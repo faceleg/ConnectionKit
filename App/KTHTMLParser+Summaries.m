@@ -16,11 +16,6 @@
 @end
 
 
-@interface KTPage (ChildrenPrivate)
-- (NSArray *)sortedFromSet:(NSSet *)aSet withSortingType:(int)aSortType;
-@end
-
-
 @interface KTHTMLParser (SummariesPrivate)
 - (NSString *)summaryForPage:(KTPage *)page;
 - (NSString *)summaryForCollection:(KTPage *)page;
@@ -90,7 +85,7 @@
 		case KTSummarizeMostRecent:
 		{
 			result = @"";
-			NSArray *children = [page sortedFromSet:[page children] withSortingType:KTCollectionSortLatestAtTop];
+			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop];
 			KTPage *recentChild = [children firstObjectOrNilIfEmpty];
 			if (recentChild) result = [self summaryForContentOfPage:recentChild];
 			break;

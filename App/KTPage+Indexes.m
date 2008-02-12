@@ -12,11 +12,6 @@
 #import "NSXMLElement+Karelia.h"
 
 
-@interface KTPage (ChildrenPrivate)
-- (NSArray *)sortedFromSet:(NSSet *)aSet withSortingType:(int)aSortType;
-@end
-
-
 @interface KTPage (IndexesPrivate)
 - (void)setArchivesIndex:(KTAbstractIndex *)anIndex;
 @end
@@ -400,7 +395,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
 	
-	NSArray *allSortedChildren = [self sortedFromSet:[self children] withSortingType:sortType];
+	NSArray *allSortedChildren = [self childrenWithSorting:sortType];
 	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
 	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
 	
