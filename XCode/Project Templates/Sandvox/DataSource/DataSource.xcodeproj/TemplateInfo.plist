@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This project builds a Sandvox .svxDataSource plugin. The Project Name should be "«DataType»Source".</string>
+	<key>FilesToMacroExpand</key>
+	<array>
+		<string>Info.plist</string>
+		<string>«PROJECTNAME».xcodeproj/project.pbxproj</string>
+		<string>«PROJECTNAME».h</string>
+		<string>«PROJECTNAME».m</string>
+		<string>«PROJECTNAME»_Prefix.pch</string>
+	</array>
+	<key>FilesToRename</key>
+	<dict>
+		<key>DataSource.h</key>
+		<string>«PROJECTNAME».h</string>
+		<key>DataSource.m</key>
+		<string>«PROJECTNAME».m</string>
+		<key>DataSource.xcodeproj</key>
+		<string>«PROJECTNAME».xcodeproj</string>
+		<key>DataSource_Prefix.pch</key>
+		<string>«PROJECTNAME»_Prefix.pch</string>
+	</dict>
+</dict>
+</plist>
