@@ -511,10 +511,6 @@
 		3CF942200D62442100B1C83D /* SilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF9421E0D62442100B1C83D /* SilencingWarningSheet.nib */; };
 		3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */; };
 		3CF9422B0D6244C000B1C83D /* DOMNode+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */; };
-		3CF9422F0D62450C00B1C83D /* CIImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF9422E0D62450C00B1C83D /* CIImage+Karelia.h */; };
-		3CF942310D62451400B1C83D /* CIImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF942300D62451400B1C83D /* CIImage+Karelia.m */; };
-		3CF942850D62461800B1C83D /* NSImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF942840D62461800B1C83D /* NSImage+Karelia.h */; };
-		3CF942870D62461D00B1C83D /* NSImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF942860D62461D00B1C83D /* NSImage+Karelia.m */; };
 		3CF948B90D624A0F00B1C83D /* getOmniWebFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FA0D623EDF00B1C83D /* getOmniWebFrontmostPage.scpt */; };
 		3CF948BA0D624A0F00B1C83D /* getOperaFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FB0D623EF700B1C83D /* getOperaFrontmostPage.scpt */; };
 		3CF948BB0D624A1000B1C83D /* getCaminoFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FC0D623EFC00B1C83D /* getCaminoFrontmostPage.scpt */; };
@@ -1450,28 +1446,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Connection */;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = Connection;
 		};
 		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* AmazonSupport */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = AmazonSupport;
 		};
 		3CE79D6A0D625E3D00FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Sparkle */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Sparkle;
 		};
 		3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 791679FD0975255000D9EF74 /* iMediaBrowser */;
+			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
 		CE0365D90D0F5A2100229614 /* PBXContainerItemProxy */ = {
@@ -2102,10 +2098,6 @@
 		3CF942270D62446900B1C83D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/SilencingWarningSheet.nib; sourceTree = "<group>"; };
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
-		3CF9422E0D62450C00B1C83D /* CIImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CIImage+Karelia.h"; path = "../../../Shared/trunk/App/CIImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		3CF942300D62451400B1C83D /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CIImage+Karelia.m"; path = "../../../Shared/trunk/App/CIImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
-		3CF942840D62461800B1C83D /* NSImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage+Karelia.h"; path = "../../../Shared/trunk/App/NSImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		3CF942860D62461D00B1C83D /* NSImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage+Karelia.m"; path = "../../../Shared/trunk/App/NSImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../../../sparkleplus/Sparkle.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKeypathURLProtocol.h; sourceTree = "<group>"; };
 		3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTKeypathURLProtocol.m; sourceTree = "<group>"; };
@@ -3560,8 +3552,6 @@
 		3C5A73070BF7AF6100776464 /* Core Image */ = {
 			isa = PBXGroup;
 			children = (
-				3CF9422E0D62450C00B1C83D /* CIImage+Karelia.h */,
-				3CF942300D62451400B1C83D /* CIImage+Karelia.m */,
 			);
 			name = "Core Image";
 			sourceTree = "<group>";
@@ -3569,8 +3559,6 @@
 		3C5A730A0BF7AF7000776464 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				3CF942840D62461800B1C83D /* NSImage+Karelia.h */,
-				3CF942860D62461D00B1C83D /* NSImage+Karelia.m */,
 				CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */,
 				CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */,
 				CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */,
@@ -4628,8 +4616,6 @@
 				3CF941DB0D623E4900B1C83D /* NSImagePicker.h in Headers */,
 				3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */,
 				3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */,
-				3CF9422F0D62450C00B1C83D /* CIImage+Karelia.h in Headers */,
-				3CF942850D62461800B1C83D /* NSImage+Karelia.h in Headers */,
 				3CE79D890D6260D000FCEE6D /* NSArray+KTExtensions.h in Headers */,
 				3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */,
 			);
@@ -6032,8 +6018,6 @@
 				3C682BB90D62348A00B4D485 /* NSString+KTExtensions.m in Sources */,
 				3CF941D70D623C5000B1C83D /* assertions.m in Sources */,
 				3CF9422B0D6244C000B1C83D /* DOMNode+KTExtensions.m in Sources */,
-				3CF942310D62451400B1C83D /* CIImage+Karelia.m in Sources */,
-				3CF942870D62461D00B1C83D /* NSImage+Karelia.m in Sources */,
 				3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */,
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 			);
