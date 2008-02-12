@@ -1442,6 +1442,34 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = "Amazon List";
 		};
+		3CE79D660D625E2E00FCEE6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Connection */;
+			remoteInfo = Connection;
+		};
+		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* AmazonSupport */;
+			remoteInfo = AmazonSupport;
+		};
+		3CE79D6A0D625E3D00FCEE6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Sparkle */;
+			remoteInfo = Sparkle;
+		};
+		3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 791679FD0975255000D9EF74 /* iMediaBrowser */;
+			remoteInfo = iMediaBrowser;
+		};
 		CE0365D90D0F5A2100229614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B65980BFA7FC4007A4871 /* KTPlugins.xcodeproj */;
@@ -4611,6 +4639,10 @@
 			);
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
+				3CE79D670D625E2E00FCEE6D /* PBXTargetDependency */,
+				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
+				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
+				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6188,6 +6220,26 @@
 			isa = PBXTargetDependency;
 			name = "Amazon List";
 			targetProxy = 3C9B66C30BFA93F8007A4871 /* PBXContainerItemProxy */;
+		};
+		3CE79D670D625E2E00FCEE6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Connection;
+			targetProxy = 3CE79D660D625E2E00FCEE6D /* PBXContainerItemProxy */;
+		};
+		3CE79D690D625E3600FCEE6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AmazonSupport;
+			targetProxy = 3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */;
+		};
+		3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = 3CE79D6A0D625E3D00FCEE6D /* PBXContainerItemProxy */;
+		};
+		3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iMediaBrowser;
+			targetProxy = 3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
