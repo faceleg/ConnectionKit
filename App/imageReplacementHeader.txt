@@ -1,0 +1,9 @@
+/*
+Image Replacement - dynamically generated - Rundle/Phark method
+*/
+
+.TurnOffReplace {
+	background:none !important;
+	text-indent:0 !important;
+	line-height:1.5em !important;
+}

@@ -1,0 +1,55 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                cancelReport = id; 
+                displayHelp = id; 
+                showReportWindow = id; 
+                submitReport = id; 
+                windowHelp = id; 
+            }; 
+            CLASS = KTAbstractBugReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAccessoryView = NSView; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+                oOpenSavedFeedbackSwitch = NSButton; 
+                oReportWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {CLASS = KTFeedbackAttachment; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {changeClassification = id; }; 
+            CLASS = KTFeedbackReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAddressComboBox = KTEmailAddressComboBox; 
+                oAttachConsoleSwitch = NSButton; 
+                oAttachPreferencesSwitch = NSButton; 
+                oAttachScreenshotSwitch = NSButton; 
+                oBugDirectionsButton = NSButton; 
+                oBugDirectionsTextField = NSTextField; 
+                oCarbonCopySelfSwitch = NSButton; 
+                oCaseNumberLabel = NSTextField; 
+                oCaseNumberTextField = NSTextField; 
+                oClassificationPopUp = NSPopUpButton; 
+                oDetailsTextView = NSTextView; 
+                oSubmitButton = NSButton; 
+                oSummaryTextField = NSTextField; 
+                oURLTextField = NSTextField; 
+            }; 
+            SUPERCLASS = KTAbstractBugReporter; 
+        }
+    ); 
+    IBVersion = 1; 
+}

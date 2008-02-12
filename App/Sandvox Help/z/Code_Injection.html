@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="code, inject, injection, injects, injections, injected, injecting, insert, inserts, inserted, inserting, custom, own, customised, customized, cutomising, customizing, before, html, php, direct, directive, directives, cookie, cookies, head, &lt;head&gt;, &lt;/head&gt;, meta, &lt;meta&gt;, tag, tags, &lt;body&gt;, onload, on, load, style, styling, styles, attribute, attributes, within, before, area, include, includes, contain, contains, contained, pages, pages, option, select, selection, selected, level, levels" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Code Injection</title>
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Code Injection</h1>
+
+        <p>Code Injection allows you to insert custom code into different parts of a Sandvox site. For example, you might use it to add PHP directives to your site. Code Injection is a <a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a> feature only.</p>
+
+        <div class="instructions">
+            <p><b>To begin using Code Injection:</b></p>
+
+            <ol>
+                <li>Choose "Code Injection…" from the <a href="Sandvox_Menu_Guide.html#Site" title="Sandvox Menu Guide">Site menu</a>.</li>
+
+                <li>Enter your code into the window.</li>
+            </ol>
+        </div>
+
+        <div class="center">
+            <div class="floatnone">
+                <span><img src="img/d/d5/Code_Injection_window.jp2" alt="" width="392" height="373" /></span>
+            </div>
+        </div>
+
+        <p>There are four places code can be injected:</p><a name="Before_.3Chtml.3E" id="Before_.3Chtml.3E"></a>
+
+        <h3>Before &lt;html&gt;</h3>
+
+        <p>Inserted at the absolute beginning of the <a href="Page.html" title="Page">page</a>, before the <tt>&lt;html&gt;</tt> tag. Please do not use any actual HTML code here. Note that the code inserted here will not appear in Sandvox while editing, only on the <a href="Publishing_Your_Site.html" title="Publish">published</a> site.</p>
+
+        <p>Example uses:</p>
+
+        <ul>
+            <li><a href="Using_PHP_with_Sandvox.html" title="PHP">PHP</a> directives</li>
+
+            <li>Setting cookies</li>
+        </ul><a name=".3Chead.3E_area"></a>
+
+        <h3>&lt;head&gt; area</h3>
+
+        <p>Inserts code in between the <tt>&lt;head&gt;</tt> and <tt>&lt;/head&gt;</tt> tags.</p>
+
+        <p>Example uses:</p>
+
+        <ul>
+            <li>Javascript <tt>&lt;script&gt;</tt> tags</li>
+
+            <li><tt>&lt;meta&gt;</tt> tags</li>
+
+            <li>Additional CSS stylesheet declarations</li>
+        </ul><a name="Within_.3Cbody.3E_tag" id="Within_.3Cbody.3E_tag"></a>
+
+        <h3>Within &lt;body&gt; tag</h3>
+
+        <p>Inserts code inside of the <tt>&lt;body&gt;</tt> tag. This literally means within the tag itself, <b>not</b> between <tt>&lt;body&gt;</tt> and <tt>&lt;/body&gt;</tt>.</p>
+
+        <p>Example uses:</p>
+
+        <ul>
+            <li>A Javascript "onload" tag</li>
+
+            <li>Style attributes</li>
+        </ul><a name="Before_.3C.2Fbody.3E" id="Before_.3C.2Fbody.3E"></a>
+
+        <h3>Before &lt;/body&gt;</h3>
+
+        <p>Inserted right at the end of the main HTML code, just before the <tt>&lt;/body&gt;</tt> tag. The main purpose is for Javascripts that process the preceding HTML code.</p>
+
+        <p>Example uses:</p>
+
+        <ul>
+            <li>Snap.com <a href="http://www.snap.com/about/shots.php" class="external text" title="http://www.snap.com/about/shots.php">Snap Shots</a></li>
+
+            <li>Context link advertisements like those from <a href="http://www.kontera.com/" class="external text" title="http://www.kontera.com/">Kontera</a></li>
+
+            <li>Page counters or statistics tools from places like <a href="http://www.onestatfree.com/" class="external text" title="http://www.onestatfree.com/">OneStatFree.com</a> or <a href="http://www.snap.com/about/shots.php" class="external text" title="http://www.snap.com/about/shots.php">free-hit-counters.com</a></li>
+        </ul><a name="Insertion_Level" id="Insertion_Level"></a>
+
+        <h2>Insertion Level</h2>
+
+        <p>Normally, you use Code Injection to affect every <a href="Page.html" title="Page">page</a> in a site. However, you can also use Code Injection upon a single <a href="Page.html" title="Page">page</a> or a subset of <a href="Page.html" title="Page">pages</a>.</p>
+
+        <div class="instructions">
+            <p><b>To use Code Injection at a selected level:</b></p>
+
+            <ol>
+                <li>Select the <a href="Page.html" title="Page">page</a> in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a>. (This can be a <a href="Collection.html" title="Collection">collection</a> if you wish)</li>
+
+                <li>Open the <a href="Sandvox_Menu_Guide.html#Site" title="Sandvox Menu Guide">Site menu</a>.</li>
+
+                <li>Hold down the <i>option</i> key and choose "Code Injection at Selected Level…"</li>
+            </ol>
+        </div>
+
+        <p>Any code entered will only affect the <a href="Page.html" title="Page">page</a> you selected in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a> (and any <a href="Collection.html" title="Child">children</a> it may have) rather than the entire site.</p><a name="Inheritance" id="Inheritance"></a>
+
+        <h2>Inheritance</h2>
+
+        <p>Each tab of the Code Injection window contains a checkbox labeled "Include on contained pages." This is turned on by default.</p>
+
+        <p>Uncheck the box and the code will only be inserted for the <a href="Page.html" title="Page">page</a> indicated in the Code Injection window's title, rather than all the <a href="Page.html" title="Page">pages</a> below it in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a>'s hierarchy.</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2>Related Articles</h2>
+
+            <ul>
+                <li><a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a></li>
+
+                <li><a href="HTML_code_guidelines_and_tips.html" title="HTML code guidelines and tips">HTML code guidelines and tips</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+//
+//  KTWebViewUndoManagerProxy.m
+//  Marvel
+//
+//  Created by Mike on 20/12/2007.
+//  Copyright 2007 Karelia Software. All rights reserved.
+//
+
+#import "KTWebViewUndoManagerProxy.h"
+
+
+NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
+
+
+@implementation KTWebViewUndoManagerProxy
+
+- (id)initWithUndoManager:(NSUndoManager *)undoManager
+{
+	myUndoManager = [undoManager retain];
+	
+	myWebViewActionTargets = [[NSMutableArray alloc] init];
+	
+	return self;
+}
+
+- (void)dealloc
+{
+	[myUndoManager release];
+	[myWebViewActionTargets release];
+	
+	[super dealloc];
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+	NSMethodSignature *result = [myUndoManager methodSignatureForSelector:aSelector];
+	return result;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+	[anInvocation setTarget:myUndoManager];
+	
+	LOG((@"Invoking method -%@ on undo manager", NSStringFromSelector([anInvocation selector])));
+	
+	[anInvocation invoke];
+}
+
+- (void)registeringUndoWithTarget:(id)target
+{
+	// Post a notification that the WebView has been edited.
+	// We DON'T do this for the first registration or if undoing/redoing
+	if (myRegisteredUndosCount > 0 && ![myUndoManager isUndoing] && ![myUndoManager isRedoing])
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:KTWebViewDidEditChunkNotification
+															object:self];
+	}
+	
+	
+	// Increment or decrement our registered undo count as appropriate
+	if ([myUndoManager isUndoing]) {
+		myRegisteredUndosCount--;
+	}
+	else {
+		myRegisteredUndosCount++;
+	}
+	NSAssert1(myRegisteredUndosCount >= 0,
+			  @"KTWebViewUndoManagerProxy undo count slipped to %i", myRegisteredUndosCount);
+	
+	
+	// Maintain a list of undo targets
+	if (![myWebViewActionTargets containsObjectIdenticalTo:target]) {
+		[myWebViewActionTargets addObject:target];
+	}
+}
+
+- (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject
+{
+	[self registeringUndoWithTarget:target];
+	
+	[myUndoManager registerUndoWithTarget:target selector:aSelector object:anObject];
+}
+
+- (id)prepareWithInvocationTarget:(id)target
+{
+	[self registeringUndoWithTarget:target];
+	
+	id result = [myUndoManager prepareWithInvocationTarget:target];
+	return result;
+}
+
+/*	We record every undo action target. This method then calls -removeAllActionsWithTarget: for them.
+ *	The main purpose behind this is so that the WebViewController can remove the actions sooner
+ *	than the WebView normally would.
+ */
+- (void)removeAllWebViewTargettedActions
+{
+	// Remove undo actions from the real undo manager
+	NSEnumerator *actionTargetsEnumerator = [myWebViewActionTargets objectEnumerator];
+	id aTarget;
+	while (aTarget = [actionTargetsEnumerator nextObject])
+	{
+		[myUndoManager removeAllActionsWithTarget:aTarget];
+	}
+	
+	[myWebViewActionTargets removeAllObjects];
+	
+	
+	// Reset the registered undo count
+	myRegisteredUndosCount = 0;
+}
+
+@end

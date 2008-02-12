@@ -1,0 +1,11 @@
+<!-- [[=&plugin.bundle.bundleIdentifier]] -->
+[[if allowIntroduction]]
+[[if introductionHTML|editing]]
+<div class="elementIntroduction">
+	[[textblock property:introductionHTML flags:"block optional"]]
+</div>
+[[endif2]]
+[[endif]]
+
+[[parseComponent self templateHTML]]
+<!-- /[[=&plugin.bundle.bundleIdentifier]] -->

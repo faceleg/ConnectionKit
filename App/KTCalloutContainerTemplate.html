@@ -1,0 +1,26 @@
+[[if orderedCallouts]]
+	<div class="callout-container">
+		<div class="callout">
+			<div class="callout-top"></div>
+			<div class="callout-content">
+[[forEach orderedCallouts aPagelet]]
+				<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif2]][[if aPagelet.titleHTML]]titled[[else2]]untitled[[endif2]] [[i]] [[eo]][[last]]" id="k-[[=aPagelet.uniqueID]]">
+[[if aPagelet.canHaveTitle]]
+[[if aPagelet.titleHTML|editing]]
+[[if aPagelet.titleLinkURLPath]]
+						<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional anchor" id:aPagelet.uniqueID replacement:titleText code:h4c]]><a href="[[=&aPagelet.titleLinkURLPath]]"><span class="in">[[=aPagelet.titleHTML]]</span></a></h4>
+[[else4]]
+						<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional" id:aPagelet.uniqueID replacement:titleText code:h4c]]><span class="in">[[=aPagelet.titleHTML]]</span></h4>
+[[endif4]]
+[[endif3]]
+[[endif2]]
+					<div class="pagelet-body">
+[[parsecomponent aPagelet class.elementTemplate]]
+					</div>
+				</div>
+[[endForEach]]
+			</div> <!-- callout-content -->
+			<div class="callout-bottom"></div>	
+		</div> <!-- callout -->
+	</div> <!-- callout-container -->
+[[endif]]

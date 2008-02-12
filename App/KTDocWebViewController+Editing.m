@@ -1,0 +1,887 @@
+//
+//  KTDocWebViewController+Editing.m
+//  Marvel
+//
+//  Created by Mike on 18/12/2007.
+//  Copyright 2007 Karelia Software. All rights reserved.
+//
+
+#import "KTDocWebViewController.h"
+
+#import "KTDocWindowController.h"
+#import "KTInfoWindowController.h"
+#import "KTWebViewTextEditingBlock.h"
+#import "KTWebViewUndoManagerProxy.h"
+#import "KTToolbars.h"
+#import "WebViewEditingHelperClasses.h"
+
+#import "DOM+KTWebViewController.h"
+
+
+@interface NSView ( WebHTMLViewHack )
+- (NSRect)selectionRect;
+- (NSRect)_selectionRect;		// old compatibility version of above
+@end
+
+
+#pragma mark -
+
+
+@interface KTDocWebViewController (EditingPrivate)
+- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock;
+- (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
+@end
+
+
+#pragma mark -
+
+
+@implementation KTDocWebViewController (Editing)
+
+#pragma mark -
+#pragma mark WebView Loaded
+
+/*! Make all editable style nodes be editable.	Fix all "kOptional" elements and replace empty ones with + button
+*/
+- (void)processEditableElementsFromDoc:(DOMDocument *)aDOMDocument;
+{
+	BOOL isNew = [[[[self windowController] siteOutlineController] selectedPage] isNewPage];
+	OFF((@"%@", NSStringFromSelector(_cmd) ));
+	DOMNode *root = [aDOMDocument documentElement];
+	BOOL displayEditingControls = [[self document] displayEditingControls];
+
+	if (nil != root)
+	{
+		DOMNodeIterator *it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[EditableNodeFilter sharedFilter] :YES];
+		DOMHTMLElement *element;
+		
+		// Collect the elements into an array for processing later, since the loop messes with the DOM
+		NSMutableArray *editableElements = [NSMutableArray array];
+		while ((element = (DOMHTMLElement *)[it nextNode]))
+		{
+			[editableElements addObject:element];
+		}
+		
+		NSEnumerator *theEnum = [editableElements objectEnumerator];
+
+		while (nil != (element = [theEnum nextObject]) )
+		{
+OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
+			
+			[element setContentEditable:@"true"];
+			if (isNew && [[element tagName] isEqualToString:@"H2"])		// The page title? (Only do first h2)
+			{
+				isNew = NO;		// Just focus the FIRST one!
+				[[[[self windowController] siteOutlineController] selectedPage] setNewPage:NO];		// STOP believing you're new now -- prevent recursion
+				if ([element respondsToSelector:@selector(focus)])
+				{
+					[element focus];		// not in older webkits
+				}
+			}
+			//[element setAttribute:@"style" :@"min-height:12px; background:rgba(255,0,0,0.1);"];
+			
+			NSString *theID = [element idName];	// id like k-Entity-Property-434
+			
+			// Not dooing for now, but we're close, so keep the code in.
+			//			// If it's an "html" element, get rid of our temporary style
+			//			NSString *propertyName = [self propertyNameForDOMNodeID:theID];
+			//			if ([propertyName isEqualToString:@"html"])	// special case : "html" property gets substituted
+			//			{
+			//				[element removeAttribute:@"style"];
+			//			}
+			
+			// Turn back on "replaced" class and update its contents
+			NSString *theClass = [element className];
+			if (NSNotFound != [theClass rangeOfString:@"TurnOffReplace"].location)
+			{
+				NSString *newClass = [theClass stringByReplacing:@"TurnOffReplace" with:@"replaced"];
+				[element setClassName:newClass];
+				
+				NSString *currentDesignIdentifier = [[[[self windowController] siteOutlineController] selectedPage] valueForKey:@"master.design.identifier"];
+				
+				(void) [[self windowController] useImageReplacementEntryForDesign:currentDesignIdentifier
+													  uniqueID:theID
+														string:[element innerText]];
+				
+				// Now we have to trick the node to displaying the new image
+				
+				NSMutableDictionary *designEntry = [[[self windowController] imageReplacementRegistry] objectForKey:currentDesignIdentifier];
+				NSMutableDictionary *renderEntry = [designEntry objectForKey:theID];
+				
+				NSString *imageName = [NSString stringWithFormat:@"replacementImages.%@.png",
+					[renderEntry objectForKey:@"imageKey"]];
+				NSString *irPath = [[self document] pathForReplacementImageName:imageName designBundleIdentifier:currentDesignIdentifier];
+				
+				[element setAttribute:@"style" :[NSString stringWithFormat:@"background:url(\"%@\") top left no-repeat;", irPath]];
+				OFF((@"IR>>>> Replaced existing entry with new text and stuck on override CSS with new URL"));
+			}
+			
+			// Check if it's empty ... if so, we will need to put in a "+" button
+			BOOL hasEmbed = NSNotFound != [[element outerHTML] rangeOfString:@"<embed"].location;
+			BOOL hasImage = NSNotFound != [[element outerHTML] rangeOfString:@"<img"].location;
+			BOOL hasObject = NSNotFound != [[element outerHTML] rangeOfString:@"<object"].location;		// logic duplicated in KTWebViewTextEditingBlock
+			BOOL hasScript = NSNotFound != [[element outerHTML] rangeOfString:@"<script"].location;
+			BOOL hasIframe = NSNotFound != [[element outerHTML] rangeOfString:@"<iframe"].location;
+			BOOL hasContents = ![[[element textContent] trim] isEqualToString:@""];
+			
+			if (!hasContents && !hasScript && !hasObject && !hasImage && !hasIframe && !hasEmbed)		// if empty, insert an adder
+			{
+				BOOL hasParagraph = ![DOMNode isSingleLineFromDOMNodeClass:theClass];
+				BOOL hasSpan = !hasParagraph;
+				// ^^^ REALLY THESE ARE JUST MUTUALLY EXCLUSIVE, BUT SINCE THEY ARE PASSED INTO THE "+" CODE, I'LL CONSIDER WE MAY WANT MORE CONTROL LATER.
+				/*
+				 if ([element hasChildNodes])		// check if it's just an empty span
+				{
+					DOMNodeList *list = [element childNodes];
+					if ([list length] >= 1)		// is there a child? (it's weird if we have > 1, often it's just white space text!
+					{
+						DOMNode *firstChild = [list item:0];
+						if ([[firstChild nodeName] isEqualToString:@"SPAN"])
+						{
+							hasSpan = YES;
+							// see if span is empty
+						}
+					}
+				}
+				 */
+
+				// For a pagelet that doesn't really live here, we DELETE the element.
+				// For a pagelet that does live here and is editable, or other elements, replace.
+				BOOL replace = displayEditingControls;		// initially yes if we display editing controls, otherwise hide
+				// Now see if this is a click anywhere in a pagelet
+				DOMHTMLElement *pageletElement = [[self windowController] pageletElementEnclosing:element];
+				if (nil != pageletElement)
+				{
+					KTPagelet *pagelet = [[self windowController] pageletEnclosing:element];
+					
+					if ([[[[self windowController] siteOutlineController] selectedPage] isEqual:[pagelet page]])
+					{	
+						// pagelet editable here			
+					}
+					else if (nil != pagelet)
+					{
+						// pagelet not editable here ... instead delete
+						replace = NO;
+					}
+				}
+				
+				
+				if (replace)
+				// Check if this is optional -- if optional, rip out the entire optional div if it's empty.
+				// If not optional, just insert a button to add content.
+				// NSString *class = [element className];
+				// if( NSNotFound != [class rangeOfString:@"kOptional"].location )
+				{
+					DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)[aDOMDocument createElement:@"A"];
+					[a setHref:@"#"];
+					[a setTitle:NSLocalizedString(@"Click on + to insert an element", @"title of '+' button; instructions for what to do")];
+					// replace_withElementName_elementClass_elementID_text_innerSpan_innerParagraph_
+					NSString *jsFunction = [NSString stringWithFormat:@"window.helper.replaceElement(this,'%@','%@','%@','%@',%@,%@); return false;",
+						[element tagName],
+						[element className],
+						theID,
+						NSLocalizedString(@"Lorem ipsum dolor sit amet.", @"placeholder string for inserted element in page"),
+						(hasSpan ? @"true" : @"false"),
+						(hasParagraph ? @"true" : @"false")];
+					
+					[a setAttribute:@"onclick" :jsFunction];
+					[a setAttribute:@"style" :@"float:none; width:13px; height:14px; border:none; text-decoration:none;"];	// ??also?? position:absolute;
+					
+					DOMHTMLImageElement *img = (DOMHTMLImageElement *)[aDOMDocument createElement:@"IMG"];
+					
+					NSString *addImagePath = [[NSBundle mainBundle] pathForImageResource:@"TinyAdd"];
+					NSURL *imageURL = [NSURL fileURLWithPath:addImagePath];
+					[img setSrc:[imageURL absoluteString]];
+					[img setAlt:NSLocalizedString(@"Add Element", @"alt text for + button in HTML view")];
+					[img setAttribute:@"style" :@"border:none;"];	// ??also?? position:absolute;
+					[img setClassName:kKTInternalImageClassName];
+					
+					DOMText *zeroWidthSpace = [aDOMDocument createTextNode:[NSString stringWithUnichar:0x200b]];
+					// Put it all together
+					(void) [a appendChild:img];
+					(void) [a appendChild:zeroWidthSpace];
+					
+					[[element parentNode] replaceChild:a :element];
+					
+				}
+				else	// delete optional element
+				{
+					[[element parentNode] removeChild:element];
+				}
+			}
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Editing Status
+
+- (KTWebViewTextEditingBlock *)currentTextEditingBlock { return myTextEditingBlock; }
+
+- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock
+{
+	// Ignore unecessary changes
+	if (textBlock == myTextEditingBlock) {
+		return;
+	}
+	
+	
+	if (myTextEditingBlock)
+	{
+		[myTextEditingBlock resignFirstResponder];
+		
+		[self resumeWebViewRefreshingForKeyPath:[myTextEditingBlock HTMLSourceKeyPath]
+									   ofObject:[myTextEditingBlock HTMLSourceObject]];
+		
+		// Kill off the undo actions and other data specific to that editing block
+		[myInlineImageElements removeAllObjects];
+		[myInlineImageNodes removeAllObjects];
+		[[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];
+		
+		// Convert empty text blocks back into + editing markers.
+		// Presumably this could be more efficient by only processing the edited block.
+		DOMDocument *DOMDoc = [[myTextEditingBlock DOMNode] ownerDocument];
+		[self processEditableElementsFromDoc:DOMDoc];
+	}
+	
+	
+	[textBlock retain];
+	[myTextEditingBlock release];
+	myTextEditingBlock = textBlock;
+		
+	
+	if (textBlock)
+	{
+		[textBlock becomeFirstResponder];
+		[self suspendWebViewRefreshingForKeyPath:[textBlock HTMLSourceKeyPath] ofObject:[textBlock HTMLSourceObject]];
+	}
+}
+
+/*	WebView does not have its own isEditing method so we have to manage one ourself.
+ */
+- (BOOL)webViewIsEditing { return ([self currentTextEditingBlock] != nil); }
+
+- (BOOL)commitEditing
+{
+	BOOL result = [[self currentTextEditingBlock] commitEditing];
+	return result;
+}
+
+- (void)webViewDidEndEditing:(NSNotification *)notification
+{
+	[self setCurrentTextEditingBlock:nil];
+}
+
+#pragma mark -
+#pragma mark Selection
+
+
+- (BOOL)webView:(WebView *)webView shouldChangeSelectedDOMRange:(DOMRange *)currentRange toDOMRange:(DOMRange *)proposedRange affinity:(NSSelectionAffinity)selectionAffinity stillSelecting:(BOOL)flag;
+{
+	OFF((@"%@ %@ %@", NSStringFromSelector(_cmd), currentRange, proposedRange ));
+	
+	// if we have a selectedInlineImageElement, check that proposedRange still contains
+	// its DOMRange. if not, clear the inspector.
+	
+	// this might be crazy inefficient
+	if ( nil != [[self windowController] selectedInlineImageElement]
+		 && [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] currentSelection] isEqual:[[self windowController] selectedInlineImageElement]] )
+	{
+		if ( ![[proposedRange startContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]]
+			 && ![[proposedRange endContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]] )
+		{
+			[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
+																object:[[[[self windowController] selectedInlineImageElement] container] page]];			
+		}
+	}
+	
+	return YES;
+}
+
+- (void)webViewDidChangeSelection:(NSNotification *)notification
+{
+	if ([notification object] != [self webView]) {	// Ignore webviews not our own
+		return;
+	}
+	
+	
+	
+	
+	// Change our -currentTextEditingBlock if needed
+	WebView *theWebview = [notification object];
+	DOMRange *selectedDOMRange = [theWebview selectedDOMRange];
+	DOMHTMLElement *selectableDOMElement = [[selectedDOMRange startContainer] firstSelectableParentNode];
+	KTWebViewTextEditingBlock *currentTextBlock = [self currentTextEditingBlock];
+	
+	if (selectableDOMElement)
+	{
+		if ([[self windowController] isEditableElement:selectableDOMElement])
+		{
+			if (!currentTextBlock || [currentTextBlock DOMNode] != selectableDOMElement)
+			{
+				KTWebViewTextEditingBlock *newBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:selectableDOMElement
+																					webViewController:self];
+				
+				[self setCurrentTextEditingBlock:newBlock];
+			}
+		}
+		else
+		{
+			[self setCurrentTextEditingBlock:nil];
+		}
+	}
+	
+	
+	
+	NSView *documentView = [[[theWebview mainFrame] frameView] documentView];
+	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
+	NSAssert([documentView isKindOfClass:[WebHTMLView class]], @"documentView not of expected class!");
+	
+	// do we have an active link panel?
+	if ( [[[self windowController] linkPanel] isVisible] )
+	{
+		[[self windowController] finishLinkPanel:nil]; // process [self contextElementInformation]
+	}
+	
+	// setSelectedDOMRange
+	[[self windowController] setSelectedDOMRange:[theWebview selectedDOMRange]];
+	
+	// setSelectionRect
+	//	 get the webView's selection rectangle
+	NSRect unconvertedSelectionRect = NSZeroRect;
+	if ([documentView respondsToSelector:@selector(selectionRect)])
+	{
+		unconvertedSelectionRect = [documentView selectionRect];
+	}
+	else if ([documentView respondsToSelector:@selector(_selectionRect)])
+	{
+		unconvertedSelectionRect = [documentView _selectionRect];
+	}
+	//	 convert to window coordinates
+	[[self windowController] setSelectionRect:[documentView convertRect:unconvertedSelectionRect toView:nil]];
+	
+	// setContextElementInformation
+	NSPoint elementPoint;
+	if ( [[self windowController] selectionRect].size.width > 0 )
+	{
+		elementPoint = unconvertedSelectionRect.origin;
+	}
+	else
+	{
+		elementPoint = [[self windowController] lastClickedPoint];
+	}
+	NSMutableDictionary *elementDictionary = [NSMutableDictionary dictionary];
+	if ( nil != selectedDOMRange )
+	{
+		[elementDictionary setObject:selectedDOMRange forKey:KTSelectedDOMRangeKey];
+        [elementDictionary addEntriesFromDictionary:[(WebView *)documentView elementAtPoint:elementPoint]];
+        [[self windowController] setContextElementInformation:[NSMutableDictionary dictionaryWithDictionary:elementDictionary]];
+	} else
+        [[self windowController] setContextElementInformation:nil];
+	
+	
+	// update Cut, Copy, Paste menuitems
+	[[self windowController] updateEditMenuItems];
+}
+
+#pragma mark -
+#pragma mark Change Management
+
+/*!	We validate any DOMNode insertions, passing them to the edited object if appropriate.
+ *	The insertion can be pasted, dropped or typed, but the last case doesn't seem to happen normally.
+ */
+- (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+	// node is DOMDocumentFragment
+{
+	BOOL result = YES;
+	
+	KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:[range startContainer]
+																		 webViewController:self];
+	if (!textBlock) {
+		return NO;
+	}
+	
+	
+	// If there is an appropriate delegate object, ask it to validate the insert.
+	id sourceObject = [textBlock HTMLSourceObject];
+	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractPlugin class]])
+	{
+		id delegate = [sourceObject delegate];
+		if (delegate && [delegate respondsToSelector:@selector(plugin:shouldInsertNode:intoTextForKeyPath:givenAction:)])
+		{
+			result = [delegate plugin:sourceObject
+					 shouldInsertNode:node
+				   intoTextForKeyPath:[textBlock HTMLSourceKeyPath]
+						  givenAction:action];
+		}
+	}
+	
+	
+	if (result)
+	{
+		// Tidy up the node to match the insertion destination
+		if ([textBlock isRichText] && [textBlock isFieldEditor])
+		{
+			[node makeSingleLine];
+		}
+		else if (![textBlock isRichText])
+		{
+			[node makePlainTextWithSingleLine:[textBlock isFieldEditor]];	// Could perhaps use -innerText method instead
+		}
+		
+		
+		// Ban inserts of <img> elements into non-importsGraphics text.
+		if (![textBlock importsGraphics])
+		{
+			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node :DOM_SHOW_ELEMENT :nil :NO];
+			DOMNode *aNode = [it nextNode];
+			while (nil != aNode)
+			{
+				if ([[aNode nodeName] isEqualToString:@"IMG"])
+				{
+					result = NO;
+					break;
+				}
+				aNode = [it nextNode];
+			}
+		}
+		
+		
+		if (result)
+		{
+			// If the insertion is from drag and drop, select the range that will be pasted into.
+			// This may mean the editing block changes. If so our other code will take care of that.
+			if (action == WebViewInsertActionDropped)
+			{
+				[aWebView setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+			}
+		}	
+	}
+	
+	
+	return result;
+}
+
+
+/*	Called whenever the user tries to type something.
+ *	We never allow a tab to be entered. (Although such a case never seems to occur)
+ */
+- (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+{
+	BOOL result = YES;
+	
+	if ([text isEqualToString:@"\t"])	// Disallow tabs
+	{
+		result = NO;
+	}
+	
+	return result;
+}
+
+
+/*	When certain actions are taken we override them
+ */
+- (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector
+{
+	if (aWebView != [self webView]) {	// Ignore webviews not our own
+		return NO;
+	}
+	
+	
+	// When the user hits return, end editing if in a field editor.
+	if (selector == @selector(insertNewline:) && [[self currentTextEditingBlock] isFieldEditor])
+	{
+		[self commitEditing];
+		return YES;
+	}
+	// When the user hits option-return insert a line break.
+	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
+	{
+		[[[aWebView window] firstResponder] insertLineBreak:self];
+		return YES;
+	}
+	
+	return NO;
+}
+
+#pragma mark -
+#pragma mark Undo Manager Proxy
+
+- (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy
+{
+	if (!myUndoManagerProxy)
+	{
+		myUndoManagerProxy = [[KTWebViewUndoManagerProxy alloc] initWithUndoManager:[[self document] undoManager]];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(webViewDidEditChunk:)
+													 name:KTWebViewDidEditChunkNotification
+												   object:myUndoManagerProxy];
+	}
+	
+	return myUndoManagerProxy;
+}
+
+- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
+{
+	return (NSUndoManager *)[self webViewUndoManagerProxy];
+}
+
+- (void)webViewDidEditChunk:(NSNotification *)notification
+{
+	[[self currentTextEditingBlock] commitEditing];
+}
+
+#pragma mark -
+#pragma mark Unused delegate methods
+
+- (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
+{
+	return YES;
+}
+
+/*!	OK, don't filter stuff.	 For some reason, when I filter the style, it doesn't let valid stuff
+through.  We seem to do OK by filtering later.
+*/
+- (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
+{
+	OFF((@"%@", NSStringFromSelector(_cmd) ));
+	//	NSString *cssText = [style cssText];
+	//	cssText = [DOMElement cleanupStyleText:cssText];
+	//	[style setCssText:cssText];
+	return YES;
+}
+
+- (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
+{
+	OFF((@"%@", NSStringFromSelector(_cmd) ));
+	return [[self currentTextEditingBlock] isRichText];
+	// only allow styling if this our property is marked as rich text, with HTML suffix....
+}
+
+- (void)webViewDidChangeTypingStyle:(NSNotification *)notification
+{
+	;
+}
+
+#pragma mark -
+#pragma mark Links
+
+- (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title
+{
+    // By default the item is disabled and reads "Create Link"
+	BOOL result = NO;
+	*title = TOOLBAR_CREATE_LINK;
+	
+	
+	if ([[self windowController] selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:NO])
+    {
+        NSDictionary *elementDictionary = [[self windowController] contextElementInformation];
+        
+        if ([elementDictionary objectForKey:WebElementLinkURLKey])
+        {
+            // If a link is selected enable the item and title it "Edit Link"
+			result = YES;
+			*title = TOOLBAR_EDIT_LINK;
+        }
+        else if ([elementDictionary objectForKey:WebElementDOMNodeKey])
+        {
+            // Allow the user to create links
+            result = YES;
+        }
+	}
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Embedded Images
+
+- (NSString *)uniqueIDForInlineImageNode:(DOMHTMLImageElement *)node
+{
+	NSArray *matches = [myInlineImageNodes allKeysForObject:node];
+	NSString *result = [matches firstObjectOrNilIfEmpty];
+	
+	if (!result)
+	{
+		result = [NSString shortGUIDString];
+		[myInlineImageNodes setObject:node forKey:result];
+	}
+	
+	return result;
+}
+
+- (KTInlineImageElement *)inlineImageEementForUniqueNodeID:(NSString *)nodeID
+{
+	KTInlineImageElement *result = [myInlineImageElements objectForKey:nodeID];
+	return result;
+}
+
+- (KTInlineImageElement *)inlineImageElementForNode:(DOMHTMLImageElement *)node
+										  container:(KTAbstractPlugin *)container
+{
+	NSString *nodeID = [self uniqueIDForInlineImageNode:node];
+	KTInlineImageElement *result = [self inlineImageEementForUniqueNodeID:nodeID];
+	
+	if (!result)
+	{
+		result = [KTInlineImageElement inlineImageElementWithID:nodeID DOMNode:node container:container];
+		[myInlineImageElements setObject:result forKey:nodeID];
+	}
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Editing Actions
+
+- (BOOL)isSelectionTypewriter:(DOMRange *)range
+{
+	if (nil == range) return NO;
+	DOMNode *node = [range startContainer];
+
+	while (![node isKindOfClass:[DOMElement class]])
+	{
+		node = [node parentNode];
+	}
+
+	NSString *styleString = [((DOMElement*)node) getAttribute:@"style"];
+	return ([[[node nodeName] lowercaseString] isEqualToString:@"tt"] || NSNotFound != [styleString rangeOfString:@"monospace"].location);
+}
+- (BOOL) isSelectionStrikeout:(DOMRange *)range
+{
+	if (nil == range) return NO;
+	DOMNode *node = [range startContainer];
+
+	while (![node isKindOfClass:[DOMElement class]])
+	{
+		node = [node parentNode];
+	}
+	/*
+	 // TODO: when webkit implements style sheet stuff, this could be done better this way.
+	 DOMCSSStyleDeclaration *style = [[node ownerDocument] getComputedStyle:(DOMElement *)node :@""];
+	 
+	 NSLog(@"cssText = %@", [style cssText]);
+	 NSLog(@"font value = %@", [style getPropertyValue:@"font"]);
+	 NSLog(@"font css value = %@", [style getPropertyCSSValue:@"font"]);
+	 NSLog(@"font priority = %@", [style getPropertyPriority:@"font"]);
+	 
+	 NSMutableString *string = [NSMutableString string];
+	 int i;
+	 for (i = 0 ; i < [style length] ; i++ )
+	 {
+		 [string appendString:[style item:i]];
+		 [string appendString:@" "];
+	 }
+	 NSLog(@"items (%d) = %@", [style length], string);
+	 
+	 
+	 //NSString *val = [style getPropertyValue:@"font"];
+	 //NSLog(@"style = %@ ...  %@", val, [style cssText]);
+	 // If fixed pitch, mark that -- otherwise, do not output this style
+	 // if ([theFont isFixedPitch])
+	 */
+
+	NSString *styleString = [((DOMElement*)node) getAttribute:@"style"];
+	return (NSNotFound != [styleString rangeOfString:@"line-through"].location);
+
+}
+
+// Handle italic ourselves so that we can force Lucida Grande to be italic!
+
+- (BOOL) isSelectionItalic:(DOMRange *)range
+{
+	//	  DOMCSSStyleDeclaration *style = [self _emptyStyle];
+	//	  [style setFontStyle:@"italic"];
+	//	WebBridge *bridge = [self _bridge];					// NOT SURE HOW TO GET HERE
+	//	  return ([bridge selectionStartHasStyle:style]);
+	return NO;		// for now, say NO
+}
+
+/*!	Pass italic command to font manager.  We do this so that we can intercept validation
+*/
+- (IBAction) italic:(id)sender
+{
+	[[[[self webView] undoManager] prepareWithInvocationTarget:[NSFontManager sharedFontManager]] removeFontTrait:sender];
+	[[NSFontManager sharedFontManager] addFontTrait:sender];
+}
+
+/*!	Pass bold command to font manager.	We do this only to be consistent with italic
+*/
+- (IBAction) bold:(id)sender
+{
+	[[[[self webView] undoManager] prepareWithInvocationTarget:[NSFontManager sharedFontManager]] removeFontTrait:sender];
+	[[NSFontManager sharedFontManager] addFontTrait:sender];
+}
+
+- (IBAction) strikeout:(id)sender
+{
+	DOMRange *range = [[self webView] selectedDOMRange];
+	if (nil != range)
+	{		
+		if (![self isSelectionStrikeout:range]) // turn on?
+		{
+			static StrikeThroughOn *sStrikeThroughOn = nil;
+			if (nil == sStrikeThroughOn) sStrikeThroughOn = [[StrikeThroughOn alloc] init];
+			[[self webView] changeAttributes:sStrikeThroughOn];
+		}
+		else
+		{
+			static StrikeThroughOff *sStrikeThroughOff = nil;
+			if (nil == sStrikeThroughOff) sStrikeThroughOff = [[StrikeThroughOff alloc] init];
+			[[self webView] changeAttributes:sStrikeThroughOff];
+		}
+	}
+}
+
+// TODO: -- change this to just insert TT as the cleanup does?	 How to make undoable?
+
+// TODO: -- hook this back up to the UI, in the next version.  Took out for now, punting.
+
+
+- (IBAction)typewriter:(id)sender
+{
+	DOMRange *range = [[self webView] selectedDOMRange];
+	if (nil != range)
+	{
+		if (![self isSelectionTypewriter:range])	// turn on?
+		{
+			static TypewriterOn *sTypewriterOn = nil;
+			if (nil == sTypewriterOn) sTypewriterOn = [[TypewriterOn alloc] init];
+			[[self webView] changeAttributes:sTypewriterOn];
+		}
+		else
+		{
+			static TypewriterOff *sTypewriterOff = nil;
+			if (nil == sTypewriterOff) sTypewriterOff = [[TypewriterOff alloc] init];
+			[[self webView] changeAttributes:sTypewriterOff];
+		}
+	}
+}
+
+
+- (IBAction)clearStyles:(id)sender
+{
+	static NSArray *copiedStyleProperties = nil;
+	
+	if (!copiedStyleProperties) {
+		copiedStyleProperties = [[NSArray arrayWithObjects:@"color", @"font-family", @"font-size", @"font-style", 
+			@"font-variant", @"font-weight", @"letter-spacing", @"line-height",@"text-align",
+			@"text-decoration", @"text-indent", @"text-shadow", @"text-transform", nil] retain];
+	}
+	
+	DOMDocumentFragment *frag = nil;	// if non-nil, this is a document fragment
+	DOMNode *node = nil;
+		
+	// Compare to the whole editable div
+	DOMRange *range = [[self webView] selectedDOMRange];
+	DOMHTMLElement *selectableNode = [[range startContainer] firstSelectableParentNode];
+	DOMRange *wholeRange = [[selectableNode ownerDocument] createRange];
+	[wholeRange selectNodeContents:selectableNode];
+	short comparison1 = [wholeRange compareBoundaryPoints:DOM_START_TO_START :range];
+	short comparison2 = [wholeRange compareBoundaryPoints:DOM_END_TO_END :range];
+	if (0 != comparison1 || 0 != comparison2)
+	{
+		frag = [range cloneContents];
+		node = frag;
+	}
+	else
+	{
+		node = selectableNode;	// work with the whole selectable node
+	}
+	
+//	LOG((@"BEFORE  styleSpan: %@", [frag outerHTML]));
+
+	[node removeStylesRecursive];
+	[node removeJunkRecursiveRestrictive:NO allowEmptyParagraphs:YES];
+	
+	// Only remove Underline, Bold, Italic, Strong, Emphasis if the option key is down
+	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
+	{
+		[node removeAnyDescendentElementsNamed:@"B"];
+		[node removeAnyDescendentElementsNamed:@"I"];
+		[node removeAnyDescendentElementsNamed:@"STRONG"];
+		[node removeAnyDescendentElementsNamed:@"EM"];
+		[node removeAnyDescendentElementsNamed:@"U"];
+	}
+	[node removeAnyDescendentElementsNamed:@"FONT"];
+	
+	DOMDocument *doc = [[self webView] mainFrameDocument];
+//	DOMElement *styleSpan = [doc createElement:@"SPAN"];
+//	DOMCSSStyleDeclaration *rootStyle = [doc getComputedStyle:[[[oWebView selectedDOMRange] commonAncestorContainer] rootEditableElement] pseudoElement: nil];
+//	DOMCSSStyleDeclaration *wrapperStyle = [styleSpan style];
+//	
+//	NSEnumerator *e = [copiedStyleProperties objectEnumerator];
+//	NSString *property;
+//	while ((property = [e nextObject])) {
+//		NSString *value = [rootStyle getPropertyValue:property];
+//		if ([value isEqualToString:@"auto"])
+//			continue;
+//		[wrapperStyle setProperty:property value:value priority:@""];
+//	}
+//	
+//	LOG((@"DURING styleSpan: %@", [styleSpan outerHTML]));
+//	
+//	[frag insert:styleSpan];
+//	LOG((@"AFTER  styleSpan: %@", [styleSpan outerHTML]));
+	
+	if (nil != frag) [[self webView] replaceSelectionWithNode:frag];
+
+	DOMCSSStyleDeclaration *clearUnderlineStyle = [doc createCSSStyleDeclaration];
+	
+	// This tells WebCore to remove any underline stylings
+	[clearUnderlineStyle setProperty:@"-webkit-text-decorations-in-effect" value:@"none" priority:@""];
+	[[self webView] applyStyle:clearUnderlineStyle];
+}
+
+#pragma mark -
+#pragma mark Menu Validation
+
+// This is called by validateMenuItem: in another file; this is webkit-specific stuff
+
+- (BOOL)webKitValidateMenuItem:(NSMenuItem *)menuItem
+{
+	OFF((@"asking webkit to validate menu item: %@", [menuItem title]));
+
+	SEL action = [menuItem action];
+
+	if (action == @selector(clearStyles:))
+	{
+		DOMRange *range = [[self webView] selectedDOMRange];
+		return (nil != range);
+	}
+	if (action == @selector(typewriter:))
+	{
+		DOMRange *range = [[self webView] selectedDOMRange];
+		if (nil != range)
+		{
+			[menuItem setState:[self isSelectionTypewriter:range] ? NSOnState : NSOffState];
+		}
+		return (nil != range);
+	}
+	else if (action == @selector(strikeout:))
+	{
+		DOMRange *range = [[self webView] selectedDOMRange];
+		if (nil != range)
+		{
+			[menuItem setState:[self isSelectionStrikeout:range] ? NSOnState : NSOffState];
+		}
+		return (nil != range);
+	}
+	else if (action == @selector(pasteTextAsMarkup:))
+	{
+		DOMRange *range = [[self webView] selectedDOMRange];
+		return (nil != range);
+	}
+	else if (action == @selector(italic:) || action == @selector(bold:))
+	{
+		(void) [[NSFontManager sharedFontManager] validateMenuItem:menuItem];
+		// Above should have side effect of fixing checkmark
+		
+		return (nil != [[self webView] selectedDOMRange]);	// enable if there is a selection, regardless of whether particular font can be bolded/italic'd.
+	}
+	
+	return YES; // default returns YES
+}
+
+@end

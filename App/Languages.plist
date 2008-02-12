@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+
+
+<!--
+
+Default character encoding was chosen capriciously ... though it's not hooked up to the UI yet.
+	European languages use ISO-8859-1
+	Languages with mostly roman characters use UTF-8
+	Languages with NON-roman characters use UTF-16.
+	
+	(Later, we may figure out how to support other, more efficient language-specific encodings)
+
+ -->
+
+<array>
+
+<dict><key>Eng</key><string>English             </string><key>Name</key><string>English                        </string><key>Code</key><string>en	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Japanese            </string><key>Name</key><string>日本語                            </string><key>Code</key><string>ja	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>French              </string><key>Name</key><string>Français                       </string><key>Code</key><string>fr	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>German              </string><key>Name</key><string>Deutsch                        </string><key>Code</key><string>de	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Spanish             </string><key>Name</key><string>Español                        </string><key>Code</key><string>es	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Italian             </string><key>Name</key><string>Italiano                       </string><key>Code</key><string>it	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Dutch               </string><key>Name</key><string>Nederlands                     </string><key>Code</key><string>nl	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Swedish             </string><key>Name</key><string>Svenska                        </string><key>Code</key><string>sv	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Norwegian           </string><key>Name</key><string>Norsk                          </string><key>Code</key><string>no	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Danish              </string><key>Name</key><string>Dansk                          </string><key>Code</key><string>da	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Finnish             </string><key>Name</key><string>Suomi                          </string><key>Code</key><string>fi	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Portuguese          </string><key>Name</key><string>Português                      </string><key>Code</key><string>pt	</string><key>Charset</key><string>ISO-8859-1</string></dict>
+<dict><key>Eng</key><string>Chinese             </string><key>Name</key><string>简体中文                             </string><key>Code</key><string>zh	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Chinese Trad.       </string><key>Name</key><string>繁體中文                             </string><key>Code</key><string>zh-Hant	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Korean              </string><key>Name</key><string>한국어                            </string><key>Code</key><string>ko	</string><key>Charset</key><string>UTF-16</string></dict>
+
+
+<dict><key>Eng</key><string>Polish              </string><key>Name</key><string>Polski                         </string><key>Code</key><string>pl	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Russian             </string><key>Name</key><string>Русский                        </string><key>Code</key><string>ru	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Esperanto           </string><key>Name</key><string>Esperanto                      </string><key>Code</key><string>eo	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Hebrew              </string><key>Name</key><string>עברית                          </string><key>Code</key><string>he	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Hungarian           </string><key>Name</key><string>Magyar                         </string><key>Code</key><string>hu	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Catalan             </string><key>Name</key><string>Català                         </string><key>Code</key><string>ca	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Czech               </string><key>Name</key><string>Čeština                        </string><key>Code</key><string>cs	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Slovenian           </string><key>Name</key><string>Slovenščina                    </string><key>Code</key><string>sl	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Ukrainian           </string><key>Name</key><string>Українська                     </string><key>Code</key><string>uk	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Bulgarian           </string><key>Name</key><string>Български                      </string><key>Code</key><string>bg	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Slovak              </string><key>Name</key><string>Slovenčina                     </string><key>Code</key><string>sk	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Serbian             </string><key>Name</key><string>Српски                         </string><key>Code</key><string>sr	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Romanian            </string><key>Name</key><string>Română                         </string><key>Code</key><string>ro	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Indonesian          </string><key>Name</key><string>Bahasa Indonesia               </string><key>Code</key><string>id	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Turkish             </string><key>Name</key><string>Türkçe                         </string><key>Code</key><string>tr	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Estonian            </string><key>Name</key><string>Eesti                          </string><key>Code</key><string>et	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Norwegian           </string><key>Name</key><string>Norsk nynorsk                  </string><key>Code</key><string>nn	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Ido                 </string><key>Name</key><string>Ido                            </string><key>Code</key><string>io	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Croatian            </string><key>Name</key><string>Hrvatski                       </string><key>Code</key><string>hr	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Malay               </string><key>Name</key><string>Bahasa Melayu                  </string><key>Code</key><string>ms	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Galician            </string><key>Name</key><string>Galego                         </string><key>Code</key><string>gl	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Lithuanian          </string><key>Name</key><string>Lietuvių                       </string><key>Code</key><string>lt	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Arabic              </string><key>Name</key><string>العربية                        </string><key>Code</key><string>ar		</string><key>Charset</key><string>UTF-16</string></dict>
+
+<dict><key>Eng</key><string>Icelandic           </string><key>Name</key><string>Íslenska                       </string><key>Code</key><string>is	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Persian             </string><key>Name</key><string>فارسی                          </string><key>Code</key><string>fa		</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Luxembourgish       </string><key>Name</key><string>Lëtzebuergesch                 </string><key>Code</key><string>lb	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Greek               </string><key>Name</key><string>Ελληνικά                       </string><key>Code</key><string>el	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Thai                </string><key>Name</key><string>ไทย                            </string><key>Code</key><string>th	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Bosnian             </string><key>Name</key><string>Bosanski                       </string><key>Code</key><string>bs	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Walloon             </string><key>Name</key><string>Walon                          </string><key>Code</key><string>wa	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Albanian            </string><key>Name</key><string>Shqip                          </string><key>Code</key><string>sq	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Vietnamese          </string><key>Name</key><string>Tiếng Việt                     </string><key>Code</key><string>vi	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Basque              </string><key>Name</key><string>Euskara                        </string><key>Code</key><string>eu	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Afrikaans           </string><key>Name</key><string>Afrikaans                      </string><key>Code</key><string>af	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Asturian            </string><key>Name</key><string>Asturianu                      </string><key>Code</key><string>ast	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Georgian            </string><key>Name</key><string>ქართული / Kartuli              </string><key>Code</key><string>ka	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Neapolitan          </string><key>Name</key><string>Nnapulitano                    </string><key>Code</key><string>nap	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Latin               </string><key>Name</key><string>Latina                         </string><key>Code</key><string>la	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Sicilian            </string><key>Name</key><string>Sicilianu                      </string><key>Code</key><string>scn	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Welsh               </string><key>Name</key><string>Cymraeg                        </string><key>Code</key><string>cy	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Tatar               </string><key>Name</key><string>Tatarça                        </string><key>Code</key><string>tt	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Breton              </string><key>Name</key><string>Brezhoneg                      </string><key>Code</key><string>br	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Macedonian          </string><key>Name</key><string>Македонски                     </string><key>Code</key><string>mk	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Interlingua         </string><key>Name</key><string>Interlingua                    </string><key>Code</key><string>ia	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Azeri               </string><key>Name</key><string>Azərbaycanca                   </string><key>Code</key><string>az	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Serbo–Croatian      </string><key>Name</key><string>Srpskohrvatski/Српскохрватски  </string><key>Code</key><string>sh	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Latvian             </string><key>Name</key><string>Latviešu                       </string><key>Code</key><string>lv	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Irish Gaelic        </string><key>Name</key><string>Gaeilge na hÉireann            </string><key>Code</key><string>ga	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Kurdish             </string><key>Name</key><string>Kurdî / كوردی                  </string><key>Code</key><string>ku		</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Telugu              </string><key>Name</key><string>తెలుగు                         </string><key>Code</key><string>te	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Belarusian          </string><key>Name</key><string>Беларуская                     </string><key>Code</key><string>be	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Frisian             </string><key>Name</key><string>Frysk                          </string><key>Code</key><string>fy	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Low Saxon           </string><key>Name</key><string>Plattdüütsch                   </string><key>Code</key><string>nds	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Tagalog             </string><key>Name</key><string>Tagalog                        </string><key>Code</key><string>tl	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Tamil               </string><key>Name</key><string>தமிழ்                          </string><key>Code</key><string>ta	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Faroese             </string><key>Name</key><string>Føroyskt                       </string><key>Code</key><string>fo	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Chuvash             </string><key>Name</key><string>Чăваш чěлхи                    </string><key>Code</key><string>cv	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Marathi             </string><key>Name</key><string>मराठी                          </string><key>Code</key><string>mr	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Javanese            </string><key>Name</key><string>Basa Jawi                      </string><key>Code</key><string>jv	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Alemannic           </string><key>Name</key><string>Alemannisch                    </string><key>Code</key><string>als	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Limburgish          </string><key>Name</key><string>Limburgs                       </string><key>Code</key><string>li	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Occitan             </string><key>Name</key><string>Occitan                        </string><key>Code</key><string>oc	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Min Nan             </string><key>Name</key><string>Bân-lâm-gú                     </string><key>Code</key><string>zh-min-nan</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Corsican            </string><key>Name</key><string>Corsu                          </string><key>Code</key><string>co	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Ossetian            </string><key>Name</key><string>Ирон æвзаг                     </string><key>Code</key><string>os	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Scots               </string><key>Name</key><string>Scots                          </string><key>Code</key><string>sco	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Scottish Gaelic     </string><key>Name</key><string>Gàidhlig na h–Alba             </string><key>Code</key><string>gd	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Kannada             </string><key>Name</key><string>ಕನ್ನಡ                          </string><key>Code</key><string>kn	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Aragonese           </string><key>Name</key><string>Aragonés                       </string><key>Code</key><string>an	</string><key>Charset</key><string>UTF-8</string></dict>
+<dict><key>Eng</key><string>Hindi               </string><key>Name</key><string>हिन्दी                         </string><key>Code</key><string>hi	</string><key>Charset</key><string>UTF-16</string></dict>
+<dict><key>Eng</key><string>Cebuano             </string><key>Name</key><string>Sugboanon                      </string><key>Code</key><string>ceb	</string><key>Charset</key><string>UTF-8</string></dict>
+
+
+</array>
+</plist>

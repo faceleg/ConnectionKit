@@ -1,0 +1,2101 @@
+//
+//	KTDocWindowController+WebView.m
+//	Marvel
+//
+//	Created by Dan Wood on 5/4/05.
+//	Copyright 2005 Biophony LLC. All rights reserved.
+//
+
+#import "KTDocWindowController.h"
+
+#import "KT.h"
+#import "KTAppDelegate.h"
+#import "KTComponents.h"
+#import "KTMaster.h"
+#import "KTDesign.h"
+#import "KTDesignManager.h"
+#import "KTDocument.h"
+#import "KTDocWebViewController.h"
+#import "KTElementPlugin.h"
+#import "KTInfoWindowController.h"
+#import "KTKeyPathURLProtocol.h"
+#import "KTTextField.h"
+#import "KTSummaryWebViewTextBlock.h"
+
+#import "DOM+KTWebViewController.h"
+#import "NSString-Utilities.h"
+
+#import "PrivateComponents.h"
+#import "RoundedBox.h"
+
+#import <CoreServices/CoreServices.h>
+#import <QuartzCore/QuartzCore.h>
+
+#import "Registration.h"
+
+typedef enum {
+    WebKitEditableLinkDefaultBehavior = 0,
+    WebKitEditableLinkAlwaysLive,
+    WebKitEditableLinkOnlyLiveWithShiftKey,
+    WebKitEditableLinkLiveWhenNotFocused
+} WebKitEditableLinkBehavior;
+
+
+@interface WebPreferences (WebPrivate)
+
+- (WebKitEditableLinkBehavior)editableLinkBehavior;
+- (void)setEditableLinkBehavior:(WebKitEditableLinkBehavior)behavior;
+@end
+
+
+@interface DOMHTMLElement ( newWebKit )
+- (void) focus;
+@end
+
+
+NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
+
+
+@interface NSObject (WebBridgeHack )
+- (DOMRange *)dragCaretDOMRange;
+@end
+
+
+@interface NSView ( WebBridgeHack )
+- (id) _bridge;	// WebFrameBridge
+@end
+
+
+@interface KTDocWindowController ( WebViewPrivate )
+
+- (NSString *)savedPageletStyle;
+- (NSPoint)linkPanelTopLeftPointForSelectionRect:(NSRect)aSelectionRect;
+- (DOMHTMLElement *)elementOfClass:(NSString *)aDesiredClass enclosing:(DOMNode *)aNode;
+
+
+
+- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractPlugin *)aContainer;
+
+- (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow;
+- (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element;
+- (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange;
+
+- (void)insertHref:(NSString *)aURLAsString inRange:(DOMRange *)aRange;
+- (void)insertText:(NSString *)aTextString href:(NSString *)aURLAsString inRange:(DOMRange *)aRange atPosition:(long)aPosition;
+
+@end
+
+NSScrollView * firstScrollView(NSView *aView);
+
+NSScrollView * firstScrollView(NSView *aView)
+{
+	NSArray *aSubviewsArray=[aView subviews];
+	unsigned i;
+	for (i=0;i<[aSubviewsArray count];i++) {
+		if ([[aSubviewsArray objectAtIndex:i] isKindOfClass:[NSScrollView class]]) {
+			return [aSubviewsArray objectAtIndex:i];
+		}
+	}
+	for (i=0;i<[aSubviewsArray count];i++) {
+		NSScrollView *scrollview=firstScrollView([aSubviewsArray objectAtIndex:i]);
+		if (scrollview) return scrollview;
+	}
+	return nil;
+}
+
+
+#pragma mark -
+
+
+@implementation KTDocWindowController ( WebView )
+
+- (IBAction)updateWebView:(id)sender
+{
+	[[self webViewController] setWebViewNeedsRefresh:YES];
+}
+
+
+- (void) webViewDeallocSupport
+{
+	[self setSelectedPagelet:nil];
+	
+    [oWebView setUIDelegate:nil];
+}
+
+/*!	More initialization code specific to the webview, called from windowDidLoad
+*/
+
+- (void)webViewDidLoad
+{
+	[self setImageReplacementRegistry:[NSMutableDictionary dictionary]];
+	[self setReplacementImages:[NSMutableDictionary dictionary]];
+	
+	[oWebView setApplicationNameForUserAgent:[NSApplication applicationName]];
+	
+	[oWebView setPreferencesIdentifier:[NSApplication applicationName]];
+	if ([[oWebView preferences] respondsToSelector:@selector(setEditableLinkBehavior:)])
+	{
+		[[oWebView preferences] setEditableLinkBehavior:WebKitEditableLinkLiveWhenNotFocused];
+	}
+	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[oWebView setContinuousSpellCheckingEnabled:[defaults boolForKey:@"ContinuousSpellChecking"]];
+	// Set UI delegate -- we don't actually use the built-in methods, but we use our custom
+	// method for detecting clicks.
+	[oWebView setUIDelegate:self];				// WebUIDelegate
+	
+	float multiplier = [[[self document] wrappedValueForKey:@"textSizeMultiplier"] floatValue];
+	if (multiplier < 0.01)
+	{
+		multiplier = [defaults floatForKey:@"textSizeMultiplier"];	// put into a sane range
+	}
+	[oWebView setTextSizeMultiplier:multiplier];
+	
+	/*
+	 // doesn't actually work yet
+	 DOMDocument *document = [[oWebView mainFrame] DOMDocument];
+	 [document addEventListener:@"mousedown"
+							   :self
+							   :YES];
+	 */
+	[self setStatusField:@""];
+}
+
+#pragma mark -
+#pragma mark Image Replacement
+
+- (NSString *)cssForImageReplacementEntry:(NSDictionary *)anEntry
+{
+	NSImage *image = [anEntry objectForKey:@"image"];
+	NSString *designBundleIdentifier = [anEntry objectForKey:@"designBundleIdentifier"];
+	NSSize size = [image size];
+	//	NSString *code = [anEntry objectForKey:@"code"];
+	NSString *uniqueID = [anEntry objectForKey:@"uniqueID"];
+	NSString *imageName = [NSString stringWithFormat:@"replacementImages.%@.png",
+		[anEntry objectForKey:@"imageKey"]];
+	
+	NSString *irPath = [[self document] pathForReplacementImageName:imageName designBundleIdentifier:designBundleIdentifier];
+	
+	static NSString *sImageReplacementEntry = nil;
+	if (nil == sImageReplacementEntry)
+	{
+		NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sImageReplacementEntry = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+	}
+	NSMutableString *result = [NSMutableString stringWithString:sImageReplacementEntry];
+	[result replace:@"_UNIQUEID_" with:uniqueID];
+	[result replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%.0f", size.width]];
+	[result replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%.0f", size.height]];
+	[result replace:@"_URL_" with:irPath];
+	return result;
+}
+
+
+/*! Generates CSS
+*/
+
+- (NSData *)generatedCSSForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
+							 managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
+{
+	OFF((@"IR>>>> %@", NSStringFromSelector(_cmd)));
+	
+	KTDesignManager *designManager = [[NSApp delegate] designManager];
+	KTDesign *design = [designManager designForIdentifier:aDesignBundleIdentifier];
+	
+	NSData *result = nil;
+	NSString *path = [[design bundle] pathForResource:@"main" ofType:@"css"];
+	if (nil == path)
+	{
+		NSLog(@"Couldn't find main.css in bundle %@", aDesignBundleIdentifier);
+		result = [NSData data];
+	}
+	else
+	{
+		NSError *error;
+		NSMutableData *fileData = [NSMutableData dataWithContentsOfFile:path options:0 error:&error];
+		
+		
+		
+		// Now, possibly, append image replacement styles
+		NSMutableDictionary *designEntry = [myImageReplacementRegistry objectForKey:aDesignBundleIdentifier];
+		
+		if (nil != designEntry && 0 != [designEntry count])
+		{
+			static NSString *sImageReplacementHeader = nil;
+			if (nil == sImageReplacementHeader)
+			{
+				NSString *irPath = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementHeader" ofType:@"txt"];
+				NSData *data = [NSData dataWithContentsOfFile:irPath];
+				sImageReplacementHeader = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+			}
+			
+			NSMutableString *buf = [NSMutableString stringWithString:sImageReplacementHeader];
+			
+			NSEnumerator *enumerator = [designEntry objectEnumerator];
+			id item;
+			
+			while ( item = [enumerator nextObject] )
+			{
+				[buf appendString:[self cssForImageReplacementEntry:item]];
+			}
+			[buf appendString:@"\n"];
+			
+			OFF((@"Additional CSS:\n%@", buf));
+			
+			NSData *additionalData = [buf dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+			[fileData appendData:additionalData];
+		}
+		
+		if (kGeneratingPreview == [self publishingMode])
+		{
+			// just get stuff specific to this page
+			KTPage *selectedPageInDocumentContext = [[self siteOutlineController] selectedPage];
+			
+			if ( nil == selectedPageInDocumentContext )
+			{
+				// better to return no CSS than crash
+				return [NSData data];
+			}
+			
+			NSManagedObjectID *selectedPageID = [selectedPageInDocumentContext objectID];
+			KTPage *selectedPage = (KTPage *)[aManagedObjectContext objectWithID:selectedPageID];
+
+			if ( nil == selectedPage )
+			{
+				// better to return no CSS than crash
+				return [NSData data];
+			}
+			
+			if ( [selectedPage isDeleted] )
+			{
+				// better to return no CSS than crash
+				return [NSData data];
+			}
+			
+			NSMutableSet *additionalCSSFiles = [NSMutableSet set];
+			
+			@try
+			{
+				[selectedPage lockPSCAndMOC];
+				
+				/// Case 18307: move check for [selectedPage bundle] *after* setLightWeightInstantiated
+				/// so that we don't do things like synchronously load movies across threads just to
+				/// figure out our bundle for CSS!
+				if ( [selectedPage isFault] )
+				{
+					if (![selectedPage plugin])
+					{
+						// this is a HACK: if selectedPage is a fault and we can't get its bundle
+						// it's a deleted object -- selectedPage is being set incorrectly during actuallyDeletePages
+						// we'll use root instead so we at least return some valid CSS until the rest
+						// of Sandvox catches up and displays the right page
+						///selectedPage = [(KTDocument *)[self document] root];
+						selectedPage = [aManagedObjectContext root];
+					}
+				}
+				
+				/*	Disabled because that -makeComponentsPerformSelector has changed name.
+				[selectedPage makeComponentsPerformSelector:@selector(addCSSFilePathToSet:forPage:)
+												 withObject:additionalCSSFiles
+												   withPage:selectedPage];
+												   */
+			}
+			@finally
+			{
+				[selectedPage unlockPSCAndMOC];
+			}
+			NSEnumerator *theEnum = [additionalCSSFiles objectEnumerator];
+			NSString *aPath;
+			
+			while (nil != (aPath = [theEnum nextObject]) )
+			{
+				NSData *additionalCSSData = [NSData dataWithContentsOfFile:aPath];
+				[fileData appendData:additionalCSSData];
+			}
+		}
+	}
+	return result;
+}
+
+- (NSString *)codeForDOMNodeID:(NSString *)anID		// id like k-Entity-Property-434-h1h
+{
+	NSArray *dashComponents = [anID componentsSeparatedByString:@"-"];
+	if ([dashComponents count] < 5)
+	{
+		return nil;		// code is optional, so return nil if it's not there
+	}
+	NSString *property = [dashComponents objectAtIndex:4];
+	return property;
+}
+
+- (NSString *)propertyNameForDOMNodeID:(NSString *)anID	// id like k-Entity-Property-434-h1h
+{
+	NSString *result = nil;
+	NSArray *dashComponents = [anID componentsSeparatedByString:@"-"];
+	if ([dashComponents count] > 2)
+	{
+		result = [dashComponents objectAtIndex:2];
+	}
+	return result;
+}
+
+
+- (id)itemForDOMNodeID:(NSString *)anID	// id like k-Entity-Property-434-h1h
+{
+	id result = nil;
+	
+	NSArray *dashComponents = [anID componentsSeparatedByString:@"-"];
+	if ([dashComponents count] < 4)
+	{
+		return nil;
+	}
+	
+	//	NSString *q			= [dashComponents objectAtIndex:0];
+	NSString *entityName= [dashComponents objectAtIndex:1];
+	//	NSString *property	= [dashComponents objectAtIndex:2];
+	NSString *uniqueID	= [dashComponents objectAtIndex:3];
+	//	NSString *code	= [dashComponents objectAtIndex:4];
+	
+	if ([entityName isEqualToString:@"Document"])
+	{
+		return [self document];		// don't need to look up object; it's this document!
+	}
+	else if ([entityName isEqualToString:@"Root"])
+	{
+		return [[self document] root];	// don't need to look up object; it's the root
+	}
+	
+	// Strip off any "_" suffix to get the real entity name.  We allow _ suffix to make things unique
+	int indexOfDash = [entityName rangeOfString:@"_"].location;
+	if (NSNotFound != indexOfDash)
+	{
+		entityName = [entityName substringToIndex:indexOfDash];
+	}
+	
+	// peform fetch
+	NSManagedObjectContext *context = [[self document] managedObjectContext];
+	NSError *fetchError = nil;
+	NSArray *fetchedObjects = [context objectsWithEntityName:entityName
+												   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", uniqueID]
+													   error:&fetchError];	
+	// extract result
+	if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+	{
+		result = [fetchedObjects objectAtIndex:0];
+	}
+	
+	return result;
+}
+
+
+/*!	Verifies that this is an editable entity.  Assumes it's an editable class; it makes sure if it's a page it's an editable summary
+*/
+- (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement
+{
+	NSString *theClass = [aDOMHTMLElement className];
+	
+	BOOL result = [DOMNode isEditableFromDOMNodeClass:theClass];
+	if (result && [DOMNode isSummaryFromDOMNodeClass:theClass])
+	{
+		// further scrutiny if it's a summary element
+		NSString *theID = [aDOMHTMLElement idName];
+		if (nil != theID)
+		{
+			id selectedItem = [self itemForDOMNodeID:theID];
+			if ([selectedItem isKindOfClass:[KTPage class]])
+			{
+				KTPage *page = (KTPage *)selectedItem;
+				if ([page isCollection])
+				{
+					// yes only if the page is a KTSummarizeAutomatic summary type
+					result = ([page integerForKey:@"collectionSummaryType"] == KTSummarizeAutomatic);
+				}
+			}
+		}
+	}
+	return result;
+}
+
+
+/*!	Looks up from cache, generates if needed
+*/
+- (BOOL)useImageReplacementEntryForDesign:(NSString *)aDesign
+								 uniqueID:(NSString *)aUniqueID
+								   string:(NSString *)aString;
+{
+	BOOL result = NO;
+	OFF((@"IR>>>> %@ %@ %@ %@", NSStringFromSelector(_cmd), aDesign, aUniqueID, aString));
+	
+	NSMutableDictionary *designEntry = [myImageReplacementRegistry objectForKey:aDesign];
+	if (nil == designEntry)
+	{
+		designEntry = [NSMutableDictionary dictionary];
+		[myImageReplacementRegistry setObject:designEntry forKey:aDesign];		// put it in
+																				OFF((@"IR>>>> Created new entry in myImageReplacementRegistry for design:%@", aDesign));
+	}
+	
+	NSString *replacementCode = [self codeForDOMNodeID:aUniqueID];
+	NSMutableDictionary *renderEntry = [designEntry objectForKey:aUniqueID];
+	
+	KTDesign *design = [[[NSApp delegate] designManager] designForIdentifier:aDesign];
+	
+	KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+	NSNumber *aSize = [[selectedPage valueForKey:@"master"] valueForKey:@"graphicalTitleSize"];
+	if (!aSize)
+	{
+		aSize = [NSNumber numberWithFloat:0.5];
+	}
+	else
+	{
+		float size = [aSize floatValue];
+		size = round(size * 10.0) / 10.0;	// round to a multiple of 0.1
+		aSize = [NSNumber numberWithFloat:size];
+	}
+OFF((@"size = %@", aSize));
+	
+	NSImage *renderedText = [design replacementImageForCode:replacementCode string:aString size:aSize];
+	if (nil != renderedText)
+	{
+		if (nil == renderEntry)
+		{
+			static unsigned long sImageKeyNumber = 0;
+			NSString *imageKey = [NSString stringWithFormat:@"k%ld", sImageKeyNumber++];
+
+			
+			// Somehow we're getting a bad entry for somebody, so log helpful info and bail if something is nil
+			if (nil == imageKey || nil == replacementCode || nil == aUniqueID || nil == aString || nil == aDesign)
+			{
+				NSLog(@"%@ null item: %@ %@ %@ %@", NSStringFromSelector(_cmd), imageKey, replacementCode, 
+					  aUniqueID, aString, aDesign);
+				return NO;
+			}
+					
+			renderEntry = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+				aDesign, @"designBundleIdentifier",
+				aString, @"string",
+				aSize, @"size",
+				aUniqueID, @"uniqueID",
+				replacementCode, @"code",
+				imageKey, @"imageKey",
+				renderedText, @"image",
+				nil];
+			[designEntry setObject:renderEntry forKey:aUniqueID];
+			[myReplacementImages setObject:renderedText forKey:imageKey];
+			OFF((@"IR>>>> Created new render entry: %@ - %@ - %@", [renderEntry objectForKey:@"code"], [renderEntry objectForKey:@"imageKey"], [renderEntry objectForKey:@"uniqueID"]));
+		}
+		else if (![[renderEntry objectForKey:@"string"] isEqualToString:aString]	// different string
+				 || fabsf([[renderEntry objectForKey:@"size"] floatValue] - [aSize floatValue]) > 0.01)	// or different size?
+		{
+			OFF((@"IR>>>> Updated render Entry, string changed from %@ to %@", [renderEntry objectForKey:@"string"], aString));
+			[renderEntry setObject:aString forKey:@"string"];
+			[renderEntry setObject:aSize forKey:@"size"];
+			[renderEntry setObject:renderedText forKey:@"image"];
+			[myReplacementImages setObject:renderedText forKey:[renderEntry objectForKey:@"imageKey"]];
+		}
+		
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		if ([defaults boolForKey:@"DebugImageReplacement"])
+		{
+			// NOW ... write this out so we can see the images
+			NSString *path = [NSString stringWithFormat:@"%@/IMG_%@_%@.png",
+				NSTemporaryDirectory(),
+				aUniqueID,
+				[renderEntry objectForKey:@"imageKey"]];
+			[[renderedText PNGRepresentation] writeToFile:path atomically:NO];
+			DJW((@"IR>>>> wrote to %@", path));
+		}
+		result = YES;
+	}
+	return result;
+}
+
+/*!	Remove any image replacement being used.  For turning it off.
+*/
+
+- (void)removeImageReplacementEntryForDesign:(NSString *)aDesign
+									uniqueID:(NSString *)aUniqueID
+									  string:(NSString *)aString;
+{
+	NSMutableDictionary *designEntry = [myImageReplacementRegistry objectForKey:aDesign];
+	if (nil == designEntry)
+	{
+		return;	// not there, so we don't need to remove anything
+	}
+	
+	[designEntry removeObjectForKey:aUniqueID];
+}
+
+#pragma mark -
+#pragma mark Accessors (Special)
+
+- (NSMutableDictionary *)contextElementInformation
+{
+	return myContextElementInformation;
+}
+
+- (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation
+{
+	[aContextElementInformation retain];
+	[myContextElementInformation release];
+	myContextElementInformation = aContextElementInformation;
+}
+
+- (BOOL)selectedDOMRangeIsEditable
+{
+	DOMRange *selectedRange = [oWebView selectedDOMRange];
+	if ( nil == selectedRange )
+	{
+		return NO;
+	}
+	DOMHTMLElement *selectableNode = [[selectedRange startContainer] firstSelectableParentNode];
+	
+	return ( (nil != selectableNode) && [self isEditableElement:selectableNode] );
+}
+
+- (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty
+{
+	DOMRange *selectedRange = [oWebView selectedDOMRange];
+	if ( nil == selectedRange )
+	{
+		return NO; // no selected text, not even an insertion point
+	}
+	
+	if ( !canBeEmpty && ([selectedRange startOffset] == [selectedRange endOffset]) )
+	{
+		return NO; // no actual text selected, probably just an insertion point
+	}
+	
+	DOMHTMLElement *selectableNode = [[selectedRange startContainer] firstSelectableParentNode];
+    
+    BOOL nodeContainsKHtml = NO;
+    if ( (nil != selectableNode) && [[selectableNode idName] hasPrefix:@"k-"] )
+    {
+        NSString *classes = [selectableNode className];
+        if ( NSNotFound != [classes rangeOfString:@"kHtml"].location )
+        {
+            nodeContainsKHtml = YES;
+        }
+    }        
+	
+    BOOL result = ( !nodeContainsKHtml
+					&& (nil != selectableNode) 
+					&& [self isEditableElement:selectableNode] 
+					&& [DOMNode isLinkableFromDOMNodeClass:[selectableNode className]] 
+					);
+	return result;
+}
+
+#pragma mark -
+#pragma mark WebUIDelegate Methods
+
+- (KTAbstractPlugin *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString
+{
+	KTAbstractPlugin *result = nil;
+	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
+	NSString *theID = nil;
+	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
+	
+	if (nil != selectedNode)
+	{
+		theID = [selectedNode idName];
+		if (nil != theID)
+		{
+			result = [self itemForDOMNodeID:theID];
+		}
+	}
+	if (nil != outIDString)
+	{
+		*outIDString = theID;
+	}
+	return result;
+}
+
+/*!	Called if you click on a pagelet owned by another page.	 Selects that pagelet and its enclosing page!
+Node was retained so that it lives to this invocation!
+*/
+- (void)selectOwnerPageAndPageletRetainedElement:(DOMHTMLElement *)anElement
+{
+	KTPagelet *pagelet = [self pageletEnclosing:anElement];
+	
+	int row = [oSiteOutline rowForItem:[pagelet page]];
+	if (row >= 0)
+	{
+		[oSiteOutline selectRow:row byExtendingSelection:NO];
+		
+// FIXME: - here I need to find the DOM element with the same ID as the given pagelet.
+		
+		[[self webViewController] performSelector:@selector(selectPagelet:) withObject:pagelet afterDelay:0.4];	// long delay to accomdate refresh we seem to get 
+	}
+	else
+	{
+		NSLog(@"couldn't select containing page in outline view");
+		NSBeep();
+	}
+	[anElement autorelease];		// go ahead and let it go now
+}
+
+/*!	This is my own delegate method for dealing with a click.  Store the selected ID away, and flash the rectangle of what was clicked, using an overlay window so we don't interfere with the WebView.
+
+Note that this method is called AFTER the webview handles the click.
+*/
+- (void)webView:(WebView *)sender singleClickAtCoordinates:(NSPoint)aPoint modifierFlags:(unsigned int)modifierFlags
+{
+	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
+	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
+
+	// if the webview takes a click, automatically close the link panel
+	if ( [oLinkPanel isVisible] )
+	{
+		[self finishLinkPanel:nil];
+	}
+	
+	[self setLastClickedPoint:aPoint];
+	
+	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
+	
+	if (nil == aNode)		// nothing found, no point in continuing
+	{
+		// Be sure any pagelet and inline image is deselected
+		[[self webViewController] setSelectedPageletHTMLElement:nil];
+		[self setSelectedPagelet:nil];
+		[self selectInlineIMGNode:nil container:nil];
+		return;
+	}
+	
+	if ([[aNode nodeName] isEqualToString:@"IMG"] && ![[aNode className] isEqualToString:kKTInternalImageClassName])
+	{
+		DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
+		
+		// did we click on an image in a block of editable text, or on a photo (like a photo page/pagelet)
+		if (nil != selectedNode && ([self isEditableElement:selectedNode] || [DOMNode isImageFromDOMNodeClass:[selectedNode className]]) )
+		{
+			NSString *theID = [selectedNode getAttribute:@"id"];
+			id itemToEdit = [self itemForDOMNodeID:theID];
+			if (nil != itemToEdit)
+			{
+				// we're here for instance if we clicked on an image in a pagelet or photo page
+				
+				id container = [itemToEdit wrappedValueForKey:@"container"];
+				
+				NSString *classes = [selectedNode className];
+				if ( (NSNotFound != [classes rangeOfString:@"kBlock"].location)
+					 || (NSNotFound != [classes rangeOfString:@"kLine"].location)///allow editing of line objects
+					 ||	nil == container )		// empty container means inline
+				{
+					[self selectInlineIMGNode:aNode container:itemToEdit];
+					[[self webViewController] setSelectedPageletHTMLElement:nil];
+					[self setSelectedPagelet:nil];
+				}
+				else if ([container isKindOfClass:[KTPage class]])	// image in a page, select that detail.	(An image in a pagelet has to put image inspector along with pagelet)
+				{
+					// clicked on an image in a page
+					[[self webViewController] setSelectedPageletHTMLElement:nil];
+					[self setSelectedPagelet:nil];
+					[self selectInlineIMGNode:nil container:nil];	// deselect any inline image
+					[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:itemToEdit];
+				}
+				else if ([container isKindOfClass:[KTPagelet class]])	// image in a pagelet, select that pagelet
+				{
+					[[self webViewController] setSelectedPageletHTMLElement:selectedNode];
+					// TODO: I need to be saving the pagelet, and then figuring out the pagelet element, and saving that, so it will survive across reloads!
+					
+					[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:container];
+				}
+				else
+				{
+					DJW((@"Clicked on an image, but not doing anything special"));
+				}
+			}
+		}
+		else
+		{
+			DJW((@"You clicked on some other kind of image -- jump to pagelet checking"));
+			// Total hack -- try to act as if we clicked elsewhere, like a pagelet.
+			goto clickedOnPagelet;
+		}
+	}
+	else
+	{
+clickedOnPagelet:
+		[self selectInlineIMGNode:nil container:nil];	// deselect any inline image regardless of what's selected now
+		
+		// Now see if this is a click anywhere in a pagelet
+		DOMHTMLElement *pageletElement = [self pageletElementEnclosing:aNode];
+		
+		if (nil != pageletElement)
+		{
+			KTPagelet *pagelet = [self pageletEnclosing:aNode];
+			
+			KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+			if ([[selectedPage pagelets] containsObject:pagelet])
+			{				
+				[[self webViewController] setSelectedPageletHTMLElement:pageletElement];
+				// TODO: I need to be saving the pagelet, and then figuring out the pagelet element, and saving that, so it will survive across reloads!
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:pagelet];
+			}
+			else if (nil != pagelet)
+			{
+				[[self webViewController] setSelectedPageletHTMLElement:nil];
+				[self setSelectedPagelet:nil];
+				NSString *plugin = [[pagelet plugin] pluginPropertyForKey:@"KTPluginName"];
+				if (nil == plugin) NSLog(@"Nil KTPluginName: %@", [pagelet plugin]);
+				NSString *desc = [NSMutableString stringWithString:plugin];
+				NSString *titleHTML = [pagelet titleHTML];
+				if (nil != titleHTML && ![titleHTML isEqualToString:@""] && ![titleHTML isEqualToString:[[pagelet plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
+				{
+					desc = [NSString stringWithFormat:NSLocalizedString(@"%@ %@%@%@", @"format to show type of pagelet and its title, e.g. RSS Feed 'Cat Daily Digest'"),
+						desc, leftDoubleQuote, [titleHTML flattenHTML], rightDoubleQuote];
+				}
+				KTPage *owningPage = [pagelet page];
+				
+				NSString *containingPageDescription = [owningPage isRoot]
+					? NSLocalizedString(@"the home page",@"fragment describing homepage")
+					: [NSString stringWithFormat:NSLocalizedString(@"an enclosing container page, %@%@%@",@"fragment describing a particular page"), leftDoubleQuote, [owningPage titleText], rightDoubleQuote];
+				
+				[[self confirmWithWindow:[self window]
+							silencingKey:@"ShutUpCantSelect"
+							   canCancel:YES OKButton:NSLocalizedString(@"Select",@"Button title")
+								 silence:NSLocalizedString(@"Always select containing page", @"")
+								   title:NSLocalizedString(@"Cannot Select Pagelet From This Page",@"alert title (capitalized)")
+								  format:NSLocalizedString(@"The item you clicked on, %@, is copied from %@. Please select that page to edit this pagelet.",@""),
+					desc, containingPageDescription]
+					selectOwnerPageAndPageletRetainedElement:((DOMHTMLElement *)[pageletElement retain])];
+				
+				//				[KTSilencingConfirmSheet alertWithWindow:[self window]
+				//											silencingKey:@"ShutUpCantSelect"
+				//													 title:NSLocalizedString(@"Cannot Select Pagelet from This Page", @"")
+				//													format:NSLocalizedString(@"The item you clicked on, %@, is copied from an enclosing container page, %@%@%@. Please select that page to edit this pagelet.",@""), desc, leftDoubleQuote, containingPageTitleText, rightDoubleQuote];
+			}
+		}
+		else	// clicked somewhere else ...
+		{
+			[[self webViewController] setSelectedPageletHTMLElement:nil];	// not a pagelet, deselect any pagelet
+			[self setSelectedPagelet:nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:[[self siteOutlineController] selectedPage]];
+
+			//DOMHTMLElement *node = [aNode firstSelectableParentNode];
+			OFF((@"Clicked in this node:%@", ([node respondsToSelector:@selector(outerHTML)] ? [node outerHTML] : node) ));
+
+			// see if we need to clear the inlineImage inspector
+			if ( nil != [self selectedInlineImageElement]
+				 && [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] currentSelection] 
+					isEqual:[self selectedInlineImageElement]] )
+			{
+				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
+																	object:[[self selectedInlineImageElement] page]];			
+			}
+			else
+			{
+
+			}
+		}
+	}
+}
+
+
+
+/*!	This is my own delegate method for dealing with a DOUBLE click.
+	For editing a chunk of Raw HTML.
+
+	Will this get the single click message too?  What happens if link panel is visible?
+
+Note that this method is called AFTER the webview handles the click.
+*/
+- (void)webView:(WebView *)sender doubleClickAtCoordinates:(NSPoint)aPoint modifierFlags:(unsigned int)modifierFlags
+{
+	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
+	
+	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
+	
+	// only process if we didn't click in editable text or a text field/text area
+	if ( ![self isEditableElement:selectedNode] && ![[aNode nodeName] isEqualToString:@"TEXTAREA"]  && ![[aNode nodeName] isEqualToString:@"INPUT"] )
+	{
+		// Now see if this is a click anywhere in a pagelet
+		DOMHTMLElement *htmlElementElement = [self elementOfClass:@"HTMLElement" enclosing:aNode];
+
+		if (nil != htmlElementElement)
+		{
+			NSString *divID = [htmlElementElement idName];
+			
+			divID = [[divID componentsSeparatedByString:@"-"] lastObject];
+			
+			// Fetch the pagelet object
+			// peform fetch
+			NSManagedObjectContext *context = [[self document] managedObjectContext];
+			NSError *fetchError = nil;
+			NSArray *fetchedObjects = [context objectsWithEntityName:@"Element"
+														   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
+															   error:&fetchError];	
+			// extract result
+			if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+			{
+				KTElement *foundKTElement = [fetchedObjects objectAtIndex:0];
+				[[self document] editKTHTMLElement:foundKTElement];
+			}
+		}
+		else
+		{
+			// Now see if this is a click anywhere in a pagelet
+			DOMHTMLElement *pageletElement = [self pageletElementEnclosing:aNode];
+			
+			if (nil != pageletElement)	// show inspector
+			{
+				[self showInfo:YES];
+			}
+		}
+	}
+}
+
+- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractPlugin *)aContainer
+{
+	if (aNode && [aNode isKindOfClass:[DOMHTMLImageElement class]])
+	{
+		// Ignore non svxmedia:// URLs
+		NSString *src = [(DOMHTMLImageElement *)aNode src];
+		if (src)
+		{
+			NSURL *URL = [NSURL URLWithString:src];
+			if ([[URL scheme] isEqualToString:@"svxmedia"])
+			{
+				KTInlineImageElement *element = [[self webViewController] inlineImageElementForNode:(DOMHTMLImageElement *)aNode
+																						  container:aContainer];
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:element];
+			}
+		}
+	}
+}
+
+/*!	Open up editor window.	I may want to have a menu action for dealing with this so we don't need a double-click,
+but the only trick is -- how to display a highlight?
+*/
+
+- (WebView *)webView:(WebView *)sender createWebViewWithRequest:(NSURLRequest *)request
+{
+	return nil;
+}
+
+- (void)webViewShow:(WebView *)sender
+{
+}
+
+
+
+- (void)webView:(WebView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(unsigned int)modifierFlags
+{
+	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
+	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
+
+	NSString *title = [elementInformation valueForKey:WebElementLinkTitleKey];
+	NSString *altText = [elementInformation valueForKey:WebElementImageAltStringKey];
+	NSURL *URL = [elementInformation valueForKey:WebElementLinkURLKey];
+
+	if ( (nil != title) && ![title isEqualToString:@""] )
+	{
+		[self setStatusField:title];
+	}
+	else if ( nil != URL )
+	{
+		NSString *urlString = @"";
+		if ([[URL scheme] isEqualToString:@"applewebdata"])
+		{
+			KTPage *linkedPage = [[self document] pageForURLPath:[URL path]];
+			if (nil != linkedPage)
+			{
+				if ( [linkedPage isRoot] )
+				{
+					urlString = NSLocalizedString(@"Home", "Home Page");
+				}
+				else
+				{
+					urlString = [linkedPage titleText];
+				}
+			}
+			else
+			{
+				urlString = [[URL path] lastPathComponent];
+			}
+		}
+		else
+		{
+			urlString = [URL absoluteString];
+		}
+		if ( [[URL scheme] isEqualToString:@"mailto"] )
+		{
+			[self setStatusField:urlString];
+		}
+		else if ( [[URL scheme] isEqualToString:@"media"] )
+		{
+			[self setStatusField:NSLocalizedString(@"On published site, clicking on image will view full-size image",@"")];
+		}
+		else
+		{
+			[self setStatusField:[NSString stringWithFormat:@"%@ %@%@%@", NSLocalizedString(@"Go to", "Go to (followed by URL)"), leftDoubleQuote, urlString, rightDoubleQuote]];
+		}
+	}
+	else if ( (nil != altText) && ![altText isEqualToString:@""] )
+	{
+		[self setStatusField:[NSString stringWithFormat:@"%@ %@%@%@", NSLocalizedString(@"Image ", "Image "), leftDoubleQuote, altText, rightDoubleQuote]];
+	}
+	else
+	{
+		[self setStatusField:@""];
+	}
+}
+
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)elementInformation defaultMenuItems:(NSArray *)defaultMenuItems
+{
+	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
+	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
+
+	NSMutableArray *array = [NSMutableArray array];
+	
+	OFF((@"element ctrl-clicked on: %@", elementInformation));
+		
+	// context has changed, first update base info
+	[self setContextElementInformation:[[elementInformation mutableCopy] autorelease]];
+	
+	BOOL elementIsSelected = [[elementInformation valueForKey:WebElementIsSelectedKey] boolValue];
+	
+	if ( nil != [elementInformation valueForKey:@"WebElementDOMNode"] )
+	{
+		DOMNode *node = [elementInformation valueForKey:@"WebElementDOMNode"];
+		DOMHTMLElement *selectedNode = [node firstSelectableParentNode];
+		
+		// first, if the element is editable and linkable, add a Create/Edit Link... item
+		if ( elementIsSelected
+			 && [self isEditableElement:selectedNode]
+			 && [DOMNode isLinkableFromDOMNodeClass:[selectedNode className]] )
+		{
+			// add selectedDOMRange to elementInformation
+			NSMutableDictionary *elementDictionary = [NSMutableDictionary dictionaryWithDictionary:[self contextElementInformation]];
+			
+			DOMRange *selectedDOMRange = [oWebView selectedDOMRange];
+			if ( nil != selectedDOMRange )
+			{
+				[elementDictionary setObject:selectedDOMRange forKey:KTSelectedDOMRangeKey];
+			}
+			else
+			{
+				// selectedDOMRange will be nil when a pre-existing link is ctrl-clicked
+				// without making a selection. in that case, assume we want to work on the entire node
+				DOMDocument *document = [[selectedDOMRange startContainer] ownerDocument];
+				DOMRange *range = [document createRange];
+				[range selectNode:node];
+				[elementDictionary setObject:range forKey:KTSelectedDOMRangeKey];
+			}
+			
+			[self setContextElementInformation:[NSMutableDictionary dictionaryWithDictionary:elementDictionary]];
+			
+			// start with an Edit or Create link menuitem
+			if ( nil != [elementInformation objectForKey:@"WebElementLinkURL"] )
+			{
+				// the selection contains a link, so let's assume we want to edit it
+				NSMenuItem *editLinkItem = [[NSMenuItem alloc] initWithTitle:EDIT_LINK_MENUITEM_TITLE
+																	  action:@selector(performShowLinkPanel:)
+															   keyEquivalent:@""];
+				[editLinkItem setRepresentedObject:nil];
+				[editLinkItem setTarget:nil];
+				[array addObject:editLinkItem];
+				[editLinkItem release];
+			}
+			else
+			{
+				// no link included, maybe we want to add one
+				NSMenuItem *createLinkItem = [[NSMenuItem alloc] initWithTitle:CREATE_LINK_MENUITEM_TITLE
+																		action:@selector(performShowLinkPanel:)
+																 keyEquivalent:@""];
+				[createLinkItem setRepresentedObject:nil];
+				[createLinkItem setTarget:nil];
+				[array addObject:createLinkItem];
+				[createLinkItem release];
+			}
+		}
+		
+		// add Edit Raw HTML...
+		if ( ((nil == gRegistrationString) || gIsPro) 
+			 && (selectedNode == [[[self webViewController] currentTextEditingBlock] DOMNode]	// is this currently focused editable text?
+				 || [DOMNode isHTMLElementFromDOMNodeClass:[selectedNode className]] )
+			  )
+		{
+			NSString *title = NSLocalizedString(@"Edit Raw HTML...", "Edit Raw HTML... MenuItem");
+			NSMenuItem *editRawHTMLItem = [[NSMenuItem alloc] initWithTitle:title
+																	 action:@selector(editRawHTMLInSelectedBlock:) 
+															  keyEquivalent:@""];
+			
+			if ( nil == gRegistrationString )
+			{
+				[[KTAppDelegate sharedInstance] setMenuItemPro:editRawHTMLItem];
+			}
+			[editRawHTMLItem setRepresentedObject:nil];
+			[editRawHTMLItem setTarget:nil];
+			[array addObject:editRawHTMLItem];
+			[editRawHTMLItem release];
+		}
+		
+		// next, trim the default menu items to a reasonable set and add to menu
+		// if we're clicked on an Image, don't add any of the default menu
+		if ( elementIsSelected
+			 && ![node isKindOfClass:[DOMHTMLImageElement class]]
+			 && (nil != [self contextElementInformation]) )
+		{
+			NSMutableArray *copyOfDefaultMenuItems = [[defaultMenuItems mutableCopy] autorelease];
+			NSEnumerator *e = [defaultMenuItems objectEnumerator];
+			NSMenuItem *menuItem;
+			while ( menuItem = [e nextObject] )
+			{
+				BOOL shouldRemove = NO;
+				
+				NSString *actionString = NSStringFromSelector([menuItem action]);
+				if ( [actionString isEqualToString:@"reload:"] )
+				{
+					shouldRemove = YES;
+				}
+				else if ( [actionString isEqualToString:@"submenuAction:"] )
+				{
+					// remove all submenus except Spelling and Find
+					// this is a bit of a hack since it depends on string comparisons
+					NSString *spellingTitle = NSLocalizedString(@"Spelling", "Spelling MenuItem"); // must match WebKit's
+					NSString *findTitle = NSLocalizedString(@"Find", "Find MenuItem"); // must match WebKit's
+					if ( ![[menuItem title] isEqualToString:spellingTitle]
+						 && ![[menuItem title] isEqualToString:findTitle] )
+					{
+						shouldRemove = YES;
+					}
+				}
+				
+				if ( shouldRemove )
+				{
+					[copyOfDefaultMenuItems removeObject:menuItem];
+				}
+			}
+			if ( [copyOfDefaultMenuItems count] > 0 )
+			{
+				if ( [array count] > 0 )
+				{
+					[array addObject:[NSMenuItem separatorItem]];
+				}
+				[array addObjectsFromArray:copyOfDefaultMenuItems];
+			}
+		}
+		
+		// is element a pagelet?
+		KTPagelet *pagelet = [self pageletEnclosing:node];
+		if ( nil != pagelet )
+		{
+			if ( [array count] > 0 )
+			{
+				[array addObject:[NSMenuItem separatorItem]];
+			}
+			
+			KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+			if ( [[selectedPage valueForKeyPath:@"callouts"] containsObject:pagelet]
+				 || [[selectedPage valueForKeyPath:@"sidebars"] containsObject:pagelet])
+			{
+				[self setSelectedPagelet:pagelet];
+				
+				NSMenuItem *deletePageletItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Delete Pagelet", "Delete Pagelet MenuItem")
+																		   action:@selector(deletePagelets:)
+																	keyEquivalent:@""];
+				[deletePageletItem setRepresentedObject:nil];
+				[deletePageletItem setTarget:nil];
+				[array addObject:deletePageletItem];
+				[deletePageletItem release];
+				
+				// if on selectedPage's calloutsList, put up Move to Sidebar
+				NSMenuItem *moveMenuItem = nil;
+				if ( [[selectedPage valueForKeyPath:@"callouts"] containsObject:pagelet] 
+                     && [selectedPage includeSidebar] )
+				{
+					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Sidebar", "Move to Sidebar MenuItem")
+															  action:@selector(movePageletToSidebar:)
+													   keyEquivalent:@""];
+					[moveMenuItem setTarget:selectedPage];
+					[moveMenuItem setRepresentedObject:pagelet];
+				}
+				// else, if on selectedPage's sidebarsList, put up Move to Callout
+				else if ( [[selectedPage valueForKeyPath:@"sidebars"] containsObject:pagelet] 
+                          && [selectedPage includeCallout] )
+				{
+					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Callout", "Move to Callout MenuItem")
+															  action:@selector(movePageletToCallouts:)
+													   keyEquivalent:@""];
+					[moveMenuItem setTarget:selectedPage];
+					[moveMenuItem setRepresentedObject:pagelet];
+				}
+				if (nil != moveMenuItem)
+				{
+					[array addObject:moveMenuItem];
+					[moveMenuItem release];
+				}
+			}
+			else	// show in menu reason why pagelet can't be manipulated
+			{
+				KTPage *owningPage = [pagelet page];
+				
+				NSString *menuTitle = [owningPage isRoot]
+					? NSLocalizedString(@"Pagelet owned by home page",
+										@"menu item showing that pagelet canot be manipulated")
+					: [NSString stringWithFormat:NSLocalizedString(@"Pagelet owned by page %@%@%@",
+																   @"menu item showing that pagelet canot be manipulated"),
+						leftDoubleQuote, [owningPage titleText], rightDoubleQuote];
+				NSMenuItem *noOpPageletItem
+					= [[NSMenuItem alloc]
+						initWithTitle:menuTitle
+							   action:nil
+						keyEquivalent:@""];
+				[noOpPageletItem setRepresentedObject:nil];
+				[noOpPageletItem setTarget:nil];
+				[array addObject:noOpPageletItem];
+				[noOpPageletItem release];
+			}
+		}
+		
+		// See if it's summary
+		
+		if (selectedNode)
+		{
+			KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:selectedNode
+																				 webViewController:[self webViewController]];
+			
+			if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])
+			{
+				if ( [array count] > 0 )
+				{
+					[array addObject:[NSMenuItem separatorItem]];
+				}
+				KTPage *theSummarizedPage = [textBlock HTMLSourceObject];
+				
+				NSMenuItem *theSummaryMenuItem = nil;
+				SEL theAction;
+				NSString *menuTitle = nil;
+				if ([theSummarizedPage customSummaryHTML])
+				{
+					menuTitle = NSLocalizedString(@"Remove Custom Summary of Page...",@"contextual menu item");
+					theAction = @selector(unOverrideSummary:);
+				}
+				else
+				{
+					menuTitle = NSLocalizedString(@"Custom Summary for Index",@"contextual menu item");
+					theAction = @selector(overrideSummary:);
+				}
+				theSummaryMenuItem = [[NSMenuItem alloc] initWithTitle:menuTitle
+																action:theAction
+														 keyEquivalent:@""];
+				[theSummaryMenuItem setRepresentedObject:theSummarizedPage];
+				[theSummaryMenuItem setTarget:textBlock];
+				[array addObject:theSummaryMenuItem];
+				[theSummaryMenuItem release];
+			}
+		}
+	}	
+	
+	if (0 == [array count])
+	{
+		return nil;	// NO element so just return nil -- prevent exception case 9144
+	}
+	return [NSArray arrayWithArray:array];
+}
+
+
+
+
+
+/*!
+@method webView:willPerformDragDestinationAction:forDraggingInfo:
+ @abstract Informs that WebView will perform a drag destination action
+ @param webView The WebView sending the delegate method
+ @param action The drag destination action
+ @param draggingInfo The dragging info of the drag
+ @discussion This method is called after the last call to webView:dragDestinationActionMaskForDraggingInfo: after something is dropped on a WebView.
+ This method informs the UI delegate of the drag destination action that WebView will perform.
+ */
+- (void)webView:(WebView *)inWebView
+willPerformDragDestinationAction:(WebDragDestinationAction)action
+forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+{
+	DJW((@"%@, %d %@", NSStringFromSelector(_cmd), action, draggingInfo));
+	
+	// Dragging location is in window coordinates.
+	// location is converted to webview coordinates
+	NSPoint location = [oWebView convertPoint:[draggingInfo draggingLocation] fromView:nil];
+	NSDictionary *item = [oWebView elementAtPoint:location];
+	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
+	
+	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
+	if (nil != selectedNode  && nil == [[[self webViewController] currentTextEditingBlock] DOMNode])	// avoid calling this again if we already have a selection since that clones the contents
+	{
+		[[self webViewController] setEditingPropertiesFromSelectedNode:selectedNode];
+	}
+	else
+	{
+		OFF((@"Unable to find selectable node enclosing %@", aNode));
+	}
+}
+
+- (void)webView:(WebView *)sender willPerformDragSourceAction:(WebDragSourceAction)action
+	  fromPoint:(NSPoint)point
+ withPasteboard:(NSPasteboard *)pasteboard
+{
+	OFF((@"%@, %d %@", NSStringFromSelector(_cmd), action, NSStringFromPoint(point)));
+}
+
+- (unsigned)webView:(WebView *)inWebView dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+{
+	OFF((@"%@, %@", NSStringFromSelector(_cmd), draggingInfo));	// caution logging -- it's called a lot!
+	return WebDragDestinationActionAny;
+}
+
+- (unsigned)webView:(WebView *)inWebView dragSourceActionMaskForPoint:(NSPoint)inPoint
+{
+	DJW((@"%@ %@", NSStringFromSelector(_cmd), NSStringFromPoint(inPoint)));
+	return WebDragSourceActionAny;
+}
+
+#pragma mark -
+#pragma mark WebUIDelegate - Support
+
+/*!	Find the node, if any, that has a class of "pagelet" in its class name
+
+class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
+*/
+
+
+- (DOMHTMLElement *)elementOfClass:(NSString *)aDesiredClass enclosing:(DOMNode *)aNode;
+{
+	DOMHTMLElement *foundDiv = nil;
+	
+	if ([aNode isKindOfClass:[DOMCharacterData class]])
+	{
+		aNode = [aNode parentNode];	// get up to the element
+	}
+	while (nil != aNode && [aNode isKindOfClass:[DOMHTMLElement class]] && ![aNode isKindOfClass:[DOMHTMLBodyElement class]])
+	{
+		if (nil == foundDiv)
+		{
+			NSString *theClass = [aNode className];
+			NSArray *classes = [theClass componentsSeparatedByWhitespace];
+			if ([classes containsObject:aDesiredClass])
+			{
+				foundDiv = (DOMHTMLElement *)aNode;				  // save for later
+				break;
+			}
+		}
+		// Now continue up the chain to the parent.
+		aNode = [aNode parentNode];
+	}
+	return foundDiv;
+}
+
+- (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;
+{
+	return [self elementOfClass:@"pagelet" enclosing:aNode];
+}
+
+- (KTPagelet *)pageletEnclosing:(DOMNode *)aNode;
+{
+	KTPagelet *result = nil;
+	DOMHTMLElement *foundDiv = [self pageletElementEnclosing:aNode];
+	
+	if (nil != foundDiv)
+	{
+		NSString *divID = [foundDiv idName];
+		
+		// NB: we expect a 1 character prefix on divID (the pagelet DIV)
+		// which we have to strip before passing to Core Data
+		// pagelet DIVs are built from the various pagelet templates
+		divID = [divID substringFromIndex:2];
+		
+		// Fetch the pagelet object
+		// peform fetch
+		NSManagedObjectContext *context = [[self document] managedObjectContext];
+		NSError *fetchError = nil;
+		NSArray *fetchedObjects = [context objectsWithEntityName:@"Pagelet"
+													   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
+														   error:&fetchError];	
+		// extract result
+		if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+		{
+			result = [fetchedObjects objectAtIndex:0];
+		}
+	}
+	return result;
+}
+
+
+#pragma mark in-line link editor methods
+
+- (NSWindow *)linkPanel { return oLinkPanel; }
+
+- (void)linkPanelDidLoad
+{
+	[oLinkView setDelegate:self];
+	// tweak the look
+	[oLinkControlsBox setDrawsGradientBackground:NO];
+	//[oLinkControlsBox setGradientStartColor:[NSColor colorWithCalibratedWhite:0.92 alpha:1.0]];
+	//[oLinkControlsBox setGradientEndColor:[NSColor colorWithCalibratedWhite:0.82 alpha:1.0]];
+	[oLinkControlsBox setBackgroundColor:[NSColor colorWithCalibratedWhite:0.95 alpha:1.0]];
+	[oLinkControlsBox setBorderColor:[NSColor lightGrayColor]];
+	[oLinkControlsBox setTitleColor:[NSColor whiteColor]];
+	[oLinkControlsBox setDrawsFullTitleBar:NO];
+	[oLinkControlsBox setBorderWidth:1.0];
+	
+	[[oLinkControlsBox window] setDelegate:self];
+}
+
+- (id)userInfoForLinkSource:(KTLinkSourceView *)link
+{
+	return [self document];
+}
+
+- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
+{
+	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardType] owner:self];
+	[pboard setString:@"LocalLink" forType:kKTLocalLinkPboardType];
+	
+	return pboard;
+}
+
+- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
+{
+	NSDictionary *info = [self contextElementInformation];
+	if (info)
+	{
+		// set up a link to the local page
+		NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
+		if ( (pageID != nil) && ![pageID isEqualToString:@""] )
+		{
+			KTPage *target = [[[self document] managedObjectContext] pageWithUniqueID:pageID];
+			if ( nil != target )
+			{
+				NSString *titleText = [target titleText];
+				if ( (nil != titleText) && ![titleText isEqualToString:@""] )
+				{
+					[oLinkLocalPageField setStringValue:titleText];
+					[oLinkDestinationField setStringValue:@""];
+					[oLinkLocalPageField setHidden:NO];
+					[oLinkDestinationField setHidden:YES];
+					
+					[info setValue:[NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID] forKey:@"KTLocalLink"];
+					[oLinkView setConnected:YES];
+					
+				}
+			}
+		}
+	}
+	//	NO, DON'T CLOSE THE LINK PANEL WHEN YOU DRAG.	[oLinkPanel orderOut:self];
+}
+
+- (IBAction)performShowLinkPanel:(id)sender
+{
+	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0];
+}
+
+- (IBAction)showLinkPanel:(id)sender
+{
+	BOOL localLink = NO;		// override if it's a local link
+	NSString *theLinkString = nil;
+	
+	[oLinkOpenInNewWindowSwitch setState:NSOffState];
+	
+	// populate with context information
+	NSDictionary *info = [[self contextElementInformation] retain];
+	if ( nil != info )
+	{
+		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
+		DOMRange *selectedRange = [oWebView selectedDOMRange];
+		
+		// set oLinkDestinationField
+		NSURL *URL = [info objectForKey:WebElementLinkURLKey];
+		
+		if ( nil != URL )
+		{
+			theLinkString = [URL absoluteString];
+			if ([theLinkString hasPrefix:@"applewebdata:"])
+			{
+				theLinkString = [theLinkString lastPathComponent];
+				// some absolute page link.	 Restore the leading slash
+				theLinkString = [@"/" stringByAppendingString:theLinkString];
+			}
+			NSRange wherePageID = [theLinkString rangeOfString:kKTPageIDDesignator];
+			if (NSNotFound != wherePageID.location)
+			{
+				[info setValue:[theLinkString lastPathComponent] forKey:@"KTLocalLink"]; // mark as local link so we preserve it
+				NSString *uid = [theLinkString substringFromIndex:NSMaxRange(wherePageID)];
+				KTPage *targetPage = [[[self document] managedObjectContext] pageWithUniqueID:uid];
+				theLinkString = [targetPage titleText];
+				localLink = YES;
+			}
+		}
+		else if ( nil != node )
+		{
+			// examine selectedRange for an e-mail address
+			NSString *string = [selectedRange toString];
+			if ( [string isValidEmailAddress] )
+			{
+				theLinkString = [NSString stringWithFormat:@"mailto:%@", string];
+			}
+			else
+			{
+				// Try to populate from frontmost Safari URL
+				NSURL *safariURL = nil;
+				NSString *safariTitle = nil;	// someday, we could populate the link title as well!
+				[NSAppleScript getWebBrowserURL:&safariURL title:&safariTitle source:nil];
+				if (safariURL)
+				{
+					theLinkString = [safariURL absoluteString];
+				}
+			}
+		}
+		
+		[oLinkView setConnected:(nil != theLinkString)];
+		
+		if (nil == theLinkString)
+		{
+			theLinkString = @"";
+		}
+		if (localLink)
+		{
+			[oLinkLocalPageField setStringValue:theLinkString];
+			[oLinkDestinationField setStringValue:@""];
+		}
+		else
+		{
+			[oLinkLocalPageField setStringValue:@""];
+			[oLinkDestinationField setStringValue:[theLinkString urlDecode]];
+		}
+		[oLinkLocalPageField setHidden:!localLink];
+		[oLinkDestinationField setHidden:localLink];
+		
+		// set oLinkOpenInNewWindowSwitch
+		if ( nil != [info objectForKey:WebElementDOMNodeKey] )
+		{
+			DOMNode *parentNode = [(DOMNode *)[info objectForKey:WebElementDOMNodeKey] parentNode];
+			if ( [parentNode isKindOfClass:[DOMHTMLAnchorElement class]] )
+			{
+				NSString *target = [(DOMHTMLAnchorElement *)parentNode target];
+				if ( [target isEqualToString:@"_blank"] )
+				{
+					[oLinkOpenInNewWindowSwitch setState:NSOnState];
+				}
+			}
+		}
+		
+		// set top left corner of window to top of selectedTextRect in screen coordinates
+		NSPoint topLeftCorner = [self linkPanelTopLeftPointForSelectionRect:mySelectionRect];
+		NSPoint convertedWindowOrigin = [[oWebView window] convertBaseToScreen:topLeftCorner];
+		[oLinkPanel setFrameTopLeftPoint:convertedWindowOrigin];
+		
+		// make it a child window, set focus on the link, and display
+		[[oWebView window] addChildWindow:oLinkPanel ordered:NSWindowAbove];
+		[oLinkPanel makeKeyAndOrderFront:nil]; // we do makeKey so that textfield gets focus
+	}
+	else
+	{
+		NSLog(@"Unable to show link panel; reselect text in Web View.");
+	}
+	[info release];
+}
+
+- (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange
+{
+	// find the common ancestor
+	DOMNode *ancestor = [selectedRange commonAncestorContainer];
+	// examine its children for anchor elements
+	NSMutableArray *anchors = [NSMutableArray arrayWithArray:[ancestor anchorElements]];
+	// if the ancestor has no anchors, see if its parent is an anchor
+	if ( (nil != anchors) && ([anchors count] == 0) )
+	{
+		DOMNode *ancestorParent = [ancestor parentNode];
+		if ( [ancestorParent isKindOfClass:[DOMHTMLAnchorElement class]] )
+		{
+			[anchors addObject:ancestorParent];
+		}
+	}
+	// if more than 1, you have a contextual menu problem, there should never be more than 1
+	if ( (nil != anchors) && ([anchors count] == 1) )
+	{
+		// have the anchor's parent replace the anchor with the anchor's child
+		DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
+		DOMNode *anchorParent = [anchor parentNode];
+		if ( [anchor hasChildNodes] )
+		{
+			DOMNode *child = [anchor firstChild];
+			
+			[[DOMNode class] node:anchorParent replaceChild:child :anchor];
+		}
+		else
+		{
+			// not sure how it would be selectable without child text...
+			[[DOMNode class] node:anchorParent removeChild:anchor];
+		}
+		return NSLocalizedString(@"Remove Link","ActionName: Remove Link");
+	}
+	else
+	{
+		DJW((@"selectedRange of anchor has more than one anchor, ignoring..."));
+		return nil;
+	}
+}
+
+- (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element openLinkInNewWindow:(BOOL)openLinkInNewWindow
+{
+	// there is an anchor in play, find it and set its href
+	DOMHTMLAnchorElement *anchor = [element immediateContainerOfClass:[DOMHTMLAnchorElement class]];
+	if ( nil != anchor )
+	{
+		NSString *target = nil;
+		
+		// Should the link be opened in a new window? It depends on what the user sets, plus if the destination page chooses to override it.
+		BOOL targetPageDemandsNewWindow = NO;
+		id targetPageDelegate = [[[self document] pageForURLPath:newLink] delegate];
+		if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)]) {
+			targetPageDemandsNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
+		}
+		
+		if (targetPageDemandsNewWindow || openLinkInNewWindow )
+		{
+			target = @"_blank";
+		}
+		[[DOMHTMLAnchorElement class] element:anchor setHref:newLink target:target];
+		return NSLocalizedString(@"Edit Link","ActionName: Remove Link");
+	}
+	else
+	{
+		DJW((@"unable to locate parent anchor for node: %@", element));
+		return nil;
+	}
+}
+
+// need to save off URL from drag and not call this until inside finish
+
+- (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow
+{
+	NSUndoManager *undoManager = [[[self webViewController] webView] undoManager];
+	
+	// we seem to need retains here to prevent zombies after manipulating the DOM
+	// pull out the selection and its nodes
+	[selectedRange retain];
+	DOMNode *commonAncestorContainer = [[selectedRange commonAncestorContainer] retain];
+	
+	// during undo, we need to replace at the parent of the parent level in case
+	// extractContents chops up the commonAncestorContainer
+	DOMNode *ancestorParent = [[commonAncestorContainer parentNode] retain];
+	OBASSERT(nil != ancestorParent);
+	DOMNode *ancestorParentsParent = [[ancestorParent parentNode] retain];
+	OBASSERT(nil != ancestorParentsParent);
+	
+	// clone the ancestor's parent for undo
+	DOMNode *clonedParent = [[ancestorParent cloneNode:YES] retain]; // YES means deep copy
+	OBASSERT(nil != clonedParent);
+	
+	// fire up a new anchor
+	DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[commonAncestorContainer ownerDocument] createElement:@"a"];
+	[anchor setHref:link];
+	
+	// Should the link be opened in a new window? It depends on what the user sets, plus if the destination page chooses to override it.
+	BOOL targetPageDemandsNewWindow = NO;
+	id targetPageDelegate = [[[self document] pageForURLPath:link] delegate];
+	if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)]) {
+		targetPageDemandsNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
+	}
+	
+	
+	if (targetPageDemandsNewWindow || openLinkInNewWindow)
+	{
+		[anchor setTarget:@"_blank"];
+	}
+	else
+	{
+		[anchor setTarget:nil];
+	}
+	
+	[anchor retain];
+	
+	// surrond the selectedRange with the new anchor
+	
+	// the DOMRange method -surroundContents is almost exactly what we need but is not undoable
+	
+	// how do we implement -surroundContents so that it is undoable?
+	// here's what surroundContents does in C++
+	//  extactContents into a fragment
+	//  inserts new parent
+	//  appends fragment to new parent
+	//  selects new parent
+	
+	// so let's try it...
+	// extract the contents
+	DOMDocumentFragment *contents = [selectedRange extractContents];
+	
+	// insert anchor
+	[selectedRange insertNode:anchor];
+	
+	// remove any anchors from extracted contents
+	[contents removeAnyDescendentElementsNamed:@"A"];
+	
+	// surround cloned contents with new anchor
+	[anchor appendChildren:[contents childNodes]];
+	
+	// fix the selection
+	[selectedRange selectNode:anchor];
+	
+	// our undo strategy: ancestorParentsParent will swap the clonedParent for the ancestorParent
+	// (the underlying NSInvocation this creates should retain the nodes passed in)
+	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:[ancestorParent parentNode] 
+													   replaceChild:clonedParent 
+																   :ancestorParent];
+	
+	[anchor release];
+	[clonedParent release];
+	[ancestorParentsParent release];
+	[ancestorParent release];
+	[commonAncestorContainer release];
+	[selectedRange release];
+	
+	return NSLocalizedString(@"Add Link","Action Name: Add Link");
+	
+}	
+
+// paste some raw HTML
+- (IBAction)pasteLink:(id)sender
+{
+	//    NSString *markup = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+	//    [oWebView replaceSelectionWithMarkupString:markup ? markup : @""];
+	
+	DOMRange *selectedRange = [oWebView selectedDOMRange];
+	BOOL emptySel = ([selectedRange startOffset] == [selectedRange endOffset]);
+	
+	NSArray *urls = nil;
+	NSArray *titles = nil;
+	[NSURL getURLs:&urls andTitles:&titles fromPasteboard:[NSPasteboard generalPasteboard]];
+	if ([urls count])
+	{
+		NSURL *url = [urls objectAtIndex:0];
+		NSString *title = nil;
+		if ([titles count] && [NSNull null] != [titles objectAtIndex:0])
+		{
+			title = [titles objectAtIndex:0];	// real string to replce text
+		}
+		if (emptySel && nil == title)
+		{
+			// we need to generate a title, so use the host.
+			title = [url host];
+		}
+		
+		if (emptySel)	// insert link and title
+		{
+			NSLog(@"Inserting %@ with text %@ --- NEED TO MAKE TEXT LINKED", url, title);
+			
+			NSString *undoActionName = [self createLink:[url absoluteString] withDOMRange:selectedRange openLinkInNewWindow:NO];
+
+			[[[[self webViewController] webView] undoManager] setActionName:undoActionName];
+		}
+	
+	// update webview to reflect node changes
+	//[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:oWebView];	
+
+		else	// not empty selection -- just link the existing text.
+		{
+			// (In theory, I could replace text with title if title != nil....)
+			
+			NSLog(@"Need to link selected text to %@", url);
+			
+		}
+	}
+}
+
+- (IBAction) clearLinkDestination:(id)sender;
+{
+	[oLinkLocalPageField setStringValue:@""];
+	[oLinkDestinationField setStringValue:@""];
+	[oLinkLocalPageField setHidden:YES];
+	[oLinkDestinationField setHidden:NO];
+	[oLinkView setConnected:NO];
+	NSMutableDictionary *info = [self contextElementInformation];
+	[info removeObjectForKey:@"KTLocalLink"];
+}
+
+
+- (void)closeLinkPanel
+{
+	[[oWebView window] removeChildWindow:oLinkPanel];
+	[oLinkPanel close];
+}
+
+- (IBAction)finishLinkPanel:(id)sender
+{
+	NSString *undoActionName = nil;
+	
+	// per Graham, check/set flag to stop recursion
+	// due to selectionDidChange: calling back into createLink:
+	if ( myIsLinkPanelClosing )
+	{
+		return;
+	}
+	myIsLinkPanelClosing = YES;
+	
+	@try
+	{
+		// grab our element info
+		NSDictionary *info = [self contextElementInformation];
+		NSAssert((nil != info), @"contextElementInformation cannot be nil!");
+		
+		// have we set up a local link?
+		if ( nil != [info valueForKey:@"KTLocalLink"] )
+		{
+			if ( nil != [info valueForKey:WebElementLinkURLKey] )
+			{
+				undoActionName = [self editLink:[info valueForKey:@"KTLocalLink"] withDOMNode:[info objectForKey:WebElementDOMNodeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+			}
+			else
+			{
+				undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] withDOMRange:[info objectForKey:KTSelectedDOMRangeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+			}
+		}
+		else
+		{
+			NSString *value = [[oLinkDestinationField stringValue] trimFirstLine];
+			value = [[value stringWithValidURLScheme]  trimFirstLine];
+			
+			if ( [value isEqualToString:@""]
+				 || [value isEqualToString:@"http://"]
+				 || [value isEqualToString:@"https://"]
+				 || [value isEqualToString:@"ftp://"]
+				 || [value isEqualToString:@"mailto:"] )
+			{
+				// empty field, remove the link
+				if ( nil != [info objectForKey:WebElementLinkURLKey] )
+				{
+					undoActionName = [self removeLinkWithDOMRange:[info objectForKey:KTSelectedDOMRangeKey]];
+				}
+			}
+			else
+			{
+				// check URL and refuse to close if not valid.  We call the delegate method to test value.
+				if (![self control:oLinkDestinationField textShouldEndEditing:nil])
+				{
+					NSBeep();
+					NSLog(@"refusing to end editing");
+					return;
+				}
+				
+				// not empty, is there already an anchor in play?
+				if ( nil != [info objectForKey:WebElementLinkURLKey] )
+				{
+					undoActionName = [self editLink:value withDOMNode:[info objectForKey:WebElementDOMNodeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+				}
+				else
+				{
+					undoActionName = [self createLink:value withDOMRange:[info objectForKey:KTSelectedDOMRangeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+				}
+			}
+		}
+
+		// update webview to reflect node changes
+		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:oWebView];	
+		[self setContextElementInformation:nil];
+		
+		// label undo last
+		if ( nil != undoActionName )
+		{
+			[[[[self webViewController] webView] undoManager] setActionName:undoActionName];
+		}
+	}
+	@finally
+	{
+		// hide link panel
+		[self closeLinkPanel];
+		myIsLinkPanelClosing = NO;
+	}
+}
+
+- (NSPoint)linkPanelTopLeftPointForSelectionRect:(NSRect)aSelectionRect
+{
+	NSWindow *window = [self window];
+	NSScreen *screen  = [window screen];
+	NSRect visibleFrame = [screen visibleFrame];
+	
+	float padding = 30; // eyeball
+	float linkPanelWidth = 356; // from nib
+	float linkPanelHeight = 101; // from nib
+	float windowWidth = [window frame].size.width;
+	
+	float linkPanelOriginX;
+	float linkPanelOriginY;
+	if ( mySelectionRect.size.width > 0 )
+	{
+		if ( (mySelectionRect.origin.x + linkPanelWidth) > windowWidth )
+		{
+			linkPanelOriginX = windowWidth - linkPanelWidth - padding;
+		}
+		else
+		{
+			linkPanelOriginX = mySelectionRect.origin.x;
+		}
+		linkPanelOriginY = mySelectionRect.origin.y;
+	}
+	else
+	{
+		if ( (myLastClickedPoint.x + linkPanelWidth) > windowWidth )
+		{
+			linkPanelOriginX = windowWidth - linkPanelWidth - padding;
+		}
+		else
+		{
+			linkPanelOriginX = myLastClickedPoint.x;
+		}
+		linkPanelOriginY = myLastClickedPoint.y;
+	}
+	
+	// keep it within the visibleFrame
+	NSPoint linkPanelOrigin = NSMakePoint(linkPanelOriginX,linkPanelOriginY);
+	
+	NSPoint linkPanelOriginInScreen = [window convertBaseToScreen:NSMakePoint(linkPanelOriginX,linkPanelOriginY)];
+	float linkPanelOriginXInScreen = linkPanelOriginInScreen.x;
+	float linkPanelOriginYInScreen = linkPanelOriginInScreen.y;
+	
+	if ( (linkPanelOriginXInScreen + linkPanelWidth) > visibleFrame.size.width )
+	{
+		linkPanelOriginXInScreen = (visibleFrame.size.width - linkPanelWidth);
+		linkPanelOriginInScreen = NSMakePoint(linkPanelOriginXInScreen,linkPanelOriginYInScreen);
+		linkPanelOrigin = [window convertScreenToBase:linkPanelOriginInScreen];
+	}
+	
+	if ( linkPanelOriginXInScreen < visibleFrame.origin.x )
+	{
+		linkPanelOriginXInScreen = visibleFrame.origin.x;
+		linkPanelOriginInScreen = NSMakePoint(linkPanelOriginXInScreen,linkPanelOriginYInScreen);
+		linkPanelOrigin = [window convertScreenToBase:linkPanelOriginInScreen];
+	}
+	
+	if ( (linkPanelOriginYInScreen - linkPanelHeight) < visibleFrame.origin.y )
+	{
+		linkPanelOriginYInScreen = linkPanelOriginYInScreen + linkPanelHeight + aSelectionRect.size.height;
+		linkPanelOriginInScreen = NSMakePoint(linkPanelOriginXInScreen,linkPanelOriginYInScreen);
+		linkPanelOrigin = [window convertScreenToBase:linkPanelOriginInScreen];
+	}
+	
+	return linkPanelOrigin; // in flipped coordinates
+}
+
+- (void)windowDidEscape:(NSWindow *)aWindow
+{
+	if ( aWindow == oLinkPanel )
+	{
+		// escape was pressed, close link panel without accepting changes
+		[self closeLinkPanel];
+	}
+}
+
+/*! accepts drop of WebURLsWithTitlesPboardType and NSURLPboardType, in that order */
+- (BOOL)acceptDropOfURLsFromDraggingInfo:(id <NSDraggingInfo>)sender
+{
+	NSString *URLAsString = nil;
+	NSString *title = nil;
+	
+	NSPasteboard *pboard = [sender draggingPasteboard];
+	
+	if ( [[pboard types] containsObject:@"WebURLsWithTitlesPboardType"] )
+	{
+		NSArray *URLsWithTitles = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+		if	( [URLsWithTitles count] > 0 )
+		{
+			NSArray *URLsAsStrings = [URLsWithTitles objectAtIndex:0];
+			NSArray *titles = [URLsWithTitles objectAtIndex:1];
+			
+			// we're only taking the first one
+			/// These two were just blindly calling objectAtIndex:0 and getting an exception sometimes
+			URLAsString = [URLsAsStrings firstObjectOrNilIfEmpty];
+			title = [titles firstObjectOrNilIfEmpty];
+		}
+	}
+	else if ( [[pboard types] containsObject:NSURLPboardType] )
+	{
+		NSURL *url = [NSURL URLFromPasteboard:pboard];
+		URLAsString = [url absoluteString];
+	}
+	
+	if ( (nil == URLAsString) || [URLAsString isEqualToString:@""] )
+	{
+		// we didn't find a useable URL string, not much we can do, bail
+		NSBeep();
+		NSLog(@"we didn't find a useable URL string");
+		return NO;
+	}
+	
+	NSURL *theURL = [NSURL URLWithString:[URLAsString encodeLegally]];
+	// filter out file:// URLs ... let webview handle it and insert any images
+	if ( [[theURL scheme] isEqualToString:@"file"] )
+	{
+		DJW((@"dropping in a file: URL"));
+		return NO;
+	}
+
+	if ( [[theURL scheme] isEqualToString:@"applewebdata"] )
+	{
+		NSRange wherePageID = [URLAsString rangeOfString:kKTPageIDDesignator];
+		if (NSNotFound == wherePageID.location)
+		{
+			return NO;
+		}
+		URLAsString = [URLAsString substringFromIndex:wherePageID.location];	// new URL, just the page ID
+	}
+	
+	if ( (nil == title) || [title isEqualToString:@""] )
+	{
+		// if no title, set it to the body of the URL, no scheme
+		NSString *scheme = [theURL scheme];
+		if ( nil != scheme )
+		{
+			NSRange schemeRange = [URLAsString rangeOfString:scheme];
+			title = [URLAsString substringFromIndex:(schemeRange.length+1)];
+		}
+		else
+		{
+			title = URLAsString;
+		}
+	}
+	
+	// ok, at this point we should have some sort of useable url and title
+	
+	// figure out where we are in the WebHTMLView
+	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
+	NSView *documentView = [[[oWebView mainFrame] frameView] documentView];
+	NSAssert([documentView isKindOfClass:[WebHTMLView class]], @"documentView should be a WebHTMLView");
+	
+	// determine dragCaretDOMRange (DOMRange, of 0 length, where drop will go, between chars)
+	id bridge = [documentView _bridge];
+	DOMRange *dragCaretDOMRange = nil;
+	if ([bridge respondsToSelector:@selector(dragCaretDOMRange)])
+	{
+		dragCaretDOMRange = (DOMRange *)[bridge dragCaretDOMRange];
+	}
+	
+	// get our currently selected range
+	DOMRange *selectedDOMRange = [oWebView selectedDOMRange];
+	
+	// if selectedDOMRange is nil, insert a new text node at caretPosition
+	if ( nil == selectedDOMRange )
+	{
+		[self insertText:title href:URLAsString inRange:dragCaretDOMRange atPosition:[dragCaretDOMRange startOffset]];
+		[[[[self webViewController] webView] undoManager] setActionName:NSLocalizedString(@"Insert Link","Action Name: Insert Link")];
+		return YES;
+	}
+	
+	// no, we have a selection, do some range checking
+	short startToStart = [selectedDOMRange compareBoundaryPoints:DOM_START_TO_START :dragCaretDOMRange];
+	short endToEnd = [selectedDOMRange compareBoundaryPoints:DOM_END_TO_END :dragCaretDOMRange];
+	// -1 = A is before B
+	//	 1 = A is after B
+	
+	// if selectedDOMRange contains dragCaretDOMRange, change href of selection
+	if ( (startToStart == -1) && (endToEnd == 1) ) // this appears to be the correct answer via testing
+	{
+		[self insertHref:URLAsString inRange:selectedDOMRange];
+		// maybe change this if a link were already there?
+		[[[[self webViewController] webView] undoManager] setActionName:NSLocalizedString(@"Insert Link","Action Name: Insert Link")];
+		return YES;
+	}
+	
+	// otherwise, insert a new text node at caretPosition
+	else
+	{
+		long caretPosition = [dragCaretDOMRange startOffset];
+		[self insertText:title href:URLAsString inRange:dragCaretDOMRange atPosition:caretPosition];
+		[[[[self webViewController] webView] undoManager] setActionName:NSLocalizedString(@"Insert Link","Action Name: Insert Link")];
+		return YES;
+	}
+	
+	// shouldn't get here
+	return NO;
+}
+
+// these methods share a bunch of code with the link panel link creation and should be refactored
+
+- (void)insertHref:(NSString *)aURLAsString inRange:(DOMRange *)aRange
+{
+	OFF((@"insertHref:%@ inRange:%@", aURLAsString, aRange));
+	DOMNode *startNode = [aRange startContainer];
+	DOMNode *endNode = [aRange endContainer];
+	DOMNode *parentNode = [startNode parentNode];
+	
+	if ( [startNode isKindOfClass:[DOMText class]] )
+	{
+		// turn the selection into a new text node
+		DOMText *text = [[startNode ownerDocument] createTextNode:[aRange toString]];
+		
+		// fire up a new anchor with text
+		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[startNode ownerDocument] createElement:@"a"];
+		[anchor setHref:aURLAsString];
+		[anchor appendChild:text];				
+		
+		// chop the selection out of the range, alters both startNode and endNode
+		(void)[aRange extractContents];
+		
+		// insert anchor
+		if ( [startNode isEqual:endNode] )
+		{
+			// split the remainder at the start
+			DOMNode *split = [(DOMText *)startNode splitText:[aRange startOffset]];
+			
+			// add the new anchor before the split
+			[[DOMNode class] node:parentNode insertBefore:anchor :split];
+		}
+		else
+		{
+			// add anchor after startNode
+			DOMNode *nextSibling = [startNode nextSibling];
+			if ( nil != nextSibling )
+			{
+				[[DOMNode class] node:parentNode insertBefore:anchor :nextSibling];
+			}
+			else
+			{
+				[[DOMNode class] node:parentNode appendChild:anchor];
+			}
+		}
+	}	
+	else
+	{
+		NSBeep();
+		DJW((@"insertHref:inRange: DOMRange does not contain a useable DOMText!"));
+	}
+	
+}
+
+- (void)insertText:(NSString *)aTextString href:(NSString *)aURLAsString inRange:(DOMRange *)aRange atPosition:(long)aPosition
+{
+	OFF((@"insertText:%@ href:%@ inRange:%@ atPosition:%l", aTextString, aURLAsString, aRange, aPosition));
+	// make sure we're looking at a useable node
+	DOMNode *startNode = [aRange startContainer];
+	if ( [startNode respondsToSelector:@selector(splitText:)] )
+	{
+		// turn aTextString into a new text node
+		DOMText *text = [[startNode ownerDocument] createTextNode:aTextString];
+		
+		// fire up a new anchor with text
+		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[startNode ownerDocument] createElement:@"a"];
+		[anchor setHref:aURLAsString];
+		[anchor appendChild:text];
+		
+		// split the DOM at aPosition
+		DOMNode *split = [(DOMText *)startNode splitText:aPosition];
+		
+		// add the new anchor before the split
+		[[DOMNode class] node:[startNode parentNode] insertBefore:anchor :split];
+	}
+	else
+	{
+		NSBeep();
+		DJW((@"insertText:href:inRange:atPosition: DOMRange does not respond to splitText:!"));
+	}
+}
+
+@end
+

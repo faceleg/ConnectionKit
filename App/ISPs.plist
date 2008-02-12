@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>provider</key>			<string>Biophony Test Server</string>
+		<key>homePageURL</key>		<string>http://www.biophony.com/</string>
+		<key>setupURL</key>			<string>http://www.biophony.com/</string>
+		<key>hostName</key>			<string>test.biophony.com</string>
+		<key>regions</key>			<string>USA</string>
+		<key>docRoot</key>			<string></string>
+		<key>stemURL</key>			<string>http://test.biophony.com/</string>
+		<key>protocol</key>			<string>ftp</string>
+		<key>storageLimitMB</key>	<integer>0</integer>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>America Online, AOL</string>
+		<key>homePageURL</key>		<string>http://www.aol.com/</string>
+		<key>setupURL</key>			<string>http://www.aol.com/</string>
+		<key>hostName</key>			<string>ftp.aol.com</string>
+		<key>regions</key>			<string>USA</string>
+		<key>docRoot</key>			<string>www</string>
+		<key>stemURL</key>			<string>http://home.aol.com/?/</string>
+		<key>protocol</key>			<string>ftp</string>
+		<key>storageLimitMB</key>	<integer>0</integer>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>Pacific Bell, PacBell</string>
+		<key>homePageURL</key>		<string>http://www.pacbell.net/</string>
+		<key>setupURL</key>			<string>http://www.pacbell.net/</string>
+		<key>hostName</key>			<string>ftp.pacbell.net</string>
+		<key>regions</key>			<string>California, Nevada</string>
+		<key>docRoot</key>			<string>www</string>
+		<key>stemURL</key>			<string>http://home.pacbell.net/?/</string>
+		<key>protocol</key>			<string>ftp</string>
+		<key>storageLimitMB</key>	<integer>15</integer>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>.Mac</string>
+		<key>homePageURL</key>		<string>http://www.mac.com/</string>
+		<key>setupURL</key>			<string>https://www.mac.com/WebObjects/Signup.woa</string>
+		<key>hostName</key>			<string>idisk.mac.com</string>
+		<key>regions</key>			<string>World</string>
+		<key>docRoot</key>			<string>/Sites</string>
+		<key>stemURL</key>			<string>http://homepage.mac.com/?/</string>
+		<key>protocol</key>			<string>webdav</string>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>Otis PHPWebHosting</string>
+		<key>homePageURL</key>		<string>http://phpwebhosting.com/</string>
+		<key>setupURL</key>			<string>http://phpwebhosting.com/</string>
+		<key>hostName</key>			<string>otis.phpwebhosting.com</string>
+		<key>regions</key>			<string>USA</string>
+		<key>docRoot</key>			<string>www</string>
+		<key>stemURL</key>			<string>http://otis.phpwebhosting.com/?/</string>
+		<key>protocol</key>			<string>ssh</string>
+		<key>storageLimitMB</key>	<integer>25</integer>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>FortuneCity</string>
+		<key>homePageURL</key>		<string>http://fortunecity.com/</string>
+		<key>setupURL</key>			<string>http://www.fortunecity.com/free-web-hosting.shtml</string>
+		<key>hostName</key>			<string>ftp.fortunecity.com</string>
+		<key>regions</key>			<string>World</string>
+		<key>docRoot</key>			<string></string>
+		<key>stemURL</key>			<string>http://members.fortunecity.com/?/</string>
+		<key>protocol</key>			<string>ftp</string>
+		<key>storageLimitMB</key>	<integer>25</integer>
+		<key>fileSizeLimitMB</key>	<integer>1</integer>
+		<key>notes</key>			<string>Free, banner-supported hosting</string>
+	</dict>
+	<dict>
+		<key>provider</key>			<string>ProHosting</string>
+		<key>homePageURL</key>		<string>http://free.prohosting.com/</string>
+		<key>setupURL</key>			<string>https://lite.prohosting.com/</string>
+		<key>hostName</key>			<string>ftp.prohosting.com</string>
+		<key>regions</key>			<string>World</string>
+		<key>docRoot</key>			<string></string>
+		<key>stemURL</key>			<string>http://ice.prohosting.com/?/</string>
+		<key>protocol</key>			<string>ftp</string>
+		<key>storageLimitMB</key>	<integer>50</integer>
+		<key>notes</key>			<string>Free, banner-supported hosting</string>
+	</dict>
+</array>
+</plist>

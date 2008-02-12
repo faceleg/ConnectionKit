@@ -1,0 +1,1116 @@
+//
+//  KTDocWindowController+Pasteboard.m
+//  Marvel
+//
+//  Created by Terrence Talbot on 1/1/06.
+//  Copyright 2006 Biophony LLC. All rights reserved.
+//
+
+#import "KTDocWindowController.h"
+
+#import "KTAppDelegate.h"
+#import "KTComponents.h"
+#import "KTDocSiteOutlineController.h"
+#import "KTDocument.h"
+#import "KTPasteboardArchiving.h"
+#import "PrivateComponents.h"
+
+
+@interface KTDocWindowController ( Pasteboard_Private )
+- (void)copyPagelets:(NSArray *)thePages toPasteboard:(NSPasteboard *)aPboard;
+
+- (NSArray *)pastePagesFromPasteboard:(NSPasteboard *)aPboard toParent:(KTPage *)aParent keepingUniqueID:(BOOL)aFlag;
+- (NSArray *)pastePagesFromArchive:(NSArray *)archive toParent:(KTPage *)aParent;
+- (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag;
+
+- (void)removePages:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext;
+- (void)removePagelets:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext;
+- (void)actuallyDeletePages:(NSDictionary *)aContext;
+@end
+
+
+#pragma mark -
+
+
+// NB: a lot of this code follows the same pattern for both pages and pagelets but
+// is currently separated into different methods for easier debugging/understandability
+
+@implementation KTDocWindowController ( Pasteboard )
+
+// these pasteboards are used for cut/copy/paste of pagelets
+NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
+
+#pragma mark -
+#pragma mark Copy
+
+- (IBAction)copy:(id)sender
+{
+    if ( nil != [self selectedPagelet] )
+	{
+		[self copyPagelets:sender];
+	}
+	else if ( [[oSiteOutline selectedItems] count] > 0 )
+	{
+		[self copyPages:sender];
+	}
+}
+
+- (IBAction)copyViaContextualMenu:(id)sender
+{
+	NSString *selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
+	if ( nil != selectionClassName )
+	{
+		if ( [selectionClassName isEqualToString:[KTPagelet className]] )
+		{
+			[self copyPagelets:sender];
+		}
+		else if ( [selectionClassName isEqual:[KTPage className]] )
+		{
+			[self copyPages:sender];
+		}
+		else
+		{
+			LOG((@"copyViaContextualMenu: don't know how to copy contextual selection!"));
+		}		
+	}
+	else
+	{
+		LOG((@"copyViaContextualMenu: no selectionClassName!"));
+	}
+}
+
+// copy selected pages
+- (IBAction)copyPages:(id)sender
+{
+    NSArray *selectedPages = [oSiteOutline selectedItems];
+	if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]))
+    {
+        // copy was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        selectedPages = [context valueForKey:kKTSelectedObjectsKey];
+    }
+    
+    NSAssert((nil != selectedPages), @"selectedPages cannot be nil.");
+    NSAssert([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
+        
+	if ([selectedPages count] > 0)
+    {
+        // Package up the selected page(s) (children included)
+        NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+		[pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, nil] owner:self];
+        
+        NSArray *topLevelPages = [selectedPages parentObjects];
+		NSArray *pasteboardReps = [topLevelPages valueForKey:@"pasteboardRepresentation"];
+		[pboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPagesPboardType];
+    }
+}
+
+- (void)copyPagelets:(id)sender
+{
+	NSArray *selectedPagelets = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // cut was sent from a contextual menuitem, get the selection from the context
+        id selection = [[sender representedObject] valueForKey:kKTSelectedObjectsKey];
+		if ( [selection isKindOfClass:[NSArray class]] )
+		{
+			selectedPagelets = [[selection mutableCopy] autorelease];
+		}
+    }
+    else
+    {
+        selectedPagelets = [NSArray arrayWithObject:[self selectedPagelet]];
+    }
+    
+	if ( [selectedPagelets count] > 0 )
+	{
+        // we declare numerous types so that plugin delegates can copy arbitrary data to pboard
+		NSPasteboard *pboard = [NSPasteboard pasteboardWithName:kKTCopyPageletsPasteboard];
+		[pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, NSFileContentsPboardType, NSHTMLPboardType, NSPostScriptPboardType, NSRTFPboardType, NSRTFDPboardType, NSStringPboardType, NSTIFFPboardType, nil] owner:self];
+        
+		// copy to pboard
+		[self copyPagelets:selectedPagelets toPasteboard:pboard];
+	}
+}
+
+- (void)copyPagelets:(NSArray *)thePagelets toPasteboard:(NSPasteboard *)aPboard
+{
+    @try
+    {
+		[[self document] suspendAutosave];
+		
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        
+        // include the documentID
+        [dictionary setValue:[[self document] documentID] forKey:@"documentID"];
+        
+        // package up the selected pagelet(s)
+        NSMutableArray *copyPageletsArray = [NSMutableArray array];
+		NSMutableSet *mediaDigestsSet = [NSMutableSet set];
+       
+        NSEnumerator *e = [thePagelets objectEnumerator];
+        KTPagelet *pagelet = nil;
+        while ( pagelet = [e nextObject] )
+        {
+            // package up archive dictionaries
+            [copyPageletsArray addObject:[pagelet archiveDictionary]];
+            // let pagelet copy other data types to aPboard
+            [pagelet copySelectionToPasteboard:aPboard];
+			// include any media owned by the pagelet
+			[mediaDigestsSet addMediaInfoObjectsFromArray:[pagelet mediaDigests]];
+        }
+        [dictionary setValue:copyPageletsArray forKey:@"pagelets"];
+		[dictionary setValue:[mediaDigestsSet allObjects] forKey:@"mediaDigests"];
+
+        // now, pop it on the pasteboard
+        [aPboard addTypes:[NSArray arrayWithObject:kKTPageletsPboardType] owner:self];
+        NSData *archivedData = [NSArchiver archivedDataWithRootObject:dictionary];
+        [aPboard setData:archivedData forType:kKTPageletsPboardType];
+    }
+    @catch (NSException *exception)
+    {
+        LOG((@"copyPagelets:toPasteboard: caught exception! name:%@ reason:%@", [exception name], [exception reason]));
+    }
+	@finally
+	{
+		[[self document] resumeAutosave];
+	}
+}
+
+#pragma mark -
+#pragma mark Cut
+
+// for now, we only cut/copy/paste/delete/duplicate a single selectedPagelet at a time
+
+- (IBAction)cut:(id)sender
+{
+	if ( nil != [self selectedPagelet] )
+	{
+		[self cutPagelets:sender];
+	}
+	else if ( [[oSiteOutline selectedItems] count] > 0 )
+	{
+		[self cutPages:sender];
+	}
+}
+
+- (IBAction)cutViaContextualMenu:(id)sender
+{
+	NSString *selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
+	if ( nil != selectionClassName )
+	{
+		if ( [selectionClassName isEqualToString:[KTPagelet className]] )
+		{
+			[self cutPagelets:sender];
+		}
+		else if ( [selectionClassName isEqualToString:[KTPage className]] )
+		{
+			[self cutPages:sender];
+		}
+		else
+		{
+			LOG((@"cutViaContextualMenu: don't know how to cut contextual selection!"));
+		}		
+	}
+	else
+	{
+		LOG((@"cutViaContextualMenu: no selectionClassName!"));
+	}
+}
+
+// cut selected pages (copy and then remove from parents)
+- (IBAction)cutPages:(id)sender
+{
+	// Figure out the selection
+	NSArray *selectedPages = [oSiteOutline selectedItems];
+	if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // cut was sent from a contextual menuitem, get the selection from the context
+        selectedPages = [[sender representedObject] valueForKey:kKTSelectedObjectsKey];
+    }
+    
+	
+	// We should never get here if the root page is in the selection
+    NSAssert((nil != selectedPages), @"selectedPages cannot be nil.");
+    NSAssert([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
+    NSAssert(![selectedPages containsObject:[[self document] root]], @"Cannot cut the home page");
+	
+	
+	// Copy to the clipboard
+	[self copy:sender];
+	
+	
+	// Delete the selection
+	[self actuallyDeletePages:nil];
+}
+
+- (void)removePages:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext
+{
+	// at present, the only method that calls this one is cutPages:
+	// so WE ARE SUSPENDING AUTOSAVE AND LOCKING THE MOC AND PSC in cutPages: instead
+	
+	// we break this out into a separate method, currently, because during cutPages:
+	// we have to mark stale and then copy to the pboard before we delete the pages
+	// so we can't do it inside one enumeration like -actuallyDeletePages:
+	NSEnumerator *e = [anArray objectEnumerator];
+	KTPage *page = nil;
+	while ( page = [e nextObject] )
+	{
+		KTPage *parent = [page parent];
+		[parent removePage:page];
+		[aContext threadSafeDeleteObject:page];
+	}
+	
+	[aContext processPendingChanges];
+	LOG((@"removed a save here, is it still needed?"));
+//	[[self document] saveContext:aContext onlyIfNecessary:NO];
+}
+
+- (IBAction)cutPagelets:(id)sender
+{
+	// currently only one pagelet at a time is selectable
+	
+	// determine selected pagelets, either selected in document or via sender
+	NSArray *selectedPagelets = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // cut was sent from a contextual menuitem, get the selection from the context
+        id selection = [[sender representedObject] valueForKey:kKTSelectedObjectsKey];
+		if ( [selection isKindOfClass:[NSArray class]] )
+		{
+			selectedPagelets = [[selection mutableCopy] autorelease];
+		}
+    }
+    else
+    {
+        selectedPagelets = [NSArray arrayWithObject:[self selectedPagelet]];
+    }
+    
+	if ( [selectedPagelets count] > 0 )
+	{
+        // we declare numerous types so that plugin delegates can copy arbitrary data to pboard
+		NSPasteboard *pboard = [NSPasteboard pasteboardWithName:kKTCopyPageletsPasteboard];
+		[pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, NSFileContentsPboardType, NSHTMLPboardType, NSPostScriptPboardType, NSRTFPboardType, NSRTFDPboardType, NSStringPboardType, NSTIFFPboardType, nil] owner:self];
+        
+		// copy to pboard
+		[self copyPagelets:selectedPagelets toPasteboard:pboard];
+		
+		//stale the page they belong to
+		NSEnumerator *e = [selectedPagelets objectEnumerator];
+		KTPagelet *cur;
+		
+		while (cur = [e nextObject])
+		{
+			if ([cur boolForKey:@"shouldPropagate"])
+			{
+				////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because pagelet's page is marked as shouldPropagate", NSStringFromSelector(_cmd), [[cur page] titleText]));
+				//[[cur page] markStale:kStaleFamily];
+				break; // only need to propagate the once.
+			}
+			else
+			{
+				////LOG((@"~~~~~~~~~ %@ ....", NSStringFromSelector(_cmd)));
+				//[[cur page] markStale:kStalePage];
+			}
+		}
+		
+		// remove from page/context
+		[self removePagelets:selectedPagelets fromContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		LOG((@"removed a save here, is it still needed?"));
+//		[[self document] saveContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+	}
+}
+
+- (void)removePagelets:(NSArray *)pagelets fromContext:(KTManagedObjectContext *)aContext
+{
+	[[self document] suspendAutosave];
+	[aContext lockPSCAndSelf];
+	
+	NSEnumerator *e = [pagelets objectEnumerator];
+	KTPagelet *pagelet = nil;
+	while ( pagelet = [e nextObject] )
+	{
+		[aContext threadSafeDeleteObject:pagelet];
+	}
+	
+	[aContext processPendingChanges];
+	LOG((@"removed a save here, is it still needed?"));
+//	[[self document] saveContext:aContext onlyIfNecessary:NO];
+	
+	[aContext unlockPSCAndSelf];
+	[[self document] resumeAutosave];
+}
+
+#pragma mark -
+#pragma mark Paste
+
+- (IBAction)paste:(id)sender
+{
+    // looks at what's on pboard before deciding what to paste
+    if ( [self canPastePagelets] )
+    {
+		[self pastePagelets:sender];
+    }
+    else if ( [self canPastePages] )
+    {
+		[self pastePages:sender];
+    }
+}
+
+- (IBAction)pasteViaContextualMenu:(id)sender
+{
+	NSString *selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
+	if ( nil != selectionClassName )
+	{
+		if ( [selectionClassName isEqual:[KTPagelet className]] )
+		{
+			[self pastePagelets:sender];
+		}
+		else if ( [selectionClassName isEqual:[KTPage className]] )
+		{
+			[self pastePages:sender];
+		}
+		else
+		{
+			LOG((@"pasteViaContextualMenu: don't know how to paste contextual selection!"));
+		}		
+	}
+	else
+	{
+		LOG((@"pasteViaContextualMenu: no selectionClassName!"));
+	}
+}
+
+// creates pages from data on pboard and add as children of selected parent
+// paste should validate only if there is one selectedPage and it is a collection
+- (IBAction)pastePages:(id)sender
+{
+    KTPage *selectedPage = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // paste was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        selectedPage = [selection objectAtIndex:0];
+    }
+    else
+    {
+        selectedPage = [[oSiteOutline selectedItems] objectAtIndex:0];
+    }
+    
+    // if we haven't selected a collection, use its parent
+	if ( ![selectedPage isCollection] )
+	{
+		selectedPage = [selectedPage parent];
+	}
+        
+    if ( nil != selectedPage )
+    {
+        // paste pages
+        NSArray *pastedPages = [self pastePagesFromPasteboard:[NSPasteboard generalPasteboard] toParent:selectedPage keepingUniqueID:NO];
+        
+        // Update the undo menu title
+        if ([pastedPages count] == 1)
+        {
+			[[[self document] undoManager] setActionName:NSLocalizedString(@"Paste Page", "Paste Page MenuItem")];
+		}
+		else if ([pastedPages count] > 1)
+		{
+			[[[self document] undoManager] setActionName:NSLocalizedString(@"Paste Pages", "Paste Pages MenuItem")];
+		}
+    }
+    else
+    {
+        LOG((@"would like to paste pages, but there's no selectedPage to paste to!"));
+    }
+}
+
+/* returns array of newly pasted pages */
+- (NSArray *)pastePagesFromPasteboard:(NSPasteboard *)aPboard toParent:(KTPage *)aParent keepingUniqueID:(BOOL)aFlag
+{
+	NSMutableArray *result = [NSMutableArray array];
+	
+    NSString *type = nil;
+    type = [aPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]];
+    
+    if ( [type length] > 0 )
+    {
+        @try
+        {
+            NSData *data = [aPboard dataForType:kKTPagesPboardType];
+            if ([data length] > 0)
+            {
+				NSArray *archivedPages = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+				[self pastePagesFromArchive:archivedPages toParent:aParent];
+            }
+            else
+            {
+                LOG((@"would like to paste pages, but there's nothing on the pasteboard!"));
+            }
+        }
+        @catch (NSException *exception)
+        {
+            LOG((@"pastePagesFromPasteboard:toParent: caught exception name:%@ reason:%@", [exception name], [exception reason]));
+        }
+    }
+    else
+    {
+        LOG((@"expecting to paste pages, but KTPagesPboardType is not on the pboard!"));
+    }
+	
+	[[self document] resumeAutosave];
+
+	return [NSArray arrayWithArray:result];
+}
+
+- (NSArray *)pastePagesFromArchive:(NSArray *)archive toParent:(KTPage *)aParent
+{
+	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[archive count]];
+	
+    NSEnumerator *archivedPagesEnumerator = [archive objectEnumerator];
+	NSDictionary *anArchivedPage;
+	while (anArchivedPage = [archivedPagesEnumerator nextObject])
+	{
+		KTPage *page = [KTPage pageWithPasteboardRepresentation:anArchivedPage parent:aParent];
+		if (page)
+		{
+			[result addObject:page];
+		}
+	}
+	
+	return [NSArray arrayWithArray:result];
+}
+
+- (BOOL)canPastePages
+{
+	// check the general pasteboard to see if there are any pages on it
+	BOOL result = [[[NSPasteboard generalPasteboard] types] containsObject:kKTPagesPboardType];
+	return result;
+}
+
+- (IBAction)pastePagelets:(id)sender
+{
+    KTPage *selectedPage = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // paste was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        selectedPage = [selection objectAtIndex:0];
+    }
+    else
+    {
+        selectedPage = [[oSiteOutline selectedItems] objectAtIndex:0];
+    }
+    
+    if ( [selectedPage isKindOfClass:[KTPage class]] )
+    {
+        BOOL canPaste = ([selectedPage includeSidebar] || [selectedPage includeCallout]);
+        if ( canPaste )
+        {
+            // paste
+            NSArray *pastedPagelets = [self pastePageletsFromPasteboard:[NSPasteboard pasteboardWithName:kKTCopyPageletsPasteboard] toPage:selectedPage keepingUniqueID:NO];
+            
+            // (re)label undo
+            if ( [pastedPagelets count] > 0 )
+            {
+                if ( [pastedPagelets count] > 1 )
+                {
+                    [[[self document] undoManager] setActionName:NSLocalizedString(@"Paste Pagelets", "Paste Pagelets MenuItem")];
+                }
+                else
+                {
+                    [[[self document] undoManager] setActionName:NSLocalizedString(@"Paste Pagelet", "Paste Pagelet MenuItem")];
+                }
+				//stale the page they belong to
+				NSEnumerator *e = [pastedPagelets objectEnumerator];
+				KTPagelet *cur;
+				
+				while (cur = [e nextObject])
+				{
+					if ([cur boolForKey:@"shouldPropagate"])
+					{
+						////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because pagelet is marked as shouldPropagate", NSStringFromSelector(_cmd), [[cur page] titleText]));
+						//[[cur page] markStale:kStaleFamily];
+						break; // only need to propagate the once.
+					}
+					else
+					{
+						////LOG((@"~~~~~~~~~ %@ ....", NSStringFromSelector(_cmd)));
+						//[[cur page] markStale:kStalePage];
+					}
+				}
+            }
+            
+        }
+    }
+    else
+    {
+        LOG((@"would like to paste pagelets, but there's no selectedPage to paste to!"));
+    }    
+}
+
+- (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag
+{
+	[[self document] suspendAutosave];
+
+	NSMutableArray *result = [NSMutableArray array];
+    
+    NSString *type = nil;
+    type = [aPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPageletsPboardType]];
+    
+    if ( [type length] > 0 )
+    {
+        @try
+        {
+            NSData *data = [aPboard dataForType:kKTPageletsPboardType];
+            if ( [data length] > 0 )
+            {
+                NSDictionary *pboardInfo = [NSUnarchiver unarchiveObjectWithData:data];
+                
+                KTManagedObjectContext *thisContext = (KTManagedObjectContext *)[[self document] managedObjectContext];
+				[thisContext lockPSCAndSelf];
+                
+                NSString *documentID = [pboardInfo valueForKey:@"documentID"];
+                BOOL sameDocument = [documentID isEqualToString:[[self document] documentID]];
+                
+                // copy media to thisContext first
+                if ( !sameDocument )
+                {
+                    KTDocument *otherDocument = [[KTAppDelegate sharedInstance] documentWithID:documentID];
+                    if ( nil != otherDocument )
+                    {
+                        KTManagedObjectContext *otherContext = (KTManagedObjectContext *)[otherDocument managedObjectContext];
+// TODO: DOES THIS DEADLOCK -- test pasting across documents and within document
+						[otherContext lockPSCAndSelf];
+                        
+                        NSArray *mediaDigests = [pboardInfo valueForKey:@"mediaDigests"];
+                        if ( [mediaDigests count] > 0 )
+                        {
+                            NSEnumerator *mediaEnumerator = [mediaDigests objectEnumerator];
+                            NSDictionary *mediaInfo;
+                            while ( mediaInfo = [mediaEnumerator nextObject] )
+                            {
+                                NSString *mediaDigest = [mediaInfo valueForKey:@"mediaDigest"];
+                                NSString *thumbnailDigest = [mediaInfo valueForKey:@"thumbnailDigest"];
+                                if  ( ![thisContext objectMatchingMediaDigest:mediaDigest
+                                                              thumbnailDigest:thumbnailDigest] )
+                                {
+                                    KTMedia *otherMedia = [otherContext objectMatchingMediaDigest:mediaDigest
+                                                                                  thumbnailDigest:thumbnailDigest];
+                                    if ( nil != otherMedia )
+                                    {
+                                        [otherMedia copyToContext:thisContext];
+                                    }
+                                    else
+                                    {
+                                        LOG((@"wanted to copy media from document %@ but couldn't find it!", documentID));
+                                    }
+                                }
+                            }
+                        }
+						[otherContext unlockPSCAndSelf];
+                    }
+                }
+                
+                NSArray *pagelets = [pboardInfo valueForKey:@"pagelets"];
+                NSEnumerator *e = [pagelets objectEnumerator];
+                NSDictionary *rep;
+                while ( rep = [e nextObject] )
+                {
+                    BOOL keepUnique = (sameDocument && aFlag);
+                    KTPagelet *pagelet = [KTPagelet pageletWithPage:aPage
+                                                  archiveDictionary:rep
+                                     insertIntoManagedObjectContext:thisContext
+                                                       keepUniqueID:keepUnique];
+                    
+                    if ( nil != pagelet )
+                    {
+                        // just insert it as if it's a new pagelet
+                        [self insertPagelet:pagelet toSelectedItem:aPage];
+                        [result addObject:pagelet];
+                    }
+                    else
+                    {
+                        LOG((@"would like to paste pagelets, but unable to create pagelet in this context!"));
+                    }
+                }
+				[thisContext unlockPSCAndSelf];
+            }
+            else
+            {
+                LOG((@"would like to paste pagelets, but there's nothing on the pasteboard!"));
+            }
+        }
+        @catch (NSException *exception)
+        {
+            LOG((@"pastePageletsFromPasteboard:toPage: caught exception name:%@ reason:%@", [exception name], [exception reason]));
+        }
+    }
+    else
+    {
+        LOG((@"expecting to paste pagelets, but KTPageletsPboardType is not on the pboard!"));
+    }
+	
+	[[self document] resumeAutosave];
+
+	return [NSArray arrayWithArray:result];
+}
+
+- (BOOL)canPastePagelets
+{
+	// check the pagelets pasteboard to see if there are any pagelets on it
+	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:kKTCopyPageletsPasteboard];
+	BOOL hasPagelets = [kKTPageletsPboardType isEqualToString:[pboard availableTypeFromArray:[NSArray arrayWithObject:kKTPageletsPboardType]]];
+	if ( hasPagelets )
+	{
+		return YES;
+	}
+    else
+    {
+        return NO;
+    }
+}
+
+#pragma mark delete
+
+- (IBAction)deleteViaContextualMenu:(id)sender
+{
+    id selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
+    if ( [selectionClassName isEqualToString:[KTPage className]] )
+    {
+        [self deletePages:sender];
+    }
+    else if ( [selectionClassName isEqualToString:[KTPagelet className]] )
+    {
+        [self deletePagelets:sender];
+    } 
+}
+
+- (IBAction)deletePages:(id)sender
+{
+	// FIXME: figure out something global for leftDoubleQuote and rightDoubleQuote
+	// the compiler won't allow these to be static, unfortunately
+	// it would be a lot nicer if we could have one global declaration
+	// for these unichars
+	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
+	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
+	
+	[[[self document] managedObjectContext] processPendingChanges];
+
+	// this method carries through the idea that if there are multiple
+    // selected pages, then selectedPage will be nil and selectedPages
+    // will be an array of two or more pages
+    KTPage *selectedPage = nil;
+	NSMutableArray *selectedPages = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // delete was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        if ( [selection count] > 1 )
+        {
+            selectedPages = [[selection mutableCopy] autorelease];
+        }
+        else
+        {
+            selectedPage = [selection objectAtIndex:0];
+        }        
+    }
+	else if ( [sender isKindOfClass:[NSPasteboard class]] )
+	{
+		NSDictionary *pboardData = [sender propertyListForType:kKTOutlineDraggingPboardType];
+		if ( nil != pboardData )
+		{
+			NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
+			NSEnumerator *e = [parentRows objectEnumerator];
+			NSString *row;
+
+			selectedPages = [NSMutableArray arrayWithCapacity:[parentRows count]];			
+			while ( row = [e nextObject] )
+			{
+				[selectedPages addObject:[oSiteOutline itemAtRow:[row intValue]]];
+			}
+			
+			switch ( [selectedPages count] )
+			{
+				case 0:
+					selectedPage = nil;
+					selectedPages = nil;
+					break;
+				case 1:
+					selectedPage = [selectedPages objectAtIndex:0];
+					selectedPages = nil;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+    else
+    {
+        selectedPages = [NSMutableArray arrayWithArray:[[[self siteOutlineController] selectedPages] allObjects]];
+        selectedPage = [[self siteOutlineController] selectedPage];
+    }
+	
+	if ( [selectedPages count] >= 1 )
+	{
+		NSMutableArray *deletedPages = [NSMutableArray array];
+		
+		unsigned int i;
+		for ( i=0; i < [selectedPages count]; i++ )
+		{
+			KTPage *page = [selectedPages objectAtIndex:i];
+			if ( [page isDeleted] )
+			{
+				[deletedPages addObject:page];
+			}
+		}
+		
+		[selectedPages removeObjectsInArray:deletedPages];
+	}
+	
+	NSString *title = nil;
+	NSString *message = nil;
+	NSDictionary *context = nil;
+	if ( (nil != selectedPage) && ![selectedPage isDeleted] )
+	{
+		if ( [selectedPage isCollection] )
+		{
+			if ( [selectedPage hasChildren] )
+			{
+				title = NSLocalizedString(@"Delete Collection", "Delete Collection Alert Title");
+				message = [NSString stringWithFormat:NSLocalizedString(@"Do you really want to delete the collection named \\U201C%@\\U201D and all the pages it contains?",
+																	   "Delete Collection with Pages Alert Message"), [selectedPage titleText]];
+				context = [NSDictionary dictionaryWithObject:selectedPage forKey:@"selectedPage"];
+			}
+			else
+			{
+				title = NSLocalizedString(@"Delete Collection", "Delete Collection Alert Title");
+				message = [NSString stringWithFormat:NSLocalizedString(@"Do you really want to delete the collection named \\U201C%@\\U201D ?",
+																	   "Delete Collection without Pages Alert Message"), [selectedPage titleText]];
+				context = [NSDictionary dictionaryWithObject:selectedPage forKey:@"selectedPage"];
+			}
+		}
+		else
+		{
+			title = NSLocalizedString(@"Delete Page", "Delete Page Alert Title");
+			message = [NSString stringWithFormat:NSLocalizedString(@"Do you really want to delete the page named \\U201C%@\\U201D ?",
+																   "Delete Page Alert Message"), [selectedPage titleText]];
+			context = [NSDictionary dictionaryWithObject:selectedPage forKey:@"selectedPage"];
+		}
+	}
+	else if ( [selectedPages count] > 1 )
+	{
+		NSString *comma = NSLocalizedString(@",", "list separator: , in English");
+		NSString *and = NSLocalizedString(@"and", "join conjunction: and in English");
+		
+		NSString *pageTitles = @"";
+		if ( [selectedPages count] == 2 )
+		{
+			pageTitles = [pageTitles stringByAppendingFormat:@"%@%@%@ %@ %@%@%@", leftDoubleQuote, [[selectedPages objectAtIndex:0] titleText], rightDoubleQuote, and, leftDoubleQuote, [[selectedPages objectAtIndex:1] titleText], rightDoubleQuote];
+		}
+		else
+		{
+			unsigned int i;
+			for ( i = 0; i < [selectedPages count]-1 ; ++i )
+			{
+				NSString *pageTitle = [[selectedPages objectAtIndex:i] titleText];
+				pageTitles = [pageTitles stringByAppendingFormat:@"%@%@%@%@ ", leftDoubleQuote, pageTitle, rightDoubleQuote, comma];
+			}
+			NSString *lastPageTitle = [[selectedPages objectAtIndex:([selectedPages count]-1)] titleText];
+			pageTitles = [pageTitles stringByAppendingFormat:@"%@ %@%@%@", and, leftDoubleQuote, lastPageTitle, rightDoubleQuote];
+		}
+		
+		
+		title = NSLocalizedString(@"Delete Pages", "Delete Pages Alert Title");
+		message = [NSString stringWithFormat:NSLocalizedString(@"Do you really want to delete the pages named %@, and any pages they contain?",
+															   "Delete Pages Alert Message"), pageTitles];
+		context = [NSDictionary dictionaryWithObject:selectedPages forKey:@"selectedPages"];
+	}
+	else
+	{
+        LOG((@"-deletePages: no useful object(s) selected!"));
+		return;
+	}	
+	
+	[[self confirmWithWindow:[self window] 
+				silencingKey:@"DeletePagesSilencingKey" 
+				   canCancel:YES
+					OKButton:NSLocalizedString(@"Delete", "Delete Button") 
+					 silence:nil 
+					   title:title 
+					  format:message] actuallyDeletePages:[context retain]]; // we retain so dictionary survives event loop
+// FIXME: what if if the message is cancelled, we have a leaking context, right? ("context" here is not a moc, but a dictionary)
+}
+
+- (void)actuallyDeletePages:(NSDictionary *)aContext
+{	
+	// FIXME: we could do away with the context dictionay, since we're going off of selected pages,
+	// but first test whether this is OK for deleting from a contextual menu
+	NSSet *selectedPages = [[self siteOutlineController] selectedPages];
+	NSAssert(![selectedPages containsObject:[[self document] root]], @"You can't delete root");
+	
+	if ([selectedPages count] > 0)
+	{		
+        // Find the parents of all the pages to delete. This also has the effect of eliminating root
+		// since it has no parent.
+		NSSet *pageParents = [selectedPages valueForKey:@"parent"];
+		
+		// Remove the pages from their parents
+		NSEnumerator *pagesEnumerator = [pageParents objectEnumerator];
+		KTPage *aPageParent;
+		while (aPageParent = [pagesEnumerator nextObject])
+		{
+			[aPageParent removePages:selectedPages];	// Far more efficient than calling -removePage: repetitively
+		}
+		
+		// Delete the pages
+		[[[self document] managedObjectContext] deleteObjects:selectedPages];
+		
+		
+		// label undo last
+		if ([selectedPages count] == 1)
+		{
+			if ([[selectedPages anyObject] isCollection])
+			{
+				[[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
+			}
+			else
+			{
+				[[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
+			}
+		}
+		else
+		{
+			[[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
+		}
+	}
+	
+	[aContext release]; // balancing retain in deletePages:
+
+}
+
+- (IBAction)deletePagelets:(id)sender
+{
+	NSAssert([NSThread isMainThread], @"should be main thread");
+
+	[[self document] suspendAutosave];
+	[[[self document] managedObjectContext] lock];
+
+    // currently assumes there is only one pagelet to be deleted
+    KTPagelet *selectedPagelet = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // paste was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        // we're only going to delete the first selected pagelet
+        selectedPagelet = [selection objectAtIndex:0];
+    }
+    else
+    {
+        selectedPagelet = [self selectedPagelet];
+    }
+    
+    if ( [selectedPagelet isKindOfClass:[KTPagelet class]] )
+    {
+        KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+        if ( [[selectedPagelet page] isEqual:selectedPage] )
+        {		
+            KTManagedObjectContext *context = (KTManagedObjectContext *)[selectedPage managedObjectContext];
+            
+            // remove pagelet from the page
+			[selectedPage lockPSCAndMOC];
+            [selectedPagelet setValue:nil forKey:@"page"];
+			[selectedPage unlockPSCAndMOC];
+            
+            // delete it from the context
+            LOG((@"deleting pagelet \"%@\" from context", [selectedPagelet valueForKey:@"pluginIdentifier"]));
+            [context deleteObject:selectedPagelet];
+            
+            // close undo group
+            [context processPendingChanges];
+			
+			// save
+			LOG((@"removed a save here, is it still needed?"));
+//			[[self document] saveContext:context onlyIfNecessary:NO];
+            
+            // change the selection to be the page
+            [self setSelectedPagelet:nil];
+            
+            // update the inspector and reload the page
+            [self postSelectionAndUpdateNotificationsForItem:selectedPage];
+            
+            // label undo
+            [[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Pagelet", "Delete Pagelet MenuItem")];
+        }
+    }
+	
+	[[[self document] managedObjectContext] unlock];
+	[[self document] resumeAutosave];
+}
+
+#pragma mark duplicate
+
+// duplicate does a copy/paste at once, within the same document, using a private pboard
+// the trick here is that we need to use new uniqueIDs, new titles, etc.
+
+NSString *kKTDuplicatePagesPasteboard = @"KTDuplicatePagesPasteboard";
+NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
+
+- (IBAction)duplicate:(id)sender
+{
+	if ([self selectedPagelet])
+	{
+		[self duplicatePagelets:sender];
+	}
+	else if ([[oSiteOutline selectedItems] count] > 0)
+	{
+		[self duplicatePages:sender];
+	}
+ }
+
+- (IBAction)duplicateViaContextualMenu:(id)sender
+{
+	id selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
+    if ( [selectionClassName isEqualToString:[KTPage className]] )
+    {
+        [self duplicatePages:sender];
+    }
+    else if ( [selectionClassName isEqualToString:[KTPagelet className]] )
+    {
+        [self duplicatePagelets:sender];
+    } 
+}
+
+- (IBAction)duplicatePages:(id)sender
+{
+	// figure out our selection
+	NSArray *selectedPages = [oSiteOutline selectedItems];
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // copy was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        selectedPages = [[selection mutableCopy] autorelease];
+    }
+	
+	
+	// Don't duplicate root
+	NSAssert(![selectedPages containsRoot], @"Can't duplicate root page");
+	
+	
+	if ([selectedPages count] > 0)
+	{
+		// Don't let the user see the shenanigans
+		[[self window] disableFlushWindow];
+		
+		
+		// Select into the first available collection
+		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObject] parent];
+		[oSiteOutline selectItem:parentOfFirstSelectedItem];
+		
+		
+		// Do the duplication
+		NSArray *archivedPages = [selectedPages valueForKey:@"pasteboardRepresentation"];
+		NSArray *newPages = [self pastePagesFromArchive:archivedPages toParent:parentOfFirstSelectedItem];
+		
+		
+		// Select the new pages
+		NSMutableIndexSet *newSelectionSet = [NSMutableIndexSet indexSet];
+		NSEnumerator *e = [newPages objectEnumerator];
+		KTPage *page = nil;
+		while ( page = [e nextObject] )
+		{
+			int pageRow = [oSiteOutline rowForItem:page];
+			if ( pageRow >= 0 )
+			{
+				[newSelectionSet addIndex:pageRow];
+			}
+		}
+		[oSiteOutline selectRowIndexes:newSelectionSet byExtendingSelection:NO];
+		
+		
+		// Label the Undo menu item
+		if ([selectedPages count] > 1)
+		{
+			[[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Pages", "Duplicate Pages MenuItem")];
+		}
+		else
+		{
+			[[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Page", "Duplicate Page MenuItem")];
+		}
+		
+						
+		// Reveal ourselves
+		[[self window] enableFlushWindow];
+	}
+}
+
+- (IBAction)duplicatePagelets:(id)sender
+{
+    // currently assumes there is only one pagelet to be deleted
+    
+    KTPagelet *selectedPagelet = nil;
+    
+    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    {
+        // paste was sent from a contextual menuitem, get the selection from the context
+        id context = [sender representedObject];
+        id selection = [context valueForKey:kKTSelectedObjectsKey];
+        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        // we're only going to duplicate the first selected pagelet
+        selectedPagelet = [selection objectAtIndex:0];
+    }
+    else
+    {
+        selectedPagelet = [self selectedPagelet];
+    }
+    
+    if ( [selectedPagelet isKindOfClass:[KTPagelet class]] )
+    {
+        KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+        if ( [[selectedPagelet page] isEqual:selectedPage] )
+        {		
+            // create a special pasteboard just for this document/operation
+            NSPasteboard *duplicatePboard = [NSPasteboard pasteboardWithName:kKTDuplicatePageletsPasteboard];
+            [duplicatePboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType] owner:self];
+            
+            // copy pagelets
+            [self copyPagelets:[NSArray arrayWithObject:selectedPagelet] toPasteboard:duplicatePboard];
+            
+            // paste back not keeping uniqueID
+            NSArray *newPagelets = [self pastePageletsFromPasteboard:duplicatePboard toPage:selectedPage keepingUniqueID:NO];
+            
+            // we're done, clear the pasteboard
+            [duplicatePboard releaseGlobally];
+            
+            if ( [newPagelets count] > 0 )
+            {
+                // reload the page, selected the newly added pagelet, and update the inspector 
+                [self postSelectionAndUpdateNotificationsForItem:[newPagelets objectAtIndex:0]];
+                
+                // label undo
+                [[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Pagelet", "Duplicate Pagelet MenuItem")];              
+            }
+        }
+    }
+	else
+	{
+		LOG((@"-deletePagelets: no recognizable object selected!"));
+	}
+}
+
+@end

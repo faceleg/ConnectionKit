@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {showHelp = id; }; 
+            CLASS = KTCodeInjectionController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oBodyEndTextView = NSTextView; 
+                oBodyTagTextField = NSTextField; 
+                oHeadTextView = NSTextView; 
+                oObjectController = NSObjectController; 
+                oPreludeTextView = NSTextView; 
+                oTabView = NSTabView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = KTNoCascadeWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }
+    ); 
+    IBVersion = 1; 
+}

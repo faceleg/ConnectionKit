@@ -1,0 +1,10 @@
+html > body #_UNIQUEID_ {
+	background/**/:url("_URL_") top left no-repeat;
+}
+html > body #_UNIQUEID_, html > body #_UNIQUEID_ a:link, html > body #_UNIQUEID_ a:visited {
+	display/**/:block;
+	text-align/**/:left;
+	text-indent/**/:-9999px;
+	width/**/:_WIDTH_px;
+	height/**/:_HEIGHT_px;
+}

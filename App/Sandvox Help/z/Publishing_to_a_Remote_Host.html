@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="publish, publishing, remote, host" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Publishing to a Remote Host</title>
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Publishing to a Remote Host</h1><a name="Previous_Step" id="Previous_Step"></a>
+
+        <h2>Previous Step</h2>
+
+        <p>This article is part of the "<a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a>" procedure, and is for if you are <a href="Publishing_Your_Site.html" title="Publish">publishing</a> your site to a remote host other than .Mac. If you wish to publish to a .Mac account, please see the "<a href="Publishing_to_.Mac.html" title="Publishing to .Mac">Publishing to .Mac</a>" article.</p>
+
+        <p>The previous step of this process is "<b><a href="Choosing_a_Publishing_Location.html" title="Choosing a Publishing Location">Choosing a Publishing Location</a></b>."</p><a name="Host_Settings" id="Host_Settings"></a>
+
+        <h2>Host Settings</h2>
+
+        <p>Sandvox will ask you to enter you <a href="Host.html" title="Host">host</a> settings like this:</p>
+
+        <div class="bordimg">
+            <div class="center">
+                <div class="floatnone">
+                    <span><img src="img/2/26/HSA-host_settings.jp2" alt="" width="480" height="356" /></span>
+                </div>
+            </div>
+        </div>
+
+        <p><br />
+        The settings you enter are used by Sandvox to piece together the information required for uploading and viewing the site, as demonstrated by this diagram:</p>
+
+        <div class="bordimg">
+            <div class="center">
+                <div class="floatnone">
+                    <span><img src="img/f/f3/HSA-URL_components.jp2" alt="" width="480" height="214" /></span>
+                </div>
+            </div>
+        </div>
+
+        <p><br />
+        Remember that <b>all</b> of the settings you need to set up your site for <a href="Publishing_Your_Site.html" title="Publish">publishing</a> should be provided by your <a href="Host.html" title="Host">host</a>. You may need to contact them if you are missing anything.</p><a name="URL_Format" id="URL_Format"></a>
+
+        <h3>URL Format</h3>
+
+        <p>The address that visitors will view your site at. Generally, something like this:</p>
+        <pre>
+http://www.example.com
+</pre><a name="Hostname" id="Hostname"></a>
+
+        <h3>Hostname</h3>
+
+        <p>The address of the server to connect to when <a href="Publishing_Your_Site.html" title="Publish">publishing</a> your site. Your <a href="Host.html" title="Host">host</a> may instead refer to this as:</p>
+
+        <ul>
+            <li>"Host name"</li>
+
+            <li>"Server"</li>
+        </ul>
+
+        <p>The hostname might be basically the same as the URL Format like so:</p>
+        <pre>
+example.com
+</pre>
+
+        <p>or to your hosting provider:</p>
+        <pre>
+examplehost.com/john
+</pre><a name="Upload_Method_and_Port" id="Upload_Method_and_Port"></a>
+
+        <h3>Upload Method and Port</h3>
+
+        <p>The method by which the site will be uploaded to your <a href="Host.html" title="Host">host</a>. In general, we prefer it if you use "SFTP" since it is more secure, however your <a href="Host.html" title="Host">host</a> may not support that. They should tell you which methods they support.</p>
+
+        <p>Sandvox automatically fills in the "Port" field for you. You should <b>only</b> change this value if your <a href="Host.html" title="Host">host</a> specifically requires you to.</p><a name="Username" id="Username"></a>
+
+        <h3>Username</h3>
+
+        <p>Your username for logging into the <a href="Host.html" title="Host">Host</a> server. Your <a href="Host.html" title="Host">host</a> may instead refer to this as:</p>
+
+        <ul>
+            <li>"Account ID"</li>
+
+            <li>"User ID"</li>
+        </ul><a name="Password" id="Password"></a>
+
+        <h3>Password</h3>
+
+        <p>Your <a href="Password.html" title="Password">password</a> for logging into the <a href="Host.html" title="Host">Host</a> server.</p>
+
+        <p>If you have chosen <a href="Uploading_using_SFTP.html" title="SFTP">SFTP</a> as your upload method, then you can tick the "Use public key" box to use a public key instead of a <a href="Password.html" title="Password">password</a>. Please see the "<a href="Uploading_using_SFTP.html" title="Uploading using SFTP">Uploading using SFTP</a>" article for information on this.</p>
+
+        <p>Note that in order to store your <a href="Password.html" title="Password">password</a> securely, Sandvox will save it in your <a href="http://en.wikipedia.org/wiki/Apple_Keychain" class="external text" title="http://en.wikipedia.org/wiki/Apple_Keychain">Keychain</a>.</p><a name="Document_Root" id="Document_Root"></a>
+
+        <h3>Document Root</h3>
+
+        <p>Type your <a href="Document_Root.html" title="Document Root">document root</a> or click the "Browse…" button and select the appropriate directory.</p><a name="Subfolder" id="Subfolder"></a>
+
+        <h3>Subfolder</h3>
+
+        <p>If you plan to have multiple sites within the same <a href="Host.html" title="Host">host</a>, then they must be in separate subfolders. Enter a name for the subfolder this site will be placed in or leave it blank. You do <b>not</b> need to alter the <a href="Publishing_to_a_Remote_Host.html" title="URL Format">URL Format</a> to include your choice of subfolder. You cannot use any incompatible characters, such as spaces.</p><a name="Next_Step" id="Next_Step"></a>
+
+        <h2>Next Step</h2>
+
+        <p>Once this information has been entered, click the "Continue" button to move on to "<b><a href="Testing_Your_Connection.html" title="Testing Your Connection">Testing Your Connection</a></b>."</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2>Related Articles</h2>
+
+            <ul>
+                <li><a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a></li>
+
+                <li><a href="Host.html" title="Host">Host</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

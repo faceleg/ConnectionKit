@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {windowHelp = id; }; 
+            CLASS = KTNewsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oBox = NTBoxView; oWebView = WebView; }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

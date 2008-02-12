@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {cancelReport = id; displayHelp = id; submitReport = id; }; 
+            CLASS = KTAbstractBugReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAccessoryView = NSView; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+                oOpenSavedFeedbackSwitch = NSButton; 
+                oReportWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = KTFeedbackAttachment; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

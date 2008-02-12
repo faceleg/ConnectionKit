@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss">
+ 	<channel>
+		<title>[[=&comboTitleText]]</title>
+		<link>[[=&url]]</link>
+		<description></description>
+		<language>[[=languageInherited]]</language>
+		<lastBuildDate>[[=document.documentLastBuildDate]]</lastBuildDate>
+		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
+		<generator>[[=&document.appNameVersion]]</generator>
+[[if master.logoImage]]
+		<image>
+			<url>[[mediainfo info:path media:master.logoImage]]</url>
+			<title>[[=&master.headerImageDescription]]</title>
+			<link>[[=&url]]</link>
+			<width>[[mediainfo info:width media:master.logoImage]]</width>
+			<height>[[mediainfo info:height media:master.logoImage]]</height>
+		</image>
+[[endif]]
+[[foreach sortedReverseChronoChildrenInIndex item]]
+		<item>
+			<title>[[=&item.titleText]]</title>
+			<link>[[=&item.url]]</link>
+			<description>
+[[if item.thumbnail]]
+				&lt;div class="article-thumbnail"&gt;
+					&lt;img[[idClass entity:Page property:image flags:"anchor" id:item.uniqueID]]
+						src="[[mediainfo info:path media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
+						alt="[[=&item.titleText]]"
+						width="[[mediainfo info:width media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
+						height="[[mediainfo info:height media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]" /&gt;
+				&lt;/div&gt;
+[[endif]]
+[[summary item collectionTruncateCharacters]]
+			</description>
+			<pubDate>[[=item.creationDateRFC822]]</pubDate>
+			<guid>[[=&item.url]]</guid>
+[[if item.enclosure]]
+			<enclosure url="[[=&item.enclosure.enclosureURL]]" length="[[=&item.enclosure.enclosureDataLength]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
+[[if item.thumbnail]]
+        <media:thumbnail url="[[enclosurepath item.thumbnail]]" />
+        <media:content url="[[enclosurepath item.enclosure]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
+[[endif2]]			
+[[endif]]
+[[forEach item.keywords aCategory]]
+			<category>[[=&aCategory]]</category>
+[[endForEach2]]
+		</item>
+[[endForEach]]
+ 	</channel>
+</rss>

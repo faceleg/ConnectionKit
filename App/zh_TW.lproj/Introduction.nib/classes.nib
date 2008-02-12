@@ -1,0 +1,18 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; showRegistrationWindow = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {done = id; openHigh = id; openIntro = id; openLicensing = id; openLow = id; }; 
+            CLASS = KTQuickStartController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oHighLink = NSButton; oLowLink = NSButton; oPreviewMovie = QTMovieView; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

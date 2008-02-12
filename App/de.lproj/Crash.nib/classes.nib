@@ -1,0 +1,44 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                cancelReport = id; 
+                displayHelp = id; 
+                showReportWindow = id; 
+                submitReport = id; 
+                windowHelp = id; 
+            }; 
+            CLASS = KTAbstractBugReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAccessoryView = NSView; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+                oOpenSavedFeedbackSwitch = NSButton; 
+                oReportWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = KTCrashReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAddressComboBox = KTEmailAddressComboBox; 
+                oDontReportButton = NSButton; 
+                oIncludeConsoleCheckbox = NSButton; 
+                oReportButton = NSButton; 
+                oReportTextView = NSTextView; 
+            }; 
+            SUPERCLASS = KTAbstractBugReporter; 
+        }, 
+        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }
+    ); 
+    IBVersion = 1; 
+}

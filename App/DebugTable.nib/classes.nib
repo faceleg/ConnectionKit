@@ -1,0 +1,87 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                buyApplication = id; 
+                chooseTheme = id; 
+                dumpDocument = id; 
+                getUpdatedApplication = id; 
+                orderFrontLicensingPanel = id; 
+                orderFrontPreferencesPanel = id; 
+                populateTestDocument = id; 
+                reloadDebugTable = id; 
+                saveWindowSize = id; 
+                showAvailableComponents = id; 
+                showAvailableISPs = id; 
+                showAvailableMedia = id; 
+                showNewsWindow = id; 
+                showPendingDeletions = id; 
+            }; 
+            CLASS = KTAppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAddCollectionMenu = NSMenu; 
+                oAddPageMenu = NSMenu; 
+                oAddPageletMenu = NSMenu; 
+                oDebugMediaPanel = NSPanel; 
+                oDebugMenuItem = NSMenuItem; 
+                oDebugTable = NSTableView; 
+                oGenericProgressImageView = NSImageView; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+                oMakeTextLargerMenuItem = NSMenuItem; 
+                oMakeTextSmallerMenuItem = NSMenuItem; 
+                oProMenuItem = NSMenuItem; 
+                oToggleAddressBarMenuItem = NSMenuItem; 
+                oToggleDetachInfoMenuItem = NSMenuItem; 
+                oToggleInfoMenuItem = NSMenuItem; 
+                oToggleSiteOutlineMenuItem = NSMenuItem; 
+                oToggleSmallPageIconsMenuItem = NSMenuItem; 
+                oToggleStatusBarMenuItem = NSMenuItem; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addPage = id; 
+                addSection = id; 
+                delete = id; 
+                group = id; 
+                groupAsSection = id; 
+                ungroup = id; 
+                updateNavigationBarShown = id; 
+                updateStatusBarShown = id; 
+            }; 
+            CLASS = KTDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oBackButton = NSButton; 
+                oExtrasTable = NSTableView; 
+                oForwardButton = NSButton; 
+                oMainBox = NTBoxView; 
+                oMainSplitterView = NSSplitView; 
+                oNavigationBar = NSBox; 
+                oReloadButton = NSButton; 
+                oSearchField = NSTextField; 
+                oSharedDefaultsController = NSUserDefaultsController; 
+                oSourceOutline = NSOutlineView; 
+                oSourceOutlineBox = NTBoxView; 
+                oSourceSplitterView = NSSplitView; 
+                oStatusBar = NSBox; 
+                oStatusBarField = NSTextField; 
+                oStatusField = NSTextField; 
+                oStatusIndicator = NSProgressIndicator; 
+                oStopButton = NSButton; 
+                oURLField = NSTextField; 
+                oWebView = WebView; 
+                oWebViewBox = NTBoxView; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = KTWebView; LANGUAGE = ObjC; SUPERCLASS = WebView; }, 
+        {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,38 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                acceptRegistration = id; 
+                buyKagi = id; 
+                buyPayPal = id; 
+                clearRegistration = id; 
+                contractWindow = id; 
+                expandWindow = id; 
+                forwardBack = id; 
+                lostCode = id; 
+                reload = id; 
+                stopLoading = id; 
+            }; 
+            CLASS = KTRegistrationController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oClearRegButton = NSButton; 
+                oCodeField = NSTextField; 
+                oForwardBack = NSSegmentedControl; 
+                oLockImage = NSImageView; 
+                oLostCodeButton = NSButton; 
+                oProgress = NSProgressIndicator; 
+                oPurchaseHeadlineField = NSTextField; 
+                oRegButton = NSButton; 
+                oRegistrationHeadlineField = NSTextField; 
+                oReloadOrStop = NSSegmentedControl; 
+                oWebView = WebView; 
+                oWebViewLine = NSBox; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}
