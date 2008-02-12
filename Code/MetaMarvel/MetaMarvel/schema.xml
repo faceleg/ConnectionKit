@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<schema version="1.0" xmlns="http://www.apple.com/metadata"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://www.apple.com/metadata file:///System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Resources/MetadataSchema.xsd">
+    <note>
+        Custom attributes that this metadata importer supports.
+        Supported types are CFString, CFNumber, CFDate, CFBoolean and CFData.		      
+    </note>
+    <attributes>
+        <attribute name="com_karelia_Sandvox_SiteTitle" multivalued="false" type="CFString"/>
+        <attribute name="com_karelia_Sandvox_SiteAuthor" multivalued="false" type="CFString"/>
+        <attribute name="com_karelia_Sandvox_PageCount" multivalued="false" type="CFNumber"/>
+        <attribute name="com_karelia_Sandvox_ModelVersion" multivalued="false" type="CFString"/>
+        <attribute name="com_karelia_Sandvox_AppVersion" multivalued="false" type="CFString"/>
+    </attributes>
+
+    <types>
+        <type name="com.karelia.sandvox.document">
+            <allattrs>
+	    com_karelia_Sandvox_SiteTitle
+        com_karelia_Sandvox_SiteAuthor
+        com_karelia_Sandvox_PageCount
+        com_karelia_Sandvox_ModelVersion
+        com_karelia_Sandvox_AppVersion
+            </allattrs>
+            <displayattrs>
+	    com_karelia_Sandvox_SiteTitle
+        com_karelia_Sandvox_SiteAuthor
+        com_karelia_Sandvox_PageCount
+        com_karelia_Sandvox_ModelVersion
+        com_karelia_Sandvox_AppVersion
+            </displayattrs>
+        </type>
+    </types>
+</schema>
+

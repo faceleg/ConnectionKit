@@ -1,0 +1,132 @@
+#!/bin/bash
+
+#
+# created by TJT 5/15/2006, last updated 11/6/2006
+#
+
+### CHANGE TRUNK TO MATCH YOUR LOCAL CONFIGURATION ###
+TRUNK=/Users/ttalbot/Code/projects/1.2.1
+
+PBXCP=${TRUNK}/Tools/pbxcp
+
+DESIGNS_DIR=${TRUNK}/Designs
+OTHER_DIR=${TRUNK}/Other
+
+READ_ME=READ\ ME\ -\ Sandvox\ Bonus\ Designs.rtfd
+#SLA_FILE=${OTHER_DIR}/SLAs/SLA-BonusDesigns
+
+# the dmg names that we'll use
+DMG_TEMP_NAME="temp"
+DMG_FINAL_NAME="BonusDesigns"
+VOLUME_NAME="BonusDesigns"
+
+# the directory that will appear on ~/Desktop after download
+BONUS_DIR_NAME="Sandvox Bonus Designs"
+
+# the top-level directory we'll do our work in
+SCRATCH_DIR=/tmp/build-bonusdesigns-dmg
+
+# the directory within the mounted .dmg we'll copy to
+DMG_DIR="/Volumes/${VOLUME_NAME}/${BONUS_DIR_NAME}"
+
+if test -d ${DESIGNS_DIR}
+then
+    if test -d ${SCRATCH_DIR}
+    then
+        echo "Removing scratch directory..."
+        rm -rf ${SCRATCH_DIR}
+    fi
+    mkdir -p ${SCRATCH_DIR}
+
+    echo "Packaging Bonus Designs..."
+    pushd ${SCRATCH_DIR}
+
+# create an initial disk image (16 MB)
+    echo "Creating initial disk image..."
+    hdiutil create -size 16m -fs HFS+ -volname "${VOLUME_NAME}" "${DMG_TEMP_NAME}.dmg"
+    
+# mount the dmg
+    echo "Mounting initial disk image..."
+    hdiutil attach "${DMG_TEMP_NAME}.dmg"
+    
+# create directory
+    mkdir -p "${DMG_DIR}"
+
+# copy READ ME to dmg
+    echo "Copying ${READ_ME} to disk image..."
+    ${PBXCP} \
+        -exclude .DS_Store \
+        -exclude CVS \
+        -exclude .svn \
+        -resolve-src-symlinks \
+        "${OTHER_DIR}/${READ_ME}" "${DMG_DIR}"
+
+# set READ ME's extension to be hidden
+	echo "Setting ${READ_ME} extension to be hidden..."
+	/Developer/Tools/SetFile -a E "${DMG_DIR}/${READ_ME}"
+
+# copy Designs to dmg
+	echo "Copying Designs marked BONUS..."
+	pushd ${DESIGNS_DIR}
+	for i in *
+	do
+    	if [ -e "${i}/BONUS" ];
+    	then
+        	# put into application
+        	echo "BONUS DESIGN: PBXCp \"$i\" ${DMG_DIR}"
+
+        	${PBXCP} \
+		        -exclude .DS_Store \
+		        -exclude CVS \
+		        -exclude .svn \
+				-exclude BONUS \
+				-exclude Info.plist \
+		        -resolve-src-symlinks \
+		        "${PWD}/${i}" "${DMG_DIR}"
+
+			/usr/bin/gcc -E -P -x c -Wno-trigraphs \
+				-include ${TRUNK}/BuildSettings.h \
+				-C "${PWD}/${i}/Info.plist" \
+				-o "${DMG_DIR}/${i}/Info.plist"
+
+    	else
+        	echo "--------------  Not including $i"
+    	fi
+	done
+	popd
+
+# obtain device information
+    echo "Gathering device information..."
+    DEVS=$(hdiutil attach "${DMG_TEMP_NAME}.dmg" | cut -f 1)
+    DEV=$(echo $DEVS | cut -f 1 -d ' ')
+
+# unmount the dmg
+    echo "Unmounting initial disk image..."
+    hdiutil detach "$DEV"
+
+# compress and convert to read-only
+# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1
+    echo "Converting disk image to read-only..."
+    hdiutil convert "${DMG_TEMP_NAME}.dmg" -format UDZO -o "${DMG_FINAL_NAME}.dmg"
+    rm "${DMG_TEMP_NAME}.dmg"
+    
+# mark as "Internet-enabled"
+    echo "Marking disk image as internet-enabled..."
+    hdiutil internet-enable -yes "${DMG_FINAL_NAME}.dmg"
+
+# install license agreement (there isn't one as of 11/6/2007)
+#    echo "Installing License Agreement..."
+#    hdiutil unflatten ${DMG_FINAL_NAME}.dmg
+#    DeRez ${SLA_FILE} > sla.r
+#    Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg
+#    hdiutil flatten ${DMG_FINAL_NAME}.dmg
+#    rm sla.r
+
+    popd
+    echo "Packaging Complete!"
+    echo "Your Sandvox Bonus Designs are waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
+else
+    echo "Did not find Sandvox Designs! ${DESIGNS_DIR}"
+    echo "Check paths."
+    exit 0
+fi

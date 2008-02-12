@@ -1,0 +1,22 @@
+#!/bin/sh
+
+
+
+echo "for now, just fetch the wiki2.karelia.com from the server.  For some reason, this is getting links differently than on the server"
+
+exit;
+
+
+echo "Getting help from wiki2.karelia.com into a working location in home directory.  wget 1.10.2 is required.  Robots = off in .wgetrc please"
+
+# ftp://mirrors.kernel.org/gnu/wget/wget-1.10.2.tar.gz
+
+cd ~/wikidownload > /dev/null
+
+
+rm -rf ~/wikidownload/wiki2.karelia.com
+
+~/bin/wget --http-user dwood --http-passwd shiny.happy --domains=wiki2.karelia.com --level=2 --no-parent --convert-links --html-extension --recursive --reject "*\?*"  http://wiki2.karelia.com/Special:Allpages
+
+echo "Done, ready for help-clean -- PLEASE use -afs option on server!"
+

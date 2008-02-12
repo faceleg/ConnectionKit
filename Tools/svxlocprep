@@ -1,0 +1,185 @@
+#!/bin/sh
+
+# Version: 13 July 2006
+#
+# Confidential - Karelia Software.  Only for use by localizers of Sandvox.
+# Please make sure you have the latest version of this.
+#
+# This will copy the localized resources into a directory structure akin to the top-level subversion
+# repository which holds imedia and sandvox among others.
+#
+# Then opendiff those two directories (first the repository [left], then this generated dir [on the right])
+# with -merge being the repository.
+# and click exclude Changed Left.
+#
+# Usually the new version will be the new correct one; choose "use right" (command-3) for most cases.
+#
+# changes: now removes the quickstart PDF
+# 4-14-2007 add 4 new pagelets
+
+if [ -e "$2/Contents" ]; then
+
+cd ~/Desktop
+
+WD=`pwd`;
+VERBOSE='';		#make it 'v' if verbose; '' if not verbose
+
+if [ -e "Subversion" ]; then
+	mv Subversion Subversion.old
+fi
+
+FILENAME="svx-$1";
+
+echo "Extracting language $1 out of $2 into $WD/$FILENAME"
+
+pushd "$2" > /dev/null
+
+# frameworks
+
+mkdir -p$VERBOSE $WD/Subversion/imedia/trunk
+cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia/trunk
+
+mkdir -p$VERBOSE $WD/Subversion/connection/trunk
+cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/trunk
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Frameworks/KTComponents
+cp -R$VERBOSE ./Contents/Frameworks/KTComponents.framework/Versions/A/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Frameworks/KTComponents
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Frameworks/AmazonSupport
+cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Frameworks/AmazonSupport
+
+# App & Spotlight
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Spotlight/MetaMarvel
+cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Spotlight/MetaMarvel
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Applications/Marvel
+cp -R$VERBOSE ./Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Applications/Marvel
+
+# plugins with their own project
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactElement
+cp -R$VERBOSE ./Contents/PlugIns/Contact.svxElement/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactElement
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactPage
+cp -R$VERBOSE ./Contents/PlugIns/Contact.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Contact.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/ContactPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/DeliciousPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Delicious.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/DeliciousPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/DiggPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Digg.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/DiggPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/FlickrPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Flickr.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/FlickrPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/IndexPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Index.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/IndexPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/SiteMapPage
+cp -R$VERBOSE ./Contents/PlugIns/SiteMap.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/SiteMapPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/StickamPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Stickam.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/StickamPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/AmazonPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Amazon.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/AmazonPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/IMStatusPagelet
+cp -R$VERBOSE ./Contents/PlugIns/IMStatus.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/IMStatusPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/PageCounterPagelet
+cp -R$VERBOSE ./Contents/PlugIns/PageCounter.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/PageCounterPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/RSSBadgePagelet
+cp -R$VERBOSE ./Contents/PlugIns/RSSBadge.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/RSSBadgePagelet
+
+# plugins in KTPlugins
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/HTMLElement 
+cp -R$VERBOSE ./Contents/PlugIns/HTML.svxElement/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/HTMLElement 
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/ImageElement
+cp -R$VERBOSE ./Contents/PlugIns/Image.svxElement/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/ImageElement
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/RichTextElement
+cp -R$VERBOSE ./Contents/PlugIns/RichText.svxElement/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/RichTextElement
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/VideoElement
+cp -R$VERBOSE ./Contents/PlugIns/Video.svxElement/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Elements/VideoElement
+
+
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/DownloadIndex
+cp -R$VERBOSE ./Contents/PlugIns/Download.svxIndex/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/DownloadIndex
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/GeneralIndex
+cp -R$VERBOSE ./Contents/PlugIns/General.svxIndex/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/GeneralIndex
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/ListingIndex
+cp -R$VERBOSE ./Contents/PlugIns/Listing.svxIndex/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/ListingIndex
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/PhotoGridIndex
+cp -R$VERBOSE ./Contents/PlugIns/PhotoGrid.svxIndex/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Indexes/PhotoGridIndex
+
+
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/BadgePagelet
+cp -R$VERBOSE ./Contents/PlugIns/Badge.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/BadgePagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/FeedPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Feed.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/FeedPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/HTMLPagelet
+cp -R$VERBOSE ./Contents/PlugIns/HTML.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/HTMLPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/IFramePagelet
+cp -R$VERBOSE ./Contents/PlugIns/IFrame.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/IFramePagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/LinkListPagelet
+cp -R$VERBOSE ./Contents/PlugIns/LinkList.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/LinkListPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/MoviePagelet
+cp -R$VERBOSE ./Contents/PlugIns/Movie.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/MoviePagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/PhotoPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Photo.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/PhotoPagelet
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/TextPagelet
+cp -R$VERBOSE ./Contents/PlugIns/Text.svxPagelet/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pagelets/TextPagelet
+
+
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/DownloadPage
+cp -R$VERBOSE ./Contents/PlugIns/Download.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/DownloadPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/HTMLPage
+cp -R$VERBOSE ./Contents/PlugIns/HTML.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/HTMLPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/LinkPage
+cp -R$VERBOSE ./Contents/PlugIns/Link.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/LinkPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/MoviePage
+cp -R$VERBOSE ./Contents/PlugIns/Movie.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/MoviePage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/PhotoPage
+cp -R$VERBOSE ./Contents/PlugIns/Photo.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/PhotoPage
+
+mkdir -p$VERBOSE $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/TextPage
+cp -R$VERBOSE ./Contents/PlugIns/Text.svxPage/Contents/Resources/$1.lproj $WD/Subversion/projects/$CURRENTBRANCH/Plugins/KTPlugins/Pages/TextPage
+
+popd > /dev/null
+
+find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null
+
+mv Subversion $FILENAME
+
+echo "DONE.  $FILENAME  ready to go."
+
+else
+	echo "Usage: locprep <language> <path-to-Sandvox.app>"
+	exit 1;
+fi

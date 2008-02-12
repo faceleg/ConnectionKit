@@ -1,0 +1,506 @@
+#!/bin/sh
+
+# This is for processing the raw downloaded wiki help files.
+# It can run either on the mac (for generating app's help) 
+# or on the karelia dreamhost account.
+
+
+# note: try IFS=$'\n'    to make the file separator be newlines, not spaces
+
+
+vflag=
+fflag=
+bflag=
+aflag=
+sflag=
+while getopts hs?fvab: name
+do
+  case $name in
+  v)      vflag=1;;
+  a)      aflag=1;;
+  f)      fflag=1;;
+  s)      sflag=1;;
+  b)      bflag=1
+          bval="$OPTARG";;
+  ?)     printf "Usage: %s: [-v] [-f] [-s] [-a] [-b sampleValue] args\n\tv = verbose\n\tf = fast, skipping graphics processing\n\ts = server\n\ta = all articles, even non-user ones\n"  $0
+         exit 2;;
+  esac
+done
+if [ ! -z "$vflag" ]; then
+    printf "Option -v specified, being verbose\n"
+    if [ ! -z "$fflag" ]; then
+    printf "Option -f specified, fast -- skipping graphics\n"
+    fi
+    if [ ! -z "$aflag" ]; then
+    printf "Option -a specified, keeping ALL articles, not stripping non-user ones\n"
+    fi
+    if [ ! -z "$sflag" ]; then
+    printf "Option -s specified, server-specific operations in effect\n"
+    fi
+    if [ ! -z "$bflag" ]; then
+      printf 'Option -b "%s" specified\n' "$bval"
+    fi
+fi
+shift $(($OPTIND - 1))
+if [ ! -z "$vflag" ]; then
+    printf "Remaining arguments are: %s\n" "$*"
+fi
+
+# -----------------------------------------------------------------------------
+echo "--- Copy wiki files into wiki.working and modifying there..."
+# -----------------------------------------------------------------------------
+cd ~/wikidownload > /dev/null || exit 1
+rm -rf ~/wikidownload/wiki.working
+cp -R ~/wikidownload/wiki2.karelia.com ~/wikidownload/wiki.working
+cd ~/wikidownload/wiki.working > /dev/null  || exit 1
+# note: there is a reference to wiki2 below as well, look for wiki2\.karelia\.com
+
+if [ -z "$aflag" ]; then
+# -----------------------------------------------------------------------------
+echo "--- Remove any category pages (Designer, Developer, Localization) AND their linked images..."
+# -----------------------------------------------------------------------------
+    for i in `grep -l 'Category:' *`
+    do
+        if [ ! -z "$vflag" ]; then
+            echo "$i:"
+        fi
+        # remove images
+        for j in `grep -E -o 'src="images/[^ ]+"' $i`
+        do
+            FILE=`echo $j | sed 's/src="\(.*\)"/\1/'`
+            if [ ! -z "$vflag" ]; then
+                echo "    $FILE"
+            fi
+            rm $FILE
+        done
+        # remove links to images (PDFs)
+        for j in `grep -E -o 'href="images/[^ ]+"' $i`
+        do
+            FILE=`echo $j | sed 's/href="\(.*\)"/\1/'`
+            if [ ! -z "$vflag" ]; then
+                echo "    $FILE"
+            fi
+            rm $FILE
+        done
+        # remove the file itself!
+        rm $i
+    done
+fi
+# -----------------------------------------------------------------------------
+echo "--- Remove directories and files we don't want..."
+# -----------------------------------------------------------------------------
+rm -rf Image:*
+rm -rf User:*
+rm -rf User_talk:*
+rm -rf Talk:*
+rm -rf Category:*
+rm -rf KareliaDocsPrivate:*
+rm -rf Special:*
+rm -rf skins
+if [ -z "$aflag" ]; then
+    rm -rf images/thumb
+fi
+rm Favicon.ico.html
+rm opensearch_desc.php
+
+# -----------------------------------------------------------------------------
+echo "--- Remove pages that don't make sense in this context..."
+# -----------------------------------------------------------------------------
+rm Robots.txt.html
+rm Main_Page.html
+rm Sandvox_Users_Guide.html
+
+# (We have the below page online, only for compatibility with older sandvox, it linked to this page)
+
+# -----------------------------------------------------------------------------
+echo "--- Build the index page before removing redundant redirected pages..."
+# -----------------------------------------------------------------------------
+cat > all_index.html <<EOF
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Index</title>
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+    <style   type="text/css">
+        p {
+            border-bottom:1px solid #CCC;
+            margin:0;
+            padding:0;
+        }
+        h1 {
+            margin-bottom:20px;
+        }
+        
+        #firsthalf, #secondhalf {
+            width:45%;
+            float:left;
+        }
+        
+        #secondhalf {
+            width:45%;
+            float:left;
+            border-left:1px solid #CCC;
+            margin-left:10px;
+            padding-left:10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Index</h1>
+<div id="firsthalf">
+EOF
+
+
+TOTAL=`grep -l '<h1 class="firstHeading">' * | wc -l`
+TOTALPLUSONE=`expr $TOTAL + 1`
+HALF=`expr $TOTALPLUSONE / 2`
+COUNTER=0
+for LINE in `grep -l '<h1 class="firstHeading">' *`
+do
+    TITLETAG=`grep -E -o '<h1 class="firstHeading">.+</h1>' $LINE`
+    TITLE=`echo $TITLETAG| sed 's/<h1 class="firstHeading">\(.*\)<\/h1>/\1/'`
+    DESTINATION=$TITLE
+    
+    REDIRECTEDTITLETAG=`grep -E -o '&amp;redirect=no" title=".+"' $LINE`
+    REDIRECTEDTITLE=`echo $REDIRECTEDTITLETAG| sed 's/&amp;redirect=no" title="\(.*\)"/\1/'`
+    
+    if [ -n "$REDIRECTEDTITLE" ]; then
+        if [ ! -z "$vflag" ]; then
+            echo "replacing $TITLE with $REDIRECTEDTITLE as destination"
+        fi
+        DESTINATION=$REDIRECTEDTITLE
+    fi
+    echo "<p><a href=\"$LINE\" title=\"$TITLE\">$DESTINATION</a></p>" >> all_index.html
+
+    if [ ! -z "$vflag" ]; then
+        echo "INDEX: $LINE - $TITLE - $DESTINATION"
+    fi
+    # halfway - put in a divider 'div'
+    COUNTER=`expr $COUNTER + 1`
+    if [ "$COUNTER" -eq "$HALF" ]; then
+        cat >> all_index.html <<EOF
+</div>
+<div id="secondhalf">
+EOF
+    fi
+done
+
+cat >> all_index.html <<EOF
+</div>
+</body>
+</html>
+EOF
+
+# -----------------------------------------------------------------------------
+echo "--- Remove redundant redirected pages & repairing links..."
+# -----------------------------------------------------------------------------
+# now that I have an index, and it's just like any other file now, I want to go through
+# and find all pages that are redirects (they say redirected from) means that this file is
+# going to go away, and we need to instead point people to the new version! 
+
+for i in `grep -l '<div id="contentSub">(Redirected from' *`
+do
+    # find the file we will use instead
+    ORIGLINE=`grep -E -o 'Retrieved from "<a href=".+\.html' $i`
+    # get just the page title
+    ORIG=`echo $ORIGLINE | sed 's/Retrieved from "<a href="\(.*\)#*\.html/\1/'`
+
+    if [ ! -z "$vflag" ]; then
+        echo "ORIGLINE = $ORIGLINE"
+        echo "REDIRECT $i -> $ORIG.html"
+    fi
+  
+ #  for j in `grep -l "href=\"$i\"" *`  # old way, doesn't catch <a href="foo#bar"
+    for j in `grep -l "href=\"$i[\"#]" *`
+    do
+        if [ ! -z "$vflag" ]; then
+            echo "    $j"
+        fi
+        perl -pi -e "s/\"$i\"/\"$ORIG\.html\"/g" $j
+        perl -pi -e "s/\"$i#/\"$ORIG\.html#/g" $j
+    done
+    
+    # now remove the redirect file
+    if [ ! -z "$vflag" ]; then
+        echo "removing file with redirect: $i"
+    fi
+    rm $i
+done
+
+# -----------------------------------------------------------------------------
+echo "--- Optimize Graphics, convert many images to jp2... (THIS MAY TAKE A WHILE)"
+# -----------------------------------------------------------------------------
+    # I can set quality to be [low|normal|high|best|<percent>]
+    # 10: Image directory shrunk from 10112 K to 1972 K ... YUCK!
+    # 50 = normal: Image directory shrunk from 10112 K to 3296 K -- but some are not very good
+    # 60: Image directory shrunk from 9952 K to 3764 K
+    # 65: Image directory shrunk from 9952 K to 4076 K -- decent
+    # 75: Image directory shrunk from 10112 K to 5012 K -- very good
+COMPRESSION=75
+
+# These are the files that just don't work well when compressed with jp2, so skip them.
+SPECIALJP2="Browser_Window_TItle ContactFormIcon EditLinkPopup ExternalLinkIcon Graphical_text_supported_example Graphical_text_unsupported_example InspectorToolbarIcon MediaBrowserToolbarIcon MovieIcon PhotoPageIcon Photo_page_in_Site_Outline Podcast_page_address Publishing_Icon TextPageIcon Sandvox_Growl_Notification_example"
+
+
+if [ ! -z "$fflag" ]; then
+    echo;echo;echo;echo;echo;echo;echo "* * * * * * * * * * SKIPPING IMAGES";echo;echo;echo;echo;echo;echo
+else
+    BEFORE=`du -k -d0 images  | awk '{print $1}'`
+   for PNGPATH in `find images -name '*.png'`
+    do
+        STEM=`echo "$PNGPATH" | sed 's/\(.*\)\.png/\1/'`
+        FILESTEM=`echo "$STEM" | sed 's/.*\/\(.*\)/\1/'`
+        # output empty if the file stem is found in this
+        EMPTYIFSPECIALJP2=`echo ${SPECIALJP2} | sed "s/.*${FILESTEM}.*//"`
+    
+        if [ -n "${EMPTYIFSPECIALJP2}" ]; then
+            
+            FORMAT=jp2
+            JP2PATH="${STEM}.${FORMAT}"
+            # HASALPHA=`sips -g hasAlpha $PNGPATH`
+            sips -s format ${FORMAT} "$PNGPATH" -s formatOptions $COMPRESSION --out "${JP2PATH}" > /dev/null
+            if [ -e $JP2PATH ]; then
+            
+                PNGDU=`du "$PNGPATH" | awk '{print $1}'`
+                JP2DU=`du "${JP2PATH}" | awk '{print $1}'`
+                
+                if [ $JP2DU -lt $PNGDU ]; then # is jp2 smaller than original PNG?
+                    if [ ! -z "$vflag" ]; then
+                        echo "${STEM} SMALLER '${FORMAT}': ${JP2DU}, PNG was ${PNGDU} -- replacing in HTML"
+                    fi
+                    
+                    # horrible way to prepend forward slashes and dots with backslash.  Better way?
+        
+                    PNGPATHESCAPED=`echo $PNGPATH | sed 's/\([\.\/]\)/\\\\\1/g'`
+                    JP2PATHESCAPED=`echo $JP2PATH | sed 's/\([\.\/]\)/\\\\\1/g'`
+                    perl -pi -e "s/${PNGPATHESCAPED}/${JP2PATHESCAPED}/g" *.html
+        
+                    # remove the original PNG now
+                    rm "${PNGPATH}"
+                   
+                else
+                    if [ ! -z "$vflag" ]; then
+                        echo "${STEM} SMALLER PNG: ${PNGDU}, '${FORMAT}' was ${JP2DU}"
+                    fi
+                    rm "${JP2PATH}"
+                fi
+            else
+                echo "******* unable to convert to '${FORMAT}': $PNGPATH"
+            fi
+        fi
+    done
+    
+    AFTER=`du -k -d0 images | awk '{print $1}'`
+    echo "    *** Image directory shrunk from $BEFORE K to $AFTER K using compression of $COMPRESSION"
+fi
+# -----------------------------------------------------------------------------
+echo '--- Optimizing the remaining PNG files... (THIS MAY TAKE A WHILE)'
+# -----------------------------------------------------------------------------
+
+if [ ! -z "$fflag" ]; then
+    echo;echo;echo;echo;echo;echo;echo "* * * * * * * * * * SKIPPING IMAGES";echo;echo;echo;echo;echo;echo
+else
+
+    for i in `find images -name '*.png'`
+    do
+        if [ ! -z "$vflag" ]; then
+            echo "$i..."
+        fi
+        optipng -q -o5 "$i"
+    done
+
+    AFTER=`du -k -d0 images | awk '{print $1}'`
+    echo "    *** Image directory shrunk to $AFTER K by optimizing PNGs"
+fi
+
+# -----------------------------------------------------------------------------
+echo '--- Remove extra whitespace and convert \\n to \\r so grep can function multi-line...'
+# -----------------------------------------------------------------------------
+perl -pi -e 's/\n+/\r/g' *.html
+
+# -----------------------------------------------------------------------------
+echo "--- Remove wikimedia junk from pages..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/<div class="printfooter">.+?<\/body>/<\/body>/g' *.html
+perl -pi -e 's/<span class="editsection".+?<\/span> //g' *.html
+perl -pi -e 's/<h3 id="siteSub">.+?<!-- start content -->//g' *.html
+perl -pi -e 's/<table id="toc".+?<\/table>//g' *.html
+perl -pi -e 's/<p><script.+?<\/script>\r<\/p>//g' *.html
+perl -pi -e 's/<script.+?<\/script>//g' *.html
+perl -pi -e 's/<p><br \/>\r<\/p>//g' *.html
+perl -pi -e 's/<!--.+?-->//g' *.html
+perl -pi -e 's/<link rel="search" .+? \/>//g' *.html
+perl -pi -e 's/<div id="globalWrapper">//g' *.html
+perl -pi -e 's/<div id="column-content">//g' *.html
+perl -pi -e 's/<div id="content">//g' *.html
+perl -pi -e 's/<a name="top" id="top"><\/a>//g' *.html
+perl -pi -e 's/<div id="bodyContent">//g' *.html
+
+# -----------------------------------------------------------------------------
+echo "--- Put in banner, mainbox divs (special case: all_index)..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/<\/body>/<\/div><\/body>/g' *.html
+perl -pi -e 's/<body.*?>/<body><div id="banner"><div id="machelp"><a class="bread" href="..\/Sandvox%20Help.html">Sandvox Help<\/a><\/div><div id="index"><a class="leftborder" href="all_index.html">Index<\/a><\/div><\/div><div id="mainbox">/g' *.html
+# but on all_index, we don't want the link to the index
+perl -pi -e 's/<div id="index">.+?<\/div>//g' all_index.html
+
+# -----------------------------------------------------------------------------
+echo "--- Head condensation..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/ - KareliaDocsPrivate<\/title>/<\/title>/' *.html
+perl -pi -e 's/<meta name="keywords".+?\/>//g' *.html
+perl -pi -e 's/<meta name="robots".+?\/>//g' *.html
+perl -pi -e 's/<link rel="shortcut icon".+?\/>//g' *.html
+perl -pi -e 's/<link title="Creative Commons".+?\/>//g' *.html
+perl -pi -e 's/<link rel="copyright".+?\/>//g' *.html
+perl -pi -e 's/<link rel="stylesheet".+?\/>//g' *.html
+perl -pi -e 's/<script type="text\/javascript".+?<\/script>//g' *.html
+perl -pi -e 's/<style type="text\/css" media="screen,projection">.+?<\/style>//g' *.html
+perl -pi -e 's/<style type="text\/css".+?<\/style>/<link href="..\/main.css" rel="stylesheet" type="text\/css" media="all" \/>\r\t<link href="..\/print.css" rel="stylesheet" type="text\/css" media="print" \/>/g' *.html
+
+# -----------------------------------------------------------------------------
+echo "--- Special div around related articles, etc...."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/(<a name="Related_Articles.+?<\/ul>)/<div class="related">\r\1\r<\/div>/g' *.html
+perl -pi -e 's/(<a name="Support_Articles.+?<\/ul>)/<div class="related">\r\1\r<\/div>/g' *.html
+
+
+perl -pi -e 's/~~SIGNUP FORM GOES HERE~~/<form method="get" action="http:\/\/groups.yahoo.com\/subscribe\/sandvox"><label for="user">Your e-mail address:<\/label>&nbsp;<input type="text" name="user" value="" size="20" \/>&nbsp;<input type="submit" alt="Click here to join sandvox discussion list group" name="Join Group" value="Join Group" \/><\/form>/g' *.html
+
+
+
+
+
+
+# -----------------------------------------------------------------------------
+echo "--- Move all keywords at the bottom up into the meta tags..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/<head>(.+)<hr \/>\r<p>Keywords: *(.+?)\r*<\/p>/<head>\r\t<meta name="keywords" content="\2" \/>\1/g' *.html
+
+
+# -----------------------------------------------------------------------------
+echo "--- Turn off indexing on special pages..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/<head>/<head>\r\t<meta name="robots" content="NOINDEX" \/>/g' Troubleshooting.html Common_Tasks.html
+
+
+# -----------------------------------------------------------------------------
+echo "--- Remove links from images.  Clean up the alt text too..."
+# -----------------------------------------------------------------------------
+perl -pi -e 's/<a href="Image:.+?>(<img.+?>)<\/a>/\1/g' *.html
+perl -pi -e 's/alt="Image:(.+?).png"/alt="\1"/g' *.html
+perl -pi -e 's/ longdesc=".+?"//g' *.html
+
+# magnifying glass, only for "all" option where we keep thumbs. Not actually used
+perl -pi -e 's/skins\/common\/images\/magnify\-clip\.png/g\/mag.png/g' *.html
+
+#change "images" directory to "img" and then "Images.1.html" to "Images.html"
+perl -pi -e 's/src="images\//src="img\//g' *.html
+perl -pi -e 's/<a href="images\//<a href="img\//g' *.html
+mv images img
+
+#no loonger needed?
+#perl -pi -e 's/Images\.1\.html/Images\.html/g' *.html
+#mv Images.1.html Images.html
+
+# -----------------------------------------------------------------------------
+echo '--- Fix "Index" fetched as Index.html, call it Index_ instead...'
+# -----------------------------------------------------------------------------
+perl -pi -e 's/Index\.html/Index_\.html/g' *.html
+mv Index.html Index_.html
+
+if [ -z "$sflag" ]; then
+
+# -----------------------------------------------------------------------------
+echo '--- Convert applescript: URL for sampler to help:runscript'
+# -----------------------------------------------------------------------------
+
+perl -pi -e 's/applescript\:.+?\Script Editor\.\r<\/li\>/help:runscript=Sandvox%20Help\/a\/sample.scpt">Click Here<\/a>.<\/li>/g' *.html
+
+fi
+
+# -----------------------------------------------------------------------------
+echo '--- Remove rel=nofollow...'
+# -----------------------------------------------------------------------------
+perl -pi -e 's/ rel="nofollow"//g' *.html
+
+# -----------------------------------------------------------------------------
+echo "--- Adding link for feedback..."
+# -----------------------------------------------------------------------------
+
+for i in *.html
+do
+    if [ "$i" != "all_index.html" ]; then
+        echo $i
+        perl -pi -e "s/<\/body>/<div id='feedback'>How can we improve this page? <a href='http:\/\/docs.karelia.com\/feedback.html?h=Sandvox&amp;p=$i'>Let us know.<\/a><\/div><\/body>/g" $i
+    fi
+done
+
+# -----------------------------------------------------------------------------
+echo '--- Convert \r back to standard UNIX-like newline, \n...'
+# -----------------------------------------------------------------------------
+perl -pi -e 's/\r+/\n/g' *.html
+
+
+# -----------------------------------------------------------------------------
+echo "--- Run HTML tidy on the pages..."
+# -----------------------------------------------------------------------------
+
+for i in `find . -name '*.html'`
+do
+    if [ ! -z "$vflag" ]; then
+        echo "$i..."
+    fi
+    tidy --tidy-mark no -indent -wrap 9999 -asxhtml -utf8 -quiet --indent-spaces 4 -modify "$i"
+done
+
+#find . -name '*.html' -exec tidy --tidy-mark no -indent -wrap 9999 -asxhtml -utf8  -quiet --indent-spaces 4 -modify {}  \;
+
+
+# -----------------------------------------------------------------------------
+echo "--- Check for dead links..."
+# -----------------------------------------------------------------------------
+
+# make sure there are no magnifying glass icons which indicate there was a thumbnail
+ANYMAGNIFY=`grep -l '<div class="magnify"' *`
+if [ -n "$ANYMAGNIFY" ]; then
+    echo "Whoops, there are thumbnails in the HTML pages: $ANYMAGNIFY"
+    exit 1
+fi
+
+# Look at all local links and make sure they are valid
+cat /dev/null > /tmp/the-help-links.txt
+for i in `find . -name '*.html'`
+do
+    if [ ! -z "$vflag" ]; then
+        echo "$i..."
+    fi
+    # remove images
+    for j in `grep -o -E 'href=\"[^/^=^#]+?["#]' $i`
+    do
+        echo $j | sed 's/href="\(.*\)["#]/\1/' >> /tmp/the-help-links.txt
+    done
+done
+ALLLINKS=`cat /tmp/the-help-links.txt | sort | uniq`
+
+for i in $ALLLINKS
+do
+
+    if [ ! -e $i ]; then
+        LINKINGFILES=`grep -l $i *.html`
+        echo "#### WARNING: Dead link to: $i from:"
+        echo $LINKINGFILES
+    fi
+done
+
+# -----------------------------------------------------------------------------
+echo "--- Removing empty dirs..."
+# -----------------------------------------------------------------------------
+
+find . -type d -empty -exec rm -rf {} \;
+
+
+echo "Done modifying wiki.working, ready for help-build (mac) or help-move (server)"

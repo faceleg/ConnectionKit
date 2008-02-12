@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# For initial add of a language.
+*
+# Merge the files into the structure of $1, e.g. /Volumes/BigData/Subversion  Directories should already exist in $1.
+#
+#
+
+
+HOW THE HECK IS THIS SUPPOSED TO WORK?
+
+if [ -e "$2" ]; then
+if [ -e "$1" ]; then
+
+echo "Moving files from $1 to $2"
+
+pushd $1 || exit 1;
+
+find . -type d -name '*.lproj' -exec cp -R -v {} $2{} \;
+
+
+
+
+popd
+
+
+else
+	echo "Directory must exist: $1"
+	exit 1;
+fi
+
+
+else
+	echo "Directory must exist: $2"
+	exit 1;
+fi

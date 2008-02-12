@@ -1,0 +1,28 @@
+#!/bin/sh
+
+
+echo "assembling help out of the cleaned up help in ~/wiki.working"
+
+
+FILESOURCE=~/wikidownload/wiki.working
+
+
+HELPDEST="${SANDVOXCURRENT}/Applications/Marvel/Sandvox Help"
+
+# we put the help files into "z" folder so they are all together
+HELPFILEDEST=${HELPDEST}/z
+
+
+
+# Remove any old copied-in files (won't affect subversion)
+cd "${HELPFILEDEST}" || exit 1
+
+find . -type f ! -path '*.svn*' -exec rm {} \;
+
+# bring in the raw files
+cp -R ${FILESOURCE}/* .
+
+# remove the sips problem files
+find . -type f -name '.*' ! -path '*.svn*' -exec rm {} \;
+
+open -a "Help Indexer" "${HELPDEST}"

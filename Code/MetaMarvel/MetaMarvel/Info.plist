@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>MDImporter</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.karelia.sandvox.document</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>APP_VERSION (SVN_VERSION), © 2006 Karelia Software</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>com.karelia.sandvox.importer</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>CFPlugInDynamicRegisterFunction</key>
+	<string></string>
+	<key>CFPlugInDynamicRegistration</key>
+	<string>NO</string>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>8F2F2414-8FCF-4D1B-B944-C3FB162D22F8</key>
+		<string>MetadataImporterPluginFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>8B08C4BF-415B-11D8-B3F9-0003936726FC</key>
+		<array>
+			<string>8F2F2414-8FCF-4D1B-B944-C3FB162D22F8</string>
+		</array>
+	</dict>
+	<key>CFPlugInUnloadFunction</key>
+	<string></string>
+</dict>
+</plist>

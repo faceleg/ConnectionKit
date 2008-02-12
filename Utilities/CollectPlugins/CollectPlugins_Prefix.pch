@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CollectPlugins' target in the 'CollectPlugins' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

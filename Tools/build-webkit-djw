@@ -1,0 +1,67 @@
+#!/bin/sh
+
+echo "building webkit...."
+#  --release ????
+
+build-webkit --no-svg GCC_OPTIMIZATION_LEVEL=s ARCHS='ppc i386' SDKROOT=/Developer/SDKs/MacOSX10.4u.sdk DEPLOYMENT_POSTPROCESSING=YES STRIP_INSTALLED_PRODUCT=YES DEAD_CODE_STRIPPING=YES DEBUGGING_SYMBOLS=full GCC_TREAT_WARNINGS_AS_ERRORS=NO PREBINDING=YES
+
+# should it be DEBUGGING_SYMBOLS=full and then -gfull as a separate item?
+# http://developer.apple.com/documentation/DeveloperTools/Conceptual/XcodeUserGuide/Contents/Resources/en.lproj/05_08_bs_linking/chapter_35_section_9.html
+
+# Re-origin the frameworks.  Maybe I can stop doing this ....
+# http://trac.webkit.org/dev/changeset/13687
+
+BUILD="/Volumes/BigData/build/Release"
+SYS="/System/Library/Frameworks"
+JSC="JavaScriptCore.framework/Versions/A/JavaScriptCore"
+JSG="JavaScriptGlue.framework/Versions/A/JavaScriptGlue"
+WC="WebCore.framework/Versions/A/WebCore"
+WK="WebKit.framework/Versions/A/WebKit"
+WKFR="WebKit.framework/Versions/A/Frameworks"
+
+echo "tarring $BUILD ...."
+tar cf $BUILD.tar $BUILD
+
+echo "redoing IDs...."
+
+# install name of libraries ... move back to their usual place
+
+echo "install_name_tool -id $SYS/$WKFR/$JSC  $BUILD/$JSC"
+echo "install_name_tool -id /System/Library/PrivateFrameworks/$JSG  $BUILD/$JSG"
+echo "install_name_tool -id $SYS/$WKFR/$WC  $BUILD/$WC"
+echo "install_name_tool -id $SYS/$WK  $BUILD/$WK"
+
+install_name_tool -id $SYS/$WKFR/$JSC  $BUILD/$JSC
+install_name_tool -id /System/Library/PrivateFrameworks/$JSG  $BUILD/$JSG
+install_name_tool -id $SYS/$WKFR/$WC  $BUILD/$WC
+install_name_tool -id $SYS/$WK  $BUILD/$WK
+
+echo "redoing dependent libraries...."
+
+# install names of libraries used by these libraries
+echo "install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$JSG"
+echo "install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$WC"
+echo "install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$WK"
+echo "install_name_tool -change $BUILD/$WC $SYS/$WKFR/$WC $BUILD/$WK"
+
+install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$JSG
+install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$WC
+install_name_tool -change $BUILD/$JSC $SYS/$WKFR/$JSC $BUILD/$WK
+install_name_tool -change $BUILD/$WC $SYS/$WKFR/$WC $BUILD/$WK
+
+echo "Done."
+
+# OTHER_LDFLAGS='-seg_addr_table /Volumes/dwood/dev/Prebinding_Table.txt' MACH_O_TYPE=mh_dylib
+
+echo "These frameworks:"
+
+otool -L $BUILD/$JSC
+otool -L $BUILD/$JSG
+otool -L $BUILD/$WC
+otool -L $BUILD/$WK
+
+echo "System Frameworks, to compare:"
+otool -L $SYS/$WKFR/$JSC
+otool -L /System/Library/PrivateFrameworks/$JSG
+otool -L $SYS/$WKFR/$WC
+otool -L $SYS/$WK
