@@ -142,25 +142,31 @@
 
 + (KTPage *)pageWithParent:(KTPage *)aParent bundle:(NSBundle *)aBundle insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {
-	NSParameterAssert(nil != aParent);
+	NSParameterAssert(aParent);
 	
 	// Create the page
 	id page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:aContext];
-	
-	// Set the page up properly
 	[page setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
-
-	if ( nil != aParent )
+	
+	
+	// Load properties from parent/sibling
+	KTPage *previousPage = aParent;
+	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop];
+	if ([children count] > 0)
 	{
-		// NB: we don't add page to aParent here,
-		// we want to let the KTPage Operations methods
-		// add or remove children and set ordering
-		[page setValue:aParent forKey:@"parent"];
-		NSAssert((nil != [aParent root]), @"parent page's root should not be nil");
-		[page setValue:[aParent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
-		
-		[page setValue:[aParent master] forKey:@"master"];
+		previousPage = [children firstObject];
 	}
+	
+	[page setBool:[previousPage boolForKey:@"allowComments"] forKey:@"allowComments"];
+	[page setBool:[previousPage boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
+	
+	
+	// Attach the page to its parent & other relationships
+	NSAssert((nil != [aParent root]), @"parent page's root should not be nil");
+	[aParent addPage:page];	// Must use this method to correctly maintain ordering
+	[page setValue:[aParent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
+	
+	[page setValue:[aParent master] forKey:@"master"];
 	
 	[page awakeFromBundleAsNewlyCreatedObject:YES];		// now it should be real data
 
@@ -207,12 +213,6 @@
 		if (nil != parent && [parent isRoot] && [[parent valueForKey:@"children"] count] < 7)
 		{
 			[self setIncludeInSiteMenu:YES];
-		}
-		
-		if (nil != parent)
-		{
-			[self setBool:[parent boolForKey:@"allowComments"] forKey:@"allowComments"];
-			[self setBool:[parent boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
 		}
 	}
 	else	// Loading from disk

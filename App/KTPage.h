@@ -138,6 +138,7 @@
 
 // Sorted Children
 - (NSArray *)sortedChildren;
+- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType;
 
 // Hierarchy Queries
 - (KTPage *)parent;
@@ -149,7 +150,6 @@
 - (NSIndexPath *)indexPathFromRoot;
 
 
-- (NSArray *)sortedChildrenInIndex;
 - (NSSet *)childrenInIndexSet;
 
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
