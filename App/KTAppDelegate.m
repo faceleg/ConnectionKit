@@ -73,7 +73,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSString-Utilities.h"
 #import "PrivateComponents.h"
 #import "NSError+Karelia.h"
-#import "NSArray+KTExtensions.h"
+//#import "NSArray+KTExtensions.h"
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>

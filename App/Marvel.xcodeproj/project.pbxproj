@@ -303,7 +303,10 @@
 		3C2EA6D00819F95500C35FCD /* KTDocument+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */; };
 		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; };
 		3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */; };
-		3C3EBA1F09F71FA800881A08 /* Connection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3EBA1109F71FA800881A08 /* Connection.framework */; };
+		3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54530D6258AA004885E7 /* Sparkle.framework */; };
+		3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
+		3C3F54910D625952004885E7 /* iMediaBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54900D625952004885E7 /* iMediaBrowser.framework */; };
+		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328CB07F7D7F700DD0D92 /* KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D6207DFC18600DE4994 /* KTTransferController.m */; };
 		3C4328E107F7DC9800DD0D92 /* KTDocWindowController+SplitViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */; };
@@ -428,15 +431,11 @@
 		3C682BE10D62355300B4D485 /* RichTextHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B910D6233E400B4D485 /* RichTextHTMLTransformer.h */; };
 		3C682BE20D62355400B4D485 /* RowHeightTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B940D6233EE00B4D485 /* RowHeightTransformer.h */; };
 		3C682BE30D62355600B4D485 /* StringToNumberTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B970D6233FA00B4D485 /* StringToNumberTransformer.h */; };
-		3C6DEA3B0BC484B9006F8E71 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6DEA250BC484B9006F8E71 /* AmazonSupport.framework */; };
-		3C6DEA3D0BC48510006F8E71 /* AmazonSupport.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6DEA250BC484B9006F8E71 /* AmazonSupport.framework */; };
 		3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2707DFC0AA00DE4994 /* KTWebView.m */; };
 		3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
-		3C77794B09AD77430025EDA7 /* iMediaBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C77794A09AD77430025EDA7 /* iMediaBrowser.framework */; };
-		3C77798409AD78340025EDA7 /* iMediaBrowser.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C77794A09AD77430025EDA7 /* iMediaBrowser.framework */; };
 		3C7DC2410921A7190081668F /* toolbar_edit_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7DC2400921A7190081668F /* toolbar_edit_link.png */; };
 		3C864F2B0B0CF7EA0037434E /* KTDocument+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */; };
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
@@ -512,10 +511,6 @@
 		3CF942310D62451400B1C83D /* CIImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF942300D62451400B1C83D /* CIImage+Karelia.m */; };
 		3CF942850D62461800B1C83D /* NSImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF942840D62461800B1C83D /* NSImage+Karelia.h */; };
 		3CF942870D62461D00B1C83D /* NSImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF942860D62461D00B1C83D /* NSImage+Karelia.m */; };
-		3CF948910D62484300B1C83D /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF948900D62484300B1C83D /* NSImage+KTExtensions.h */; };
-		3CF948950D62485800B1C83D /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF948940D62485800B1C83D /* NSImage+KTExtensions.m */; };
-		3CF948990D62486D00B1C83D /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF948980D62486D00B1C83D /* CIImage+KTExtensions.h */; };
-		3CF9489D0D62487F00B1C83D /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9489C0D62487F00B1C83D /* CIImage+KTExtensions.m */; };
 		3CF948B90D624A0F00B1C83D /* getOmniWebFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FA0D623EDF00B1C83D /* getOmniWebFrontmostPage.scpt */; };
 		3CF948BA0D624A0F00B1C83D /* getOperaFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FB0D623EF700B1C83D /* getOperaFrontmostPage.scpt */; };
 		3CF948BB0D624A1000B1C83D /* getCaminoFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FC0D623EFC00B1C83D /* getCaminoFrontmostPage.scpt */; };
@@ -523,8 +518,6 @@
 		3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FE0D623F1500B1C83D /* getSafariFrontmostFeed.scpt */; };
 		3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */; };
 		3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */; };
-		3CFBD07E0D36C3F60083CAD2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFBD07D0D36C3F60083CAD2 /* Sparkle.framework */; };
-		3CFBD0980D36C45B0083CAD2 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFBD07D0D36C3F60083CAD2 /* Sparkle.framework */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		7939562209501EA500961D65 /* KTDocWindowController+ModalOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */; };
 		794798720A7DAE0900425FB8 /* KTThreadedURLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 794798700A7DAE0900425FB8 /* KTThreadedURLLoader.m */; };
@@ -546,7 +539,6 @@
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
 		CE0F676A0A39EEE50092DC43 /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67690A39EEE50092DC43 /* globe.png */; };
 		CE0F67BF0A39F53F0092DC43 /* trans16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67BE0A39F53F0092DC43 /* trans16.png */; };
-		CE112ACB0B69811F00783570 /* Connection.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3EBA1109F71FA800881A08 /* Connection.framework */; };
 		CE116CFE08ED045700B8F7B4 /* feedback_yellowbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CF908ED045700B8F7B4 /* feedback_yellowbug.png */; };
 		CE116CFF08ED045700B8F7B4 /* feedback_reply.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CFA08ED045700B8F7B4 /* feedback_reply.png */; };
 		CE116D0008ED045700B8F7B4 /* feedback_redbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CFB08ED045700B8F7B4 /* feedback_redbug.png */; };
@@ -1571,11 +1563,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CE112ACB0B69811F00783570 /* Connection.framework in Copy Frameworks */,
-				3C77798409AD78340025EDA7 /* iMediaBrowser.framework in Copy Frameworks */,
-				3CFBD0980D36C45B0083CAD2 /* Sparkle.framework in Copy Frameworks */,
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks */,
-				3C6DEA3D0BC48510006F8E71 /* AmazonSupport.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1824,8 +1812,11 @@
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C3EBA1109F71FA800881A08 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3F54900D625952004885E7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Pasteboard.m"; sourceTree = "<group>"; };
 		3C59B05908A9B8E70076C6DC /* 13x13_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 13x13_empty.png; sourceTree = "<group>"; };
 		3C5A2CA00BD1F8DD00A788F5 /* KTNoCascadePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNoCascadePanel.h; sourceTree = "<group>"; };
@@ -1961,7 +1952,6 @@
 		3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KTExtensions.m"; sourceTree = "<group>"; };
 		3C6CF8F6095BD3300046A5DB /* KTExceptionReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExceptionReporter.h; sourceTree = "<group>"; };
 		3C6CF8F7095BD3310046A5DB /* KTExceptionReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExceptionReporter.m; sourceTree = "<group>"; };
-		3C6DEA250BC484B9006F8E71 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C728BF008EC7AD800BADA0A /* MediaInspector.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MediaInspector.nib; sourceTree = "<group>"; };
 		3C728F0908EC8FCC00BADA0A /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
 		3C728F0A08EC8FCC00BADA0A /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
@@ -1969,7 +1959,6 @@
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
-		3C77794A09AD77430025EDA7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C7DC2400921A7190081668F /* toolbar_edit_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_link.png; sourceTree = "<group>"; };
 		3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Media.m"; sourceTree = "<group>"; };
 		3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentController.h; sourceTree = "<group>"; };
@@ -2081,12 +2070,7 @@
 		3CF942300D62451400B1C83D /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CIImage+Karelia.m"; path = "../../../Shared/trunk/App/CIImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		3CF942840D62461800B1C83D /* NSImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage+Karelia.h"; path = "../../../Shared/trunk/App/NSImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		3CF942860D62461D00B1C83D /* NSImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage+Karelia.m"; path = "../../../Shared/trunk/App/NSImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
-		3CF948900D62484300B1C83D /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
-		3CF948940D62485800B1C83D /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTExtensions.m"; sourceTree = "<group>"; };
-		3CF948980D62486D00B1C83D /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
-		3CF9489C0D62487F00B1C83D /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../../../sparkleplus/Sparkle.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3CFBD07D0D36C3F60083CAD2 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKeypathURLProtocol.h; sourceTree = "<group>"; };
 		3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTKeypathURLProtocol.m; sourceTree = "<group>"; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -2571,15 +2555,15 @@
 				3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */,
 				CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */,
 				79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */,
-				3C77794B09AD77430025EDA7 /* iMediaBrowser.framework in Frameworks */,
 				CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */,
-				3C3EBA1F09F71FA800881A08 /* Connection.framework in Frameworks */,
 				CE26237F0A360332009467ED /* QTKit.framework in Frameworks */,
 				3CBD8A650B5B4370004BB49D /* libcurl.dylib in Frameworks */,
 				3C5C0DB40BF8213E003594F8 /* ApplicationServices.framework in Frameworks */,
-				3C6DEA3B0BC484B9006F8E71 /* AmazonSupport.framework in Frameworks */,
 				3C5C0DB20BF820EA003594F8 /* libbz2.dylib in Frameworks */,
-				3CFBD07E0D36C3F60083CAD2 /* Sparkle.framework in Frameworks */,
+				3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */,
+				3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */,
+				3C3F54910D625952004885E7 /* iMediaBrowser.framework in Frameworks */,
+				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2963,7 +2947,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C6DEA250BC484B9006F8E71 /* AmazonSupport.framework */,
+				3C3F54A10D625983004885E7 /* AmazonSupport.framework */,
 				3CED77980AEEFBDE00D0538C /* Cocoa Frameworks */,
 				1058C7A6FEA54F5311CA2CBB /* System Frameworks */,
 				3C0C021E0905883E00CFFE3E /* Testing Frameworks */,
@@ -3221,10 +3205,10 @@
 		3C202DC907E00BCC00DE4994 /* Third Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EBA1109F71FA800881A08 /* Connection.framework */,
+				3C3F547C0D625919004885E7 /* Connection.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
-				3C77794A09AD77430025EDA7 /* iMediaBrowser.framework */,
-				3CFBD07D0D36C3F60083CAD2 /* Sparkle.framework */,
+				3C3F54900D625952004885E7 /* iMediaBrowser.framework */,
+				3C3F54530D6258AA004885E7 /* Sparkle.framework */,
 			);
 			name = "Third Party Frameworks";
 			sourceTree = "<group>";
@@ -3537,8 +3521,6 @@
 			isa = PBXGroup;
 			children = (
 				3CF9422E0D62450C00B1C83D /* CIImage+Karelia.h */,
-				3CF9489C0D62487F00B1C83D /* CIImage+KTExtensions.m */,
-				3CF948980D62486D00B1C83D /* CIImage+KTExtensions.h */,
 				3CF942300D62451400B1C83D /* CIImage+Karelia.m */,
 			);
 			name = "Core Image";
@@ -3548,8 +3530,6 @@
 			isa = PBXGroup;
 			children = (
 				3CF942840D62461800B1C83D /* NSImage+Karelia.h */,
-				3CF948940D62485800B1C83D /* NSImage+KTExtensions.m */,
-				3CF948900D62484300B1C83D /* NSImage+KTExtensions.h */,
 				3CF942860D62461D00B1C83D /* NSImage+Karelia.m */,
 				CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */,
 				CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */,
@@ -4610,8 +4590,6 @@
 				3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */,
 				3CF9422F0D62450C00B1C83D /* CIImage+Karelia.h in Headers */,
 				3CF942850D62461800B1C83D /* NSImage+Karelia.h in Headers */,
-				3CF948910D62484300B1C83D /* NSImage+KTExtensions.h in Headers */,
-				3CF948990D62486D00B1C83D /* CIImage+KTExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6010,8 +5988,6 @@
 				3CF9422B0D6244C000B1C83D /* DOMNode+KTExtensions.m in Sources */,
 				3CF942310D62451400B1C83D /* CIImage+Karelia.m in Sources */,
 				3CF942870D62461D00B1C83D /* NSImage+Karelia.m in Sources */,
-				3CF948950D62485800B1C83D /* NSImage+KTExtensions.m in Sources */,
-				3CF9489D0D62487F00B1C83D /* CIImage+KTExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6585,6 +6561,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* Application Release.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Builds/Products/Debug\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
@@ -6601,6 +6581,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* Application Debug.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Builds/Products/Debug\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;

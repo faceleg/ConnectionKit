@@ -14,7 +14,7 @@
 #import "KTDocument.h"
 #import "KTPasteboardArchiving.h"
 #import "PrivateComponents.h"
-#import "NSArray+KTExtensions.h"
+//#import "NSArray+KTExtensions.h"
 
 
 @interface KTDocWindowController ( Pasteboard_Private )

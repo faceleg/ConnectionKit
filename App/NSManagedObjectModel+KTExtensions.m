@@ -11,6 +11,8 @@
 #import "KT.h"
 #import "KTAbstractPlugin.h"
 
+#import "NSException+Karelia.h"
+
 static NSManagedObjectModel *sKTComponentsModel;
 
 @implementation NSManagedObjectModel ( KTExtensions )
