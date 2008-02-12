@@ -6,9 +6,9 @@
 //  Copyright (c) 2006 Biophony LLC. All rights reserved.
 //
 
-#import "NSAppleScript+KTExtensions.h"
+#import "NSAppleScript+Karelia.h"
 #import "KTAbstractPlugin.h"			// just a class known to be in KTComponents
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 static NSAppleScript *sSafariFrontmostFeedScript = nil;

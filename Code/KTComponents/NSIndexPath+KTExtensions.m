@@ -6,7 +6,7 @@
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
 //
 
-#import "NSIndexPath+KTExtensions.h"
+#import "NSIndexPath+Karelia.h"
 
 
 @implementation NSIndexPath ( KTExtensions  )

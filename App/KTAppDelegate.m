@@ -68,11 +68,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "KTWebView.h"
-#import "NSException+KTExtensions.h"
+#import "NSException+Karelia.h"
 #import "NSString+KTApplication.h"
 #import "NSString-Utilities.h"
 #import "PrivateComponents.h"
-#import "NSError+KTExtensions.h"
+#import "NSError+Karelia.h"
+#import "NSArray+KTExtensions.h"
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
@@ -1889,7 +1890,7 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 	
 	// find transactions of what we refund.  For each parent transaction ID, find it in gmail and get the license code.
 	
-#define INVALID_LIST_COUNT 137
+#define INVALID_LIST_COUNT 140
 	
 unsigned char invalidListDigests[INVALID_LIST_COUNT][SHA1_DIGEST_LENGTH] = {
 { 0x6F,0xD9,0x8B,0xCF,0x1C,0x1B,0x77,0x44,0xD5,0x94,0x0E,0xEB,0xFE,0x6E,0x80,0xF6,0x94,0xDA,0x8D,0x25 }, // P Canavan Only Chob Deanery

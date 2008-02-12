@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 @interface TrimFirstLineTransformer : NSValueTransformer {

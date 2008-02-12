@@ -8,6 +8,8 @@
 
 #import "KTDocSiteOutlineController.h"
 
+#import "NSException+Karelia.h"
+
 #import "KTAppPlugin.h"
 #import "KTDocWindowController.h"
 #import "KTPulsatingOverlay.h"
@@ -735,7 +737,7 @@
 					
 					// Whinge if the page couldn't be created
 					if (!page) {
-						[self raiseExceptionWithName:kKTGenericDocumentException reason:@"unable to create Page"];
+						[self raiseExceptionWithName:kKareliaDocumentException reason:@"unable to create Page"];
 					}
 				}
 				

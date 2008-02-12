@@ -9,7 +9,7 @@
 // FIXME: Use of the NSCalendarDate class is again discouraged in 10.5, but it is not deprecated yet. It may be in the next major OS release after 10.5. NSDateFormatter should be used for date formatting, and NSCalendar should be used for calendrical calculations. Where formatting differs between NSCalendarDate and NSDateFormatter (10.4-style) differ, the NSDateFormatter result will be considered to be the correct result (absent a bug being exercised). Where NSCalendar and NSCalendarDate calendrical calculations differ and the NSCalendar result is reasonable, we define its value to be the correct value. Developers should abandon hope for NSCalendarDate bug fixes.
 
 
-#import "NSCalendarDate+KTExtensions.h"
+#import "NSCalendarDate+Karelia.h"
 
 #import "KT.h"
 #import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro

@@ -8,7 +8,7 @@
 
 #import "KTPage.h"
 
-#import "NSSortDescriptor+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
 
 
 @interface KTPage (ChildrenPrivate)

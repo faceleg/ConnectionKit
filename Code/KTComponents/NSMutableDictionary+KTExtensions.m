@@ -5,7 +5,7 @@
 //  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSMutableDictionary+KTExtensions.h"
+#import "NSMutableDictionary+Karelia.h"
 
 #import "Debug.h"
 #import "KT.h"

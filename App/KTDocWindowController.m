@@ -8,6 +8,8 @@
 
 #import "KTDocWindowController.h"
 
+#import "NSException+Karelia.h"
+
 #import "KTDocWebViewController.h"
 
 #import "AMRollOverButton.h"
@@ -39,6 +41,7 @@
 #import "Registration.h"
 #import <WebKit/WebKit.h>
 #import <iMediaBrowser/iMedia.h>
+#import "NSArray+KTExtensions.h"
 
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
@@ -854,12 +857,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		}
 		else
 		{
-			[self raiseExceptionWithName:kKTGenericDocumentException reason:@"unable to create Pagelet"];
+			[self raiseExceptionWithName:kKareliaDocumentException reason:@"unable to create Pagelet"];
 		}
 	}
 	else
     {
-		[self raiseExceptionWithName:kKTGenericDocumentException
+		[self raiseExceptionWithName:kKareliaDocumentException
 							  reason:@"sender has no representedObject"
 							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
     }
@@ -954,7 +957,7 @@ from representedObject */
     }
     else
     {
-		[self raiseExceptionWithName:kKTGenericDocumentException reason:@"Unable to instantiate collection"
+		[self raiseExceptionWithName:kKareliaDocumentException reason:@"Unable to instantiate collection"
 							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
     }
 }
@@ -1031,7 +1034,7 @@ from representedObject */
 	}
 	else
 	{
-		RAISE_EXCEPTION(kKTGenericDocumentException, @"selectedItem is of unknown class", [NSDictionary dictionaryWithObject:selectedItem forKey:@"selectedItem"]);
+		RAISE_EXCEPTION(kKareliaDocumentException, @"selectedItem is of unknown class", [NSDictionary dictionaryWithObject:selectedItem forKey:@"selectedItem"]);
 		return;
 	}
 	

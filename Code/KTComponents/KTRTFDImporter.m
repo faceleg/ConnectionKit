@@ -15,7 +15,7 @@
 #import "Sandvox.h"
 
 #import "DOMNode+KTExtensions.h"
-#import "NSAttributedString+KTExtensions.h"
+#import "NSAttributedString+Karelia.h"
 
 #import <WebKit/WebKit.h>
 

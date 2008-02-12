@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSApplication+KTExtensions.h"
+#import "NSApplication+Karelia.h"
 #import "KT.h"
 
 @implementation NSApplication ( KTExtensions )

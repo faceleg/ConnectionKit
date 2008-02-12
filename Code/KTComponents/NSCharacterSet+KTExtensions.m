@@ -6,7 +6,7 @@
 //  Copyright 2004 Karelia Software, LLC. All rights reserved.
 //
 
-#import "NSCharacterSet+KTExtensions.h"
+#import "NSCharacterSet+Karelia.h"
 
 static NSCharacterSet *sAlphanumericASCIICharacterSet;
 static NSCharacterSet *sAlphanumericASCIIUnderlineCharacterSet;

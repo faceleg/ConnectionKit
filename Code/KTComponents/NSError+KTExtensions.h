@@ -31,10 +31,9 @@ enum {
 	
 };
 
-extern NSString *kKTGenericErrorDomain;
 extern NSString *kKTURLPrococolErrorDomain;
-extern NSString *kKTHostSetupDomain;
-extern NSString *kKTConnectionDomain;
+extern NSString *kKTHostSetupErrorDomain;
+extern NSString *kKTConnectionErrorDomain;
 extern NSString *kKTDataMigrationErrorDomain;
 
 
@@ -45,10 +44,10 @@ extern NSString *kKTDataMigrationErrorDomain;
 /*! returns error with aLocalizedDescription in anErrorDomain with anErrorCode */
 + (id)errorWithDomain:(NSString *)anErrorDomain code:(int)anErrorCode localizedDescription:(NSString *)aLocalizedDescription;
 
-/*! returns error with aLocalizedDecription in kKTGenericErrorDomain with KTGenericError code */
+/*! returns error with aLocalizedDecription in kKareliaErrorDomain with KTGenericError code */
 + (id)errorWithLocalizedDescription:(NSString *)aLocalizedDescription;
 
-/*! messages NSApp to presentError: of aLocalizedDescription in kKTGenericErrorDomain with KTGenericError code */
+/*! messages NSApp to presentError: of aLocalizedDescription in kKareliaErrorDomain with KTGenericError code */
 + (void)presentErrorWithLocalizedDescription:(NSString *)aLocalizedDescription;
 
 /*!	Returns an error for the given HTTP code; includes some explanation for common codes.

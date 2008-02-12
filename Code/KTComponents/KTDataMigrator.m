@@ -15,11 +15,11 @@
 #import "KTStoredDictionary.h"
 #import "KTStoredSet.h"
 #import "KTUtilities.h"
-#import "NSArray+KTExtensions.h"
-#import "NSError+KTExtensions.h"
+#import "NSArray+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 /*
  

@@ -11,8 +11,8 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 
-#import "NSMutableArray+KTExtensions.h"
-#import "NSSortDescriptor+KTExtensions.h"
+#import "NSMutableArray+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 
 
 @interface KTPage (PageletsPrivate)

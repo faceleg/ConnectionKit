@@ -27,7 +27,7 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTExceptionReporter.h"
-#import "NSException+KTExtensions.h"
+#import "NSException+Karelia.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import "KTComponents.h"
 #import "KTQuickStartController.h"

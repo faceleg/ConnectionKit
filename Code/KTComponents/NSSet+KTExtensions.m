@@ -9,6 +9,7 @@
 #import "NSSet+KTExtensions.h"
 
 #import "KTAbstractPlugin.h"
+#import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 
 
@@ -28,6 +29,13 @@
 	return string;
 }
 #endif
+
+- (NSArray *)orderedObjects
+{
+#warning We need to come up with a replacement for this; gOrderingDescriptor was removed in 1.5
+//	return [[self allObjects] sortedArrayUsingDescriptors:gOrderingDescriptor];
+	return [self allObjects];	// FOR NOW
+}
 
 - (NSString *)shortDescription
 {

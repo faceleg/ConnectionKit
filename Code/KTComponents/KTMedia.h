@@ -20,7 +20,7 @@
 #import "KTManagedObject.h"
 
 #import "Sandvox.h"
-#import "CIImage+KTExtensions.h"
+#import "CIImage+Karelia.h"
 
 extern NSString *kKTMediaException;
 

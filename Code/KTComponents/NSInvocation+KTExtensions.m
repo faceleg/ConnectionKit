@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSInvocation+KTExtensions.h"
+#import "NSInvocation+Karelia.h"
 
 /*
  PURPOSE OF THIS CLASS/CATEGORY:

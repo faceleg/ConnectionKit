@@ -14,7 +14,7 @@
 #import "assertions.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
-#import "NSData+KTExtensions.h"
+#import "NSData+Karelia.h"
 
 
 @interface KTPage (ChildrenPrivate)

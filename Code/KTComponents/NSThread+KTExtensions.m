@@ -6,7 +6,7 @@
 //  Copyright 2006 Karelia Software. All rights reserved.
 //
 
-#import "NSThread+KTExtensions.h"
+#import "NSThread+Karelia.h"
 
 
 @interface NSObject ( KTThreadingPrivate )

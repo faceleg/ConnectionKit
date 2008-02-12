@@ -13,7 +13,7 @@
 #import "KTMaster.h"
 #import "KTPathInfoField.h"
 
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 
 #import <WebKit/WebKit.h>
 

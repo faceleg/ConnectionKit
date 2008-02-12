@@ -7,7 +7,7 @@
 //
 
 #import "StripHTMLTransformer.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 /*!	Strips out HTML from the value we're tracking.  When sending *back*, we escape entities so it's legal (but not styled) HTML.
 */

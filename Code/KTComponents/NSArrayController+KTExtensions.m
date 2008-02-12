@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "NSArrayController+KTExtensions.h"
+#import "NSArrayController+Karelia.h"
 
 
 @implementation NSArrayController (KTExtensions)

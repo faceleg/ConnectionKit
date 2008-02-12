@@ -6,9 +6,9 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSWindow+KTExtensions.h"
+#import "NSWindow+Karelia.h"
 
-#import "NSView+KTExtensions.h"
+#import "NSView+Karelia.h"
 
 @implementation NSWindow ( KTExtensions )
 

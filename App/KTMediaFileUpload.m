@@ -7,6 +7,7 @@
 //
 
 #import "KTMediaFileUpload.h"
+#import "NSString+KTExtensions.h"
 
 
 @implementation KTMediaFileUpload

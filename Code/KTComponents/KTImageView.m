@@ -11,11 +11,11 @@
 #import "Debug.h"
 //#import "ImageCropperController.h"
 #import "KT.h"
-#import "NSBitmapImageRep+KTExtensions.h"
-#import "NSFileManager+KTExtensions.h"
-#import "NSImage+KTExtensions.h"
+#import "NSBitmapImageRep+Karelia.h"
+#import "NSFileManager+Karelia.h"
+#import "NSImage+Karelia.h"
 //#import "NSImagePicker.h"		// OLD
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import <WebKit/WebKit.h>
 
 

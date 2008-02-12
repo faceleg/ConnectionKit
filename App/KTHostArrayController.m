@@ -22,7 +22,7 @@ TO DO:
  */
 
 #import "KTHostArrayController.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 @interface NSString ( containsItem )
 - (BOOL) containsItem:(NSString *)aSearchString;

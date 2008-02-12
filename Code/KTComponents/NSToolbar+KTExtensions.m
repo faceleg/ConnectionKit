@@ -6,7 +6,7 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSToolbar+KTExtensions.h"
+#import "NSToolbar+Karelia.h"
 
 
 @implementation NSToolbar ( KTExtensions )

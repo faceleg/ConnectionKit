@@ -113,14 +113,7 @@ extern NSString *kKTDesignExtension;
 
 extern NSString *kKTSourceMediaDirectory;
 
-extern NSString *kKTClassNotLoadedException;
-extern NSString *kKTFileManagerException;
-extern NSString *kKTGenericDocumentException;
-extern NSString *kKTGenericObjectException;
-extern NSString *kKTGenericPluginException;
-extern NSString *kKTGenericStorageException;
 extern NSString *kKTTemplateParserException;
-extern NSString *kKTInternalInconsistencyException;
 
 extern NSString *kKTDefaultCalendarFormat;
 
@@ -169,3 +162,10 @@ extern NSString *kKTSelectedObjectsKey;
 extern NSString *kKTSelectedObjectsClassNameKey;
 
 extern NSString *kKTMediaNotFoundMediaName;
+
+
+extern NSString *kKTURLPrococolErrorDomain;
+extern NSString *kKTHostSetupErrorDomain;
+extern NSString *kKTConnectionErrorDomain;
+extern NSString *kKTDataMigrationErrorDomain;
+

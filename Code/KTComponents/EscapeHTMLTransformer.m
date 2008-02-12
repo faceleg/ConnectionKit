@@ -7,7 +7,7 @@
 //
 
 #import "EscapeHTMLTransformer.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 @implementation EscapeHTMLTransformer
 

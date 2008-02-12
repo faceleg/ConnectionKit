@@ -8,7 +8,7 @@
 
 #import "KTPlaceholderTableView.h"
 #import "KTVerticallyAlignedTextCell.h"
-#import "NSView+KTExtensions.h"
+#import "NSView+Karelia.h"
 
 
 @interface KTPlaceholderTableView (Private)

@@ -6,12 +6,12 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "CIImage+KTExtensions.h"
+#import "CIImage+Karelia.h"
 
 #import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro
 #import "KTImageScalingSettings.h"
 
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 #import "KT.h"
 #import <QuartzCore/QuartzCore.h>
 #import "assertions.h"

@@ -9,7 +9,7 @@
 #import "KTPage.h"
 
 #import "KTAppPlugin.h"
-#import "NSXMLElement+KTExtensions.h"
+#import "NSXMLElement+Karelia.h"
 
 
 @interface KTPage (ChildrenPrivate)

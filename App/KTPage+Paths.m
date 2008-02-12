@@ -15,6 +15,7 @@
 
 #import "KTDesign.h"
 #import "KTMaster.h"
+#import "NSString+KTExtensions.h"
 
 
 typedef enum	//	Defines the 3 ways of linking to a collection:

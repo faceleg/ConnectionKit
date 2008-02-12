@@ -10,6 +10,7 @@
 
 #import "KTDesign.h"
 #import "KTDesignManager.h"
+#import "NSString+KTExtensions.h"
 
 
 @interface KTMaster (Private)

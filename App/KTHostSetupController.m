@@ -22,6 +22,8 @@ TO DO:
 
 #import "KTHostSetupController.h"
 
+#import "NSError+Karelia.h"
+
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTBackgroundTabView.h"
@@ -1866,7 +1868,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupDomain
+        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
 													 code:1
 												 userInfo:userInfoDict] autorelease];
         *outError = error;
@@ -2006,7 +2008,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupDomain
+        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
 													 code:2
 												 userInfo:userInfoDict] autorelease];
         *outError = error;

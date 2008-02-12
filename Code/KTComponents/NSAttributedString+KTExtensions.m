@@ -6,14 +6,14 @@
 //  Copyright 2004 Karelia Software, LLC. All rights reserved.
 //
 
-#import "NSAttributedString+KTExtensions.h"
+#import "NSAttributedString+Karelia.h"
 
 #import "Debug.h"
 #import "KT.h"
-#import "NSCharacterSet+KTExtensions.h"
-#import "NSImage+KTExtensions.h"
-#import "NSString+KTExtensions.h"
-#import "NSColor+KTExtensions.h"
+#import "NSCharacterSet+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSColor+Karelia.h"
 
 static NSCharacterSet *sNonWebPunctuationSet;
 static NSCharacterSet *sWhitespaceAndDelimeterSet;
@@ -62,7 +62,7 @@ static NSCharacterSet *sWhitespaceAndDelimeterSet;
 	
 	if ( nil == attr )
 	{
-		[NSException raise:kKTGenericObjectException format:@"attributedStringWithURL:%@ ..., error:%@", [aURL path], [localError localizedDescription]];
+		[NSException raise:kKareliaObjectException format:@"attributedStringWithURL:%@ ..., error:%@", [aURL path], [localError localizedDescription]];
 		return NO;
 	}
 	
@@ -94,7 +94,7 @@ static NSCharacterSet *sWhitespaceAndDelimeterSet;
 	
 	if ( nil == data )
 	{
-		[NSException raise:kKTGenericObjectException format:@"standardSnippet error:%@", [localError localizedDescription]];
+		[NSException raise:kKareliaObjectException format:@"standardSnippet error:%@", [localError localizedDescription]];
 		return nil;
 	}
 	

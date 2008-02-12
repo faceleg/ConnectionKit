@@ -22,22 +22,6 @@
 
 @interface NSObject ( KTExtensions )
 
-// enforcing intentions
-+ (void)subclassResponsibility:(SEL)aSelector;
-- (void)subclassResponsibility:(SEL)aSelector;
-- (void)notImplemented:(SEL)aSelector;
-- (void)shouldNotImplement:(SEL)aSelector;
-
-// deprecation
-- (void)deprecated:(SEL)aSelector;
-
-// exceptions and errors
-- (void)raiseExceptionWithName:(NSString *)name reason:(NSString *)reason userInfo:(NSDictionary *)userInfo;
-- (void)raiseExceptionWithName:(NSString *)name reason:(NSString *)reason;
-- (void)raiseExceptionWithName:(NSString *)name;
-
-// encodable?
-- (BOOL)isFoundationObject;
 
 // managed by a context?
 - (BOOL)isManagedObject;
@@ -46,20 +30,5 @@
 - (id)wrappedValueForKeyWithFallback:(NSString *)aKey;
 - (void)setWrappedValueWithFallback:(id)aValue forKey:(NSString *)aKey;
 
-// KVC & KVO
-- (BOOL)boolForKey:(NSString *)aKey;
-- (void)setBool:(BOOL)value forKey:(NSString *)aKey;
-
-- (float)floatForKey:(NSString *)aKey;
-- (void)setFloat:(float)value forKey:(NSString *)aKey;
-
-- (int)integerForKey:(NSString *)aKey;
-- (void)setInteger:(int)value forKey:(NSString *)aKey;
-
-- (void)willChangeValuesForKeys:(NSSet *)keys;
-- (void)didChangeValuesForKeys:(NSSet *)keys;
-
-- (void)addObserver:(NSObject *)anObserver forKeyPaths:(NSSet *)keyPaths options:(NSKeyValueObservingOptions)options context:(void *)context;
-- (void)removeObserver:(NSObject *)observer forKeyPaths:(NSSet *)keyPaths;
 
 @end

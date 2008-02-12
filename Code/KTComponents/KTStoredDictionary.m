@@ -10,9 +10,10 @@
 #import "Debug.h"
 #import "KTDocument.h"
 #import "KTManagedObjectContext.h"
-#import "NSData+KTExtensions.h"
+#import "NSData+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 
 

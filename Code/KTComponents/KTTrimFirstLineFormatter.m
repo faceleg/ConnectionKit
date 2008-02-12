@@ -8,7 +8,7 @@
 
 #import "KTTrimFirstLineFormatter.h"
 
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 @implementation KTTrimFirstLineFormatter

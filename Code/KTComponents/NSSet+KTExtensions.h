@@ -26,6 +26,8 @@
 - (NSString *)o;
 #endif
 
+- (NSArray *)orderedObjects;
+
 /*! returns "<ordering>:<shortDescription>" of orderedObjects */
 - (NSString *)shortDescription;
 

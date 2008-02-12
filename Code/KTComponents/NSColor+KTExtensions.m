@@ -5,7 +5,7 @@
 //  Copyright (c) 2004 Biophony LLC. All rights reserved.
 //
 
-#import "NSColor+KTExtensions.h"
+#import "NSColor+Karelia.h"
 
 
 @implementation NSColor ( KTExtensions )

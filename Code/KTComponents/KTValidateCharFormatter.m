@@ -7,7 +7,7 @@
 //
 
 #import "KTValidateCharFormatter.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 @interface KTValidateCharFormatter ( Private )
 - (NSCharacterSet *)illegalCharacterSet;

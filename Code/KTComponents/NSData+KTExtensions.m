@@ -5,7 +5,7 @@
 //  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSData+KTExtensions.h"
+#import "NSData+Karelia.h"
 
 #import "Debug.h"
 #import "bzlib.h"

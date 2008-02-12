@@ -7,8 +7,8 @@
 //
 
 #import "KTPluginLoader.h"
-#import "NSBezierPath+KTExtensions.h"
-#import "NSError+KTExtensions.h"
+#import "NSBezierPath+Karelia.h"
+#import "NSError+Karelia.h"
 
 @interface KTPluginLoader ( Private )
 

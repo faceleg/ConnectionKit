@@ -6,7 +6,7 @@
 //  Copyright (c) 2007 Karelia Software. All rights reserved.
 //
 
-#import "NSHelpManager+KTExtensions.h"
+#import "NSHelpManager+Karelia.h"
 
 
 @implementation NSHelpManager ( KTExtensions )

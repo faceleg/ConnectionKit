@@ -11,8 +11,9 @@
 #import "Debug.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTDocument.h"
+#import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 static NSString *kKTPseudoElementException = @"KTPseudoElementException";

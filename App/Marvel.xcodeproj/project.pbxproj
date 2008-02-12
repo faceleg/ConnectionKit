@@ -141,7 +141,6 @@
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; };
 		2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */; };
 		271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575520D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m */; };
-		271575CD0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575CB0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
@@ -157,20 +156,14 @@
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
 		272FBCCA0D40102C00FCC189 /* KTDocSiteOutlineController+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* KTDocSiteOutlineController+Icons.m */; };
-		2738634C0D50028700A8A209 /* NSSortDescriptor+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2738634A0D50028700A8A209 /* NSSortDescriptor+KTExtensions.h */; };
-		2738634D0D50028700A8A209 /* NSSortDescriptor+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2738634B0D50028700A8A209 /* NSSortDescriptor+KTExtensions.m */; };
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273866C10D51555200A8A209 /* KTImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 273866BF0D51555200A8A209 /* KTImageLoader.h */; };
 		273866C20D51555200A8A209 /* KTImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 273866C00D51555200A8A209 /* KTImageLoader.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
-		273D7BD40D05A11D00057448 /* NSObject+PerformOnMainThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D7BD20D05A11D00057448 /* NSObject+PerformOnMainThread.h */; };
-		273D7BD50D05A11D00057448 /* NSObject+PerformOnMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7BD30D05A11D00057448 /* NSObject+PerformOnMainThread.m */; };
 		273D7DB40D070BC100057448 /* KTPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTPage+Paths.m */; };
 		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; };
 		273D840D0D099C4200057448 /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
-		2743626D0D53BEAA00C257BA /* NSXMLElement+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2743626B0D53BEAA00C257BA /* NSXMLElement+KTExtensions.h */; };
-		2743626E0D53BEAA00C257BA /* NSXMLElement+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2743626C0D53BEAA00C257BA /* NSXMLElement+KTExtensions.m */; };
 		275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 275167870CBCE40000C91DFA /* KTMediaContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275167880CBCE40000C91DFA /* KTMediaContainer.m */; };
 		275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */; };
@@ -272,7 +265,6 @@
 		3C006CD8095D0FA800474823 /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C728F0A08EC8FCC00BADA0A /* KTFeedbackReporter.m */; };
 		3C006CD9095D0FAA00474823 /* KTExceptionReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6CF8F7095BD3310046A5DB /* KTExceptionReporter.m */; };
 		3C007193095DCFF700474823 /* BugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C007191095DCFF700474823 /* BugReporterViews.nib */; };
-		3C036AB0095F350500E1DA3D /* NSException+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C036AAE095F350500E1DA3D /* NSException+KTExtensions.m */; };
 		3C036B3E095F5C9500E1DA3D /* criticalAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C036B3D095F5C9500E1DA3D /* criticalAlert.png */; };
 		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
@@ -324,12 +316,8 @@
 		3C5A2CA30BD1F8DD00A788F5 /* KTNoCascadePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A2CA10BD1F8DD00A788F5 /* KTNoCascadePanel.m */; };
 		3C5A71880BF7ADE100776464 /* add_idle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A707D0BF7ADE100776464 /* add_idle.png */; };
 		3C5A71890BF7ADE100776464 /* add_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A707E0BF7ADE100776464 /* add_pressed.png */; };
-		3C5A718B0BF7ADE100776464 /* AMRollOverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70800BF7ADE100776464 /* AMRollOverButton.m */; };
-		3C5A718D0BF7ADE100776464 /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70820BF7ADE100776464 /* AMRollOverButtonCell.m */; };
-		3C5A718F0BF7ADE100776464 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70840BF7ADE100776464 /* AQDataExtensions.m */; };
 		3C5A71900BF7ADE100776464 /* ArrowPointingDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A70850BF7ADE100776464 /* ArrowPointingDown.png */; };
 		3C5A71920BF7ADE100776464 /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70870BF7ADE100776464 /* assertions.m */; };
-		3C5A71940BF7ADE100776464 /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70890BF7ADE100776464 /* BDAlias.m */; };
 		3C5A71970BF7ADE100776464 /* broken.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A708C0BF7ADE100776464 /* broken.png */; };
 		3C5A71990BF7ADE100776464 /* CharsetToEncodingTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A708E0BF7ADE100776464 /* CharsetToEncodingTransformer.m */; };
 		3C5A719B0BF7ADE100776464 /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70900BF7ADE100776464 /* CIImage+KTExtensions.m */; };
@@ -338,7 +326,6 @@
 		3C5A71A10BF7ADE100776464 /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A70960BF7ADE100776464 /* crop.png */; };
 		3C5A71A30BF7ADE100776464 /* CropMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70980BF7ADE100776464 /* CropMarker.m */; };
 		3C5A71A50BF7ADE100776464 /* CroppingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A709A0BF7ADE100776464 /* CroppingImageView.m */; };
-		3C5A71A80BF7ADE100776464 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A709D0BF7ADE100776464 /* DNDArrayController.m */; };
 		3C5A71AA0BF7ADE100776464 /* DOMNode+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A709F0BF7ADE100776464 /* DOMNode+KTExtensions.m */; };
 		3C5A71AC0BF7ADE100776464 /* EscapeHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70A10BF7ADE100776464 /* EscapeHTMLTransformer.m */; };
 		3C5A71B00BF7ADE100776464 /* ImageCropperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A70A50BF7ADE100776464 /* ImageCropperController.m */; };
@@ -380,58 +367,18 @@
 		3C5A72110BF7ADE100776464 /* KTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71060BF7ADE100776464 /* KTView.m */; };
 		3C5A72120BF7ADE100776464 /* larger.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A71070BF7ADE100776464 /* larger.png */; };
 		3C5A72140BF7ADE100776464 /* mag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A71090BF7ADE100776464 /* mag.png */; };
-		3C5A72160BF7ADE100776464 /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A710B0BF7ADE100776464 /* MyTableView.m */; };
 		3C5A72170BF7ADE100776464 /* no_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A710C0BF7ADE100776464 /* no_image.png */; };
 		3C5A72180BF7ADE100776464 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A710D0BF7ADE100776464 /* none.png */; };
-		3C5A721A0BF7ADE100776464 /* NSAppleScript+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A710F0BF7ADE100776464 /* NSAppleScript+KTExtensions.m */; };
-		3C5A721C0BF7ADE100776464 /* NSApplication+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71110BF7ADE100776464 /* NSApplication+KTExtensions.m */; };
-		3C5A72200BF7ADE100776464 /* NSArrayController+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71150BF7ADE100776464 /* NSArrayController+KTExtensions.m */; };
-		3C5A72240BF7ADE100776464 /* NSBezierPath_AMAdditons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71190BF7ADE100776464 /* NSBezierPath_AMAdditons.m */; };
-		3C5A72260BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A711B0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.m */; };
-		3C5A722A0BF7ADE100776464 /* NSCalendarDate+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A711F0BF7ADE100776464 /* NSCalendarDate+KTExtensions.m */; };
-		3C5A722C0BF7ADE100776464 /* NSCharacterSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71210BF7ADE100776464 /* NSCharacterSet+KTExtensions.m */; };
-		3C5A722E0BF7ADE100776464 /* NSColor+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71230BF7ADE100776464 /* NSColor+KTExtensions.m */; };
-		3C5A72300BF7ADE100776464 /* NSData+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71250BF7ADE100776464 /* NSData+KTExtensions.m */; };
-		3C5A72320BF7ADE100776464 /* NSDate+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71270BF7ADE100776464 /* NSDate+KTExtensions.m */; };
-		3C5A72340BF7ADE100776464 /* NSDictionary+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71290BF7ADE100776464 /* NSDictionary+KTExtensions.m */; };
-		3C5A72360BF7ADE100776464 /* NSDocumentController+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712B0BF7ADE100776464 /* NSDocumentController+KTExtensions.m */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
-		3C5A723A0BF7ADE100776464 /* NSError+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712F0BF7ADE100776464 /* NSError+KTExtensions.m */; };
 		3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */; };
-		3C5A723E0BF7ADE100776464 /* NSFileManager+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71330BF7ADE100776464 /* NSFileManager+KTExtensions.m */; };
-		3C5A72400BF7ADE100776464 /* NSHelpManager+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71350BF7ADE100776464 /* NSHelpManager+KTExtensions.m */; };
-		3C5A72420BF7ADE100776464 /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71370BF7ADE100776464 /* NSImage+KTExtensions.m */; };
-		3C5A72450BF7ADE100776464 /* NSIndexPath+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A713A0BF7ADE100776464 /* NSIndexPath+KTExtensions.m */; };
-		3C5A72470BF7ADE100776464 /* NSIndexSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A713C0BF7ADE100776464 /* NSIndexSet+KTExtensions.m */; };
-		3C5A72490BF7ADE100776464 /* NSInvocation+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A713E0BF7ADE100776464 /* NSInvocation+KTExtensions.m */; };
 		3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71400BF7ADE100776464 /* NSManagedObject+KTExtensions.m */; };
 		3C5A724D0BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71420BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.m */; };
 		3C5A724F0BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71440BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m */; };
-		3C5A72530BF7ADE100776464 /* NSMutableDictionary+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71480BF7ADE100776464 /* NSMutableDictionary+KTExtensions.m */; };
-		3C5A72550BF7ADE100776464 /* NSMutableSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A714A0BF7ADE100776464 /* NSMutableSet+KTExtensions.m */; };
-		3C5A72570BF7ADE100776464 /* NSObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A714C0BF7ADE100776464 /* NSObject+KTExtensions.m */; };
-		3C5A72590BF7ADE100776464 /* NSOutlineView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A714E0BF7ADE100776464 /* NSOutlineView+KTExtensions.m */; };
 		3C5A725B0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71500BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m */; };
-		3C5A725D0BF7ADE100776464 /* NSScanner+KTComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71520BF7ADE100776464 /* NSScanner+KTComponents.m */; };
-		3C5A725F0BF7ADE100776464 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71540BF7ADE100776464 /* NSSet+KTExtensions.m */; };
-		3C5A72610BF7ADE100776464 /* NSString-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71560BF7ADE100776464 /* NSString-Utilities.m */; };
-		3C5A72630BF7ADE100776464 /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71580BF7ADE100776464 /* NSString+KTExtensions.m */; };
-		3C5A72650BF7ADE100776464 /* NSThread+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A715A0BF7ADE100776464 /* NSThread+KTExtensions.m */; };
-		3C5A72670BF7ADE100776464 /* NSToolbar+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A715C0BF7ADE100776464 /* NSToolbar+KTExtensions.m */; };
-		3C5A72690BF7ADE100776464 /* NSURL+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A715E0BF7ADE100776464 /* NSURL+KTExtensions.m */; };
-		3C5A726B0BF7ADE100776464 /* NSView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71600BF7ADE100776464 /* NSView+KTExtensions.m */; };
-		3C5A726D0BF7ADE100776464 /* NSWindow+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71620BF7ADE100776464 /* NSWindow+KTExtensions.m */; };
-		3C5A726F0BF7ADE100776464 /* NSWorkspace+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71640BF7ADE100776464 /* NSWorkspace+KTExtensions.m */; };
-		3C5A72710BF7ADE100776464 /* NTBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71660BF7ADE100776464 /* NTBoxView.m */; };
-		3C5A72730BF7ADE100776464 /* NTSUTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71680BF7ADE100776464 /* NTSUTaskController.m */; };
-		3C5A72750BF7ADE100776464 /* OmniCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A716A0BF7ADE100776464 /* OmniCompatibility.m */; };
 		3C5A72770BF7ADE100776464 /* remove_idle.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A716C0BF7ADE100776464 /* remove_idle.png */; };
 		3C5A72780BF7ADE100776464 /* remove_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A716D0BF7ADE100776464 /* remove_pressed.png */; };
 		3C5A727A0BF7ADE100776464 /* RichTextHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A716F0BF7ADE100776464 /* RichTextHTMLTransformer.m */; };
-		3C5A727C0BF7ADE100776464 /* RoundedBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71710BF7ADE100776464 /* RoundedBox.m */; };
 		3C5A727E0BF7ADE100776464 /* RowHeightTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71730BF7ADE100776464 /* RowHeightTransformer.m */; };
-		3C5A72800BF7ADE100776464 /* RYZImagePopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71750BF7ADE100776464 /* RYZImagePopUpButton.m */; };
-		3C5A72820BF7ADE100776464 /* RYZImagePopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71770BF7ADE100776464 /* RYZImagePopUpButtonCell.m */; };
 		3C5A72840BF7ADE100776464 /* smaller.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5A71790BF7ADE100776464 /* smaller.png */; };
 		3C5A72860BF7ADE100776464 /* StringToNumberTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A717B0BF7ADE100776464 /* StringToNumberTransformer.m */; };
 		3C5A72880BF7ADE100776464 /* StripHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A717D0BF7ADE100776464 /* StripHTMLTransformer.m */; };
@@ -471,7 +418,6 @@
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
 		3C9B0485095E5EEB0053F596 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9B0483095E5EEB0053F596 /* Exception.nib */; };
-		3C9B5C440BFA7DA2007A4871 /* KTDataMigrator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5C0D950BF82011003594F8 /* KTDataMigrator.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3C9B5C520BFA7DD8007A4871 /* KTPseudoElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70EE0BF7ADE100776464 /* KTPseudoElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3C9B5C530BFA7DD9007A4871 /* KTInlineImageElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70C90BF7ADE100776464 /* KTInlineImageElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3C9B5C550BFA7DE8007A4871 /* KTHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70C50BF7ADE100776464 /* KTHTMLParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -496,19 +442,6 @@
 		3CC9A5E60D1B45CE0016A60E /* KTMediaDataProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C982BF09E34EDF0026A7B7 /* KTMediaDataProxy.h */; };
 		3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */; };
 		3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD6B0EE0BFA380600B9287E /* ThirdParty.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B11C0BFA390B00B9287E /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70830BF7ADE100776464 /* AQDataExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B11D0BFA391500B9287E /* AMRollOverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A707F0BF7ADE100776464 /* AMRollOverButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B11E0BFA391600B9287E /* AMRollOverButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70810BF7ADE100776464 /* AMRollOverButtonCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B11F0BFA391800B9287E /* NSBezierPath_AMAdditons.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71180BF7ADE100776464 /* NSBezierPath_AMAdditons.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1200BFA391C00B9287E /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70880BF7ADE100776464 /* BDAlias.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1220BFA392100B9287E /* OmniCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71690BF7ADE100776464 /* OmniCompatibility.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1230BFA392100B9287E /* NSString-Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71550BF7ADE100776464 /* NSString-Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CD6B1240BFA392200B9287E /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71650BF7ADE100776464 /* NTBoxView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CD6B1250BFA392300B9287E /* NTSUTaskController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71670BF7ADE100776464 /* NTSUTaskController.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1260BFA392700B9287E /* RoundedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71700BF7ADE100776464 /* RoundedBox.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1270BFA392800B9287E /* RYZImagePopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71740BF7ADE100776464 /* RYZImagePopUpButton.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1280BFA392A00B9287E /* RYZImagePopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71760BF7ADE100776464 /* RYZImagePopUpButtonCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CD6B1BC0BFA3B5F00B9287E /* MyTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A710A0BF7ADE100776464 /* MyTableView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3CD6B24B0BFA3E5900B9287E /* ContactPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70910BF7ADE100776464 /* ContactPassword.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3CDECA8F08413B42008CA93F /* KTURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */; };
 		3CE686D40B531F9B0097451B /* movie.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE686D30B531F9B0097451B /* movie.png */; };
@@ -539,47 +472,6 @@
 		3CEC87BC0BF8DE5A00CC732B /* KTSmallDatePickerCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70F60BF7ADE100776464 /* KTSmallDatePickerCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC87BD0BF8DE6E00CC732B /* KTValidateCharFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71010BF7ADE100776464 /* KTValidateCharFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC87BE0BF8DE7200CC732B /* KTVerticallyAlignedTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71030BF7ADE100776464 /* KTVerticallyAlignedTextCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC886C0BF8DFAB00CC732B /* NSArray+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71130BF7ADE100776464 /* NSArray+KTExtensions.m */; };
-		3CEC886D0BF8DFAD00CC732B /* NSMutableArray+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71460BF7ADE100776464 /* NSMutableArray+KTExtensions.m */; };
-		3CEC886E0BF8DFB000CC732B /* NSAttributedString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71170BF7ADE100776464 /* NSAttributedString+KTExtensions.m */; };
-		3CEC886F0BF8DFC000CC732B /* NSBundle+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A711D0BF7ADE100776464 /* NSBundle+KTExtensions.m */; };
-		3CEC88700BF8E00600CC732B /* NSURL+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A715D0BF7ADE100776464 /* NSURL+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88710BF8E00700CC732B /* NSThread+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71590BF7ADE100776464 /* NSThread+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88720BF8E00900CC732B /* NSString+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71570BF7ADE100776464 /* NSString+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88730BF8E00B00CC732B /* NSMutableSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71490BF7ADE100776464 /* NSMutableSet+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88740BF8E00C00CC732B /* NSSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71530BF7ADE100776464 /* NSSet+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88750BF8E00D00CC732B /* NSScanner+KTComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71510BF7ADE100776464 /* NSScanner+KTComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88760BF8E00F00CC732B /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714B0BF7ADE100776464 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88770BF8E01000CC732B /* NSInvocation+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713D0BF7ADE100776464 /* NSInvocation+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88780BF8E01100CC732B /* NSIndexSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713B0BF7ADE100776464 /* NSIndexSet+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88790BF8E01300CC732B /* NSIndexPath+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71390BF7ADE100776464 /* NSIndexPath+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC887A0BF8E01400CC732B /* NSFileManager+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71320BF7ADE100776464 /* NSFileManager+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC887B0BF8E01600CC732B /* NSException+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C036AAD095F350500E1DA3D /* NSException+KTExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CEC887C0BF8E01700CC732B /* NSError+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A712E0BF7ADE100776464 /* NSError+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC887D0BF8E01800CC732B /* NSMutableDictionary+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71470BF7ADE100776464 /* NSMutableDictionary+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC887E0BF8E01A00CC732B /* NSDictionary+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71280BF7ADE100776464 /* NSDictionary+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC887F0BF8E01C00CC732B /* NSDate+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71260BF7ADE100776464 /* NSDate+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88800BF8E01E00CC732B /* NSData+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71240BF7ADE100776464 /* NSData+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88810BF8E01F00CC732B /* NSCharacterSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71200BF7ADE100776464 /* NSCharacterSet+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88820BF8E02000CC732B /* NSCalendarDate+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A711E0BF7ADE100776464 /* NSCalendarDate+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88830BF8E02200CC732B /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A711C0BF7ADE100776464 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88840BF8E02300CC732B /* NSAttributedString+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71160BF7ADE100776464 /* NSAttributedString+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88850BF8E02500CC732B /* NSMutableArray+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71450BF7ADE100776464 /* NSMutableArray+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88860BF8E02800CC732B /* NSArray+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71120BF7ADE100776464 /* NSArray+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC88870BF8E02900CC732B /* NSAppleScript+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A710E0BF7ADE100776464 /* NSAppleScript+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894A0BF8E0B600CC732B /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894B0BF8E0B700CC732B /* NSManagedObjectModel+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71430BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894C0BF8E0B800CC732B /* NSManagedObjectContext+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71410BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894D0BF8E0B900CC732B /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894E0BF8E0BA00CC732B /* NSFetchRequest+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71300BF7ADE100776464 /* NSFetchRequest+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC894F0BF8E0BB00CC732B /* NSEntityDescription+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A712C0BF7ADE100776464 /* NSEntityDescription+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC89500BF8E0C200CC732B /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A708F0BF7ADE100776464 /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A1C0BF9021500CC732B /* NSApplication+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71100BF7ADE100776464 /* NSApplication+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A1D0BF9021800CC732B /* NSArrayController+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71140BF7ADE100776464 /* NSArrayController+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A1E0BF9021C00CC732B /* NSColor+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71220BF7ADE100776464 /* NSColor+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A1F0BF9022000CC732B /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71360BF7ADE100776464 /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A200BF9022400CC732B /* NSWorkspace+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71630BF7ADE100776464 /* NSWorkspace+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8A210BF9023400CC732B /* DOMNode+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A709E0BF7ADE100776464 /* DOMNode+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8A220BF9024000CC732B /* CharsetToEncodingTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A708D0BF7ADE100776464 /* CharsetToEncodingTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8A230BF9024100CC732B /* ContainerIsEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70920BF7ADE100776464 /* ContainerIsEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8A240BF9024300CC732B /* ContainerIsNotEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A70940BF7ADE100776464 /* ContainerIsNotEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -624,14 +516,6 @@
 		3CEC8B2A0BF9097C00CC732B /* KTTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEBFB0670843F09F00154996 /* KTTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8B2B0BF9097E00CC732B /* KTTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEBFB06D0843F0AB00154996 /* KTTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8B2C0BF9097F00CC732B /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71050BF7ADE100776464 /* KTView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B2D0BF9099600CC732B /* NSBitmapImageRep+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A711A0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B2E0BF9099900CC732B /* NSDocumentController+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A712A0BF7ADE100776464 /* NSDocumentController+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B2F0BF9099B00CC732B /* NSHelpManager+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71340BF7ADE100776464 /* NSHelpManager+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B300BF9099E00CC732B /* NSOutlineView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714D0BF7ADE100776464 /* NSOutlineView+KTExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CEC8B310BF909A000CC732B /* NSToolbar+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A715B0BF7ADE100776464 /* NSToolbar+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B320BF909A200CC732B /* NSView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A715F0BF7ADE100776464 /* NSView+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC8B330BF909A400CC732B /* NSWindow+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71610BF7ADE100776464 /* NSWindow+KTExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3CEC8B340BF909BE00CC732B /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A709C0BF7ADE100776464 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CF1EBDA08ECA2E40081EAC7 /* Feedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF1EBD908ECA2E40081EAC7 /* Feedback.nib */; };
 		3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */; };
 		3CFBD07E0D36C3F60083CAD2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFBD07D0D36C3F60083CAD2 /* Sparkle.framework */; };
@@ -663,10 +547,70 @@
 		CE116D0008ED045700B8F7B4 /* feedback_redbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CFB08ED045700B8F7B4 /* feedback_redbug.png */; };
 		CE116D0108ED045700B8F7B4 /* feedback_qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CFC08ED045700B8F7B4 /* feedback_qmark.png */; };
 		CE116D0208ED045700B8F7B4 /* feedback_bulb.png in Resources */ = {isa = PBXBuildFile; fileRef = CE116CFD08ED045700B8F7B4 /* feedback_bulb.png */; };
+		CE11DF160D6184AD003B00CA /* KSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE8F0D6184AD003B00CA /* KSAppDelegate.m */; };
+		CE11DF180D6184AD003B00CA /* KSApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE910D6184AD003B00CA /* KSApplication.m */; };
+		CE11DF1A0D6184AD003B00CA /* KSSingletonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE930D6184AD003B00CA /* KSSingletonWindowController.m */; };
+		CE11DF1C0D6184AD003B00CA /* CIImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE980D6184AD003B00CA /* CIImage+Karelia.m */; };
+		CE11DF1E0D6184AD003B00CA /* NSApplication+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE9B0D6184AD003B00CA /* NSApplication+Karelia.m */; };
+		CE11DF200D6184AD003B00CA /* NSArrayController+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE9D0D6184AD003B00CA /* NSArrayController+Karelia.m */; };
+		CE11DF220D6184AD003B00CA /* NSBitmapImageRep+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DE9F0D6184AD003B00CA /* NSBitmapImageRep+Karelia.m */; };
+		CE11DF240D6184AD003B00CA /* NSColor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEA10D6184AD003B00CA /* NSColor+Karelia.m */; };
+		CE11DF260D6184AD003B00CA /* NSHelpManager+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEA30D6184AD003B00CA /* NSHelpManager+Karelia.m */; };
+		CE11DF280D6184AD003B00CA /* NSImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEA50D6184AD003B00CA /* NSImage+Karelia.m */; };
+		CE11DF2A0D6184AD003B00CA /* NSToolbar+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEA70D6184AD003B00CA /* NSToolbar+Karelia.m */; };
+		CE11DF2C0D6184AD003B00CA /* NSView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEA90D6184AD003B00CA /* NSView+Karelia.m */; };
+		CE11DF2E0D6184AD003B00CA /* NSWindow+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEAB0D6184AD003B00CA /* NSWindow+Karelia.m */; };
+		CE11DF300D6184AD003B00CA /* NSWorkspace+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEAD0D6184AD003B00CA /* NSWorkspace+Karelia.m */; };
+		CE11DF320D6184AD003B00CA /* NSObject+PerformOnMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEB00D6184AD003B00CA /* NSObject+PerformOnMainThread.m */; };
+		CE11DF340D6184AD003B00CA /* NSAppleScript+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEB20D6184AD003B00CA /* NSAppleScript+Karelia.m */; };
+		CE11DF360D6184AD003B00CA /* NSArray+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEB40D6184AD003B00CA /* NSArray+Karelia.m */; };
+		CE11DF380D6184AD003B00CA /* NSMutableArray+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEB60D6184AD003B00CA /* NSMutableArray+Karelia.m */; };
+		CE11DF3A0D6184AD003B00CA /* NSAttributedString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEB80D6184AD003B00CA /* NSAttributedString+Karelia.m */; };
+		CE11DF3C0D6184AD003B00CA /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEBA0D6184AD003B00CA /* NSBundle+Karelia.m */; };
+		CE11DF3E0D6184AD003B00CA /* NSCalendarDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEBC0D6184AD003B00CA /* NSCalendarDate+Karelia.m */; };
+		CE11DF400D6184AD003B00CA /* NSCharacterSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEBE0D6184AD003B00CA /* NSCharacterSet+Karelia.m */; };
+		CE11DF420D6184AD003B00CA /* NSData+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEC00D6184AD003B00CA /* NSData+Karelia.m */; };
+		CE11DF440D6184AD003B00CA /* NSDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEC20D6184AD003B00CA /* NSDate+Karelia.m */; };
+		CE11DF460D6184AD003B00CA /* NSDictionary+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEC40D6184AD003B00CA /* NSDictionary+Karelia.m */; };
+		CE11DF480D6184AD003B00CA /* NSMutableDictionary+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEC60D6184AD003B00CA /* NSMutableDictionary+Karelia.m */; };
+		CE11DF4A0D6184AD003B00CA /* NSError+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEC80D6184AD003B00CA /* NSError+Karelia.m */; };
+		CE11DF4C0D6184AD003B00CA /* NSException+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DECA0D6184AD003B00CA /* NSException+Karelia.m */; };
+		CE11DF4E0D6184AD003B00CA /* NSFileManager+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DECC0D6184AD003B00CA /* NSFileManager+Karelia.m */; };
+		CE11DF500D6184AD003B00CA /* NSIndexPath+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DECE0D6184AD003B00CA /* NSIndexPath+Karelia.m */; };
+		CE11DF520D6184AD003B00CA /* NSIndexSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DED00D6184AD003B00CA /* NSIndexSet+Karelia.m */; };
+		CE11DF540D6184AD003B00CA /* NSInvocation+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DED20D6184AD003B00CA /* NSInvocation+Karelia.m */; };
+		CE11DF560D6184AD003B00CA /* NSObject+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DED40D6184AD003B00CA /* NSObject+Karelia.m */; };
+		CE11DF580D6184AD003B00CA /* NSScanner+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DED60D6184AD003B00CA /* NSScanner+Karelia.m */; };
+		CE11DF5A0D6184AD003B00CA /* NSMutableSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DED80D6184AD003B00CA /* NSMutableSet+Karelia.m */; };
+		CE11DF5C0D6184AD003B00CA /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEDA0D6184AD003B00CA /* NSString+Karelia.m */; };
+		CE11DF600D6184AD003B00CA /* NSThread+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEDE0D6184AD003B00CA /* NSThread+Karelia.m */; };
+		CE11DF620D6184AD003B00CA /* NSURL+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEE00D6184AD003B00CA /* NSURL+Karelia.m */; };
+		CE11DF640D6184AD003B00CA /* NSSortDescriptor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEE20D6184AD003B00CA /* NSSortDescriptor+Karelia.m */; };
+		CE11DF660D6184AD003B00CA /* NSXMLElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEE40D6184AD003B00CA /* NSXMLElement+Karelia.m */; };
+		CE11DF680D6184AD003B00CA /* NSBezierPath+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEE60D6184AD003B00CA /* NSBezierPath+Karelia.m */; };
+		CE11DF6A0D6184AD003B00CA /* RoundedBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEED0D6184AD003B00CA /* RoundedBox.m */; };
+		CE11DF6C0D6184AD003B00CA /* RYZImagePopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEEF0D6184AD003B00CA /* RYZImagePopUpButton.m */; };
+		CE11DF6E0D6184AD003B00CA /* RYZImagePopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEF10D6184AD003B00CA /* RYZImagePopUpButtonCell.m */; };
+		CE11DF700D6184AD003B00CA /* OmniCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEF40D6184AD003B00CA /* OmniCompatibility.m */; };
+		CE11DF720D6184AD003B00CA /* NSString-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEF60D6184AD003B00CA /* NSString-Utilities.m */; };
+		CE11DF740D6184AD003B00CA /* NTBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEF80D6184AD003B00CA /* NTBoxView.m */; };
+		CE11DF760D6184AD003B00CA /* NTSUTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEFA0D6184AD003B00CA /* NTSUTaskController.m */; };
+		CE11DF780D6184AD003B00CA /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DEFD0D6184AD003B00CA /* BDAlias.m */; };
+		CE11DF7A0D6184AD003B00CA /* AMRollOverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF000D6184AD003B00CA /* AMRollOverButton.m */; };
+		CE11DF7C0D6184AD003B00CA /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF020D6184AD003B00CA /* AMRollOverButtonCell.m */; };
+		CE11DF7E0D6184AD003B00CA /* NSBezierPath_AMAdditons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF040D6184AD003B00CA /* NSBezierPath_AMAdditons.m */; };
+		CE11DF800D6184AD003B00CA /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF070D6184AD003B00CA /* AQDataExtensions.m */; };
+		CE11DF820D6184AD003B00CA /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF0A0D6184AD003B00CA /* DNDArrayController.m */; };
+		CE11DF840D6184AD003B00CA /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF0C0D6184AD003B00CA /* MyTableView.m */; };
+		CE11DF8B0D618548003B00CA /* KTDataMigrator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5C0D950BF82011003594F8 /* KTDataMigrator.h */; };
+		CE11DF9B0D6185B9003B00CA /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71540BF7ADE100776464 /* NSSet+KTExtensions.m */; };
+		CE11DFA80D6185F7003B00CA /* NSObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A714C0BF7ADE100776464 /* NSObject+KTExtensions.m */; };
+		CE11DFAA0D61862E003B00CA /* NSString+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB521C60899526E006B0019 /* NSString+KTApplication.m */; };
+		CE11DFAE0D61864D003B00CA /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71580BF7ADE100776464 /* NSString+KTExtensions.m */; };
+		CE11DFB00D6186FC003B00CA /* NSBundle+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A711D0BF7ADE100776464 /* NSBundle+KTExtensions.m */; };
 		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
-		CE1303330BD0149000DC2439 /* NSTextView+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1303310BD0149000DC2439 /* NSTextView+KTApplication.m */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
 		CE16A3D9087319720006F80B /* KTStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16A3D7087319720006F80B /* KTStackView.m */; };
 		CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */; };
@@ -695,6 +639,9 @@
 		CE265C9108195CEF009D3B6C /* fwd_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = CE265C8F08195CEF009D3B6C /* fwd_sm.png */; };
 		CE265C9208195CEF009D3B6C /* bak_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = CE265C9008195CEF009D3B6C /* bak_sm.png */; };
 		CE26FA1408C4D9C500C9604B /* additionalEditingCSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */; };
+		CE27F63B0D61928B00D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71370BF7ADE100776464 /* NSImage+KTExtensions.m */; };
+		CE27F6650D6193B200D211EA /* NSImage+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */; };
+		CE27F6670D6193B200D211EA /* NSTextView+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */; };
 		CE2FE58208E8EF2C00C12D48 /* News.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE2FE58008E8EF2C00C12D48 /* News.nib */; };
 		CE2FE58808E8EF4900C12D48 /* KTNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FE58608E8EF4900C12D48 /* KTNewsController.m */; };
 		CE2FE70308E8FC6000C12D48 /* NewsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE2FE67E08E8F8A000C12D48 /* NewsTemplate.html */; };
@@ -716,8 +663,6 @@
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
 		CE53609C0A15303D00661E26 /* Introduction.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE53609A0A15303D00661E26 /* Introduction.nib */; };
 		CE57F2960D57F194005C1D64 /* follow15.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE57F2950D57F194005C1D64 /* follow15.tiff */; };
-		CE57F35F0D58D65D005C1D64 /* NSBezierPath+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE57F35D0D58D65D005C1D64 /* NSBezierPath+KTExtensions.h */; };
-		CE57F3600D58D65D005C1D64 /* NSBezierPath+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE57F35E0D58D65D005C1D64 /* NSBezierPath+KTExtensions.m */; };
 		CE5CA31A0D15B90B0021E9B3 /* toolbar_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3190D15B90B0021E9B3 /* toolbar_html.tiff */; };
 		CE5CA3470D15BE580021E9B3 /* GenericFileServerIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */; };
 		CE5CA3690D15C1DE0021E9B3 /* pageborder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3670D15C1DE0021E9B3 /* pageborder.tiff */; };
@@ -755,6 +700,7 @@
 		CE9218860809A40500E7F46B /* toolbar_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218840809A40500E7F46B /* toolbar_group.png */; };
 		CE946B600822CD0000CE8E0C /* Shading.png in Resources */ = {isa = PBXBuildFile; fileRef = CE946B5F0822CD0000CE8E0C /* Shading.png */; };
 		CE9475390823013F00CE8E0C /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9475380823013F00CE8E0C /* Mask.jpg */; };
+		CE99C6070D61904600A54B40 /* MoreAddrToSym.c in Sources */ = {isa = PBXBuildFile; fileRef = CE11DF0F0D6184AD003B00CA /* MoreAddrToSym.c */; };
 		CE9CAB4B0BCEC566001BF9F7 /* dreamhost.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB480BCEC566001BF9F7 /* dreamhost.gif */; };
 		CE9CAB4D0BCEC566001BF9F7 /* serverlogistics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */; };
 		CE9DFF4C09FD4E5900007D04 /* MediaInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C728BF008EC7AD800BADA0A /* MediaInspector.nib */; };
@@ -771,7 +717,6 @@
 		CEA369E2091A7D680073219B /* feedback_rtfd.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA369E1091A7D680073219B /* feedback_rtfd.png */; };
 		CEA36AAD091AA2400073219B /* po.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA36AAC091AA2400073219B /* po.png */; };
 		CEA36D1E091AEF430073219B /* Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA36D1D091AEF430073219B /* Lock.png */; };
-		CEA378A20831347D00466572 /* NSImage+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA378A00831347D00466572 /* NSImage+KTApplication.m */; };
 		CEA962C30AF6A924008A1367 /* sandvox.css in Resources */ = {isa = PBXBuildFile; fileRef = CEA962C20AF6A924008A1367 /* sandvox.css */; };
 		CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */ = {isa = PBXBuildFile; fileRef = CEAE132B08450536007025D4 /* RSSTemplate.xml */; };
 		CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAE1668084530C1007025D4 /* KTHostProperties.m */; };
@@ -780,15 +725,12 @@
 		CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34930082961880073A7A4 /* KTInfoWindowController.m */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
 		CEB3510D08298A1D0073A7A4 /* KTDocument+Lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */; };
-		CEB521C80899526E006B0019 /* NSString+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB521C60899526E006B0019 /* NSString+KTApplication.m */; };
 		CEB53A7A0899A99C006B0019 /* KTDesignURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB53A870899A9AD006B0019 /* KTDesignManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A830899A9AD006B0019 /* KTDesignManager.m */; };
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
 		CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */; };
-		CEBE780209F407450059DEC6 /* MoreAddrToSym.c in Sources */ = {isa = PBXBuildFile; fileRef = CEBE780009F407450059DEC6 /* MoreAddrToSym.c */; };
-		CEBE782909F40A320059DEC6 /* MoreBacktrace.c in Sources */ = {isa = PBXBuildFile; fileRef = CEBE782809F40A320059DEC6 /* MoreBacktrace.c */; };
 		CEBFB06A0843F09F00154996 /* KTTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFB0680843F09F00154996 /* KTTextField.m */; };
 		CEBFB0700843F0AB00154996 /* KTTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFB06E0843F0AB00154996 /* KTTextFieldCell.m */; };
 		CEC164620D3596EF005C1DE8 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC1645E0D3596EF005C1DE8 /* checkmark.tiff */; };
@@ -802,13 +744,6 @@
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
 		CEC3B5130BA9107A006DA002 /* KTTranscript.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3B5120BA9107A006DA002 /* KTTranscript.nib */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
-		CEC5A9AF0D616BCF001BA05D /* KSAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */; };
-		CEC5A9B00D616BCF001BA05D /* KSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */; };
-		CEC5A9B10D616BCF001BA05D /* KSApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9AB0D616BCF001BA05D /* KSApplication.h */; };
-		CEC5A9B20D616BCF001BA05D /* KSApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AC0D616BCF001BA05D /* KSApplication.m */; };
-		CEC5A9B30D616BCF001BA05D /* KSSingletonWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */; };
-		CEC5A9B40D616BCF001BA05D /* KSSingletonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */; };
-		CEC5A9B60D616BE1001BA05D /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
 		CECDC3E208287E920090F560 /* Info.nib in Resources */ = {isa = PBXBuildFile; fileRef = CECDC3E008287E920090F560 /* Info.nib */; };
@@ -1675,21 +1610,15 @@
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
 		272FBCC90D40102C00FCC189 /* KTDocSiteOutlineController+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Icons.m"; sourceTree = "<group>"; };
-		2738634A0D50028700A8A209 /* NSSortDescriptor+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSortDescriptor+KTExtensions.h"; sourceTree = "<group>"; };
-		2738634B0D50028700A8A209 /* NSSortDescriptor+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSortDescriptor+KTExtensions.m"; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
 		273866BF0D51555200A8A209 /* KTImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageLoader.h; sourceTree = "<group>"; };
 		273866C00D51555200A8A209 /* KTImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageLoader.m; sourceTree = "<group>"; };
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
-		273D7BD20D05A11D00057448 /* NSObject+PerformOnMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PerformOnMainThread.h"; sourceTree = "<group>"; };
-		273D7BD30D05A11D00057448 /* NSObject+PerformOnMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformOnMainThread.m"; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Paths.m"; sourceTree = "<group>"; };
 		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
 		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
-		2743626B0D53BEAA00C257BA /* NSXMLElement+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSXMLElement+KTExtensions.h"; sourceTree = "<group>"; };
-		2743626C0D53BEAA00C257BA /* NSXMLElement+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+KTExtensions.m"; sourceTree = "<group>"; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
 		2752C7120C8DCA0900BD90EA /* getCaminoFrontmostPage.scpt */ = {isa = PBXFileReference; explicitFileType = file; fileEncoding = 30; name = getCaminoFrontmostPage.scpt; path = ../Code/KTComponents/getCaminoFrontmostPage.scpt; sourceTree = SOURCE_ROOT; };
@@ -1802,8 +1731,6 @@
 		3C006B51095CBBB300474823 /* KTAbstractBugReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractBugReporter.h; sourceTree = "<group>"; };
 		3C006B52095CBBB300474823 /* KTAbstractBugReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractBugReporter.m; sourceTree = "<group>"; };
 		3C007192095DCFF700474823 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/BugReporterViews.nib; sourceTree = "<group>"; };
-		3C036AAD095F350500E1DA3D /* NSException+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+KTExtensions.h"; sourceTree = "<group>"; };
-		3C036AAE095F350500E1DA3D /* NSException+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSException+KTExtensions.m"; sourceTree = "<group>"; };
 		3C036B3D095F5C9500E1DA3D /* criticalAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = criticalAlert.png; sourceTree = "<group>"; };
 		3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../Xcode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ArchiveIndex.xcodeproj; path = ../Plugins/Indexes/ArchiveIndex/ArchiveIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -1913,17 +1840,9 @@
 		3C5A2CA10BD1F8DD00A788F5 /* KTNoCascadePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTNoCascadePanel.m; sourceTree = "<group>"; };
 		3C5A707D0BF7ADE100776464 /* add_idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_idle.png; path = ../Code/KTComponents/add_idle.png; sourceTree = SOURCE_ROOT; };
 		3C5A707E0BF7ADE100776464 /* add_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_pressed.png; path = ../Code/KTComponents/add_pressed.png; sourceTree = SOURCE_ROOT; };
-		3C5A707F0BF7ADE100776464 /* AMRollOverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButton.h; path = ../Code/KTComponents/AMRollOverButton.h; sourceTree = SOURCE_ROOT; };
-		3C5A70800BF7ADE100776464 /* AMRollOverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButton.m; path = ../Code/KTComponents/AMRollOverButton.m; sourceTree = SOURCE_ROOT; };
-		3C5A70810BF7ADE100776464 /* AMRollOverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButtonCell.h; path = ../Code/KTComponents/AMRollOverButtonCell.h; sourceTree = SOURCE_ROOT; };
-		3C5A70820BF7ADE100776464 /* AMRollOverButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButtonCell.m; path = ../Code/KTComponents/AMRollOverButtonCell.m; sourceTree = SOURCE_ROOT; };
-		3C5A70830BF7ADE100776464 /* AQDataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AQDataExtensions.h; path = ../Code/KTComponents/AQDataExtensions.h; sourceTree = SOURCE_ROOT; };
-		3C5A70840BF7ADE100776464 /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQDataExtensions.m; path = ../Code/KTComponents/AQDataExtensions.m; sourceTree = SOURCE_ROOT; };
 		3C5A70850BF7ADE100776464 /* ArrowPointingDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ArrowPointingDown.png; path = ../Code/KTComponents/ArrowPointingDown.png; sourceTree = SOURCE_ROOT; };
 		3C5A70860BF7ADE100776464 /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = assertions.h; path = ../Code/KTComponents/assertions.h; sourceTree = SOURCE_ROOT; };
 		3C5A70870BF7ADE100776464 /* assertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = assertions.m; path = ../Code/KTComponents/assertions.m; sourceTree = SOURCE_ROOT; };
-		3C5A70880BF7ADE100776464 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../Code/KTComponents/BDAlias.h; sourceTree = SOURCE_ROOT; };
-		3C5A70890BF7ADE100776464 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../Code/KTComponents/BDAlias.m; sourceTree = SOURCE_ROOT; };
 		3C5A708C0BF7ADE100776464 /* broken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = broken.png; path = ../Code/KTComponents/broken.png; sourceTree = SOURCE_ROOT; };
 		3C5A708D0BF7ADE100776464 /* CharsetToEncodingTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharsetToEncodingTransformer.h; path = ../Code/KTComponents/CharsetToEncodingTransformer.h; sourceTree = SOURCE_ROOT; };
 		3C5A708E0BF7ADE100776464 /* CharsetToEncodingTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharsetToEncodingTransformer.m; path = ../Code/KTComponents/CharsetToEncodingTransformer.m; sourceTree = SOURCE_ROOT; };
@@ -1940,8 +1859,6 @@
 		3C5A70990BF7ADE100776464 /* CroppingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CroppingImageView.h; path = ../Code/KTComponents/CroppingImageView.h; sourceTree = SOURCE_ROOT; };
 		3C5A709A0BF7ADE100776464 /* CroppingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CroppingImageView.m; path = ../Code/KTComponents/CroppingImageView.m; sourceTree = SOURCE_ROOT; };
 		3C5A709B0BF7ADE100776464 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debug.h; path = ../Code/KTComponents/Debug.h; sourceTree = SOURCE_ROOT; };
-		3C5A709C0BF7ADE100776464 /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNDArrayController.h; path = ../Code/KTComponents/DNDArrayController.h; sourceTree = SOURCE_ROOT; };
-		3C5A709D0BF7ADE100776464 /* DNDArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNDArrayController.m; path = ../Code/KTComponents/DNDArrayController.m; sourceTree = SOURCE_ROOT; };
 		3C5A709E0BF7ADE100776464 /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DOMNode+KTExtensions.h"; path = "../Code/KTComponents/DOMNode+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A709F0BF7ADE100776464 /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DOMNode+KTExtensions.m"; path = "../Code/KTComponents/DOMNode+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A70A00BF7ADE100776464 /* EscapeHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EscapeHTMLTransformer.h; path = ../Code/KTComponents/EscapeHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
@@ -2035,116 +1952,38 @@
 		3C5A71070BF7ADE100776464 /* larger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = larger.png; path = ../Code/KTComponents/larger.png; sourceTree = SOURCE_ROOT; };
 		3C5A71080BF7ADE100776464 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../Code/KTComponents/License.rtf; sourceTree = SOURCE_ROOT; };
 		3C5A71090BF7ADE100776464 /* mag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mag.png; path = ../Code/KTComponents/mag.png; sourceTree = SOURCE_ROOT; };
-		3C5A710A0BF7ADE100776464 /* MyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTableView.h; path = ../Code/KTComponents/MyTableView.h; sourceTree = SOURCE_ROOT; };
-		3C5A710B0BF7ADE100776464 /* MyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTableView.m; path = ../Code/KTComponents/MyTableView.m; sourceTree = SOURCE_ROOT; };
 		3C5A710C0BF7ADE100776464 /* no_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = no_image.png; path = ../Code/KTComponents/no_image.png; sourceTree = SOURCE_ROOT; };
 		3C5A710D0BF7ADE100776464 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = none.png; path = ../Code/KTComponents/none.png; sourceTree = SOURCE_ROOT; };
-		3C5A710E0BF7ADE100776464 /* NSAppleScript+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAppleScript+KTExtensions.h"; path = "../Code/KTComponents/NSAppleScript+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A710F0BF7ADE100776464 /* NSAppleScript+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAppleScript+KTExtensions.m"; path = "../Code/KTComponents/NSAppleScript+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71100BF7ADE100776464 /* NSApplication+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSApplication+KTExtensions.h"; path = "../Code/KTComponents/NSApplication+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71110BF7ADE100776464 /* NSApplication+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+KTExtensions.m"; path = "../Code/KTComponents/NSApplication+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71120BF7ADE100776464 /* NSArray+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+KTExtensions.h"; path = "../Code/KTComponents/NSArray+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71130BF7ADE100776464 /* NSArray+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+KTExtensions.m"; path = "../Code/KTComponents/NSArray+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71140BF7ADE100776464 /* NSArrayController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArrayController+KTExtensions.h"; path = "../Code/KTComponents/NSArrayController+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71150BF7ADE100776464 /* NSArrayController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArrayController+KTExtensions.m"; path = "../Code/KTComponents/NSArrayController+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71160BF7ADE100776464 /* NSAttributedString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+KTExtensions.h"; path = "../Code/KTComponents/NSAttributedString+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71170BF7ADE100776464 /* NSAttributedString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+KTExtensions.m"; path = "../Code/KTComponents/NSAttributedString+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71180BF7ADE100776464 /* NSBezierPath_AMAdditons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBezierPath_AMAdditons.h; path = ../Code/KTComponents/NSBezierPath_AMAdditons.h; sourceTree = SOURCE_ROOT; };
-		3C5A71190BF7ADE100776464 /* NSBezierPath_AMAdditons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBezierPath_AMAdditons.m; path = ../Code/KTComponents/NSBezierPath_AMAdditons.m; sourceTree = SOURCE_ROOT; };
-		3C5A711A0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBitmapImageRep+KTExtensions.h"; path = "../Code/KTComponents/NSBitmapImageRep+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A711B0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep+KTExtensions.m"; path = "../Code/KTComponents/NSBitmapImageRep+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A711C0BF7ADE100776464 /* NSBundle+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+KTExtensions.h"; path = "../Code/KTComponents/NSBundle+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A711D0BF7ADE100776464 /* NSBundle+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+KTExtensions.m"; path = "../Code/KTComponents/NSBundle+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A711E0BF7ADE100776464 /* NSCalendarDate+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCalendarDate+KTExtensions.h"; path = "../Code/KTComponents/NSCalendarDate+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A711F0BF7ADE100776464 /* NSCalendarDate+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCalendarDate+KTExtensions.m"; path = "../Code/KTComponents/NSCalendarDate+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71200BF7ADE100776464 /* NSCharacterSet+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCharacterSet+KTExtensions.h"; path = "../Code/KTComponents/NSCharacterSet+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71210BF7ADE100776464 /* NSCharacterSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCharacterSet+KTExtensions.m"; path = "../Code/KTComponents/NSCharacterSet+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71220BF7ADE100776464 /* NSColor+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+KTExtensions.h"; path = "../Code/KTComponents/NSColor+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71230BF7ADE100776464 /* NSColor+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+KTExtensions.m"; path = "../Code/KTComponents/NSColor+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71240BF7ADE100776464 /* NSData+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+KTExtensions.h"; path = "../Code/KTComponents/NSData+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71250BF7ADE100776464 /* NSData+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+KTExtensions.m"; path = "../Code/KTComponents/NSData+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71260BF7ADE100776464 /* NSDate+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+KTExtensions.h"; path = "../Code/KTComponents/NSDate+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71270BF7ADE100776464 /* NSDate+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+KTExtensions.m"; path = "../Code/KTComponents/NSDate+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71280BF7ADE100776464 /* NSDictionary+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+KTExtensions.h"; path = "../Code/KTComponents/NSDictionary+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71290BF7ADE100776464 /* NSDictionary+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+KTExtensions.m"; path = "../Code/KTComponents/NSDictionary+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A712A0BF7ADE100776464 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDocumentController+KTExtensions.h"; path = "../Code/KTComponents/NSDocumentController+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A712B0BF7ADE100776464 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDocumentController+KTExtensions.m"; path = "../Code/KTComponents/NSDocumentController+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A712C0BF7ADE100776464 /* NSEntityDescription+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSEntityDescription+KTExtensions.h"; path = "../Code/KTComponents/NSEntityDescription+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSEntityDescription+KTExtensions.m"; path = "../Code/KTComponents/NSEntityDescription+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A712E0BF7ADE100776464 /* NSError+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+KTExtensions.h"; path = "../Code/KTComponents/NSError+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A712F0BF7ADE100776464 /* NSError+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+KTExtensions.m"; path = "../Code/KTComponents/NSError+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71300BF7ADE100776464 /* NSFetchRequest+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFetchRequest+KTExtensions.h"; path = "../Code/KTComponents/NSFetchRequest+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFetchRequest+KTExtensions.m"; path = "../Code/KTComponents/NSFetchRequest+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71320BF7ADE100776464 /* NSFileManager+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+KTExtensions.h"; path = "../Code/KTComponents/NSFileManager+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71330BF7ADE100776464 /* NSFileManager+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+KTExtensions.m"; path = "../Code/KTComponents/NSFileManager+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71340BF7ADE100776464 /* NSHelpManager+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSHelpManager+KTExtensions.h"; path = "../Code/KTComponents/NSHelpManager+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71350BF7ADE100776464 /* NSHelpManager+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSHelpManager+KTExtensions.m"; path = "../Code/KTComponents/NSHelpManager+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71360BF7ADE100776464 /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage+KTExtensions.h"; path = "../Code/KTComponents/NSImage+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71370BF7ADE100776464 /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage+KTExtensions.m"; path = "../Code/KTComponents/NSImage+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71380BF7ADE100776464 /* NSImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSImagePicker.h; path = ../Code/KTComponents/NSImagePicker.h; sourceTree = SOURCE_ROOT; };
-		3C5A71390BF7ADE100776464 /* NSIndexPath+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+KTExtensions.h"; path = "../Code/KTComponents/NSIndexPath+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A713A0BF7ADE100776464 /* NSIndexPath+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+KTExtensions.m"; path = "../Code/KTComponents/NSIndexPath+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A713B0BF7ADE100776464 /* NSIndexSet+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexSet+KTExtensions.h"; path = "../Code/KTComponents/NSIndexSet+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A713C0BF7ADE100776464 /* NSIndexSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexSet+KTExtensions.m"; path = "../Code/KTComponents/NSIndexSet+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A713D0BF7ADE100776464 /* NSInvocation+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+KTExtensions.h"; path = "../Code/KTComponents/NSInvocation+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A713E0BF7ADE100776464 /* NSInvocation+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+KTExtensions.m"; path = "../Code/KTComponents/NSInvocation+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+KTExtensions.h"; path = "../Code/KTComponents/NSManagedObject+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71400BF7ADE100776464 /* NSManagedObject+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+KTExtensions.m"; path = "../Code/KTComponents/NSManagedObject+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71410BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+KTExtensions.h"; path = "../Code/KTComponents/NSManagedObjectContext+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71420BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+KTExtensions.m"; path = "../Code/KTComponents/NSManagedObjectContext+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71430BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectModel+KTExtensions.h"; path = "../Code/KTComponents/NSManagedObjectModel+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71440BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectModel+KTExtensions.m"; path = "../Code/KTComponents/NSManagedObjectModel+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71450BF7ADE100776464 /* NSMutableArray+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+KTExtensions.h"; path = "../Code/KTComponents/NSMutableArray+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71460BF7ADE100776464 /* NSMutableArray+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+KTExtensions.m"; path = "../Code/KTComponents/NSMutableArray+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71470BF7ADE100776464 /* NSMutableDictionary+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableDictionary+KTExtensions.h"; path = "../Code/KTComponents/NSMutableDictionary+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71480BF7ADE100776464 /* NSMutableDictionary+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+KTExtensions.m"; path = "../Code/KTComponents/NSMutableDictionary+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71490BF7ADE100776464 /* NSMutableSet+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableSet+KTExtensions.h"; path = "../Code/KTComponents/NSMutableSet+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A714A0BF7ADE100776464 /* NSMutableSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableSet+KTExtensions.m"; path = "../Code/KTComponents/NSMutableSet+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A714B0BF7ADE100776464 /* NSObject+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+KTExtensions.h"; path = "../Code/KTComponents/NSObject+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A714C0BF7ADE100776464 /* NSObject+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+KTExtensions.m"; path = "../Code/KTComponents/NSObject+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A714D0BF7ADE100776464 /* NSOutlineView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSOutlineView+KTExtensions.h"; path = "../Code/KTComponents/NSOutlineView+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A714E0BF7ADE100776464 /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSOutlineView+KTExtensions.m"; path = "../Code/KTComponents/NSOutlineView+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPersistentStoreCoordinator+KTExtensions.h"; path = "../Code/KTComponents/NSPersistentStoreCoordinator+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71500BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPersistentStoreCoordinator+KTExtensions.m"; path = "../Code/KTComponents/NSPersistentStoreCoordinator+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71510BF7ADE100776464 /* NSScanner+KTComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSScanner+KTComponents.h"; path = "../Code/KTComponents/NSScanner+KTComponents.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71520BF7ADE100776464 /* NSScanner+KTComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScanner+KTComponents.m"; path = "../Code/KTComponents/NSScanner+KTComponents.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71530BF7ADE100776464 /* NSSet+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+KTExtensions.h"; path = "../Code/KTComponents/NSSet+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71540BF7ADE100776464 /* NSSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+KTExtensions.m"; path = "../Code/KTComponents/NSSet+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71550BF7ADE100776464 /* NSString-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString-Utilities.h"; path = "../Code/KTComponents/NSString-Utilities.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71560BF7ADE100776464 /* NSString-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString-Utilities.m"; path = "../Code/KTComponents/NSString-Utilities.m"; sourceTree = SOURCE_ROOT; };
 		3C5A71570BF7ADE100776464 /* NSString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+KTExtensions.h"; path = "../Code/KTComponents/NSString+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
 		3C5A71580BF7ADE100776464 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+KTExtensions.m"; path = "../Code/KTComponents/NSString+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71590BF7ADE100776464 /* NSThread+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+KTExtensions.h"; path = "../Code/KTComponents/NSThread+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A715A0BF7ADE100776464 /* NSThread+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+KTExtensions.m"; path = "../Code/KTComponents/NSThread+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A715B0BF7ADE100776464 /* NSToolbar+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSToolbar+KTExtensions.h"; path = "../Code/KTComponents/NSToolbar+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A715C0BF7ADE100776464 /* NSToolbar+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSToolbar+KTExtensions.m"; path = "../Code/KTComponents/NSToolbar+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A715D0BF7ADE100776464 /* NSURL+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+KTExtensions.h"; path = "../Code/KTComponents/NSURL+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A715E0BF7ADE100776464 /* NSURL+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+KTExtensions.m"; path = "../Code/KTComponents/NSURL+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A715F0BF7ADE100776464 /* NSView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView+KTExtensions.h"; path = "../Code/KTComponents/NSView+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71600BF7ADE100776464 /* NSView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView+KTExtensions.m"; path = "../Code/KTComponents/NSView+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71610BF7ADE100776464 /* NSWindow+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWindow+KTExtensions.h"; path = "../Code/KTComponents/NSWindow+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71620BF7ADE100776464 /* NSWindow+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWindow+KTExtensions.m"; path = "../Code/KTComponents/NSWindow+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71630BF7ADE100776464 /* NSWorkspace+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWorkspace+KTExtensions.h"; path = "../Code/KTComponents/NSWorkspace+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		3C5A71640BF7ADE100776464 /* NSWorkspace+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWorkspace+KTExtensions.m"; path = "../Code/KTComponents/NSWorkspace+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
-		3C5A71650BF7ADE100776464 /* NTBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NTBoxView.h; path = ../Code/KTComponents/NTBoxView.h; sourceTree = SOURCE_ROOT; };
-		3C5A71660BF7ADE100776464 /* NTBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NTBoxView.m; path = ../Code/KTComponents/NTBoxView.m; sourceTree = SOURCE_ROOT; };
-		3C5A71670BF7ADE100776464 /* NTSUTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NTSUTaskController.h; path = ../Code/KTComponents/NTSUTaskController.h; sourceTree = SOURCE_ROOT; };
-		3C5A71680BF7ADE100776464 /* NTSUTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NTSUTaskController.m; path = ../Code/KTComponents/NTSUTaskController.m; sourceTree = SOURCE_ROOT; };
-		3C5A71690BF7ADE100776464 /* OmniCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OmniCompatibility.h; path = ../Code/KTComponents/OmniCompatibility.h; sourceTree = SOURCE_ROOT; };
-		3C5A716A0BF7ADE100776464 /* OmniCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OmniCompatibility.m; path = ../Code/KTComponents/OmniCompatibility.m; sourceTree = SOURCE_ROOT; };
 		3C5A716B0BF7ADE100776464 /* PrivateComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrivateComponents.h; path = ../Code/KTComponents/PrivateComponents.h; sourceTree = SOURCE_ROOT; };
 		3C5A716C0BF7ADE100776464 /* remove_idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = remove_idle.png; path = ../Code/KTComponents/remove_idle.png; sourceTree = SOURCE_ROOT; };
 		3C5A716D0BF7ADE100776464 /* remove_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = remove_pressed.png; path = ../Code/KTComponents/remove_pressed.png; sourceTree = SOURCE_ROOT; };
 		3C5A716E0BF7ADE100776464 /* RichTextHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RichTextHTMLTransformer.h; path = ../Code/KTComponents/RichTextHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
 		3C5A716F0BF7ADE100776464 /* RichTextHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RichTextHTMLTransformer.m; path = ../Code/KTComponents/RichTextHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
-		3C5A71700BF7ADE100776464 /* RoundedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundedBox.h; path = ../Code/KTComponents/RoundedBox.h; sourceTree = SOURCE_ROOT; };
-		3C5A71710BF7ADE100776464 /* RoundedBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundedBox.m; path = ../Code/KTComponents/RoundedBox.m; sourceTree = SOURCE_ROOT; };
 		3C5A71720BF7ADE100776464 /* RowHeightTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RowHeightTransformer.h; path = ../Code/KTComponents/RowHeightTransformer.h; sourceTree = SOURCE_ROOT; };
 		3C5A71730BF7ADE100776464 /* RowHeightTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RowHeightTransformer.m; path = ../Code/KTComponents/RowHeightTransformer.m; sourceTree = SOURCE_ROOT; };
-		3C5A71740BF7ADE100776464 /* RYZImagePopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYZImagePopUpButton.h; path = ../Code/KTComponents/RYZImagePopUpButton.h; sourceTree = SOURCE_ROOT; };
-		3C5A71750BF7ADE100776464 /* RYZImagePopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYZImagePopUpButton.m; path = ../Code/KTComponents/RYZImagePopUpButton.m; sourceTree = SOURCE_ROOT; };
-		3C5A71760BF7ADE100776464 /* RYZImagePopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYZImagePopUpButtonCell.h; path = ../Code/KTComponents/RYZImagePopUpButtonCell.h; sourceTree = SOURCE_ROOT; };
-		3C5A71770BF7ADE100776464 /* RYZImagePopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYZImagePopUpButtonCell.m; path = ../Code/KTComponents/RYZImagePopUpButtonCell.m; sourceTree = SOURCE_ROOT; };
 		3C5A71780BF7ADE100776464 /* Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sandvox.h; path = ../Code/KTComponents/Sandvox.h; sourceTree = SOURCE_ROOT; };
 		3C5A71790BF7ADE100776464 /* smaller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smaller.png; path = ../Code/KTComponents/smaller.png; sourceTree = SOURCE_ROOT; };
 		3C5A717A0BF7ADE100776464 /* StringToNumberTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringToNumberTransformer.h; path = ../Code/KTComponents/StringToNumberTransformer.h; sourceTree = SOURCE_ROOT; };
@@ -2281,6 +2120,121 @@
 		CE116CFB08ED045700B8F7B4 /* feedback_redbug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_redbug.png; sourceTree = "<group>"; };
 		CE116CFC08ED045700B8F7B4 /* feedback_qmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_qmark.png; sourceTree = "<group>"; };
 		CE116CFD08ED045700B8F7B4 /* feedback_bulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_bulb.png; sourceTree = "<group>"; };
+		CE11DE8E0D6184AD003B00CA /* KSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSAppDelegate.h; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		CE11DE8F0D6184AD003B00CA /* KSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSAppDelegate.m; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.m; sourceTree = SOURCE_ROOT; };
+		CE11DE900D6184AD003B00CA /* KSApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSApplication.h; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.h; sourceTree = SOURCE_ROOT; };
+		CE11DE910D6184AD003B00CA /* KSApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSApplication.m; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.m; sourceTree = SOURCE_ROOT; };
+		CE11DE920D6184AD003B00CA /* KSSingletonWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSingletonWindowController.h; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.h; sourceTree = SOURCE_ROOT; };
+		CE11DE930D6184AD003B00CA /* KSSingletonWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSingletonWindowController.m; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.m; sourceTree = SOURCE_ROOT; };
+		CE11DE970D6184AD003B00CA /* CIImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CIImage+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/CIImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DE980D6184AD003B00CA /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CIImage+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/CIImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DE9A0D6184AD003B00CA /* NSApplication+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSApplication+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSApplication+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DE9B0D6184AD003B00CA /* NSApplication+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSApplication+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DE9C0D6184AD003B00CA /* NSArrayController+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArrayController+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSArrayController+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DE9D0D6184AD003B00CA /* NSArrayController+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArrayController+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSArrayController+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DE9E0D6184AD003B00CA /* NSBitmapImageRep+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBitmapImageRep+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSBitmapImageRep+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DE9F0D6184AD003B00CA /* NSBitmapImageRep+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSBitmapImageRep+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEA00D6184AD003B00CA /* NSColor+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSColor+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEA10D6184AD003B00CA /* NSColor+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSColor+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEA20D6184AD003B00CA /* NSHelpManager+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSHelpManager+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSHelpManager+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEA30D6184AD003B00CA /* NSHelpManager+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSHelpManager+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSHelpManager+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEA40D6184AD003B00CA /* NSImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEA50D6184AD003B00CA /* NSImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEA60D6184AD003B00CA /* NSToolbar+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSToolbar+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSToolbar+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEA70D6184AD003B00CA /* NSToolbar+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSToolbar+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSToolbar+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEA80D6184AD003B00CA /* NSView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSView+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEA90D6184AD003B00CA /* NSView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSView+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEAA0D6184AD003B00CA /* NSWindow+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWindow+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSWindow+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEAB0D6184AD003B00CA /* NSWindow+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWindow+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSWindow+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEAC0D6184AD003B00CA /* NSWorkspace+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWorkspace+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSWorkspace+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEAD0D6184AD003B00CA /* NSWorkspace+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWorkspace+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSWorkspace+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEAF0D6184AD003B00CA /* NSObject+PerformOnMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+PerformOnMainThread.h"; path = "../../../Shared/trunk/App/KareliaApp/NSObject+PerformOnMainThread.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEB00D6184AD003B00CA /* NSObject+PerformOnMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+PerformOnMainThread.m"; path = "../../../Shared/trunk/App/KareliaApp/NSObject+PerformOnMainThread.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEB10D6184AD003B00CA /* NSAppleScript+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAppleScript+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSAppleScript+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEB20D6184AD003B00CA /* NSAppleScript+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAppleScript+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSAppleScript+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEB30D6184AD003B00CA /* NSArray+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSArray+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEB40D6184AD003B00CA /* NSArray+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSArray+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEB50D6184AD003B00CA /* NSMutableArray+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableArray+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEB60D6184AD003B00CA /* NSMutableArray+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableArray+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEB70D6184AD003B00CA /* NSAttributedString+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSAttributedString+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEB80D6184AD003B00CA /* NSAttributedString+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSAttributedString+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEB90D6184AD003B00CA /* NSBundle+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSBundle+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEBA0D6184AD003B00CA /* NSBundle+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSBundle+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEBB0D6184AD003B00CA /* NSCalendarDate+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCalendarDate+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSCalendarDate+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEBC0D6184AD003B00CA /* NSCalendarDate+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCalendarDate+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSCalendarDate+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEBD0D6184AD003B00CA /* NSCharacterSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCharacterSet+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSCharacterSet+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEBE0D6184AD003B00CA /* NSCharacterSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCharacterSet+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSCharacterSet+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEBF0D6184AD003B00CA /* NSData+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSData+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEC00D6184AD003B00CA /* NSData+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSData+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEC10D6184AD003B00CA /* NSDate+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSDate+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEC20D6184AD003B00CA /* NSDate+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSDate+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEC30D6184AD003B00CA /* NSDictionary+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSDictionary+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEC40D6184AD003B00CA /* NSDictionary+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSDictionary+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEC50D6184AD003B00CA /* NSMutableDictionary+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableDictionary+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableDictionary+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEC60D6184AD003B00CA /* NSMutableDictionary+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableDictionary+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEC70D6184AD003B00CA /* NSError+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSError+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEC80D6184AD003B00CA /* NSError+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSError+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEC90D6184AD003B00CA /* NSException+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSException+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSException+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DECA0D6184AD003B00CA /* NSException+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSException+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSException+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DECB0D6184AD003B00CA /* NSFileManager+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSFileManager+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DECC0D6184AD003B00CA /* NSFileManager+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSFileManager+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DECD0D6184AD003B00CA /* NSIndexPath+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSIndexPath+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DECE0D6184AD003B00CA /* NSIndexPath+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSIndexPath+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DECF0D6184AD003B00CA /* NSIndexSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexSet+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSIndexSet+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DED00D6184AD003B00CA /* NSIndexSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexSet+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSIndexSet+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DED10D6184AD003B00CA /* NSInvocation+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSInvocation+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DED20D6184AD003B00CA /* NSInvocation+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSInvocation+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DED30D6184AD003B00CA /* NSObject+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSObject+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DED40D6184AD003B00CA /* NSObject+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSObject+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DED50D6184AD003B00CA /* NSScanner+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSScanner+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSScanner+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DED60D6184AD003B00CA /* NSScanner+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScanner+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSScanner+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DED70D6184AD003B00CA /* NSMutableSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableSet+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableSet+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DED80D6184AD003B00CA /* NSMutableSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableSet+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSMutableSet+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DED90D6184AD003B00CA /* NSString+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSString+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEDA0D6184AD003B00CA /* NSString+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSString+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEDD0D6184AD003B00CA /* NSThread+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSThread+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEDE0D6184AD003B00CA /* NSThread+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSThread+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEDF0D6184AD003B00CA /* NSURL+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSURL+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEE00D6184AD003B00CA /* NSURL+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSURL+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEE10D6184AD003B00CA /* NSSortDescriptor+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSortDescriptor+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSSortDescriptor+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEE20D6184AD003B00CA /* NSSortDescriptor+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSortDescriptor+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSSortDescriptor+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEE30D6184AD003B00CA /* NSXMLElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSXMLElement+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSXMLElement+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEE40D6184AD003B00CA /* NSXMLElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSXMLElement+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSXMLElement+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEE50D6184AD003B00CA /* NSBezierPath+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+Karelia.h"; path = "../../../Shared/trunk/App/KareliaApp/NSBezierPath+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEE60D6184AD003B00CA /* NSBezierPath+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+Karelia.m"; path = "../../../Shared/trunk/App/KareliaApp/NSBezierPath+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEEC0D6184AD003B00CA /* RoundedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundedBox.h; path = ../../../Shared/trunk/App/KareliaApp/RoundedBox.h; sourceTree = SOURCE_ROOT; };
+		CE11DEED0D6184AD003B00CA /* RoundedBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundedBox.m; path = ../../../Shared/trunk/App/KareliaApp/RoundedBox.m; sourceTree = SOURCE_ROOT; };
+		CE11DEEE0D6184AD003B00CA /* RYZImagePopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYZImagePopUpButton.h; path = ../../../Shared/trunk/App/KareliaApp/RYZImagePopUpButton.h; sourceTree = SOURCE_ROOT; };
+		CE11DEEF0D6184AD003B00CA /* RYZImagePopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYZImagePopUpButton.m; path = ../../../Shared/trunk/App/KareliaApp/RYZImagePopUpButton.m; sourceTree = SOURCE_ROOT; };
+		CE11DEF00D6184AD003B00CA /* RYZImagePopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RYZImagePopUpButtonCell.h; path = ../../../Shared/trunk/App/KareliaApp/RYZImagePopUpButtonCell.h; sourceTree = SOURCE_ROOT; };
+		CE11DEF10D6184AD003B00CA /* RYZImagePopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RYZImagePopUpButtonCell.m; path = ../../../Shared/trunk/App/KareliaApp/RYZImagePopUpButtonCell.m; sourceTree = SOURCE_ROOT; };
+		CE11DEF30D6184AD003B00CA /* OmniCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OmniCompatibility.h; path = ../../../Shared/trunk/App/KareliaApp/OmniCompatibility.h; sourceTree = SOURCE_ROOT; };
+		CE11DEF40D6184AD003B00CA /* OmniCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OmniCompatibility.m; path = ../../../Shared/trunk/App/KareliaApp/OmniCompatibility.m; sourceTree = SOURCE_ROOT; };
+		CE11DEF50D6184AD003B00CA /* NSString-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString-Utilities.h"; path = "../../../Shared/trunk/App/KareliaApp/NSString-Utilities.h"; sourceTree = SOURCE_ROOT; };
+		CE11DEF60D6184AD003B00CA /* NSString-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString-Utilities.m"; path = "../../../Shared/trunk/App/KareliaApp/NSString-Utilities.m"; sourceTree = SOURCE_ROOT; };
+		CE11DEF70D6184AD003B00CA /* NTBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NTBoxView.h; path = ../../../Shared/trunk/App/KareliaApp/NTBoxView.h; sourceTree = SOURCE_ROOT; };
+		CE11DEF80D6184AD003B00CA /* NTBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NTBoxView.m; path = ../../../Shared/trunk/App/KareliaApp/NTBoxView.m; sourceTree = SOURCE_ROOT; };
+		CE11DEF90D6184AD003B00CA /* NTSUTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NTSUTaskController.h; path = ../../../Shared/trunk/App/KareliaApp/NTSUTaskController.h; sourceTree = SOURCE_ROOT; };
+		CE11DEFA0D6184AD003B00CA /* NTSUTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NTSUTaskController.m; path = ../../../Shared/trunk/App/KareliaApp/NTSUTaskController.m; sourceTree = SOURCE_ROOT; };
+		CE11DEFC0D6184AD003B00CA /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../../Shared/trunk/App/KareliaApp/BDAlias.h; sourceTree = SOURCE_ROOT; };
+		CE11DEFD0D6184AD003B00CA /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../../Shared/trunk/App/KareliaApp/BDAlias.m; sourceTree = SOURCE_ROOT; };
+		CE11DEFF0D6184AD003B00CA /* AMRollOverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButton.h; path = ../../../Shared/trunk/App/KareliaApp/AMRollOverButton.h; sourceTree = SOURCE_ROOT; };
+		CE11DF000D6184AD003B00CA /* AMRollOverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButton.m; path = ../../../Shared/trunk/App/KareliaApp/AMRollOverButton.m; sourceTree = SOURCE_ROOT; };
+		CE11DF010D6184AD003B00CA /* AMRollOverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButtonCell.h; path = ../../../Shared/trunk/App/KareliaApp/AMRollOverButtonCell.h; sourceTree = SOURCE_ROOT; };
+		CE11DF020D6184AD003B00CA /* AMRollOverButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButtonCell.m; path = ../../../Shared/trunk/App/KareliaApp/AMRollOverButtonCell.m; sourceTree = SOURCE_ROOT; };
+		CE11DF030D6184AD003B00CA /* NSBezierPath_AMAdditons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBezierPath_AMAdditons.h; path = ../../../Shared/trunk/App/KareliaApp/NSBezierPath_AMAdditons.h; sourceTree = SOURCE_ROOT; };
+		CE11DF040D6184AD003B00CA /* NSBezierPath_AMAdditons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBezierPath_AMAdditons.m; path = ../../../Shared/trunk/App/KareliaApp/NSBezierPath_AMAdditons.m; sourceTree = SOURCE_ROOT; };
+		CE11DF060D6184AD003B00CA /* AQDataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AQDataExtensions.h; path = ../../../Shared/trunk/App/KareliaApp/AQDataExtensions.h; sourceTree = SOURCE_ROOT; };
+		CE11DF070D6184AD003B00CA /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQDataExtensions.m; path = ../../../Shared/trunk/App/KareliaApp/AQDataExtensions.m; sourceTree = SOURCE_ROOT; };
+		CE11DF090D6184AD003B00CA /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNDArrayController.h; path = ../../../Shared/trunk/App/KareliaApp/DNDArrayController.h; sourceTree = SOURCE_ROOT; };
+		CE11DF0A0D6184AD003B00CA /* DNDArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNDArrayController.m; path = ../../../Shared/trunk/App/KareliaApp/DNDArrayController.m; sourceTree = SOURCE_ROOT; };
+		CE11DF0B0D6184AD003B00CA /* MyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTableView.h; path = ../../../Shared/trunk/App/KareliaApp/MyTableView.h; sourceTree = SOURCE_ROOT; };
+		CE11DF0C0D6184AD003B00CA /* MyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTableView.m; path = ../../../Shared/trunk/App/KareliaApp/MyTableView.m; sourceTree = SOURCE_ROOT; };
+		CE11DF0D0D6184AD003B00CA /* MoreSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreSetup.h; path = ../../../Shared/trunk/App/KareliaApp/MoreSetup.h; sourceTree = SOURCE_ROOT; };
+		CE11DF0E0D6184AD003B00CA /* MoreAddrToSym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreAddrToSym.h; path = ../../../Shared/trunk/App/KareliaApp/MoreAddrToSym.h; sourceTree = SOURCE_ROOT; };
+		CE11DF0F0D6184AD003B00CA /* MoreAddrToSym.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MoreAddrToSym.c; path = ../../../Shared/trunk/App/KareliaApp/MoreAddrToSym.c; sourceTree = SOURCE_ROOT; };
+		CE11DF100D6184AD003B00CA /* MoreBacktrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreBacktrace.h; path = ../../../Shared/trunk/App/KareliaApp/MoreBacktrace.h; sourceTree = SOURCE_ROOT; };
+		CE11DF110D6184AD003B00CA /* MoreBacktrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = MoreBacktrace.c; path = ../../../Shared/trunk/App/KareliaApp/MoreBacktrace.c; sourceTree = SOURCE_ROOT; };
 		CE11E2C709ED76B600A734DE /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
 		CE1215420B5EFFC600C40320 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE1215430B5EFFC800C40320 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
@@ -2292,8 +2246,6 @@
 		CE121D9A0B5F008200C40320 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = SyntaxColorDefaults.plist; sourceTree = "<group>"; };
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
-		CE1303300BD0149000DC2439 /* NSTextView+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTApplication.h"; sourceTree = "<group>"; };
-		CE1303310BD0149000DC2439 /* NSTextView+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTApplication.m"; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		CE16A3D7087319720006F80B /* KTStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStackView.m; sourceTree = "<group>"; };
 		CE16A3D8087319720006F80B /* KTStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStackView.h; sourceTree = "<group>"; };
@@ -2340,6 +2292,10 @@
 		CE265C8F08195CEF009D3B6C /* fwd_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwd_sm.png; sourceTree = "<group>"; };
 		CE265C9008195CEF009D3B6C /* bak_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bak_sm.png; sourceTree = "<group>"; };
 		CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = additionalEditingCSS.txt; sourceTree = "<group>"; };
+		CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTApplication.h"; sourceTree = "<group>"; };
+		CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTApplication.m"; sourceTree = "<group>"; };
+		CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTApplication.h"; sourceTree = "<group>"; };
+		CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTApplication.m"; sourceTree = "<group>"; };
 		CE2FE58108E8EF2C00C12D48 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/News.nib; sourceTree = "<group>"; };
 		CE2FE58508E8EF4900C12D48 /* KTNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNewsController.h; sourceTree = "<group>"; };
 		CE2FE58608E8EF4900C12D48 /* KTNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTNewsController.m; sourceTree = "<group>"; };
@@ -2387,8 +2343,6 @@
 		CE55B0F10AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/News.nib; sourceTree = "<group>"; };
 		CE55B0F20AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Prefs.nib; sourceTree = "<group>"; };
 		CE57F2950D57F194005C1D64 /* follow15.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = follow15.tiff; sourceTree = "<group>"; };
-		CE57F35D0D58D65D005C1D64 /* NSBezierPath+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+KTExtensions.h"; sourceTree = "<group>"; };
-		CE57F35E0D58D65D005C1D64 /* NSBezierPath+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+KTExtensions.m"; sourceTree = "<group>"; };
 		CE5CA3190D15B90B0021E9B3 /* toolbar_html.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_html.tiff; sourceTree = "<group>"; };
 		CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GenericFileServerIcon.icns; sourceTree = "<group>"; };
 		CE5CA3670D15C1DE0021E9B3 /* pageborder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = pageborder.tiff; sourceTree = "<group>"; };
@@ -2451,8 +2405,6 @@
 		CEA369E1091A7D680073219B /* feedback_rtfd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = feedback_rtfd.png; sourceTree = "<group>"; };
 		CEA36AAC091AA2400073219B /* po.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = po.png; sourceTree = "<group>"; };
 		CEA36D1D091AEF430073219B /* Lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lock.png; sourceTree = "<group>"; };
-		CEA3789F0831347D00466572 /* NSImage+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTApplication.h"; sourceTree = "<group>"; };
-		CEA378A00831347D00466572 /* NSImage+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTApplication.m"; sourceTree = "<group>"; };
 		CEA962C20AF6A924008A1367 /* sandvox.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = sandvox.css; sourceTree = "<group>"; };
 		CEA9AE870A6420F600855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/BugReporterViews.nib; sourceTree = "<group>"; };
 		CEA9AE890A6420F600855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/Crash.nib; sourceTree = "<group>"; };
@@ -2510,11 +2462,6 @@
 		CEB563190A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Prefs.nib; sourceTree = "<group>"; };
 		CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_on.png; sourceTree = "<group>"; };
 		CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_off.png; sourceTree = "<group>"; };
-		CEBE77FF09F407450059DEC6 /* MoreAddrToSym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreAddrToSym.h; sourceTree = "<group>"; };
-		CEBE780009F407450059DEC6 /* MoreAddrToSym.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MoreAddrToSym.c; sourceTree = "<group>"; };
-		CEBE781109F408F70059DEC6 /* MoreSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSetup.h; sourceTree = "<group>"; };
-		CEBE782609F40A290059DEC6 /* MoreBacktrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreBacktrace.h; sourceTree = "<group>"; };
-		CEBE782809F40A320059DEC6 /* MoreBacktrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MoreBacktrace.c; sourceTree = "<group>"; };
 		CEBFB0670843F09F00154996 /* KTTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTextField.h; sourceTree = "<group>"; };
 		CEBFB0680843F09F00154996 /* KTTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTextField.m; sourceTree = "<group>"; };
 		CEBFB06D0843F0AB00154996 /* KTTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTextFieldCell.h; sourceTree = "<group>"; };
@@ -2531,13 +2478,6 @@
 		CEC3B5120BA9107A006DA002 /* KTTranscript.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KTTranscript.nib; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
-		CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSAppDelegate.h; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSAppDelegate.m; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		CEC5A9AB0D616BCF001BA05D /* KSApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSApplication.h; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.h; sourceTree = SOURCE_ROOT; };
-		CEC5A9AC0D616BCF001BA05D /* KSApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSApplication.m; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.m; sourceTree = SOURCE_ROOT; };
-		CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSingletonWindowController.h; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.h; sourceTree = SOURCE_ROOT; };
-		CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSingletonWindowController.m; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.m; sourceTree = SOURCE_ROOT; };
-		CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOverrideConstants.h; sourceTree = SOURCE_ROOT; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
@@ -2947,7 +2887,6 @@
 				3C5A716B0BF7ADE100776464 /* PrivateComponents.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
-				CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */,
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
@@ -2976,8 +2915,6 @@
 				3C5A732D0BF7B28800776464 /* Value Transformers */,
 				3C202D9F07DFC46800DE4994 /* Cocoa Extensions */,
 				3C5A732A0BF7B24200776464 /* Cocoa Private */,
-				3C5A72E70BF7AE3400776464 /* Third Party */,
-				CEC5A9A80D616BA7001BA05D /* Karelia Shared */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				3C5A73330BF7B39500776464 /* Private Headers (DO NOT EXPORT) */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -2987,6 +2924,7 @@
 				3C72D4F4094A240E0061A876 /* Libraries */,
 				3C5A73770BF7B82600776464 /* Debugging */,
 				2786962A0C32C46E00430B63 /* Deprecated Classes */,
+				CE11DE880D6184AD003B00CA /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
@@ -2999,11 +2937,6 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CEBE781109F408F70059DEC6 /* MoreSetup.h */,
-				CEBE77FF09F407450059DEC6 /* MoreAddrToSym.h */,
-				CEBE780009F407450059DEC6 /* MoreAddrToSym.c */,
-				CEBE782609F40A290059DEC6 /* MoreBacktrace.h */,
-				CEBE782809F40A320059DEC6 /* MoreBacktrace.c */,
 				32DBCF750370BD2300C91783 /* Marvel_Prefix.pch */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 			);
@@ -3563,102 +3496,19 @@
 			name = "Site Outline";
 			sourceTree = "<group>";
 		};
-		3C5A72E70BF7AE3400776464 /* Third Party */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A73240BF7B1A700776464 /* Apple Sample Code */,
-				3C5A731E0BF7B11400776464 /* Aquatic Prime */,
-				3C5A72EA0BF7AE7700776464 /* Andreas Mayer */,
-				3C5A72ED0BF7AE9300776464 /* bDistributed */,
-				3C5A73210BF7B14900776464 /* CocoaTech */,
-				3C5A73270BF7B1F300776464 /* Matt Gemmell */,
-			);
-			name = "Third Party";
-			sourceTree = "<group>";
-		};
-		3C5A72EA0BF7AE7700776464 /* Andreas Mayer */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A707F0BF7ADE100776464 /* AMRollOverButton.h */,
-				3C5A70800BF7ADE100776464 /* AMRollOverButton.m */,
-				3C5A70810BF7ADE100776464 /* AMRollOverButtonCell.h */,
-				3C5A70820BF7ADE100776464 /* AMRollOverButtonCell.m */,
-				3C5A71180BF7ADE100776464 /* NSBezierPath_AMAdditons.h */,
-				3C5A71190BF7ADE100776464 /* NSBezierPath_AMAdditons.m */,
-			);
-			name = "Andreas Mayer";
-			sourceTree = "<group>";
-		};
-		3C5A72ED0BF7AE9300776464 /* bDistributed */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A70880BF7ADE100776464 /* BDAlias.h */,
-				3C5A70890BF7ADE100776464 /* BDAlias.m */,
-			);
-			name = bDistributed;
-			sourceTree = "<group>";
-		};
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				273D7BD20D05A11D00057448 /* NSObject+PerformOnMainThread.h */,
-				273D7BD30D05A11D00057448 /* NSObject+PerformOnMainThread.m */,
-				3C5A710E0BF7ADE100776464 /* NSAppleScript+KTExtensions.h */,
-				3C5A710F0BF7ADE100776464 /* NSAppleScript+KTExtensions.m */,
-				3C5A71120BF7ADE100776464 /* NSArray+KTExtensions.h */,
-				3C5A71130BF7ADE100776464 /* NSArray+KTExtensions.m */,
-				3C5A71450BF7ADE100776464 /* NSMutableArray+KTExtensions.h */,
-				3C5A71460BF7ADE100776464 /* NSMutableArray+KTExtensions.m */,
-				3C5A71160BF7ADE100776464 /* NSAttributedString+KTExtensions.h */,
-				3C5A71170BF7ADE100776464 /* NSAttributedString+KTExtensions.m */,
 				3C5A711C0BF7ADE100776464 /* NSBundle+KTExtensions.h */,
 				3C5A711D0BF7ADE100776464 /* NSBundle+KTExtensions.m */,
-				3C5A711E0BF7ADE100776464 /* NSCalendarDate+KTExtensions.h */,
-				3C5A711F0BF7ADE100776464 /* NSCalendarDate+KTExtensions.m */,
-				3C5A71200BF7ADE100776464 /* NSCharacterSet+KTExtensions.h */,
-				3C5A71210BF7ADE100776464 /* NSCharacterSet+KTExtensions.m */,
-				3C5A71240BF7ADE100776464 /* NSData+KTExtensions.h */,
-				3C5A71250BF7ADE100776464 /* NSData+KTExtensions.m */,
-				3C5A71260BF7ADE100776464 /* NSDate+KTExtensions.h */,
-				3C5A71270BF7ADE100776464 /* NSDate+KTExtensions.m */,
-				3C5A71280BF7ADE100776464 /* NSDictionary+KTExtensions.h */,
-				3C5A71290BF7ADE100776464 /* NSDictionary+KTExtensions.m */,
-				3C5A71470BF7ADE100776464 /* NSMutableDictionary+KTExtensions.h */,
-				3C5A71480BF7ADE100776464 /* NSMutableDictionary+KTExtensions.m */,
-				3C5A712E0BF7ADE100776464 /* NSError+KTExtensions.h */,
-				3C5A712F0BF7ADE100776464 /* NSError+KTExtensions.m */,
-				3C036AAD095F350500E1DA3D /* NSException+KTExtensions.h */,
-				3C036AAE095F350500E1DA3D /* NSException+KTExtensions.m */,
-				3C5A71320BF7ADE100776464 /* NSFileManager+KTExtensions.h */,
-				3C5A71330BF7ADE100776464 /* NSFileManager+KTExtensions.m */,
-				3C5A71390BF7ADE100776464 /* NSIndexPath+KTExtensions.h */,
-				3C5A713A0BF7ADE100776464 /* NSIndexPath+KTExtensions.m */,
-				3C5A713B0BF7ADE100776464 /* NSIndexSet+KTExtensions.h */,
-				3C5A713C0BF7ADE100776464 /* NSIndexSet+KTExtensions.m */,
-				3C5A713D0BF7ADE100776464 /* NSInvocation+KTExtensions.h */,
-				3C5A713E0BF7ADE100776464 /* NSInvocation+KTExtensions.m */,
 				3C5A714B0BF7ADE100776464 /* NSObject+KTExtensions.h */,
 				3C5A714C0BF7ADE100776464 /* NSObject+KTExtensions.m */,
-				3C5A71510BF7ADE100776464 /* NSScanner+KTComponents.h */,
-				3C5A71520BF7ADE100776464 /* NSScanner+KTComponents.m */,
 				3C5A71530BF7ADE100776464 /* NSSet+KTExtensions.h */,
 				3C5A71540BF7ADE100776464 /* NSSet+KTExtensions.m */,
-				3C5A71490BF7ADE100776464 /* NSMutableSet+KTExtensions.h */,
-				3C5A714A0BF7ADE100776464 /* NSMutableSet+KTExtensions.m */,
 				3C5A71570BF7ADE100776464 /* NSString+KTExtensions.h */,
 				3C5A71580BF7ADE100776464 /* NSString+KTExtensions.m */,
 				CEB521C50899526E006B0019 /* NSString+KTApplication.h */,
 				CEB521C60899526E006B0019 /* NSString+KTApplication.m */,
-				3C5A71590BF7ADE100776464 /* NSThread+KTExtensions.h */,
-				3C5A715A0BF7ADE100776464 /* NSThread+KTExtensions.m */,
-				3C5A715D0BF7ADE100776464 /* NSURL+KTExtensions.h */,
-				3C5A715E0BF7ADE100776464 /* NSURL+KTExtensions.m */,
-				2738634A0D50028700A8A209 /* NSSortDescriptor+KTExtensions.h */,
-				2738634B0D50028700A8A209 /* NSSortDescriptor+KTExtensions.m */,
-				2743626B0D53BEAA00C257BA /* NSXMLElement+KTExtensions.h */,
-				2743626C0D53BEAA00C257BA /* NSXMLElement+KTExtensions.m */,
-				CE57F35D0D58D65D005C1D64 /* NSBezierPath+KTExtensions.h */,
-				CE57F35E0D58D65D005C1D64 /* NSBezierPath+KTExtensions.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -3694,34 +3544,12 @@
 		3C5A730A0BF7AF7000776464 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				3C5A71100BF7ADE100776464 /* NSApplication+KTExtensions.h */,
-				3C5A71110BF7ADE100776464 /* NSApplication+KTExtensions.m */,
-				3C5A71140BF7ADE100776464 /* NSArrayController+KTExtensions.h */,
-				3C5A71150BF7ADE100776464 /* NSArrayController+KTExtensions.m */,
-				3C5A711A0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.h */,
-				3C5A711B0BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.m */,
-				3C5A71220BF7ADE100776464 /* NSColor+KTExtensions.h */,
-				3C5A71230BF7ADE100776464 /* NSColor+KTExtensions.m */,
-				3C5A712A0BF7ADE100776464 /* NSDocumentController+KTExtensions.h */,
-				3C5A712B0BF7ADE100776464 /* NSDocumentController+KTExtensions.m */,
-				3C5A71340BF7ADE100776464 /* NSHelpManager+KTExtensions.h */,
-				3C5A71350BF7ADE100776464 /* NSHelpManager+KTExtensions.m */,
 				3C5A71360BF7ADE100776464 /* NSImage+KTExtensions.h */,
 				3C5A71370BF7ADE100776464 /* NSImage+KTExtensions.m */,
-				CEA3789F0831347D00466572 /* NSImage+KTApplication.h */,
-				CEA378A00831347D00466572 /* NSImage+KTApplication.m */,
-				3C5A714D0BF7ADE100776464 /* NSOutlineView+KTExtensions.h */,
-				3C5A714E0BF7ADE100776464 /* NSOutlineView+KTExtensions.m */,
-				CE1303300BD0149000DC2439 /* NSTextView+KTApplication.h */,
-				CE1303310BD0149000DC2439 /* NSTextView+KTApplication.m */,
-				3C5A715B0BF7ADE100776464 /* NSToolbar+KTExtensions.h */,
-				3C5A715C0BF7ADE100776464 /* NSToolbar+KTExtensions.m */,
-				3C5A715F0BF7ADE100776464 /* NSView+KTExtensions.h */,
-				3C5A71600BF7ADE100776464 /* NSView+KTExtensions.m */,
-				3C5A71610BF7ADE100776464 /* NSWindow+KTExtensions.h */,
-				3C5A71620BF7ADE100776464 /* NSWindow+KTExtensions.m */,
-				3C5A71630BF7ADE100776464 /* NSWorkspace+KTExtensions.h */,
-				3C5A71640BF7ADE100776464 /* NSWorkspace+KTExtensions.m */,
+				CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */,
+				CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */,
+				CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */,
+				CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */,
 			);
 			name = AppKit;
 			sourceTree = "<group>";
@@ -3735,54 +3563,6 @@
 				271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */,
 			);
 			name = WebKit;
-			sourceTree = "<group>";
-		};
-		3C5A731E0BF7B11400776464 /* Aquatic Prime */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A70830BF7ADE100776464 /* AQDataExtensions.h */,
-				3C5A70840BF7ADE100776464 /* AQDataExtensions.m */,
-			);
-			name = "Aquatic Prime";
-			sourceTree = "<group>";
-		};
-		3C5A73210BF7B14900776464 /* CocoaTech */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A71690BF7ADE100776464 /* OmniCompatibility.h */,
-				3C5A716A0BF7ADE100776464 /* OmniCompatibility.m */,
-				3C5A71550BF7ADE100776464 /* NSString-Utilities.h */,
-				3C5A71560BF7ADE100776464 /* NSString-Utilities.m */,
-				3C5A71650BF7ADE100776464 /* NTBoxView.h */,
-				3C5A71660BF7ADE100776464 /* NTBoxView.m */,
-				3C5A71670BF7ADE100776464 /* NTSUTaskController.h */,
-				3C5A71680BF7ADE100776464 /* NTSUTaskController.m */,
-			);
-			name = CocoaTech;
-			sourceTree = "<group>";
-		};
-		3C5A73240BF7B1A700776464 /* Apple Sample Code */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A709C0BF7ADE100776464 /* DNDArrayController.h */,
-				3C5A709D0BF7ADE100776464 /* DNDArrayController.m */,
-				3C5A710A0BF7ADE100776464 /* MyTableView.h */,
-				3C5A710B0BF7ADE100776464 /* MyTableView.m */,
-			);
-			name = "Apple Sample Code";
-			sourceTree = "<group>";
-		};
-		3C5A73270BF7B1F300776464 /* Matt Gemmell */ = {
-			isa = PBXGroup;
-			children = (
-				3C5A71700BF7ADE100776464 /* RoundedBox.h */,
-				3C5A71710BF7ADE100776464 /* RoundedBox.m */,
-				3C5A71740BF7ADE100776464 /* RYZImagePopUpButton.h */,
-				3C5A71750BF7ADE100776464 /* RYZImagePopUpButton.m */,
-				3C5A71760BF7ADE100776464 /* RYZImagePopUpButtonCell.h */,
-				3C5A71770BF7ADE100776464 /* RYZImagePopUpButtonCell.m */,
-			);
-			name = "Matt Gemmell";
 			sourceTree = "<group>";
 		};
 		3C5A732A0BF7B24200776464 /* Cocoa Private */ = {
@@ -4277,6 +4057,256 @@
 			name = WebView;
 			sourceTree = "<group>";
 		};
+		CE11DE880D6184AD003B00CA /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEEA0D6184AD003B00CA /* Third Party */,
+				CE11DEE90D6184AD003B00CA /* Views */,
+				CE11DEE80D6184AD003B00CA /* Formatters */,
+				CE11DEE70D6184AD003B00CA /* Value Transformers */,
+				CE11DE950D6184AD003B00CA /* Cocoa Extensions */,
+				CE11DE940D6184AD003B00CA /* Feedback */,
+				CE11DE8D0D6184AD003B00CA /* Application */,
+			);
+			name = Shared;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DE8D0D6184AD003B00CA /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DE8E0D6184AD003B00CA /* KSAppDelegate.h */,
+				CE11DE8F0D6184AD003B00CA /* KSAppDelegate.m */,
+				CE11DE900D6184AD003B00CA /* KSApplication.h */,
+				CE11DE910D6184AD003B00CA /* KSApplication.m */,
+				CE11DE920D6184AD003B00CA /* KSSingletonWindowController.h */,
+				CE11DE930D6184AD003B00CA /* KSSingletonWindowController.m */,
+			);
+			name = Application;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DE940D6184AD003B00CA /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Feedback;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DE950D6184AD003B00CA /* Cocoa Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEAE0D6184AD003B00CA /* Foundation */,
+				CE11DE990D6184AD003B00CA /* AppKit */,
+				CE11DE960D6184AD003B00CA /* Core Image */,
+			);
+			name = "Cocoa Extensions";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DE960D6184AD003B00CA /* Core Image */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DE970D6184AD003B00CA /* CIImage+Karelia.h */,
+				CE11DE980D6184AD003B00CA /* CIImage+Karelia.m */,
+			);
+			name = "Core Image";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DE990D6184AD003B00CA /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DE9A0D6184AD003B00CA /* NSApplication+Karelia.h */,
+				CE11DE9B0D6184AD003B00CA /* NSApplication+Karelia.m */,
+				CE11DE9C0D6184AD003B00CA /* NSArrayController+Karelia.h */,
+				CE11DE9D0D6184AD003B00CA /* NSArrayController+Karelia.m */,
+				CE11DE9E0D6184AD003B00CA /* NSBitmapImageRep+Karelia.h */,
+				CE11DE9F0D6184AD003B00CA /* NSBitmapImageRep+Karelia.m */,
+				CE11DEA00D6184AD003B00CA /* NSColor+Karelia.h */,
+				CE11DEA10D6184AD003B00CA /* NSColor+Karelia.m */,
+				CE11DEA20D6184AD003B00CA /* NSHelpManager+Karelia.h */,
+				CE11DEA30D6184AD003B00CA /* NSHelpManager+Karelia.m */,
+				CE11DEA40D6184AD003B00CA /* NSImage+Karelia.h */,
+				CE11DEA50D6184AD003B00CA /* NSImage+Karelia.m */,
+				CE11DEA60D6184AD003B00CA /* NSToolbar+Karelia.h */,
+				CE11DEA70D6184AD003B00CA /* NSToolbar+Karelia.m */,
+				CE11DEA80D6184AD003B00CA /* NSView+Karelia.h */,
+				CE11DEA90D6184AD003B00CA /* NSView+Karelia.m */,
+				CE11DEAA0D6184AD003B00CA /* NSWindow+Karelia.h */,
+				CE11DEAB0D6184AD003B00CA /* NSWindow+Karelia.m */,
+				CE11DEAC0D6184AD003B00CA /* NSWorkspace+Karelia.h */,
+				CE11DEAD0D6184AD003B00CA /* NSWorkspace+Karelia.m */,
+			);
+			name = AppKit;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEAE0D6184AD003B00CA /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEAF0D6184AD003B00CA /* NSObject+PerformOnMainThread.h */,
+				CE11DEB00D6184AD003B00CA /* NSObject+PerformOnMainThread.m */,
+				CE11DEB10D6184AD003B00CA /* NSAppleScript+Karelia.h */,
+				CE11DEB20D6184AD003B00CA /* NSAppleScript+Karelia.m */,
+				CE11DEB30D6184AD003B00CA /* NSArray+Karelia.h */,
+				CE11DEB40D6184AD003B00CA /* NSArray+Karelia.m */,
+				CE11DEB50D6184AD003B00CA /* NSMutableArray+Karelia.h */,
+				CE11DEB60D6184AD003B00CA /* NSMutableArray+Karelia.m */,
+				CE11DEB70D6184AD003B00CA /* NSAttributedString+Karelia.h */,
+				CE11DEB80D6184AD003B00CA /* NSAttributedString+Karelia.m */,
+				CE11DEB90D6184AD003B00CA /* NSBundle+Karelia.h */,
+				CE11DEBA0D6184AD003B00CA /* NSBundle+Karelia.m */,
+				CE11DEBB0D6184AD003B00CA /* NSCalendarDate+Karelia.h */,
+				CE11DEBC0D6184AD003B00CA /* NSCalendarDate+Karelia.m */,
+				CE11DEBD0D6184AD003B00CA /* NSCharacterSet+Karelia.h */,
+				CE11DEBE0D6184AD003B00CA /* NSCharacterSet+Karelia.m */,
+				CE11DEBF0D6184AD003B00CA /* NSData+Karelia.h */,
+				CE11DEC00D6184AD003B00CA /* NSData+Karelia.m */,
+				CE11DEC10D6184AD003B00CA /* NSDate+Karelia.h */,
+				CE11DEC20D6184AD003B00CA /* NSDate+Karelia.m */,
+				CE11DEC30D6184AD003B00CA /* NSDictionary+Karelia.h */,
+				CE11DEC40D6184AD003B00CA /* NSDictionary+Karelia.m */,
+				CE11DEC50D6184AD003B00CA /* NSMutableDictionary+Karelia.h */,
+				CE11DEC60D6184AD003B00CA /* NSMutableDictionary+Karelia.m */,
+				CE11DEC70D6184AD003B00CA /* NSError+Karelia.h */,
+				CE11DEC80D6184AD003B00CA /* NSError+Karelia.m */,
+				CE11DEC90D6184AD003B00CA /* NSException+Karelia.h */,
+				CE11DECA0D6184AD003B00CA /* NSException+Karelia.m */,
+				CE11DECB0D6184AD003B00CA /* NSFileManager+Karelia.h */,
+				CE11DECC0D6184AD003B00CA /* NSFileManager+Karelia.m */,
+				CE11DECD0D6184AD003B00CA /* NSIndexPath+Karelia.h */,
+				CE11DECE0D6184AD003B00CA /* NSIndexPath+Karelia.m */,
+				CE11DECF0D6184AD003B00CA /* NSIndexSet+Karelia.h */,
+				CE11DED00D6184AD003B00CA /* NSIndexSet+Karelia.m */,
+				CE11DED10D6184AD003B00CA /* NSInvocation+Karelia.h */,
+				CE11DED20D6184AD003B00CA /* NSInvocation+Karelia.m */,
+				CE11DED30D6184AD003B00CA /* NSObject+Karelia.h */,
+				CE11DED40D6184AD003B00CA /* NSObject+Karelia.m */,
+				CE11DED50D6184AD003B00CA /* NSScanner+Karelia.h */,
+				CE11DED60D6184AD003B00CA /* NSScanner+Karelia.m */,
+				CE11DED70D6184AD003B00CA /* NSMutableSet+Karelia.h */,
+				CE11DED80D6184AD003B00CA /* NSMutableSet+Karelia.m */,
+				CE11DED90D6184AD003B00CA /* NSString+Karelia.h */,
+				CE11DEDA0D6184AD003B00CA /* NSString+Karelia.m */,
+				CE11DEDD0D6184AD003B00CA /* NSThread+Karelia.h */,
+				CE11DEDE0D6184AD003B00CA /* NSThread+Karelia.m */,
+				CE11DEDF0D6184AD003B00CA /* NSURL+Karelia.h */,
+				CE11DEE00D6184AD003B00CA /* NSURL+Karelia.m */,
+				CE11DEE10D6184AD003B00CA /* NSSortDescriptor+Karelia.h */,
+				CE11DEE20D6184AD003B00CA /* NSSortDescriptor+Karelia.m */,
+				CE11DEE30D6184AD003B00CA /* NSXMLElement+Karelia.h */,
+				CE11DEE40D6184AD003B00CA /* NSXMLElement+Karelia.m */,
+				CE11DEE50D6184AD003B00CA /* NSBezierPath+Karelia.h */,
+				CE11DEE60D6184AD003B00CA /* NSBezierPath+Karelia.m */,
+			);
+			name = Foundation;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEE70D6184AD003B00CA /* Value Transformers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Value Transformers";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEE80D6184AD003B00CA /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Formatters;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEE90D6184AD003B00CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEEA0D6184AD003B00CA /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DF080D6184AD003B00CA /* Apple Sample Code */,
+				CE11DF050D6184AD003B00CA /* Aquatic Prime */,
+				CE11DEFE0D6184AD003B00CA /* Andreas Mayer */,
+				CE11DEFB0D6184AD003B00CA /* bDistributed */,
+				CE11DEF20D6184AD003B00CA /* CocoaTech */,
+				CE11DEEB0D6184AD003B00CA /* Matt Gemmell */,
+			);
+			name = "Third Party";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEEB0D6184AD003B00CA /* Matt Gemmell */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEEC0D6184AD003B00CA /* RoundedBox.h */,
+				CE11DEED0D6184AD003B00CA /* RoundedBox.m */,
+				CE11DEEE0D6184AD003B00CA /* RYZImagePopUpButton.h */,
+				CE11DEEF0D6184AD003B00CA /* RYZImagePopUpButton.m */,
+				CE11DEF00D6184AD003B00CA /* RYZImagePopUpButtonCell.h */,
+				CE11DEF10D6184AD003B00CA /* RYZImagePopUpButtonCell.m */,
+			);
+			name = "Matt Gemmell";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEF20D6184AD003B00CA /* CocoaTech */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEF30D6184AD003B00CA /* OmniCompatibility.h */,
+				CE11DEF40D6184AD003B00CA /* OmniCompatibility.m */,
+				CE11DEF50D6184AD003B00CA /* NSString-Utilities.h */,
+				CE11DEF60D6184AD003B00CA /* NSString-Utilities.m */,
+				CE11DEF70D6184AD003B00CA /* NTBoxView.h */,
+				CE11DEF80D6184AD003B00CA /* NTBoxView.m */,
+				CE11DEF90D6184AD003B00CA /* NTSUTaskController.h */,
+				CE11DEFA0D6184AD003B00CA /* NTSUTaskController.m */,
+			);
+			name = CocoaTech;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEFB0D6184AD003B00CA /* bDistributed */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEFC0D6184AD003B00CA /* BDAlias.h */,
+				CE11DEFD0D6184AD003B00CA /* BDAlias.m */,
+			);
+			name = bDistributed;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DEFE0D6184AD003B00CA /* Andreas Mayer */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DEFF0D6184AD003B00CA /* AMRollOverButton.h */,
+				CE11DF000D6184AD003B00CA /* AMRollOverButton.m */,
+				CE11DF010D6184AD003B00CA /* AMRollOverButtonCell.h */,
+				CE11DF020D6184AD003B00CA /* AMRollOverButtonCell.m */,
+				CE11DF030D6184AD003B00CA /* NSBezierPath_AMAdditons.h */,
+				CE11DF040D6184AD003B00CA /* NSBezierPath_AMAdditons.m */,
+			);
+			name = "Andreas Mayer";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DF050D6184AD003B00CA /* Aquatic Prime */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DF060D6184AD003B00CA /* AQDataExtensions.h */,
+				CE11DF070D6184AD003B00CA /* AQDataExtensions.m */,
+			);
+			name = "Aquatic Prime";
+			sourceTree = SOURCE_ROOT;
+		};
+		CE11DF080D6184AD003B00CA /* Apple Sample Code */ = {
+			isa = PBXGroup;
+			children = (
+				CE11DF090D6184AD003B00CA /* DNDArrayController.h */,
+				CE11DF0A0D6184AD003B00CA /* DNDArrayController.m */,
+				CE11DF0B0D6184AD003B00CA /* MyTableView.h */,
+				CE11DF0C0D6184AD003B00CA /* MyTableView.m */,
+				CE11DF0D0D6184AD003B00CA /* MoreSetup.h */,
+				CE11DF0E0D6184AD003B00CA /* MoreAddrToSym.h */,
+				CE11DF0F0D6184AD003B00CA /* MoreAddrToSym.c */,
+				CE11DF100D6184AD003B00CA /* MoreBacktrace.h */,
+				CE11DF110D6184AD003B00CA /* MoreBacktrace.c */,
+			);
+			name = "Apple Sample Code";
+			sourceTree = SOURCE_ROOT;
+		};
 		CE2556CC0D3432AF003A5B5E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4432,19 +4462,6 @@
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
 		};
-		CEC5A9A80D616BA7001BA05D /* Karelia Shared */ = {
-			isa = PBXGroup;
-			children = (
-				CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */,
-				CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */,
-				CEC5A9AB0D616BCF001BA05D /* KSApplication.h */,
-				CEC5A9AC0D616BCF001BA05D /* KSApplication.m */,
-				CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */,
-				CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */,
-			);
-			name = "Karelia Shared";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4483,43 +4500,6 @@
 				3CEC87BC0BF8DE5A00CC732B /* KTSmallDatePickerCell.h in Headers */,
 				3CEC87BD0BF8DE6E00CC732B /* KTValidateCharFormatter.h in Headers */,
 				3CEC87BE0BF8DE7200CC732B /* KTVerticallyAlignedTextCell.h in Headers */,
-				3CEC88700BF8E00600CC732B /* NSURL+KTExtensions.h in Headers */,
-				3CEC88710BF8E00700CC732B /* NSThread+KTExtensions.h in Headers */,
-				3CEC88720BF8E00900CC732B /* NSString+KTExtensions.h in Headers */,
-				3CEC88730BF8E00B00CC732B /* NSMutableSet+KTExtensions.h in Headers */,
-				3CEC88740BF8E00C00CC732B /* NSSet+KTExtensions.h in Headers */,
-				3CEC88750BF8E00D00CC732B /* NSScanner+KTComponents.h in Headers */,
-				3CEC88760BF8E00F00CC732B /* NSObject+KTExtensions.h in Headers */,
-				3CEC88770BF8E01000CC732B /* NSInvocation+KTExtensions.h in Headers */,
-				3CEC88780BF8E01100CC732B /* NSIndexSet+KTExtensions.h in Headers */,
-				3CEC88790BF8E01300CC732B /* NSIndexPath+KTExtensions.h in Headers */,
-				3CEC887A0BF8E01400CC732B /* NSFileManager+KTExtensions.h in Headers */,
-				3CEC887B0BF8E01600CC732B /* NSException+KTExtensions.h in Headers */,
-				3CEC887C0BF8E01700CC732B /* NSError+KTExtensions.h in Headers */,
-				3CEC887D0BF8E01800CC732B /* NSMutableDictionary+KTExtensions.h in Headers */,
-				3CEC887E0BF8E01A00CC732B /* NSDictionary+KTExtensions.h in Headers */,
-				3CEC887F0BF8E01C00CC732B /* NSDate+KTExtensions.h in Headers */,
-				3CEC88800BF8E01E00CC732B /* NSData+KTExtensions.h in Headers */,
-				3CEC88810BF8E01F00CC732B /* NSCharacterSet+KTExtensions.h in Headers */,
-				3CEC88820BF8E02000CC732B /* NSCalendarDate+KTExtensions.h in Headers */,
-				3CEC88830BF8E02200CC732B /* NSBundle+KTExtensions.h in Headers */,
-				3CEC88840BF8E02300CC732B /* NSAttributedString+KTExtensions.h in Headers */,
-				3CEC88850BF8E02500CC732B /* NSMutableArray+KTExtensions.h in Headers */,
-				3CEC88860BF8E02800CC732B /* NSArray+KTExtensions.h in Headers */,
-				3CEC88870BF8E02900CC732B /* NSAppleScript+KTExtensions.h in Headers */,
-				3CEC894A0BF8E0B600CC732B /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */,
-				3CEC894B0BF8E0B700CC732B /* NSManagedObjectModel+KTExtensions.h in Headers */,
-				3CEC894C0BF8E0B800CC732B /* NSManagedObjectContext+KTExtensions.h in Headers */,
-				3CEC894D0BF8E0B900CC732B /* NSManagedObject+KTExtensions.h in Headers */,
-				3CEC894E0BF8E0BA00CC732B /* NSFetchRequest+KTExtensions.h in Headers */,
-				3CEC894F0BF8E0BB00CC732B /* NSEntityDescription+KTExtensions.h in Headers */,
-				3CEC89500BF8E0C200CC732B /* CIImage+KTExtensions.h in Headers */,
-				3CEC8A1C0BF9021500CC732B /* NSApplication+KTExtensions.h in Headers */,
-				3CEC8A1D0BF9021800CC732B /* NSArrayController+KTExtensions.h in Headers */,
-				3CEC8A1E0BF9021C00CC732B /* NSColor+KTExtensions.h in Headers */,
-				3CEC8A1F0BF9022000CC732B /* NSImage+KTExtensions.h in Headers */,
-				3CEC8A200BF9022400CC732B /* NSWorkspace+KTExtensions.h in Headers */,
-				3CEC8A210BF9023400CC732B /* DOMNode+KTExtensions.h in Headers */,
 				3CEC8A220BF9024000CC732B /* CharsetToEncodingTransformer.h in Headers */,
 				3CEC8A230BF9024100CC732B /* ContainerIsEmptyTransformer.h in Headers */,
 				3CEC8A240BF9024300CC732B /* ContainerIsNotEmptyTransformer.h in Headers */,
@@ -4564,30 +4544,8 @@
 				3CEC8B2A0BF9097C00CC732B /* KTTextField.h in Headers */,
 				3CEC8B2B0BF9097E00CC732B /* KTTextFieldCell.h in Headers */,
 				3CEC8B2C0BF9097F00CC732B /* KTView.h in Headers */,
-				3CEC8B2D0BF9099600CC732B /* NSBitmapImageRep+KTExtensions.h in Headers */,
-				3CEC8B2E0BF9099900CC732B /* NSDocumentController+KTExtensions.h in Headers */,
-				3CEC8B2F0BF9099B00CC732B /* NSHelpManager+KTExtensions.h in Headers */,
-				3CEC8B300BF9099E00CC732B /* NSOutlineView+KTExtensions.h in Headers */,
-				3CEC8B310BF909A000CC732B /* NSToolbar+KTExtensions.h in Headers */,
-				3CEC8B320BF909A200CC732B /* NSView+KTExtensions.h in Headers */,
-				3CEC8B330BF909A400CC732B /* NSWindow+KTExtensions.h in Headers */,
 				3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */,
-				3CEC8B340BF909BE00CC732B /* DNDArrayController.h in Headers */,
-				3CD6B11C0BFA390B00B9287E /* AQDataExtensions.h in Headers */,
-				3CD6B11D0BFA391500B9287E /* AMRollOverButton.h in Headers */,
-				3CD6B11E0BFA391600B9287E /* AMRollOverButtonCell.h in Headers */,
-				3CD6B11F0BFA391800B9287E /* NSBezierPath_AMAdditons.h in Headers */,
-				3CD6B1200BFA391C00B9287E /* BDAlias.h in Headers */,
-				3CD6B1220BFA392100B9287E /* OmniCompatibility.h in Headers */,
-				3CD6B1230BFA392100B9287E /* NSString-Utilities.h in Headers */,
-				3CD6B1240BFA392200B9287E /* NTBoxView.h in Headers */,
-				3CD6B1250BFA392300B9287E /* NTSUTaskController.h in Headers */,
-				3CD6B1260BFA392700B9287E /* RoundedBox.h in Headers */,
-				3CD6B1270BFA392800B9287E /* RYZImagePopUpButton.h in Headers */,
-				3CD6B1280BFA392A00B9287E /* RYZImagePopUpButtonCell.h in Headers */,
-				3CD6B1BC0BFA3B5F00B9287E /* MyTableView.h in Headers */,
 				3CD6B24B0BFA3E5900B9287E /* ContactPassword.h in Headers */,
-				3C9B5C440BFA7DA2007A4871 /* KTDataMigrator.h in Headers */,
 				3C9B5C520BFA7DD8007A4871 /* KTPseudoElement.h in Headers */,
 				3C9B5C530BFA7DD9007A4871 /* KTInlineImageElement.h in Headers */,
 				3C9B5C550BFA7DE8007A4871 /* KTHTMLParser.h in Headers */,
@@ -4617,7 +4575,6 @@
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				27969F110CF5DCBC00C03F45 /* NSString+Publishing.h in Headers */,
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
-				273D7BD40D05A11D00057448 /* NSObject+PerformOnMainThread.h in Headers */,
 				273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */,
 				272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */,
 				27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */,
@@ -4647,20 +4604,13 @@
 				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
 				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
 				CE36770B0D4FA65100B2A9F1 /* KTPluginInstallerController.h in Headers */,
-				2738634C0D50028700A8A209 /* NSSortDescriptor+KTExtensions.h in Headers */,
 				273866C10D51555200A8A209 /* KTImageLoader.h in Headers */,
-				2743626D0D53BEAA00C257BA /* NSXMLElement+KTExtensions.h in Headers */,
 				27ACA2DC0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h in Headers */,
 				27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
-				CE57F35F0D58D65D005C1D64 /* NSBezierPath+KTExtensions.h in Headers */,
 				CE21CC950D59426D0066A8A8 /* KTPluginLoader.h in Headers */,
 				2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */,
-				271575CD0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h in Headers */,
-				CEC5A9AF0D616BCF001BA05D /* KSAppDelegate.h in Headers */,
-				CEC5A9B10D616BCF001BA05D /* KSApplication.h in Headers */,
-				CEC5A9B30D616BCF001BA05D /* KSSingletonWindowController.h in Headers */,
-				CEC5A9B60D616BE1001BA05D /* KSOverrideConstants.h in Headers */,
+				CE11DF8B0D618548003B00CA /* KTDataMigrator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5822,7 +5772,6 @@
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */,
 				3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */,
-				CEA378A20831347D00466572 /* NSImage+KTApplication.m in Sources */,
 				3CDECA8F08413B42008CA93F /* KTURLProtocol.m in Sources */,
 				CEBFB06A0843F09F00154996 /* KTTextField.m in Sources */,
 				CEBFB0700843F0AB00154996 /* KTTextFieldCell.m in Sources */,
@@ -5830,7 +5779,6 @@
 				CE16A3D9087319720006F80B /* KTStackView.m in Sources */,
 				CE6FFB92088EF02500AD0154 /* KTDesignPickerView.m in Sources */,
 				CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */,
-				CEB521C80899526E006B0019 /* NSString+KTApplication.m in Sources */,
 				CEB53A7A0899A99C006B0019 /* KTDesignURLProtocol.m in Sources */,
 				CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */,
 				CEB53A870899A9AD006B0019 /* KTDesignManager.m in Sources */,
@@ -5843,7 +5791,6 @@
 				3C006CD7095D0FA400474823 /* KTAbstractBugReporter.m in Sources */,
 				3C006CD8095D0FA800474823 /* KTFeedbackReporter.m in Sources */,
 				3C006CD9095D0FAA00474823 /* KTExceptionReporter.m in Sources */,
-				3C036AB0095F350500E1DA3D /* NSException+KTExtensions.m in Sources */,
 				3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */,
 				3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */,
 				3C27FEA1096F40DB00702991 /* KTTextViewController.m in Sources */,
@@ -5854,8 +5801,6 @@
 				CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */,
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
-				CEBE780209F407450059DEC6 /* MoreAddrToSym.c in Sources */,
-				CEBE782909F40A320059DEC6 /* MoreBacktrace.c in Sources */,
 				CEDCB6AC09FABA1B00A30124 /* KTCrashReporter.m in Sources */,
 				79B731110A33BF9A008F7F58 /* KTHost.m in Sources */,
 				794798720A7DAE0900425FB8 /* KTThreadedURLLoader.m in Sources */,
@@ -5865,21 +5810,15 @@
 				3C864F2B0B0CF7EA0037434E /* KTDocument+Media.m in Sources */,
 				3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */,
 				CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */,
-				CE1303330BD0149000DC2439 /* NSTextView+KTApplication.m in Sources */,
 				3C5A2CA30BD1F8DD00A788F5 /* KTNoCascadePanel.m in Sources */,
 				3CC67F630BDA692800790F50 /* KTNoCascadeWindow.m in Sources */,
-				3C5A718B0BF7ADE100776464 /* AMRollOverButton.m in Sources */,
-				3C5A718D0BF7ADE100776464 /* AMRollOverButtonCell.m in Sources */,
-				3C5A718F0BF7ADE100776464 /* AQDataExtensions.m in Sources */,
 				3C5A71920BF7ADE100776464 /* assertions.m in Sources */,
-				3C5A71940BF7ADE100776464 /* BDAlias.m in Sources */,
 				3C5A71990BF7ADE100776464 /* CharsetToEncodingTransformer.m in Sources */,
 				3C5A719B0BF7ADE100776464 /* CIImage+KTExtensions.m in Sources */,
 				3C5A719E0BF7ADE100776464 /* ContainerIsEmptyTransformer.m in Sources */,
 				3C5A71A00BF7ADE100776464 /* ContainerIsNotEmptyTransformer.m in Sources */,
 				3C5A71A30BF7ADE100776464 /* CropMarker.m in Sources */,
 				3C5A71A50BF7ADE100776464 /* CroppingImageView.m in Sources */,
-				3C5A71A80BF7ADE100776464 /* DNDArrayController.m in Sources */,
 				3C5A71AA0BF7ADE100776464 /* DOMNode+KTExtensions.m in Sources */,
 				3C5A71AC0BF7ADE100776464 /* EscapeHTMLTransformer.m in Sources */,
 				3C5A71B00BF7ADE100776464 /* ImageCropperController.m in Sources */,
@@ -5917,53 +5856,13 @@
 				3C5A720B0BF7ADE100776464 /* KTUtilities.m in Sources */,
 				3C5A720D0BF7ADE100776464 /* KTValidateCharFormatter.m in Sources */,
 				3C5A72110BF7ADE100776464 /* KTView.m in Sources */,
-				3C5A72160BF7ADE100776464 /* MyTableView.m in Sources */,
-				3C5A721A0BF7ADE100776464 /* NSAppleScript+KTExtensions.m in Sources */,
-				3C5A721C0BF7ADE100776464 /* NSApplication+KTExtensions.m in Sources */,
-				3C5A72200BF7ADE100776464 /* NSArrayController+KTExtensions.m in Sources */,
-				3C5A72240BF7ADE100776464 /* NSBezierPath_AMAdditons.m in Sources */,
-				3C5A72260BF7ADE100776464 /* NSBitmapImageRep+KTExtensions.m in Sources */,
-				3C5A722A0BF7ADE100776464 /* NSCalendarDate+KTExtensions.m in Sources */,
-				3C5A722C0BF7ADE100776464 /* NSCharacterSet+KTExtensions.m in Sources */,
-				3C5A722E0BF7ADE100776464 /* NSColor+KTExtensions.m in Sources */,
-				3C5A72300BF7ADE100776464 /* NSData+KTExtensions.m in Sources */,
-				3C5A72320BF7ADE100776464 /* NSDate+KTExtensions.m in Sources */,
-				3C5A72340BF7ADE100776464 /* NSDictionary+KTExtensions.m in Sources */,
-				3C5A72360BF7ADE100776464 /* NSDocumentController+KTExtensions.m in Sources */,
 				3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */,
-				3C5A723A0BF7ADE100776464 /* NSError+KTExtensions.m in Sources */,
 				3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */,
-				3C5A723E0BF7ADE100776464 /* NSFileManager+KTExtensions.m in Sources */,
-				3C5A72400BF7ADE100776464 /* NSHelpManager+KTExtensions.m in Sources */,
-				3C5A72420BF7ADE100776464 /* NSImage+KTExtensions.m in Sources */,
-				3C5A72450BF7ADE100776464 /* NSIndexPath+KTExtensions.m in Sources */,
-				3C5A72470BF7ADE100776464 /* NSIndexSet+KTExtensions.m in Sources */,
-				3C5A72490BF7ADE100776464 /* NSInvocation+KTExtensions.m in Sources */,
 				3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */,
 				3C5A724D0BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.m in Sources */,
 				3C5A724F0BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m in Sources */,
-				3C5A72530BF7ADE100776464 /* NSMutableDictionary+KTExtensions.m in Sources */,
-				3C5A72550BF7ADE100776464 /* NSMutableSet+KTExtensions.m in Sources */,
-				3C5A72570BF7ADE100776464 /* NSObject+KTExtensions.m in Sources */,
-				3C5A72590BF7ADE100776464 /* NSOutlineView+KTExtensions.m in Sources */,
 				3C5A725B0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m in Sources */,
-				3C5A725D0BF7ADE100776464 /* NSScanner+KTComponents.m in Sources */,
-				3C5A725F0BF7ADE100776464 /* NSSet+KTExtensions.m in Sources */,
-				3C5A72610BF7ADE100776464 /* NSString-Utilities.m in Sources */,
-				3C5A72630BF7ADE100776464 /* NSString+KTExtensions.m in Sources */,
-				3C5A72650BF7ADE100776464 /* NSThread+KTExtensions.m in Sources */,
-				3C5A72670BF7ADE100776464 /* NSToolbar+KTExtensions.m in Sources */,
-				3C5A72690BF7ADE100776464 /* NSURL+KTExtensions.m in Sources */,
-				3C5A726B0BF7ADE100776464 /* NSView+KTExtensions.m in Sources */,
-				3C5A726D0BF7ADE100776464 /* NSWindow+KTExtensions.m in Sources */,
-				3C5A726F0BF7ADE100776464 /* NSWorkspace+KTExtensions.m in Sources */,
-				3C5A72710BF7ADE100776464 /* NTBoxView.m in Sources */,
-				3C5A72730BF7ADE100776464 /* NTSUTaskController.m in Sources */,
-				3C5A72750BF7ADE100776464 /* OmniCompatibility.m in Sources */,
-				3C5A727C0BF7ADE100776464 /* RoundedBox.m in Sources */,
 				3C5A727E0BF7ADE100776464 /* RowHeightTransformer.m in Sources */,
-				3C5A72800BF7ADE100776464 /* RYZImagePopUpButton.m in Sources */,
-				3C5A72820BF7ADE100776464 /* RYZImagePopUpButtonCell.m in Sources */,
 				3C5A727A0BF7ADE100776464 /* RichTextHTMLTransformer.m in Sources */,
 				3C5A72860BF7ADE100776464 /* StringToNumberTransformer.m in Sources */,
 				3C5A72880BF7ADE100776464 /* StripHTMLTransformer.m in Sources */,
@@ -5971,10 +5870,6 @@
 				3C5A728D0BF7ADE100776464 /* TrimTransformer.m in Sources */,
 				3C5A728F0BF7ADE100776464 /* ValuesAreEqualTransformer.m in Sources */,
 				3C5C0F480BF82A9E003594F8 /* KTVerticallyAlignedTextCell.m in Sources */,
-				3CEC886C0BF8DFAB00CC732B /* NSArray+KTExtensions.m in Sources */,
-				3CEC886D0BF8DFAD00CC732B /* NSMutableArray+KTExtensions.m in Sources */,
-				3CEC886E0BF8DFB000CC732B /* NSAttributedString+KTExtensions.m in Sources */,
-				3CEC886F0BF8DFC000CC732B /* NSBundle+KTExtensions.m in Sources */,
 				278695FF0C32BE2400430B63 /* KTComponents.xcdatamodel in Sources */,
 				3CC35E130C3D55C700F81009 /* KTPage+Pagelets.m in Sources */,
 				27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */,
@@ -6007,7 +5902,6 @@
 				27969F120CF5DCBC00C03F45 /* NSString+Publishing.m in Sources */,
 				2796A0210CF7193A00C03F45 /* KTMediaManager+DocumentSaving.m in Sources */,
 				277EE9230CFD8CFF005617FE /* KTStalenessManager.m in Sources */,
-				273D7BD50D05A11D00057448 /* NSObject+PerformOnMainThread.m in Sources */,
 				273D7DB40D070BC100057448 /* KTPage+Paths.m in Sources */,
 				273D840D0D099C4200057448 /* KTDesign+KTTransferController.m in Sources */,
 				272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */,
@@ -6039,23 +5933,81 @@
 				27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */,
 				27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */,
 				CE36770C0D4FA65100B2A9F1 /* KTPluginInstallerController.m in Sources */,
-				2738634D0D50028700A8A209 /* NSSortDescriptor+KTExtensions.m in Sources */,
 				273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */,
 				273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */,
 				273866C20D51555200A8A209 /* KTImageLoader.m in Sources */,
-				2743626E0D53BEAA00C257BA /* NSXMLElement+KTExtensions.m in Sources */,
 				27ACA2DD0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m in Sources */,
 				27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */,
 				27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */,
-				CE57F3600D58D65D005C1D64 /* NSBezierPath+KTExtensions.m in Sources */,
 				CE21CC960D59426D0066A8A8 /* KTPluginLoader.m in Sources */,
 				27156A810D5CA1C700A91E58 /* KTHTMLParser+Summaries.m in Sources */,
 				2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */,
 				271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */,
 				271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */,
-				CEC5A9B00D616BCF001BA05D /* KSAppDelegate.m in Sources */,
-				CEC5A9B20D616BCF001BA05D /* KSApplication.m in Sources */,
-				CEC5A9B40D616BCF001BA05D /* KSSingletonWindowController.m in Sources */,
+				CE11DF160D6184AD003B00CA /* KSAppDelegate.m in Sources */,
+				CE11DF180D6184AD003B00CA /* KSApplication.m in Sources */,
+				CE11DF1A0D6184AD003B00CA /* KSSingletonWindowController.m in Sources */,
+				CE11DF1C0D6184AD003B00CA /* CIImage+Karelia.m in Sources */,
+				CE11DF1E0D6184AD003B00CA /* NSApplication+Karelia.m in Sources */,
+				CE11DF200D6184AD003B00CA /* NSArrayController+Karelia.m in Sources */,
+				CE11DF220D6184AD003B00CA /* NSBitmapImageRep+Karelia.m in Sources */,
+				CE11DF240D6184AD003B00CA /* NSColor+Karelia.m in Sources */,
+				CE11DF260D6184AD003B00CA /* NSHelpManager+Karelia.m in Sources */,
+				CE11DF280D6184AD003B00CA /* NSImage+Karelia.m in Sources */,
+				CE11DF2A0D6184AD003B00CA /* NSToolbar+Karelia.m in Sources */,
+				CE11DF2C0D6184AD003B00CA /* NSView+Karelia.m in Sources */,
+				CE11DF2E0D6184AD003B00CA /* NSWindow+Karelia.m in Sources */,
+				CE11DF300D6184AD003B00CA /* NSWorkspace+Karelia.m in Sources */,
+				CE11DF320D6184AD003B00CA /* NSObject+PerformOnMainThread.m in Sources */,
+				CE11DF340D6184AD003B00CA /* NSAppleScript+Karelia.m in Sources */,
+				CE11DF360D6184AD003B00CA /* NSArray+Karelia.m in Sources */,
+				CE11DF380D6184AD003B00CA /* NSMutableArray+Karelia.m in Sources */,
+				CE11DF3A0D6184AD003B00CA /* NSAttributedString+Karelia.m in Sources */,
+				CE11DF3C0D6184AD003B00CA /* NSBundle+Karelia.m in Sources */,
+				CE11DF3E0D6184AD003B00CA /* NSCalendarDate+Karelia.m in Sources */,
+				CE11DF400D6184AD003B00CA /* NSCharacterSet+Karelia.m in Sources */,
+				CE11DF420D6184AD003B00CA /* NSData+Karelia.m in Sources */,
+				CE11DF440D6184AD003B00CA /* NSDate+Karelia.m in Sources */,
+				CE11DF460D6184AD003B00CA /* NSDictionary+Karelia.m in Sources */,
+				CE11DF480D6184AD003B00CA /* NSMutableDictionary+Karelia.m in Sources */,
+				CE11DF4A0D6184AD003B00CA /* NSError+Karelia.m in Sources */,
+				CE11DF4C0D6184AD003B00CA /* NSException+Karelia.m in Sources */,
+				CE11DF4E0D6184AD003B00CA /* NSFileManager+Karelia.m in Sources */,
+				CE11DF500D6184AD003B00CA /* NSIndexPath+Karelia.m in Sources */,
+				CE11DF520D6184AD003B00CA /* NSIndexSet+Karelia.m in Sources */,
+				CE11DF540D6184AD003B00CA /* NSInvocation+Karelia.m in Sources */,
+				CE11DF560D6184AD003B00CA /* NSObject+Karelia.m in Sources */,
+				CE11DF580D6184AD003B00CA /* NSScanner+Karelia.m in Sources */,
+				CE11DF5A0D6184AD003B00CA /* NSMutableSet+Karelia.m in Sources */,
+				CE11DF5C0D6184AD003B00CA /* NSString+Karelia.m in Sources */,
+				CE11DF600D6184AD003B00CA /* NSThread+Karelia.m in Sources */,
+				CE11DF620D6184AD003B00CA /* NSURL+Karelia.m in Sources */,
+				CE11DF640D6184AD003B00CA /* NSSortDescriptor+Karelia.m in Sources */,
+				CE11DF660D6184AD003B00CA /* NSXMLElement+Karelia.m in Sources */,
+				CE11DF680D6184AD003B00CA /* NSBezierPath+Karelia.m in Sources */,
+				CE11DF6A0D6184AD003B00CA /* RoundedBox.m in Sources */,
+				CE11DF6C0D6184AD003B00CA /* RYZImagePopUpButton.m in Sources */,
+				CE11DF6E0D6184AD003B00CA /* RYZImagePopUpButtonCell.m in Sources */,
+				CE11DF700D6184AD003B00CA /* OmniCompatibility.m in Sources */,
+				CE11DF720D6184AD003B00CA /* NSString-Utilities.m in Sources */,
+				CE11DF740D6184AD003B00CA /* NTBoxView.m in Sources */,
+				CE11DF760D6184AD003B00CA /* NTSUTaskController.m in Sources */,
+				CE11DF780D6184AD003B00CA /* BDAlias.m in Sources */,
+				CE11DF7A0D6184AD003B00CA /* AMRollOverButton.m in Sources */,
+				CE11DF7C0D6184AD003B00CA /* AMRollOverButtonCell.m in Sources */,
+				CE11DF7E0D6184AD003B00CA /* NSBezierPath_AMAdditons.m in Sources */,
+				CE11DF800D6184AD003B00CA /* AQDataExtensions.m in Sources */,
+				CE11DF820D6184AD003B00CA /* DNDArrayController.m in Sources */,
+				CE11DF840D6184AD003B00CA /* MyTableView.m in Sources */,
+				CE11DF9B0D6185B9003B00CA /* NSSet+KTExtensions.m in Sources */,
+				CE11DFA80D6185F7003B00CA /* NSObject+KTExtensions.m in Sources */,
+				CE11DFAA0D61862E003B00CA /* NSString+KTApplication.m in Sources */,
+				CE11DFAE0D61864D003B00CA /* NSString+KTExtensions.m in Sources */,
+				CE11DFB00D6186FC003B00CA /* NSBundle+KTExtensions.m in Sources */,
+				CE99C6070D61904600A54B40 /* MoreAddrToSym.c in Sources */,
+				CE27F63B0D61928B00D211EA /* NSImage+KTExtensions.m in Sources */,
+				CE27F6650D6193B200D211EA /* NSImage+KTApplication.m in Sources */,
+				CE27F6670D6193B200D211EA /* NSTextView+KTApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

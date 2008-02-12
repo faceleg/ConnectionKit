@@ -29,7 +29,7 @@ TO DO:
 #import "KTDocument.h"
 #import "KTToolbars.h"
 #import "NSImage+KTApplication.h"
-#import "NSToolbar+KTExtensions.h"
+#import "NSToolbar+Karelia.h"
 #import "PrivateComponents.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"

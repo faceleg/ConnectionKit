@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSDate+KTExtensions.h"
+#import "NSDate+Karelia.h"
 
 
 @implementation NSDate ( KTExtensions )

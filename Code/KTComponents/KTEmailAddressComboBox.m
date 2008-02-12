@@ -9,7 +9,7 @@
 #import "KTEmailAddressComboBox.h"
 
 #import <AddressBook/AddressBook.h>
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "KT.h"
 #import "KTAbstractPlugin.h"		// for the benefit of NSLocalizedString macro
 

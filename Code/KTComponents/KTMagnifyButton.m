@@ -9,7 +9,7 @@
 #import "KTMagnifyButton.h"
 
 #import "Debug.h"
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 
 @implementation KTMagnifyButton
 

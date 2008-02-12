@@ -7,7 +7,7 @@
 //
 
 #import "TrimTransformer.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 @implementation TrimTransformer

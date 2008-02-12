@@ -24,6 +24,8 @@
 
 #import "KTUtilities.h"
 
+#import "NSException+Karelia.h"
+
 #import "Debug.h"
 #import "KT.h"
 
@@ -32,10 +34,11 @@
 #import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro
 #import "KTManagedObjectContext.h"
 
-#import "NSApplication+KTExtensions.h"
+#import "NSApplication+Karelia.h"
+#import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSError+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <IOKit/IOKitLib.h>
@@ -81,7 +84,7 @@ NSString *gFunnyFileName = nil;
 		}
 		else
 		{
-			[NSException raise:kKTGenericDocumentException 
+			[NSException raise:kKareliaDocumentException 
 						format:@"Unable create context from %@", aStoreURL];
 		}
 		return nil;
@@ -116,7 +119,7 @@ NSString *gFunnyFileName = nil;
 	
 	if ( nil == modelURL )
 	{
-		[NSException raise:kKTGenericDocumentException 
+		[NSException raise:kKareliaDocumentException 
 					format:@"Unable to locate %@", resourceNameWithExtension];
 		return nil;
 	}
@@ -125,7 +128,7 @@ NSString *gFunnyFileName = nil;
 	
 	if ( nil == result )
 	{
-		[NSException raise:kKTGenericDocumentException 
+		[NSException raise:kKareliaDocumentException 
 					format:@"Unable create model from %@", resourceNameWithExtension];
 		return nil;
 	}

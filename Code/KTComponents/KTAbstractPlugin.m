@@ -15,15 +15,17 @@
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
 #import "KTPluginDelegatesManager.h"
 
+#import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSDate+KTExtensions.h"
+#import "NSDate+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableSet+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
-#import "NSSortDescriptor+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface NSObject ( delegateMethods )

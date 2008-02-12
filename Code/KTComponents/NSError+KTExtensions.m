@@ -6,7 +6,7 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSError+KTExtensions.h"
+#import "NSError+Karelia.h"
 
 #import "KT.h"
 #import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro
@@ -21,7 +21,7 @@
 
 + (id)errorWithLocalizedDescription:(NSString *)aLocalizedDescription
 {
-	return [self errorWithDomain:kKTGenericErrorDomain code:KTGenericError localizedDescription:aLocalizedDescription];
+	return [self errorWithDomain:kKareliaErrorDomain code:KTGenericError localizedDescription:aLocalizedDescription];
 }
 
 + (id) errorWithHTTPStatusCode:(int)aStatusCode URL:(NSURL *)aURL

@@ -8,6 +8,7 @@
 
 #import "KTPluginInspectorViewsManager.h"
 
+#import "NSException+Karelia.h"
 
 @interface NSNib (KTPlugins)
 
@@ -100,7 +101,7 @@
 	// Bail if we couldn't load the nib
 	if (!succeeded || !inspectorView)
 	{
-		[self raiseExceptionWithName:kKTGenericPluginException 
+		[self raiseExceptionWithName:kKareliaPluginException 
 							  reason:@"Unable to load inspector from bundle, file is missing or not configured right." 
 							userInfo:[NSDictionary dictionaryWithObject:[[plugin inspectorNibBundle] bundleIdentifier] forKey:@"plugin"]];
 							
@@ -192,7 +193,7 @@
 				if (*objectController)	// Already thinks it has an object controller? Could be a problem!
 				{
 					NSString *identifier = [[plugin inspectorNibBundle] bundleIdentifier];
-					[self raiseExceptionWithName:kKTGenericPluginException 
+					[self raiseExceptionWithName:kKareliaPluginException 
 										  reason:@"Unable to load inspector from bundle, more than one unbound object controller found." 
 										userInfo:[NSDictionary dictionaryWithObject:identifier forKey:@"plugin"]];
 					result = NO;
@@ -208,7 +209,7 @@
 				if (*inspectorView)	// Already thinks it has an inspector view? Could be a problem!
 				{
 					NSString *identifier = [[plugin inspectorNibBundle] bundleIdentifier];
-					[self raiseExceptionWithName:kKTGenericPluginException 
+					[self raiseExceptionWithName:kKareliaPluginException 
 										  reason:@"Unable to load inspector from bundle, more than one view object found." 
 										userInfo:[NSDictionary dictionaryWithObject:identifier forKey:@"plugin"]];
 					result = NO;

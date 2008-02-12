@@ -18,13 +18,13 @@
 //#import "KTOldMediaManager.h"
 #import "KTPage.h"
 #import "NSDocumentController+KTExtensions.h"
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-#import "NSThread+KTExtensions.h"
-#import "NSWorkspace+KTExtensions.h"
+#import "NSThread+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 #import <QTKit/QTKit.h>
 #import <QuartzCore/QuartzCore.h>
 

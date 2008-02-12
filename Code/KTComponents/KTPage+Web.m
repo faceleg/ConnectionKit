@@ -15,6 +15,7 @@
 #import "KTHTMLParser.h"
 #import "KTMaster.h"
 
+#import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString-Utilities.h"

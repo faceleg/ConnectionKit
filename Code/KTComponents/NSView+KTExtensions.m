@@ -1,5 +1,5 @@
 
-#import "NSView+KTExtensions.h"
+#import "NSView+Karelia.h"
 
 @implementation NSView ( KTExtensions )
 

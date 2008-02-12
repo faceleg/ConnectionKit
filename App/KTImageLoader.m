@@ -7,7 +7,7 @@
 //
 
 #import "KTImageLoader.h"
-#import "NSBezierPath+KTExtensions.h"
+#import "NSBezierPath+Karelia.h"
 
 
 @interface KTImageLoader ( Private )

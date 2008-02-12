@@ -5,12 +5,12 @@
 //  Copyright (c) 2004 Biophony LLC. All rights reserved.
 //
 
-#import "NSWorkspace+KTExtensions.h"
+#import "NSWorkspace+Karelia.h"
 
 #import "KT.h"
 #import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro
-#import "NSImage+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation NSWorkspace ( KTExtensions )

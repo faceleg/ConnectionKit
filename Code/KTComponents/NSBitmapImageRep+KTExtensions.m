@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSBitmapImageRep+KTExtensions.h"
+#import "NSBitmapImageRep+Karelia.h"
 
 @implementation NSBitmapImageRep ( KTExtensions )
 

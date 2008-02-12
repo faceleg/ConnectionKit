@@ -23,23 +23,6 @@
 
 @interface NSArray ( KTExtensions )
 
-// standard NSArray stuff
-- (id)initWithObject:(id)anObject;
-
-- (id)objectAtReverseIndex:(int)index;
-
-- (BOOL)containsObjectIdenticalTo:(id)object;	// Like the -indexOfObjectIdenticalTo: method
-
-- (BOOL)containsObjectEqualToString:(NSString *)aString;
-
-- (id)firstObject; // NSArray oddly has a lastObject method, but not a firstObject
-- (id)firstObjectOrNilIfEmpty;	// Hnady to save on checking if you have nil or an empty array
-
-- (BOOL)isEmpty;
-
-- (void)removeObserver:(NSObject *)anObserver fromObjectsAtIndexes:(NSIndexSet *)indexes forKeyPaths:(NSSet *)keyPaths;
-
-
 // operations that assume all objects in array are KTPages
 
 /*! returns parent common to all objects in array */
@@ -49,8 +32,8 @@
 - (BOOL)objectsHaveCommonParent;
 
 /*! returns whether any object in the array is parent to aPage
-	NB: this is not a sophisticated search, assumes parents
-		and children are essentially in order */
+ NB: this is not a sophisticated search, assumes parents
+ and children are essentially in order */
 - (BOOL)containsParentOfPage:(KTPage *)aPage;
 
 /*! returns whether any object in the array isRoot */
@@ -62,7 +45,5 @@
 /*! returns only those pages that are not children of other pages in the array */
 - (NSArray *)parentObjects;
 
-/*! Converts an NSArray with three (or four) NSValues into an RGB/RGBA Color */
--(NSColor*)		colorValue;
 
 @end

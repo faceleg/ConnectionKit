@@ -9,8 +9,8 @@
 //
 #import "CroppingImageView.h"
 #import "CropMarker.h"
-#import "CIImage+KTExtensions.h"
-#import "NSImage+KTExtensions.h"
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
 #import <QuartzCore/QuartzCore.h>
 #import "assertions.h"
 

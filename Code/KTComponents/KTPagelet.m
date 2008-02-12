@@ -17,6 +17,7 @@
 #import "KTManagedObject.h"
 #import "KTPage.h"
 #import "KTStoredDictionary.h"
+#import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"

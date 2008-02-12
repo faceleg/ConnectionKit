@@ -5,7 +5,7 @@
 //  Copyright (c) 2004 Biophony LLC. All rights reserved.
 //
 
-#import "NSOutlineView+KTExtensions.h"
+#import "NSOutlineView+Karelia.h"
 #import "KTComponents.h"
 
 @implementation NSOutlineView ( KTExtensions )

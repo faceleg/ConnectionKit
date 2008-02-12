@@ -9,7 +9,7 @@
 
 // third party
 #import "BDAlias.h"
-#import "BDAlias+KTExtensions.h"
+#import "BDAlias+Karelia.h"
 
 #import "NSString-Utilities.h"
 #import "NTBoxView.h"

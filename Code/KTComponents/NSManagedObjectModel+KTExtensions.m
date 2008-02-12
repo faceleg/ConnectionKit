@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTAbstractPlugin.h"
+#import "NSException+Karelia.h"
 
 static NSManagedObjectModel *sKTComponentsModel;
 
@@ -70,7 +71,7 @@ static NSManagedObjectModel *sKTComponentsModel;
 		sKTComponentsModel = [[NSManagedObjectModel modelWithPath:modelPath] retain];
 		if ( nil == sKTComponentsModel )
 		{
-			[NSException raise:kKTGenericObjectException format:@"unable to construct model at path: %@", modelPath];
+			[NSException raise:kKareliaObjectException format:@"unable to construct model at path: %@", modelPath];
 		}
 	}
 	

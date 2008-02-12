@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "NSMutableArray+KTExtensions.h"
+#import "NSMutableArray+Karelia.h"
 
 
 @implementation NSMutableArray ( KTExtensions )

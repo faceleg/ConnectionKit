@@ -22,27 +22,8 @@
 
 @interface NSBundle ( KTExtensions )
 
-+ (Class)principalClassForBundle:(NSBundle *)aBundle;
-
-/*! utility function */
-- (NSString *)localizedObjectForInfoDictionaryKey:(NSString *)aKey;
-
-- (NSString *)entityName;			// specified as KTMainEntityName
-
-- (NSString *)version;				// specified as CFBundleShortVersionString
-- (NSString *)buildVersion;				// specified as CFBundleVersion
-- (NSString *)helpAnchor;			// specified as KTHelpAnchor
 
 - (NSString *)templateRSSAsString;
-
-- (void)loadLocalFonts;
-
-// Nib loading
-- (BOOL)loadNibNamed:(NSString *)nibName owner:(id)owner;
-- (BOOL)loadNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray **)topLevelObjects;
-
-- (NSString *)localizedStringForString:aString language:(NSString *)aLocalization fallback:(NSString *)aFallbackString;
-- (NSString *)localizedStringForString:aString language:(NSString *)aLocalization;
 
 - (NSString *)overridingPathForResource:(NSString *)name ofType:(NSString *)ext;
 - (NSString *)overridingPathForResource:(NSString *)name ofType:(NSString *)ext inDirectory:(NSString *)subpath;

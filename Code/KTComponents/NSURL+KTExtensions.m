@@ -6,10 +6,10 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "NSURL+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
-#import "NSFileManager+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSFileManager+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface NSURL (KTExtensionsPrivate)

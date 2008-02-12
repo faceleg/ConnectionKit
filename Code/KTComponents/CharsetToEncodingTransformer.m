@@ -24,7 +24,7 @@ TO DO:
  */
 
 #import "CharsetToEncodingTransformer.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 //
 

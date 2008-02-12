@@ -6,7 +6,7 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSMutableSet+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
 
 
 @implementation NSMutableSet ( KTExtensions )

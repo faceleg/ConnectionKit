@@ -46,22 +46,15 @@ NSString *kKTDataSourcePasteboard = @"kKTDataSourcePasteboard";
 NSString *kKTDataSourceNil = @"kKTDataSourceNil";
 
 // Error Domains
-NSString *kKTGenericErrorDomain = @"com.karelia.Sandvox.GenericErrorDomain";
 NSString *kKTDataMigrationErrorDomain = @"com.karelia.Sandvox.DataMigrationErrorDomain";
 NSString *kKTURLPrococolErrorDomain = @"com.karelia.Sandvox.GenericErrorDomain";
-NSString *kKTHostSetupDomain = @"com.karelia.Sandvox.HostSetupDomain";
-NSString *kKTConnectionDomain = @"com.karelia.Sandvox.ConnectionDomain";
+NSString *kKTHostSetupErrorDomain = @"com.karelia.Sandvox.HostSetupDomain";
+NSString *kKTConnectionErrorDomain = @"com.karelia.Sandvox.ConnectionDomain";
 
 
 // Exceptions
-NSString *kKTClassNotLoadedException = @"KTClassNotLoadedException";
-NSString *kKTGenericDocumentException = @"KTGenericDocumentException";
-NSString *kKTGenericObjectException = @"KTGenericObjectException";
-NSString *kKTGenericPluginException = @"KTGenericPluginException";
-NSString *kKTGenericStorageException = @"KTGenericStorageException";
-NSString *kKTTemplateParserException = @"kKTTemplateParserException";
-NSString *kKTFileManagerException = @"KTFileManagerException";
-NSString *kKTInternalInconsistencyException = @"KTInternalInconsistencyException";
+
+NSString *kKTTemplateParserException = @"KTTemplateParserException";
 
 // KTComponents
 NSString *kKTDefaultCalendarFormat = @"%Y-%m-%d %H:%M:%S %z";

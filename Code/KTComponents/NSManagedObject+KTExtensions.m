@@ -10,7 +10,7 @@
 
 #import "Debug.h"
 #import "KTManagedObjectContext.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 @interface NSManagedObject (KTExtensionsPrivate)

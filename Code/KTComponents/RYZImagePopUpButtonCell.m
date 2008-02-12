@@ -7,7 +7,7 @@
 
 #import "RYZImagePopUpButtonCell.h"
 
-#import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 
 
 @implementation RYZImagePopUpButtonCell

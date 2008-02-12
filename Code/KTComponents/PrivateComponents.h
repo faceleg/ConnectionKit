@@ -33,14 +33,14 @@
 #import "KTHTMLParser.h"
 
 // foundation extensions
-#import "NSMutableSet+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
 
 // appkit extensions
 #import "NSDocumentController+KTExtensions.h"
 #import "NSOutlineView+KTExtensions.h"
-#import "NSToolbar+KTExtensions.h"
-#import "NSView+KTExtensions.h"
-#import "NSWindow+KTExtensions.h"
+#import "NSToolbar+Karelia.h"
+#import "NSView+Karelia.h"
+#import "NSWindow+Karelia.h"
 
 // core data extensions
 #import "NSEntityDescription+KTExtensions.h"

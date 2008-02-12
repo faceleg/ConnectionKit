@@ -9,8 +9,9 @@
 
 #import "Debug.h"
 #import "KTAppDelegate.h"
+#import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 #ifdef SANDVOX_RELEASE
 #import "Registration.h"

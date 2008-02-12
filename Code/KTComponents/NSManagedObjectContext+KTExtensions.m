@@ -17,7 +17,7 @@
 #import "KTPagelet.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSFetchRequest+KTExtensions.h"
-#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 @interface NSManagedObjectContext ( KTManagedObjectContext )

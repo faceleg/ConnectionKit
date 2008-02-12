@@ -1,0 +1,67 @@
+//
+//  NSEntityDescription+KTExtensions.m
+//  ModelTester
+//
+//  Created by Terrence Talbot on 3/2/05.
+//  Copyright 2005 Biophony LLC. All rights reserved.
+//
+
+#import "NSEntityDescription+KTExtensions.h"
+
+
+@implementation NSEntityDescription ( KTExtensions )
+
+- (void)addPropertiesOfEntity:(NSEntityDescription *)anEntity
+{
+	NSMutableArray *properties = [NSMutableArray arrayWithArray:[self properties]];
+	
+	NSDictionary *parentPropertiesByName = [anEntity propertiesByName];
+	NSEnumerator *e = [parentPropertiesByName keyEnumerator];
+	id key;
+	while ( key = [e nextObject] )
+	{
+		// let's grab each property and examine what type it is
+		// then copy it "by hand" to a new object and add it
+
+		id parentProperty = [parentPropertiesByName objectForKey:key];
+		id property = [[[[parentProperty class] alloc] init] autorelease];
+		
+		// set the common things
+		[(NSPropertyDescription *)property setName:[[[parentProperty name] copy] autorelease]];
+		[property setOptional:[parentProperty isOptional]];
+		[property setTransient:[parentProperty isTransient]];
+		[property setUserInfo:nil];
+		
+		// set the class specific things
+		if ( [parentProperty isKindOfClass:[NSAttributeDescription class]] )
+		{
+			[property setAttributeType:[parentProperty attributeType]];
+			[property setDefaultValue:[[[parentProperty defaultValue] copy] autorelease]];
+		}
+		else if ( [parentProperty isKindOfClass:[NSRelationshipDescription class]] )
+		{
+			[property setDestinationEntity:[parentProperty destinationEntity]];
+			[property setInverseRelationship:[parentProperty inverseRelationship]];
+			[property setDeleteRule:[parentProperty deleteRule]];
+			[property setMinCount:[parentProperty minCount]];
+			[property setMaxCount:[parentProperty maxCount]];
+		}
+		else if ( [parentProperty isKindOfClass:[NSFetchedPropertyDescription class]] )
+		{
+			[property setFetchRequest:[parentProperty fetchRequest]];
+		}
+		
+		[properties addObject:property];
+	}
+	
+	[self setProperties:properties];
+}
+
+- (void)addSubentity:(NSEntityDescription *)anEntity
+{
+	NSMutableArray *subentities = [NSMutableArray arrayWithArray:[self subentities]];
+	[subentities addObject:anEntity];
+	[self setSubentities:subentities];
+}
+
+@end

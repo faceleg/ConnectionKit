@@ -18,6 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 
 @class KTManagedObjectContext;
