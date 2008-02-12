@@ -1,5 +1,5 @@
 ARCHS = ppc i386
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Frameworks/Growl
+FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl:$(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
 
 GCC_DYNAMIC_NO_PIC = YES
 GCC_ENABLE_FIX_AND_CONTINUE = NO

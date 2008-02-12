@@ -1611,14 +1611,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* Sparkle.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Sparkle;
 		};
 		CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 61B5F90209C4CEE200B25A18 /* Sparkle Test App.app */;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
 		};
 /* End PBXContainerItemProxy section */
@@ -5571,7 +5571,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A9A940D11E68A0054058C /* ShellScript */ = {
@@ -5585,7 +5585,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CK_REVISION FOR RELEASE BUILDS\n###\n\nCK_PATH=${SRCROOT}/../../../../connection\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing ConnectionKit with revision ${CK_REVISION}\"\ncd ${CK_PATH}\n${SVN_PATH} update -r${CK_REVISION}\necho \"finished syncing ConnectionKit\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CK_REVISION FOR RELEASE BUILDS\n###\n\nCK_PATH=${SRCROOT}/../../../connection\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing ConnectionKit with revision ${CK_REVISION}\"\ncd ${CK_PATH}\n${SVN_PATH} update -r${CK_REVISION}\necho \"finished syncing ConnectionKit\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
@@ -5657,7 +5657,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SP_REVISION FOR RELEASE BUILDS\n###\n\nSP_PATH=${SRCROOT}/../../../../sparkleplus\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Sparkle+ with revision ${SP_REVISION}\"\ncd ${SP_PATH}\n${SVN_PATH} update -r${SP_REVISION}\necho \"finished syncing Sparkle+\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SP_REVISION FOR RELEASE BUILDS\n###\n\nSP_PATH=${SRCROOT}/../../../sparkleplus\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Sparkle+ with revision ${SP_REVISION}\"\ncd ${SP_PATH}\n${SVN_PATH} update -r${SP_REVISION}\necho \"finished syncing Sparkle+\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {

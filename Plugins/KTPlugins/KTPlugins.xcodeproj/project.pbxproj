@@ -674,7 +674,7 @@
 		CE035C870D0F558C00229614 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE035C880D0F558C00229614 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE035C890D0F558C00229614 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE035C990D0F55A200229614 /* Archive.svxIndex */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Archive.svxIndex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE035C990D0F55A200229614 /* Viewer.svxIndex */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Viewer.svxIndex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE051C160A6C40500012E640 /* DownloadIndex.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DownloadIndex.css; path = Indexes/DownloadIndex/DownloadIndex.css; sourceTree = "<group>"; };
 		CE1AD39C0A7E84480083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = Pagelets/BadgePagelet/it.lproj/BadgePagelet.nib; sourceTree = "<group>"; };
 		CE1AD39E0A7E84480083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = Pages/DownloadPage/it.lproj/DownloadPage.nib; sourceTree = SOURCE_ROOT; };
@@ -1449,7 +1449,7 @@
 				CE71E3230960CC8100BA1E3F /* Movie.svxPagelet */,
 				CE347B2B0964C188001FCB6B /* Badge.svxPagelet */,
 				CE59BA0D0D0DF6D4009FBD68 /* Archive.svxIndex */,
-				CE035C990D0F55A200229614 /* Archive.svxIndex */,
+				CE035C990D0F55A200229614 /* Viewer.svxIndex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2378,7 +2378,7 @@
 			);
 			name = ViewerIndex;
 			productName = ListingSummary;
-			productReference = CE035C990D0F55A200229614 /* Archive.svxIndex */;
+			productReference = CE035C990D0F55A200229614 /* Viewer.svxIndex */;
 			productType = "com.apple.product-type.bundle";
 		};
 		CE347B1A0964C188001FCB6B /* BadgePagelet */ = {
