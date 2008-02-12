@@ -102,7 +102,7 @@
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSHelpManager+Karelia.h"
-#import "NSScanner+KTComponents.h"
+#import "NSScanner+Karelia.h"
 
 // CoreData extensions
 #import "NSManagedObject+KTExtensions.h"
