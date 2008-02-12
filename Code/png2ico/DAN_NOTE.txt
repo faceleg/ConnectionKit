@@ -1,0 +1,30 @@
+Download libpng from:
+
+http://www.libpng.org/pub/png/libpng.html
+
+
+
+
+Statically link in /usr/local/lib/libpng.a
+
+I just modified the resulting line that actually got executed by the makefile.  I took out the -lpng and added the .a path
+
+g++ -W -Wall -O2 -finline-functions -g -o png2ico png2ico.cpp /usr/local/lib/libpng.a -lz -lm
+
+
+Verify that this does not link to libpng.dylib:
+
+[g5-of-dan-wood:~/Desktop/png2ico] dwood% otool -L png2ico
+png2ico:
+        /usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.0.0)
+        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 71.1.1)
+	
+	
+
+
+TO TEST THIS IS MAKING A MAKEFILE
+
+png2ico favicon.ico --colors 16 32.png 16.png
+
+See http://photomatt.net/2003/11/13/how-to-create-a-favicon/
+
