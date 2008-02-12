@@ -802,6 +802,13 @@
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
 		CEC3B5130BA9107A006DA002 /* KTTranscript.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3B5120BA9107A006DA002 /* KTTranscript.nib */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
+		CEC5A9AF0D616BCF001BA05D /* KSAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */; };
+		CEC5A9B00D616BCF001BA05D /* KSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */; };
+		CEC5A9B10D616BCF001BA05D /* KSApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9AB0D616BCF001BA05D /* KSApplication.h */; };
+		CEC5A9B20D616BCF001BA05D /* KSApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AC0D616BCF001BA05D /* KSApplication.m */; };
+		CEC5A9B30D616BCF001BA05D /* KSSingletonWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */; };
+		CEC5A9B40D616BCF001BA05D /* KSSingletonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */; };
+		CEC5A9B60D616BE1001BA05D /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
 		CECDC3E208287E920090F560 /* Info.nib in Resources */ = {isa = PBXBuildFile; fileRef = CECDC3E008287E920090F560 /* Info.nib */; };
@@ -2524,6 +2531,13 @@
 		CEC3B5120BA9107A006DA002 /* KTTranscript.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KTTranscript.nib; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
+		CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSAppDelegate.h; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSAppDelegate.m; path = ../../../Shared/trunk/App/KareliaApp/KSAppDelegate.m; sourceTree = SOURCE_ROOT; };
+		CEC5A9AB0D616BCF001BA05D /* KSApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSApplication.h; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.h; sourceTree = SOURCE_ROOT; };
+		CEC5A9AC0D616BCF001BA05D /* KSApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSApplication.m; path = ../../../Shared/trunk/App/KareliaApp/KSApplication.m; sourceTree = SOURCE_ROOT; };
+		CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSingletonWindowController.h; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.h; sourceTree = SOURCE_ROOT; };
+		CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSingletonWindowController.m; path = ../../../Shared/trunk/App/KareliaApp/KSSingletonWindowController.m; sourceTree = SOURCE_ROOT; };
+		CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOverrideConstants.h; sourceTree = SOURCE_ROOT; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
@@ -2933,6 +2947,7 @@
 				3C5A716B0BF7ADE100776464 /* PrivateComponents.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
+				CEC5A9B50D616BE1001BA05D /* KSOverrideConstants.h */,
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
@@ -2962,6 +2977,7 @@
 				3C202D9F07DFC46800DE4994 /* Cocoa Extensions */,
 				3C5A732A0BF7B24200776464 /* Cocoa Private */,
 				3C5A72E70BF7AE3400776464 /* Third Party */,
+				CEC5A9A80D616BA7001BA05D /* Karelia Shared */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				3C5A73330BF7B39500776464 /* Private Headers (DO NOT EXPORT) */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -4416,6 +4432,19 @@
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
 		};
+		CEC5A9A80D616BA7001BA05D /* Karelia Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CEC5A9A90D616BCF001BA05D /* KSAppDelegate.h */,
+				CEC5A9AA0D616BCF001BA05D /* KSAppDelegate.m */,
+				CEC5A9AB0D616BCF001BA05D /* KSApplication.h */,
+				CEC5A9AC0D616BCF001BA05D /* KSApplication.m */,
+				CEC5A9AD0D616BCF001BA05D /* KSSingletonWindowController.h */,
+				CEC5A9AE0D616BCF001BA05D /* KSSingletonWindowController.m */,
+			);
+			name = "Karelia Shared";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4628,6 +4657,10 @@
 				CE21CC950D59426D0066A8A8 /* KTPluginLoader.h in Headers */,
 				2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */,
 				271575CD0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h in Headers */,
+				CEC5A9AF0D616BCF001BA05D /* KSAppDelegate.h in Headers */,
+				CEC5A9B10D616BCF001BA05D /* KSApplication.h in Headers */,
+				CEC5A9B30D616BCF001BA05D /* KSSingletonWindowController.h in Headers */,
+				CEC5A9B60D616BE1001BA05D /* KSOverrideConstants.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6020,6 +6053,9 @@
 				2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */,
 				271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */,
 				271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */,
+				CEC5A9B00D616BCF001BA05D /* KSAppDelegate.m in Sources */,
+				CEC5A9B20D616BCF001BA05D /* KSApplication.m in Sources */,
+				CEC5A9B40D616BCF001BA05D /* KSSingletonWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

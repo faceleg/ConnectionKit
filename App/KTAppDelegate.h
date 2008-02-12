@@ -23,6 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Sparkle/Sparkle.h>
+#import "KSAppDelegate.h"
 
 extern BOOL gWantToCatchSystemExceptions;
 
@@ -84,7 +85,7 @@ extern NSThread *gMainThread;
 
 @class KTDocument, KTDocumentController, KTBundleManager, KTDesignManager, KTPrefsController, KTFeedbackReporter;
 
-@interface KTAppDelegate : NSObject <SUStatusCheckerDelegate>
+@interface KTAppDelegate : KSAppDelegate <SUStatusCheckerDelegate>
 {
     // IBOutlets
     IBOutlet NSMenuItem     *oToggleAddressBarMenuItem;

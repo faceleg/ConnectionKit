@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSApplication.h"
 
-@interface KTApplication : NSApplication
+@interface KTApplication : KSApplication
 
 +(NSString * )machineName;
 - (void)showHelpPage:(NSString *)inHelpString;
