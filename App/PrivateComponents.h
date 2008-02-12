@@ -37,7 +37,7 @@
 
 // appkit extensions
 #import "NSDocumentController+KTExtensions.h"
-//#import "NSOutlineView+KTExtensions.h"
+#import "NSOutlineView+KTExtensions.h"
 #import "NSToolbar+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWindow+Karelia.h"
