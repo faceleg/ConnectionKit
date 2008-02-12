@@ -181,7 +181,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];
 		if ( nil != sizeString )
         {
-			[[self window] setContentSize:NSSizeFromString(sizeString)];
+			NSSize size = NSSizeFromString(sizeString);
+			size.height = MAX(size.height, 200.0);
+			size.width = MAX(size.width,800.0);
+			[[self window] setContentSize:size];
 		}
 		
 		// Toolbar

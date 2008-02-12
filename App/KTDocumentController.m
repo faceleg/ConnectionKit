@@ -294,6 +294,10 @@
 		{
 			NSWindow *window = [[document windowController] window];
 			NSRect frameRect = [window frameRectForContentRect:contentRect];
+
+			frameRect.size.width = MAX(frameRect.size.width, 800.0);
+			frameRect.size.height = MAX(frameRect.size.height, 200.0);
+
 			NSRect screenRect = [[window screen] visibleFrame];
 			
 			// make sure width and height will fit on screen
