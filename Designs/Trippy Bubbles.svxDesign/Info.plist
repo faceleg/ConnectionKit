@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.Trippy Bubbles</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>CalloutBorderable</key>
+	<true/>
+	<key>KTMenusUseNonBreakingSpaces</key>
+	<false/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.0</string>
+	<key>SidebarBorderable</key>
+	<true/>
+	<key>backgroundRGB</key>
+	<string>FFFFFF</string>
+	<key>comments</key>
+	<string>
+	</string>
+	<key>copyright</key>
+	<string>Copyright © 2006, Karelia Software</string>
+	<key>frameRGB</key>
+	<string>FFFFFF</string>
+	<key>genre</key>
+	<string>fun</string>
+	<key>imageReplacement</key>
+	<dict>
+		<key>h1</key>
+		<dict>
+			<key>qtzFile</key>
+			<string>bubble</string>
+		</dict>
+		<key>h1h</key>
+		<dict>
+			<key>qtzFile</key>
+			<string>bubble</string>
+		</dict>
+	</dict>
+	<key>tallViewer</key>
+	<true/>
+	<key>textRGB</key>
+	<string>000000</string>
+	<key>title</key>
+	<string>Trippy Bubbles</string>
+	<key>viewport</key>
+	<integer>771</integer>
+</dict>
+</plist>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.Glass Box</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>CalloutBorderable</key>
+	<true/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.0</string>
+	<key>SidebarBorderable</key>
+	<true/>
+	<key>bannerHeight</key>
+	<integer>265</integer>
+	<key>bannerName</key>
+	<string>g-bk-header.jpg</string>
+	<key>bannerWidth</key>
+	<integer>800</integer>
+	<key>copyright</key>
+	<string>Copyright © 2006, Karelia Software</string>
+	<key>genre</key>
+	<string>business</string>
+	<key>title</key>
+	<string>Glass Box</string>
+	<key>viewport</key>
+	<integer>762</integer>
+</dict>
+</plist>

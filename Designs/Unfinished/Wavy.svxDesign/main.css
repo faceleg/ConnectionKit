@@ -1,0 +1,228 @@
+/* Copyright (c) 2006, Karelia Software. All Rights Reserved. */
+
+a img { border: none; }
+
+/* Color Scheme */
+
+h1, h1 a { color:#fff; }
+.callout .pagelet { background:url(wavy_brown.jpg); }
+#sidebar .pagelet { background:url(wavy_yellow.jpg); }
+#bodyarea { background:url(wavy_green.jpg); }
+#footer { background:url(wavy_green2.jpg); }
+#header { background:url(wavy_peach.jpg); }
+#sidebar { background:url(wavy_pink.jpg); }
+.sidebar { background:url(wavy_graypink.jpg); }
+
+/* General styles  */
+
+.hidden { display:none; }
+.clear	{
+	clear: both;
+}
+
+h2,h3,h4 {
+	margin:0;
+	padding:0;
+}
+
+.article p a:link, .article p a:visited {
+	color: #fff;
+	background-color: #036;
+	text-decoration: none;
+	padding:1px 2px 1px 2px;
+}
+
+.article p a:hover, .article p a:focus, .article p a:active {
+	color: #fff;
+	background-color: #369;
+	text-decoration: none;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img .narrow { float:left; }
+img .wide { display:block; }
+
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font: 76% "Georgia", Serif;
+	margin:0;
+	padding:0;
+}
+
+			#header {
+			    overflow:auto;
+			}
+			.sidebar #header, .sidebar #bodyarea, .sidebar #footer {
+				margin-right:200px;
+			}
+
+				#titleholder {
+					text-align:center;
+				}
+
+				#titleholder p {
+					margin:20px 3em;
+					font-size:1.5em;
+					color:#fff;
+				}
+
+					h1 {
+						font-size:3em;
+						padding:10px;
+						margin:0;
+					}
+
+						h1 a {
+							text-decoration:none;
+						}
+
+					#titleholder img {
+						float:right;
+						padding:10px;
+					}
+
+				#sitemenu {
+				    overflow:auto;
+				}
+					#sitelist {}
+
+						#sitelist ul {
+							margin-left: 10px;
+							padding-left: 0;
+							white-space: nowrap;
+						}
+
+						#sitelist li {
+							display: inline;
+							list-style-type: none;
+							float:left;
+							margin:5px 2px;
+						}
+
+							.currentPage {
+								padding: 3px 10px;
+								color: #3d3267;
+								background-color: #8c48aa;
+							}
+
+							#sitelist a {
+								padding: 3px 10px;
+								background-color: #cbafed;
+							}
+
+							#sitelist a:link, #sitelist a:visited {
+								color: #3d3267;
+								text-decoration: none;
+							}
+
+							#sitelist a:hover, a:focus, a:active {
+								color: #fff;
+								background-color: #8c48aa;
+								text-decoration: none;
+							}
+
+				#sidebar {
+					position: absolute;
+					right:0;
+					top:0;
+					width:200px;
+					bottom:0;
+				}
+
+				    .pagelet {
+				    	width:200px;
+						padding-top:10px;
+						padding-bottom:10px;
+						margin-bottom:20px;
+						overflow:hidden;
+						word-wrap: break-word;
+					}
+					.pagelet p {
+						margin:10px;
+					}
+					.pagelet h4 {
+						margin:10px;
+						color:#3d3267;
+						background-color:#fff;
+						text-align:center;
+					}
+					.untitled {}
+					.titled {}
+
+				#bodyarea {
+					color:#000;
+					padding:20px;
+				}
+
+					h2 {
+						text-align:center;
+						font-size:3em;
+						margin:0 10px 20px 10px;
+					}
+
+						.article  {
+								max-width:60em;
+								padding-bottom:10px;
+								border-bottom:2px solid white;
+							}
+
+						.article p {
+								max-width:50em;
+						}
+							h3 {
+								text-align:center;
+								padding:10px;
+							}
+
+							.article-thumbnail {
+								float:left;
+								padding:10px;
+							}
+
+							.callout {
+								float:left;
+							}
+							.callout .pagelet {
+								float:left;
+								width:200px;
+								margin:10px;
+								border: 1px solid #fff;
+							}
+							.callout .clear {
+								clear:none;
+							}
+
+			#footer {
+				padding:10px;
+			}
+
+				#footer p {
+					margin:0;
+					color:#fff;
+				}
+
+/* Used on Photo Grid Pages ... */
+.photogrid-index {
+    margin-right:-20px;
+    background:white;
+}
+
+.gridItem {
+	float:left;
+	width:138px;
+	height:170px;	/* room for caption */
+	overflow:visible;
+}
+
+	.gridItem h3 {
+		font-size:1em;
+		font-weight:normal;
+	}
+
+/* Used on index summary pages */
+
+	.article li h3 {
+		text-align:left;
+	}
+

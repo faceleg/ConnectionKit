@@ -1,0 +1,201 @@
+/* Copyright (c) 2006, Karelia Software. All Rights Reserved. */
+
+a img { border: none; }
+
+ /* General styles  */
+
+.clear {
+	clear: both;
+}
+
+.hidden {
+    display:none;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img .narrow {
+    float:right;
+}
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font-size:76%;
+	background:url(wavy_gray.jpg) repeat;
+	margin:0;
+	font-family: "Big Caslon", "Baskerville", serif;
+}
+    h1,h2,h3,h4,h5,h6 {
+	    font-family: "Arial Black",sans-serif;
+	}
+
+		#container {
+		    width:755px;
+		    border-left:1px solid #88F;
+		    border-right:1px solid #88F;
+		    margin:0 auto;
+		    background:#def;
+		}
+
+			#header {
+			    width:755px;
+				background:#003;
+			}
+
+				#titleholder {
+					text-align:center;
+			    }
+
+					h1 {
+					    margin:0;
+					    font:small-caps bold 36pt "Arial Black",sans-serif;
+					    color:#FFC;
+					}
+
+						h1 a {
+						    text-decoration:none;
+						    color:#FFC;
+						}
+
+					#titleholder img {
+					    float:left;
+					    padding:10px;
+					}
+
+					#titleholder p {
+					    color:#FFC;
+					    font:italic 1.3em "Big Caslon", "Baskerville", serif;
+					}
+
+				    #sitemenu {
+					    clear:both;
+					    width:100%;
+					    border-bottom: 3px dotted #fff;
+					    overflow:visible;
+					    padding:0 10px;
+				    }
+
+					#sitelist ul {
+					    white-space: nowrap;
+					    padding:5px;
+					}
+
+					#sitelist li {
+					    display: inline;
+					    list-style-type: none;
+					}
+
+					#sitelist a, .currentPage {
+					    padding: 3px 10px 3px 0;
+					}
+
+					#sitelist a:link, #sitelist a:visited {
+					color: #fff;
+					background-color: #036;
+					text-decoration: none;
+					}
+
+					#sitelist a:hover, .currentPage {
+					color: #fff;
+					background-color: #369;
+					text-decoration: none;
+					}
+
+					.currentPage {
+					    color:#cc8;
+					}
+
+			#content {
+			    width:755px;
+			    padding-bottom:20px;
+			}
+
+				#sidebar {
+				    margin-left:10px;
+				    float:left;
+				    width:235px;
+					overflow:hidden;
+				}
+
+				.callout {
+				    float:right;
+				    margin:0 -10px 10px 10px;
+				    padding:0 0 10px 10px;
+				    width:210px;
+				    border-top:1px solid #88F;
+				    border-bottom:1px solid #88F;
+				    border-left:1px solid #88F;
+				}
+
+				    .pagelet {
+					    width:200px;
+					    word-wrap: break-word;
+					}
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+				body.no-sidebar #bodyarea {
+				    width:755px;
+				    padding-bottom:20px;
+				}
+
+/* Most other pages have sidebars */
+				body.sidebar #bodyarea {
+				    width:500px;
+				    float:left;
+				    padding-bottom:20px;
+				}
+
+				    h2:before {
+					    content:url(flourish1.gif);
+					    display:block;
+					}
+				    h2:after {
+					    content:url(flourish2.gif);
+					    display:block;
+					}
+
+					h2 {
+					    font-size:2em;
+					    margin-right:40px;
+					    background:white;
+					    border:1px solid #003;
+					    padding:20px 30px;
+					    text-align:center;
+					}
+
+			#footer {
+			    background:#fff;
+			    border-top:1px solid #888;
+			    border-bottom:1px solid #FFF;
+
+			}
+
+				#footer p:before {
+				   content:url(flourish3.gif);
+				   padding:0 10px;
+			    }
+
+				#footer p {
+				    margin:5px;
+				}
+
+/* Other specific classes nested with an .article */
+
+.photogrid-index {
+    width:540px;
+    margin-left:-28px;
+}
+
+.gridItem {
+	float:left;
+	width:132px;
+	height:170px;	/* room for caption */
+	overflow:visible;
+}
+
+.gridItem h3 {
+    font:1em normal sans-serif;
+
+}
+
+/* Used on index summary pages */
+

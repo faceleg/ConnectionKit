@@ -1,0 +1,219 @@
+/* Copyright (c) 2006, Karelia Software. All Rights Reserved. */
+
+a img { border: none; }
+
+/* Color Scheme */
+
+body { background-color:#c19d66; }
+#sitemenu { background-color:#8bcdc4; }
+#header { background-color:#649b84; }
+#sidebar { background-color:#8d5072; }
+.pagelet { background-color:#b54a60; }
+.callout .pagelet { background-color:#9f966f; }
+#bodyarea { background-color:#bbce7b; }
+#footer { background-color:#4d4d62; }
+
+/* General styles  */
+
+.hidden { display:none; }
+.clear	{
+	position: relative;
+	clear: both;
+	height: 0;
+	}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img .narrow { float:left; }
+img .wide { display:block; }
+
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font:76% Palatino, Serif;
+	margin:0;
+	padding:0;
+}
+
+h1,h2,h3,h4,#sitelist {
+	font-family: Gadget, "Arial Black", sans-serif;
+}
+
+p {
+	max-width:30em;
+}
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+/* Most other pages have sidebars */
+
+			#header {
+				position:absolute;
+				padding:10px;
+				width:200px;
+				top:220px;
+				left:0;
+				height:460px;
+			}
+
+					h1 {
+						font-size:3em;
+						color:#fff;
+					}
+
+						h1 a {
+							text-decoration:none;
+							color:#fff;
+						}
+
+				#sitemenu {
+					position:absolute;
+					padding:10px;
+					width:200px;
+					top:-220px;
+					left:0;
+					height:200px;
+					text-align:right;
+				}
+
+					#sitelist {}
+
+						#sitelist ul {
+							list-style: none;
+							padding-top:40px;
+						}
+
+							.currentPage {
+								color: #b54a60;
+							}
+
+							#sitelist a {
+								text-decoration: none;
+							}
+
+							#sitelist a:link, #sitelist a:visited {
+								color:#000;
+							}
+
+							#sitelist a:hover, a:focus, a:active {
+								text-decoration: underline overline;
+							}
+
+			#content {
+				position:absolute;
+				left:220px;
+				right:40px;
+				top:0px;
+				bottom:0px;
+			}
+
+				#sidebar {
+					position:absolute;
+					top:700px;
+					left:-220px;
+				}
+
+				    .pagelet {
+				    	width:200px;
+				    	padding:10px;
+				    	color:#fff;
+				    	overflow:hidden;
+				    	word-wrap: break-word;
+					}
+
+				    	.pagelet h4 {
+				    		text-align:center;
+				    	}
+
+					.untitled {}
+					.titled {}
+
+				#bodyarea {
+					padding:10px;
+				}
+
+				#bodyarea a {
+					text-decoration: none;
+				}
+
+				#bodyarea a:link, a:visited {
+					color:#649b84;
+				}
+
+				#bodyarea a:hover, a:focus, a:active {
+					text-decoration: underline overline;
+				}
+
+					h2 {
+						font-size:2em;
+						color:#b54a60;
+						margin:0 0 10px -100px;
+					}
+
+							.article-thumbnail {
+								margin-right:10px;
+								float:left;
+							}
+
+							.callout {
+								float:right;
+								margin-right:-40px;
+							}
+
+			#footer {
+				position:fixed;
+				bottom:0;
+				left:0;
+				right:0;
+				padding: 0 10px 0 10px;
+				font-size:0.8em;
+			}
+
+				#footer p {
+					margin:1px;
+					color:#bbce7b;
+				}
+
+	#extraDiv1, #extraDiv2, #extraDiv3, #extraDiv4, #extraDiv5, #extraDiv6 {}
+
+/* Other specific classes nested with an .article */
+
+	.photo {}
+		.photo h3 {}
+
+/* Used on Photo Grid Pages ... */
+.photogrid-index {}
+
+	.gridItem {
+		float:left;
+	}
+
+		.gridItem h3 {
+			font-size:0.8em;
+	}
+
+/* Used on index summary pages */
+
+	.article li h3 {}
+
+/* Individual Photo Pages */
+
+.photo-navigation {}
+
+	#previous-photo	{
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(leftarrow.png)		no-repeat;
+	}
+	#next-photo {
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(rightarrow.png)		no-repeat;
+	}
+	#photo-list {
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(photolist.png)		no-repeat;
+	}
+

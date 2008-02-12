@@ -1,0 +1,246 @@
+/* Copyright (c) 2006, Karelia Software. All Rights Reserved. */
+
+a img { border: none; }
+
+/* Color Scheme */
+
+h1, h1 a { color:#fff; }
+body { background-color:#cbafed; }
+.callout .pagelet { background-color:#8c48aa; }
+#bodyarea { background-color:#3d3267; }
+#footer { background-color:#5e2772; }
+
+/* General styles  */
+
+.hidden { display:none; }
+.clear	{
+	position: relative;
+	clear: both;
+	height: 0;
+}
+
+h2,h3,h4 {
+	margin:0;
+	padding:0;
+}
+
+#bodyarea a:link, a:visited {
+	color: #fff;
+	background-color: #036;
+	text-decoration: none;
+}
+
+#bodyarea a:hover, a:focus, a:active {
+	color: #fff;
+	background-color: #369;
+	text-decoration: none;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img .narrow { float:left; }
+img .wide { display:block; }
+
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font: 76% "Georgia", Serif;
+	margin:0;
+	padding:0;
+}
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+.no-sidebar {
+background-color:#cbafed;
+}
+/* Most other pages have sidebars */
+.sidebar {
+	background: #856bc0 url(sunflower.jpg) bottom right no-repeat;
+}
+
+			#header {
+				overflow:auto;
+				background: url(shag.jpg) repeat;
+			}
+			.sidebar #header, .sidebar #bodyarea, .sidebar #footer {
+				margin-right:200px;
+			}
+
+				#titleholder {
+					text-align:center;
+				}
+
+				#titleholder p {
+					border:1px solid #fff;
+					margin:20px;
+					font-size:1.5em;
+					background-color: #5e2772;
+					color:#fff;
+				}
+
+					h1 {
+						font-size:3em;
+						padding:10px;
+					}
+
+						h1 a {
+							text-decoration:none;
+						}
+
+					#titleholder img {
+						float:right;
+						padding:10px;
+					}
+
+					#sitelist {}
+
+						#sitelist ul {
+							margin-left: 10px;
+							padding-left: 0;
+							white-space: nowrap;
+						}
+
+						#sitelist li {
+							display: inline;
+							list-style-type: none;
+							margin:0 2px;
+						}
+
+							.currentPage {
+								padding: 3px 10px;
+								color: #3d3267;
+								background-color: #8c48aa;
+							}
+
+							#sitelist a {
+								padding: 3px 10px;
+								background-color: #cbafed;
+							}
+
+							#sitelist a:link, #sitelist a:visited {
+								color: #3d3267;
+								text-decoration: none;
+							}
+
+							#sitelist a:hover, a:focus, a:active {
+								color: #fff;
+								background-color: #8c48aa;
+								text-decoration: none;
+							}
+
+				#sidebar {
+					position: absolute;
+					right:0;
+					top:0;
+					width:200px;
+					overflow:hidden;
+					word-wrap: break-word;
+					bottom:0;
+				}
+
+				    .pagelet {
+				    	width:200px;
+						padding-top:10px;
+						padding-bottom:10px;
+					}
+					.pagelet p {
+								margin:10px;
+					}
+					.pagelet h4 {
+						margin:10px;
+						color:#3d3267;
+						background-color:#fff;
+						text-align:center;
+					}
+
+					.untitled {}
+					.titled {}
+
+				#bodyarea {
+					color:#fff;
+					padding:20px;
+				}
+
+					h2 {
+						text-align:center;
+						font-size:3em;
+						margin:0 10px 20px 10px;
+					}
+
+						.article {
+								max-width:50em;
+							}
+
+							h3 {
+								text-align:center;
+								padding:10px;
+							}
+
+							.article-thumbnail {
+								float:left;
+								padding:10px;
+							}
+
+							.callout {
+								margin-left:40px;
+							}
+							.callout .pagelet {
+								float:left;
+								margin:10px;
+								border: 1px solid #fff;
+							}
+							.callout .clear {
+								clear:none;
+							}
+
+			#footer {
+				padding:10px;
+			}
+
+				#footer p {
+					margin:0;
+					color:#fff;
+				}
+
+	#extraDiv1, #extraDiv2, #extraDiv3, #extraDiv4, #extraDiv5, #extraDiv6 {}
+
+/* Other specific classes nested with an .article */
+
+	.photo {}
+		.photo h3 {}
+
+/* Used on Photo Grid Pages ... */
+.photogrid-index {}
+
+	.gridItem {
+		float:left;
+	}
+
+/* Used on index summary pages */
+
+	.article li h3 {
+		text-align:left;
+	}
+
+/* Individual Photo Pages */
+
+.photo-navigation {}
+
+	#previous-photo	{
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(leftarrow.png)		no-repeat;
+	}
+	#next-photo {
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(rightarrow.png)		no-repeat;
+	}
+	#photo-list {
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(photolist.png)		no-repeat;
+	}
+

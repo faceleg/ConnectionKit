@@ -1,0 +1,489 @@
+/* 
+   css Copyright (c) 2005-2006 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+a img { border: none; }
+
+/* General styles  */
+
+.hidden { display:none; }
+.clear	{
+	position: relative;
+	clear: both;
+	height: 0;
+	}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img.narrow {
+	display:block;
+	float:left;
+	margin: 0;
+	padding: 8px 8px 0;
+	clear: left;
+}
+img.wide {
+	display:block;
+	clear:both;
+	position: relative;
+	margin:0 0 0 9px;
+	padding: 0;
+}
+
+/* Block Level formatting, more or less in descending order */
+
+body {
+	padding: 0;
+	margin: 0;
+	font-size: 76%;
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: center;
+	word-wrap:break-word;
+}
+
+/* special fonts for headings */
+h1, h2 {
+	font-family:Monotype Corsiva, Apple Chancery, Times, serif;
+}
+
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+body.no-sidebar {
+	background: #4e614e url("BodyBGcolorImage.gif") repeat-y center;
+}
+/* Most other pages have sidebars */
+body.allow-sidebar {
+	background: #4e614e url("bodyBGImage.gif") repeat-y center;
+}
+
+		#page {
+			position: relative;
+			margin: auto;
+			padding: 0;
+			width: 748px;
+			text-align: left;
+			background: url("ForestHeaderBGImage.jpg") no-repeat;
+		}
+
+			#page-top {
+				position: relative;
+				margin: 0;
+				padding: 0;
+				width: 748px;
+				min-height: 90px;
+			}
+
+				#title {
+					color: #ff9;
+				}
+
+					h1 {
+					position: relative;
+					margin: 0;
+					padding: 14px 0 0 9px;
+					font-weight: normal; 
+					font-size:2em;
+					height:46px!important;
+					overflow:hidden;
+					}
+
+						h1 a {
+							text-decoration: none;
+							color: #ff9;
+							font-weight:normal;
+						}
+
+					#title img {
+						float: right;
+						margin:0;
+						padding: 5px;
+					}
+					#title p {
+						position: relative;
+						margin: 0;
+						padding: 0 0 0 10px;
+					}
+
+				#sitemenu {
+					position: relative;
+					margin: 4px 0 0;
+					padding: 0;
+					color: #0ff;
+				}
+
+					#sitemenu-content {
+						position: relative;
+						margin: 0;
+						padding: 1px ;
+					}
+
+						#sitemenu-content ul {
+							position: relative;
+							margin: 0px;
+							margin-left:9px;
+							padding: 0;
+							list-style: none;
+						}
+
+						#sitemenu-content li {
+							position: relative;
+							display: inline;
+							margin: 0;
+							margin-right: 9px;
+							font-weight: normal;
+						}
+
+							.currentPage, .currentParent {
+								color: #fff;
+							}
+
+							#sitemenu-content a {
+								font-size: .9em;
+								text-decoration: none;
+								
+							}
+
+							#sitemenu-content a:link, #sitemenu-content a:visited {
+								color: #a3e5a3;
+							}
+
+							#sitemenu-content .currentParent a:link, #sitemenu-content .currentParent a:visited {
+								color: #fff;
+							}
+
+							#sitemenu-content a:hover, a:focus, a:active {
+								text-decoration: underline;
+							}
+
+			#page-content {
+				position: relative;
+				float: left;
+				margin: 0 !important;
+				margin: -12px 0 0;
+				padding: 0;
+				width: 748px;
+				background: url("sidebarBodyBGImage.gif") no-repeat;
+			}
+			.no-sidebar #page-content {
+				position: relative;
+				margin: 0;
+				padding: 0;
+				width: 748px;
+				background: #9bc29b url("PhotoBodyBGImage.gif") no-repeat;
+			}
+				#sidebar {
+					position: absolute;
+					top: 0;
+					left: 0;
+					margin: 0;
+					padding: 126px 4px 0px 4px ;
+					width: 206px;
+				}
+
+				    .pagelet {
+						margin: 0;
+						padding: 0;
+						color: #fff;
+					    overflow:hidden;
+					    word-wrap: break-word;
+					}
+					
+					#sidebar .pagelet.bordered {
+						border:3px #ff9 solid;
+					}
+
+					#main .pagelet.bordered {
+						border:3px #4e614e solid;
+						margin:0px 0px 0px 5px;
+					}
+					
+					.pagelet.bordered + .pagelet.bordered {
+						margin-top:10px!important;
+					}
+					
+					
+				    	#sidebar h4 {
+							position: relative;
+							margin:0px;
+							margin-top:1em;
+							padding: 2px 4px 4px 4px;
+							color: #ff9;
+							font-size: 1em;
+							font-weight:normal;
+				    	}
+						#sidebar p, .pageletIntroduction {
+							margin: 1em 0;
+							padding: 0 5px 0 5px;
+						}
+
+					.untitled {}
+					.titled {}
+
+				#main {
+					position: relative;
+					margin: 0 0 0 214px;
+					padding: 0 8px 54px 10px;
+					min-height: 400px;
+				}
+				.no-sidebar #main {
+					position: relative;
+					margin: 0;
+					padding: 36px 0 54px;
+				}
+					 a {
+						color: #ff9;
+						text-decoration: none;
+						font-weight:bold;
+					}
+					 a:hover {
+						color: #fff;
+						text-decoration: underline;
+					}
+					.no-sidebar #main h2 {
+						position: relative;
+						margin: 0;
+						padding: 1em 0;
+						text-align: center;
+						}
+						
+					.allow-sidebar #main h2 {
+						margin: 0;
+						padding: 54px 0px 9px;
+					}
+					#main h2 {
+						padding: 2px 0px;
+						color:  #4e614e;
+						font-weight:normal;
+						font-size:2em;
+					}
+
+						.article {
+							position: relative;
+							margin: 0;
+							padding: 0;
+							width: 516px;
+						}
+						
+						.no-sidebar .article {
+							width:668px;
+							padding:0px 40px;
+						}
+
+							h3 {
+								margin: 0;
+								padding: 2px 0px;
+								color: #4e614e;
+								font-weight:normal;
+								font-size:1.7em; 
+							}
+							
+							h3 a {
+								font-weight:normal;
+							}
+							
+							.article-thumbnail {
+								position: relative;
+								margin: 9px;
+							}
+
+							.article-content {
+								padding: 0 0px;
+							}
+							
+							.timestamp {
+								padding:0 18px;
+							}							
+							
+							.article p {
+								margin: 1em 0;
+								padding: 0 0px;
+								}
+							.callout {
+								position: relative;
+								float: right;
+								padding: 0;
+								margin: 0;
+								width: 211px;
+							}
+							.callout p {
+								margin: 0;
+								padding: 0.5em 4px 1em 5px;
+								font-size: .9em;
+								color: #000;
+							}
+							.callout h4 {
+								margin:0;
+								padding: 1em 0;
+								text-align: center;
+								color: #4e614e;
+								font-size: 1em;
+							}
+
+			#page-bottom {
+				position: relative;
+				margin: 0;
+				padding: 8px 8px 8px 225px;
+				text-align: right;
+				clear: both;
+			}
+
+				#page-bottom p {
+					color: #666;
+					font: .8em sans-serif;
+					margin:1px 0px;
+				}
+
+	#extraDiv1, #extraDiv2, #extraDiv3, #extraDiv4, #extraDiv5, #extraDiv6 {}
+
+
+/* Used on Photo Grid Pages ... */
+.photogrid-index {
+	text-align:center;
+	position: relative;
+	margin: 1em 30px;
+	padding: 0;
+}
+
+/* IE Hack (needed to prevent index from disappearing) */
+/* Hides from IE5-mac \*/
+.photogrid-index {
+	margin: 1em 26px;
+}
+/* End hide from IE5-mac */
+
+.photogrid-index a {
+	color:#4e614e;
+	text-decoration:none;
+}
+
+.photogrid-index a:hover  {
+	text-decoration:underline;
+}
+
+.gridItem {
+	position: relative;
+	width:145px;
+	height:180px;
+	float: left;
+	margin: 0 3px;
+}
+
+.gridItem h3 {
+	color: #4e614e;
+	font-weight: normal;
+	font-size:1em;
+	overflow:hidden;
+	position:absolute;
+	top:140px;
+	padding:0px 4px;
+	width:137px;
+}
+
+.gridItem img {
+    border: 1px solid rgb(80, 80, 80);
+    margin: auto;
+    display:block;
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+}
+
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+
+* html .gridItem img {
+	position: relative;
+	top:0px;
+}
+
+* html .gridItem h3 {
+	position: relative;
+	top: 2px;
+}
+/* End hide from IE5-mac */
+
+
+
+
+/* Used on index summary pages */
+
+
+/*.article ul {
+	margin: 0 0 0 9px;
+	padding: 0;
+	list-style: none;
+	}
+*/
+ul {
+	list-style-type:disc;	
+	padding-left:2em;
+	margin:0em;
+}	
+
+	
+.article li {
+	margin: 0;
+	padding: 0;
+}
+	.article li h3 {
+	font-weight:normal;
+	font-size:1.2em;
+	}
+
+/* Individual Photo Pages */
+
+.photo-navigation {
+	position: relative;
+	margin: auto;
+	padding: 0 0 0 72px;
+	width: 216px;
+	height:27px;
+}
+.photo-navigation div {
+	position: relative;
+	width: 54px;
+	height: 27px;
+	float: left;
+}
+
+.photo-navigation a {
+	display:block;
+	text-indent: -5000em;
+	width:100%;
+	height:100%;
+}
+
+	#previous-photo	{
+		background: url("photoPrevBGImage-disabled.gif") no-repeat;
+	}
+	#previous-photo	a {
+		background: url("photoPrevBGImage.gif") no-repeat;
+	}
+	#next-photo {
+		background: url("photoNextBGImage-disabled.gif") no-repeat;
+	}
+	#next-photo a {
+		background: url("photoNextBGImage.gif") no-repeat;
+	}
+	#photo-list {
+		background: url("photoListBGImage-disabled.gif") no-repeat;
+	}
+	#photo-list a {
+		background: url("photoListBGImage.gif") no-repeat;
+	}
+	
+.ImageElement, .VideoElement  {
+	text-align:center;
+}
+
+.caption {
+	margin: 0;
+	padding: 9px 18px;
+	text-align:center;
+}

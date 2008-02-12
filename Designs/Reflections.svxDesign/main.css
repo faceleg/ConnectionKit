@@ -1,0 +1,399 @@
+/* 
+   css Copyright (c) 2007 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+
+/*
+GLOBAL
+
+Try to define style properties as globally as possible. E.g. the basic font setting should be right there for the body element
+*/
+
+* { 
+	margin:0px;
+	padding:0px;
+}
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 76%; /* as recommended in CSS guide */
+	background:#8d8da4;
+	color:#000;
+	word-wrap:break-word;
+	line-height:1.6;
+	text-align: center;
+}
+
+a {
+	color:#000;
+}
+
+img {
+	border:0px #000 none;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+ul, ol {
+	padding-left: 3em;
+}
+
+.pagelet ul, .pagelet ol {
+	padding-left:10px;
+	list-style-position: inside;
+}
+
+.pagelet ul {
+	padding-left:12px;
+}
+
+
+#page {
+	margin:12px auto 24px auto;
+	background:url(page-background.jpg);
+	width:780px;
+	text-align: left;
+}
+
+
+#title {
+	background: url(page-top.jpg) top left no-repeat;
+	height:186px;
+	position: relative;
+	overflow: hidden;
+}
+
+#title h1, #title p {
+	text-align:center !important;
+	color: #fff;
+	font-weight:bold;
+	margin: 0px 23px 0px 26px;
+	padding: 0px;
+	position:absolute;
+	left:0px;
+	width:732px !important;
+}
+
+#title h1 {
+	top:90px;
+	background-position: center top !important;
+}
+
+html>body #title h1.replaced, html>body #title h1.TurnOffReplace {
+	height: 100px;
+	top: 100px;
+}
+
+#title p {
+	bottom:6px;
+}
+
+#title h1 a, #title p a {
+	color: #fff;
+}
+
+#title h1 a {
+	text-decoration:none;
+}
+
+
+#logo-container {
+	float:left;
+	margin: 36px 10px 10px 24px;
+	display:block;
+}
+
+
+
+/*
+SITEMENU
+*/
+#sitemenu {
+	margin: 4px 7px 0px 11px;
+	background: #6b6b82;     /* #8d8da4;*/
+}
+
+#sitemenu ul {
+	list-style:none;
+	padding: 1px 4px 0px 4px;
+	line-height:180%;
+}
+
+#sitemenu ul li {
+	display:inline;
+}
+
+#sitemenu ul li a, #sitemenu ul li.currentPage {
+	padding:1px 3px 4px 3px;
+	color: #fff;
+}
+
+#sitemenu ul li a {
+	text-decoration: none;
+}
+
+#sitemenu ul li.currentPage span.in, #sitemenu ul .currentParent a, #sitemenu ul li a:hover span.in {
+	text-decoration: underline;
+}
+
+
+/* 
+MAIN PAGE SETUP
+*/
+#page-content {
+	margin: 0px 4px 0px 11px;
+	padding: 4px;
+}
+
+.article {
+	margin:0px 3px 0px 0px;
+}
+
+
+
+/*
+SIDEBAR & CALLOUTS
+*/
+body.allow-sidebar #main {
+	margin-right:245px;
+	padding-top:1px;
+}
+
+#sidebar {
+	margin-top:10px;
+	width:234px;
+	float:right;
+}
+
+#sidebar .pagelet {
+	margin-right:2px;
+}
+
+#sidebar .pagelet.bordered {
+	margin-right:0px;
+}
+
+.pagelet {
+	margin-bottom:15px;
+}
+
+.pagelet h4 {
+	margin-top:0px;
+}
+
+.pagelet.bordered.titled {
+	background: url(pagelet-background.jpg) top repeat-y;
+}
+
+.pagelet.bordered.titled h4 {
+	background: url(pagelet-top.jpg) top no-repeat;
+	padding: 8px 6px 0px 8px;
+	margin-bottom: 2px;
+}
+
+.pagelet.bordered.titled div {
+	margin: 0px;
+}
+
+.pagelet.bordered.titled  div.pagelet-body {
+	background: url(pagelet-bottom.jpg) bottom no-repeat;
+	padding: 0px 8px 14px 8px;
+	min-height:4px;
+}
+
+.pagelet p {
+	padding:0px;
+}
+
+.callout {
+	width:234px;
+	float:left;
+	margin-right:10px;
+}
+
+
+/* 
+PHOTO GRID PAGE
+*/
+
+.photogrid-index {
+    text-align: center;
+    margin: auto;
+    overflow: auto;
+}
+
+.photogrid-index a {
+	text-decoration:none;
+	background-color:#fff;
+	color:#000;
+}
+.photogrid-index h3 a:hover {
+	text-decoration:underline;
+}
+
+.gridItem {
+    float: left;
+    position:relative;
+    width:150px;
+    height:180px;	/* room for caption */
+	margin:5px;
+    padding-top: 10px;
+    background-color: #fff;
+    color:inherit;
+    overflow: hidden;
+}
+
+body.no-sidebar .gridItem {
+	width:145px;
+	margin: 5px 2px;
+}
+
+.gridItem h3 {
+    font-weight: normal;
+    font-size: 1.2em;
+	background-color:#fff;
+    color: #000;
+    margin: 4px 7px 0px 7px;
+	padding: 0px 2px;
+    position:absolute;
+	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
+	width: 136px;
+}
+
+body.no-sidebar .gridItem h3 {
+	width: 133px;
+	margin: 4px 4px 0px 4px;
+}
+
+.gridItem img {
+    border: 1px solid #000;
+    margin: auto;
+    display:block;
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+}
+
+
+
+/*
+PHOTO NAVIGATION
+*/
+
+.photo-navigation {
+	position:relative;
+    height: 42px;
+    width:200px;
+    margin:0px auto;
+}
+
+.photo-navigation div {
+	width:53px;
+	height:42px;
+	position: absolute;
+    text-indent: -5000em;
+}
+
+.photo-navigation a {
+	border-bottom:none;
+	display:block;
+	width:100%;
+	height:100%;
+}
+
+#previous-photo	{
+    background: url(fat-arrow-left-off.gif)		no-repeat;
+    left: 25px;
+}
+#previous-photo a {
+    background: url(fat-arrow-left.gif)		no-repeat;
+}
+
+#next-photo {
+    background: url(fat-arrow-right-off.gif)		no-repeat;
+    left: 120px; 
+}
+#next-photo a {
+    background: url(fat-arrow-right.gif)		no-repeat;
+}
+
+#photo-list {
+    background: url(index-off.gif)		no-repeat;
+    left: 83px;
+}
+#photo-list a {
+    background: url(index.gif)		no-repeat;
+}
+
+.image-controls a {
+	border-bottom:none !important;
+}
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+* html .gridItem img {
+	position: relative;
+	top:0px;
+}
+
+* html .gridItem h3 {
+	position: relative;
+	top: 0px;
+}
+/* End hide from IE5-mac */
+
+
+
+
+/* 
+PAGE BOTTOM
+*/
+.article-info {
+	text-align:right;
+	margin-bottom:6px;
+	font-style: oblique;
+}
+
+
+#page-bottom {
+	background: url(page-bottom.jpg) no-repeat;
+	height: 20px;
+	overflow: hidden;
+	text-align: center;
+	padding: 10px 12px 20px 14px;
+	margin-top: 6px;
+}
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+* html #page-bottom {
+	height:40px;
+	padding-bottom:0px;
+}
+/* End hide from IE5-mac */
+
+
+
+
+
+/* 
+SANDVOX INTERNALS
+	
+these should be present in every style sheeto ensure that certain classes used by Sandvox to hide and clear elements are respected.
+Don't change them unless you have very good reason to do so.
+*/
+
+.clear {clear: both; height: 0;}
+#main .clear {clear:left;}
+.hidden {display:none;}
+img.narrow {float: right;}
+img.wide {display: block;}
+.ImageElement, .VideoElement { text-align:center;}

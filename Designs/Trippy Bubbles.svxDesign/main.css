@@ -1,0 +1,1034 @@
+/* 
+   css Copyright (c) 2005-2007 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+a img, a[href*="http://www.sandvox.com/"] { border: none!important; }
+
+ /* General styles  */
+
+.clear {
+	clear: both;
+	height: 0;
+}
+
+.hidden {
+    display:none;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img.narrow {
+	display: block;
+ 	clear:left;
+	float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+img.wide {
+	clear:both;
+	display: block;
+}
+
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font-family:"Helvetica Neue",Helvetica,Verdana,Arial,sans-serif;
+	font-size: 76%;
+	margin: 0;
+	background: white url(bkgd.png) right repeat-y;
+	word-wrap:break-word;
+}
+
+
+body.no-sidebar {
+    background: white;
+}
+
+#page-container {
+    background: url(top_background.png) top left repeat-x; 
+}
+
+
+#page {
+    margin: auto;
+    min-width: 771px;
+    min-height: 252px;
+    position: relative;
+}
+
+body.allow-sidebar #page {
+	background: url(sidebar_background.png) top right repeat-y;
+}
+
+body.no-sidebar #page {
+}
+
+#page-top {
+    margin:0;
+}
+
+* html #page-top {
+    height: 176px;
+}
+
+body.no-sidebar #page-top {
+    overflow: auto;
+    height: auto;
+     background: rgb(71, 245, 237) url(top_background.png) bottom left repeat-x;
+}
+
+	
+#title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 220px;
+    height: 135px;
+}
+
+h1 {
+    font:  24px  "Helvetica Neue", Helvetica, verdana, arial, sans-serif;
+    text-align: left;
+    margin: 30px 10px 0px 25px;
+    color: white;
+    display: block;
+	width:480px;
+	height:85px!important;
+	overflow:hidden;
+    text-shadow: 0px 0px 1px rgb(57, 237, 235);
+}
+
+/*body.no-sidebar h1 {
+    margin-top: 33px;
+}
+*/
+/* IE Hack */
+
+/* Hides from IE5-mac \*/
+* html h1 {
+    height: 1%;
+}
+/* End hide from IE5-mac */
+
+h1 a {
+    text-decoration:none;
+    color: white;
+}
+
+h1 a:hover, h1 a:focus, h1 a:active {
+    border-bottom: 1px solid white;
+}
+
+#title img {
+    float: right;
+    margin: 3px;
+    margin-right: 3px;
+    margin-bottom: 6px;
+}
+
+#title p {
+    color: white;
+	font-size:120%;
+	font-weight:bold;
+    text-align: left;
+    margin: 3px 10px 14px 25px;
+    height:1.4em;
+	overflow:hidden;
+}
+
+/* IE Hack */
+
+/* Hides from IE5-mac \*/
+* html #title p {
+    height: 1%;
+}
+/* End hide from IE5-mac */
+
+#sitemenu {
+    float: right;
+    width: 210px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+#sitemenu-container {
+    min-height: 195px;
+}
+
+body.no-sidebar #sitemenu {
+    background: url(links_bkgd.png) left bottom no-repeat;
+    position: relative;
+    z-index: 5000;
+    margin: 0;
+}
+
+#sitemenu-content ul {
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: left;
+    padding:0;
+    list-style: none;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content ul{
+    margin-top: 15px;
+    margin-left: 15px;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li {
+    margin: 0;
+    padding: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 1px;
+    font-size:1.1em;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li{
+    margin: 0;
+    padding-left: 10px;
+    padding-top: 0;
+    display: inline;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li span.in {
+    padding-left: 30px;
+    background: url(blue_link.png) left no-repeat;
+    line-height: 2em;
+    height:2em;
+    min-height: 25px;
+    display: block;
+    overflow:hidden;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li span.in {
+    background: url(blue_link_ie.png) left no-repeat;
+    margin: 0;
+    height: 21px;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i2 span.in {
+    background: url(green_link.png)  left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i2 span.in {
+    background: url(green_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i3 span.in {
+    background: url(yellow_link.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i3 span.in {
+    background: url(yellow_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i4 span.in {
+    background: url(purple_link.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i4 span.in {
+    background: url(purple_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i6 span.in {
+    background: url(green_link.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i6 span.in {
+    background: url(green_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i7 span.in {
+    background: url(yellow_link.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i7 span.in {
+    background: url(yellow_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.i8 span.in {
+    background: url(purple_link.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.i8 span.in {
+    background: url(purple_link_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content a {
+    text-decoration: none;
+    color: white;
+    min-height: 25px;
+    display: block;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content a {
+    margin: 0;
+    padding: 0;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content li.currentPage span.in, #sitemenu-content li.currentParent span.in {
+    color: white;
+    background: url(current_page.png) left no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content li.currentPage span.in {
+    background: url(current_page_ie.png) left no-repeat;
+}
+/* End IE5-mac Hide */
+
+#sitemenu-content a:hover, #sitemenu-content a:focus, #sitemenu-content a:active {
+    color: white;
+    background: url(link_roll_right.png) right no-repeat;
+    border: none;
+}
+
+/* Hides from IE5-mac \*/
+* html #sitemenu-content a:hover, * html #sitemenu-content a:focus, * html #sitemenu-content a:active {
+    background: url(link_roll_right_ie.png) right no-repeat;
+}
+/* End hide from IE5-mac */
+
+#sitemenu-content a:hover span.in, #sitemenu-content a:focus span.in, #sitemenu-content a:active span.in {
+    background: url(link_roll_left.png) left no-repeat;
+    border: none;
+}
+
+#page-content {
+	min-width:550px;
+    margin: auto;
+    clear: both;
+}
+
+#sidebar {
+  	float: right;
+    clear: both;
+    position: relative;
+    width: 220px;
+    font-size: 0.8em;
+    text-align: center;
+    padding-bottom: 10px;
+    background: url(sidebar_seperator.png) top center no-repeat;
+    z-index: 8000;
+}
+
+.pagelet {
+    width:220px;
+    overflow:hidden;
+    color: white;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.pagelet.bordered {
+    background: url(sidebar_pagelet.png) no-repeat;
+    color: black;
+}
+
+.pagelet>div {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.pagelet .photo {
+	margin-left:-4px;
+}
+
+.pagelet a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.pagelet a:hover, .pagelet a:focus, .pagelet a:active {
+    border-bottom: 1px solid white;
+}
+
+.pagelet.bordered a {
+    color: black;
+}
+
+.pagelet.bordered a:hover, .pagelet.bordered a:focus, .pagelet.bordered a:active {
+    border-bottom: 1px solid black;
+}
+
+.pagelet .HTMLElement {
+    margin: 0;
+}
+.pagelet.bordered .pagelet-body {
+    background: url(sidebar_pagelet_bottom.png) bottom no-repeat;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 0px;
+}
+
+
+/* Hides from IE5-mac \*/
+* html .pagelet.bordered .pagelet-body  {
+    background: url(sidebar_pagelet_bottom.gif) bottom no-repeat;
+}
+/* End hide from IE5-mac */
+
+.pagelet h4 {
+	margin: 5px 0px 5px 10px;
+	padding: 0px 13px;
+    font-weight: normal;
+    font-size: 1.3em;
+    background: url(pagelet_title.png) no-repeat;
+    color: black;
+    text-align: left;
+    height:33px;
+    overflow:hidden;
+}
+
+.pagelet h4 span.in  {
+	line-height:33px;
+}
+
+/* Hides from IE5-mac \*/
+* html .pagelet h4{
+    background: url(pagelet_title.gif) repeat-y;
+}
+/* End hide from IE5-mac */
+
+#main {
+    min-height: 340px;
+    min-width:370px;
+    background: transparent url(bkgd_bubbles.png) 0px 200px fixed no-repeat;
+    position: absolute;
+    top: 177px;
+	word-wrap:break-word;
+	left:0px;
+	right:0px;
+}
+
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+body.no-sidebar #main {
+    width: 100%;
+    background: url(bkgd_bubbles.png) 0px 200px fixed no-repeat;
+    position: static;
+}
+
+/* Most other pages have sidebars */
+body.allow-sidebar #main {
+    margin: 0;
+    margin-right: 220px !important;
+}
+
+/* IE Hack */
+
+/* Hides from IE5-mac \*/
+* html .body.allow-sidebar #main {
+    margin:0;
+    padding:0;
+    background: url(bkgd_bubbles.gif) 0px 200px no-repeat;
+    margin-right: 220px !important;
+    padding-right: 220px;
+}
+/* End hide from IE5-mac */
+
+h2 {
+    font-weight: normal;
+    color: white;
+    margin: -42px 25px 0px 0px;
+    padding: 7px 0px 0px 25px;
+    display: block;
+    width:520px;
+    height: 38px;
+    z-index: 4000;
+    overflow: hidden; 
+	background: url(h2_background_left.png) no-repeat; 
+}
+
+body.no-sidebar h2 {
+	margin-top: -41px;
+    margin-bottom: 3px;
+}
+
+/* Hides from IE5-mac \*/
+* html h2 {
+	position:absolute;
+}
+
+* html body.no-sidebar h2 {
+	margin-top: -59px;
+	height:34px;
+}
+/* End hide from IE5-mac */
+
+
+#main ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-left: 20px;
+}
+
+ul ul {
+	margin-top:7px!important;
+	margin-bottom:-13px!important;
+}
+
+.callout ul, #sidebar ul {
+	text-align:left;
+	padding-left:28px;
+}
+
+#main li, #main li + li + li + li + li {
+    padding-left: 25px;
+    background: url(bullet.png) no-repeat;
+    padding-bottom: 10px;
+}
+
+/* Hides from IE5-mac \*/
+* html #main li, * html #main li + li + li + li + li  {
+    background: url(bullet.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+#main li + li, #main li + li + li + li + li + li {
+    background: url(bullet_2.png) no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #main li + li , * html #main li + li + li + li + li +li  {
+    background: url(bullet_2.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+#main li + li + li, #main li + li + li + li + li + li + li {
+    background: url(bullet_3.png) no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #main li + li +li , * html #main li + li + li + li + li + li +li {
+    background: url(bullet_3.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#main li + li + li + li, #main li + li + li + li + li + li + li + li {
+    background: url(bullet_4.png) no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html #main li + li + li + li , * html #main li + li + li + li + li + li + li + li {
+    background: url(bullet_4.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+
+
+
+.article {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.article p {
+    max-width: 70em;
+    text-shadow: 0px 0px 1px white;
+    padding-left:15px;
+	word-wrap:break-word;
+}
+
+.article h3 {
+     background: url(article_title_right.png) right no-repeat;
+     text-align: left;
+     height: 34px;
+     margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 10px;
+    font-size: 1.0em;
+    color: black;
+}
+
+/* remove excessive spacing if the heading is used in a collection index */
+li h3 {
+	margin:0px!important;
+	height:auto!important;
+	width:auto!important;
+}
+
+
+/* Hides from IE5-mac \*/
+* html .article h3 {
+    background: url(article_title_right.gif) top right no-repeat;
+}
+/* End hide from IE5-mac */
+
+.article.i1 h3 {
+    margin-top: -10px;
+}
+
+.article h3 span.in {
+    background: url(article_title_left.png) left top no-repeat;
+    display: block;
+    height: 34px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-top: 10px;
+    color: black;
+    font-weight: normal;
+}
+
+.article a {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.article h3 span.in a {
+    color: black;
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.article img {
+    border: none;
+}
+
+.article a:hover, .article a:focus, .article a:active {
+    border-bottom: 1px solid black;
+    color: black;
+}
+
+.article-thumbnail {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.callout {
+    float: right;
+    margin: 10px;
+    margin-right: 0px;
+    margin-top: 0;
+    font-size: 0.8em;
+}
+
+.callout p {
+	margin:0px;
+	padding:0px;
+}
+
+.callout li {
+    text-align: left;
+}
+
+.callout .pagelet {
+    color: black;
+}
+
+.callout .pagelet.bordered {
+    background: url(article_pagelet.png) top center no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html .callout .pagelet.bordered {
+    background: url(article_pagelet.gif) top center no-repeat;
+}
+/* End hide from IE5-mac */
+
+.callout .pagelet.bordered .pagelet-body {
+    background: url(article_pagelet_bottom.png) bottom center no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html .callout .pagelet.bordered .pagelet-body {
+    background: url(article_pagelet_bottom.gif) bottom center no-repeat;
+}
+/* End hide from IE5-mac */
+
+.callout h4 {
+    font-weight: normal !important;
+    font-size: 1.3em !important;
+    background: url(article_pagelet_title.png) repeat-y;
+    color: white;
+}
+
+/* Hides from IE5-mac \*/
+* html .callout h4 {
+    background: url(article_pagelet_title.gif) repeat-y;
+}
+/* End hide from IE5-mac */
+
+body.allow-sidebar #page-bottom {
+    float: right;
+    width: 210px;
+    margin-right: 5px;
+    padding-top:8px;
+    background: url(sidebar_seperator.png) top center no-repeat;
+}
+
+body.no-sidebar #page-bottom {
+    background: url(bkgd.png) right;
+    position: relative;
+    z-index: 5000;
+    width: 100%;
+    background: rgb(255, 40, 120);
+    display: block;
+    margin: 0px;
+    padding: 6px 0px;
+}
+
+#page-bottom p {
+    font-size: 0.8em;
+    color: white;
+	padding: 0px 15px;
+	margin: 0px;
+    text-align: center;
+}
+
+body.no-sidebar #page-bottom p {
+    color: white;
+    padding: 0px 5px;
+}
+
+#page-bottom a {
+	color: #fff;
+}
+
+div.photo-viewer-summary .article {
+    margin: auto;
+}
+
+.HTMLElement {
+    margin: 10px;
+}
+
+.ImageElement, .VideoElement {
+    text-align: center;
+    position: relative;
+    z-index: 8000;
+}
+
+.photo-page .ImageElement {
+    width: 100%;
+    display:block;
+    margin:1em auto;
+}
+
+.caption {
+    margin: 2px 10px;
+    font-size: 1.4em;
+}
+
+.caption a {
+	text-decoration: none;
+    font-weight: normal;
+    color: black;
+    border-bottom: 1px solid rgb(158, 158, 158); 
+}
+
+/* Used on Photo Grid Pages ... */
+.photogrid-index {
+    text-align: center;
+    margin: auto;
+    background: url(photo_bubbles.png);
+    background-position:0px 200px;
+    margin:10px 0px;
+    padding: 5px;
+    overflow: auto;
+}
+
+/* Hides from IE5-mac \*/
+* html .photogrid-index {
+    background: url(photo_bubbles_ie.png);
+    width:99%;
+    margin:0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/* End hide from IE5-mac */
+
+*:first-child+html .photogrid-index {
+    width:99%;
+	overflow:visible;
+}
+
+.photogrid-index a {
+	color:#000;
+	text-decoration:none;
+}
+
+.photogrid-index a:hover  {
+	text-decoration:underline;
+}
+
+.gridItem {
+    float: left;
+	position:relative;
+    width:152px;
+    height:192px;	/* room for caption */
+    overflow: hidden;
+    margin: 3px;
+    padding-top: 10px;
+    background: url(thumbnail_bkgd.png)  no-repeat;
+}
+
+/* Hides from IE5-mac \*/
+* html .gridItem {
+    background: transparent no-repeat;
+}
+/* End hide from IE5-mac */
+
+.gridItem h3 {
+    font-weight:normal;
+    margin-top: 2px;
+    margin-left: 7px;
+    margin-right: 7px;
+    color: black;
+    height: 43px;
+    overflow: hidden;
+    position:absolute;
+	top: 142px; /* needs to leave 38px from the bottom of the gridItem */
+	width: 136px;
+}
+
+.gridItem img {
+    margin: auto;
+    display:block;
+    position: absolute;
+    top: 0;
+    bottom: 45px;
+    right: 0;
+    left: 0;
+}
+
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+
+* html .gridItem img {
+	position: relative;
+	top:3px;
+}
+
+* html .gridItem h3 {
+	position: relative;
+	top: 3px;
+	font-size:1em;
+}
+/* End hide from IE5-mac */
+
+
+
+
+
+/* Used on index summary pages */
+.listing-index li h3 a {
+    text-decoration:none;
+    font-weight:normal;
+    color: black;
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.listing-index li h3 a:hover, .listing-index li h3 a:focus, .listing-index li h3 a:active {
+    border-bottom: 1px solid black;
+    color: black;
+}
+
+/* Individual Photo Pages */
+
+.photo-navigation {
+    margin: auto;
+    position: relative;
+    width: 100%;
+    height: 0px;
+    z-index:10000;
+}
+
+.photo-navigation div {
+    text-indent: -5000em;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    z-index: 10000;
+    margin-top: -43px;
+}
+
+.allow-sidebar .photo-navigation div {
+	margin-top: -40px;
+}
+
+/* Hides from IE5-mac \*/
+* html .allow-sidebar .photo-navigation div {
+	margin-top:  -36px;
+}
+
+* html .no-sidebar .photo-navigation div {
+	margin-top: -56px;
+}
+/* End hide from IE5-mac */
+
+
+.photo-navigation a {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.photo-navigation a:active {
+    border: none;
+}
+
+#previous-photo	{
+    background: url(photo-buttons-disabled.png)	no-repeat;
+    right: 315px;
+}
+.allow-sidebar #previous-photo {left:400px;}
+/* Hides from IE5-mac \*/
+* html #previous-photo	{
+    background: url(photo-buttons-disabled.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#previous-photo a { background: url(photo-buttons.png) no-repeat;}
+
+/* Hides from IE5-mac \*/
+* html #previous-photo a {
+    background: url(photo-buttons.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#next-photo {
+    background: url(photo-buttons-disabled-03.png) no-repeat;
+    right: 265px;
+    border-right: 1px solid white;
+    padding-right: 10px;
+}
+.allow-sidebar #next-photo {left:440px;}
+
+/* Hides from IE5-mac \*/
+* html #next-photo	{
+    background: url(photo-buttons-disabled-03.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#next-photo a {background: url(photo-buttons-03.png) no-repeat; }
+
+
+/* Hides from IE5-mac \*/
+* html #next-photo a {
+    background: url(photo-buttons-03.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#photo-list {
+    background: url(photo-buttons-disabled-02.png) no-repeat;
+    right: 225px;
+}
+.allow-sidebar #photo-list {left:490px;}
+
+/* Hides from IE5-mac \*/
+* html #photo-list	{
+    background: url(photo-buttons-disabled-02.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+#photo-list a {background: url(photo-buttons-02.png) no-repeat;}
+
+/* Hides from IE5-mac \*/
+* html #photo-list a {
+    background: url(photo-buttons-02.gif) no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+.image-controls a {
+	border:none;
+}
+
+
+/* IE 5/5.5 Hackery */
+@media tty {
+i{content:"\";/*" "*/}} @import 'ie.css'; /*";}
+}/* */
+
+/* IE:Mac Hackery */
+
+/*\*//*/
+
+h2 {
+    margin-top: -25px;
+    padding-top: 0px;
+}
+
+#title {
+    margin-right: 220px;
+}
+
+#sitemenu-content li span.in {
+    height: 25px;
+    padding-left: 30px;
+}
+
+#sitemenu-content li.currentPage span.in {
+    color: white;
+}
+
+.article {
+    margin: 20px;
+    margin-top: -30px;
+    background: none;
+    border: none;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.article p {
+    clear: none;
+}
+
+.article a {
+    text-decoration: underline;
+    border-bottom: none;
+}
+
+.article a:hover, a:focus, a:active {
+    border-bottom: none;
+    color: blue;
+}
+
+.article-summary {
+    padding: 0;
+    margin: 0;
+    clear: none;
+}
+
+#page-bottom p {
+    margin-top: 0;
+}
+
+/**/

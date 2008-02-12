@@ -1,0 +1,290 @@
+/* Copyright (c) 2006, Karelia Software. All Rights Reserved. */
+
+a img { border: none; }
+
+ /* General styles  */
+
+.clear {
+	position: relative;
+	clear: both;
+	height: 0;
+}
+
+.hidden {
+    display:none;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+/* Block Level formatting, more or less in descending order */
+
+body {
+	font-size: 76%;
+	margin:0;
+	font-family: "Cochin", "Baskerville", serif;
+}
+
+		#container {
+		    width:785px;
+		    background:url(22point5.gif) no-repeat top left ;
+		}
+
+			#header {
+			    position:relative;
+			    height:327px;
+			}
+
+					h1 {
+					    position:absolute;
+					    top:10px;
+					    left:220px;
+					    width:480px;
+					    padding:0;
+					    margin:0;
+					    font:small-caps bold 36pt "Impact",sans-serif;
+					}
+
+						h1 a {
+						    text-decoration:none;
+						}
+
+					#titleholder img {
+					    position:absolute;
+					    top:30px;
+					    left:20px;
+					}
+
+					#titleholder p {
+					    font:italic 1.3em "Big Caslon", "Baskerville", serif;
+					    position:absolute;
+					    left:500px;
+					    width:200px;
+					    top:3px;
+					    color:red;
+					    margin:0;
+					    text-align:left;
+					}
+
+				    #sitemenu {
+					    position:absolute;
+					    right:11px;
+					    bottom:0;
+					    width:200px;
+					    overflow:hidden;
+					    word-wrap: break-word;
+					    margin-left:auto;
+				    }
+				    #sitemenu:before {
+					    content:url(menu_top.png);
+					}
+				    #sitemenu:after {
+					    content:url(angle_bottom.gif);
+					}
+
+					#sitelist ul {
+					    background:black;
+					    white-space: nowrap;
+					    text-align:center;
+					    padding:0;
+					    margin:0;
+					}
+
+					#sitelist li {
+					    display: block;
+					    list-style-type: none;
+					    border-left:1px solid black;
+					    border-right:1px solid black;
+					    padding: 3px;
+					}
+
+					#sitelist a:link, #sitelist a:visited {
+					color: #fff;
+					text-decoration: none;
+					}
+
+					#sitelist a:hover, .currentPage {
+					    color:red;
+					    text-decoration: none;
+					}
+
+					.currentPage {
+					    background-color:#fff;
+					}
+
+			    .listing-index h3 a:link { color:black; }
+			    #content a:link {color: blue;}
+				#content a:visited {color: purple;}
+				#content a:hover {color: red;}
+				#content a:active {color: orange;}
+
+			    .listing-index h3 a { text-decoration:none; }
+
+				#sidebar {
+				    position:absolute;
+				    left:574px;
+				    top:327px;
+				    padding-left:10px;
+				    border-left:1px solid black;
+				}
+
+				    .pagelet {
+					    width:200px;
+					    overflow:hidden;
+					    word-wrap: break-word;
+					}
+
+				    	.pagelet h4 {
+						    margin:0.5em;
+						    font-family:Impact,sans-serif;
+				    	}
+				    	.pagelet h4:before {
+						    content:url(h4_bullet.gif);
+						    margin-right:0.5em;
+						    position:relative;
+						    bottom:-5px;
+						}
+
+			    #bodyarea {
+				    position:relative;
+				    margin-left:10px;
+			    }
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+				body.no-sidebar #bodyarea {
+				    margin-right:10px;
+
+				}
+
+				body.sidebar #bodyarea {
+				    margin-right:222px;
+				}
+
+					h2 {
+					    font-size:2em;
+					    position:absolute;
+					    text-align:center;
+					    top:-210px;
+						left:270px;
+					}
+
+				/* on an HTML page, leave some extra room for the HTML */
+			    #html-page h2 {
+					top:-260px;
+				}
+				#html-page #bodyarea {
+				    margin-top:50px;
+				}
+				/* on a photo page, leave some extra room for the HTML */
+			    #photo-page h2 {
+					top:-230px;
+				}
+				#photo-page #bodyarea {
+				    margin-top:20px;
+				}
+
+						body.sidebar .article {
+						    margin-left:200px;
+						}
+
+							.article h3 {
+							    position:relative;
+							    left:-180px;
+							    top:20px;
+							    margin-bottom:-40px;
+							    z-index:6;	/* over line-top.gif */
+							}
+
+							.article-content {
+							    z-index:100;	/* ?? over h3 */
+							}
+
+							.article-thumbnail {
+							    float:right;
+							}
+
+							.callout {
+							    float:left;
+							    width:202px;
+							    margin:0 10px 0 -160px;
+							    border-bottom:1px solid black;
+							}
+						    .callout:before {
+							    content:url(line_top.gif);
+							    z-index:5;
+							}
+							.callout .pagelet {
+							    border-left:1px solid black;
+							    border-right:1px solid black;
+							}
+
+							.callout p {
+							    margin:0.5em;
+							}
+
+			#footer {
+			    margin-top:100px;
+			    border-top:1px solid #888;
+			    border-right:1px solid #888;
+			    background:#ccc;
+			    bottom:0;
+			    position:relative;
+			}
+			body.sidebar #footer {
+				width:574px;
+		    }
+
+				#footer p {
+				    padding:5px;
+				    margin:0;
+				}
+
+/* Other specific classes nested with an .article */
+
+	.gridItem {
+		float:left;
+		width:128px;
+		height:160px;
+		overflow:hidden;
+		word-wrap: break-word;
+	}
+
+		.gridItem h3 {
+		    font-size:1em;
+		    font-weight:normal;
+	    }
+
+/* Used on index summary pages */
+
+.listing-index ul {
+    list-style-image:url(h4_bullet.gif);
+}
+
+/* Individual Photo Pages */
+
+	#previous-photo	{
+	    position:absolute;
+	    top:-75px;
+	    left:-5px;
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(left.gif)		no-repeat;
+	}
+	#photo-list {
+	    position:absolute;
+	    top:-95px;
+	    left:50px;
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(list.gif)		no-repeat;
+	}
+	#next-photo {
+	    position:absolute;
+	    top:-110px;
+	    left:85px;
+		text-indent: -5000em;
+		width: 80px;
+		height: 60px;
+		background: url(right.gif)		no-repeat;
+	}
+

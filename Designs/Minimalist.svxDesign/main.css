@@ -1,0 +1,240 @@
+/* 
+   css Copyright (c) 2005-2006 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+a img { border: none; }
+
+body {
+	font: 76% serif;
+	background:white;
+	word-wrap: break-word;
+}
+
+#main {
+	min-height:200px;
+}
+
+
+p {
+	max-width:50em;
+}
+
+
+.clear {
+	clear: both;
+}
+
+.hidden {
+    display:none;
+}
+
+img.narrow, .article-thumbnail img {
+	display:block;
+	clear:right;
+    float:right;
+    margin-left:10px;
+}
+
+img.wide {
+	display: block;
+	clear: both;
+}
+
+.pagelet {
+	word-wrap: break-word;
+	overflow:hidden;
+}
+
+.photogrid-index h3, .listing-index h3 {
+	font-size:1em;
+	font-weight:normal;
+}
+
+body {
+	width:731px;
+	margin:20px;
+	}
+
+#sidebar {
+	float: right;
+	width: 200px;
+	margin:0 0 10px 8px;
+	padding:0 0 10px 10px;
+	border-left:1px solid gray;
+	border-bottom:1px solid gray;
+	}
+
+.allow-sidebar #main {
+	float: left;
+	width: 505px;
+	}
+
+.no-sidebar #main {
+	width: 731px;
+	}
+
+.callout {
+	float: left;
+	width: 200px;
+	margin:0 10px 10px 0;
+	padding:0 10px 10px 0;
+	border-right:1px solid gray;
+	border-bottom:1px solid gray;
+	border-top:1px solid gray;
+	}
+
+/* "Header" elements side-by-side */
+
+#title {
+	width:510px;
+	float: left;
+	}
+
+#logo {
+	float:right;
+}
+
+#sitemenu-container {
+	width:200px;
+	margin-left:10px;
+	float:right;
+}
+
+/* Photo Grid Flow */
+
+.photogrid-index {
+	text-align:center;
+	margin:0px;
+	width:500px;
+}
+
+body.no-sidebar .photogrid-index {
+	width:680px;
+}
+
+.photogrid-index a {
+	color:#000;
+	text-decoration:none;
+}
+
+.photogrid-index a:hover  {
+	text-decoration:underline;
+}
+
+.gridItem {
+	float:left;
+	position:relative;
+	width:165px;
+	height:186px;
+	overflow:hidden;
+}
+
+.gridItem h3 {
+    position:absolute;
+	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
+	width: 100%;
+	margin:0px;
+}
+
+
+.gridItem img {
+    margin: auto;
+    display:block;
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+}
+
+* html .gridItem img {
+	position: relative;
+	top:0px;
+}
+
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+
+* html .gridItem h3 {
+	position: relative;
+	top: 0px;
+}
+
+/* End hide from IE5-mac */
+
+
+
+#previous-photo, #next-photo, #photo-list { display:inline; }
+
+.pagelet {
+	font:90% sans-serif;
+}
+
+.pagelet.bordered {
+	border: 1px solid #ccc;
+	padding: 0px 5px;
+	margin-top:10px;
+}
+
+.pagelet.bordered .ImageElement {
+	margin:0px -5px;
+}
+
+.pagelet p {	
+    text-align:justify;
+}
+
+
+h1 {
+	font-weight:normal;
+}
+
+h1 a {
+	text-decoration:none;
+	color:black;
+}
+
+#sitemenu-content a, .currentPage span.in {
+    text-decoration:none;
+    color:black;
+    line-height:150%;
+}
+
+#sitemenu ul {
+    list-style-type:none;
+    float:right;
+    text-align:right;
+    margin:0;
+}
+
+#page-top {
+	border-bottom:1px solid gray;
+	overflow:hidden;
+	height:1%;
+}
+#page-bottom {
+    margin:10px;
+    border-top:1px solid gray;
+    padding-top:10px;
+}
+
+#page-bottom p {
+    text-align:center;
+    margin:0px;
+}
+
+.general-index h3 {
+	width:100%;
+	margin:10px 0;
+	padding:10px 0 10px 0;
+	border-top:1px solid gray;
+}
+
+img#logo {
+	margin-bottom:10px;
+}

@@ -1,0 +1,486 @@
+/* 
+   css Copyright (c) 2005-2006 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+a img { border: none; }
+
+/* General style definitions */
+html {
+	/* This is defined because some browsers have an html box region
+	   which is larger than the body box region.  This makes the two
+	   regions seamless.  The body style should have the same background
+	   specifications as this one. */
+	background-color: rgb(230,191,122); /* = rgb(232,197,132); @ Mac gamma */
+	background: url("background.png");  /* subject to colour management */
+}
+
+body {
+	margin-left: auto;	/* these two properties make the body auto-centre */
+	margin-right: auto;
+	padding: 0px;
+	width: 748px;
+
+	font-family: Optima, "Trebuchet MS", sans-serif;
+	font-size: 76%;
+	/*  This causes problems when rendering pages that have a minimum font
+	    size set.  If a browser is told to not render fonts lower than a
+	    certain font size, and this font-size parameter is in effect, the
+	    browser will use this parameter to mis-calculate box sizes in order
+	    to fit the text given the minimum size.  This leads to overflow
+	    problems, and ultimate breakage of the design.
+
+	    It is recommended that font-size not be specified, although this will
+	    not entirely solve this particular problem. */
+	text-align: center;
+
+	background-color: rgb(230,191,122); /* = rgb(232,197,132); @ Mac gamma */
+	background: url("background.png");  /* subject to colour management */
+}
+.hidden {
+	display: none;
+}
+.clear {
+	clear: both;  /* for now, start with this */
+	height: 0;
+}
+
+/* Images embedded in text.  "narrow" are 200 pixels wide or smaller. */
+img.narrow {
+	display: block;
+	clear: right;
+	border: 1px solid white;
+	float: right;
+	margin: 4px;
+}
+img.wide {
+	display: block;
+	clear: both;
+	border: 1px solid white;
+	margin: 4px;
+}
+
+/* Document content (including header) styles */
+
+/* h2 on home page template never shows, since site title is same as page title.
+   Additionally, whenever any page template is used as a home page, h2 is
+   generated as class hidden to ensure that it's hidden. */
+#page-content {
+	margin-top: -0.9em;
+}
+#page-content a:link { color: rgb(91,74,46); }
+#page-content a:visited { color: rgb(127,105,68); }
+#page-content a:hover {
+	background-color: rgb(228,207,171);
+	color: maroon;
+}
+#page-content a:active { color: red; }
+#main:after {
+	/*
+	 *  From <http://www.positioniseverything.net/easyclearing.html>
+	 *  "Clearing a Float Container Without Source Markup"
+	 *
+	 *  Safari needed this in order for it to fix its
+	 *  sidebar-container box.
+	 */
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+/* Document header style definitions */
+#page-top {
+	display: block;
+	position: relative;
+
+	background: url("topglasstea.png");	/* subject to colour management */
+	background-repeat: no-repeat;
+	margin-bottom: -1em;
+	padding: 0px;
+	text-align: left;
+	width: 748px;
+
+	min-height: 184px;		/*  Enough to clear the topglasstea.png graphic; does
+					    not work in Internet Explorer, OmniWeb. */
+	max-height: none;
+	z-index: 1;
+}
+
+/* Document title and menu style definitions */
+#title {
+	margin-left: auto;
+	margin-right: 50px;
+	margin-top: 10px;
+	position: inline-block;
+
+	background-color: rgb(91,74,46);
+	border: 3px solid white;
+	color: yellow;
+	font-family: Didot, Georgia, serif;
+	font-weight: bold;
+	letter-spacing: 0.4em;
+	padding-bottom: 4px;
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-top: 4px;
+	text-align: center;
+
+	width: 428px;
+}
+#title span {
+	border: 1px solid white;
+	float: right;
+	left: 14px;
+	margin-bottom: 1.2em;
+	position: relative;
+	top: -6px;
+
+	z-index: 2;
+}
+#title a:link { color: rgb(255,255,153); }
+#title a:visited { color: yellow; }
+#title a:hover, a:focus, a:active {
+	background-color: rgb(127,105,68);
+	color: rgb(255,165,165);
+}
+#title h1 {
+	line-height: 1.3em;
+	font-size: 2.5em;
+}
+#title a {
+	text-decoration: none:
+}
+#title p {
+	font-size: medium;
+	letter-spacing: 0.1em;
+	line-height: 1.2em;
+}
+h1 a {
+	color: yellow;
+	text-decoration: none;
+}
+
+#sitemenu-container {
+	position: inline-block;
+}
+#sitemenu {
+	margin-left: auto;
+	margin-right: 50px;
+	margin-top: 2px;
+	position: relative;
+
+	background-color: rgb(161,134,87);
+	border: 2px solid white;
+	color: yellow;
+	font-family: Optima, "Trebuchet MS", sans-serif;
+	font-weight: bold;
+	font-size: medium;
+	text-align: left;
+	width: 454px;
+}
+
+#sitemenu-content ul,ol {
+	display: block;
+	line-height: 1.2em;
+	margin-top: 1.2em;
+	position: relative;
+}
+#sitemenu-content a:link { color: rgb(255,255,153); }
+#sitemenu-content a:visited { color: yellow; }
+#sitemenu-content a:hover, a:focus, a:active {
+	background-color: rgb(228,207,171);
+	color: maroon;
+}
+.currentPage {
+	color: white;
+}
+
+/*  Sidebar (left-of-document) style definitions */
+#sidebar {
+	border-right: 1px solid rgb(199,168,109);
+	float: left;
+	position: relative;
+	top: 19px;
+	width: 240px;
+}
+.pagelet {
+	background-color: rgb(228,207,171);
+	margin: 0px 4px 0px 4px;
+	overflow: hidden;
+	word-wrap: break-word;		/* Internet Explorer requires this */
+
+	font-size: medium;
+	padding: 0px 0.5em 0px 0.5em;
+	text-align: left;
+}
+.pagelet h4 {
+	color: rgb(127,105,68);
+	font-size: medium;
+	text-align: center;
+}
+.pagelet-body {
+	font-size: small;
+	text-align: center;
+}
+.pagelet-body img {
+	margin: 4px;
+}
+.pagelet-body li {
+	font-size: small;
+}
+.pagelet p {
+	text-align: left;
+}
+
+/*  These two styles attempt to change the way images are displayed in
+    z_RichText.html and z_SummaryPage_loaded.html, but the <div> tags require the
+    addition of a new class called "image" (inside the ".(un)titled" class) in
+    order for them to work; see z_RichText.html:61-66 and
+    z_SummaryPage_loaded.html:176-192. */
+/* NEW! */
+.untitled .image {
+	font-size: small;
+	padding: 4px;
+	text-align: center;
+}
+/* NEW! */
+.titled .image {
+	background-color: rgb(228,207,171);
+	border: 1px dotted rgb(201,183,151);
+	font-size: small;
+	margin: 4px;
+	padding: 4px;
+	text-align: center;
+}
+
+/* Main body content style definitions */
+
+/* photo-page, html-page (in some cases), iframe-page don't have sidebar */
+#main .clear {
+	clear: right;
+}
+body.no-sidebar #main {
+	background-color: rgb(230,191,122); /* = rgb(232,197,132); @ Mac gamma */
+	background: url("background.png");  /* subject to colour management */
+		/* Internet Explorer 6 requires that a block contains content
+		   to be rendered (including any backgrounds) before its borders
+		   are rendered. Otherwise, this would not be necessary. */
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	border-bottom: 3px solid white;
+	border-top: 1px solid rgb(230,191,122);  /* to work around an Internet Explorer bug */
+	margin-bottom: 2px;
+
+	min-height: 7px;
+	padding-bottom: 7px;
+}
+
+/* Most other pages have sidebars */
+body.allow-sidebar #main {
+	background-color: rgb(230,191,122); /* = rgb(232,197,132); @ Mac gamma */
+	background: url("background.png");  /* subject to colour management */
+		/* Internet Explorer 6 requires that a block contains content
+		   to be rendered (including any backgrounds) before its borders
+		   are rendered.  Otherwise, this would not be necessary. */
+	border-left: 3px solid white;
+	border-right: 3px solid white;
+	border-bottom: 3px solid white;
+	border-top: 1px solid rgb(230,191,122);  /* to work around an Internet Explorer bug */
+
+	min-height: 7px;
+	padding-bottom: 7px;
+	padding-left: 240px;
+}
+#main ul,ol {
+	font-size: medium;
+}
+h2 {
+	color: rgb(91,74,46);
+	top: 1em;
+}
+h3 {
+	font-size: 1em;
+}
+li {
+	text-align: left;
+}
+.article {
+clear: none;
+float: right;
+
+	display: inline;
+	font-size: medium;
+	margin: 4px 4px 4px 2px;
+	padding: 4px;
+	text-align: left;
+	width: 489px;
+}
+.article .clear {
+border: 2px solid red;
+clear: none;
+}
+.article > a:hover > h3 {
+	background-color: rgb(228,207,171);
+}
+.article-thumbnail {
+	border: 1px solid white;
+	float: left;
+	margin-bottom: 4px;
+	margin-right: 8px;
+}
+.article-thumbnail a * {
+	border: 0px;
+}
+.callout {
+	float: right;
+	font-size: small;
+	width: 240px;
+}
+.article-summary {
+	text-align: center;
+}
+.article-summary p {
+	text-align: left;
+}
+.article-summary img {
+	text-align: center;
+}
+
+/* Page footer style definitions */
+#page-bottom {
+	position: relative;
+
+	font-size: x-small;
+	padding: 0em 1em 0em 1em;
+}
+
+/* Other specific classes nested within an .article */
+.ImageElement {
+	text-align: center;
+}
+.photo h3 {
+background-color: #080;
+	color: rgb(199,168,109);
+	text-align: center;
+}
+.photo img {
+	margin: 4px;
+}
+.caption {
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+.RichTextElement {
+	padding: 0em 1em 0em 1em;
+	text-align: left;
+ }
+
+.HTMLElement {
+	margin-bottom: 4px;
+	margin-left: 8px;
+	margin-right: 8px;
+	text-align: left;
+
+	font-size: medium;
+}
+
+/* Used on Photo Grid Pages ... */
+
+/*
+ *  This version of the .photogrid-index and .gridItem rules makes the blocks tall
+ *  but small -- this is the preferred way to present the thumbnails.
+ *
+ *  Does not work in Firefox.
+ */
+.photogrid-index {
+	display: block;
+	margin-left: -240px;
+	text-align: right;
+}
+.photogrid-index :before {
+	content: "photogrid: finished";
+}
+.gridItem {
+	/* Dan's fix: */
+/*	display: inline-block;  ** comment this out... */
+	float: left;  /* ... and include this */
+
+	background-color: rgb(228,207,171);
+	border: 1px dotted rgb(201,183,151);
+	height: 200px;	/* room for caption */
+	margin: 1px 0px 0px 3px;
+	overflow: visible;
+	padding: 2px;
+	text-align: center;
+	width: 128px;
+}
+.gridItem h3 {
+	font-size: 1em;
+	font-weight: normal;
+}
+
+/*
+ *  This version of the .photogrid-index and .gridItem rules makes the blocks wide
+ *  to accomodate where Firefox does not place the boxes in a pleasing manner,
+ *  and there is no way of forcing inter-line gravity otherwise.
+ *
+ *.photogrid-index {
+ *	display: block;
+ *	text-align: right;
+ *}
+ *.gridItem {
+ *	display: inline-block;
+ *
+ *	background-color: rgb(228,207,171);
+ *	border: 1px dotted rgb(201,183,151);
+ *	height: 128px;
+ *	margin: 0px 2px 2px 0px;
+ *	overflow: visible;
+ *	padding: 2px;
+ *	text-align: left;
+ *	vertical-align: bottom;
+ *	width: 477px;	** extra room for caption **
+ * }
+ *.gridItem h3 {
+ *	font-size: 1em;
+ *	font-weight: normal;
+ *	float: right;
+ *}
+ */
+
+/* Used on index summary pages... */
+.listing-index li h3 a {
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: normal;
+}
+
+/* Individual Photo Pages... */
+#previous-photo	{
+	background: url(leftarrow.png) no-repeat;
+	float: left;
+	height: 60px;
+	text-indent: -5000em;
+	width: 80px;
+}
+#next-photo {
+	background: url(rightarrow.png) no-repeat;
+	float: right;
+	height: 60px;
+	text-indent: -5000em;
+	width: 80px;
+}
+#photo-list {
+	background: url(photolist.png) no-repeat;
+	clear: right;
+	float: right;
+	height: 60px;
+	text-indent: -5000em;
+	width: 80px;
+}

@@ -1,0 +1,406 @@
+/* 
+   css Copyright (c) 2007 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+
+/*
+GLOBAL
+
+Try to define style properties as globally as possible. E.g. the basic font setting should be right there for the body element
+*/
+
+* { 
+	margin:0px;
+	padding:0px;
+}
+
+body {
+	font-family: Georgia, Palatino, Times,serif;
+	font-size: 76%; /* as recommended in CSS guide */
+	background:#0e1824 url(body-background.jpeg) center repeat-y;
+	color:#ddd;
+	word-wrap:break-word;
+	line-height:1.6;
+}
+
+img {
+	border:0px #000 none;
+}
+
+a {
+	color: #eee;
+}
+
+a:visited {
+	color: #ddd;
+}
+
+a:hover, a:active {
+	color: #fff;
+}
+
+
+#page {
+	width:776px;
+	margin:0px auto;
+	background: #121212;
+}
+
+#title {
+	color: #fff;
+	overflow: hidden;
+	height:200px;
+	background: url(default-header.jpeg) center top no-repeat;
+	text-shadow: #000 3px 1px 1px;
+	position:relative;
+
+}
+
+#title h1 {
+	position: absolute;
+	top: 60px;
+	left: 250px;
+	font-size: 217% !important;
+}
+
+#title h1 a {
+	text-decoration:none;
+}
+
+#title h1 a:hover {
+	text-decoration:underline;
+}
+
+#title p {
+	margin-left: 250px;
+	font-size:120%;
+}
+
+#title h1 a {
+	color:inherit;
+} 
+
+#logo-container {
+	float: left;
+	margin-right: 12px;
+}
+
+
+ul {
+	padding-left:20px;
+	list-style-type:square;
+}
+
+
+/*
+SITEMENU
+*/
+
+#sitemenu {
+	clear:left;
+}
+
+#sitemenu ul {
+	margin:0px 0px 16px 0px;
+	padding:1px 6px 1px 2px;
+	list-style:none;
+	text-align:left;
+	background:#0a1725 ;
+}
+
+#sitemenu ul li {
+	display:inline;
+	margin:0px;
+}
+
+#sitemenu ul a, #sitemenu ul .currentPage .in {
+	color: #fff;
+	text-decoration: none;
+	padding:3px 4px;
+}
+
+#sitemenu .currentPage .in,  #sitemenu a:hover  {
+	background: #ddd;
+	color:#3b0700 !important;
+}
+
+
+/* 
+MAIN PART 
+*/
+
+#main, #sidebar {
+	line-height:1.8;
+}
+
+.article, #index {
+	margin-bottom:1em;
+	padding:10px 6px 6px 6px;
+}
+
+
+#index .article {
+	margin:0px;
+	border:0px none;
+	background:transparent;
+	padding:0px;
+	clear:right;
+}
+
+
+.article-info {
+	clear:right;
+	text-align:right;
+	padding-right:6px;
+}
+
+#main h2 {
+	color:#efefe7;
+	padding:0px 6px;
+	border-width: 0px 0px 2px 0px;
+	border-color: #;
+	border-style: solid;
+}
+
+/*
+SIDEBAR & CALLOUTS
+*/
+body.allow-sidebar #main {
+	margin-left:245px;
+	padding-top:1px;
+}
+
+#sidebar {
+	margin-top:1px;
+	width:230px;
+	float:left;
+}
+
+.pagelet {
+	margin-bottom:15px;
+	padding:0px 0px 2px 0px;
+	overflow:hidden;
+}
+
+.pagelet h4 {
+	margin:4px 0px 4px 0px;
+	color:#efefe7;
+	padding:1px 6px;
+	border-color: #eee;
+	border-style: solid;
+	border-width: 0px 0px 1px 0px;
+}
+
+.pagelet.bordered {
+	background:#222;
+}
+
+.pagelet.bordered h4 {
+}
+
+.pagelet div {
+	margin:0px 3px;
+}
+
+
+.callout {
+	width:230px;
+	float:right;
+	margin: 0px 0px 0px 10px ;
+}
+
+.callout .pagelet.bordered {
+	margin-left:-1px;
+}
+
+/* 
+PHOTO GRID PAGE
+*/
+
+.photogrid-index {
+    text-align: center;
+    margin: auto;
+    overflow: hidden; /* for IE 5 Mac */
+}
+
+/* IE 6 Hack */
+/* Hides from IE5-mac \*/
+* html .photogrid-index {
+	height:1%; /* for IE 5, 6 Win */
+	margin-left:-8px;
+}
+/* End hide from IE5-mac */
+
+.photogrid-index a {
+	text-decoration:none;
+	padding:1px 3px;
+}
+.photogrid-index h3 a:hover {
+	text-decoration:underline;
+}
+
+.gridItem {
+    float: left;
+    position:relative;
+    width:142px;
+    height:180px;	/* room for caption */
+	margin:5px;
+    padding-top: 10px;
+    color:inherit;
+    overflow: hidden;
+}
+
+body.allow-sidebar .gridItem {
+	width: 160px;
+}
+
+.gridItem h3 {
+    font-weight: normal;
+    font-size: 100%;
+    line-height: 130%;
+    color: #3b0700;
+    margin: 4px 7px 0px 5px;
+	padding: 0px 2px;
+    position:absolute;
+	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
+	width: 128px;
+}
+
+body.allow-sidebar .gridItem h3 {
+	width:136px;
+	margin: 4px 11px 0px 11px; 
+}
+
+.gridItem img {
+    border: 1px solid #eee;
+    margin: auto;
+    display:block;
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    right: 0;
+    left: 0;
+}
+
+* html .gridItem img {
+	position:relative;
+}
+
+
+/*
+PHOTO NAVIGATION
+*/
+
+.photo-navigation {
+	position:relative;
+    height: 21px;
+    width:200px;
+    margin:8px auto 8px auto;
+}
+
+.photo-navigation div {
+	width:34px;
+	height:21px;
+	position: absolute;
+    text-indent: -5000em;
+}
+
+.photo-navigation a {
+	border-bottom:none;
+	display:block;
+	width:100%;
+	height:100%;
+}
+
+#previous-photo	{
+    background: url(photo-prev-off.gif)		no-repeat;
+    left: 42px;
+}
+#previous-photo a {
+    background: url(photo-prev.gif)		no-repeat;
+}
+
+#next-photo {
+    background: url(photo-next-off.gif)		no-repeat;
+    left: 124px; 
+}
+#next-photo a {
+    background: url(photo-next.gif)		no-repeat;
+}
+
+#photo-list {
+    background: url(photo-list-off.gif)		no-repeat;
+    left: 83px;
+}
+#photo-list a {
+    background: url(photo-list.gif)		no-repeat;
+}
+
+.image-controls a {
+	border-bottom:none !important;
+}
+
+/* IE 6 Hack */
+/* Hides from IE5-mac \*/
+* html .gridItem img {
+	position: relative;
+	top:0px;
+}
+
+* html .gridItem h3 {
+	position: relative;
+	top: 0px;
+}
+/* End hide from IE5-mac */
+
+
+
+
+/* 
+PAGE BOTTOM
+*/
+#page-bottom {
+	margin-top:12px;
+	padding:4px 12px 2px 12px;
+	line-height:1.4em;
+	background: #0a1725;
+	text-align: center;	
+}
+
+#page-bottom a {
+	color: #ebe8e5;
+}
+
+/*
+OTHER
+*/
+.article-thumbnail {
+	float:right;
+}
+
+
+/* 
+HACK FOR IE 5/WIN
+*/
+@import\ url("ie5win.css");
+
+
+
+/* 
+SANDVOX INTERNALS
+	
+these should be present in every style sheeto ensure that certain classes used by Sandvox to hide and clear elements are respected.
+Don't change them unless you have very good reason to do so.
+*/
+
+.clear {clear: both; height: 0;}
+#main .clear {clear:right;}
+.hidden {display:none;}
+img.narrow {float: right;}
+img.wide {display: block;}
+.ImageElement, .VideoElement { text-align:center;}
+

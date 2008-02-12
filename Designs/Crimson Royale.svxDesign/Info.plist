@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.Crimson Royale</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>CalloutBorderable</key>
+	<false/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.1</string>
+	<key>SidebarBorderable</key>
+	<false/>
+	<key>backgroundRGB</key>
+	<string>ffffff</string>
+	<key>bannerHeight</key>
+	<integer>293</integer>
+	<key>bannerName</key>
+	<string>new_header_bkgd.jpg</string>
+	<key>bannerWidth</key>
+	<integer>800</integer>
+	<key>copyright</key>
+	<string>Copyright © 2006, Karelia Software</string>
+	<key>frameRGB</key>
+	<string>FF3300</string>
+	<key>genre</key>
+	<string>business</string>
+	<key>tallViewer</key>
+	<true/>
+	<key>textRGB</key>
+	<string>000000</string>
+	<key>title</key>
+	<string>Crimson Royale</string>
+	<key>viewport</key>
+	<integer>740</integer>
+</dict>
+</plist>

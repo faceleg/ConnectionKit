@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.Iris Spring</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>CalloutBorderable</key>
+	<false/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.0</string>
+	<key>SidebarBorderable</key>
+	<false/>
+	<key>copyright</key>
+	<string>Copyright © 2006, Karelia Software</string>
+	<key>genre</key>
+	<string>specialty</string>
+	<key>imageReplacement</key>
+	<dict>
+		<key>h1</key>
+		<dict>
+			<key>qtzFile</key>
+			<string>iris</string>
+		</dict>
+		<key>h1h</key>
+		<dict>
+			<key>qtzFile</key>
+			<string>iris</string>
+		</dict>
+	</dict>
+	<key>title</key>
+	<string>Iris Spring</string>
+	<key>viewport</key>
+	<integer>712</integer>
+</dict>
+</plist>
