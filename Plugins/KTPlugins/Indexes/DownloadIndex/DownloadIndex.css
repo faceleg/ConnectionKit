@@ -1,0 +1,9 @@
+.Download-index td {
+    vertical-align: top;
+}
+.Download-index .article-summary {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+td.dli1 { text-align:center; }

@@ -1,0 +1,302 @@
+<!-- Contact Element -->
+[[if address]]
+<script type="text/javascript"><!--
+
+var xhrContact[[=uniqueID]] = false;
+
+function makeContactRequest[[=uniqueID]](form) {
+	var requestOK = true;
+	
+	if (window.XMLHttpRequest) {
+		xhrContact[[=uniqueID]] = new XMLHttpRequest();
+	}
+	else {
+		if (window.ActiveXObject) {
+			try {
+				xhrContact[[=uniqueID]] = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) { }
+		}
+	}
+
+	if (xhrContact[[=uniqueID]]) {
+		xhrContact[[=uniqueID]].onreadystatechange = showContactStatus[[=uniqueID]];
+		xhrContact[[=uniqueID]].open("POST", "[[=delegate.mailmeAjaxURL]]", true);
+		xhrContact[[=uniqueID]].setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		
+		var toPost = '';
+		var aDict = { "subject": "contact[[=uniqueID]]-subject", "message":"contact[[=uniqueID]]-message",
+[[foreach delegate.fields aField]]
+		"[[=&aField.inputName]]": "contact[[=uniqueID]]-[[=_&aField.inputName]]",
+[[endforeach]]
+[[if copyToSender]]
+		"c": "contact[[=uniqueID]]-c",
+[[endif2]]
+		"a": "contact[[=uniqueID]]-a",
+		"t": "contact[[=uniqueID]]-t",
+		"v": "contact[[=uniqueID]]-v" };
+		for (var formKey in aDict)
+		{
+			var elementID = aDict[formKey];
+			var theElement = document.getElementById( elementID );
+			if (theElement)
+			{
+				var theValue = theElement.value;
+				toPost += '&' + formKey + '=' + encodeURI( theValue );
+			}
+		}
+		toPost = toPost.substring(1);
+		xhrContact[[=uniqueID]].send(toPost);
+	}
+	else {
+		requestOK = false;
+	}
+	return requestOK;
+}
+
+function showContactStatus[[=uniqueID]]() {
+	if (xhrContact[[=uniqueID]].readyState == 4)
+	{
+		var isOK = false;
+		var theResults	= document.getElementById("contact[[=uniqueID]]-results");
+		var message;
+		
+		if (xhrContact[[=uniqueID]].status == 200)
+		{
+			message = xhrContact[[=uniqueID]].responseText;
+			isOK = (message == 'OK');
+			if (isOK)
+			{
+				message = '[["Message sent.]]';
+			}
+		}
+		else
+		{
+			message = "[["Unable to Submit form. Result code = ]]" + xhrContact[[=uniqueID]].status;
+		}
+		document.getElementById("contact[[=uniqueID]]-submit").disabled = isOK;	// disable if sent; enable if not sent
+		theResults.className = isOK ? 'contactOK' : 'contactError';
+		theResults.innerHTML = message;		
+		setTimeout('document.getElementById("contact[[=uniqueID]]-submit").disabled = false',5000);	// re-enable after a few seconds
+	}
+}
+
+function verifyAndSubmit[[=uniqueID]](form) {
+
+	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
+
+	checkEmail = form.e.value;
+	if (checkEmail=='email@domain.com' || checkEmail.indexOf('@') < 0)
+	{
+		var message = "[["Email address is missing.  Message cannot be sent.]]";
+		theResults.className = 'contactError';
+		theResults.innerHTML = message;
+		return false;
+	}
+	if (form.s.value == '' && form.m.value == '')
+	{
+		var message = "[["No message has been entered.  Message cannot be sent.]]";
+		theResults.className = 'contactError';
+		theResults.innerHTML = message;
+		return false;
+	}
+
+	var theResults = document.getElementById("contact[[=uniqueID]]-results");
+	document.getElementById("contact[[=uniqueID]]-submit").disabled = true;
+	theResults.className = '';
+	theResults.innerHTML = "[["Submitting Form...]]";
+	var requestedOK = makeContactRequest[[=uniqueID]](form);
+	
+	return !requestedOK;		// return false if requested OK 
+	
+}
+function doblur[[=uniqueID]](anInput) {
+	if (anInput.value == '') { anInput.value = anInput.title; }
+}
+function dofocus[[=uniqueID]](anInput) {
+	if (anInput.value == anInput.title) { anInput.value = ''; }
+}
+
+//--></script>
+
+<form class="contactElement" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
+		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
+		<div class="hidden">
+			<label for="contact[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
+			<input id="contact[[=uniqueID]]-subject" type="text" name="subject" />
+			<br />
+			<label for="contact[[=uniqueID]]-message">[["Please leave this field empty:]]</label>
+			<textarea id="contact[[=uniqueID]]-message" name="message" rows="3" cols="20"></textarea>
+		</div>
+	
+[[if sideLabels]]
+<table width="100%">
+[[foreach delegate.fields aField]]
+
+	[[if aField.type==0]]
+	<!-- hidden -->
+	[[if aField.defaultString]]<input type="hidden" name="[[=&aField.inputName]]" value="[[=&aField.defaultString]]" />[[endif4]]
+	[[else3]]
+<tr>
+	[[if aField.type==6]]
+	<!-- Send Button -->
+	<td colspan="2">
+	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&delegate.sendButtonTitle]]" />
+	</td>
+
+	[[else4]]
+	<td>
+	[[if aField.label]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label>[[endif5]]
+	</td>
+	<td>
+	
+	[[if aField.type==2]]
+	<!-- text area -->
+	<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80"></textarea>
+	
+	[[else5]]
+	[[if aField.type==4]]
+	<!-- popup button -->
+	<select class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+		[[foreach aField.visitorChoices anOption]]
+		<option>[[=&anOption]]</option>
+		[[endForEach2]]
+	</select>
+	
+	[[else6]]
+	[[if aField.type==3]]
+	<!-- checkbox -->
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="checkbox"
+		name="[[=&aField.inputName]]"
+		value="on"
+		[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
+		/>
+	[[if aField.checkBoxLabel]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+	
+	[[else7]]
+	[[if aField.type==5]]
+	<!-- radio buttons -->
+	[[foreach aField.visitorChoices anOption]]
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+	<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>
+	[[endForEach2]]
+	
+	[[else8]]
+	[[if aField.type==1]]
+	<!-- text field -->
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="text"
+		class="fullWidth"
+		name="[[=&aField.inputName]]"
+		[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
+		[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]
+		/>
+
+	[[else9]]
+	UNKNOWN INPUT TYPE
+	[[endif9]]
+	[[endif8]]
+	[[endif7]]
+	[[endif6]]
+	[[endif5]]
+</td>
+	[[endif4]]
+	[[endif3]]
+</tr>	
+[[endForEach]]
+</table>
+[[else2]]
+<p>
+[[foreach delegate.fields aField]]
+
+	[[if aField.type==0]]
+	<!-- hidden -->
+	[[if aField.defaultString]]<input type="hidden" name="[[=&aField.inputName]]" value="[[=&aField.defaultString]]" />[[endif4]]
+	[[else3]]
+
+	[[if aField.type==6]]
+	<!-- Send Button -->
+	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&delegate.sendButtonTitle]]" />
+
+	[[else4]]
+	[[if aField.label]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
+	
+	[[if aField.type==2]]
+	<!-- text area -->
+	<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80"></textarea>
+	
+	[[else5]]
+	[[if aField.type==4]]
+	<!-- popup button -->
+	<select class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+		[[foreach aField.visitorChoices anOption]]
+		<option>[[=&anOption]]</option>
+		[[endForEach2]]
+	</select>
+	
+	[[else6]]
+	[[if aField.type==3]]
+	<!-- checkbox -->
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="checkbox"
+		name="[[=&aField.inputName]]"
+		value="on"
+		[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
+		/>
+	[[if aField.checkBoxLabel]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+	
+	[[else7]]
+	[[if aField.type==5]]
+	<!-- radio buttons -->
+	[[foreach aField.visitorChoices anOption]]
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+	<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>
+	[[endForEach2]]
+	
+	[[else8]]
+	[[if aField.type==1]]
+	<!-- text field -->
+	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="text"
+		class="fullWidth"
+		name="[[=&aField.inputName]]"
+		[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
+		[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]
+		/>
+
+	[[else9]]
+	UNKNOWN INPUT TYPE
+	[[endif9]]
+	[[endif8]]
+	[[endif7]]
+	[[endif6]]
+	[[endif5]]
+	[[endif4]]
+<br />
+	[[endif3]]
+[[endForEach]]
+	</p>
+[[endif2]]
+	
+		<!-- CSS URL -->
+		<input type="hidden" name="a" id="contact[[=uniqueID]]-a" value="[[=&delegate.absoluteCSSURL]]" />
+		<!-- Site Title -->
+		<input type="hidden" name="t" id="contact[[=uniqueID]]-t" value="[[=&page.siteTitleTextInherited]]" />
+		<!-- Verification Code -->
+		<input type="hidden" name="v" id="contact[[=uniqueID]]-v" value="[[=delegate.encodedRecipient]]" />
+	
+		[[if copyToSender]]
+		<!-- Copy to sender -->
+		<input type="hidden" name="c" id="contact[[=uniqueID]]-c" value="yes" />
+		[[endif2]]
+</form>
+<div style='text-align:center;' id="contact[[=uniqueID]]-results"></div>
+
+[[else]]
+<p>[['Please specify an address for the recipient using the Inspector.]]</p>
+
+[[endif]]
+
+<!-- /Contact Element -->
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Video</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.VideoElement</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTPluginIconName</key>
+	<string>Video.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>captionHTML</key>
+		<string></string>
+		<key>movieSource</key>
+		<integer>0</integer>
+	</dict>
+	<key>KTPluginNibFile</key>
+	<string>VideoElement</string>
+	<key>KTPluginResourcesNeeded</key>
+	<array>
+		<string>AC_QuickTime.js</string>
+	</array>
+	<key>KTTemplateName</key>
+	<string>VideoElementTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>VideoElementDelegate</string>
+</dict>
+</plist>

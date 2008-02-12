@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'FeedElement' target in the 'FeedElement' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

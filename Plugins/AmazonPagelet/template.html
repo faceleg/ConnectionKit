@@ -1,0 +1,129 @@
+<!-- Amazon List -->
+
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>
+	[[=introductionHTML]]
+</div>
+[[endif]]
+
+[[if listSource==0]]
+
+[[if delegate.productsSuitableForPublishing]]
+	
+[[if layout==6]]
+<ul>
+	[[foreach delegate.productsSuitableForPublishing aProduct]]
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="[[=&aProduct.URL.absoluteString]]">[[=&aProduct.title]]</a></p>
+		[[if showCreators&&aProduct.creator]]<p class="amazonListBulletsParagraph">[[=&aProduct.creator]]</p>[[endif4]]
+		[[if showComments&&aProduct.comment]]<p class="amazonListBulletsParagraph"><i>[[=&aProduct.comment]]</i></p>[[endif4]]
+	</li>
+	[[endForEach]]
+</ul>
+	
+[[else3]]
+
+<div class="amazonList [[=delegate.layoutString]]">
+	
+	[[if layout==8]]
+	<iframe	src="[[=delegate.randomLayoutIFrameURL.absoluteString]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
+			style="width:120px; height:240px;"
+			scrolling="no"
+			marginwidth="0"
+			marginheight="0"
+			frameborder="0">
+	</iframe>
+
+	[[else4]]
+	[[foreach delegate.productsSuitableForPublishing aProduct]]
+	<div class="amazonListRow [[eo]]">
+		[[if layout==7]]
+		
+		[[if HTMLGenerationPurpose||document.liveDataFeeds]]
+		<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL.absoluteString]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
+				style="width:120px; height:240px;"
+				scrolling="no"
+				marginwidth="0"
+				marginheight="0"
+				frameborder="0">
+		</iframe>
+		[[else6]]
+		<div class="amazonListPlaceholder">
+			[['This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.]]
+		</div>
+		[[endif6]]
+		
+		[[else5]]
+		
+		[[if showThumbnails&&aProduct.publishingThumbnailURLString]]
+		<a class="imageLink" href="[[=&aProduct.URL.absoluteString]]">
+			<img	class="amazonProductThumbnail[[if frameThumbnails]] amazonProductThumbnailFrame[[endif7]]"
+					src="[[if HTMLGenerationPurpose||document.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL.absoluteString]][[endif7]]"
+					alt="[[=&aProduct.title]]"
+					width="[[=&thumbnailWidthsString]]" />
+		</a>
+		[[endif6]]
+		<div class="amazonText">
+			[[if showThumbnails]]<div class="amazonListShowThumbnails">[[endif6]]
+				[[if aProduct.publishingThumbnailURLString]]<div class="amazonTextWithThumbnail">[[endif6]]
+					
+					[[if showTitles]]
+					<p class="amazonText"><a href="[[=&aProduct.URL.absoluteString]]">[[=&aProduct.title]]</a></p>
+					[[endif6]]
+					
+					[[if showCreators&&aProduct.creator]]
+					<p class="amazonText">[[=&aProduct.creator]]</p>
+					[[endif6]]
+					
+					[[if showComments&&aProduct.comment]]
+					<p class="amazonText"><i>[[=&aProduct.comment]]</i></p>
+					[[endif6]]
+					
+				[[if aProduct.publishingThumbnailURLString]]</div>[[endif6]]
+			[[if showThumbnails]]</div>[[endif6]]
+		</div>
+		<!--	This is a little hacky but it nicely stops thumbnails being taller than the div.
+				<br style="clear:both"> doesn't work since it inserts an extra, invisible, line of text -->
+		<div style="clear:both;"></div>
+
+		[[endif5]]
+	</div>
+	[[endForEach]]
+
+[[endif4]]
+</div>
+[[endif3]]
+	
+[[else2]]
+[[if HTMLGenerationPurpose==0]]
+<p style="text-align:center;">[['Please add Amazon products to this list using the Inspector.]]</p>
+[[endif3]]
+[[endif2]]
+
+[[else]]
+	
+[[if automaticListType>0]]
+[[if HTMLGenerationPurpose||document.liveDataFeeds]]
+<script src="[[=&delegate.kareliaHTMLURL.absoluteString]]" type="text/javascript"></script>
+[[else3]]
+<div class="amazonListPlaceholder">
+	[['This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.]]
+</div>
+[[endif3]]
+
+[[else2]]
+[[if HTMLGenerationPurpose==0]]
+<p style="text-align:center;">[['Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.]]</p>
+[[endif3]]
+
+[[endif2]]
+	
+[[endif]]
+
+
+[[if captionHTML|editing]]
+<div[[idClass entity:Pagelet property:captionHTML flags:"block optional" id:uniqueID class:caption]]>
+	[[=captionHTML]]
+</div>
+[[endif]]
+<!-- /Amazon List -->

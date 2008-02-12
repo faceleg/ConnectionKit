@@ -1,0 +1,28 @@
+<!-- Download Index -->
+<table>
+[[foreach page.sortedChildrenInIndex item page.collectionMaxIndexItems]]
+	<tr class="[[i]] [[eo]][[last]]">
+		<td class="dli1">
+[[if item.thumbnail]]
+			<a class="imageLink" [[target item]]href="[[path item]]"><img[[idClass entity:Page property:image flags:"anchor" id:item.uniqueID]]
+				src="[[mediainfo info:path media:item.thumbnail sizeToFit:thumbnailSize]]"
+				alt="[[=&item.titleText]]"
+				width="[[mediainfo info:width media:item.thumbnail sizeToFit:thumbnailSize]]"
+				height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailSize]]" /></a>
+[[endif]]
+		</td>
+		<td class="dli2">
+			<h3[[idClass entity:Page property:titleHTML flags:"line copy anchor" id:item.uniqueID replacement:item.titleText code:h3]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
+		</td>
+		<td class="dli3">
+			<div class="article-summary">>[[summary item page.collectionTruncateCharacters]]</div>
+		</td>
+[[if item.shouldShowTimestamp]]
+		<td class="dli4">
+			[[=&item.timestamp]]
+		</td>
+[[endif]]
+	</tr>
+[[endForEach]]
+</table>
+<!-- /Download Index -->

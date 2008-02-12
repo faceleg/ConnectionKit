@@ -1,0 +1,471 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE0484D30B4992D8009CDBDA /* iMBAmazonController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0484D20B4992D8009CDBDA /* iMBAmazonController.m */; };
+		CE0485420B499834009CDBDA /* amazon-logo.tif in Resources */ = {isa = PBXBuildFile; fileRef = CE04852D0B499834009CDBDA /* amazon-logo.tif */; };
+		CE0485430B499834009CDBDA /* icon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04852E0B499834009CDBDA /* icon.tiff */; };
+		CE0485440B499834009CDBDA /* apparel.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485300B499834009CDBDA /* apparel.tiff */; };
+		CE0485450B499834009CDBDA /* baby.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485310B499834009CDBDA /* baby.tiff */; };
+		CE0485460B499834009CDBDA /* books.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485320B499834009CDBDA /* books.tiff */; };
+		CE0485470B499834009CDBDA /* classical.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485330B499834009CDBDA /* classical.tiff */; };
+		CE0485480B499834009CDBDA /* computers.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485340B499834009CDBDA /* computers.tiff */; };
+		CE0485490B499834009CDBDA /* dvd.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485350B499834009CDBDA /* dvd.tiff */; };
+		CE04854A0B499834009CDBDA /* electronics.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485360B499834009CDBDA /* electronics.tiff */; };
+		CE04854B0B499834009CDBDA /* garden.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485370B499834009CDBDA /* garden.tiff */; };
+		CE04854C0B499834009CDBDA /* home-improvement.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485380B499834009CDBDA /* home-improvement.tiff */; };
+		CE04854D0B499834009CDBDA /* homegarden.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485390B499834009CDBDA /* homegarden.tiff */; };
+		CE04854E0B499834009CDBDA /* kitchen.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853A0B499834009CDBDA /* kitchen.tiff */; };
+		CE04854F0B499834009CDBDA /* magazines.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853B0B499834009CDBDA /* magazines.tiff */; };
+		CE0485500B499834009CDBDA /* music.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853C0B499834009CDBDA /* music.tiff */; };
+		CE0485510B499834009CDBDA /* photo.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853D0B499834009CDBDA /* photo.tiff */; };
+		CE0485520B499834009CDBDA /* software.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853E0B499834009CDBDA /* software.tiff */; };
+		CE0485530B499834009CDBDA /* toys.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE04853F0B499834009CDBDA /* toys.tiff */; };
+		CE0485540B499834009CDBDA /* vhs.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485400B499834009CDBDA /* vhs.tiff */; };
+		CE0485550B499834009CDBDA /* video-games.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0485410B499834009CDBDA /* video-games.tiff */; };
+		CE0485730B49A273009CDBDA /* topLevelNodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE0485720B49A273009CDBDA /* topLevelNodes.plist */; };
+		CE0486EE0B49B035009CDBDA /* iMediaBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0486ED0B49B035009CDBDA /* iMediaBrowser.framework */; };
+		CE0487AC0B49B396009CDBDA /* larger.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0487AA0B49B396009CDBDA /* larger.png */; };
+		CE0487AD0B49B396009CDBDA /* smaller.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0487AB0B49B396009CDBDA /* smaller.png */; };
+		CE04CD3E0BC5F82B00EE0B72 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE04CD3D0BC5F82B00EE0B72 /* AmazonSupport.framework */; };
+		CE04D6EC0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CE04D6EA0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig */; };
+		CE04D6ED0BC5FE8E00EE0B72 /* Bundle Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CE04D6EB0BC5FE8E00EE0B72 /* Bundle Release.xcconfig */; };
+		CE2A87C80B542E0B00D10B32 /* DebugDescriptions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2A87C70B542E0B00D10B32 /* DebugDescriptions.m */; };
+		CE85EC2F0BC60EA300552153 /* iMBDeliciousLibraryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85EC2E0BC60EA300552153 /* iMBDeliciousLibraryParser.m */; };
+		CE85EC450BC60ED100552153 /* iMBAmazonBrowseNodesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85EC440BC60ED100552153 /* iMBAmazonBrowseNodesParser.m */; };
+		CEE26B6A0B61655B00FBEF1D /* remove_idle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE26B640B61655B00FBEF1D /* remove_idle.png */; };
+		CEE379750B47818000FE4838 /* textview.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE379720B47817F00FE4838 /* textview.png */; };
+		CEE379760B47818000FE4838 /* photoview.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE379730B47818000FE4838 /* photoview.png */; };
+		CEE379770B47818000FE4838 /* comboview.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE379740B47818000FE4838 /* comboview.png */; };
+		CEE379840B4782F900FE4838 /* amazon.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEE379820B4782F900FE4838 /* amazon.nib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE04D6DB0BC5FDB700EE0B72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE04D6D70BC5FDB700EE0B72 /* AmazonSupport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = AmazonSupport;
+		};
+		CE04D6DD0BC5FDD700EE0B72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE04D6D70BC5FDB700EE0B72 /* AmazonSupport.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = AmazonSupport;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF630370AF2F00C91783 /* iMediaAmazon_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMediaAmazon_Prefix.pch; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* iMediaAmazon.iMediaBrowser */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iMediaAmazon.iMediaBrowser; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE0484D10B4992D8009CDBDA /* iMBAmazonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMBAmazonController.h; sourceTree = "<group>"; };
+		CE0484D20B4992D8009CDBDA /* iMBAmazonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iMBAmazonController.m; sourceTree = "<group>"; };
+		CE04852D0B499834009CDBDA /* amazon-logo.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "amazon-logo.tif"; sourceTree = "<group>"; };
+		CE04852E0B499834009CDBDA /* icon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = icon.tiff; sourceTree = "<group>"; };
+		CE0485300B499834009CDBDA /* apparel.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = apparel.tiff; sourceTree = "<group>"; };
+		CE0485310B499834009CDBDA /* baby.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = baby.tiff; sourceTree = "<group>"; };
+		CE0485320B499834009CDBDA /* books.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = books.tiff; sourceTree = "<group>"; };
+		CE0485330B499834009CDBDA /* classical.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = classical.tiff; sourceTree = "<group>"; };
+		CE0485340B499834009CDBDA /* computers.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = computers.tiff; sourceTree = "<group>"; };
+		CE0485350B499834009CDBDA /* dvd.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = dvd.tiff; sourceTree = "<group>"; };
+		CE0485360B499834009CDBDA /* electronics.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = electronics.tiff; sourceTree = "<group>"; };
+		CE0485370B499834009CDBDA /* garden.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = garden.tiff; sourceTree = "<group>"; };
+		CE0485380B499834009CDBDA /* home-improvement.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "home-improvement.tiff"; sourceTree = "<group>"; };
+		CE0485390B499834009CDBDA /* homegarden.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = homegarden.tiff; sourceTree = "<group>"; };
+		CE04853A0B499834009CDBDA /* kitchen.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = kitchen.tiff; sourceTree = "<group>"; };
+		CE04853B0B499834009CDBDA /* magazines.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = magazines.tiff; sourceTree = "<group>"; };
+		CE04853C0B499834009CDBDA /* music.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = music.tiff; sourceTree = "<group>"; };
+		CE04853D0B499834009CDBDA /* photo.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = photo.tiff; sourceTree = "<group>"; };
+		CE04853E0B499834009CDBDA /* software.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = software.tiff; sourceTree = "<group>"; };
+		CE04853F0B499834009CDBDA /* toys.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toys.tiff; sourceTree = "<group>"; };
+		CE0485400B499834009CDBDA /* vhs.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = vhs.tiff; sourceTree = "<group>"; };
+		CE0485410B499834009CDBDA /* video-games.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "video-games.tiff"; sourceTree = "<group>"; };
+		CE0485720B49A273009CDBDA /* topLevelNodes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = topLevelNodes.plist; sourceTree = "<group>"; };
+		CE0486ED0B49B035009CDBDA /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0487AA0B49B396009CDBDA /* larger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = larger.png; sourceTree = "<group>"; };
+		CE0487AB0B49B396009CDBDA /* smaller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smaller.png; sourceTree = "<group>"; };
+		CE04CD3D0BC5F82B00EE0B72 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonSupport.framework; path = ../Debug/AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE04D6D70BC5FDB700EE0B72 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../../Frameworks/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE04D6EA0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Debug.xcconfig"; path = "../../Xcode Configurations/Bundle Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
+		CE04D6EB0BC5FE8E00EE0B72 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Release.xcconfig"; path = "../../Xcode Configurations/Bundle Release.xcconfig"; sourceTree = SOURCE_ROOT; };
+		CE2A87C70B542E0B00D10B32 /* DebugDescriptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugDescriptions.m; sourceTree = "<group>"; };
+		CE85EC2D0BC60EA300552153 /* iMBDeliciousLibraryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMBDeliciousLibraryParser.h; sourceTree = "<group>"; };
+		CE85EC2E0BC60EA300552153 /* iMBDeliciousLibraryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iMBDeliciousLibraryParser.m; sourceTree = "<group>"; };
+		CE85EC430BC60ED100552153 /* iMBAmazonBrowseNodesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMBAmazonBrowseNodesParser.h; sourceTree = "<group>"; };
+		CE85EC440BC60ED100552153 /* iMBAmazonBrowseNodesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iMBAmazonBrowseNodesParser.m; sourceTree = "<group>"; };
+		CEE26B640B61655B00FBEF1D /* remove_idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove_idle.png; sourceTree = "<group>"; };
+		CEE379720B47817F00FE4838 /* textview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = textview.png; sourceTree = "<group>"; };
+		CEE379730B47818000FE4838 /* photoview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photoview.png; sourceTree = "<group>"; };
+		CEE379740B47818000FE4838 /* comboview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comboview.png; sourceTree = "<group>"; };
+		CEE379830B4782F900FE4838 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/amazon.nib; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				CE0486EE0B49B035009CDBDA /* iMediaBrowser.framework in Frameworks */,
+				CE04CD3E0BC5F82B00EE0B72 /* AmazonSupport.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* iMediaAmazon */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				CE04D6F00BC5FE9200EE0B72 /* XCode Configurations */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				CE04D6D70BC5FDB700EE0B72 /* AmazonSupport.xcodeproj */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = iMediaAmazon;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE0485720B49A273009CDBDA /* topLevelNodes.plist */,
+				CEE379820B4782F900FE4838 /* amazon.nib */,
+				CE04852D0B499834009CDBDA /* amazon-logo.tif */,
+				CEE26B640B61655B00FBEF1D /* remove_idle.png */,
+				CE04852E0B499834009CDBDA /* icon.tiff */,
+				CE0487AA0B49B396009CDBDA /* larger.png */,
+				CE0487AB0B49B396009CDBDA /* smaller.png */,
+				CE04852F0B499834009CDBDA /* Icons */,
+				CEE379720B47817F00FE4838 /* textview.png */,
+				CEE379730B47818000FE4838 /* photoview.png */,
+				CEE379740B47818000FE4838 /* comboview.png */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE0484D10B4992D8009CDBDA /* iMBAmazonController.h */,
+				CE0484D20B4992D8009CDBDA /* iMBAmazonController.m */,
+				CE85EC430BC60ED100552153 /* iMBAmazonBrowseNodesParser.h */,
+				CE85EC440BC60ED100552153 /* iMBAmazonBrowseNodesParser.m */,
+				CE2A87C70B542E0B00D10B32 /* DebugDescriptions.m */,
+				CE85EC2D0BC60EA300552153 /* iMBDeliciousLibraryParser.h */,
+				CE85EC2E0BC60EA300552153 /* iMBDeliciousLibraryParser.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE04CD3D0BC5F82B00EE0B72 /* AmazonSupport.framework */,
+				CE0486ED0B49B035009CDBDA /* iMediaBrowser.framework */,
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* iMediaAmazon.iMediaBrowser */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* iMediaAmazon_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		CE04852F0B499834009CDBDA /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				CE0485300B499834009CDBDA /* apparel.tiff */,
+				CE0485310B499834009CDBDA /* baby.tiff */,
+				CE0485320B499834009CDBDA /* books.tiff */,
+				CE0485330B499834009CDBDA /* classical.tiff */,
+				CE0485340B499834009CDBDA /* computers.tiff */,
+				CE0485350B499834009CDBDA /* dvd.tiff */,
+				CE0485360B499834009CDBDA /* electronics.tiff */,
+				CE0485370B499834009CDBDA /* garden.tiff */,
+				CE0485380B499834009CDBDA /* home-improvement.tiff */,
+				CE0485390B499834009CDBDA /* homegarden.tiff */,
+				CE04853A0B499834009CDBDA /* kitchen.tiff */,
+				CE04853B0B499834009CDBDA /* magazines.tiff */,
+				CE04853C0B499834009CDBDA /* music.tiff */,
+				CE04853D0B499834009CDBDA /* photo.tiff */,
+				CE04853E0B499834009CDBDA /* software.tiff */,
+				CE04853F0B499834009CDBDA /* toys.tiff */,
+				CE0485400B499834009CDBDA /* vhs.tiff */,
+				CE0485410B499834009CDBDA /* video-games.tiff */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		CE04D6D80BC5FDB700EE0B72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE04D6DC0BC5FDB700EE0B72 /* AmazonSupport.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE04D6F00BC5FE9200EE0B72 /* XCode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				CE04D6EA0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig */,
+				CE04D6EB0BC5FE8E00EE0B72 /* Bundle Release.xcconfig */,
+			);
+			name = "XCode Configurations";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* iMediaAmazon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "iMediaAmazon" */;
+			buildPhases = (
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE04D6DE0BC5FDD700EE0B72 /* PBXTargetDependency */,
+			);
+			name = iMediaAmazon;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = iMediaAmazon;
+			productReference = 8D5B49B6048680CD000E48DA /* iMediaAmazon.iMediaBrowser */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "iMediaAmazon" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* iMediaAmazon */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CE04D6D80BC5FDB700EE0B72 /* Products */;
+					ProjectRef = CE04D6D70BC5FDB700EE0B72 /* AmazonSupport.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* iMediaAmazon */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CE04D6DC0BC5FDB700EE0B72 /* AmazonSupport.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AmazonSupport.framework;
+			remoteRef = CE04D6DB0BC5FDB700EE0B72 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				CEE379750B47818000FE4838 /* textview.png in Resources */,
+				CEE379760B47818000FE4838 /* photoview.png in Resources */,
+				CEE379770B47818000FE4838 /* comboview.png in Resources */,
+				CEE379840B4782F900FE4838 /* amazon.nib in Resources */,
+				CE0485420B499834009CDBDA /* amazon-logo.tif in Resources */,
+				CE0485430B499834009CDBDA /* icon.tiff in Resources */,
+				CE0485440B499834009CDBDA /* apparel.tiff in Resources */,
+				CE0485450B499834009CDBDA /* baby.tiff in Resources */,
+				CE0485460B499834009CDBDA /* books.tiff in Resources */,
+				CE0485470B499834009CDBDA /* classical.tiff in Resources */,
+				CE0485480B499834009CDBDA /* computers.tiff in Resources */,
+				CE0485490B499834009CDBDA /* dvd.tiff in Resources */,
+				CE04854A0B499834009CDBDA /* electronics.tiff in Resources */,
+				CE04854B0B499834009CDBDA /* garden.tiff in Resources */,
+				CE04854C0B499834009CDBDA /* home-improvement.tiff in Resources */,
+				CE04854D0B499834009CDBDA /* homegarden.tiff in Resources */,
+				CE04854E0B499834009CDBDA /* kitchen.tiff in Resources */,
+				CE04854F0B499834009CDBDA /* magazines.tiff in Resources */,
+				CE0485500B499834009CDBDA /* music.tiff in Resources */,
+				CE0485510B499834009CDBDA /* photo.tiff in Resources */,
+				CE0485520B499834009CDBDA /* software.tiff in Resources */,
+				CE0485530B499834009CDBDA /* toys.tiff in Resources */,
+				CE0485540B499834009CDBDA /* vhs.tiff in Resources */,
+				CE0485550B499834009CDBDA /* video-games.tiff in Resources */,
+				CE0485730B49A273009CDBDA /* topLevelNodes.plist in Resources */,
+				CE0487AC0B49B396009CDBDA /* larger.png in Resources */,
+				CE0487AD0B49B396009CDBDA /* smaller.png in Resources */,
+				CEE26B6A0B61655B00FBEF1D /* remove_idle.png in Resources */,
+				CE04D6EC0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig in Resources */,
+				CE04D6ED0BC5FE8E00EE0B72 /* Bundle Release.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE0484D30B4992D8009CDBDA /* iMBAmazonController.m in Sources */,
+				CE2A87C80B542E0B00D10B32 /* DebugDescriptions.m in Sources */,
+				CE85EC2F0BC60EA300552153 /* iMBDeliciousLibraryParser.m in Sources */,
+				CE85EC450BC60ED100552153 /* iMBAmazonBrowseNodesParser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CE04D6DE0BC5FDD700EE0B72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AmazonSupport;
+			targetProxy = CE04D6DD0BC5FDD700EE0B72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CEE379820B4782F900FE4838 /* amazon.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEE379830B4782F900FE4838 /* English */,
+			);
+			name = amazon.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE04D6EA0BC5FE8E00EE0B72 /* Bundle Debug.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = iMediaAmazon_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x505A0000,
+				);
+				PRODUCT_NAME = iMediaAmazon;
+				WRAPPER_EXTENSION = iMediaBrowser;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE04D6EB0BC5FE8E00EE0B72 /* Bundle Release.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = iMediaAmazon_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x505A0000,
+				);
+				PRODUCT_NAME = iMediaAmazon;
+				WRAPPER_EXTENSION = iMediaBrowser;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "iMediaAmazon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "iMediaAmazon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

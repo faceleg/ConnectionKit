@@ -1,0 +1,8 @@
+<!-- Movie Pagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+[[forEach orderedElements anElement]]
+[[parseComponent anElement anElement.templateHTML]]
+[[endForEach]]
+<!-- /Movie Pagelet -->

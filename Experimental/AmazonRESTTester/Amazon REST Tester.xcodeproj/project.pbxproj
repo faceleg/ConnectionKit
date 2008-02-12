@@ -1,0 +1,457 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2721CDE00B60FE9100DAFA5B /* AmazonListItem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2721CDDA0B60FE9100DAFA5B /* AmazonListItem.h */; };
+		2721CDE10B60FE9100DAFA5B /* AmazonListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721CDDB0B60FE9100DAFA5B /* AmazonListItem.m */; };
+		2721CDE20B60FE9100DAFA5B /* AsyncObjectQueue.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2721CDDC0B60FE9100DAFA5B /* AsyncObjectQueue.h */; };
+		2721CDE30B60FE9100DAFA5B /* AsyncObjectQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721CDDD0B60FE9100DAFA5B /* AsyncObjectQueue.m */; };
+		2721CDE40B60FE9100DAFA5B /* RESTOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2721CDDE0B60FE9100DAFA5B /* RESTOperation.h */; };
+		2721CDE50B60FE9100DAFA5B /* RESTOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721CDDF0B60FE9100DAFA5B /* RESTOperation.m */; };
+		27273DA30B569E73000EB114 /* AmazonBrowseNodeLookup.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D890B569E73000EB114 /* AmazonBrowseNodeLookup.h */; };
+		27273DA40B569E73000EB114 /* AmazonBrowseNodeLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D8A0B569E73000EB114 /* AmazonBrowseNodeLookup.m */; };
+		27273DA50B569E73000EB114 /* AmazonImage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D8B0B569E73000EB114 /* AmazonImage.h */; };
+		27273DA60B569E73000EB114 /* AmazonImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D8C0B569E73000EB114 /* AmazonImage.m */; };
+		27273DA70B569E73000EB114 /* AmazonItem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D8D0B569E73000EB114 /* AmazonItem.h */; };
+		27273DA80B569E73000EB114 /* AmazonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D8E0B569E73000EB114 /* AmazonItem.m */; };
+		27273DA90B569E73000EB114 /* AmazonItemLookup.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D8F0B569E73000EB114 /* AmazonItemLookup.h */; };
+		27273DAA0B569E73000EB114 /* AmazonItemLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D900B569E73000EB114 /* AmazonItemLookup.m */; };
+		27273DAB0B569E73000EB114 /* AmazonListLookup.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D910B569E73000EB114 /* AmazonListLookup.h */; };
+		27273DAC0B569E73000EB114 /* AmazonListLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D920B569E73000EB114 /* AmazonListLookup.m */; };
+		27273DAD0B569E73000EB114 /* AmazonOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D930B569E73000EB114 /* AmazonOperation.h */; };
+		27273DAE0B569E73000EB114 /* AmazonOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D940B569E73000EB114 /* AmazonOperation.m */; };
+		27273DAF0B569E73000EB114 /* AsyncImage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D950B569E73000EB114 /* AsyncImage.h */; };
+		27273DB00B569E73000EB114 /* AsyncImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D960B569E73000EB114 /* AsyncImage.m */; };
+		27273DB10B569E73000EB114 /* AsyncObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D970B569E73000EB114 /* AsyncObject.h */; };
+		27273DB20B569E73000EB114 /* AsyncObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D980B569E73000EB114 /* AsyncObject.m */; };
+		27273DB30B569E73000EB114 /* CacheableObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D990B569E73000EB114 /* CacheableObject.h */; };
+		27273DB40B569E73000EB114 /* CacheableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D9A0B569E73000EB114 /* CacheableObject.m */; };
+		27273DB50B569E73000EB114 /* NSDictionary+Amazon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D9B0B569E73000EB114 /* NSDictionary+Amazon.h */; };
+		27273DB60B569E73000EB114 /* NSDictionary+Amazon.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D9C0B569E73000EB114 /* NSDictionary+Amazon.m */; };
+		27273DB70B569E73000EB114 /* NSString+Amazon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D9D0B569E73000EB114 /* NSString+Amazon.h */; };
+		27273DB80B569E73000EB114 /* NSString+Amazon.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273D9E0B569E73000EB114 /* NSString+Amazon.m */; };
+		27273DB90B569E73000EB114 /* NSURL+Amazon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273D9F0B569E73000EB114 /* NSURL+Amazon.h */; };
+		27273DBA0B569E73000EB114 /* NSURL+Amazon.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273DA00B569E73000EB114 /* NSURL+Amazon.m */; };
+		27273DBB0B569E73000EB114 /* NSXMLElement+Amazon.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27273DA10B569E73000EB114 /* NSXMLElement+Amazon.h */; };
+		27273DBC0B569E73000EB114 /* NSXMLElement+Amazon.m in Sources */ = {isa = PBXBuildFile; fileRef = 27273DA20B569E73000EB114 /* NSXMLElement+Amazon.m */; };
+		274BD05D0B3D565E00DBAAED /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274BD05C0B3D565E00DBAAED /* AppController.m */; };
+		279599020B6965740085863D /* AmazonECSOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 279599000B6965740085863D /* AmazonECSOperation.h */; };
+		279599030B6965740085863D /* AmazonECSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 279599010B6965740085863D /* AmazonECSOperation.m */; };
+		279599140B6965CA0085863D /* AmazonMiniItem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 279599120B6965CA0085863D /* AmazonMiniItem.h */; };
+		279599150B6965CA0085863D /* AmazonMiniItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 279599130B6965CA0085863D /* AmazonMiniItem.m */; };
+		27CDE21E0B4C1EF80042AF71 /* KTComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CDE21D0B4C1EF80042AF71 /* KTComponents.framework */; };
+		27CDE29A0B4C1F280042AF71 /* KTComponents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27CDE21D0B4C1EF80042AF71 /* KTComponents.framework */; };
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		27CDE2980B4C1F1A0042AF71 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				27CDE29A0B4C1F280042AF71 /* KTComponents.framework in CopyFiles */,
+				27273DA30B569E73000EB114 /* AmazonBrowseNodeLookup.h in CopyFiles */,
+				27273DA50B569E73000EB114 /* AmazonImage.h in CopyFiles */,
+				27273DA70B569E73000EB114 /* AmazonItem.h in CopyFiles */,
+				27273DA90B569E73000EB114 /* AmazonItemLookup.h in CopyFiles */,
+				27273DAB0B569E73000EB114 /* AmazonListLookup.h in CopyFiles */,
+				27273DAD0B569E73000EB114 /* AmazonOperation.h in CopyFiles */,
+				27273DAF0B569E73000EB114 /* AsyncImage.h in CopyFiles */,
+				27273DB10B569E73000EB114 /* AsyncObject.h in CopyFiles */,
+				27273DB30B569E73000EB114 /* CacheableObject.h in CopyFiles */,
+				27273DB50B569E73000EB114 /* NSDictionary+Amazon.h in CopyFiles */,
+				27273DB70B569E73000EB114 /* NSString+Amazon.h in CopyFiles */,
+				27273DB90B569E73000EB114 /* NSURL+Amazon.h in CopyFiles */,
+				27273DBB0B569E73000EB114 /* NSXMLElement+Amazon.h in CopyFiles */,
+				2721CDE00B60FE9100DAFA5B /* AmazonListItem.h in CopyFiles */,
+				2721CDE20B60FE9100DAFA5B /* AsyncObjectQueue.h in CopyFiles */,
+				2721CDE40B60FE9100DAFA5B /* RESTOperation.h in CopyFiles */,
+				279599020B6965740085863D /* AmazonECSOperation.h in CopyFiles */,
+				279599140B6965CA0085863D /* AmazonMiniItem.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		2721CDDA0B60FE9100DAFA5B /* AmazonListItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonListItem.h; sourceTree = "<group>"; };
+		2721CDDB0B60FE9100DAFA5B /* AmazonListItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonListItem.m; sourceTree = "<group>"; };
+		2721CDDC0B60FE9100DAFA5B /* AsyncObjectQueue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AsyncObjectQueue.h; sourceTree = "<group>"; };
+		2721CDDD0B60FE9100DAFA5B /* AsyncObjectQueue.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AsyncObjectQueue.m; sourceTree = "<group>"; };
+		2721CDDE0B60FE9100DAFA5B /* RESTOperation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RESTOperation.h; sourceTree = "<group>"; };
+		2721CDDF0B60FE9100DAFA5B /* RESTOperation.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RESTOperation.m; sourceTree = "<group>"; };
+		27273D890B569E73000EB114 /* AmazonBrowseNodeLookup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonBrowseNodeLookup.h; sourceTree = "<group>"; };
+		27273D8A0B569E73000EB114 /* AmazonBrowseNodeLookup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonBrowseNodeLookup.m; sourceTree = "<group>"; };
+		27273D8B0B569E73000EB114 /* AmazonImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonImage.h; sourceTree = "<group>"; };
+		27273D8C0B569E73000EB114 /* AmazonImage.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonImage.m; sourceTree = "<group>"; };
+		27273D8D0B569E73000EB114 /* AmazonItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonItem.h; sourceTree = "<group>"; };
+		27273D8E0B569E73000EB114 /* AmazonItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonItem.m; sourceTree = "<group>"; };
+		27273D8F0B569E73000EB114 /* AmazonItemLookup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonItemLookup.h; sourceTree = "<group>"; };
+		27273D900B569E73000EB114 /* AmazonItemLookup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonItemLookup.m; sourceTree = "<group>"; };
+		27273D910B569E73000EB114 /* AmazonListLookup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonListLookup.h; sourceTree = "<group>"; };
+		27273D920B569E73000EB114 /* AmazonListLookup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonListLookup.m; sourceTree = "<group>"; };
+		27273D930B569E73000EB114 /* AmazonOperation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonOperation.h; sourceTree = "<group>"; };
+		27273D940B569E73000EB114 /* AmazonOperation.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonOperation.m; sourceTree = "<group>"; };
+		27273D950B569E73000EB114 /* AsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AsyncImage.h; sourceTree = "<group>"; };
+		27273D960B569E73000EB114 /* AsyncImage.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AsyncImage.m; sourceTree = "<group>"; };
+		27273D970B569E73000EB114 /* AsyncObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AsyncObject.h; sourceTree = "<group>"; };
+		27273D980B569E73000EB114 /* AsyncObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AsyncObject.m; sourceTree = "<group>"; };
+		27273D990B569E73000EB114 /* CacheableObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CacheableObject.h; sourceTree = "<group>"; };
+		27273D9A0B569E73000EB114 /* CacheableObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CacheableObject.m; sourceTree = "<group>"; };
+		27273D9B0B569E73000EB114 /* NSDictionary+Amazon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Amazon.h"; sourceTree = "<group>"; };
+		27273D9C0B569E73000EB114 /* NSDictionary+Amazon.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Amazon.m"; sourceTree = "<group>"; };
+		27273D9D0B569E73000EB114 /* NSString+Amazon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSString+Amazon.h"; sourceTree = "<group>"; };
+		27273D9E0B569E73000EB114 /* NSString+Amazon.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSString+Amazon.m"; sourceTree = "<group>"; };
+		27273D9F0B569E73000EB114 /* NSURL+Amazon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSURL+Amazon.h"; sourceTree = "<group>"; };
+		27273DA00B569E73000EB114 /* NSURL+Amazon.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Amazon.m"; sourceTree = "<group>"; };
+		27273DA10B569E73000EB114 /* NSXMLElement+Amazon.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSXMLElement+Amazon.h"; sourceTree = "<group>"; };
+		27273DA20B569E73000EB114 /* NSXMLElement+Amazon.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+Amazon.m"; sourceTree = "<group>"; };
+		274BD05B0B3D565E00DBAAED /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		274BD05C0B3D565E00DBAAED /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		279599000B6965740085863D /* AmazonECSOperation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonECSOperation.h; sourceTree = "<group>"; };
+		279599010B6965740085863D /* AmazonECSOperation.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonECSOperation.m; sourceTree = "<group>"; };
+		279599120B6965CA0085863D /* AmazonMiniItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AmazonMiniItem.h; sourceTree = "<group>"; };
+		279599130B6965CA0085863D /* AmazonMiniItem.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AmazonMiniItem.m; sourceTree = "<group>"; };
+		27CDE21D0B4C1EF80042AF71 /* KTComponents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KTComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* Amazon REST Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Amazon REST Tester_Prefix.pch"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Amazon REST Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Amazon REST Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				27CDE21E0B4C1EF80042AF71 /* KTComponents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				274BD05B0B3D565E00DBAAED /* AppController.h */,
+				274BD05C0B3D565E00DBAAED /* AppController.m */,
+			);
+			name = Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				27CDE21D0B4C1EF80042AF71 /* KTComponents.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Amazon REST Tester.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		27CDE20F0B4C1A060042AF71 /* AmazonSupport */ = {
+			isa = PBXGroup;
+			children = (
+				279599120B6965CA0085863D /* AmazonMiniItem.h */,
+				279599130B6965CA0085863D /* AmazonMiniItem.m */,
+				279599000B6965740085863D /* AmazonECSOperation.h */,
+				279599010B6965740085863D /* AmazonECSOperation.m */,
+				2721CDDA0B60FE9100DAFA5B /* AmazonListItem.h */,
+				2721CDDB0B60FE9100DAFA5B /* AmazonListItem.m */,
+				2721CDDC0B60FE9100DAFA5B /* AsyncObjectQueue.h */,
+				2721CDDD0B60FE9100DAFA5B /* AsyncObjectQueue.m */,
+				2721CDDE0B60FE9100DAFA5B /* RESTOperation.h */,
+				2721CDDF0B60FE9100DAFA5B /* RESTOperation.m */,
+				27273D890B569E73000EB114 /* AmazonBrowseNodeLookup.h */,
+				27273D8A0B569E73000EB114 /* AmazonBrowseNodeLookup.m */,
+				27273D8B0B569E73000EB114 /* AmazonImage.h */,
+				27273D8C0B569E73000EB114 /* AmazonImage.m */,
+				27273D8D0B569E73000EB114 /* AmazonItem.h */,
+				27273D8E0B569E73000EB114 /* AmazonItem.m */,
+				27273D8F0B569E73000EB114 /* AmazonItemLookup.h */,
+				27273D900B569E73000EB114 /* AmazonItemLookup.m */,
+				27273D910B569E73000EB114 /* AmazonListLookup.h */,
+				27273D920B569E73000EB114 /* AmazonListLookup.m */,
+				27273D930B569E73000EB114 /* AmazonOperation.h */,
+				27273D940B569E73000EB114 /* AmazonOperation.m */,
+				27273D950B569E73000EB114 /* AsyncImage.h */,
+				27273D960B569E73000EB114 /* AsyncImage.m */,
+				27273D970B569E73000EB114 /* AsyncObject.h */,
+				27273D980B569E73000EB114 /* AsyncObject.m */,
+				27273D990B569E73000EB114 /* CacheableObject.h */,
+				27273D9A0B569E73000EB114 /* CacheableObject.m */,
+				27273D9B0B569E73000EB114 /* NSDictionary+Amazon.h */,
+				27273D9C0B569E73000EB114 /* NSDictionary+Amazon.m */,
+				27273D9D0B569E73000EB114 /* NSString+Amazon.h */,
+				27273D9E0B569E73000EB114 /* NSString+Amazon.m */,
+				27273D9F0B569E73000EB114 /* NSURL+Amazon.h */,
+				27273DA00B569E73000EB114 /* NSURL+Amazon.m */,
+				27273DA10B569E73000EB114 /* NSXMLElement+Amazon.h */,
+				27273DA20B569E73000EB114 /* NSXMLElement+Amazon.m */,
+			);
+			name = AmazonSupport;
+			path = ../../Plugins/AmazonSupport;
+			sourceTree = SOURCE_ROOT;
+		};
+		29B97314FDCFA39411CA2CEA /* Amazon REST Tester */ = {
+			isa = PBXGroup;
+			children = (
+				27CDE20F0B4C1A060042AF71 /* AmazonSupport */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "Amazon REST Tester";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Amazon REST Tester_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Amazon REST Tester */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Amazon REST Tester" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				27CDE2980B4C1F1A0042AF71 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Amazon REST Tester";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Amazon REST Tester";
+			productReference = 8D1107320486CEB800E47090 /* Amazon REST Tester.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Amazon REST Tester" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Amazon REST Tester */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Amazon REST Tester */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				274BD05D0B3D565E00DBAAED /* AppController.m in Sources */,
+				27273DA40B569E73000EB114 /* AmazonBrowseNodeLookup.m in Sources */,
+				27273DA60B569E73000EB114 /* AmazonImage.m in Sources */,
+				27273DA80B569E73000EB114 /* AmazonItem.m in Sources */,
+				27273DAA0B569E73000EB114 /* AmazonItemLookup.m in Sources */,
+				27273DAC0B569E73000EB114 /* AmazonListLookup.m in Sources */,
+				27273DAE0B569E73000EB114 /* AmazonOperation.m in Sources */,
+				27273DB00B569E73000EB114 /* AsyncImage.m in Sources */,
+				27273DB20B569E73000EB114 /* AsyncObject.m in Sources */,
+				27273DB40B569E73000EB114 /* CacheableObject.m in Sources */,
+				27273DB60B569E73000EB114 /* NSDictionary+Amazon.m in Sources */,
+				27273DB80B569E73000EB114 /* NSString+Amazon.m in Sources */,
+				27273DBA0B569E73000EB114 /* NSURL+Amazon.m in Sources */,
+				27273DBC0B569E73000EB114 /* NSXMLElement+Amazon.m in Sources */,
+				2721CDE10B60FE9100DAFA5B /* AmazonListItem.m in Sources */,
+				2721CDE30B60FE9100DAFA5B /* AsyncObjectQueue.m in Sources */,
+				2721CDE50B60FE9100DAFA5B /* RESTOperation.m in Sources */,
+				279599030B6965740085863D /* AmazonECSOperation.m in Sources */,
+				279599150B6965CA0085863D /* AmazonMiniItem.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Amazon REST Tester";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Amazon REST Tester";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Amazon REST Tester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Amazon REST Tester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

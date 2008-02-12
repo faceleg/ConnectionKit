@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.RSSBadgePagelet</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>KTHelpAnchor</key>
+	<string>RSS_Badge</string>
+	<key>KTMinimumAppVersion</key>
+	<string>1.1</string>
+	<key>KTPageletCanHaveTitle</key>
+	<false/>
+	<key>KTPluginCSSFilesNeeded</key>
+	<array>
+		<string>rssbadge.css</string>
+	</array>
+	<key>KTPluginDescription</key>
+	<string>Links to the RSS feed for a collection</string>
+	<key>KTPluginIconName</key>
+	<string>bundleicon.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>collectionID</key>
+		<string></string>
+		<key>iconPosition</key>
+		<integer>1</integer>
+		<key>iconStyle</key>
+		<integer>1</integer>
+	</dict>
+	<key>KTPluginName</key>
+	<string>RSS Badge</string>
+	<key>KTPluginNibFile</key>
+	<string>RSSBadge</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string></string>
+	<key>KTTemplateName</key>
+	<string>BadgePageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>RSSBadgeDelegate</string>
+</dict>
+</plist>

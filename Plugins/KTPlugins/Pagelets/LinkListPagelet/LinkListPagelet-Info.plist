@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.LinkListPagelet</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTHelpAnchor</key>
+	<string>List_of_Links</string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>listing.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>layout</key>
+		<integer>0</integer>
+		<key>linkList</key>
+		<array/>
+		<key>openInNewWindow</key>
+		<false/>
+	</dict>
+	<key>KTPluginName</key>
+	<string>List of Links</string>
+	<key>KTPluginNibFile</key>
+	<string>LinkListPagelet</string>
+	<key>KTPluginUntitledName</key>
+	<string>Link List</string>
+	<key>KTTemplateName</key>
+	<string>LinkListPageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>LinkListPageletDelegate</string>
+</dict>
+</plist>

@@ -1,0 +1,68 @@
+﻿/* alert message */
+"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found." = "Amazon-lister er normalt specifikke for et bestemt land. Skifter du butik bliver din liste måske ikke fundet.";
+
+/* button text */
+"Cancel" = "Annuller";
+
+/* button text */
+"Change Store" = "Skift butik";
+
+/* alert title */
+"Change to the %@ Amazon store?" = "Skift til %@ Amazon-butik?";
+
+/* button */
+"Close" = "Luk";
+
+/* Appears in an empty tableview */
+"Drag Amazon products here from your web browser" = "Træk Amazon-produkter hertil fra din web-browser";
+
+/* table cell */
+"Loading product data\\U2026" = "Indlæser produktdata…";
+
+/* table cell */
+"No Internet connection" = "Ingen internetforbindelse";
+
+/* error message in tableview */
+"No list with that ID was found" = "Ingen liste med dette ID blev fundet";
+
+/* table cell */
+"No matching Amazon product found" = "Ingen matchende Amazon-produkter blev fundet";
+
+/* alert message */
+"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found." = "Ikke alle produkter er tilgængelige i alle lande. Skifter du butik vil nogle af produkterne i din liste måske ikke blive fundet.";
+
+/* String_On_Page_Template */
+"Please add Amazon products to this list using the Inspector." = "Tilføj Amazon-produkter til denne liste med inspektøren.";
+
+/* alert text */
+"Please click the purple help button to view instructions on how to find the public URL of an Amazon list." = "Klik på den lilla hjælpknap for at se instruktion om at finde den offentlige URL for en Amazon-liste.";
+
+/* Table placeholder text */
+"Please enter the ID or public URL of an Amazon list above" = "Skriv ID eller offentlig URL tol en Amazon-liste herover";
+
+/* String_On_Page_Template */
+"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector." = "Angiv en Amazon-liste f.eks. en øsnkeliste eller listmania) at vise ved hjælp af inspektøren.";
+
+/* table cell */
+"Please specify an Amazon product to display" = "Angiv et Amazon-produkt at vise";
+
+/* Tooltip text */
+"The desired quantity of this product has been received." = "Det ønskede kvantum af dette produkt er blevet modtaget.";
+
+/* error message in tableview */
+"The URL entered does not appear to be a public Amazon list URL" = "Den skrevne URL synes ikke at være en offentlig Amazon-liste URL";
+
+/* alert title */
+"The URL entered is not the public URL of an Amazon list." = "Den skrevne URL er ikke en offentlig Amazon-liste URL";
+
+/* error message in tableview */
+"There was an error loading the list." = "Der opstod en fejl under indlæsning af listen.";
+
+/* table cell */
+"There was an error loading the product" = "Der opstod en fejl under indlæsning af produktet";
+
+/* Placeholder text */
+"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences." = "Dette er en pladsholder for et Amazon-produkt. Det vises når du publicerer eller slår live data feeds til i indstillingerne";
+
+/* Placeholder text */
+"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences." = "Dette er en pladsholder. Din Amazon-liste vises her, når du publicerer eller slår live data feeds til i indstillingerne.";

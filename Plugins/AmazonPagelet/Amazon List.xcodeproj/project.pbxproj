@@ -1,0 +1,577 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		270877570B5461F000A756C2 /* DropShadowImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 270877560B5461F000A756C2 /* DropShadowImageCell.m */; };
+		27096CF20BCC53B800273C02 /* Thumbnail placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 27096CF10BCC53B800273C02 /* Thumbnail placeholder.png */; };
+		270B532B0B98407D00D33C3A /* APProductsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B532A0B98407D00D33C3A /* APProductsArrayController.m */; };
+		271B1DC40B7A75D600EC807C /* layoutRight.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 271B1DBE0B7A75D600EC807C /* layoutRight.tiff */; };
+		271B1DC50B7A75D600EC807C /* layoutLeft.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 271B1DBF0B7A75D600EC807C /* layoutLeft.tiff */; };
+		271B1DC60B7A75D600EC807C /* layoutTwoUp.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 271B1DC00B7A75D600EC807C /* layoutTwoUp.tiff */; };
+		271B1DC70B7A75D600EC807C /* layoutCenter.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 271B1DC10B7A75D600EC807C /* layoutCenter.tiff */; };
+		271B1DC90B7A75D600EC807C /* layoutAlt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 271B1DC30B7A75D600EC807C /* layoutAlt.tiff */; };
+		271D7E1A0C87213800494D69 /* AmazonListDelegate+ManualList.m in Sources */ = {isa = PBXBuildFile; fileRef = 271D7E190C87213800494D69 /* AmazonListDelegate+ManualList.m */; };
+		271D7E850C87256000494D69 /* AmazonListDelegate+AutomaticList.m in Sources */ = {isa = PBXBuildFile; fileRef = 271D7E840C87256000494D69 /* AmazonListDelegate+AutomaticList.m */; };
+		27229C540B47098D00894404 /* APProductAttributesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27229C530B47098D00894404 /* APProductAttributesCell.m */; };
+		2722D0F70B9C6E8600E674CE /* AmazonIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2722D0F60B9C6E8600E674CE /* AmazonIDFormatter.m */; };
+		272D57C90B557BA4007E436A /* APAmazonList.m in Sources */ = {isa = PBXBuildFile; fileRef = 272D57C80B557BA4007E436A /* APAmazonList.m */; };
+		272D5A7A0B55A422007E436A /* NSURL+AmazonPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 272D5A790B55A422007E436A /* NSURL+AmazonPagelet.m */; };
+		273FA3790B51527B007DF8BC /* Amazon.png in Resources */ = {isa = PBXBuildFile; fileRef = 273FA3780B51527A007DF8BC /* Amazon.png */; };
+		274BD0070B3C022600DBAAED /* AmazonListDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 274BD0060B3C022600DBAAED /* AmazonListDelegate.m */; };
+		275018720B657A4D001C3639 /* APManualListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275018710B657A4D001C3639 /* APManualListArrayController.m */; };
+		276583A90B98F19800AEF7B1 /* layoutBullets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 276583A80B98F19800AEF7B1 /* layoutBullets.tiff */; };
+		27873CB50B6EB9FF00A5D52A /* AmazonItem+APExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 27873CB40B6EB9FF00A5D52A /* AmazonItem+APExtensions.m */; };
+		27A60A350BCD556000CE872B /* layoutRandom.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A60A340BCD556000CE872B /* layoutRandom.png */; };
+		27A923460BA2E301008451F3 /* layoutEnhanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27A923450BA2E301008451F3 /* layoutEnhanced.tiff */; };
+		27B8686E0B74D5E50016AA9C /* APInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8686D0B74D5E50016AA9C /* APInspectorController.m */; };
+		27C19DB50B5FE76B00B10F99 /* gear_idle.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27C19DB40B5FE76B00B10F99 /* gear_idle.tiff */; };
+		27C19DDC0B5FECD700B10F99 /* gear_pressed.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27C19DDB0B5FECD700B10F99 /* gear_pressed.tiff */; };
+		27C4715C0B765CA900A856C5 /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 27C4715B0B765CA900A856C5 /* template.html */; };
+		27C472AB0B769F9800A856C5 /* amazonlist.css in Resources */ = {isa = PBXBuildFile; fileRef = 27C4729A0B769A0E00A856C5 /* amazonlist.css */; };
+		27CDD9EA0B4AA3090042AF71 /* APManualListProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CDD9E90B4AA3090042AF71 /* APManualListProduct.m */; };
+		27CDDA090B4AA6F60042AF71 /* APAmazonProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CDDA080B4AA6F60042AF71 /* APAmazonProduct.m */; };
+		27FD77DD0B7949660007BEC3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27FD77DB0B7949660007BEC3 /* Localizable.strings */; };
+		27FDDFE80B7CDA7300532F5F /* APAutomaticListProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDDFE70B7CDA7300532F5F /* APAutomaticListProduct.m */; };
+		3C6DD7D10BC483FB006F8E71 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C6DD7D00BC483FB006F8E71 /* AmazonSupport.framework */; };
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE1A35FD0BC6D24200673CD6 /* Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE1A35FB0BC6D24200673CD6 /* Inspector.nib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		270877550B5461F000A756C2 /* DropShadowImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropShadowImageCell.h; sourceTree = "<group>"; };
+		270877560B5461F000A756C2 /* DropShadowImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropShadowImageCell.m; sourceTree = "<group>"; };
+		27096CF10BCC53B800273C02 /* Thumbnail placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbnail placeholder.png"; sourceTree = "<group>"; };
+		270B53290B98407D00D33C3A /* APProductsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APProductsArrayController.h; sourceTree = "<group>"; };
+		270B532A0B98407D00D33C3A /* APProductsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APProductsArrayController.m; sourceTree = "<group>"; };
+		271B1DBE0B7A75D600EC807C /* layoutRight.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutRight.tiff; sourceTree = "<group>"; };
+		271B1DBF0B7A75D600EC807C /* layoutLeft.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutLeft.tiff; sourceTree = "<group>"; };
+		271B1DC00B7A75D600EC807C /* layoutTwoUp.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutTwoUp.tiff; sourceTree = "<group>"; };
+		271B1DC10B7A75D600EC807C /* layoutCenter.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutCenter.tiff; sourceTree = "<group>"; };
+		271B1DC30B7A75D600EC807C /* layoutAlt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutAlt.tiff; sourceTree = "<group>"; };
+		271D7E190C87213800494D69 /* AmazonListDelegate+ManualList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListDelegate+ManualList.m"; sourceTree = "<group>"; };
+		271D7E840C87256000494D69 /* AmazonListDelegate+AutomaticList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListDelegate+AutomaticList.m"; sourceTree = "<group>"; };
+		27229C520B47098D00894404 /* APProductAttributesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APProductAttributesCell.h; sourceTree = "<group>"; };
+		27229C530B47098D00894404 /* APProductAttributesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APProductAttributesCell.m; sourceTree = "<group>"; };
+		2722D0F50B9C6E8600E674CE /* AmazonIDFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonIDFormatter.h; sourceTree = "<group>"; };
+		2722D0F60B9C6E8600E674CE /* AmazonIDFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonIDFormatter.m; sourceTree = "<group>"; };
+		272D57C70B557BA4007E436A /* APAmazonList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAmazonList.h; sourceTree = "<group>"; };
+		272D57C80B557BA4007E436A /* APAmazonList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAmazonList.m; sourceTree = "<group>"; };
+		272D5A780B55A422007E436A /* NSURL+AmazonPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+AmazonPagelet.h"; sourceTree = "<group>"; };
+		272D5A790B55A422007E436A /* NSURL+AmazonPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+AmazonPagelet.m"; sourceTree = "<group>"; };
+		273B83BD0BC56D7E00027491 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = "Bundle Debug.xcconfig"; sourceTree = "<group>"; };
+		273B83BE0BC56D7E00027491 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = "Bundle Release.xcconfig"; sourceTree = "<group>"; };
+		273FA3780B51527A007DF8BC /* Amazon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Amazon.png; sourceTree = "<group>"; };
+		274BD0050B3C022600DBAAED /* AmazonListDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonListDelegate.h; sourceTree = "<group>"; };
+		274BD0060B3C022600DBAAED /* AmazonListDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonListDelegate.m; sourceTree = "<group>"; };
+		275018700B657A4D001C3639 /* APManualListArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = APManualListArrayController.h; sourceTree = "<group>"; };
+		275018710B657A4D001C3639 /* APManualListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = APManualListArrayController.m; sourceTree = "<group>"; };
+		276583A80B98F19800AEF7B1 /* layoutBullets.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutBullets.tiff; sourceTree = "<group>"; };
+		27873CB30B6EB9FF00A5D52A /* AmazonItem+APExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AmazonItem+APExtensions.h"; sourceTree = "<group>"; };
+		27873CB40B6EB9FF00A5D52A /* AmazonItem+APExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonItem+APExtensions.m"; sourceTree = "<group>"; };
+		27A60A340BCD556000CE872B /* layoutRandom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = layoutRandom.png; sourceTree = "<group>"; };
+		27A923450BA2E301008451F3 /* layoutEnhanced.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = layoutEnhanced.tiff; sourceTree = "<group>"; };
+		27B8686C0B74D5E50016AA9C /* APInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInspectorController.h; sourceTree = "<group>"; };
+		27B8686D0B74D5E50016AA9C /* APInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APInspectorController.m; sourceTree = "<group>"; };
+		27C19DB40B5FE76B00B10F99 /* gear_idle.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = gear_idle.tiff; sourceTree = "<group>"; };
+		27C19DDB0B5FECD700B10F99 /* gear_pressed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = gear_pressed.tiff; sourceTree = "<group>"; };
+		27C4715B0B765CA900A856C5 /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
+		27C4729A0B769A0E00A856C5 /* amazonlist.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = amazonlist.css; sourceTree = "<group>"; };
+		27CDD9E80B4AA3090042AF71 /* APManualListProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APManualListProduct.h; sourceTree = "<group>"; };
+		27CDD9E90B4AA3090042AF71 /* APManualListProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APManualListProduct.m; sourceTree = "<group>"; };
+		27CDDA070B4AA6F60042AF71 /* APAmazonProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAmazonProduct.h; sourceTree = "<group>"; };
+		27CDDA080B4AA6F60042AF71 /* APAmazonProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAmazonProduct.m; sourceTree = "<group>"; };
+		27FD77DC0B7949660007BEC3 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		27FDDFE60B7CDA7300532F5F /* APAutomaticListProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAutomaticListProduct.h; sourceTree = "<group>"; };
+		27FDDFE70B7CDA7300532F5F /* APAutomaticListProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAutomaticListProduct.m; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* Amazon List_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Amazon List_Prefix.pch"; sourceTree = "<group>"; };
+		3C6DD7D00BC483FB006F8E71 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Amazon.svxPagelet */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxPagelet; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE1A35FC0BC6D24200673CD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BABB0BD6E04C0006417A /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BABC0BD6E04C0006417A /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BACA0BD6E05C0006417A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BACB0BD6E05C0006417A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BAD80BD6E08E0006417A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BADD0BD6E0950006417A /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BAE20BD6E09C0006417A /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BAE30BD6E09C0006417A /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BAE40BD6E09C0006417A /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BAE80BD6E0B80006417A /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BAF60BD6E0D10006417A /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BAF70BD6E0D10006417A /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BAF80BD6E0D10006417A /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BAFD0BD6E0D90006417A /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BAFE0BD6E0D90006417A /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BAFF0BD6E0D90006417A /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BB040BD6E0E00006417A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BB050BD6E0E00006417A /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BB060BD6E0E00006417A /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEF6BB070BD6E0E60006417A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEF6BB080BD6E0E60006417A /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEF6BB090BD6E0E60006417A /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				3C6DD7D10BC483FB006F8E71 /* AmazonSupport.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Amazon List */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* AmazonPagelet */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				273B83AE0BC56AC100027491 /* Xcode Configurations */,
+			);
+			name = "Amazon List";
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				271B1E110B7A898700EC807C /* Layout */,
+				2721CD890B60F4ED00DAFA5B /* Buttons */,
+				2721CD8A0B60F50700DAFA5B /* Other */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* AmazonPagelet */ = {
+			isa = PBXGroup;
+			children = (
+				272D5A750B55A410007E436A /* Cocoa Extensions */,
+				272D585C0B55847C007E436A /* Lists */,
+				27CDDCA80B4ACC340042AF71 /* Plugin */,
+				27CDDCA70B4ACC270042AF71 /* Products */,
+				27CDDCA60B4ACBF10042AF71 /* UI */,
+			);
+			name = AmazonPagelet;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+				3C6DD7D00BC483FB006F8E71 /* AmazonSupport.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* Amazon.svxPagelet */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		271B1E110B7A898700EC807C /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				27A60A340BCD556000CE872B /* layoutRandom.png */,
+				27A923450BA2E301008451F3 /* layoutEnhanced.tiff */,
+				271B1DBE0B7A75D600EC807C /* layoutRight.tiff */,
+				271B1DBF0B7A75D600EC807C /* layoutLeft.tiff */,
+				271B1DC00B7A75D600EC807C /* layoutTwoUp.tiff */,
+				271B1DC10B7A75D600EC807C /* layoutCenter.tiff */,
+				271B1DC30B7A75D600EC807C /* layoutAlt.tiff */,
+				276583A80B98F19800AEF7B1 /* layoutBullets.tiff */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
+		2721CD890B60F4ED00DAFA5B /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				27C19DDB0B5FECD700B10F99 /* gear_pressed.tiff */,
+				27C19DB40B5FE76B00B10F99 /* gear_idle.tiff */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		2721CD8A0B60F50700DAFA5B /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				27096CF10BCC53B800273C02 /* Thumbnail placeholder.png */,
+				CE1A35FB0BC6D24200673CD6 /* Inspector.nib */,
+				27FD77DB0B7949660007BEC3 /* Localizable.strings */,
+				27C4715B0B765CA900A856C5 /* template.html */,
+				273FA3780B51527A007DF8BC /* Amazon.png */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				27C4729A0B769A0E00A856C5 /* amazonlist.css */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		272D585C0B55847C007E436A /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				272D57C70B557BA4007E436A /* APAmazonList.h */,
+				272D57C80B557BA4007E436A /* APAmazonList.m */,
+			);
+			name = Lists;
+			sourceTree = "<group>";
+		};
+		272D5A750B55A410007E436A /* Cocoa Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				272D5A780B55A422007E436A /* NSURL+AmazonPagelet.h */,
+				272D5A790B55A422007E436A /* NSURL+AmazonPagelet.m */,
+			);
+			name = "Cocoa Extensions";
+			sourceTree = "<group>";
+		};
+		273B83AE0BC56AC100027491 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				273B83BD0BC56D7E00027491 /* Bundle Debug.xcconfig */,
+				273B83BE0BC56D7E00027491 /* Bundle Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			path = "../../Xcode Configurations";
+			sourceTree = SOURCE_ROOT;
+		};
+		27CDDCA60B4ACBF10042AF71 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2722D0F50B9C6E8600E674CE /* AmazonIDFormatter.h */,
+				2722D0F60B9C6E8600E674CE /* AmazonIDFormatter.m */,
+				27229C520B47098D00894404 /* APProductAttributesCell.h */,
+				27229C530B47098D00894404 /* APProductAttributesCell.m */,
+				270877550B5461F000A756C2 /* DropShadowImageCell.h */,
+				270877560B5461F000A756C2 /* DropShadowImageCell.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		27CDDCA70B4ACC270042AF71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				275018700B657A4D001C3639 /* APManualListArrayController.h */,
+				275018710B657A4D001C3639 /* APManualListArrayController.m */,
+				27CDD9E80B4AA3090042AF71 /* APManualListProduct.h */,
+				27CDD9E90B4AA3090042AF71 /* APManualListProduct.m */,
+				27CDDA070B4AA6F60042AF71 /* APAmazonProduct.h */,
+				27CDDA080B4AA6F60042AF71 /* APAmazonProduct.m */,
+				27873CB30B6EB9FF00A5D52A /* AmazonItem+APExtensions.h */,
+				27873CB40B6EB9FF00A5D52A /* AmazonItem+APExtensions.m */,
+				27FDDFE60B7CDA7300532F5F /* APAutomaticListProduct.h */,
+				27FDDFE70B7CDA7300532F5F /* APAutomaticListProduct.m */,
+				270B53290B98407D00D33C3A /* APProductsArrayController.h */,
+				270B532A0B98407D00D33C3A /* APProductsArrayController.m */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		27CDDCA80B4ACC340042AF71 /* Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				271D7E190C87213800494D69 /* AmazonListDelegate+ManualList.m */,
+				274BD0050B3C022600DBAAED /* AmazonListDelegate.h */,
+				274BD0060B3C022600DBAAED /* AmazonListDelegate.m */,
+				27B8686C0B74D5E50016AA9C /* APInspectorController.h */,
+				27B8686D0B74D5E50016AA9C /* APInspectorController.m */,
+				271D7E840C87256000494D69 /* AmazonListDelegate+AutomaticList.m */,
+			);
+			name = Plugin;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* Amazon List_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* Amazon List */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "Amazon List" */;
+			buildPhases = (
+				27FD77940B7942060007BEC3 /* ShellScript */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Amazon List";
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = "Amazon List";
+			productReference = 8D5B49B6048680CD000E48DA /* Amazon.svxPagelet */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "Amazon List" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				zh_CN,
+				zh_TW,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* Amazon List */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* Amazon List */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27C472AB0B769F9800A856C5 /* amazonlist.css in Resources */,
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				273FA3790B51527B007DF8BC /* Amazon.png in Resources */,
+				27C19DB50B5FE76B00B10F99 /* gear_idle.tiff in Resources */,
+				27C19DDC0B5FECD700B10F99 /* gear_pressed.tiff in Resources */,
+				27C4715C0B765CA900A856C5 /* template.html in Resources */,
+				27FD77DD0B7949660007BEC3 /* Localizable.strings in Resources */,
+				271B1DC40B7A75D600EC807C /* layoutRight.tiff in Resources */,
+				271B1DC50B7A75D600EC807C /* layoutLeft.tiff in Resources */,
+				271B1DC60B7A75D600EC807C /* layoutTwoUp.tiff in Resources */,
+				271B1DC70B7A75D600EC807C /* layoutCenter.tiff in Resources */,
+				271B1DC90B7A75D600EC807C /* layoutAlt.tiff in Resources */,
+				276583A90B98F19800AEF7B1 /* layoutBullets.tiff in Resources */,
+				27A923460BA2E301008451F3 /* layoutEnhanced.tiff in Resources */,
+				CE1A35FD0BC6D24200673CD6 /* Inspector.nib in Resources */,
+				27096CF20BCC53B800273C02 /* Thumbnail placeholder.png in Resources */,
+				27A60A350BCD556000CE872B /* layoutRandom.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		27FD77940B7942060007BEC3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				274BD0070B3C022600DBAAED /* AmazonListDelegate.m in Sources */,
+				27229C540B47098D00894404 /* APProductAttributesCell.m in Sources */,
+				27CDD9EA0B4AA3090042AF71 /* APManualListProduct.m in Sources */,
+				27CDDA090B4AA6F60042AF71 /* APAmazonProduct.m in Sources */,
+				270877570B5461F000A756C2 /* DropShadowImageCell.m in Sources */,
+				272D57C90B557BA4007E436A /* APAmazonList.m in Sources */,
+				272D5A7A0B55A422007E436A /* NSURL+AmazonPagelet.m in Sources */,
+				275018720B657A4D001C3639 /* APManualListArrayController.m in Sources */,
+				27873CB50B6EB9FF00A5D52A /* AmazonItem+APExtensions.m in Sources */,
+				27B8686E0B74D5E50016AA9C /* APInspectorController.m in Sources */,
+				27FDDFE80B7CDA7300532F5F /* APAutomaticListProduct.m in Sources */,
+				270B532B0B98407D00D33C3A /* APProductsArrayController.m in Sources */,
+				2722D0F70B9C6E8600E674CE /* AmazonIDFormatter.m in Sources */,
+				271D7E1A0C87213800494D69 /* AmazonListDelegate+ManualList.m in Sources */,
+				271D7E850C87256000494D69 /* AmazonListDelegate+AutomaticList.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEF6BABB0BD6E04C0006417A /* da */,
+				CEF6BACA0BD6E05C0006417A /* de */,
+				CEF6BAE30BD6E09C0006417A /* fr */,
+				CEF6BAE80BD6E0B80006417A /* en */,
+				CEF6BAF70BD6E0D10006417A /* it */,
+				CEF6BAFE0BD6E0D90006417A /* ja */,
+				CEF6BB050BD6E0E00006417A /* zh_CN */,
+				CEF6BB080BD6E0E60006417A /* zh_TW */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		27FD77DB0B7949660007BEC3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27FD77DC0B7949660007BEC3 /* en */,
+				CEF6BABC0BD6E04C0006417A /* da */,
+				CEF6BACB0BD6E05C0006417A /* de */,
+				CEF6BAE40BD6E09C0006417A /* fr */,
+				CEF6BAF80BD6E0D10006417A /* it */,
+				CEF6BAFF0BD6E0D90006417A /* ja */,
+				CEF6BB060BD6E0E00006417A /* zh_CN */,
+				CEF6BB090BD6E0E60006417A /* zh_TW */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CE1A35FB0BC6D24200673CD6 /* Inspector.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE1A35FC0BC6D24200673CD6 /* en */,
+				CEF6BAD80BD6E08E0006417A /* de */,
+				CEF6BADD0BD6E0950006417A /* da */,
+				CEF6BAE20BD6E09C0006417A /* fr */,
+				CEF6BAF60BD6E0D10006417A /* it */,
+				CEF6BAFD0BD6E0D90006417A /* ja */,
+				CEF6BB040BD6E0E00006417A /* zh_CN */,
+				CEF6BB070BD6E0E60006417A /* zh_TW */,
+			);
+			name = Inspector.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 273B83BD0BC56D7E00027491 /* Bundle Debug.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = "Amazon List_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x504c0000,
+				);
+				PRODUCT_NAME = Amazon;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 273B83BE0BC56D7E00027491 /* Bundle Release.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = "Amazon List_Prefix.pch";
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x504c0000,
+				);
+				PRODUCT_NAME = Amazon;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "Amazon List" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "Amazon List" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

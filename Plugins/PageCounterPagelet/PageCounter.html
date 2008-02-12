@@ -1,0 +1,60 @@
+<!-- PageCounterPagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+<div class="page_counter" style="text-align: center;" id="pc-[[=uniqueID]]">
+[[if document.publishingMode]]
+<script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&CurrentPage.url]]"></script>
+[[else]]
+<script type="text/javascript">var svxPageCount = "1234";</script>
+[[endif]]
+[[if delegate.type==2]]
+<script type="text/javascript">
+var resourceDir = "[[=delegate.resourceDirectory]]";
+var theme = "[[=&delegate.theme]]";
+var countRequest = false;
+var pcWidth = "[[=delegate.width]]";
+var pcHeight = "[[=delegate.height]]";
+
+function showCount(countStr)
+{
+	var pagelet = document.getElementById("pc-[[=uniqueID]]");
+	var i, c = countStr.length;
+	for (i = 0; i < c; i++)
+	{
+		var image = document.createElement("img");
+		image.setAttribute("style", "padding:0px; margin:0px;");
+		image.setAttribute("src", resourceDir+"/"+theme+"-"+countStr.charAt(i)+".png");
+		image.setAttribute("width", pcWidth);
+		image.setAttribute("height", pcHeight);
+		image.setAttribute("alt", "" + countStr.charAt(i));
+		pagelet.appendChild(image);
+	}
+}
+showCount(svxPageCount);
+</script>
+[[endif]]
+[[if delegate.type==1]]
+<script type="text/javascript">
+var paragraph = document.createElement("p");
+var text = document.createTextNode(svxPageCount);
+paragraph.appendChild(text);
+document.getElementById("pc-[[=uniqueID]]").appendChild(paragraph);
+</script>
+[[endif]]
+[[if delegate.type==0]]
+<script type="text/javascript">
+var commentNode = document.createComment(svxPageCount);
+document.getElementById("pc-[[=uniqueID]]").appendChild(commentNode);
+</script>
+[[endif]]
+<noscript>
+<!-- tickle pagecounter by loading a small image -->
+[[if delegate.type]]
+<p><img src="http://service.karelia.com/ctr/noscript.gif?u=[[=%&CurrentPage.url]]" alt="" /></p>
+[[else]]
+<div><img src="http://service.karelia.com/ctr/1x1.gif?u=[[=%&CurrentPage.url]]" alt="" height="1" width="1" /></div>
+[[endif]]
+</noscript>
+</div>
+<!-- /PageCounterPagelet -->

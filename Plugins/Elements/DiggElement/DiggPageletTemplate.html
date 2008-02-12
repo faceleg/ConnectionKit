@@ -1,0 +1,21 @@
+<!-- digg Pagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+
+[[if document.publishingMode||document.liveDataFeeds]]
+
+<script src="http://digg.com/diggjs/[[=&%delegate.diggTypeString]]/[[=delegate.diggCategoryString]]//[[=delegate.diggMaskString]]" type="text/javascript"></script>
+<noscript><p><a href="http://www.digg.com/">digg.com</a></p></noscript>
+[[else]]
+<ul>
+<li><a href="#">[['Digg example no.]] 1</a></li>
+<li><a href="#">[['Digg example no.]] 2</a></li>
+<li><a href="#">[['Digg example no.]] 3</a></li>
+<li><a href="#">[['Digg example no.]] 4</a></li>
+</ul>
+[[endif]]
+
+
+<!-- /digg Pagelet -->
+

@@ -1,0 +1,10 @@
+<!-- Archive Index -->
+<ul>
+[[foreach page.sortedChildrenInIndex item]][[comment NEED TO OVERRIDE TO HAVE NO MAXIMUM NUMBER OF ITEMS only in the "automatic" version -- otherwise limit to collectionMaxIndexItems]]
+	<li class="[[i]] [[eo]]">
+		<h3[[idClass entity:Page property:titleHTML flags:"line copy anchor" id:item.uniqueID]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
+		<p>[[=&item.timestampAlways]]</p>
+	</li>
+[[endForEach]]
+</ul>
+<!-- /Archive Index -->

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>HTML</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.HTMLPage</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTCSSClassName</key>
+	<string>html-page</string>
+	<key>KTHelpAnchor</key>
+	<string>Raw_HTML</string>
+	<key>KTIncludeCallout</key>
+	<true/>
+	<key>KTIncludeSidebar</key>
+	<true/>
+	<key>KTMainElement</key>
+	<string>sandvox.HTMLElement</string>
+	<key>KTPluginIconName</key>
+	<string>htmlpage.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>fillEntirePage</key>
+		<false/>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Raw HTML</string>
+	<key>KTPluginNibFile</key>
+	<string>HTMLPage</string>
+	<key>KTPluginPriority</key>
+	<integer>9</integer>
+	<key>KTPluginUntitledName</key>
+	<string>Raw HTML</string>
+	<key>KTSeparateInspectorSegment</key>
+	<false/>
+	<key>KTSidebarChangeable</key>
+	<true/>
+	<key>KTTemplateName</key>
+	<string>HTMLPageTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>HTMLPageDelegate</string>
+</dict>
+</plist>

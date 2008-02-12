@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'StickamPagelet' target in the 'StickamPagelet' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

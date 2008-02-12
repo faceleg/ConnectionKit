@@ -1,0 +1,12 @@
+﻿/* Localized versions of Info.plist keys */
+
+NSHumanReadableCopyright = "© Karelia Software, 2008";
+
+KTPluginName = "フォトページ";
+KTPluginUntitledName = "フォト";
+KTPluginDescription = "フォトを表示しているページ";
+
+KTPluginName = "フォトページレット";
+KTPluginUntitledName = "フォトページレット";
+KTPluginDescription = "サイドバーに小さな写真を表示";
+

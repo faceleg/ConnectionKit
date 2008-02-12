@@ -1,0 +1,5 @@
+﻿/* Localized versions of Info.plist keys */
+
+"KTPluginName" = "Sidetæller";
+"KTPluginUntitledName" = "Sidetæller";
+"KTPluginDescription" = "Viser hvor mange gange en side er blevet vist";

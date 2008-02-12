@@ -1,0 +1,21 @@
+<!-- Index Pagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+
+<div class="Index-Pagelet">
+[[if indexedPage]]
+<ul>
+[[foreach indexedPage.sortedChildrenInIndex item maxItems]]
+	<li class="[[i]] [[eo]]"><a href="[[path item]]">[[=item.titleHTML]]</a></li>
+[[endForEach]]
+</ul>
+[[else]]
+[[if document.publishingMode]]
+[[else2]]
+<p>[['Please specify the collection to index using the Pagelet Inspector.]]</p>
+[[endif2]]
+[[endif]]
+</div>
+<!-- /Index Pagelet -->
+

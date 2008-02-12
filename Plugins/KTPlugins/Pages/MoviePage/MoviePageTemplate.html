@@ -1,0 +1,13 @@
+<!-- Movie Page Contents -->
+[[if needsPhotoNavigation]]
+<div class="photo-navigation">
+	<div id="previous-photo">[[if previousURLPath]]<a class="imageLink" href="[[=&previousURLPath]]#previous-photo">[["Previous]]</a>[[endif2]]</div>
+	<div id="next-photo">[[if nextURLPath]]<a class="imageLink" href="[[=&nextURLPath]]#previous-photo">[["Next]]</a>[[endif2]]</div>
+	<div id="photo-list"><a class="imageLink" href="[[=&parentURLPath]]">[["List]]</a></div>
+</div>
+[[endif]]
+[[forEach orderedElements anElement]]
+[[parseComponent anElement anElement.templateHTML]]
+<div class="clear"></div>
+[[endForEach]]
+<!-- /Movie Page Contents -->

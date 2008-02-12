@@ -1,0 +1,14 @@
+﻿/* Download of File Packages Not Supported Alert Text */
+"%@ is a file package. (A directory that acts like a single file.) Downloading of file packages is not currently supported. Consider using Finder to make an Archive of the file. Downloading of archive (.zip) files is supported." = "%@ er en arkiv-pakke. (En mappe der optræder som et enkelt arkiv.) Download af arkiv-pakker understøttes ikke aktuelt. Brug Finder til at lave et komprimeret arkiv af arkivet. Download af  .zip-arkiver understøttes.";
+
+/* Download Not Supported Alert Title */
+"Download Not Supported" = "Download ikke understøttet";
+
+/* Informational text in the webview */
+"Clicking on a link to this file will cause it to be downloaded in your browser." = "Klik på et link til dette arkiv starter download af det i din browser.";
+
+/* Informational text in the webview */
+"This display is a placeholder for this file:" = "Denne visning er en pladsholder for dette arkiv:";
+
+/* OK Button */
+"OK" = "OK";

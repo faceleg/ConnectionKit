@@ -1,0 +1,17 @@
+[[if fillEntirePage]]
+[[=mainElement.html]]
+[[else]]
+
+<!-- HTML Page Contents -->
+[[forEach orderedElements anElement]]
+<div class="article">
+[[parsecomponent self calloutContainerTemplateHTML]]
+	<div class="article-content">
+[[parseComponent anElement anElement.templateHTML]]
+	</div> <!-- article-content -->
+</div> <!-- article -->
+<div class="clear"></div>
+[[endForEach]]
+<!-- /HTML Page Contents -->
+
+[[endif]]

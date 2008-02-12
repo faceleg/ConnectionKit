@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Download</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.FileDownload</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTCSSClassName</key>
+	<string>file-download</string>
+	<key>KTHelpAnchor</key>
+	<string>File_Download</string>
+	<key>KTIncludeSidebar</key>
+	<false/>
+	<key>KTPageDisableComments</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>download.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict/>
+	<key>KTPluginName</key>
+	<string>File Download</string>
+	<key>KTPluginNibFile</key>
+	<string>DownloadPage</string>
+	<key>KTPluginUntitledName</key>
+	<string>Download</string>
+	<key>KTSidebarChangeable</key>
+	<false/>
+	<key>KTTemplateName</key>
+	<string>Download</string>
+	<key>NSPrincipalClass</key>
+	<string>DownloadPageDelegate</string>
+</dict>
+</plist>

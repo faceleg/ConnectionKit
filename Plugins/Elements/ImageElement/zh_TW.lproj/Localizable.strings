@@ -1,0 +1,20 @@
+﻿/* alt text of dot photo link */
+"dotphoto" = "dotphoto";
+
+/* alt text of mag link */
+"magnify" = "放大";
+
+/* Title of dot photo link */
+"Order prints of this image from dotphoto.com" = "訂購 dotphoto.com 影像的輸出列印";
+
+/* action name for setting an image */
+"Set Image" = "設定影像";
+
+/* Title of mag link */
+"View this image full-size" = "以完整大小顯示此影像";
+
+/* NOT AUTOMATICALLY GENERATED */
+
+"Next" = "下一個";
+"List" = "列表";
+"Previous" = "上一個";

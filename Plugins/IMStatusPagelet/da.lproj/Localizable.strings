@@ -1,0 +1,11 @@
+﻿/* Used in template */
+"(Please set your ID using the Pagelet Inspector)" = "(Indstil dit ID ved hjælp af Pagelet-inspektøren)";
+
+/* Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website */
+"Chat with me" = "Chat med mig";
+
+/* status indicator of chat; offline or unavailable */
+"offline" = "offline";
+
+/* status indicator of chat; online or available */
+"online" = "online";

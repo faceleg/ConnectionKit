@@ -1,0 +1,56 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {takePhotoSizeFrom = id; }; 
+            CLASS = MUPhotoView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {
+            ACTIONS = {moveToMaximumValue = id; moveToMinimumValue = id; }; 
+            CLASS = NSSlider; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSControl; 
+        }, 
+        {CLASS = NarrowPopUpButton; LANGUAGE = ObjC; SUPERCLASS = NSPopUpButton; }, 
+        {
+            CLASS = iMBAbstractController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oView = NSView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = iMBAmazonController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oArrayController = NSArrayController; 
+                oComboTableView = NSTableView; 
+                oPhotoView = MUPhotoView; 
+                oSlider = NSSlider; 
+                oStoreSelectionPopup = NSPopUpButton; 
+                oTextTableView = NSTableView; 
+                oViewTypePopup = NSPopUpButton; 
+            }; 
+            SUPERCLASS = iMBAbstractController; 
+        }, 
+        {
+            ACTIONS = {search = id; }; 
+            CLASS = iMBDNDArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myDelegate = id; newObject = id; tableView = NSTableView; }; 
+            SUPERCLASS = NSArrayController; 
+        }, 
+        {CLASS = iMBPhotoView; LANGUAGE = ObjC; SUPERCLASS = NSMatrix; }, 
+        {
+            CLASS = photosAlbumController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oPhotoView = iMBPhotoView; oView = NSView; table = NSTableView; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {openFlickr = id; }; 
+            CLASS = FlickrPageletDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oFlickrButton = NSButton; }; 
+            SUPERCLASS = KTAbstractPluginDelegate; 
+        }, 
+        {
+            CLASS = KTAbstractPluginDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myDelegateOwner = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = KTLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
+    ); 
+    IBVersion = 1; 
+}

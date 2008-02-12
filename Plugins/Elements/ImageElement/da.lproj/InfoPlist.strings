@@ -1,0 +1,12 @@
+﻿/* Localized versions of Info.plist keys */
+
+NSHumanReadableCopyright = "© Karelia Software, 2008";
+
+KTPluginName = "Fotoside";
+KTPluginUntitledName = "Foto";
+KTPluginDescription = "Side visende et foto";
+
+KTPluginName = "Foto-pagelet";
+KTPluginUntitledName = "Foto-pagelet";
+KTPluginDescription = "Lille foto i sidepanel";
+

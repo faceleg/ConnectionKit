@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7916698509B8007A003FC862 /* HSA.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7916698309B8007A003FC862 /* HSA.nib */; };
+		79166AAA09B80100003FC862 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D6A5FE840307C02AAC07 /* AppKit.framework */; };
+		79166AAB09B80100003FC862 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D69BFE84028FC02AAC07 /* Foundation.framework */; };
+		79166AB709B801B1003FC862 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 79166AB609B801B1003FC862 /* Controller.m */; };
+		79166ACC09B801F0003FC862 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79166ACB09B801F0003FC862 /* main.m */; };
+		791673EE09B808B0003FC862 /* HostSetupAssistant.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* HostSetupAssistant.framework */; };
+		7916744B09B80A68003FC862 /* HostSetupAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* HostSetupAssistant.framework */; };
+		7916753B09B81EA4003FC862 /* HSAAbstractStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 7916753909B81EA4003FC862 /* HSAAbstractStep.h */; };
+		7916753C09B81EA4003FC862 /* HSAAbstractStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 7916753A09B81EA4003FC862 /* HSAAbstractStep.m */; };
+		79F5DC750971DBA70057859A /* HSAController.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F5DC730971DBA70057859A /* HSAController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79F5DC760971DBA70057859A /* HSAController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F5DC740971DBA70057859A /* HSAController.m */; };
+		79F5DC810971E0EB0057859A /* HSAStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F5DC800971E0EB0057859A /* HSAStep.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79F5E2150971E6260057859A /* Assistant.nib in Resources */ = {isa = PBXBuildFile; fileRef = 79F5E2130971E6260057859A /* Assistant.nib */; };
+		79F5E21B0971E80D0057859A /* HSAView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F5E2190971E80D0057859A /* HSAView.m */; };
+		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
+		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7916697309B7FF71003FC862 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = HostSetupAssistant;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		791673EC09B808A0003FC862 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				791673EE09B808B0003FC862 /* HostSetupAssistant.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF5E0370ADEE00C91783 /* HostSetupAssistant_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostSetupAssistant_Prefix.pch; sourceTree = "<group>"; };
+		7916696D09B7FF6A003FC862 /* Sample HSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample HSA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7916696F09B7FF6A003FC862 /* Sample HSA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample HSA-Info.plist"; sourceTree = "<group>"; };
+		7916698409B8007A003FC862 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/HSA.nib; sourceTree = "<group>"; };
+		79166AB509B801B1003FC862 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		79166AB609B801B1003FC862 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		79166ACB09B801F0003FC862 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7916753909B81EA4003FC862 /* HSAAbstractStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSAAbstractStep.h; sourceTree = "<group>"; };
+		7916753A09B81EA4003FC862 /* HSAAbstractStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSAAbstractStep.m; sourceTree = "<group>"; };
+		79F5DC730971DBA70057859A /* HSAController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSAController.h; sourceTree = "<group>"; };
+		79F5DC740971DBA70057859A /* HSAController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSAController.m; sourceTree = "<group>"; };
+		79F5DC800971E0EB0057859A /* HSAStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSAStep.h; sourceTree = "<group>"; };
+		79F5E2140971E6260057859A /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/Assistant.nib; sourceTree = "<group>"; };
+		79F5E2180971E80D0057859A /* HSAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSAView.h; sourceTree = "<group>"; };
+		79F5E2190971E80D0057859A /* HSAView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSAView.m; sourceTree = "<group>"; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* HostSetupAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HostSetupAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7916696B09B7FF6A003FC862 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7916744B09B80A68003FC862 /* HostSetupAssistant.framework in Frameworks */,
+				79166AAA09B80100003FC862 /* AppKit.framework in Frameworks */,
+				79166AAB09B80100003FC862 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* HostSetupAssistant.framework */,
+				7916696D09B7FF6A003FC862 /* Sample HSA.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* HostSetupAssistant */ = {
+			isa = PBXGroup;
+			children = (
+				7916696809B7FF3E003FC862 /* Sample Application */,
+				08FB77AEFE84172EC02AAC07 /* Framework */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+				79F5E2130971E6260057859A /* Assistant.nib */,
+			);
+			name = HostSetupAssistant;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				79F5DC800971E0EB0057859A /* HSAStep.h */,
+				7916753909B81EA4003FC862 /* HSAAbstractStep.h */,
+				7916753A09B81EA4003FC862 /* HSAAbstractStep.m */,
+				79F5DC730971DBA70057859A /* HSAController.h */,
+				79F5DC740971DBA70057859A /* HSAController.m */,
+				79F5E2180971E80D0057859A /* HSAView.h */,
+				79F5E2190971E80D0057859A /* HSAView.m */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF5E0370ADEE00C91783 /* HostSetupAssistant_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		7916696809B7FF3E003FC862 /* Sample Application */ = {
+			isa = PBXGroup;
+			children = (
+				79166AB509B801B1003FC862 /* Controller.h */,
+				79166AB609B801B1003FC862 /* Controller.m */,
+				7916696F09B7FF6A003FC862 /* Sample HSA-Info.plist */,
+				7916698309B8007A003FC862 /* HSA.nib */,
+				79166ACB09B801F0003FC862 /* main.m */,
+			);
+			name = "Sample Application";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79F5DC750971DBA70057859A /* HSAController.h in Headers */,
+				79F5DC810971E0EB0057859A /* HSAStep.h in Headers */,
+				7916753B09B81EA4003FC862 /* HSAAbstractStep.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7916696C09B7FF6A003FC862 /* Sample HSA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7916697009B7FF6B003FC862 /* Build configuration list for PBXNativeTarget "Sample HSA" */;
+			buildPhases = (
+				7916696909B7FF6A003FC862 /* Resources */,
+				7916696A09B7FF6A003FC862 /* Sources */,
+				7916696B09B7FF6A003FC862 /* Frameworks */,
+				791673EC09B808A0003FC862 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7916697409B7FF71003FC862 /* PBXTargetDependency */,
+			);
+			name = "Sample HSA";
+			productName = "Sample HSA";
+			productReference = 7916696D09B7FF6A003FC862 /* Sample HSA.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8DC2EF4F0486A6940098B216 /* HostSetupAssistant */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "HostSetupAssistant" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HostSetupAssistant;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = HostSetupAssistant;
+			productReference = 8DC2EF5B0486A6940098B216 /* HostSetupAssistant.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "HostSetupAssistant" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* HostSetupAssistant */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* HostSetupAssistant */,
+				7916696C09B7FF6A003FC862 /* Sample HSA */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7916696909B7FF6A003FC862 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7916698509B8007A003FC862 /* HSA.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
+				79F5E2150971E6260057859A /* Assistant.nib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7916696A09B7FF6A003FC862 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79166AB709B801B1003FC862 /* Controller.m in Sources */,
+				79166ACC09B801F0003FC862 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79F5DC760971DBA70057859A /* HSAController.m in Sources */,
+				79F5E21B0971E80D0057859A /* HSAView.m in Sources */,
+				7916753C09B81EA4003FC862 /* HSAAbstractStep.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7916697409B7FF71003FC862 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DC2EF4F0486A6940098B216 /* HostSetupAssistant */;
+			targetProxy = 7916697309B7FF71003FC862 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1667FE841158C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7916698309B8007A003FC862 /* HSA.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7916698409B8007A003FC862 /* English */,
+			);
+			name = HSA.nib;
+			sourceTree = "<group>";
+		};
+		79F5E2130971E6260057859A /* Assistant.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79F5E2140971E6260057859A /* English */,
+			);
+			name = Assistant.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91AE08733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HostSetupAssistant_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../frameworks";
+				PRODUCT_NAME = HostSetupAssistant;
+				WRAPPER_EXTENSION = framework;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB91AF08733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = HostSetupAssistant_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "@executable_path/../frameworks";
+				PRODUCT_NAME = HostSetupAssistant;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		7916697109B7FF6B003FC862 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Sample HSA-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Sample HSA";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		7916697209B7FF6B003FC862 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Sample HSA-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Sample HSA";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "HostSetupAssistant" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91AE08733DA50010E9CD /* Debug */,
+				1DEB91AF08733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "HostSetupAssistant" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7916697009B7FF6B003FC862 /* Build configuration list for PBXNativeTarget "Sample HSA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7916697109B7FF6B003FC862 /* Debug */,
+				7916697209B7FF6B003FC862 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

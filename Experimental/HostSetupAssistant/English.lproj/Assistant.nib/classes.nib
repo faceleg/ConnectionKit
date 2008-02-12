@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {cancel = id; goBack = id; goForward = id; }; 
+            CLASS = HSAController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                myDelegate = id; 
+                myUserInfo = id; 
+                oBack = NSButton; 
+                oBackgroundImage = NSImageView; 
+                oBusy = NSProgressIndicator; 
+                oCancel = NSButton; 
+                oForward = NSButton; 
+                oStepName = NSTextField; 
+                oView = HSAView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = HSAView; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = KTBackgroundTabView; LANGUAGE = ObjC; SUPERCLASS = NSTabView; }
+    ); 
+    IBVersion = 1; 
+}

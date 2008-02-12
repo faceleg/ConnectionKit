@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Link</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.LinkPage</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTCSSClassName</key>
+	<string>iframe-page</string>
+	<key>KTHelpAnchor</key>
+	<string>External_Link</string>
+	<key>KTIncludeSidebar</key>
+	<false/>
+	<key>KTPageDisableComments</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>url.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>iFrameHeight</key>
+		<integer>300</integer>
+		<key>iFrameWidth</key>
+		<integer>0</integer>
+		<key>linkURL</key>
+		<string></string>
+		<key>linktype</key>
+		<integer>0</integer>
+	</dict>
+	<key>KTPluginName</key>
+	<string>External Link</string>
+	<key>KTPluginNibFile</key>
+	<string>LinkPage</string>
+	<key>KTPluginUntitledName</key>
+	<string>External Link</string>
+	<key>KTSidebarChangeable</key>
+	<true/>
+	<key>KTTemplateName</key>
+	<string>LinkPageTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>LinkPageDelegate</string>
+</dict>
+</plist>

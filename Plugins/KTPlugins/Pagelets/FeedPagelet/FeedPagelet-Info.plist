@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Feed</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.FeedPagelet</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTHelpAnchor</key>
+	<string>RSS_Feed_Pagelet</string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>rsspagelet.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>max</key>
+		<integer>0</integer>
+		<key>url</key>
+		<string></string>
+	</dict>
+	<key>KTPluginName</key>
+	<string>RSS Feed</string>
+	<key>KTPluginNibFile</key>
+	<string>FeedPagelet</string>
+	<key>KTPluginUntitledName</key>
+	<string>RSS Feed</string>
+	<key>KTTemplateName</key>
+	<string>FeedPageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>FeedPageletDelegate</string>
+</dict>
+</plist>

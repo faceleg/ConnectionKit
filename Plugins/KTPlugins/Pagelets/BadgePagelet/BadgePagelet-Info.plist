@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Badge</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.BadgePagelet</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>APP_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
+	<key>KTHelpAnchor</key>
+	<string>Sandvox_Badge</string>
+	<key>KTPageletCanHaveTitle</key>
+	<false/>
+	<key>KTPluginIconName</key>
+	<string>document.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>badgeTypeTag</key>
+		<integer>1</integer>
+		<key>prefersBottom</key>
+		<true/>
+		<key>showBorder</key>
+		<false/>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Badge</string>
+	<key>KTPluginNibFile</key>
+	<string>BadgePagelet</string>
+	<key>KTPluginPriority</key>
+	<integer>8</integer>
+	<key>KTPluginUntitledName</key>
+	<string></string>
+	<key>KTTemplateName</key>
+	<string>BadgePageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>BadgePageletDelegate</string>
+</dict>
+</plist>

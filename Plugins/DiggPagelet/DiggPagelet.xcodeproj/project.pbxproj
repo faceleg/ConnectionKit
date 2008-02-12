@@ -1,0 +1,365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C27ACA50A3A0B55007DA786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C27ACA30A3A0B55007DA786 /* Localizable.strings */; };
+		3C41CC9109B4D81D0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC9009B4D81D0086EF83 /* License.rtf */; };
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE0321BD09A0F9C20037C6EF /* DiggPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0321BC09A0F9C20037C6EF /* DiggPageletDelegate.m */; };
+		CE0321C109A0F9CD0037C6EF /* digg.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE0321BE09A0F9CD0037C6EF /* digg.icns */; };
+		CE0321C209A0F9CD0037C6EF /* digg.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0321BF09A0F9CD0037C6EF /* digg.png */; };
+		CE0321C309A0F9CD0037C6EF /* DiggPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE0321C009A0F9CD0037C6EF /* DiggPageletTemplate.html */; };
+		CE0321C609A0F9D30037C6EF /* DiggPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE0321C409A0F9D30037C6EF /* DiggPagelet.nib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167EFE841241C02AAC07 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF630370AF2F00C91783 /* DiggPagelet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggPagelet_Prefix.pch; sourceTree = "<group>"; };
+		3C27ACA40A3A0B55007DA786 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C27ACA60A3A0B5F007DA786 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C41CC9009B4D81D0086EF83 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
+		3CAC4F3709A2AF90007AB5B6 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bundle Debug.xcconfig"; sourceTree = "<group>"; };
+		3CAC4F3809A2AF90007AB5B6 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Bundle Release.xcconfig"; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* Digg.svxPagelet */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Digg.svxPagelet; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE0321BB09A0F9C20037C6EF /* DiggPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggPageletDelegate.h; sourceTree = "<group>"; };
+		CE0321BC09A0F9C20037C6EF /* DiggPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggPageletDelegate.m; sourceTree = "<group>"; };
+		CE0321BE09A0F9CD0037C6EF /* digg.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = digg.icns; sourceTree = "<group>"; };
+		CE0321BF09A0F9CD0037C6EF /* digg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = digg.png; sourceTree = "<group>"; };
+		CE0321C009A0F9CD0037C6EF /* DiggPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DiggPageletTemplate.html; sourceTree = "<group>"; };
+		CE0321C509A0F9D30037C6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CE1AD3FE0A7E84740083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CE1AD3FF0A7E84740083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE1AD4000A7E84740083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE55B0520AD19AA20091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CE55B0530AD19AA20091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE55B0540AD19AA20091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEA9AFBA0A64220100855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CEA9AFBB0A64220100855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEA9AFBC0A64220100855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB563A90A7AB7320081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CEB563AA0A7AB7320081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB563AB0A7AB7320081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEDE183F0A5C69130055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CEDE18400A5C69130055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEDE18410A5C69130055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEDE18420A5C69180055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CEDE18430A5C69180055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEDE18440A5C69180055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE0B37309EDB201004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEE0B37409EDB205004850FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* DiggPagelet */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3CAC4F3409A2AF7A007AB5B6 /* Xcode Configurations */,
+			);
+			name = DiggPagelet;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE0321C409A0F9D30037C6EF /* DiggPagelet.nib */,
+				CE0321BE09A0F9CD0037C6EF /* digg.icns */,
+				CE0321BF09A0F9CD0037C6EF /* digg.png */,
+				CE0321C009A0F9CD0037C6EF /* DiggPageletTemplate.html */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C41CC9009B4D81D0086EF83 /* License.rtf */,
+				3C27ACA30A3A0B55007DA786 /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CE0321BB09A0F9C20037C6EF /* DiggPageletDelegate.h */,
+				CE0321BC09A0F9C20037C6EF /* DiggPageletDelegate.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* Digg.svxPagelet */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* DiggPagelet_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3CAC4F3409A2AF7A007AB5B6 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3CAC4F3709A2AF90007AB5B6 /* Bundle Debug.xcconfig */,
+				3CAC4F3809A2AF90007AB5B6 /* Bundle Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* DiggPagelet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "DiggPagelet" */;
+			buildPhases = (
+				3C27AC8B0A3A0AE6007DA786 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DiggPagelet;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = DiggPagelet;
+			productReference = 8D5B49B6048680CD000E48DA /* Digg.svxPagelet */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DiggPagelet" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+				ja,
+				fr,
+				de,
+				zh_TW,
+				da,
+				it,
+				zh_CN,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* DiggPagelet */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* DiggPagelet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				CE0321C109A0F9CD0037C6EF /* digg.icns in Resources */,
+				CE0321C209A0F9CD0037C6EF /* digg.png in Resources */,
+				CE0321C309A0F9CD0037C6EF /* DiggPageletTemplate.html in Resources */,
+				CE0321C609A0F9D30037C6EF /* DiggPagelet.nib in Resources */,
+				3C41CC9109B4D81D0086EF83 /* License.rtf in Resources */,
+				3C27ACA50A3A0B55007DA786 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C27AC8B0A3A0AE6007DA786 /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE0321BD09A0F9C20037C6EF /* DiggPageletDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* en */,
+				CEE0B37309EDB201004850FB /* fr */,
+				CEDE18400A5C69130055352C /* zh_TW */,
+				CEDE18430A5C69180055352C /* da */,
+				CEA9AFBB0A64220100855897 /* ja */,
+				CEB563AA0A7AB7320081179A /* de */,
+				CE1AD3FF0A7E84740083C01E /* it */,
+				CE55B0530AD19AA20091C8AE /* zh_CN */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C27ACA30A3A0B55007DA786 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C27ACA40A3A0B55007DA786 /* en */,
+				3C27ACA60A3A0B5F007DA786 /* fr */,
+				CEDE18410A5C69130055352C /* zh_TW */,
+				CEDE18440A5C69180055352C /* da */,
+				CEA9AFBC0A64220100855897 /* ja */,
+				CEB563AB0A7AB7320081179A /* de */,
+				CE1AD4000A7E84740083C01E /* it */,
+				CE55B0540AD19AA20091C8AE /* zh_CN */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CE0321C409A0F9D30037C6EF /* DiggPagelet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE0321C509A0F9D30037C6EF /* en */,
+				CEE0B37409EDB205004850FB /* fr */,
+				CEDE183F0A5C69130055352C /* zh_TW */,
+				CEDE18420A5C69180055352C /* da */,
+				CEA9AFBA0A64220100855897 /* ja */,
+				CEB563A90A7AB7320081179A /* de */,
+				CE1AD3FE0A7E84740083C01E /* it */,
+				CE55B0520AD19AA20091C8AE /* zh_CN */,
+			);
+			name = DiggPagelet.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CAC4F3709A2AF90007AB5B6 /* Bundle Debug.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = DiggPagelet_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Digg;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CAC4F3809A2AF90007AB5B6 /* Bundle Release.xcconfig */;
+			buildSettings = {
+				GCC_PREFIX_HEADER = DiggPagelet_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Digg;
+				WRAPPER_EXTENSION = svxPagelet;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "DiggPagelet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DiggPagelet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

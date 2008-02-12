@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>KTCSSClassName</key>
+	<string>archive-index</string>
+	<key>KTPluginIconName</key>
+	<string>archive.icns</string>
+	<key>KTPluginName</key>
+	<string>Title List</string>
+	<key>KTPluginPriority</key>
+	<integer>2</integer>
+	<key>KTPreferredPageBundleIdentifier</key>
+	<string>sandvox.RichTextElement</string>
+	<key>KTPresets</key>
+	<array/>
+	<key>KTTemplateName</key>
+	<string>ArchiveIndexTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>KTAbstractIndex</string>
+</dict>
+</plist>

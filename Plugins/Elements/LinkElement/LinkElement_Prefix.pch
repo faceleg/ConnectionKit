@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'LinkElement' target in the 'LinkElement' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

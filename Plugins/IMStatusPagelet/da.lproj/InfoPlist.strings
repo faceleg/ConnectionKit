@@ -1,0 +1,5 @@
+﻿/* Localized versions of Info.plist keys */
+
+"KTPluginName" = "IM-Status";
+"KTPluginUntitledName" = "";
+"KTPluginDescription" = "Viser om du er tilgængelig online til chat";

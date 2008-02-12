@@ -1,0 +1,8 @@
+﻿KTPluginName = "Rich Text";
+KTPluginDescription = "Tekst med grafik, etc.";
+
+KTPageName = "Tekstside";
+KTPageUntitledName = "Tekst";
+
+KTPageletName = "Tekst-pagelet";
+KTPageletUntitledName = "Tekst-pagelet";

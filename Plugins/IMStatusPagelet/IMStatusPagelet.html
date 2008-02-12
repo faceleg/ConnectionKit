@@ -1,0 +1,28 @@
+<!-- IMStatusPagelet -->
+
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+
+<div style="text-align:center; padding:15px 0; margin:0;">
+
+[[if username]]
+
+[[if document.publishingMode]]
+		[[=delegate.publishingHTML]]
+[[else2]]
+[[if document.liveDataFeeds]]
+		[[=delegate.livePreviewHTML]]
+[[else3]]
+		[[=delegate.nonLivePreviewHTML]]
+[[endif3]]
+[[endif2]]
+
+[[else]]
+[['(Please set your ID using the Pagelet Inspector)]]
+
+[[endif]]
+
+</div>
+
+<!-- /IMStatusPagelet -->

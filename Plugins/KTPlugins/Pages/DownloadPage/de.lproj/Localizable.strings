@@ -1,0 +1,14 @@
+﻿/* Download of File Packages Not Supported Alert Text */
+"%@ is a file package. (A directory that acts like a single file.) Downloading of file packages is not currently supported. Consider using Finder to make an Archive of the file. Downloading of archive (.zip) files is supported." = "%@ ist ein Dateipaket. (Ein Verzeichnis, dass sich wie eine einzelne Datei verhält) Der Download von einem Dateipaket wird zur Zeit nicht unterstützt. Benutzen Sie den Finder, um ein Archiv der Datei zu erstellen. Der Download eines Archivs (.zip) Datei wird unterstützt.";
+
+/* Download Not Supported Alert Title */
+"Download Not Supported" = "Download nicht unterstützt";
+
+/* Informational text in the webview */
+"Clicking on a link to this file will cause it to be downloaded in your browser." = "Wenn Sie auf diesen Link klicken, wird die Datei in ihrem Browser heruntergeladen.";
+
+/* Informational text in the webview */
+"This display is a placeholder for this file:" = "Diese Anzeige ist ein Platzhalter für diese Datei:";
+
+/* OK Button */
+"OK" = "OK";

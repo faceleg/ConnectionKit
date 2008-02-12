@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {categoryChosen = id; openDigg = id; }; 
+            CLASS = DiggPageletDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oCategoryPopup = NSPopUpButton; }; 
+            SUPERCLASS = KTAbstractPluginDelegate; 
+        }, 
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = KTAbstractPluginDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {myDelegateOwner = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = KTLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
+    ); 
+    IBVersion = 1; 
+}
