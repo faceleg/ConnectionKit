@@ -8,6 +8,8 @@
 
 #import "NSImage+KTApplication.h"
 
+#import "KTImageScalingSettings.h"
+
 
 @implementation NSImage ( KTApplication )
 
@@ -34,6 +36,46 @@
 	[newImage unlockFocus];
 	
 	return newImage;
+}
+
+- (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings
+{
+	// Create the image rep
+	NSBitmapImageRep *result = [[NSBitmapImageRep alloc]
+		initWithBitmapDataPlanes:nil
+					  pixelsWide:[settings size].width
+					  pixelsHigh:[settings size].height
+				   bitsPerSample:8
+				 samplesPerPixel:4
+					    hasAlpha:YES
+                        isPlanar:NO
+				  colorSpaceName:NSCalibratedRGBColorSpace
+					bitmapFormat:0
+					 bytesPerRow:(4 *[settings size].width)
+					bitsPerPixel:32];
+	
+	
+	// Prepare for drawing
+	NSImageInterpolation oldImageInterpolation = [[NSGraphicsContext currentContext] imageInterpolation];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:result]];
+	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+	
+	
+	// Draw the scaled image
+	NSRect scaledRect;
+	scaledRect.origin = NSMakePoint(0.0, 0.0);
+	scaledRect.size = [settings size];
+	
+	[self drawInRect:scaledRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	// TODO: handle all behaviors
+	
+	
+	// Tidy up
+	[NSGraphicsContext restoreGraphicsState];
+	[[NSGraphicsContext currentContext] setImageInterpolation:oldImageInterpolation];
+	
+	return [result autorelease];
 }
 
 @end

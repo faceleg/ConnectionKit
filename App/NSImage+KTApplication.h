@@ -12,4 +12,6 @@
 
 - (NSImage *)imageWithCompositedAddBadge;
 
+- (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings;
+
 @end
