@@ -201,6 +201,7 @@
 		274E78170D626BD1004F89C2 /* NSMutableSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED70D6184AD003B00CA /* NSMutableSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DF090D6184AD003B00CA /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E78200D626C69004F89C2 /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEF70D6184AD003B00CA /* NTBoxView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */; };
 		275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 275167870CBCE40000C91DFA /* KTMediaContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275167880CBCE40000C91DFA /* KTMediaContainer.m */; };
 		275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1682,6 +1683,8 @@
 		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
 		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
+		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
+		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
 		275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserMasterCache.h; sourceTree = "<group>"; };
@@ -2957,6 +2960,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
+				274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */,
+				274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */,
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3C68250E0D622DEB00B4D485 /* Sandvox.h */,
 				3C68250F0D622E7B00B4D485 /* KTComponents.h */,
@@ -6124,6 +6129,7 @@
 				3CF9422B0D6244C000B1C83D /* DOMNode+KTExtensions.m in Sources */,
 				3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */,
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
+				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
