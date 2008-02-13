@@ -30,18 +30,11 @@
 }
 #endif
 
-- (NSArray *)orderedObjects
-{
-#warning We need to come up with a replacement for this; gOrderingDescriptor was removed in 1.5
-//	return [[self allObjects] sortedArrayUsingDescriptors:gOrderingDescriptor];
-	return [self allObjects];	// FOR NOW
-}
-
 - (NSString *)shortDescription
 {
 	NSString *result = @"";
 	
-	NSEnumerator *e = [[self orderedObjects] objectEnumerator];
+	NSEnumerator *e = [self objectEnumerator];
 	id object;
 	while ( object = [e nextObject] )
 	{

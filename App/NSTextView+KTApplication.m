@@ -74,7 +74,6 @@ multi-line comment etc. or it'll lose color.
 	NS_DURING
 		
 		// Get the text we'll be working with:
-		NSRange						vOldSelection = [self selectedRange];
 		NSMutableAttributedString*	vString = [[NSMutableAttributedString alloc] initWithString: [[[self textStorage] string] substringWithRange: range]];
 		[vString autorelease];
 		

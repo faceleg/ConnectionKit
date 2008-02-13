@@ -246,7 +246,6 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		[NSNumber numberWithBool:YES],			@"ContinuousSpellChecking",
 				
 		@"",									@"CrashReporterFromAddress",
-		[NSNumber numberWithUnsignedInt:'…'],	@"BreakCharacterCode",
 		
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
@@ -1151,9 +1150,7 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		}
 		
 #ifdef EXPIRY_TIMESTAMP
-#warning -------
 #warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
-#warning -------
 
 		unsigned char km[16];
 		GetKeys((void *)km);
@@ -2509,7 +2506,7 @@ FAILURE:
 	if ( (nil != fileURL) && [fileURL isKindOfClass:[NSURL class]] )
 	{
 		NSError *localError = nil;
-		KTDocument *sample = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
+		[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
 		
 //		if ( nil != sample )
 //		{
