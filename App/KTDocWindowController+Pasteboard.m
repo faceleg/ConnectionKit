@@ -141,34 +141,10 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     {
 		[[self document] suspendAutosave];
 		
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-        
-        // include the documentID
-        [dictionary setValue:[[self document] documentID] forKey:@"documentID"];
-        
         // package up the selected pagelet(s)
-        NSMutableArray *copyPageletsArray = [NSMutableArray array];
-		NSMutableSet *mediaDigestsSet = [NSMutableSet set];
-       
-        NSEnumerator *e = [thePagelets objectEnumerator];
-        KTPagelet *pagelet = nil;
-        while ( pagelet = [e nextObject] )
-        {
-            // package up archive dictionaries
-            [copyPageletsArray addObject:[pagelet archiveDictionary]];
-            // let pagelet copy other data types to aPboard
-            [pagelet copySelectionToPasteboard:aPboard];
-			// include any media owned by the pagelet
-			[mediaDigestsSet addMediaInfoObjectsFromArray:[pagelet mediaDigests]];
-        }
-        [dictionary setValue:copyPageletsArray forKey:@"pagelets"];
-		[dictionary setValue:[mediaDigestsSet allObjects] forKey:@"mediaDigests"];
-
-        // now, pop it on the pasteboard
-        [aPboard addTypes:[NSArray arrayWithObject:kKTPageletsPboardType] owner:self];
-        NSData *archivedData = [NSArchiver archivedDataWithRootObject:dictionary];
-        [aPboard setData:archivedData forType:kKTPageletsPboardType];
-    }
+        NSArray *pasteboardReps = [thePagelets valueForKey:@"pasteboardRepresentation"];
+		[aPboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPageletsPboardType];
+	}
     @catch (NSException *exception)
     {
         LOG((@"copyPagelets:toPasteboard: caught exception! name:%@ reason:%@", [exception name], [exception reason]));
@@ -566,75 +542,23 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     NSString *type = nil;
     type = [aPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPageletsPboardType]];
     
-    if ( [type length] > 0 )
+    if ([type length] > 0)
     {
         @try
         {
-            NSData *data = [aPboard dataForType:kKTPageletsPboardType];
-            if ( [data length] > 0 )
-            {
-                NSDictionary *pboardInfo = [NSUnarchiver unarchiveObjectWithData:data];
-                
-                KTManagedObjectContext *thisContext = (KTManagedObjectContext *)[[self document] managedObjectContext];
-				[thisContext lockPSCAndSelf];
-                
-                NSString *documentID = [pboardInfo valueForKey:@"documentID"];
-                BOOL sameDocument = [documentID isEqualToString:[[self document] documentID]];
-                
-                // copy media to thisContext first
-                if ( !sameDocument )
+			NSData *data = [aPboard dataForType:kKTPageletsPboardType];
+			NSArray *pasteboardReps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+			
+			if (pasteboardReps && [pasteboardReps count] > 0)
+			{
+                NSEnumerator *e = [pasteboardReps objectEnumerator];
+                NSDictionary *anArchivedPagelet;
+                while (anArchivedPagelet = [e nextObject])
                 {
-                    KTDocument *otherDocument = [[KTAppDelegate sharedInstance] documentWithID:documentID];
-                    if ( nil != otherDocument )
-                    {
-                        KTManagedObjectContext *otherContext = (KTManagedObjectContext *)[otherDocument managedObjectContext];
-// TODO: DOES THIS DEADLOCK -- test pasting across documents and within document
-						[otherContext lockPSCAndSelf];
-                        
-                        NSArray *mediaDigests = [pboardInfo valueForKey:@"mediaDigests"];
-                        if ( [mediaDigests count] > 0 )
-                        {
-                            NSEnumerator *mediaEnumerator = [mediaDigests objectEnumerator];
-                            NSDictionary *mediaInfo;
-                            while ( mediaInfo = [mediaEnumerator nextObject] )
-                            {
-                                NSString *mediaDigest = [mediaInfo valueForKey:@"mediaDigest"];
-                                NSString *thumbnailDigest = [mediaInfo valueForKey:@"thumbnailDigest"];
-                                if  ( ![thisContext objectMatchingMediaDigest:mediaDigest
-                                                              thumbnailDigest:thumbnailDigest] )
-                                {
-                                    KTMedia *otherMedia = [otherContext objectMatchingMediaDigest:mediaDigest
-                                                                                  thumbnailDigest:thumbnailDigest];
-                                    if ( nil != otherMedia )
-                                    {
-                                        [otherMedia copyToContext:thisContext];
-                                    }
-                                    else
-                                    {
-                                        LOG((@"wanted to copy media from document %@ but couldn't find it!", documentID));
-                                    }
-                                }
-                            }
-                        }
-						[otherContext unlockPSCAndSelf];
-                    }
-                }
-                
-                NSArray *pagelets = [pboardInfo valueForKey:@"pagelets"];
-                NSEnumerator *e = [pagelets objectEnumerator];
-                NSDictionary *rep;
-                while ( rep = [e nextObject] )
-                {
-                    BOOL keepUnique = (sameDocument && aFlag);
-                    KTPagelet *pagelet = [KTPagelet pageletWithPage:aPage
-                                                  archiveDictionary:rep
-                                     insertIntoManagedObjectContext:thisContext
-                                                       keepUniqueID:keepUnique];
+                    KTPagelet *pagelet = [KTPagelet pageletWithPasteboardRepresentation:anArchivedPagelet page:aPage];
                     
                     if ( nil != pagelet )
                     {
-                        // just insert it as if it's a new pagelet
-                        [self insertPagelet:pagelet toSelectedItem:aPage];
                         [result addObject:pagelet];
                     }
                     else
@@ -642,7 +566,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
                         LOG((@"would like to paste pagelets, but unable to create pagelet in this context!"));
                     }
                 }
-				[thisContext unlockPSCAndSelf];
             }
             else
             {
