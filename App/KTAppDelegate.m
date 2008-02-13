@@ -51,6 +51,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTComponents.h"
 #import "KTCrashReporter.h"
 #import "KTDesignManager.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
