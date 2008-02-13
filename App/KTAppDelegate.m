@@ -69,7 +69,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <iMediaBrowser/iMediaBrowser.h>
 
 #ifdef SANDVOX_RELEASE
-#warning ----- NOTE: WE ARE BUILDING FOR SANDVOX RELEASE --------
 #import "Registration.h"
 #endif
 
@@ -1134,8 +1133,11 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		}
 		
 #ifdef EXPIRY_TIMESTAMP
-#warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
 
+#ifndef DEBUG
+#warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
+#endif
+		
 		unsigned char km[16];
 		GetKeys((void *)km);
 		BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
