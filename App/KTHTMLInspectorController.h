@@ -34,19 +34,19 @@
 	NSString*						replacementString;
 
 	// ivar of what to send the information back to
-	DOMHTMLElement	*myDOMHTMLElement;
-	KTElement		*myKTHTMLElement;
-	NSString		*mySourceCode;				// Temp. storage for data from file until NIB has been read.
-	NSString		*myTitle;
-	NSString		*myExplanation;
+	DOMHTMLElement		*myDOMHTMLElement;
+	KTAbstractPlugin	*myKTHTMLElement;
+	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
+	NSString			*myTitle;
+	NSString			*myExplanation;
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
 
 - (DOMHTMLElement *)DOMHTMLElement;
 - (void)setDOMHTMLElement:(DOMHTMLElement *)aDOMHTMLElement;
-- (KTElement *)KTHTMLElement;
-- (void)setKTHTMLElement:(KTElement *)aKTHTMLElement;
+- (KTAbstractPlugin *)KTHTMLElement;
+- (void)setKTHTMLElement:(KTAbstractPlugin *)aKTHTMLElement;
 - (NSString *)explanation;
 - (void)setExplanation:(NSString *)anExplanation;
 - (NSString *)sourceCode;

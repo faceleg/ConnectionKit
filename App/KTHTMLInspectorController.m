@@ -16,6 +16,7 @@
 
 #import "KTHTMLInspectorController.h"
 
+#import "KTApplication.h"
 #import "KTComponents.h"
 #import "KTDocWindowController.h"
 #import "NSString-Utilities.h"
@@ -590,12 +591,12 @@ initial syntax coloring.
 	[self setSourceCode:source];
 }
 
-- (KTElement *)KTHTMLElement
+- (KTAbstractPlugin *)KTHTMLElement
 {
     return myKTHTMLElement; 
 }
 
-- (void)setKTHTMLElement:(KTElement *)aKTHTMLElement
+- (void)setKTHTMLElement:(KTAbstractPlugin *)aKTHTMLElement
 {
     [aKTHTMLElement retain];
     [myKTHTMLElement release];
@@ -605,15 +606,14 @@ initial syntax coloring.
 	{
 		// Figure out a title
 		NSString *title = @"";
-		KTAbstractPlugin *container = [aKTHTMLElement container];
 		
-		if ( [container isKindOfClass:[KTPage class]] )
+		if ( [aKTHTMLElement isKindOfClass:[KTPage class]] )
 		{
-			title = [((KTPage *)container) titleText];
+			title = [((KTPage *)aKTHTMLElement) titleText];
 		}
-		else if ( [container isKindOfClass:[KTPagelet class]] )
+		else if ( [aKTHTMLElement isKindOfClass:[KTPagelet class]] )
 		{
-			title = [((KTPagelet *)container) titleText];
+			title = [((KTPagelet *)aKTHTMLElement) titleText];
 			if (!title || [title isEqualToString:@""])
 			{
 				title = @"Pagelet";

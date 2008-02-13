@@ -1122,7 +1122,6 @@
 		// We keep the old path as the suggested place, for easy replacement.
 		suggestedPath = [[[myExportTransferController storagePath] copy] autorelease];
 		// Exists already, so clear the path actually used.  
-		[myExportTransferController setStoragePath:nil];
 	}
 	[myExportTransferController uploadEverythingToSuggestedPath:suggestedPath];	// ASYNC!
 	
@@ -1202,7 +1201,7 @@
 	[[self HTMLInspectorController] showWindow:nil];
 }
 
-- (void)editKTHTMLElement:(KTElement *)anElement;
+- (void)editKTHTMLElement:(KTAbstractPlugin *)anElement;
 {
 	[[self HTMLInspectorController] setKTHTMLElement:anElement];
 	[[self HTMLInspectorController] showWindow:nil];
@@ -1232,7 +1231,7 @@
 	}
 	else	// Edit the HTML Element
 	{
-		KTElement *htmlElement = nil;
+		KTAbstractPlugin *htmlElement = nil;
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
 		{

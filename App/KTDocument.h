@@ -139,7 +139,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 // Editing
 
 - (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
-- (void)editKTHTMLElement:(KTElement *)anElement;
+- (void)editKTHTMLElement:(KTAbstractPlugin *)anElement;
 
 @end
 
@@ -254,7 +254,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 - (void)setDisplaySmallPageIcons:(BOOL)value;
 
 - (NSRect)documentWindowContentRect;
-- (void)setDocumentWindowContentRect:(NSRect)aRect;
 
 - (BOOL)isReadOnly;
 
