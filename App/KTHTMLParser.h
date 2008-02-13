@@ -46,7 +46,7 @@
 	KTDocument *myDocument;
 }
 
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id <KTWebViewComponent>)component;
++ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id)component;
 
 + (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate
 						   component:(id <KTWebViewComponent>)component

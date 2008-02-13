@@ -685,10 +685,10 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			{
 				NSString *identifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
 				
-				NSBundle *bundle = [[[NSApp delegate] bundleManager] pluginWithIdentifier:identifier];
-				[oIndexPopup selectItemAtIndex:(nil == bundle
+				KTAppPlugin *plugin = [[[NSApp delegate] bundleManager] pluginWithIdentifier:identifier];
+				[oIndexPopup selectItemAtIndex:(nil == plugin
 												? 0 : 
-												[oIndexPopup indexOfItemWithRepresentedObject:bundle])];
+												[oIndexPopup indexOfItemWithRepresentedObject:plugin])];
 				
 				[self updateCollectionStylePopup];
 			}

@@ -6,11 +6,12 @@
 //  Copyright 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSArray+Karelia.h"
+#import "NSArray+KTExtensions.h"
 
 #import "KTPage.h"
 
-@implementation NSArray ( KTExtensions )
+
+@implementation NSArray (KTExtensions)
 
 - (BOOL)objectsHaveCommonParent
 {
@@ -124,7 +125,7 @@
 	KTPage *page;
 	while ( page = [e nextObject] )
 	{
-		if ( ![array containsParentOfPage:page] )
+		if (![array containsParentOfPage:page])
 		{
 			[array addObject:page];
 		}

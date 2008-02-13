@@ -204,7 +204,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)copyPagelets:(id)sender;
 
 - (IBAction)paste:(id)sender;
-- (IBAction)pasteLink:(id)sender;
 - (IBAction)pasteViaContextualMenu:(id)sender;
 - (IBAction)pastePages:(id)sender;
 - (IBAction)pastePagelets:(id)sender;
@@ -238,6 +237,8 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)showLinkPanel:(id)sender;
 - (IBAction)finishLinkPanel:(id)sender;
 - (IBAction) clearLinkDestination:(id)sender;
+
+- (IBAction)pasteLink:(id)sender;
 
 - (KTAbstractPlugin *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
 

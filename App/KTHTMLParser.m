@@ -93,7 +93,7 @@ static unsigned sLastParserID;
 
 
 // Usual case, no absolute media paths
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id <KTWebViewComponent>)component
++ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id)component
 {
 	return [self HTMLStringWithTemplate:aTemplate component:component useAbsoluteMediaPaths:NO];
 }
