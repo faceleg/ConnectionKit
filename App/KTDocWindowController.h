@@ -170,7 +170,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
 - (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem;
-- (void)movePage:(KTPage *)page fromParent:(KTPage *)oldParent toParent:(KTPage *)newParent;
 
 // clean up at document close
 - (void)selectionDealloc;

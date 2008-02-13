@@ -9,6 +9,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWebViewController+Private.h"
 
+#import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTHelper.h"

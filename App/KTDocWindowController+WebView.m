@@ -66,6 +66,11 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 @end
 
 
+@interface KTDocWebViewController (EditingPrivate)
+- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock;
+@end
+
+
 @interface KTDocWindowController ( WebViewPrivate )
 
 - (NSString *)savedPageletStyle;
@@ -786,7 +791,7 @@ clickedOnPagelet:
 					isEqual:[self selectedInlineImageElement]] )
 			{
 				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-																	object:[[self selectedInlineImageElement] page]];			
+																	object:[[[self selectedInlineImageElement] container] page]];			
 			}
 			else
 			{
@@ -827,14 +832,11 @@ Note that this method is called AFTER the webview handles the click.
 			// Fetch the pagelet object
 			// peform fetch
 			NSManagedObjectContext *context = [[self document] managedObjectContext];
-			NSError *fetchError = nil;
-			NSArray *fetchedObjects = [context objectsWithEntityName:@"Element"
-														   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
-															   error:&fetchError];	
+			KTAbstractPlugin *foundKTElement = [context pluginWithUniqueID:divID];
+			
 			// extract result
-			if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+			if (foundKTElement)
 			{
-				KTElement *foundKTElement = [fetchedObjects objectAtIndex:0];
 				[[self document] editKTHTMLElement:foundKTElement];
 			}
 		}
@@ -1227,10 +1229,10 @@ forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 	NSDictionary *item = [oWebView elementAtPoint:location];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
-	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
-	if (nil != selectedNode  && nil == [[[self webViewController] currentTextEditingBlock] DOMNode])	// avoid calling this again if we already have a selection since that clones the contents
+	KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
+	if (textBlock && textBlock != [[self webViewController] currentTextEditingBlock])	// avoid calling this again if we already have a selection since that clones the contents
 	{
-		[[self webViewController] setEditingPropertiesFromSelectedNode:selectedNode];
+		[[self webViewController] setCurrentTextEditingBlock:textBlock];
 	}
 	else
 	{

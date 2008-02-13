@@ -965,15 +965,6 @@ from representedObject */
     }
 }
 
-/*! moves page from oldParent to newParent */
-- (void)movePage:(KTPage *)page fromParent:(KTPage *)oldParent toParent:(KTPage *)newParent
-{
-    int insertionPoint = [[newParent children] count];
-    
-    [oldParent removePage:page];
-    [newParent insertPage:page atIndex:insertionPoint];
-}
-
 /*! inserts aPage at the current selection */
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection
 {
