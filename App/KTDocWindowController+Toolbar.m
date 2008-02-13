@@ -28,7 +28,7 @@ TO DO:
 #import "KTComponents.h"
 #import "KTDocument.h"
 #import "KTToolbars.h"
-#import "NSImage+KTApplication.h"
+#import "NSImage+KTExtensions.h"
 #import "NSToolbar+Karelia.h"
 #import "PrivateComponents.h"
 #import "RYZImagePopUpButton.h"

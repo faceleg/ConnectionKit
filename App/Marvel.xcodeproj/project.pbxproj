@@ -676,7 +676,7 @@
 		CE265C9108195CEF009D3B6C /* fwd_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = CE265C8F08195CEF009D3B6C /* fwd_sm.png */; };
 		CE265C9208195CEF009D3B6C /* bak_sm.png in Resources */ = {isa = PBXBuildFile; fileRef = CE265C9008195CEF009D3B6C /* bak_sm.png */; };
 		CE26FA1408C4D9C500C9604B /* additionalEditingCSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */; };
-		CE27F6650D6193B200D211EA /* NSImage+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */; };
+		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */; };
 		CE2FE58208E8EF2C00C12D48 /* News.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE2FE58008E8EF2C00C12D48 /* News.nib */; };
 		CE2FE58808E8EF4900C12D48 /* KTNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2FE58608E8EF4900C12D48 /* KTNewsController.m */; };
@@ -2365,8 +2365,8 @@
 		CE265C8F08195CEF009D3B6C /* fwd_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwd_sm.png; sourceTree = "<group>"; };
 		CE265C9008195CEF009D3B6C /* bak_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bak_sm.png; sourceTree = "<group>"; };
 		CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = additionalEditingCSS.txt; sourceTree = "<group>"; };
-		CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTApplication.h"; sourceTree = "<group>"; };
-		CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTApplication.m"; sourceTree = "<group>"; };
+		CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
+		CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTExtensions.m"; sourceTree = "<group>"; };
 		CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTApplication.h"; sourceTree = "<group>"; };
 		CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTApplication.m"; sourceTree = "<group>"; };
 		CE2FE58108E8EF2C00C12D48 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/News.nib; sourceTree = "<group>"; };
@@ -3633,8 +3633,8 @@
 		3C5A730A0BF7AF7000776464 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				CE27F6600D6193B200D211EA /* NSImage+KTApplication.h */,
-				CE27F6610D6193B200D211EA /* NSImage+KTApplication.m */,
+				CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */,
+				CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */,
 				CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */,
 				CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */,
 			);
@@ -6076,7 +6076,7 @@
 				CE11DF840D6184AD003B00CA /* MyTableView.m in Sources */,
 				CE11DFAA0D61862E003B00CA /* NSString+KTApplication.m in Sources */,
 				CE99C6070D61904600A54B40 /* MoreAddrToSym.c in Sources */,
-				CE27F6650D6193B200D211EA /* NSImage+KTApplication.m in Sources */,
+				CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */,
 				CE27F6670D6193B200D211EA /* NSTextView+KTApplication.m in Sources */,
 				3C682B0F0D622EC200B4D485 /* KTComponents.xcdatamodel in Sources */,
 				3C682B120D622F1D00B4D485 /* KTDocumentInfo.m in Sources */,

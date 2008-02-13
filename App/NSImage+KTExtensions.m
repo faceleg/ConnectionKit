@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "NSImage+KTApplication.h"
+#import "NSImage+KTExtensions.h"
 
 #import "KTImageScalingSettings.h"
 
