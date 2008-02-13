@@ -124,6 +124,7 @@
 				3C9B668B0BFA8268007A4871 /* PBXTargetDependency */,
 				3C9B669F0BFA829F007A4871 /* PBXTargetDependency */,
 				3C9B668D0BFA826F007A4871 /* PBXTargetDependency */,
+				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
@@ -797,6 +798,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* MetaSandvox */;
+			remoteInfo = MetaSandvox;
+		};
 		27F0F2A50D0ED91B00B7555A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B65980BFA7FC4007A4871 /* KTPlugins.xcodeproj */;
@@ -1673,6 +1681,7 @@
 		273D7DB30D070BC100057448 /* KTPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Paths.m"; sourceTree = "<group>"; };
 		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
 		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
+		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
 		275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserMasterCache.h; sourceTree = "<group>"; };
@@ -1881,6 +1890,8 @@
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3F140F09D51BD000C01EED /* Importer Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Importer Debug.xcconfig"; sourceTree = "<group>"; };
+		3C3F141309D51BDA00C01EED /* Importer Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Importer Release.xcconfig"; sourceTree = "<group>"; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2665,6 +2676,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* Sandvox.app */,
+				274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2757,6 +2769,15 @@
 				273864650D50BB1D00A8A209 /* KTPage+Indexes.m */,
 			);
 			name = Page;
+			sourceTree = "<group>";
+		};
+		274E823F0D627147004F89C2 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				3C3F140F09D51BD000C01EED /* Importer Debug.xcconfig */,
+				3C3F141309D51BDA00C01EED /* Importer Release.xcconfig */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		2752C70F0C8DC4CA00BD90EA /* Scripts */ = {
@@ -2988,6 +3009,7 @@
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
 				3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */,
+				274E823F0D627147004F89C2 /* Recovered References */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -6108,6 +6130,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MetaSandvox;
+			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
+		};
 		3C095C070D5D282B00DE6F62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ViewerIndex;
