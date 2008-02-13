@@ -13,6 +13,8 @@
 
 #import "DOM+KTWebViewController.h"
 
+#import "KTWebKitCompatibility.h"
+
 
 @interface KTWebViewTextEditingBlock (Private)
 

@@ -487,6 +487,7 @@
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
 		3C9B0485095E5EEB0053F596 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9B0483095E5EEB0053F596 /* Exception.nib */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
+		3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */; };
 		3CB5E2B0080303C7006BB008 /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A6080303C7006BB008 /* document.icns */; };
 		3CB5E2B1080303C7006BB008 /* graydimple1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A7080303C7006BB008 /* graydimple1.png */; };
 		3CB5E2B2080303C7006BB008 /* graydimple2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A8080303C7006BB008 /* graydimple2.png */; };
@@ -2072,6 +2073,7 @@
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
 		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
+		3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebKitCompatibility.h; sourceTree = "<group>"; };
 		3CB5E2A6080303C7006BB008 /* document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = document.icns; sourceTree = "<group>"; };
 		3CB5E2A7080303C7006BB008 /* graydimple1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graydimple1.png; sourceTree = "<group>"; };
 		3CB5E2A8080303C7006BB008 /* graydimple2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graydimple2.png; sourceTree = "<group>"; };
@@ -2968,6 +2970,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
+				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
 				274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */,
 				274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */,
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
@@ -4741,6 +4744,7 @@
 				274E78200D626C69004F89C2 /* NTBoxView.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
 				276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */,
+				3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

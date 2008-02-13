@@ -8,6 +8,8 @@
 
 #import "KTSummaryWebViewTextBlock.h"
 
+#import "KTWebKitCompatibility.h"
+
 
 @implementation KTSummaryWebViewTextBlock
 

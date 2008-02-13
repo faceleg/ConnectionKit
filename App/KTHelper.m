@@ -12,6 +12,8 @@
 #import "KTDocWebViewController.h"
 #import "KTWebViewTextEditingBlock.h"
 
+#import "KTWebKitCompatibility.h"
+
 #import "DOMNode+KTExtensions.h"
 #import "DOM+KTWebViewController.h"
 

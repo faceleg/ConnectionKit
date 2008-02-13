@@ -15,6 +15,8 @@
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
 
+#import "KTWebKitCompatibility.h"
+
 #import "DOM+KTWebViewController.h"
 
 
