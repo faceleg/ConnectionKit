@@ -1497,13 +1497,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = "Amazon List";
 		};
-		3CE79D660D625E2E00FCEE6D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090;
-			remoteInfo = Connection;
-		};
 		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
@@ -1545,6 +1538,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
+		};
+		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteInfo = Framework;
 		};
 		CE9982E90D614CB600F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4806,7 +4806,7 @@
 			);
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
-				3CE79D670D625E2E00FCEE6D /* PBXTargetDependency */,
+				CE9510B60D63B0A3008D163A /* PBXTargetDependency */,
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
@@ -6398,11 +6398,6 @@
 			name = "Amazon List";
 			targetProxy = 3C9B66C30BFA93F8007A4871 /* PBXContainerItemProxy */;
 		};
-		3CE79D670D625E2E00FCEE6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Connection;
-			targetProxy = 3CE79D660D625E2E00FCEE6D /* PBXContainerItemProxy */;
-		};
 		3CE79D690D625E3600FCEE6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
@@ -6422,6 +6417,11 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+		};
+		CE9510B60D63B0A3008D163A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
