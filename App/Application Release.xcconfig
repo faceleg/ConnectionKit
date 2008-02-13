@@ -1,5 +1,5 @@
 ARCHS = ppc i386
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl:$(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
+FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
 
 GCC_DYNAMIC_NO_PIC = YES
 GCC_ENABLE_FIX_AND_CONTINUE = NO
@@ -17,7 +17,7 @@ GCC_WARN_UNUSED_VALUE = YES
 GCC_WARN_UNUSED_VARIABLE = YES
 
 //INFOPLIST_OTHER_PREPROCESSOR_FLAGS = -C
-//INFOPLIST_PREFIX_HEADER = /tmp/build-sandvox/BuildSettings.xcconfig
+//INFOPLIST_PREFIX_HEADER = /tmp/build-sandvox/BuildSettings.h
 //INFOPLIST_PREPROCESS = YES
 
 LIBRARY_SEARCH_PATHS = $(BUILD_DIR)

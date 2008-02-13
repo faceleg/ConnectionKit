@@ -6738,10 +6738,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* Application Release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../Builds/Products/Debug\"",
-				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
@@ -6758,10 +6754,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* Application Debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../Builds/Products/Debug\"",
-				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;

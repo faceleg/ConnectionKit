@@ -333,13 +333,13 @@ static KTPluginInstallerController *sSharedPluginInstallerController = nil;
 #pragma mark -
 #pragma mark Table View Delegate
 
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex
 {
 	return NO;
 }
 
 // Required for use by our custom table
-- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
+- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 {
 	if ([[tableColumn identifier] isEqualToString:@"install"])
 	{
@@ -355,7 +355,7 @@ static KTPluginInstallerController *sSharedPluginInstallerController = nil;
 }
 
 // ad-hoc action
-- (void)tableView:(NSTableView *)tableView sendActionForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
+- (void)tableView:(NSTableView *)tableView sendActionForTableColumn:(NSTableColumn *)tableColumn row:(int)row;
 {
 	if ([[tableColumn identifier] isEqualToString:@"info"])
 	{
