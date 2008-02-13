@@ -1,20 +1,3 @@
-
-
-
-// String that we will put up on the server to indicate what is new about the "next" version
-// We put it here so it will get translated.  It's not actually used in the build of Sandvox, but
-// if we put it here, and keep it up to date to represent the state of the next-upcoming version, 
-// then will have the strings to put on the server when we announce the new version
-
-#warning BE SURE TO UPDATE THE WHAT'S NEW STRING NEAR RELEASE-TIME SO WE GET LOCALIZED SUMMARY OF CHANGES
-
-// SEARCH FOR : Summary of new features about this new version
-
-// Now just put in a description for minor updates, for 1.2.1 since we're too late for 1.2.1
-
-//NSLocalizedString(@"This new version includes some bugfixes, plus some updates to the language translations.", @"Summary of new features about the NEXT version of the application");
-
-
 //
 //  KTAppDelegate.m
 //  Marvel
