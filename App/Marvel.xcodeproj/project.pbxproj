@@ -504,6 +504,8 @@
 		3CE79EAA0D62657A00FCEE6D /* KSAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE8E0D6184AD003B00CA /* KSAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CE79EAB0D62657C00FCEE6D /* KSApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE900D6184AD003B00CA /* KSApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CE79EAC0D62657E00FCEE6D /* KSSingletonWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE920D6184AD003B00CA /* KSSingletonWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CE7A0490D635BFF00FCEE6D /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE7A0470D635BFF00FCEE6D /* NSImage+KTExtensions.h */; };
+		3CE7A04A0D635BFF00FCEE6D /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7A0480D635BFF00FCEE6D /* NSImage+KTExtensions.m */; };
 		3CEC877A0BF8DD2700CC732B /* KT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1407DFC06100DE4994 /* KT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC877B0BF8DD2B00CC732B /* KTAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC877C0BF8DD3000CC732B /* KTBundleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1C07DFC0AA00DE4994 /* KTBundleManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2084,6 +2086,8 @@
 		3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KTExtensions.m"; sourceTree = "<group>"; };
 		3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView+KTExtensions.h"; sourceTree = "<group>"; };
 		3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+KTExtensions.m"; sourceTree = "<group>"; };
+		3CE7A0470D635BFF00FCEE6D /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
+		3CE7A0480D635BFF00FCEE6D /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTExtensions.m"; sourceTree = "<group>"; };
 		3CEC4EE20874A9C000ADFE7A /* KTMediaURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaURLProtocol.h; sourceTree = "<group>"; };
 		3CEC4EE30874A9C000ADFE7A /* KTMediaURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaURLProtocol.m; sourceTree = "<group>"; };
 		3CEC86140BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.h; sourceTree = "<group>"; };
@@ -2972,6 +2976,8 @@
 				3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */,
 				3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */,
 				3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */,
+				3CE7A0470D635BFF00FCEE6D /* NSImage+KTExtensions.h */,
+				3CE7A0480D635BFF00FCEE6D /* NSImage+KTExtensions.m */,
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
@@ -4727,6 +4733,7 @@
 				274E78170D626BD1004F89C2 /* NSMutableSet+Karelia.h in Headers */,
 				274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */,
 				274E78200D626C69004F89C2 /* NTBoxView.h in Headers */,
+				3CE7A0490D635BFF00FCEE6D /* NSImage+KTExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6132,6 +6139,7 @@
 				3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */,
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
+				3CE7A04A0D635BFF00FCEE6D /* NSImage+KTExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
