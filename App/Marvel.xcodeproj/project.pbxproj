@@ -3320,40 +3320,13 @@
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */,
-				3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */,
-				3C1D06730D5D669800782A95 /* FileSource.xcodeproj */,
-				3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */,
-				3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */,
-				3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */,
-				3C1D06970D5D66D200782A95 /* MovieSource.xcodeproj */,
-				3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */,
-				3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */,
-				3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */,
-				3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */,
-				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
-				3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */,
-				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
-				3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */,
-				3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */,
-				3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */,
-				3C5FA6FE0D4FDBE80046CF3D /* RichTextElement.xcodeproj */,
-				3C9B65980BFA7FC4007A4871 /* KTPlugins.xcodeproj */,
-				3C9B661C0BFA8180007A4871 /* Amazon List.xcodeproj */,
-				3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */,
-				3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */,
-				3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */,
-				3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */,
-				3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */,
-				3C9B666D0BFA81D5007A4871 /* PageCounterPagelet.xcodeproj */,
-				3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */,
-				3C9B66810BFA81EC007A4871 /* SiteMapPage.xcodeproj */,
-				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
-				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
-				3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */,
+				3CA9FD500D63A10700815310 /* Deprecated */,
+				3CA9FD020D63A04A00815310 /* DataSources */,
+				3CA9FD200D63A06A00815310 /* Indexes */,
+				3CA9FD350D63A08000815310 /* Elements */,
+				3CA9FD410D63A0B400815310 /* Frameworks */,
 				3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */,
 				CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */,
-				3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */,
 			);
 			name = "Product Dependencies";
 			sourceTree = "<group>";
@@ -4109,6 +4082,73 @@
 				3C9B66890BFA81EC007A4871 /* SiteMap.svxPage */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3CA9FD020D63A04A00815310 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */,
+				3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */,
+				3C1D06730D5D669800782A95 /* FileSource.xcodeproj */,
+				3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */,
+				3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */,
+				3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */,
+				3C1D06970D5D66D200782A95 /* MovieSource.xcodeproj */,
+				3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */,
+				3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */,
+			);
+			name = DataSources;
+			sourceTree = "<group>";
+		};
+		3CA9FD200D63A06A00815310 /* Indexes */ = {
+			isa = PBXGroup;
+			children = (
+				3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */,
+				3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */,
+				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
+				3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */,
+				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
+				3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */,
+			);
+			name = Indexes;
+			sourceTree = "<group>";
+		};
+		3CA9FD350D63A08000815310 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */,
+				3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */,
+				3C5FA6FE0D4FDBE80046CF3D /* RichTextElement.xcodeproj */,
+			);
+			name = Elements;
+			sourceTree = "<group>";
+		};
+		3CA9FD410D63A0B400815310 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
+				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
+				3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */,
+				3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CA9FD500D63A10700815310 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				3C9B65980BFA7FC4007A4871 /* KTPlugins.xcodeproj */,
+				3C9B661C0BFA8180007A4871 /* Amazon List.xcodeproj */,
+				3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */,
+				3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */,
+				3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */,
+				3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */,
+				3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */,
+				3C9B666D0BFA81D5007A4871 /* PageCounterPagelet.xcodeproj */,
+				3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */,
+				3C9B66810BFA81EC007A4871 /* SiteMapPage.xcodeproj */,
+			);
+			name = Deprecated;
 			sourceTree = "<group>";
 		};
 		3CECB527085EA773000A9A69 /* Xcode Configurations */ = {
