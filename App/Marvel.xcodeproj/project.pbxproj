@@ -1688,8 +1688,8 @@
 		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
 		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
-		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = SOURCE_ROOT; };
-		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = SOURCE_ROOT; };
+		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
+		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
 		275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserMasterCache.h; sourceTree = "<group>"; };
@@ -2970,19 +2970,12 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
-				274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */,
-				274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */,
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3C68250E0D622DEB00B4D485 /* Sandvox.h */,
 				3C68250F0D622E7B00B4D485 /* KTComponents.h */,
 				3C6825100D622EA100B4D485 /* PrivateComponents.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
-				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
-				3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */,
-				3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */,
-				3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */,
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
@@ -3595,6 +3588,8 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
+				3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */,
 				3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */,
 				3C682BAC0D62345B00B4D485 /* NSBundle+KTExtensions.m */,
 				3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */,
@@ -3640,8 +3635,12 @@
 		3C5A730A0BF7AF7000776464 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */,
+				274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */,
 				CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */,
 				CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */,
+				3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */,
+				3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */,
 				CE27F6620D6193B200D211EA /* NSTextView+KTApplication.h */,
 				CE27F6630D6193B200D211EA /* NSTextView+KTApplication.m */,
 			);
@@ -3657,6 +3656,7 @@
 				271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */,
 				276689ED0D63752D0019686C /* WebView+Karelia.h */,
 				276689EE0D63752D0019686C /* WebView+Karelia.m */,
+				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
 			);
 			name = WebKit;
 			sourceTree = "<group>";
