@@ -56,6 +56,7 @@
 + (KTPluginInstallerController *)sharedController;
 + (KTPluginInstallerController *)sharedControllerWithoutLoading;
 
+- (void) loadInformation;
 - (void) prepareForDisplay;
 
 // Icon at:  /System/Library/CoreServices/Software Update.app/Contents/Resources/Software Update.icns
