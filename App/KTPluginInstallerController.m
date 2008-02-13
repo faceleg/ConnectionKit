@@ -8,9 +8,6 @@
 //
 
 
-#warning make sure this won't show plugins that require a new application version.
-
-
 #import "KTPluginInstallerController.h"
 #import "KTImageLoader.h"
 #import "KTPluginLoader.h"
