@@ -212,6 +212,8 @@
 		27657C2B0C80657F00B2C4D6 /* KTExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
+		276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276689ED0D63752D0019686C /* WebView+Karelia.h */; };
+		276689F00D63752D0019686C /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276689EE0D63752D0019686C /* WebView+Karelia.m */; };
 		2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */; };
 		277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KTParsedKeyPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1698,6 +1700,8 @@
 		27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensibleManagedObject.m; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
+		276689ED0D63752D0019686C /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WebView+Karelia.h"; path = "../../../Shared/trunk/App/WebView+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		276689EE0D63752D0019686C /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WebView+Karelia.m"; path = "../../../Shared/trunk/App/WebView+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageContainer.h; sourceTree = "<group>"; };
 		2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageContainer.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KTParsedKeyPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTParsedKeyPath.h; sourceTree = "<group>"; };
@@ -3648,6 +3652,8 @@
 				3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */,
 				271575CB0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h */,
 				271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */,
+				276689ED0D63752D0019686C /* WebView+Karelia.h */,
+				276689EE0D63752D0019686C /* WebView+Karelia.m */,
 			);
 			name = WebKit;
 			sourceTree = "<group>";
@@ -4734,6 +4740,7 @@
 				274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */,
 				274E78200D626C69004F89C2 /* NTBoxView.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
+				276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6140,6 +6147,7 @@
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
+				276689F00D63752D0019686C /* WebView+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

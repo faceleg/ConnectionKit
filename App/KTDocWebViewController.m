@@ -18,6 +18,7 @@
 
 #import "NSString-Utilities.h"
 #import "NSTextView+KTApplication.h"
+#import "WebView+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -777,7 +778,7 @@
 		
 		// Restore scroll position
 		
-		NSScrollView *scrollView = firstScrollView([self webView]);
+		NSScrollView *scrollView = [[self webView] mainScrollView];
 		if (scrollView && ([self windowController]->myHasSavedVisibleRect)) {
 			[(NSView *)[scrollView documentView] scrollRectToVisible:([self windowController]->myDocumentVisibleRect)];
 			([self windowController]->myHasSavedVisibleRect) = NO;

@@ -90,24 +90,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 @end
 
-NSScrollView * firstScrollView(NSView *aView);
-
-NSScrollView * firstScrollView(NSView *aView)
-{
-	NSArray *aSubviewsArray=[aView subviews];
-	unsigned i;
-	for (i=0;i<[aSubviewsArray count];i++) {
-		if ([[aSubviewsArray objectAtIndex:i] isKindOfClass:[NSScrollView class]]) {
-			return [aSubviewsArray objectAtIndex:i];
-		}
-	}
-	for (i=0;i<[aSubviewsArray count];i++) {
-		NSScrollView *scrollview=firstScrollView([aSubviewsArray objectAtIndex:i]);
-		if (scrollview) return scrollview;
-	}
-	return nil;
-}
-
 
 #pragma mark -
 
