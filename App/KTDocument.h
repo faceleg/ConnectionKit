@@ -174,10 +174,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 // support
 - (void)processPendingChangesAndClearChangeCount;
 
-- (void)rememberSelection;
-- (void)rememberWindowPosition;
-- (void)rememberSiteOutlineWidth;
-
 - (BOOL)isSaving;
 - (void)setSaving:(BOOL)flag;
 

@@ -34,6 +34,8 @@
 
 - (BOOL)backup;
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError;
+
+- (void)rememberDocumentDisplayProperties;
 @end
 
 
@@ -335,10 +337,7 @@
 
 										
 					// remember important things that we don't usually update
-					[self rememberWindowPosition];
-					[self rememberSelection];
-					[self rememberSiteOutlineWidth];
-					[self rememberPageIconSize];
+					[self rememberDocumentDisplayProperties];
 					
 					// collect garbage
 					if ([self upateMediaStorageAtNextSave])
@@ -716,9 +715,9 @@
 	[self updateChangeCount:NSChangeCleared];
 }
 
-- (void)rememberSelection
+- (void)rememberDocumentDisplayProperties
 {
-	// compare index sets
+	// Selected pages
 	NSIndexSet *outlineSelectedRowIndexSet = [[[(KTDocWindowController *)[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
 	NSIndexSet *storedIndexSet = [self lastSelectedRows];
 	
@@ -726,22 +725,19 @@
 	{
 		[self setLastSelectedRows:outlineSelectedRowIndexSet];	
 	}	
-}
-
-- (void)rememberSiteOutlineWidth
-{
+	
+	
+	// Source Outline width
 	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
 	[[self documentInfo] setInteger:width forKey:@"sourceOutlineSize"];
-}
-
-- (void)rememberPageIconSize
-{
+	
+	
+	// Icon size
 	[[self documentInfo] setPrimitiveValue:[NSNumber numberWithBool:[self displaySmallPageIcons]]
 									forKey:@"displaySmallPageIcons"];
-}
-
-- (void)rememberWindowPosition
-{
+	
+	
+	// Window size
 	BOOL saveContentRect = NO;
 	NSRect currentContentRect = NSZeroRect;
 	NSRect storedContentRect = [self documentWindowContentRect];
@@ -759,8 +755,7 @@
 		}
 	}
 	
-	// store content rect, if needed
-	if ( saveContentRect )
+	if (saveContentRect)	// store content rect, if needed
 	{
 		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
 	}
