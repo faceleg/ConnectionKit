@@ -36,7 +36,6 @@
 
 #import "PhotoGridIndex.h"
 
-#import <NSMutableSet+KTExtensions.h>
 
 
 @implementation PhotoGridIndex

@@ -162,6 +162,44 @@
 		273D7DB40D070BC100057448 /* KTPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTPage+Paths.m */; };
 		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		273D840D0D099C4200057448 /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
+		274E77EB0D626996004F89C2 /* NSObject+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED30D6184AD003B00CA /* NSObject+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77EF0D6269BF004F89C2 /* NSAppleScript+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEB10D6184AD003B00CA /* NSAppleScript+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F00D6269C6004F89C2 /* NSArray+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEB30D6184AD003B00CA /* NSArray+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F10D6269D1004F89C2 /* NSMutableArray+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEB50D6184AD003B00CA /* NSMutableArray+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F20D6269D7004F89C2 /* NSAttributedString+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEB70D6184AD003B00CA /* NSAttributedString+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F30D6269DC004F89C2 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE9E0D6184AD003B00CA /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F50D6269E7004F89C2 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEB90D6184AD003B00CA /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F60D6269F2004F89C2 /* NSCalendarDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEBB0D6184AD003B00CA /* NSCalendarDate+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F70D6269F8004F89C2 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEBD0D6184AD003B00CA /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F80D6269FF004F89C2 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEBF0D6184AD003B00CA /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77F90D626A03004F89C2 /* NSDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEC10D6184AD003B00CA /* NSDate+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FA0D626A14004F89C2 /* NSDictionary+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEC30D6184AD003B00CA /* NSDictionary+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FB0D626A1C004F89C2 /* NSMutableDictionary+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEC50D6184AD003B00CA /* NSMutableDictionary+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FC0D626A22004F89C2 /* NSError+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEC70D6184AD003B00CA /* NSError+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FD0D626A31004F89C2 /* NSFileManager+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DECB0D6184AD003B00CA /* NSFileManager+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FE0D626A3B004F89C2 /* NSIndexPath+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DECD0D6184AD003B00CA /* NSIndexPath+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E77FF0D626A3E004F89C2 /* NSIndexSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DECF0D6184AD003B00CA /* NSIndexSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78000D626A44004F89C2 /* NSInvocation+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED10D6184AD003B00CA /* NSInvocation+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BB20D62347A00B4D485 /* NSSet+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78020D626A54004F89C2 /* NSString+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED90D6184AD003B00CA /* NSString+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78030D626A59004F89C2 /* NSString-Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEF50D6184AD003B00CA /* NSString-Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78040D626A62004F89C2 /* NSThread+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEDD0D6184AD003B00CA /* NSThread+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78050D626A75004F89C2 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEDF0D6184AD003B00CA /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78060D626A83004F89C2 /* NSHelpManager+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEA20D6184AD003B00CA /* NSHelpManager+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78070D626A89004F89C2 /* NSScanner+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED50D6184AD003B00CA /* NSScanner+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A71410BF7ADE100776464 /* NSManagedObjectContext+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78090D626A99004F89C2 /* CIImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE970D6184AD003B00CA /* CIImage+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E780A0D626AA2004F89C2 /* NSApplication+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE9A0D6184AD003B00CA /* NSApplication+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E780B0D626AA8004F89C2 /* NSArrayController+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DE9C0D6184AD003B00CA /* NSArrayController+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E780C0D626AAD004F89C2 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEA00D6184AD003B00CA /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E780D0D626AB7004F89C2 /* NSImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEA40D6184AD003B00CA /* NSImage+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E780E0D626ABC004F89C2 /* NSWorkspace+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEAC0D6184AD003B00CA /* NSWorkspace+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78170D626BD1004F89C2 /* NSMutableSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED70D6184AD003B00CA /* NSMutableSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DF090D6184AD003B00CA /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		274E78200D626C69004F89C2 /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DEF70D6184AD003B00CA /* NTBoxView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 275167870CBCE40000C91DFA /* KTMediaContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275167880CBCE40000C91DFA /* KTMediaContainer.m */; };
 		275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -494,7 +532,7 @@
 		3CF941D70D623C5000B1C83D /* assertions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941D60D623C5000B1C83D /* assertions.m */; };
 		3CF941D90D623C7100B1C83D /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941D80D623C7100B1C83D /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CF941DB0D623E4900B1C83D /* NSImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DA0D623E4900B1C83D /* NSImagePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DC0D623E5400B1C83D /* ContactPassword.h */; };
+		3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DC0D623E5400B1C83D /* ContactPassword.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3CF941DF0D623E6B00B1C83D /* larger.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941DE0D623E6B00B1C83D /* larger.png */; };
 		3CF941E10D623E6F00B1C83D /* mag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941E00D623E6F00B1C83D /* mag.png */; };
 		3CF941E30D623E7200B1C83D /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941E20D623E7200B1C83D /* none.png */; };
@@ -4624,6 +4662,44 @@
 				3CE79EAA0D62657A00FCEE6D /* KSAppDelegate.h in Headers */,
 				3CE79EAB0D62657C00FCEE6D /* KSApplication.h in Headers */,
 				3CE79EAC0D62657E00FCEE6D /* KSSingletonWindowController.h in Headers */,
+				274E77EB0D626996004F89C2 /* NSObject+Karelia.h in Headers */,
+				274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */,
+				274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */,
+				274E77EF0D6269BF004F89C2 /* NSAppleScript+Karelia.h in Headers */,
+				274E77F00D6269C6004F89C2 /* NSArray+Karelia.h in Headers */,
+				274E77F10D6269D1004F89C2 /* NSMutableArray+Karelia.h in Headers */,
+				274E77F20D6269D7004F89C2 /* NSAttributedString+Karelia.h in Headers */,
+				274E77F30D6269DC004F89C2 /* NSBitmapImageRep+Karelia.h in Headers */,
+				274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */,
+				274E77F50D6269E7004F89C2 /* NSBundle+Karelia.h in Headers */,
+				274E77F60D6269F2004F89C2 /* NSCalendarDate+Karelia.h in Headers */,
+				274E77F70D6269F8004F89C2 /* NSCharacterSet+Karelia.h in Headers */,
+				274E77F80D6269FF004F89C2 /* NSData+Karelia.h in Headers */,
+				274E77F90D626A03004F89C2 /* NSDate+Karelia.h in Headers */,
+				274E77FA0D626A14004F89C2 /* NSDictionary+Karelia.h in Headers */,
+				274E77FB0D626A1C004F89C2 /* NSMutableDictionary+Karelia.h in Headers */,
+				274E77FC0D626A22004F89C2 /* NSError+Karelia.h in Headers */,
+				274E77FD0D626A31004F89C2 /* NSFileManager+Karelia.h in Headers */,
+				274E77FE0D626A3B004F89C2 /* NSIndexPath+Karelia.h in Headers */,
+				274E77FF0D626A3E004F89C2 /* NSIndexSet+Karelia.h in Headers */,
+				274E78000D626A44004F89C2 /* NSInvocation+Karelia.h in Headers */,
+				274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */,
+				274E78020D626A54004F89C2 /* NSString+Karelia.h in Headers */,
+				274E78030D626A59004F89C2 /* NSString-Utilities.h in Headers */,
+				274E78040D626A62004F89C2 /* NSThread+Karelia.h in Headers */,
+				274E78050D626A75004F89C2 /* NSURL+Karelia.h in Headers */,
+				274E78060D626A83004F89C2 /* NSHelpManager+Karelia.h in Headers */,
+				274E78070D626A89004F89C2 /* NSScanner+Karelia.h in Headers */,
+				274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */,
+				274E78090D626A99004F89C2 /* CIImage+Karelia.h in Headers */,
+				274E780A0D626AA2004F89C2 /* NSApplication+Karelia.h in Headers */,
+				274E780B0D626AA8004F89C2 /* NSArrayController+Karelia.h in Headers */,
+				274E780C0D626AAD004F89C2 /* NSColor+Karelia.h in Headers */,
+				274E780D0D626AB7004F89C2 /* NSImage+Karelia.h in Headers */,
+				274E780E0D626ABC004F89C2 /* NSWorkspace+Karelia.h in Headers */,
+				274E78170D626BD1004F89C2 /* NSMutableSet+Karelia.h in Headers */,
+				274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */,
+				274E78200D626C69004F89C2 /* NTBoxView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

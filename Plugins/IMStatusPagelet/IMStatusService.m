@@ -8,8 +8,6 @@
 
 #import "IMStatusService.h"
 
-#import <NSString+KTExtensions.h>
-
 
 @interface IMStatusService (Private)
 

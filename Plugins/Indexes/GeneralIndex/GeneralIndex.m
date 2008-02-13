@@ -36,7 +36,6 @@
 
 #import "GeneralIndex.h"
 
-#import <NSMutableSet+KTExtensions.h>
 
 
 @implementation GeneralIndex

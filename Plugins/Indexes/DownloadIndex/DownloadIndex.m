@@ -8,7 +8,6 @@
 
 #import "DownloadIndex.h"
 
-#import <NSMutableSet+KTExtensions.h>
 
 
 @implementation DownloadIndex
