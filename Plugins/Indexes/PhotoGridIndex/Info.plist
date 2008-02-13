@@ -6,18 +6,18 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
-	<key>CFBundleSignature</key>
-	<string>Svox</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KTCSSClassName</key>
@@ -35,14 +35,12 @@
 		<dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>childrenAllowComments</key>
-				<false/>
-				<key>childrenIncludeTimestamp</key>
-				<false/>
 				<key>collectionHyperlinkPageTitles</key>
 				<false/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
+				<key>collectionShowNavigationArrows</key>
+				<true/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
@@ -62,14 +60,12 @@
 		<dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>childrenAllowComments</key>
-				<true/>
-				<key>childrenIncludeTimestamp</key>
-				<true/>
 				<key>collectionHyperlinkPageTitles</key>
 				<false/>
 				<key>collectionMaxIndexItems</key>
 				<integer>20</integer>
+				<key>collectionShowNavigationArrows</key>
+				<true/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>

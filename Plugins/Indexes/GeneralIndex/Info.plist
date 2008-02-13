@@ -35,14 +35,12 @@
 		<dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>childrenAllowComments</key>
-				<false/>
-				<key>childrenIncludeTimestamp</key>
-				<false/>
 				<key>collectionHyperlinkPageTitles</key>
 				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
+				<key>collectionShowNavigationArrows</key>
+				<false/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
@@ -62,14 +60,12 @@
 		<dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>childrenAllowComments</key>
-				<true/>
-				<key>childrenIncludeTimestamp</key>
-				<true/>
 				<key>collectionHyperlinkPageTitles</key>
 				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>20</integer>
+				<key>collectionShowNavigationArrows</key>
+				<true/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>

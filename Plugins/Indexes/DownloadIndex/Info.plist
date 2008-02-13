@@ -39,14 +39,12 @@
 		<dict>
 			<key>KTPageSettings</key>
 			<dict>
-				<key>childrenAllowComments</key>
-				<false/>
-				<key>childrenIncludeTimestamp</key>
-				<false/>
 				<key>collectionHyperlinkPageTitles</key>
 				<false/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
+				<key>collectionShowNavigationArrows</key>
+				<false/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
