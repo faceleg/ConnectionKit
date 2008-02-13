@@ -210,6 +210,8 @@
 		2753688B0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */; };
 		27657C2A0C80657F00B2C4D6 /* KTExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27657C280C80657F00B2C4D6 /* KTExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27657C2B0C80657F00B2C4D6 /* KTExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */; };
+		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; };
+		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */; };
 		277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KTParsedKeyPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1694,6 +1696,8 @@
 		2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Refreshing.m"; sourceTree = "<group>"; };
 		27657C280C80657F00B2C4D6 /* KTExtensibleManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExtensibleManagedObject.h; sourceTree = "<group>"; };
 		27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensibleManagedObject.m; sourceTree = "<group>"; };
+		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
+		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageContainer.h; sourceTree = "<group>"; };
 		2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageContainer.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KTParsedKeyPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTParsedKeyPath.h; sourceTree = "<group>"; };
@@ -3620,6 +3624,8 @@
 		3C5A73070BF7AF6100776464 /* Core Image */ = {
 			isa = PBXGroup;
 			children = (
+				276688F40D63625F0019686C /* CIImage+KTExtensions.h */,
+				276688F50D63625F0019686C /* CIImage+KTExtensions.m */,
 			);
 			name = "Core Image";
 			sourceTree = "<group>";
@@ -4727,6 +4733,7 @@
 				274E78170D626BD1004F89C2 /* NSMutableSet+Karelia.h in Headers */,
 				274E781E0D626C42004F89C2 /* DNDArrayController.h in Headers */,
 				274E78200D626C69004F89C2 /* NTBoxView.h in Headers */,
+				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6132,6 +6139,7 @@
 				3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */,
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
+				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
