@@ -129,7 +129,6 @@
 				3C9B669B0BFA8299007A4871 /* PBXTargetDependency */,
 				3C9B66950BFA828E007A4871 /* PBXTargetDependency */,
 				3C9B668B0BFA8268007A4871 /* PBXTargetDependency */,
-				3C9B669F0BFA829F007A4871 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
@@ -1246,13 +1245,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterPagelet;
 		};
-		3C9B667F0BFA81E4007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = "RSS Badge";
-		};
 		3C9B668A0BFA8268007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B666D0BFA81D5007A4871 /* PageCounterPagelet.xcodeproj */;
@@ -1273,13 +1265,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IMStatusPagelet;
-		};
-		3C9B669E0BFA829F007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = "RSS Badge";
 		};
 		3C9B66A00BFA82A3007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1939,7 +1924,6 @@
 		3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusPagelet.xcodeproj; path = ../Plugins/IMStatusPagelet/IMStatusPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexPagelet.xcodeproj; path = ../Plugins/IndexPagelet/IndexPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B666D0BFA81D5007A4871 /* PageCounterPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterPagelet.xcodeproj; path = ../Plugins/PageCounterPagelet/PageCounterPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "RSS Badge.xcodeproj"; path = "../Plugins/RSSBadgePagelet/RSS Badge.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
 		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../Plugins/Elements/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3922,14 +3906,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C9B66790BFA81E4007A4871 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C9B66800BFA81E4007A4871 /* RSSBadge.svxPagelet */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3CA900680D63C76100815310 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4030,7 +4006,6 @@
 				3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */,
 				3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */,
 				3C9B666D0BFA81D5007A4871 /* PageCounterPagelet.xcodeproj */,
-				3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */,
 			);
 			name = Deprecated;
 			sourceTree = "<group>";
@@ -4872,10 +4847,6 @@
 					ProjectRef = 3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C9B66790BFA81E4007A4871 /* Products */;
-					ProjectRef = 3C9B66780BFA81E4007A4871 /* RSS Badge.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C42DE170D64CCC7004F35FD /* Products */;
 					ProjectRef = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 				},
@@ -5102,13 +5073,6 @@
 			fileType = wrapper.cfbundle;
 			path = PageCounter.svxPagelet;
 			remoteRef = 3C9B66740BFA81D5007A4871 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C9B66800BFA81E4007A4871 /* RSSBadge.svxPagelet */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RSSBadge.svxPagelet;
-			remoteRef = 3C9B667F0BFA81E4007A4871 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CA9006C0D63C76100815310 /* IFrame.svxElement */ = {
@@ -6131,11 +6095,6 @@
 			isa = PBXTargetDependency;
 			name = IMStatusPagelet;
 			targetProxy = 3C9B669A0BFA8299007A4871 /* PBXContainerItemProxy */;
-		};
-		3C9B669F0BFA829F007A4871 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "RSS Badge";
-			targetProxy = 3C9B669E0BFA829F007A4871 /* PBXContainerItemProxy */;
 		};
 		3C9B66A10BFA82A3007A4871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
