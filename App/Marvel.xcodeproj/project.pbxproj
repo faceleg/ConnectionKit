@@ -113,6 +113,8 @@
 				3C095C070D5D282B00DE6F62 /* PBXTargetDependency */,
 				3CA9FF330D63C17C00815310 /* PBXTargetDependency */,
 				3C4C6A730D64110700398BDA /* PBXTargetDependency */,
+				3C4C6A9E0D64128A00398BDA /* PBXTargetDependency */,
+				3C4C6A9C0D64127800398BDA /* PBXTargetDependency */,
 				3CA901730D63D1EA00815310 /* PBXTargetDependency */,
 				3CA9FF890D63C4E700815310 /* PBXTargetDependency */,
 				3CA9006E0D63C77000815310 /* PBXTargetDependency */,
@@ -121,8 +123,6 @@
 				3CA900CE0D63CD0B00815310 /* PBXTargetDependency */,
 				3C4C68F40D64086A00398BDA /* PBXTargetDependency */,
 				3C9B66C40BFA93F8007A4871 /* PBXTargetDependency */,
-				3C9B668F0BFA8274007A4871 /* PBXTargetDependency */,
-				3C9B66930BFA828A007A4871 /* PBXTargetDependency */,
 				3C9B66A10BFA82A3007A4871 /* PBXTargetDependency */,
 				3C9B669B0BFA8299007A4871 /* PBXTargetDependency */,
 				3C9B66950BFA828E007A4871 /* PBXTargetDependency */,
@@ -1077,6 +1077,34 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* ContactElement */;
 			remoteInfo = ContactElement;
 		};
+		3C4C6A7C0D64122700398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Delicious.svxElement */;
+			remoteInfo = DeliciousElement;
+		};
+		3C4C6A850D64123200398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Digg.svxElement */;
+			remoteInfo = DiggElement;
+		};
+		3C4C6A9B0D64127800398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DiggElement */;
+			remoteInfo = DiggElement;
+		};
+		3C4C6A9D0D64128A00398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DeliciousElement */;
+			remoteInfo = DeliciousElement;
+		};
 		3C5A9A990D11E7440054058C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1154,20 +1182,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = "Amazon List";
 		};
-		3C9B66470BFA81A4007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = DeliciousPagelet;
-		};
-		3C9B66500BFA81AC007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = DiggPagelet;
-		};
 		3C9B66590BFA81B7007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */;
@@ -1223,20 +1237,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = SiteMapPage;
-		};
-		3C9B668E0BFA8274007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = DeliciousPagelet;
-		};
-		3C9B66920BFA828A007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = DiggPagelet;
 		};
 		3C9B66940BFA828E007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1765,6 +1765,8 @@
 		3C3F54900D625952004885E7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RichTextElement.xcodeproj; path = ../Plugins/Elements/RichTextElement/RichTextElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../Plugins/Elements/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Pasteboard.m"; sourceTree = "<group>"; };
 		3C59B05908A9B8E70076C6DC /* 13x13_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 13x13_empty.png; sourceTree = "<group>"; };
 		3C5A2CA00BD1F8DD00A788F5 /* KTNoCascadePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNoCascadePanel.h; sourceTree = "<group>"; };
@@ -1916,8 +1918,6 @@
 		3C9B0484095E5EEB0053F596 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Exception.nib; sourceTree = "<group>"; };
 		3C9B661C0BFA8180007A4871 /* Amazon List.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Amazon List.xcodeproj"; path = "../Plugins/AmazonPagelet/Amazon List.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ContactElement.xcodeproj; path = ../Plugins/Elements/ContactElement/ContactElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousPagelet.xcodeproj; path = ../Plugins/DeliciousPagelet/DeliciousPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggPagelet.xcodeproj; path = ../Plugins/DiggPagelet/DiggPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrPagelet.xcodeproj; path = ../Plugins/FlickrPagelet/FlickrPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusPagelet.xcodeproj; path = ../Plugins/IMStatusPagelet/IMStatusPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexPagelet.xcodeproj; path = ../Plugins/IndexPagelet/IndexPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3428,6 +3428,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3C4C6A760D64122700398BDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C4C6A7D0D64122700398BDA /* Delicious.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C4C6A7F0D64123200398BDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C4C6A860D64123200398BDA /* Digg.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C5188A10D2F4DDC002D7414 /* Site Outline */ = {
 			isa = PBXGroup;
 			children = (
@@ -3842,22 +3858,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C9B66410BFA81A4007A4871 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C9B66480BFA81A4007A4871 /* Delicious.svxPagelet */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C9B664A0BFA81AC007A4871 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C9B66510BFA81AC007A4871 /* Digg.svxPagelet */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C9B66530BFA81B7007A4871 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3971,6 +3971,8 @@
 			isa = PBXGroup;
 			children = (
 				3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */,
+				3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */,
+				3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */,
 				3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */,
 				3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */,
 				3CA900670D63C76100815310 /* IFrameElement.xcodeproj */,
@@ -3998,8 +4000,6 @@
 			isa = PBXGroup;
 			children = (
 				3C9B661C0BFA8180007A4871 /* Amazon List.xcodeproj */,
-				3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */,
-				3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */,
 				3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */,
 				3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */,
 				3C9B66640BFA81CC007A4871 /* IndexPagelet.xcodeproj */,
@@ -4739,16 +4739,16 @@
 					ProjectRef = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C9B66410BFA81A4007A4871 /* Products */;
-					ProjectRef = 3C9B66400BFA81A4007A4871 /* DeliciousPagelet.xcodeproj */;
+					ProductGroup = 3C4C6A760D64122700398BDA /* Products */;
+					ProjectRef = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C1D06620D5D667C00782A95 /* Products */;
 					ProjectRef = 3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C9B664A0BFA81AC007A4871 /* Products */;
-					ProjectRef = 3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */;
+					ProductGroup = 3C4C6A7F0D64123200398BDA /* Products */;
+					ProjectRef = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 3CA9016D0D63D1D100815310 /* Products */;
@@ -5012,25 +5012,25 @@
 			remoteRef = 3C4C6A700D6410F300398BDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3C4C6A7D0D64122700398BDA /* Delicious.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Delicious.svxElement;
+			remoteRef = 3C4C6A7C0D64122700398BDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C4C6A860D64123200398BDA /* Digg.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Digg.svxElement;
+			remoteRef = 3C4C6A850D64123200398BDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C9B66240BFA8180007A4871 /* Amazon.svxPagelet */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = Amazon.svxPagelet;
 			remoteRef = 3C9B66230BFA8180007A4871 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C9B66480BFA81A4007A4871 /* Delicious.svxPagelet */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Delicious.svxPagelet;
-			remoteRef = 3C9B66470BFA81A4007A4871 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C9B66510BFA81AC007A4871 /* Digg.svxPagelet */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Digg.svxPagelet;
-			remoteRef = 3C9B66500BFA81AC007A4871 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C9B665A0BFA81B7007A4871 /* Flickr.svxPagelet */ = {
@@ -6006,6 +6006,16 @@
 			name = ContactElement;
 			targetProxy = 3C4C6A720D64110700398BDA /* PBXContainerItemProxy */;
 		};
+		3C4C6A9C0D64127800398BDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DiggElement;
+			targetProxy = 3C4C6A9B0D64127800398BDA /* PBXContainerItemProxy */;
+		};
+		3C4C6A9E0D64128A00398BDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DeliciousElement;
+			targetProxy = 3C4C6A9D0D64128A00398BDA /* PBXContainerItemProxy */;
+		};
 		3C5A9A9A0D11E7440054058C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C5A9A950D11E68A0054058C /* ConnectionKit - Use Specific Revision */;
@@ -6065,16 +6075,6 @@
 			isa = PBXTargetDependency;
 			name = SiteMapPage;
 			targetProxy = 3C9B668C0BFA826F007A4871 /* PBXContainerItemProxy */;
-		};
-		3C9B668F0BFA8274007A4871 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DeliciousPagelet;
-			targetProxy = 3C9B668E0BFA8274007A4871 /* PBXContainerItemProxy */;
-		};
-		3C9B66930BFA828A007A4871 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DiggPagelet;
-			targetProxy = 3C9B66920BFA828A007A4871 /* PBXContainerItemProxy */;
 		};
 		3C9B66950BFA828E007A4871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
