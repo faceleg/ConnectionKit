@@ -24,6 +24,7 @@
 	
 	NSIndexSet	*mySelectedIndexes;
 	NSSet		*mySelectedPages;
+	NSArrayController	*myTempSelectionController;
 	
 	NSImage				*myCachedFavicon;
 	NSMutableDictionary	*myCachedPluginIcons;

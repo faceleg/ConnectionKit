@@ -195,7 +195,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		// Design Chooser bindings
 		[oDesignsView bind:@"selectedDesign"
-				  toObject:oPageSelectionController
+				  toObject:[self siteOutlineController]
 			   withKeyPath:@"selection.master.design"
 				   options:nil];
 				   
@@ -225,7 +225,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		// Prepare the collection index.html popup
 		[oCollectionIndexExtensionButton bind:@"defaultValue"
-									 toObject:oPageSelectionController
+									 toObject:[self siteOutlineController]
 								  withKeyPath:@"selection.defaultIndexFileName"
 								      options:nil];
 		
@@ -233,7 +233,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			"Popup menu title for setting the index.html file's extensions")];
 		
 		[oFileExtensionPopup bind:@"defaultValue"
-						 toObject:oPageSelectionController
+						 toObject:[self siteOutlineController]
 					  withKeyPath:@"selection.defaultFileExtension"
 						  options:nil];
 		

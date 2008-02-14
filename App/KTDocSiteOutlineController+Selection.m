@@ -19,6 +19,12 @@
 
 @implementation KTDocSiteOutlineController (Selection)
 
+- (id)selection
+{
+	id result = [myTempSelectionController selection];
+	return result; 
+}
+
 #pragma mark -
 #pragma mark Selection Indexes
 
@@ -76,9 +82,8 @@
 	mySelectedPages = selectedPages;
 	
 	// Got to keep the controller in sync for the benefit of the UI
-	NSArrayController *arrayController = [[self docWindowController] allPagesController];
-	[arrayController setContent:selectedPages];
-	[arrayController setSelectedObjects:[selectedPages allObjects]];
+	[myTempSelectionController setContent:selectedPages];
+	[myTempSelectionController setSelectedObjects:[selectedPages allObjects]];
 	
 	[self didChangeValueForKey:@"selectedPage"];
 	[[self docWindowController] didChangeValueForKey:@"selectedPagesIncludesACollection"];

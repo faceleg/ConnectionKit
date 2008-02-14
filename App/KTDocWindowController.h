@@ -53,9 +53,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSTokenField						*oKeywordsField;
 	IBOutlet KTPopUpButton	*oFileExtensionPopup;
 	IBOutlet KTPopUpButton	*oCollectionIndexExtensionButton;
-	
-	IBOutlet NSArrayController	*oPageSelectionController;
-	
+		
 	
 	// Uploading TO HOOK UP
 	//	IBOutlet NSProgressIndicator    *oUploadStatusIndicator;	// upload status
@@ -287,7 +285,6 @@ extern NSString *KTSelectedDOMRangeKey;
 - (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement;
 
 - (KTPage *)nearestParent:(KTManagedObjectContext *)aManagedObjectContext;
-- (NSArrayController *)allPagesController;
 
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;

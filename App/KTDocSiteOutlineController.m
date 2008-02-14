@@ -71,13 +71,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 #pragma mark Init/Dealloc/Awake
 
-- (id)init
+- (id)initWithCoder:(NSCoder *)decoder
 {
-	[super init];
+	self = [super initWithCoder:decoder];
 	
 	if ( nil != self )
 	{
 		myPages = [[NSMutableSet alloc] initWithCapacity:200];
+		myTempSelectionController = [[NSArrayController alloc] initWithContent:nil];
 		
 		// Caches
 		myCachedPluginIcons = [[NSMutableDictionary alloc] init];
@@ -125,6 +126,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Release remaining iVars
 	[myMOC release];
 	[mySelectedPages release];
+	[myTempSelectionController release];
 	
 	[myCachedFavicon release];
 	[myCachedPluginIcons release];

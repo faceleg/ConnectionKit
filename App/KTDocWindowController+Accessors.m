@@ -121,12 +121,6 @@
 	return parentCollection;
 }
 
-/*	This controller is kept in sync with our -selectedPages method.
- *	It allows UI elements to bound to it so they gain proper support for editing when multiple
- *	pages are selected in the Site Outline.
- */
-- (NSArrayController *)allPagesController { return oPageSelectionController; }
-
 /*	Used for binding the visibility of the filename settings
  *	We don't want to show the UI for file extension if one or more collections is selected
  */
