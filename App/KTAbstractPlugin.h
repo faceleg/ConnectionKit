@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTExtensibleManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 #import "KTPluginInspectorViewsManager.h"
 
 #import "KTComponents.h"
@@ -27,7 +27,7 @@
 @class KTDocument, KTMediaManager, KTElementPlugin, KTPage;
 
 
-@interface KTAbstractPlugin : KTExtensibleManagedObject <KTInspectorPlugin>
+@interface KTAbstractPlugin : KTManagedObject <KTInspectorPlugin>
 {
     // optional delegate
 	id					myDelegate;

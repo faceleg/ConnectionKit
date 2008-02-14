@@ -18,11 +18,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSExtensibleManagedObject.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 
 @class KTManagedObjectContext;
-@interface KTManagedObject : NSManagedObject { }
+@interface KTManagedObject : KSExtensibleManagedObject
+{
+}
 
 - (BOOL)isNewlyCreatedObject;
 

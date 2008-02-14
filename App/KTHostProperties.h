@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTExtensibleManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 
-@interface KTHostProperties : KTExtensibleManagedObject
+@interface KTHostProperties : KTManagedObject
 
 - (BOOL)remoteSiteURLIsValid;
 - (NSString *)globalBaseURLUsingHome:(BOOL)inHome;

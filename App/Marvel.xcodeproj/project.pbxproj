@@ -208,8 +208,8 @@
 		275341350C993D8600AC7220 /* KTHTMLParserMasterCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */; };
 		27534C950C99C15A00AC7220 /* KTDocWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27534C930C99C15A00AC7220 /* KTDocWebViewController.m */; };
 		2753688B0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */; };
-		27657C2A0C80657F00B2C4D6 /* KTExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27657C280C80657F00B2C4D6 /* KTExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27657C2B0C80657F00B2C4D6 /* KTExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */; };
+		27657C2A0C80657F00B2C4D6 /* KSExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27657C280C80657F00B2C4D6 /* KSExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27657C2B0C80657F00B2C4D6 /* KSExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27657C290C80657F00B2C4D6 /* KSExtensibleManagedObject.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276689ED0D63752D0019686C /* WebView+Karelia.h */; };
@@ -1697,8 +1697,8 @@
 		27534C920C99C15A00AC7220 /* KTDocWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWebViewController.h; sourceTree = "<group>"; };
 		27534C930C99C15A00AC7220 /* KTDocWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWebViewController.m; sourceTree = "<group>"; };
 		2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Refreshing.m"; sourceTree = "<group>"; };
-		27657C280C80657F00B2C4D6 /* KTExtensibleManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExtensibleManagedObject.h; sourceTree = "<group>"; };
-		27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensibleManagedObject.m; sourceTree = "<group>"; };
+		27657C280C80657F00B2C4D6 /* KSExtensibleManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSExtensibleManagedObject.h; path = ../../../Shared/trunk/App/KSExtensibleManagedObject.h; sourceTree = "<group>"; };
+		27657C290C80657F00B2C4D6 /* KSExtensibleManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSExtensibleManagedObject.m; path = ../../../Shared/trunk/App/KSExtensibleManagedObject.m; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		276689ED0D63752D0019686C /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WebView+Karelia.h"; path = "../../../Shared/trunk/App/WebView+Karelia.h"; sourceTree = SOURCE_ROOT; };
@@ -2929,8 +2929,8 @@
 				3C682B280D622FF000B4D485 /* KTManagedObjectContext.m */,
 				3C682B2A0D622FF800B4D485 /* KTPersistentStoreCoordinator.h */,
 				3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */,
-				27657C280C80657F00B2C4D6 /* KTExtensibleManagedObject.h */,
-				27657C290C80657F00B2C4D6 /* KTExtensibleManagedObject.m */,
+				27657C280C80657F00B2C4D6 /* KSExtensibleManagedObject.h */,
+				27657C290C80657F00B2C4D6 /* KSExtensibleManagedObject.m */,
 				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
 				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
 			);
@@ -4633,7 +4633,7 @@
 				3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */,
 				27FF86A60C5A9B6C0077CB14 /* UnifiedTableButton.h in Headers */,
 				27FF86A80C5A9B6C0077CB14 /* UnifiedTableButtonCell.h in Headers */,
-				27657C2A0C80657F00B2C4D6 /* KTExtensibleManagedObject.h in Headers */,
+				27657C2A0C80657F00B2C4D6 /* KSExtensibleManagedObject.h in Headers */,
 				27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */,
 				27DB8CE40C85D15A00E29C38 /* ContainsValueTransformer.h in Headers */,
 				278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */,
@@ -6002,7 +6002,7 @@
 				27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */,
 				27FF86A70C5A9B6C0077CB14 /* UnifiedTableButton.m in Sources */,
 				27FF86A90C5A9B6C0077CB14 /* UnifiedTableButtonCell.m in Sources */,
-				27657C2B0C80657F00B2C4D6 /* KTExtensibleManagedObject.m in Sources */,
+				27657C2B0C80657F00B2C4D6 /* KSExtensibleManagedObject.m in Sources */,
 				27FA04750C82F66700793A6D /* KTAbstractPlugin+Deprecated.m in Sources */,
 				27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */,
 				27DB8CE50C85D15A00E29C38 /* ContainsValueTransformer.m in Sources */,
