@@ -936,6 +936,33 @@ from representedObject */
 		[self insertPage:indexPage parent:nearestParent];
 		
 		
+		// Generate a first child page if desired
+		NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
+		if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
+		{
+			NSMutableDictionary *firstChildProperties =
+				[NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
+			[firstChildProperties removeObjectForKey:@"pluginIdentifier"];
+			
+			KTPage *firstChild = [KTPage pageWithParent:indexPage
+												 bundle:[NSBundle bundleWithIdentifier:firstChildIdentifier]
+						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+			
+			NSEnumerator *propertiesEnumerator = [firstChildProperties objectEnumerator];
+			NSString *aKey;
+			while (aKey = [propertiesEnumerator nextObject])
+			{
+				id aProperty = [firstChildProperties objectForKey:aProperty];
+				if ([aProperty isKindOfClass:[NSString class]])
+				{
+					aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
+				}
+				
+				[firstChild setValue:aProperty forKey:aKey];
+			}
+		}
+		
+		
 		// Any collection with an RSS feed should have an RSS Badge.
 		if ([[pageSettings objectForKey:@"collectionSyndicate"] boolValue])
 		{
@@ -944,7 +971,10 @@ from representedObject */
 			if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
 			{
 				KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
-				[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
+				if (badgePlugin)
+				{
+					[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
+				}
 			}
 		
 		

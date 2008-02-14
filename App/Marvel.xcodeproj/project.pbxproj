@@ -1039,42 +1039,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* SiteMap.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = SiteMapElement;
 		};
 		3C42DDAE0D64C8D9004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* SiteMapElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = SiteMapElement;
 		};
 		3C42DE1A0D64CCC7004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* RSSBadge.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = RSSBadgeElement;
 		};
 		3C42DE1C0D64CCDC004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* RSSBadgeElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = RSSBadgeElement;
 		};
 		3C42E29D0D64D253004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* PageCounter.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterElement;
 		};
 		3C42E29F0D64D262004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* PageCounterElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PageCounterElement;
 		};
 		3C4C68F10D64086000398BDA /* PBXContainerItemProxy */ = {
