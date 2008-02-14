@@ -7,17 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C42E5070D6505A5004F35FD /* HTMLElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5060D6505A5004F35FD /* HTMLElementDelegate.m */; };
+		3C42E50B0D6505BC004F35FD /* HTMLElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E50A0D6505BC004F35FD /* HTMLElementTemplate.html */; };
+		3C42E5110D6505C6004F35FD /* HTMLElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E50C0D6505C6004F35FD /* HTMLElement.nib */; };
+		3C42E5120D6505C6004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E50F0D6505C6004F35FD /* Localizable.strings */; };
+		3C42E52C0D650637004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E52B0D650637004F35FD /* License.rtf */; };
+		3C42E52F0D650646004F35FD /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E52D0D650646004F35FD /* Debug.xcconfig */; };
+		3C42E5300D650646004F35FD /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E52E0D650646004F35FD /* Release.xcconfig */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* HTMLElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElement_Prefix.pch; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* HTMLElement.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTMLElement.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C42E5050D6505A5004F35FD /* HTMLElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElementDelegate.h; sourceTree = "<group>"; };
+		3C42E5060D6505A5004F35FD /* HTMLElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLElementDelegate.m; sourceTree = "<group>"; };
+		3C42E50A0D6505BC004F35FD /* HTMLElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = HTMLElementTemplate.html; sourceTree = "<group>"; };
+		3C42E50D0D6505C6004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E50E0D6505C6004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5100D6505C6004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E5140D6505D5004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E5150D6505D5004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5160D6505D5004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E5170D6505DF004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E5180D6505DF004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5190D6505DF004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E51A0D6505E8004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E51B0D6505E8004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E51C0D6505E8004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E51D0D6505F5004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E51E0D6505F5004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E51F0D6505F5004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E5200D650600004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E5210D650600004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5220D650600004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E5230D65060D004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E5240D65060D004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5250D65060D004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E5260D650616004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		3C42E5270D650616004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E5280D650616004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E52B0D650637004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C42E52D0D650646004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C42E52E0D650646004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* HTML.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTML.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -42,6 +78,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C42E5330D65064B004F35FD /* Xcode Configurations */,
 			);
 			name = HTMLElement;
 			sourceTree = "<group>";
@@ -59,7 +96,11 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3C42E50C0D6505C6004F35FD /* HTMLElement.nib */,
+				3C42E50A0D6505BC004F35FD /* HTMLElementTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C42E50F0D6505C6004F35FD /* Localizable.strings */,
+				3C42E52B0D650637004F35FD /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -67,6 +108,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3C42E5050D6505A5004F35FD /* HTMLElementDelegate.h */,
+				3C42E5060D6505A5004F35FD /* HTMLElementDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -92,7 +135,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* HTMLElement.bundle */,
+				8D5B49B6048680CD000E48DA /* HTML.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +148,15 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		3C42E5330D65064B004F35FD /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C42E52D0D650646004F35FD /* Debug.xcconfig */,
+				3C42E52E0D650646004F35FD /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,9 +164,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "HTMLElement" */;
 			buildPhases = (
-				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3C42E5740D6506D1004F35FD /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -123,7 +176,7 @@
 			name = HTMLElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = HTMLElement;
-			productReference = 8D5B49B6048680CD000E48DA /* HTMLElement.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* HTML.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -134,6 +187,20 @@
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "HTMLElement" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				zh_CN,
+				zh_TW,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* HTMLElement */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -149,16 +216,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3C42E50B0D6505BC004F35FD /* HTMLElementTemplate.html in Resources */,
+				3C42E5110D6505C6004F35FD /* HTMLElement.nib in Resources */,
+				3C42E5120D6505C6004F35FD /* Localizable.strings in Resources */,
+				3C42E52C0D650637004F35FD /* License.rtf in Resources */,
+				3C42E52F0D650646004F35FD /* Debug.xcconfig in Resources */,
+				3C42E5300D650646004F35FD /* Release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C42E5740D6506D1004F35FD /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C42E5070D6505A5004F35FD /* HTMLElementDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,9 +260,46 @@
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				3C42E50E0D6505C6004F35FD /* en */,
+				3C42E5150D6505D5004F35FD /* da */,
+				3C42E5180D6505DF004F35FD /* de */,
+				3C42E51B0D6505E8004F35FD /* fr */,
+				3C42E51E0D6505F5004F35FD /* it */,
+				3C42E5210D650600004F35FD /* ja */,
+				3C42E5240D65060D004F35FD /* zh_CN */,
+				3C42E5270D650616004F35FD /* zh_TW */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C42E50C0D6505C6004F35FD /* HTMLElement.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C42E50D0D6505C6004F35FD /* en */,
+				3C42E5140D6505D5004F35FD /* da */,
+				3C42E5170D6505DF004F35FD /* de */,
+				3C42E51A0D6505E8004F35FD /* fr */,
+				3C42E51D0D6505F5004F35FD /* it */,
+				3C42E5200D650600004F35FD /* ja */,
+				3C42E5230D65060D004F35FD /* zh_CN */,
+				3C42E5260D650616004F35FD /* zh_TW */,
+			);
+			name = HTMLElement.nib;
+			sourceTree = "<group>";
+		};
+		3C42E50F0D6505C6004F35FD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C42E5100D6505C6004F35FD /* en */,
+				3C42E5160D6505D5004F35FD /* da */,
+				3C42E5190D6505DF004F35FD /* de */,
+				3C42E51C0D6505E8004F35FD /* fr */,
+				3C42E51F0D6505F5004F35FD /* it */,
+				3C42E5220D650600004F35FD /* ja */,
+				3C42E5250D65060D004F35FD /* zh_CN */,
+				3C42E5280D650616004F35FD /* zh_TW */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -178,33 +307,29 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C42E52D0D650646004F35FD /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HTMLElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = HTMLElement;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = YES;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50220000,
+				);
+				PRODUCT_NAME = HTML;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C42E52E0D650646004F35FD /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HTMLElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = HTMLElement;
-				WRAPPER_EXTENSION = bundle;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50220000,
+				);
+				PRODUCT_NAME = HTML;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
