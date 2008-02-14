@@ -174,11 +174,13 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 							<h2[[idClass entity:Page property:titleHTML flags:"line optional RootNotOptional" id:uniqueID replacement:titleText code:h2]]><span class="in">[[=titleHTML]]</span></h2>
 							
 [[if parent.collectionShowNavigationArrows]]
+[[if parent.index.navigationArrowsStyle==1]]
 							<div class="photo-navigation">
-								<div id="previous-photo">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]">[["Previous]]</a>[[endif2]]</div>
-								<div id="next-photo">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]">[["Next]]</a>[[endif2]]</div>
+								<div id="previous-photo">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]">[["Previous]]</a>[[endif3]]</div>
+								<div id="next-photo">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]">[["Next]]</a>[[endif3]]</div>
 								<div id="photo-list"><a class="imageLink" href="[[path parent]]">[["List]]</a></div>
 							</div>
+[[endif2]]
 [[endif]]
 
 [[parsecomponent self class.elementTemplate]]

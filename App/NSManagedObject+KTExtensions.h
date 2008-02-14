@@ -37,6 +37,7 @@
 /*! returns all values (changed+committed) */
 - (NSDictionary *)currentValues;
 
+//	TODO: Review if we really need all 4 of these.
 - (BOOL)hasTemporaryObjectID;
 - (BOOL)hasTemporaryURIRepresentation;
 - (BOOL)isTemporaryObject;

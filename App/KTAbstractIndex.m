@@ -83,7 +83,10 @@
 	return result;
 }
 
-
+- (KTNavigationArrowsStyle)navigationArrowsStyle
+{
+	return [[[self plugin] pluginPropertyForKey:@"KTNavigationArrowsStyle"] intValue];
+}
 
 /*!	For gathering up of resources and such.  We don't have any special
 	methods defined that allow you to just specify something in an info.plist, so if

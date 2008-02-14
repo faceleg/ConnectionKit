@@ -156,7 +156,7 @@
 
 - (BOOL)isNewlyCreatedObject
 {
-    return [[self objectID] isTemporaryID];
+    return [self hasTemporaryObjectID];
 }
 
 - (BOOL)hasChanges

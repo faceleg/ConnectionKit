@@ -20,6 +20,13 @@
 #import <Cocoa/Cocoa.h>
 
 
+typedef enum {
+	KTNavigationArrowsStyleNone,
+	KTNavigationArrowsStyleGraphical,
+	KTNavigationArrowsStyleText,
+} KTNavigationArrowsStyle;
+
+
 @class KTPage;
 
 
@@ -40,6 +47,8 @@
 - (void)makeComponentsPerformSelector:(SEL)selector withObject:(void *)anObject withPage:(KTPage *)page;
 
 - (NSString *)cssClassName;	// returns CSS class of index, e.g. listing-index
+
+- (KTNavigationArrowsStyle)navigationArrowsStyle;
 
 // Media
 - (NSSet *)requiredMediaIdentifiers;
