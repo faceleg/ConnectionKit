@@ -8,19 +8,44 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.yourcocoabundle</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>NSPrincipalClass</key>
+	<string>${SVN_VERSION}</string>
+	<key>KTHelpAnchor</key>
+	<string>Sandvox_Badge</string>
+	<key>KTPageletCanHaveTitle</key>
+	<false/>
+	<key>KTPluginIconName</key>
+	<string>document.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>badgeTypeTag</key>
+		<integer>1</integer>
+		<key>prefersBottom</key>
+		<true/>
+		<key>showBorder</key>
+		<false/>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Badge</string>
+	<key>KTPluginNibFile</key>
+	<string>BadgePagelet</string>
+	<key>KTPluginPriority</key>
+	<integer>8</integer>
+	<key>KTPluginUntitledName</key>
 	<string></string>
+	<key>KTTemplateName</key>
+	<string>BadgePageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>BadgePageletDelegate</string>
 </dict>
 </plist>
