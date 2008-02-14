@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C5FA4FF0D4FAFF50046CF3D /* Bundle Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA4FD0D4FAFF50046CF3D /* Bundle Debug.xcconfig */; };
-		3C5FA5000D4FAFF50046CF3D /* Bundle Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA4FE0D4FAFF50046CF3D /* Bundle Release.xcconfig */; };
 		3C5FA5250D4FB4540046CF3D /* loremipsum1.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA5230D4FB4540046CF3D /* loremipsum1.html */; };
 		3C5FA5260D4FB4540046CF3D /* loremipsum2.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA5240D4FB4540046CF3D /* loremipsum2.html */; };
 		3C5FA52D0D4FB4C00046CF3D /* RichTextElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5FA52C0D4FB4C00046CF3D /* RichTextElementDelegate.m */; };
@@ -24,8 +22,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* RichTextElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextElement_Prefix.pch; sourceTree = "<group>"; };
-		3C5FA4FD0D4FAFF50046CF3D /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Debug.xcconfig"; path = "../../Xcode Configurations/Bundle Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
-		3C5FA4FE0D4FAFF50046CF3D /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Release.xcconfig"; path = "../../Xcode Configurations/Bundle Release.xcconfig"; sourceTree = SOURCE_ROOT; };
+		3C4C691E0D6408D500398BDA /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C4C691F0D6408D500398BDA /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C5FA5230D4FB4540046CF3D /* loremipsum1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = loremipsum1.html; sourceTree = "<group>"; };
 		3C5FA5240D4FB4540046CF3D /* loremipsum2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = loremipsum2.html; sourceTree = "<group>"; };
 		3C5FA52B0D4FB4C00046CF3D /* RichTextElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextElementDelegate.h; sourceTree = "<group>"; };
@@ -42,7 +40,7 @@
 		3C5FA6430D4FD1BC0046CF3D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C5FA6460D4FD1C60046CF3D /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C5FA6490D4FD1D00046CF3D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* RichTextElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RichTextElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* RichText.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RichText.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -127,7 +125,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* RichTextElement.svxElement */,
+				8D5B49B6048680CD000E48DA /* RichText.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,8 +141,8 @@
 		3C5FA4FA0D4FAFD30046CF3D /* Xcode Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				3C5FA4FD0D4FAFF50046CF3D /* Bundle Debug.xcconfig */,
-				3C5FA4FE0D4FAFF50046CF3D /* Bundle Release.xcconfig */,
+				3C4C691E0D6408D500398BDA /* Debug.xcconfig */,
+				3C4C691F0D6408D500398BDA /* Release.xcconfig */,
 			);
 			name = "Xcode Configurations";
 			sourceTree = "<group>";
@@ -167,7 +165,7 @@
 			name = RichTextElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = RichTextElement;
-			productReference = 8D5B49B6048680CD000E48DA /* RichTextElement.svxElement */;
+			productReference = 8D5B49B6048680CD000E48DA /* RichText.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -206,8 +204,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C5FA4FF0D4FAFF50046CF3D /* Bundle Debug.xcconfig in Resources */,
-				3C5FA5000D4FAFF50046CF3D /* Bundle Release.xcconfig in Resources */,
 				3C5FA5250D4FB4540046CF3D /* loremipsum1.html in Resources */,
 				3C5FA5260D4FB4540046CF3D /* loremipsum2.html in Resources */,
 				3C5FA5310D4FB4CB0046CF3D /* RichTextElementTemplate.html in Resources */,
@@ -250,33 +246,28 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C5FA4FD0D4FAFF50046CF3D /* Bundle Debug.xcconfig */;
+			baseConfigurationReference = 3C4C691E0D6408D500398BDA /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = RichTextElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = RichTextElement;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50260000,
+				);
+				PRODUCT_NAME = RichText;
 				WRAPPER_EXTENSION = svxElement;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C5FA4FE0D4FAFF50046CF3D /* Bundle Release.xcconfig */;
+			baseConfigurationReference = 3C4C691F0D6408D500398BDA /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = RichTextElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = RichTextElement;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50260000,
+				);
+				PRODUCT_NAME = RichText;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
