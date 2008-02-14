@@ -149,6 +149,9 @@
 - (BOOL)isRoot;
 - (NSIndexPath *)indexPathFromRoot;
 
+- (KTPage *)previousPage;
+- (KTPage *)nextPage;
+
 
 - (NSSet *)childrenInIndexSet;
 
