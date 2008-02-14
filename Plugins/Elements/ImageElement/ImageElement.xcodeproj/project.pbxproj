@@ -25,8 +25,6 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2743601C0D52A5E900C257BA /* photopage.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = photopage.icns; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ImageElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageElement_Prefix.pch; sourceTree = "<group>"; };
-		3C09FF160D4FFA94001A4237 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Debug.xcconfig"; path = "../../Xcode Configurations/Bundle Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
-		3C09FF170D4FFA94001A4237 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Release.xcconfig"; path = "../../Xcode Configurations/Bundle Release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3C09FF290D50089F001A4237 /* ImageElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageElementDelegate.h; sourceTree = "<group>"; };
 		3C09FF2A0D50089F001A4237 /* ImageElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageElementDelegate.m; sourceTree = "<group>"; };
 		3C09FF2E0D5008CC001A4237 /* dotphoto.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dotphoto.gif; sourceTree = "<group>"; };
@@ -35,6 +33,8 @@
 		3C09FF310D5008CC001A4237 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		3C09FF390D5008E5001A4237 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/ImageElement.nib; sourceTree = "<group>"; };
 		3C09FF3E0D500941001A4237 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
+		3C4C69A10D640C7800398BDA /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C4C69A20D640C7800398BDA /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C67C25A0D5274C000116BA5 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C67C25E0D5274CA00116BA5 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C67C2630D5274DC00116BA5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		3C67C29F0D52761800116BA5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C67C2A20D52761E00116BA5 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C67C2A50D52762700116BA5 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* ImageElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Image.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Image.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -145,7 +145,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* ImageElement.svxElement */,
+				8D5B49B6048680CD000E48DA /* Image.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,8 +161,8 @@
 		3C09FF110D4FFA68001A4237 /* Xcode Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				3C09FF160D4FFA94001A4237 /* Bundle Debug.xcconfig */,
-				3C09FF170D4FFA94001A4237 /* Bundle Release.xcconfig */,
+				3C4C69A10D640C7800398BDA /* Debug.xcconfig */,
+				3C4C69A20D640C7800398BDA /* Release.xcconfig */,
 			);
 			name = "Xcode Configurations";
 			sourceTree = "<group>";
@@ -174,9 +174,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ImageElement" */;
 			buildPhases = (
-				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3C4C69A60D640D0900398BDA /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -185,7 +186,7 @@
 			name = ImageElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = ImageElement;
-			productReference = 8D5B49B6048680CD000E48DA /* ImageElement.svxElement */;
+			productReference = 8D5B49B6048680CD000E48DA /* Image.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -235,6 +236,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C4C69A60D640D0900398BDA /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\ngenstrings -q -u -o en.lproj *.[hm]\n\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
@@ -298,25 +317,28 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C09FF160D4FFA94001A4237 /* Bundle Debug.xcconfig */;
+			baseConfigurationReference = 3C4C69A10D640C7800398BDA /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = ImageElement;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50240000,
+				);
+				PRODUCT_NAME = Image;
 				WRAPPER_EXTENSION = svxElement;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C09FF170D4FFA94001A4237 /* Bundle Release.xcconfig */;
+			baseConfigurationReference = 3C4C69A20D640C7800398BDA /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = ImageElement;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50240000,
+				);
+				PRODUCT_NAME = Image;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;

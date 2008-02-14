@@ -43,7 +43,7 @@
 #import <KTAbstractMediaFile.h>
 #import <KTPathInfoField.h>
 
-#import <NSMutableSet+KTExtensions.h>
+#import <NSMutableSet+Karelia.h>
 
 #import <QuartzCore/QuartzCore.h>
 
