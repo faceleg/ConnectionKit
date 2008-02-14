@@ -219,6 +219,8 @@
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276689ED0D63752D0019686C /* WebView+Karelia.h */; };
 		276689F00D63752D0019686C /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276689EE0D63752D0019686C /* WebView+Karelia.m */; };
+		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; };
+		27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugin.m */; };
 		2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */; };
 		277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KTParsedKeyPath.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1275,42 +1277,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* IFrame.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = IFrameElement;
 		};
 		3CA9006D0D63C77000815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* IFrameElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IFrameElement;
 		};
 		3CA900CB0D63CCF800815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900C70D63CCF800815310 /* LinkListElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* LinkList.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = LinkListElement;
 		};
 		3CA900CD0D63CD0B00815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900C70D63CCF800815310 /* LinkListElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LinkListElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = LinkListElement;
 		};
 		3CA901700D63D1D100815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Download.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DownloadElement;
 		};
 		3CA901720D63D1EA00815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DownloadElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DownloadElement;
 		};
 		3CA901A60D63D45B00815310 /* PBXContainerItemProxy */ = {
@@ -1554,6 +1556,8 @@
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		276689ED0D63752D0019686C /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WebView+Karelia.h"; path = "../../../Shared/trunk/App/WebView+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		276689EE0D63752D0019686C /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WebView+Karelia.m"; path = "../../../Shared/trunk/App/WebView+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		27668FC20D63D3070019686C /* KTIndexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugin.h; sourceTree = "<group>"; };
+		27668FC30D63D3070019686C /* KTIndexPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugin.m; sourceTree = "<group>"; };
 		2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageContainer.h; sourceTree = "<group>"; };
 		2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageContainer.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KTParsedKeyPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTParsedKeyPath.h; sourceTree = "<group>"; };
@@ -2819,6 +2823,8 @@
 				27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */,
 				27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */,
 				27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */,
+				27668FC20D63D3070019686C /* KTIndexPlugin.h */,
+				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
 			);
 			name = Plugins;
 			sourceTree = "<group>";
@@ -4654,6 +4660,7 @@
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
 				276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */,
 				3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */,
+				27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5892,6 +5899,7 @@
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
 				276689F00D63752D0019686C /* WebView+Karelia.m in Sources */,
+				27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

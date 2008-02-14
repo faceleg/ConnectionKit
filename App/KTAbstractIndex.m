@@ -85,7 +85,7 @@
 
 - (KTNavigationArrowsStyle)navigationArrowsStyle
 {
-	return [[[self plugin] pluginPropertyForKey:@"KTNavigationArrowsStyle"] intValue];
+	return [[[self plugin] pluginPropertyForKey:@"KTIndexNavigationArrowsStyle"] intValue];
 }
 
 /*!	For gathering up of resources and such.  We don't have any special

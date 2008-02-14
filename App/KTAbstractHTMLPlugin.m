@@ -16,7 +16,6 @@
 
 + (void)load
 {
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxIndex"];
 	[KTAppPlugin registerPluginClass:[KTAppPlugin class] forFileExtension:kKTDataSourceExtension];
 }
 

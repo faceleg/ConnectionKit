@@ -22,6 +22,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KTCSSClassName</key>
 	<string>general-index</string>
+	<key>KTIndexNavigationArrowsStyle</key>
+	<integer>2</integer>
 	<key>KTPluginIconName</key>
 	<string>index.icns</string>
 	<key>KTPluginName</key>

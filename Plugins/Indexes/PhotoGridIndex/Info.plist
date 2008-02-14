@@ -22,6 +22,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KTCSSClassName</key>
 	<string>photogrid-index</string>
+	<key>KTIndexNavigationArrowsStyle</key>
+	<integer>1</integer>
 	<key>KTPluginIconName</key>
 	<string>photoalbum.icns</string>
 	<key>KTPluginName</key>
