@@ -129,7 +129,6 @@
 				3C42DE1D0D64CCDC004F35FD /* PBXTargetDependency */,
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
 				3C9B66A10BFA82A3007A4871 /* PBXTargetDependency */,
-				3C9B669B0BFA8299007A4871 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
@@ -1267,20 +1266,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = FlickrPagelet;
 		};
-		3C9B66620BFA81C3007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = IMStatusPagelet;
-		};
-		3C9B669A0BFA8299007A4871 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = IMStatusPagelet;
-		};
 		3C9B66A00BFA82A3007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */;
@@ -1939,7 +1924,6 @@
 		3C9B0484095E5EEB0053F596 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Exception.nib; sourceTree = "<group>"; };
 		3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ContactElement.xcodeproj; path = ../Plugins/Elements/ContactElement/ContactElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrPagelet.xcodeproj; path = ../Plugins/FlickrPagelet/FlickrPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusPagelet.xcodeproj; path = ../Plugins/IMStatusPagelet/IMStatusPagelet.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUndoManager.h; sourceTree = "<group>"; };
 		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../Plugins/Elements/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3922,14 +3906,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C9B665C0BFA81C3007A4871 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C9B66630BFA81C3007A4871 /* IMStatus.svxPagelet */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3CA900680D63C76100815310 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4030,7 +4006,6 @@
 			isa = PBXGroup;
 			children = (
 				3C9B66520BFA81B7007A4871 /* FlickrPagelet.xcodeproj */,
-				3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */,
 			);
 			name = Deprecated;
 			sourceTree = "<group>";
@@ -4832,10 +4807,6 @@
 					ProjectRef = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C9B665C0BFA81C3007A4871 /* Products */;
-					ProjectRef = 3C9B665B0BFA81C3007A4871 /* IMStatusPagelet.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C42E40A0D64F93E004F35FD /* Products */;
 					ProjectRef = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 				},
@@ -5102,13 +5073,6 @@
 			fileType = wrapper.cfbundle;
 			path = Flickr.svxPagelet;
 			remoteRef = 3C9B66590BFA81B7007A4871 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C9B66630BFA81C3007A4871 /* IMStatus.svxPagelet */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = IMStatus.svxPagelet;
-			remoteRef = 3C9B66620BFA81C3007A4871 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CA9006C0D63C76100815310 /* IFrame.svxElement */ = {
@@ -6131,11 +6095,6 @@
 			isa = PBXTargetDependency;
 			target = 8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */;
 			targetProxy = 3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */;
-		};
-		3C9B669B0BFA8299007A4871 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IMStatusPagelet;
-			targetProxy = 3C9B669A0BFA8299007A4871 /* PBXContainerItemProxy */;
 		};
 		3C9B66A10BFA82A3007A4871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
