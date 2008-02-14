@@ -8,7 +8,7 @@
 
 #import "ContactElementInspectorController.h"
 
-#import <NSImage+KTExtensions.h>
+#import <NSImage+Karelia.h>
 #import <NTBoxView.h>
 #import <ValuesAreEqualTransformer.h>
 

@@ -193,10 +193,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ContactElement" */;
 			buildPhases = (
-				3CAC4EFB09A2ADEA007AB5B6 /* Generate Localizable.strings */,
-				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3CAC4EFB09A2ADEA007AB5B6 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -337,8 +337,8 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C4C69D60D640E8A00398BDA /* Debug.xcconfig */;
 			buildSettings = {
-				GCC_PREFIX_HEADER = ContactElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
@@ -354,8 +354,8 @@
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C4C69D70D640E8A00398BDA /* Release.xcconfig */;
 			buildSettings = {
-				GCC_PREFIX_HEADER = ContactElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
