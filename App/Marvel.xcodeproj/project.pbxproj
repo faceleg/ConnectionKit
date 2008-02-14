@@ -1039,84 +1039,84 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* RichTextElement.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = RichTextElement;
 		};
 		3C4C68F30D64086A00398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* RichTextElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = RichTextElement;
 		};
 		3C4C69B40D640D8000398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Image.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = ImageElement;
 		};
 		3C4C69B60D640D9A00398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* ImageElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ImageElement;
 		};
 		3C4C6A700D6410F300398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Contact.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = ContactElement;
 		};
 		3C4C6A720D64110700398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* ContactElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ContactElement;
 		};
 		3C4C6A7C0D64122700398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Delicious.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DeliciousElement;
 		};
 		3C4C6A850D64123200398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Digg.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = DiggElement;
 		};
 		3C4C6A9B0D64127800398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DiggElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DiggElement;
 		};
 		3C4C6A9D0D64128A00398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DeliciousElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DeliciousElement;
 		};
 		3C4C6AAD0D64136C00398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Amazon.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
 		3C4C6AAF0D64137F00398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* AmazonElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
 		3C5A9A990D11E7440054058C /* PBXContainerItemProxy */ = {
@@ -3407,7 +3407,7 @@
 		3C4C68EB0D64086000398BDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C4C68F20D64086000398BDA /* RichTextElement.svxElement */,
+				3C4C68F20D64086000398BDA /* RichText.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4991,10 +4991,10 @@
 			remoteRef = 3C1D06B00D5D66E700782A95 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C4C68F20D64086000398BDA /* RichTextElement.svxElement */ = {
+		3C4C68F20D64086000398BDA /* RichText.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = RichTextElement.svxElement;
+			path = RichText.svxElement;
 			remoteRef = 3C4C68F10D64086000398BDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
