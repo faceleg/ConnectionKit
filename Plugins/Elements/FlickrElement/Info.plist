@@ -8,19 +8,50 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.yourcocoabundle</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>NSPrincipalClass</key>
+	<string>${SVN_VERSION}</string>
+	<key>KTHelpAnchor</key>
+	<string>Flickr_Badge</string>
+	<key>KTMainElement</key>
 	<string></string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginCSSFilesNeeded</key>
+	<array>
+		<string>FlickrPagelet.css</string>
+	</array>
+	<key>KTPluginIconName</key>
+	<string>flickr.png</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>number</key>
+		<integer>10</integer>
+		<key>showInfo</key>
+		<true/>
+		<key>tag</key>
+		<string>clouds</string>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Flickr Badge</string>
+	<key>KTPluginNibFile</key>
+	<string>FlickrPagelet</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string>My Flickr Photos</string>
+	<key>KTTemplateName</key>
+	<string>FlickrPageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>FlickrPageletDelegate</string>
 </dict>
 </plist>
