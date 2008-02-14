@@ -1,0 +1,21 @@
+<!-- IFrame Pagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
+[[endif]]
+[[if document.publishingMode||document.liveDataFeeds]]
+<iframe class="[[if iFrameIsBordered]]iframe-border[[else2]]iframe-no-border[[endif2]]"
+		[[if document.publishingMode]][[else2]]style="background:url(keypath:/[[=document.documentID]]/z0/hashPattern);"[[endif2]]
+		src="[[=linkURL]]"
+		title="test iframe"
+		height="[[if iFrameHeight]][[=iFrameHeight]][[else2]]200[[endif2]]"
+		width="[[if iFrameWidth]][[=iFrameWidth]]px[[else2]]100%[[endif2]]"
+		frameborder="[[if iFrameIsBordered]]1[[else2]]0[[endif2]]">
+	<!-- show fallback link in case iframe isn't supported -->
+	<a href="[[=&linkURL]]" title="[[=&titleText]]">[[=titleHTML]]</a>
+</iframe>
+[[else]]
+<div style="width:200px; height:[[if iFrameHeight]][[=iFrameHeight]][[else2]]200[[endif2]]px; background:rgba(0,0,0,0.25); text-align:center">
+	[['Placeholder for:]] [[=&linkURL]]
+</div>
+[[endif]]
+<!-- /IFrame Pagelet -->

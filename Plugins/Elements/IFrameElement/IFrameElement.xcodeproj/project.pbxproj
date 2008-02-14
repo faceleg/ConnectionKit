@@ -7,17 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA9003D0D63C61C00815310 /* IFramePageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */; };
+		3CA900410D63C62400815310 /* IFramePageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900400D63C62400815310 /* IFramePageletTemplate.html */; };
+		3CA900470D63C63600815310 /* IFramePagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900420D63C63600815310 /* IFramePagelet.nib */; };
+		3CA900480D63C63600815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900450D63C63600815310 /* Localizable.strings */; };
+		3CA9005F0D63C69200815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9005E0D63C69200815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* IFrameElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFrameElement_Prefix.pch; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* IFrameElement.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IFrameElement.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CA9003B0D63C61C00815310 /* IFramePageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFramePageletDelegate.h; sourceTree = "<group>"; };
+		3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFramePageletDelegate.m; sourceTree = "<group>"; };
+		3CA900400D63C62400815310 /* IFramePageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IFramePageletTemplate.html; sourceTree = "<group>"; };
+		3CA900430D63C63600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA900440D63C63600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900460D63C63600815310 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900490D63C64200815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA9004A0D63C64200815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9004B0D63C64200815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9004C0D63C64C00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA9004D0D63C64C00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9004E0D63C64C00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9004F0D63C65700815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA900500D63C65700815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900510D63C65700815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900520D63C66200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA900530D63C66200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900540D63C66200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900550D63C66E00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA900560D63C66E00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900570D63C66E00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900580D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA900590D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9005A0D63C67C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9005B0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/IFramePagelet.nib; sourceTree = "<group>"; };
+		3CA9005C0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9005D0D63C68600815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9005E0D63C69200815310 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3CA900600D63C69F00815310 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3CA900610D63C69F00815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* IFrame.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IFrame.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -42,6 +76,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3CA900640D63C6A400815310 /* Xcode Configurations */,
 			);
 			name = IFrameElement;
 			sourceTree = "<group>";
@@ -59,7 +94,11 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3CA900400D63C62400815310 /* IFramePageletTemplate.html */,
+				3CA900420D63C63600815310 /* IFramePagelet.nib */,
+				3CA900450D63C63600815310 /* Localizable.strings */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3CA9005E0D63C69200815310 /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -67,6 +106,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3CA9003B0D63C61C00815310 /* IFramePageletDelegate.h */,
+				3CA9003C0D63C61C00815310 /* IFramePageletDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -92,7 +133,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* IFrameElement.bundle */,
+				8D5B49B6048680CD000E48DA /* IFrame.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +144,15 @@
 				32DBCF630370AF2F00C91783 /* IFrameElement_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3CA900640D63C6A400815310 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3CA900600D63C69F00815310 /* Debug.xcconfig */,
+				3CA900610D63C69F00815310 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,7 +173,7 @@
 			name = IFrameElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = IFrameElement;
-			productReference = 8D5B49B6048680CD000E48DA /* IFrameElement.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* IFrame.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -134,6 +184,20 @@
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IFrameElement" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				zh_CN,
+				zh_TW,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* IFrameElement */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -149,6 +213,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3CA900410D63C62400815310 /* IFramePageletTemplate.html in Resources */,
+				3CA900470D63C63600815310 /* IFramePagelet.nib in Resources */,
+				3CA900480D63C63600815310 /* Localizable.strings in Resources */,
+				3CA9005F0D63C69200815310 /* License.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA9003D0D63C61C00815310 /* IFramePageletDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,9 +237,46 @@
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				3CA900440D63C63600815310 /* en */,
+				3CA9004A0D63C64200815310 /* da */,
+				3CA9004D0D63C64C00815310 /* de */,
+				3CA900500D63C65700815310 /* fr */,
+				3CA900530D63C66200815310 /* it */,
+				3CA900560D63C66E00815310 /* ja */,
+				3CA900590D63C67C00815310 /* zh_CN */,
+				3CA9005C0D63C68600815310 /* zh_TW */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3CA900420D63C63600815310 /* IFramePagelet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA900430D63C63600815310 /* en */,
+				3CA900490D63C64200815310 /* da */,
+				3CA9004C0D63C64C00815310 /* de */,
+				3CA9004F0D63C65700815310 /* fr */,
+				3CA900520D63C66200815310 /* it */,
+				3CA900550D63C66E00815310 /* ja */,
+				3CA900580D63C67C00815310 /* zh_CN */,
+				3CA9005B0D63C68600815310 /* zh_TW */,
+			);
+			name = IFramePagelet.nib;
+			sourceTree = "<group>";
+		};
+		3CA900450D63C63600815310 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA900460D63C63600815310 /* en */,
+				3CA9004B0D63C64200815310 /* da */,
+				3CA9004E0D63C64C00815310 /* de */,
+				3CA900510D63C65700815310 /* fr */,
+				3CA900540D63C66200815310 /* it */,
+				3CA900570D63C66E00815310 /* ja */,
+				3CA9005A0D63C67C00815310 /* zh_CN */,
+				3CA9005D0D63C68600815310 /* zh_TW */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -178,33 +284,29 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA900600D63C69F00815310 /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IFrameElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = IFrameElement;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = YES;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50440000,
+				);
+				PRODUCT_NAME = IFrame;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA900610D63C69F00815310 /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IFrameElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = IFrameElement;
-				WRAPPER_EXTENSION = bundle;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50440000,
+				);
+				PRODUCT_NAME = IFrame;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
