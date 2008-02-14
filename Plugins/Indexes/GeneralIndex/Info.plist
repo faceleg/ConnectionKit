@@ -60,6 +60,17 @@
 			<string>Collection</string>
 		</dict>
 		<dict>
+			<key>KTFirstChildSettings</key>
+			<dict>
+				<key>allowComments</key>
+				<true/>
+				<key>includeTimestamp</key>
+				<true/>
+				<key>pluginIdentifier</key>
+				<string>sandvox.RichTextElement</string>
+				<key>richTextHTML</key>
+				<string>&lt;p&gt;This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!&lt;/p&gt;</string>
+			</dict>
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>

@@ -37,6 +37,8 @@
 		<dict>
 			<key>KTFirstChildSettings</key>
 			<dict>
+				<key>includeTimestamp</key>
+				<false/>
 				<key>pluginIdentifier</key>
 				<string>sandvox.ImageElement</string>
 			</dict>
@@ -65,6 +67,15 @@
 			<string>Photo Album</string>
 		</dict>
 		<dict>
+			<key>KTFirstChildSettings</key>
+			<dict>
+				<key>allowComments</key>
+				<true/>
+				<key>includeTimestamp</key>
+				<true/>
+				<key>pluginIdentifier</key>
+				<string>sandvox.ImageElement</string>
+			</dict>
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>

@@ -37,6 +37,15 @@
 	<key>KTPresets</key>
 	<array>
 		<dict>
+			<key>KTFirstChildSettings</key>
+			<dict>
+				<key>allowComments</key>
+				<false/>
+				<key>includeTimestamp</key>
+				<false/>
+				<key>pluginIdentifier</key>
+				<string>sandvox.DownloadElement</string>
+			</dict>
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>

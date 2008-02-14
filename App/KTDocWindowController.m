@@ -948,11 +948,11 @@ from representedObject */
 												 bundle:[NSBundle bundleWithIdentifier:firstChildIdentifier]
 						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 			
-			NSEnumerator *propertiesEnumerator = [firstChildProperties objectEnumerator];
+			NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
 			NSString *aKey;
 			while (aKey = [propertiesEnumerator nextObject])
 			{
-				id aProperty = [firstChildProperties objectForKey:aProperty];
+				id aProperty = [firstChildProperties objectForKey:aKey];
 				if ([aProperty isKindOfClass:[NSString class]])
 				{
 					aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
