@@ -119,6 +119,7 @@
 				3CA901730D63D1EA00815310 /* PBXTargetDependency */,
 				3CA9FF890D63C4E700815310 /* PBXTargetDependency */,
 				3C42E4F80D650433004F35FD /* PBXTargetDependency */,
+				3C42E60A0D650BBD004F35FD /* PBXTargetDependency */,
 				3CA9006E0D63C77000815310 /* PBXTargetDependency */,
 				3C42E48A0D64FCF4004F35FD /* PBXTargetDependency */,
 				3C42E4110D64F956004F35FD /* PBXTargetDependency */,
@@ -129,6 +130,7 @@
 				3C4C68F40D64086A00398BDA /* PBXTargetDependency */,
 				3C42DE1D0D64CCDC004F35FD /* PBXTargetDependency */,
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
+				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
@@ -1131,6 +1133,20 @@
 			containerPortal = 3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* HTML.svxElement */;
+			remoteInfo = HTMLElement;
+		};
+		3C42E6070D650BAF004F35FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* VideoElement */;
+			remoteInfo = VideoElement;
+		};
+		3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* HTMLElement */;
 			remoteInfo = HTMLElement;
 		};
 		3C4C68F10D64086000398BDA /* PBXContainerItemProxy */ = {
@@ -6068,6 +6084,16 @@
 			isa = PBXTargetDependency;
 			name = FlickrElement;
 			targetProxy = 3C42E4F70D650433004F35FD /* PBXContainerItemProxy */;
+		};
+		3C42E6080D650BAF004F35FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VideoElement;
+			targetProxy = 3C42E6070D650BAF004F35FD /* PBXContainerItemProxy */;
+		};
+		3C42E60A0D650BBD004F35FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HTMLElement;
+			targetProxy = 3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */;
 		};
 		3C4C68F40D64086A00398BDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
