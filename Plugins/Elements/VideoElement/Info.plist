@@ -8,19 +8,36 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.yourcocoabundle</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>${SVN_VERSION}</string>
+	<key>KTPluginIconName</key>
+	<string>Video.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>captionHTML</key>
+		<string></string>
+		<key>movieSource</key>
+		<integer>0</integer>
+	</dict>
+	<key>KTPluginNibFile</key>
+	<string>VideoElement</string>
+	<key>KTPluginResourcesNeeded</key>
+	<array>
+		<string>AC_QuickTime.js</string>
+	</array>
+	<key>KTTemplateName</key>
+	<string>VideoElementTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string></string>
+	<string>VideoElementDelegate</string>
 </dict>
 </plist>
