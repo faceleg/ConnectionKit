@@ -1,0 +1,38 @@
+<!-- LinkList Pagelet -->
+[[if introductionHTML|editing]]
+<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>
+	[[=introductionHTML]]
+</div>
+[[endif]]
+
+[[if linkList]]
+
+[[if layout==1]]
+<dl>
+	[[foreach linkList oneItem]]
+	<dt>
+		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openInNewWindow]] target="_blank"[[endif4]]>[[endif3]][[=oneItem.titleHTML]][[if oneItem.url]]</a>[[endif3]]
+	</dt>
+	[[if oneItem.comment]]<dd><span style="font-size:75%;">[[=&oneItem.comment]]</span></dd>[[endif3]]
+	[[endForEach]]
+</dl>
+
+[[else2]]
+<ul>
+	[[foreach linkList oneItem]]
+	<li>
+		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openInNewWindow]] target="_blank"[[endif4]]>[[endif3]]
+			[[=oneItem.titleHTML]]
+		[[if oneItem.url]]</a>[[endif3]]
+		[[if oneItem.comment]]<br>[[=&oneItem.comment]][[endif3]]
+	</li>
+	[[endForEach]]
+</ul>
+
+[[endif2]]
+
+[[else]]
+[[if document.publishingMode]][[else2]]<p style="text-align:center;">[['(Add links via Details Inspector)]]</p>[[endif2]]
+
+[[endif]]
+<!-- /LinkList Pagelet -->

@@ -7,17 +7,57 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA9008E0D63C89400815310 /* LinkListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA900890D63C89400815310 /* LinkListArrayController.m */; };
+		3CA9008F0D63C89400815310 /* LinkListInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9008B0D63C89400815310 /* LinkListInspectorController.m */; };
+		3CA900900D63C89400815310 /* LinkListPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9008D0D63C89400815310 /* LinkListPageletDelegate.m */; };
+		3CA900920D63C8A200815310 /* LinkListPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900910D63C8A200815310 /* LinkListPageletTemplate.html */; };
+		3CA900980D63C8AC00815310 /* LinkListPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900940D63C8AC00815310 /* LinkListPagelet.nib */; };
+		3CA900990D63C8AC00815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900960D63C8AC00815310 /* Localizable.strings */; };
+		3CA900BB0D63CB2900815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA900BA0D63CB2900815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* LinkListElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListElement_Prefix.pch; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* LinkListElement.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkListElement.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CA900880D63C89400815310 /* LinkListArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListArrayController.h; sourceTree = "<group>"; };
+		3CA900890D63C89400815310 /* LinkListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListArrayController.m; sourceTree = "<group>"; };
+		3CA9008A0D63C89400815310 /* LinkListInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListInspectorController.h; sourceTree = "<group>"; };
+		3CA9008B0D63C89400815310 /* LinkListInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListInspectorController.m; sourceTree = "<group>"; };
+		3CA9008C0D63C89400815310 /* LinkListPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkListPageletDelegate.h; sourceTree = "<group>"; };
+		3CA9008D0D63C89400815310 /* LinkListPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkListPageletDelegate.m; sourceTree = "<group>"; };
+		3CA900910D63C8A200815310 /* LinkListPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LinkListPageletTemplate.html; sourceTree = "<group>"; };
+		3CA900930D63C8AC00815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900950D63C8AC00815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900970D63C8AC00815310 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9009A0D63C8B600815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9009B0D63C8B600815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA9009C0D63C8B600815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900A80D63CAE000815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900A90D63CAE000815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900AA0D63CAE000815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900AB0D63CAEB00815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900AC0D63CAEB00815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900AD0D63CAEB00815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900AE0D63CAF800815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900AF0D63CAF800815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900B00D63CAF800815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900B10D63CB0400815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900B20D63CB0400815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900B30D63CB0400815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900B40D63CB1100815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900B50D63CB1100815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900B60D63CB1100815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900B70D63CB1900815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA900B80D63CB1900815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		3CA900B90D63CB1900815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA900BA0D63CB2900815310 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3CA900BC0D63CB4200815310 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3CA900BD0D63CB4200815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* LinkList.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkList.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -42,6 +82,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3CA900C00D63CB4700815310 /* Xcode Configurations */,
 			);
 			name = LinkListElement;
 			sourceTree = "<group>";
@@ -59,7 +100,11 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3CA900940D63C8AC00815310 /* LinkListPagelet.nib */,
+				3CA900910D63C8A200815310 /* LinkListPageletTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3CA900960D63C8AC00815310 /* Localizable.strings */,
+				3CA900BA0D63CB2900815310 /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -67,6 +112,12 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3CA900880D63C89400815310 /* LinkListArrayController.h */,
+				3CA900890D63C89400815310 /* LinkListArrayController.m */,
+				3CA9008A0D63C89400815310 /* LinkListInspectorController.h */,
+				3CA9008B0D63C89400815310 /* LinkListInspectorController.m */,
+				3CA9008C0D63C89400815310 /* LinkListPageletDelegate.h */,
+				3CA9008D0D63C89400815310 /* LinkListPageletDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -92,7 +143,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* LinkListElement.bundle */,
+				8D5B49B6048680CD000E48DA /* LinkList.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +156,15 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		3CA900C00D63CB4700815310 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3CA900BC0D63CB4200815310 /* Debug.xcconfig */,
+				3CA900BD0D63CB4200815310 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,9 +172,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "LinkListElement" */;
 			buildPhases = (
-				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3CA900E30D63CD6500815310 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -123,7 +184,7 @@
 			name = LinkListElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = LinkListElement;
-			productReference = 8D5B49B6048680CD000E48DA /* LinkListElement.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* LinkList.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -134,6 +195,20 @@
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "LinkListElement" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				zh_CN,
+				zh_TW,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* LinkListElement */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -149,16 +224,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3CA900920D63C8A200815310 /* LinkListPageletTemplate.html in Resources */,
+				3CA900980D63C8AC00815310 /* LinkListPagelet.nib in Resources */,
+				3CA900990D63C8AC00815310 /* Localizable.strings in Resources */,
+				3CA900BB0D63CB2900815310 /* License.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3CA900E30D63CD6500815310 /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\ngenstrings -q -u -o en.lproj *.[hm]\n\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA9008E0D63C89400815310 /* LinkListArrayController.m in Sources */,
+				3CA9008F0D63C89400815310 /* LinkListInspectorController.m in Sources */,
+				3CA900900D63C89400815310 /* LinkListPageletDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,9 +268,46 @@
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				3CA900930D63C8AC00815310 /* en */,
+				3CA9009A0D63C8B600815310 /* da */,
+				3CA900A80D63CAE000815310 /* de */,
+				3CA900AB0D63CAEB00815310 /* fr */,
+				3CA900AE0D63CAF800815310 /* it */,
+				3CA900B10D63CB0400815310 /* ja */,
+				3CA900B40D63CB1100815310 /* zh_CN */,
+				3CA900B70D63CB1900815310 /* zh_TW */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3CA900940D63C8AC00815310 /* LinkListPagelet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA900950D63C8AC00815310 /* en */,
+				3CA9009B0D63C8B600815310 /* da */,
+				3CA900A90D63CAE000815310 /* de */,
+				3CA900AC0D63CAEB00815310 /* fr */,
+				3CA900AF0D63CAF800815310 /* it */,
+				3CA900B20D63CB0400815310 /* ja */,
+				3CA900B50D63CB1100815310 /* zh_CN */,
+				3CA900B80D63CB1900815310 /* zh_TW */,
+			);
+			name = LinkListPagelet.nib;
+			sourceTree = "<group>";
+		};
+		3CA900960D63C8AC00815310 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA900970D63C8AC00815310 /* en */,
+				3CA9009C0D63C8B600815310 /* da */,
+				3CA900AA0D63CAE000815310 /* de */,
+				3CA900AD0D63CAEB00815310 /* fr */,
+				3CA900B00D63CAF800815310 /* it */,
+				3CA900B30D63CB0400815310 /* ja */,
+				3CA900B60D63CB1100815310 /* zh_CN */,
+				3CA900B90D63CB1900815310 /* zh_TW */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -178,33 +315,29 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA900BC0D63CB4200815310 /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = LinkListElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = LinkListElement;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = YES;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50460000,
+				);
+				PRODUCT_NAME = LinkList;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA900BD0D63CB4200815310 /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = LinkListElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = LinkListElement;
-				WRAPPER_EXTENSION = bundle;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50460000,
+				);
+				PRODUCT_NAME = LinkList;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
