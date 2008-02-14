@@ -45,7 +45,9 @@
 		27FF85F20C5A91EA0077CB14 /* ContactElementInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactElementInspectorController.h; sourceTree = "<group>"; };
 		27FF85F30C5A91EA0077CB14 /* ContactElementInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactElementInspectorController.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ContactElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElement_Prefix.pch; sourceTree = "<group>"; };
-		3C41CC7309B4D7BC0086EF83 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C41CC7309B4D7BC0086EF83 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C4C69D60D640E8A00398BDA /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C4C69D70D640E8A00398BDA /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3CAC4F0709A2AE2C007AB5B6 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Contact.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Contact.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
@@ -53,8 +55,6 @@
 		CE1AD37C0A7E83E90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE55B0830AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CE55B0840AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE6F50300BC577B20078D5E2 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Debug.xcconfig"; path = "../../Xcode Configurations/Bundle Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
-		CE6F50310BC577B20078D5E2 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Release.xcconfig"; path = "../../Xcode Configurations/Bundle Release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		CE98EACE099947EE00EDCEE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CE98EF3009994D7E00EDCEE7 /* ContactElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElementDelegate.h; sourceTree = "<group>"; };
 		CE98EF3109994D7E00EDCEE7 /* ContactElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactElementDelegate.m; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		CEDE18740A5C695B0055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CEE0B3A409EDB250004850FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CEE0B3A509EDB258004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CEFC34490D0A09FB00CE15EC /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactPassword.h; path = ../../Frameworks/KTComponents/ContactPassword.h; sourceTree = SOURCE_ROOT; };
+		CEFC34490D0A09FB00CE15EC /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactPassword.h; path = ../../../App/ContactPassword.h; sourceTree = SOURCE_ROOT; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -180,8 +180,8 @@
 		3CAC4EF409A2AD9B007AB5B6 /* Xcode Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				CE6F50300BC577B20078D5E2 /* Bundle Debug.xcconfig */,
-				CE6F50310BC577B20078D5E2 /* Bundle Release.xcconfig */,
+				3C4C69D60D640E8A00398BDA /* Debug.xcconfig */,
+				3C4C69D70D640E8A00398BDA /* Release.xcconfig */,
 			);
 			name = "Xcode Configurations";
 			sourceTree = "<group>";
@@ -267,6 +267,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -336,7 +337,6 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE6F50300BC577B20078D5E2 /* Bundle Debug.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = ContactElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
@@ -354,7 +354,6 @@
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE6F50310BC577B20078D5E2 /* Bundle Release.xcconfig */;
 			buildSettings = {
 				GCC_PREFIX_HEADER = ContactElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;

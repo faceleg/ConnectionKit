@@ -315,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\ngenstrings -q -u -o en.lproj *.[hm]\n\n";
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
