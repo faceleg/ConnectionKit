@@ -40,6 +40,7 @@
 - (BOOL)hasTemporaryObjectID;
 - (BOOL)hasTemporaryURIRepresentation;
 - (BOOL)isTemporaryObject;
+- (BOOL)isNewlyCreatedObject;
 
 - (BOOL)hasChanges;
 

@@ -27,7 +27,6 @@
 {
 }
 
-- (BOOL)isNewlyCreatedObject;
 
 #pragma mark Migration Methods
 

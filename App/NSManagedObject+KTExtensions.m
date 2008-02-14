@@ -154,6 +154,11 @@
 	return [self hasTemporaryObjectID];
 }
 
+- (BOOL)isNewlyCreatedObject
+{
+    return [[self objectID] isTemporaryID];
+}
+
 - (BOOL)hasChanges
 {
 	// changedValues, according to docs, doesn't fire faults

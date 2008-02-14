@@ -25,11 +25,6 @@
 
 @implementation KTManagedObject
 
-- (BOOL)isNewlyCreatedObject
-{
-    return [[self objectID] isTemporaryID];
-}
-
 //- (void)awakeFromFetch
 //{
 //	TJT((@"awakeFromFetch:%@", [self managedObjectDescription]));
