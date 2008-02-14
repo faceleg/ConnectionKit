@@ -34,6 +34,7 @@
  */
 - (void)_setSelectedIndexes:(NSIndexSet *)indexes
 {
+	[self willChangeValueForKey:@"selection"];
 	[self willChangeValueForKey:@"selectedIndexes"];
 	
 	[indexes retain];
@@ -44,6 +45,8 @@
 	
 	// Update the selectedPages list
 	[self generateSelectedPagesSet];
+	
+	[self didChangeValueForKey:@"selection"];
 }
 
 /*	Public method that updates the outline view's selection. This will then call through to appropriate prviate methods
