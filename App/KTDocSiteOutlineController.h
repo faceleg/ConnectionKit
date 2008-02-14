@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 @class KTPage, KTDocument, KTDocWindowController;
-@interface KTDocSiteOutlineController : NSObject
+
+
+@interface KTDocSiteOutlineController : NSObjectController
 {
 	IBOutlet KTDocWindowController	*oWindowController;
 	IBOutlet NSOutlineView			*oSiteOutline;
