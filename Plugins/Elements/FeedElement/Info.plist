@@ -8,19 +8,40 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.yourcocoabundle</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>${SVN_VERSION}</string>
+	<key>KTHelpAnchor</key>
+	<string>RSS_Feed_Pagelet</string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>rsspagelet.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>max</key>
+		<integer>0</integer>
+		<key>url</key>
+		<string></string>
+	</dict>
+	<key>KTPluginName</key>
+	<string>RSS Feed</string>
+	<key>KTPluginNibFile</key>
+	<string>FeedPagelet</string>
+	<key>KTPluginUntitledName</key>
+	<string>RSS Feed</string>
+	<key>KTTemplateName</key>
+	<string>FeedPageletTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string></string>
+	<string>FeedPageletDelegate</string>
 </dict>
 </plist>
