@@ -1,0 +1,8 @@
+﻿/* Download of File Packages Not Supported Alert Text */
+"%@ is a file package. (A directory that acts like a single file.) Downloading of file packages is not currently supported. Consider using Finder to make an Archive of the file. Downloading of archive (.zip) files is supported." = "%@ はファイルパッケージです（一つのファイルのように振る舞うディレクトリです）。ファイル派ケージのダウンロードは現在サポートされていません。ファインダーを利用して圧縮ファイルを作製することを検討してください。圧縮ファイル（.zip）のダウンロードはサポートされています。";
+
+/* Download Not Supported Alert Title */
+"Download Not Supported" = "ダウンロードはサポートされていません";
+
+/* OK Button */
+"OK" = "OK";

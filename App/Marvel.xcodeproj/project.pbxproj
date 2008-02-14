@@ -112,6 +112,7 @@
 				3C095C0B0D5D283200DE6F62 /* PBXTargetDependency */,
 				3C095C070D5D282B00DE6F62 /* PBXTargetDependency */,
 				3CA9FF330D63C17C00815310 /* PBXTargetDependency */,
+				3CA901730D63D1EA00815310 /* PBXTargetDependency */,
 				3CA9FF890D63C4E700815310 /* PBXTargetDependency */,
 				3CA9006E0D63C77000815310 /* PBXTargetDependency */,
 				3CA900CE0D63CD0B00815310 /* PBXTargetDependency */,
@@ -1297,6 +1298,20 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LinkListElement */;
 			remoteInfo = LinkListElement;
 		};
+		3CA901700D63D1D100815310 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Download.svxElement */;
+			remoteInfo = DownloadElement;
+		};
+		3CA901720D63D1EA00815310 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* DownloadElement */;
+			remoteInfo = DownloadElement;
+		};
 		3CA9FF300D63C16500815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
@@ -1894,6 +1909,7 @@
 		3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUndoManager.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../Plugins/Elements/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA900C70D63CCF800815310 /* LinkListElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkListElement.xcodeproj; path = ../Plugins/Elements/LinkListElement/LinkListElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadElement.xcodeproj; path = ../Plugins/Elements/DownloadElement/DownloadElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
 		3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebKitCompatibility.h; sourceTree = "<group>"; };
 		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../Plugins/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3884,6 +3900,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3CA9016D0D63D1D100815310 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CA901710D63D1D100815310 /* Download.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3CA9FD020D63A04A00815310 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -3917,6 +3941,7 @@
 			isa = PBXGroup;
 			children = (
 				3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */,
+				3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */,
 				3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */,
 				3CA900670D63C76100815310 /* IFrameElement.xcodeproj */,
 				3CA900C70D63CCF800815310 /* LinkListElement.xcodeproj */,
@@ -4694,6 +4719,10 @@
 					ProjectRef = 3C9B66490BFA81AC007A4871 /* DiggPagelet.xcodeproj */;
 				},
 				{
+					ProductGroup = 3CA9016D0D63D1D100815310 /* Products */;
+					ProjectRef = 3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C095BDA0D5D27F100DE6F62 /* Products */;
 					ProjectRef = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
 				},
@@ -5022,6 +5051,13 @@
 			fileType = wrapper.cfbundle;
 			path = LinkList.svxElement;
 			remoteRef = 3CA900CB0D63CCF800815310 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CA901710D63D1D100815310 /* Download.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Download.svxElement;
+			remoteRef = 3CA901700D63D1D100815310 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CA9FF310D63C16500815310 /* Badge.svxElement */ = {
@@ -6030,6 +6066,11 @@
 			isa = PBXTargetDependency;
 			name = LinkListElement;
 			targetProxy = 3CA900CD0D63CD0B00815310 /* PBXContainerItemProxy */;
+		};
+		3CA901730D63D1EA00815310 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DownloadElement;
+			targetProxy = 3CA901720D63D1EA00815310 /* PBXContainerItemProxy */;
 		};
 		3CA9FF330D63C17C00815310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

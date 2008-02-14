@@ -7,17 +7,55 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA901230D63D03C00815310 /* DownloadPageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA901220D63D03C00815310 /* DownloadPageDelegate.m */; };
+		3CA901290D63D04C00815310 /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901260D63D04C00815310 /* Download.html */; };
+		3CA9012A0D63D04C00815310 /* download.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901270D63D04C00815310 /* download.icns */; };
+		3CA9012B0D63D04C00815310 /* download.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901280D63D04C00815310 /* download.tiff */; };
+		3CA901310D63D05600815310 /* DownloadPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9012C0D63D05600815310 /* DownloadPage.nib */; };
+		3CA901320D63D05600815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9012F0D63D05600815310 /* Localizable.strings */; };
+		3CA901490D63D0B500815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901480D63D0B500815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* DownloadElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadElement_Prefix.pch; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* DownloadElement.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DownloadElement.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CA901210D63D03C00815310 /* DownloadPageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadPageDelegate.h; sourceTree = "<group>"; };
+		3CA901220D63D03C00815310 /* DownloadPageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadPageDelegate.m; sourceTree = "<group>"; };
+		3CA901260D63D04C00815310 /* Download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Download.html; sourceTree = "<group>"; };
+		3CA901270D63D04C00815310 /* download.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = download.icns; sourceTree = "<group>"; };
+		3CA901280D63D04C00815310 /* download.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = download.tiff; sourceTree = "<group>"; };
+		3CA9012D0D63D05600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA9012E0D63D05600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901300D63D05600815310 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901330D63D06100815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA901340D63D06100815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901350D63D06100815310 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901360D63D06A00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA901370D63D06A00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901380D63D06A00815310 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901390D63D07600815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA9013A0D63D07600815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9013B0D63D07600815310 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9013C0D63D08200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA9013D0D63D08200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA9013E0D63D08200815310 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA9013F0D63D08F00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA901400D63D08F00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901410D63D08F00815310 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901420D63D09C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA901430D63D09C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901440D63D09C00815310 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901450D63D0A800815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/DownloadPage.nib; sourceTree = "<group>"; };
+		3CA901460D63D0A800815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3CA901470D63D0A800815310 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA901480D63D0B500815310 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
+		3CA9014A0D63D0C400815310 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3CA9014B0D63D0C400815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* Download.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Download.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -42,6 +80,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3CA9014E0D63D0C800815310 /* Xcode Configurations */,
 			);
 			name = DownloadElement;
 			sourceTree = "<group>";
@@ -59,7 +98,13 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3CA9012C0D63D05600815310 /* DownloadPage.nib */,
+				3CA901260D63D04C00815310 /* Download.html */,
+				3CA901270D63D04C00815310 /* download.icns */,
+				3CA901280D63D04C00815310 /* download.tiff */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3CA9012F0D63D05600815310 /* Localizable.strings */,
+				3CA901480D63D0B500815310 /* License.rtf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -67,6 +112,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3CA901210D63D03C00815310 /* DownloadPageDelegate.h */,
+				3CA901220D63D03C00815310 /* DownloadPageDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -92,7 +139,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* DownloadElement.bundle */,
+				8D5B49B6048680CD000E48DA /* Download.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,6 +152,15 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		3CA9014E0D63D0C800815310 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3CA9014A0D63D0C400815310 /* Debug.xcconfig */,
+				3CA9014B0D63D0C400815310 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,9 +168,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "DownloadElement" */;
 			buildPhases = (
-				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3CA901520D63D0DD00815310 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -123,7 +180,7 @@
 			name = DownloadElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = DownloadElement;
-			productReference = 8D5B49B6048680CD000E48DA /* DownloadElement.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* Download.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -134,6 +191,20 @@
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DownloadElement" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				da,
+				de,
+				fr,
+				it,
+				ja,
+				zh_CN,
+				zh_TW,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* DownloadElement */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -149,16 +220,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3CA901290D63D04C00815310 /* Download.html in Resources */,
+				3CA9012A0D63D04C00815310 /* download.icns in Resources */,
+				3CA9012B0D63D04C00815310 /* download.tiff in Resources */,
+				3CA901310D63D05600815310 /* DownloadPage.nib in Resources */,
+				3CA901320D63D05600815310 /* Localizable.strings in Resources */,
+				3CA901490D63D0B500815310 /* License.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3CA901520D63D0DD00815310 /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\ngenstrings -q -u -o en.lproj *.[hm]\n\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA901230D63D03C00815310 /* DownloadPageDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,9 +264,46 @@
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				3CA9012E0D63D05600815310 /* en */,
+				3CA901340D63D06100815310 /* da */,
+				3CA901370D63D06A00815310 /* de */,
+				3CA9013A0D63D07600815310 /* fr */,
+				3CA9013D0D63D08200815310 /* it */,
+				3CA901400D63D08F00815310 /* ja */,
+				3CA901430D63D09C00815310 /* zh_CN */,
+				3CA901460D63D0A800815310 /* zh_TW */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3CA9012C0D63D05600815310 /* DownloadPage.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA9012D0D63D05600815310 /* en */,
+				3CA901330D63D06100815310 /* da */,
+				3CA901360D63D06A00815310 /* de */,
+				3CA901390D63D07600815310 /* fr */,
+				3CA9013C0D63D08200815310 /* it */,
+				3CA9013F0D63D08F00815310 /* ja */,
+				3CA901420D63D09C00815310 /* zh_CN */,
+				3CA901450D63D0A800815310 /* zh_TW */,
+			);
+			name = DownloadPage.nib;
+			sourceTree = "<group>";
+		};
+		3CA9012F0D63D05600815310 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CA901300D63D05600815310 /* en */,
+				3CA901350D63D06100815310 /* da */,
+				3CA901380D63D06A00815310 /* de */,
+				3CA9013B0D63D07600815310 /* fr */,
+				3CA9013E0D63D08200815310 /* it */,
+				3CA901410D63D08F00815310 /* ja */,
+				3CA901440D63D09C00815310 /* zh_CN */,
+				3CA901470D63D0A800815310 /* zh_TW */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -178,33 +311,29 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA9014A0D63D0C400815310 /* Debug.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = DownloadElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = DownloadElement;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = YES;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x502a0000,
+				);
+				PRODUCT_NAME = Download;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CA9014B0D63D0C400815310 /* Release.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = DownloadElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = DownloadElement;
-				WRAPPER_EXTENSION = bundle;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x502a0000,
+				);
+				PRODUCT_NAME = Download;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
