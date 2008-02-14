@@ -1,8 +1,0 @@
-﻿KTPluginName = "Rich Text";
-KTPluginDescription = "Rich Text with Embedded Images";
-
-KTPageName = "文字页面";
-KTPageUntitledName = "文字";
-
-KTPageletName = "文字 Pagelet";
-KTPageletUntitledName = "文字 Pagelet";
