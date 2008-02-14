@@ -8,19 +8,42 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.yourcocoabundle</string>
+	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>NSPrincipalClass</key>
+	<string>${SVN_VERSION}</string>
+	<key>KTHelpAnchor</key>
+	<string>Index</string>
+	<key>KTMainElement</key>
 	<string></string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginIconName</key>
+	<string>listing.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>maxItems</key>
+		<integer>10</integer>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Index</string>
+	<key>KTPluginNibFile</key>
+	<string>IndexPagelet</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string>Collection Index</string>
+	<key>KTTemplateName</key>
+	<string>IndexPageletTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>IndexPageletDelegate</string>
 </dict>
 </plist>
