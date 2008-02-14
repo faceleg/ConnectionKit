@@ -1,7 +1,0 @@
-﻿/* Localized versions of Info.plist keys */
-
-NSHumanReadableCopyright = "© Karelia Software, 2006";
-
-"KTPluginDescription" = "En pagelet til visning af en liste med Amazon-produkter";
-"KTPluginName" = "Amazon List";
-"KTPluginUntitledName" = "Amazon List";
