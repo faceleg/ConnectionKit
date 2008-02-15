@@ -34,6 +34,8 @@
 	<true/>
 	<key>KTPageNibFile</key>
 	<string>HTMLPage</string>
+	<key>KTPluginDescription</key>
+	<string>Custom raw HTML code</string>
 	<key>KTPluginIconName</key>
 	<string>HTML.icns</string>
 	<key>KTPluginInitialProperties</key>
