@@ -15,6 +15,7 @@
 #import "KTDesign.h"
 #import "KTDesignManager.h"
 #import "KTDocument.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
