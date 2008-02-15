@@ -427,26 +427,6 @@
 }
 
 #pragma mark -
-#pragma mark To move into Index category
-
-- (NSSet *)childrenInIndexSet
-{
-	NSSet *originalSet = [self children];
-	NSMutableSet *visibleChildren = [NSMutableSet setWithSet:originalSet];	// stop "Collection ... was mutated while being enumerated" error
-	NSEnumerator *theEnum = [originalSet objectEnumerator];
-	KTPage *aPage;
-	
-	while (nil != (aPage = [theEnum nextObject]) )
-	{
-		if (![aPage includeInIndexAndPublish])
-		{
-			[visibleChildren removeObject:aPage];
-		}
-	}
-	return visibleChildren;
-}
-
-#pragma mark -
 #pragma mark Should probably be deprecated
 
 /*! returns a suggested ordering value for inserting aProposedChild

@@ -66,6 +66,36 @@
 	}
 }
 
+/*	Takes our -sortedChildren property and filters out:
+ *		* Pages excluded from the index
+ *		* Unpublished draft pages
+ *		* Pages outside the maxPages limit
+ */
+- (NSArray *)sortedChildrenInIndex
+{
+	NSArray *allChildren = [self sortedChildren];
+	
+	unsigned maxPages = [self integerForKey:@"collectionMaxIndexItems"];
+	if (maxPages == 0) maxPages = [allChildren count];
+	
+	NSMutableArray *buffer = [[NSMutableArray alloc] initWithCapacity:maxPages];
+	NSEnumerator *childrenEnumerator = [allChildren objectEnumerator];
+	KTPage *aPage;
+	while (aPage = [childrenEnumerator nextObject])
+	{
+		if ([aPage includeInIndexAndPublish])
+		{
+			[buffer addObject:aPage];
+			
+			if ([buffer count] >= maxPages) break;
+		}
+	}
+	
+	NSArray *result = [NSArray arrayWithArray:buffer];
+	[buffer release];
+	return result;
+}
+
 #pragma mark -
 #pragma mark RSS Feed
 
@@ -109,15 +139,6 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 - (NSString *)archivesURLPath
 {
 	return [self archivesURLPathRelativeToPage:self];
-}
-
-/*	Do we have more children than are set to appear in the index?
- *	i.e. Should there be an archive index?
- */
-- (BOOL)indexIsOverflowing
-{
-	BOOL result = ([self index] && [[self childrenInIndexSet] count] > [self integerForKey:@"collectionMaxIndexItems"]);
-	return result;
 }
 
 #pragma mark -

@@ -153,8 +153,6 @@
 - (KTPage *)nextPage;
 
 
-- (NSSet *)childrenInIndexSet;
-
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(KTCollectionSortType)aSortType;
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
@@ -174,13 +172,14 @@
 - (void)setIndex:(KTAbstractIndex *)anIndex;
 - (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
 
+- (NSArray *)sortedChildrenInIndex;
+
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
 
 // Archive
 - (KTAbstractIndex *)archivesIndex;
 - (NSString *)archivesURLPath;
-- (BOOL)indexIsOverflowing;
 
 // Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;

@@ -533,7 +533,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Archives
-	if ([page indexIsOverflowing])
+	if ([[page children] count] > [[page sortedChildrenInIndex] count])
 	{
 		NSString *archivesString = [page archivesRepresentation];
 		if (archivesString)
