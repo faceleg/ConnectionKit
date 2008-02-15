@@ -1434,11 +1434,11 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 - (void)updateCollectionStylePopup;
 {
-	NSMenuItem *matchingMenuItem = nil;
+	NSMenuItem *menuItem = nil;
 	
 	// Note: dictionary equality is really picky about whether it's a CFNumber or CFBoolean so this tries to match them.
 	NSDictionary *dictToMatch = [NSDictionary dictionaryWithObjectsAndKeys: 
-		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"childrenIncludeTimestamp"]], @"childrenIncludeTimestamp",
+		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionShowNavigationArrows"]], @"collectionShowNavigationArrows",
 		[mySelectedPage valueForKey:@"collectionMaxIndexItems"], @"collectionMaxIndexItems",
 		[mySelectedPage valueForKey:@"collectionSortOrder"], @"collectionSortOrder",
 		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
@@ -1447,63 +1447,48 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		[mySelectedPage wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
 		nil];
 
-	NSString *indexToMatch = [mySelectedPage valueForKey:@"collectionIndexBundleIdentifier"];
 
-	NSEnumerator *theEnum = [[oCollectionStylePopup itemArray] objectEnumerator];
-	NSMenuItem *item;
-
-	while (nil != (item = [theEnum nextObject]) )
+	NSString *indexIdentifier = [mySelectedPage valueForKey:@"collectionIndexBundleIdentifier"];
+	if (indexIdentifier)
 	{
-		NSDictionary *presetDict = [item representedObject];
-		if (nil != presetDict)
+		NSEnumerator *menuEnumerator = [[oCollectionStylePopup itemArray] objectEnumerator];
+		NSMenuItem *aMenuItem;
+		while (aMenuItem = [menuEnumerator nextObject])
 		{
-			NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
+			NSDictionary *aPreset = [aMenuItem representedObject];
+			if (!aPreset) continue;		// Ignore non-preset menu items
 			
-			if (nil == indexToMatch && nil == identifier)	// is this the menu item with a nil identifier?
+			
+			NSString *anIndexIdentifier = [aPreset objectForKey:@"KTPresetIndexBundleIdentifier"];
+			if ([anIndexIdentifier isEqualToString:indexIdentifier])	// They have the same index. Possible match
 			{
-				// Check if we've overridden any of the specified settings
-				NSEnumerator *thePresetEnum = [presetDict keyEnumerator];
-				id key;
-				BOOL matched = YES;
-
-				while (nil != (key = [thePresetEnum nextObject]) )
+				NSDictionary *pageSettings = [aPreset objectForKey:@"KTPageSettings"];
+				if ([dictToMatch isEqualToDictionary:pageSettings])
 				{
-					id value = [presetDict objectForKey:key];
-					id actualValue = [mySelectedPage valueForKey:key];
-					if (![value isEqual:actualValue])
-					{
-						matched = NO;
-						break;
-					}
-				}
-				if (matched)
-				{
-					matchingMenuItem = item;
-					break;
-				}
-			}
-			else
-			{
-				
-				NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
-				if ([identifier isEqualToString:indexToMatch]
-					&& [pageSettings isEqual:dictToMatch])
-				{
-					matchingMenuItem = item;
+					menuItem = aMenuItem;
 					break;
 				}
 			}
 		}
 	}
-	if (nil != matchingMenuItem)
+	else
 	{
-		[oCollectionStylePopup selectItem:matchingMenuItem];
+		// Special case, the user selected "No Index"
+		menuItem = [oCollectionStylePopup itemAtIndex:0];
+	}
+	
+	// Select the right menu item
+	if (menuItem)
+	{
+		[oCollectionStylePopup selectItem:menuItem];
 	}
 	else
 	{
 		[oCollectionStylePopup selectItemWithTag:CUSTOM_TAG];
 	}
 }
+
+
 - (void)observeValueForKeyPath:(NSString *)aKeyPath
                       ofObject:(id)anObject
                         change:(NSDictionary *)aChange
