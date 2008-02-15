@@ -1800,8 +1800,11 @@
 		3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexElement.xcodeproj; path = ../Plugins/Elements/IndexElement/IndexElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../Plugins/Elements/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../Plugins/Elements/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C42E52D0D650646004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C42E52E0D650646004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoElement.xcodeproj; path = ../Plugins/Elements/VideoElement/VideoElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLElement.xcodeproj; path = ../Plugins/Elements/HTMLElement/HTMLElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C42E6BB0D6510BE004F35FD /* HTML.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTML.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RichTextElement.xcodeproj; path = ../Plugins/Elements/RichTextElement/RichTextElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../Plugins/Elements/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2582,6 +2585,7 @@
 			children = (
 				8D15AC370486D014006FF6A4 /* Sandvox.app */,
 				274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */,
+				3C42E6BB0D6510BE004F35FD /* HTML.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2681,6 +2685,8 @@
 			children = (
 				3C3F140F09D51BD000C01EED /* Importer Debug.xcconfig */,
 				3C3F141309D51BDA00C01EED /* Importer Release.xcconfig */,
+				3C42E52D0D650646004F35FD /* Debug.xcconfig */,
+				3C42E52E0D650646004F35FD /* Release.xcconfig */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

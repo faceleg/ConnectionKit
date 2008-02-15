@@ -64,17 +64,49 @@
 		else
 		{
 			[[self delegateOwner] setObject:string forKey:@"html"];
-			[[self delegateOwner] cacheMediaReferencesWithinHTMLStringAccountingForSummary:string];
 		}
 	}
 	else
 	{
 		NSString *string = [aDictionary valueForKey:kKTDataSourceString];
 		[[self delegateOwner] setObject:string forKey:@"html"];
-		[[self delegateOwner] cacheMediaReferencesWithinHTMLStringAccountingForSummary:string];
 	}
 	
 	[[self undoManager] setActionName:LocalizedStringInThisBundle(@"Insert Raw HTML", "adding raw html via d-n-d")];
+}
+
+#pragma mark media management
+
+- (NSSet *)requiredMediaIdentifiers
+{
+	NSMutableSet *result = [NSMutableSet set];
+	
+	// scan for svxmedia:// URLs, returning set of media identifiers
+	NSString *svxString = @"<img src=\"svxmedia://";
+	
+	NSString *html = [[self delegateOwner] valueForKey:@"html"];
+	LOG((@"scanning block for identifiers: \n%@", html));
+	if ( [html length] > [svxString length] )
+	{
+		NSScanner *scanner = [NSScanner scannerWithString:html];
+		while ( ![scanner isAtEnd] )
+		{
+			if ( [scanner scanUpToString:svxString intoString:NULL] )
+			{
+				if ( [scanner scanString:svxString intoString:NULL] )
+				{
+					NSString *mediaPath = nil;
+					if ( [scanner scanUpToString:@"\"" intoString:&mediaPath] )
+					{
+						NSString *mediaIdentifier = [mediaPath lastPathComponent];
+						[result addObject:mediaIdentifier];
+					}
+				}
+			}
+		}
+	}
+	
+	return result;
 }
 
 #pragma mark KVO/bindings
@@ -109,15 +141,20 @@
 - (void)setHtml:(NSString *)inHTML
 {
 	[[self delegateOwner] setObject:inHTML forKey:@"html"];
-	
-	[[self delegateOwner] cacheMediaReferencesWithinHTMLStringAccountingForSummary:inHTML];
-	
+		
 	// it would be better to coalesce this last bit, if possible
 	// right now, we're updating the display (and the undo stack)
 	// after every keypress!
 	[[self managedObjectContext] processPendingChanges];
 	[[self undoManager] setActionName:LocalizedStringInThisBundle(@"Edit Raw HTML", "editing raw html")];
 }
+
+#pragma mark -
+#pragma mark Summaries
+
+- (NSString *)summaryHTMLKeyPath { return @"html"; }
+
+- (BOOL)summaryHTMLIsEditable { return NO; }
 
 #pragma mark Page support
 
