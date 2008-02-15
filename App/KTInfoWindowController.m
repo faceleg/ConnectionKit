@@ -13,8 +13,11 @@
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
 #import "KTDesign.h"
+
 #import "KTDocWindow.h"
 #import "KTDocWindowController.h"
+#import "KTDocSiteOutlineController.h"
+
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTPluginInspectorViewsManager.h"
@@ -34,7 +37,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 static KTInfoWindowController *sKTInfoWindowController = nil;
 
 // selectedLevel = root
-// selectedPage = a page, which might be root
+
 
 @interface KTInfoWindowController ( Private )
 - (BOOL)preventWindowAnimation;
@@ -60,6 +63,9 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 - (void)setMainWindow:(NSWindow *)mainWindow;
 - (void)setPluginInspectorViews:(NSMutableDictionary *)aPluginInspectorViews;
 - (void)setPluginInspectorObjectControllers:(NSMutableDictionary *)aPluginInspectorObjectControllers;
+
+// Support
+- (KTDocSiteOutlineController *)siteOutlineController;
 
 @end
 
@@ -175,11 +181,12 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		}
 	}		
 		
-	[oInfoWindowController addObserver:self
-		   forKeyPath:@"selection.selectedPage.indexPresetDictionary"
+	[oPageController addObserver:self
+		   forKeyPath:@"selection.indexPresetDictionary"
 			  options:NSKeyValueObservingOptionNew
 			  context:nil];
-		
+	
+			
 	// replace standin for date picker with small date picker
 	NSView *superview = [oSmallDatePickerPlaceholderView superview];
 	
@@ -189,29 +196,27 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	[oSmallDatePickerPlaceholderView removeFromSuperviewWithoutNeedingDisplay];
 	[superview addSubview:mySmallDatePicker];
 	[mySmallDatePicker setDatePickerElements:(NSHourMinuteDatePickerElementFlag|NSYearMonthDayDatePickerElementFlag)];
+	
 	[mySmallDatePicker bind:@"value" 
-                   toObject:oInfoWindowController 
-                withKeyPath:@"selection.selectedPage.editableTimestamp" 
+                   toObject:oPageController 
+                withKeyPath:@"selection.editableTimestamp" 
                     options:nil];
-	[mySmallDatePicker bind:@"hidden" 
-                   toObject:oInfoWindowController 
-                withKeyPath:@"selection.selectedPage" 
-                    options:[NSDictionary dictionaryWithObject:NSIsNilTransformerName 
-                                                        forKey:NSValueTransformerNameBindingOption]];
+	
 	[mySmallDatePicker bind:@"enabled" 
-                   toObject:oInfoWindowController 
-                withKeyPath:@"selection.selectedPage.master.timestampType" 
+                   toObject:oPageController 
+                withKeyPath:@"selection.master.timestampType" 
                     options:nil];
+	
 	[mySmallDatePicker bind:@"enabled2" 
-                   toObject:oInfoWindowController 
-                withKeyPath:@"selection.selectedPage.includeTimestamp" 
+                   toObject:oPageController 
+                withKeyPath:@"selection.includeTimestamp" 
                     options:nil];
 	
 	
 	// Page menu title placeholder binding
 	[oPageMenuTitleField bind:@"placeholderValue"
-					 toObject:oInfoWindowController
-				  withKeyPath:@"selection.selectedPage.titleText"
+					 toObject:oPageController
+				  withKeyPath:@"selection.titleText"
 					  options:nil];
 	
 	
@@ -310,11 +315,12 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		@try
 		{
 			myIgnoreCollectionStyleChanges = YES;
-			[[self selectedPage] setIndexFromPlugin:plugin];
-			[[self selectedPage] setValuesForKeysWithDictionary:pageSettings];
+			KTPage *collection = [[self siteOutlineController] selectedPage];
+			[collection setIndexFromPlugin:plugin];
+			[collection setValuesForKeysWithDictionary:pageSettings];
 			
 			// Update the index menu "manually" since there's no bindings
-			NSString *indexIdentifier = [[self selectedPage] valueForKey:@"collectionIndexBundleIdentifier"];
+			NSString *indexIdentifier = [collection valueForKey:@"collectionIndexBundleIdentifier"];
 			KTAppPlugin *indexBundle = [[[NSApp delegate] bundleManager] pluginWithIdentifier:indexIdentifier];
 			[oIndexPopup selectItemAtIndex:(nil == indexBundle
 				? 0
@@ -338,7 +344,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 - (IBAction)changeIndexType:(id)sender
 {
 	KTIndexPlugin *plugin = [sender representedObject];
-	[[self selectedPage] setIndexFromPlugin:plugin];
+	[[[self siteOutlineController] selectedPage] setIndexFromPlugin:plugin];
 }
 
 - (IBAction)openHaloscan:(id)sender
@@ -354,7 +360,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[oInfoWindowController removeObserver:self forKeyPath:@"selection.selectedPage.indexPresetDictionary"];
+	[oPageController removeObserver:self forKeyPath:@"selection.indexPresetDictionary"];
     
     if ( nil != mySmallDatePicker )
     {
@@ -371,7 +377,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
     [self setPluginInspectorObjectControllers:nil];
     [self setAssociatedDocument:nil];
     [self setCurrentSelection:nil];
-    [self setSelectedPage:nil];
     [self setSelectedPagelet:nil];
     [self setSelectedLevel:nil];
     [self setSelectionInspectorView:nil];
@@ -384,7 +389,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 {
 	[self clearObjectControllers];
     [self setAssociatedDocument:nil];
-    [self setSelectedPage:nil];
     [self setSelectedPagelet:nil];
     [self setSelectedLevel:nil];
 	[self setSelectionInspectorView:nil];
@@ -421,7 +425,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	{
 		[self clearObjectControllers];				/// these are pretty much from clearAll
 		[self setAssociatedDocument:nil];
-		[self setSelectedPage:nil];
 		[self setSelectedPagelet:nil];
 		[self setSelectedLevel:nil];
 		[self setSelectionInspectorView:nil];
@@ -466,19 +469,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		NSSet *deletedObjects = [[aNotification userInfo] valueForKey:NSDeletedObjectsKey];
 		if ( nil != deletedObjects )
 		{
-			if ( nil != [self selectedPage] )
-			{
-				if ( [deletedObjects containsObject:[self selectedPage]] )
-				{
-					//LOG((@"info noticing selected page has been deleted"));
-					[self setSelectedPagelet:nil];
-					[self setCurrentSelection:nil];
-					[self setSelectedPage:nil];
-					[self setupViewStackFor:nil selectLevel:NO];
-					return;
-				}
-			}
-			
 			id subsituteItem = nil;
 			
 			if ( nil != myCurrentSelection )
@@ -487,7 +477,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					//LOG((@"info noticing current selection has been deleted"));
 					[self setCurrentSelection:nil];
-					subsituteItem = [self selectedPage];
+					subsituteItem = [[self siteOutlineController] selectedPage];
 				}
 			}
 			
@@ -497,16 +487,13 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					//LOG((@"info noticing selected pagelet has been deleted"));
 					[self setSelectedPagelet:nil];
-					subsituteItem = [self selectedPage];
+					subsituteItem = [[self siteOutlineController] selectedPage];
 				}
 			}
 			
-			if ( nil != subsituteItem )
+			if (subsituteItem && [subsituteItem isKindOfClass:[KTPage class]])
 			{
-				if ( nil != [self selectedPage] )
-				{
-					[self setupViewStackFor:[self selectedPage] selectLevel:NO];
-				}
+				[self setupViewStackFor:subsituteItem selectLevel:NO];
 			}
 		}
 	}
@@ -621,7 +608,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	}
 	// First, set selected page -- it may not be the same as the selected item
 	KTPage *selPage = [[[myAssociatedDocument windowController] siteOutlineController] selectedPage];
-	[self setSelectedPage:selPage];
 	
 	KTPage *level = [myAssociatedDocument root];
 #ifdef DEBUG
@@ -667,7 +653,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		// our custom page type is NOT html
 		[self setCustomFileExtension:NO];		// TODO: fix
 		
-		if (nil == [self selectedPage])
+		if (![[self siteOutlineController] selectedPage])
 		{
 //			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
@@ -809,7 +795,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		return result;
 	}
 		
-	if (nil == [self selectedPage] )
+	if (![[self siteOutlineController] selectedPage] )
 	{
 		[result addObject:oSiteView];	// no selection; all we can have is site!
 	}
@@ -824,7 +810,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			case SEGMENT_PAGE:
 			{
 				[result addObject:oPageView];
-				if ([[self selectedPage] isCollection])
+				if ([[[self siteOutlineController] selectedPage] isCollection])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oCollectionView];
@@ -834,7 +820,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 						[result addObject:oCustomIndexView];
 					}
 				}
-				if ((![myCurrentSelection isKindOfClass:[KTPseudoElement class]]) && nil != myPageInspectorView && ![[self selectedPage] separateInspectorSegment])
+				if ((![myCurrentSelection isKindOfClass:[KTPseudoElement class]]) && nil != myPageInspectorView && ![[[self siteOutlineController] selectedPage] separateInspectorSegment])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oPageDetailsHeaderView];		// shows page type name
@@ -862,7 +848,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 					{
 						[result addObject:mySelectionInspectorView];
 					}
-					else if (nil != myPageInspectorView && [[self selectedPage] separateInspectorSegment])
+					else if (nil != myPageInspectorView && [[[self siteOutlineController] selectedPage] separateInspectorSegment])
 					{
 						[result addObject:myPageInspectorView];
 					}
@@ -1122,24 +1108,29 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	}
 	
 	KTMediaContainer *thumbnail = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
-	[[self selectedPage] setThumbnail:thumbnail];
+	[[[self siteOutlineController] selection] setValue:thumbnail forKey:@"thumbnail"];
 }
 
 - (IBAction)resetPageThumbnail:(id)sender
 {
-	KTPage *page = [self selectedPage];
-	id pageDelegate = [page delegate];
+	NSSet *pages = [[self siteOutlineController] selectedPages];
+	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
+	KTPage *aPage;
 	
-	if (pageDelegate && [pageDelegate respondsToSelector:@selector(pageShouldClearThumbnail:)])
+	while (aPage = [pagesEnumerator nextObject])
 	{
-		if ([pageDelegate pageShouldClearThumbnail:page])
+		id pageDelegate = [aPage delegate];
+		if (pageDelegate && [pageDelegate respondsToSelector:@selector(pageShouldClearThumbnail:)])
 		{
-			[page setThumbnail:nil];
+			if ([pageDelegate pageShouldClearThumbnail:aPage])
+			{
+				[aPage setThumbnail:nil];
+			}
 		}
-	}
-	else
-	{
-		[page setThumbnail:nil];
+		else
+		{
+			[aPage setThumbnail:nil];
+		}
 	}
 }
 
@@ -1150,7 +1141,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	if (anImageView == oThumbImageView)
 	{
 		KTMediaContainer *thumbnail = [[[self associatedDocument] mediaManager] mediaContainerWithDataSourceDictionary:aDataSourceDictionary];
-		[[self selectedPage] setThumbnail:thumbnail];
+		[[[self siteOutlineController] selection] setValue:thumbnail forKey:@"thumbnail"];
 	}
 	else if (anImageView == oFaviconImageView)
 	{
@@ -1299,15 +1290,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
     mySelectedLevel = aSelectedLevel;
 }
 
-- (KTPage *)selectedPage { return mySelectedPage; }
-
-- (void)setSelectedPage:(KTPage *)aSelectedPage
-{
-    [aSelectedPage retain];
-    [mySelectedPage release];
-    mySelectedPage = aSelectedPage;
-}
-
 - (KTPagelet *)selectedPagelet
 {
     return mySelectedPagelet; 
@@ -1395,23 +1377,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
     myPageInspectorView = aPageInspectorView;
 }
 
-/*!	Ordered list of sidebar pagelets or callout pagelets, as appropriate
-*/
-- (NSArray *)orderedPageletList
-{
-	NSArray *result = nil;
-
-	if (kPageletInSidebarPosition == mySelectedPageletPosition)
-	{
-		result = [[self selectedPage] orderedSidebars];
-	}
-	else
-	{
-		result = [[self selectedPage] orderedCallouts];
-	}
-	return result;
-}
-
 #pragma mark -
 #pragma mark Delegate
 
@@ -1434,18 +1399,19 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSMenuItem *menuItem = nil;
 	
 	// Note: dictionary equality is really picky about whether it's a CFNumber or CFBoolean so this tries to match them.
+	KTPage *page = [[self siteOutlineController] selectedPage];
 	NSDictionary *dictToMatch = [NSDictionary dictionaryWithObjectsAndKeys: 
-		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionShowNavigationArrows"]], @"collectionShowNavigationArrows",
-		[[self selectedPage] valueForKey:@"collectionMaxIndexItems"], @"collectionMaxIndexItems",
-		[[self selectedPage] valueForKey:@"collectionSortOrder"], @"collectionSortOrder",
-		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
-		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionShowPermanentLink"]], @"collectionShowPermanentLink",
-		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionHyperlinkPageTitles"]], @"collectionHyperlinkPageTitles",
-		[[self selectedPage] wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
+		[NSNumber numberWithBool:[page boolForKey:@"collectionShowNavigationArrows"]], @"collectionShowNavigationArrows",
+		[page valueForKey:@"collectionMaxIndexItems"], @"collectionMaxIndexItems",
+		[page valueForKey:@"collectionSortOrder"], @"collectionSortOrder",
+		[NSNumber numberWithBool:[page boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
+		[NSNumber numberWithBool:[page boolForKey:@"collectionShowPermanentLink"]], @"collectionShowPermanentLink",
+		[NSNumber numberWithBool:[page boolForKey:@"collectionHyperlinkPageTitles"]], @"collectionHyperlinkPageTitles",
+		[page wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
 		nil];
 
 
-	NSString *indexIdentifier = [[self selectedPage] valueForKey:@"collectionIndexBundleIdentifier"];
+	NSString *indexIdentifier = [page valueForKey:@"collectionIndexBundleIdentifier"];
 	if (indexIdentifier)
 	{
 		NSEnumerator *menuEnumerator = [[oCollectionStylePopup itemArray] objectEnumerator];
@@ -1492,8 +1458,8 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
                        context:(void *)aContext
 {
     if ( !myIgnoreCollectionStyleChanges
-		 && nil != [self selectedPage]
-		 && [aKeyPath isEqualToString:@"selection.selectedPage.indexPresetDictionary"] )
+		 && ![[self siteOutlineController] selectedPage]
+		 && [aKeyPath isEqualToString:@"selection.indexPresetDictionary"] )
     {
 		[self updateCollectionStylePopup];
     }
@@ -1549,13 +1515,13 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		}
 		case SEGMENT_PAGE:
 			pageName = @"General_Page_Attributes";
-			if ([[self selectedPage] isCollection])
+			if ([[[self siteOutlineController] selectedPage] isCollection])
 			{
 				pageName = @"Collection";
 			}
 			if (nil != myPageInspectorView)	// special inspector IF there is a specialized inspector below.
 			{	
-				NSString *helpAnchor = [[[[self selectedPage] plugin] bundle] helpAnchor];
+				NSString *helpAnchor = [[[[[self siteOutlineController] selectedPage] plugin] bundle] helpAnchor];
 				if (nil != helpAnchor)
 				{
 					pageName = helpAnchor;
@@ -1580,7 +1546,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					pageName = @"Embedded_Image";
 				}
-				else if (nil != myPageInspectorView && [[self selectedPage] separateInspectorSegment])
+				else if (nil != myPageInspectorView && [[[self siteOutlineController] selectedPage] separateInspectorSegment])
 				{
 					if (oProRequiredView == myPageInspectorView)
 					{
@@ -1606,5 +1572,14 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	[NSApp showHelpPage:pageName];
 }
 
+#pragma mark -
+#pragma mark Support
+
+/*	Convenience method to get to the inspected site outline controller quickly.
+ */
+- (KTDocSiteOutlineController *)siteOutlineController
+{
+	return [[[self associatedDocument] windowController] siteOutlineController];
+}
 
 @end

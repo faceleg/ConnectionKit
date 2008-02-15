@@ -16,6 +16,7 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
 	IBOutlet NSPanel			*oPanel;
 	IBOutlet NSObjectController	*oInfoWindowController;
+	IBOutlet NSController		*oPageController;
 
 	IBOutlet KTStackView		*oStackView;	// top level container, installed in window
 
@@ -67,7 +68,6 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 	NSView						*myPageInspectorView;
 	id							myCurrentSelection;
 	KTDocument					*myAssociatedDocument;
-	KTPage						*mySelectedPage;
 	KTPagelet					*mySelectedPagelet;
 	KTPage						*mySelectedLevel;
 		
@@ -95,9 +95,6 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
 - (KTPage *)selectedLevel;
 - (void)setSelectedLevel:(KTPage *)aSelectedLevel;
-
-- (KTPage *)selectedPage;
-- (void)setSelectedPage:(KTPage *)aSelectedPage;
 
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;

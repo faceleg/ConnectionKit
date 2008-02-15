@@ -169,6 +169,8 @@
 				<string>KTPathInfoField</string>
 				<key>oNothingView</key>
 				<string>NSView</string>
+				<key>oPageController</key>
+				<string>NSController</string>
 				<key>oPageDetailsHeaderView</key>
 				<string>NSView</string>
 				<key>oPageMenuTitleField</key>
