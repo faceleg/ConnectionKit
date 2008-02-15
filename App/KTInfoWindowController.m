@@ -16,6 +16,7 @@
 #import "KTDocWindow.h"
 #import "KTDocWindowController.h"
 #import "KTElementPlugin.h"
+#import "KTIndexPlugin.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTDocument.h"
 #import "KTMediaManager.h"
@@ -334,13 +335,13 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	[self adjustWindow];
 }
 
-- (IBAction) changeIndexType:(id)sender
+- (IBAction)changeIndexType:(id)sender
 {
-	NSBundle *bundle = [sender representedObject];
-	[mySelectedPage setIndexFromPlugin:[KTAppPlugin pluginWithBundle:bundle]];
+	KTIndexPlugin *plugin = [sender representedObject];
+	[mySelectedPage setIndexFromPlugin:plugin];
 }
 
-- (IBAction) openHaloscan:(id)sender
+- (IBAction)openHaloscan:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.haloscan.com/"]];
 }
@@ -1412,25 +1413,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		result = [mySelectedPage orderedCallouts];
 	}
 	return result;
-}
-
-- (NSSet *)pageletSet
-{
-	NSSet *result = nil;
-	if (kPageletInSidebarPosition == mySelectedPageletPosition)
-	{
-		result = [[mySelectedPage wrappedValueForKey:@"sidebarsList"] primitiveValueForKey:@"pagelets"];
-	}
-	else
-	{
-		result = [[mySelectedPage wrappedValueForKey:@"calloutsList"] primitiveValueForKey:@"pagelets"];
-	}
-	return result;
-}
-
-- (int) pageletCount
-{
-	return [[self pageletSet] count];
 }
 
 #pragma mark -
