@@ -9,6 +9,7 @@
 #import "KTDocWebViewController.h"
 
 #import "KTDocWindowController.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTInfoWindowController.h"
 #import "KTWebViewTextEditingBlock.h"
 #import "KTWebViewUndoManagerProxy.h"

@@ -35,18 +35,9 @@
 #pragma mark -
 #pragma mark Index
 
-- (KTAbstractIndex *)index { return myIndex; }
+- (KTAbstractIndex *)index { return [self wrappedValueForKey:@"index"]; }
 
-- (void)setIndex:(KTAbstractIndex *)anIndex
-{
-	[self willChangeValueForKey:@"index"];
-	
-	[anIndex retain];
-	[myIndex release];
-	myIndex = anIndex;
-	
-	[self didChangeValueForKey:@"index"];
-}
+- (void)setIndex:(KTAbstractIndex *)anIndex { [self setWrappedValue:anIndex forKey:@"index"]; }
 
 - (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)plugin
 {

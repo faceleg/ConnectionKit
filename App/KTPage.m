@@ -293,8 +293,6 @@
 - (void)dealloc
 {
     // release ivars
-//	[self setCustomSummaryMediaRefNames:nil];
-	[myIndex release];
 	[myArchivesIndex release];
     [self setDocument:nil];
     [mySortedChildrenCache release];

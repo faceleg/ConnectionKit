@@ -32,7 +32,6 @@
 @interface KTPage : KTAbstractPlugin	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
 {
 	// most ivars handled internally via CoreData model
-	KTAbstractIndex		*myIndex;					// not archived, set from indexBundleIdentifier
 	KTAbstractIndex		*myArchivesIndex;			// not archived, loaded lazily
 	
 	// these ivars are only set if the page is root
