@@ -310,11 +310,11 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		@try
 		{
 			myIgnoreCollectionStyleChanges = YES;
-			[mySelectedPage setIndexFromPlugin:plugin];
-			[mySelectedPage setValuesForKeysWithDictionary:pageSettings];
+			[[self selectedPage] setIndexFromPlugin:plugin];
+			[[self selectedPage] setValuesForKeysWithDictionary:pageSettings];
 			
 			// Update the index menu "manually" since there's no bindings
-			NSString *indexIdentifier = [mySelectedPage valueForKey:@"collectionIndexBundleIdentifier"];
+			NSString *indexIdentifier = [[self selectedPage] valueForKey:@"collectionIndexBundleIdentifier"];
 			KTAppPlugin *indexBundle = [[[NSApp delegate] bundleManager] pluginWithIdentifier:indexIdentifier];
 			[oIndexPopup selectItemAtIndex:(nil == indexBundle
 				? 0
@@ -338,7 +338,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 - (IBAction)changeIndexType:(id)sender
 {
 	KTIndexPlugin *plugin = [sender representedObject];
-	[mySelectedPage setIndexFromPlugin:plugin];
+	[[self selectedPage] setIndexFromPlugin:plugin];
 }
 
 - (IBAction)openHaloscan:(id)sender
@@ -466,9 +466,9 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		NSSet *deletedObjects = [[aNotification userInfo] valueForKey:NSDeletedObjectsKey];
 		if ( nil != deletedObjects )
 		{
-			if ( nil != mySelectedPage )
+			if ( nil != [self selectedPage] )
 			{
-				if ( [deletedObjects containsObject:mySelectedPage] )
+				if ( [deletedObjects containsObject:[self selectedPage]] )
 				{
 					//LOG((@"info noticing selected page has been deleted"));
 					[self setSelectedPagelet:nil];
@@ -487,7 +487,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					//LOG((@"info noticing current selection has been deleted"));
 					[self setCurrentSelection:nil];
-					subsituteItem = mySelectedPage;
+					subsituteItem = [self selectedPage];
 				}
 			}
 			
@@ -497,15 +497,15 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					//LOG((@"info noticing selected pagelet has been deleted"));
 					[self setSelectedPagelet:nil];
-					subsituteItem = mySelectedPage;
+					subsituteItem = [self selectedPage];
 				}
 			}
 			
 			if ( nil != subsituteItem )
 			{
-				if ( nil != mySelectedPage )
+				if ( nil != [self selectedPage] )
 				{
-					[self setupViewStackFor:mySelectedPage selectLevel:NO];
+					[self setupViewStackFor:[self selectedPage] selectLevel:NO];
 				}
 			}
 		}
@@ -582,11 +582,11 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		[pagelet clearObjectController];
 	}
 
-	if ( nil != mySelectedPage )
+	if ( nil != [self selectedPage] )
 	{
-		KTPage *page = mySelectedPage;
+		KTPage *page = [self selectedPage];
         
-		NSEnumerator *e = [[mySelectedPage wrappedValueForKey:@"elements"] objectEnumerator];
+		NSEnumerator *e = [[[self selectedPage] wrappedValueForKey:@"elements"] objectEnumerator];
         KTElement *element;
         while ( element = [e nextObject] )
         {
@@ -599,7 +599,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 - (void)setupViewStackFor:(id)selectedItem selectLevel:(BOOL)aWantLevel
 {
-	/// in some cases, selectedItem == mySelectedPage
+	/// in some cases, selectedItem == [self selectedPage]
 	[selectedItem retain]; // don't lose this!
 	
 /*
@@ -667,9 +667,9 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		// our custom page type is NOT html
 		[self setCustomFileExtension:NO];		// TODO: fix
 		
-		if (nil == mySelectedPage)
+		if (nil == [self selectedPage])
 		{
-//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, mySelectedPage, mySelectedPagelet);
+//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
 			[self setPageInspectorView:nil];
 			[self setSelectionInspectorView:nil];
@@ -681,7 +681,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPage class]])	// was the selected item the page?
 		{
-			//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, mySelectedPage, mySelectedPagelet);
+			//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			if ([((KTPage *)myCurrentSelection) isCollection])
 			{
 				NSString *identifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
@@ -749,7 +749,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			}
 			
 						
-//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, mySelectedPage, mySelectedPagelet);
+//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
 			NSView *pageletInspectorView = [[[myAssociatedDocument windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			
@@ -809,7 +809,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		return result;
 	}
 		
-	if (nil == mySelectedPage )
+	if (nil == [self selectedPage] )
 	{
 		[result addObject:oSiteView];	// no selection; all we can have is site!
 	}
@@ -824,7 +824,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			case SEGMENT_PAGE:
 			{
 				[result addObject:oPageView];
-				if ([mySelectedPage isCollection])
+				if ([[self selectedPage] isCollection])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oCollectionView];
@@ -834,7 +834,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 						[result addObject:oCustomIndexView];
 					}
 				}
-				if ((![myCurrentSelection isKindOfClass:[KTPseudoElement class]]) && nil != myPageInspectorView && ![mySelectedPage separateInspectorSegment])
+				if ((![myCurrentSelection isKindOfClass:[KTPseudoElement class]]) && nil != myPageInspectorView && ![[self selectedPage] separateInspectorSegment])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oPageDetailsHeaderView];		// shows page type name
@@ -862,7 +862,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 					{
 						[result addObject:mySelectionInspectorView];
 					}
-					else if (nil != myPageInspectorView && [mySelectedPage separateInspectorSegment])
+					else if (nil != myPageInspectorView && [[self selectedPage] separateInspectorSegment])
 					{
 						[result addObject:myPageInspectorView];
 					}
@@ -931,7 +931,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 - (BOOL)enableShowPageletBorderButton
 {
 	BOOL result = NO;
-//	KTDesign *currentDesign = [mySelectedPage design];
+//	KTDesign *currentDesign = [[self selectedPage] design];
 	
 	// sidebarBorderable, calloutBorderable
 // TODO: finish
@@ -1299,10 +1299,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
     mySelectedLevel = aSelectedLevel;
 }
 
-- (KTPage *)selectedPage
-{
-    return mySelectedPage; 
-}
+- (KTPage *)selectedPage { return mySelectedPage; }
 
 - (void)setSelectedPage:(KTPage *)aSelectedPage
 {
@@ -1406,11 +1403,11 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 	if (kPageletInSidebarPosition == mySelectedPageletPosition)
 	{
-		result = [mySelectedPage orderedSidebars];
+		result = [[self selectedPage] orderedSidebars];
 	}
 	else
 	{
-		result = [mySelectedPage orderedCallouts];
+		result = [[self selectedPage] orderedCallouts];
 	}
 	return result;
 }
@@ -1438,17 +1435,17 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	
 	// Note: dictionary equality is really picky about whether it's a CFNumber or CFBoolean so this tries to match them.
 	NSDictionary *dictToMatch = [NSDictionary dictionaryWithObjectsAndKeys: 
-		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionShowNavigationArrows"]], @"collectionShowNavigationArrows",
-		[mySelectedPage valueForKey:@"collectionMaxIndexItems"], @"collectionMaxIndexItems",
-		[mySelectedPage valueForKey:@"collectionSortOrder"], @"collectionSortOrder",
-		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
-		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionShowPermanentLink"]], @"collectionShowPermanentLink",
-		[NSNumber numberWithBool:[mySelectedPage boolForKey:@"collectionHyperlinkPageTitles"]], @"collectionHyperlinkPageTitles",
-		[mySelectedPage wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
+		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionShowNavigationArrows"]], @"collectionShowNavigationArrows",
+		[[self selectedPage] valueForKey:@"collectionMaxIndexItems"], @"collectionMaxIndexItems",
+		[[self selectedPage] valueForKey:@"collectionSortOrder"], @"collectionSortOrder",
+		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
+		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionShowPermanentLink"]], @"collectionShowPermanentLink",
+		[NSNumber numberWithBool:[[self selectedPage] boolForKey:@"collectionHyperlinkPageTitles"]], @"collectionHyperlinkPageTitles",
+		[[self selectedPage] wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
 		nil];
 
 
-	NSString *indexIdentifier = [mySelectedPage valueForKey:@"collectionIndexBundleIdentifier"];
+	NSString *indexIdentifier = [[self selectedPage] valueForKey:@"collectionIndexBundleIdentifier"];
 	if (indexIdentifier)
 	{
 		NSEnumerator *menuEnumerator = [[oCollectionStylePopup itemArray] objectEnumerator];
@@ -1495,7 +1492,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
                        context:(void *)aContext
 {
     if ( !myIgnoreCollectionStyleChanges
-		 && nil != mySelectedPage
+		 && nil != [self selectedPage]
 		 && [aKeyPath isEqualToString:@"selection.selectedPage.indexPresetDictionary"] )
     {
 		[self updateCollectionStylePopup];
@@ -1552,13 +1549,13 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		}
 		case SEGMENT_PAGE:
 			pageName = @"General_Page_Attributes";
-			if ([mySelectedPage isCollection])
+			if ([[self selectedPage] isCollection])
 			{
 				pageName = @"Collection";
 			}
 			if (nil != myPageInspectorView)	// special inspector IF there is a specialized inspector below.
 			{	
-				NSString *helpAnchor = [[[mySelectedPage plugin] bundle] helpAnchor];
+				NSString *helpAnchor = [[[[self selectedPage] plugin] bundle] helpAnchor];
 				if (nil != helpAnchor)
 				{
 					pageName = helpAnchor;
@@ -1583,7 +1580,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 				{
 					pageName = @"Embedded_Image";
 				}
-				else if (nil != myPageInspectorView && [mySelectedPage separateInspectorSegment])
+				else if (nil != myPageInspectorView && [[self selectedPage] separateInspectorSegment])
 				{
 					if (oProRequiredView == myPageInspectorView)
 					{
