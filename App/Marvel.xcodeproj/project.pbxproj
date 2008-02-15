@@ -1083,42 +1083,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Index.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = IndexElement;
 		};
 		3C42E4100D64F956004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* IndexElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IndexElement;
 		};
 		3C42E4870D64FCE3004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* IMStatus.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = IMStatusElement;
 		};
 		3C42E4890D64FCF4004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* IMStatusElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IMStatusElement;
 		};
 		3C42E4F50D650429004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Flickr.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = FlickrElement;
 		};
 		3C42E4F70D650433004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* FlickrElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FlickrElement;
 		};
 		3C42E5EE0D650ABF004F35FD /* PBXContainerItemProxy */ = {

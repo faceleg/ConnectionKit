@@ -14,8 +14,6 @@
 + (void)load
 {
 	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxElement"];
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxPage"];
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxPagelet"];
 }
 
 #pragma mark -
