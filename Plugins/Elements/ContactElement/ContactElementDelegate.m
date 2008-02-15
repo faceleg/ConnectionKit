@@ -334,12 +334,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)absoluteCSSURL
 {
-	[[self delegateOwner] lockPSCAndMOC];
-
 	KTPage *thisPage = [((KTElement *)[self delegateOwner]) page];
-	NSString *result = [[thisPage document] URLForDesignBundleIdentifier:[thisPage valueForKeyPath:@"master.design.identifier"]];
 	
-	[[self delegateOwner] unlockPSCAndMOC];
+	NSString *result = [[thisPage document] URLForDesignBundleIdentifier:[thisPage valueForKeyPath:@"master.design.identifier"]];
 	
 	return result;
 }

@@ -37,7 +37,6 @@
 #import "GeneralIndex.h"
 
 
-
 @implementation GeneralIndex
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(64.0, 64.0); }

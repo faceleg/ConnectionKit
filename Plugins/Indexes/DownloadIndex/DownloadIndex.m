@@ -9,7 +9,6 @@
 #import "DownloadIndex.h"
 
 
-
 @implementation DownloadIndex
 
 - (NSSize)thumbnailSize

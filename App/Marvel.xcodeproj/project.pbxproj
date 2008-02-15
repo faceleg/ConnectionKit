@@ -217,9 +217,9 @@
 		2753688B0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */; };
 		27657C2A0C80657F00B2C4D6 /* KSExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27657C280C80657F00B2C4D6 /* KSExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27657C2B0C80657F00B2C4D6 /* KSExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27657C290C80657F00B2C4D6 /* KSExtensibleManagedObject.m */; };
-		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; };
+		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
-		276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276689ED0D63752D0019686C /* WebView+Karelia.h */; };
+		276689EF0D63752D0019686C /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276689ED0D63752D0019686C /* WebView+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		276689F00D63752D0019686C /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276689EE0D63752D0019686C /* WebView+Karelia.m */; };
 		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; };
 		27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugin.m */; };
@@ -498,7 +498,7 @@
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
 		3C9B0485095E5EEB0053F596 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9B0483095E5EEB0053F596 /* Exception.nib */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
-		3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */; };
+		3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CB5E2B0080303C7006BB008 /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A6080303C7006BB008 /* document.icns */; };
 		3CB5E2B1080303C7006BB008 /* graydimple1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A7080303C7006BB008 /* graydimple1.png */; };
 		3CB5E2B2080303C7006BB008 /* graydimple2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A8080303C7006BB008 /* graydimple2.png */; };

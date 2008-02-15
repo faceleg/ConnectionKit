@@ -253,7 +253,7 @@ static NSMutableArray *sThemes = nil;
 
 - (NSString *)resourceDirectory
 {
-	if ([[self document] publishingMode] == kGeneratingPreview)
+	if ([[[self document] windowController] publishingMode] == kGeneratingPreview)
 	{
 		NSString *path = [[[self bundle] resourcePath]stringByAppendingPathComponent:@"digits"];
 		return [[NSURL fileURLWithPath:path] absoluteString];

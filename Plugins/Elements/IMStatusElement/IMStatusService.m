@@ -8,6 +8,8 @@
 
 #import "IMStatusService.h"
 
+#import <KTComponents.h>
+
 
 @interface IMStatusService (Private)
 

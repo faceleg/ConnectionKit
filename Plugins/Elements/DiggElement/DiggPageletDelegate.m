@@ -74,7 +74,7 @@ typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
 	return [NSString stringWithFormat:@"%u", mask];
 }
 
-#warning TODO: handle your friends' diggs
+// TODO: handle your friends' diggs
 
 - (NSString *)diggTypeString
 {

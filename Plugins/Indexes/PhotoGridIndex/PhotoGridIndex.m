@@ -37,7 +37,6 @@
 #import "PhotoGridIndex.h"
 
 
-
 @implementation PhotoGridIndex
 
 - (NSSize)thumbnailImageSize { return NSMakeSize(128.0, 128.0); }

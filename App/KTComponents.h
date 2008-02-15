@@ -48,6 +48,11 @@
 #import "KTPage.h"
 #import "KTPagelet.h"
 
+#import "KTDocument.h"
+
+// Safari 3 WebKit methods, available in 10.4.11
+#import "KTWebKitCompatibility.h"
+
 //  Core Data-based media objects
 //#import "KTMedia.h"
 //#import "KTMediaRef.h"
@@ -79,6 +84,7 @@
 #import "NSAppleScript+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSMutableArray+Karelia.h"
+#import "NSMutableSet+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSBundle+Karelia.h"

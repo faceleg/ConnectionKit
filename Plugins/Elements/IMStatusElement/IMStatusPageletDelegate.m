@@ -317,7 +317,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 - (NSString *)cacheConfuser
 {
 	NSString *result = @"";
-	if ([[self document] publishingMode] == kGeneratingPreview)
+	if ([[[self document] windowController] publishingMode] == kGeneratingPreview)
 	{
 		static int sCacheConfuser = 1;
 		result = [NSString stringWithFormat:@"?cacheConfuser=%d", sCacheConfuser++];
