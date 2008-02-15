@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2727DE730D6516EE002816FE /* HTML.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2727DE720D6516EE002816FE /* HTML.icns */; };
 		3C42E5070D6505A5004F35FD /* HTMLElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5060D6505A5004F35FD /* HTMLElementDelegate.m */; };
 		3C42E50B0D6505BC004F35FD /* HTMLElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E50A0D6505BC004F35FD /* HTMLElementTemplate.html */; };
 		3C42E5110D6505C6004F35FD /* HTMLElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E50C0D6505C6004F35FD /* HTMLElement.nib */; };
@@ -22,6 +23,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2727DE720D6516EE002816FE /* HTML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = HTML.icns; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* HTMLElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42E5050D6505A5004F35FD /* HTMLElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElementDelegate.h; sourceTree = "<group>"; };
 		3C42E5060D6505A5004F35FD /* HTMLElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLElementDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2727DE720D6516EE002816FE /* HTML.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42E50C0D6505C6004F35FD /* HTMLElement.nib */,
 				3C42E50A0D6505BC004F35FD /* HTMLElementTemplate.html */,
@@ -222,6 +225,7 @@
 				3C42E52C0D650637004F35FD /* License.rtf in Resources */,
 				3C42E52F0D650646004F35FD /* Debug.xcconfig in Resources */,
 				3C42E5300D650646004F35FD /* Release.xcconfig in Resources */,
+				2727DE730D6516EE002816FE /* HTML.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

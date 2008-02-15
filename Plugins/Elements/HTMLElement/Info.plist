@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -20,6 +20,20 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
+	<key>KTCSSClassName</key>
+	<string>html</string>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTHelpAnchor</key>
+	<string>Raw_HTML</string>
+	<key>KTMinimumAppVersion</key>
+	<string>1.5</string>
+	<key>KTPageAllowsCallouts</key>
+	<true/>
+	<key>KTPageNibFile</key>
+	<string>HTMLPage</string>
 	<key>KTPluginIconName</key>
 	<string>HTML.icns</string>
 	<key>KTPluginInitialProperties</key>
@@ -29,10 +43,14 @@
 		<key>htmlType</key>
 		<integer>2</integer>
 	</dict>
+	<key>KTPluginName</key>
+	<string>Raw HTML</string>
 	<key>KTPluginNibFile</key>
 	<string>HTMLElement</string>
+	<key>KTPluginPriority</key>
+	<integer>9</integer>
 	<key>KTPluginUntitledName</key>
-	<string>Untitled HTML Element</string>
+	<string>Raw HTML</string>
 	<key>KTTemplateName</key>
 	<string>HTMLElementTemplate</string>
 	<key>NSPrincipalClass</key>
