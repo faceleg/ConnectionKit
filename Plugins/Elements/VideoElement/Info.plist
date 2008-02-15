@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -20,6 +20,26 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
+	<key>KTCSSClassName</key>
+	<string>Movie</string>
+	<key>KTElementAllowsIntroduction</key>
+	<true/>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTHelpAnchor</key>
+	<string>Movie</string>
+	<key>KTMinimumAppVersion</key>
+	<string>1.5</string>
+	<key>KTPageName</key>
+	<string>Video Page</string>
+	<key>KTPageShowSidebar</key>
+	<false/>
+	<key>KTPageletName</key>
+	<string>Video Pagelet</string>
+	<key>KTPluginDescription</key>
+	<string>Play video, audio and Flash files</string>
 	<key>KTPluginIconName</key>
 	<string>Video.icns</string>
 	<key>KTPluginInitialProperties</key>
@@ -29,12 +49,18 @@
 		<key>movieSource</key>
 		<integer>0</integer>
 	</dict>
+	<key>KTPluginName</key>
+	<string>Video</string>
 	<key>KTPluginNibFile</key>
 	<string>VideoElement</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
 	<key>KTPluginResourcesNeeded</key>
 	<array>
 		<string>AC_QuickTime.js</string>
 	</array>
+	<key>KTPluginUntitledName</key>
+	<string>Video</string>
 	<key>KTTemplateName</key>
 	<string>VideoElementTemplate</string>
 	<key>NSPrincipalClass</key>

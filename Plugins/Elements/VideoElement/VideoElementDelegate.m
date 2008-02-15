@@ -518,7 +518,7 @@ After deflating starting at byte 8, you get:
 	NSSize result = [self movieSize];		// start out with 100%
 									// Scale down if too wide to fit
 	int maxWidth = 0;
-	id container = [[self delegateOwner] container];
+	id container = [self delegateOwner];
 	if ( [container isKindOfClass:[KTPagelet class]] )
 	{
 		maxWidth = 200;
@@ -857,5 +857,25 @@ After deflating starting at byte 8, you get:
 //	return [NSArray arrayWithObject:@"VideoElement"];
 //}
 
+
+#pragma mark -
+#pragma mark Page Thumbnail
+
+/*	Whenever the user tries to "clear" the thumbnail image, we'll instead reset it to match the page content.
+ */
+- (BOOL)pageShouldClearThumbnail:(KTPage *)page
+{
+	KTMediaContainer *posterImage = [[self delegateOwner] valueForKeyPath:@"posterImage"];
+	[[self delegateOwner] setThumbnail:posterImage];
+	
+	return NO;
+}
+
+#pragma mark -
+#pragma mark Summaries
+
+- (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
+
+- (BOOL)summaryHTMLIsEditable { return YES; }
 
 @end
