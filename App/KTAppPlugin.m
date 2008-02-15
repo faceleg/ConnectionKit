@@ -23,14 +23,22 @@
 
 + (id)pluginWithPath:(NSString *)path
 {
-	path = [path stringByStandardizingPath];
-	KTAppPlugin *result = [self pluginForPath:path];
+	KTAppPlugin *result = nil;
 	
-	if (!result)
+	path = [path stringByStandardizingPath];
+	KTAppPlugin *plugin = [self pluginForPath:path];
+	
+	if (!plugin)
 	{
 		NSBundle *bundle = [NSBundle bundleWithPath:path];
 		Class pluginClass = [self registeredPluginClassForFileExtension:[path pathExtension]];
-		result = [[[pluginClass alloc] initWithBundle:bundle] autorelease];
+		plugin = [[[pluginClass alloc] initWithBundle:bundle] autorelease];
+	}
+	
+	// If the plugin does not match the class requested, return nil
+	if ([plugin isKindOfClass:self])
+	{
+		result = plugin;
 	}
 	
 	return result;
