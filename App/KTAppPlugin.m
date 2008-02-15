@@ -12,6 +12,7 @@
 @interface KTAppPlugin (Private)
 + (KTAppPlugin *)pluginForPath:(NSString *)path;
 + (void)registerPlugin:(KTAppPlugin *)plugin forPath:(NSString *)path;
++ (NSMutableDictionary *)_pluginsByPath;
 @end
 
 
@@ -51,18 +52,28 @@
 
 #pragma mark support
 
-static NSMutableDictionary *sPluginsByPath;
-
 + (KTAppPlugin *)pluginForPath:(NSString *)path
 {
-	KTAppPlugin *result = [sPluginsByPath objectForKey:path];
+	KTAppPlugin *result = [[self _pluginsByPath] objectForKey:path];
 	return result;
 }
 
 + (void)registerPlugin:(KTAppPlugin *)plugin forPath:(NSString *)path
 {
 	NSParameterAssert(plugin);
-	[sPluginsByPath setObject:plugin forKey:path];
+	[[self _pluginsByPath] setObject:plugin forKey:path];
+}
+
++ (NSMutableDictionary *)_pluginsByPath
+{
+	static NSMutableDictionary *result = nil;
+	
+	if (!result)
+	{
+		result = [[NSMutableDictionary alloc] init];
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -94,16 +105,16 @@ static NSMutableDictionary *sPluginsByPath;
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void)initialize
-{
-	sPluginsByPath = [[NSMutableDictionary alloc] init];
-}
-
 - (id)initWithBundle:(NSBundle *)bundle
 {
     self = [super init];
-    if ( self ) {
+    
+	if (self)
+	{
         myBundle = [bundle retain];
+		
+		// Register the path
+		[KTAppPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByStandardizingPath]];
     }
 
     return self;
