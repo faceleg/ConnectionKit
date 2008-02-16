@@ -124,6 +124,8 @@
 
 + (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
 {
+	NSParameterAssert([aBundle bundleIdentifier]);
+	
 	id root = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
 											inManagedObjectContext:[aDocument managedObjectContext]];
 	
@@ -142,8 +144,8 @@
 
 + (KTPage *)pageWithParent:(KTPage *)aParent bundle:(NSBundle *)aBundle insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {
-	NSParameterAssert(aParent);
-	
+	NSParameterAssert(aParent);		NSParameterAssert([aBundle bundleIdentifier]);
+
 	// Create the page
 	id page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:aContext];
 	[page setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];

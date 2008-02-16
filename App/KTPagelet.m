@@ -55,7 +55,7 @@
  */
 + (KTPagelet *)pageletWithPage:(KTPage *)page plugin:(KTElementPlugin *)plugin;
 {	
-	NSParameterAssert(page);
+	NSParameterAssert(page);	NSParameterAssert(plugin);
 	
 	// Create the pagelet
 	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
