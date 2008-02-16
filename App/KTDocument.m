@@ -240,9 +240,11 @@
 		if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
 		{
 			KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
-			KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
-			
-			[pagelet setPrefersBottom:YES];
+			if (badgePlugin)
+			{
+				KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
+				[pagelet setPrefersBottom:YES];
+			}
 		}
 		
 		NSString *defaultRootIndexIdentifier = [defaults stringForKey:@"DefaultRootIndexBundleIdentifier"];
