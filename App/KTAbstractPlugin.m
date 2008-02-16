@@ -147,15 +147,6 @@
 }
 
 #pragma mark -
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-    [myPlugin release];
-	[super dealloc];
-}
-
-#pragma mark -
 #pragma mark Delegate / Plugin
 
 - (id)delegate { return myDelegate; }
@@ -164,13 +155,18 @@
 
 - (KTElementPlugin *)plugin
 {
-	if (!myPlugin)
+	KTElementPlugin *result = [self wrappedValueForKey:@"plugin"];
+	
+	if (!result)
 	{
-		myPlugin = [[KTElementPlugin pluginWithIdentifier:[self wrappedValueForKey:@"pluginIdentifier"]] retain];
+		result = [KTElementPlugin pluginWithIdentifier:[self valueForKey:@"pluginIdentifier"]];
+		[self setPrimitiveValue:result forKey:@"plugin"];
 	}
 	
-	return myPlugin;
+	return result;
 }
+
+- (void)setPlugin:(KTAbstractPlugin *)plugin { OBASSERT_NOT_REACHED("Please don't call -setPlugin:"); }
 
 /*	Whenever setting a value in the extensible properties inform our delegate if they're interested
  */

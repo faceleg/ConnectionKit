@@ -31,8 +31,6 @@
 {
     // optional delegate
 	id					myDelegate;
-	
-	KTElementPlugin		*myPlugin;
 }
 
 #pragma mark awake
