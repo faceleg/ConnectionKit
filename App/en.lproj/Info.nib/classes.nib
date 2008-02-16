@@ -6,19 +6,6 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>KTControllerProxy</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myContentObject</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSObjectController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>KTPathInfoField</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>

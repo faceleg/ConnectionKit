@@ -179,10 +179,18 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			[thisItem setRepresentedObject:code];
 			theIndex++;
 		}
-	}		
+	}
+	
+	
+	/*/ Bind the page controller to its proxy object
+	[oPageController bind:@"proxyObject"
+				 toObject:oInfoWindowController
+			  withKeyPath:@"selection.associatedDocument.windowController.siteOutlineController"
+				  options:nil];
+	*/
 		
 	[oPageController addObserver:self
-		   forKeyPath:@"selection.indexPresetDictionary"
+		   forKeyPath:@"selection.selection.indexPresetDictionary"
 			  options:NSKeyValueObservingOptionNew
 			  context:nil];
 	
@@ -199,24 +207,24 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	
 	[mySmallDatePicker bind:@"value" 
                    toObject:oPageController 
-                withKeyPath:@"selection.editableTimestamp" 
+                withKeyPath:@"selection.selection.editableTimestamp" 
                     options:nil];
 	
 	[mySmallDatePicker bind:@"enabled" 
                    toObject:oPageController 
-                withKeyPath:@"selection.master.timestampType" 
+                withKeyPath:@"selection.selection.master.timestampType" 
                     options:nil];
 	
 	[mySmallDatePicker bind:@"enabled2" 
                    toObject:oPageController 
-                withKeyPath:@"selection.includeTimestamp" 
+                withKeyPath:@"selection.selection.includeTimestamp" 
                     options:nil];
 	
 	
 	// Page menu title placeholder binding
 	[oPageMenuTitleField bind:@"placeholderValue"
 					 toObject:oPageController
-				  withKeyPath:@"selection.titleText"
+				  withKeyPath:@"selection.selection.titleText"
 					  options:nil];
 	
 	
@@ -360,7 +368,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[oPageController removeObserver:self forKeyPath:@"selection.indexPresetDictionary"];
+	[oPageController removeObserver:self forKeyPath:@"selection.selection.indexPresetDictionary"];
     
     if ( nil != mySmallDatePicker )
     {
