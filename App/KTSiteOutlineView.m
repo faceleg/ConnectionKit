@@ -122,7 +122,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 		
 		// add Edit Raw HTML...
 		if ( ((nil == gRegistrationString) || gIsPro) 
-			 && [[[item bundle] bundleIdentifier] isEqualToString:@"sandvox.HTMLPage"] )
+			 && [[[item bundle] bundleIdentifier] isEqualToString:@"sandvox.HTMLElement"] )
 		{
 			// --
 			[menu addItem:[NSMenuItem separatorItem]];

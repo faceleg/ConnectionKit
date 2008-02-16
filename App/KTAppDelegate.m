@@ -264,8 +264,8 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		@"sandvox.ArchiveIndex",	@"DefaultArchivesIndexBundleIdentifier",
 		@"sandvox.GeneralIndex",	@"DefaultIndexBundleIdentifier",
 		@"sandvox.RichTextElement",		@"DefaultRootPageBundleIdentifier",
-		@"sandvox.BadgePagelet",	@"DefaultBadgeBundleIdentifier",		// can be empty
-		@"sandvox.RSSBadgePagelet",	@"DefaultRSSBadgeBundleIdentifier",		// can be empty
+		@"sandvox.BadgeElement",	@"DefaultBadgeBundleIdentifier",		// can be empty
+		@"sandvox.RSSBadgeElement",	@"DefaultRSSBadgeBundleIdentifier",		// can be empty
 		@"index.xml", @"RSSFileName",
 		@"index", @"htmlIndexBaseName",
 		@"archives", @"archivesBaseName",

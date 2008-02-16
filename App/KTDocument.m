@@ -847,13 +847,13 @@
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
 		{
-			if ([@"sandvox.HTMLPagelet" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
+			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
 			{
 				return YES;
 			}
 		}
 		KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLPage" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
+		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
 		{
 			return YES;
 		}
@@ -911,13 +911,13 @@
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
 		{
-			if ([@"sandvox.HTMLPagelet" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
+			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
 			{
 				return YES;
 			}
 		}
 		KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLPage" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
+		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
 		{
 			return YES;
 		}
@@ -1237,7 +1237,7 @@
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
 		{
-			if ([@"sandvox.HTMLPagelet" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
+			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
 			{
 				htmlElement = selPagelet;
 			}
@@ -1245,7 +1245,7 @@
 		if (nil == htmlElement)
 		{
 			KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
-			if ([@"sandvox.HTMLPage" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
+			if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
 			{
 				htmlElement = selPage;
 			}
