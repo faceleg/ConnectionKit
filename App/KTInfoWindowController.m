@@ -597,40 +597,13 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	/// in some cases, selectedItem == [self selectedPage]
 	[selectedItem retain]; // don't lose this!
 	
-/*
-	if ( [selectedItem isManagedObject] )
-	{
-		LOG((@"calling setupViewStackFor: %@", [selectedItem managedObjectDescription]));
-	}
-	else
-	{
-		LOG((@"calling setupViewStackFor: %@", [selectedItem description]));
-	}
-*/	
-//	[self setCurrentlyBoundControllers:[NSMutableSet set]];		// start with a new set of bound controllers
-	(void) [self window];	// make sure window is loaded
+	[self window];	// make sure window is loaded
 
-	if (nil == myAssociatedDocument)
-	{
-		return;
-	}
-	// First, set selected page -- it may not be the same as the selected item
-	KTPage *selPage = [[[myAssociatedDocument windowController] siteOutlineController] selectedPage];
+	if (!myAssociatedDocument) return;
 	
-	KTPage *level = [myAssociatedDocument root];
-#ifdef DEBUG
-	// DEVELOPMENT ONLY AT THIS POINT, NOT MAKING LIVE
-	if  (aWantLevel)
-	{
-		level = selPage;	// option key causes us to actually choose the PAGE not the root
-		[oTabSegmentedControl setLabel:NSLocalizedString(@"Level",@"Segment Label, indicating that we are inspecting the current level, not the whole site") forSegment:SEGMENT_SITE];
-	}
-	else
-	{
-		[oTabSegmentedControl setLabel:NSLocalizedString(@"Site",@"Segment Label, indicating that we are inspecting the whole site") forSegment:SEGMENT_SITE];
-	}
-#endif
-	[self setSelectedLevel:level];
+	
+	
+	[self setSelectedLevel:[myAssociatedDocument root]];
 	
 	// Manually synchronize the language popup and field
 	NSString *languageCode = [[[self selectedLevel] master] valueForKey:@"language"];
@@ -668,10 +641,8 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 			[self setPageInspectorView:nil];
 			[self setSelectionInspectorView:nil];
 			
-			[oTabSegmentedControl setEnabled:NO forSegment:SEGMENT_PAGE];
 			[oTabSegmentedControl setLabel:NSLocalizedString(@"Selection",@"Segment Label") forSegment:SEGMENT_SELECTION];
 			[oTabSegmentedControl setEnabled:NO forSegment:SEGMENT_SELECTION];
-			[self setSelectedSegmentIndex:SEGMENT_SITE];	// NO PAGE, select site!
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPage class]])	// was the selected item the page?
 		{
@@ -803,22 +774,21 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 		return result;
 	}
 		
-	if (![[self siteOutlineController] selectedPage] )
+	switch ([oTabSegmentedControl selectedSegment])
 	{
-		[result addObject:oSiteView];	// no selection; all we can have is site!
-	}
-	else
-	{
-		switch ([oTabSegmentedControl selectedSegment])
+		case SEGMENT_SITE:
+			[result addObject:oSiteView];
+			[result addObject:oHelpBottomView];
+			break;
+		case SEGMENT_PAGE:
 		{
-			case SEGMENT_SITE:
-				[result addObject:oSiteView];
-				[result addObject:oHelpBottomView];
-				break;
-			case SEGMENT_PAGE:
+			[result addObject:oPageView];
+			
+			// If only a single page is selected, show other more specialised information
+			KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+			if (selectedPage)
 			{
-				[result addObject:oPageView];
-				if ([[[self siteOutlineController] selectedPage] isCollection])
+				if ([selectedPage isCollection])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oCollectionView];
@@ -828,48 +798,53 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 						[result addObject:oCustomIndexView];
 					}
 				}
-				if ((![myCurrentSelection isKindOfClass:[KTPseudoElement class]]) && nil != myPageInspectorView && ![[[self siteOutlineController] selectedPage] separateInspectorSegment])
+				if (![myCurrentSelection isKindOfClass:[KTPseudoElement class]] &&
+					myPageInspectorView &&
+					![selectedPage separateInspectorSegment])
 				{
 					[result addObject:oDividerView];
 					[result addObject:oPageDetailsHeaderView];		// shows page type name
 					[result addObject:myPageInspectorView];
 				}
-				[result addObject:oHelpBottomView];
-				break;
 			}
-			case SEGMENT_SELECTION:
+			
+			[result addObject:oHelpBottomView];
+			
+			break;
+		}
+		case SEGMENT_SELECTION:
+		{
+			if ([myCurrentSelection isKindOfClass:[KTPagelet class]])
 			{
-				if ([myCurrentSelection isKindOfClass:[KTPagelet class]])
+				[result addObject:oPageletGeneralView];
+				if (nil != mySelectionInspectorView)
 				{
-					[result addObject:oPageletGeneralView];
-					if (nil != mySelectionInspectorView)
-					{
-						[result addObject:oDividerView];
-						[result addObject:oPageletDetailsHeaderView];		// shows pagelet type name
-						[result addObject:mySelectionInspectorView];
-					}
+					[result addObject:oDividerView];
+					[result addObject:oPageletDetailsHeaderView];		// shows pagelet type name
+					[result addObject:mySelectionInspectorView];
 				}
-				else	// page or pseudo element
-				{
-					// djw
-					if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
-					{
-						[result addObject:mySelectionInspectorView];
-					}
-					else if (nil != myPageInspectorView && [[[self siteOutlineController] selectedPage] separateInspectorSegment])
-					{
-						[result addObject:myPageInspectorView];
-					}
-					else
-					{
-						[result addObject:oNothingView];
-					}
-				}
-				[result addObject:oHelpBottomView];
-				break;
 			}
+			else	// page or pseudo element
+			{
+				// djw
+				if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
+				{
+					[result addObject:mySelectionInspectorView];
+				}
+				else if (nil != myPageInspectorView && [[[self siteOutlineController] selectedPage] separateInspectorSegment])
+				{
+					[result addObject:myPageInspectorView];
+				}
+				else
+				{
+					[result addObject:oNothingView];
+				}
+			}
+			[result addObject:oHelpBottomView];
+			break;
 		}
 	}
+	
 	return result;
 }
 
