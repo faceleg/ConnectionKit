@@ -617,8 +617,9 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	[oLanguagePopup selectItemAtIndex:theIndex];
 	
 	
-	if ((selectedItem != myCurrentSelection)
-		 || ([selectedItem isKindOfClass:[KTPseudoElement class]]) )
+	if (selectedItem != myCurrentSelection ||
+		[selectedItem isKindOfClass:[KTPseudoElement class]] ||
+		[[[self siteOutlineController] selectedIndexes] count] >= 2)
 	{
 //		NSLog(@"setupViewStackFor: %@", 
 //			  ( [selectedItem respondsToSelector:@selector(entity)] 
