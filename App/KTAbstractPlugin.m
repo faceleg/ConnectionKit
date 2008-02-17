@@ -212,9 +212,9 @@
 /*	These 2 methods allow us to store and retrieve managed object even though they dont't conform to <NSCoding>
  *	Instead though they must conform to the KTArchivableManagedObject protocol
  */
-- (NSMutableDictionary *)unarchiveExtensiblePropertiesDictionary:(NSData *)propertiesData
+- (NSMutableDictionary *)unarchiveExtensibleProperties:(NSData *)propertiesData
 {
-	NSMutableDictionary *result = [super unarchiveExtensiblePropertiesDictionary:propertiesData];
+	NSMutableDictionary *result = [super unarchiveExtensibleProperties:propertiesData];
 	
 	// Go through all dictionary entries and swap any KTArchivedManagedObjects for the real thing
 	NSEnumerator *keysEnumerator= [[NSDictionary dictionaryWithDictionary:result] keyEnumerator];
@@ -233,7 +233,7 @@
 	return result;
 }
 
-- (NSData *)archiveExtensiblePropertiesDictionary:(NSDictionary *)properties
+- (NSData *)archiveExtensibleProperties:(NSDictionary *)properties
 {
 	// Replace any managed objects conforming to KTArchivableManagedObject with KTArchivedManagedObject
 	NSMutableDictionary *correctedProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
@@ -253,7 +253,7 @@
 		}
 	}
 	
-	NSData *result = [super archiveExtensiblePropertiesDictionary:correctedProperties];
+	NSData *result = [super archiveExtensibleProperties:correctedProperties];
 	return result;
 }
 

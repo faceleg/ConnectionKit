@@ -86,7 +86,7 @@
 - (id <NSCoding>)pasteboardRepresentation
 {
 	// Start with our extensible properties
-	NSDictionary *extensibleProperties = [self extensiblePropertyValues];
+	NSDictionary *extensibleProperties = [self extensibleProperties];
 	NSMutableDictionary *buffer = [NSMutableDictionary dictionaryWithDictionary:extensibleProperties];
 	
 	
