@@ -36,6 +36,8 @@
 
 #import "LinkPageDelegate.h"
 
+#import <KTHTMLParser.h>
+
 //#import <ThirdParty.h>
 
 
@@ -190,6 +192,51 @@
 {
 	return [self absolutePathAllowingIndexPage:aCanHaveIndexPage];
 }
+
+#pragma mark -
+#pragma mark Summary
+
++ (NSString *)iFrameTemplateHTML
+{
+	static NSString *result;
+	
+	if (!result)
+	{
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSString *templatePath = [bundle pathForResource:@"IFrameTemplate" ofType:@"html"];
+		result = [[NSString alloc] initWithContentsOfFile:templatePath];
+	}
+	
+	return result;
+}
+
+- (NSString *)summary
+{
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:[[self class] iFrameTemplateHTML]
+														component:[self delegateOwner]];
+	
+	[parser setHTMLGenerationPurpose:kGeneratingRemote];
+	NSString *result = [parser parseTemplate];
+	[parser release];
+	
+	return result;
+}
+
+/*	A summary is only available if using page-witin-page
+ */
+- (NSString *)summaryHTMLKeyPath
+{
+	NSString *result = nil;
+	
+	if ([[self delegateOwner] integerForKey:@"linkType"] == iframeLink)
+	{
+		result = @"delegate.summary";
+	}
+	
+	return result;
+}
+
+- (BOOL)summaryHTMLIsEditable { return NO; }
 
 #pragma mark -
 #pragma mark Support

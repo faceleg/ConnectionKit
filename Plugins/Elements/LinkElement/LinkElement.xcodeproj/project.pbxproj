@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27AD51450D69FDC000883550 /* IFrameTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27AD51440D69FDC000883550 /* IFrameTemplate.html */; };
 		3CA901810D63D30C00815310 /* LinkPageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA901800D63D30C00815310 /* LinkPageDelegate.m */; };
 		3CA901860D63D31900815310 /* LinkPageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901840D63D31900815310 /* LinkPageTemplate.html */; };
 		3CA901870D63D31900815310 /* url.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901850D63D31900815310 /* url.icns */; };
@@ -20,6 +21,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27AD51440D69FDC000883550 /* IFrameTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = IFrameTemplate.html; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* LinkElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkElement_Prefix.pch; sourceTree = "<group>"; };
 		3CA9017F0D63D30C00815310 /* LinkPageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkPageDelegate.h; sourceTree = "<group>"; };
 		3CA901800D63D30C00815310 /* LinkPageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkPageDelegate.m; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				3CA901850D63D31900815310 /* url.icns */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9019B0D63D38800815310 /* License.rtf */,
+				27AD51440D69FDC000883550 /* IFrameTemplate.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				3CA901870D63D31900815310 /* url.icns in Resources */,
 				3CA9018B0D63D32400815310 /* LinkPage.nib in Resources */,
 				3CA9019C0D63D38800815310 /* License.rtf in Resources */,
+				27AD51450D69FDC000883550 /* IFrameTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
