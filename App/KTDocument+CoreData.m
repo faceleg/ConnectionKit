@@ -351,6 +351,7 @@
 					[[managedObjectContext undoManager] enableUndoRegistration];
 				}
 				
+				
 				// Write out the last QuickLook thumbnail
 				if (myQuickLookthumbnailPNGData)
 				{
@@ -358,6 +359,18 @@
 					 [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"Thumbnail.png"]
 												  atomically:NO];
 				}
+				
+				
+				// Store QuickLook preview
+				KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+				[parser setHTMLGenerationPurpose:1];
+				NSString *previewHTML = [parser parseTemplate];
+				[parser release];
+				
+				NSString *previewPath =
+					[[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+				[previewHTML writeToFile:previewPath atomically:NO];
+				
 				
 				// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
 				// so that saveDocumentAs: can find us again until the new context is fully ready
