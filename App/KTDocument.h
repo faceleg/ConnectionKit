@@ -29,7 +29,14 @@
 
 
 // publishing mode
-enum { kGeneratingPreview = 0, kGeneratingLocal, kGeneratingRemote, kGeneratingRemoteExport };
+typedef enum {
+	kGeneratingPreview = 0,
+	kGeneratingLocal,
+	kGeneratingRemote,
+	kGeneratingRemoteExport,
+	kGeneratingQuickLookPreview = 10,
+} KTHTMLGenerationPurpose;
+
 
 // Spotlight metadata keys
 extern NSString *kKTMetadataAppVersionKey;

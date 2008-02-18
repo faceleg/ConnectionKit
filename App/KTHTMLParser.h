@@ -33,7 +33,7 @@
 	KTHTMLParserMasterCache	*myCache;
 	id						myDelegate;
 	KTPage					*myCurrentPage;
-	int						myHTMLGenerationPurpose;
+	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
 	BOOL					myGenerateArchives;
 	BOOL					myUseAbsoluteMediaPaths;
 	KTHTMLParser			*myParentParser;	// Weak ref
@@ -66,8 +66,8 @@
 - (KTPage *)currentPage;
 - (void)setCurrentPage:(KTPage *)page;
 
-- (int)HTMLGenerationPurpose;
-- (void)setHTMLGenerationPurpose:(int)purpose;
+- (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
+- (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
 
 - (BOOL)useAbsoluteMediaPaths;
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag;

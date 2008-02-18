@@ -224,9 +224,9 @@ static unsigned sLastParserID;
  *	Instead of limiting HTML generating to a single mode at a time, we tell each parser what it is generating the HTML for.
  *	
  */
-- (int)HTMLGenerationPurpose { return myHTMLGenerationPurpose; }
+- (KTHTMLGenerationPurpose)HTMLGenerationPurpose { return myHTMLGenerationPurpose; }
 
-- (void)setHTMLGenerationPurpose:(int)purpose { myHTMLGenerationPurpose = purpose; }
+- (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose { myHTMLGenerationPurpose = purpose; }
 
 - (BOOL)generateArchives { return myGenerateArchives; }
 
@@ -1371,13 +1371,17 @@ static unsigned sLastParserID;
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result;
-	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+	switch ([self HTMLGenerationPurpose])
 	{
-		result = [targetPage previewPath];
-	}
-	else
-	{
-		result = [targetPage publishedPathRelativeToPage:[self currentPage]];
+		case kGeneratingPreview:
+			result = [targetPage previewPath];
+			break;
+		case kGeneratingQuickLookPreview:
+			result= @"";
+			break;
+		default:
+			result = [targetPage publishedPathRelativeToPage:[self currentPage]];
+			break;
 	}
 	
 	return result;

@@ -363,7 +363,7 @@
 				
 				// Store QuickLook preview
 				KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-				[parser setHTMLGenerationPurpose:1];
+				[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
 				NSString *previewHTML = [parser parseTemplate];
 				[parser release];
 				
