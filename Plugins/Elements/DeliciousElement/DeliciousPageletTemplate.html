@@ -1,7 +1,3 @@
-<!-- del.icio.us Pagelet -->
-[[if introductionHTML|editing]]
-<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
-[[endif]]
 [[if deliciousID]]
 
 [[if document.publishingMode||document.liveDataFeeds]]
@@ -95,5 +91,3 @@ document.getElementById('delicious-container-[[=uniqueID]]').appendChild(dl)
 [[else]]
 [[if document.publishingMode]][[else2]]<p style="text-align:center;">[['(Please set your del.icio.us ID using the Pagelet Inspector)]]</p>[[endif2]]
 [[endif]]
-<!-- /del.icio.us Pagelet -->
-

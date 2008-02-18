@@ -1,7 +1,3 @@
-<!-- PageCounterPagelet -->
-[[if introductionHTML|editing]]
-<div[[idClass entity:Pagelet property:introductionHTML flags:"block optional" id:uniqueID class:pageletIntroduction]]>[[=introductionHTML]]</div>
-[[endif]]
 <div class="page_counter" style="text-align: center;" id="pc-[[=uniqueID]]">
 [[if document.publishingMode]]
 <script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&CurrentPage.url]]"></script>
@@ -57,4 +53,3 @@ document.getElementById("pc-[[=uniqueID]]").appendChild(commentNode);
 [[endif]]
 </noscript>
 </div>
-<!-- /PageCounterPagelet -->
