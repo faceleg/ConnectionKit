@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27EF5C320D6B78E90024575B /* NSCharacterSet+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C300D6B78E90024575B /* NSCharacterSet+QuickLook.h */; };
+		27EF5C330D6B78E90024575B /* NSCharacterSet+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C310D6B78E90024575B /* NSCharacterSet+QuickLook.m */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		61E3BCFB0870B4F2002186A0 /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.c */; };
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
@@ -28,6 +30,8 @@
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08FB77B6FE84183AC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		27EF5C300D6B78E90024575B /* NSCharacterSet+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCharacterSet+QuickLook.h"; sourceTree = "<group>"; };
+		27EF5C310D6B78E90024575B /* NSCharacterSet+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCharacterSet+QuickLook.m"; sourceTree = "<group>"; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* SandvoxQuickLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SandvoxQuickLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +105,8 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				27EF5C300D6B78E90024575B /* NSCharacterSet+QuickLook.h */,
+				27EF5C310D6B78E90024575B /* NSCharacterSet+QuickLook.m */,
 				61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.c */,
 				2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */,
 				08FB77B6FE84183AC02AAC07 /* main.c */,
@@ -134,6 +140,7 @@
 			files = (
 				CE56AB7E0CFF2B970036FA3B /* KTUtilitiesForQuickLook.h in Headers */,
 				CE56AB980CFF30950036FA3B /* NSBundle+QuickLook.h in Headers */,
+				27EF5C320D6B78E90024575B /* NSCharacterSet+QuickLook.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +216,7 @@
 				CE31433E0CFE41D900696F81 /* NSString+QuickLook.m in Sources */,
 				CE56AB7F0CFF2B970036FA3B /* KTUtilitiesForQuickLook.m in Sources */,
 				CE56AB990CFF30950036FA3B /* NSBundle+QuickLook.m in Sources */,
+				27EF5C330D6B78E90024575B /* NSCharacterSet+QuickLook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

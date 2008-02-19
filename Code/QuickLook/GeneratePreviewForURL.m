@@ -5,6 +5,8 @@
 #import <QuickLook/QuickLook.h>
 #import <Quartz/Quartz.h>
 #import "KTUtilitiesForQuickLook.h"
+
+#import "NSCharacterSet+QuickLook.h"
 #import "NSString+QuickLook.h"
 
 
@@ -20,7 +22,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
 
 	NSString *docPath = [((NSURL *)url) path];
-	NSString *sitePath = [docPath stringByAppendingPathComponent:@"Site"];
+	//NSString *sitePath = [docPath stringByAppendingPathComponent:@"Site"];
 	
 	NSString *previewPath = [[docPath stringByAppendingPathComponent:@"QuickLook"] stringByAppendingPathComponent:@"preview.html"];
 	if (![[NSFileManager defaultManager] fileExistsAtPath:previewPath])
@@ -34,22 +36,73 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	}
 	NSData *htmlData = [NSData dataWithContentsOfFile:previewPath];
 	NSString *htmlString = [NSString stringWithHTMLData:htmlData];
-	NSMutableString *buf = [NSMutableString stringWithString:htmlString];
+	NSMutableString *buffer = [NSMutableString stringWithCapacity:[htmlString length]];
 	
+	/*
 	NSString *basePathString = [NSString stringWithFormat:@"<head><base href=\"%@\" />", 
 								[[NSURL fileURLWithPath:sitePath] absoluteString]];
-	(void) [buf replaceOccurrencesOfString:@"<head>" withString:basePathString options:NSCaseInsensitiveSearch range:NSMakeRange(0, [buf length])];
+	(void) [buffer replaceOccurrencesOfString:@"<head>" withString:basePathString options:NSCaseInsensitiveSearch range:NSMakeRange(0, [buffer length])];
+	*/
 	
 	
+	// Search for <!svxdata> pseudo-tags
+	NSScanner *scanner = [[NSScanner alloc] initWithString:htmlString];
+	NSString *aString;
+	NSString *aURIScheme;	NSString *aURIPath;
+	NSCharacterSet *tagEndCharactersSet = [NSCharacterSet svxDataPseudoTagEndCharacterSet];
+	
+	while (![scanner isAtEnd])
+	{
+		// Look for the tag
+		[scanner scanUpToString:@"<!svxdata" intoString:&aString];
+		[buffer appendString:aString];
+		
+		if ([scanner isAtEnd]) break;
+		
+		// Scan up to the URL information
+		[scanner scanString:@"<!svxdata" intoString:NULL];
+		[scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:NULL];
+		
+		// Scan the URI info
+		[scanner scanUpToString:@":" intoString:&aURIScheme];
+		[scanner setScanLocation:([scanner scanLocation] + 1)];
+		[scanner scanUpToCharactersFromSet:tagEndCharactersSet intoString:&aURIPath];
+		
+		// Process the URI
+		if ([aURIScheme isEqualToString:@"design"])
+		{
+			NSArray *pathComponents = [aURIPath pathComponents];
+			
+			NSString *designIdentifier = [pathComponents objectAtIndex:0];
+			NSBundle *designBundle = [NSBundle bundleWithIdentifier:designIdentifier];
+			if (designBundle)
+			{
+				NSArray *subPathComponents = [pathComponents subarrayWithRange:NSMakeRange(1, [pathComponents count] - 1)];
+				NSString *subPath = [NSString pathWithComponents:subPathComponents];
+				
+				NSString *path = [[designBundle bundlePath] stringByAppendingPathComponent:subPath];
+				[buffer appendString:[NSURL fileURLWithPath:path]];
+			}
+		}
+		
+		// Make sure we're ready to go round the loop again
+		[scanner scanUpToString:@">" intoString:NULL];
+		[scanner scanString:@">" intoString:NULL];
+	}
+	
+	[scanner release];
+	
+	
+	/*
 	// To show the substituted banner, we're going to have to write out the CSS to uplooad, and use that instead of the generic CSS.
 	// We can probably still use the generic CSS resources, but we're not going to get 
 	
 	// Intercept CSS paths and try to find the right design
 	// e.g. <link rel="stylesheet" type="text/css" href="sandvox_EarthandSky/main.css" title="Earth &amp; Sky" />
-	NSRange whereStyle = [buf rangeBetweenString:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"" andString:@"/"];
+	NSRange whereStyle = [buffer rangeBetweenString:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"" andString:@"/"];
 	if (NSNotFound != whereStyle.location)
 	{
-		NSString *styleSheetCondensed = [buf substringWithRange:whereStyle];
+		NSString *styleSheetCondensed = [buffer substringWithRange:whereStyle];
 		NSLog(@"style sheet = '%@'", styleSheetCondensed);
 
 		NSDictionary *designBundles = [KTUtilitiesForQuickLook pluginsWithExtension:@"svxDesign" sisterDirectory:@"Designs"];
@@ -78,17 +131,17 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 
 			if ([condensed isEqualToString:styleSheetCondensed])
 			{
-				[buf replaceCharactersInRange:whereStyle withString:[designBundle bundlePath]];
+				[buffer replaceCharactersInRange:whereStyle withString:[designBundle bundlePath]];
 				
 				break;		// found it -- done
 			}
 		}
 	}
-
+	*/
 	
 	// Intercept remote images and ... replace with a gray image or something?
-	buf = (NSMutableString *) [buf replaceAllTextBetweenString:@"src=\"http://" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
-	[buf replaceOccurrencesOfString:@"src=\"http://" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
+	buffer = (NSMutableString *) [buffer replaceAllTextBetweenString:@"src=\"http://" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
+	[buffer replaceOccurrencesOfString:@"src=\"http://" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
 	
 	
 	// Intercept media that doesn't exist, and find the real deals?
@@ -101,12 +154,12 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	// I think what we need to do is to use dojo to create a sticky note.  I'll have to research that!
 	
 	
-	[buf replaceOccurrencesOfString:@"</body>" withString:stickyHTML options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
+	[buffer replaceOccurrencesOfString:@"</body>" withString:stickyHTML options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
 	
 	// Intercept Resources.... FOR NOW EMPTY OUT
 	// TO DO -- MAYBE FIGURE OUT BETTER WAY TO ACTUALLY FIND THE RESOURCES?
-	buf = (NSMutableString *) [buf replaceAllTextBetweenString:@"src=\"_Resources/" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
-	[buf replaceOccurrencesOfString:@"src=\"_Resources/" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
+	buffer = (NSMutableString *) [buffer replaceAllTextBetweenString:@"src=\"_Resources/" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
+	[buffer replaceOccurrencesOfString:@"src=\"_Resources/" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
 
 
 	NSMutableDictionary *props=[[[NSMutableDictionary alloc] init] autorelease]; 
@@ -128,7 +181,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	[props setObject:[NSDictionary dictionaryWithObject:imgProps 
 		forKey:@"gray.gif"] forKey:(NSString *)kQLPreviewPropertyAttachmentsKey]; 
 
-	htmlData = [buf dataUsingEncoding:NSUTF8StringEncoding];
+	htmlData = [buffer dataUsingEncoding:NSUTF8StringEncoding];
 	
 	QLPreviewRequestSetDataRepresentation(preview,(CFDataRef)htmlData,kUTTypeHTML,(CFDictionaryRef)props); 
 
