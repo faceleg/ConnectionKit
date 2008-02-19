@@ -9,6 +9,8 @@
 #import "KTPage.h"
 
 #import "KTAppPlugin.h"
+#import "KTIndexPlugin.h"
+
 #import "NSXMLElement+Karelia.h"
 
 
@@ -112,7 +114,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	if (nil == myArchivesIndex)
 	{
 		NSString *identifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultArchivesIndexBundleIdentifier"];
-		NSBundle *indexBundle = [NSBundle bundleWithIdentifier:identifier];
+		NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:identifier] bundle];
 		Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
 		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:[KTAppPlugin pluginWithBundle:indexBundle]] autorelease];
 		[self setArchivesIndex:theIndex];

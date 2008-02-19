@@ -17,7 +17,10 @@
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
+
 #import "KTBundleManager.h"
+#import "KTIndexPlugin.h"
+
 #import <Sandvox.h>
 #import "KTDesignPickerView.h"
 #import "KTDocWindow.h"
@@ -885,7 +888,7 @@ from representedObject */
 	NSDictionary *presetDict= [sender representedObject];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 	
-	NSBundle *indexBundle = [NSBundle bundleWithIdentifier:identifier];
+	NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:identifier] bundle];
 	
     if ( nil != indexBundle && [indexBundle isMemberOfClass:[NSBundle class]] )
     {		
@@ -945,7 +948,7 @@ from representedObject */
 			[firstChildProperties removeObjectForKey:@"pluginIdentifier"];
 			
 			KTPage *firstChild = [KTPage pageWithParent:indexPage
-												 bundle:[NSBundle bundleWithIdentifier:firstChildIdentifier]
+												 bundle:[[KTElementPlugin pluginWithIdentifier:firstChildIdentifier] bundle]
 						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 			
 			NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
@@ -2275,7 +2278,7 @@ from representedObject */
 							if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
 							{
 								NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-								NSBundle *indexBundle = [NSBundle bundleWithIdentifier:defaultIdentifier];
+								NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:defaultIdentifier] bundle];
 								
 // FIXME: we should load up the properties from a KTPreset
 								

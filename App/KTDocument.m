@@ -40,8 +40,12 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
+
 #import "KTAppPlugin.h"
 #import "KTBundleManager.h"
+#import "KTElementPlugin.h"
+#import "KTIndexPlugin.h"
+
 #import "KTCodeInjectionController.h"
 #import <Sandvox.h>
 #import "KTDesignManager.h"
@@ -188,7 +192,7 @@
 		
 		// make a new root
 		NSString *defaultRootIdentifier = [defaults stringForKey:@"DefaultRootPageBundleIdentifier"];
-		NSBundle *defaultRootBundle = [NSBundle bundleWithIdentifier:defaultRootIdentifier];
+		NSBundle *defaultRootBundle = [[KTElementPlugin pluginWithIdentifier:defaultRootIdentifier] bundle];
 		NSString *assertMessage = [NSString stringWithFormat:@"Unable to load default root bundle: %@", defaultRootIdentifier];
 		NSAssert((nil != defaultRootBundle), assertMessage);
 		// POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
@@ -250,7 +254,7 @@
 		NSString *defaultRootIndexIdentifier = [defaults stringForKey:@"DefaultRootIndexBundleIdentifier"];
 		if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
 		{
-			NSBundle *bundle = [NSBundle bundleWithIdentifier:defaultRootIndexIdentifier];
+			NSBundle *bundle = [[KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier] bundle];
 			if (nil != bundle)
 			{
 				[root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
