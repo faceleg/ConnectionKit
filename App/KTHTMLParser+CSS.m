@@ -33,8 +33,15 @@
 	
 			
 	// Then the base design's CSS file.
-	[stylesheetLines addObject:[self linkToStylesheet:[[self cache] valueForKey:@"cssURLPath"]
-												title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities]]];
+	NSString *mainCSS;
+	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview) {
+		mainCSS = [NSString stringWithFormat:@"<!svxdata design:%@/main.css>", [[[[page master] design] bundle] bundleIdentifier]];
+	}
+	else {
+		mainCSS = [[self cache] valueForKey:@"cssURLPath"];
+	}
+	
+	[stylesheetLines addObject:[self linkToStylesheet:mainCSS title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities]]];
 	
 	
 	// Ask the page and it's components for extra CSS files required

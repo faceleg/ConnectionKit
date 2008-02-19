@@ -1391,7 +1391,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* SandvoxQuickLook */;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
 		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
