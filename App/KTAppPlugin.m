@@ -171,8 +171,15 @@
 		NSString *aPath;
 		while (aPath = [pathsEnumerator nextObject])
 		{
-			NSString *sandvoxPath = [aPath stringByAppendingPathComponent:[NSApplication applicationName]];
-			[buffer addObject:[sandvoxPath stringByAppendingPathComponent:@"PlugIns"]];
+			// It is very important to standardize paths here in order to catch symlinks
+			NSString *sandvoxPath = [[aPath stringByAppendingPathComponent:
+										[NSApplication applicationName]]
+											stringByResolvingSymlinksInPath];
+			
+			NSString *pluginsPath = [[sandvoxPath stringByAppendingPathComponent:@"PlugIns"]
+										stringByResolvingSymlinksInPath];
+			
+			[buffer addObject:pluginsPath];
 			[buffer addObject:sandvoxPath];
 		}
 		

@@ -32,12 +32,19 @@
 		NSString *aPath;
 		while (aPath = [pathsEnumerator nextObject])
 		{
-			NSString *sandvoxPath = [aPath stringByAppendingPathComponent:[NSApplication applicationName]];
-			[buffer addObject:[sandvoxPath stringByAppendingPathComponent:@"Designs"]];
+			// It is very important to standardize paths here in order to catch symlinks
+			NSString *sandvoxPath = [[aPath stringByAppendingPathComponent:
+										[NSApplication applicationName]]
+											stringByResolvingSymlinksInPath];
+			
+			NSString *pluginsPath = [[sandvoxPath stringByAppendingPathComponent:@"Designs"]
+										stringByResolvingSymlinksInPath];
+			
+			[buffer addObject:pluginsPath];
 			[buffer addObject:sandvoxPath];
 		}
 		
-		[buffer addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"]];
+		[buffer addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
 		
 		result = [buffer copy];
 	}
@@ -47,7 +54,7 @@
 
 + (void)load
 {
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];
+	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"Designs"];
 }
 
 + (KTDesign *)designWithBundle:(NSBundle *)bundle
