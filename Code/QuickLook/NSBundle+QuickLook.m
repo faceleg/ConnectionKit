@@ -23,4 +23,16 @@
     return retVal;
 }
 
+/*	Specify the file as a path relative to the bundle.
+ *	Converts it to a pseudo tag of the form <!svxdata bundle:identifier/file>
+ */
+- (NSString *)quicklookDataForFile:(NSString *)file;
+{
+	NSString *result = [NSString stringWithFormat:@"<!svxdata bundle:%@/%@>",
+												  [self bundleIdentifier],
+												  file];
+	
+	return result;
+}
+
 @end

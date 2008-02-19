@@ -11,6 +11,7 @@
 
 #import "KTMaster.h"
 
+#import "NSBundle+QuickLook.h"
 #import "NSString+KTExtensions.h"
 
 
@@ -89,6 +90,9 @@
 	return result;
 }
 
+/*	Generates the path to the specified file with the current page's design.
+ *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
+ */
 - (NSString *)pathToDesignFile:(NSString *)filename
 {
 	NSString *result = nil;
@@ -101,7 +105,7 @@
 		switch ([self HTMLGenerationPurpose])
 		{
 			case kGeneratingQuickLookPreview:
-				result = [NSString stringWithFormat:@"<!svxdata design:/%@/%@>", [design identifier], filename];
+				result = [[design bundle] quicklookDataForFile:filename];
 				break;
 				
 			default:

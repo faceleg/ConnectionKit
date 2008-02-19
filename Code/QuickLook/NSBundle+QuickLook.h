@@ -14,4 +14,5 @@
 - (NSString *)version;				// specified as CFBundleShortVersionString
 - (NSString *)minimumAppVersion;
 
+- (NSString *)quicklookDataForFile:(NSString *)file;
 @end
