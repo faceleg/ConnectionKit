@@ -1377,7 +1377,7 @@ static unsigned sLastParserID;
 			result = [targetPage previewPath];
 			break;
 		case kGeneratingQuickLookPreview:
-			result= @"";
+			result= @"javascript:void(0)";
 			break;
 		default:
 			result = [targetPage publishedPathRelativeToPage:[self currentPage]];

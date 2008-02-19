@@ -85,10 +85,6 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	}
 
 	
-	// Replace all href="..." with voids to disable links.
-	buf = (NSMutableString *) [buf replaceAllTextBetweenString:@"<a href=\"" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
-	[buf replaceOccurrencesOfString:@"<a href=\"\"" withString:@"<a href=\"javascript:void(0)\"" options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
-
 	// Intercept remote images and ... replace with a gray image or something?
 	buf = (NSMutableString *) [buf replaceAllTextBetweenString:@"src=\"http://" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
 	[buf replaceOccurrencesOfString:@"src=\"http://" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
