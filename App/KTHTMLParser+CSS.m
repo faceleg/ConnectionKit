@@ -15,7 +15,8 @@
 
 
 @interface KTHTMLParser (CSSPrivate)
-- (NSString *)linkToStylesheet:(NSString *)stylesheetPath title:(NSString *)title;
+- (NSString *)pathToDesignFile:(NSString *)filename;
+- (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title;
 @end
 
 
@@ -29,19 +30,12 @@
 	
 	// Always include the global sandvox CSS.
 	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-	[stylesheetLines addObject:[self linkToStylesheet:[self resourceFilePathRelativeToCurrentPage:globalCSSFile] title:nil]];
+	[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePathRelativeToCurrentPage:globalCSSFile] title:nil]];
 	
 			
 	// Then the base design's CSS file.
-	NSString *mainCSS;
-	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview) {
-		mainCSS = [NSString stringWithFormat:@"<!svxdata design:%@/main.css>", [[[[page master] design] bundle] bundleIdentifier]];
-	}
-	else {
-		mainCSS = [[self cache] valueForKey:@"cssURLPath"];
-	}
-	
-	[stylesheetLines addObject:[self linkToStylesheet:mainCSS title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities]]];
+	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
+	[stylesheetLines addObject:[self stylesheetLink:mainCSS title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities]]];
 	
 	
 	// Ask the page and it's components for extra CSS files required
@@ -55,7 +49,7 @@
 	NSString *aCSSFile;
 	while (aCSSFile = [pluginCSSEnumerator nextObject])
 	{
-		[stylesheetLines addObject:[self linkToStylesheet:[self resourceFilePathRelativeToCurrentPage:aCSSFile] title:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePathRelativeToCurrentPage:aCSSFile] title:nil]];
 		
 		// Tell the delegate
 		[self didEncounterResourceFile:aCSSFile];
@@ -69,7 +63,7 @@
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
 																			 ofType:@"txt"];
 																		 
-		[stylesheetLines addObject:[self linkToStylesheet:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil]];
 		
 		
 		// And inline stylesheet for master-specific properties
@@ -88,16 +82,40 @@
 		NSString *relativeMasterCSSPath =
 			[[@"/" stringByAppendingString:masterCSSPath] pathRelativeTo:[@"/" stringByAppendingString:pagePath]];
 		
-		[stylesheetLines addObject:[self linkToStylesheet:relativeMasterCSSPath title:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil]];
 	}
 	
 	NSString *result = [stylesheetLines componentsJoinedByString:@"\r"];
 	return result;
 }
 
+- (NSString *)pathToDesignFile:(NSString *)filename
+{
+	NSString *result = nil;
+	
+	// Return nil if the file doesn't actually exist
+	KTDesign *design = [[[self currentPage] master] design];
+	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
+	{
+		switch ([self HTMLGenerationPurpose])
+		{
+			case kGeneratingQuickLookPreview:
+				result = [NSString stringWithFormat:@"<!svxdata design:/%@/%@>", [design identifier], filename];
+				break;
+				
+			default:
+				result = [[[self currentPage] designDirectoryPath] stringByAppendingPathComponent:filename];
+				break;
+		}
+	}
+	
+	return result;
+}
+
 /*	Generates a <link> tag to the specified stylesheet. Include a title attribute when possible.
  */
-- (NSString *)linkToStylesheet:(NSString *)stylesheetPath title:(NSString *)title
+- (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title
 {
 	if (title)
 	{

@@ -304,7 +304,6 @@
 - (BOOL)pluginHTMLIsFullPage;
 - (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
 
-- (NSString *)cssURLPath;
 - (NSString *)javascriptURLPath;
 - (NSString *)printCSSURLPath;
 - (NSString *)RSSRepresentation;

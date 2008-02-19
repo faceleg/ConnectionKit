@@ -186,13 +186,6 @@
 
 - (NSString *)cssClassName { return [[self plugin] pageCSSClassName]; }
 
-/*!	Generate path to CSS */
-- (NSString *)cssURLPath
-{
-	NSString *result = [[self designDirectoryPath] stringByAppendingPathComponent:@"main.css"];
-	return result;
-}
-
 /*!	Generate path to print CSS */
 - (NSString *)printCSSURLPath
 {
