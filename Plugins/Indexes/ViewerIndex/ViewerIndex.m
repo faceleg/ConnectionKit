@@ -45,21 +45,13 @@
 	// We must hang onto the scaled images required for each page
 	NSArray *pagesInIndex = [[self page] sortedChildrenInIndex];
 	
-	unsigned count = [[self valueForKeyPath:@"page.collectionMaxIndexItems"] unsignedIntValue];
-	if (count > 0 && ([pagesInIndex count] > count) )
-	{
-		pagesInIndex = [pagesInIndex subarrayWithRange:NSMakeRange(0, count)];
-	}
-	
-	
 	NSMutableSet *result = [NSMutableSet setWithCapacity:[pagesInIndex count]];
 	NSEnumerator *childPagesEnumerator = [pagesInIndex objectEnumerator];
 	KTPage *aPage;
 	while (aPage = [childPagesEnumerator nextObject])
 	{
-		KTAbstractMediaFile *thumbnail = [[aPage thumbnail] file];
-		float scale = [thumbnail imageScaleFactorToFitSize:[self thumbnailImageSize]];
-		KTAbstractMediaFile *scaledThumbnail = [thumbnail imageWithScaleFactor:scale aspectRatio:1.0];
+		KTMediaContainer *thumbnail = [aPage thumbnail];
+		KTMediaContainer *scaledThumbnail = [thumbnail imageToFitSize:[self thumbnailImageSize]];
 		[result addObject:scaledThumbnail];
 	}
 	
