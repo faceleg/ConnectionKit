@@ -65,11 +65,18 @@
  */
 + (id)pluginWithIdentifier:(NSString *)identifier
 {
-	KTAppPlugin *result = [self registeredPluginForIdentifier:identifier];
+	KTAppPlugin *result = nil;
 	
-	if (!result)
+	KTAppPlugin *plugin = [self registeredPluginForIdentifier:identifier];
+	if (!plugin)
 	{
-		result = [self pluginWithBundle:[NSBundle bundleWithIdentifier:identifier]];
+		plugin = [self pluginWithBundle:[NSBundle bundleWithIdentifier:identifier]];
+	}
+	
+	// If the plugin does not match the class requested, return nil
+	if ([plugin isKindOfClass:self])
+	{
+		result = plugin;
 	}
 	
 	return result;
