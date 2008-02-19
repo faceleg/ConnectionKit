@@ -39,9 +39,20 @@
 #import <ContainsValueTransformer.h>
 
 
+typedef enum { diggTypePromoted, diggTypeSubmitted, diggTypeUser, diggTypeFriends } diggType;
+typedef enum { diggHomepage, diggSubmitted, diggDugg, diggCommented } diggUserOptions;
+typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
+
+
 // LocalizedStringInThisBundle(@"Digg example no.", "String_On_Page_Template - followed by a number")
 
-@implementation DiggPageletDelegate
+
+@interface DiggPageletDelegate (Private)
+- (NSString *)diggMaskString;
+- (NSString *)diggTypeString;
+- (NSString *)diggCategoryString;
+@end
+
 
 /*
  Plugin Properties we use:
@@ -52,14 +63,39 @@ diggUser  --> diggTypeString
 diggNumberMask --> diggMaskString
 diggDescriptions --> diggMaskString
 diggCategory  (human readable version for popup) --> diggCategoryString
-
- 
  */
 
-typedef enum { diggTypePromoted, diggTypeSubmitted, diggTypeUser, diggTypeFriends } diggType;
-typedef enum { diggHomepage, diggSubmitted, diggDugg, diggCommented } diggUserOptions;
-typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
 
+@implementation DiggPageletDelegate
+
+#pragma mark -
+#pragma mark Initialisation
+
++ (void)initialize
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	// Register value transformers
+	NSSet *comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeUser], [NSNumber numberWithInt:diggTypeFriends], nil];
+	NSValueTransformer *transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
+	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsUserOrFriends"];
+	[transformer release];
+	
+	comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeSubmitted], [NSNumber numberWithInt:diggTypePromoted], nil];
+	transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
+	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsSubmittedOrPromoted"];
+	[transformer release];
+	
+	[pool release];
+}
+
+- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
+{
+	// Ensure our derived properties are up-to-date
+	[[self delegateOwner] setValue:[self diggMaskString] forKey:@"diggMaskString"];
+	[[self delegateOwner] setValue:[self diggTypeString] forKey:@"diggTypeString"];
+	[[self delegateOwner] setValue:[self diggCategoryString] forKey:@"diggCategoryString"];
+}
 
 #pragma mark -
 #pragma mark HTML Generation
@@ -124,31 +160,30 @@ typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
 	return result;
 }
 
-#pragma mark -
-#pragma mark Other
+/*	When the user changes a property in the GUI, we also need to change the corresponding HTML in the plugin
+ */
+- (void)plugin:(KTAbstractPlugin *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+{
+	if ([key isEqualToString:@"diggCategory"])
+	{
+		[plugin setValue:[self diggCategoryString] forKey:@"diggCategoryString"];
+	}
+	else if ([key isEqualToString:@"diggNumberMask"] || [key isEqualToString:@"diggDescriptions"])
+	{
+		[plugin setValue:[self diggMaskString] forKey:@"diggMaskString"];
+	}
+	else if ([key isEqualToString:@"diggType"] || [key isEqualToString:@"diggUser"] || [key isEqualToString:@"diggUserOptions"])
+	{
+		[plugin setValue:[self diggTypeString] forKey:@"diggTypeString"];
+	}
+}
 
-- (IBAction) openDigg:(id)sender
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)openDigg:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.digg.com/"]];
 }
-
-+ (void) initialize
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	// Register value transformers
-	NSSet *comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeUser], [NSNumber numberWithInt:diggTypeFriends], nil];
-	NSValueTransformer *transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
-	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsUserOrFriends"];
-	[transformer release];
-	
-	comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeSubmitted], [NSNumber numberWithInt:diggTypePromoted], nil];
-	transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
-	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsSubmittedOrPromoted"];
-	[transformer release];
-	
-	[pool release];
-}
-
 
 @end
