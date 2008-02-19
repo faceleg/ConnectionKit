@@ -57,7 +57,7 @@
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTCircularProgressCell.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDesign.h"
 #import "KTDesignManager.h"
 #import "KTDocWindowController.h"
@@ -72,7 +72,7 @@
 #import "NSString+Publishing.h"
 #import "NSString-Utilities.h"
 
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
 #import <Growl/Growl.h>

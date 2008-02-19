@@ -8,7 +8,7 @@
 
 #import "KTMediaDataProxy.h"
 
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 
 @implementation KTMediaDataProxy

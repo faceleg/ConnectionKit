@@ -26,8 +26,8 @@ TO DO:
 #import "KT.h"
 #import "KTElementPlugin.h"
 #import "KTAppDelegate.h"
-#import "KTComponents.h"
-#import "PrivateComponents.h"
+#import <Sandvox.h>
+#import "SandvoxPrivate.h"
 #import "Registration.h"
 
 @interface KTAppDelegate ( PrivateHack )

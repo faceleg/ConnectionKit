@@ -31,7 +31,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTAcknowledgmentsController.h"
 #import "KTApplication.h"
 #import "KTBundleManager.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTCrashReporter.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
@@ -55,7 +55,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSException+Karelia.h"
 #import "NSString+KTApplication.h"
 #import "NSString-Utilities.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "NSError+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import <AmazonSupport/AmazonSupport.h>

@@ -24,7 +24,7 @@ TO DO:
 
  */
 
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 #import "KTWebView.h"
 #import "KTBundleManager.h"

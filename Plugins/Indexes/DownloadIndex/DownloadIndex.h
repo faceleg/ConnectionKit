@@ -6,8 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface DownloadIndex : KTAbstractIndex

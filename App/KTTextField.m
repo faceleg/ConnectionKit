@@ -9,7 +9,7 @@
 
 #import "KTTextField.h"
 #import "KTTextFieldCell.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 @implementation KTTextField
  

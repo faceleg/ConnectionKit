@@ -8,7 +8,7 @@
 
 #import "NSURL+AmazonPagelet.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface NSURL (AmazonPageletPrivate)

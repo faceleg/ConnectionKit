@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 // NOTE: THIS IS ALMOST THE SAME AS HTMLPAGEDELEGATE --- 
 // TODO: UNIFY THIS SOMEHOW.

@@ -8,7 +8,7 @@
 
 #import "APAutomaticListProduct.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 #import <AmazonSupport/AmazonSupport.h>
 
 

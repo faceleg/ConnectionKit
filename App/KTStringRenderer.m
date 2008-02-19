@@ -8,7 +8,7 @@
 
 #import "KTStringRenderer.h"
 #import <OpenGL/CGLMacro.h>
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 static NSMutableDictionary *sRendererDictionary = nil;
 

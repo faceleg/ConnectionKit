@@ -9,7 +9,7 @@
 #import "KTUndoManager.h"
 
 #import "KTDocument.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 
 @implementation KTUndoManager

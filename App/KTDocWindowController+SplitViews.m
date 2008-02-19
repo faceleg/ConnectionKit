@@ -24,7 +24,7 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTDesignPickerView.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import <iMediaBrowser/iMedia.h>
 
 #pragma mark -

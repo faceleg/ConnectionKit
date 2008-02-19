@@ -12,7 +12,7 @@
 #import "KTDocWebViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 
 

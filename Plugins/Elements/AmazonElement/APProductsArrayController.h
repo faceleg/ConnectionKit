@@ -16,9 +16,8 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <KTComponents.h>
+#import <Sandvox.h>
 #import <DNDArrayController.h>
-//#import <ThirdParty.h>
 
 @interface APProductsArrayController : DNDArrayController
 {

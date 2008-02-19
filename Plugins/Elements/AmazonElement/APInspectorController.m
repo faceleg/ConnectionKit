@@ -8,7 +8,7 @@
 
 #import "APInspectorController.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 #import <DNDArrayController.h>
 #import <NTBoxView.h>
 #import <AmazonSupport/AmazonSupport.h>

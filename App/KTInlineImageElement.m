@@ -171,7 +171,7 @@
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
-	[imageChooser setPrompt:LocalizedStringInThisBundle(@"Choose", "choose - open panel")];
+	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose - open panel")];
 	
 	// TODO: Open the panel at a reasonable location
 	[imageChooser runModalForDirectory:nil

@@ -8,7 +8,7 @@
 
 #import "DOM+RichTextElement.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 @implementation DOMNode (RichTextElement)
 
 - (BOOL)isFileList

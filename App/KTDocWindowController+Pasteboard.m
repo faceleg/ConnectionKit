@@ -9,11 +9,11 @@
 #import "KTDocWindowController.h"
 
 #import "KTAppDelegate.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
 #import "KTPasteboardArchiving.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "NSArray+KTExtensions.h"
 
 

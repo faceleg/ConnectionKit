@@ -10,7 +10,7 @@
 
 #import "KTDocWindowController.h"
 #import "KTPulsatingOverlay.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";

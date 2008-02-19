@@ -26,7 +26,7 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 static NSImage *sUnknownThumbnail;
 

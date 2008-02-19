@@ -25,12 +25,12 @@ TO DO:
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDocument.h"
 #import "KTToolbars.h"
 #import "NSImage+KTExtensions.h"
 #import "NSToolbar+Karelia.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"
 

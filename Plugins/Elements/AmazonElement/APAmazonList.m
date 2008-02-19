@@ -10,7 +10,7 @@
 #import "APAutomaticListProduct.h"
 
 #import <AmazonSupport/AmazonSupport.h>
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface APAmazonList (Private)

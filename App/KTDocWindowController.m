@@ -18,7 +18,7 @@
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTBundleManager.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDesignPickerView.h"
 #import "KTDocWindow.h"
 #import "KTDocument.h"
@@ -37,7 +37,7 @@
 #import "KTTransferController.h"
 #import "NSTextView+KTApplication.h"
 #import "NTBoxView.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "Registration.h"
 #import <WebKit/WebKit.h>
 #import <iMediaBrowser/iMedia.h>

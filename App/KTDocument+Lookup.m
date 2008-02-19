@@ -18,7 +18,7 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDesign.h"
 #import "KTDesignManager.h"
 #import "KTDesignURLProtocol.h"
@@ -27,7 +27,7 @@
 #import "KTInfoWindowController.h"
 #import "KTKeypathURLProtocol.h"
 #import "NSString-Utilities.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 #import "Registration.h"
 

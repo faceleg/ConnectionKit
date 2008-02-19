@@ -8,7 +8,7 @@
 
 #import "KTDocumentController.h"
 #import "KTPluginInstaller.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "Registration.h"
 #import "KTDocument.h"
 

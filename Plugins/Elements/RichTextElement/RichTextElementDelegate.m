@@ -38,7 +38,7 @@
 
 #import "DOM+RichTextElement.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 #import <Sandvox.h>
 
 // TODO: seems like we should be folding all of these imports into something easy for plugins to grab (KTPlugins.h?)

@@ -17,7 +17,7 @@
 #import "KTHTMLInspectorController.h"
 
 #import "KTApplication.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDocWindowController.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTApplication.h"

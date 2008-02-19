@@ -9,7 +9,7 @@
 #import "KTAbstractBugReporter.h"
 
 #import "KTApplication.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import <asl.h>
 
 

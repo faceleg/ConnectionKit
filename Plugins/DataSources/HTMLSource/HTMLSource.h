@@ -35,7 +35,7 @@
 //
 
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 @interface HTMLSource : KTAbstractDataSource
 {

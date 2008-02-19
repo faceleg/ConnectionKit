@@ -12,7 +12,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @class NTBoxView;

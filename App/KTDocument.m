@@ -43,7 +43,7 @@
 #import "KTAppPlugin.h"
 #import "KTBundleManager.h"
 #import "KTCodeInjectionController.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
@@ -57,7 +57,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTStalenessManager.h"
 #import "KTTransferController.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 #import <iMediaBrowser/iMediaBrowser.h>
 

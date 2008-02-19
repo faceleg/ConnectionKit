@@ -35,7 +35,6 @@
 //
 
 #import "HTMLElementDelegate.h"
-#import <KTComponents.h>
 
 
 @interface HTMLElementDelegate ( Private )

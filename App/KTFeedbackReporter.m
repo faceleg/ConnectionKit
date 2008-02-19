@@ -13,8 +13,8 @@
 #import "KTBundleManager.h"
 #import "KTDesignManager.h"
 #import "KTInfoWindowController.h"
-#import "KTComponents.h"
-#import "PrivateComponents.h"
+#import <Sandvox.h>
+#import "SandvoxPrivate.h"
 
 // must match items in localized pop-up (pop-up is not programmatically built)
 #define MENUITEM_FEATURE_REQUEST	NSLocalizedString(@"Feature Request", "Feature Request PopUpMenuItem")

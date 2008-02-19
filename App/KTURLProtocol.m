@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTThreadedURLLoader.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 @interface KTURLProtocol (Private)
 - (void)KT_startLoading;

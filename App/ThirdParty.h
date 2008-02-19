@@ -1,6 +1,6 @@
 /*
  *  ThirdParty.h
- *  Marvel
+ *  Sandvox
  *
  *  Created by Terrence Talbot on 5/15/07.
  *  Copyright 2007 Karelia Software. All rights reserved.

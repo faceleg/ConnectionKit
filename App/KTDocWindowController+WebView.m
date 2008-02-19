@@ -10,7 +10,7 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTMaster.h"
 #import "KTDesign.h"
 #import "KTDesignManager.h"
@@ -26,7 +26,7 @@
 #import "DOM+KTWebViewController.h"
 #import "NSString-Utilities.h"
 
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "RoundedBox.h"
 
 #import <CoreServices/CoreServices.h>

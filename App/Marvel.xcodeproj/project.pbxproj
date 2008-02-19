@@ -443,8 +443,7 @@
 		3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */; };
 		3C682BB90D62348A00B4D485 /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */; };
 		3C682BBA0D6234D200B4D485 /* Sandvox.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* Sandvox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BBB0D6234D600B4D485 /* KTComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250F0D622E7B00B4D485 /* KTComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BBC0D6234D800B4D485 /* PrivateComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6825100D622EA100B4D485 /* PrivateComponents.h */; };
+		3C682BBC0D6234D800B4D485 /* SandvoxPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6825100D622EA100B4D485 /* SandvoxPrivate.h */; };
 		3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTDocumentInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBF0D6234E600B4D485 /* KTAbstractPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1E0D622F7100B4D485 /* KTAbstractPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1832,8 +1831,7 @@
 		3C66E3E908A9781400EC7716 /* 16x16_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16x16_empty.png; sourceTree = "<group>"; };
 		3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ImageElement.xcodeproj; path = ../Plugins/Elements/ImageElement/ImageElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C68250E0D622DEB00B4D485 /* Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sandvox.h; sourceTree = "<group>"; };
-		3C68250F0D622E7B00B4D485 /* KTComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTComponents.h; sourceTree = "<group>"; };
-		3C6825100D622EA100B4D485 /* PrivateComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateComponents.h; sourceTree = "<group>"; };
+		3C6825100D622EA100B4D485 /* SandvoxPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPrivate.h; sourceTree = "<group>"; };
 		3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = KTComponents.xcdatamodel; sourceTree = "<group>"; };
 		3C682B100D622F1600B4D485 /* KTDocumentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentInfo.h; sourceTree = "<group>"; };
 		3C682B110D622F1D00B4D485 /* KTDocumentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentInfo.m; sourceTree = "<group>"; };
@@ -2872,8 +2870,7 @@
 			children = (
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3C68250E0D622DEB00B4D485 /* Sandvox.h */,
-				3C68250F0D622E7B00B4D485 /* KTComponents.h */,
-				3C6825100D622EA100B4D485 /* PrivateComponents.h */,
+				3C6825100D622EA100B4D485 /* SandvoxPrivate.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 				3C5A737A0BF7B83A00776464 /* Models */,
@@ -4616,8 +4613,7 @@
 				3C682BA30D62343800B4D485 /* TrimTransformer.h in Headers */,
 				3C682BA70D62344200B4D485 /* ValuesAreEqualTransformer.h in Headers */,
 				3C682BBA0D6234D200B4D485 /* Sandvox.h in Headers */,
-				3C682BBB0D6234D600B4D485 /* KTComponents.h in Headers */,
-				3C682BBC0D6234D800B4D485 /* PrivateComponents.h in Headers */,
+				3C682BBC0D6234D800B4D485 /* SandvoxPrivate.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
 				3C682BBF0D6234E600B4D485 /* KTAbstractPlugin.h in Headers */,

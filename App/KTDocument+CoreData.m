@@ -11,13 +11,13 @@
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
 #import "KTMediaManager+Internal.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 
 #import "Registration.h"
 

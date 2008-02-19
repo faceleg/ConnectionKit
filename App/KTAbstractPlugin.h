@@ -20,7 +20,7 @@
 #import "KSExtensibleManagedObject.h"
 #import "KTPluginInspectorViewsManager.h"
 
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import <WebKit/WebKit.h>
 
 

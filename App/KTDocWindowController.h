@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 @class CIFilter;
 @class KTBorderlessWindow;

@@ -34,8 +34,8 @@ TO DO:
 #import <AddressBook/AddressBook.h>
 #import <Connection/AbstractConnection.h>
 #import <Connection/ConnectionOpenPanel.h>
-#import "KTComponents.h"
-#import "PrivateComponents.h"
+#import <Sandvox.h>
+#import "SandvoxPrivate.h"
 #import <Security/Security.h>
 #import <sys/sysctl.h>
 #import "KTHost.h"

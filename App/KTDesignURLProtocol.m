@@ -13,7 +13,7 @@
 #import "KTDesignManager.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 
 @implementation KTDesignURLProtocol

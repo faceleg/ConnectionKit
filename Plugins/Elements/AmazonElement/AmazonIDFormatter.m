@@ -8,7 +8,7 @@
 
 #import "AmazonIDFormatter.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @implementation AmazonIDFormatter

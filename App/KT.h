@@ -17,8 +17,11 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
+// these are #defines and enums that are used throughout Sandvox
+// they can only be #imported once, so they are kept separately from Sandvox.h
+
 // LocalizedStringInThisBundle is really for use by plugins,
-// But WARNING -- it won't work in Category Methods, since the class with have the wrong bundle.
+// But WARNING -- it won't work in Category Methods, since the class will have the wrong bundle.
 // Code in Sandvox.app should always just use standard NSLocalized* macros
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]

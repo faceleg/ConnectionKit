@@ -1,8 +1,8 @@
 //
-//  PrivateComponents.h
-//  KTComponents
+//  SandvoxPrivate.h
+//  Sandvox
 //
-//  Copyright (c) 2004-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2004-2008, Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,13 +17,16 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
+// SandvoxPrivate.h is a convenience header that imports all "project" headers in Sandvox
+// in general, these classes are purposefully *not* exposed to plugins
+
+#import "KTAppDelegate.h"
+
 // Core Data-based objects
 
 //  document storage
 #import "KTDocumentInfo.h"
 
-//  converts file to a new model
-#import "KTDataMigrator.h"
 
 // in-line elements
 #import "KTPseudoElement.h"

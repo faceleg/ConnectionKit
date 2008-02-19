@@ -12,8 +12,8 @@
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
 #import "Registration.h"
-#import "KTComponents.h"
-#import "PrivateComponents.h"
+#import <Sandvox.h>
+#import "SandvoxPrivate.h"
 
 static KTRegistrationController *sSharedRegistrationController = nil;
 

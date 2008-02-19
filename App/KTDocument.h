@@ -18,10 +18,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-#import "KT.h"
-#import "KTComponents.h"
 #import <WebKit/WebKit.h>
+
+#import "Sandvox.h"
 
 #ifdef SANDVOX_RELEASE
 	#import "Registration.h"
@@ -47,6 +46,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController, KTPluginDelegatesManager;
+@class KTAbstractPlugin, KTMediaContainer, KTPage;
 
 @interface KTDocument : NSPersistentDocument
 {

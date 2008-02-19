@@ -25,9 +25,9 @@
 #import "KTMediaManager.h"
 #import "KTPathInfoField.h"
 #import "KTStackView.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTMaster.h"
-#import "PrivateComponents.h"
+#import "SandvoxPrivate.h"
 #import "Registration.h"
 
 enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
@@ -926,7 +926,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
-	[imageChooser setPrompt:LocalizedStringInThisBundle(@"Choose", "choose button - open panel")];
+	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
 	[imageChooser runModalForDirectory:nil
@@ -952,7 +952,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
-	[imageChooser setPrompt:LocalizedStringInThisBundle(@"Choose", "choose button - open panel")];
+	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
 	[imageChooser runModalForDirectory:nil
@@ -1053,7 +1053,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
-	[imageChooser setPrompt:LocalizedStringInThisBundle(@"Choose", "choose button - open panel")];
+	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
 	[imageChooser runModalForDirectory:nil
@@ -1079,7 +1079,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
-	[imageChooser setPrompt:LocalizedStringInThisBundle(@"Choose", "choose button - open panel")];
+	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
 	[imageChooser runModalForDirectory:nil

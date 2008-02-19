@@ -3,15 +3,15 @@
 #include "/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.0a1
+SANDVOX_VERSION = 1.5a3
 
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 823
+CK_REVISION = 828
 
 // iMedia
-IMEDIA_REVISION = 517
+IMEDIA_REVISION = 520
 
 // Sparkle+
 SP_REVISION = 113

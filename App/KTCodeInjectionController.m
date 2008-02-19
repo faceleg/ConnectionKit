@@ -12,7 +12,7 @@
 #import "KTDocSiteOutlineController.h"
 
 #import "KTApplication.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 
 @interface KTPage ( CodeInjectionBindings )

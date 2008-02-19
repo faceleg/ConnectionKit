@@ -9,7 +9,7 @@
 #import "KTCrashReporter.h"
 
 #import "KTApplication.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 
 static NSString *sCrashSubmitURLString = @"https://ssl.karelia.com/bugsubmit/KTCrashReporterSubmit.php";
 

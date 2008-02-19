@@ -45,7 +45,7 @@
 
 #import "DownloadPageDelegate.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 #import <KTPathInfoField.h>
 
 

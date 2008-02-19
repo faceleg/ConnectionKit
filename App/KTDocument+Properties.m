@@ -10,7 +10,7 @@
 
 #import "KTTransferController.h"
 #import "KTDocWindowController.h"
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTHTMLInspectorController.h"
 #import "KTPluginDelegatesManager.h"
 #import "KTStalenessManager.h"

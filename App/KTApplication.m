@@ -29,7 +29,7 @@ TO DO:
 #import "KTExceptionReporter.h"
 #import "NSException+Karelia.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTQuickStartController.h"
 #import "Registration.h"
 

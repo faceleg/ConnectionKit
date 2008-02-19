@@ -8,7 +8,7 @@
 
 #import "DropShadowImageCell.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface DropShadowImageCell (Private)

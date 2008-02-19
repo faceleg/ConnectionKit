@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 static KTPrefsController *sSharedPrefsController = nil;
 

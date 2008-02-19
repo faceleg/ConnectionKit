@@ -8,7 +8,7 @@
 
 #import "KTDocSiteOutlineController.h"
 
-#import "KTComponents.h"
+#import <Sandvox.h>
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
 #import "KTElementPlugin.h"

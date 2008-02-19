@@ -34,8 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface GeneralIndex : KTAbstractIndex 

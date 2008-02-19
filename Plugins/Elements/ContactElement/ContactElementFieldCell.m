@@ -8,7 +8,7 @@
 
 #import "ContactElementFieldCell.h"
 
-#import <KTComponents.h>
+#import <Sandvox.h>
 
 
 @interface ContactElementFieldCell (Private)
