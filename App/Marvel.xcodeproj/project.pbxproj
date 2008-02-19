@@ -92,7 +92,6 @@
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
-				CE2556E20D34333A003A5B5E /* Script - Add QuickLook */,
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
@@ -1388,6 +1387,13 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedElement;
 		};
+		3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* SandvoxQuickLook */;
+			remoteInfo = SandvoxQuickLook;
+		};
 		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
@@ -1790,8 +1796,6 @@
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C3F140F09D51BD000C01EED /* Importer Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Importer Debug.xcconfig"; sourceTree = "<group>"; };
-		3C3F141309D51BDA00C01EED /* Importer Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Importer Release.xcconfig"; sourceTree = "<group>"; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1803,8 +1807,6 @@
 		3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IndexElement.xcodeproj; path = ../Plugins/Elements/IndexElement/IndexElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../Plugins/Elements/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../Plugins/Elements/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C42E52D0D650646004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
-		3C42E52E0D650646004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoElement.xcodeproj; path = ../Plugins/Elements/VideoElement/VideoElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLElement.xcodeproj; path = ../Plugins/Elements/HTMLElement/HTMLElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E6BB0D6510BE004F35FD /* HTML.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTML.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2682,17 +2684,6 @@
 			name = Page;
 			sourceTree = "<group>";
 		};
-		274E823F0D627147004F89C2 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				3C3F140F09D51BD000C01EED /* Importer Debug.xcconfig */,
-				3C3F141309D51BDA00C01EED /* Importer Release.xcconfig */,
-				3C42E52D0D650646004F35FD /* Debug.xcconfig */,
-				3C42E52E0D650646004F35FD /* Release.xcconfig */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		2752C70F0C8DC4CA00BD90EA /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2919,7 +2910,6 @@
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
 				3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */,
-				274E823F0D627147004F89C2 /* Recovered References */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4728,6 +4718,7 @@
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
+				3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */,
 			);
 			buildRules = (
 			);
@@ -4737,6 +4728,7 @@
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
+				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5688,7 +5680,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 		};
-		CE2556E20D34333A003A5B5E /* Script - Add QuickLook */ = {
+		3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5701,6 +5693,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6214,6 +6207,11 @@
 			isa = PBXTargetDependency;
 			name = FeedElement;
 			targetProxy = 3CA9FF880D63C4E700815310 /* PBXContainerItemProxy */;
+		};
+		3CDC2EE20D6B4736007E800E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SandvoxQuickLook;
+			targetProxy = 3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */;
 		};
 		3CE79D690D625E3600FCEE6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
