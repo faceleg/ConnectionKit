@@ -56,4 +56,14 @@
 	[self setTransientValue:identifiers forKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
 }
 
+- (NSDictionary *)metadata
+{
+	return [self transientValueForKey:@"metadata" persistentPropertyListKey:@"metadataData"];
+}
+
+- (void)setMetadata:(NSDictionary *)metadata
+{
+	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
+}
+
 @end

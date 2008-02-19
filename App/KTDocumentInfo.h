@@ -31,4 +31,7 @@
 - (NSSet *)requiredBundlesIdentifiers;
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
 
+- (NSDictionary *)metadata;
+- (void)setMetadata:(NSDictionary *)metadata;
+
 @end
