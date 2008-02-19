@@ -90,8 +90,8 @@ TO DO:
  */
 - (KTAppPlugin *)pluginWithIdentifier:(NSString *)anIdentifier
 {
-    KTAppPlugin *result = [[self registeredPlugins] objectForKey:anIdentifier];
-    return result;
+    [self registeredPlugins];	// Ensure plugins are loaded
+    return [KTAppPlugin pluginWithIdentifier:anIdentifier];
 }
 
 /*	Returns those registeredPlugins of the specified type
