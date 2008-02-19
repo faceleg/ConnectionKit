@@ -17,6 +17,34 @@
 #pragma mark -
 #pragma mark Class Methods
 
++ (NSArray *)pluginSearchPaths
+{
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSMutableArray *buffer = [NSMutableArray array];
+		
+		NSArray *basePaths =
+			NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
+		
+		NSEnumerator *pathsEnumerator = [basePaths objectEnumerator];
+		NSString *aPath;
+		while (aPath = [pathsEnumerator nextObject])
+		{
+			NSString *sandvoxPath = [aPath stringByAppendingPathComponent:[NSApplication applicationName]];
+			[buffer addObject:[sandvoxPath stringByAppendingPathComponent:@"Designs"]];
+			[buffer addObject:sandvoxPath];
+		}
+		
+		[buffer addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"]];
+		
+		result = [buffer copy];
+	}
+	
+	return result;
+}
+
 + (void)load
 {
 	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];

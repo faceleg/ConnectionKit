@@ -10,9 +10,18 @@
 
 
 @interface KTAppPlugin (Private)
+
 + (KTAppPlugin *)pluginForPath:(NSString *)path;
 + (void)registerPlugin:(KTAppPlugin *)plugin forPath:(NSString *)path;
 + (NSMutableDictionary *)_pluginsByPath;
+
++ (KTAppPlugin *)registeredPluginForIdentifier:(NSString *)identifier;
++ (NSMutableDictionary *)_pluginsByIdentifier;
+
++ (NSArray *)pluginSearchPaths;
++ (KTAppPlugin *)preferredPlugin:(KTAppPlugin *)pluginA :(KTAppPlugin *)pluginB;
++ (NSComparisonResult)comparePluginPaths:(NSString *)pathA :(NSString *)pathB;
+
 @end
 
 
@@ -51,14 +60,49 @@
 	return result;
 }
 
+/*	Hopefully there'll already be a plugin registered for the identifier. If so, return it.
+ *	If not, fall back to NSBundle's methods.
+ */
 + (id)pluginWithIdentifier:(NSString *)identifier
 {
-	NSBundle *bundle = [NSBundle bundleWithIdentifier:identifier];
-	KTAppPlugin *result = [self pluginWithBundle:bundle];
+	KTAppPlugin *result = [self registeredPluginForIdentifier:identifier];
+	
+	if (!result)
+	{
+		result = [self pluginWithBundle:[NSBundle bundleWithIdentifier:identifier]];
+	}
+	
 	return result;
 }
 
-#pragma mark support
+#pragma mark -
+#pragma mark Class Registration
+
++ (NSMutableDictionary *)_registeredPluginClasses
+{
+	static NSMutableDictionary *sRegisteredPluginClasses;
+	
+	if (!sRegisteredPluginClasses)
+	{
+		sRegisteredPluginClasses = [[NSMutableDictionary alloc] initWithCapacity:3];
+	}
+	
+	return sRegisteredPluginClasses;
+}
+
++ (Class)registeredPluginClassForFileExtension:(NSString *)extension
+{
+	Class result = [[self _registeredPluginClasses] objectForKey:extension];
+	return result;
+}
+
++ (void)registerPluginClass:(Class)pluginClass forFileExtension:(NSString *)extension
+{
+	[[self _registeredPluginClasses] setObject:pluginClass forKey:extension];
+}
+
+#pragma mark -
+#pragma mark Path Registration
 
 + (KTAppPlugin *)pluginForPath:(NSString *)path
 {
@@ -85,29 +129,126 @@
 }
 
 #pragma mark -
-#pragma mark Plugin Registration
+#pragma mark Identifier Registration
 
-+ (NSMutableDictionary *)_registeredPluginClasses
++ (KTAppPlugin *)registeredPluginForIdentifier:(NSString *)identifier
 {
-	static NSMutableDictionary *sRegisteredPluginClasses;
-	
-	if (!sRegisteredPluginClasses)
-	{
-		sRegisteredPluginClasses = [[NSMutableDictionary alloc] initWithCapacity:3];
-	}
-	
-	return sRegisteredPluginClasses;
+	return [[self _pluginsByIdentifier] objectForKey:identifier];
 }
 
-+ (Class)registeredPluginClassForFileExtension:(NSString *)extension
++ (void)registerPlugin:(KTAppPlugin *)plugin forIdentifier:(NSString *)identifier
 {
-	Class result = [[self _registeredPluginClasses] objectForKey:extension];
+	[[self _pluginsByIdentifier] setObject:plugin forKey:identifier];
+}
+
++ (NSMutableDictionary *)_pluginsByIdentifier
+{
+	static NSMutableDictionary *result = nil;
+	
+	if (!result)
+	{
+		result = [[NSMutableDictionary alloc] init];
+	}
+	
 	return result;
 }
 
-+ (void)registerPluginClass:(Class)pluginClass forFileExtension:(NSString *)extension
+/*	The paths to search for plugins in. index 0 is the best location.
+ *	KTDesign overrides this method to search in /Designs rather than /PlugIns
+ */
++ (NSArray *)pluginSearchPaths
 {
-	[[self _registeredPluginClasses] setObject:pluginClass forKey:extension];
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSMutableArray *buffer = [NSMutableArray array];
+		
+		NSArray *basePaths =
+			NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
+		
+		NSEnumerator *pathsEnumerator = [basePaths objectEnumerator];
+		NSString *aPath;
+		while (aPath = [pathsEnumerator nextObject])
+		{
+			NSString *sandvoxPath = [aPath stringByAppendingPathComponent:[NSApplication applicationName]];
+			[buffer addObject:[sandvoxPath stringByAppendingPathComponent:@"PlugIns"]];
+			[buffer addObject:sandvoxPath];
+		}
+		
+		[buffer addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
+		
+		result = [buffer copy];
+	}
+	
+	return result;
+}
+
++ (KTAppPlugin *)preferredPlugin:(KTAppPlugin *)pluginA :(KTAppPlugin *)pluginB
+{
+	KTAppPlugin *result = nil;
+	
+	// First check by version
+	NSComparisonResult versionComparison =
+		SUStandardVersionComparison([[pluginA bundle] version], [[pluginB bundle] version]);
+	
+	switch (versionComparison)
+	{
+		case NSOrderedDescending:
+			result = pluginA;
+			break;
+		case NSOrderedAscending:
+			result = pluginB;
+			break;
+		
+		case NSOrderedSame:
+		{
+			// Have to compare by path
+			NSComparisonResult pathComparison =
+				[self comparePluginPaths:[[pluginA bundle] bundlePath] :[[pluginB bundle] bundlePath]];
+			
+			if (pathComparison == NSOrderedAscending)
+			{
+				result = pluginB;
+			}
+			else
+			{
+				result = pluginA;
+			}
+		}
+	}
+	
+	return result;
+}
+
++ (NSComparisonResult)comparePluginPaths:(NSString *)pathA :(NSString *)pathB
+{
+	NSString *dirA = [pathA stringByDeletingLastPathComponent];
+	NSString *dirB = [pathB stringByDeletingLastPathComponent];
+	
+	unsigned indexA = [[self pluginSearchPaths] indexOfObject:dirA];
+	unsigned indexB = [[self pluginSearchPaths] indexOfObject:dirB];
+	
+	if (indexA == indexB)
+	{
+		return NSOrderedSame;
+	}
+	else if (indexA == NSNotFound)
+	{
+		return NSOrderedDescending;
+	}
+	else if (indexB == NSNotFound)
+	{
+		return NSOrderedAscending;
+	}
+	else if (indexA < indexB)
+	{
+		return NSOrderedDescending;
+	}
+	else
+	{
+		return NSOrderedAscending;
+	}
 }
 
 #pragma mark -
@@ -123,6 +264,19 @@
 		
 		// Register the path
 		[KTAppPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByStandardizingPath]];
+		
+		
+		// Register the identfier if we are the best match for it
+		NSString *identifier = [bundle bundleIdentifier]; 
+		KTAppPlugin *bestPlugin = self;
+		
+		KTAppPlugin *otherMatch = [KTAppPlugin registeredPluginForIdentifier:identifier];
+		if (otherMatch)
+		{
+			bestPlugin = [[self class] preferredPlugin:self :otherMatch];
+		}
+		
+		[KTAppPlugin registerPlugin:bestPlugin forIdentifier:identifier];
     }
 
     return self;
