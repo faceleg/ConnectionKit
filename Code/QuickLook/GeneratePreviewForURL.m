@@ -21,8 +21,9 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 
 	NSString *docPath = [((NSURL *)url) path];
 	NSString *sitePath = [docPath stringByAppendingPathComponent:@"Site"];
-	NSString *indexPath = [sitePath stringByAppendingPathComponent:@"index.html"];
-	if (![[NSFileManager defaultManager] fileExistsAtPath:indexPath])
+	
+	NSString *previewPath = [[docPath stringByAppendingPathComponent:@"QuickLook"] stringByAppendingPathComponent:@"preview.html"];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:previewPath])
 	{
         return noErr; 
 	}
@@ -31,7 +32,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	{
 		return noErr; 
 	}
-	NSData *htmlData = [NSData dataWithContentsOfFile:indexPath];
+	NSData *htmlData = [NSData dataWithContentsOfFile:previewPath];
 	NSString *htmlString = [NSString stringWithHTMLData:htmlData];
 	NSMutableString *buf = [NSMutableString stringWithString:htmlString];
 	
