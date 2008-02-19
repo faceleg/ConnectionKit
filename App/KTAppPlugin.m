@@ -34,7 +34,7 @@
 {
 	KTAppPlugin *result = nil;
 	
-	path = [path stringByStandardizingPath];
+	path = [path stringByResolvingSymlinksInPath];
 	KTAppPlugin *plugin = [self pluginForPath:path];
 	
 	if (!plugin)
@@ -270,7 +270,7 @@
         myBundle = [bundle retain];
 		
 		// Register the path
-		[KTAppPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByStandardizingPath]];
+		[KTAppPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByResolvingSymlinksInPath]];
 		
 		
 		// Register the identfier if we are the best match for it

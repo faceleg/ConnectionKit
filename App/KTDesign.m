@@ -44,7 +44,7 @@
 			[buffer addObject:sandvoxPath];
 		}
 		
-		[buffer addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
+		[buffer addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"]];
 		
 		result = [buffer copy];
 	}
@@ -54,7 +54,7 @@
 
 + (void)load
 {
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"Designs"];
+	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];
 }
 
 + (KTDesign *)designWithBundle:(NSBundle *)bundle
