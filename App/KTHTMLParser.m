@@ -14,6 +14,7 @@
 #import "KTMediaManager.h"
 #import "KTSummaryWebViewTextBlock.h"
 
+#import "BDAlias+QuickLook.h"
 #import "NSString+KTExtensions.h"
 
 
@@ -1240,13 +1241,20 @@ static unsigned sLastParserID;
 	NSString *result = nil;
     if (page && resourceFilePath)
     {
-        if ([self HTMLGenerationPurpose] == kGeneratingPreview)	// When previewing, link straight to the file on disk
+        // The generated link depends on its use
+		switch ([self HTMLGenerationPurpose])
 		{
-			result = [[NSURL fileURLWithPath:resourceFilePath] absoluteString];
-		}
-		else	// Ask the page for the path
-		{
-			result = [page publishedPathForResourceFile:resourceFilePath];
+			case kGeneratingPreview:
+				result = [[NSURL fileURLWithPath:resourceFilePath] absoluteString];
+				break;
+			
+			case kGeneratingQuickLookPreview:
+				result = [[BDAlias aliasWithPath:resourceFilePath] quickLookPseudoTag];
+				break;
+				
+			default:
+				result = [page publishedPathForResourceFile:resourceFilePath];
+				break;
 		}
 		
 		// The delegate may want to know

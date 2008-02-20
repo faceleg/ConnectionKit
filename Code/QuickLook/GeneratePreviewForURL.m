@@ -6,6 +6,7 @@
 #import <Quartz/Quartz.h>
 #import "KTUtilitiesForQuickLook.h"
 
+#import "BDAlias+QuickLook.h"
 #import "NSCharacterSet+QuickLook.h"
 #import "NSString+QuickLook.h"
 
@@ -69,20 +70,26 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		[scanner scanUpToCharactersFromSet:tagEndCharactersSet intoString:&aURIPath];
 		
 		// Process the URI
-		if ([aURIScheme isEqualToString:@"design"])
+		if ([aURIScheme isEqualToString:@"bundle"])
 		{
 			NSArray *pathComponents = [aURIPath pathComponents];
 			
-			NSString *designIdentifier = [pathComponents objectAtIndex:0];
-			NSBundle *designBundle = [NSBundle bundleWithIdentifier:designIdentifier];
-			if (designBundle)
+			NSString *bundleIdentifier = [pathComponents objectAtIndex:0];
+			NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleIdentifier];
+			if (bundle)
 			{
 				NSArray *subPathComponents = [pathComponents subarrayWithRange:NSMakeRange(1, [pathComponents count] - 1)];
 				NSString *subPath = [NSString pathWithComponents:subPathComponents];
 				
-				NSString *path = [[designBundle bundlePath] stringByAppendingPathComponent:subPath];
-				[buffer appendString:[NSURL fileURLWithPath:path]];
+				NSString *path = [[bundle bundlePath] stringByAppendingPathComponent:subPath];
+				[buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
 			}
+		}
+		else if ([aURIScheme isEqualToString:@"alias"])
+		{
+			BDAlias *alias = [BDAlias aliasWithQuickLookPseudoTagPath:aURIPath];
+			NSString *path = [alias fullPath];
+			if (path) [buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
 		}
 		
 		// Make sure we're ready to go round the loop again
