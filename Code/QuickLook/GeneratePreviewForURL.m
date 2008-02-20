@@ -84,7 +84,14 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		{
 			BDAlias *alias = [BDAlias aliasWithQuickLookPseudoTagPath:aURIPath];
 			NSString *path = [alias fullPath];
-			if (path) [buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
+			if (path)
+			{
+				[buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
+			}
+			else
+			{
+				[buffer appendString:@"cid:gray.gif"];
+			}
 		}
 		else if ([aURIScheme isEqualToString:@"indocumentmedia"])
 		{
@@ -100,58 +107,10 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	[scanner release];
 	
 	
-	/*
-	// To show the substituted banner, we're going to have to write out the CSS to uplooad, and use that instead of the generic CSS.
-	// We can probably still use the generic CSS resources, but we're not going to get 
-	
-	// Intercept CSS paths and try to find the right design
-	// e.g. <link rel="stylesheet" type="text/css" href="sandvox_EarthandSky/main.css" title="Earth &amp; Sky" />
-	NSRange whereStyle = [buffer rangeBetweenString:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"" andString:@"/"];
-	if (NSNotFound != whereStyle.location)
-	{
-		NSString *styleSheetCondensed = [buffer substringWithRange:whereStyle];
-		NSLog(@"style sheet = '%@'", styleSheetCondensed);
-
-		NSDictionary *designBundles = [KTUtilitiesForQuickLook pluginsWithExtension:@"svxDesign" sisterDirectory:@"Designs"];
-		
-		NSEnumerator *enumerator = [designBundles keyEnumerator];
-		NSString *key;
-		
-		while ( key = [enumerator nextObject] )
-		{
-			NSBundle *designBundle = [designBundles objectForKey:key];
-			NSString *bundleIdentifier = [designBundle bundleIdentifier];
-			NSString *version = [designBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-
-			// convert into the format we would be seeing in the HTML
-
-			NSMutableString *condensed = [NSMutableString stringWithString:[bundleIdentifier removeWhiteSpace]];
-			if ((version != nil) 
-				&& ![version isEqualToString:@""] 
-				&& ![version isEqualToString:@"APP_VERSION"] 
-				&& ([version floatVersion] > 1.0))
-			{
-				[condensed appendFormat:@".%@", version];
-			}
-			
-			[condensed replaceOccurrencesOfString:@"." withString:@"_" options:NSLiteralSearch range:NSMakeRange(0, [condensed length])];
-
-			if ([condensed isEqualToString:styleSheetCondensed])
-			{
-				[buffer replaceCharactersInRange:whereStyle withString:[designBundle bundlePath]];
-				
-				break;		// found it -- done
-			}
-		}
-	}
-	*/
 	
 	// Intercept remote images and ... replace with a gray image or something?
 	buffer = (NSMutableString *) [buffer replaceAllTextBetweenString:@"src=\"http://" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
 	[buffer replaceOccurrencesOfString:@"src=\"http://" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
-	
-	
-	// Intercept media that doesn't exist, and find the real deals?
 	
 	
 	// Put a sticky note on there for metadata
