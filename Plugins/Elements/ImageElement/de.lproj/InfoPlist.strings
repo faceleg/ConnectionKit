@@ -2,11 +2,11 @@
 
 NSHumanReadableCopyright = "© Karelia Software, 2008";
 
-KTPluginName = "Photoseite";
+KTPageName = "Photoseite";
 KTPluginUntitledName = "Photo";
 KTPluginDescription = "Seite mit Photoanzeige";
 
-KTPluginName = "Photo Pagelet";
+KTPageletName = "Photo Pagelet";
 KTPluginUntitledName = "Photo Pagelet";
 KTPluginDescription = "Kleines Photo in der Seitenleiste";
 

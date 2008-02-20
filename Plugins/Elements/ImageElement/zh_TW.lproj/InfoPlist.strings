@@ -2,11 +2,11 @@
 
 NSHumanReadableCopyright = "© Karelia Software, 2008";
 
-KTPluginName = "照片頁面";
+KTPageName = "照片頁面";
 KTPluginUntitledName = "照片";
 KTPluginDescription = "顯示照片的頁面";
 
-KTPluginName = "照片 Pagelet";
+KTPageletName = "照片 Pagelet";
 KTPluginUntitledName = "照片 Pagelet";
 KTPluginDescription = "側邊欄的照片縮圖";
 

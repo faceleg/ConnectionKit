@@ -57,6 +57,8 @@
 	</dict>
 	<key>KTPluginName</key>
 	<string>Photo</string>
+	<key>KTPluginNibFile</key>
+	<string>ImageElement</string>
 	<key>KTPluginPriority</key>
 	<integer>2</integer>
 	<key>KTPluginResourcesNeeded</key>
