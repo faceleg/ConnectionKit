@@ -369,7 +369,7 @@
 				
 				NSString *previewPath =
 					[[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-				[previewHTML writeToFile:previewPath atomically:NO];
+				[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 				
 				
 				// we very temporarily keep a weak pointer to ourselves as lastSavedDocument

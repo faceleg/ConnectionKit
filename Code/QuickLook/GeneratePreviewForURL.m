@@ -36,8 +36,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	{
 		return noErr; 
 	}
-	NSData *htmlData = [NSData dataWithContentsOfFile:previewPath];
-	NSString *htmlString = [NSString stringWithHTMLData:htmlData];
+	NSString *htmlString = [NSString stringWithContentsOfFile:previewPath encoding:NSUTF8StringEncoding error:NULL];
 	NSMutableString *buffer = [NSMutableString stringWithCapacity:[htmlString length]];
 	
 	
@@ -122,12 +121,9 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	
 	[buffer replaceOccurrencesOfString:@"</body>" withString:stickyHTML options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
 	
-	// Intercept Resources.... FOR NOW EMPTY OUT
-	// TO DO -- MAYBE FIGURE OUT BETTER WAY TO ACTUALLY FIND THE RESOURCES?
-	buffer = (NSMutableString *) [buffer replaceAllTextBetweenString:@"src=\"_Resources/" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
-	[buffer replaceOccurrencesOfString:@"src=\"_Resources/" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
-
-
+	
+	
+	
 	NSMutableDictionary *props=[[[NSMutableDictionary alloc] init] autorelease]; 
 	[props setObject:@"UTF-8" forKey:(NSString 
 									  *)kQLPreviewPropertyTextEncodingNameKey]; 
@@ -147,7 +143,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	[props setObject:[NSDictionary dictionaryWithObject:imgProps 
 		forKey:@"gray.gif"] forKey:(NSString *)kQLPreviewPropertyAttachmentsKey]; 
 
-	htmlData = [buffer dataUsingEncoding:NSUTF8StringEncoding];
+	NSData *htmlData = [buffer dataUsingEncoding:NSUTF8StringEncoding];
 	
 	QLPreviewRequestSetDataRepresentation(preview,(CFDataRef)htmlData,kUTTypeHTML,(CFDictionaryRef)props); 
 
