@@ -7,26 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "QuickLookSandvoxPlugin.h"
 
 
-@interface KTAppPlugin : NSObject
+@interface KTAppPlugin : QuickLookSandvoxPlugin
 {
-	@private
-	NSBundle *myBundle;
 }
-
-+ (id)pluginWithPath:(NSString *)path;
-+ (id)pluginWithBundle:(NSBundle *)bundle;
-+ (id)pluginWithIdentifier:(NSString *)identifier;
 
 + (Class)registeredPluginClassForFileExtension:(NSString *)extension;
 + (void)registerPluginClass:(Class)pluginClass forFileExtension:(NSString *)extension;
-//+ (void)registerPluginClass:(Class)pluginClass forType:(NSString *)UTI;	Implement soon
 
-// designated initializer
-- (id)initWithBundle:(NSBundle *)bundle;
-
-- (NSBundle *)bundle;
 - (NSString *)pluginType;
 - (NSString *)version;
 - (NSString *)identifier;

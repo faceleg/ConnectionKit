@@ -15,6 +15,8 @@
 		27EF5CD60D6B9C7E0024575B /* NSData+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */; };
 		27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */; };
 		27EF5CDE0D6B9CF80024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */; };
+		27EF5D920D6C517C0024575B /* QuickLookSandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */; };
+		27EF5D930D6C517C0024575B /* QuickLookSandvoxPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		61E3BCFB0870B4F2002186A0 /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.c */; };
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
@@ -44,6 +46,8 @@
 		27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+QuickLook.m"; sourceTree = "<group>"; };
 		27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = SOURCE_ROOT; };
 		27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = SOURCE_ROOT; };
+		27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickLookSandvoxPlugin.h; sourceTree = "<group>"; };
+		27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickLookSandvoxPlugin.m; sourceTree = "<group>"; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* SandvoxQuickLook.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SandvoxQuickLook.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +141,8 @@
 				CE56ADB80CFF78670036FA3B /* tinygif.pl */,
 				27EF5CD30D6B9C7E0024575B /* NSData+QuickLook.h */,
 				27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */,
+				27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */,
+				27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -162,6 +168,7 @@
 				27EF5CBA0D6B9BBA0024575B /* BDAlias.h in Headers */,
 				27EF5CD50D6B9C7E0024575B /* NSData+QuickLook.h in Headers */,
 				27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */,
+				27EF5D920D6C517C0024575B /* QuickLookSandvoxPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +248,7 @@
 				27EF5CBB0D6B9BBA0024575B /* BDAlias.m in Sources */,
 				27EF5CD60D6B9C7E0024575B /* NSData+QuickLook.m in Sources */,
 				27EF5CDE0D6B9CF80024575B /* BDAlias+QuickLook.m in Sources */,
+				27EF5D930D6C517C0024575B /* QuickLookSandvoxPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

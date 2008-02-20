@@ -298,6 +298,8 @@
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
+		27EF5DC80D6C57A30024575B /* QuickLookSandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5DC60D6C57A30024575B /* QuickLookSandvoxPlugin.h */; };
+		27EF5DC90D6C57A30024575B /* QuickLookSandvoxPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5DC70D6C57A30024575B /* QuickLookSandvoxPlugin.m */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1678,6 +1680,8 @@
 		27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+QuickLook.m"; path = "../Code/QuickLook/NSBundle+QuickLook.m"; sourceTree = SOURCE_ROOT; };
 		27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = "<group>"; };
 		27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = "<group>"; };
+		27EF5DC60D6C57A30024575B /* QuickLookSandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickLookSandvoxPlugin.h; path = ../Code/QuickLook/QuickLookSandvoxPlugin.h; sourceTree = SOURCE_ROOT; };
+		27EF5DC70D6C57A30024575B /* QuickLookSandvoxPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickLookSandvoxPlugin.m; path = ../Code/QuickLook/QuickLookSandvoxPlugin.m; sourceTree = SOURCE_ROOT; };
 		27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingSettings.h; sourceTree = "<group>"; };
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
 		27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTTransferController+Internal.h"; sourceTree = "<group>"; };
@@ -2852,6 +2856,8 @@
 		27E31BC10D4B795C00895DA1 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				27EF5DC60D6C57A30024575B /* QuickLookSandvoxPlugin.h */,
+				27EF5DC70D6C57A30024575B /* QuickLookSandvoxPlugin.m */,
 				3C202D1C07DFC0AA00DE4994 /* KTBundleManager.h */,
 				3C202D1D07DFC0AA00DE4994 /* KTBundleManager.m */,
 				CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */,
@@ -4716,6 +4722,7 @@
 				27EF5C910D6B95EF0024575B /* NSBundle+Karelia.h in Headers */,
 				27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */,
 				27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */,
+				27EF5DC80D6C57A30024575B /* QuickLookSandvoxPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5983,6 +5990,7 @@
 				27AD539B0D6B3E8700883550 /* KTHTMLParser+CSS.m in Sources */,
 				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
+				27EF5DC90D6C57A30024575B /* QuickLookSandvoxPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
