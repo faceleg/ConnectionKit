@@ -39,7 +39,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 
 
-@interface KTDocSiteOutlineController ( Private )
+@interface KTDocSiteOutlineController (Private)
+- (void)setSiteOutline:(NSOutlineView *)outlineView;
+
 - (NSSet *)pages;
 - (void)addPagesObject:(KTPage *)aPage;
 - (void)removePagesObject:(KTPage *)aPage;
@@ -113,14 +115,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[myPages release];
 	
 	
-	if ( (nil != oSiteOutline) && (nil != [oSiteOutline dataSource]) )
-	{
-		[oSiteOutline setDataSource:nil];
-	}
-	if ( (nil != oSiteOutline) && (nil != [oSiteOutline delegate]) )
-	{
-		[oSiteOutline setDelegate:nil];
-	}
+	[self setSiteOutline:nil];
 	
 	
 	// Release remaining iVars
@@ -140,28 +135,28 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)siteOutlineDidLoad
 {	
 	// set up the Source outline
-	[oSiteOutline setTarget:oWindowController];
-	[oSiteOutline setDoubleAction:@selector(showInfo:)];
+	[[self siteOutline] setTarget:oWindowController];
+	[[self siteOutline] setDoubleAction:@selector(showInfo:)];
 	
 	// set up cell to show graphics
-	NSTableColumn *tableColumn = [oSiteOutline tableColumnWithIdentifier:@"displayName"];
+	NSTableColumn *tableColumn = [[self siteOutline] tableColumnWithIdentifier:@"displayName"];
 	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
 	[imageTextCell setEditable:YES];
 	//[imageTextCell setImagePosition:NSImageRight];
 	[tableColumn setDataCell:imageTextCell];
 	
 	// Causes a crash?
-	[oSiteOutline setIntercellSpacing:NSMakeSize(3.0, 1.0)];
+	[[self siteOutline] setIntercellSpacing:NSMakeSize(3.0, 1.0)];
 	
 	// set drag types and mask
 	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[[[NSApp delegate] bundleManager] allDragSourceAcceptedDragTypesForPagelets:NO]];
 	[dragTypes addObject:kKTOutlineDraggingPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardType];
-	[oSiteOutline registerForDraggedTypes:dragTypes];
-	[oSiteOutline setVerticalMotionCanBeginDrag:YES];
+	[[self siteOutline] registerForDraggedTypes:dragTypes];
+	[[self siteOutline] setVerticalMotionCanBeginDrag:YES];
 	
-	[oSiteOutline setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    [oSiteOutline setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
+	[[self siteOutline] setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+    [[self siteOutline] setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
 	
 	// update the selection from what was saved in document
 	NSIndexSet *lastSelectedRows = [[self document] lastSelectedRows];
@@ -170,15 +165,15 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		|| [lastSelectedRows isEqualToIndexSet:[NSIndexSet indexSetWithIndex:0]] )
 	{
 		// no selection exists, or just root selected
-		[oSiteOutline selectRow:0 byExtendingSelection:NO];
+		[[self siteOutline] selectRow:0 byExtendingSelection:NO];
 		// Kick start the root selection
 		[self outlineViewSelectionDidChange:nil];
 	}
 	else
 	{
-		[oSiteOutline expandItem:[[self document] root] expandChildren:YES];
-		[oSiteOutline selectRowIndexes:lastSelectedRows byExtendingSelection:NO];
-		if (0 == [oSiteOutline selectedRow])	// was that selection bogus, meaning selection is stil 0?
+		[[self siteOutline] expandItem:[[self document] root] expandChildren:YES];
+		[[self siteOutline] selectRowIndexes:lastSelectedRows byExtendingSelection:NO];
+		if (0 == [[self siteOutline] selectedRow])	// was that selection bogus, meaning selection is stil 0?
 		{
 			// If so, force an update since we wouldn't get it otherwise
 			[self outlineViewSelectionDidChange:nil];
@@ -193,7 +188,20 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (KTDocWindowController *)docWindowController { return oWindowController; }
 
-- (NSOutlineView *)siteOutline { return oSiteOutline; }
+- (NSOutlineView *)siteOutline { return siteOutline; }
+
+- (void)setSiteOutline:(NSOutlineView *)outlineView
+{
+	[[self siteOutline] setDataSource:nil];
+	[[self siteOutline] setDelegate:nil];
+	
+	[outlineView retain];
+	[siteOutline release];
+	siteOutline = outlineView;
+	
+	[outlineView setDataSource:self];
+	[outlineView setDelegate:self];
+}
 
 - (NSManagedObjectContext *)managedObjectContext { return myMOC; }
 
@@ -409,7 +417,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)reloadSiteOutline
 {
-	[oSiteOutline reloadData];
+	[[self siteOutline] reloadData];
 }
 
 /*	!!IMPORTANT!!
@@ -529,7 +537,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	else
 	{
-		id result = [NSString stringWithFormat:@"%i:%i", [oSiteOutline rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
+		id result = [NSString stringWithFormat:@"%i:%i", [[self siteOutline] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
 		return result;
 	}
 }
@@ -663,7 +671,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	
 	//if ( (item == [context root]) && ![[oSiteOutline selectedItems] containsObject:item] )
-	if ( (item == [[self document] root]) && ![[oSiteOutline selectedItems] containsObject:item] )
+	if ( (item == [[self document] root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
 	{
 		// draw a line to "separate" the root from its children
 		float width = [tableColumn width]*0.95;
@@ -696,7 +704,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// we'll build the tooltip based on defaults
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	if ( [ov isEqual:oSiteOutline] && [defaults boolForKey:@"ShowOutlineTooltips"] )
+	if ( [ov isEqual:[self siteOutline]] && [defaults boolForKey:@"ShowOutlineTooltips"] )
 	{
 		if ( [cell isKindOfClass:[NSTextFieldCell class]] ) 
 		{

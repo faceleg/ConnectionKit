@@ -57,10 +57,10 @@
 	id item;
 	while ( item = [e nextObject] )
 	{
-		[allRows addObject:[NSString stringWithFormat:@"%i", [oSiteOutline rowForItem:item]]];
+		[allRows addObject:[NSString stringWithFormat:@"%i", [[self siteOutline] rowForItem:item]]];
 		if ( ![self items:items containsParentOfItem:item] )
 		{
-			[parentRows addObject:[NSString stringWithFormat:@"%i", [oSiteOutline rowForItem:item]]];
+			[parentRows addObject:[NSString stringWithFormat:@"%i", [[self siteOutline] rowForItem:item]]];
 		}
 	}
 	
@@ -123,9 +123,9 @@
 	BOOL cameFromProgram = (nil != [info draggingSource]);
 	if (cameFromProgram)
 	{
-		if  ( [oSiteOutline isEqual:[info draggingSource]] )
+		if  ( [[self siteOutline] isEqual:[info draggingSource]] )
 		{
-			KTPage *firstDraggedItem = [oSiteOutline itemAtRow:[[allRows objectAtIndex:0] intValue]];
+			KTPage *firstDraggedItem = [[self siteOutline] itemAtRow:[[allRows objectAtIndex:0] intValue]];
 			// this should be a "local" drag
 			if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]] )
 			{
@@ -533,12 +533,12 @@
 				}
 			}
 		}
-		else if ( [proposedParent isEqual:[oSiteOutline itemAtRow:([oSiteOutline numberOfRows]-1)]] )
+		else if ( [proposedParent isEqual:[[self siteOutline] itemAtRow:([[self siteOutline] numberOfRows]-1)]] )
 		{
 			// if we're dropping below the last row of the outline, accept the drag
 			// but reposition the drop to be at the root level
 			// NB: we add 1 to account for the row taken up by "home"
-			[oSiteOutline setDropItem:nil 
+			[[self siteOutline] setDropItem:nil 
 					   dropChildIndex:([[[(KTDocument *)[self document] root] children] count]+1)];
 			return NSDragOperationCopy;
 		}
@@ -575,7 +575,7 @@
 	
 	if ( cameFromProgram )
 	{
-		if  ( [oSiteOutline isEqual:[info draggingSource]] )
+		if  ( [[self siteOutline] isEqual:[info draggingSource]] )
 		{
 			// drag is internal to document
 			if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]] )
@@ -589,7 +589,7 @@
 				id row;
 				while ( row = [e nextObject] )
 				{
-					[selectedItems addObject:[oSiteOutline itemAtRow:[row intValue]]];
+					[selectedItems addObject:[[self siteOutline] itemAtRow:[row intValue]]];
 				}
 				
 				// we use parentRows here as moving the parent rows should move all the children as well
@@ -609,7 +609,7 @@
 				e = [parentRows objectEnumerator];
 				while ( row = [e nextObject] )
 				{
-					[draggedItems addObject:[oSiteOutline itemAtRow:[row intValue]]];
+					[draggedItems addObject:[[self siteOutline] itemAtRow:[row intValue]]];
 				}
 				
 				
@@ -655,11 +655,11 @@
 				KTPage *selectedPage;
 				while ( selectedPage = [e nextObject] )
 				{
-					int selectedRow = [oSiteOutline rowForItem:selectedPage];
+					int selectedRow = [[self siteOutline] rowForItem:selectedPage];
 					[indexSet addIndex:selectedRow];
 				}
 				OFF((@"selecting indexes: %@", indexSet));
-				[oSiteOutline selectRowIndexes:indexSet byExtendingSelection:NO];
+				[[self siteOutline] selectRowIndexes:indexSet byExtendingSelection:NO];
 				
 				[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
 				
@@ -787,7 +787,7 @@
 	id row;
 	while ( row = [e nextObject] )
 	{
-		[items addObject:[oSiteOutline itemAtRow:[row intValue]]];
+		[items addObject:[[self siteOutline] itemAtRow:[row intValue]]];
 	}
 	
 	return [NSArray arrayWithArray:items];

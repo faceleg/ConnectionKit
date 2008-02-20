@@ -15,7 +15,7 @@
 @interface KTDocSiteOutlineController : NSObjectController
 {
 	IBOutlet KTDocWindowController	*oWindowController;
-	IBOutlet NSOutlineView			*oSiteOutline;
+	IBOutlet NSOutlineView			*siteOutline;
 	
 	@private
 	
