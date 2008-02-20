@@ -43,7 +43,7 @@ static KTPlaceholderController *sSharedPlaceholderController = nil;
 - (IBAction) doNew:(id)sender
 {
 	[[self window] orderOut:self];
-	[[NSApp delegate] newDocument:nil];
+	[[NSDocumentController sharedDocumentController] newDocument:nil];
 
 	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 						   withObject:nil

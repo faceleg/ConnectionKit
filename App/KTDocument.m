@@ -167,113 +167,134 @@
  */
 - (id)initWithType:(NSString *)type error:(NSError **)error
 {
- 	if (gLicenseViolation)
-	{
+ 	// Do nothing if the license is invalid
+	if (gLicenseViolation) {
 		NSBeep();
-		return nil;
+		*error = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
+		[self release];	return nil;
 	}
 	
-    if ( nil != [super initWithType:type error:error] )
-	{
-		// Init code only for new documents
-		KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		
-		// Make a new documentInfo to store document properties
-		KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
-		[self setDocumentInfo:documentInfo];
-		[self setDocumentID:[documentInfo valueForKey:@"siteID"]];
-		
-		NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
-		if (docProperties)
-		{
-			[documentInfo setValuesForKeysWithDictionary:docProperties];
-		}
-		
-		// make a new root
-		NSString *defaultRootIdentifier = [defaults stringForKey:@"DefaultRootPageBundleIdentifier"];
-		NSBundle *defaultRootBundle = [[KTElementPlugin pluginWithIdentifier:defaultRootIdentifier] bundle];
-		NSString *assertMessage = [NSString stringWithFormat:@"Unable to load default root bundle: %@", defaultRootIdentifier];
-		NSAssert((nil != defaultRootBundle), assertMessage);
-		// POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
-		[defaultRootBundle load];
-		
-		KTPage *root = [KTPage rootPageWithDocument:self bundle:defaultRootBundle];
-		NSAssert((nil != root), @"root page is nil!");
-		[self setRoot:root];
-		[[self documentInfo] setValue:root forKey:@"root"];
-		
-		// Create the site Master object
-		KTMaster *master = [NSEntityDescription insertNewObjectForEntityForName:@"Master" inManagedObjectContext:[self managedObjectContext]];
-		[root setValue:master forKey:@"master"];
-		
-		// Set the design
-		KTDesign *design = [[[[KTAppDelegate sharedInstance] designManager] sortedDesigns] firstObject];
-		[master setDesign:design];		
-
-		// set up root properties that used to come from document defaults
-		[[root master] setValue:[defaults valueForKey:@"author"] forKey:@"author"];
-		[root setBool:YES forKey:@"isCollection"];
-		
-		[[root master] setValue:[self language] forKey:@"language"];
-		[[root master] setValue:[self charset] forKey:@"charset"];
-		
-		NSString *subtitle = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML"
-																	language:[master valueForKey:@"language"]
-			fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML",
-													   nil,
-													   [NSBundle mainBundle],
-													   @"This is the subtitle for your site.",
-													   @"Default introduction statement for a page")];
-		[master setValue:subtitle forKey:@"siteSubtitleHTML"];
-		
-		// set initial required bundles
-		[self setRequiredBundlesIdentifiers:[NSSet setWithObject:[defaultRootBundle bundleIdentifier]]];
-        
-// FIXME: we should load up the properties from a KTPreset
-		[root setBool:NO forKey:@"includeTimestamp"];
-		[root setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];
-		[root setBool:NO forKey:@"collectionSyndicate"];
-		[root setInteger:0 forKey:@"collectionMaxIndexItems"];
-		[root setBool:NO forKey:@"collectionShowPermanentLink"];
-		[root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		
-		[root setTitleText:[self defaultRootPageTitleText]];
-		
-		// Make the initial Sandvox badge
-		NSString *initialBadgeBundleID = [defaults objectForKey:@"DefaultBadgeBundleIdentifier"];
-		if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-		{
-			KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
-			if (badgePlugin)
-			{
-				KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
-				[pagelet setPrefersBottom:YES];
-			}
-		}
-		
-		NSString *defaultRootIndexIdentifier = [defaults stringForKey:@"DefaultRootIndexBundleIdentifier"];
-		if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
-		{
-			NSBundle *bundle = [[KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier] bundle];
-			if (nil != bundle)
-			{
-				[root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
-				
-				Class indexToAllocate = [NSBundle principalClassForBundle:bundle];
-				KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:[KTAppPlugin pluginWithBundle:bundle]] autorelease];
-				[root setIndex:theIndex];
-			}
-		}
-		
-		[self setLocalTransferController:nil];		// make sure to clear old settings after we have some host properties
-		[self setRemoteTransferController:nil];
-		[self setExportTransferController:nil];
-		
-		// no snapshot/backup on opening new document
-		mySnapshotOrBackupUponFirstSave = KTNoBackupOnOpening;
-    }
 	
-    return self;
+	// Ask the user for the location and home page type of the document
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setTitle:NSLocalizedString(@"New Site", @"Save Panel Title")];
+	[savePanel setPrompt:NSLocalizedString(@"Create", @"Create Button")];
+	[savePanel setCanSelectHiddenExtension:YES];
+	[savePanel setRequiredFileType:kKTDocumentExtension];
+	[savePanel setCanCreateDirectories:YES];
+	
+	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
+	[savePanel setAccessoryView:oNewDocAccessoryView];
+	
+	int saveResult = [savePanel runModalForDirectory:nil file:nil];
+		
+		
+	
+	
+	// Create the document
+	[super initWithType:type error:error];
+	
+	
+    
+	// Init code only for new documents
+	KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	// Make a new documentInfo to store document properties
+	KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
+	[self setDocumentInfo:documentInfo];
+	[self setDocumentID:[documentInfo valueForKey:@"siteID"]];
+	
+	NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
+	if (docProperties)
+	{
+		[documentInfo setValuesForKeysWithDictionary:docProperties];
+	}
+	
+	// make a new root
+	NSString *defaultRootIdentifier = [defaults stringForKey:@"DefaultRootPageBundleIdentifier"];
+	NSBundle *defaultRootBundle = [[KTElementPlugin pluginWithIdentifier:defaultRootIdentifier] bundle];
+	NSString *assertMessage = [NSString stringWithFormat:@"Unable to load default root bundle: %@", defaultRootIdentifier];
+	NSAssert((nil != defaultRootBundle), assertMessage);
+	// POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
+	[defaultRootBundle load];
+	
+	KTPage *root = [KTPage rootPageWithDocument:self bundle:defaultRootBundle];
+	NSAssert((nil != root), @"root page is nil!");
+	[self setRoot:root];
+	[[self documentInfo] setValue:root forKey:@"root"];
+	
+	// Create the site Master object
+	KTMaster *master = [NSEntityDescription insertNewObjectForEntityForName:@"Master" inManagedObjectContext:[self managedObjectContext]];
+	[root setValue:master forKey:@"master"];
+	
+	// Set the design
+	KTDesign *design = [[[[KTAppDelegate sharedInstance] designManager] sortedDesigns] firstObject];
+	[master setDesign:design];		
+
+	// set up root properties that used to come from document defaults
+	[[root master] setValue:[defaults valueForKey:@"author"] forKey:@"author"];
+	[root setBool:YES forKey:@"isCollection"];
+	
+	[[root master] setValue:[self language] forKey:@"language"];
+	[[root master] setValue:[self charset] forKey:@"charset"];
+	
+	NSString *subtitle = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML"
+																language:[master valueForKey:@"language"]
+		fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML",
+												   nil,
+												   [NSBundle mainBundle],
+												   @"This is the subtitle for your site.",
+												   @"Default introduction statement for a page")];
+	[master setValue:subtitle forKey:@"siteSubtitleHTML"];
+	
+	// set initial required bundles
+	[self setRequiredBundlesIdentifiers:[NSSet setWithObject:[defaultRootBundle bundleIdentifier]]];
+	
+// FIXME: we should load up the properties from a KTPreset
+	[root setBool:NO forKey:@"includeTimestamp"];
+	[root setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];
+	[root setBool:NO forKey:@"collectionSyndicate"];
+	[root setInteger:0 forKey:@"collectionMaxIndexItems"];
+	[root setBool:NO forKey:@"collectionShowPermanentLink"];
+	[root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		
+	[root setTitleText:[self defaultRootPageTitleText]];
+	
+	// Make the initial Sandvox badge
+	NSString *initialBadgeBundleID = [defaults objectForKey:@"DefaultBadgeBundleIdentifier"];
+	if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
+	{
+		KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
+		if (badgePlugin)
+		{
+			KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
+			[pagelet setPrefersBottom:YES];
+		}
+	}
+	
+	NSString *defaultRootIndexIdentifier = [defaults stringForKey:@"DefaultRootIndexBundleIdentifier"];
+	if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
+	{
+		NSBundle *bundle = [[KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier] bundle];
+		if (nil != bundle)
+		{
+			[root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
+			
+			Class indexToAllocate = [NSBundle principalClassForBundle:bundle];
+			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:[KTAppPlugin pluginWithBundle:bundle]] autorelease];
+			[root setIndex:theIndex];
+		}
+	}
+	
+	[self setLocalTransferController:nil];		// make sure to clear old settings after we have some host properties
+	[self setRemoteTransferController:nil];
+	[self setExportTransferController:nil];
+	
+	// no snapshot/backup on opening new document
+	mySnapshotOrBackupUponFirstSave = KTNoBackupOnOpening;
+   
+	
+	return self;
 }
 
 /*! initializer for opening an existing document */
@@ -348,6 +369,8 @@
 	[self cancelAndInvalidateAutosaveTimers]; // invalidates and releases myAutosaveTimer
     [myLastSavedTime release]; myLastSavedTime = nil;
     [mySaveLock release]; mySaveLock = nil;
+	
+	[oNewDocAccessoryView release];
 		
     [self setDocumentInfo:nil];
 	[self setDocumentID:nil];

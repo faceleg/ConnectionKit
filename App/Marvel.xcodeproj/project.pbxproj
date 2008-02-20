@@ -300,6 +300,7 @@
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
 		27EF5DC80D6C57A30024575B /* QuickLookSandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5DC60D6C57A30024575B /* QuickLookSandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27EF5DC90D6C57A30024575B /* QuickLookSandvoxPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5DC70D6C57A30024575B /* QuickLookSandvoxPlugin.m */; };
+		27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27EF5F260D6C94BF0024575B /* NewDocumentAccessoryView.nib */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1682,6 +1683,7 @@
 		27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = "<group>"; };
 		27EF5DC60D6C57A30024575B /* QuickLookSandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuickLookSandvoxPlugin.h; path = ../Code/QuickLook/QuickLookSandvoxPlugin.h; sourceTree = SOURCE_ROOT; };
 		27EF5DC70D6C57A30024575B /* QuickLookSandvoxPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuickLookSandvoxPlugin.m; path = ../Code/QuickLook/QuickLookSandvoxPlugin.m; sourceTree = SOURCE_ROOT; };
+		27EF5F280D6C94D50024575B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
 		27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingSettings.h; sourceTree = "<group>"; };
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
 		27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTTransferController+Internal.h"; sourceTree = "<group>"; };
@@ -3442,6 +3444,7 @@
 				CE2FE58008E8EF2C00C12D48 /* News.nib */,
 				CE7779C60AE4945D002E6844 /* Placeholder.nib */,
 				CEA234C1086B6EC5007A4C2D /* Prefs.nib */,
+				27EF5F260D6C94BF0024575B /* NewDocumentAccessoryView.nib */,
 			);
 			name = Localized;
 			sourceTree = "<group>";
@@ -5509,6 +5512,7 @@
 				3CF948BC0D624A1100B1C83D /* getFirefoxFrontmostPage.scpt in Resources */,
 				3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */,
 				3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */,
+				27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6271,6 +6275,14 @@
 				27AA102C0CDA06C6001D6B9B /* en */,
 			);
 			name = MissingMedia.nib;
+			sourceTree = "<group>";
+		};
+		27EF5F260D6C94BF0024575B /* NewDocumentAccessoryView.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27EF5F280D6C94D50024575B /* en */,
+			);
+			name = NewDocumentAccessoryView.nib;
 			sourceTree = "<group>";
 		};
 		2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */ = {

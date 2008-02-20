@@ -50,6 +50,11 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 @interface KTDocument : NSPersistentDocument
 {
+	// New docs
+	IBOutlet NSView		*oNewDocAccessoryView;
+	
+	@private
+	
 	KTManagedObjectContext		*myManagedObjectContext;
 	NSManagedObjectModel		*myManagedObjectModel;
 	KTDocumentInfo				*myDocumentInfo;

@@ -2510,7 +2510,7 @@ FAILURE:
 	}
 }
 
-- (IBAction)newDocument:(id)sender
+- (IBAction)XnewDocument:(id)sender
 {
 	@try
 	{
