@@ -30,8 +30,16 @@
 	
 	
 	// Always include the global sandvox CSS.
-	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-	[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePathRelativeToCurrentPage:globalCSSFile] title:nil]];
+	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+	{
+		NSString *globalCSSFile = [[NSBundle mainBundle] quicklookDataForFile:@"Contents/Resources/sandvox.css"];
+		[stylesheetLines addObject:[self stylesheetLink:globalCSSFile title:nil]];
+	}
+	else
+	{
+		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
+		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePathRelativeToCurrentPage:globalCSSFile] title:nil]];
+	}
 	
 			
 	// Then the base design's CSS file.
