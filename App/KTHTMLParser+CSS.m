@@ -65,17 +65,18 @@
 	}
 	
 	
-	// If we're in preview mode...
+	// If we're in preview mode include addition edting CSS
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
 	{
-		// ...include the additional editing CSS
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
 																			 ofType:@"txt"];
-																		 
 		[stylesheetLines addObject:[self stylesheetLink:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil]];
-		
-		
-		// And inline stylesheet for master-specific properties
+	}
+	
+	
+	// For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
+	if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+	{
 		NSString *masterCSS = [[[self currentPage] master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
 		if (masterCSS)
 		{
@@ -84,7 +85,6 @@
 	}
 	else
 	{
-		// Proper stylesheet for master-specific properties
 		NSString *masterCSSPath = [[[self currentPage] master] publishedMasterCSSPathRelativeToSite];
 		NSString *pagePath = [[self currentPage] publishedPathRelativeToSite];
 		
@@ -94,6 +94,16 @@
 		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil]];
 	}
 	
+	
+	// Don't bother to include print.css for Quick Look
+	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
+	{
+		NSString *printCSS = [self pathToDesignFile:@"print.css"];
+		if (printCSS) [stylesheetLines addObject:[self stylesheetLink:printCSS title:nil]];
+	}
+	
+	
+	// Tidy up
 	NSString *result = [stylesheetLines componentsJoinedByString:@"\r"];
 	return result;
 }

@@ -186,13 +186,6 @@
 
 - (NSString *)cssClassName { return [[self plugin] pageCSSClassName]; }
 
-/*!	Generate path to print CSS */
-- (NSString *)printCSSURLPath
-{
-	NSString *result = [[self designDirectoryPath] stringByAppendingPathComponent:@"print.css"];
-	return result;
-}
-
 #pragma mark -
 #pragma mark Other
 

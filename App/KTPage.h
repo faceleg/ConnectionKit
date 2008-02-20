@@ -305,7 +305,6 @@
 - (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
 
 - (NSString *)javascriptURLPath;
-- (NSString *)printCSSURLPath;
 - (NSString *)RSSRepresentation;
 - (NSString *)archivesRepresentation;
 - (BOOL)isNewPage;
