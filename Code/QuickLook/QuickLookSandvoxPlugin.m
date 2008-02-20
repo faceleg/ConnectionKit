@@ -11,6 +11,7 @@
 
 @interface QuickLookSandvoxPlugin (Private)
 
++ (void)searchForPlugins;
 + (Class)registeredPluginClassForFileExtension:(NSString *)extension;
 
 + (QuickLookSandvoxPlugin *)pluginForPath:(NSString *)path;
@@ -64,8 +65,16 @@
  */
 + (id)pluginWithIdentifier:(NSString *)identifier
 {
-	QuickLookSandvoxPlugin *result = nil;
+	// Ensure all reasonably found plugins have been loaded
+	static BOOL sHaveSearchedForPlugins;
+	if (!sHaveSearchedForPlugins)
+	{
+		[self searchForPlugins];
+		sHaveSearchedForPlugins = YES;
+	}
 	
+	// Use an existing plugin object when possible
+	QuickLookSandvoxPlugin *result = nil;
 	QuickLookSandvoxPlugin *plugin = [self registeredPluginForIdentifier:identifier];
 	if (!plugin)
 	{
@@ -82,7 +91,7 @@
 }
 
 #pragma mark -
-#pragma mark Class Registration
+#pragma mark File Extensions
 
 /*	We cheat here and always return self. The more intelligent subclass, KTAppPlugin will actually
  *	return the right class.
@@ -96,8 +105,7 @@
 	{
 		pluginExtensions = [[NSSet alloc] initWithObjects:@"svxDesign",
 														  @"svxElement",
-														  @"svxIndex",
-														  @"svxDataSource", nil];
+														  @"svxIndex", nil];
 	}
 	
 	if ([pluginExtensions containsObject:extension])
@@ -106,6 +114,28 @@
 	}
 	
 	return result;
+}
+
+/*	Run through all plugin search paths and load as many plugins as possible
+ */
++ (void)searchForPlugins
+{
+	NSArray *pluginSearchPaths = [self pluginSearchPaths];
+	NSEnumerator *searchPathEnumerator = [pluginSearchPaths objectEnumerator];
+	NSString *aSearchPath;
+	
+	while (aSearchPath = [searchPathEnumerator nextObject])
+	{
+		NSEnumerator *pathContentsEnumerator =
+			[[[NSFileManager defaultManager] directoryContentsAtPath:aSearchPath] objectEnumerator];
+		NSString *aFilename;
+		
+		while (aFilename = [pathContentsEnumerator nextObject])
+		{
+			NSString *aPath = [aSearchPath stringByAppendingPathComponent:aFilename];
+			[self pluginWithPath:aPath];
+		}
+	}
 }
 
 #pragma mark -
@@ -192,8 +222,12 @@
 			[buffer addObject:sandvoxPath];
 		}
 		
-		[buffer addObject:[[NSBundle mainBundle] builtInPlugInsPath]];
-		[buffer addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"]];
+		// Since the plugin is running insied QuickLook, +mainBundle does not work.
+		NSString *sandvoxPath =
+			[[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"com.karelia.Sandvox"];
+		
+		[buffer addObject:[[NSBundle bundleWithPath:sandvoxPath] builtInPlugInsPath]];
+		[buffer addObject:[sandvoxPath stringByAppendingPathComponent:@"Contents/Designs"]];
 		
 		result = [buffer copy];
 	}

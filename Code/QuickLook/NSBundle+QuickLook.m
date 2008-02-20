@@ -19,7 +19,7 @@
  */
 + (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier
 {
-	NSBundle *result = [QuickLookSandvoxPlugin pluginWithIdentifier:identifier];
+	NSBundle *result = [[QuickLookSandvoxPlugin pluginWithIdentifier:identifier] bundle];
 	
 	if (!result)
 	{
