@@ -8,8 +8,36 @@
 
 #import "NSBundle+QuickLook.h"
 
+#import "QuickLookSandvoxPlugin.h"
 
-@implementation NSBundle ( QuickLook )
+
+@implementation NSBundle (QuickLook)
+
+/*	Supplements the default NSBundle behavior by:
+ *		A) Using QuickLookSandvoxPlugin whenever possible.
+ *		B) Also trying NSWorkspace
+ */
++ (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier
+{
+	NSBundle *result = [QuickLookSandvoxPlugin pluginWithIdentifier:identifier];
+	
+	if (!result)
+	{
+		result = [self bundleWithIdentifier:identifier];
+	}
+	
+	if (!result)
+	{
+		NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:identifier];
+		if (path)
+		{
+			result = [self bundleWithPath:path];
+		}
+	}
+	
+	return result;
+}
+
 
 - (NSString *)version;				// specified as CFBundleShortVersionString
 {

@@ -7,6 +7,7 @@
 #import "KTUtilitiesForQuickLook.h"
 
 #import "BDAlias+QuickLook.h"
+#import "NSBundle+QuickLook.h"
 #import "NSCharacterSet+QuickLook.h"
 #import "NSString+QuickLook.h"
 
@@ -75,7 +76,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 			NSArray *pathComponents = [aURIPath pathComponents];
 			
 			NSString *bundleIdentifier = [pathComponents objectAtIndex:0];
-			NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleIdentifier];
+			NSBundle *bundle = [NSBundle quickLookBundleWithIdentifier:bundleIdentifier];
 			if (bundle)
 			{
 				NSArray *subPathComponents = [pathComponents subarrayWithRange:NSMakeRange(1, [pathComponents count] - 1)];

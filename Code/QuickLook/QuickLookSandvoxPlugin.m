@@ -94,7 +94,10 @@
 	static NSSet *pluginExtensions;
 	if (!pluginExtensions)
 	{
-		pluginExtensions = [[NSSet alloc] initWithObjects:@"svxDesign", @"svxElement", @"svxIndex", @"svxDataSource"];
+		pluginExtensions = [[NSSet alloc] initWithObjects:@"svxDesign",
+														  @"svxElement",
+														  @"svxIndex",
+														  @"svxDataSource", nil];
 	}
 	
 	if ([pluginExtensions containsObject:extension])

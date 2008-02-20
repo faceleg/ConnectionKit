@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface NSBundle ( QuickLook )
+@interface NSBundle (QuickLook)
+
++ (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier;
 
 - (NSString *)version;				// specified as CFBundleShortVersionString
 - (NSString *)minimumAppVersion;
