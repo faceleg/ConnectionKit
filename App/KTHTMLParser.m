@@ -11,7 +11,11 @@
 #import "Debug.h"
 #import "KTDocument.h"	// for constants, methods
 #import "KTMaster.h"
+
 #import "KTMediaManager.h"
+#import "KTInDocumentMediaFile.h"
+#import "KTExternalMediaFile.h"
+
 #import "KTSummaryWebViewTextBlock.h"
 
 #import "BDAlias+QuickLook.h"
@@ -1097,17 +1101,35 @@ static unsigned sLastParserID;
 	NSString *infoRequested = [parameters objectForKey:@"info"];
 	if ([infoRequested isEqualToString:@"path"])
 	{
-		if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+		switch ([self HTMLGenerationPurpose])
 		{
-			NSString *path = [mediaFile currentPath];
-			if (path) {
-				result = [[NSURL fileURLWithPath:path] absoluteString];
+			case kGeneratingPreview:
+			{
+				NSString *path = [mediaFile currentPath];
+				if (path) result = [[NSURL fileURLWithPath:path] absoluteString];
+				break;
 			}
-		}
-		else
-		{
-			upload = [mediaFile defaultUpload];
-			result = [upload publishedPathRelativeToPage:[self currentPage]];
+			
+			case kGeneratingQuickLookPreview:
+			{
+				// External media uses an alias. Internal media a relative path
+				if ([mediaFile isKindOfClass:[KTExternalMediaFile class]])
+				{
+					result = [[(KTExternalMediaFile *)mediaFile alias] quickLookPseudoTag];
+				}
+				else
+				{
+					result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>", [mediaFile valueForKey:@"filename"]];
+				}
+				break;
+			}
+			
+			default:
+			{
+				upload = [mediaFile defaultUpload];
+				result = [upload publishedPathRelativeToPage:[self currentPage]];
+				break;
+			}
 		}
 	}
 	else if ([infoRequested isEqualToString:@"width"])

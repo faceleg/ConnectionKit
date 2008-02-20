@@ -24,7 +24,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
 
 	NSString *docPath = [((NSURL *)url) path];
-	//NSString *sitePath = [docPath stringByAppendingPathComponent:@"Site"];
+	NSString *mediaPath = [[docPath stringByAppendingPathComponent:@"Site"] stringByAppendingPathComponent:@"_Media"];
 	
 	NSString *previewPath = [[docPath stringByAppendingPathComponent:@"QuickLook"] stringByAppendingPathComponent:@"preview.html"];
 	if (![[NSFileManager defaultManager] fileExistsAtPath:previewPath])
@@ -39,12 +39,6 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSData *htmlData = [NSData dataWithContentsOfFile:previewPath];
 	NSString *htmlString = [NSString stringWithHTMLData:htmlData];
 	NSMutableString *buffer = [NSMutableString stringWithCapacity:[htmlString length]];
-	
-	/*
-	NSString *basePathString = [NSString stringWithFormat:@"<head><base href=\"%@\" />", 
-								[[NSURL fileURLWithPath:sitePath] absoluteString]];
-	(void) [buffer replaceOccurrencesOfString:@"<head>" withString:basePathString options:NSCaseInsensitiveSearch range:NSMakeRange(0, [buffer length])];
-	*/
 	
 	
 	// Search for <!svxdata> pseudo-tags
@@ -91,6 +85,11 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 			BDAlias *alias = [BDAlias aliasWithQuickLookPseudoTagPath:aURIPath];
 			NSString *path = [alias fullPath];
 			if (path) [buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
+		}
+		else if ([aURIScheme isEqualToString:@"indocumentmedia"])
+		{
+			NSString *path = [mediaPath stringByAppendingPathComponent:aURIPath];
+			[buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
 		}
 		
 		// Make sure we're ready to go round the loop again
