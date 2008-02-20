@@ -331,5 +331,26 @@
 	myLastSavedDocumentWeakRef = aDocument;
 }
 
+/*	We override the default behavior to not show the document initially
+ */
+- (IBAction)newDocument:(id)sender
+{
+	// Create the document and then close it
+	NSError *error = nil;
+	KTDocument *document = [self openUntitledDocumentAndDisplay:NO error:&error];
+	
+	if (document)
+	{
+		NSURL *docURL = [document fileURL];
+		[document close];
+		
+		// Open the doc again at the end of the runloop
+		[[NSApp delegate] performSelector:@selector(openDocumentWithContentsOfURL:) withObject:docURL afterDelay:0.0];
+	}
+	else if (error)
+	{
+		[NSApp presentError:error];
+	}
+}
 
 @end

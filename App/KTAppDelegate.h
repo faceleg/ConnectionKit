@@ -252,7 +252,6 @@ extern NSThread *gMainThread;
 - (KTDocument *)documentWithID:(NSString *)anID;
 
 
-- (IBAction)newDocument:(id)sender;
 - (IBAction)openSampleDocument:(id)sender;
 
 - (IBAction)orderFrontLicensingPanel:(id)sender;
