@@ -272,7 +272,7 @@ TO DO:
 			&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
 		{
 			NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
-			if (anAction == @selector(addPage:)) {
+			if (anAction == @selector(addPage:) || anAction == nil) {
 				pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
 			}
 			else if (anAction == @selector(addPagelet:)) {
@@ -301,7 +301,7 @@ TO DO:
 		NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
 		
 		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
-		if (anAction == @selector(addPage:)) {
+		if (anAction == @selector(addPage:) || anAction == nil) {
 			pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
 		}
 		else if (anAction == @selector(addPagelet:)) {
