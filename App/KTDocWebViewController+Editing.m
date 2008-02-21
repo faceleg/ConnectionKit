@@ -582,29 +582,23 @@ through.  We seem to do OK by filtering later.
 
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title
 {
-    // By default the item is disabled and reads "Create Link"
-	BOOL result = NO;
-	*title = TOOLBAR_CREATE_LINK;
+    *title = TOOLBAR_CREATE_LINK;
 	
+	if (![self currentTextEditingBlock]) return NO;		// Can't create a link if nothing is being edited
+    
 	
-	if ([[self windowController] selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:NO])
-    {
-        NSDictionary *elementDictionary = [[self windowController] contextElementInformation];
-        
-        if ([elementDictionary objectForKey:WebElementLinkURLKey])
-        {
-            // If a link is selected enable the item and title it "Edit Link"
-			result = YES;
+	// A discontinuous selection must be to create a link
+	DOMRange *selection = [[self webView] selectedDOMRange];
+	if ([selection startContainer] == [selection endContainer])
+	{
+		// Check for an existing link containing the selection, that will mean we can edit it.
+		if ([[selection startContainer] isContainedByElementOfClass:[DOMHTMLAnchorElement class]])
+		{
 			*title = TOOLBAR_EDIT_LINK;
-        }
-        else if ([elementDictionary objectForKey:WebElementDOMNodeKey])
-        {
-            // Allow the user to create links
-            result = YES;
-        }
+		}
 	}
 	
-	return result;
+	return YES;
 }
 
 #pragma mark -
