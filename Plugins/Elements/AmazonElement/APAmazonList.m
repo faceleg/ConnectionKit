@@ -291,7 +291,7 @@
  */
 - (AmazonListType)listTypeToTryAfterType:(AmazonListType)previousType
 {
-	AmazonListType result = 0;
+	AmazonListType result;
 	
 	switch (previousType)
 	{
@@ -308,6 +308,10 @@
 			}
 			break;
 		}
+		
+		default:
+			result = 0;
+			break;
 	}
 	
 	return result;
