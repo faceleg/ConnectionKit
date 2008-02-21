@@ -46,7 +46,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSString *aURIScheme;	NSString *aURIPath;
 	NSCharacterSet *tagEndCharactersSet = [NSCharacterSet svxDataPseudoTagEndCharacterSet];
 	
-	while (![scanner isAtEnd])
+	while (![scanner isAtEnd] && !(QLPreviewRequestIsCancelled(preview)))
 	{
 		// Look for the tag
 		[scanner scanUpToString:@"<!svxdata" intoString:&aString];
@@ -54,14 +54,17 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		
 		if ([scanner isAtEnd]) break;
 		
+		
 		// Scan up to the URL information
 		[scanner scanString:@"<!svxdata" intoString:NULL];
 		[scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:NULL];
+		
 		
 		// Scan the URI info
 		[scanner scanUpToString:@":" intoString:&aURIScheme];
 		[scanner setScanLocation:([scanner scanLocation] + 1)];
 		[scanner scanUpToCharactersFromSet:tagEndCharactersSet intoString:&aURIPath];
+		
 		
 		// Process the URI
 		if ([aURIScheme isEqualToString:@"bundle"])
@@ -98,13 +101,14 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 			[buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
 		}
 		
+		
 		// Make sure we're ready to go round the loop again
 		[scanner scanUpToString:@">" intoString:NULL];
 		[scanner scanString:@">" intoString:NULL];
 	}
 	
-	[scanner release];
-	
+	[scanner release];	// Tidy up after scanning
+	if (QLPreviewRequestIsCancelled(preview)) return noErr;
 	
 	
 	// Intercept remote images and ... replace with a gray image or something?
