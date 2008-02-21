@@ -1118,18 +1118,8 @@ static unsigned sLastParserID;
 			}
 			
 			case kGeneratingQuickLookPreview:
-			{
-				// External media uses an alias. Internal media a relative path
-				if ([mediaFile isKindOfClass:[KTExternalMediaFile class]])
-				{
-					result = [[(KTExternalMediaFile *)mediaFile alias] quickLookPseudoTag];
-				}
-				else
-				{
-					result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>", [mediaFile valueForKey:@"filename"]];
-				}
+				result = [mediaFile quickLookPseudoTag];
 				break;
-			}
 			
 			default:
 			{

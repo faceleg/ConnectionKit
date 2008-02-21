@@ -10,6 +10,7 @@
 
 #import "NSManagedObject+KTExtensions.h"
 #import "BDAlias.h"
+#import "BDAlias+QuickLook.h"
 
 
 @implementation KTExternalMediaFile
@@ -49,6 +50,12 @@
 		result = nil;
 	}
 	
+	return result;
+}
+
+- (NSString *)quickLookPseudoTag
+{
+	NSString *result = [[self alias] quickLookPseudoTag];
 	return result;
 }
 

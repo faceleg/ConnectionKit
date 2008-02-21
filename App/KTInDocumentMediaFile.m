@@ -101,4 +101,11 @@
 	}
 }
 
+- (NSString *)quickLookPseudoTag
+{
+	NSString *result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>",
+												  [self filename]];
+	return result;
+}
+
 @end

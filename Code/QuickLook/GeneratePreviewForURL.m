@@ -111,6 +111,9 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	if (QLPreviewRequestIsCancelled(preview)) return noErr;
 	
 	
+	
+	
+	
 	// Intercept remote images and ... replace with a gray image or something?
 	buffer = (NSMutableString *) [buffer replaceAllTextBetweenString:@"src=\"http://" andString:@"\"" fromDictionary:[NSDictionary dictionary]];
 	[buffer replaceOccurrencesOfString:@"src=\"http://" withString:@"src=\"cid:gray.gif" options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];

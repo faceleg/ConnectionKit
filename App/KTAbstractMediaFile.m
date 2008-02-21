@@ -116,6 +116,14 @@
 	return result;
 }
 
+/*	Subclasses implement this to return a <!svxData> pseudo-tag for Quick Look previews
+ */
+- (NSString *)quickLookPseudoTag
+{
+	[self subclassResponsibility:_cmd];
+	return nil;
+}
+
 + (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize
 {
 	// Figure the approrpriate scaling factor
