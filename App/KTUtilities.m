@@ -356,7 +356,6 @@ Doesn't seem to really return anything useful anymore.  There may be no way to g
                 KTAbstractHTMLPlugin *plugin = [KTAppPlugin pluginWithPath:pluginPath];
                 if (plugin) 
 				{
-					[[plugin bundle] principalClass]; // fix for CoreData via bbum WWDC 2005
 					NSString *identifier = [plugin identifier];
 					if (nil == identifier)
 					{
