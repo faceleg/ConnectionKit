@@ -8,13 +8,23 @@
 
 #import "KTDocSiteOutlineController.h"
 
-#import <Sandvox.h>
-#import "KTDocWindowController.h"
+#import "Debug.h"
+#import "KTAbstractPlugin.h"
+#import "KTAppDelegate.h"
+#import "KTBundleManager.h"
+#import "KTDocument.h"
 #import "KTDocWebViewController.h"
+#import "KTDocWindowController.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
 #import "KTMaster.h"
+#import "KTPage.h"
+
+#import "NSAttributedString+Karelia.h"
+#import "NSDate+Karelia.h"
+#import "NSOutlineView+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 
 #define LARGE_ICON_CELL_HEIGHT	34.00

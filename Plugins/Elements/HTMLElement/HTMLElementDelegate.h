@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 
 // NOTE: THIS IS ALMOST THE SAME AS HTMLPAGEDELEGATE --- 
 // TODO: UNIFY THIS SOMEHOW.

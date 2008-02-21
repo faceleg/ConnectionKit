@@ -11,7 +11,8 @@
 
 #import "KTMediaManager+Internal.h"
 #import "KTExternalMediaFile.h"
-
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
 
 @implementation KTMissingMediaArrayController
 

@@ -17,7 +17,10 @@
 
 #import "KTImageScalingSettings.h"
 #import "BDAlias.h"
-
+#import "KTDocument.h"
+#import "NSString+Karelia.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 @interface KTMediaContainer (Private)
 

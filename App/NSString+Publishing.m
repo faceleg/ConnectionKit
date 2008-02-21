@@ -8,6 +8,10 @@
 
 #import "NSString+Publishing.h"
 
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
+#import "Registration.h"
+
 
 @implementation NSString (Publishing)
 

@@ -10,8 +10,14 @@
 
 #import "KTElementPlugin.h"
 #import "KTMaster.h"
+#import "KTMediaContainer.h"
+#import "KTPage.h"
 #import "NSObject+PerformOnMainThread.h"
-
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "KTAbstractMediaFile.h"
+#import "NSImage+Karelia.h"
+#import "KTDocument.h"
+#import "NSArray+Karelia.h"
 
 @interface KTDocSiteOutlineController (IconsPrivate)
 

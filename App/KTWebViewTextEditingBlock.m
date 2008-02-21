@@ -8,12 +8,16 @@
 
 #import "KTWebViewTextEditingBlock.h"
 
-#import "KTDocWindowController.h"
-#import "KTWeakReferenceMutableDictionary.h"
+#import "Debug.h"
 
 #import "DOM+KTWebViewController.h"
+#import "DOMNode+KTExtensions.h"
 
+#import "KTDocWindowController.h"
+#import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 
 
 @interface KTWebViewTextEditingBlock (Private)

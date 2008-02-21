@@ -53,11 +53,15 @@
 #import "KTTransferController.h"
 #import "KTTransferController+Internal.h"
 
+#import "Debug.h"
+
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTCircularProgressCell.h"
-#import <Sandvox.h>
+
+#import "KTPage.h"
+
 #import "KTDesign.h"
 #import "KTDesignManager.h"
 #import "KTDocWindowController.h"
@@ -67,12 +71,27 @@
 #import "KTInfoWindowController.h"
 #import "KTMaster.h"
 #import "KTTranscriptController.h"
+#import "KTUtilities.h"
+#import "NSWorkspace+Karelia.h"
+#import "NSThread+Karelia.h"
+#import "NSString+Karelia.h"
+
+#import "KTMediaContainer.h"
+
+#import "KTAbstractMediaFile.h"
+
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+
+#import "NSData+Karelia.h"
+#import "NSHelpManager+KTExtensions.h"
+#import "NSBundle+Karelia.h"
+#import "NSApplication+Karelia.h"
 
 #import "NSObject+PerformOnMainThread.h"
 #import "NSString+Publishing.h"
 #import "NSString-Utilities.h"
 
-#import "SandvoxPrivate.h"
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
 #import <Growl/Growl.h>

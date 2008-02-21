@@ -11,6 +11,7 @@
 #import "Debug.h"
 #import "KTDocument.h"	// for constants, methods
 #import "KTMaster.h"
+#import "KTPage.h"
 
 #import "KTMediaManager.h"
 #import "KTInDocumentMediaFile.h"
@@ -19,8 +20,14 @@
 #import "KTSummaryWebViewTextBlock.h"
 
 #import "BDAlias+QuickLook.h"
+#import "NSBundle+Karelia.h"
+#import "NSCharacterSet+Karelia.h"
+#import "NSIndexPath+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "KTMediaContainer.h"
 
 @interface KTHTMLParser (Private)
 

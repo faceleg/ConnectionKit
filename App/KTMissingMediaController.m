@@ -11,6 +11,9 @@
 #import "KTAbstractMediaFile.h"
 #import "KTExternalMediaFile.h"
 #import "KTMediaManager+Internal.h"
+#import "NSArray+Karelia.h"
+#import "NSHelpManager+Karelia.h"
+
 #import "BDAlias.h"
 
 

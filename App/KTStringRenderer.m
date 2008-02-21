@@ -8,7 +8,7 @@
 
 #import "KTStringRenderer.h"
 #import <OpenGL/CGLMacro.h>
-#import <Sandvox.h>
+#import "NSImage+Karelia.h"
 
 static NSMutableDictionary *sRendererDictionary = nil;
 

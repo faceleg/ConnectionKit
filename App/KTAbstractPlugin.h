@@ -17,10 +17,10 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KSExtensibleManagedObject.h"
+#import "KTManagedObject.h"
 #import "KTPluginInspectorViewsManager.h"
 
-#import <Sandvox.h>
+
 #import <WebKit/WebKit.h>
 
 

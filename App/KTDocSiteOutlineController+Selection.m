@@ -8,9 +8,10 @@
 
 #import "KTDocSiteOutlineController.h"
 
+#import "KT.h"
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
-
+#import "NSOutlineView+KTExtensions.h"
 
 @interface KTDocSiteOutlineController (SelectionPrivate)
 - (void)generateSelectedPagesSet;

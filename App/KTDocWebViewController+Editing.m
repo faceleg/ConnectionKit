@@ -8,6 +8,7 @@
 
 #import "KTDocWebViewController.h"
 
+#import "Debug.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTInfoWindowController.h"
@@ -15,10 +16,19 @@
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
+#import "KTPseudoElement.h"
+#import "KTInlineImageElement.h"
+
+#import "KTPage.h"
+#import "KTDocument.h"
 
 #import "KTWebKitCompatibility.h"
 
 #import "DOM+KTWebViewController.h"
+#import "DOMNode+KTExtensions.h"
 
 
 @interface NSView ( WebHTMLViewHack )

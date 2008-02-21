@@ -19,12 +19,13 @@
 
 #import "KTManagedObject.h"
 
-#import "Sandvox.h"
+
 #import "CIImage+Karelia.h"
 
 extern NSString *kKTMediaException;
 
 @class KTDocument, KTManagedObject, KTAbstractPlugin, KTCachedImage, KTPage, KTStoredDictionary, KTStoredSet;
+@class BDAlias;
 
 @interface KTMedia : KTManagedObject
 {

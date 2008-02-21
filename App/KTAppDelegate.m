@@ -26,12 +26,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #import "KTAppDelegate.h"
 
+#import "Debug.h"
 #import "BDAlias.h"
 #import "KT.h"
 #import "KTAcknowledgmentsController.h"
 #import "KTApplication.h"
 #import "KTBundleManager.h"
-#import <Sandvox.h>
 #import "KTCrashReporter.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
@@ -55,7 +55,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSException+Karelia.h"
 #import "NSString+KTApplication.h"
 #import "NSString-Utilities.h"
-#import "SandvoxPrivate.h"
 #import "NSError+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import <AmazonSupport/AmazonSupport.h>
@@ -67,6 +66,30 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMediaBrowser/iMediaBrowser.h>
+
+#import "RichTextHTMLTransformer.h"
+#import "ContainerIsEmptyTransformer.h"
+#import "ContainerIsNotEmptyTransformer.h"
+#import "EscapeHTMLTransformer.h"
+#import "CharsetToEncodingTransformer.h"
+#import "StripHTMLTransformer.h"
+#import "TrimTransformer.h"
+#import "StringToNumberTransformer.h"
+#import "TrimFirstLineTransformer.h"
+
+#import "KTEmailAddressComboBox.h"
+#import "KTSilencingConfirmSheet.h"
+#import "KTUtilities.h"
+
+#import "KTMediaManager.h"
+#import "NSWorkspace+Karelia.h"
+#import "NSBundle+Karelia.h"
+
+#import "NSApplication+Karelia.h"
+#import "AQDataExtensions.h"
+#import "KTPage.h"
+
+#import "NSToolbar+Karelia.h"
 
 #ifdef SANDVOX_RELEASE
 #import "Registration.h"

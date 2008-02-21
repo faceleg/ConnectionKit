@@ -8,9 +8,21 @@
 
 #import "KTMediaManager+Internal.h"
 
+#import "Debug.h"
+#import "KT.h"
 #import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 #import "MediaFiles+Internal.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSManagedObjectModel+KTExtensions.h"
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
+#import "KTMediaContainer.h"
+#import "NSData+Karelia.h"
+#import "KTDocument.h"
+#import "KTDocumentInfo.h"
+#import "NSImage+Karelia.h"
+#import "KTMediaManager.h"
 
 #import "BDAlias.h"
 

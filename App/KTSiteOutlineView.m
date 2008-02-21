@@ -8,9 +8,15 @@
 
 #import "KTSiteOutlineView.h"
 
+#import "KT.h"
+#import "KTAppDelegate.h"
 #import "KTDocWindowController.h"
+#import "KTPage.h"
 #import "KTPulsatingOverlay.h"
-#import "SandvoxPrivate.h"
+#import "NSOutlineView+KTExtensions.h"
+#import "KTAbstractPluginDelegate.h"
+
+#import "Registration.h"
 
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";

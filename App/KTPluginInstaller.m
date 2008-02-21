@@ -8,6 +8,10 @@
 
 #import "KTPluginInstaller.h"
 
+#import "Debug.h"
+#import "NSApplication+Karelia.h"
+#import "NSHelpManager+Karelia.h"
+#import "NSError+Karelia.h"
 
 @implementation KTPluginInstaller
 

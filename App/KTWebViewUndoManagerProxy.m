@@ -8,6 +8,8 @@
 
 #import "KTWebViewUndoManagerProxy.h"
 
+#import "Debug.h"
+#import "NSArray+Karelia.h"
 
 NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 

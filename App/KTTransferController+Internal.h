@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTTransferController.h"
 
+@class KTMediaFileUpload;
 
 @interface KTTransferController (Internal)
 - (void)uploadFile:(NSString *)localPath toFile:(NSString *)remotePath;

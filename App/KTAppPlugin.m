@@ -8,6 +8,8 @@
 
 #import "KTAppPlugin.h"
 
+#import "NSBundle+Karelia.h"
+
 
 @interface KTAppPlugin (Private)
 + (void)registerPlugin:(KTAppPlugin *)plugin forPath:(NSString *)path;

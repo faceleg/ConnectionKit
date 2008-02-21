@@ -38,8 +38,8 @@
 
 #import "DOM+RichTextElement.h"
 
-#import <Sandvox.h>
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
+#import <SandvoxPlugin.h>
 
 // TODO: seems like we should be folding all of these imports into something easy for plugins to grab (KTPlugins.h?)
 #import <KTDesign.h>

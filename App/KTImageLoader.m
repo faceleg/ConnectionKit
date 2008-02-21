@@ -7,8 +7,11 @@
 //
 
 #import "KTImageLoader.h"
-#import "NSBezierPath+Karelia.h"
 
+#import "Debug.h"
+#import "NSBezierPath+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
 
 @interface KTImageLoader ( Private )
 

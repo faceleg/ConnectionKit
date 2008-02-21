@@ -8,6 +8,8 @@
 
 #import "KTPage.h"
 
+#import "Debug.h"
+
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 

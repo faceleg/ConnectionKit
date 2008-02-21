@@ -11,8 +11,11 @@
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
-#import <Sandvox.h>
-#import "SandvoxPrivate.h"
+#import "KTHTMLParser.h"
+#import "NSDate+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
+
 #import "NTBoxView.h"
 
 static KTNewsController *sSharedNewsController = nil;

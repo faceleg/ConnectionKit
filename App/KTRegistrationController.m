@@ -8,12 +8,19 @@
 
 #import "KTRegistrationController.h"
 
+#import "Debug.h"
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
+#import "NSApplication+Karelia.h"
+#import "NSData+Karelia.h"
+#import "NSHelpManager+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+
+#import "AQDataExtensions.h"
+
 #import "Registration.h"
-#import <Sandvox.h>
-#import "SandvoxPrivate.h"
 
 static KTRegistrationController *sSharedRegistrationController = nil;
 

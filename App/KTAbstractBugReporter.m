@@ -9,7 +9,11 @@
 #import "KTAbstractBugReporter.h"
 
 #import "KTApplication.h"
-#import <Sandvox.h>
+#import "NSApplication+Karelia.h"
+#import "NSObject+Karelia.h"
+#import "NSHelpManager+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+
 #import <asl.h>
 
 

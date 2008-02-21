@@ -8,6 +8,8 @@
 
 #import "KTDesign+KTTransferController.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 
 @implementation KTDesign (KTTransferController)
 

@@ -8,6 +8,10 @@
 
 #import "KTDesign.h"
 
+#import "Debug.h"
+#import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
+
 
 @implementation KTDesign ( ScaledImages )
 

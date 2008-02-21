@@ -9,7 +9,7 @@
 #import "KTScaledImageProperties.h"
 
 #import "KTImageScalingSettings.h"
-
+#import "NSManagedObject+KTExtensions.h"
 
 @implementation KTScaledImageProperties
 

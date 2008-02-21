@@ -6,7 +6,9 @@
 //
 
 #import "NSOutlineView+KTExtensions.h"
-#import <Sandvox.h>
+
+#import "Debug.h"
+#import "KTPage.h"
 
 @implementation NSOutlineView ( KTExtensions )
 

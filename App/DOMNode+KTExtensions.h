@@ -19,7 +19,7 @@
 
 #import <WebKit/WebKit.h>
 
-@class KTDocument, KTPage;
+@class KTDocument, KTAbstractPlugin, KTPage;
 
 
 @interface DOMNode ( KTExtensions )

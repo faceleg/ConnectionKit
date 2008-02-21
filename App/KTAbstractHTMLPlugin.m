@@ -8,6 +8,10 @@
 
 #import "KTAbstractHTMLPlugin.h"
 
+#import "KT.h"
+#import "NSImage+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
 
 @implementation KTAbstractHTMLPlugin
 

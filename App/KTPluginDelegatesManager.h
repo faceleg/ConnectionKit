@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KTAbstractPlugin, KTAbstractPluginDelegate;
 
 @interface KTPluginDelegatesManager : NSObject
 {

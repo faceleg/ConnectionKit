@@ -7,8 +7,12 @@
 //
 
 #import "KTPluginLoader.h"
+
+#import "Debug.h"
+#import "NSApplication+Karelia.h"
 #import "NSBezierPath+Karelia.h"
 #import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
 
 @interface KTPluginLoader ( Private )
 

@@ -35,10 +35,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 
 
-@interface SiteMapDelegate : KTAbstractPluginDelegate {
+@interface SiteMapDelegate : KTAbstractPluginDelegate
+{
 
 }
 

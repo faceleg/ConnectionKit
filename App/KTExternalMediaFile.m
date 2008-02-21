@@ -8,6 +8,7 @@
 
 #import "KTExternalMediaFile.h"
 
+#import "NSManagedObject+KTExtensions.h"
 #import "BDAlias.h"
 
 

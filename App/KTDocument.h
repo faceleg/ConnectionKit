@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "Sandvox.h"
+
 
 #ifdef SANDVOX_RELEASE
 	#import "Registration.h"

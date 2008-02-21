@@ -8,7 +8,7 @@
 
 #import "ContactElementFieldCell.h"
 
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 
 
 @interface ContactElementFieldCell (Private)

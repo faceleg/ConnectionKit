@@ -7,11 +7,15 @@
 //
 
 #import "KTURLProtocol.h"
+
+#import "Debug.h"
+#import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTThreadedURLLoader.h"
-#import <Sandvox.h>
+#import "NSString+Karelia.h"
+#import "NSObject+Karelia.h"
 
 @interface KTURLProtocol (Private)
 - (void)KT_startLoading;

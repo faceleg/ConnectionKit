@@ -8,6 +8,10 @@
 
 #import "WebViewEditingHelperClasses.h"
 
+#import "Debug.h"
+#import "NSString+Karelia.h"
+
+
 @implementation StrikeThroughOn
 
 - (NSDictionary *)convertAttributes:(NSDictionary *)attributes

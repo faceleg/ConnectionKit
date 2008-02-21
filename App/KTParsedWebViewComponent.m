@@ -8,6 +8,8 @@
 
 #import "KTParsedWebViewComponent.h"
 
+#import "KTHTMLParser.h"
+
 
 @implementation KTParsedWebViewComponent
 

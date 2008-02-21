@@ -9,8 +9,13 @@
 
 
 #import "KTPluginInstallerController.h"
+
+#import "KTAppDelegate.h"
 #import "KTImageLoader.h"
 #import "KTPluginLoader.h"
+#import "NSString+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 @interface KTPluginTableView : NSTableView
 @end

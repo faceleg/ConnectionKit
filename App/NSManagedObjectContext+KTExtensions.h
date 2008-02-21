@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTPage;
+@class KTAbstractPlugin, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTPage;
 
 @interface NSManagedObjectContext ( KTExtensions )
 

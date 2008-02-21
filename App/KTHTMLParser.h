@@ -19,11 +19,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "KTDocument.h"
 #import "KTWebViewComponent.h"
 
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTWebViewTextEditingBlock;
-
+@class KTPage;
+@class KTAbstractMediaFile;
 
 @interface KTHTMLParser : NSObject
 {

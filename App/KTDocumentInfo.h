@@ -19,6 +19,7 @@
 
 #import "KTManagedObject.h"
 
+#import "KT.h"
 @class KTHostProperties;
 
 @interface KTDocumentInfo : KTManagedObject 

@@ -8,13 +8,18 @@
 
 #import "KTFeedbackReporter.h"
 
+#import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
 #import "KTDesignManager.h"
+#import "KTDocument.h"
+#import "KTEmailAddressComboBox.h"
 #import "KTInfoWindowController.h"
-#import <Sandvox.h>
-#import "SandvoxPrivate.h"
+#import "NSData+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSWindow+Karelia.h"
 
 // must match items in localized pop-up (pop-up is not programmatically built)
 #define MENUITEM_FEATURE_REQUEST	NSLocalizedString(@"Feature Request", "Feature Request PopUpMenuItem")

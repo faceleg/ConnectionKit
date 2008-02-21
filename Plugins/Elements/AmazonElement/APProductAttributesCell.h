@@ -10,7 +10,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 
 
 @interface APProductAttributesCell : NSTextFieldCell

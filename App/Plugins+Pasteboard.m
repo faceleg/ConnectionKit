@@ -6,10 +6,13 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
+#import "KTPage.h"
+
 #import "KTAbstractPlugin.h"
+#import "KTMediaContainer+Pasteboard.h"
+#import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
 
-#import "KTMediaContainer+Pasteboard.h"
 #import "BDAlias.h"
 
 

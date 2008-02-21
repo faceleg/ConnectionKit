@@ -7,8 +7,11 @@
 //
 
 #import "KTExceptionReporter.h"
+
+#import "KT.h"
 #import "KTApplication.h"
-#import <Sandvox.h>
+#import "KTEmailAddressComboBox.h"
+#import "NSApplication+Karelia.h"
 #import "NSException+Karelia.h"
 
 static NSString *sScoutSubmitURLString = @"https://ssl.karelia.com/bugsubmit/exceptionReporterSubmit.php";

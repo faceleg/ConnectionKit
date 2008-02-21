@@ -8,13 +8,16 @@
 
 #import "KTDocument.h"
 
+#import "Debug.h"
+
 #import "KTTransferController.h"
 #import "KTDocWindowController.h"
-#import <Sandvox.h>
+
 #import "KTHTMLInspectorController.h"
 #import "KTPluginDelegatesManager.h"
 #import "KTStalenessManager.h"
 
+#import "NSIndexSet+Karelia.h"
 
 @interface KTDocument (PropertiesPrivate)
 - (void)updateDefaultDocumentProperty:(NSString *)key;

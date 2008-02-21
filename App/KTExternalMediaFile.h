@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractMediaFile.h"
 
-
+@class BDAlias;
 @interface KTExternalMediaFile : KTAbstractMediaFile
 {
 }

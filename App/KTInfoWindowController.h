@@ -11,6 +11,10 @@
 enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
 @class KTStackView, KTImageView, KTPathInfoField;
+@class KTSmallDatePicker;
+@class KTDocument;
+@class KTPagelet;
+@class KTPage;
 
 @interface KTInfoWindowController : NSWindowController {
 

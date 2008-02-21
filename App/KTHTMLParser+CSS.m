@@ -9,9 +9,14 @@
 #import "KTHTMLParser.h"
 #import "KTHTMLParser+Private.h"
 
+#import "KTAbstractPluginDelegate.h"
 #import "KTMaster.h"
+#import "KTPage.h"
 
 #import "NSBundle+QuickLook.h"
+#import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 

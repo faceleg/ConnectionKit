@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KTImageScalingSettings;
+
 @interface NSImage ( KTApplication )
 
 - (NSImage *)imageWithCompositedAddBadge;

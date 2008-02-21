@@ -8,9 +8,7 @@
 
 #import "APInspectorController.h"
 
-#import <Sandvox.h>
-#import <DNDArrayController.h>
-#import <NTBoxView.h>
+#import <SandvoxPlugin.h>
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "AmazonListDelegate.h"

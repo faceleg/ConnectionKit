@@ -11,6 +11,10 @@
 
 #import "KTStringRenderer.h"
 #import "NSString-Utilities.h"
+#import "NSApplication+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSImage+Karelia.h"
 
 @implementation KTDesign
 

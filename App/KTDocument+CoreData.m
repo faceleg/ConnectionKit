@@ -8,16 +8,31 @@
 
 #import "KTDocument.h"
 
+#import "Debug.h"
+
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
-#import <Sandvox.h>
+
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
 #import "KTMediaManager+Internal.h"
-#import "SandvoxPrivate.h"
+#import "KTDocumentInfo.h"
+#import "KTPersistentStoreCoordinator.h"
+#import "KTHTMLParser.h"
+#import "KTManagedObjectContext.h"
+#import "KTAbstractPlugin.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "KTPage.h"
+#import "NSBundle+Karelia.h"
+#import "NSThread+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+#import "NSMutableSet+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSApplication+Karelia.h"
+#import "KTAbstractPluginDelegate.h"
 
 #import "Registration.h"
 

@@ -8,6 +8,7 @@
 
 #import "NSString+KTApplication.h"
 
+#import "NSCharacterSet+Karelia.h"
 
 @implementation NSString ( KTApplication )
 

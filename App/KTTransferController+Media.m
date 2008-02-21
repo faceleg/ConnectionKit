@@ -8,6 +8,7 @@
 
 #import "KTTransferController+Internal.h"
 
+#import "NSThread+Karelia.h"
 
 @implementation KTTransferController (Media)
 

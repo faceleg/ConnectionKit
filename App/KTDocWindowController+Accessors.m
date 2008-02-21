@@ -10,10 +10,12 @@
 
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
+#import "KTInlineImageElement.h"
+#import "KTManagedObjectContext.h"
+#import "KTPage.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "SandvoxPrivate.h"
-
 
 
 // GENERIC, NO-BIG-WHOOP ACCESSORS ONLY.  PUT ANYTHING WITH LOGIC IN A DIFFERENT FILE PLEASE.

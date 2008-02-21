@@ -8,6 +8,7 @@
 
 #import "KTThreadedURLLoader.h"
 
+#import "Debug.h"
 
 enum { CHECK_TASKS = 1 };
 

@@ -11,8 +11,8 @@
 #import "KTAppDelegate.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import <Sandvox.h>
-
+#import "NSString+Karelia.h"
+#import "NSImage+Karelia.h"
 
 @implementation KTKeypathURLProtocol
 

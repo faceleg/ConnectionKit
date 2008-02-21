@@ -26,8 +26,13 @@
 
 #import "KTStalenessManager.h"
 
-#import "KTStalenessHTMLParser.h"
+#import "KTPage.h"
 #import "KTParsedKeyPath.h"
+#import "KTStalenessHTMLParser.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSThread+Karelia.h"
 
 
 @interface KTStalenessManager (Private)

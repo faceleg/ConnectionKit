@@ -16,6 +16,9 @@
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTMaster.h"
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <ScreenSaver/ScreenSaver.h>

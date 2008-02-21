@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTDesign.h"
 
-
+@class KTDocument;
 @interface KTDesign (KTTransferController)
 
 - (void)didPublishInDocument:(KTDocument *)document;

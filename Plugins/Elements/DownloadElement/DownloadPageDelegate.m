@@ -45,8 +45,7 @@
 
 #import "DownloadPageDelegate.h"
 
-#import <Sandvox.h>
-#import <KTPathInfoField.h>
+#import <SandvoxPlugin.h>
 
 
 @implementation DownloadPageDelegate

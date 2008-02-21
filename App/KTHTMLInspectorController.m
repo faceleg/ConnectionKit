@@ -16,11 +16,16 @@
 
 #import "KTHTMLInspectorController.h"
 
+#import "DOMNode+KTExtensions.h"
+#import "Debug.h"
 #import "KTApplication.h"
-#import <Sandvox.h>
 #import "KTDocWindowController.h"
+#import "KTPage.h"
+#import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTApplication.h"
+
+#import "Registration.h"
 
 @interface KTHTMLInspectorController ( Private )
 

@@ -24,7 +24,13 @@ typedef enum {
 
 @class KTParsedWebViewComponent;
 @class KTWebViewTextEditingBlock, KTWebViewUndoManagerProxy;
-
+@class KTHTMLParser;
+@class KTInlineImageElement;
+@class KTPagelet;
+@class CIFilter;
+@class KTAbstractPlugin;
+@class KTDocument;
+@class KTDocWindowController;
 
 @interface KTDocWebViewController : NSObject
 {

@@ -26,7 +26,9 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "SandvoxPrivate.h"
+#import "KTUtilities.h"
+#import "NSBundle+Karelia.h"
+
 
 static NSImage *sUnknownThumbnail;
 

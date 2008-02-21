@@ -25,9 +25,9 @@
 
 
 @class KTDesign, KTAbstractHTMLPlugin;
-@class KTElement, KTAbstractIndex, KTMaster;
+@class KTAbstractIndex, KTMaster;
 @class WebView;
-
+@class KTMediaContainer;
 
 @interface KTPage : KTAbstractPlugin	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
 {

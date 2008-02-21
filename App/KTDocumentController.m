@@ -7,10 +7,16 @@
 //
 
 #import "KTDocumentController.h"
-#import "KTPluginInstaller.h"
-#import "SandvoxPrivate.h"
-#import "Registration.h"
+
+#import "Debug.h"
+#import "KT.h"
 #import "KTDocument.h"
+#import "KTPluginInstaller.h"
+#import "KTPersistentStoreCoordinator.h"
+#import "NSHelpManager+Karelia.h"
+#import "NSString+Karelia.h"
+#import "Registration.h"
+
 
 @implementation KTDocumentController
 

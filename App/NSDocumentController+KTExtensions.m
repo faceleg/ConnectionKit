@@ -8,6 +8,8 @@
 
 #import "NSDocumentController+KTExtensions.h"
 
+#import "KTDocument.h"
+
 //@interface NSPersistentDocument (KTDocument)
 //- (NSArray *)peerContexts;
 //@end

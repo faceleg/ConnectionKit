@@ -8,6 +8,9 @@
 // a few additions to Chuck's ImageAndTextCell class
 
 #import "KTImageTextCell.h"
+
+#import "KT.H"
+
 void InterpolateBlue (void* info, float const* inData, float *outData);
 void InterpolateGray (void* info, float const* inData, float *outData);
 

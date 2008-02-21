@@ -12,7 +12,11 @@
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
-#import <Sandvox.h>
+#import "KTEmailAddressComboBox.h"
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSApplication+Karelia.h"
+
 
 static KTPrefsController *sSharedPrefsController = nil;
 

@@ -21,7 +21,8 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "Sandvox.h"
+#import "NSString+Karelia.h"
+
 
 #ifdef SANDVOX_RELEASE
 #import "Registration.h"

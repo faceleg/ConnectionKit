@@ -8,6 +8,8 @@
 
 #import "KTPDFViewController.h"
 
+#import "NSObject+Karelia.h"
+
 
 @implementation KTPDFViewController
 

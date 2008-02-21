@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-
+@class KTAbstractMediaFile, KTImageScalingSettings, KTInDocumentMediaFile;
 @interface KTScaledImageProperties : NSManagedObject
 {
 }

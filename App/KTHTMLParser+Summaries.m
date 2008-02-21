@@ -8,8 +8,12 @@
 
 #import "KTHTMLParser.h"
 
+#import "Debug.h"
+#import "KTPage.h"
 #import "KTSummaryWebViewTextBlock.h"
+#import "NSString+Karelia.h"
 
+#import "NSArray+Karelia.h"
 
 @interface KTHTMLParser (Private)
 - (KTHTMLParserMasterCache *)cache;

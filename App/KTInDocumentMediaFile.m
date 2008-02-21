@@ -8,9 +8,14 @@
 
 #import "KTInDocumentMediaFile.h"
 
-#import "BDAlias.h"
+#import "Debug.h"
+#import "KTDocument.h"
 #import "KTMediaManager.h"
 #import "MediaFiles+Internal.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+
+#import "BDAlias.h"
 
 
 @implementation KTInDocumentMediaFile

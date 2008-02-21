@@ -8,6 +8,8 @@
 
 #import "KTInfoWindowController.h"
 
+#import "Debug.h"
+
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
@@ -18,6 +20,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 
+#import "KTPseudoElement.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTPluginInspectorViewsManager.h"
@@ -25,9 +28,22 @@
 #import "KTMediaManager.h"
 #import "KTPathInfoField.h"
 #import "KTStackView.h"
-#import <Sandvox.h>
+
+#import "NSWorkspace+Karelia.h"
+#import "NSArray+Karelia.h"
+
+#import "NSBundle+Karelia.h"
+
+#import "KTSmallDatePicker.h"
+
+#import "NSString+Karelia.h"
+
+#import "KTPage.h"
+#import "KTPagelet.h"
+
+#import "ValuesAreEqualTransformer.h"
+
 #import "KTMaster.h"
-#import "SandvoxPrivate.h"
 #import "Registration.h"
 
 enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };

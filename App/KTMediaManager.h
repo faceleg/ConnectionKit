@@ -7,12 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Sandvox.h>
+
 #import "KTInDocumentMediaFile.h"
 
 
 @class KTDocument, KTExternalMediaFile, KTInDocumentMediaFile;
-
+@class KTMediaContainer;
 
 @interface KTMediaManager : NSObject
 {

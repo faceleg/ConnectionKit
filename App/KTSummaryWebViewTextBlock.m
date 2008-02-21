@@ -9,7 +9,8 @@
 #import "KTSummaryWebViewTextBlock.h"
 
 #import "KTWebKitCompatibility.h"
-
+#import "KTPage.h"
+#import "DOMNode+KTExtensions.h"
 
 @implementation KTSummaryWebViewTextBlock
 

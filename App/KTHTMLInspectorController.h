@@ -13,7 +13,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-
+@class KTAbstractPlugin;
 
 // Syntax-colored text file viewer:
 @interface KTHTMLInspectorController : NSWindowController

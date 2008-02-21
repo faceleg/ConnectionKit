@@ -13,7 +13,11 @@
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageProperties.h"
 
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
+#import "NSString+Karelia.h"
+
 #import <QuartzCore/QuartzCore.h>
 #import <QTKit/QTKit.h>
 

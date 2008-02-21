@@ -12,8 +12,8 @@
 #import "KTDesign.h"
 #import "KTOffScreenWebViewController.h"
 #import "KTMaster.h"
-#import "Sandvox.h"
 
+#import "KTAbstractPluginDelegate.h"
 #import "DOMNode+KTExtensions.h"
 #import "NSAttributedString+Karelia.h"
 

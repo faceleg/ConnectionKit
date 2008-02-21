@@ -13,7 +13,7 @@
 #import "KTDesignManager.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
-#import <Sandvox.h>
+#import "NSString+Karelia.h"
 
 
 @implementation KTDesignURLProtocol

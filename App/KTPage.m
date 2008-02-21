@@ -8,29 +8,24 @@
 
 #import "KTPage.h"
 
+#import "ContainsValueTransformer.h"
 #import "Debug.h"
 #import "KTAbstractIndex.h"
+#import "KTAppDelegate.h"
 #import "KTBundleManager.h"
-#import "ContainsValueTransformer.h"
-#import "KTDocument.h"
 #import "KTDocWindowController.h"
+#import "KTDocument.h"
 #import "KTElementPlugin.h"
-
-#import "NSBundle+Karelia.h"
+#import "KTManagedObjectContext.h"
+#import "NSArray+Karelia.h"
+#import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSString+Karelia.h"
+#import "NSBundle+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
-
-/*
-#import "KT.h"
-#import "KTDictionaryEntry.h"
-#import "KTElement.h"
-#import "KTHTMLParser.h"
-#import "KTMedia.h"
-#import "KTMediaManager.h"
-#import "KTPagelet.h"
 #import "NSManagedObject+KTExtensions.h"
-*/
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface NSObject ( RichTextElementDelegateHack )

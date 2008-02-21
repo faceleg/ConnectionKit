@@ -8,8 +8,11 @@
 
 #import "KTCrashReporter.h"
 
+#import "Debug.h"
+#import "KT.h"
 #import "KTApplication.h"
-#import <Sandvox.h>
+#import "KTEmailAddressComboBox.h"
+#import "NSApplication+Karelia.h"
 
 static NSString *sCrashSubmitURLString = @"https://ssl.karelia.com/bugsubmit/KTCrashReporterSubmit.php";
 

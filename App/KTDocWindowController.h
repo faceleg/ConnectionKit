@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import <Sandvox.h>
+
 
 @class CIFilter;
 @class KTBorderlessWindow;
@@ -25,6 +25,10 @@
 @class KTPluginInspectorViewsManager;
 @class KTDocWebViewController;
 @class KTDocSiteOutlineController;
+@class KTPage, KTPagelet;
+@class KTCodeInjectionController;
+@class KTAbstractPlugin;
+@class KTManagedObjectContext;
 
 extern NSString *gInfoWindowAutoSaveName;
 

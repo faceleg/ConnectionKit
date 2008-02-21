@@ -26,8 +26,11 @@ TO DO:
 #import "KT.h"
 #import "KTElementPlugin.h"
 #import "KTAppDelegate.h"
-#import <Sandvox.h>
-#import "SandvoxPrivate.h"
+#import "KTUtilities.h"
+#import "NSManagedObjectModel+KTExtensions.h"
+#import "NSBundle+Karelia.h"
+#import "KTAbstractDataSource.h"
+
 #import "Registration.h"
 
 @interface KTAppDelegate ( PrivateHack )

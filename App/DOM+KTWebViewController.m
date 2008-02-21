@@ -8,6 +8,9 @@
 
 #import "DOM+KTWebViewController.h"
 
+#import "DOMNode+KTExtensions.h"
+#import "NSString+Karelia.h"
+
 
 @implementation DOMNode (KTWebViewController)
 

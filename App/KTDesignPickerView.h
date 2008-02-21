@@ -11,6 +11,7 @@
 
 #define kMaximumReasonableNumberOfVisibleThumbs 50
 
+@class KTDesign;
 
 @interface KTDesignPickerView : NSView
 {

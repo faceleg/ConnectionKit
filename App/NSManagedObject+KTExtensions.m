@@ -10,6 +10,7 @@
 
 #import "Debug.h"
 #import "KTManagedObjectContext.h"
+#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 

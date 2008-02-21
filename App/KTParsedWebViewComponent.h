@@ -15,7 +15,7 @@
 #import "KTWebViewComponent.h"
 
 
-@class KTParsedKeyPath;
+@class KTParsedKeyPath, KTHTMLParser, KTWebViewTextEditingBlock;
 
 
 @interface KTParsedWebViewComponent : NSObject

@@ -8,10 +8,13 @@
 
 #import "KTMediaManager+Internal.h"
 
+#import "Debug.h"
 #import "BDAlias.h"
 
 #import "KTExternalMediaFile.h"
 #import "KTAbstractMediaFile.h"
+#import "KTDocument.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 
 @interface KTMediaManager (DocumentSavingPrivate)

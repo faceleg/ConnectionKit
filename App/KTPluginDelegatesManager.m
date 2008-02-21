@@ -8,6 +8,10 @@
 
 #import "KTPluginDelegatesManager.h"
 
+#import "KTAbstractPlugin.h"
+#import "KTAbstractPluginDelegate.h"
+#import "NSString+Karelia.h"
+#import "NSManagedObject+KTExtensions.h"
 
 @implementation KTPluginDelegatesManager
 

@@ -9,7 +9,9 @@
 #import "KTAbstractPluginDelegate.h"
 
 #import "KTDocument.h"
-
+#import "KTPage.h"
+#import "KTPagelet.h"
+#import "NSManagedObject+KTExtensions.h"
 
 @implementation KTAbstractPluginDelegate
 

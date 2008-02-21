@@ -8,6 +8,7 @@
 
 #import "KTDocWebViewController.h"
 
+@class KTPage;
 
 @interface KTDocWebViewController (Private)
 - (BOOL)hideWebView;

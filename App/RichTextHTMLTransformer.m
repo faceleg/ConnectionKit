@@ -24,8 +24,9 @@
 
 #import "RichTextHTMLTransformer.h"
 
-//#import <NSAttributedString+KTExtensions.h>
-#import <NSString+KTExtensions.h>
+#import "NSString+Karelia.h"
+#import "NSAttributedString+Karelia.h"
+#import "NSString+KTExtensions.h"
 
 @implementation RichTextHTMLTransformer
 

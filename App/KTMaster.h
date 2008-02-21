@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "KT.h"
+@class KTDesign;
+@class KTMediaContainer;
 
-@interface KTMaster : NSManagedObject {
+@interface KTMaster : NSManagedObject 
+{
 
 }
 

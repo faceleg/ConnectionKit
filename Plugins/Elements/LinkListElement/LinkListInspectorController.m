@@ -8,7 +8,7 @@
 
 #import "LinkListInspectorController.h"
 
-#import <NTBoxView.h>
+#import <SandvoxPlugin.h>
 
 
 @implementation LinkListInspectorController

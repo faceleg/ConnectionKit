@@ -8,7 +8,7 @@
 
 #import "DOM+RichTextElement.h"
 
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 @implementation DOMNode (RichTextElement)
 
 - (BOOL)isFileList

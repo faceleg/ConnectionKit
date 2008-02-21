@@ -8,11 +8,13 @@
 
 #import "KTPage.h"
 
+#import "KTAbstractIndex.h"
 #import "KTAppPlugin.h"
 #import "KTIndexPlugin.h"
 
 #import "NSXMLElement+Karelia.h"
-
+#import "NSCharacterSet+Karelia.h"
+#import "NSBundle+Karelia.h"
 
 @interface KTPage (IndexesPrivate)
 - (void)setArchivesIndex:(KTAbstractIndex *)anIndex;

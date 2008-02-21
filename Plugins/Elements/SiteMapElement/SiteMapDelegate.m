@@ -36,9 +36,11 @@
 
 #import "SiteMapDelegate.h"
 
+
 @interface NSMutableString ( indentation )
 - (void)appendIndent:(int)anIndent;
 @end
+
 
 @implementation NSMutableString ( indentation )
 

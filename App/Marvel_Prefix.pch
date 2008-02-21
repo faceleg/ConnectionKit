@@ -7,6 +7,4 @@
     #import <CoreData/CoreData.h>
     #import <AppKit/AppKit.h>
     #import <WebKit/WebKit.h>
-	#import <Sandvox.h>
-	#import "SandvoxPrivate.h"
 #endif

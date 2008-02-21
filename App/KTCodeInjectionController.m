@@ -12,8 +12,9 @@
 #import "KTDocSiteOutlineController.h"
 
 #import "KTApplication.h"
-#import <Sandvox.h>
+#import "KTPage.h"
 
+#import "Registration.h"
 
 @interface KTPage ( CodeInjectionBindings )
 - (void)setInsertEndBody:(NSString *)aString;

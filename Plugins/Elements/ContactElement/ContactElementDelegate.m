@@ -38,6 +38,7 @@
 
 #import "ContactElementField.h"
 
+#import <SandvoxPlugin.h>
 // defines CONTACT_PASSWORD, not supplied
 #import <ContactPassword.h>
 
@@ -165,7 +166,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] overridingPathForResource:@"ContactStrings" ofType:@"plist"]];
 	}
 	
-	NSString *languageCode = [[((KTElement *)[self delegateOwner]) page] valueForKeyPath:@"master.language"];
+	NSString *languageCode = [[[self delegateOwner] page] valueForKeyPath:@"master.language"];
 	
 	NSDictionary *result = [sLocalizations objectForKey:languageCode];
 	

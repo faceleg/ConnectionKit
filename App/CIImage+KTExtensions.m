@@ -8,6 +8,7 @@
 
 #import "CIImage+KTExtensions.h"
 
+#import "CIImage+Karelia.h"
 #import "KTImageScalingSettings.h"
 #import <QuartzCore/QuartzCore.h>
 

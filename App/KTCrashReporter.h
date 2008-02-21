@@ -10,6 +10,8 @@
 
 #import "KTAbstractBugReporter.h"
 
+@class KTEmailAddressComboBox;
+
 @interface KTCrashReporter : KTAbstractBugReporter
 {
 	IBOutlet NSTextView				*oReportTextView;

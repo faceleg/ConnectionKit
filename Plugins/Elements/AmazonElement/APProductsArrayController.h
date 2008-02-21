@@ -16,8 +16,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <Sandvox.h>
-#import <DNDArrayController.h>
+#import <SandvoxPlugin.h>
 
 @interface APProductsArrayController : DNDArrayController
 {

@@ -28,8 +28,9 @@ TO DO:
 #import "KTDocument.h"
 #import "KTExceptionReporter.h"
 #import "NSException+Karelia.h"
+#import "NSHelpManager+Karelia.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
-#import <Sandvox.h>
+
 #import "KTQuickStartController.h"
 #import "Registration.h"
 

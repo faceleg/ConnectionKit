@@ -8,11 +8,13 @@
 
 #import "KTNamedSettingsScaledImageContainer.h"
 
-#import "MediaFiles+Internal.h"
 #import "KTAbstractMediaFile+ScaledImages.h"
-#import "KTImageScalingSettings.h"
 #import "KTDesign.h"
+#import "KTImageScalingSettings.h"
 #import "KTMaster.h"
+#import "KTPage.h"
+#import "MediaFiles+Internal.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 
 @implementation KTNamedSettingsScaledImageContainer

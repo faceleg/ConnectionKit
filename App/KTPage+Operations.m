@@ -7,9 +7,10 @@
 //
 
 #import "KTPage.h"
-#import "KTDocument.h"
 
 #import "Debug.h"
+#import "KTAbstractIndex.h"
+#import "KTDocument.h"
 #import "NSSet+KTExtensions.h"
 
 

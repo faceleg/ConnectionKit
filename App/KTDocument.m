@@ -38,6 +38,7 @@
 
 #import "KTDocument.h"
 
+#import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
 
@@ -47,7 +48,7 @@
 #import "KTIndexPlugin.h"
 
 #import "KTCodeInjectionController.h"
-#import <Sandvox.h>
+
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
@@ -61,7 +62,19 @@
 #import "KTMediaManager+Internal.h"
 #import "KTStalenessManager.h"
 #import "KTTransferController.h"
-#import "SandvoxPrivate.h"
+#import "KTUtilities.h"
+#import "NSBundle+Karelia.h"
+#import "KTAbstractIndex.h"
+#import "KTSilencingConfirmSheet.h"
+#import "KTManagedObjectContext.h"
+#import "KTPage.h"
+#import "NSArray+Karelia.h"
+#import "NSDate+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSThread+Karelia.h"
+#import "NSFileManager+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSApplication+Karelia.h"
 
 #import <iMediaBrowser/iMediaBrowser.h>
 

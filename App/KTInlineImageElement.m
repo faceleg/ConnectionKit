@@ -12,6 +12,11 @@
 #import "KTImageView.h"
 #import "KTMaster.h"
 #import "KTPathInfoField.h"
+#import "KTPagelet.h"
+#import "KTMediaContainer.h"
+#import "KTMediaManager.h"
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "NSImage+Karelia.h"
 

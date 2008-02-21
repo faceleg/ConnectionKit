@@ -8,10 +8,22 @@
 
 #import "KTMaster.h"
 
+#import "KT.h"
+#import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDesignManager.h"
+#import "KTDocument.h"
+#import "KTMediaContainer.h"
+#import "KTMediaManager.h"
+#import "NSArray+Karelia.h"
+#import "NSAttributedString+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
-
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
+#import "NSMutableSet+Karelia.h"
 
 @interface KTMaster (Private)
 - (KTMediaManager *)mediaManager;

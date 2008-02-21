@@ -14,6 +14,8 @@
 
 #import "NSTextView+KTApplication.h"
 
+#import "NSArray+Karelia.h"
+#import "NSScanner+Karelia.h"
 
 @interface NSTextView ( Private )
 

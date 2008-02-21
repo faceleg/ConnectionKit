@@ -21,7 +21,7 @@
 
 enum { kBlockImage, kFloatImage, kInlineImage };
 
-@class KTMedia;
+@class KTMedia, KTMediaContainer;
 
 @interface KTInlineImageElement : KTPseudoElement
 {

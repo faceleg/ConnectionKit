@@ -24,14 +24,20 @@ TO DO:
 
  */
 
-#import <Sandvox.h>
+
 
 #import "KTWebView.h"
+
+#import "Debug.h"
+#import "KT.h"
 #import "KTBundleManager.h"
 #import "KTAppDelegate.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
-
+#import "NSString+Karelia.h"
+#import "KTAbstractDataSource.h"
+#import "KTPage.h"
+#import "KTAbstractPluginDelegate.h"
 
 @class ImageSource;
 

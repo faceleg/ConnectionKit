@@ -8,8 +8,10 @@
 
 #import "MediaFiles+Internal.h"
 
-#import "KTMediaManager+Internal.h"
 #import "KTImageScalingSettings.h"
+#import "KTMediaManager+Internal.h"
+#import "NSData+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "BDAlias.h"
 

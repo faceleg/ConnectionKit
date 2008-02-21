@@ -17,8 +17,8 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-// Sandvox.h is a convenience header that imports all "public" headers in Sandvox
-// #import <Sandvox.h> should be sufficient for almost all plugins
+// SandvoxPlugin.h is a convenience header that imports all "public" headers in Sandvox
+//  should be sufficient for almost all plugins
 
 // Safari 3 WebKit methods, available in 10.4.11 and above
 #import "KTWebKitCompatibility.h"
@@ -44,8 +44,9 @@
 #import "KTAbstractPlugin.h"
 #import "KTAbstractPluginDelegate.h"
 
-//  abstract superclass of all containers (pages and pagelets)
-#import "KTAbstractPlugin.h"
+#import "KTAppPlugin.h"
+#import "KTAbstractHTMLPlugin.h"
+#import "KTIndexPlugin.h"
 
 //  major Core Data-based plugin superclasses
 #import "KTPage.h"
@@ -123,6 +124,7 @@
 // Value Transformers
 #import "CharsetToEncodingTransformer.h"
 #import "ContainerIsEmptyTransformer.h"
+#import "ContainsValueTransformer.h"
 #import "ContainerIsNotEmptyTransformer.h"
 #import "EscapeHTMLTransformer.h"
 #import "RichTextHTMLTransformer.h"
@@ -144,3 +146,30 @@
 
 //  intelligently dismissable sheet
 #import "KTSilencingConfirmSheet.h"
+
+
+#import "KTPluginInspectorViewsManager.h"
+#import "QuickLookSandvoxPlugin.h"
+
+
+
+#import "KTWebViewComponent.h"
+
+#import "KTPasteboardArchiving.h"
+
+#import "KTInDocumentMediaFile.h"
+
+#import "DNDArrayController.h"
+#import <NTBoxView.h>
+#import <KTPathInfoField.h>
+#import <KTPathInfoFieldCell.h>
+#import <KTDesign.h>
+#import <KTMaster.h>
+#import <KTMediaContainer.h>
+#import <KTAbstractMediaFile.h>
+#import <KTPathInfoField.h>
+#import <NSMutableSet+Karelia.h>
+#import <KTHTMLParser.h>
+#import "KTDocWindowController.h"
+#import "NSString+KTExtensions.h"
+

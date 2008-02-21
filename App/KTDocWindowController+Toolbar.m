@@ -22,15 +22,16 @@ TO DO:
 
 #import "KTDocWindowController.h"
 
+#import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
-#import <Sandvox.h>
+
 #import "KTDocument.h"
 #import "KTToolbars.h"
 #import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
-#import "SandvoxPrivate.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"
 

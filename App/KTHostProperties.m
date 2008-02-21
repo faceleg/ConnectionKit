@@ -10,6 +10,8 @@
 
 #import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
+#import "NSString+Karelia.h"
+
 
 @implementation KTHostProperties
 

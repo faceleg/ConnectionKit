@@ -36,14 +36,8 @@
 
 #import "ImageElementDelegate.h"
 
-#import <Sandvox.h>
-#import <KTDesign.h>
-#import <KTMaster.h>
-#import <KTMediaContainer.h>
-#import <KTAbstractMediaFile.h>
-#import <KTPathInfoField.h>
+#import <SandvoxPlugin.h>
 
-#import <NSMutableSet+Karelia.h>
 
 #import <QuartzCore/QuartzCore.h>
 

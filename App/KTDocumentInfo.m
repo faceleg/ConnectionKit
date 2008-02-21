@@ -9,10 +9,11 @@
 #import "KTDocumentInfo.h"
 
 #import "KT.h"
+#import "KTDocument.h"
 #import "KTManagedObjectContext.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-
+#import "NSString+Karelia.h"
 
 @implementation KTDocumentInfo
 

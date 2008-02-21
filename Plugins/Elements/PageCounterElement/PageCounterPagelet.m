@@ -27,7 +27,7 @@
 
 #import "PageCounterPagelet.h"
 
-#import <Sandvox.h>
+#import <SandvoxPlugin.h>
 
 enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 

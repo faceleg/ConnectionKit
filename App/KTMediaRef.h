@@ -19,7 +19,7 @@
 
 #import "KTManagedObject.h"
 
-#import "Sandvox.h"
+
 
 @class KTAbstractPlugin, KTMedia;
 @interface KTMediaRef : KTManagedObject

@@ -7,6 +7,9 @@
 //
 
 #import "KTQuickStartController.h"
+
+#import "NSColor+Karelia.h"
+#import "NSThread+Karelia.h"
 #import "Registration.h"
 
 @implementation KTQuickStartController

@@ -13,8 +13,12 @@
 
 #import "KTPage.h"
 
+#import "Debug.h"
 #import "KTDesign.h"
+#import "KTDocument.h"
 #import "KTMaster.h"
+#import "NSMutableSet+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 

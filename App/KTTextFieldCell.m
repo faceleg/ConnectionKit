@@ -8,7 +8,7 @@
 // Based on RSBrowserAddressCell courtesy of Brent Simmons of Ranchero Software
 
 #import "KTTextFieldCell.h"
-#import <Sandvox.h>
+
 
 @implementation KTTextFieldCell
 

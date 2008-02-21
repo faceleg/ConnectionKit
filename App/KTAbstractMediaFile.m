@@ -9,7 +9,11 @@
 #import "KTAbstractMediaFile.h"
 #import "KTExternalMediaFile.h"
 
+#import "Debug.h"
 #import "KTMediaManager.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>

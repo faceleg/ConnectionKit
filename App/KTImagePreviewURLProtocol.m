@@ -8,6 +8,9 @@
 
 #import "KTImagePreviewURLProtocol.h"
 
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 #import <QuartzCore/QuartzCore.h>
 
 

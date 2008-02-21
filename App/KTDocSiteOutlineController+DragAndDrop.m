@@ -8,11 +8,18 @@
 
 #import "KTDocSiteOutlineController.h"
 
+#import "Debug.h"
 #import "NSException+Karelia.h"
-
+#import "KT.h"
 #import "KTAppPlugin.h"
+#import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPulsatingOverlay.h"
+#import "KTPage.h"
+#import "NSArray+Karelia.h"
+#import "KTAbstractDataSource.h"
+#import "KTAppDelegate.h"
+#import "DOMNode+KTExtensions.h"
 
 
 @interface KTDocSiteOutlineController (DragAndDropPrivate)

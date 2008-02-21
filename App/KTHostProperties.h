@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSExtensibleManagedObject.h"
+#import "KTManagedObject.h"
 
 
 @interface KTHostProperties : KTManagedObject

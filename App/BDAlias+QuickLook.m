@@ -8,6 +8,7 @@
 
 #import "BDAlias+QuickLook.h"
 
+#import "NSData+Karelia.h"
 
 @implementation BDAlias (QuickLook)
 

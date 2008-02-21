@@ -8,6 +8,8 @@
 
 #import "KTTextViewController.h"
 
+#import "NSObject+Karelia.h"
+
 
 @implementation KTTextViewController
 

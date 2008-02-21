@@ -9,12 +9,16 @@
 #import "KTPage.h"
 
 #import "KTMaster.h"
+#import "KTMediaManager.h"
 #import "KTDesign.h"
 
-#import "assertions.h"
+#import "Debug.h"
+#import "NSAttributedString+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSData+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 
 
 @interface KTPage (ChildrenPrivate)

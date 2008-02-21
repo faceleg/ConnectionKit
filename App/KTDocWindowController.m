@@ -8,9 +8,13 @@
 
 #import "KTDocWindowController.h"
 
+#import "Debug.h"
+
 #import "NSException+Karelia.h"
 
 #import "KTDocWebViewController.h"
+
+#import "KTLinkSourceView.h"
 
 #import "AMRollOverButton.h"
 #import "AMRollOverButtonCell.h"
@@ -21,7 +25,8 @@
 #import "KTBundleManager.h"
 #import "KTIndexPlugin.h"
 
-#import <Sandvox.h>
+#import "KTInlineImageElement.h"
+
 #import "KTDesignPickerView.h"
 #import "KTDocWindow.h"
 #import "KTDocument.h"
@@ -32,6 +37,11 @@
 #import "KTDocSiteOutlineController.h"
 #import "KTCodeInjectionController.h"
 
+#import "KTWebViewTextEditingBlock.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
+#import "KTAbstractDataSource.h"
+
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 
@@ -40,12 +50,25 @@
 #import "KTTransferController.h"
 #import "NSTextView+KTApplication.h"
 #import "NTBoxView.h"
-#import "SandvoxPrivate.h"
 #import "Registration.h"
 #import <WebKit/WebKit.h>
 #import <iMediaBrowser/iMedia.h>
 #import "NSArray+KTExtensions.h"
+#import "KTValidateCharFormatter.h"
 
+#import "NSCharacterSet+Karelia.h"
+#import "NSString+Karelia.h"
+#import "KTSilencingConfirmSheet.h"
+
+#import "KTManagedObjectContext.h"
+
+#import "NSOutlineView+KTExtensions.h"
+
+#import "KTPage.h"
+
+#import "NSBundle+Karelia.h"
+#import "KTAbstractIndex.h"
+#import "NSThread+Karelia.h"
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 

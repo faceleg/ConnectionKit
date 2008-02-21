@@ -9,6 +9,8 @@
 #import "KTPluginInspectorViewsManager.h"
 
 #import "NSException+Karelia.h"
+#import "NSObject+Karelia.h"
+
 
 @interface NSNib (KTPlugins)
 

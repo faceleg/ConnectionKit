@@ -7,6 +7,9 @@
 //
 
 #import "KTMediaFileUpload.h"
+
+#import "KTPage.h"
+#import "NSManagedObject+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 
