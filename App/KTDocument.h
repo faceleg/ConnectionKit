@@ -51,7 +51,8 @@ extern NSString *kKTMetadataSiteTitleKey;
 @interface KTDocument : NSPersistentDocument
 {
 	// New docs
-	IBOutlet NSView		*oNewDocAccessoryView;
+	IBOutlet NSView			*oNewDocAccessoryView;
+	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
 	
 	@private
 	

@@ -263,7 +263,6 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		@"",	@"DefaultRootIndexBundleIdentifier",	// no index default on root
 		@"sandvox.ArchiveIndex",	@"DefaultArchivesIndexBundleIdentifier",
 		@"sandvox.GeneralIndex",	@"DefaultIndexBundleIdentifier",
-		@"sandvox.RichTextElement",		@"DefaultRootPageBundleIdentifier",
 		@"sandvox.BadgeElement",	@"DefaultBadgeBundleIdentifier",		// can be empty
 		@"sandvox.RSSBadgeElement",	@"DefaultRSSBadgeBundleIdentifier",		// can be empty
 		@"index.xml", @"RSSFileName",

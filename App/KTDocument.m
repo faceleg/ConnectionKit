@@ -186,6 +186,14 @@
 	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
 	[savePanel setAccessoryView:oNewDocAccessoryView];
 	
+	NSSet *pagePlugins = [[[NSApp delegate] bundleManager] pagePlugins];
+	[[[NSApp delegate] bundleManager] addPlugins:pagePlugins
+									      toMenu:[oNewDocHomePageTypePopup menu]
+									      target:nil
+									      action:nil
+									   pullsDown:NO
+									   showIcons:NO];
+	
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {
 		*error = nil;	// Otherwise we crash
@@ -267,10 +275,8 @@
 		}
 		
 		// make a new root
-		NSString *defaultRootIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultRootPageBundleIdentifier"];
-		NSBundle *defaultRootBundle = [[KTElementPlugin pluginWithIdentifier:defaultRootIdentifier] bundle];
-		NSString *assertMessage = [NSString stringWithFormat:@"Unable to load default root bundle: %@", defaultRootIdentifier];
-		NSAssert((nil != defaultRootBundle), assertMessage);
+		NSBundle *defaultRootBundle = [[[oNewDocHomePageTypePopup selectedItem] representedObject] bundle];
+		NSAssert(defaultRootBundle, @"No root bundle for new site");
 		// POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
 		[defaultRootBundle load];
 		
