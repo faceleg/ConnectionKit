@@ -262,9 +262,6 @@
 	NSArray *entityNames = [NSArray arrayWithObjects:
 		@"Page", 
 		@"Pagelet", 
-		@"Element", 
-		@"Media", 
-        @"Root",
 		nil];
 	
 	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
@@ -272,7 +269,13 @@
 
 - (KTAbstractPlugin *)pluginWithUniqueID:(NSString *)pluginID
 {
-	KTAbstractPlugin *result = (KTAbstractPlugin *)[self objectWithUniqueID:pluginID entityName:@"AbstractPlugin"];
+	static NSArray *entityNames;
+	if (!entityNames)
+	{
+		entityNames = [[NSArray alloc] initWithObjects:@"Pagelet", @"Page", nil];
+	}
+	
+	KTAbstractPlugin *result = (KTAbstractPlugin *)[self objectWithUniqueID:pluginID entityNames:entityNames];
 	return result;
 }
 
