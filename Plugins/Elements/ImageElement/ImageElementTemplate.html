@@ -7,7 +7,10 @@
 [[if parser.liveDataFeeds]]
 		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif4]]<img src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif4]]
 [[else3]]
-		<p>Live data feeds disabled</p>
+		<div style="padding:20px; background:rgba(0,0,0,0.25); text-align:center">
+			<p>[['This is a placeholder for the image at:]]</p>
+			<p>[[=&externalImageURL]]</p>
+		</div>
 [[endif3]]
 [[else2]]
 		<p>[['Please use the Inspector to enter the URL of an image]]</p>
