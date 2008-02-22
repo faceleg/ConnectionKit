@@ -831,7 +831,7 @@
 {
 	NSURL *requestURL = [request URL];
 	
-	if ([requestURL hasNetworkLocation] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"])
+	if ([requestURL hasNetworkLocation] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
 		LOG((@"DISALLOWING webView:resource:willSendRequest:%@ ....", requestURL));
 		NSString *pagePath = [[NSBundle mainBundle] pathForResource:@"Empty" ofType:@"html"];
