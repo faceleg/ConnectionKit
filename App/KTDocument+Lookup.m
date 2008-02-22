@@ -264,12 +264,6 @@
 	return NO;
 }
 
-- (BOOL)liveDataFeeds
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	return [defaults boolForKey:@"LiveDataFeeds"];
-}
-
 #pragma mark -
 #pragma mark Fallback values for properties in pages and collections
 

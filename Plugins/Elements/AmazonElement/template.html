@@ -31,7 +31,7 @@
 	<div class="amazonListRow [[eo]]">
 		[[if layout==7]]
 		
-		[[if HTMLGenerationPurpose||document.liveDataFeeds]]
+		[[if HTMLGenerationPurpose||parser.liveDataFeeds]]
 		<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL.absoluteString]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
 				style="width:120px; height:240px;"
 				scrolling="no"
@@ -50,7 +50,7 @@
 		[[if showThumbnails&&aProduct.publishingThumbnailURLString]]
 		<a class="imageLink" href="[[=&aProduct.URL.absoluteString]]">
 			<img	class="amazonProductThumbnail[[if frameThumbnails]] amazonProductThumbnailFrame[[endif7]]"
-					src="[[if HTMLGenerationPurpose||document.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL.absoluteString]][[endif7]]"
+					src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL.absoluteString]][[endif7]]"
 					alt="[[=&aProduct.title]]"
 					width="[[=&thumbnailWidthsString]]" />
 		</a>
@@ -95,7 +95,7 @@
 [[else]]
 	
 [[if automaticListType>0]]
-[[if HTMLGenerationPurpose||document.liveDataFeeds]]
+[[if HTMLGenerationPurpose||parser.liveDataFeeds]]
 <script src="[[=&delegate.kareliaHTMLURL.absoluteString]]" type="text/javascript"></script>
 [[else3]]
 <div class="amazonListPlaceholder">

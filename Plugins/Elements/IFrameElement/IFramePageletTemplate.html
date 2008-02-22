@@ -1,4 +1,4 @@
-[[if document.publishingMode||document.liveDataFeeds]]
+[[if document.publishingMode||parser.liveDataFeeds]]
 <iframe class="[[if iFrameIsBordered]]iframe-border[[else2]]iframe-no-border[[endif2]]"
 		[[if document.publishingMode]][[else2]]style="background:url(keypath:/[[=document.documentID]]/z0/hashPattern);"[[endif2]]
 		src="[[=linkURL]]"

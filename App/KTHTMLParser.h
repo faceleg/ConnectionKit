@@ -82,6 +82,7 @@
 
 // parsing
 - (NSString *)parseTemplate;
+- (BOOL)liveDataFeeds;
 
 @end
 

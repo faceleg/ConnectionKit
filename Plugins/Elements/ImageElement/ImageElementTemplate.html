@@ -4,7 +4,11 @@
 
 [[if preferExternalImage]]
 [[if externalImageURL]]	
-		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif3]]<img src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif3]]
+[[if parser.liveDataFeeds]]
+		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif4]]<img src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif4]]
+[[else3]]
+		<p>Live data feeds disabled</p>
+[[endif3]]
 [[else2]]
 		<p>[['Please use the Inspector to enter the URL of an image]]</p>
 [[endif2]]

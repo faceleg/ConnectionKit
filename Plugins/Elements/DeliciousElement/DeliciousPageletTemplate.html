@@ -1,6 +1,6 @@
 [[if deliciousID]]
 
-[[if document.publishingMode||document.liveDataFeeds]]
+[[if document.publishingMode||parser.liveDataFeeds]]
 
 <div id="delicious-container-[[=uniqueID]]">
 <script type="text/javascript" src="http://del.icio.us/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>

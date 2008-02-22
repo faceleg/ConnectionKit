@@ -318,6 +318,7 @@ static unsigned sLastParserID;
 	
 	
 	// Override CurrentPage in the cache for HTML code to access
+	[cache overrideKey:@"parser" withValue:self];
 	if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
 	[cache overrideKey:@"HTMLGenerationPurpose" withValue:[NSNumber numberWithInt:[self HTMLGenerationPurpose]]];
 	[cache overrideKey:@"generateArchives" withValue:[NSNumber numberWithBool:[self generateArchives]]];	// give us access to the parser's delegate (which might be nil)
@@ -347,6 +348,20 @@ static unsigned sLastParserID;
 - (void)finishParsing
 {
 	[self setCache:nil];
+}
+
+/*	Used by templates to know if they're allowed external images
+ */
+- (BOOL)liveDataFeeds
+{
+	BOOL result = NO;
+	
+	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
+	{
+		result = [[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"];
+	}
+	
+	return result;
 }
 
 - (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner
