@@ -44,7 +44,6 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSScanner *scanner = [[NSScanner alloc] initWithString:htmlString];
 	NSString *aString;
 	NSString *aURIScheme;	NSString *aURIPath;
-	NSCharacterSet *tagEndCharactersSet = [NSCharacterSet svxDataPseudoTagEndCharacterSet];
 	
 	while (![scanner isAtEnd] && !(QLPreviewRequestIsCancelled(preview)))
 	{
@@ -63,7 +62,9 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		// Scan the URI info
 		[scanner scanUpToString:@":" intoString:&aURIScheme];
 		[scanner setScanLocation:([scanner scanLocation] + 1)];
-		[scanner scanUpToCharactersFromSet:tagEndCharactersSet intoString:&aURIPath];
+		
+		[scanner scanUpToString:@">" intoString:&aURIPath];
+		aURIPath = [aURIPath stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 		
 		
 		// Process the URI
@@ -103,7 +104,6 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		
 		
 		// Make sure we're ready to go round the loop again
-		[scanner scanUpToString:@">" intoString:NULL];
 		[scanner scanString:@">" intoString:NULL];
 	}
 	
