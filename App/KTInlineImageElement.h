@@ -32,7 +32,7 @@ enum { kBlockImage, kFloatImage, kInlineImage };
 
 + (KTInlineImageElement *)inlineImageElementWithID:(NSString *)uniqueID
 										   DOMNode:(DOMHTMLImageElement *)aDOMNode 
-										 container:(KTAbstractPlugin *)aContainer;
+										 container:(KTAbstractElement *)aContainer;
 
 #pragma mark actions
 

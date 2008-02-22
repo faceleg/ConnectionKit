@@ -9,7 +9,7 @@
 #import "KTDocSiteOutlineController.h"
 
 #import "Debug.h"
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
 #import "KTDocument.h"

@@ -351,7 +351,7 @@ TO DO:
 	NSPoint location = [self convertPoint:[sender draggingLocation] fromView:nil];
 	NSString *theID = nil;
 	NSString *property = nil;
-	KTAbstractPlugin *draggedItem = [controller selectableItemAtPoint:location itemID:&theID];
+	KTAbstractElement *draggedItem = [controller selectableItemAtPoint:location itemID:&theID];
     if ( nil != [draggedItem delegate] )
     {
         LOG((@"KTWebView performDragOperation dest = %@", [[draggedItem delegate] class]));

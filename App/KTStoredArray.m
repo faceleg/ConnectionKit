@@ -16,7 +16,7 @@
 #import "NSSet+KTExtensions.h"
 
 
-extern NSArray *[NSSortDescriptor orderingSortDescriptors];	// defined in KTAbstractPlugin
+extern NSArray *[NSSortDescriptor orderingSortDescriptors];	// defined in KTAbstractElement
 
 
 @interface KTStoredArray ( Private )

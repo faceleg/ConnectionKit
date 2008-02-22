@@ -490,7 +490,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
  *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
  *	-getElementsByTagName: method.
  */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 {
 	// Since we're a DOMNode, ask evey child to do this method.
 	DOMNodeList *children = [self childNodes];
@@ -1143,7 +1143,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
  *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
  *	-getElementsByTagName: method.
  */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 {
 	// If we're an IMG element, convert our source
 	if ([self isKindOfClass:[DOMHTMLImageElement class]])
@@ -1351,7 +1351,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
  *	Depending on the URL scheme, we can either use the local path, or might have to convert to
  *	data first.
  */
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 {
 	NSURL *sourceURL = [NSURL URLWithString:[self src]];
 	if (sourceURL)

@@ -162,7 +162,7 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 
 /*	When the user changes a property in the GUI, we also need to change the corresponding HTML in the plugin
  */
-- (void)plugin:(KTAbstractPlugin *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
 	if ([key isEqualToString:@"diggCategory"])
 	{

@@ -84,7 +84,7 @@
 #pragma mark Index details
 
 // When changing the collection, change pagelet title HTML to match
-- (void)plugin:(KTAbstractPlugin *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
 	if ([key isEqualToString:@"indexedPage"])
 	{

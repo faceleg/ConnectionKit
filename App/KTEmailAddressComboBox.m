@@ -11,7 +11,7 @@
 #import <AddressBook/AddressBook.h>
 #import "NSString+Karelia.h"
 #import "KT.h"
-#import "KTAbstractPlugin.h"		// for the benefit of NSLocalizedString macro
+#import "KTAbstractElement.h"		// for the benefit of NSLocalizedString macro
 
 #define ANONYMOUS NSLocalizedString(@"Anonymous", "Placeholder")
 #define NO_REPLY_ADDRESS @"no_reply@karelia.com"

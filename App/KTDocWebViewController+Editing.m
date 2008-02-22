@@ -417,7 +417,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	
 	// If there is an appropriate delegate object, ask it to validate the insert.
 	id sourceObject = [textBlock HTMLSourceObject];
-	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractPlugin class]])
+	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractElement class]])
 	{
 		id delegate = [sourceObject delegate];
 		if (delegate && [delegate respondsToSelector:@selector(plugin:shouldInsertNode:intoTextForKeyPath:givenAction:)])
@@ -625,7 +625,7 @@ through.  We seem to do OK by filtering later.
 }
 
 - (KTInlineImageElement *)inlineImageElementForNode:(DOMHTMLImageElement *)node
-										  container:(KTAbstractPlugin *)container
+										  container:(KTAbstractElement *)container
 {
 	NSString *nodeID = [self uniqueIDForInlineImageNode:node];
 	KTInlineImageElement *result = [self inlineImageEementForUniqueNodeID:nodeID];

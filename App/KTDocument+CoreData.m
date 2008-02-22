@@ -23,7 +23,7 @@
 #import "KTPersistentStoreCoordinator.h"
 #import "KTHTMLParser.h"
 #import "KTManagedObjectContext.h"
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "KTPage.h"
 #import "NSBundle+Karelia.h"
@@ -92,7 +92,7 @@
 		
 		// TODO: move to using Sandvox.mom before shipping 1.5
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractPlugin class]];
+		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
         if ( nil != componentsBundle )
         {
             NSURL *modelURL = [NSURL fileURLWithPath:[componentsBundle pathForResource:@"Sandvox" ofType:@"mom"]];

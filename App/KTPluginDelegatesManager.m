@@ -8,7 +8,7 @@
 
 #import "KTPluginDelegatesManager.h"
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 #import "NSString+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -33,7 +33,7 @@
 	[super dealloc];
 }
 
-- (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractPlugin *)plugin
+- (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractElement *)plugin
 {
 	NSString *pluginID = [plugin uniqueID];
 	KTAbstractPluginDelegate *result = [myPluginDelegates objectForKey:pluginID];

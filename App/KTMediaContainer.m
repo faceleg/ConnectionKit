@@ -29,7 +29,7 @@
 
 - (KTNamedSettingsScaledImageContainer *)existingImageWithName:(NSString *)name pluginID:(NSString *)ID;
 - (KTNamedSettingsScaledImageContainer *)_imageWithScalingSettingsNamed:(NSString *)settingsName
-															  forPlugin:(KTAbstractPlugin *)plugin;
+															  forPlugin:(KTAbstractElement *)plugin;
 
 @end
 
@@ -260,7 +260,7 @@
 #pragma mark Named Settings
 
 - (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
-										  forPlugin:(KTAbstractPlugin *)plugin;
+										  forPlugin:(KTAbstractElement *)plugin;
 {
 	// Look for an existing scaled image of the name
 	KTMediaContainer *result = [self existingImageWithName:settingsName pluginID:[plugin uniqueID]];

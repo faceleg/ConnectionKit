@@ -24,7 +24,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class KTDocument;
-@class KTAbstractPlugin, KTMedia;
+@class KTAbstractElement, KTMedia;
 
 @interface KTOldMediaManager : NSObject
 {

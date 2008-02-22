@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 // this class essentially defines an informal plugin delegatae protocol
 
@@ -26,7 +26,7 @@
 
 @interface KTAbstractPluginDelegate : NSObject
 {
-	KTAbstractPlugin *myDelegateOwner; // should be a subclass of KTAbstractPlugin
+	KTAbstractElement *myDelegateOwner; // should be a subclass of KTAbstractElement
 }
 
 #pragma mark awake

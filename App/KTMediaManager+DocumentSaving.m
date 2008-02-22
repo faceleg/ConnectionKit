@@ -149,7 +149,7 @@
 	return deadMediaFiles;
 }
 
-/*	Specify an entity (e.g. KTAbstractPlugin) and this will return all the KTMedia2 objects they require
+/*	Specify an entity (e.g. KTAbstractElement) and this will return all the KTMedia2 objects they require
  */
 - (NSSet *)mediaIdentifiersRequiredByEntity:(NSString *)entityName
 {

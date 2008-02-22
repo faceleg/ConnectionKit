@@ -918,7 +918,7 @@ static unsigned sLastParserID;
 		result = [NSString stringWithFormat:@"<div id=\"k-%@-%@-%@\" class=\"%@\">\r%@\r</div>",
 											pseudoEntity,
 											textKeyPath,
-											[(KTAbstractPlugin *)[self component] uniqueID],
+											[(KTAbstractElement *)[self component] uniqueID],
 											[flagClasses componentsJoinedByString:@" "],
 											text];
 	}

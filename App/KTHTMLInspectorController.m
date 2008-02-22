@@ -596,12 +596,12 @@ initial syntax coloring.
 	[self setSourceCode:source];
 }
 
-- (KTAbstractPlugin *)KTHTMLElement
+- (KTAbstractElement *)KTHTMLElement
 {
     return myKTHTMLElement; 
 }
 
-- (void)setKTHTMLElement:(KTAbstractPlugin *)aKTHTMLElement
+- (void)setKTHTMLElement:(KTAbstractElement *)aKTHTMLElement
 {
     [aKTHTMLElement retain];
     [myKTHTMLElement release];

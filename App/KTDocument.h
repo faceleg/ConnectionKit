@@ -46,7 +46,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController, KTPluginDelegatesManager;
-@class KTAbstractPlugin, KTMediaContainer, KTPage;
+@class KTAbstractElement, KTMediaContainer, KTPage;
 
 @interface KTDocument : NSPersistentDocument
 {
@@ -152,7 +152,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 // Editing
 
 - (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
-- (void)editKTHTMLElement:(KTAbstractPlugin *)anElement;
+- (void)editKTHTMLElement:(KTAbstractElement *)anElement;
 
 @end
 

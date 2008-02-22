@@ -10,7 +10,7 @@
 #import "Debug.h"
 #import "NSImage+Karelia.h"
 #import "NSApplication+Karelia.h"
-#import "KTAbstractPlugin.h"		// just for class reference for bundle
+#import "KTAbstractElement.h"		// just for class reference for bundle
 
 
 @implementation NSBundle ( KTExtensions )
@@ -62,7 +62,7 @@
 {
 	NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 	NSString *path = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent:[NSApplication applicationName]];
-	NSBundle *ktComponentsBundle = [NSBundle bundleForClass:[KTAbstractPlugin class]];
+	NSBundle *ktComponentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
 	NSString *bundleDescription = nil;
 	if (self == [NSBundle mainBundle])
 	{

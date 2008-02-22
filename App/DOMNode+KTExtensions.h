@@ -19,7 +19,7 @@
 
 #import <WebKit/WebKit.h>
 
-@class KTDocument, KTAbstractPlugin, KTPage;
+@class KTDocument, KTAbstractElement, KTPage;
 
 
 @interface DOMNode ( KTExtensions )
@@ -73,7 +73,7 @@
 /*! returns all child DOMHTMLObjectElement (object tags) */
 - (NSArray *)objectElements;
 
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
 - (DOMNode *)removeJunkRecursiveRestrictive:(BOOL)aRestricted allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs;
 
@@ -113,7 +113,7 @@
 - (NSString *)cleanedOuterHTMLWithInnards:(BOOL)aFlag;
 - (DOMElement *)removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs;
 
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
 @end
 
@@ -127,5 +127,5 @@
 
 
 @interface DOMHTMLImageElement (KTExtensions)
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractPlugin *)plugin;
+- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 @end

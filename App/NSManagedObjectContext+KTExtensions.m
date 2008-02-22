@@ -267,7 +267,7 @@
 	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
 }
 
-- (KTAbstractPlugin *)pluginWithUniqueID:(NSString *)pluginID
+- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID
 {
 	static NSArray *entityNames;
 	if (!entityNames)
@@ -275,7 +275,7 @@
 		entityNames = [[NSArray alloc] initWithObjects:@"Pagelet", @"Page", nil];
 	}
 	
-	KTAbstractPlugin *result = (KTAbstractPlugin *)[self objectWithUniqueID:pluginID entityNames:entityNames];
+	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
 	return result;
 }
 
@@ -409,7 +409,7 @@
 	[plugins addObjectsFromArray:pagelets];
 	
 	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
-	KTAbstractPlugin *aPlugin;
+	KTAbstractElement *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
 		[aPlugin makeSelfOrDelegatePerformSelector:selector withObject:object withPage:page recursive:NO];

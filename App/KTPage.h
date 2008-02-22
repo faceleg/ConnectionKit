@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "KT.h"
@@ -29,7 +29,7 @@
 @class WebView;
 @class KTMediaContainer;
 
-@interface KTPage : KTAbstractPlugin	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
+@interface KTPage : KTAbstractElement	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
 {
 	// most ivars handled internally via CoreData model
 	KTAbstractIndex		*myArchivesIndex;			// not archived, loaded lazily

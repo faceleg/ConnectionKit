@@ -382,7 +382,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[((KTAbstractPlugin *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
+				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -393,7 +393,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
 
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [((KTAbstractPlugin *)[self delegateOwner]) uniqueID]];
+			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [((KTAbstractElement *)[self delegateOwner]) uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
@@ -417,7 +417,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[((KTAbstractPlugin *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
+				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
 			break;
 	}
 	

@@ -33,7 +33,7 @@
 
 + (KTInlineImageElement *)inlineImageElementWithID:(NSString *)uniqueID
 										   DOMNode:(DOMHTMLImageElement *)aDOMNode 
-										 container:(KTAbstractPlugin *)aContainer
+										 container:(KTAbstractElement *)aContainer
 {
 	KTInlineImageElement *element = [[self alloc] initWithDOMNode:aDOMNode container:aContainer];
 	element->myUID = [uniqueID copy];
@@ -93,7 +93,7 @@
 	
 	
 	// Figure out the maximum image size
-	KTAbstractPlugin *container = [self container];
+	KTAbstractElement *container = [self container];
 	NSString *imageScalingSettings = nil;
 	if ([container isKindOfClass:[KTPagelet class]])
 	{

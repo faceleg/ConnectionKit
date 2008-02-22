@@ -114,7 +114,7 @@
 	//							[refreshObjects addObject:media];
 	//						}
 	//						
-	//						KTAbstractPlugin *owner = [(KTMediaRef *)changedObject valueForKey:@"owner"];
+	//						KTAbstractElement *owner = [(KTMediaRef *)changedObject valueForKey:@"owner"];
 	//						if ( [owner isManagedObject] )
 	//						{
 	//							[refreshObjects addObject:owner];

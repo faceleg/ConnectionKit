@@ -9,7 +9,7 @@
 #import "NSManagedObjectModel+KTExtensions.h"
 
 #import "KT.h"
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 #import "NSException+Karelia.h"
 
@@ -67,7 +67,7 @@ static NSManagedObjectModel *sKTComponentsModel;
 {
 	if ( nil == sKTComponentsModel )
 	{
-		NSBundle *bundle = [NSBundle bundleForClass:[KTAbstractPlugin class]];
+		NSBundle *bundle = [NSBundle bundleForClass:[KTAbstractElement class]];
 		NSString *modelPath = [bundle pathForResource:@"KTComponents" ofType:@"mom"];
 		sKTComponentsModel = [[NSManagedObjectModel modelWithPath:modelPath] retain];
 		if ( nil == sKTComponentsModel )

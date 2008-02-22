@@ -225,7 +225,7 @@
 #pragma mark -
 #pragma mark Media Storage
 
-- (void)plugin:(KTAbstractPlugin *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
 	// When setting the video also update poster image
 	if ([key isEqualToString:@"video"])
@@ -237,7 +237,7 @@
 	// Update page thumbnail if appropriate
 	else if ([key isEqualToString:@"posterImage"])
 	{
-		KTAbstractPlugin *container = [self delegateOwner];
+		KTAbstractElement *container = [self delegateOwner];
 		if (container && [container respondsToSelector:@selector(thumbnail)])
 		{
 			if ([container valueForKey:@"thumbnail"] == oldValue)

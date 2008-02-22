@@ -1,15 +1,15 @@
 //
-//  KTAbstractPlugin+Deprecated.m
+//  KTAbstractElement+Deprecated.m
 //  Marvel
 //
 //  Created by Mike on 27/08/2007.
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 
-@implementation KTAbstractPlugin (Deprecated)
+@implementation KTAbstractElement (Deprecated)
 
 #pragma mark -
 #pragma mark Plugin Properties

@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTAbstractPlugin, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTPage;
+@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTPage;
 
 @interface NSManagedObjectContext ( KTExtensions )
 
@@ -78,7 +78,7 @@
 
 // returns KTManagedObject, searching entities Root, Page, Pagelet, Element, and Media
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
-- (KTAbstractPlugin *)pluginWithUniqueID:(NSString *)pluginID;
+- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
 
 // returns objectWithUniqueID: searching only Media
 - (KTMedia *)mediaWithUniqueID:(NSString *)anID;

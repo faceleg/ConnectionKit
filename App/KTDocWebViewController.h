@@ -28,7 +28,7 @@ typedef enum {
 @class KTInlineImageElement;
 @class KTPagelet;
 @class CIFilter;
-@class KTAbstractPlugin;
+@class KTAbstractElement;
 @class KTDocument;
 @class KTDocWindowController;
 
@@ -172,7 +172,7 @@ typedef enum {
 - (BOOL)commitEditing;
 
 - (KTInlineImageElement *)inlineImageElementForNode:(DOMHTMLImageElement *)node
-										  container:(KTAbstractPlugin *)container;
+										  container:(KTAbstractElement *)container;
 
 // Links
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;

@@ -43,7 +43,7 @@ static NSString *kKTPseudoElementException = @"KTPseudoElementException";
 	[NSException raise:kKTPseudoElementException format:@"PseudoElements have no context!"];
 }
 
-- (id)initWithDOMNode:(DOMNode *)node container:(KTAbstractPlugin *)container;
+- (id)initWithDOMNode:(DOMNode *)node container:(KTAbstractElement *)container;
 {
 	if (![super init]) {
 		return nil;
@@ -134,6 +134,6 @@ static NSString *kKTPseudoElementException = @"KTPseudoElementException";
 	myDOMNode = aDOMNode;
 }
 
-- (KTAbstractPlugin *)container { return myContainer; }
+- (KTAbstractElement *)container { return myContainer; }
 
 @end

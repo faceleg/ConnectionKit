@@ -20,7 +20,7 @@
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDesignManager.h"

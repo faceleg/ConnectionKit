@@ -41,7 +41,7 @@
 #import "KTManagedObject.h"
 
 //  abstract superclass of all plugins (bundles)
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
 #import "KTAppPlugin.h"

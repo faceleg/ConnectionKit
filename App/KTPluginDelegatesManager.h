@@ -8,13 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTAbstractPlugin, KTAbstractPluginDelegate;
+@class KTAbstractElement, KTAbstractPluginDelegate;
 
 @interface KTPluginDelegatesManager : NSObject
 {
 	NSMutableDictionary	*myPluginDelegates;
 }
 
-- (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractPlugin *)plugin;
+- (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractElement *)plugin;
 
 @end

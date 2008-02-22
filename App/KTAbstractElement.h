@@ -1,5 +1,5 @@
 //
-//  KTAbstractPlugin.h
+//  KTAbstractElement.h
 //  KTComponents
 //
 //  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
@@ -27,7 +27,7 @@
 @class KTDocument, KTMediaManager, KTElementPlugin, KTPage;
 
 
-@interface KTAbstractPlugin : KTManagedObject <KTInspectorPlugin>
+@interface KTAbstractElement : KTManagedObject <KTInspectorPlugin>
 {
     // optional delegate
 	id					myDelegate;
@@ -81,7 +81,7 @@
 @end
 
 
-@interface KTAbstractPlugin (Pasteboard)
+@interface KTAbstractElement (Pasteboard)
 + (NSSet *)keysToIgnoreForPasteboardRepresentation;
 - (id <NSCoding>)pasteboardRepresentation;
 - (id <NSCoding>)IDOnlyPasteboardRepresentation;
@@ -89,9 +89,9 @@
 
 
 @interface NSObject (KTAbstractPluginDelegate)
-- (void)plugin:(KTAbstractPlugin *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 
-- (BOOL)plugin:(KTAbstractPlugin *)plugin
+- (BOOL)plugin:(KTAbstractElement *)plugin
 	shouldInsertNode:(DOMNode *)node
   intoTextForKeyPath:(NSString *)keyPath
 		 givenAction:(WebViewInsertAction)action;

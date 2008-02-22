@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 // Priority
 typedef enum { 
@@ -32,7 +32,7 @@ typedef enum {
 	KTSourcePrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
 } KTSourcePriority;
 
-@class KTAbstractPlugin;
+@class KTAbstractElement;
 
 @interface KTAbstractDataSource : NSObject
 {

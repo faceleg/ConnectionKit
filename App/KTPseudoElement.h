@@ -25,7 +25,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTAbstractPlugin.h"				// our container will be one of these
+#import "KTAbstractElement.h"				// our container will be one of these
 #import "KTPluginInspectorViewsManager.h"	// for KTInspectorPlugin protocol
 
 
@@ -35,13 +35,13 @@
 @interface KTPseudoElement : NSObject <KTInspectorPlugin>
 {
 	DOMNode				*myDOMNode;
-	KTAbstractPlugin	*myContainer;
+	KTAbstractElement	*myContainer;
 	
 	NSMutableDictionary	*myPrimitiveValues;
 	BOOL				myAutomaticUndoIsEnabled;
 }
 
-- (id)initWithDOMNode:(DOMNode *)node container:(KTAbstractPlugin *)container;
+- (id)initWithDOMNode:(DOMNode *)node container:(KTAbstractElement *)container;
 
 // NSManagedObject clones
 - (id)primitiveValueForKey:(NSString *)key;
@@ -59,6 +59,6 @@
 
 // Accessors
 - (DOMNode *)DOMNode;
-- (KTAbstractPlugin *)container;
+- (KTAbstractElement *)container;
 
 @end

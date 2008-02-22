@@ -20,7 +20,7 @@
 @implementation KTNamedSettingsScaledImageContainer
 
 + (id)imageWithScalingSettingsNamed:(NSString *)settingsName
-						  forPlugin:(KTAbstractPlugin *)plugin
+						  forPlugin:(KTAbstractElement *)plugin
 						sourceMedia:(KTMediaContainer *)sourceMedia
 {
 	// Create the media container first
@@ -41,7 +41,7 @@
 	
 	// Find the plugin, and thereby its design.
 	NSString *pluginID = [self valueForKey:@"pluginID"];
-	KTAbstractPlugin *plugin = [[document managedObjectContext] pluginWithUniqueID:pluginID];
+	KTAbstractElement *plugin = [[document managedObjectContext] pluginWithUniqueID:pluginID];
 	KTPage *page = [plugin page];
 	KTDesign *design = [[page master] design];
 	

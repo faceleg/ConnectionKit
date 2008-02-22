@@ -1,11 +1,11 @@
 //
-//  KTAbstractPlugin.m
+//  KTAbstractElement.m
 //  KTComponents
 //
 //  Copyright (c) 2004-2006 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 #import "Debug.h"
 #import "KT.h"
@@ -43,7 +43,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractPlugin
+@implementation KTAbstractElement
 
 #pragma mark -
 #pragma mark Core Data
@@ -168,7 +168,7 @@
 	return result;
 }
 
-- (void)setPlugin:(KTAbstractPlugin *)plugin { OBASSERT_NOT_REACHED("Please don't call -setPlugin:"); }
+- (void)setPlugin:(KTAbstractElement *)plugin { OBASSERT_NOT_REACHED("Please don't call -setPlugin:"); }
 
 /*	Whenever setting a value in the extensible properties inform our delegate if they're interested
  */

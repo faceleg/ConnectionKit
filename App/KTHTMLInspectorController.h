@@ -13,7 +13,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTAbstractPlugin;
+@class KTAbstractElement;
 
 // Syntax-colored text file viewer:
 @interface KTHTMLInspectorController : NSWindowController
@@ -35,7 +35,7 @@
 
 	// ivar of what to send the information back to
 	DOMHTMLElement		*myDOMHTMLElement;
-	KTAbstractPlugin	*myKTHTMLElement;
+	KTAbstractElement	*myKTHTMLElement;
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
 	NSString			*myExplanation;
@@ -45,8 +45,8 @@
 
 - (DOMHTMLElement *)DOMHTMLElement;
 - (void)setDOMHTMLElement:(DOMHTMLElement *)aDOMHTMLElement;
-- (KTAbstractPlugin *)KTHTMLElement;
-- (void)setKTHTMLElement:(KTAbstractPlugin *)aKTHTMLElement;
+- (KTAbstractElement *)KTHTMLElement;
+- (void)setKTHTMLElement:(KTAbstractElement *)aKTHTMLElement;
 - (NSString *)explanation;
 - (void)setExplanation:(NSString *)anExplanation;
 - (NSString *)sourceCode;

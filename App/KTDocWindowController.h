@@ -27,7 +27,7 @@
 @class KTDocSiteOutlineController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
-@class KTAbstractPlugin;
+@class KTAbstractElement;
 @class KTManagedObjectContext;
 
 extern NSString *gInfoWindowAutoSaveName;
@@ -242,7 +242,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)pasteLink:(id)sender;
 
-- (KTAbstractPlugin *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
+- (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
 
 - (void)webViewDidLoad;
 - (void) webViewDeallocSupport;

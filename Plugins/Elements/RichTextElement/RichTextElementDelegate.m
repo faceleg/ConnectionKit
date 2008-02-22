@@ -260,7 +260,7 @@
  *	have to manually retrieve the data from. It could look like this:
  *		<p><img src="webkit-fake-url://123456-1234-123456-1234/image.tiff /></p>
  */
-- (BOOL)plugin:(KTAbstractPlugin *)plugin
+- (BOOL)plugin:(KTAbstractElement *)plugin
 	shouldInsertNode:(DOMNode *)node
   intoTextForKeyPath:(NSString *)keyPath
 		 givenAction:(WebViewInsertAction)action
@@ -269,7 +269,7 @@
 	
 	
 	// Figure out the maximum image size we'll allow
-	KTAbstractPlugin *container = [self delegateOwner];
+	KTAbstractElement *container = [self delegateOwner];
 	NSString *settings = nil;
 	if ([container isKindOfClass:[KTPagelet class]])
 	{

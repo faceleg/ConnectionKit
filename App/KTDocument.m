@@ -1339,7 +1339,7 @@
 	[[self HTMLInspectorController] showWindow:nil];
 }
 
-- (void)editKTHTMLElement:(KTAbstractPlugin *)anElement;
+- (void)editKTHTMLElement:(KTAbstractElement *)anElement;
 {
 	[[self HTMLInspectorController] setKTHTMLElement:anElement];
 	[[self HTMLInspectorController] showWindow:nil];
@@ -1369,7 +1369,7 @@
 	}
 	else	// Edit the HTML Element
 	{
-		KTAbstractPlugin *htmlElement = nil;
+		KTAbstractElement *htmlElement = nil;
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
 		{

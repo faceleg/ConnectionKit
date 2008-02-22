@@ -8,7 +8,7 @@
 
 #import "KTPage.h"
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTMediaContainer+Pasteboard.h"
 #import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
@@ -22,7 +22,7 @@
 	NSString *myPluginEntity;
 }
 
-- (id)initWithPlugin:(KTAbstractPlugin *)plugin;
+- (id)initWithPlugin:(KTAbstractElement *)plugin;
 
 - (NSString *)pluginID;
 - (NSString *)pluginEntity;
@@ -32,7 +32,7 @@
 
 @implementation KTPluginIDPasteboardRepresentation
 
-- (id)initWithPlugin:(KTAbstractPlugin *)plugin
+- (id)initWithPlugin:(KTAbstractElement *)plugin
 {
 	[super init];
 	
@@ -76,7 +76,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractPlugin (Pasteboard)
+@implementation KTAbstractElement (Pasteboard)
 
 + (NSSet *)keysToIgnoreForPasteboardRepresentation
 {

@@ -16,6 +16,6 @@
 }
 
 + (id)imageWithScalingSettingsNamed:(NSString *)settingsName
-						  forPlugin:(KTAbstractPlugin *)plugin
+						  forPlugin:(KTAbstractElement *)plugin
 						sourceMedia:(KTMediaContainer *)sourceMedia;
 @end

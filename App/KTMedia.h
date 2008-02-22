@@ -24,7 +24,7 @@
 
 extern NSString *kKTMediaException;
 
-@class KTDocument, KTManagedObject, KTAbstractPlugin, KTCachedImage, KTPage, KTStoredDictionary, KTStoredSet;
+@class KTDocument, KTManagedObject, KTAbstractElement, KTCachedImage, KTPage, KTStoredDictionary, KTStoredSet;
 @class BDAlias;
 
 @interface KTMedia : KTManagedObject

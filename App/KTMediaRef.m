@@ -33,7 +33,7 @@
 /*! standard constructor, assumes that instance will be created in aMediaObject's context */
 + (KTMediaRef *)mediaRefWithMedia:(KTMedia *)aMediaObject
                              name:(NSString *)aName
-                            owner:(KTAbstractPlugin *)anOwner
+                            owner:(KTAbstractElement *)anOwner
 {
 	NSParameterAssert(nil != aName);
 	NSParameterAssert(nil != aMediaObject);
@@ -70,9 +70,9 @@
 
 /*! constructor for reconstituting MediaRef from a dictionary (generally via the pasteboard) */
 + (KTMediaRef *)mediaRefWithArchiveDictionary:(NSDictionary *)aDictionary
-										owner:(KTAbstractPlugin *)anOwner
+										owner:(KTAbstractElement *)anOwner
 {
-	NSParameterAssert([anOwner isKindOfClass:[KTAbstractPlugin class]]);
+	NSParameterAssert([anOwner isKindOfClass:[KTAbstractElement class]]);
 
     KTMediaRef *result = nil;
     
@@ -117,7 +117,7 @@
 /*! "retain" media by creating a new KTMediaRef in aMediaObject's context */
 + (KTMediaRef *)retainMedia:(KTMedia *)aMediaObject
                        name:(NSString *)aName
-					  owner:(KTAbstractPlugin *)anOwner
+					  owner:(KTAbstractElement *)anOwner
 {
     NSParameterAssert(nil != aMediaObject);
     NSParameterAssert(nil != aName);
@@ -159,7 +159,7 @@
 /*! "release" media by deleting KTMediaRef that corresponds to parameters */
 + (BOOL)releaseMedia:(KTMedia *)aMediaObject
                 name:(NSString *)aName
-			   owner:(KTAbstractPlugin *)anOwner
+			   owner:(KTAbstractElement *)anOwner
 {
     NSParameterAssert(nil != aMediaObject);
     NSParameterAssert(nil != anOwner);
@@ -193,7 +193,7 @@
 		[context lockPSCAndSelf];
 		
 		KTDocument *document = [aMediaRef document];
-		KTAbstractPlugin *owner = [aMediaRef valueForKey:@"owner"];
+		KTAbstractElement *owner = [aMediaRef valueForKey:@"owner"];
 		KTMedia *media = [aMediaRef valueForKey:@"media"];
 		
 		OFF((@"releaseMediaRef: %@ name: %@ media: %@ owner: %@", [aMediaRef managedObjectDescription], [aMediaRef valueForKey:@"name"], [media managedObjectDescription], [owner managedObjectDescription]));
@@ -215,7 +215,7 @@
 
 + (KTMediaRef *)objectMatchingMedia:(KTMedia *)aMediaObject
                                name:(NSString *)aName
-							  owner:(KTAbstractPlugin *)anOwner
+							  owner:(KTAbstractElement *)anOwner
 {
 	NSParameterAssert(nil != aName);
 	NSParameterAssert(nil != aMediaObject);
@@ -305,7 +305,7 @@
 	if ( [media isImage] )
 	{
 		// ask the owner's delegate what size is required
-		KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+		KTAbstractElement *owner = [self valueForKey:@"owner"];
 		id delegate = [owner delegate];
 		if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 		{
@@ -335,7 +335,7 @@
 		if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"RSSFeedEnclosuresAreOriginalImages"] )
 		{
 			// ask the owner's delegate what size is required
-			KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+			KTAbstractElement *owner = [self valueForKey:@"owner"];
 			id delegate = [owner delegate];
 			if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 			{
@@ -370,7 +370,7 @@
 		if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"RSSFeedEnclosuresAreOriginalImages"] )
 		{
 			// ask the owner's delegate what size is required
-			KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+			KTAbstractElement *owner = [self valueForKey:@"owner"];
 			id delegate = [owner delegate];
 			if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 			{
@@ -409,7 +409,7 @@
 		if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"RSSFeedEnclosuresAreOriginalImages"] )
 		{
 			// ask the owner's delegate what size is required
-			KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+			KTAbstractElement *owner = [self valueForKey:@"owner"];
 			id delegate = [owner delegate];
 			if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 			{
@@ -451,7 +451,7 @@
 	if ( [media isImage] )
 	{
 		// ask the owner's delegate what size is required
-		KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+		KTAbstractElement *owner = [self valueForKey:@"owner"];
 		id delegate = [owner delegate];
 		if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 		{
@@ -480,7 +480,7 @@
 		if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"RSSFeedEnclosuresAreOriginalImages"] )
 		{
 			// ask the owner's delegate what size is required
-			KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+			KTAbstractElement *owner = [self valueForKey:@"owner"];
 			id delegate = [owner delegate];
 			if ( [delegate respondsToSelector:@selector(appropriateScaledImage)] )
 			{
@@ -544,7 +544,7 @@
 	[newMediaRef copyAttributesFromObject:self];
 	
 	// copy owner	
-	KTAbstractPlugin *owner = [self valueForKey:@"owner"];
+	KTAbstractElement *owner = [self valueForKey:@"owner"];
 	NSAssert((nil != owner), @"owner cannot be nil!");
 	[newMediaRef copyToOneRelationshipForKey:@"owner" fromObject:self useExisting:YES];
 	

@@ -31,7 +31,7 @@
 
 #import "KTAppPlugin.h"
 #import "KTAbstractHTMLPlugin.h"
-#import "KTAbstractPlugin.h"		// for the benefit of L'izedStringInKTComponents macro
+#import "KTAbstractElement.h"		// for the benefit of L'izedStringInKTComponents macro
 #import "KTManagedObjectContext.h"
 
 #import "NSApplication+Karelia.h"

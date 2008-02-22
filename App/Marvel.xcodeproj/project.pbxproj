@@ -314,7 +314,7 @@
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */; settings = {ATTRIBUTES = (); }; };
 		27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */; };
-		27FA04750C82F66700793A6D /* KTAbstractPlugin+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractPlugin+Deprecated.m */; };
+		27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */; };
 		27FF86A60C5A9B6C0077CB14 /* UnifiedTableButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FF86A20C5A9B6C0077CB14 /* UnifiedTableButton.h */; settings = {ATTRIBUTES = (); }; };
 		27FF86A70C5A9B6C0077CB14 /* UnifiedTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF86A30C5A9B6C0077CB14 /* UnifiedTableButton.m */; };
 		27FF86A80C5A9B6C0077CB14 /* UnifiedTableButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FF86A40C5A9B6C0077CB14 /* UnifiedTableButtonCell.h */; settings = {ATTRIBUTES = (); }; };
@@ -398,7 +398,7 @@
 		3C682B180D622F4400B4D485 /* KTPage+Pagelets.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B170D622F4400B4D485 /* KTPage+Pagelets.m */; };
 		3C682B1A0D622F4A00B4D485 /* KTPage+Web.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B190D622F4A00B4D485 /* KTPage+Web.m */; };
 		3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B1C0D622F6400B4D485 /* KTPage.m */; };
-		3C682B200D622F9300B4D485 /* KTAbstractPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B1F0D622F9300B4D485 /* KTAbstractPlugin.m */; };
+		3C682B200D622F9300B4D485 /* KTAbstractElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B1F0D622F9300B4D485 /* KTAbstractElement.m */; };
 		3C682B230D622FA600B4D485 /* KTPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B220D622FA600B4D485 /* KTPagelet.m */; };
 		3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B250D622FC700B4D485 /* KTManagedObject.m */; };
 		3C682B290D622FF000B4D485 /* KTManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B280D622FF000B4D485 /* KTManagedObjectContext.m */; };
@@ -455,7 +455,7 @@
 		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTDocumentInfo.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BBF0D6234E600B4D485 /* KTAbstractPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1E0D622F7100B4D485 /* KTAbstractPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BBF0D6234E600B4D485 /* KTAbstractElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC00D6234E800B4D485 /* KTPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B210D622F9F00B4D485 /* KTPagelet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC10D6234EE00B4D485 /* KTManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* KTManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC20D6234EF00B4D485 /* KTManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B270D622FDA00B4D485 /* KTManagedObjectContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1706,7 +1706,7 @@
 		27F462880CBBF1DB008D45CC /* KTPathInfoFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPathInfoFieldCell.m; sourceTree = "<group>"; };
 		27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExtensiblePluginPropertiesArchivedObject.h; sourceTree = "<group>"; };
 		27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensiblePluginPropertiesArchivedObject.m; sourceTree = "<group>"; };
-		27FA04730C82F66700793A6D /* KTAbstractPlugin+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPlugin+Deprecated.m"; sourceTree = "<group>"; };
+		27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractElement+Deprecated.m"; sourceTree = "<group>"; };
 		27FF86A20C5A9B6C0077CB14 /* UnifiedTableButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UnifiedTableButton.h; sourceTree = "<group>"; };
 		27FF86A30C5A9B6C0077CB14 /* UnifiedTableButton.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = UnifiedTableButton.m; sourceTree = "<group>"; };
 		27FF86A40C5A9B6C0077CB14 /* UnifiedTableButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UnifiedTableButtonCell.h; sourceTree = "<group>"; };
@@ -1872,8 +1872,8 @@
 		3C682B190D622F4A00B4D485 /* KTPage+Web.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Web.m"; sourceTree = "<group>"; };
 		3C682B1B0D622F5F00B4D485 /* KTPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPage.h; sourceTree = "<group>"; };
 		3C682B1C0D622F6400B4D485 /* KTPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPage.m; sourceTree = "<group>"; };
-		3C682B1E0D622F7100B4D485 /* KTAbstractPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPlugin.h; sourceTree = "<group>"; };
-		3C682B1F0D622F9300B4D485 /* KTAbstractPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPlugin.m; sourceTree = "<group>"; };
+		3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractElement.h; sourceTree = "<group>"; };
+		3C682B1F0D622F9300B4D485 /* KTAbstractElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractElement.m; sourceTree = "<group>"; };
 		3C682B210D622F9F00B4D485 /* KTPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPagelet.h; sourceTree = "<group>"; };
 		3C682B220D622FA600B4D485 /* KTPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPagelet.m; sourceTree = "<group>"; };
 		3C682B240D622FC100B4D485 /* KTManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTManagedObject.h; sourceTree = "<group>"; };
@@ -3749,11 +3749,11 @@
 		3C5A73710BF7B69300776464 /* Plugin Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				3C682B1E0D622F7100B4D485 /* KTAbstractPlugin.h */,
-				3C682B1F0D622F9300B4D485 /* KTAbstractPlugin.m */,
+				3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */,
+				3C682B1F0D622F9300B4D485 /* KTAbstractElement.m */,
 				3C682B210D622F9F00B4D485 /* KTPagelet.h */,
 				3C682B220D622FA600B4D485 /* KTPagelet.m */,
-				27FA04730C82F66700793A6D /* KTAbstractPlugin+Deprecated.m */,
+				27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */,
 			);
 			name = "Plugin Foundation";
 			sourceTree = "<group>";
@@ -4652,7 +4652,7 @@
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
-				3C682BBF0D6234E600B4D485 /* KTAbstractPlugin.h in Headers */,
+				3C682BBF0D6234E600B4D485 /* KTAbstractElement.h in Headers */,
 				3C682BC00D6234E800B4D485 /* KTPagelet.h in Headers */,
 				3C682BC10D6234EE00B4D485 /* KTManagedObject.h in Headers */,
 				3C682BC20D6234EF00B4D485 /* KTManagedObjectContext.h in Headers */,
@@ -5823,7 +5823,7 @@
 				27FF86A70C5A9B6C0077CB14 /* UnifiedTableButton.m in Sources */,
 				27FF86A90C5A9B6C0077CB14 /* UnifiedTableButtonCell.m in Sources */,
 				27657C2B0C80657F00B2C4D6 /* KSExtensibleManagedObject.m in Sources */,
-				27FA04750C82F66700793A6D /* KTAbstractPlugin+Deprecated.m in Sources */,
+				27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */,
 				27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */,
 				27DB8CE50C85D15A00E29C38 /* ContainsValueTransformer.m in Sources */,
 				278EC6F40C97136500A212EC /* KTHTMLParserCache.m in Sources */,
@@ -5956,7 +5956,7 @@
 				3C682B180D622F4400B4D485 /* KTPage+Pagelets.m in Sources */,
 				3C682B1A0D622F4A00B4D485 /* KTPage+Web.m in Sources */,
 				3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */,
-				3C682B200D622F9300B4D485 /* KTAbstractPlugin.m in Sources */,
+				3C682B200D622F9300B4D485 /* KTAbstractElement.m in Sources */,
 				3C682B230D622FA600B4D485 /* KTPagelet.m in Sources */,
 				3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */,
 				3C682B290D622FF000B4D485 /* KTManagedObjectContext.m in Sources */,

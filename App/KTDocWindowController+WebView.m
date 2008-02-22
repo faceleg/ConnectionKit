@@ -10,7 +10,7 @@
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
 #import "KTBorderlessWindow.h"
 #import "KTDesign.h"
@@ -97,7 +97,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 
 
-- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractPlugin *)aContainer;
+- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractElement *)aContainer;
 
 - (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow;
 - (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element;
@@ -594,9 +594,9 @@ OFF((@"size = %@", aSize));
 #pragma mark -
 #pragma mark WebUIDelegate Methods
 
-- (KTAbstractPlugin *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString
+- (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString
 {
-	KTAbstractPlugin *result = nil;
+	KTAbstractElement *result = nil;
 	NSDictionary *item = [oWebView elementAtPoint:aPoint];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	NSString *theID = nil;
@@ -832,7 +832,7 @@ Note that this method is called AFTER the webview handles the click.
 			// Fetch the pagelet object
 			// peform fetch
 			NSManagedObjectContext *context = [[self document] managedObjectContext];
-			KTAbstractPlugin *foundKTElement = [context pluginWithUniqueID:divID];
+			KTAbstractElement *foundKTElement = [context pluginWithUniqueID:divID];
 			
 			// extract result
 			if (foundKTElement)
@@ -853,7 +853,7 @@ Note that this method is called AFTER the webview handles the click.
 	}
 }
 
-- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractPlugin *)aContainer
+- (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractElement *)aContainer
 {
 	if (aNode && [aNode isKindOfClass:[DOMHTMLImageElement class]])
 	{

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 @class KTDocument;
 
 @interface KTExtensiblePluginPropertiesArchivedObject : NSObject <NSCoding>

@@ -21,7 +21,7 @@
 
 
 
-@class KTAbstractPlugin, KTMedia;
+@class KTAbstractElement, KTMedia;
 @interface KTMediaRef : KTManagedObject
 {
 
@@ -33,30 +33,30 @@
 /*! standard constructor, assumes that instance will be created in aMediaObject's context */
 + (KTMediaRef *)mediaRefWithMedia:(KTMedia *)aMediaObject
                              name:(NSString *)aName
-                            owner:(KTAbstractPlugin *)anOwner;
+                            owner:(KTAbstractElement *)anOwner;
 
 /*! constructor for reconstituting MediaRef from a dictionary (generally via the pasteboard) */
 + (KTMediaRef *)mediaRefWithArchiveDictionary:(NSDictionary *)aDictionary
-										owner:(KTAbstractPlugin *)anOwner;
+										owner:(KTAbstractElement *)anOwner;
 
 /*! "retain" media by creating a new KTMediaRef in aMediaObject's context
 	(any previous mediaRef(s) with same aName and anOwner are released)
 */
 + (KTMediaRef *)retainMedia:(KTMedia *)aMediaObject
                        name:(NSString *)aName
-                      owner:(KTAbstractPlugin *)anOwner;
+                      owner:(KTAbstractElement *)anOwner;
 
 /*! "release" media by deleting KTMediaRef that corresponds to parameters */
 + (void)releaseMediaRef:(KTMediaRef *)aMediaRef;
 
 + (BOOL)releaseMedia:(KTMedia *)aMediaObject
                 name:(NSString *)aName
-			   owner:(KTAbstractPlugin *)anOwner;
+			   owner:(KTAbstractElement *)anOwner;
 
 /*! returns KTMediaRef matching parameters from aMediaObject's context */
 + (KTMediaRef *)objectMatchingMedia:(KTMedia *)aMediaObject
                                name:(NSString *)aName
-                              owner:(KTAbstractPlugin *)anOwner;
+                              owner:(KTAbstractElement *)anOwner;
 
 /*! returns media relationship */
 - (KTMedia *)media;

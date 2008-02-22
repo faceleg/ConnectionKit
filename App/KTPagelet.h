@@ -18,7 +18,7 @@
 //
 
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 
 #import "KTWebViewComponent.h"
 
@@ -34,7 +34,7 @@ typedef enum {
 @class KTManagedObject, KTPage;
 
 
-@interface KTPagelet : KTAbstractPlugin	<KTWebViewComponent>
+@interface KTPagelet : KTAbstractElement	<KTWebViewComponent>
 {
 }
 

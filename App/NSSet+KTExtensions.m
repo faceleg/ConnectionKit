@@ -8,7 +8,7 @@
 
 #import "NSSet+KTExtensions.h"
 
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 

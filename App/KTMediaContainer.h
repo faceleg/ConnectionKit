@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractPlugin.h"
+#import "KTAbstractElement.h"
 #import "KTPasteboardArchiving.h"
 
 
@@ -47,6 +47,6 @@ typedef enum {
 - (KTMediaContainer *)imageStretchedToSize:(NSSize)size;
 
 - (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
-										  forPlugin:(KTAbstractPlugin *)plugin;
+										  forPlugin:(KTAbstractElement *)plugin;
 
 @end
