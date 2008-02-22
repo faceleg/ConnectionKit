@@ -1728,6 +1728,7 @@
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../Plugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ViewerIndex.xcodeproj; path = ../Plugins/Indexes/ViewerIndex/ViewerIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../../Shared/trunk/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousSource.xcodeproj; path = ../Plugins/DataSources/DeliciousSource/DeliciousSource.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedSource.xcodeproj; path = ../Plugins/DataSources/FeedSource/FeedSource.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C1D06730D5D669800782A95 /* FileSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FileSource.xcodeproj; path = ../Plugins/DataSources/FileSource/FileSource.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2892,6 +2893,7 @@
 			children = (
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
+				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 				3C5A737A0BF7B83A00776464 /* Models */,
