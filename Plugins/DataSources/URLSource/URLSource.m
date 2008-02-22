@@ -46,6 +46,7 @@
 		@"WebURLsWithTitlesPboardType",
 		@"BookmarkDictionaryListPboardType",
 		NSURLPboardType,	// Apple URL pasteboard type
+		NSStringPboardType,
 		nil];
 }
 
@@ -68,27 +69,19 @@
 - (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
 {
 	int result = KTSourcePriorityNone;
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSURLPboardType]])
+    
+	NSArray *URLs = nil;
+	[NSURL getURLs:&URLs
+		 andTitles:NULL
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > 0)
 	{
-		NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];
-
-		if (nil != extractedURL)
-		{
-			if (![extractedURL isFileURL])
-			{
-				result = KTSourcePriorityReasonable;
-			}
-			else	// file URL, see if it's a webloc
-			{
-				NSString *path = [extractedURL path];
-				if ([[path pathExtension] isEqualToString:@"webloc"])
-				{
-					result = KTSourcePriorityReasonable;
-				}
-			}
-		}
+		result = KTSourcePriorityReasonable;
 	}
+	
 	return result;
 }
 	
@@ -99,91 +92,37 @@
 {
     BOOL result = NO;
     
-    NSString *urlString = nil;
-    NSString *urlTitle= nil;
-    
-    NSArray *orderedTypes = [self acceptedDragTypesCreatingPagelet:isAPagelet];
-
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    NSArray *URLs = nil;	NSArray *titles = nil;
+	[NSURL getURLs:&URLs
+		 andTitles:&titles
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
 	
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
-    
-    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
-    {
-        NSArray *arrayFromData = [pboard propertyListForType:@"BookmarkDictionaryListPboardType"];
-        NSDictionary *objectInfo = [arrayFromData objectAtIndex:anIndex];
-        urlString = [objectInfo valueForKey:@"URLString"];
-        urlTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
-    }
-    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
-    {
-        NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
-        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
-        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
-        urlString = [urlStringArray objectAtIndex:anIndex];
-        urlTitle = [urlTitleArray objectAtIndex:anIndex];
-    }
-    else if ( [bestType isEqualToString:NSURLPboardType] )
-    {
-		NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];
-		urlString = [extractedURL absoluteString];
-		// Note: no title available from this
+	if (URLs && [URLs count] > 0)
+	{
+		NSURL *URL = [URLs firstObject];
+		NSString *title = [titles firstObjectOrNilIfEmpty];
 		
-		// We may be able to get title from CorePasteboardFlavorType 'urln'
-		if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"CorePasteboardFlavorType 0x75726C6E"]])
+		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+        if (title && (id)title != [NSNull null])
 		{
-			urlTitle = [pboard stringForType:@"CorePasteboardFlavorType 0x75726C6E"];
+			[aDictionary setValue:title forKey:kKTDataSourceTitle];
 		}
 		
-		// Convert .webloc files to their contained URL
-		if ([extractedURL isFileURL])
-		{
-			NSString *path = [extractedURL path];
-			if ([[path pathExtension] isEqualToString:@"webloc"])
-			{
-				// Use the Carbon Resource Manager to read 'url ' resource #256.
-				NSData *urlData = [[NSFileManager defaultManager] readFromResourceFileAtPath:path
-																						type:'url '
-																					   named:nil
-																						  id:256];
-				// Sring sems to be pre ASCII, with 2-bytes converted to % escapes
-				urlString = [[[NSString alloc] initWithData:urlData encoding:NSASCIIStringEncoding] autorelease];
-				urlString = [urlString encodeLegally];
-				
-				// Use the Carbon Resource Manager to read 'urln' resource #256.
-				NSData *nameData = [[NSFileManager defaultManager] readFromResourceFileAtPath:path
-																						 type:'urln'
-																						named:nil
-																						   id:256];
-				// empirically, this seems to be UTF8 encoded.
-				urlTitle = [[[NSString alloc] initWithData:nameData encoding:NSUTF8StringEncoding] autorelease];
-			}
-		}
-    }
-    
-    if ( nil != urlString )
-    {
-        [aDictionary setValue:urlString forKey:kKTDataSourceURLString];
-        if ( nil != urlTitle )
-        {
-            [aDictionary setValue:urlTitle forKey:kKTDataSourceTitle];
-        }
-		// 
-		// currently no suggested pagelet type defined.... an iFrame pagelet is too esoteric.  Maybe a simple "bookmark" pagelet?  Especially if multiple URLs selected, maybe from Safari
-		
-        result = YES;
-    }
+		result = YES;
+	}
     
     return result;
 }
 
 - (NSString *)pageBundleIdentifier
 {
-	return @"sandvox.LinkPage";
+	return @"sandvox.LinkElement";
 }
 - (NSString *)pageletBundleIdentifier
 {
-	return @"sandvox.LinkListPagelet";
+	return @"sandvox.LinkListElement";
 }
 
 
