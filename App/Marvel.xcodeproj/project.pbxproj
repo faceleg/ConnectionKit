@@ -1978,8 +1978,8 @@
 		3CEC4EE30874A9C000ADFE7A /* KTMediaURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaURLProtocol.m; sourceTree = "<group>"; };
 		3CEC86140BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.h; sourceTree = "<group>"; };
 		3CEC86150BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.m; sourceTree = "<group>"; };
-		3CECB4FA085EA759000A9A69 /* Application Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Application Debug.xcconfig"; sourceTree = "<group>"; };
-		3CECB524085EA76A000A9A69 /* Application Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Application Release.xcconfig"; sourceTree = "<group>"; };
+		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
+		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
 		3CF2DC1109AFB018008822F6 /* Registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Registration.h; sourceTree = "<group>"; };
 		3CF941B60D623B8D00B1C83D /* KTMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMedia.h; sourceTree = "<group>"; };
 		3CF941B80D623B9E00B1C83D /* KTMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMedia.m; sourceTree = "<group>"; };
@@ -4058,8 +4058,8 @@
 		3CECB527085EA773000A9A69 /* Xcode Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				3CECB4FA085EA759000A9A69 /* Application Debug.xcconfig */,
-				3CECB524085EA76A000A9A69 /* Application Release.xcconfig */,
+				3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */,
+				3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */,
 			);
 			name = "Xcode Configurations";
 			sourceTree = "<group>";
@@ -6572,7 +6572,7 @@
 /* Begin XCBuildConfiguration section */
 		3C0CF98B085E3D50009E3AD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* Application Release.xcconfig */;
+			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
@@ -6588,7 +6588,7 @@
 		};
 		3C0CFA3E085E3E9C009E3AD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* Application Debug.xcconfig */;
+			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
@@ -6636,28 +6636,23 @@
 		};
 		3C8883990BFCB4EE00921FA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PRODUCT_NAME = DiskImage;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 		3C88839A0BFCB4EE00921FA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = DiskImage;
 			};
 			name = Debug;
 		};
 		3C96ADE20CA06FB900C5249F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateVersion;
 			};
