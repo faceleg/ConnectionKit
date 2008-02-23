@@ -5,6 +5,9 @@
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 1.5a3
 
+// the SLA variant to wrap around the .dmg [beta,release]
+SANDVOX_VARIANT = beta
+
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit

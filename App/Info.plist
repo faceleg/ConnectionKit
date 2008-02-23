@@ -152,7 +152,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>APP_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2008 Karelia Software</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Sandvox Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -160,7 +160,7 @@
 	<key>CFBundleIconFile</key>
 	<string>AppIcon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.karelia.Sandvox</string>
+	<string>com.karelia.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -168,11 +168,17 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string>SVN_VERSION</string>
+	<string>${SVN_VERSION}</string>
+	<key>KTConnectionVersion</key>
+	<string>${CK_REVISION}</string>
+	<key>KTSparklePlusVersion</key>
+	<string>${SP_REVISION}</string>
+	<key>KTiMediaVersion</key>
+	<string>${IMEDIA_REVISION}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
