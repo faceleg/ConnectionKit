@@ -1,3 +1,7 @@
+
+// grab SANDVOX_VERSION and SVN_VERSION
+#include "../Xcode/Configurations/Sandvox.xcconfig"
+
 ARCHS = ppc i386
 FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
 

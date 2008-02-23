@@ -5499,7 +5499,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
-			showEnvVarsInLog = 0;
 		};
 		3C5A9A940D11E68A0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5541,7 +5540,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SVN_VERSION FOR ALL BUILDS\n###\n\n# this script creates two versions\n# .xcconfig is used with build settings\n# .h is used with *some* Info.plist post-processing\n\n# make sure we have a file to write to\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nmkdir -p ${BUILDSETTINGS_DIR}\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\nBUILDSETTINGS_XCCONFIG_PATH=${BUILDSETTINGS_DIR}/BuildSettings.xcconfig\n\nif test -r ${BUILDSETTINGS_PATH}\nthen\n\techo \"Removing ${BUILDSETTINGS_PATH} ...\"\n\trm ${BUILDSETTINGS_PATH}\nfi\n\ntouch ${BUILDSETTINGS_PATH}\n\nif test -r ${BUILDSETTINGS_XCCONFIG_PATH}\nthen\n\techo \"Removing ${BUILDSETTINGS_XCCONFIG_PATH} ...\"\n\trm ${BUILDSETTINGS_XCCONFIG_PATH}\nfi\n\ntouch ${BUILDSETTINGS_XCCONFIG_PATH}\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\necho \"updating version...\"\npushd ${SRCROOT}\n\n# to test Sparkle, temporarily, MANUALLY set SANDVOX_SVN_VERSION < current Sandvox Version\nSANDVOX_SVN_VERSION=`$SVN_PATH info | awk '$1==\"Revision:\" { print $2 }'`;\n\nBUILD_DATE=`/bin/date`\n\npopd\n\necho \"//\" > $BUILDSETTINGS_XCCONFIG_PATH\necho \"// Sandvox Build, generated on $BUILD_DATE\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"SVN_VERSION = $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\n\necho \"\" > $BUILDSETTINGS_PATH\necho \"#define SVN_VERSION $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\n\n\necho \"finished updating version\"\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SVN_VERSION FOR ALL BUILDS\n###\n\n# this script creates two versions\n# .xcconfig is used with build settings\n# .h is used with *some* Info.plist post-processing\n\n# make sure we have a file to write to\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nmkdir -p ${BUILDSETTINGS_DIR}\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\nBUILDSETTINGS_XCCONFIG_PATH=${BUILDSETTINGS_DIR}/BuildSettings.xcconfig\n\nif test -r ${BUILDSETTINGS_PATH}\nthen\n\techo \"Removing ${BUILDSETTINGS_PATH} ...\"\n\trm ${BUILDSETTINGS_PATH}\nfi\n\ntouch ${BUILDSETTINGS_PATH}\n\nif test -r ${BUILDSETTINGS_XCCONFIG_PATH}\nthen\n\techo \"Removing ${BUILDSETTINGS_XCCONFIG_PATH} ...\"\n\trm ${BUILDSETTINGS_XCCONFIG_PATH}\nfi\n\ntouch ${BUILDSETTINGS_XCCONFIG_PATH}\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\necho \"updating version...\"\npushd ${SRCROOT}\n\n# to test Sparkle, temporarily, MANUALLY set SANDVOX_SVN_VERSION < current Sandvox Version\nSANDVOX_SVN_VERSION=`$SVN_PATH info | awk '$1==\"Revision:\" { print $2 }'`;\n\nBUILD_DATE=`/bin/date`\n\npopd\n\necho \"//\" > $BUILDSETTINGS_XCCONFIG_PATH\necho \"// Sandvox Build, generated on $BUILD_DATE\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"SVN_VERSION = $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\n\necho \"\"\necho \"wrote $BUILDSETTINGS_XCCONFIG_PATH\"\n\necho \"\" > $BUILDSETTINGS_PATH\necho \"#define SVN_VERSION $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\n\necho \"\"\necho \"wrote $BUILDSETTINGS_PATH\"\n\necho \"\"\necho \"finished updating version\"\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
@@ -6652,7 +6651,6 @@
 		};
 		3C96ADE20CA06FB900C5249F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateVersion;
 			};
@@ -6660,7 +6658,6 @@
 		};
 		3C96ADE30CA06FB900C5249F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateVersion;
 			};
