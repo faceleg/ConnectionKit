@@ -11,10 +11,10 @@ SANDVOX_VARIANT = beta
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 828
+CK_REVISION = 835
 
 // iMedia
-IMEDIA_REVISION = 520
+IMEDIA_REVISION = 524
 
 // Sparkle+
 SP_REVISION = 113

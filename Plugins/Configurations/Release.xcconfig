@@ -3,10 +3,11 @@
 #include "../../../Xcode/Configurations/Sandvox.xcconfig"
 
 // we want to "link" against Sandvox directly
-USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Debug/Sandvox.app/Contents/PrivateHeaders" "$(SYMROOT)/Debug/Sandvox.app/Contents/Headers"
-BUNDLE_LOADER = $(SYMROOT)/Debug/Sandvox.app/Contents/MacOS/Sandvox
+USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Release/Sandvox.app/Contents/PrivateHeaders" "$(SYMROOT)/Release/Sandvox.app/Contents/Headers"
+BUNDLE_LOADER = $(SYMROOT)/Release/Sandvox.app/Contents/MacOS/Sandvox
 
-// we're building for Tiger and above
+// release builds are Universal, using Tiger's SDK
+ARCHS = ppc i386
 MACOSX_DEPLOYMENT_TARGET = 10.4
 SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk
 
@@ -14,15 +15,19 @@ SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk
 INSTALL_PATH = $(HOME)/Library/Bundles
 LIBRARY_STYLE = BUNDLE
 
-// gcc flags
-DEBUG_INFORMATION_FORMAT =  dwarf-with-dsym
+// keep debugging symbols in separate files so we can symbolize crash logs
+// <http://developer.apple.com/tools/xcode/symbolizingcrashdumps.html>
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+GCC_GENERATE_DEBUGGING_SYMBOLS = YES
+ZERO_LINK = NO
 
-ARCHS = ppc i386
+STRIP_INSTALLED_PRODUCT = YES
+SEPARATE_STRIP = YES
+STRIPFLAGS = "-S"
+COPY_PHASE_STRIP = NO
 
-COPY_PHASE_STRIP = YES
 DEPLOYMENT_LOCATION = NO
 DEPLOYMENT_POSTPROCESSING = YES
-STRIP_INSTALLED_PRODUCT = YES
 
 // we use PROJECT_NAME instead of PRODUCT_NAME
 GCC_PREFIX_HEADER = $(PROJECT_NAME)_Prefix.pch
@@ -32,7 +37,6 @@ GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = NO
 GCC_ENABLE_OBJC_EXCEPTIONS = YES
 GCC_FAST_OBJC_DISPATCH = YES
-GCC_GENERATE_DEBUGGING_SYMBOLS = NO
 GCC_MODEL_TUNING = G5
 GCC_WARN_ABOUT_RETURN_TYPE = YES
 GCC_WARN_UNINITIALIZED_AUTOS = YES
@@ -40,5 +44,4 @@ GCC_WARN_UNUSED_VALUE = YES
 GCC_WARN_UNUSED_VARIABLE = YES
 
 PREBINDING = YES
-ZERO_LINK = NO
 
