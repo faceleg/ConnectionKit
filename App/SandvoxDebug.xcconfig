@@ -3,7 +3,7 @@
 #include "../Xcode/Configurations/Sandvox.xcconfig"
 
 COPY_PHASE_STRIP = NO
-DEBUG_INFORMATION_FORMAT = dwarf;
+DEBUG_INFORMATION_FORMAT = dwarf
 FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
 GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = YES
