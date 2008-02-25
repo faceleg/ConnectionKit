@@ -9,7 +9,7 @@
 #import "QuickLookSandvoxPlugin.h"
 
 
-@interface QuickLookSandvoxPlugin (Private)
+@interface QuickLookSandvoxPlugin ()
 
 + (void)searchForPlugins;
 + (Class)registeredPluginClassForFileExtension:(NSString *)extension;
@@ -67,10 +67,13 @@
 {
 	// Ensure all reasonably found plugins have been loaded
 	static BOOL sHaveSearchedForPlugins;
-	if (!sHaveSearchedForPlugins)
+	static NSDate *sLastPluginSearchDate;
+	if (!sHaveSearchedForPlugins || (-[sLastPluginSearchDate timeIntervalSinceNow]) > (4 * 60.0))
 	{
 		[self searchForPlugins];
+		
 		sHaveSearchedForPlugins = YES;
+		[sLastPluginSearchDate release];	sLastPluginSearchDate = [[NSDate alloc] init];
 	}
 	
 	// Use an existing plugin object when possible
