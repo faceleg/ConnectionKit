@@ -131,6 +131,7 @@
 		
 		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
 		[root setBool:YES forKey:@"isCollection"];	// root is automatically a collection
+		[root setBool:NO forKey:@"allowComments"];
 		[root awakeFromBundleAsNewlyCreatedObject:YES];
 	}
 
