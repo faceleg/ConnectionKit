@@ -51,7 +51,7 @@
 #pragma mark pluginProperties
 
 // NB: we must implement html accessor so that self can observe
-// that keyPath and validateHTML, otherwise KTAbstractPlugin
+// that keyPath and validateHTML, otherwise KTAbstractElement
 // will store the value for us without triggering KVO
 - (NSString *)html;
 - (void)setHtml:(NSString *)inHTML;

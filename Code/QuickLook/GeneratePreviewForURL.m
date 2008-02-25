@@ -86,7 +86,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		else if ([aURIScheme isEqualToString:@"alias"])
 		{
 			BDAlias *alias = [BDAlias aliasWithQuickLookPseudoTagPath:aURIPath];
-			NSString *path = [alias fullPath];
+			NSString *path = [alias fullPathRelativeToPath:nil mountVolumes:NO];
 			if (path)
 			{
 				[buffer appendString:[[NSURL fileURLWithPath:path] absoluteString]];
