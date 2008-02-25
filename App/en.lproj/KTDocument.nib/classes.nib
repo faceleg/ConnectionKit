@@ -30,11 +30,18 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>NSString</string>
+			<string>KTLinkSourceView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+				<key>myDelegate</key>
+				<string>id</string>
+			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSObject</string>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -60,18 +67,11 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTLinkSourceView</string>
+			<string>NSString</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-				<key>myDelegate</key>
-				<string>id</string>
-			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSView</string>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -351,35 +351,6 @@
 			<string>NSView</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>NSTextView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSText</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTPopUpButton</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>mySelectedObject</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSPopUpButton</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTWebView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>WebView</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>nextPage</key>
@@ -400,6 +371,35 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTPopUpButton</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>mySelectedObject</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSPopUpButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSTextView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSText</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTWebView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>WebView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
