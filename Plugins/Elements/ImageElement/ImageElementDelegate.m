@@ -343,6 +343,19 @@
 
 - (unsigned)boundingImageBoxWidth { return [self boundingImageBox].width; }
 
+/*	For use when there is no photo selected; generate the approrpriate svximage:// URL to get the placeholder image
+ */
+- (NSString *)placeholderImagePath
+{
+	NSString *result = [[[[self page] master] design] placeholderImagePath];
+	if (!result || [result isEqualToString:@""])
+	{
+		result = [[self bundle] pathForImageResource:@"placeholder"];
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Resources
 
