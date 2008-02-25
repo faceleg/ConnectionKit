@@ -344,6 +344,8 @@
 	return result;
 }
 
+- (unsigned)boundingImageBoxWidth { return [self boundingImageBox].width; }
+
 #pragma mark Placeholder
 
 - (float)placeholderScaling

@@ -18,12 +18,16 @@
 [[else]]
 		
 [[if delegate.linkURL]]
-		<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif2]]<img
-			src="[[if image.file.currentPath]][[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]][[else2]][[=&delegate.placeholderImage]][[endif2]]"
+		<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif2]][[if image.file.currentPath]]<img
+			src="[[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]]"
 			alt="[[=&altText]]"
 			width="[[mediainfo info:width media:image sizeToFit:delegate.boundingImageBox]]"
 			height="[[mediainfo info:height media:image sizeToFit:delegate.boundingImageBox]]"
-		/>[[if delegate.linkURL]]</a>[[endif2]]
+		/>[[else2]]<img 
+			src="[[resourcepath delegate.placeholderImagePath]]"
+			alt="[[=&altText]]"
+			width="[[=delegate.boundingImageBoxWidth]]"
+		/>[[endif2]][[if delegate.linkURL]]</a>[[endif2]]
 		
 [[if shouldIncludeLink]][[if linkImageToOriginal]]
 		<div class="image-controls">
