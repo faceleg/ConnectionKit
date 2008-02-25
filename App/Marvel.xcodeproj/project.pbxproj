@@ -268,8 +268,6 @@
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27DB8CE40C85D15A00E29C38 /* ContainsValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8CE20C85D15A00E29C38 /* ContainsValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DB8CE50C85D15A00E29C38 /* ContainsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8CE30C85D15A00E29C38 /* ContainsValueTransformer.m */; };
-		27DD93E60CB50FFB006EE69F /* KTImagePreviewURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DD93E40CB50FFB006EE69F /* KTImagePreviewURLProtocol.h */; settings = {ATTRIBUTES = (); }; };
-		27DD93E70CB50FFB006EE69F /* KTImagePreviewURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD93E50CB50FFB006EE69F /* KTImagePreviewURLProtocol.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31B5F0D4B748700895DA1 /* KTAppPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1634,8 +1632,6 @@
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
 		27DB8CE20C85D15A00E29C38 /* ContainsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContainsValueTransformer.h; sourceTree = "<group>"; };
 		27DB8CE30C85D15A00E29C38 /* ContainsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContainsValueTransformer.m; sourceTree = "<group>"; };
-		27DD93E40CB50FFB006EE69F /* KTImagePreviewURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImagePreviewURLProtocol.h; sourceTree = "<group>"; };
-		27DD93E50CB50FFB006EE69F /* KTImagePreviewURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImagePreviewURLProtocol.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppPlugin.h; sourceTree = "<group>"; };
@@ -2761,8 +2757,6 @@
 				2796A0200CF7193A00C03F45 /* KTMediaManager+DocumentSaving.m */,
 				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
 				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
-				27DD93E40CB50FFB006EE69F /* KTImagePreviewURLProtocol.h */,
-				27DD93E50CB50FFB006EE69F /* KTImagePreviewURLProtocol.m */,
 				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
 			);
 			name = Other;
@@ -4547,7 +4541,6 @@
 				27B17DAB0CA80A9E00187918 /* KTParsedWebViewComponent.h in Headers */,
 				2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */,
 				2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */,
-				27DD93E60CB50FFB006EE69F /* KTImagePreviewURLProtocol.h in Headers */,
 				27F462890CBBF1DB008D45CC /* KTPathInfoField.h in Headers */,
 				27F4628B0CBBF1DB008D45CC /* KTPathInfoFieldCell.h in Headers */,
 				275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */,
@@ -5765,7 +5758,6 @@
 				27B17DAC0CA80A9E00187918 /* KTParsedWebViewComponent.m in Sources */,
 				2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */,
 				2786BEE70CAD24980086F9E0 /* KTMediaManager.m in Sources */,
-				27DD93E70CB50FFB006EE69F /* KTImagePreviewURLProtocol.m in Sources */,
 				27F4628A0CBBF1DB008D45CC /* KTPathInfoField.m in Sources */,
 				27F4628C0CBBF1DB008D45CC /* KTPathInfoFieldCell.m in Sources */,
 				2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */,

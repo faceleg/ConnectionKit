@@ -664,22 +664,4 @@
 	return result;
 }
 
-#pragma mark -
-#pragma mark Deprecated
-
-- (NSURL *)URLOfImage:(KTAbstractMediaFile *)image withScaleFactor:(float)scaling
-{
-	NSURL *sourceImage = [NSURL fileURLWithPath:[image currentPath]];
-	
-	NSString *urlString = [NSString stringWithFormat:@"svximage://%@%@?id=%@&scale=%f&aspectratio=%f",
-													 [sourceImage host],
-													 [[sourceImage path] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
-													 [[[[image objectID] URIRepresentation] absoluteString] urlEncode],
-													 scaling,
-													 1.0];
-	
-	NSURL *result = [NSURL URLWithString:urlString];
-	return result;
-}
-
 @end

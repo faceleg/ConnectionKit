@@ -38,10 +38,6 @@
 - (BOOL)mediaFileShouldBeExternal:(NSString *)path;
 + (BOOL)fileConstituesIMedia:(NSString *)path;
 
-// Deprecated
-- (NSURL *)URLOfImage:(KTAbstractMediaFile *)image withScaleFactor:(float)scaling;
-
-
 
 @end
 

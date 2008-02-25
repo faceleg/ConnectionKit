@@ -49,11 +49,8 @@
 // LocalizedStringInThisBundle(@"magnify", "alt text of mag link");
 
 
-@interface ImageElementDelegate (Private)
-- (void)updateDependentThumbnailsFrom:(KTAbstractMediaFile *)oldFile to:(KTAbstractMediaFile *)newFile;
-
+@interface ImageElementDelegate ()
 - (NSSize)boundingImageBox;
-- (NSString *)placeholderImagePath;
 @end
 
 
@@ -345,49 +342,6 @@
 }
 
 - (unsigned)boundingImageBoxWidth { return [self boundingImageBox].width; }
-
-#pragma mark Placeholder
-
-- (float)placeholderScaling
-{
-	NSURL *placeholderURL = [NSURL fileURLWithPath:[self placeholderImagePath]];
-	CIImage *placeholderImage = [[CIImage alloc] initWithContentsOfURL:placeholderURL];
-	CGSize placeholderCGSize = [placeholderImage extent].size;
-	NSSize placeholderSize = (*(NSSize *)&(placeholderCGSize));
-	
-	float result = [KTAbstractMediaFile scaleFactorOfSize:placeholderSize toFitSize:[self boundingImageBox]];
-	
-	[placeholderImage release];
-	return result;
-}
-
-/*	For use when there is no photo selected; generate the approrpriate svximage:// URL to get the placeholder image
- */
-- (NSString *)placeholderImagePath
-{
-	NSString *result = [[[[self page] master] design] placeholderImagePath];
-	if (!result || [result isEqualToString:@""])
-	{
-		result = [[self bundle] pathForImageResource:@"placeholder"];
-	}
-	
-	return result;
-}
-
-- (NSString *)placeholderImage
-{
-	NSString *placeholderPath = [self placeholderImagePath];
-	NSURL *basicPlaceholderURL = [NSURL fileURLWithPath:placeholderPath];
-	
-	NSURL *uneditedURL = [[[NSURL alloc] initWithScheme:@"svximage"
-												   host:[basicPlaceholderURL host]
-												   path:[basicPlaceholderURL path]] autorelease];
-	
-	NSString *resultString = [[uneditedURL absoluteString] stringByAppendingFormat:@"?scale=%f&placeholder=yes",
-																				   [self placeholderScaling]];
-	
-	return [NSURL URLWithString:resultString];
-}
 
 #pragma mark -
 #pragma mark Resources
