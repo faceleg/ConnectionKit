@@ -256,6 +256,7 @@
 		27B103BA0CDFB4C0005C69D5 /* KTAbstractMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTAbstractMediaFile.m */; };
 		27B17DAB0CA80A9E00187918 /* KTParsedWebViewComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B17DA90CA80A9E00187918 /* KTParsedWebViewComponent.h */; settings = {ATTRIBUTES = (); }; };
 		27B17DAC0CA80A9E00187918 /* KTParsedWebViewComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B17DAA0CA80A9E00187918 /* KTParsedWebViewComponent.m */; };
+		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
 		27CD65380CE1F32E00919E41 /* MediaFiles+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* MediaFiles+Internal.h */; settings = {ATTRIBUTES = (); }; };
@@ -1619,6 +1620,7 @@
 		27B103B80CDFB4C0005C69D5 /* KTAbstractMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTParsedWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTParsedWebViewComponent.h; sourceTree = "<group>"; };
 		27B17DAA0CA80A9E00187918 /* KTParsedWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTParsedWebViewComponent.m; sourceTree = "<group>"; };
+		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
 		27CD65360CE1F32E00919E41 /* MediaFiles+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MediaFiles+Internal.h"; sourceTree = "<group>"; };
@@ -3103,6 +3105,7 @@
 				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
 				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
+				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -5940,6 +5943,7 @@
 				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27EF5DC90D6C57A30024575B /* QuickLookSandvoxPlugin.m in Sources */,
+				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

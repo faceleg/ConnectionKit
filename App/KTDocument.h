@@ -164,14 +164,8 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 
 @interface KTDocument ( CoreData )
-// save/autosave
-- (IBAction)autosaveDocument:(id)sender;
 
-- (void)cancelAndInvalidateAutosaveTimers;
-- (void)fireAutosave:(id)notUsedButRequiredParameter;
-- (void)restartAutosaveTimersIfNecessary;
-- (void)resumeAutosave;
-- (void)suspendAutosave;
+- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error;
 
 // backup
 - (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
@@ -331,4 +325,15 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 - (BOOL)upateMediaStorageAtNextSave;
 - (void)setUpdateMediaStorageAtNextSave:(BOOL)update;
+@end
+
+
+@interface KTDocument (Saving)
+// save/autosave
+- (IBAction)autosaveDocument:(id)sender;
+- (void)cancelAndInvalidateAutosaveTimers;
+- (void)fireAutosave:(id)notUsedButRequiredParameter;
+- (void)restartAutosaveTimersIfNecessary;
+- (void)resumeAutosave;
+- (void)suspendAutosave;
 @end
