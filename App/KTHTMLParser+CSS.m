@@ -127,6 +127,10 @@
 	{
 		switch ([self HTMLGenerationPurpose])
 		{
+			case kGeneratingPreview:
+				result = [[NSURL fileURLWithPath:localPath] absoluteString];
+				break;
+				
 			case kGeneratingQuickLookPreview:
 				result = [[design bundle] quicklookDataForFile:filename];
 				break;
