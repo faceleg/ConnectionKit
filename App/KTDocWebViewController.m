@@ -761,30 +761,8 @@
 				source =  NSLocalizedString(@"No Source Available", @"Warning when we cannot load HTML source of a web page");
 			}
 			[[self windowController] setHTMLSource:source];
-			
-			/*
-			[[self sourceCodeTextView] scrollPoint:NSZeroPoint];
-			
-			NSRange		oldRange = NSMakeRange(0,[[[self sourceCodeTextView] textStorage] length]);
-			NSRange		newRange = NSMakeRange(0,[source length]);
-			[[[self sourceCodeTextView] textStorage] replaceCharactersInRange:oldRange
-														 withString:source];
-			[[self sourceCodeTextView] recolorRange:newRange];	
-			*/
 		}
 		
-		// here may be a good place to get the snapshot of the thing
-		// stores it as a 512 pixel image in QuickLook/Thumbnail.png ....
-		NSView *documentView = [[frame frameView] documentView];	// WebHTMLView
-		NSImage *snapshot = [documentView snapshot];
-		NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 
-													height:512 
-												  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect												 alignment:NSImageAlignTop];
-		NSData *thumbnailData = [snapshot512 PNGRepresentation];
-		[[self document] setQuickLookthumbnailPNGData:thumbnailData];
-#ifdef DEBUG
-		if ([NSUserName() isEqualToString:@"dwood"]) [thumbnailData writeToFile:[@"~/Desktop/sandvox_snapshot_.png" stringByExpandingTildeInPath] atomically:NO];
-#endif	
 		[self processEditableElementsFromDoc:[frame DOMDocument]];
 		
 		[self setHilite:YES onHTMLElement:[self selectedPageletHTMLElement]];
