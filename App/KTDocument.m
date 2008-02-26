@@ -120,6 +120,10 @@
 - (void)setSiteCachePath:(NSString *)aPath;
 - (void)setSnapshotPath:(NSString *)aPath;
 - (NSDate *)lastSnapshotDate;
+
+// Saving
+- (void)quickLookThumbnailWebViewIsFinishedWith;
+
 @end
 
 
