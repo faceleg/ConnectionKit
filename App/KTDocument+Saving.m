@@ -18,6 +18,7 @@
 #import "KTMediaManager+Internal.h"
 
 #import "CIImage+Karelia.h"
+#import "KTWebKitCompatibility.h"
 #import "NSImage+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -37,6 +38,7 @@
 
 
 @interface KTDocument (SavingPrivate)
+
 - (void)threadedSaveToURL:(NSURL *)absoluteURL
 				   ofType:(NSString *)typeName
 		 forSaveOperation:(NSSaveOperationType)saveOperation;
@@ -45,6 +47,11 @@
 
 - (void)rememberDocumentDisplayProperties;
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError;
+
+- (WebView *)quickLookThumbnailWebView;
+- (void)beginLoadingQuickLookThumbnailWebView;
+- (void)quickLookThumbnailWebViewIsFinishedWith;
+
 @end
 
 
@@ -52,14 +59,6 @@
 
 
 @implementation KTDocument (Saving)
-
-- (IBAction)saveDocument:(id)sender
-{
-	// because context changes will be processed before writeToURL:::::, set flag here, too
-	[self setSaving:YES];
-	[super saveDocument:sender]; // ultimately calls writeToURL:::::, below
-	[self setSaving:NO];
-}
 
 /*	Override of default NSDocument behaviour. We split off a new thread to perform the save.
  */
@@ -70,27 +69,32 @@
   didSaveSelector:(SEL)didSaveSelector
 	  contextInfo:(void *)contextInfo
 {
+	NSAssert(![self quickLookThumbnailWebView], @"A save is already in progress");
+	
+	
 	// CRITICAL: set flag to turn off model property inheritance (among other things) while saving
 	[self setSaving:YES];
 	
-	[[NSThread detachNewThreadInvocationToTarget:self]
-		threadedSaveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation];
+	
+	// Store the information until it's needed later
+	mySavingURL = [absoluteURL copy];
+	mySavingType = [mySavingType copy];
+	mySavingOperationType = saveOperation;
+	mySavingDelegate = delegate;	// weak ref
+	mySavingFinishedSelector = didSaveSelector;
+	mySavingContextInfo = contextInfo;
+	
+	// Start generating thumbnail
+	[self beginLoadingQuickLookThumbnailWebView];
 }
 
-- (void)threadedSaveToURL:(NSURL *)absoluteURL
-				   ofType:(NSString *)typeName
-		 forSaveOperation:(NSSaveOperationType)saveOperation
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	[self saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:NULL];
-	
-	[pool release];
-}
 
-// called when creating a new document and when performing saveDocumentAs:
+/*	Called when creating a new document and when performing saveDocumentAs:
+ */
 - (BOOL)writeToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
+	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	
 	BOOL result = NO;
 	
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
@@ -132,64 +136,31 @@
 	}
 	
 	
+	// Save the context
+	result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
 	
-	// 
-	[self performSelectorOnMainThread:@selector(loadQuickLookThumbnailIntoWebView) withObject:nil waitUntilDone:NO];
 	
-	
-	// A bunch of trickery to save the context on the main thread
-	NSMethodSignature *methodSig = [self methodSignatureForSelector:@selector(writeMOCToURL:ofType:forSaveOperation:error:)];
-	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
-	
-	[invocation setSelector:@selector(writeMOCToURL:ofType:forSaveOperation:error:)];
-	[invocation setArgument:&inURL atIndex:2];
-	[invocation setArgument:&inType atIndex:3];
-	[invocation setArgument:&inSaveOperation atIndex:4];
-	[invocation setArgument:&outError atIndex:5];
-	
-	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:) withObject:self waitUntilDone:YES];
-	[invocation getReturnValue:&result];
-	
+	// Write out Quick Look thumbnail if available
+	WebView *thumbnailWebView = [self quickLookThumbnailWebView];
+	if (thumbnailWebView && ![thumbnailWebView isLoading])
+	{
+		// Write out the thumbnail
+		[thumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+		NSImage *snapshot = [[[[thumbnailWebView mainFrame] frameView] documentView] snapshot];
+		
+		NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
+												  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+												 alignment:NSImageAlignTop];
+		
+		NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
+		[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
+		
+		
+		[self quickLookThumbnailWebViewIsFinishedWith];
+	}
 	
 	
 	return result;
-}
-
-- (void)loadQuickLookThumbnailIntoWebView
-{
-	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
-	
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-	[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	NSString *thumbnailHTML = [parser parseTemplate];
-	[parser release];
-	
-	// Load the webview. It must be in an offscreen window to do this properly.
-	unsigned designViewport = [[[[self root] master] design] viewport];	// Ensures we don't clip anything important
-	NSRect frame = NSMakeRect(0.0, 0.0, designViewport, designViewport);
-	
-	NSWindow *window = [[NSWindow alloc]
-		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	WebView *webView = [[WebView alloc] initWithFrame:frame];
-	[window setContentView:webView];
-	[webView release];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDone:) name:WebViewProgressFinishedNotification object:webView];
-	[[webView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
-}
-
-- (void)webViewDone:(NSNotification *)notification
-{
-	WebView *webView = [notification object];
-	[webView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-	NSImage *snapshot = [[[[webView mainFrame] frameView] documentView] snapshot];
-	
-	NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
-											  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
-											 alignment:NSImageAlignTop];
-	
-	NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
-	[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
 }
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError
@@ -322,12 +293,21 @@
  */
 - (BOOL)writeSafelyToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError
 {
-	// Write to the new URL
-	BOOL result = [self writeToURL:absoluteURL
-							ofType:typeName
-				  forSaveOperation:saveOperation
-			   originalContentsURL:[self fileURL]
-							 error:outError];
+	BOOL result;
+	
+	if (saveOperation == NSSaveAsOperation)
+	{
+		// Write to the new URL
+		result = [self writeToURL:absoluteURL
+						   ofType:typeName
+				 forSaveOperation:saveOperation
+			  originalContentsURL:[self fileURL]
+							error:outError];
+	}
+	else
+	{
+		result = [super writeSafelyToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+	}
 	
 	return result;
 }
@@ -459,6 +439,84 @@
 	[pathsToMove release];
 	
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Quick Look Thumbnail
+
+/*	Each document has a private WebView dedicated to generating Quick Look thumbnails.
+ */
+- (WebView *)quickLookThumbnailWebView { return myQuickLookThumbnailWebView; }
+
+/*	Once saving is complete, the WebView and its window can be disposed of to save memory.
+ */
+- (void)quickLookThumbnailWebViewIsFinishedWith
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:myQuickLookThumbnailWebView];
+	
+	// Get rid of the webview and its window
+	NSWindow *window = [myQuickLookThumbnailWebView window];
+	[window release];
+	myQuickLookThumbnailWebView = nil;
+	
+	// This information was temporary while we waited. Clear it out.
+	[mySavingURL release];	mySavingURL = nil;
+	[mySavingType release];	mySavingType = nil;
+	mySavingOperationType = 0;
+	mySavingDelegate = nil;		// weak ref
+	mySavingFinishedSelector = nil;
+	mySavingContextInfo = NULL;
+}
+
+- (void)beginLoadingQuickLookThumbnailWebView
+{
+	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	NSAssert(!myQuickLookThumbnailWebView, @"A Quick Look thumbnail is already being generated");
+	
+	
+	// Put together the HTML for the thumbnail
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+	[parser setHTMLGenerationPurpose:kGeneratingPreview];
+	NSString *thumbnailHTML = [parser parseTemplate];
+	[parser release];
+	
+	
+	// Create the webview. It must be in an offscreen window to do this properly.
+	unsigned designViewport = [[[[self root] master] design] viewport];	// Ensures we don't clip anything important
+	NSRect frame = NSMakeRect(0.0, 0.0, designViewport, designViewport);
+	
+	NSWindow *window = [[NSWindow alloc]
+		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+	
+	myQuickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
+	[window setContentView:myQuickLookThumbnailWebView];
+	[myQuickLookThumbnailWebView release];
+	
+	
+	// We want to know when the webview's done loading
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(quickLookThumbnailWebviewDidFinishLoading:)
+												 name:WebViewProgressFinishedNotification
+											   object:myQuickLookThumbnailWebView];
+	
+	
+	// Actually go ahead and begin building the thumbnail
+	[[myQuickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+}
+
+/*	Once the thumbnail webview has loaded we can go ahead and do normal document saving
+ */
+- (void)quickLookThumbnailWebviewDidFinishLoading:(NSNotification *)notification
+{
+	if ([notification object] != [self quickLookThumbnailWebView]) return;
+	
+	
+	[super saveToURL:mySavingURL
+			  ofType:mySavingType
+	forSaveOperation:mySavingOperationType
+			delegate:mySavingDelegate
+	 didSaveSelector:mySavingFinishedSelector
+		 contextInfo:mySavingContextInfo];
 }
 
 #pragma mark -

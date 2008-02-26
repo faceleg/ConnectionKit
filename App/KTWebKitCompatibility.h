@@ -33,4 +33,5 @@
 
 @interface WebView ( KTWebKitCompatibility )
 - (DOMDocument *)mainFrameDocument;
+- (BOOL)isLoading;
 @end

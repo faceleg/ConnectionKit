@@ -94,7 +94,16 @@ extern NSString *kKTMetadataSiteTitleKey;
 	NSMutableDictionary	*myTopSidebarsCache;
 	NSMutableDictionary	*myBottomSidebarsCache;
 	
-	NSData *myQuickLookthumbnailPNGData;
+	
+	// Quick Look thumbnail saving. We have to hang onto these till the webview is laoded.
+	WebView				*myQuickLookThumbnailWebView;
+	NSURL				*mySavingURL;
+	NSString			*mySavingType;
+	NSSaveOperationType	mySavingOperationType;
+	id					mySavingDelegate;			// weak ref
+	SEL					mySavingFinishedSelector;
+	void				*mySavingContextInfo;
+	
 	
 	// UI
 	BOOL	myShowDesigns;				// is designs panel showing?
@@ -239,8 +248,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 
 @interface KTDocument ( Properties )
-
-- (void) setQuickLookthumbnailPNGData:(NSData *)aData;
 
 - (KTPluginDelegatesManager *)pluginDelegatesManager;
 - (KTStalenessManager *)stalenessManager;

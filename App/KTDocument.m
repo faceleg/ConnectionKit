@@ -487,7 +487,7 @@
 
 	[myMediaManager release];
 	[myPluginDelegatesManager release];
-	[self setQuickLookthumbnailPNGData:nil];
+	[self quickLookThumbnailWebViewIsFinishedWith];
 	
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];

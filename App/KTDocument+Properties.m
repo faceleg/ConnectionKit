@@ -166,13 +166,6 @@
 
 #pragma mark ivar accessors (not stored objects)
 
-- (void) setQuickLookthumbnailPNGData:(NSData *)aData
-{
-	[aData retain];
-	[myQuickLookthumbnailPNGData release];
-	myQuickLookthumbnailPNGData = aData;
-}
-
 - (NSTimer *)autosaveTimer
 {
 	return myAutosaveTimer;
