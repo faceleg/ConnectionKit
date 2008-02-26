@@ -79,6 +79,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 			);
 			dependencies = (
+				3CC0B0990D74BD1F00D3815B /* PBXTargetDependency */,
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
 				3C1D06BB0D5D67B800782A95 /* PBXTargetDependency */,
 				3C1D06BD0D5D67BC00782A95 /* PBXTargetDependency */,
@@ -1355,6 +1356,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedElement;
+		};
+		3CC0B0980D74BD1F00D3815B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
+			remoteInfo = "Update Version";
 		};
 		3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3093,6 +3101,7 @@
 				CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */,
 				3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */,
 				3CA9B30D0804643200C3053B /* KTDocument+Properties.m */,
+				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
 				3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */,
@@ -3105,7 +3114,6 @@
 				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
 				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
-				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -6164,6 +6172,11 @@
 			isa = PBXTargetDependency;
 			name = FeedElement;
 			targetProxy = 3CA9FF880D63C4E700815310 /* PBXContainerItemProxy */;
+		};
+		3CC0B0990D74BD1F00D3815B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C96ADE10CA06FB900C5249F /* Update Version */;
+			targetProxy = 3CC0B0980D74BD1F00D3815B /* PBXContainerItemProxy */;
 		};
 		3CDC2EE20D6B4736007E800E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
