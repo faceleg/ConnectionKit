@@ -146,16 +146,11 @@
 - (NSString *)introductionHTML 
 {
 	NSString *result = [self wrappedValueForKey:@"introductionHTML"];
-	
-	if ([[self document] isSaving])	// if we are saving, don't do any lookup, or it will save that derived data to the file!
-	{
-		return result;
-	}
-	
-	if (nil == result)
+	if (!result)
 	{
 		result = @"";
 	}
+	
 	return result;
 }
 

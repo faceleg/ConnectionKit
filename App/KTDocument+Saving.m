@@ -31,6 +31,12 @@
 
 
 @interface KTDocument (SavingPrivate)
+- (void)threadedSaveToURL:(NSURL *)absoluteURL
+				   ofType:(NSString *)typeName
+		 forSaveOperation:(NSSaveOperationType)saveOperation;
+		 
+- (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError;
+
 - (void)rememberDocumentDisplayProperties;
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError;
 @end
@@ -43,27 +49,47 @@
 
 - (IBAction)saveDocument:(id)sender
 {
-	//LOGMETHOD;
 	// because context changes will be processed before writeToURL:::::, set flag here, too
 	[self setSaving:YES];
 	[super saveDocument:sender]; // ultimately calls writeToURL:::::, below
 	[self setSaving:NO];
 }
 
+/*	Override of default NSDocument behaviour. We split off a new thread to perform the save.
+ */
+- (void)saveToURL:(NSURL *)absoluteURL
+		   ofType:(NSString *)typeName
+ forSaveOperation:(NSSaveOperationType)saveOperation
+		 delegate:(id)delegate
+  didSaveSelector:(SEL)didSaveSelector
+	  contextInfo:(void *)contextInfo
+{
+	// CRITICAL: set flag to turn off model property inheritance (among other things) while saving
+	[self setSaving:YES];
+	
+	[[NSThread detachNewThreadInvocationToTarget:self]
+		threadedSaveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation];
+}
+
+- (void)threadedSaveToURL:(NSURL *)absoluteURL
+				   ofType:(NSString *)typeName
+		 forSaveOperation:(NSSaveOperationType)saveOperation
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	[self saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:NULL];
+	
+	[pool release];
+}
+
 // called when creating a new document and when performing saveDocumentAs:
 - (BOOL)writeToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
-	//LOGMETHOD;
-	//LOG((@"-writeToURL: %@ ofType: %@ forSaveOperation: %d originalContentsURL: %@", inURL, inType, inSaveOperation, inOriginalContentsURL));
-	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
-
 	BOOL result = NO;
 	
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
 	if ( ((0 == gRegistrationWasChecked) && random() < (LONG_MAX / 10) ) )
 	{
-		result = NO; // explicitly fail to save document
-		
 		// NB: this is a trick to make a licensing issue look like an Unknown Store Type error
 		// KTErrorReason/KTErrorDomain is a nonsense response to flag this as bad license
 		NSError *registrationError = [NSError errorWithDomain:NSCocoaErrorDomain
@@ -75,168 +101,189 @@
 			// we'll pass registrationError back to the document for presentation
 			*outError = registrationError;
 		}
-	}
-	else
-	{
-		// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m
 		
-		@synchronized ( self ) // right now, we don't want to do anything but write out this file
-		{
-			// CRITICAL: set flag to turn off model property inheritance (among other things) while saving
-			[self setSaving:YES];
-			
-			NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-			NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
-			
-			// if we haven't been saved before, create document wrapper paths on disk before we do anything else
-			if ( NSSaveAsOperation == inSaveOperation )
-			{
-				[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
-				[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
-				
-				[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument siteURLForDocumentURL:inURL] path] attributes:nil];
-				[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument mediaURLForDocumentURL:inURL] path] attributes:nil];
-				[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
-			}
-			
-			// we really want to write to a URL inside the wrapper, so compute the real URL
-			NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
-			@try 
-			{
-				
-				if ( (NSSaveOperation == inSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
-				{
-					// NSDocument does atomic saves so the first time the user saves it's in a temporary
-					// directory and the file is then moved to the actual save path, so we need to tell the 
-					// persistentStoreCoordinator to remove the old persistentStore, otherwise if we attempt
-					// to migrate it, the coordinator complains because it knows they are the same store
-					// despite having two different URLs
-					(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
-															error:outError];
-					
-				}
-				
-				if ( [[storeCoordinator persistentStores] count] < 1 ) 
-				{ 
-					// this is our first save so we just set the persistentStore and save normally
-					BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-																				 ofType:[KTDocument defaultStoreType]
-																	 modelConfiguration:nil
-																		   storeOptions:nil
-																				  error:outError];
-					
-					NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
-					id newStore = [coord persistentStoreForURL:newSaveURL];
-					if ( !newStore || !didConfigure )
-					{
-						NSLog(@"error: unable to create document: %@", [*outError description]);
-					}
-					else
-					{
-						(void)[self setMetadataForStoreAtURL:newSaveURL];
-					}
-				} 
-				else if (inSaveOperation == NSSaveAsOperation)
-				{
-					result = [self migrateToURL:inURL ofType:inType error:outError];
-					if (!result) {
-						return result;
-					}
-				}
-				
-				if ( [self isClosing] )
-				{
-					// grab any last edits
-					[[[self windowController] webViewController] commitEditing];
-					[managedObjectContext processPendingChanges];
-					
-					// remembering and collecting should not be undoable
-					[[managedObjectContext undoManager] disableUndoRegistration];
-
-										
-					// remember important things that we don't usually update
-					[self rememberDocumentDisplayProperties];
-					
-					// collect garbage
-					if ([self upateMediaStorageAtNextSave])
-					{
-						[[self mediaManager] resetMediaFileStorage];
-					}
-					[[self mediaManager] garbageCollect];
-					
-					// force context to record all changes before saving
-					[managedObjectContext processPendingChanges];
-					[[managedObjectContext undoManager] enableUndoRegistration];
-				}
-				
-				
-				// Write out the last QuickLook thumbnail
-				if (myQuickLookthumbnailPNGData)
-				{
-					[myQuickLookthumbnailPNGData writeToFile:
-					 [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"Thumbnail.png"]
-												  atomically:NO];
-				}
-				
-				
-				// Store QuickLook preview
-				KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-				[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-				NSString *previewHTML = [parser parseTemplate];
-				[parser release];
-				
-				NSString *previewPath =
-					[[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-				[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
-				
-				
-				// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
-				// so that saveDocumentAs: can find us again until the new context is fully ready
-				// FIXME: is keeping this weak ref still necessary for save as?
-				[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
-				result = [managedObjectContext save:outError];
-				if (result) result = [[[self mediaManager] managedObjectContext] save:outError];
-				[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
-				
-				if ( result )
-				{
-					// if we've saved, we don't need to autosave until after the next context change
-					[self cancelAndInvalidateAutosaveTimers];
-				}
-			}
-			@catch (NSException * e) 
-			{
-				NSLog(@"writeToURL: %@", [e description]);
-			}
-			@finally
-			{
-				if ( ![self isClosing] )
-				{
-					// CRITICAL: now, set flag to turn on model property inheritance during normal operation
-					[self setSaving:NO]; // Make SURE this is reset (so that inherited properties work again)
-				}
-				else
-				{
-					[mySaveLock unlock]; // don't resume autosave, but we do have to break the lock
-				}
-			}
-		}
+		[self setSaving:NO];
+		return NO;
 	}
+	
+	
+	
+	// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m
+	
+	
+	
+	
+	
+	// if we haven't been saved before, create document wrapper paths on disk before we do anything else
+	if ( NSSaveAsOperation == inSaveOperation )
+	{
+		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
+		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
+		
+		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument siteURLForDocumentURL:inURL] path] attributes:nil];
+		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument mediaURLForDocumentURL:inURL] path] attributes:nil];
+		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
+	}
+	
+	
+	
+	// A bunch of trickery to save the context on the main thread
+	NSMethodSignature *methodSig = [self methodSignatureForSelector:@selector(writeMOCToURL:ofType:forSaveOperation:error:)];
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
+	
+	[invocation setSelector:@selector(writeMOCToURL:ofType:forSaveOperation:error:)];
+	[invocation setArgument:&inURL atIndex:2];
+	[invocation setArgument:&inType atIndex:3];
+	[invocation setArgument:&inSaveOperation atIndex:4];
+	[invocation setArgument:&outError atIndex:5];
+	
+	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:) withObject:self waitUntilDone:YES];
+	[invocation getReturnValue:&result];
+	
+	
 	
 	return result;
 }
 
-/*	We override the "Save As" behavior to save directly ('unsafely' I suppose!) to the URL,
+- (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError
+{
+	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	
+	BOOL result = NO;
+	
+	// we really want to write to a URL inside the wrapper, so compute the real URL
+	NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
+	
+	@try 
+	{
+		NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+		NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
+		if ( (NSSaveOperation == inSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
+		{
+			// NSDocument does atomic saves so the first time the user saves it's in a temporary
+			// directory and the file is then moved to the actual save path, so we need to tell the 
+			// persistentStoreCoordinator to remove the old persistentStore, otherwise if we attempt
+			// to migrate it, the coordinator complains because it knows they are the same store
+			// despite having two different URLs
+			(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
+													error:outError];
+			
+		}
+		
+		if ( [[storeCoordinator persistentStores] count] < 1 ) 
+		{ 
+			// this is our first save so we just set the persistentStore and save normally
+			BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+																		 ofType:[KTDocument defaultStoreType]
+															 modelConfiguration:nil
+																   storeOptions:nil
+																		  error:outError];
+			
+			NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
+			id newStore = [coord persistentStoreForURL:newSaveURL];
+			if ( !newStore || !didConfigure )
+			{
+				NSLog(@"error: unable to create document: %@", [*outError description]);
+			}
+			else
+			{
+				(void)[self setMetadataForStoreAtURL:newSaveURL];
+			}
+		} 
+		else if (inSaveOperation == NSSaveAsOperation)
+		{
+			result = [self migrateToURL:inURL ofType:inType error:outError];
+			if (!result) {
+				return result;
+			}
+		}
+		
+		if ( [self isClosing] )
+		{
+			// grab any last edits
+			[[[self windowController] webViewController] commitEditing];
+			[managedObjectContext processPendingChanges];
+			
+			// remembering and collecting should not be undoable
+			[[managedObjectContext undoManager] disableUndoRegistration];
+
+								
+			// remember important things that we don't usually update
+			[self rememberDocumentDisplayProperties];
+			
+			// collect garbage
+			if ([self upateMediaStorageAtNextSave])
+			{
+				[[self mediaManager] resetMediaFileStorage];
+			}
+			[[self mediaManager] garbageCollect];
+			
+			// force context to record all changes before saving
+			[managedObjectContext processPendingChanges];
+			[[managedObjectContext undoManager] enableUndoRegistration];
+		}
+		
+		
+		// Write out the last QuickLook thumbnail
+		if (myQuickLookthumbnailPNGData)
+		{
+			[myQuickLookthumbnailPNGData writeToFile:
+			 [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"Thumbnail.png"]
+										  atomically:NO];
+		}
+		
+		
+		// Store QuickLook preview
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+		NSString *previewHTML = [parser parseTemplate];
+		[parser release];
+		
+		NSString *previewPath =
+			[[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+		
+		
+		// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
+		// so that saveDocumentAs: can find us again until the new context is fully ready
+		// FIXME: is keeping this weak ref still necessary for save as?
+		[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
+		result = [managedObjectContext save:outError];
+		if (result) result = [[[self mediaManager] managedObjectContext] save:outError];
+		[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
+		
+		if (result)
+		{
+			// if we've saved, we don't need to autosave until after the next context change
+			[self cancelAndInvalidateAutosaveTimers];
+		}
+	}
+	@catch (NSException * e) 
+	{
+		NSLog(@"writeToURL: %@", [e description]);
+	}
+	@finally
+	{
+		if ( ![self isClosing] )
+		{
+			// CRITICAL: now, set flag to turn on model property inheritance during normal operation
+			[self setSaving:NO]; // Make SURE this is reset (so that inherited properties work again)
+		}
+		else
+		{
+			[mySaveLock unlock]; // don't resume autosave, but we do have to break the lock
+		}
+	}
+	
+	
+	return result;
+}
+
+/*	We override the behavior to save directly ('unsafely' I suppose!) to the URL,
  *	rather than via a temporary file as is the default.
  */
 - (BOOL)writeSafelyToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError
 {
-	if (saveOperation != NSSaveAsOperation)
-	{
-		return [super writeSafelyToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-	}
-	
-	
 	// Write to the new URL
 	BOOL result = [self writeToURL:absoluteURL
 							ofType:typeName
