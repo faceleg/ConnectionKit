@@ -89,8 +89,12 @@ TO DO:
 
 static float sGrowCutoffSidebarDimension;
 
+#define DIM(x) (((float*)&(x))[ishor])
+#define WIDEN (2)
+
 /*!	Cause the little dragging view to work as the dragger
 */
+
 - (int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview
 {
 	int result = NSNotFound;
@@ -119,6 +123,26 @@ static float sGrowCutoffSidebarDimension;
 				result = 0;
 			}
 		}
+		
+		// Give a chance for a slop rect now
+		if (NSNotFound == result)
+		{
+			NSRect lead = [subview frame];
+			NSRect trail = lead;
+			unsigned pos = [subview position];
+			BOOL ishor = [sender isHorizontal];
+			float dim = DIM(trail.size);
+			DIM(trail.origin) += dim-WIDEN;
+			DIM(trail.size) = WIDEN;
+			DIM(lead.size) = WIDEN;
+			if ([sender mouse:point inRect:lead]&&(pos>0)) {
+				return pos-1;
+			} else if ([sender mouse:point inRect:trail]&&(pos<[sender numberOfSubviews]-1)) {
+				return pos;
+			}
+		}
+		
+		
 		if (0 == result)
 		{
 			// If we are about to drag, make this calculation
@@ -177,6 +201,13 @@ you start dragging to enlarge.  Not exact, depending on how fast mouse is moved.
 		NSRect bounds = [sidebarSplit bounds];
 		bounds.origin.x += bounds.size.width - 1;
 		bounds.size.width = 1;
+
+		
+		// Widen the main split
+		BOOL ishor = [sender isHorizontal];	// used in the macros below
+		DIM(bounds.origin) -= WIDEN;
+		DIM(bounds.size) += WIDEN*2;
+
 		[sender addCursorRect:bounds cursor:[RBSplitView cursor:RBSVVerticalCursor]];
 
 		return rect;
