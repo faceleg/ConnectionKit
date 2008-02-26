@@ -8,16 +8,22 @@
 
 #import "KTDocument.h"
 
+#import "KTDesign.h"
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTHTMLParser.h"
+#import "KTPage.h"
+#import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
 
+#import "CIImage+Karelia.h"
+#import "NSImage+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSThread+Karelia.h"
+#import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 #import <iMediaBrowser/RBSplitView.h>
@@ -127,6 +133,10 @@
 	
 	
 	
+	// 
+	[self performSelectorOnMainThread:@selector(loadQuickLookThumbnailIntoWebView) withObject:nil waitUntilDone:NO];
+	
+	
 	// A bunch of trickery to save the context on the main thread
 	NSMethodSignature *methodSig = [self methodSignatureForSelector:@selector(writeMOCToURL:ofType:forSaveOperation:error:)];
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSig];
@@ -143,6 +153,43 @@
 	
 	
 	return result;
+}
+
+- (void)loadQuickLookThumbnailIntoWebView
+{
+	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+	[parser setHTMLGenerationPurpose:kGeneratingPreview];
+	NSString *thumbnailHTML = [parser parseTemplate];
+	[parser release];
+	
+	// Load the webview. It must be in an offscreen window to do this properly.
+	unsigned designViewport = [[[[self root] master] design] viewport];	// Ensures we don't clip anything important
+	NSRect frame = NSMakeRect(0.0, 0.0, designViewport, designViewport);
+	
+	NSWindow *window = [[NSWindow alloc]
+		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+	WebView *webView = [[WebView alloc] initWithFrame:frame];
+	[window setContentView:webView];
+	[webView release];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDone:) name:WebViewProgressFinishedNotification object:webView];
+	[[webView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+}
+
+- (void)webViewDone:(NSNotification *)notification
+{
+	WebView *webView = [notification object];
+	[webView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+	NSImage *snapshot = [[[[webView mainFrame] frameView] documentView] snapshot];
+	
+	NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
+											  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+											 alignment:NSImageAlignTop];
+	
+	NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
+	[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
 }
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError
@@ -221,15 +268,6 @@
 			// force context to record all changes before saving
 			[managedObjectContext processPendingChanges];
 			[[managedObjectContext undoManager] enableUndoRegistration];
-		}
-		
-		
-		// Write out the last QuickLook thumbnail
-		if (myQuickLookthumbnailPNGData)
-		{
-			[myQuickLookthumbnailPNGData writeToFile:
-			 [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"Thumbnail.png"]
-										  atomically:NO];
 		}
 		
 		
