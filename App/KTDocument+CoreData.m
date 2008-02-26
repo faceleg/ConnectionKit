@@ -211,7 +211,7 @@
 	// what do we do about that?
 	// right now, this is the only place where we are starting the timers
 	
-	if ( (nil != [self fileURL]) && ![self isSaving] )
+	if ([self fileURL])
 	{
 		// if we have a place to save, then we can autosave
 		[self restartAutosaveTimersIfNecessary];
@@ -716,16 +716,6 @@
 {
 	// we tie this standard NSDocument method to a user default
 	return [[NSUserDefaults standardUserDefaults] boolForKey:@"CreateBackupFileWhenSaving"];
-}
-
-- (BOOL)isSaving
-{
-    return myIsSaving;
-}
-
-- (void)setSaving:(BOOL)flag
-{
-    myIsSaving = flag;
 }
 
 #pragma mark managed object support

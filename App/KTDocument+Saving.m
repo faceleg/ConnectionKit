@@ -72,10 +72,6 @@
 	NSAssert(![self quickLookThumbnailWebView], @"A save is already in progress");
 	
 	
-	// CRITICAL: set flag to turn off model property inheritance (among other things) while saving
-	[self setSaving:YES];
-	
-	
 	// Store the information until it's needed later
 	mySavingURL = [absoluteURL copy];
 	mySavingType = [mySavingType copy];
@@ -112,7 +108,6 @@
 			*outError = registrationError;
 		}
 		
-		[self setSaving:NO];
 		return NO;
 	}
 	
@@ -270,18 +265,6 @@
 	@catch (NSException * e) 
 	{
 		NSLog(@"writeToURL: %@", [e description]);
-	}
-	@finally
-	{
-		if ( ![self isClosing] )
-		{
-			// CRITICAL: now, set flag to turn on model property inheritance during normal operation
-			[self setSaving:NO]; // Make SURE this is reset (so that inherited properties work again)
-		}
-		else
-		{
-			[mySaveLock unlock]; // don't resume autosave, but we do have to break the lock
-		}
 	}
 	
 	
@@ -626,7 +609,6 @@
 	//LOG((@"---------------------------------------------- deactivating autosave"));
 	if ( !myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
-		[mySaveLock lock];
 		myIsSuspendingAutosave = YES;
 	}
 	if ( [NSThread isMainThread] )
@@ -646,7 +628,6 @@
 	//LOG((@"---------------------------------------------- (re)activating autosave"));
 	if ( myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
-		[mySaveLock unlock];
 		myIsSuspendingAutosave = NO;
 	}
 	if ( [NSThread isMainThread] )

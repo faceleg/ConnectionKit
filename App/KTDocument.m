@@ -143,7 +143,6 @@
     if ( nil != [super init] )
 	{
 		// set up autosave
-		mySaveLock = [[NSLock alloc] init];
 		myIsSuspendingAutosave = NO;
 		
 		// we always start in preview
@@ -481,7 +480,6 @@
 	// no more saving
 	[self cancelAndInvalidateAutosaveTimers]; // invalidates and releases myAutosaveTimer
     [myLastSavedTime release]; myLastSavedTime = nil;
-    [mySaveLock release]; mySaveLock = nil;
 	
 	[oNewDocAccessoryView release];
 		

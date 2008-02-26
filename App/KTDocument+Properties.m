@@ -457,24 +457,21 @@
 {
 	OFF((@"WARNING: wrappedInheritedValueForKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
     id result = [[self documentInfo] valueForKey:aKey];
-	if ( ![self isSaving] ) // only allow inheritance if we are not in "saving mode"
+	if ( nil == result )
 	{
-		if ( nil == result )
+		result = [[NSUserDefaults standardUserDefaults] objectForKey:aKey];
+		if ( nil != result )
 		{
-			result = [[NSUserDefaults standardUserDefaults] objectForKey:aKey];
-			if ( nil != result )
-			{
-				// for now, we're going to specialize support for known entities
-				// in the model that we want to be inheritied.
-				KTDocumentInfo *documentInfo = [self documentInfo];
+			// for now, we're going to specialize support for known entities
+			// in the model that we want to be inheritied.
+			KTDocumentInfo *documentInfo = [self documentInfo];
 //				[documentInfo lockPSCAndMOC];
-				[documentInfo setPrimitiveValue:result forKey:aKey];
+			[documentInfo setPrimitiveValue:result forKey:aKey];
 //				[self refreshObjectInAllOtherContexts:(KTManagedObject *)documentInfo];
 //				[documentInfo unlockPSCAndMOC];
-			}
 		}
 	}
-    return result;
+	return result;
 }
 
 - (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey

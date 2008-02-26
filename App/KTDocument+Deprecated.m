@@ -561,7 +561,7 @@
 					//&& ![self connectionsAreConnected] ); // we should be ok to save changes to peer during publishing now
 	if ( doSave )
 	{
-		[self suspendAutosave]; // sets mySaveLock so no other thread tries to save (avoid deadlock)
+		[self suspendAutosave];
 		
 		
 		

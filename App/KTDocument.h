@@ -79,10 +79,8 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 	NSTimer						*myAutosaveTimer;
 	NSDate						*myLastSavedTime;	
-	NSRecursiveLock				*mySaveLock;
 		
-	BOOL myIsSaving;
-	BOOL myIsSuspendingAutosave;	// flag to see whether mySaveLock isLocked
+	BOOL myIsSuspendingAutosave;
 	BOOL myIsClosing;
 	
 	NSString *myDocumentID;
@@ -189,9 +187,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 // support
 - (void)processPendingChangesAndClearChangeCount;
-
-- (BOOL)isSaving;
-- (void)setSaving:(BOOL)flag;
 
 // notifications
 /// these are now just used for debugging purposes
