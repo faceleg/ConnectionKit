@@ -18,9 +18,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>APP_VERSION (SVN_VERSION), © 2006 Karelia Software</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2006 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.karelia.sandvox.importer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -28,9 +26,9 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>APP_VERSION</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleVersion</key>
-	<string>SVN_VERSION</string>
+	<string>${SVN_VERSION}</string>
 	<key>CFPlugInDynamicRegisterFunction</key>
 	<string></string>
 	<key>CFPlugInDynamicRegistration</key>
