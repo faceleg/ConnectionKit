@@ -24,6 +24,7 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTDesignPickerView.h"
+#import "Debug.h"
 
 #import <iMediaBrowser/iMedia.h>
 
@@ -90,7 +91,7 @@ TO DO:
 static float sGrowCutoffSidebarDimension;
 
 #define DIM(x) (((float*)&(x))[ishor])
-#define WIDEN (2)
+#define WIDEN (3)
 
 /*!	Cause the little dragging view to work as the dragger
 */
@@ -132,13 +133,13 @@ static float sGrowCutoffSidebarDimension;
 			unsigned pos = [subview position];
 			BOOL ishor = [sender isHorizontal];
 			float dim = DIM(trail.size);
-			DIM(trail.origin) += dim-WIDEN;
-			DIM(trail.size) = WIDEN;
+			DIM(trail.origin) += dim-WIDEN - 1;		// fudge width, give an extra pixel to the left
+			DIM(trail.size) = WIDEN + 1;			//
 			DIM(lead.size) = WIDEN;
 			if ([sender mouse:point inRect:lead]&&(pos>0)) {
-				return pos-1;
+				result = pos-1;
 			} else if ([sender mouse:point inRect:trail]&&(pos<[sender numberOfSubviews]-1)) {
-				return pos;
+				result = pos;
 			}
 		}
 		
@@ -200,7 +201,7 @@ you start dragging to enlarge.  Not exact, depending on how fast mouse is moved.
 		RBSplitSubview *sidebarSplit = [sender subviewAtPosition:0];
 		NSRect bounds = [sidebarSplit bounds];
 		bounds.origin.x += bounds.size.width - 1;
-		bounds.size.width = 1;
+		bounds.size.width = 1;	// fake width, since we are really zero width
 
 		
 		// Widen the main split
