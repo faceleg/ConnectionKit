@@ -122,6 +122,18 @@
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
 		};
+		3CA0FEE40D7614AB0093562D /* DeployRelease */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3CA0FEE90D7615020093562D /* Build configuration list for PBXAggregateTarget "DeployRelease" */;
+			buildPhases = (
+				3CA0FEE30D7614AB0093562D /* ShellScript */,
+			);
+			dependencies = (
+				3CA0FEE80D7614B40093562D /* PBXTargetDependency */,
+			);
+			name = DeployRelease;
+			productName = DeployRelease;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1277,6 +1289,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D15AC270486D014006FF6A4;
 			remoteInfo = Marvel;
+		};
+		3CA0FEE70D7614B40093562D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C88838D0BFCB49C00921FA4;
+			remoteInfo = BuildAndPackageRelease;
 		};
 		3CA9006B0D63C76100815310 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4998,6 +5017,7 @@
 				8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */,
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
+				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3C96ADE10CA06FB900C5249F /* Update Version */,
 				3C5A9A850D11E4DF0054058C /* iMedia - Use Specific Revision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit - Use Specific Revision */,
@@ -5736,6 +5756,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 		};
+		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n# we base the DeployRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\n# the directory we're uploading from (based on convention, from the BuildAndPackageRelease script)\nSCRATCH_DIR=/tmp/build-sandvox-dmg\n\n# the name of the dmg to upload\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}\"\nfi\n\nDISTRO_PATH=${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg\n\necho \"Pushing up a new Sparkle-ready Deployment ...\"\necho \"\"\necho \"Uploading $DISTRO_PATH ...\"\n\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tSERVER_PATH=/home/19590/domains/wallace.karelia.com/html/beta/${DMG_FINAL_NAME}.dmg\n\telse\n\t\tSERVER_PATH=/home/19590/domains/wallace.karelia.com/html/release/${DMG_FINAL_NAME}.dmg\nfi\n\necho \"... to ${SERVER_PATH}\"\nscp \"$DISTRO_PATH\" \"serveradmin%karelia.com@s19590.gridserver.com:$SERVER_PATH\"\n\n# if we got through that, upload release notes\n\necho \"\"\necho \"Upload release notes ...\"\n\n\n# if we got through that, upload new latest.php\n\n\nexit 0\n\n";
+			showEnvVarsInLog = 0;
+		};
 		3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -6218,6 +6252,11 @@
 			isa = PBXTargetDependency;
 			target = 8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */;
 			targetProxy = 3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */;
+		};
+		3CA0FEE80D7614B40093562D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */;
+			targetProxy = 3CA0FEE70D7614B40093562D /* PBXContainerItemProxy */;
 		};
 		3CA9006E0D63C77000815310 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6781,6 +6820,22 @@
 			};
 			name = Debug;
 		};
+		3CA0FEE50D7614AC0093562D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = DeployRelease;
+			};
+			name = Release;
+		};
+		3CA0FEE60D7614AC0093562D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = DeployRelease;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6834,6 +6889,15 @@
 			buildConfigurations = (
 				3C9B65960BFA7F9E007A4871 /* Release */,
 				3C9B65970BFA7F9E007A4871 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CA0FEE90D7615020093562D /* Build configuration list for PBXAggregateTarget "DeployRelease" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CA0FEE50D7614AC0093562D /* Release */,
+				3CA0FEE60D7614AC0093562D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
