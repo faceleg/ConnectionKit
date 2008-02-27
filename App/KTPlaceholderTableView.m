@@ -7,12 +7,12 @@
 //
 
 #import "KTPlaceholderTableView.h"
-#import "KTVerticallyAlignedTextCell.h"
+#import "KSVerticallyAlignedTextCell.h"
 #import "NSView+Karelia.h"
 
 
 @interface KTPlaceholderTableView (Private)
-- (KTVerticallyAlignedTextCell *)placeholderTextCell;
+- (KSVerticallyAlignedTextCell *)placeholderTextCell;
 @end
 
 
@@ -109,12 +109,12 @@
 	}
 }
 
-- (KTVerticallyAlignedTextCell *)placeholderTextCell
+- (KSVerticallyAlignedTextCell *)placeholderTextCell
 {
 	if (!myPlaceholderCell)
 	{
 		// Create the new cell with appropriate attributes
-		myPlaceholderCell = [[KTVerticallyAlignedTextCell alloc] initTextCell:@""];
+		myPlaceholderCell = [[KSVerticallyAlignedTextCell alloc] initTextCell:@""];
 		
 		[myPlaceholderCell setAlignment:NSCenterTextAlignment];
 		[myPlaceholderCell setVerticalAlignment:KTVerticalCenterTextAlignment];

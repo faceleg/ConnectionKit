@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
-#import "KTBorderlessWindow.h"
+#import "KSBorderlessWindow.h"
 #import "KTDesign.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
@@ -26,9 +26,9 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTPseudoElement.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSSilencingConfirmSheet.h"
 #import "KTSummaryWebViewTextBlock.h"
-#import "KTTextField.h"
+#import "KSTextField.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAppleScript+Karelia.h"
@@ -770,7 +770,7 @@ clickedOnPagelet:
 					desc, containingPageDescription]
 					selectOwnerPageAndPageletRetainedElement:((DOMHTMLElement *)[pageletElement retain])];
 				
-				//				[KTSilencingConfirmSheet alertWithWindow:[self window]
+				//				[KSSilencingConfirmSheet alertWithWindow:[self window]
 				//											silencingKey:@"ShutUpCantSelect"
 				//													 title:NSLocalizedString(@"Cannot Select Pagelet from This Page", @"")
 				//													format:NSLocalizedString(@"The item you clicked on, %@, is copied from an enclosing container page, %@%@%@. Please select that page to edit this pagelet.",@""), desc, leftDoubleQuote, containingPageTitleText, rightDoubleQuote];

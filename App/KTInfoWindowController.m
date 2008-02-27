@@ -26,7 +26,7 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTDocument.h"
 #import "KTMediaManager.h"
-#import "KTPathInfoField.h"
+#import "KSPathInfoField.h"
 #import "KTStackView.h"
 
 #import "NSWorkspace+Karelia.h"
@@ -34,7 +34,7 @@
 
 #import "NSBundle+Karelia.h"
 
-#import "KTSmallDatePicker.h"
+#import "KSSmallDatePicker.h"
 
 #import "NSString+Karelia.h"
 
@@ -215,7 +215,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 	NSView *superview = [oSmallDatePickerPlaceholderView superview];
 	
 	NSRect smallFrame = [oSmallDatePickerPlaceholderView frame];
-	mySmallDatePicker = [[KTSmallDatePicker alloc] initWithFrame:smallFrame];
+	mySmallDatePicker = [[KSSmallDatePicker alloc] initWithFrame:smallFrame];
 	
 	[oSmallDatePickerPlaceholderView removeFromSuperviewWithoutNeedingDisplay];
 	[superview addSubview:mySmallDatePicker];
@@ -991,12 +991,12 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 /*	Only allow images to be dropped
  */
-- (NSArray *)supportedDragTypesForPathInfoField:(KTPathInfoField *)pathInfoField
+- (NSArray *)supportedDragTypesForPathInfoField:(KSPathInfoField *)pathInfoField
 {
 	return [NSImage imagePasteboardTypes];
 }
 
-- (NSDragOperation)pathInfoField:(KTPathInfoField *)field
+- (NSDragOperation)pathInfoField:(KSPathInfoField *)field
 				validateFileDrop:(NSString *)path operationMask:(NSDragOperation)dragMask
 {
 	NSDragOperation result = NSDragOperationNone;
@@ -1032,7 +1032,7 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 /*	Set the banner or logo image as appropriate
  */
-- (BOOL)pathInfoField:(KTPathInfoField *)field
+- (BOOL)pathInfoField:(KSPathInfoField *)field
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp
 {

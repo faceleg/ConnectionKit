@@ -65,7 +65,7 @@
 #import "KTUtilities.h"
 #import "NSBundle+Karelia.h"
 #import "KTAbstractIndex.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSSilencingConfirmSheet.h"
 #import "KTManagedObjectContext.h"
 #import "KTPage.h"
 #import "NSArray+Karelia.h"
@@ -1140,7 +1140,7 @@
 	[[[self windowController] webViewController] commitEditing];
 	if (nil == gRegistrationString)
 	{
-		[KTSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
+		[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
 	}
 	
 	// Make sure both localHosting and remoteHosting are set to true
@@ -1462,7 +1462,7 @@
 
 - (void) warnThatHostUsesCharset:(NSString *)hostCharset
 {
-	[KTSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
+	[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
 }
 
 // deal with save panels

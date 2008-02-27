@@ -25,7 +25,7 @@
 #import "KTPage.h"
 #import "NSImage+Karelia.h"
 #import "CIImage+Karelia.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSSilencingConfirmSheet.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTApplication.h"
@@ -603,7 +603,7 @@
 		KTPage *thePage = [[[self windowController] document] pageForURLPath:[url path]];
 		if (nil == thePage)
 		{
-			[KTSilencingConfirmSheet alertWithWindow:[[self windowController] window]
+			[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window]
 										silencingKey:@"shutUpFakeURL"
 											   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
 											  format:NSLocalizedString

@@ -58,7 +58,8 @@
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
-#import "KTCircularProgressCell.h"
+#import "KSCircularProgressCell.h"
+#import "KSUtilities.h"
 
 #import "KTPage.h"
 
@@ -298,7 +299,7 @@ static NSArray *sReservedNames = nil;
 					&& !([hostName hasSuffix:@"idisk.mac.com"]) 
 					&& !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
 				{
-					password = [KTUtilities keychainPasswordForServer:hostName account:userName];
+					password = [KSUtilities keychainPasswordForServer:hostName account:userName];
 				}
 				if (nil == password && !([hostName hasSuffix:@"idisk.mac.com"] || [protocol isEqualToString:@"SFTP"]))	// complain if it's not mac.com
 				{

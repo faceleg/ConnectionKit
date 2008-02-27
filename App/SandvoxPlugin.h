@@ -64,15 +64,15 @@
 #import "KTAbstractIndex.h"
 
 // Foundation/AppKit subclasses
-#import "KTEmailAddressComboBox.h"
+#import "KSSilencingConfirmSheet.h"
 #import "KTImageView.h"
-#import "KTLabel.h"
+#import "KSLabel.h"
 #import "KTPlaceholderTableView.h"
-#import "KTSmallDatePicker.h"
-#import "KTSmallDatePickerCell.h"
-#import "KTTrimFirstLineFormatter.h"
-#import "KTValidateCharFormatter.h"
-#import "KTVerticallyAlignedTextCell.h"
+#import "KSSmallDatePicker.h"
+#import "KSSmallDatePickerCell.h"
+#import "KSTrimFirstLineFormatter.h"
+#import "KSValidateCharFormatter.h"
+#import "KSVerticallyAlignedTextCell.h"
 
 // Foundation extensions
 #import "NSAppleScript+Karelia.h"
@@ -145,7 +145,7 @@
 #import "KTRTFDImporter.h"
 
 //  intelligently dismissable sheet
-#import "KTSilencingConfirmSheet.h"
+#import "KSEmailAddressComboBox.h"
 
 
 #import "KTPluginInspectorViewsManager.h"
@@ -161,13 +161,13 @@
 
 #import "DNDArrayController.h"
 #import <NTBoxView.h>
-#import <KTPathInfoField.h>
-#import <KTPathInfoFieldCell.h>
+#import <KSPathInfoField.h>
+#import <KSPathInfoFieldCell.h>
 #import <KTDesign.h>
 #import <KTMaster.h>
 #import <KTMediaContainer.h>
 #import <KTAbstractMediaFile.h>
-#import <KTPathInfoField.h>
+#import <KSPathInfoField.h>
 #import <NSMutableSet+Karelia.h>
 #import <KTHTMLParser.h>
 #import "KTDocWindowController.h"

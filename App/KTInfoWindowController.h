@@ -10,8 +10,8 @@
 
 enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
-@class KTStackView, KTImageView, KTPathInfoField;
-@class KTSmallDatePicker;
+@class KTStackView, KTImageView, KSPathInfoField;
+@class KSSmallDatePicker;
 @class KTDocument;
 @class KTPagelet;
 @class KTPage;
@@ -46,13 +46,13 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 	IBOutlet NSSegmentedControl	*oTabSegmentedControl;
 	IBOutlet KTImageView		*oThumbImageView;
 	IBOutlet KTImageView		*oFaviconImageView;
-	IBOutlet KTPathInfoField	*oLogoPathInfoField;
-	IBOutlet KTPathInfoField	*oBannerPathInfoField;
+	IBOutlet KSPathInfoField	*oLogoPathInfoField;
+	IBOutlet KSPathInfoField	*oBannerPathInfoField;
 	
 	// Page Controls
 	IBOutlet NSTextField		*oPageMenuTitleField;
 	IBOutlet NSView				*oSmallDatePickerPlaceholderView;
-    KTSmallDatePicker           *mySmallDatePicker; // takes over for oSmallDatePickerPlaceholderView
+    KSSmallDatePicker           *mySmallDatePicker; // takes over for oSmallDatePickerPlaceholderView
 	
 
 	IBOutlet NSPopUpButton			*oIndexPopup;

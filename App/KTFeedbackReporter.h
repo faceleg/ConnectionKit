@@ -9,7 +9,7 @@
 
 #import "KTAbstractBugReporter.h"
 
-@class KTEmailAddressComboBox;
+@class KSEmailAddressComboBox;
 
 @interface KTFeedbackReporter : KTAbstractBugReporter
 {
@@ -17,7 +17,7 @@
 	IBOutlet NSTextField			*oURLTextField;
 	IBOutlet NSTextField			*oSummaryTextField;
 	IBOutlet NSTextView				*oDetailsTextView;
-	IBOutlet KTEmailAddressComboBox	*oAddressComboBox;
+	IBOutlet KSEmailAddressComboBox	*oAddressComboBox;
 	IBOutlet NSButton				*oAttachConsoleSwitch;
 	IBOutlet NSButton				*oAttachScreenshotSwitch;
 	IBOutlet NSButton				*oAttachPreferencesSwitch;

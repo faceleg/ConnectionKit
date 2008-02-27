@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "KTApplication.h"
 #import "KTAppDelegate.h"
-#import "KTEmailAddressComboBox.h"
+#import "KSEmailAddressComboBox.h"
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSApplication+Karelia.h"
@@ -38,8 +38,8 @@ static KTPrefsController *sSharedPrefsController = nil;
 
 - (id)init
 {
-	[KTEmailAddressComboBox setWillAddAnonymousEntry:NO];
-	[KTEmailAddressComboBox setWillIncludeNames:NO];
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+	[KSEmailAddressComboBox setWillIncludeNames:NO];
 	self = [super initWithWindowNibName:@"Prefs"];
     if (self)
 	{

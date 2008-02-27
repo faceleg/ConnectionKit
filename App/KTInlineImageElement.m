@@ -11,7 +11,7 @@
 #import "KTDesign.h"
 #import "KTImageView.h"
 #import "KTMaster.h"
-#import "KTPathInfoField.h"
+#import "KSPathInfoField.h"
 #import "KTPagelet.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
@@ -193,7 +193,7 @@
 	[self setImage:image];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)field
+- (BOOL)pathInfoField:(KSPathInfoField *)field
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp
 {
@@ -210,12 +210,12 @@
 	return YES;
 }
 
-- (NSArray *)supportedDragTypesForPathInfoField:(KTPathInfoField *)pathInfoField
+- (NSArray *)supportedDragTypesForPathInfoField:(KSPathInfoField *)pathInfoField
 {
 	return [NSImage imagePasteboardTypes];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
+- (BOOL)pathInfoField:(KSPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
 {
 	BOOL result = NO;
 	

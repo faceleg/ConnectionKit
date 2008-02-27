@@ -32,7 +32,7 @@ TO DO:
 #import "KTDocument.h"
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
-#import "KTUtilities.h"
+#import "KSUtilities.h"
 #import "NSString+KTApplication.h"
 #import "NSString+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -2616,7 +2616,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		&& ![userName isEqualToString:@""]
 		&& ![hostName isEqualToString:@""])
 	{
-		result = [KTUtilities keychainPasswordForServer:hostName account:userName];
+		result = [KSUtilities keychainPasswordForServer:hostName account:userName];
 	}
 	return result;
 }
@@ -2631,7 +2631,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		&& ![userName isEqualToString:@""]
 		&& ![hostName isEqualToString:@""])
 	{
-		OSStatus result = [KTUtilities keychainSetPassword:aPassword
+		OSStatus result = [KSUtilities keychainSetPassword:aPassword
 												 forServer:hostName
 												   account:userName];
 		if (noErr != result)

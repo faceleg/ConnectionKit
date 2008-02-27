@@ -14,7 +14,7 @@
 #import "KTBundleManager.h"
 #import "KTDesignManager.h"
 #import "KTDocument.h"
-#import "KTEmailAddressComboBox.h"
+#import "KSEmailAddressComboBox.h"
 #import "KTInfoWindowController.h"
 #import "NSData+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -70,8 +70,8 @@ static NSString *sFeedbackSubmitURLString = @"https://ssl.karelia.com/bugsubmit/
 
 - (void)loadAndPrepareReportWindow
 {
-	[KTEmailAddressComboBox setWillAddAnonymousEntry:YES];
-	[KTEmailAddressComboBox setWillIncludeNames:YES];
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:YES];
+	[KSEmailAddressComboBox setWillIncludeNames:YES];
 	(void)[NSBundle loadNibNamed:@"Feedback" owner:self];
 	
 	// add icons to classification menu items

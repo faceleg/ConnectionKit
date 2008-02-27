@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTPopUpButton.h"
+#import "KSPopUpButton.h"
 
 
-@interface KTCollectionIndexFilenameButton : KTPopUpButton
+@interface KTCollectionIndexFilenameButton : KSPopUpButton
 {
 	
 }

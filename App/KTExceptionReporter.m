@@ -10,7 +10,7 @@
 
 #import "KT.h"
 #import "KTApplication.h"
-#import "KTEmailAddressComboBox.h"
+#import "KSEmailAddressComboBox.h"
 #import "NSApplication+Karelia.h"
 #import "NSException+Karelia.h"
 
@@ -99,8 +99,8 @@ static NSString *sScoutSubmitURLString = @"https://ssl.karelia.com/bugsubmit/exc
 
 - (void)loadAndPrepareReportWindow
 {
-	[KTEmailAddressComboBox setWillAddAnonymousEntry:YES];
-	[KTEmailAddressComboBox setWillIncludeNames:YES];
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:YES];
+	[KSEmailAddressComboBox setWillIncludeNames:YES];
 	(void)[NSBundle loadNibNamed:@"Exception" owner:self];
 			
 	// set first responder to summary

@@ -11,9 +11,9 @@
 
 
 @class CIFilter;
-@class KTBorderlessWindow;
+@class KSBorderlessWindow;
 @class KTInlineImageElement;
-@class KTTextField, KTPopUpButton;
+@class KSTextField, KSPopUpButton;
 @class KTDesignPickerView;
 @class RoundedBox;
 @class RBSplitView;
@@ -55,8 +55,8 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NTBoxView							*oDetailPanel;
 	IBOutlet NSTextField						*oPageNameField;
 	IBOutlet NSTokenField						*oKeywordsField;
-	IBOutlet KTPopUpButton	*oFileExtensionPopup;
-	IBOutlet KTPopUpButton	*oCollectionIndexExtensionButton;
+	IBOutlet KSPopUpButton	*oFileExtensionPopup;
+	IBOutlet KSPopUpButton	*oCollectionIndexExtensionButton;
 		
 	
 	// Uploading TO HOOK UP
@@ -89,7 +89,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	BOOL							mySingleLine;
     
 	NSMutableDictionary				*myContextElementInformation;
-	IBOutlet KTBorderlessWindow		*oLinkPanel;
+	IBOutlet KSBorderlessWindow		*oLinkPanel;
 	IBOutlet RoundedBox				*oLinkControlsBox;
 	IBOutlet NSTextField			*oLinkDestinationField;
 	IBOutlet NSTextField			*oLinkLocalPageField;
@@ -99,7 +99,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	BOOL							myIsLinkPanelClosing;
 	BOOL							myIsCopying;
 	
-	IBOutlet KTBorderlessWindow		*oMessageWindow;
+	IBOutlet KSBorderlessWindow		*oMessageWindow;
 	IBOutlet NSTextField			*oMessageTextField;
 	
 	// Image Replacement

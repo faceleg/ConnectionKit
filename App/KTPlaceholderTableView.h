@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTVerticallyAlignedTextCell;
+@class KSVerticallyAlignedTextCell;
 
 
 @interface KTPlaceholderTableView : NSTableView
@@ -19,7 +19,7 @@
 	NSString	*myPlaceholder;
 	BOOL		myLoadingData;
 	
-	KTVerticallyAlignedTextCell	*myPlaceholderCell;
+	KSVerticallyAlignedTextCell	*myPlaceholderCell;
 	NSProgressIndicator			*myDataLoadingProgressIndicator;
 }
 

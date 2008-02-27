@@ -52,6 +52,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "KTWebView.h"
+#import "KSUtilities.h"
 #import "NSException+Karelia.h"
 #import "NSString+KTApplication.h"
 #import "NSString-Utilities.h"
@@ -77,8 +78,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "StringToNumberTransformer.h"
 #import "TrimFirstLineTransformer.h"
 
-#import "KTEmailAddressComboBox.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSEmailAddressComboBox.h"
+#import "KSSilencingConfirmSheet.h"
 #import "KTUtilities.h"
 
 #import "KTMediaManager.h"
@@ -417,7 +418,7 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		
 		
 		// THIS MIGHT BE NIL -- it should be last to not destroy the rest of the dictionary
-		[KTEmailAddressComboBox primaryEmailAddress], DEFAULTS_ADDRESS_KEY,
+		[KSEmailAddressComboBox primaryEmailAddress], DEFAULTS_ADDRESS_KEY,
 		
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
@@ -1040,7 +1041,7 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 		NSString *qxPart2 = NSLocalizedString(@"(Quartz Extreme functionality is supported by the following video GPUs: NVIDIA GeForce2 MX and later, or any AGP-based ATI RADEON GPU. A minimum of 16MB VRAM is required.)",@"Quartz Extreme Comment");
 		NSString *qxPart3 = NSLocalizedString(@"Sandvox will still function perfectly well, but not be able to create fancy page titles.",@"Quartz Extreme Comment");
 		
-		[KTSilencingConfirmSheet
+		[KSSilencingConfirmSheet
 			alertWithWindow:nil
 			   silencingKey:@"shutUpQuartzExtreme"
 					  title:NSLocalizedString(@"Quartz Extreme Not Available", "Title of alert")
@@ -3316,7 +3317,7 @@ FAILURE:
 + (BOOL) coreImageAccelerated
 {	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *key = [NSString stringWithFormat:@"CoreImageAccelerated %@", [[KTUtilities MACAddress] base64Encoding]];
+	NSString *key = [NSString stringWithFormat:@"CoreImageAccelerated %@", [[KSUtilities MACAddress] base64Encoding]];
 	if (nil == [defaults objectForKey:key])
 	{
 		// First check if Quart Extreme is enabled

@@ -6,6 +6,8 @@
 //  Copyright 2006 Karelia Software. All rights reserved.
 //
 
+// REQUIRES Quartz.framework
+
 #import "KTMedia.h"
 
 #import "KTDesign.h"

@@ -45,7 +45,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 
-#import "KTTextField.h"
+#import "KSTextField.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"
 #import "NSTextView+KTApplication.h"
@@ -54,11 +54,11 @@
 #import <WebKit/WebKit.h>
 #import <iMediaBrowser/iMedia.h>
 #import "NSArray+KTExtensions.h"
-#import "KTValidateCharFormatter.h"
+#import "KSValidateCharFormatter.h"
 
 #import "NSCharacterSet+Karelia.h"
 #import "NSString+Karelia.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSSilencingConfirmSheet.h"
 
 #import "KTManagedObjectContext.h"
 
@@ -244,7 +244,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[oDetailPanel setBorderMask:(NTBoxRight | NTBoxBottom)];
 		
 		NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
-		NSFormatter *formatter = [[[KTValidateCharFormatter alloc]
+		NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
 			initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
 		[oPageNameField setFormatter:formatter];
 		
@@ -636,7 +636,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	else
 	{
-		[KTSilencingConfirmSheet
+		[KSSilencingConfirmSheet
 			alertWithWindow:[self window]
 			   silencingKey:@"shutUpValidateError"
 					  title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
@@ -646,7 +646,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 -(void) showValidationResultsAlert
 {
-				[KTSilencingConfirmSheet
+				[KSSilencingConfirmSheet
 				alertWithWindow:[self window]
 				   silencingKey:@"shutUpNotValidated"
 						  title:NSLocalizedString(@"Validation Results Loaded",@"Title of alert")

@@ -17,7 +17,7 @@
 #import "KTPage.h"
 #import "KTPagelet.h"
 #import "KTPasteboardArchiving.h"
-#import "KTSilencingConfirmSheet.h"
+#import "KSSilencingConfirmSheet.h"
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSOutlineView+KTExtensions.h"

@@ -14,7 +14,7 @@
 
 
 @implementation NSBundle ( KTExtensions )
-kIOEthernetAddressSize
+
 
 #pragma mark -
 #pragma mark HTML Template files

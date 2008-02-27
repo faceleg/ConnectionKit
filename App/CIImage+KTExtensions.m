@@ -6,6 +6,8 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
+// REQUIRES Quartz.framework
+
 #import "CIImage+KTExtensions.h"
 
 #import "CIImage+Karelia.h"
