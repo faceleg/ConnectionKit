@@ -15,7 +15,7 @@
 
 @interface APProductAttributesCell : NSTextFieldCell
 {
-	KTVerticallyAlignedTextCell *myTextDrawingCell;
+	KSVerticallyAlignedTextCell *myTextDrawingCell;
 }
 
 @end

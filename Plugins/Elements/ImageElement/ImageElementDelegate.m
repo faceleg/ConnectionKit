@@ -238,7 +238,7 @@
 	[[self delegateOwner] setValue:image forKey:@"image"];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)field
+- (BOOL)pathInfoField:(KSPathInfoField *)field
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp
 {
@@ -258,12 +258,12 @@
 
 /*	We want to support all image types
  */
-- (NSArray *)supportedDragTypesForPathInfoField:(KTPathInfoField *)pathInfoField
+- (NSArray *)supportedDragTypesForPathInfoField:(KSPathInfoField *)pathInfoField
 {
 	return [NSImage imagePasteboardTypes];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
+- (BOOL)pathInfoField:(KSPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
 {
 	BOOL result = NO;
 	

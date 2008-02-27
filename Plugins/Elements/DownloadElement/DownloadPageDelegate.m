@@ -161,7 +161,7 @@
 	[[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)field
+- (BOOL)pathInfoField:(KSPathInfoField *)field
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp
 {

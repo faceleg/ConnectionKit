@@ -41,7 +41,7 @@
 #import <QTKit/QTKit.h>
 #include <zlib.h>
 
-#import <KTPathInfoField.h>
+#import <KSPathInfoField.h>
 
 
 /*
@@ -286,7 +286,7 @@
 	[self loadMovie];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)field
+- (BOOL)pathInfoField:(KSPathInfoField *)field
  performDragOperation:(id <NSDraggingInfo>)sender
 	 expectedDropType:(NSDragOperation)dragOp
 {
@@ -306,14 +306,14 @@
 
 /*	We want to support all video types but not images
  */
-- (NSArray *)supportedDragTypesForPathInfoField:(KTPathInfoField *)pathInfoField
+- (NSArray *)supportedDragTypesForPathInfoField:(KSPathInfoField *)pathInfoField
 {
 	NSMutableSet *movieTypes = [NSMutableSet setWithArray:[QTMovie movieUnfilteredPasteboardTypes]];
 	[movieTypes minusSet:[NSSet setWithArray:[NSImage imagePasteboardTypes]]];
 	return [movieTypes allObjects];
 }
 
-- (BOOL)pathInfoField:(KTPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
+- (BOOL)pathInfoField:(KSPathInfoField *)filed shouldAllowFileDrop:(NSString *)path
 {
 	BOOL result = NO;
 	

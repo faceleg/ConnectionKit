@@ -15,7 +15,7 @@
 
 @interface APProductAttributesCell (Private)
 
-- (KTVerticallyAlignedTextCell *)textDrawingCell;
+- (KSVerticallyAlignedTextCell *)textDrawingCell;
 - (void)drawProductLoadingError:(NSError *)error withFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 - (void)drawSingleLine:(NSString *)line
@@ -57,12 +57,12 @@
 #pragma mark -
 #pragma mark Drawing
 
-- (KTVerticallyAlignedTextCell *)textDrawingCell
+- (KSVerticallyAlignedTextCell *)textDrawingCell
 {
 	// Create the cell if needed
 	if (!myTextDrawingCell)
 	{
-		myTextDrawingCell = [[KTVerticallyAlignedTextCell alloc] initTextCell: @""];
+		myTextDrawingCell = [[KSVerticallyAlignedTextCell alloc] initTextCell: @""];
 		
 		NSFont *cellFont = [NSFont boldSystemFontOfSize:
 			[NSFont systemFontSizeForControlSize: NSSmallControlSize]];
@@ -176,7 +176,7 @@
 	 allowTextWrapping:(BOOL)wrap
 			   useGray:(BOOL)gray
 {
-	KTVerticallyAlignedTextCell *drawingCell = [self textDrawingCell];
+	KSVerticallyAlignedTextCell *drawingCell = [self textDrawingCell];
 	
 	// Set the wrapping behaviour of the cell
 	if (wrap)
@@ -209,7 +209,7 @@
 	
 	
 	// Draw the lines
-	KTVerticallyAlignedTextCell *cell = [self textDrawingCell];
+	KSVerticallyAlignedTextCell *cell = [self textDrawingCell];
 	if (gray) {
 		[cell setTextColor: [NSColor grayColor]];
 	}
