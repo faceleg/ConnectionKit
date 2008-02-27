@@ -22,6 +22,8 @@
 
 @interface NSBundle ( KTExtensions )
 
+- (NSString *)entityName;
+
 
 - (NSString *)templateRSSAsString;
 

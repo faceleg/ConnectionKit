@@ -44,16 +44,9 @@
 
 #pragma mark File Manager
 
-+ (BOOL)createPathIfNecessary:(NSString *)storeDirectory error:(NSError **)outError;
++ (BOOL)createPathIfNecessary:(NSString *)storeDirectory error:(NSError **)outError DEPRECATED_IN_MAC_OS_X_VERSION_10_5_AND_LATER;
 
-#pragma mark Keychain
 
-+ (NSString *)keychainPasswordForServer:(NSString *)aServerName account:(NSString *)anAccountName;
-+ (OSStatus)keychainSetPassword:(NSString *)inPassword forServer:(NSString *)aServer account:(NSString *)anAccount;
-
-#pragma mark Other
-
-+ (NSData *)MACAddress;
 
 #pragma mark Plugin Management
 

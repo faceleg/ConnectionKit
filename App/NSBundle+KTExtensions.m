@@ -14,11 +14,16 @@
 
 
 @implementation NSBundle ( KTExtensions )
-
+kIOEthernetAddressSize
 
 #pragma mark -
 #pragma mark HTML Template files
 
+- (NSString *)entityName
+{
+	id result = [self objectForInfoDictionaryKey:@"KTMainEntityName"];
+    return result;
+}
 
 - (NSString *)templateRSSAsString
 {
