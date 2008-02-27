@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>KTPathInfoField</string>
+			<string>KSPathInfoField</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -56,7 +56,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTEdgeSnapWindow</string>
+			<string>KSEdgeSnapWindow</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -125,7 +125,7 @@
 				<key>myCurrentSelection</key>
 				<string>id</string>
 				<key>oBannerPathInfoField</key>
-				<string>KTPathInfoField</string>
+				<string>KSPathInfoField</string>
 				<key>oCollectionStylePopup</key>
 				<string>NSPopUpButton</string>
 				<key>oCollectionView</key>
@@ -153,7 +153,7 @@
 				<key>oLanguagePopup</key>
 				<string>NSPopUpButton</string>
 				<key>oLogoPathInfoField</key>
-				<string>KTPathInfoField</string>
+				<string>KSPathInfoField</string>
 				<key>oNothingView</key>
 				<string>NSView</string>
 				<key>oPageController</key>
@@ -237,7 +237,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTLabel</string>
+			<string>KSLabel</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

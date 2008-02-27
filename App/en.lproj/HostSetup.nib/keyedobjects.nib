@@ -17251,7 +17251,7 @@ The data will be stored in your home folder's "Sites" folder.</string>
 				<integer>1054</integer>
 			</dict>
 		</dict>
-		<string>KTTrimFirstLineFormatter</string>
+		<string>KSTrimFirstLineFormatter</string>
 		<string>formatter</string>
 		<dict>
 			<key>$class</key>

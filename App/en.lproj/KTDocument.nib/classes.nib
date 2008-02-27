@@ -168,7 +168,7 @@
 				<key>oBuyMarvelBadge</key>
 				<string>AMRollOverButton</string>
 				<key>oCollectionIndexExtensionButton</key>
-				<string>KTPopUpButton</string>
+				<string>KSPopUpButton</string>
 				<key>oDesignBackButton</key>
 				<string>NSButton</string>
 				<key>oDesignCloseButton</key>
@@ -186,7 +186,7 @@
 				<key>oDocumentController</key>
 				<string>NSObjectController</string>
 				<key>oFileExtensionPopup</key>
-				<string>KTPopUpButton</string>
+				<string>KSPopUpButton</string>
 				<key>oKeywordsField</key>
 				<string>NSTokenField</string>
 				<key>oLatestNewsBadge</key>
@@ -200,13 +200,13 @@
 				<key>oLinkOpenInNewWindowSwitch</key>
 				<string>NSButton</string>
 				<key>oLinkPanel</key>
-				<string>KTBorderlessWindow</string>
+				<string>KSBorderlessWindow</string>
 				<key>oLinkView</key>
 				<string>KTLinkSourceView</string>
 				<key>oMessageTextField</key>
 				<string>NSTextField</string>
 				<key>oMessageWindow</key>
-				<string>KTBorderlessWindow</string>
+				<string>KSBorderlessWindow</string>
 				<key>oModalImage</key>
 				<string>NSImageView</string>
 				<key>oModalPanel</key>
@@ -262,7 +262,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTBorderlessWindow</string>
+			<string>KSBorderlessWindow</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -316,7 +316,7 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>KTPopUpButton</string>
+			<string>KSPopUpButton</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -382,7 +382,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTPopUpButton</string>
+			<string>KSPopUpButton</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
@@ -424,7 +424,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTLabel</string>
+			<string>KSLabel</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

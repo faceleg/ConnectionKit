@@ -54,7 +54,7 @@
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
-        {CLASS = KTTrimFirstLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {CLASS = KSTrimFirstLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {CLASS = NSDictionary; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
     IBVersion = 1; 
