@@ -145,5 +145,21 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Plugin
+
+/*	With links set to open in a new window, we must use transitional XHTML.
+ */
+- (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
+{
+	if ([[self delegateOwner] boolForKey:@"openLinksInNewWindow"])
+	{
+		int *docType = (int *)aDocTypePointer;
+		if (*docType > KTXHTMLTransitionalDocType)
+		{
+			*docType = KTXHTMLTransitionalDocType;
+		}
+	}
+}
 
 @end
