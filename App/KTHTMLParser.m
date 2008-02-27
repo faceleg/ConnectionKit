@@ -1443,6 +1443,7 @@ static unsigned sLastParserID;
 			[parser setParentParser:self];
 			[parser setCurrentPage:[self currentPage]];
 			[parser setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
+			if (myLiveDataFeeds) [parser setLiveDataFeeds:[self liveDataFeeds]];
 			[parser setDelegate:[self delegate]];
 			[parser setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
 			
