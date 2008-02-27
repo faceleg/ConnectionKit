@@ -467,7 +467,7 @@
 	
 	// Create the webview. It must be in an offscreen window to do this properly.
 	unsigned designViewport = [[[[self root] master] design] viewport];	// Ensures we don't clip anything important
-	NSRect frame = NSMakeRect(0.0, 0.0, designViewport, designViewport);
+	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	NSWindow *window = [[NSWindow alloc]
 		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
