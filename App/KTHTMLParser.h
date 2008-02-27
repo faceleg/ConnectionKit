@@ -36,6 +36,7 @@
 	id						myDelegate;
 	KTPage					*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
+	NSNumber				*myLiveDataFeeds;
 	BOOL					myGenerateArchives;
 	BOOL					myUseAbsoluteMediaPaths;
 	KTHTMLParser			*myParentParser;	// Weak ref
@@ -71,6 +72,9 @@
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
 
+- (BOOL)liveDataFeeds;
+- (void)setLiveDataFeeds:(BOOL)flag;
+
 - (BOOL)useAbsoluteMediaPaths;
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag;
 
@@ -82,7 +86,6 @@
 
 // parsing
 - (NSString *)parseTemplate;
-- (BOOL)liveDataFeeds;
 
 @end
 

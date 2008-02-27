@@ -178,6 +178,7 @@ static unsigned sLastParserID;
 	[myComponent release];
 	[myCache release];
 	[myCurrentPage release];
+	[myLiveDataFeeds release];
 	
 	[myForEachIndexes release];
 	[myForEachCounts release];
@@ -239,6 +240,38 @@ static unsigned sLastParserID;
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose { return myHTMLGenerationPurpose; }
 
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose { myHTMLGenerationPurpose = purpose; }
+
+/*	Used by templates to know if they're allowed external images etc.
+ */
+- (BOOL)liveDataFeeds
+{
+	// Publishing always has live feeds turned on
+	KTHTMLGenerationPurpose mode = [self HTMLGenerationPurpose];
+	if (mode == kGeneratingLocal || mode == kGeneratingRemote || mode == kGeneratingRemoteExport) {
+		return YES;
+	}
+	
+	// If a value has been explicitly set, use it.
+	if (myLiveDataFeeds)
+	{
+		return [myLiveDataFeeds boolValue];
+	}
+	
+	// Use the default for the generation mode
+	BOOL result = NO;
+	if (mode != kGeneratingQuickLookPreview)
+	{
+		result = [[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"];
+	}
+	
+	return result;
+}
+
+- (void)setLiveDataFeeds:(BOOL)flag
+{
+	[myLiveDataFeeds release];
+	myLiveDataFeeds = [[NSNumber alloc] initWithBool:flag];
+}
 
 - (BOOL)generateArchives { return myGenerateArchives; }
 
@@ -348,20 +381,6 @@ static unsigned sLastParserID;
 - (void)finishParsing
 {
 	[self setCache:nil];
-}
-
-/*	Used by templates to know if they're allowed external images
- */
-- (BOOL)liveDataFeeds
-{
-	BOOL result = NO;
-	
-	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
-	{
-		result = [[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"];
-	}
-	
-	return result;
 }
 
 - (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner

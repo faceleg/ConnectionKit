@@ -251,7 +251,6 @@
 		// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
 		// so that saveDocumentAs: can find us again until the new context is fully ready
 		/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
-		
 		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
 		result = [managedObjectContext save:outError];
 		if (result) result = [[[self mediaManager] managedObjectContext] save:outError];
@@ -461,6 +460,7 @@
 	// Put together the HTML for the thumbnail
 	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
+	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
 	[parser release];
 	
