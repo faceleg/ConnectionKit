@@ -7,6 +7,7 @@
 //
 
 #import "KTPopUpButton.h"
+#import "KSPopUpButtonCell.h"
 
 
 @interface KTPopUpButton (Private)
@@ -30,9 +31,28 @@
 	[self exposeBinding:@"defaultValue"];
 }
 
++ (Class)cellClass { return [KSPopUpButtonCell class]; }
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
 	[super initWithCoder:decoder];
+	
+	
+	// Now replace our cell with the correct subclass
+	NSMutableData *cellData = [[NSMutableData alloc] init];
+	NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:cellData];
+	[archiver encodeObject:[self cell] forKey:@"cell"];
+	[archiver finishEncoding];
+	[archiver release];
+	
+	NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:cellData];
+	[unarchiver setClass:[[self class] cellClass] forClassName:@"NSPopUpButtonCell"];
+	NSCell *cell = [unarchiver decodeObjectForKey:@"cell"];
+	[unarchiver finishDecoding];
+	[self setCell:cell];
+	[unarchiver release];
+	[cellData release];
+	
 	
 	myDefaultValue = [NSLocalizedString(@"Default", "The default item in a list.") copy];
 	

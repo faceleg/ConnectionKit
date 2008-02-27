@@ -218,6 +218,8 @@
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2786BEE70CAD24980086F9E0 /* KTMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BEE50CAD24980086F9E0 /* KTMediaManager.m */; };
+		278927620D75C9FC002EC950 /* KSPopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 278927600D75C9FB002EC950 /* KSPopUpButtonCell.h */; };
+		278927630D75C9FC002EC950 /* KSPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278927610D75C9FC002EC950 /* KSPopUpButtonCell.m */; };
 		278B95AF0D382AC700E5053A /* KTSimpleScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
 		278B95B00D382AC700E5053A /* KTSimpleScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */; };
 		278B95B30D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
@@ -1588,6 +1590,8 @@
 		2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInDocumentMediaFile.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
+		278927600D75C9FB002EC950 /* KSPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPopUpButtonCell.h; path = ../../../Shared/trunk/App/KSPopUpButtonCell.h; sourceTree = SOURCE_ROOT; };
+		278927610D75C9FC002EC950 /* KSPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPopUpButtonCell.m; path = ../../../Shared/trunk/App/KSPopUpButtonCell.m; sourceTree = SOURCE_ROOT; };
 		278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSimpleScaledImageContainer.h; sourceTree = "<group>"; };
 		278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSimpleScaledImageContainer.m; sourceTree = "<group>"; };
 		278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNamedSettingsScaledImageContainer.h; sourceTree = "<group>"; };
@@ -2584,6 +2588,8 @@
 		272321DB0D48B5A70075F31F /* Page Details */ = {
 			isa = PBXGroup;
 			children = (
+				278927600D75C9FB002EC950 /* KSPopUpButtonCell.h */,
+				278927610D75C9FC002EC950 /* KSPopUpButtonCell.m */,
 				272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */,
 				272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */,
 				2723242D0D4940C10075F31F /* KTPopUpButton.h */,
@@ -4699,6 +4705,7 @@
 				3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */,
 				3C1FA3950D6C99650008AAD9 /* AQDataExtensions.h in Headers */,
 				3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */,
+				278927620D75C9FC002EC950 /* KSPopUpButtonCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5952,6 +5959,7 @@
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27EF5DC90D6C57A30024575B /* QuickLookSandvoxPlugin.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
+				278927630D75C9FC002EC950 /* KSPopUpButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
