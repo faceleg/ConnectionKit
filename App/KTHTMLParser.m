@@ -844,13 +844,19 @@ static unsigned sLastParserID;
 - (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile
 {
 	NSString *result;
-	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+	switch ([self HTMLGenerationPurpose])
 	{
-		result = [[NSURL fileURLWithPath:resourceFile] absoluteString];
-	}
-	else
-	{
-		result = [[self currentPage] publishedPathForResourceFile:resourceFile];
+		case kGeneratingPreview:
+			result = [[NSURL fileURLWithPath:resourceFile] absoluteString];
+			break;
+		
+		case kGeneratingQuickLookPreview:
+			result = [[BDAlias aliasWithPath:resourceFile] quickLookPseudoTag];
+			break;
+			
+		default:
+			result = [[self currentPage] publishedPathForResourceFile:resourceFile];
+			break;
 	}
 		
 	// Tell the delegate
