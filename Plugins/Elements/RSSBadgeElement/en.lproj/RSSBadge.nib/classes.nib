@@ -92,7 +92,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTLabel</string>
+			<string>KSLabel</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -100,7 +100,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTTrimFirstLineFormatter</string>
+			<string>KSTrimFirstLineFormatter</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

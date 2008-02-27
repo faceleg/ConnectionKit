@@ -13,7 +13,7 @@
             OUTLETS = {myDelegate = id; }; 
             SUPERCLASS = KTManagedObject; 
         }, 
-        {CLASS = KTLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {CLASS = KTManagedObject; LANGUAGE = ObjC; SUPERCLASS = NSManagedObject; }, 
         {CLASS = KTPagelet; LANGUAGE = ObjC; SUPERCLASS = KTAbstractPlugin; }, 
         {

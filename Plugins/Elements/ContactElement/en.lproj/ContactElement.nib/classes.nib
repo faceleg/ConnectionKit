@@ -99,7 +99,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTEmailAddressComboBox</string>
+			<string>KSEmailAddressComboBox</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

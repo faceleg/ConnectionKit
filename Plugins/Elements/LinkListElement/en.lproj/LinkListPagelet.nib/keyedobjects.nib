@@ -2222,7 +2222,7 @@
 			<key>NSvFlags</key>
 			<integer>292</integer>
 		</dict>
-		<string>KTLabel</string>
+		<string>KSLabel</string>
 		<string>NSTextField</string>
 		<string>{{17, 23}, {60, 14}}</string>
 		<dict>

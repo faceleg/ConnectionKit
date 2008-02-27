@@ -4412,7 +4412,7 @@
 				<integer>202</integer>
 			</dict>
 		</dict>
-		<string>KTLabel</string>
+		<string>KSLabel</string>
 		<string>NSTextField</string>
 		<string>{{14, 69}, {60, 14}}</string>
 		<dict>

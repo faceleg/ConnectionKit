@@ -5,7 +5,7 @@
             CLASS = ContactElementDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                oEmailAddressComboBox = KTEmailAddressComboBox; 
+                oEmailAddressComboBox = KSEmailAddressComboBox; 
                 oLabelPopup = NSPopUpButton; 
                 oLabelValue = NSTextField; 
                 oSubjects = NSTextField; 
@@ -24,7 +24,7 @@
             OUTLETS = {myDelegateOwner = id; }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }
     ); 
     IBVersion = 1; 
 }

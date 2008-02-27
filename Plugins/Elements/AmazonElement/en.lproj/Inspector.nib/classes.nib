@@ -79,7 +79,7 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>KTTrimFirstLineFormatter</string>
+			<string>KSTrimFirstLineFormatter</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -123,7 +123,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTLabel</string>
+			<string>KSLabel</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

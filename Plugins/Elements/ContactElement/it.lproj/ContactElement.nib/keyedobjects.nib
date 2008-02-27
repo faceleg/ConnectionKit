@@ -1256,7 +1256,7 @@
 			<key>NSvFlags</key>
 			<integer>256</integer>
 		</dict>
-		<string>KTEmailAddressComboBox</string>
+		<string>KSEmailAddressComboBox</string>
 		<string>NSComboBox</string>
 		<string>{{96, 187}, {147, 22}}</string>
 		<dict>

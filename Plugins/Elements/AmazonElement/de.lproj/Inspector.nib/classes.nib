@@ -108,7 +108,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = KTLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {CLASS = KTPlaceholderTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = NSTabView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 

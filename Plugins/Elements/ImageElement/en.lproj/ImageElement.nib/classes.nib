@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>KTPathInfoField</string>
+			<string>KSPathInfoField</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
