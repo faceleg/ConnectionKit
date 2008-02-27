@@ -6,7 +6,7 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTEdgeSnapWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
+        {CLASS = KSEdgeSnapWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
         {
             ACTIONS = {pickSomeone = id; removeImage = id; }; 
             CLASS = KTImageView; 
@@ -59,7 +59,7 @@
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
-        {CLASS = KTLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             CLASS = KTStackView; 
             LANGUAGE = ObjC; 

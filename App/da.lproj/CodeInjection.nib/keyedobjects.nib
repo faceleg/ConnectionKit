@@ -338,7 +338,7 @@
 		</dict>
 		<string>{{119, 519}, {523, 337}}</string>
 		<string>Kodeindsætning</string>
-		<string>KTNoCascadeWindow</string>
+		<string>KSNoCascadeWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>

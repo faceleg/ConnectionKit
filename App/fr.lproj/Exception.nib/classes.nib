@@ -26,12 +26,12 @@
             }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
         {
             CLASS = KTExceptionReporter; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                oAddressComboBox = KTEmailAddressComboBox; 
+                oAddressComboBox = KSEmailAddressComboBox; 
                 oDontReportButton = NSButton; 
                 oIncludeConsoleCheckbox = NSButton; 
                 oInformativeTextField = NSTextField; 

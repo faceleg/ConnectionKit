@@ -15,7 +15,7 @@
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
-        {CLASS = KTNoCascadeWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }
+        {CLASS = KSNoCascadeWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }
     ); 
     IBVersion = 1; 
 }

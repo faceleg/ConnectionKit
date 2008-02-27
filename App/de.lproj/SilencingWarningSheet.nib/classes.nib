@@ -3,7 +3,7 @@
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {sheetCancel = id; sheetOK = id; }; 
-            CLASS = KTSilencingConfirmSheet; 
+            CLASS = KSSilencingConfirmSheet; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 myTarget = id; 

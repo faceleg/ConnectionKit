@@ -26,14 +26,14 @@
             }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
         {CLASS = KTFeedbackAttachment; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {changeClassification = id; }; 
             CLASS = KTFeedbackReporter; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                oAddressComboBox = KTEmailAddressComboBox; 
+                oAddressComboBox = KSEmailAddressComboBox; 
                 oAttachConsoleSwitch = NSButton; 
                 oAttachPreferencesSwitch = NSButton; 
                 oAttachScreenshotSwitch = NSButton; 

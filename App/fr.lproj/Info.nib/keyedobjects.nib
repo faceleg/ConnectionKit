@@ -814,7 +814,7 @@
 		</dict>
 		<string>{{20, 662}, {280, 200}}</string>
 		<string>Inspecteur</string>
-		<string>KTEdgeSnapWindow</string>
+		<string>KSEdgeSnapWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3334,7 +3334,7 @@ pages enfant</string>
 			<key>NSvFlags</key>
 			<integer>266</integer>
 		</dict>
-		<string>KTLabel</string>
+		<string>KSLabel</string>
 		<string>NSTextField</string>
 		<string>{{49, 70}, {49, 14}}</string>
 		<dict>

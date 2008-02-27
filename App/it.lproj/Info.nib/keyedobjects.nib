@@ -834,7 +834,7 @@
 		</dict>
 		<string>{{50, 662}, {250, 200}}</string>
 		<string>Impostazioni</string>
-		<string>KTEdgeSnapWindow</string>
+		<string>KSEdgeSnapWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -3186,7 +3186,7 @@
 			<key>NSvFlags</key>
 			<integer>266</integer>
 		</dict>
-		<string>KTLabel</string>
+		<string>KSLabel</string>
 		<string>NSTextField</string>
 		<string>{{7, 70}, {72, 14}}</string>
 		<dict>

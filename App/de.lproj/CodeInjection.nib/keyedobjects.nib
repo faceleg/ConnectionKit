@@ -334,7 +334,7 @@
 		</dict>
 		<string>{{119, 499}, {578, 357}}</string>
 		<string>Code Injektion</string>
-		<string>KTNoCascadeWindow</string>
+		<string>KSNoCascadeWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>

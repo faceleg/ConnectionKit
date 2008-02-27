@@ -858,7 +858,7 @@
 			<key>NSvFlags</key>
 			<integer>289</integer>
 		</dict>
-		<string>KTEmailAddressComboBox</string>
+		<string>KSEmailAddressComboBox</string>
 		<string>NSComboBox</string>
 		<dict>
 			<key>$class</key>

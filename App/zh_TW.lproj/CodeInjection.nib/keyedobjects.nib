@@ -338,7 +338,7 @@
 		</dict>
 		<string>{{144, 270}, {523, 337}}</string>
 		<string>插入語法</string>
-		<string>KTNoCascadeWindow</string>
+		<string>KSNoCascadeWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>

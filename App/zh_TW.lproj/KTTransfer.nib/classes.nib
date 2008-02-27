@@ -6,7 +6,7 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTCircularProgressCell; LANGUAGE = ObjC; SUPERCLASS = NSCell; }, 
+        {CLASS = KSCircularProgressCell; LANGUAGE = ObjC; SUPERCLASS = NSCell; }, 
         {
             ACTIONS = {cancelTransfer = id; hideTransfer = id; }; 
             CLASS = KTTransferController; 

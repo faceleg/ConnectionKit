@@ -24,7 +24,7 @@
             CLASS = KTCrashReporter; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                oAddressComboBox = KTEmailAddressComboBox; 
+                oAddressComboBox = KSEmailAddressComboBox; 
                 oDontReportButton = NSButton; 
                 oIncludeConsoleCheckbox = NSButton; 
                 oReportButton = NSButton; 
@@ -32,7 +32,7 @@
             }; 
             SUPERCLASS = KTAbstractBugReporter; 
         }, 
-        {CLASS = KTEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
         {CLASS = KTFeedbackAttachment; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
     IBVersion = 1; 

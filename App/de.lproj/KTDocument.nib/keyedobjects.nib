@@ -1355,7 +1355,7 @@
 			<key>NSvFlags</key>
 			<integer>266</integer>
 		</dict>
-		<string>KTLabel</string>
+		<string>KSLabel</string>
 		<string>NSTextField</string>
 		<string>{{10, 38}, {130, 13}}</string>
 		<dict>
@@ -4477,7 +4477,7 @@
 		</dict>
 		<string>{{71, 407}, {495, 116}}</string>
 		<string>Link Bereich</string>
-		<string>KTBorderlessWindow</string>
+		<string>KSBorderlessWindow</string>
 		<dict>
 			<key>$class</key>
 			<dict>
