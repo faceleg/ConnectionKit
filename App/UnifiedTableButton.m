@@ -3,7 +3,7 @@
 //  KTPlugins
 //
 //  Created by Mike on 10/05/2007.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//  Copyright 2007 Karelia Software. All rights reserved.
 //
 
 #import "UnifiedTableButton.h"

@@ -3,7 +3,7 @@
 //  File Picker prototype
 //
 //  Created by Mike on 08/10/2007.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//  Copyright 2007 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

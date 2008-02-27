@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Greg Hulands on 30/03/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+//  Copyright 2006 Karelia Software. All rights reserved.
 //
 
 #import "KTMediaDataProxy.h"

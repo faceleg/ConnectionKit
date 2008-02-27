@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 1/18/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+//  Copyright 2005 Karelia Software. All rights reserved.
 //
 
 #import "KTMagnifyButton.h"
