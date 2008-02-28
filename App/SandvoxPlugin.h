@@ -49,6 +49,7 @@
 #import "KTIndexPlugin.h"
 
 //  major Core Data-based plugin superclasses
+#import "KTAbstractPage.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
 
