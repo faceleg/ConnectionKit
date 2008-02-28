@@ -51,7 +51,7 @@
 		3C42DE000D64CB6C004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C42DE020D64CB7E004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42DE030D64CB7E004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
-		8D5B49B6048680CD000E48DA /* RSSBadge.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSBadge.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollectionArchive.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -133,7 +133,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* RSSBadge.svxElement */,
+				8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5B49AC048680CD000E48DA /* RSSBadgeElement */ = {
+		8D5B49AC048680CD000E48DA /* CollectionArchiveElement */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "RSSBadgeElement" */;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "CollectionArchiveElement" */;
 			buildPhases = (
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
@@ -171,10 +171,10 @@
 			);
 			dependencies = (
 			);
-			name = RSSBadgeElement;
+			name = CollectionArchiveElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = RSSBadgeElement;
-			productReference = 8D5B49B6048680CD000E48DA /* RSSBadge.svxElement */;
+			productReference = 8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -203,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* RSSBadgeElement */,
+				8D5B49AC048680CD000E48DA /* CollectionArchiveElement */,
 			);
 		};
 /* End PBXProject section */
@@ -308,9 +308,9 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
-					0x50560000,
+					0x505C0000,
 				);
-				PRODUCT_NAME = RSSBadge;
+				PRODUCT_NAME = CollectionArchive;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -322,9 +322,9 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
-					0x50560000,
+					0x505C0000,
 				);
-				PRODUCT_NAME = RSSBadge;
+				PRODUCT_NAME = CollectionArchive;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
@@ -356,7 +356,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "RSSBadgeElement" */ = {
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "CollectionArchiveElement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,

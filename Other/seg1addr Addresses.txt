@@ -38,13 +38,14 @@ Reserved for use by system services. Do not use this address range.
 0x40000000				Third-party plugins
 
 0x50000000             Our Plugins
-505c 0000 is next available slot, increment by 2 0000 .... see a crash report for layout
+505E 0000 is next available slot, increment by 2 0000 .... see a crash report for layout
 0x504c0000 - amazon (giving 3 slots)
 0x50520000 - IM status
 0x50540000 - Page Counter
 0x50560000 - RSS Badge
 0x50580000 - Tagometer
 0x505A0000 - imedia Amazon
+0x505C0000 - Collection Archive
 
 
 
