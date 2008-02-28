@@ -1,6 +1,6 @@
 
 // include SVN_VERSION (the first step in any Sandvox build)
-#include "/tmp/build-sandvox/BuildSettings.xcconfig"
+#include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 1.5a3
