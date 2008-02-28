@@ -4,13 +4,9 @@
 #import <CoreServices/CoreServices.h>
 #import <QuickLook/QuickLook.h>
 #import <Quartz/Quartz.h>
-#import "KTUtilitiesForQuickLook.h"
 
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+QuickLook.h"
-#import "NSCharacterSet+QuickLook.h"
-//#import "NSString+QuickLook.h"
-
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file
