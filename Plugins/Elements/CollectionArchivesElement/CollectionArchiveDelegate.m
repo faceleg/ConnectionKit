@@ -6,10 +6,10 @@
 //  Copyright 2006 Karelia. All rights reserved.
 //
 
-#import "RSSBadgeDelegate.h"
+#import "CollectionArchiveDelegate.h"
 
 
-@implementation RSSBadgeDelegate
+@implementation CollectionArchiveDelegate
 
 #pragma mark -
 #pragma mark Init

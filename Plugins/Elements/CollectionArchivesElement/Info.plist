@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,10 +26,6 @@
 	<string>1.1</string>
 	<key>KTPageletCanHaveTitle</key>
 	<false/>
-	<key>KTPluginCSSFilesNeeded</key>
-	<array>
-		<string>rssbadge.css</string>
-	</array>
 	<key>KTPluginDescription</key>
 	<string>Links to the RSS feed for a collection</string>
 	<key>KTPluginIconName</key>
@@ -52,7 +48,7 @@
 	<key>KTPluginUntitledName</key>
 	<string></string>
 	<key>KTTemplateName</key>
-	<string>BadgePageletTemplate</string>
+	<string>template</string>
 	<key>NSPrincipalClass</key>
 	<string>RSSBadgeDelegate</string>
 </dict>

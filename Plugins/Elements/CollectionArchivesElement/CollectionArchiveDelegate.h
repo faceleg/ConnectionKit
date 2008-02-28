@@ -30,7 +30,7 @@ typedef enum {
 @class MAImagePopUpButton;
 
 
-@interface RSSBadgeDelegate : KTAbstractPluginDelegate
+@interface CollectionArchiveDelegate : KTAbstractPluginDelegate
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 	IBOutlet MAImagePopUpButton	*iconTypePopupButton;

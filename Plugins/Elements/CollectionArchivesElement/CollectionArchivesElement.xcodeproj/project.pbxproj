@@ -7,19 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C42DDCA0D64CA9B004F35FD /* RSSBadgeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DDC90D64CA9B004F35FD /* RSSBadgeDelegate.m */; };
-		3C42DDCD0D64CAAD004F35FD /* BadgePageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDCB0D64CAAD004F35FD /* BadgePageletTemplate.html */; };
-		3C42DDCE0D64CAAD004F35FD /* rssbadge.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDCC0D64CAAD004F35FD /* rssbadge.css */; };
-		3C42DDD90D64CAC0004F35FD /* bundleIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDCF0D64CAC0004F35FD /* bundleIcon.icns */; };
-		3C42DDDA0D64CAC0004F35FD /* Gray Badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD00D64CAC0004F35FD /* Gray Badge.png */; };
-		3C42DDDB0D64CAC0004F35FD /* gray_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD10D64CAC0004F35FD /* gray_large.png */; };
-		3C42DDDC0D64CAC0004F35FD /* gray_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD20D64CAC0004F35FD /* gray_small.png */; };
-		3C42DDDD0D64CAC0004F35FD /* Orange Badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD30D64CAC0004F35FD /* Orange Badge.png */; };
-		3C42DDDE0D64CAC0004F35FD /* orange_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD40D64CAC0004F35FD /* orange_large.png */; };
-		3C42DDDF0D64CAC0004F35FD /* orange_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD50D64CAC0004F35FD /* orange_small.png */; };
-		3C42DDE00D64CAC0004F35FD /* rss.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD60D64CAC0004F35FD /* rss.gif */; };
-		3C42DDE10D64CAC0004F35FD /* rss_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD70D64CAC0004F35FD /* rss_blue.png */; };
-		3C42DDE20D64CAC0004F35FD /* xml.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDD80D64CAC0004F35FD /* xml.gif */; };
+		2740553B0D772386001E759E /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 2740553A0D772386001E759E /* template.html */; };
+		3C42DDCA0D64CA9B004F35FD /* CollectionArchiveDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */; };
 		3C42DDE80D64CAFE004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDE40D64CAFE004F35FD /* Localizable.strings */; };
 		3C42DDE90D64CAFE004F35FD /* RSSBadge.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DDE60D64CAFE004F35FD /* RSSBadge.nib */; };
 		3C42DE010D64CB6C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DE000D64CB6C004F35FD /* License.rtf */; };
@@ -31,21 +20,10 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		32DBCF630370AF2F00C91783 /* RSSBadgeElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSBadgeElement_Prefix.pch; sourceTree = "<group>"; };
-		3C42DDC80D64CA9B004F35FD /* RSSBadgeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSBadgeDelegate.h; sourceTree = "<group>"; };
-		3C42DDC90D64CA9B004F35FD /* RSSBadgeDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSBadgeDelegate.m; sourceTree = "<group>"; };
-		3C42DDCB0D64CAAD004F35FD /* BadgePageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = BadgePageletTemplate.html; sourceTree = "<group>"; };
-		3C42DDCC0D64CAAD004F35FD /* rssbadge.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = rssbadge.css; sourceTree = "<group>"; };
-		3C42DDCF0D64CAC0004F35FD /* bundleIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = bundleIcon.icns; sourceTree = "<group>"; };
-		3C42DDD00D64CAC0004F35FD /* Gray Badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gray Badge.png"; sourceTree = "<group>"; };
-		3C42DDD10D64CAC0004F35FD /* gray_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_large.png; sourceTree = "<group>"; };
-		3C42DDD20D64CAC0004F35FD /* gray_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_small.png; sourceTree = "<group>"; };
-		3C42DDD30D64CAC0004F35FD /* Orange Badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Badge.png"; sourceTree = "<group>"; };
-		3C42DDD40D64CAC0004F35FD /* orange_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_large.png; sourceTree = "<group>"; };
-		3C42DDD50D64CAC0004F35FD /* orange_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_small.png; sourceTree = "<group>"; };
-		3C42DDD60D64CAC0004F35FD /* rss.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = rss.gif; sourceTree = "<group>"; };
-		3C42DDD70D64CAC0004F35FD /* rss_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_blue.png; sourceTree = "<group>"; };
-		3C42DDD80D64CAC0004F35FD /* xml.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = xml.gif; sourceTree = "<group>"; };
+		2740553A0D772386001E759E /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* CollectionArchivesElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionArchivesElement_Prefix.pch; sourceTree = "<group>"; };
+		3C42DDC80D64CA9B004F35FD /* CollectionArchiveDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionArchiveDelegate.h; sourceTree = "<group>"; };
+		3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionArchiveDelegate.m; sourceTree = "<group>"; };
 		3C42DDE30D64CAFE004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42DDE50D64CAFE004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42DDE70D64CAFE004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/RSSBadge.nib; sourceTree = "<group>"; };
@@ -117,21 +95,10 @@
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42DDE60D64CAFE004F35FD /* RSSBadge.nib */,
-				3C42DDCB0D64CAAD004F35FD /* BadgePageletTemplate.html */,
-				3C42DDCC0D64CAAD004F35FD /* rssbadge.css */,
-				3C42DDCF0D64CAC0004F35FD /* bundleIcon.icns */,
-				3C42DDD00D64CAC0004F35FD /* Gray Badge.png */,
-				3C42DDD10D64CAC0004F35FD /* gray_large.png */,
-				3C42DDD20D64CAC0004F35FD /* gray_small.png */,
-				3C42DDD30D64CAC0004F35FD /* Orange Badge.png */,
-				3C42DDD40D64CAC0004F35FD /* orange_large.png */,
-				3C42DDD50D64CAC0004F35FD /* orange_small.png */,
-				3C42DDD60D64CAC0004F35FD /* rss.gif */,
-				3C42DDD70D64CAC0004F35FD /* rss_blue.png */,
-				3C42DDD80D64CAC0004F35FD /* xml.gif */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
 				3C42DE000D64CB6C004F35FD /* License.rtf */,
+				2740553A0D772386001E759E /* template.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -139,8 +106,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C42DDC80D64CA9B004F35FD /* RSSBadgeDelegate.h */,
-				3C42DDC90D64CA9B004F35FD /* RSSBadgeDelegate.m */,
+				3C42DDC80D64CA9B004F35FD /* CollectionArchiveDelegate.h */,
+				3C42DDC90D64CA9B004F35FD /* CollectionArchiveDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -174,7 +141,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF630370AF2F00C91783 /* RSSBadgeElement_Prefix.pch */,
+				32DBCF630370AF2F00C91783 /* CollectionArchivesElement_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -215,7 +182,7 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "RSSBadgeElement" */;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "CollectionArchivesElement" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -247,21 +214,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C42DDCD0D64CAAD004F35FD /* BadgePageletTemplate.html in Resources */,
-				3C42DDCE0D64CAAD004F35FD /* rssbadge.css in Resources */,
-				3C42DDD90D64CAC0004F35FD /* bundleIcon.icns in Resources */,
-				3C42DDDA0D64CAC0004F35FD /* Gray Badge.png in Resources */,
-				3C42DDDB0D64CAC0004F35FD /* gray_large.png in Resources */,
-				3C42DDDC0D64CAC0004F35FD /* gray_small.png in Resources */,
-				3C42DDDD0D64CAC0004F35FD /* Orange Badge.png in Resources */,
-				3C42DDDE0D64CAC0004F35FD /* orange_large.png in Resources */,
-				3C42DDDF0D64CAC0004F35FD /* orange_small.png in Resources */,
-				3C42DDE00D64CAC0004F35FD /* rss.gif in Resources */,
-				3C42DDE10D64CAC0004F35FD /* rss_blue.png in Resources */,
-				3C42DDE20D64CAC0004F35FD /* xml.gif in Resources */,
 				3C42DDE80D64CAFE004F35FD /* Localizable.strings in Resources */,
 				3C42DDE90D64CAFE004F35FD /* RSSBadge.nib in Resources */,
 				3C42DE010D64CB6C004F35FD /* License.rtf in Resources */,
+				2740553B0D772386001E759E /* template.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42DDCA0D64CA9B004F35FD /* RSSBadgeDelegate.m in Sources */,
+				3C42DDCA0D64CA9B004F35FD /* CollectionArchiveDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "RSSBadgeElement" */ = {
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "CollectionArchivesElement" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
