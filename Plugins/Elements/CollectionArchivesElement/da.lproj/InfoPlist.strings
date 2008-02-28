@@ -1,0 +1,5 @@
+﻿/* Localized versions of Info.plist keys */
+
+"KTPluginName" = "RSS Badge";
+"KTPluginUntitledName" = "";
+"KTPluginDescription" = "Links til RSS-feed for en samling";
