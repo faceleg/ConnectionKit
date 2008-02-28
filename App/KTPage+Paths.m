@@ -133,7 +133,7 @@ KTCollectionPathStyle;
  */
 - (NSArray *)availableFileExtensions
 {
-	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"asp", nil];
+	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", nil];
 	return result;
 }
 
