@@ -29,6 +29,7 @@ TO DO:
 #import "KTExceptionReporter.h"
 #import "NSException+Karelia.h"
 #import "NSHelpManager+Karelia.h"
+#import "NSString+Karelia.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 
 #import "KTQuickStartController.h"

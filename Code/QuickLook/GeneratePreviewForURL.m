@@ -9,7 +9,7 @@
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+QuickLook.h"
 #import "NSCharacterSet+QuickLook.h"
-#import "NSString+QuickLook.h"
+//#import "NSString+QuickLook.h"
 
 
 /* -----------------------------------------------------------------------------

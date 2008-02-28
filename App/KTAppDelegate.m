@@ -85,6 +85,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTMediaManager.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSDate+Karelia.h"
 
 #import "NSApplication+Karelia.h"
 #import "AQDataExtensions.h"
