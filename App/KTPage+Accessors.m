@@ -104,8 +104,6 @@
 	return self;			// the containing page of this object is the page itself
 }
 
-- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
-
 /*!	A root page needs a direct pointer to document
 */
 - (KTDocument *)document

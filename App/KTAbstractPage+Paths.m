@@ -1,5 +1,5 @@
 //
-//  KTPage+Paths.m
+//  KTAbstractPage+Paths.m
 //  Marvel
 //
 //  Created by Mike on 05/12/2007.
@@ -11,27 +11,20 @@
 //		upload		- When accessing the site for publishing via FTP, SFTP etc.
 //		preview		- For previewing the page within the Sandvox UI
 
-#import "KTPage.h"
+#import "KTAbstractPage.h"
 
 #import "Debug.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTMaster.h"
+
+#import "NSManagedObject+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 
-typedef enum	//	Defines the 3 ways of linking to a collection:
-{
-	KTCollectionDirectoryPath,			//		collection
-	KTCollectionHTMLDirectoryPath,		//		collection/
-	KTCollectionIndexFilePath,			//		collection/index.html
-}
-KTCollectionPathStyle;
-
-
-@interface KTPage (PathsPrivate)
+@interface KTAbstractPage (PathsPrivate)
 - (NSString *)indexFilename;
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -41,7 +34,7 @@ KTCollectionPathStyle;
 #pragma mark -
 
 
-@implementation KTPage (Paths)
+@implementation KTAbstractPage (Paths)
 
 #pragma mark -
 #pragma mark File Name
@@ -57,30 +50,8 @@ KTCollectionPathStyle;
  */
 - (NSString *)suggestedFileName
 {
-	// The home page's title isn't settable, so keep it constant
-	if ([self isRoot]) {
-		return @"home_page";
-	}
-	
-	
-	// Build a list of the file names already taken
-	NSMutableSet *unavailableFileNames = [NSMutableSet setWithSet:[[[self parent] children] valueForKey:@"fileName"]];
-	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
-	
-	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-	NSString *result = [[self titleText] legalizeFileNameWithFallbackID:[self uniqueID]];
-	NSString *baseFileName = result;
-	int suffixCount = 2;
-	
-	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
-	while ([unavailableFileNames containsObject:result])
-	{
-		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
-	}
-	
-	OBPOSTCONDITION(result);
-	
-	return result;
+	SUBCLASSMUSTIMPLEMENT;
+	return nil;
 }
 
 #pragma mark -
@@ -221,15 +192,7 @@ KTCollectionPathStyle;
 {
 	NSURL *result = nil;
 	
-	id delegate = [self delegate];
-	if ([delegate respondsToSelector:@selector(urlAllowingIndexPage:)])
-	{
-		NSString *delegateURL = [delegate urlAllowingIndexPage:aCanHaveIndexPage];	// might return nil -- if so, act as if was not defined
-		if (delegateURL) {
-			result = [NSURL URLWithString:delegateURL];
-		}
-	}
-	else if ( [self isRoot] )
+	if ( [self isRoot] )
 	{
 		result = [NSURL URLWithString:[[self document] publishedSiteURL]];
 	}
@@ -283,7 +246,7 @@ KTCollectionPathStyle;
 /*	Very useful method. Returns the path of the specifed page relative to our own published path.
  *	If there appears to be no relative path between the two, returns nil.
  */
-- (NSString *)publishedPathRelativeToPage:(KTPage *)otherPage
+- (NSString *)publishedPathRelativeToPage:(KTAbstractPage *)otherPage
 {
 	NSString *result = nil;
 	
@@ -344,19 +307,6 @@ KTCollectionPathStyle;
 #pragma mark -
 #pragma mark Other Paths
 
-/*	The published path to the design directory relative to the receiver.
- */
-- (NSString *)designDirectoryPath
-{
-	KTDesign *design = [[self master] design];
-	NSString *designPath = [@"/" stringByAppendingString:[design remotePath]];
-	
-	NSString *pagePath = [@"/" stringByAppendingString:[self publishedPathRelativeToSite]];
-	
-	NSString *result = [designPath pathRelativeTo:pagePath];
-	return result;
-}
-
 - (NSString *)publishedPathForResourceFile:(NSString *)onDiskResourcePath
 {
 	// Get the path of us & the resource relative to the site. Pretend they're absolute to fool NSString
@@ -371,31 +321,7 @@ KTCollectionPathStyle;
 	return result;
 }
 
-- (NSString *)feedURLPathRelativeToPage:(KTPage *)aPage
-{
-	NSString *result = nil;
-	
-	if ([self boolForKey:@"collectionSyndicate"] && [self collectionCanSyndicate])
-	{
-		NSString *feedFileName = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-		NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
-		NSString *feedPath = [collectionPath stringByAppendingPathComponent:feedFileName];
-		
-		NSString *comparisonFeedPath = [@"/" stringByAppendingString:feedPath];
-		NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage publishedPathRelativeToSite]];
-		
-		result = [comparisonFeedPath pathRelativeTo:comparisonPagePath];
-	}
-	
-	return result;
-}
-
-- (NSString *)feedURLPath
-{
-	return [self feedURLPathRelativeToPage:self];
-}
-
-- (NSString *)archivesURLPathRelativeToPage:(KTPage *)aPage
+- (NSString *)archivesURLPathRelativeToPage:(KTAbstractPage *)aPage
 {
 	NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
 	NSString *archivePath = [collectionPath stringByAppendingPathComponent:[self archivesFilename]];
@@ -443,7 +369,7 @@ KTCollectionPathStyle;
 }
 
 /*	Does the hard graft for -publishedPathRelativeToSite and -uploadPathRelativeToSite.
- *	Should not generally be called outside of KTPage methods.
+ *	Should not generally be called outside of KTAbstractPage methods.
  */
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle
 {

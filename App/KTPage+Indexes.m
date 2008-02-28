@@ -12,9 +12,16 @@
 #import "KTAppPlugin.h"
 #import "KTIndexPlugin.h"
 
-#import "NSXMLElement+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSString+KTExtensions.h"
+#import "NSXMLElement+Karelia.h"
+
+
+@interface KTAbstractPage (PathsPrivate)
+- (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
+@end
+
 
 @interface KTPage (IndexesPrivate)
 - (void)setArchivesIndex:(KTAbstractIndex *)anIndex;
@@ -106,6 +113,30 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	// TAKE OUT FOR NOW ... NOT USING THIS SETTING, UNTIL/UNLESS WE HAVE MULTIPLE FORMATS TO CHOOSE FROM
 	// (which we would put in the site settings)
 	// && ([self boolForKey:@"collectionGenerateAtom"] || [self boolForKey:@"collectionGenerateRSS"]) ;
+}
+
+- (NSString *)feedURLPathRelativeToPage:(KTAbstractPage *)aPage
+{
+	NSString *result = nil;
+	
+	if ([self boolForKey:@"collectionSyndicate"] && [self collectionCanSyndicate])
+	{
+		NSString *feedFileName = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+		NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
+		NSString *feedPath = [collectionPath stringByAppendingPathComponent:feedFileName];
+		
+		NSString *comparisonFeedPath = [@"/" stringByAppendingString:feedPath];
+		NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage publishedPathRelativeToSite]];
+		
+		result = [comparisonFeedPath pathRelativeTo:comparisonPagePath];
+	}
+	
+	return result;
+}
+
+- (NSString *)feedURLPath
+{
+	return [self feedURLPathRelativeToPage:self];
 }
 
 #pragma mark -

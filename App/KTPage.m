@@ -13,10 +13,13 @@
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
 #import "KTBundleManager.h"
+#import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTManagedObjectContext.h"
+#import "KTMaster.h"
+
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -26,6 +29,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSString+KTExtensions.h"
 
 
 @interface NSObject ( RichTextElementDelegateHack )
@@ -296,6 +300,58 @@
     [mySortedChildrenCache release];
 	
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Master
+
+- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
+
+/*	The published path to the design directory relative to the receiver.
+ */
+- (NSString *)designDirectoryPath
+{
+	KTDesign *design = [[self master] design];
+	NSString *designPath = [@"/" stringByAppendingString:[design remotePath]];
+	
+	NSString *pagePath = [@"/" stringByAppendingString:[self publishedPathRelativeToSite]];
+	
+	NSString *result = [designPath pathRelativeTo:pagePath];
+	return result;
+}
+
+#pragma mark -
+#pragma mark Filename
+
+/*	Looks at sibling pages and the page title to determine the best possible filename.
+ *	Guaranteed to return something unique.
+ */
+- (NSString *)suggestedFileName
+{
+	// The home page's title isn't settable, so keep it constant
+	if ([self isRoot]) {
+		return @"home_page";
+	}
+	
+	
+	// Build a list of the file names already taken
+	NSMutableSet *unavailableFileNames = [NSMutableSet setWithSet:[[[self parent] children] valueForKey:@"fileName"]];
+	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
+	
+	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
+	NSString *result = [[self titleText] legalizeFileNameWithFallbackID:[self uniqueID]];
+	NSString *baseFileName = result;
+	int suffixCount = 2;
+	
+	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
+	while ([unavailableFileNames containsObject:result])
+	{
+		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
+	}
+	
+	OBPOSTCONDITION(result);
+	
+	return result;
 }
 
 #pragma mark -

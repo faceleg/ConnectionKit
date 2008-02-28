@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTAbstractElement.h"
+#import "KTAbstractPage.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "KT.h"
@@ -29,7 +29,7 @@
 @class WebView;
 @class KTMediaContainer;
 
-@interface KTPage : KTAbstractElement	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
+@interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
 {
 	// most ivars handled internally via CoreData model
 	KTAbstractIndex		*myArchivesIndex;			// not archived, loaded lazily
@@ -54,6 +54,10 @@
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
+// Master
+- (KTMaster *)master;
+- (NSString *)designDirectoryPath;
+
 // Inspector
 - (BOOL)separateInspectorSegment;
 
@@ -69,9 +73,6 @@
 
 - (BOOL)disableComments;
 - (void)setDisableComments:(BOOL)disableComments;
-
-// Relationships
-- (KTMaster *)master;
 
 - (KTDocument *)document;
 - (void)setDocument:(KTDocument *)aDocument;
@@ -140,12 +141,10 @@
 - (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType;
 
 // Hierarchy Queries
-- (KTPage *)parent;
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
 - (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;
 
-- (BOOL)isRoot;
 - (NSIndexPath *)indexPathFromRoot;
 
 - (KTPage *)previousPage;
@@ -175,6 +174,8 @@
 
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
+- (NSString *)feedURLPathRelativeToPage:(KTAbstractPage *)aPage;
+- (NSString *)feedURLPath;
 
 // Archive
 - (KTAbstractIndex *)archivesIndex;
@@ -250,49 +251,6 @@
 
 @interface KTPage (Pasteboard)
 + (KTPage *)pageWithPasteboardRepresentation:(NSDictionary *)archive parent:(KTPage *)parent;
-@end
-
-
-@interface KTPage (Paths)
-
-// File Name
-- (NSString *)fileName;
-- (void)setFileName:(NSString *)fileName;
-- (NSString *)suggestedFileName;
-
-// File Extension
-- (NSString *)fileExtension;
-- (NSString *)customFileExtension;
-- (void)setCustomFileExtension:(NSString *)extension;
-- (NSString *)defaultFileExtension;
-- (NSArray *)availableFileExtensions;
-
-- (NSString *)indexFilename;
-- (NSString *)indexFileName;
-- (NSString *)archivesFilename;
-
-
-// Publishing
-- (NSURL *)publishedURL;
-- (NSURL *)publishedURLAllowingIndexPage:(BOOL)aCanHaveIndexPage;
-- (NSString *)publishedPathRelativeToParent;
-- (NSString *)publishedPathRelativeToSite;
-- (NSString *)publishedPathRelativeToPage:(KTPage *)otherPage;
-
-// Uploading
-- (NSString *)uploadPath;
-- (NSString *)uploadPathRelativeToParent;
-
-// Preview
-- (NSString *)previewPath;
-
-// Other
-- (NSString *)designDirectoryPath;
-- (NSString *)publishedPathForResourceFile:(NSString *)resourcePath;
-- (NSString *)feedURLPathRelativeToPage:(KTPage *)aPage;
-- (NSString *)feedURLPath;
-- (NSString *)archivesURLPathRelativeToPage:(KTPage *)aPage;
-
 @end
 
 

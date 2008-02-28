@@ -313,17 +313,9 @@
 #pragma mark -
 #pragma mark Page Hierarchy Queries
 
-- (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
-
 - (KTPage *)root 
 {
 	return [self valueForKeyPath:@"documentInfo.root"];
-}
-
-- (BOOL)isRoot
-{
-	BOOL result = (self == [self root]);
-	return result;
 }
 
 - (KTPage *)parentOrRoot
