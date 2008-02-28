@@ -115,6 +115,7 @@
 				3C42DE1D0D64CCDC004F35FD /* PBXTargetDependency */,
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
 				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
+				274339F10D7733B600164FA5 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
@@ -828,6 +829,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		274339ED0D77339B00164FA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */;
+			remoteInfo = CollectionArchiveElement;
+		};
+		274339F00D7733B600164FA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* CollectionArchiveElement */;
+			remoteInfo = CollectionArchiveElement;
+		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1568,6 +1583,7 @@
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
 		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
 		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
+		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -2687,6 +2703,14 @@
 				270ABF9B0D76E85500C80911 /* KTAbstractPage.m */,
 			);
 			name = Page;
+			sourceTree = "<group>";
+		};
+		274339EA0D77339B00164FA5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				274339EE0D77339B00164FA5 /* CollectionArchive.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		2752C70F0C8DC4CA00BD90EA /* Scripts */ = {
@@ -4008,6 +4032,7 @@
 		3CA9FD350D63A08000815310 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */,
 				3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */,
 				3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */,
 				3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */,
@@ -4873,6 +4898,10 @@
 					ProjectRef = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
 				},
 				{
+					ProductGroup = 274339EA0D77339B00164FA5 /* Products */;
+					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
+				},
+				{
 					ProductGroup = CE9982EE0D614CCD00F2DD12 /* Products */;
 					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 				},
@@ -5036,6 +5065,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		274339EE0D77339B00164FA5 /* CollectionArchive.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CollectionArchive.svxElement;
+			remoteRef = 274339ED0D77339B00164FA5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C095BD80D5D27E600DE6F62 /* Archive.svxIndex */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -6083,6 +6119,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		274339F10D7733B600164FA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CollectionArchiveElement;
+			targetProxy = 274339F00D7733B600164FA5 /* PBXContainerItemProxy */;
+		};
 		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MetaSandvox;
