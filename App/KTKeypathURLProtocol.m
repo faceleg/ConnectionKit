@@ -13,6 +13,7 @@
 #import "KTDocument.h"
 #import "NSString+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSImage+KTExtensions.h"
 
 @implementation KTKeypathURLProtocol
 

@@ -1937,6 +1937,7 @@
 		3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Media.m"; sourceTree = "<group>"; };
 		3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentController.h; sourceTree = "<group>"; };
 		3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentController.m; sourceTree = "<group>"; };
+		3C951FEE0D762D65009FCAC9 /* ReleaseNotes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ReleaseNotes.html; sourceTree = "<group>"; };
 		3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStringRenderer.h; sourceTree = "<group>"; };
 		3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStringRenderer.m; sourceTree = "<group>"; };
 		3C96FD6607E7FFFF00B418ED /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
@@ -2875,11 +2876,8 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
-				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
-				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
-				3C202D1407DFC06100DE4994 /* KT.h */,
-				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
+				3C951FF70D762D9C009FCAC9 /* Release Configuration */,
+				3C951FF20D762D87009FCAC9 /* Common Headers */,
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
@@ -3934,6 +3932,26 @@
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		3C951FF20D762D87009FCAC9 /* Common Headers */ = {
+			isa = PBXGroup;
+			children = (
+				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
+				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
+				3C202D1407DFC06100DE4994 /* KT.h */,
+				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
+			);
+			name = "Common Headers";
+			sourceTree = "<group>";
+		};
+		3C951FF70D762D9C009FCAC9 /* Release Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
+				3C951FEE0D762D65009FCAC9 /* ReleaseNotes.html */,
+			);
+			name = "Release Configuration";
 			sourceTree = "<group>";
 		};
 		3CA900680D63C76100815310 /* Products */ = {

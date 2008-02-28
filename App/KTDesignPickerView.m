@@ -18,6 +18,7 @@
 #import "KTMaster.h"
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSImage+KTExtensions.h"
 #import "NSWorkspace+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
