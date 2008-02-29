@@ -31,9 +31,6 @@
 
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
 {
-	// most ivars handled internally via CoreData model
-	KTAbstractIndex		*myArchivesIndex;			// not archived, loaded lazily
-	
 	// these ivars are only set if the page is root
     KTDocument			*myDocument;				// not archived
 	BOOL				myIsNewPage;
@@ -188,6 +185,7 @@
 // Archive
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
+- (NSArray *)archivePages;
 
 @end
 

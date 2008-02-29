@@ -438,7 +438,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	{
 		result = [NSNumber numberWithBool:NO];
 		
-		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchive"];
+		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchiveElement"];
 		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
 		KTPagelet *aPagelet;
 		while (aPagelet = [pageletsEnumerator nextObject])
@@ -459,12 +459,28 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive
 {
 	// Ignore requests that will do nothing
-	if (generateArchive == [self collectionGenerateArchives]) return;
-	
-	// Store the value
+	BOOL noChange = (generateArchive == [self collectionGenerateArchives]);
 	[self setWrappedBool:generateArchive forKey:@"collectionGenerateArchives"];
+	if (noChange) return;
+	
 	
 	// Delete or add archive pages as needed
+	if (generateArchive)
+	{
+	
+	}
+	else
+	{
+		NSArray *archivePages = [self archivePages];
+		[[self managedObjectContext] deleteObjects:[NSSet setWithArray:archivePages]];
+	}
+}
+
+- (NSArray *)archivePages
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent == %@", self];
+	NSArray *result = [[self managedObjectContext] objectsWithEntityName:@"ArchivePage" predicate:predicate error:NULL];
+	return result;
 }
 
 #pragma mark -

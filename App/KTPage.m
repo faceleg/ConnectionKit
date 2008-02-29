@@ -295,8 +295,7 @@
 - (void)dealloc
 {
     // release ivars
-	[myArchivesIndex release];
-    [self setDocument:nil];
+	[self setDocument:nil];
     [mySortedChildrenCache release];
 	
     [super dealloc];
