@@ -164,7 +164,7 @@
 		273866C20D51555200A8A209 /* KTImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 273866C00D51555200A8A209 /* KTImageLoader.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
-		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; settings = {ATTRIBUTES = (); }; };
+		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		273D840D0D099C4200057448 /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
 		274E77EB0D626996004F89C2 /* NSObject+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE11DED30D6184AD003B00CA /* NSObject+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -277,8 +277,6 @@
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
-		27DB8CE40C85D15A00E29C38 /* ContainsValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8CE20C85D15A00E29C38 /* ContainsValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27DB8CE50C85D15A00E29C38 /* ContainsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8CE30C85D15A00E29C38 /* ContainsValueTransformer.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31B5F0D4B748700895DA1 /* KTAppPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -297,7 +295,7 @@
 		27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27EF5F260D6C94BF0024575B /* NewDocumentAccessoryView.nib */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
-		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (); }; };
+		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27F0EDC30D0C556600B7555A /* KTTransferController+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0EDC10D0C556600B7555A /* KTTransferController+Media.m */; };
 		27F0F3A40D0F46AC00B7555A /* KTExternalMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0F3A20D0F46AC00B7555A /* KTExternalMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		27F0F3A50D0F46AC00B7555A /* KTExternalMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0F3A30D0F46AC00B7555A /* KTExternalMediaFile.m */; };
@@ -409,21 +407,6 @@
 		3C682B720D62329A00B4D485 /* KTMagnifyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B710D62329A00B4D485 /* KTMagnifyButton.m */; };
 		3C682B750D6232AA00B4D485 /* KTPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B740D6232AA00B4D485 /* KTPlaceholderTableView.m */; };
 		3C682B840D6232EF00B4D485 /* KTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B830D6232EF00B4D485 /* KTView.m */; };
-		3C682B870D6233AF00B4D485 /* CharsetToEncodingTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B860D6233AF00B4D485 /* CharsetToEncodingTransformer.m */; };
-		3C682B8A0D6233BC00B4D485 /* ContainerIsEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B890D6233BC00B4D485 /* ContainerIsEmptyTransformer.m */; };
-		3C682B8D0D6233C800B4D485 /* ContainerIsNotEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B8C0D6233C800B4D485 /* ContainerIsNotEmptyTransformer.m */; };
-		3C682B900D6233D800B4D485 /* EscapeHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B8F0D6233D800B4D485 /* EscapeHTMLTransformer.m */; };
-		3C682B930D6233E700B4D485 /* RichTextHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B920D6233E700B4D485 /* RichTextHTMLTransformer.m */; };
-		3C682B960D6233F300B4D485 /* RowHeightTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B950D6233F300B4D485 /* RowHeightTransformer.m */; };
-		3C682B990D6233FE00B4D485 /* StringToNumberTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B980D6233FE00B4D485 /* StringToNumberTransformer.m */; };
-		3C682B9B0D62340C00B4D485 /* StripHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B9A0D62340C00B4D485 /* StripHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682B9D0D62342800B4D485 /* StripHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B9C0D62342800B4D485 /* StripHTMLTransformer.m */; };
-		3C682B9F0D62343000B4D485 /* TrimFirstLineTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B9E0D62343000B4D485 /* TrimFirstLineTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BA10D62343300B4D485 /* TrimFirstLineTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BA00D62343300B4D485 /* TrimFirstLineTransformer.m */; };
-		3C682BA30D62343800B4D485 /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BA20D62343800B4D485 /* TrimTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BA50D62343D00B4D485 /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BA40D62343D00B4D485 /* TrimTransformer.m */; };
-		3C682BA70D62344200B4D485 /* ValuesAreEqualTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BA60D62344200B4D485 /* ValuesAreEqualTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BA90D62344600B4D485 /* ValuesAreEqualTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BA80D62344600B4D485 /* ValuesAreEqualTransformer.m */; };
 		3C682BAD0D62345B00B4D485 /* NSBundle+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BAC0D62345B00B4D485 /* NSBundle+KTExtensions.m */; };
 		3C682BB10D62347400B4D485 /* NSObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB00D62347400B4D485 /* NSObject+KTExtensions.m */; };
 		3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */; };
@@ -452,13 +435,6 @@
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD70D62353C00B4D485 /* KTPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B730D6232A500B4D485 /* KTPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BDD0D62354B00B4D485 /* CharsetToEncodingTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B850D6233AA00B4D485 /* CharsetToEncodingTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BDE0D62354C00B4D485 /* ContainerIsEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B880D6233B700B4D485 /* ContainerIsEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BDF0D62354E00B4D485 /* ContainerIsNotEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B8B0D6233C400B4D485 /* ContainerIsNotEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BE00D62355000B4D485 /* EscapeHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B8E0D6233D400B4D485 /* EscapeHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BE10D62355300B4D485 /* RichTextHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B910D6233E400B4D485 /* RichTextHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BE20D62355400B4D485 /* RowHeightTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B940D6233EE00B4D485 /* RowHeightTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BE30D62355600B4D485 /* StringToNumberTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B970D6233FA00B4D485 /* StringToNumberTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2707DFC0AA00DE4994 /* KTWebView.m */; };
 		3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
@@ -792,6 +768,30 @@
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
 		CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */; };
+		CEB9802B0D77750B00DFF20D /* ContainsValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980130D77750B00DFF20D /* ContainsValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB9802C0D77750B00DFF20D /* ContainsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980140D77750B00DFF20D /* ContainsValueTransformer.m */; };
+		CEB9802D0D77750B00DFF20D /* CharsetToEncodingTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980150D77750B00DFF20D /* CharsetToEncodingTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB9802E0D77750B00DFF20D /* CharsetToEncodingTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980160D77750B00DFF20D /* CharsetToEncodingTransformer.m */; };
+		CEB9802F0D77750B00DFF20D /* ContainerIsEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980170D77750B00DFF20D /* ContainerIsEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980300D77750B00DFF20D /* ContainerIsEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980180D77750B00DFF20D /* ContainerIsEmptyTransformer.m */; };
+		CEB980310D77750B00DFF20D /* ContainerIsNotEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980190D77750B00DFF20D /* ContainerIsNotEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980320D77750B00DFF20D /* ContainerIsNotEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB9801A0D77750B00DFF20D /* ContainerIsNotEmptyTransformer.m */; };
+		CEB980330D77750B00DFF20D /* EscapeHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB9801B0D77750B00DFF20D /* EscapeHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980340D77750B00DFF20D /* EscapeHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB9801C0D77750B00DFF20D /* EscapeHTMLTransformer.m */; };
+		CEB980350D77750B00DFF20D /* RichTextHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB9801D0D77750B00DFF20D /* RichTextHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980360D77750B00DFF20D /* RichTextHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB9801E0D77750B00DFF20D /* RichTextHTMLTransformer.m */; };
+		CEB980370D77750B00DFF20D /* RowHeightTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB9801F0D77750B00DFF20D /* RowHeightTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980380D77750B00DFF20D /* RowHeightTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980200D77750B00DFF20D /* RowHeightTransformer.m */; };
+		CEB980390D77750B00DFF20D /* StringToNumberTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980210D77750B00DFF20D /* StringToNumberTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB9803A0D77750B00DFF20D /* StringToNumberTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980220D77750B00DFF20D /* StringToNumberTransformer.m */; };
+		CEB9803B0D77750B00DFF20D /* StripHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980230D77750B00DFF20D /* StripHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB9803C0D77750B00DFF20D /* StripHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980240D77750B00DFF20D /* StripHTMLTransformer.m */; };
+		CEB9803D0D77750B00DFF20D /* TrimFirstLineTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980250D77750B00DFF20D /* TrimFirstLineTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB9803E0D77750B00DFF20D /* TrimFirstLineTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980260D77750B00DFF20D /* TrimFirstLineTransformer.m */; };
+		CEB9803F0D77750B00DFF20D /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980270D77750B00DFF20D /* TrimTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980400D77750B00DFF20D /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB980280D77750B00DFF20D /* TrimTransformer.m */; };
+		CEB980410D77750B00DFF20D /* ValuesAreEqualTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB980290D77750B00DFF20D /* ValuesAreEqualTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEB980420D77750B00DFF20D /* ValuesAreEqualTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB9802A0D77750B00DFF20D /* ValuesAreEqualTransformer.m */; };
 		CEC164620D3596EF005C1DE8 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC1645E0D3596EF005C1DE8 /* checkmark.tiff */; };
 		CEC164630D3596EF005C1DE8 /* refresh.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC1645F0D3596EF005C1DE8 /* refresh.tiff */; };
 		CEC164640D3596EF005C1DE8 /* follow.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC164600D3596EF005C1DE8 /* follow.tiff */; };
@@ -833,14 +833,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
 		274339F00D7733B600164FA5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* CollectionArchiveElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
@@ -1664,8 +1664,6 @@
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
 		27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInspectorViewsManager.h; sourceTree = "<group>"; };
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
-		27DB8CE20C85D15A00E29C38 /* ContainsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContainsValueTransformer.h; sourceTree = "<group>"; };
-		27DB8CE30C85D15A00E29C38 /* ContainsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContainsValueTransformer.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppPlugin.h; sourceTree = "<group>"; };
@@ -1898,28 +1896,6 @@
 		3C682B740D6232AA00B4D485 /* KTPlaceholderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderTableView.m; sourceTree = "<group>"; };
 		3C682B820D6232EA00B4D485 /* KTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTView.h; sourceTree = "<group>"; };
 		3C682B830D6232EF00B4D485 /* KTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTView.m; sourceTree = "<group>"; };
-		3C682B850D6233AA00B4D485 /* CharsetToEncodingTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharsetToEncodingTransformer.h; sourceTree = "<group>"; };
-		3C682B860D6233AF00B4D485 /* CharsetToEncodingTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharsetToEncodingTransformer.m; sourceTree = "<group>"; };
-		3C682B880D6233B700B4D485 /* ContainerIsEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerIsEmptyTransformer.h; sourceTree = "<group>"; };
-		3C682B890D6233BC00B4D485 /* ContainerIsEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerIsEmptyTransformer.m; sourceTree = "<group>"; };
-		3C682B8B0D6233C400B4D485 /* ContainerIsNotEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerIsNotEmptyTransformer.h; sourceTree = "<group>"; };
-		3C682B8C0D6233C800B4D485 /* ContainerIsNotEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerIsNotEmptyTransformer.m; sourceTree = "<group>"; };
-		3C682B8E0D6233D400B4D485 /* EscapeHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EscapeHTMLTransformer.h; sourceTree = "<group>"; };
-		3C682B8F0D6233D800B4D485 /* EscapeHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EscapeHTMLTransformer.m; sourceTree = "<group>"; };
-		3C682B910D6233E400B4D485 /* RichTextHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextHTMLTransformer.h; sourceTree = "<group>"; };
-		3C682B920D6233E700B4D485 /* RichTextHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextHTMLTransformer.m; sourceTree = "<group>"; };
-		3C682B940D6233EE00B4D485 /* RowHeightTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RowHeightTransformer.h; sourceTree = "<group>"; };
-		3C682B950D6233F300B4D485 /* RowHeightTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RowHeightTransformer.m; sourceTree = "<group>"; };
-		3C682B970D6233FA00B4D485 /* StringToNumberTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringToNumberTransformer.h; sourceTree = "<group>"; };
-		3C682B980D6233FE00B4D485 /* StringToNumberTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringToNumberTransformer.m; sourceTree = "<group>"; };
-		3C682B9A0D62340C00B4D485 /* StripHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StripHTMLTransformer.h; sourceTree = "<group>"; };
-		3C682B9C0D62342800B4D485 /* StripHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StripHTMLTransformer.m; sourceTree = "<group>"; };
-		3C682B9E0D62343000B4D485 /* TrimFirstLineTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimFirstLineTransformer.h; sourceTree = "<group>"; };
-		3C682BA00D62343300B4D485 /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimFirstLineTransformer.m; sourceTree = "<group>"; };
-		3C682BA20D62343800B4D485 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimTransformer.h; sourceTree = "<group>"; };
-		3C682BA40D62343D00B4D485 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimTransformer.m; sourceTree = "<group>"; };
-		3C682BA60D62344200B4D485 /* ValuesAreEqualTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValuesAreEqualTransformer.h; sourceTree = "<group>"; };
-		3C682BA80D62344600B4D485 /* ValuesAreEqualTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValuesAreEqualTransformer.m; sourceTree = "<group>"; };
 		3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+KTExtensions.h"; sourceTree = "<group>"; };
 		3C682BAC0D62345B00B4D485 /* NSBundle+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+KTExtensions.m"; sourceTree = "<group>"; };
 		3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KTExtensions.h"; sourceTree = "<group>"; };
@@ -2460,6 +2436,30 @@
 		CEB563190A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Prefs.nib; sourceTree = "<group>"; };
 		CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_on.png; sourceTree = "<group>"; };
 		CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_off.png; sourceTree = "<group>"; };
+		CEB980130D77750B00DFF20D /* ContainsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainsValueTransformer.h; path = ../../../Shared/trunk/App/ContainsValueTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980140D77750B00DFF20D /* ContainsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainsValueTransformer.m; path = ../../../Shared/trunk/App/ContainsValueTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980150D77750B00DFF20D /* CharsetToEncodingTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharsetToEncodingTransformer.h; path = ../../../Shared/trunk/App/CharsetToEncodingTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980160D77750B00DFF20D /* CharsetToEncodingTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharsetToEncodingTransformer.m; path = ../../../Shared/trunk/App/CharsetToEncodingTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980170D77750B00DFF20D /* ContainerIsEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainerIsEmptyTransformer.h; path = ../../../Shared/trunk/App/ContainerIsEmptyTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980180D77750B00DFF20D /* ContainerIsEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainerIsEmptyTransformer.m; path = ../../../Shared/trunk/App/ContainerIsEmptyTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980190D77750B00DFF20D /* ContainerIsNotEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainerIsNotEmptyTransformer.h; path = ../../../Shared/trunk/App/ContainerIsNotEmptyTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB9801A0D77750B00DFF20D /* ContainerIsNotEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainerIsNotEmptyTransformer.m; path = ../../../Shared/trunk/App/ContainerIsNotEmptyTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB9801B0D77750B00DFF20D /* EscapeHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EscapeHTMLTransformer.h; path = ../../../Shared/trunk/App/EscapeHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB9801C0D77750B00DFF20D /* EscapeHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EscapeHTMLTransformer.m; path = ../../../Shared/trunk/App/EscapeHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB9801D0D77750B00DFF20D /* RichTextHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RichTextHTMLTransformer.h; path = ../../../Shared/trunk/App/RichTextHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB9801E0D77750B00DFF20D /* RichTextHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RichTextHTMLTransformer.m; path = ../../../Shared/trunk/App/RichTextHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB9801F0D77750B00DFF20D /* RowHeightTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RowHeightTransformer.h; path = ../../../Shared/trunk/App/RowHeightTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980200D77750B00DFF20D /* RowHeightTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RowHeightTransformer.m; path = ../../../Shared/trunk/App/RowHeightTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980210D77750B00DFF20D /* StringToNumberTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringToNumberTransformer.h; path = ../../../Shared/trunk/App/StringToNumberTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980220D77750B00DFF20D /* StringToNumberTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StringToNumberTransformer.m; path = ../../../Shared/trunk/App/StringToNumberTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980230D77750B00DFF20D /* StripHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StripHTMLTransformer.h; path = ../../../Shared/trunk/App/StripHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980240D77750B00DFF20D /* StripHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StripHTMLTransformer.m; path = ../../../Shared/trunk/App/StripHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980250D77750B00DFF20D /* TrimFirstLineTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrimFirstLineTransformer.h; path = ../../../Shared/trunk/App/TrimFirstLineTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980260D77750B00DFF20D /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrimFirstLineTransformer.m; path = ../../../Shared/trunk/App/TrimFirstLineTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980270D77750B00DFF20D /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrimTransformer.h; path = ../../../Shared/trunk/App/TrimTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB980280D77750B00DFF20D /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrimTransformer.m; path = ../../../Shared/trunk/App/TrimTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEB980290D77750B00DFF20D /* ValuesAreEqualTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValuesAreEqualTransformer.h; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEB9802A0D77750B00DFF20D /* ValuesAreEqualTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValuesAreEqualTransformer.m; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC1645E0D3596EF005C1DE8 /* checkmark.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = checkmark.tiff; sourceTree = "<group>"; };
 		CEC1645F0D3596EF005C1DE8 /* refresh.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = refresh.tiff; sourceTree = "<group>"; };
 		CEC164600D3596EF005C1DE8 /* follow.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = follow.tiff; sourceTree = "<group>"; };
@@ -2917,7 +2917,6 @@
 				3C5A738C0BF7B93900776464 /* UI */,
 				278ECE560D259F400012BA6B /* Pasteboard */,
 				3C5A73EE0BF7BB1400776464 /* Feedback */,
-				3C5A732D0BF7B28800776464 /* Value Transformers */,
 				3C202D9F07DFC46800DE4994 /* Cocoa Extensions */,
 				3C5A732A0BF7B24200776464 /* Cocoa Private */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
@@ -3670,37 +3669,6 @@
 			name = "Cocoa Private";
 			sourceTree = "<group>";
 		};
-		3C5A732D0BF7B28800776464 /* Value Transformers */ = {
-			isa = PBXGroup;
-			children = (
-				27DB8CE20C85D15A00E29C38 /* ContainsValueTransformer.h */,
-				27DB8CE30C85D15A00E29C38 /* ContainsValueTransformer.m */,
-				3C682B850D6233AA00B4D485 /* CharsetToEncodingTransformer.h */,
-				3C682B860D6233AF00B4D485 /* CharsetToEncodingTransformer.m */,
-				3C682B880D6233B700B4D485 /* ContainerIsEmptyTransformer.h */,
-				3C682B890D6233BC00B4D485 /* ContainerIsEmptyTransformer.m */,
-				3C682B8B0D6233C400B4D485 /* ContainerIsNotEmptyTransformer.h */,
-				3C682B8C0D6233C800B4D485 /* ContainerIsNotEmptyTransformer.m */,
-				3C682B8E0D6233D400B4D485 /* EscapeHTMLTransformer.h */,
-				3C682B8F0D6233D800B4D485 /* EscapeHTMLTransformer.m */,
-				3C682B910D6233E400B4D485 /* RichTextHTMLTransformer.h */,
-				3C682B920D6233E700B4D485 /* RichTextHTMLTransformer.m */,
-				3C682B940D6233EE00B4D485 /* RowHeightTransformer.h */,
-				3C682B950D6233F300B4D485 /* RowHeightTransformer.m */,
-				3C682B970D6233FA00B4D485 /* StringToNumberTransformer.h */,
-				3C682B980D6233FE00B4D485 /* StringToNumberTransformer.m */,
-				3C682B9A0D62340C00B4D485 /* StripHTMLTransformer.h */,
-				3C682B9C0D62342800B4D485 /* StripHTMLTransformer.m */,
-				3C682B9E0D62343000B4D485 /* TrimFirstLineTransformer.h */,
-				3C682BA00D62343300B4D485 /* TrimFirstLineTransformer.m */,
-				3C682BA20D62343800B4D485 /* TrimTransformer.h */,
-				3C682BA40D62343D00B4D485 /* TrimTransformer.m */,
-				3C682BA60D62344200B4D485 /* ValuesAreEqualTransformer.h */,
-				3C682BA80D62344600B4D485 /* ValuesAreEqualTransformer.m */,
-			);
-			name = "Value Transformers";
-			sourceTree = "<group>";
-		};
 		3C5A73320BF7B33B00776464 /* ImageCropper */ = {
 			isa = PBXGroup;
 			children = (
@@ -4132,6 +4100,7 @@
 				CEE0CDF90D74EAA100A1B5FB /* Utilities */,
 				CEE0CDD00D74E73300A1B5FB /* Debugging */,
 				3C5A73920BF7B9F400776464 /* Foundation-ish Classes */,
+				CEB980110D7774EA00DFF20D /* Value Transformers */,
 				CE11DEEA0D6184AD003B00CA /* Third Party */,
 				CE11DEE90D6184AD003B00CA /* Views */,
 				CE11DEE80D6184AD003B00CA /* Formatters */,
@@ -4607,6 +4576,37 @@
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
 		};
+		CEB980110D7774EA00DFF20D /* Value Transformers */ = {
+			isa = PBXGroup;
+			children = (
+				CEB980130D77750B00DFF20D /* ContainsValueTransformer.h */,
+				CEB980140D77750B00DFF20D /* ContainsValueTransformer.m */,
+				CEB980150D77750B00DFF20D /* CharsetToEncodingTransformer.h */,
+				CEB980160D77750B00DFF20D /* CharsetToEncodingTransformer.m */,
+				CEB980170D77750B00DFF20D /* ContainerIsEmptyTransformer.h */,
+				CEB980180D77750B00DFF20D /* ContainerIsEmptyTransformer.m */,
+				CEB980190D77750B00DFF20D /* ContainerIsNotEmptyTransformer.h */,
+				CEB9801A0D77750B00DFF20D /* ContainerIsNotEmptyTransformer.m */,
+				CEB9801B0D77750B00DFF20D /* EscapeHTMLTransformer.h */,
+				CEB9801C0D77750B00DFF20D /* EscapeHTMLTransformer.m */,
+				CEB9801D0D77750B00DFF20D /* RichTextHTMLTransformer.h */,
+				CEB9801E0D77750B00DFF20D /* RichTextHTMLTransformer.m */,
+				CEB9801F0D77750B00DFF20D /* RowHeightTransformer.h */,
+				CEB980200D77750B00DFF20D /* RowHeightTransformer.m */,
+				CEB980210D77750B00DFF20D /* StringToNumberTransformer.h */,
+				CEB980220D77750B00DFF20D /* StringToNumberTransformer.m */,
+				CEB980230D77750B00DFF20D /* StripHTMLTransformer.h */,
+				CEB980240D77750B00DFF20D /* StripHTMLTransformer.m */,
+				CEB980250D77750B00DFF20D /* TrimFirstLineTransformer.h */,
+				CEB980260D77750B00DFF20D /* TrimFirstLineTransformer.m */,
+				CEB980270D77750B00DFF20D /* TrimTransformer.h */,
+				CEB980280D77750B00DFF20D /* TrimTransformer.m */,
+				CEB980290D77750B00DFF20D /* ValuesAreEqualTransformer.h */,
+				CEB9802A0D77750B00DFF20D /* ValuesAreEqualTransformer.m */,
+			);
+			name = "Value Transformers";
+			sourceTree = "<group>";
+		};
 		CEE0CDD00D74E73300A1B5FB /* Debugging */ = {
 			isa = PBXGroup;
 			children = (
@@ -4658,7 +4658,6 @@
 				3CEC8B290BF9097B00CC732B /* KTStackView.h in Headers */,
 				3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */,
 				27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */,
-				27DB8CE40C85D15A00E29C38 /* ContainsValueTransformer.h in Headers */,
 				278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */,
 				275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */,
 				277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */,
@@ -4707,10 +4706,6 @@
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
 				CE21CC950D59426D0066A8A8 /* KTPluginLoader.h in Headers */,
 				2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */,
-				3C682B9B0D62340C00B4D485 /* StripHTMLTransformer.h in Headers */,
-				3C682B9F0D62343000B4D485 /* TrimFirstLineTransformer.h in Headers */,
-				3C682BA30D62343800B4D485 /* TrimTransformer.h in Headers */,
-				3C682BA70D62344200B4D485 /* ValuesAreEqualTransformer.h in Headers */,
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
@@ -4735,13 +4730,6 @@
 				3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */,
 				3C682BD70D62353C00B4D485 /* KTPlaceholderTableView.h in Headers */,
 				3C682BDC0D62354700B4D485 /* KTView.h in Headers */,
-				3C682BDD0D62354B00B4D485 /* CharsetToEncodingTransformer.h in Headers */,
-				3C682BDE0D62354C00B4D485 /* ContainerIsEmptyTransformer.h in Headers */,
-				3C682BDF0D62354E00B4D485 /* ContainerIsNotEmptyTransformer.h in Headers */,
-				3C682BE00D62355000B4D485 /* EscapeHTMLTransformer.h in Headers */,
-				3C682BE10D62355300B4D485 /* RichTextHTMLTransformer.h in Headers */,
-				3C682BE20D62355400B4D485 /* RowHeightTransformer.h in Headers */,
-				3C682BE30D62355600B4D485 /* StringToNumberTransformer.h in Headers */,
 				3CF941DB0D623E4900B1C83D /* NSImagePicker.h in Headers */,
 				3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */,
 				3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */,
@@ -4826,6 +4814,18 @@
 				CE1F3D970D75FBEB008259E2 /* KSTrimFirstLineFormatter.h in Headers */,
 				CE1F3D990D75FBEB008259E2 /* KSExtensibleManagedObject.h in Headers */,
 				270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */,
+				CEB9802B0D77750B00DFF20D /* ContainsValueTransformer.h in Headers */,
+				CEB9802D0D77750B00DFF20D /* CharsetToEncodingTransformer.h in Headers */,
+				CEB9802F0D77750B00DFF20D /* ContainerIsEmptyTransformer.h in Headers */,
+				CEB980310D77750B00DFF20D /* ContainerIsNotEmptyTransformer.h in Headers */,
+				CEB980330D77750B00DFF20D /* EscapeHTMLTransformer.h in Headers */,
+				CEB980350D77750B00DFF20D /* RichTextHTMLTransformer.h in Headers */,
+				CEB980370D77750B00DFF20D /* RowHeightTransformer.h in Headers */,
+				CEB980390D77750B00DFF20D /* StringToNumberTransformer.h in Headers */,
+				CEB9803B0D77750B00DFF20D /* StripHTMLTransformer.h in Headers */,
+				CEB9803D0D77750B00DFF20D /* TrimFirstLineTransformer.h in Headers */,
+				CEB9803F0D77750B00DFF20D /* TrimTransformer.h in Headers */,
+				CEB980410D77750B00DFF20D /* ValuesAreEqualTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5909,7 +5909,6 @@
 				27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */,
 				27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */,
 				27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */,
-				27DB8CE50C85D15A00E29C38 /* ContainsValueTransformer.m in Sources */,
 				278EC6F40C97136500A212EC /* KTHTMLParserCache.m in Sources */,
 				275341350C993D8600AC7220 /* KTHTMLParserMasterCache.m in Sources */,
 				27534C950C99C15A00AC7220 /* KTDocWebViewController.m in Sources */,
@@ -6061,17 +6060,6 @@
 				3C682B720D62329A00B4D485 /* KTMagnifyButton.m in Sources */,
 				3C682B750D6232AA00B4D485 /* KTPlaceholderTableView.m in Sources */,
 				3C682B840D6232EF00B4D485 /* KTView.m in Sources */,
-				3C682B870D6233AF00B4D485 /* CharsetToEncodingTransformer.m in Sources */,
-				3C682B8A0D6233BC00B4D485 /* ContainerIsEmptyTransformer.m in Sources */,
-				3C682B8D0D6233C800B4D485 /* ContainerIsNotEmptyTransformer.m in Sources */,
-				3C682B900D6233D800B4D485 /* EscapeHTMLTransformer.m in Sources */,
-				3C682B930D6233E700B4D485 /* RichTextHTMLTransformer.m in Sources */,
-				3C682B960D6233F300B4D485 /* RowHeightTransformer.m in Sources */,
-				3C682B990D6233FE00B4D485 /* StringToNumberTransformer.m in Sources */,
-				3C682B9D0D62342800B4D485 /* StripHTMLTransformer.m in Sources */,
-				3C682BA10D62343300B4D485 /* TrimFirstLineTransformer.m in Sources */,
-				3C682BA50D62343D00B4D485 /* TrimTransformer.m in Sources */,
-				3C682BA90D62344600B4D485 /* ValuesAreEqualTransformer.m in Sources */,
 				3C682BAD0D62345B00B4D485 /* NSBundle+KTExtensions.m in Sources */,
 				3C682BB10D62347400B4D485 /* NSObject+KTExtensions.m in Sources */,
 				3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */,
@@ -6113,6 +6101,18 @@
 				CE1F3D980D75FBEB008259E2 /* KSTrimFirstLineFormatter.m in Sources */,
 				CE1F3D9A0D75FBEB008259E2 /* KSExtensibleManagedObject.m in Sources */,
 				270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */,
+				CEB9802C0D77750B00DFF20D /* ContainsValueTransformer.m in Sources */,
+				CEB9802E0D77750B00DFF20D /* CharsetToEncodingTransformer.m in Sources */,
+				CEB980300D77750B00DFF20D /* ContainerIsEmptyTransformer.m in Sources */,
+				CEB980320D77750B00DFF20D /* ContainerIsNotEmptyTransformer.m in Sources */,
+				CEB980340D77750B00DFF20D /* EscapeHTMLTransformer.m in Sources */,
+				CEB980360D77750B00DFF20D /* RichTextHTMLTransformer.m in Sources */,
+				CEB980380D77750B00DFF20D /* RowHeightTransformer.m in Sources */,
+				CEB9803A0D77750B00DFF20D /* StringToNumberTransformer.m in Sources */,
+				CEB9803C0D77750B00DFF20D /* StripHTMLTransformer.m in Sources */,
+				CEB9803E0D77750B00DFF20D /* TrimFirstLineTransformer.m in Sources */,
+				CEB980400D77750B00DFF20D /* TrimTransformer.m in Sources */,
+				CEB980420D77750B00DFF20D /* ValuesAreEqualTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,8 +63,6 @@ typedef enum {
 
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 
-extern NSThread *gMainThread;
-
 #define CUT_MENUITEM_TITLE					NSLocalizedString(@"Cut", "Cut MenuItem")
 #define CUT_PAGE_MENUITEM_TITLE				NSLocalizedString(@"Cut Page", "Cut Page MenuItem")
 #define CUT_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Cut Pages", "Cut Pages MenuItem")
@@ -195,7 +193,6 @@ extern NSThread *gMainThread;
 	
 	BOOL myDidAwake;
 	BOOL myAppIsTerminating;
-	BOOL myHandlingExceptionAlready;
 
 	NSTimer					*mNewsTimer;
 	

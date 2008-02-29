@@ -60,23 +60,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSArray+KTExtensions.h"
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
-#import <ExceptionHandling/NSExceptionHandler.h>
 #import <OpenGL/CGLMacro.h>
 #import <Quartz/Quartz.h>
 #import <QuartzCore/QuartzCore.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMediaBrowser/iMediaBrowser.h>
+#import <ExceptionHandling/NSExceptionHandler.h>
 
-#import "RichTextHTMLTransformer.h"
-#import "ContainerIsEmptyTransformer.h"
-#import "ContainerIsNotEmptyTransformer.h"
-#import "EscapeHTMLTransformer.h"
-#import "CharsetToEncodingTransformer.h"
-#import "StripHTMLTransformer.h"
-#import "TrimTransformer.h"
-#import "StringToNumberTransformer.h"
-#import "TrimFirstLineTransformer.h"
 
 #import "KSEmailAddressComboBox.h"
 #import "KSSilencingConfirmSheet.h"
@@ -105,8 +96,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #include <openssl/err.h>
 #import <netinet/in.h>
 
-NSThread *gMainThread = nil;
-BOOL gWantToCatchSystemExceptions = NO;
 
 enum {
 	versionMask = 1+2+4, // 0 = trial license; 1 = license for v. 1; ... 7 = perpetual comp license?
@@ -187,23 +176,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 + (void)setDebugDefault:(BOOL)flag;
 @end
 
-// THIS IS FROM DTS WORK-AROUND
-// Define HACKAROUND to 1 to hack around <rdar://problem/4191740>.
-
-#define HACKAROUND 1
-#if HACKAROUND
-
-typedef void (*SignalHandler)(int sig, siginfo_t *sip, void *scp);
-
-static SignalHandler gNSExceptionHandlerUncaughtSignalHandler;
-
-static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
-{
-	// LIKE NSLog -- fprintf(stderr, "HackySignalHandler (sig=%s, sip=%p, scp=%p)\n", sys_signame[sig], sip, scp);
-	gNSExceptionHandlerUncaughtSignalHandler(sig, sip, scp);
-}
-
-#endif
 
 @implementation KTAppDelegate
 
@@ -470,14 +442,18 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
+	// Already defined in Leopard
 	gMainThread = [NSThread currentThread];
-
+#endif
+	
 	[self registerDefaults];
 	
 	// Register my transformers.
 	// Note: for some useful math operation transformers, see
 	// http://homepage.mac.com/oscarmv/OMVFPValueTransformers.sitx
 
+/*
 	NSValueTransformer *theTransformer;
 
 //	theTransformer = [[[RowHeightTransformer alloc] init] autorelease];
@@ -521,7 +497,7 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 	theTransformer = [[[TrimFirstLineTransformer alloc] init] autorelease];
 	[NSValueTransformer setValueTransformer:theTransformer
 									forName:@"TrimFirstLineTransformer"];
-	
+*/
 	[pool release];
 }
 
@@ -535,52 +511,6 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
     self = [super init];
     if ( self )
     {
-
-		NSExceptionHandler *handler = [NSExceptionHandler defaultExceptionHandler];
-		OBASSERT(handler);
-		// From Steve Gehrman:
-		// turn off some of the NSLogs (was NSLogAndHandleEveryExceptionMask)
-		// Applescript and DefaultFolder have some issues with no window visible
-		int mask = (
-					
-					NSLogUncaughtExceptionMask|
-					NSLogUncaughtSystemExceptionMask|
-					NSLogUncaughtRuntimeErrorMask|
-					NSHandleUncaughtExceptionMask|
-					NSHandleUncaughtSystemExceptionMask|
-					NSHandleUncaughtRuntimeErrorMask|
-					NSLogTopLevelExceptionMask|
-					NSHandleTopLevelExceptionMask|
-					// NSLogOtherExceptionMask|
-					NSHandleOtherExceptionMask
-					);
-			
-		[handler setExceptionHandlingMask:mask];
-		[handler setDelegate:self];
-		
-#if HACKAROUND
-        // Get the old signal handler, which is the one installed by NSExceptionHandler.
-
-        gNSExceptionHandlerUncaughtSignalHandler = (SignalHandler) signal(SIGSEGV, SIG_DFL);
-        
-        // Install our signal handlers, using sigaction so that we can specify SA_SIGINFO so 
-        // that we get the extra arguments passed to the signal handler.
-        
-        {
-			int              err;
-            struct sigaction sa;
-			
-            sa.sa_sigaction = HackySignalHandler;
-            sa.sa_flags = SA_SIGINFO;
-            sigemptyset(&sa.sa_mask);
-			
-            err = sigaction(SIGSEGV, &sa, NULL);
-            assert(err == 0);
-            err = sigaction(SIGBUS,  &sa, NULL);
-            assert(err == 0);
-        }
-#endif
-
 		// force webkit to load so we can log the version early
 		(void) [[WebPreferences standardPreferences] setAutosaves:YES];
 
@@ -594,144 +524,10 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
         applicationIsLaunching = YES;
 		myDidAwake = NO;
 		myAppIsTerminating = NO;
-		
-		// not sure where to put this, but we need to set up the class
-		[NSDateFormatter setDefaultFormatterBehavior:NSDateFormatterBehavior10_4];
-		
-//		LOG((@"Environment = %@", [[NSProcessInfo processInfo] environment]));
-
 	}
-
     return self;
 }
 
-// Sort of documented here:
-// http://developer.apple.com/documentation/Cocoa/Conceptual/Exceptions/Tasks/ControllingAppResponse.html
-// Also check out:
-// http://www.cocoadev.com/index.pl?StackTraces
-// and
-// http://developer.apple.com/technotes/tn2004/tn2123.html
-//
-// December 2003 MacTech
-
-- (BOOL)exceptionHandler:(NSExceptionHandler *)sender
-   shouldHandleException:(NSException *)exception 
-					mask:(unsigned int)aMask
-{
-//#warning ------ TEMPOARY OVER-LOGGING
-//	NSLog(@"exc = %@: %@ %@ %@", exception, [exception name], [exception reason], [[exception userInfo] description]);
-	
-	NSString *name = [exception name];
-	NSString *reason = [exception reason];
-	
-	// we want to log this.
-
-
-	if ( [name isEqualToString:NSInvalidArgumentException]
-		 && NSNotFound != [reason rangeOfString:@"passed DOMRange"].location  )
-		
-	{
-		NSLog(@"PLEASE REPORT THIS TO KARELIA SOFTWARE - support@karelia.com -- %@", [[[exception userInfo] objectForKey:NSStackTraceKey] condenseWhiteSpace]);
-
-		return NO;
-	}
-	
-	if ([name isEqualToString:NSImageCacheException]
-		|| [name isEqualToString:@"GIFReadingException"]
-		|| [name isEqualToString:@"NSRTFException"]
-		|| ( [name isEqualToString:NSInternalInconsistencyException]
-			&& [reason hasPrefix:@"lockFocus"] ) 		// hmm, this wasn't noticed in case 6266.  Keep an eye on this!
-		
-		|| ( [name isEqualToString:NSInvalidArgumentException]
-			 && NSNotFound != [reason rangeOfString:@"passed DOMRange"].location )
-		
-		|| ( [name isEqualToString:NSGenericException]
-			 && NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
-		
-		|| ( [name isEqualToString:NSRangeException]
-			 && NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
-
-		)
-	{
-		return NO;
-	}
-	
-	if ( [name isEqualToString:NSInternalInconsistencyException] )
-	{
-		// catch all Undo exceptions and simply reset
-		if ( [reason hasPrefix:@"_registerUndoObject"] )
-		{
-			LOG((@"caught _registerUndoObject exception, resetting undoManager"));
-			KTDocument *document = [self currentDocument];
-			[document resetUndoManager];
-			return NO;
-		}
-		
-		// another stab at undo
-		if ( NSNotFound != [reason rangeOfString:@"undo was called with too many nested undo groups"].location )
-		{
-			LOG((@"caught undo called with too many nested undo groups exception, resetting undoManager"));
-			KTDocument *document = [self currentDocument];
-			[document resetUndoManager];
-			return NO;
-		}
-	}
-	
-	if ( [name isEqualToString:NSObjectInaccessibleException] )
-	{
-		if ( [reason isEqualToString:@"CoreData could not fulfill a fault."] )
-		{
-			LOG((@"caught core data deleted object exception, ignoring"));
-			// should change the selection to the root
-			return NO;
-		}
-	}
-	
-	if ( [name isEqualToString:NSRangeException] )
-	{
-		NSString *stacktrace = [exception stacktrace];
-		if ( NSNotFound != [stacktrace rangeOfString:@"+[CKHTTPResponse canConstructResponseWithData:]"].location )
-		{
-			return NO;
-		}
-		if ( NSNotFound != [stacktrace rangeOfString:@"-[DotMacConnection processResponse:]"].location )
-		{
-			return NO;
-		}
-	}
-	
-	// Normally we want to ignore these so that the crash handler can do its thing.  If we turn on gWantToCatchSystemExceptions then we can catch crashes
-	//
-	if (!gWantToCatchSystemExceptions && ([name isEqualToString:@"NSUncaughtSystemExceptionException"] 
-										 || [name isEqualToString:@"NSUncaughtRuntimeErrorException"]) )
-	{
-		return NO;
-	}
-
-	if (myHandlingExceptionAlready)
-	{
-		NSLog(@"Not handling exception, we are already in exception handler.  %@", exception);
-		return NO;
-	}
-		
-	@try
-	{
-		myHandlingExceptionAlready = YES;	// below might fail or recurse -- this should help prevent recursion.
-		// Do my own logging, even though we have mask to log 
-		LOG((@"Parsed stack trace (mask=%d):\n%@", aMask, [[[exception userInfo] objectForKey:NSStackTraceKey] condenseWhiteSpace]));
-	}
-	@finally
-	{
-		myHandlingExceptionAlready = NO;
-	}
-	return YES;
-	// Note: based on article on Dec 2003 macTech
-}
-
-- (BOOL)exceptionHandler:(NSExceptionHandler *)sender shouldLogException:(NSException *)exception mask:(unsigned int)aMask
-{
-    return NO;
-}
 
 - (void)dealloc
 {
@@ -937,6 +733,112 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 //																			 error:nil];
 	[self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]];
 }
+
+
+
+
+
+
+
+
+// Exceptions specific to Sandvox
+
+- (BOOL)exceptionHandler:(NSExceptionHandler *)sender
+   shouldHandleException:(NSException *)exception 
+					mask:(unsigned int)aMask
+{
+	NSString *name = [exception name];
+	NSString *reason = [exception reason];
+	
+	// we want to log this.
+	
+	if ( [name isEqualToString:NSInvalidArgumentException]
+		&& NSNotFound != [reason rangeOfString:@"passed DOMRange"].location  )
+		
+	{
+		NSLog(@"PLEASE REPORT THIS TO KARELIA SOFTWARE - support@karelia.com -- %@", [[[exception userInfo] objectForKey:NSStackTraceKey] condenseWhiteSpace]);
+		
+		return NO;
+	}
+	
+	if ([name isEqualToString:NSImageCacheException]
+		|| [name isEqualToString:@"GIFReadingException"]
+		|| [name isEqualToString:@"NSRTFException"]
+		|| ( [name isEqualToString:NSInternalInconsistencyException]
+			&& [reason hasPrefix:@"lockFocus"] ) 		// hmm, this wasn't noticed in case 6266.  Keep an eye on this!
+		
+		|| ( [name isEqualToString:NSInvalidArgumentException]
+			&& NSNotFound != [reason rangeOfString:@"passed DOMRange"].location )
+		
+		|| ( [name isEqualToString:NSGenericException]
+			&& NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
+		
+		|| ( [name isEqualToString:NSRangeException]
+			&& NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
+		
+		)
+	{
+		return NO;
+	}
+	
+	if ( [name isEqualToString:NSInternalInconsistencyException] )
+	{
+		// catch all Undo exceptions and simply reset
+		if ( [reason hasPrefix:@"_registerUndoObject"] )
+		{
+			LOG((@"caught _registerUndoObject exception, resetting undoManager"));
+			KTDocument *document = [self currentDocument];
+			[document resetUndoManager];
+			return NO;
+		}
+		
+		// another stab at undo
+		if ( NSNotFound != [reason rangeOfString:@"undo was called with too many nested undo groups"].location )
+		{
+			LOG((@"caught undo called with too many nested undo groups exception, resetting undoManager"));
+			KTDocument *document = [self currentDocument];
+			[document resetUndoManager];
+			return NO;
+		}
+	}
+	
+	if ( [name isEqualToString:NSObjectInaccessibleException] )
+	{
+		if ( [reason isEqualToString:@"CoreData could not fulfill a fault."] )
+		{
+			LOG((@"caught core data deleted object exception, ignoring"));
+			// should change the selection to the root
+			return NO;
+		}
+	}
+	
+	if ( [name isEqualToString:NSRangeException] )
+	{
+		NSString *stacktrace = [exception stacktrace];
+		if ( NSNotFound != [stacktrace rangeOfString:@"+[CKHTTPResponse canConstructResponseWithData:]"].location )
+		{
+			return NO;
+		}
+		if ( NSNotFound != [stacktrace rangeOfString:@"-[DotMacConnection processResponse:]"].location )
+		{
+			return NO;
+		}
+	}
+	return [super exceptionHandler:sender shouldHandleException:exception mask:aMask];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #pragma mark -
 #pragma mark NSApplication Delegate
@@ -1512,9 +1414,6 @@ static void HackySignalHandler(int sig, siginfo_t *sip, void *scp)
 	// create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
 	
-
-	// LOG((@"thread at app launch = %p", gMainThread));
-
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
 #ifdef APPLE_DESIGN_AWARDS_KEY
@@ -2940,6 +2839,7 @@ FAILURE:
 {
 	return ( KTSnapshotOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
 }
+
 
 - (NSThread *)mainThread
 {
