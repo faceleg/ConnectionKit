@@ -177,10 +177,6 @@
 - (NSString *)feedURLPathRelativeToPage:(KTAbstractPage *)aPage;
 - (NSString *)feedURLPath;
 
-// Archive
-- (KTAbstractIndex *)archivesIndex;
-- (NSString *)archivesURLPath;
-
 // Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
 

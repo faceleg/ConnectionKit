@@ -23,11 +23,6 @@
 @end
 
 
-@interface KTPage (IndexesPrivate)
-- (void)setArchivesIndex:(KTAbstractIndex *)anIndex;
-@end
-
-
 #pragma mark -
 
 
@@ -137,34 +132,6 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 - (NSString *)feedURLPath
 {
 	return [self feedURLPathRelativeToPage:self];
-}
-
-#pragma mark -
-#pragma mark Archive Index
-
-- (KTAbstractIndex *)archivesIndex	// just return it on demand
-{
-	if (nil == myArchivesIndex)
-	{
-		NSString *identifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultArchivesIndexBundleIdentifier"];
-		NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:identifier] bundle];
-		Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
-		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:[KTAppPlugin pluginWithBundle:indexBundle]] autorelease];
-		[self setArchivesIndex:theIndex];
-	}
-	return myArchivesIndex;
-}
-
-- (void)setArchivesIndex:(KTAbstractIndex *)anIndex
-{
-	[anIndex retain];
-	[myArchivesIndex release];
-	myArchivesIndex = anIndex;
-}
-
-- (NSString *)archivesURLPath
-{
-	return [self archivesURLPathRelativeToPage:self];
 }
 
 #pragma mark -
