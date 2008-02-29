@@ -22,7 +22,7 @@
 
 
 
-#ifdef SANDVOX_RELEASE
+#ifdef APP_RELEASE
 	#import "Registration.h"
 #endif
 
@@ -160,6 +160,8 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 - (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
 - (void)editKTHTMLElement:(KTAbstractElement *)anElement;
+
+- (void)addScreenshotsToReport:(NSMutableDictionary *)report  attachmentOwner:(NSString *)attachmentOwner;
 
 @end
 

@@ -24,7 +24,7 @@
 #import "NSString+Karelia.h"
 
 
-#ifdef SANDVOX_RELEASE
+#ifdef APP_RELEASE
 #import "Registration.h"
 #endif
 

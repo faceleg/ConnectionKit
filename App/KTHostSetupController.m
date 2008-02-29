@@ -33,7 +33,7 @@ TO DO:
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
 #import "KSUtilities.h"
-#import "NSString+KTApplication.h"
+#import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"

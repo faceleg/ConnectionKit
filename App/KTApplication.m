@@ -26,7 +26,7 @@ TO DO:
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
-#import "KTExceptionReporter.h"
+#import "KSExceptionReporter.h"
 #import "NSException+Karelia.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSString+Karelia.h"
@@ -682,21 +682,9 @@ void showMethodGroups(Class klass, char mType) {
 
 
 
-// REGISTRATION GLOBALS
-int gRegistrationFailureCode;
-NSString *gRegistrationString;
-int gLicenseIsBlacklisted;
-int gLicenseViolation;
-int gRegistrationWasChecked;
-NSString *gLicensee = nil;
-NSDate *gLicenseDate = nil;
-NSString *gRegistrationHash = nil;
-int gLicenseType = 0;
-int gIsPro = 0;
-int gLicenseVersion = 0;
-unsigned int gSeats = 0;
 
 @implementation KTApplication
+
 
 - (void)run
 {
@@ -799,7 +787,7 @@ unsigned int gSeats = 0;
 	else
 	{
 		// we have a new trace, encourage the user to send in a report
-		int alertResult = [[KTExceptionReporter sharedInstance] runAlertWithException:anException
+		int alertResult = [[KSExceptionReporter sharedInstance] runAlertWithException:anException
                                                                           messageText:alertTitle
                                                                       informativeText:[anException name]];
         
@@ -846,35 +834,6 @@ unsigned int gSeats = 0;
     [super terminate:sender];
 }
 
-
-
-/*!	Machine name.  May be helpful to look up here:
-	http://developer.apple.com/documentation/Hardware/hardware2.html
-*/
-
-+(NSString * )machineName
-{
-	StringPtr *gestaltValue = nil;
-    // Fetch machine name as pointer to PStr255 (Pascal String:  Byte0=length, Byte1..255=Characters)
-	if (!Gestalt((OSType)gestaltUserVisibleMachineName,  (long *)&gestaltValue))
-	{
-		return [(NSString*)CFStringCreateWithPascalString(NULL, 
-			(ConstStr255Param) gestaltValue, kCFStringEncodingMacRoman) autorelease];
-	} else {
-		return @"Unknown";
-	}
-}
-
-
-- (void)showHelpPage:(NSString *)inHelpString;
-{
-	BOOL OK = [NSHelpManager gotoHelpAnchor:inHelpString];
-	if (!OK)
-	{
-		NSBeep();
-		NSLog(@"error: could not find help named %@", inHelpString);
-	}
-}
 
 
 @end

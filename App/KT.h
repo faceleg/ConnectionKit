@@ -26,7 +26,6 @@
 
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-#define	DEFAULTS_ADDRESS_KEY @"KTAddress"
 
 #define kStaleCacheBit 0x80
 #define kStaleCacheMask 0x7F
@@ -126,7 +125,6 @@ extern NSString *kKTInfoWindowMayNeedRefreshingNotification;
 extern NSString *kKTDesignChangedNotification;
 extern NSString *kKTDesignWillChangeNotification;
 extern NSString *kKTItemSelectedNotification;
-extern NSString *kKTBadgeUpdateNotification;
 extern NSString *kKTInternalImageClassName;
 
 extern NSString *kKTDefaultMediaPath;

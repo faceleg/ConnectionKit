@@ -49,6 +49,7 @@
 
 #import "KTCodeInjectionController.h"
 
+#import "KTAbstractBugReporter.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
@@ -1661,6 +1662,67 @@
     [aPath retain];
     [mySiteCachePath release];
     mySiteCachePath = aPath;
+}
+
+#pragma mark -
+#pragma mark screenshot for feedback
+
+//  screenshot1 = document window
+//  screenshot2 = document sheet, if any
+//  screenshot3 = inspector window, if visible
+// alternative: use screencapture to write a jpeg of the entire screen to the user's temp directory
+
+- (void)addScreenshotsToReport:(NSMutableDictionary *)report attachmentOwner:(NSString *)attachmentOwner
+{
+	
+	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
+	NSImage *snapshot = [window snapshot];
+	if ( nil != snapshot )
+	{
+		NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
+		NSString *snapshotName = [NSString stringWithFormat:@"screenshot-%@.jp2", attachmentOwner];
+		
+		KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName 
+																				   data:snapshotData];
+		[report setValue:attachment forKey:@"screenshot1"];
+		[attachments addObject:@"screenshot1"];
+	}
+	
+	// Also attach any sheet (host setup, etc.)
+	if (nil != [window attachedSheet])
+	{
+		snapshot = [[window attachedSheet] snapshot];
+		if ( nil != snapshot )
+		{
+			NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
+			NSString *snapshotName = [NSString stringWithFormat:@"sheet-%@.jp2", attachmentOwner];
+			
+			KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
+			[report setValue:attachment forKey:@"screenshot2"];
+			[attachments addObject:@"screenshot2"];
+		}
+	}
+	
+	// Attach inspector, if visible
+	KTInfoWindowController *sharedController = [KTInfoWindowController sharedInfoWindowControllerWithoutLoading];
+	if ( nil != sharedController )
+	{
+		NSWindow *infoWindow = [sharedController window];
+		if ( [infoWindow isVisible] )
+		{
+			snapshot = [infoWindow snapshot];
+			if ( nil != snapshot )
+			{
+				NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
+				NSString *snapshotName = [NSString stringWithFormat:@"inspector-%@.jp2", attachmentOwner];
+				
+				KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
+				[report setValue:attachment forKey:@"screenshot3"];
+				[attachments addObject:@"screenshot3"];
+			}
+		}
+	}
+	
 }
 
 @end

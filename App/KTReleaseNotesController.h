@@ -6,9 +6,9 @@
 //  Copyright 2006 Biophony LLC. All rights reserved.
 //
 
-#import "KTTextViewController.h"
+#import "KSTextViewController.h"
 
 
-@interface KTReleaseNotesController : KTTextViewController { }
+@interface KSReleaseNotesController : KTTextViewController { }
 
 @end

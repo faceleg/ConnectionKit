@@ -17,12 +17,11 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#ifdef SANDVOX_RELEASE
+#ifdef APP_RELEASE
     #import "Registration.h"
 #endif
 
 #import <Cocoa/Cocoa.h>
-#import <Sparkle/Sparkle.h>
 #import "KSAppDelegate.h"
 
 extern BOOL gWantToCatchSystemExceptions;
@@ -83,7 +82,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 @class KTDocument, KTDocumentController, KTBundleManager, KTDesignManager, KTPrefsController, KTFeedbackReporter;
 
-@interface KTAppDelegate : KSAppDelegate <SUStatusCheckerDelegate>
+@interface KTAppDelegate : KSAppDelegate
 {
     // IBOutlets
     IBOutlet NSMenuItem     *oToggleAddressBarMenuItem;
@@ -154,17 +153,12 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oSendFeedbackMenuItem;
 	IBOutlet NSMenuItem		*oProductPageMenuItem;
 
-    IBOutlet NSView                 *oGenericProgressView;
-    IBOutlet NSTextField            *oGenericProgressTextField;
-    IBOutlet NSProgressIndicator    *oGenericProgressIndicator;
-    IBOutlet NSImageView			*oGenericProgressImageView;
 
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;
     IBOutlet NSMenu			*oAddCollectionMenu;
     IBOutlet NSMenu			*oAddPageletMenu;
 	
-	IBOutlet NSMenu			*oDebugMenu;
 
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
@@ -172,37 +166,20 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	NSPoint myCascadePoint;
 
     // ivars
-    KTBundleManager         *myBundleManager;
 	KTDesignManager         *myDesignManager;
-	NSMutableData			*myHomeBaseConnectionData;
-	NSDictionary			*myHomeBaseDict;
-
-    NSPanel                 *myGenericProgressPanel;
 	//KTDocument				*myCurrentDocument;
 	
 	KTDocumentController	*myDocumentController;
 	
-	KTFeedbackReporter		*myFeedbackReporter;
 
     BOOL applicationIsLaunching;
 	
-	NSString *myNewVersionString;
-	NSString *myNewFeatures;
-	NSURL *myCurrentAppDownloadURL;
-	BOOL myNewsHasChanged;
 	
-	BOOL myDidAwake;
+	BOOL myKTDidAwake;
 	BOOL myAppIsTerminating;
 
-	NSTimer					*mNewsTimer;
 	
 	
-	// NSNetServices
-	NSNetServiceBrowser *myNetServiceBrowser;
-	NSSocketPort *myNetServicePort;
-	NSNetService *myNetService;
-	NSString *myNetServiceName;
-	NSMutableSet *mySimilarLicenses;
 }
 
 
@@ -212,29 +189,15 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction) openHigh:(id)sender;
 - (IBAction) openLow:(id)sender;
 
-+ (KTAppDelegate *)sharedInstance;
 + (void) registerDefaults;
 + (BOOL) coreImageAccelerated;
 + (BOOL) fastEnoughProcessor;
 
-- (KTBundleManager *)bundleManager;
 
 - (KTDocument *)currentDocument;
 //- (void)setCurrentDocument:(KTDocument *)aDocument;
 
 - (void)updateMenusForDocument:(KTDocument *)aDocument;
-
-- (NSString *)newVersionString;
-- (void)setNewVersionString:(NSString *)aNewVersionString;
-
-- (NSString *)newFeatures;
-- (void)setNewFeatures:(NSString *)aNewFeatures;
-
-- (NSURL *)currentAppDownloadURL;
-- (void)setCurrentAppDownloadURL:(NSURL *)aCurrentAppDownloadURL;
-
-- (BOOL)newsHasChanged;
-- (void)setNewsHasChanged:(BOOL)flag;
 
 - (IBAction)toggleLogAllContextChanges:(id)sender;
 - (BOOL)logAllContextChanges;
@@ -277,10 +240,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 - (KTDesignManager *)designManager;
-- (BOOL) isPro;
-
-- (NSDictionary *)homeBaseDict;
-- (void)setHomeBaseDict:(NSDictionary *)aHomeBaseDict;
 
 - (void)showGenericProgressPanelWithMessage:(NSString *)aString image:(NSImage *)anImage;
 - (void)updateGenericProgressPanelWithMessage:(NSString *)aString;
@@ -307,11 +266,9 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (BOOL)shouldSnapshotOnOpening;
 - (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath;
 
-- (NSThread *)mainThread;
 
 - (void)checkPlaceholderWindow:(id)bogus;
 
-- (void)setMenuItemPro:(NSMenuItem *)aMenuItem;
 
 @end
 

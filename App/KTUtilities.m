@@ -49,18 +49,9 @@
 #import <Security/Security.h>
 
 
-// Global variable, initialize it here is a good place
-
-NSString *gFunnyFileName = nil;
 
 @implementation KTUtilities
 
-+ (void) initialize
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	gFunnyFileName = [[NSString stringWithFormat:@".%@.%@", @"WebKit", @"UTF-16"] retain];
-	[pool release];
-}
 	
 #pragma mark Core Data
 

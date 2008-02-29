@@ -11,7 +11,5 @@
 
 @interface KTApplication : KSApplication
 
-+(NSString * )machineName;
-- (void)showHelpPage:(NSString *)inHelpString;
 
 @end

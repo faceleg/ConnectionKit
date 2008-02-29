@@ -349,5 +349,72 @@
 	return result;
 }
 
+- (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
+{
+	NSMutableDictionary *props;
+	if (nil != parentMedia)
+	{
+		// Extract the colorSync data from the original image
+		NSBitmapImageRep *otherBitmap = [NSBitmapImageRep imageRepWithData:[parentMedia data]];
+		NSSet *propsToExtract = [NSSet setWithObjects: NSImageColorSyncProfileData, nil];
+		props = [otherBitmap dictionaryOfPropertiesWithSetOfKeys:propsToExtract];
+	}
+	else
+	{
+		props = [NSMutableDictionary dictionary];
+	}
+	
+	// Also, set the PNG to be interlaced.
+	[props setObject:[NSNumber numberWithBool:YES] forKey:NSImageInterlaced];
+	
+	NSData *result = [[self bitmap] representationUsingType:NSPNGFileType properties:props];
+	
+	return result;
+}
+
+- (NSData *)PNGRepresentation
+{
+	return [self PNGRepresentationWithOriginalMedia:nil];
+}
+
+- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+{
+	NSMutableDictionary *props;
+	if (nil != parentMedia)
+	{
+		// Extract the EXIF data (if we have a jpeg), and colorSync data from the original image
+		NSBitmapImageRep *otherBitmap = [NSBitmapImageRep imageRepWithData:[parentMedia data]];
+		NSSet *propsToExtract = [NSSet setWithObjects: NSImageEXIFData, NSImageColorSyncProfileData, nil];
+		props = [otherBitmap dictionaryOfPropertiesWithSetOfKeys:propsToExtract];
+		
+		// Fix up dictionary to take out ISOSpeedRatings since that doesn't appear to be settable
+		NSDictionary *exifDict = [props objectForKey:NSImageEXIFData];
+		if (nil != exifDict)
+		{
+			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:exifDict];
+			[dict removeObjectForKey:@"ISOSpeedRatings"];
+			[props setObject:dict forKey:NSImageEXIFData];
+		}
+	}
+	else
+	{
+		props = [NSMutableDictionary dictionary];
+	}
+	
+	// Also set our desired compression property, and make NOT progressive for the benefit of the flash-based viewer
+	[props setObject:[NSNumber numberWithFloat:aQuality] forKey:NSImageCompressionFactor];
+	[props setObject:[NSNumber numberWithBool:NO] forKey:NSImageProgressive];
+	
+	NSData *result = [[self bitmap] representationUsingType:NSJPEGFileType properties:props];
+	
+	return result;
+}
+
+- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
+{
+	return [self JPEGRepresentationWithQuality:aQuality originalMedia:nil];
+}
+
+
 
 @end

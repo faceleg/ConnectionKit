@@ -80,7 +80,6 @@ NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefr
 NSString *kKTRootPageSavingNotification = @"KTRootPageSavingNotification";
 NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
 NSString *kKTInternalImageClassName = @"InternalImageClassName";
-NSString *kKTBadgeUpdateNotification = @"DocumentOperationNotification";
 
 NSString *kKTMediaObjectDidBecomeActiveNotification = @"KTMediaObjectDidBecomeActiveNotification";
 NSString *kKTMediaObjectDidBecomeInactiveNotification = @"KTMediaObjectDidBecomeInactiveNotification";

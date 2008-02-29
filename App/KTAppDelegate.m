@@ -31,30 +31,26 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KT.h"
 #import "KTAcknowledgmentsController.h"
 #import "KTApplication.h"
-#import "KTBundleManager.h"
-#import "KTCrashReporter.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTDocumentController.h"
-#import "KTFeedbackReporter.h"
 #import "KTHostSetupController.h"
 #import "KTInfoWindowController.h"
 #import "KTNewsController.h"
 #import "KTPlaceholderController.h"
 #import "KTPrefsController.h"
 #import "KTQuickStartController.h"
-#import "KTRegistrationController.h"
-#import "KTPluginInstallerController.h"
+#import "KSRegistrationController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "KTWebView.h"
 #import "KSUtilities.h"
 #import "NSException+Karelia.h"
-#import "NSString+KTApplication.h"
+#import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSError+Karelia.h"
@@ -80,35 +76,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSDate+Karelia.h"
 
 #import "NSApplication+Karelia.h"
-#import "AQDataExtensions.h"
 #import "KTPage.h"
 
 #import "NSToolbar+Karelia.h"
 
-#ifdef SANDVOX_RELEASE
-#import "Registration.h"
-#endif
-
 // ? #import </usr/include/objc/objc-class.h>
 // ? #import </usr/include/objc/Protocol.h>
 
-#include <openssl/rsa.h>
-#include <openssl/sha.h>
-#include <openssl/err.h>
-#import <netinet/in.h>
 
 
-enum {
-	versionMask = 1+2+4, // 0 = trial license; 1 = license for v. 1; ... 7 = perpetual comp license?
-    licenseMask = 8+16,
-	paymentMask = 32,	// paypal or other
-	proMask = 64,		// pro or normal
-	namedMask = 128		// if on, then this is somebody's name; if off, it's an anonymous index
-};
 
-const int the16BitPrime = 65521;
-const int theBigPrime = 5003;	
-const int the8BitPrime = 251;		// fits in 1 byte
 
 // NSLocalizedString(@"Comment", "String_On_Page_Template -- text for link on a blog posting")
 // NSLocalizedString(@"Other Posts About This", "String_On_Page_Template - description of trackbacks")
@@ -117,8 +94,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 
 
-// See: Sandvox KTAppDelegate, RegGenerator RegGenerator.h - make sure this corresponds to other apps
-#define REFERENCE_TIMESTAMP @"2006-01-01 00:00:00 -0800"
 
 // Comment this out if we are not building an expiring demo
 #define EXPIRY_TIMESTAMP @"2008-03-15 11:59:59 -0800"
@@ -179,6 +154,71 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 
 @implementation KTAppDelegate
+
+
+- (NSDate *)referenceTimestamp
+{
+	return [NSDate dateWithString:@"2006-01-01 00:00:00 -0800"]; // See: Sandvox KTAppDelegate, RegGenerator RegGenerator.h - make sure this corresponds to other apps
+}
+
+- (NSString *)licenseFileName
+{
+	return [[NSString stringWithFormat:@".%@.%@", @"WebKit", @"UTF-16"] retain];
+
+}
+
+- (void) addToFeedbackReport:(NSMutableDictionary *)report
+{
+	//  additionalPlugins
+	NSString *plugins = [[self bundleManager] pluginReportShowingAll:NO];
+	[report setValue:plugins forKey:@"additionalPlugins"];
+	
+	//  additionalDesigns
+	NSString *designs = [[self designManager] designReportShowingAll:NO];
+	[report setValue:designs forKey:@"additionalDesigns"];
+	
+}
+
+- (int) the16BitPrime
+{
+	return 65521;
+}
+- (int) theBigPrime
+{
+	return 5003;
+}
+
+- (int) the8BitPrime
+{
+	return 251;
+}
+
+
+
+- (void) checkRegistrationString:(NSString *)aString	// if not specified, looks in hidden path
+{
+	BOOL wasNil = (nil == gRegistrationString);
+
+	[super checkRegistrationString:aString];
+	
+	if (wasNil && gRegistrationString != nil)
+	{
+		// we are now registered, let's set all open docs as stale
+		NSEnumerator *e = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+		KTDocument *cur;
+		
+		while ( (cur = [e nextObject]) )
+		{
+			if ([cur isKindOfClass:[KSDocument class]])	// make sure it's a KSDocument
+			{
+				////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because app is newly registered", NSStringFromSelector(_cmd)));
+				///	TODO:	Make this happen again.
+				//[[cur root] markStale:kStaleFamily];
+			}
+		}
+	}
+}
+
 
 /*!	Needs to be done on initialization, and after resetStandardUserDefaults is called
 */
@@ -391,8 +431,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 		[NSNumber numberWithBool:NO], @"DebugAmazonListService",
 		
 		
-		// THIS MIGHT BE NIL -- it should be last to not destroy the rest of the dictionary
-		[KSEmailAddressComboBox primaryEmailAddress], DEFAULTS_ADDRESS_KEY,
 		
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
@@ -409,6 +447,8 @@ const int the8BitPrime = 251;		// fits in 1 byte
 		@"", @"DotMacPersonalDomain",
 		
 		
+										 // THIS MIGHT BE NIL -- it should be last to not destroy the rest of the dictionary
+										 [KSEmailAddressComboBox primaryEmailAddress], @"KSEmailAddress",
 		
 		nil];
 	
@@ -450,61 +490,7 @@ const int the8BitPrime = 251;		// fits in 1 byte
 	
 	[self registerDefaults];
 	
-	// Register my transformers.
-	// Note: for some useful math operation transformers, see
-	// http://homepage.mac.com/oscarmv/OMVFPValueTransformers.sitx
-
-/*
-	NSValueTransformer *theTransformer;
-
-//	theTransformer = [[[RowHeightTransformer alloc] init] autorelease];
-//	[NSValueTransformer setValueTransformer:theTransformer
-//									forName:@"RowHeightTransformer"];
-
-	// killing for now -- having problems with this crashing webkit!
-	// TRYGIN AGAIN
-	theTransformer = [[[RichTextHTMLTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"RichTextHTMLTransformer"];
-
-	theTransformer = [[[ContainerIsEmptyTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"ContainerIsEmptyTransformer"];
-
-	theTransformer = [[[ContainerIsNotEmptyTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"ContainerIsNotEmptyTransformer"];
-
-	theTransformer = [[[EscapeHTMLTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"EscapeHTMLTransformer"];
-
-	theTransformer = [[[CharsetToEncodingTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"CharsetToEncodingTransformer"];
-	
-	theTransformer = [[[StripHTMLTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"StripHTMLTransformer"];
-
-	theTransformer = [[[TrimTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"TrimTransformer"];
-
-	theTransformer = [[[StringToNumberTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"StringToNumberTransformer"];
-	
-	theTransformer = [[[TrimFirstLineTransformer alloc] init] autorelease];
-	[NSValueTransformer setValueTransformer:theTransformer
-									forName:@"TrimFirstLineTransformer"];
-*/
 	[pool release];
-}
-
-+ (KTAppDelegate *)sharedInstance
-{
-    return [NSApp delegate];
 }
 
 - (id)init
@@ -512,18 +498,19 @@ const int the8BitPrime = 251;		// fits in 1 byte
     self = [super init];
     if ( self )
     {
+
+		// fire up a components manager and discover our components
+        myBundleManager = [[KTBundleManager allocWithZone:[self zone]] init];
+
 		// force webkit to load so we can log the version early
 		(void) [[WebPreferences standardPreferences] setAutosaves:YES];
-
-        // fire up a components manager and discover our components
-        myBundleManager = [[KTBundleManager allocWithZone:[self zone]] init];
 
         // fire up a designs manager and discover our designs
 		myDesignManager = [[KTDesignManager allocWithZone:[self zone]] init];
 		myCascadePoint = NSMakePoint(100, 100);
 
         applicationIsLaunching = YES;
-		myDidAwake = NO;
+		myKTDidAwake = NO;
 		myAppIsTerminating = NO;
 	}
     return self;
@@ -532,39 +519,10 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 - (void)dealloc
 {
-	[mNewsTimer invalidate];
-	[mNewsTimer release]; mNewsTimer = nil;
-	[mySimilarLicenses release]; mySimilarLicenses = nil;
-
-    [myNetServiceBrowser stop];
-	[myNetServiceBrowser release]; myNetServiceBrowser = nil;
-	[myNetServicePort release]; myNetServicePort = nil;
-    [myNetService stop];
-	[myNetService release];	myNetService = nil;
-	[myNetServiceName release]; myNetServiceName = nil;
-	
-	//[myDocumentController autorelease];
-    [myDocumentController release]; myDocumentController = nil;
-    [myBundleManager release]; myBundleManager = nil;
 	[myDesignManager release]; myDesignManager = nil;
-
-    [myGenericProgressPanel release]; myGenericProgressPanel = nil;
-    
-    [myFeedbackReporter release]; myFeedbackReporter = nil;
-    
-    if ( nil != myHomeBaseDict )
-    {
-        [myHomeBaseDict release]; myHomeBaseDict = nil;
-    }
-    if ( nil != myHomeBaseConnectionData )
-    {
-        [myHomeBaseConnectionData release]; myHomeBaseConnectionData = nil;
-    }
-    
-    [self setNewVersionString:nil];
-    [self setNewFeatures:nil];
-    [self setCurrentAppDownloadURL:nil];
 	
+	[myDocumentController release]; myDocumentController = nil;
+
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
@@ -572,40 +530,43 @@ const int the8BitPrime = 251;		// fits in 1 byte
 	[super dealloc];
 }
 
+#define SHA1_DIGEST_LENGTH	20
+
+// Override of KSAppDelegate
+- (BOOL) checkForBlacklist:(NSData *)aHash
+{
+	// BLACKLIST -- subtle non-functionality, for cracked codes.  
+#define BLACKLIST_COUNT 1
+	unsigned char blacklistDigests[BLACKLIST_COUNT][SHA1_DIGEST_LENGTH] = {
+		{ 0xFC,0x8C,0xF1,0xAD,0xDF,0x82,0x45,0x72,0x21,0xFA,0xE7,0x15,0x7B,0x11,0x4A,0x22,0x23,0x7F,0x06,0x20 }, // Nop Chopper Hurly Anomaly Penalty	
+	};
+	return [self licenseHash:[aHash bytes] foundInList:blacklistDigests ofSize:BLACKLIST_COUNT];
+	
+}
+
+// Override of KSAppDelegate
+- (BOOL) checkForInvalidLicense:(NSData *)aHash
+{
+#include "SandvoxInvalidLicenses.h"
+	
+	return [self licenseHash:[aHash bytes] foundInList:invalidListDigests ofSize:INVALID_LIST_COUNT];
+	
+}
+
+
+
 - (void)awakeFromNib
 {
-	if ( !myDidAwake )
+	if ( !myKTDidAwake )
 	{
-		myDidAwake = YES;	// turn this on now so we can load a nib from her
+		myKTDidAwake = YES;	// turn this on now so we can load a nib from here
 		
-		// set up a reusable, generic progress panel
-		if ( nil == myGenericProgressPanel )
-		{
-			myGenericProgressPanel = [[NSPanel alloc] initWithContentRect:[oGenericProgressView bounds]
-																styleMask:NSTitledWindowMask
-																  backing:NSBackingStoreBuffered
-																	defer:YES];
-			[myGenericProgressPanel setTitle:[NSApplication applicationName]];
-			[myGenericProgressPanel setContentView:oGenericProgressView];
-			[myGenericProgressPanel setLevel:NSModalPanelWindowLevel];
-		}
 		
 		// tweak any menus that need tweaking
 		[self setCutMenuItemTitle:KTCutMenuItemTitle];
 		[self setCopyMenuItemTitle:KTCopyMenuItemTitle];
 		[self setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
 				
-		// see if we should add the Debug menu
-		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"IncludeDebugMenu"] )
-		{
-			[NSBundle loadNibNamed:@"DebugMenu" owner:self];
-			
-			NSMenuItem *debugMenu = [[[NSMenuItem alloc] initWithTitle:@"Debug" action:nil keyEquivalent:@""] autorelease];	// do not localize
-			[debugMenu setSubmenu:oDebugMenu];
-			[oDebugMenu setTitle:@"Debug"];	// do not localize
-			[[NSApp mainMenu] addItem:debugMenu];
-		}
-
 		NSImage *globe = [NSImage imageNamed:@"globe"];
 		//NSImage *trans = [NSImage imageNamed:@"trans16"];
 		
@@ -623,10 +584,9 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 		[oViewPublishedSiteMenuItem setImage:globe];
 		[oLatestNewsMenuItem setImage:globe];
-		//[oReleaseNotesMenuItem setImage:trans];
+		[oReleaseNotesMenuItem setImage:globe];
 		//[oAcknowledgementsMenuItem setImage:trans];
 		[oSendFeedbackMenuItem setImage:globe];
-		
 	}
 }
 
@@ -736,12 +696,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 }
 
 
-
-
-
-
-
-
 // Exceptions specific to Sandvox
 
 - (BOOL)exceptionHandler:(NSExceptionHandler *)sender
@@ -830,17 +784,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 #pragma mark -
 #pragma mark NSApplication Delegate
 
@@ -871,35 +814,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
     }
 }
 
-- (void)showGenericProgressPanelWithMessage:(NSString *)aString image:(NSImage *)anImage
-{
-	if (nil == anImage)
-	{
-		anImage = [NSImage imageNamed:@"AppIcon"];
-	}
-	if (nil == aString) aString = @"";	/// defense against nil
-    [oGenericProgressImageView setImage:anImage];
-    [oGenericProgressTextField setStringValue:aString];
-    [oGenericProgressIndicator setUsesThreadedAnimation:YES];
-    [oGenericProgressIndicator startAnimation:self];
-    [myGenericProgressPanel center];
-    [myGenericProgressPanel makeKeyAndOrderFront:self];
-}
-
-- (void)updateGenericProgressPanelWithMessage:(NSString *)aString
-{
-	if (nil == aString) aString = @"";	/// defense against nil
-    [oGenericProgressTextField setStringValue:aString];
-    [oGenericProgressTextField displayIfNeeded];
-}
-
-- (void)hideGenericProgressPanel
-{
-    [oGenericProgressIndicator stopAnimation:self];
-    [oGenericProgressIndicator setUsesThreadedAnimation:NO];
-    [myGenericProgressPanel orderOut:nil];
-}
-
 - (void)checkPlaceholderWindow:(id)bogus
 {
 	int windowCount = 0;
@@ -921,7 +835,7 @@ const int the8BitPrime = 251;		// fits in 1 byte
 		OFF((@"0 windows; so showing placeholder/violation window", windowCount));
 		if (gLicenseViolation)		// license violation dialog should open, not the new/open
 		{
-			[[KTRegistrationController sharedRegistrationController] showWindow:nil];
+			[[KSRegistrationController sharedRegistrationController] showWindow:nil];
 		}
 		else
 		{
@@ -954,48 +868,17 @@ const int the8BitPrime = 251;		// fits in 1 byte
 }
 
 
-- (IBAction) reportLatestCrash:(id)sender
-{
-	[[KTCrashReporter sharedInstance] runAlert];
-}
-
 - (IBAction)loggingConfiguration:(id)sender
 {
 	[KTLogger configure:self];
 }
 
-- (void)checkCrashLog:(id)bogus
+- (void)applicationWillTerminate:(NSNotification *)aNotification
 {
-	// Inspired by UKCrashReporter
-	NSString*		appName = [[NSProcessInfo processInfo] processName];	// NOT CFBundleExecutable!
-	NSString*		crashLogsFolder = [@"~/Library/Logs/CrashReporter/" stringByExpandingTildeInPath];
-	NSString*		crashLogName = [appName stringByAppendingString: @".crash.log"];
-	NSString*		crashLogPath = [crashLogsFolder stringByAppendingPathComponent: crashLogName];
-	NSDictionary*	fileAttrs = [[NSFileManager defaultManager] fileAttributesAtPath: crashLogPath traverseLink: YES];
-	NSDate*			lastTimeCrashLogged = (fileAttrs == nil) ? nil : [fileAttrs fileModificationDate];
-	NSDate*			lastTimeCrashReported = [[NSUserDefaults standardUserDefaults] objectForKey: @"LastCrashReportDate"];
-
-	if( lastTimeCrashLogged )	// We have a crash log file and its mod date? Means we crashed sometime in the past.
-	{
-		// If we never before reported a crash or the last report lies before the last crash:
-		if( nil == lastTimeCrashReported || [lastTimeCrashReported compare: lastTimeCrashLogged] == NSOrderedAscending )
-		{
-			//NSLog(@"Crash Log: %@ last changed %@, last reported %@", [crashLogPath stringByAbbreviatingWithTildeInPath], lastTimeCrashLogged, lastTimeCrashReported);
-
-			[[KTCrashReporter sharedInstance] runAlert];
-			[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey: @"LastCrashReportDate"];
-			[[NSUserDefaults standardUserDefaults] synchronize];
-		}
-		else
-		{
-			//NSLog(@"Crash Log: %@ last changed %@, last reported %@ (not reporting)", [crashLogPath stringByAbbreviatingWithTildeInPath], lastTimeCrashLogged, lastTimeCrashReported);
-		}
-	}
-	else	// this shouldn't happen unless 
-	{
-		//NSLog(@"No crash log found: %@", [crashLogPath stringByAbbreviatingWithTildeInPath]);
-	}
+	[self setAppIsTerminating:YES];
+	[super applicationWillTerminate:aNotification];
 }
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
@@ -1091,9 +974,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 #endif
         
-		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-
-
 // log SQL statements
 #ifdef DEBUG_SQL
         // via http://weblog.bignerdranch.com/?p=12
@@ -1111,23 +991,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
                                                                     "Message while initializing launching application.")
 											image:nil];
 
-		// connect to homebase.  (It won't actually do it if the pref is not checked)
-		int interval = [defaults integerForKey:@"SecondsBetweenHomeBaseChecks"];
-		if (interval < 60 * 60)
-		{
-			interval = 60 * 60;	// if a very small number, set it to an hour.
-		}
-		if (0 != interval)	// don't connect if zero interval
-		{
-			mNewsTimer = [NSTimer
-					scheduledTimerWithTimeInterval:interval
-											target:self
-										  selector:@selector(connectToHomeBase:)
-										  userInfo:nil
-										   repeats:YES];
-			// do it now
-			[self connectToHomeBase:nil];
-		}
 
 		// load plugins
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-Ins...",
@@ -1172,13 +1035,9 @@ const int the8BitPrime = 251;		// fits in 1 byte
 		
         if ( firstRun )
         {
-			// Set a baseline date of last crash reporting
-			[defaults setObject:[NSDate date] forKey: @"LastCrashReportDate"];
-			[defaults synchronize];
 			[self performSelector:@selector(checkPlaceholderWindow:) 
 					   withObject:nil
 					   afterDelay:0.0];
-			
         }
         else
         {
@@ -1324,11 +1183,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 					   afterDelay:0.0];
 
 			
-			// Still in the "not first run" branch ... 
-			if ([defaults boolForKey:@"SendCrashReports"])
-			{
-				[self performSelector:@selector(checkCrashLog:) withObject:nil afterDelay:3.0];
-			}
         }
 		
 		// QE check AFTER the welcome message
@@ -1380,6 +1234,8 @@ const int the8BitPrime = 251;		// fits in 1 byte
 		
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}
+	
+	[super applicationDidFinishLaunching:aNotification];
 	
     applicationIsLaunching = NO; // we're done
 }
@@ -1449,15 +1305,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 	}
 	else
 	{
-//#warning In version 1.0.3, we can probably safely remove this since customers will have been informed of screencast by then.
-//		// Show the new-video-available, but ONLY if never seen the alert before
-//		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//		if (![defaults boolForKey:@"ToldAboutScreencast"])
-//		{
-//			[[KTQuickStartController sharedController] performSelector:@selector(doWelcomeAlert:) withObject:nil afterDelay:0.0];
-//			[defaults setBool:YES forKey:@"ToldAboutScreencast"];
-//			[defaults synchronize];
-//		}
 
 		if (gIsPro || (nil == gRegistrationString))
 		{
@@ -1501,513 +1348,6 @@ const int the8BitPrime = 251;		// fits in 1 byte
 
 }
 	
-#include <openssl/sha.h>
-
-#define SHA1_CTX			SHA_CTX
-#define SHA1_DIGEST_LENGTH	SHA_DIGEST_LENGTH
-
-- (NSData *)hashDataFromLicenseString:(NSString *)aCode	// can be nil
-{
-	NSString *cleanedString = [[aCode stringByRemovingCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] lowercaseString];
-	NSData *stringData = [cleanedString dataUsingEncoding:NSUTF8StringEncoding];
-	NSData *result = [stringData sha1Digest];
-	return result;
-}
-
-- (int) calculateStringChecksum:(NSString *)aWord :(int)aPrime
-{
-	OBPRECONDITION(aWord);
-	int len = [aWord length];
-	len = MIN(len, 12);			// Don't check past 12th character, only 12 will fit into 64 bits
-	NSString *lowerWord = [aWord lowercaseString];
-	long long total = 0;
-	int i;
-	for ( i = 0 ; i < len ; i++ )
-	{
-		unichar theChar = [lowerWord characterAtIndex:i] - 'a';
-		total *= 26;
-		total += theChar;		// basically make it like a 5-bit number
-	}
-	return total % aPrime;
-}
-
-- (BOOL) codeIsValid:(NSString *)aCode
-					:(int *)outNamed
-					:(NSString **)outLicensee	// RETAINS if created
-					:(int *)outIndex
-					:(int *)outVersion
-					:(NSDate **)outDate		// RETAINS if created; expiration if version == 0
-					:(int *)outType
-					:(int *)outSource
-					:(int *)outPro
-					:(unsigned int *)outSeats
-{
-	OBPRECONDITION(aCode);
-	NSMutableString *cleanedString = [NSMutableString stringWithString:aCode];
-	[cleanedString replace:[NSString stringWithUnichar:0] with:@""];		// remove NULLs.  Not likely but it could conceivably happen
-	
-	NSArray *codeComponents = [cleanedString componentsSeparatedByWhitespace];	// newlines, option-space, etc.
-	int count = [codeComponents count];
-	if (count <  4)
-	{
-		LOG((@"code doesn't have enough components"));
-		return NO;
-	}
-	
-	int flags		= [self calculateStringChecksum:[codeComponents objectAtIndex:count-2] :theBigPrime];
-	
-	int version = flags & versionMask;
-	BOOL isNamed = 0 != (flags & namedMask);
-	int isPro = (flags & proMask) / proMask;
-	int paymentIndex = (flags & paymentMask) / paymentMask;
-	int licenseIndex = (flags & licenseMask) / 8;
-	
-	long long stringChecksumTotal = 0;
-	
-	int i;
-	for ( i = 0 ; i < count-1; i++ )
-	{
-		NSString *word = [codeComponents objectAtIndex:i];
-		NSString *cleanedWord = [[word stringByRemovingCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] lowercaseString];
-		
-		int length = [cleanedWord length];
-		// Test checksum < 256, len >= 3 except for name components
-		if (!isNamed || (i >= count - 3))
-		{
-			int wordChecksum = [self calculateStringChecksum:cleanedWord :theBigPrime];
-			if (length < 3)
-			{
-				LOG((@"word %@ < 3 chars", cleanedWord));
-				return NO;
-			}
-			if (wordChecksum > 255)
-			{
-				LOG((@"word %@ checksum illegal, = %d", cleanedWord, wordChecksum));
-				return NO;
-			}
-		}
-		
-		int charIndex;
-		for (charIndex = 0 ; charIndex < length ; charIndex++)
-		{
-			int c = [cleanedWord characterAtIndex:charIndex] - 'a';
-			stringChecksumTotal = stringChecksumTotal * 2 + c;		// shift each one by 1 bit
-		}
-	}
-	int expectedChecksum = stringChecksumTotal % the8BitPrime;
-	NSString *finalWord = [codeComponents objectAtIndex:count-1];
-	int checksumValue = [self calculateStringChecksum:finalWord :theBigPrime];
-	if (expectedChecksum != checksumValue)
-	{
-		LOG((@"expectedChecksum %d != given checksum %d from %@", expectedChecksum, checksumValue, finalWord));
-		return NO;
-	}
-	
-	int fortnights	= [self calculateStringChecksum:[codeComponents objectAtIndex:count-3] :theBigPrime];
-	float secondsPerFortnight = 14 * 24 * 60 * 60;
-	NSTimeInterval timeIntervalToAdd = (float)fortnights * secondsPerFortnight;
-	NSDate *embeddedDate = [NSDate dateWithString:REFERENCE_TIMESTAMP];
-	embeddedDate = [embeddedDate addTimeInterval:timeIntervalToAdd ];
-	
-	NSTimeInterval sinceStoredDate = [[NSDate date] timeIntervalSinceDate:embeddedDate];
-	
-	int daysSince = sinceStoredDate / (60 * 60 * 24);
-	if (0 == version)	// make sure current time is not AFTER the given date
-	{
-		if (daysSince > 0)
-		{
-			LOG((@"It looks like you've expired"));
-			return NO;
-		}
-	}
-	else	// Make sure that the given date is in the past
-	{
-		if (daysSince < 0)
-		{
-			LOG((@"It looks like the generation date is in the future; this is bad?"));
-			return NO;
-		}
-	}
-
-	int seats = 0;
-	if (kSiteLicense == licenseIndex)
-	{
-		seats	= [self calculateStringChecksum:[codeComponents objectAtIndex:count-4] :theBigPrime];
-		if (seats < 5 || seats > 255)
-		{
-			LOG((@"Invalid site-license seats number"));
-			return NO;
-		}
-	}
-	
-	// If everything is valid, return new values
-	if (outNamed)
-	{
-		*outNamed = isNamed;
-	}
-	if (outLicensee && isNamed)
-	{
-		int namePosition = (kSiteLicense == licenseIndex) ? count-4 : count-3;
-		NSArray *justName = [codeComponents subarrayWithRange:NSMakeRange(0,namePosition)];
-		*outLicensee = [[justName componentsJoinedByString:@" "] retain];
-	}
-	if (outIndex && !isNamed)
-	{
-		int loByte = [self calculateStringChecksum:[codeComponents objectAtIndex:0] :theBigPrime];
-		int hiByte = [self calculateStringChecksum:[codeComponents objectAtIndex:1] :theBigPrime];
-		*outIndex = hiByte * 256 + loByte;
-	}
-	if (outVersion)
-	{
-		*outVersion = version;
-	}
-	if (outDate)
-	{
-		*outDate = [embeddedDate retain];
-	}
-	if (outType)
-	{
-		*outType = licenseIndex;
-	}
-	if (outSource)
-	{
-		*outSource = paymentIndex;
-	}
-	if (outPro)
-	{
-		*outPro = isPro;
-	}
-	if (outSeats)
-	{
-		*outSeats = seats;
-	}
-	return YES;
-}
-
-
-- (NSString *)registrationReport
-{
-	if (nil == gRegistrationString)
-	{
-		return @"None";		// DO NOT LOCALIZE
-	}
-	// Now calculate summary 
-	NSMutableString *buf = [NSMutableString string];
-	if (nil != gLicensee)
-	{
-		[buf appendFormat:@"%@ - ", gLicensee];
-	}
-	switch (gLicenseType)
-	{
-		case kSingleLicense:
-			[buf appendString:@"S"];
-			break;
-		case kHouseholdLicense:
-			[buf appendString:@"H"];
-			break;
-		case kSiteLicense:
-			[buf appendString:@"L"];
-			break;
-		case kWorldwideLicense:
-			[buf appendString:@"W"];
-			break;
-	}
-	if (gIsPro)
-	{
-		[buf appendString:@"+p"];
-	}
-	[buf appendFormat:@" V%d ", gLicenseVersion];
-	if (0 == gLicenseVersion)
-	{
-		[buf appendString:@"X: "];
-	}
-	[buf appendString:[gLicenseDate description]];
-	if (gLicenseIsBlacklisted)
-	{
-		[buf appendString:@" #"];		// Easy way to tell that request comes from blacklisted user
-	}
-	OBPOSTCONDITION([buf length]);
-	return buf;
-}
-
-- (void) checkRegistrationString:(NSString *)aString	// if not specified, looks in hidden path
-{
-	NSString *regString = aString;
-	NSString *path = nil;
-	BOOL readingFromInternalFile = (nil == aString);
-	BOOL wasNil = (nil == gRegistrationString);
-	
-	[gLicensee				release];	gLicensee			= nil;
-	[gLicenseDate			release];	gLicenseDate		= nil;
-	[gRegistrationString	release];	gRegistrationString	= nil;
-	[gRegistrationHash		release];	gRegistrationHash	= nil;
-	
-	// OK, so far so good.  Read file
-	if (readingFromInternalFile)
-	{
-		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-		path = [libraryPaths objectAtIndex:0];
-		
-		path = [NSString pathWithComponents:
-			[NSArray arrayWithObjects:path, [NSApplication applicationName], gFunnyFileName, nil]];	// nice and obscure strings and file name
-		NSData *data = [NSData dataWithContentsOfFile:path];
-		
-		// Decrypt using the funny file name PLUS the user name -- meaning that the file won't work if it's somebody else's account
-		NSData *decodedData = [data dataDecryptedWithPassword:[NSString stringWithFormat:@"%@%@", gFunnyFileName, NSUserName()]];
-		if (nil !=decodedData)
-		{
-			regString = [[[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding] autorelease];
-		}
-	}
-
-	NSData *hash = [self hashDataFromLicenseString:regString];
-
-	// sneakily put in a global that the registration was checked (even if there is no license!
-	gRegistrationWasChecked = -1;
-
-	if (!regString)
-	{
-		LOG((@"Could not read file at %@", path));
-		gRegistrationFailureCode = kKTCouldNotReadLicenseFile;
-		goto FAILURE;
-	}
-	
-	// Keep hash as a string for use by feed
-	gRegistrationHash = [[hash base64Encoding] retain];
-
-	// BLACKLIST -- subtle non-functionality, for cracked codes.  
-#define BLACKLIST_COUNT 1
-	unsigned char blacklistDigests[BLACKLIST_COUNT][SHA1_DIGEST_LENGTH] = {
-{ 0xFC,0x8C,0xF1,0xAD,0xDF,0x82,0x45,0x72,0x21,0xFA,0xE7,0x15,0x7B,0x11,0x4A,0x22,0x23,0x7F,0x06,0x20 }, // Nop Chopper Hurly Anomaly Penalty	
-	};
-	int i;
-	for (i = 0 ; i < BLACKLIST_COUNT; i++)
-	{
-		int compareResult = memcmp([hash bytes], blacklistDigests[i], SHA1_DIGEST_LENGTH);
-		if (0 == compareResult)
-		{
-			LOG((@"Code '%@' is blacklisted -- setting time bombs", regString));
-			gLicenseIsBlacklisted = 1;		// non-zero means we are blacklisted, but otherwise continue!
-			break;	// no point in continuing to check
-		}
-	}
-
-	BOOL valid = YES;		// start out true, then if a truly invalid we will set to NO
-	
-#include "SandvoxInvalidLicenses.h"
-	
-	for (i = 0 ; i < INVALID_LIST_COUNT; i++)
-	{
-		int compareResult = memcmp([hash bytes], invalidListDigests[i], SHA1_DIGEST_LENGTH);
-		if (0 == compareResult)
-		{
-			LOG((@"Code '%@' is not valid -- not enabling code", regString));
-			valid = NO;
-			break;	// no point in continuing to check
-		}
-	}
-	
-	
-// Check license.  If invalidated above, this will act as if license is not valid.	
-	
-	valid &= [self codeIsValid:regString :nil :&gLicensee :nil :&gLicenseVersion :&gLicenseDate :&gLicenseType :nil :&gIsPro :&gSeats];
-	
-	if (valid)
-	{		
-		gRegistrationString = [regString retain];
-		gRegistrationFailureCode = kKTLicenseOK;
-
-//		LOG((@"gLicensee = %@, gLicenseVersion = %d, gLicenseDate = %@, gLicenseType = %d, gIsPro = %d", gLicensee, gLicenseVersion, gLicenseDate, gLicenseType, gIsPro));
-	}
-	else
-	{
-		LOG((@"Code '%@' failed to validate", regString));
-		gRegistrationFailureCode = kKTLicenseCheckFailed;
-	}
-	
-FAILURE:	
-
-#ifdef DEBUG
-		if (kKTLicenseOK != gRegistrationFailureCode)
-		{
-			NSLog(@"failure = %d", gRegistrationFailureCode);
-		}
-#endif
-
-
-//	LOG((@"Report: %@", [self registrationReport]));
-
-	// Post notification,
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTBadgeUpdateNotification object:nil]; 
-	
-	
-	// Set up zeroconf
-	
-	if (nil != gRegistrationString && nil == myNetService)
-	{
-		// Start looking for other services, with a timeout
-		myNetServiceBrowser = [[NSNetServiceBrowser alloc] init];
-		[myNetServiceBrowser setDelegate:self];
-		[myNetServiceBrowser searchForServicesOfType:@"_sandvox._tcp." inDomain:@""];
-		
-		// Soon, stop looking for other similar licenses; let other instances with this license
-		// that come on-line force a quit, not this instance.
-		[self performSelector:@selector(cancelNetServicesBrowser:) withObject:myNetServiceBrowser afterDelay:20.0];
-	
-		// Publish this one's presence
-		
-		myNetServicePort = [[NSSocketPort port] retain];
-		
-		struct sockaddr_in addrIn = *(struct sockaddr_in *)[[myNetServicePort address] bytes];
-		int port = addrIn.sin_port;
-		myNetServiceName = [[NSString alloc] initWithFormat:@"%@: %@",
-			NSFullUserName(),
-			[((NSString *)SCDynamicStoreCopyComputerName(NULL, NULL)) autorelease]];
-		
-		myNetService = [[NSNetService alloc] initWithDomain:@""
-													   type:@"_sandvox._tcp."
-													   name:myNetServiceName
-													   port:port];
-		NSData *hashTXTData = [NSNetService dataFromTXTRecordDictionary:
-							 [NSDictionary dictionaryWithObjectsAndKeys: hash, @"hash", nil]];
-		BOOL succeededSettingTXT = [myNetService setTXTRecordData:hashTXTData];
-		if (!succeededSettingTXT)
-		{
-			LOG((@"couldn't set TXT data"));
-		}
-		[myNetService setDelegate:self];
-		[myNetService publish];
-	}
-	else if (nil == gRegistrationString && nil != myNetService)
-	{
-		[myNetServiceBrowser stop];
-		[myNetServiceBrowser release];
-		myNetServiceBrowser = nil;
-		[myNetServicePort release];
-		myNetServicePort = nil;
-		[myNetService stop];
-		[myNetService release];
-		myNetService = nil;
-	}
-	
-	if (wasNil && gRegistrationString != nil)
-	{
-		// we are now registered, let's set all open docs as stale
-		NSEnumerator *e = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
-		KTDocument *cur;
-		
-		while ( (cur = [e nextObject]) )
-		{
-			if ([cur isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
-			{
-				////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because app is newly registered", NSStringFromSelector(_cmd)));
-///	TODO:	Make this happen again.
-				//[[cur root] markStale:kStaleFamily];
-			}
-		}
-	}
-}
-
-- (void)netService:(NSNetService *)sender didUpdateTXTRecordData:(NSData *)data
-{
-	if (nil == mySimilarLicenses)
-	{
-		mySimilarLicenses = [[NSMutableSet alloc] init];
-	}
-	LOG((@"%@ %@ %@", NSStringFromSelector(_cmd), sender, data ));
-	NSDictionary *dict = [NSNetService dictionaryFromTXTRecordData:data];
-	NSString *hashBase64 = [[dict objectForKey:@"hash"] base64Encoding];
-	if ([hashBase64 isEqualToString:gRegistrationHash])
-	{
-		[mySimilarLicenses addObject:[sender name]];
-		BOOL violation = NO;
-		switch (gLicenseType)
-		{
-			case kSingleLicense:
-				violation = YES;
-				break;
-			case kHouseholdLicense:
-				violation = ([mySimilarLicenses count] + 1 > kKTMaxLicensesPerHousehold);
-				break;
-			case kSiteLicense:
-				violation = ([mySimilarLicenses count] + 1 > gSeats);
-				break;
-		}
-		if (violation)
-		{
-			gLicenseIsBlacklisted = YES;	// act blacklisted for now so you can't publish
-			gLicenseViolation = YES;	// this will help the registration controller prompt
-			
-			[[NSDocumentController sharedDocumentController] closeAllDocumentsWithDelegate:nil
-																	   didCloseAllSelector:nil
-																			   contextInfo:nil];
-
-			[[KTRegistrationController sharedRegistrationController] showWindow:sender];
-			
-		}
-	}
-	else
-	{
-		[mySimilarLicenses removeObject:[sender name]];
-	}
-
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
-{
-	if (![[aNetService name] isEqualToString:myNetServiceName])
-	{
-		// LOG((@"Another Service --> %@ %@ more=%d name='%@' myName ='%@'", NSStringFromSelector(_cmd), aNetService, moreComing, [aNetService name], myNetServiceName ));
-		if (NSNotFound != [[aNetService description] rangeOfString:@"local."].location)
-		{
-			// LOG((@"This is on local. -- not monitoring."));
-		}
-		else
-		{
-			[aNetService setDelegate:self];
-			[aNetService startMonitoring];
-		}
-	}
-	else
-	{
-		// LOG((@"My Service --> %@ %@ more=%d name='%@'", NSStringFromSelector(_cmd), aNetService, moreComing, [aNetService name] ));
-	}
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
-{
-	[aNetService stopMonitoring];
-}
-
-- (void)cancelNetServicesBrowser:(NSNetServiceBrowser *)aBrowser
-{
-	[aBrowser stop];
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification
-{
-    //LOG((@"Sandvox: applicationWillTerminate: %@", aNotification));
-    
-    // we're no longer a FirstRun
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"FirstRun"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-	
-	[self setAppIsTerminating:YES];
-#ifdef DEBUG
-	if (nil != [[[NSProcessInfo processInfo] environment] objectForKey:@"MallocStackLogging"])
-	{
-		char cmd[256];
-		sprintf(cmd, "/usr/bin/leaks %d > /tmp/Sandvox_%d.leaks", getpid(), getpid());
-		printf("%s", cmd);
-		printf("\n");
-		system(cmd);
-		sprintf(cmd, "open /tmp/Sandvox_%d.leaks", getpid() );
-		printf("%s", cmd);
-		printf("\n");
-		system(cmd);
-	}
-#endif
-}
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
 {
@@ -2038,29 +1378,6 @@ FAILURE:
 			//  | NSFontPanelShadowEffectModeMask		// only sort of works
 			  );
 }
-
-#pragma mark -
-#pragma mark Sparkle delegate
-
-- (BOOL)updaterShouldSendProfileInfo
-{
-	// we're not going to track profile info, for now
-	// but we want to use sparkle+ as it's being actively developed
-	return NO;
-}
-
-- (void)statusChecker:(SUStatusChecker *)statusChecker
-         foundVersion:(NSString *)versionString
-         isNewVersion:(BOOL)isNewVersion 
-{ 
-    if ( nil == versionString ) 
-    { 
-        LOG((@"warning: Sparkle+ could not GET new version information")); 
-        return; 
-    } 
-    LOG((@"Sparkle+: appcast version is %@", versionString)); 
-    LOG((@"Sparkle+: appcast version is newest? %@", isNewVersion ? @"Yes" : @"No")); 
-} 
 
 #pragma mark -
 #pragma mark Document communication
@@ -2155,62 +1472,6 @@ FAILURE:
     return [[NSDocumentController sharedDocumentController] currentDocument];
 }
 
-- (NSDictionary *)homeBaseDict
-{
-    return myHomeBaseDict;
-}
-- (void)setHomeBaseDict:(NSDictionary *)aHomeBaseDict
-{
-    [myHomeBaseDict release];
-    myHomeBaseDict = [aHomeBaseDict copy];
-}
-
-- (NSString *)newVersionString
-{
-    return myNewVersionString; 
-}
-
-- (void)setNewVersionString:(NSString *)aNewVersionString
-{
-    [aNewVersionString retain];
-    [myNewVersionString release];
-    myNewVersionString = aNewVersionString;
-}
-
-- (NSString *)newFeatures
-{
-    return myNewFeatures; 
-}
-
-- (void)setNewFeatures:(NSString *)aNewFeatures
-{
-    [aNewFeatures retain];
-    [myNewFeatures release];
-    myNewFeatures = aNewFeatures;
-}
-
-- (NSURL *)currentAppDownloadURL
-{
-    return myCurrentAppDownloadURL; 
-}
-
-- (void)setCurrentAppDownloadURL:(NSURL *)aCurrentAppDownloadURL
-{
-    [aCurrentAppDownloadURL retain];
-    [myCurrentAppDownloadURL release];
-    myCurrentAppDownloadURL = aCurrentAppDownloadURL;
-}
-
-- (BOOL)newsHasChanged
-{
-    return myNewsHasChanged;
-}
-
-- (void)setNewsHasChanged:(BOOL)flag
-{
-    myNewsHasChanged = flag;
-}
-
 - (BOOL)appIsTerminating
 {
 	return myAppIsTerminating;
@@ -2286,15 +1547,6 @@ FAILURE:
     return newDocument;    
 }
 
-- (IBAction)orderFrontLicensingPanel:(id)sender
-{
-//    if ( nil == oLicensingPanel ) {
-//        [NSBundle loadNibNamed:@"Licensing" owner:self];
-//    }
-//
-//    [oLicensingPanel center];
-//    [oLicensingPanel makeKeyAndOrderFront:sender];
-}
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
@@ -2322,94 +1574,6 @@ FAILURE:
 	}
 }
 
-- (IBAction) showNewsWindow:(id)sender
-{
-    [[KTNewsController sharedNewsController] showWindow:sender];
-}
-
-- (IBAction)showRegistrationWindow:(id)sender
-{
-	[[KTRegistrationController sharedRegistrationController] showWindow:sender];
-
-}
-
-- (IBAction)showPluginWindow:(id)sender;
-{
-	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - only showing new updates.
-	{
-		[[KTPluginInstallerController sharedController] showWindowForNewVersions:sender];
-	}
-	else	// normal
-	{
-		[[KTPluginInstallerController sharedController] showWindow:sender];
-	}
-}
-
-// Invoked when update badge is clicked.  May just directly open the URL if the shut-up has been chosen.
-
-- (IBAction) getUpdatedApplication:(id)sender
-{
-	// Immediately download if the option key is held down
-	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
-	{
-		if (nil != myCurrentAppDownloadURL)
-		{
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:myCurrentAppDownloadURL];
-		}
-		else
-		{
-			NSBeep();
-		}
-	}
-	else	// put up a dialog to confirm the 
-	{	
-		[[[NSWorkspace sharedWorkspace]
-			confirmWithWindow:nil
-				 silencingKey:@"shutUpDownloadWarn"
-					canCancel:YES OKButton:NSLocalizedString(@"Download", @"Download Button Title")
-					  silence:NSLocalizedString(@"Immediately download without this warning", @"checkbox title")
-						title:[NSString stringWithFormat:
-									NSLocalizedString(@"Upgrade to Sandvox %@?", @"Question for title of warning"),
-									[self newVersionString]]
-					   format:NSLocalizedString(@"Do you wish to download the upgrade to version %@ of Sandvox? (You are running version %@.)\n\n%@",
-												@"question for download warning -- followed by details of update"),
-					[self newVersionString],
-					[[NSBundle mainBundle] version],
-					[self newFeatures]
-				]
-			attemptToOpenWebURL:myCurrentAppDownloadURL];
-	}
-}
-
-// Similar to above, but brings up a dialog automatically when phoned home and there is a new version.
-// Shutting up will cause this warning not to appear again
-- (void) notifyNewVersionAvailable:(id)bogus
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *noAlertKey = @"shutUpNewVersionAlert";
-	
-	if (![defaults boolForKey:noAlertKey])	// show alert if we haven't been told to stop
-	{
-		[[[NSWorkspace sharedWorkspace]
-				confirmWithWindow:nil
-					 silencingKey:@"shutUpNewVersionAlert"
-						canCancel:YES OKButton:NSLocalizedString(@"Download", @"Download Button Title")
-						  silence:NSLocalizedString(@"Do not show this message when a new version is available",@"checkbox to stop showing alert when a new version of Sandvox is available")
-							title:NSLocalizedString(@"A new version of Sandvox is available", @"title of alert")
-						   format:NSLocalizedString(@"Do you wish to download the upgrade to version %@ of Sandvox? (You are running version %@.)\n\n%@",
-													@"question for download warning -- followed by details of update"),
-			[self newVersionString],
-			[[NSBundle mainBundle] version],
-			[self newFeatures]
-			]
-				attemptToOpenWebURL:myCurrentAppDownloadURL];
-		
-		// Store this new version in the defaults, so that we won't remind about this new version any more.
-		[defaults setObject:[self newVersionString] forKey:@"lastNotifiedVersion"];
-		[defaults synchronize];
-	}
-}
-
 - (IBAction)showAvailableMedia:(id)sender
 {
 	/// disabling for 1.2.1 unless we figure out a non-crashing media inspector
@@ -2431,25 +1595,6 @@ FAILURE:
 
 //	[oDebugMediaObjectController setContent:nil];
 //	[oDebugMediaPanel orderOut:nil];
-}
-
-- (IBAction)showFeedbackReporter:(id)sender
-{
-	if ( nil == myFeedbackReporter )
-	{
-		myFeedbackReporter = [KTFeedbackReporter sharedInstance];
-	}
-	[myFeedbackReporter showReportWindow:self];
-}
-
-- (IBAction)showReleaseNotes:(id)sender
-{
-    [[KTReleaseNotesController sharedController] showWindow:nil];
-}
-
-- (IBAction)showAcknowledgments:(id)sender
-{
-    [[KTAcknowledgmentsController sharedController] showWindow:nil];
 }
 
 - (IBAction)showProductPage:(id)sender
@@ -2599,185 +1744,9 @@ FAILURE:
 }
 #endif
 
-- (void)connectToHomeBase:(NSTimer *)inTimer
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (![defaults boolForKey:@"contactHomeBase"])
-	{
-		return;	// do nothing if we aren't supposed to contact home base
-	}
-	
-	/// check for sparkle update
-    [[[SUStatusChecker statusCheckerForDelegate:self] retain] checkForUpdatesInBackground]; 
-
-	// One of the first things we should do is kick off a visit to the host site, so this stuff will be returned ASAP.
-	NSString *appVersionString = [[NSBundle mainBundle] version];
-    NSDictionary *systemVersionDict = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-	NSString *sysVersion = [systemVersionDict objectForKey:@"ProductVersion"];
-	if (nil == sysVersion)
-	{
-		sysVersion = @"";
-	}
-	// This could use -[NSBundle preferredLocalizationsFromArray:forPreferences:]
-	// http://www.cocoabuilder.com/archive/message/cocoa/2003/4/24/84070
-	// but that would return strings like "English" not "en" which is what we want.
-	
-	NSArray *langArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-#define MAX_LANGUAGES_TO_TRANSMIT 4
-	if ([langArray count] > MAX_LANGUAGES_TO_TRANSMIT)
-	{
-		langArray = [langArray subarrayWithRange:NSMakeRange(0,MAX_LANGUAGES_TO_TRANSMIT)];
-	}
-	NSString *languagesString = [langArray componentsJoinedByString:@","];
-
-	NSString *urlString = [NSString stringWithFormat:@"%@sandvox.plist?v=%@&os=%@&l=%@", [defaults objectForKey:@"HomeBaseURL"], appVersionString, sysVersion, languagesString
-		];
-	// LOG((@"connecting to homebase; URL = %@", urlString));
-	
-	NSURLRequest *theRequest
-	=	[NSURLRequest requestWithURL:[NSURL URLWithString:[urlString encodeLegally]]
-						 cachePolicy:NSURLRequestReloadIgnoringCacheData
-					 timeoutInterval:15.0];
-	// create the connection with the request and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-	if (theConnection)
-	{
-		// Create the NSMutableData that will hold
-		// the received data
-		myHomeBaseConnectionData=[[NSMutableData alloc] init];
-	} else {
-		// inform the user that the download could not be made
-		NSLog(@"unable to set up connection to home base");
-
-	}
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-	OBPRECONDITION(connection);
-	OBPRECONDITION(response);
-    // this method is called when the server has determined that it
-    // has enough information to create the NSURLResponse
-	// it can be called multiple times, for example in the case of a
-	// redirect, so each time we reset the data.
-    [myHomeBaseConnectionData setLength:0];
-
-
-	if ([response respondsToSelector:@selector(statusCode)])
-	{
-		int statusCode = [((NSHTTPURLResponse *)response) statusCode]; 
-		if (statusCode >= 400)
-		{
-			[connection cancel];
-			[self connection:connection didFailWithError:[NSError errorWithHTTPStatusCode:statusCode URL:[response URL]]];
-		}
-	}
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-	OBPRECONDITION(connection);
-	OBPRECONDITION(data);
-    // append the new data to the myHomeBaseConnectionData
-    [myHomeBaseConnectionData appendData:data];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	OBPRECONDITION(connection);
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    // do something with the data
-	NSString *errorMessage = nil;
-	NSDictionary *root
-	= [NSPropertyListSerialization propertyListFromData:myHomeBaseConnectionData
-									   mutabilityOption:NSPropertyListMutableContainers
-												 format:nil
-									   errorDescription:&errorMessage];
-
-	if (nil != root)
-	{
-		DJW((@"Got Home Base Dict"));
-		[self setHomeBaseDict:root];
-		
-		BOOL shouldUpdateFeed = YES;
-		NSDate *feedDate = [root objectForKey:@"feedDate"];
-		if (nil != feedDate)
-		{
-			NSDate *lastSawFeedDate = [defaults objectForKey:@"lastSawFeedDate"];
-			if (nil != lastSawFeedDate)
-			{
-				NSTimeInterval since = [feedDate timeIntervalSinceDate:lastSawFeedDate];
-				
-				shouldUpdateFeed = (since > 60.0);		// slop of 5 minutes in case file was updated soon thereafter
-			}
-		}
-		[self setNewsHasChanged:shouldUpdateFeed];
-		
-		[self setNewVersionString:[root objectForKey:@"CurrentAppVersionNumber"]];
-		[self setNewFeatures:[root objectForKey:@"CurrentAppFeatures"]];
-		
-		if (nil != myNewVersionString && ![myNewVersionString isEqualToString:[defaults objectForKey:@"lastNotifiedVersion"]])
-		{
-			/// turning off new app notification in favor of using sparkle
-			///[self performSelector:@selector(notifyNewVersionAvailable:) withObject:nil afterDelay:30.0];
-		}
-		
-		NSString *downloadURLString = [root objectForKey:@"CurrentAppDownloadURL"];
-		NSURL *downloadURL = nil;
-		if (nil != downloadURLString)
-		{
-			downloadURL = [NSURL URLWithString:[downloadURLString encodeLegally]];
-		}
-		[self setCurrentAppDownloadURL:downloadURL];
-		
-		// Post notification to cause badges to be updated
-		[[NSNotificationCenter defaultCenter] postNotificationName:kKTBadgeUpdateNotification
-															object:nil]; 
-	}
-	else
-	{
-		NSLog(@"error reading home base data: %@", errorMessage);
-		[self setHomeBaseDict:nil];
-	}
-
-    // release the connection, and the data object
-    [connection release];
-    [myHomeBaseConnectionData release];
-	myHomeBaseConnectionData = nil;
-
-}
-
-// Dan explains why connection, the passed in param, is released in these method:
-// "Well, the connection needs to survive across runloops. One way would be to set
-// it as an ivar, but in this case, it's retained before the connection starts, 
-// and then when the connection is done (either failing or succeeding), it's released
-// when it's no longer needed. I don't see a problem with that."
-
-- (void)connection:(NSURLConnection *)connection
-		didFailWithError:(NSError *)error
-{
-	OBPRECONDITION(connection);
-	OBPRECONDITION(error);
-    // release the connection, and the data object
-    [connection release];
-    [myHomeBaseConnectionData release];
-	myHomeBaseConnectionData = nil;
-    // inform the user
-    NSLog(@"Connection failed! Error - %@ %@",
-          [error localizedDescription],
-          [[[[error userInfo] objectForKey:NSErrorFailingURLStringKey] description] condenseWhiteSpace]);
-
-}
 
 #pragma mark -
 #pragma mark Utility Methods
-
-- (KTBundleManager *)bundleManager
-{
-	OBPOSTCONDITION(myBundleManager);
-    return myBundleManager;
-}
 
 - (KTDocument *)documentWithID:(NSString *)anID
 {
@@ -2814,12 +1783,6 @@ FAILURE:
 	return myDesignManager;
 }
 
-// Required because a pagelet, page asks if pro
-- (BOOL) isPro
-{
-	return gIsPro;
-}
-
 //- (BOOL)shouldAutosave
 //{
 //	//return [[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"];
@@ -2841,12 +1804,6 @@ FAILURE:
 	return ( KTSnapshotOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
 }
 
-
-- (NSThread *)mainThread
-{
-	OBPOSTCONDITION(gMainThread);
-	return gMainThread;
-}
 
 #pragma mark -
 #pragma mark Debug Methods
@@ -3115,64 +2072,6 @@ FAILURE:
 	{
 		[oToggleMediaMenuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
 	}
-}
-
-/*! sets aMenuItem to display PRO icon  */
-- (void)setMenuItemPro:(NSMenuItem *)aMenuItem
-{
-	NSAttributedString *oldTitle = [aMenuItem attributedTitle];
-	NSDictionary *attrDict = nil;
-	if (nil == oldTitle)
-	{
-		attrDict = [NSDictionary dictionaryWithObjectsAndKeys:
-			[NSFont systemFontOfSize:([NSFont systemFontSize]+1.0)], NSFontAttributeName,
-			nil];
-		// No attributed string, so setup the title, we have to hand-tune the font size apparently
-		oldTitle = [[[NSMutableAttributedString alloc] initWithString:[aMenuItem title] attributes:attrDict] autorelease];
-	}
-	else
-	{
-		attrDict = [oldTitle attributesAtIndex:0 effectiveRange:nil];
-	}
-
-	NSAttributedString *spaceString = [[[NSAttributedString alloc] initWithString:@" " attributes:attrDict] autorelease];
-
-    // setup the image cell, with hand-tuned baseline!
-    NSTextAttachmentCell *cell = [[[NSTextAttachmentCell alloc] initImageCell:[NSImage imageNamed:@"PRO.png"]] autorelease];
-    NSTextAttachment *attachment = [[[NSTextAttachment alloc] init] autorelease];
-    [attachment setAttachmentCell:cell];
-    NSMutableAttributedString *newString = [[[NSMutableAttributedString alloc] initWithAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]] autorelease];
-    [newString addAttributes:attrDict range:NSMakeRange(0,[newString length])];
-	
-	float baselineOffset = -2.0;		// default if no para style
-	NSParagraphStyle *paraStyle = [attrDict objectForKey:NSParagraphStyleAttributeName];
-	if (nil != paraStyle)
-	{
-		float minimumLineHeight = [paraStyle minimumLineHeight];
-		NSFont *fontUsed = [attrDict objectForKey:NSFontAttributeName];
-		baselineOffset = (minimumLineHeight - [fontUsed xHeight]) / 2.0 - 4.0;
-	}
-	
-	[newString addAttribute:NSBaselineOffsetAttributeName
-					  value:[NSNumber numberWithFloat:baselineOffset]
-					  range:NSMakeRange(0,[newString length])];
-		
-	// set the attributed string
-	[newString appendAttributedString:spaceString];
-    [newString appendAttributedString:oldTitle];
-
-    // set the menu
-    [aMenuItem setAttributedTitle:newString];
-}
-
-/*! resets aMenuItem back to its original target, action, title, and representedObject */
-- (void)setMenuItemRegular:(NSMenuItem *)aMenuItem
-{
-    NSDictionary *dict = [aMenuItem representedObject];
-    [aMenuItem setTarget:nil];
-    [aMenuItem setAction:NSSelectorFromString([dict objectForKey:@"action"])];
-    [aMenuItem setTitle:[dict objectForKey:@"title"]];
-    [aMenuItem setRepresentedObject:[dict objectForKey:@"representedObject"]];
 }
 
 - (IBAction)toggleLogAllContextChanges:(id)sender

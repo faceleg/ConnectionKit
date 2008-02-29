@@ -44,4 +44,11 @@
 - (NSData *)representationForMIMEType:(NSString *)aMimeType;
 - (NSData *)representationForUTI:(NSString *)aUTI;
 
+- (NSData *)PNGRepresentation;
+- (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
+- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
+- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+
+- (NSData *)JPEG2000RepresentationWithQuality:(float)aQuality;
+
 @end
