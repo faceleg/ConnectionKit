@@ -32,6 +32,12 @@ KTCollectionPathStyle;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
 
+// Title
+- (void)setTitleHTML:(NSString *)value;
+- (NSString *)titleText;
+- (void)setTitleText:(NSString *)value;
+- (BOOL)canEditTitle;
+
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
 
 @end

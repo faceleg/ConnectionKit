@@ -80,12 +80,6 @@
 - (BOOL)includeInIndexAndPublish;
 - (BOOL)excludedFromSiteMap;
 
-// Title
-- (void)setTitleHTML:(NSString *)value;
-- (NSString *)titleText;
-- (void)setTitleText:(NSString *)value;
-- (BOOL)canEditTitle;
-
 // Site menu
 - (BOOL)includeInSiteMenu;
 - (void)setIncludeInSiteMenu:(BOOL)include;
