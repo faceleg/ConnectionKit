@@ -313,11 +313,6 @@
 #pragma mark -
 #pragma mark Page Hierarchy Queries
 
-- (KTPage *)root 
-{
-	return [self valueForKeyPath:@"documentInfo.root"];
-}
-
 - (KTPage *)parentOrRoot
 {
 	KTPage *result = [self parent];

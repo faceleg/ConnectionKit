@@ -12,6 +12,8 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "Debug.h"
+
 
 @implementation KTAbstractPage
 
@@ -37,6 +39,9 @@
 	KTAbstractPage *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
 														   inManagedObjectContext:[aParent managedObjectContext]];
 	
+	[result setValue:[aParent valueForKey:@"documentInfo"] forKey:@"documentInfo"];
+	
+	
 	// How the page is connected to its parent depends on the class type. KTPage needs special handling for the cache.
 	if ([result isKindOfClass:[KTPage class]])
 	{
@@ -47,10 +52,16 @@
 		[result setValue:aParent forKey:@"parent"];
 	}
 	
+	
 	return result;
 }
 
 - (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
+
+- (KTPage *)root 
+{
+	return [self valueForKeyPath:@"documentInfo.root"];
+}
 
 /*	Only KTPages can be collections
  */
@@ -60,6 +71,12 @@
 {
 	BOOL result = ((id)self == [self root]);
 	return result;
+}
+
+- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+{
+	SUBCLASSMUSTIMPLEMENT;
+	return nil;
 }
 
 @end

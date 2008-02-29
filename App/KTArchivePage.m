@@ -15,11 +15,17 @@
 
 + (NSString *)entityName { return @"ArchivePage"; }
 
-/*	Stop KSExtensibleManagedObject kicking in
+- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+{
+	return @"Yo yo yo!";
+}
+
+/*	Hacks to override KSExtensibleManagedObject
  */
 - (id)valueForUndefinedKey:(NSString *)key
 {
 	OBASSERT_NOT_REACHED("");
+	return nil;
 	return [super valueForUndefinedKey:key];
 }
 
@@ -28,5 +34,7 @@
 	OBASSERT_NOT_REACHED("");
 	[super setValue:value forUndefinedKey:key];
 }
+
+- (KTElementPlugin *)plugin { return nil; }
 
 @end

@@ -444,7 +444,7 @@ static NSArray *sReservedNames = nil;
 
 /*	Uploads the specified page and returns by reference the media & resources that it requires
  */
-- (void)threadedUploadPage:(KTPage *)page onlyUploadStalePages:(BOOL)staleOnly
+- (void)threadedUploadPage:(KTAbstractPage *)page onlyUploadStalePages:(BOOL)staleOnly
 {
 	// Fetch the publishing info for the page. Bail if it is not for publishing.
 	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForPage:)
@@ -502,7 +502,7 @@ static NSArray *sReservedNames = nil;
  *	
  *	If the page will not be published because it or a parent is a draft, returns nil.
  */
-- (NSDictionary *)publishingInfoForPage:(KTPage *)page;
+- (NSDictionary *)publishingInfoForPage:(KTAbstractPage *)page;
 {
 	// This MUST be called from the main thread
 	if (![NSThread isMainThread]) {
@@ -511,7 +511,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Bail early if the page is not for publishing
-	if ([page pageOrParentDraft])
+	if ([page isKindOfClass:[KTPage class]] && [(KTPage *)page pageOrParentDraft])
 	{
 		return nil;
 	}
@@ -522,7 +522,9 @@ static NSArray *sReservedNames = nil;
 	
 	// Source data
 	NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO isArchives:NO] stringByAdjustingHTMLForPublishing];
-	NSString *charset = [[page master] valueForKey:@"charset"];
+	
+	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
+	NSString *charset = [[masterPage master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];
 	NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
 	[info setObject:data forKey:@"sourceData"];
@@ -535,12 +537,12 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// RSS feed
-	if ([page boolForKey:@"collectionSyndicate"] && [page collectionCanSyndicate])
+	if ([page isKindOfClass:[KTPage class]] && [page boolForKey:@"collectionSyndicate"] && [(KTPage *)page collectionCanSyndicate])
 	{
-		NSString *RSSString = [page RSSRepresentation];
+		NSString *RSSString = [(KTPage *)page RSSRepresentation];
 		if (RSSString)
 		{
-			RSSString = [page fixPageLinksFromString:RSSString managedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]];
+			RSSString = [(KTPage *)page fixPageLinksFromString:RSSString managedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]];
 			
 			// Now that we have page contents in unicode, clean up to the desired character encoding.
 			// MAYBE DO THIS TOO IF WE USE SOMETHING OTHER THAN UTF8
@@ -548,22 +550,6 @@ static NSArray *sReservedNames = nil;
 // FIXME: If we specify UTF8 here, won't that get us in trouble?  Should we use other encodings, like of site?
 			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 			[info setObject:RSSData forKey:@"RSSData"];
-		}
-	}
-	
-	
-	// Archives
-	if ([[page children] count] > [[page sortedChildrenInIndex] count])
-	{
-		NSString *archivesString = [page archivesRepresentation];
-		if (archivesString)
-		{			
-			NSString *archivesString = [[page contentHTMLWithParserDelegate:self isPreview:NO isArchives:YES] stringByAdjustingHTMLForPublishing];
-			NSString *charset = [[page master] valueForKey:@"charset"];
-			NSStringEncoding encoding = [charset encodingFromCharset];
-			NSData *archivesData = [archivesString dataUsingEncoding:encoding allowLossyConversion:YES];
-			[info setObject:archivesData forKey:@"archivesData"];
-			[info setObject:[page archivesFilename] forKey:@"archivesFilename"];
 		}
 	}
 	
@@ -775,7 +761,7 @@ static NSArray *sReservedNames = nil;
 	@try
 	{
 		NSEnumerator *pagesEnumerator = [allPages objectEnumerator];
-		KTPage *aPage;
+		KTAbstractPage *aPage;
 		
 		while (aPage = [pagesEnumerator nextObject])
 		{

@@ -32,6 +32,8 @@ KTCollectionPathStyle;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
 
+- (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+
 @end
 
 
