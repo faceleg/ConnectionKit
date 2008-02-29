@@ -353,7 +353,11 @@
 	
 	
 	// Build a list of the file names already taken
-	NSMutableSet *unavailableFileNames = [NSMutableSet setWithSet:[[[self parent] children] valueForKey:@"fileName"]];
+	NSSet *siblingFileNames = [[[self parent] children] valueForKey:@"fileName"];
+	NSSet *archiveFileNames = [[self parent] valueForKeyPath:@"archivePages.fileName"];
+	NSMutableSet *unavailableFileNames = [NSMutableSet setWithCapacity:([siblingFileNames count] + [archiveFileNames count])];
+	[unavailableFileNames unionSet:siblingFileNames];
+	[unavailableFileNames unionSet:archiveFileNames];
 	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
