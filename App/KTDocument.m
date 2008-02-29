@@ -267,6 +267,7 @@
 		
 		// Create the document
 		[super initWithType:type error:error];
+		[[NSDocumentController sharedDocumentController] addDocument:self];	// So managed objects can access their document during init.
 		
 		
 		// Is this path a currently open document? if yes, close it!
