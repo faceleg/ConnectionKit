@@ -20,29 +20,18 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>KTHelpAnchor</key>
-	<string>RSS_Badge</string>
 	<key>KTMinimumAppVersion</key>
-	<string>1.1</string>
+	<string>1.5</string>
 	<key>KTPageletCanHaveTitle</key>
-	<false/>
+	<true/>
 	<key>KTPluginDescription</key>
 	<string>Links to the RSS feed for a collection</string>
-	<key>KTPluginIconName</key>
-	<string>bundleIcon.icns</string>
 	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>collectionID</key>
-		<string></string>
-		<key>iconPosition</key>
-		<integer>1</integer>
-		<key>iconStyle</key>
-		<integer>1</integer>
-	</dict>
+	<dict/>
 	<key>KTPluginName</key>
-	<string>RSS Badge</string>
+	<string>Collection Archive</string>
 	<key>KTPluginNibFile</key>
-	<string>RSSBadge</string>
+	<string>Inspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
@@ -50,6 +39,6 @@
 	<key>KTTemplateName</key>
 	<string>template</string>
 	<key>NSPrincipalClass</key>
-	<string>RSSBadgeDelegate</string>
+	<string>CollectionArchiveDelegate</string>
 </dict>
 </plist>

@@ -10,38 +10,12 @@
 #import <SandvoxPlugin.h>
 
 
-typedef enum {
-	RSSBadgeIconStyleNone = 0,
-	RSSBadgeIconStyleStandardOrangeSmall = 1,
-	RSSBadgeIconStyleStandardOrangeLarge = 2,
-	RSSBadgeIconStyleStandardGraySmall = 3,
-	RSSBadgeIconStyleStandardGrayLarge = 4,
-	RSSBadgeIconStyleAppleRSS = 5,
-	RSSBadgeIconStyleFlatXML = 6,
-	RSSBadgeIconStyleFlatRSS = 7,
-} RSSBadgeIconStyle;
-
-typedef enum {
-	RSSBadgeIconPositionLeft = 1,
-	RSSBadgeIconPositionRight = 2,
-} RSSBadgeIconPosition;
-
-
-@class MAImagePopUpButton;
-
-
 @interface CollectionArchiveDelegate : KTAbstractPluginDelegate
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
-	IBOutlet MAImagePopUpButton	*iconTypePopupButton;
 }
 
 // IB Actions
 - (IBAction)clearCollectionLink:(id)sender;
-
-// Collection accessors
-- (BOOL)useLargeIconLayout;
-
-- (NSString *)feedIconResourcePath;
 
 @end
