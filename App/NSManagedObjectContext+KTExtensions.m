@@ -376,11 +376,6 @@
 	return nil;
 }
 
-- (NSArray *)allPages;
-{
-	return [self allObjectsWithEntityName:@"Page" error:NULL];
-}
-
 - (void)lockPSCAndSelf
 {
 	//[self checkPublishingModeAndThread];

@@ -10,11 +10,22 @@
 #import "KTPage.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 
 @implementation KTAbstractPage
 
 + (NSString *)extensiblePropertiesDataKey { return nil; }
+
++ (NSString *)entityName { return @"AbstractPage"; }
+
+/*	Picks out all the pages correspoding to self's entity
+ */
++ (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC
+{
+	NSArray *result = [MOC allObjectsWithEntityName:[self entityName] error:NULL];
+	return result;
+}
 
 /*	Generic creation method for all page types.
  */

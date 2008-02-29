@@ -13,6 +13,8 @@
 
 @implementation KTArchivePage
 
++ (NSString *)entityName { return @"ArchivePage"; }
+
 /*	Stop KSExtensibleManagedObject kicking in
  */
 - (id)valueForUndefinedKey:(NSString *)key

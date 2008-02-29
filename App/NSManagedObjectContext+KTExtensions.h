@@ -90,7 +90,6 @@
 
 // returns context's Root
 - (KTPage *)root;
-- (NSArray *)allPages;
 
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page;
 @end

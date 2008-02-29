@@ -1077,7 +1077,7 @@ static NSArray *sReservedNames = nil;
 	NSArray *result = nil;
 	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
 	{
-		result = [[[self associatedDocument] managedObjectContext] allPages];
+		result = [KTAbstractPage allPagesInManagedObjectContext:[[self associatedDocument] managedObjectContext]];
 	}
 	else
 	{
