@@ -314,7 +314,7 @@
 - (void)loadPageIntoWebView:(KTPage *)page
 {
 	// Build the HTML
-	NSString *pageHTML = [page contentHTMLWithParserDelegate:self isPreview:YES isArchives:NO];
+	NSString *pageHTML = [page contentHTMLWithParserDelegate:self isPreview:YES];
 	
 	// There's a few keypaths that the parser will not pick up. We have to explicitly observe them here.
 	[self addParsedKeyPath:@"pluginHTMLIsFullPage" ofObject:page forParsedComponent:[self mainWebViewComponent]];
@@ -359,7 +359,7 @@
 	switch ([self viewType])
 	{
 		case KTSourceCodeView:
-			sourceCode = [page contentHTMLWithParserDelegate:nil isPreview:NO isArchives:NO];
+			sourceCode = [page contentHTMLWithParserDelegate:nil isPreview:NO];
 			break;
 		
 		case KTDOMSourceView:

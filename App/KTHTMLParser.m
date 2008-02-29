@@ -273,10 +273,6 @@ static unsigned sLastParserID;
 	myLiveDataFeeds = [[NSNumber alloc] initWithBool:flag];
 }
 
-- (BOOL)generateArchives { return myGenerateArchives; }
-
-- (void)setGenerateArchives:(int)gen { myGenerateArchives = gen; }
-
 - (BOOL)useAbsoluteMediaPaths { return myUseAbsoluteMediaPaths; }
 
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag { myUseAbsoluteMediaPaths = flag; }
@@ -354,7 +350,6 @@ static unsigned sLastParserID;
 	[cache overrideKey:@"parser" withValue:self];
 	if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
 	[cache overrideKey:@"HTMLGenerationPurpose" withValue:[NSNumber numberWithInt:[self HTMLGenerationPurpose]]];
-	[cache overrideKey:@"generateArchives" withValue:[NSNumber numberWithBool:[self generateArchives]]];	// give us access to the parser's delegate (which might be nil)
 	[cache overrideKey:@"userDefaults" withValue:[NSUserDefaults standardUserDefaults]];
 	[cache overrideKey:@"calloutContainerTemplateHTML" withValue:[[self class] calloutContainerTemplateHTML]];
 

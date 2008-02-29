@@ -521,7 +521,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Source data
-	NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO isArchives:NO] stringByAdjustingHTMLForPublishing];
+	NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
 	
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	NSString *charset = [[masterPage master] valueForKey:@"charset"];

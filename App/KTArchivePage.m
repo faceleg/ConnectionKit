@@ -15,9 +15,10 @@
 
 + (NSString *)entityName { return @"ArchivePage"; }
 
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
 {
-	return @"Yo yo yo!";
+	NSString *result = [[self parent] contentHTMLWithParserDelegate:parserDelegate isPreview:isPreview];
+	return result;
 }
 
 /*	Hacks to override KSExtensibleManagedObject
@@ -36,5 +37,11 @@
 }
 
 - (KTElementPlugin *)plugin { return nil; }
+
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	[self setTitleText:@"Collection archive test"];
+}
 
 @end

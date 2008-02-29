@@ -157,7 +157,7 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
 {
 	SUBCLASSMUSTIMPLEMENT;
 	return nil;

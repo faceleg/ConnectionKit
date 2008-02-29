@@ -92,7 +92,7 @@
 
 /*!	Return the HTML.
 */
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
 {
 	BOOL isProFeature = (9 == [[[self plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
 	if (isProFeature && ![[NSApp delegate] isPro])
@@ -117,7 +117,6 @@
 	} else {
 		[parser setHTMLGenerationPurpose:kGeneratingRemote];
 	}
-	[parser setGenerateArchives:isArchives];
 	
 	result = [parser parseTemplate];
 	[parser release];

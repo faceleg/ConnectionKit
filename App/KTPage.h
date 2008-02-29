@@ -247,7 +247,7 @@
 
 + (NSString *)pageTemplate;
 
-- (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview isArchives:(BOOL)isArchives;
+- (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 - (BOOL)pluginHTMLIsFullPage;
 - (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
 

@@ -37,7 +37,6 @@
 	KTPage					*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
 	NSNumber				*myLiveDataFeeds;
-	BOOL					myGenerateArchives;
 	BOOL					myUseAbsoluteMediaPaths;
 	KTHTMLParser			*myParentParser;	// Weak ref
 	
@@ -77,10 +76,6 @@
 
 - (BOOL)useAbsoluteMediaPaths;
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag;
-
-- (BOOL)generateArchives;
-- (void)setGenerateArchives:(int)gen;
-
 
 - (KTHTMLParser *)parentParser;
 
