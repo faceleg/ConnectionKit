@@ -467,7 +467,14 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	// Delete or add archive pages as needed
 	if (generateArchive)
 	{
-	
+		//NSSet *children = [self children];
+		
+		/// Temporary:
+		KTAbstractPage *page = [NSEntityDescription insertNewObjectForEntityForName:@"ArchivePage"
+															 inManagedObjectContext:[self managedObjectContext]];
+		
+		[page setValue:[NSDate distantPast] forKey:@"archiveStartDate"];
+		[page setValue:[NSDate distantFuture] forKey:@"archiveEndDate"];
 	}
 	else
 	{
@@ -481,19 +488,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent == %@", self];
 	NSArray *result = [[self managedObjectContext] objectsWithEntityName:@"ArchivePage" predicate:predicate error:NULL];
 	return result;
-}
-
-#pragma mark -
-#pragma mark Other
-
-/*	When creating a new page, load properties from the defaults
- */
-- (void)awakeFromInsert
-{
-	[super awakeFromInsert];
-	
-	[self setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"]
-			forKey:@"collectionSummaryMaxPages"];
 }
 
 @end

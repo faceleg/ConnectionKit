@@ -121,6 +121,8 @@
 	[pool release];
 }
 
++ (NSString *)extensiblePropertiesDataKey { return @"extensiblePropertiesData"; }
+
 + (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
 {
 	NSParameterAssert([aBundle bundleIdentifier]);
@@ -195,6 +197,21 @@
 
 #pragma mark -
 #pragma mark Awake
+
+/*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.
+*/
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+		
+	// attributes
+	NSDate *now = [NSDate date];
+	[self setValue:now forKey:@"creationDate"];
+	[self setValue:now forKey:@"lastModificationDate"];
+	
+	[self setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"]
+			forKey:@"collectionSummaryMaxPages"];
+}
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert
 */

@@ -13,6 +13,8 @@
 
 @implementation KTAbstractPage
 
++ (NSString *)extensiblePropertiesDataKey { return nil; }
+
 - (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
 
 /*	Only KTPages can be collections

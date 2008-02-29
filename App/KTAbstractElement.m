@@ -114,18 +114,6 @@
 	[self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
-/*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.
-*/
-- (void)awakeFromInsert
-{
-	[super awakeFromInsert];
-		
-	// attributes
-	NSCalendarDate *now = [NSCalendarDate calendarDate];
-	[self setValue:now forKey:@"creationDate"];
-	[self setValue:now forKey:@"lastModificationDate"];
-}
-
 /*!	Called after all the other awake messages, to populate from a drag.  Handles calling the delegate.
 */
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
