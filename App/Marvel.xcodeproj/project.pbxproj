@@ -89,7 +89,6 @@
 				3C1D06CD0D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06C90D5D67DA00782A95 /* PBXTargetDependency */,
-				3C095C0D0D5D284800DE6F62 /* PBXTargetDependency */,
 				3C1D06CB0D5D67DA00782A95 /* PBXTargetDependency */,
 				3C095C0F0D5D284D00DE6F62 /* PBXTargetDependency */,
 				3C095C090D5D282F00DE6F62 /* PBXTargetDependency */,
@@ -850,13 +849,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		3C095BD70D5D27E600DE6F62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = ArchiveIndex;
-		};
 		3C095BE00D5D27F100DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -912,13 +904,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ListingIndex;
-		};
-		3C095C0C0D5D284800DE6F62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = ArchiveIndex;
 		};
 		3C095C0E0D5D284D00DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1698,7 +1683,6 @@
 		3C007192095DCFF700474823 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/BugReporterViews.nib; sourceTree = "<group>"; };
 		3C036B3D095F5C9500E1DA3D /* criticalAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = criticalAlert.png; sourceTree = "<group>"; };
 		3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../Xcode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
-		3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ArchiveIndex.xcodeproj; path = ../Plugins/Indexes/ArchiveIndex/ArchiveIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadIndex.xcodeproj; path = ../Plugins/Indexes/DownloadIndex/DownloadIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../Plugins/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../Plugins/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2985,14 +2969,6 @@
 			name = Unused;
 			sourceTree = "<group>";
 		};
-		3C095BD10D5D27E600DE6F62 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C095BD80D5D27E600DE6F62 /* Archive.svxIndex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C095BDA0D5D27F100DE6F62 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3987,7 +3963,6 @@
 		3CA9FD200D63A06A00815310 /* Indexes */ = {
 			isa = PBXGroup;
 			children = (
-				3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */,
 				3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */,
 				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
 				3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */,
@@ -4890,10 +4865,6 @@
 					ProjectRef = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C095BD10D5D27E600DE6F62 /* Products */;
-					ProjectRef = 3C095BD00D5D27E600DE6F62 /* ArchiveIndex.xcodeproj */;
-				},
-				{
 					ProductGroup = 3CA9FF2A0D63C16500815310 /* Products */;
 					ProjectRef = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
 				},
@@ -5070,13 +5041,6 @@
 			fileType = wrapper.cfbundle;
 			path = CollectionArchive.svxElement;
 			remoteRef = 274339ED0D77339B00164FA5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C095BD80D5D27E600DE6F62 /* Archive.svxIndex */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Archive.svxIndex;
-			remoteRef = 3C095BD70D5D27E600DE6F62 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C095BE10D5D27F100DE6F62 /* Download.svxIndex */ = {
@@ -6143,11 +6107,6 @@
 			isa = PBXTargetDependency;
 			name = ListingIndex;
 			targetProxy = 3C095C0A0D5D283200DE6F62 /* PBXContainerItemProxy */;
-		};
-		3C095C0D0D5D284800DE6F62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ArchiveIndex;
-			targetProxy = 3C095C0C0D5D284800DE6F62 /* PBXContainerItemProxy */;
 		};
 		3C095C0F0D5D284D00DE6F62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
