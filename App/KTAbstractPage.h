@@ -23,6 +23,8 @@ KTCollectionPathStyle;
 
 }
 
++ (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
+
 - (KTPage *)parent;
 - (BOOL)isCollection;
 - (BOOL)isRoot;

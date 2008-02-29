@@ -470,8 +470,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		//NSSet *children = [self children];
 		
 		/// Temporary:
-		KTAbstractPage *page = [NSEntityDescription insertNewObjectForEntityForName:@"ArchivePage"
-															 inManagedObjectContext:[self managedObjectContext]];
+		KTAbstractPage *page = [KTAbstractPage pageWithParent:self entityName:@"ArchivePage"];
 		
 		[page setValue:[NSDate distantPast] forKey:@"archiveStartDate"];
 		[page setValue:[NSDate distantFuture] forKey:@"archiveEndDate"];
