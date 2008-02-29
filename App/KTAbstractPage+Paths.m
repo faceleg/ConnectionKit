@@ -50,8 +50,34 @@
  */
 - (NSString *)suggestedFileName
 {
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
+	// The home page's title isn't settable, so keep it constant
+	if ([self isRoot]) {
+		return @"home_page";
+	}
+	
+	
+	// Build a list of the file names already taken
+	NSSet *siblingFileNames = [[[self parent] children] valueForKey:@"fileName"];
+	NSSet *archiveFileNames = [[self parent] valueForKeyPath:@"archivePages.fileName"];
+	NSMutableSet *unavailableFileNames = [NSMutableSet setWithCapacity:([siblingFileNames count] + [archiveFileNames count])];
+	[unavailableFileNames unionSet:siblingFileNames];
+	[unavailableFileNames unionSet:archiveFileNames];
+	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
+	
+	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
+	NSString *result = [[self titleText] legalizeFileNameWithFallbackID:[self uniqueID]];
+	NSString *baseFileName = result;
+	int suffixCount = 2;
+	
+	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
+	while ([unavailableFileNames containsObject:result])
+	{
+		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
+	}
+	
+	OBPOSTCONDITION(result);
+	
+	return result;
 }
 
 #pragma mark -

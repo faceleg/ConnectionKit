@@ -81,6 +81,21 @@
 }
 
 #pragma mark -
+#pragma mark Simple Accessors
+
+- (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
+
+- (void)setIsStale:(BOOL)stale
+{
+	BOOL valueWillChange = (stale != [self boolForKey:@"isStale"]);
+	
+	if (valueWillChange)
+	{
+		[self setWrappedBool:stale forKey:@"isStale"];
+	}
+}
+
+#pragma mark -
 #pragma mark Title
 
 // Flatten the string and just store a fake attributed string.

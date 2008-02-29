@@ -30,18 +30,6 @@
 #pragma mark -
 #pragma mark Simple Accessors
 
-- (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
-
-- (void)setIsStale:(BOOL)stale
-{
-	BOOL valueWillChange = (stale != [self boolForKey:@"isStale"]);
-	
-	if (valueWillChange)
-	{
-		[self setWrappedBool:stale forKey:@"isStale"];
-	}
-}
-
 /*	By default this is set to NO. Plugins can override it either in their info.plist, or dynamically at run-time
  *	using the -setDisableComments: method.
  */

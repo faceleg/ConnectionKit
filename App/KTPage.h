@@ -65,9 +65,6 @@
 
 @interface KTPage (Accessors)
 
-- (BOOL)isStale;
-- (void)setIsStale:(BOOL)stale;
-
 - (BOOL)disableComments;
 - (void)setDisableComments:(BOOL)disableComments;
 
