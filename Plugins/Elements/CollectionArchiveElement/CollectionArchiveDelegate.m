@@ -31,6 +31,8 @@
 			[[self delegateOwner] setValue:parent forKey:@"collection"];
 		}
 	}
+	
+	[[[self delegateOwner] valueForKey:@"collection"] setCollectionGenerateArchives:YES];
 }
 
 #pragma mark -
@@ -72,6 +74,35 @@
 {
 	[[self delegateOwner] setValue:nil forKey:@"collection"];
 	[collectionLinkSourceView setConnected:NO];
+}
+
+#pragma mark -
+#pragma mark Settings
+
+/*	Changing collection means disabling archives on the old collection if necessary
+ */
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+{
+	if ([key isEqualToString:@"collection"])
+	{
+		// Turn off the old collection's archives if not needed
+		BOOL enableArchives = NO;
+		NSArray *archivePagelets = [[plugin managedObjectContext] pageletsWithPluginIdentifier:[[self bundle] bundleIdentifier]];
+		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
+		KTPagelet *aPagelet;
+		while (aPagelet = [pageletsEnumerator nextObject])
+		{
+			if ([[aPagelet valueForKey:@"collection"] isEqual:(KTPage *)oldValue])
+			{
+				enableArchives = YES;
+				break;
+			}
+		}
+		[(KTPage *)oldValue setCollectionGenerateArchives:enableArchives];
+		
+		// Enable archives on the new page.
+		[(KTPage *)value setCollectionGenerateArchives:YES];
+	}
 }
 
 @end

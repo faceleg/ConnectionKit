@@ -458,7 +458,13 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive
 {
+	// Ignore requests that will do nothing
+	if (generateArchive == [self collectionGenerateArchives]) return;
+	
+	// Store the value
 	[self setWrappedBool:generateArchive forKey:@"collectionGenerateArchives"];
+	
+	// Delete or add archive pages as needed
 }
 
 #pragma mark -
