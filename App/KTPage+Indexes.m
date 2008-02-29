@@ -14,6 +14,7 @@
 
 #import "NSCharacterSet+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 #import "NSXMLElement+Karelia.h"
 
@@ -391,8 +392,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	return result;
 }
 
-#pragma mark -
-#pragma mark Custom Summary
+#pragma mark custom summary
 
 /*	Returns nil if there is no custom summary
  */
@@ -400,8 +400,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 - (void)setCustomSummaryHTML:(NSString *)HTML { [self setWrappedValue:HTML forKey:@"customSummaryHTML"]; }
 
-#pragma mark -
-#pragma mark Title List
+#pragma mark title list
 
 /*	Constructs the HTML for a title list-style summary using the specified ordering
  */
@@ -423,6 +422,43 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	[result appendFormat:@"</ul>"];
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Archives
+
+/*	This is a transient NOT persistent property. When accessed for the first time, we look for any pagelets requesting archive
+ *	generation and set the value accordingly.
+ */
+- (BOOL)collectionGenerateArchives
+{
+	NSNumber *result = [self wrappedValueForKey:@"collectionGenerateArchives"];
+	
+	if (!result)
+	{
+		result = [NSNumber numberWithBool:NO];
+		
+		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchive"];
+		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
+		KTPagelet *aPagelet;
+		while (aPagelet = [pageletsEnumerator nextObject])
+		{
+			if ([[aPagelet valueForKey:@"collection"] isEqual:self])
+			{
+				result = [NSNumber numberWithBool:YES];
+				break;
+			}
+		}
+		
+		[self setPrimitiveValue:result forKey:@"collectionGenerateArchives"];
+	}
+	
+	return [result boolValue];
+}
+
+- (void)setCollectionGenerateArchives:(BOOL)generateArchive
+{
+	[self setWrappedBool:generateArchive forKey:@"collectionGenerateArchives"];
 }
 
 #pragma mark -

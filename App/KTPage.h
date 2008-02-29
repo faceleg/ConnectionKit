@@ -185,6 +185,10 @@
 
 - (NSString *)titleListHTMLWithSorting:(KTCollectionSortType)sortType;
 
+// Archive
+- (BOOL)collectionGenerateArchives;
+- (void)setCollectionGenerateArchives:(BOOL)generateArchive;
+
 @end
 
 

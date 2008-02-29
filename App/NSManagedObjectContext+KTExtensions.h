@@ -86,6 +86,8 @@
 // returns objectWithUniqueID: searching only Page
 - (KTPage *)pageWithUniqueID:(NSString *)anID;
 
+- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
+
 // returns context's Root
 - (KTPage *)root;
 - (NSArray *)allPages;

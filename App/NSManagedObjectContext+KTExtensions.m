@@ -303,6 +303,21 @@
 	return result;
 }
 
+- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier
+{
+	NSArray *result = nil;
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pluginIdentifier == %@", pluginIdentifier];
+	
+	NSError *error = nil;
+	result = [self objectsWithEntityName:@"Pagelet" predicate:predicate error:&error];
+	if (error) {
+		[[NSAlert alertWithError:error] runModal];
+	}
+	
+	return result;
+}
+
 - (NSManagedObject *)objectWithURIRepresentation:(NSURL *)aURL
 {
 	NSAssert((nil != aURL), @"aURL cannot be nil");
