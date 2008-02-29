@@ -530,7 +530,7 @@
 		798634F4094E763F003B2653 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 798634F2094E763F003B2653 /* remove.png */; };
 		79B731110A33BF9A008F7F58 /* KTHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B7310F0A33BF9A008F7F58 /* KTHost.m */; };
 		79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
-		79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
+		79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
 		79EC3C030973CECD00FE7D50 /* upload_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC3C020973CECD00FE7D50 /* upload_complete.png */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -1527,10 +1527,20 @@
 				3CE2CA970D6D54D400B2D56B /* iMediaBrowser.framework in Copy Frameworks */,
 				3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */,
 				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
-				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
+			);
+			name = "Copy Frameworks ALWAYS";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -4815,6 +4825,7 @@
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
+				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */,

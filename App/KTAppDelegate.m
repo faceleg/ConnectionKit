@@ -55,6 +55,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KSUtilities.h"
 #import "NSException+Karelia.h"
 #import "NSString+KTApplication.h"
+#import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSError+Karelia.h"
 #import "NSArray+KTExtensions.h"
