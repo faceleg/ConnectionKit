@@ -35,6 +35,7 @@
 //
 
 #import "URLSource.h"
+#import "NSURL+KTExtensions.h"
 
 @implementation URLSource
 

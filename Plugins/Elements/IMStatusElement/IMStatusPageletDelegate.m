@@ -16,7 +16,7 @@
 
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
-
+#import "NSImage+KTExtensions.h"
 
 NSString *IMServiceKey = @"service";
 NSString *IMHTMLKey = @"html"; 

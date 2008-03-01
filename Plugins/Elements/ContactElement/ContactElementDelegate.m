@@ -116,13 +116,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 											   object:oArrayController];
 }
 
-
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	if (isNewObject)
 	{
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		NSString *address = [defaults objectForKey:DEFAULTS_ADDRESS_KEY];
+		NSString *address = [defaults objectForKey:@"KSEmailAddress"];
 		if (nil != address)
 		{
 			unsigned int whereSpace = [address rangeOfString:@" "].location;

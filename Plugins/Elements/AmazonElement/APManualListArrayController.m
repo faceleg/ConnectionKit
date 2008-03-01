@@ -15,6 +15,7 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "NSURL+AmazonPagelet.h"
+#import "NSURL+KTExtensions.h"
 
 
 @implementation APManualListArrayController

@@ -190,7 +190,7 @@
 	
 	// Draw the single line of text in the centre of the cell
 	[drawingCell setStringValue: line];
-	[drawingCell setVerticalAlignment: KTVerticalCenterTextAlignment];
+	[drawingCell setVerticalAlignment: KSVerticalCenterTextAlignment];
 	
 	[drawingCell drawWithFrame: cellFrame inView: controlView];
 }
@@ -215,11 +215,11 @@
 	}
 	
 	[cell setStringValue: line1];
-	[cell setVerticalAlignment: KTBottomTextAlignment];
+	[cell setVerticalAlignment: KSBottomTextAlignment];
 	[cell drawWithFrame: topRect inView: controlView];
 	
 	[cell setStringValue: line2];
-	[cell setVerticalAlignment: KTTopTextAlignment];
+	[cell setVerticalAlignment: KSTopTextAlignment];
 	[cell drawWithFrame: bottomRect inView: controlView];
 }
 
