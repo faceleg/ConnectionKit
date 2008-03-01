@@ -28,7 +28,7 @@
 #import "KSSilencingConfirmSheet.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-#import "NSTextView+KTApplication.h"
+#import "NSTextView+KTExtensions.h"
 #import "WebView+Karelia.h"
 #import "NSView+Karelia.h"
 

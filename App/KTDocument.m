@@ -49,7 +49,7 @@
 
 #import "KTCodeInjectionController.h"
 
-#import "KTAbstractBugReporter.h"
+#import "KSAbstractBugReporter.h"
 #import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
@@ -76,7 +76,8 @@
 #import "NSFileManager+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSApplication+Karelia.h"
-
+#import "NSWindow+Karelia.h"
+#import "NSImage+Karelia.h"
 #import <iMediaBrowser/iMediaBrowser.h>
 
 #import "Registration.h"
@@ -308,7 +309,7 @@
 		[root setValue:master forKey:@"master"];
 		
 		// Set the design
-		KTDesign *design = [[[[KTAppDelegate sharedInstance] designManager] sortedDesigns] firstObject];
+		KTDesign *design = [[[[NSApp delegate] designManager] sortedDesigns] firstObject];
 		[master setDesign:design];		
 
 		// set up root properties that used to come from document defaults
@@ -444,7 +445,7 @@
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
 		// remember this as an open document
-		[[KTAppDelegate sharedInstance] performSelector:@selector(updateLastOpened)
+		[[NSApp delegate] performSelector:@selector(updateLastOpened)
 											 withObject:nil
 											 afterDelay:0.0];
 		
@@ -824,13 +825,13 @@
         if ( [[[KTDocumentController sharedDocumentController] documents] count] == 1 )
         {
             // close media window
-            [[KTAppDelegate sharedInstance] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
+            [[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
             [[iMediaBrowser sharedBrowser] close];
         }
     }
 	
 	// try to forget this was an open document
-	[[KTAppDelegate sharedInstance] performSelector:@selector(updateLastOpened) 
+	[[NSApp delegate] performSelector:@selector(updateLastOpened) 
 	withObject:nil
 	afterDelay:0.0];
 	
@@ -1672,7 +1673,7 @@
 //  screenshot3 = inspector window, if visible
 // alternative: use screencapture to write a jpeg of the entire screen to the user's temp directory
 
-- (void)addScreenshotsToReport:(NSMutableDictionary *)report attachmentOwner:(NSString *)attachmentOwner
+- (void)addScreenshotsToReport:(NSMutableDictionary *)report  attachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 {
 	
 	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];

@@ -10,6 +10,7 @@
 
 #import "KTImageScalingSettings.h"
 #import "NSImage+Karelia.h"
+#import "NSBitmapImageRep+Karelia.h"
 
 
 @implementation NSImage ( KTApplication )

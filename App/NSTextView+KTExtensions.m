@@ -1,5 +1,5 @@
 //
-//  NSTextView+KTApplication.m
+//  NSTextView+KTExtensions.m
 //  Marvel
 //
 //  Created by Dan Wood on 4/13/07.
@@ -12,7 +12,7 @@
 // Note: font from HTMLViewFontName & HTMLViewPointSize defaults
 
 
-#import "NSTextView+KTApplication.h"
+#import "NSTextView+KTExtensions.h"
 
 #import "NSArray+Karelia.h"
 #import "NSScanner+Karelia.h"

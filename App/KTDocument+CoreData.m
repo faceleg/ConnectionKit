@@ -171,7 +171,7 @@
                 NSString *bundleIdentifier;
                 while ( bundleIdentifier  = [e nextObject] )
                 {
-                    NSBundle *bundle = [[[[KTAppDelegate sharedInstance] bundleManager] pluginWithIdentifier:bundleIdentifier] bundle];
+                    NSBundle *bundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:bundleIdentifier] bundle];
                     if ( nil != bundle )
                     {
                         // NB: bundles without delegates may not have a principal class
@@ -236,7 +236,7 @@
 //	}
 		
 	// log changes if set in Debug menu
-	if ( [[KTAppDelegate sharedInstance] logAllContextChanges] )
+	if ( [[NSApp delegate] logAllContextChanges] )
 	{		
 		NSLog(@"================== contextDidChange: ==================");		
 		if ( [NSThread isMainThread] )

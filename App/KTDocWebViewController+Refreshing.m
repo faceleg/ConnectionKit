@@ -24,7 +24,7 @@
 #import "KTParsedKeyPath.h"
 #import "KTParsedWebViewComponent.h"
 #import "NSString-Utilities.h"
-#import "NSTextView+KTApplication.h"
+#import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 
 #import "DOMNode+KTExtensions.h"

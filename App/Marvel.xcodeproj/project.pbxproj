@@ -649,7 +649,6 @@
 		CEC11AF20D78BE3D00513E70 /* KSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */; };
 		CEC11AF30D78BE3D00513E70 /* KSValidateCharFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */; };
 		CEC11AF40D78BE3D00513E70 /* KSVerticallyAlignedTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */; };
-		CEC11AF50D78BE3D00513E70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8D0D78BE3C00513E70 /* main.m */; };
 		CEC11AF60D78BE3D00513E70 /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8E0D78BE3C00513E70 /* MyTableView.m */; };
 		CEC11AF70D78BE3D00513E70 /* NSAppleScript+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */; };
 		CEC11AF80D78BE3D00513E70 /* NSApplication+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */; };
@@ -2268,7 +2267,6 @@
 		CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSUtilities.m; path = ../../../Shared/trunk/App/KSUtilities.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSValidateCharFormatter.m; path = ../../../Shared/trunk/App/KSValidateCharFormatter.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSVerticallyAlignedTextCell.m; path = ../../../Shared/trunk/App/KSVerticallyAlignedTextCell.m; sourceTree = SOURCE_ROOT; };
-		CEC11A8D0D78BE3C00513E70 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../../Shared/trunk/App/main.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8E0D78BE3C00513E70 /* MyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTableView.m; path = ../../../Shared/trunk/App/MyTableView.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAppleScript+Karelia.m"; path = "../../../Shared/trunk/App/NSAppleScript+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+Karelia.m"; path = "../../../Shared/trunk/App/NSApplication+Karelia.m"; sourceTree = SOURCE_ROOT; };
@@ -4300,7 +4298,6 @@
 				CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */,
 				CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */,
 				CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */,
-				CEC11A8D0D78BE3C00513E70 /* main.m */,
 				CEC11A8E0D78BE3C00513E70 /* MyTableView.m */,
 				CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */,
 				CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */,
@@ -5793,7 +5790,6 @@
 				CEC11AF20D78BE3D00513E70 /* KSUtilities.m in Sources */,
 				CEC11AF30D78BE3D00513E70 /* KSValidateCharFormatter.m in Sources */,
 				CEC11AF40D78BE3D00513E70 /* KSVerticallyAlignedTextCell.m in Sources */,
-				CEC11AF50D78BE3D00513E70 /* main.m in Sources */,
 				CEC11AF60D78BE3D00513E70 /* MyTableView.m in Sources */,
 				CEC11AF70D78BE3D00513E70 /* NSAppleScript+Karelia.m in Sources */,
 				CEC11AF80D78BE3D00513E70 /* NSApplication+Karelia.m in Sources */,

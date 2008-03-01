@@ -161,7 +161,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 - (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
 - (void)editKTHTMLElement:(KTAbstractElement *)anElement;
 
-- (void)addScreenshotsToReport:(NSMutableDictionary *)report  attachmentOwner:(NSString *)attachmentOwner;
+- (void)addScreenshotsToReport:(NSMutableDictionary *)report  attachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 
 @end
 

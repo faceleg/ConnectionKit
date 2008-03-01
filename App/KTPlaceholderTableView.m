@@ -117,7 +117,7 @@
 		myPlaceholderCell = [[KSVerticallyAlignedTextCell alloc] initTextCell:@""];
 		
 		[myPlaceholderCell setAlignment:NSCenterTextAlignment];
-		[myPlaceholderCell setVerticalAlignment:KTVerticalCenterTextAlignment];
+		[myPlaceholderCell setVerticalAlignment:KSVerticalCenterTextAlignment];
 		
 		float fontSize = [NSFont systemFontSizeForControlSize:NSSmallControlSize];
 		NSFont *font = [NSFont boldSystemFontOfSize:fontSize];

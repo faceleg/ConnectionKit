@@ -139,7 +139,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 															  keyEquivalent:@""];
 			if ( nil == gRegistrationString )
 			{
-				[[KTAppDelegate sharedInstance] setMenuItemPro:editRawHTMLItem];
+				[[NSApp delegate] setMenuItemPro:editRawHTMLItem];
 			}
 			[editRawHTMLItem setRepresentedObject:nil];
 			[editRawHTMLItem setTarget:nil];

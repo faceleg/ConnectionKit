@@ -35,9 +35,11 @@
 #import "NSApplication+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSImage+Karelia.h"
+#import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
+#import "NSURL+KTExtensions.h"
 
 #import "DOMNode+KTExtensions.h"
 
@@ -1032,7 +1034,7 @@ but the only trick is -- how to display a highlight?
 			
 			if ( nil == gRegistrationString )
 			{
-				[[KTAppDelegate sharedInstance] setMenuItemPro:editRawHTMLItem];
+				[[NSApp delegate] setMenuItemPro:editRawHTMLItem];
 			}
 			[editRawHTMLItem setRepresentedObject:nil];
 			[editRawHTMLItem setTarget:nil];

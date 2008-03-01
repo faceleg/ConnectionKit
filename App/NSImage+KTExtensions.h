@@ -49,6 +49,5 @@
 - (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
 - (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
 
-- (NSData *)JPEG2000RepresentationWithQuality:(float)aQuality;
 
 @end

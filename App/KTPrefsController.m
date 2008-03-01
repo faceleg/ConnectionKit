@@ -15,6 +15,7 @@
 #import "KSEmailAddressComboBox.h"
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSImage+KTExtensions.h"
 #import "NSApplication+Karelia.h"
 
 

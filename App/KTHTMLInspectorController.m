@@ -23,7 +23,7 @@
 #import "KTPage.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-#import "NSTextView+KTApplication.h"
+#import "NSTextView+KTExtensions.h"
 
 #import "Registration.h"
 

@@ -9,6 +9,6 @@
 #import "KSTextViewController.h"
 
 
-@interface KSReleaseNotesController : KTTextViewController { }
+@interface KTReleaseNotesController : KSTextViewController { }
 
 @end

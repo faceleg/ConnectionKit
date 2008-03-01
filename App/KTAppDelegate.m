@@ -32,6 +32,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTAcknowledgmentsController.h"
 #import "KTApplication.h"
 #import "KTDesignManager.h"
+#import "KTBundleManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
@@ -209,7 +210,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		while ( (cur = [e nextObject]) )
 		{
-			if ([cur isKindOfClass:[KSDocument class]])	// make sure it's a KSDocument
+			if ([cur isKindOfClass:[KTDocument class]])	// make sure it's a KSDocument
 			{
 				////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because app is newly registered", NSStringFromSelector(_cmd)));
 				///	TODO:	Make this happen again.
@@ -521,6 +522,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	[myDesignManager release]; myDesignManager = nil;
 	
+	[myBundleManager release]; myBundleManager = nil;
+
 	[myDocumentController release]; myDocumentController = nil;
 
 #ifdef OBSERVE_UNDO
@@ -1033,6 +1036,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[self setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
 		}
 		
+		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
         if ( firstRun )
         {
 			[self performSelector:@selector(checkPlaceholderWindow:) 
@@ -1482,6 +1486,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	myAppIsTerminating = aFlag;
 }
 
+- (KTBundleManager *)bundleManager
+{
+	OBPOSTCONDITION(myBundleManager);
+    return myBundleManager;
+}
+
 #pragma mark -
 #pragma mark IBActions
 
@@ -1622,13 +1632,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		[[KTAppDelegate sharedInstance] setDisplayMediaMenuItemTitle:KTHideMediaMenuItemTitle];
+		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTHideMediaMenuItemTitle];
 		[browser setIdentifier:@"Sandvox"];
 		[browser showWindow:sender];
 	}
 	else
 	{
-		[[KTAppDelegate sharedInstance] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
+		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
 		[browser close];
 	}
 
@@ -1685,6 +1695,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
 		}
 	}
+}
+
+- (IBAction)showAcknowledgments:(id)sender
+{
+    [[KTAcknowledgmentsController sharedController] showWindow:nil];
+}
+
+- (IBAction)showReleaseNotes:(id)sender
+{
+    [[KTReleaseNotesController sharedController] showWindow:nil];
 }
 
 #pragma mark -

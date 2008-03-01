@@ -223,7 +223,7 @@ static KTNewsController *sSharedNewsController = nil;
 	[[NSApp delegate] setNewsHasChanged:NO];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:[NSDate date] forKey:@"lastSawFeedDate"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTBadgeUpdateNotification
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKSBadgeUpdateNotification
 														object:nil]; 
 	
 }

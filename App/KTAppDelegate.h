@@ -170,6 +170,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	//KTDocument				*myCurrentDocument;
 	
 	KTDocumentController	*myDocumentController;
+	KTBundleManager         *myBundleManager;
 	
 
     BOOL applicationIsLaunching;
@@ -185,7 +186,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (IBAction) crash:(id)sender;
 - (IBAction) generateException:(id)sender;
-- (IBAction) reportLatestCrash:(id)sender;
 - (IBAction) openHigh:(id)sender;
 - (IBAction) openLow:(id)sender;
 
@@ -206,31 +206,24 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 //- (NSDictionary *)compositeDocumentModel;
 
-- (void) checkRegistrationString:(NSString *)aString;
-- (NSString *)registrationReport;
 
 - (KTDocument *)documentWithID:(NSString *)anID;
 
 
 - (IBAction)openSampleDocument:(id)sender;
 
-- (IBAction)orderFrontLicensingPanel:(id)sender;
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;
 
 - (IBAction)showAvailableComponents:(id)sender;
-- (IBAction)showNewsWindow:(id)sender;
+- (IBAction)showAcknowledgments:(id)sender;
+- (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)showTranscriptWindow:(id)sender;
-- (IBAction)getUpdatedApplication:(id)sender;
-- (IBAction)showRegistrationWindow:(id)sender;
-- (IBAction)showPluginWindow:(id)sender;
 - (IBAction)showAvailableMedia:(id)sender;
 - (IBAction)showAvailableDesigns:(id)sender;
 
-- (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showDiscussionGroup:(id)sender;
 - (IBAction)showProductPage:(id)sender;
-- (IBAction)showReleaseNotes:(id)sender;
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 - (IBAction)viewPublishedSite:(id)sender;
@@ -240,10 +233,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 - (KTDesignManager *)designManager;
-
-- (void)showGenericProgressPanelWithMessage:(NSString *)aString image:(NSImage *)anImage;
-- (void)updateGenericProgressPanelWithMessage:(NSString *)aString;
-- (void)hideGenericProgressPanel;
+- (KTBundleManager *)bundleManager;
 
 // methods to allow current document to update menus
 - (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;

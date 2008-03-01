@@ -48,7 +48,7 @@
 #import "KSTextField.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"
-#import "NSTextView+KTApplication.h"
+#import "NSTextView+KTExtensions.h"
 #import "NTBoxView.h"
 #import "Registration.h"
 #import <WebKit/WebKit.h>
@@ -295,7 +295,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(updateStinkingBadges:)
-													 name:kKTBadgeUpdateNotification
+													 name:kKSBadgeUpdateNotification
 												   object:nil];
 		[self updateStinkingBadges:nil];	// update them now
 		
@@ -716,11 +716,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		[[KTAppDelegate sharedInstance] setDisplayInfoMenuItemTitle:KTHideInfoMenuItemTitle];
+		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTHideInfoMenuItemTitle];
 	}
 	else
 	{
-		[[KTAppDelegate sharedInstance] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
+		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
 	}
 	
 	// display info, if appropriate
@@ -1839,25 +1839,25 @@ from representedObject */
 		
 		if ( (firstResponder != oSiteOutline) || ([selectedPages count] == 0) )
 		{
-			[[KTAppDelegate sharedInstance] setCutMenuItemTitle:KTCutMenuItemTitle];
+			[[NSApp delegate] setCutMenuItemTitle:KTCutMenuItemTitle];
 		}
 		else if ( [selectedPages count] > 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCutMenuItemTitle:KTCutPagesMenuItemTitle];
+			[[NSApp delegate] setCutMenuItemTitle:KTCutPagesMenuItemTitle];
 		}
 		else if ( [selectedPages count] == 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCutMenuItemTitle:KTCutPageMenuItemTitle];
+			[[NSApp delegate] setCutMenuItemTitle:KTCutPageMenuItemTitle];
 		}
 		
 		// set alternate menu item, default is Cut Page
 		if ( [selectedPages count] > 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCutPagesMenuItemTitle:KTCutPagesMenuItemTitle];
+			[[NSApp delegate] setCutPagesMenuItemTitle:KTCutPagesMenuItemTitle];
 		}
 		else
 		{
-			[[KTAppDelegate sharedInstance] setCutPagesMenuItemTitle:KTCutPageMenuItemTitle];
+			[[NSApp delegate] setCutPagesMenuItemTitle:KTCutPageMenuItemTitle];
 		}
 	}
 }
@@ -1872,25 +1872,25 @@ from representedObject */
 		
 		if ( (firstResponder != oSiteOutline) || ([selectedPages count] == 0) )
 		{
-			[[KTAppDelegate sharedInstance] setCopyMenuItemTitle:KTCopyMenuItemTitle];
+			[[NSApp delegate] setCopyMenuItemTitle:KTCopyMenuItemTitle];
 		}
 		else if ( [selectedPages count] > 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCopyMenuItemTitle:KTCopyPagesMenuItemTitle];
+			[[NSApp delegate] setCopyMenuItemTitle:KTCopyPagesMenuItemTitle];
 		}
 		else if ( [selectedPages count] == 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCopyMenuItemTitle:KTCopyPageMenuItemTitle];
+			[[NSApp delegate] setCopyMenuItemTitle:KTCopyPageMenuItemTitle];
 		}
 		
 		// set alternate menu item, default is Cut Page
 		if ( [selectedPages count] > 1 )
 		{
-			[[KTAppDelegate sharedInstance] setCopyPagesMenuItemTitle:KTCopyPagesMenuItemTitle];
+			[[NSApp delegate] setCopyPagesMenuItemTitle:KTCopyPagesMenuItemTitle];
 		}
 		else
 		{
-			[[KTAppDelegate sharedInstance] setCopyPagesMenuItemTitle:KTCopyPageMenuItemTitle];
+			[[NSApp delegate] setCopyPagesMenuItemTitle:KTCopyPageMenuItemTitle];
 		}
 	}
 }
@@ -1902,17 +1902,17 @@ from representedObject */
 	{
 		if ( [selectedPages count] > 1 )
 		{
-			[[KTAppDelegate sharedInstance] setDeletePagesMenuItemTitle:KTDeletePagesMenuItemTitle];
+			[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeletePagesMenuItemTitle];
 		}
 		else
 		{
 			if ( [(KTPage *)[selectedPages objectAtIndex:0] isCollection] )
 			{
-				[[KTAppDelegate sharedInstance] setDeletePagesMenuItemTitle:KTDeleteCollectionMenuItemTitle];
+				[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeleteCollectionMenuItemTitle];
 			}
 			else
 			{
-				[[KTAppDelegate sharedInstance] setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
+				[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
 			}
 		}
 	}
@@ -2103,11 +2103,11 @@ from representedObject */
 		[[NSUserDefaults standardUserDefaults] setObject:topLeftAsString forKey:gInfoWindowAutoSaveName];
 
 		[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"DisplayInfo"];
-		[[KTAppDelegate sharedInstance] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
+		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
 	}
 	else if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
 	{
-		[[KTAppDelegate sharedInstance] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
+		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
 	}
 	else if ([[aNotification object] isKindOfClass:[KTDocWindow class]])
 	{
@@ -2473,7 +2473,7 @@ from representedObject */
 												width,
 												[oUpdateMarvelBadge frame].size.height)];
 		
-		[oUpdateMarvelBadge setAction:@selector(getUpdatedApplication:)];
+//  DEPRECATING SLOWLY...		[oUpdateMarvelBadge setAction:@selector(getUpdatedApplication:)];
 		nextX = [oUpdateMarvelBadge frame].origin.x - BETWEEN;
 	}
 	
@@ -2490,7 +2490,7 @@ from representedObject */
 											  width,
 											  [oLatestNewsBadge frame].size.height)];
 		
-		[oLatestNewsBadge setAction:@selector(showNewsWindow:)];
+////		[oLatestNewsBadge setAction:@selector(showNewsWindow:)];
 		nextX = [oLatestNewsBadge frame].origin.x - BETWEEN;
 	}
 	// Now, make the status field go up next to that.

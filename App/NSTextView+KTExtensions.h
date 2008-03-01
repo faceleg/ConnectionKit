@@ -1,5 +1,5 @@
 //
-//  NSTextView+KTApplication.h
+//  NSTextView+KTExtensions.h
 //  Marvel
 //
 //  Created by Dan Wood on 4/13/07.

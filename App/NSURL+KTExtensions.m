@@ -7,9 +7,28 @@
 //
 
 #import "NSURL+KTExtensions.h"
+#import "NSURL+Karelia.h"
+#import "NSString+Karelia.h"
 
+@interface NSURL ( Private )
 
-@implementation NSURL_KTExtensions
++ (void)getBookmarkDictionaryURLs:(NSArray **)URLs
+						andTitles:(NSArray **)titles
+				   fromPasteboard:(NSPasteboard *)pasteboard;
+
++ (void)getWebURLs:(NSArray **)URLs
+		 andTitles:(NSArray **)titles
+	fromPasteboard:(NSPasteboard *)pasteboard;
+
++ (void)getBasicURLs:(NSArray **)URLs
+		   andTitles:(NSArray **)titles
+	  fromPasteboard:(NSPasteboard *)pasteboard;
+
++ (void)getURLs:(NSArray **)URLs andTitles:(NSArray **)titles fromPasteboardString:(NSString *)string;
+
+@end
+
+@implementation NSURL ( KTExtensions )
 
 #pragma mark -
 #pragma mark Pasteboards

@@ -137,7 +137,7 @@
 	if (!result)
 	{
 		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
-		result = [[[KTAppDelegate sharedInstance] designManager] designForIdentifier:identifier];
+		result = [[[NSApp delegate] designManager] designForIdentifier:identifier];
 		[self setPrimitiveValue:result forKey:@"design"];
 	}
 	
