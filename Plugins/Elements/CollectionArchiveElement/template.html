@@ -1,1 +1,7 @@
-<p>This is a Collection Archive pagelet. Useful information will appear here eventually!</p>
+[[if collection]]
+<ul>
+[[foreach collection.archivePages aPage]]
+	<li><a href="[[path aPage]]">[[=&aPage.titleText]]</a></li>
+[[endforeach]]
+</ul>
+[[endif]]
