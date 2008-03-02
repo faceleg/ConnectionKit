@@ -40,6 +40,8 @@
 	BOOL					myUseAbsoluteMediaPaths;
 	KTHTMLParser			*myParentParser;	// Weak ref
 	
+	NSMutableDictionary	*myOverriddenKeys;
+	
 	int myIfCount;
 	
 	NSIndexPath	*myForEachIndexes;
@@ -78,6 +80,11 @@
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag;
 
 - (KTHTMLParser *)parentParser;
+
+// KVC Overrides
+- (NSSet *)overriddenKeys;
+- (void)overrideKey:(NSString *)key withValue:(id)override;
+- (void)removeOverrideForKey:(NSString *)key;
 
 // parsing
 - (NSString *)parseTemplate;

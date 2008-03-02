@@ -16,7 +16,7 @@
 @interface KTHTMLParserMasterCache : KTHTMLParserCache
 {
 	NSMutableDictionary	*myOverrides;
-	KTHTMLParser		*myParser;
+	KTHTMLParser		*myParser;		// Weak ref
 }
 
 // Init
@@ -29,7 +29,7 @@
 - (id)valueForKeyPath:(NSString *)keyPath informDelegate:(BOOL)informDelegate;
 
 // KVC Overrides
-- (NSSet *)overridenKeys;
+- (NSSet *)overriddenKeys;
 - (void)overrideKey:(NSString *)key withValue:(id)override;
 - (void)removeOverrideForKey:(NSString *)key;
 

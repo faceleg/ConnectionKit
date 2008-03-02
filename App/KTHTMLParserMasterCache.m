@@ -129,7 +129,7 @@
 #pragma mark -
 #pragma mark KVC Overriding
 
-- (NSSet *)overridenKeys
+- (NSSet *)overriddenKeys
 {
 	return [NSSet setWithArray:[myOverrides allKeys]];
 }

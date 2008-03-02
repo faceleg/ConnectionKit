@@ -179,6 +179,7 @@ static unsigned sLastParserID;
 	[myCache release];
 	[myCurrentPage release];
 	[myLiveDataFeeds release];
+	[myOverriddenKeys release];
 	
 	[myForEachIndexes release];
 	[myForEachCounts release];
@@ -282,6 +283,43 @@ static unsigned sLastParserID;
 - (void)setParentParser:(KTHTMLParser *)parser { myParentParser = parser; }
 
 #pragma mark -
+#pragma mark KVC Overriding
+
+/*	These methods provide access to the cache's override method. However, these overrides are set in place before any
+ *	parsing begins and are retained if several parses are made.
+ */
+
+- (NSMutableDictionary *)_keyOverrides
+{
+	if (!myOverriddenKeys)
+	{
+		myOverriddenKeys = [[NSMutableDictionary alloc] init];
+	}
+	
+	return myOverriddenKeys;
+}
+
+- (NSSet *)overriddenKeys
+{
+	return [NSSet setWithArray:[[self _keyOverrides] allKeys]];
+}
+
+- (void)overrideKey:(NSString *)key withValue:(id)override
+{
+	NSAssert(key, @"Attempt to override a nil key");
+	NSAssert(override, @"Attempt to override parser key with nil value");
+	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser override key", key);
+	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key \"%@\" is already overidden", key);
+	
+	[[self _keyOverrides] setObject:key forKey:key];
+}
+
+- (void)removeOverrideForKey:(NSString *)key
+{
+	[[self _keyOverrides] removeObjectForKey:key];
+}
+
+#pragma mark -
 #pragma mark Delegate
 
 - (id)delegate { return myDelegate; }
@@ -346,12 +384,19 @@ static unsigned sLastParserID;
 	[cache release];
 	
 	
-	// Override CurrentPage in the cache for HTML code to access
+	// Cache overrides
 	[cache overrideKey:@"parser" withValue:self];
 	if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
 	[cache overrideKey:@"HTMLGenerationPurpose" withValue:[NSNumber numberWithInt:[self HTMLGenerationPurpose]]];
 	[cache overrideKey:@"userDefaults" withValue:[NSUserDefaults standardUserDefaults]];
 	[cache overrideKey:@"calloutContainerTemplateHTML" withValue:[[self class] calloutContainerTemplateHTML]];
+	
+	NSEnumerator *overridesEnumerator = [myOverriddenKeys keyEnumerator];
+	NSString *aKey;
+	while (aKey = [overridesEnumerator nextObject])
+	{
+		[cache overrideKey:aKey withValue:[[self _keyOverrides] objectForKey:aKey]];
+	}
 
 	
 	if ([parsedComponent  isKindOfClass:[KTPage class]])
