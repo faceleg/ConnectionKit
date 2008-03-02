@@ -477,16 +477,9 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	}
 	else
 	{
-		NSArray *archivePages = [self archivePages];
+		NSArray *archivePages = [self valueForKey:@"archivePages"];
 		[[self managedObjectContext] deleteObjects:[NSSet setWithArray:archivePages]];
 	}
-}
-
-- (NSArray *)archivePages
-{
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent == %@", self];
-	NSArray *result = [[self managedObjectContext] objectsWithEntityName:@"ArchivePage" predicate:predicate error:NULL];
-	return result;
 }
 
 @end

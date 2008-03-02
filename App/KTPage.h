@@ -176,7 +176,6 @@
 // Archive
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
-- (NSArray *)archivePages;
 
 @end
 
