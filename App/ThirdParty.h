@@ -15,8 +15,6 @@
 #import "NTBoxView.h"
 #import "NTSUTaskController.h"
 
-#import "AMRollOverButton.h"
-
 #import "RoundedBox.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"

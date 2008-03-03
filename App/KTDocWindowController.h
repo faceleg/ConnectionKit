@@ -19,7 +19,6 @@
 @class RBSplitView;
 @class RBSplitSubview;
 @class NTBoxView;
-@class AMRollOverButton;
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTPluginInspectorViewsManager;
@@ -47,9 +46,6 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet NTBoxView				*oStatusBar;	// below web view
 	IBOutlet NSImageView			*oSplitDragView;
 	IBOutlet NSTextField			*oStatusBarField;	// URL pointed to, expand size to left of visible item(s) below
-	IBOutlet AMRollOverButton		*oLatestNewsBadge;		// to the left of below
-	IBOutlet AMRollOverButton		*oUpdateMarvelBadge;	// to the left of below
-	IBOutlet AMRollOverButton		*oBuyMarvelBadge;		// always at the right
 	
 	// Detail panel for page titles & keywords
 	IBOutlet NTBoxView							*oDetailPanel;
@@ -134,6 +130,8 @@ extern NSString *gInfoWindowAutoSaveName;
 
 
 	KTPluginInspectorViewsManager	*myPluginInspectorViewsManager;
+	
+	NSButton *myBuyNowButton;
 }
 
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
@@ -149,7 +147,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (NSString *)status;
 
 - (void)updateEditMenuItems;
-- (void) updateStinkingBadges:(NSNotification *)aNotification;
+- (void) updateBuyNow:(NSNotification *)aNotification;
 
 // Actions
 
