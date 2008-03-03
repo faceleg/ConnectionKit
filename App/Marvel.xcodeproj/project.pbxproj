@@ -144,7 +144,7 @@
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
-		27156A810D5CA1C700A91E58 /* KTHTMLParser+Summaries.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Summaries.m */; };
+		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
 		2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */; };
 		271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575520D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m */; };
@@ -1588,7 +1588,7 @@
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
-		27156A800D5CA1C700A91E58 /* KTHTMLParser+Summaries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Summaries.m"; sourceTree = "<group>"; };
+		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
 		271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessHTMLParser.m; sourceTree = "<group>"; };
 		271575520D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+DragAndDrop.m"; sourceTree = "<group>"; };
@@ -3796,7 +3796,7 @@
 				3C682B430D62308D00B4D485 /* KTHTMLParser.m */,
 				275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */,
 				275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */,
-				27156A800D5CA1C700A91E58 /* KTHTMLParser+Summaries.m */,
+				27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */,
 				271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */,
 				271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */,
 				27AD539A0D6B3E8700883550 /* KTHTMLParser+CSS.m */,
@@ -5760,7 +5760,7 @@
 				27ACA2DD0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m in Sources */,
 				27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */,
 				27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */,
-				27156A810D5CA1C700A91E58 /* KTHTMLParser+Summaries.m in Sources */,
+				27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */,
 				2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */,
 				271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */,
 				271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */,

@@ -7,11 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTHTMLParser.h"
 
 
 @interface KTHTMLParser (Private)
 
 - (KTHTMLParserMasterCache *)cache;
+
+- (KTHTMLParser *)newChildParserWithTemplate:(NSString *)templateHTML component:(id <KTWebViewComponent>)component;
 
 - (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile;
 - (void)didEncounterResourceFile:(NSString *)resourcePath;

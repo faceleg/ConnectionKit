@@ -6,21 +6,18 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLParser.h"
+#import "KTHTMLParser+Private.h"
 
-#import "Debug.h"
 #import "KTPage.h"
 #import "KTSummaryWebViewTextBlock.h"
-#import "NSString+Karelia.h"
 
 #import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
 
-@interface KTHTMLParser (Private)
-- (KTHTMLParserMasterCache *)cache;
-@end
+#import "Debug.h"
 
 
-@interface KTHTMLParser (SummariesPrivate)
+@interface KTHTMLParser (IndexPrivate)
 - (NSString *)summaryForPage:(KTPage *)page;
 - (NSString *)summaryForCollection:(KTPage *)page;
 - (NSString *)summaryForContentOfPage:(KTPage *)page;
@@ -30,7 +27,35 @@
 #pragma mark -
 
 
-@implementation KTHTMLParser (Summaries)
+@implementation KTHTMLParser (Index)
+
+#pragma mark -
+#pragma mark Index
+
+- (NSString *)indexWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	NSString *result = @"";
+	
+	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
+	if (parameters && [parameters count] == 2)
+	{
+		KTAbstractIndex *index = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
+		
+		KTHTMLParser *parser = [self newChildParserWithTemplate:[index templateHTML] component:(id)index];
+		result = [parser parseTemplate];
+		[parser release];
+	}
+	else
+	{
+		NSLog(@"target: usage [[index keyPath.to.index pages.to.index]]");
+		
+	}
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Summary
 
 - (NSString *)summaryWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {

@@ -71,11 +71,8 @@ trackback:ping="http://haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueI
 
 [[if index]]
 							<div id="index" class="[[=&index.cssClassName]]">
-[[parsecomponent index index.templateHTML]]
+[[index index sortedChildrenInIndex]]
 							</div> <!-- index -->
-[[if indexOverflowing]]
-							<p class="index-overflow"><a href="[[archivespath]]">[[`indexOverflowHTML]]</a></p>
-[[endif2]]
 							<div class="clear"></div>
 [[endif]]
 						</div> <!-- main-content -->

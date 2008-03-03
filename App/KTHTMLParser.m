@@ -32,6 +32,8 @@
 
 @interface KTHTMLParser (Private)
 
+- (void)setParentParser:(KTHTMLParser *)parser;
+
 - (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner;
 - (NSString *)HTMLStringByScanning:(NSScanner *)inScanner;
 
@@ -285,10 +287,6 @@ static unsigned sLastParserID;
 
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag { myUseAbsoluteMediaPaths = flag; }
 
-- (KTHTMLParser *)parentParser { return myParentParser; }
-
-- (void)setParentParser:(KTHTMLParser *)parser { myParentParser = parser; }
-
 #pragma mark -
 #pragma mark KVC Overriding
 
@@ -325,6 +323,72 @@ static unsigned sLastParserID;
 {
 	[[self _keyOverrides] removeObjectForKey:key];
 }
+
+#pragma mark -
+#pragma mark Child Parsers
+
+/*	Creates a new parser with the same basic properties as ourself, and the specifed template/componet
+ *	IMPORTANT:	Follows the standard "new rule" so, the return object is NOT autoreleased.
+ */
+- (KTHTMLParser *)newChildParserWithTemplate:(NSString *)templateHTML component:(id <KTWebViewComponent>)component
+{
+	KTHTMLParser *parser = [[[self class] alloc] initWithTemplate:templateHTML component:component];
+	
+	[parser setParentParser:self];
+	[parser setCurrentPage:[self currentPage]];
+	[parser setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
+	if (myLiveDataFeeds) [parser setLiveDataFeeds:[self liveDataFeeds]];
+	[parser setDelegate:[self delegate]];
+	[parser setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
+	
+	return parser;
+}
+
+/*	[[parseComponent keypath.to.component keypath.to.templateHTML]]
+ *
+ *	Branches off a new HTML parser for the specified component.
+ *	The new parser has the same basic properties as us.
+ */
+- (NSString *)parsecomponentWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	NSString *result = @"";
+	
+	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
+	
+	if (!parameters || [parameters count] != 2)
+	{
+		NSLog(@"parsecomponent: usage [[parseComponent keypath.to.component keypath.to.templateHTML]]");
+	}
+	else
+	{
+		id component = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
+		NSString *template = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
+		
+		if (component)
+		{
+			KTHTMLParser *parser = [self newChildParserWithTemplate:template component:component];
+			result = [parser parseTemplate];
+			
+			// If possible, wrap the result inside a uniqueID <div> to allow the WebViewController to identify it later.
+			if ([component conformsToProtocol:@protocol(KTWebViewComponent)])
+			{
+				result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
+													[component uniqueWebViewID],
+													[parser parserID],
+													result];
+			}
+			
+			// Tidy up
+			[parser release];
+		}
+	}
+	
+	return result;
+}
+
+- (KTHTMLParser *)parentParser { return myParentParser; }
+
+- (void)setParentParser:(KTHTMLParser *)parser { myParentParser = parser; }
 
 #pragma mark -
 #pragma mark Delegate
@@ -413,10 +477,10 @@ static unsigned sLastParserID;
 		[document setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];	// set this value when we set the outer context
 	}
 	
+	/*	This doesn't seem to be actually used.
 	// Hack -- don't do this for news controller
 	Class contextClass = NSClassFromString([parsedComponent className]);
 	
-	/*	This doesn't seem to be actually used.
 	if (![contextClass isSubclassOfClass:[NSXMLElement class]]) {
 		[self setDocument:[parsedComponent valueForKey:@"document"]];
 	}*/	
@@ -835,7 +899,7 @@ static unsigned sLastParserID;
 	KTDesign *design = [[(KTPage *)page master] design];
 	
 	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
-		&& [[page master] boolForKey:@"enableImageReplacement"])
+		&& [[(KTPage *)page master] boolForKey:@"enableImageReplacement"])
 	{
 		//LOG((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
 		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatPropertyValue];
@@ -1207,7 +1271,6 @@ static unsigned sLastParserID;
 }
 */
 
-
 #pragma mark media & resources
 
 - (NSString *)mediainfoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)scanner
@@ -1447,55 +1510,6 @@ static unsigned sLastParserID;
 		default:
 			result = [targetPage publishedPathRelativeToPage:[self currentPage]];
 			break;
-	}
-	
-	return result;
-}
-
-/*	[[parseComponent keypath.to.component keypath.to.templateHTML]]
- *
- *	Branches off a new HTML parser for the specified component.
- *	The new parser has the same basic properties as us.
- */
-- (NSString *)parsecomponentWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
-	
-	if (!parameters || [parameters count] != 2)
-	{
-		NSLog(@"parsecomponent: usage [[parseComponent keypath.to.component keypath.to.templateHTML]]");
-	}
-	else
-	{
-		id component = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
-		NSString *template = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
-		
-		if (component)
-		{
-			KTHTMLParser *parser = [[[self class] alloc] initWithTemplate:template component:component];
-			[parser setParentParser:self];
-			[parser setCurrentPage:[self currentPage]];
-			[parser setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
-			if (myLiveDataFeeds) [parser setLiveDataFeeds:[self liveDataFeeds]];
-			[parser setDelegate:[self delegate]];
-			[parser setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
-			
-			result = [parser parseTemplate];
-			
-			// If possible, wrap the result inside a uniqueID <div> to allow the WebViewController to identify it later.
-			if ([component conformsToProtocol:@protocol(KTWebViewComponent)])
-			{
-				result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
-													[component uniqueWebViewID],
-													[parser parserID],
-													result];
-			}
-			
-			// Tidy up
-			[parser release];
-		}
 	}
 	
 	return result;
