@@ -111,7 +111,7 @@
 	}
 	
 	// It's not an overriden key, so do the standard implementation
-	if (!result)
+	if (trueKeyPath == keyPath)
 	{
 		cache = self;
 		result = [super valueForKeyPath:trueKeyPath];

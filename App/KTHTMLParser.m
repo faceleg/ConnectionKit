@@ -416,9 +416,10 @@ static unsigned sLastParserID;
 	// Hack -- don't do this for news controller
 	Class contextClass = NSClassFromString([parsedComponent className]);
 	
+	/*	This doesn't seem to be actually used.
 	if (![contextClass isSubclassOfClass:[NSXMLElement class]]) {
 		[self setDocument:[parsedComponent valueForKey:@"document"]];
-	}	
+	}*/	
 	
 	
 	
@@ -834,7 +835,7 @@ static unsigned sLastParserID;
 	KTDesign *design = [[(KTPage *)page master] design];
 	
 	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
-		&& [[[[self cache] valueForKey:@"master"] valueForKey:@"enableImageReplacement"] boolValue])
+		&& [[page master] boolForKey:@"enableImageReplacement"])
 	{
 		//LOG((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
 		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatPropertyValue];

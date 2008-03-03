@@ -1,9 +1,9 @@
 [[foreach page.sortedChildrenInIndex item page.collectionMaxIndexItems]]
 	<div class="article [[i]] [[eo]][[last]]">
 [[if page.collectionHyperlinkPageTitles]]
-		<h3[[idClass entity:Page property:titleHTML flags:"line copy anchor" id:item.uniqueID replacement:item.titleText code:h3]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
+		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy anchor" id:item.uniqueID replacement:item.titleText code:h3]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
 [[else]]
-		<h3[[idClass entity:Page property:titleHTML flags:"line copy" id:item.uniqueID replacement:item.titleText code:h3]]><span class="in">[[=item.titleHTML]]</span></h3>
+		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy" id:item.uniqueID replacement:item.titleText code:h3]]><span class="in">[[=item.titleHTML]]</span></h3>
 [[endif]]
 [[if item.thumbnail]]
 		<div class="article-thumbnail">
@@ -29,14 +29,14 @@
 [[endif2]]
 			</div>
 [[endif]]
-[[if master.haloscanUserName]]
+[[if page.master.haloscanUserName]]
 [[if item.pageShouldAllowComments]]
 			<div class="comments">
 				<p>
-					[[if document.publishingMode]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=item.uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=item.uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=item.uniqueID]]'); </script></a>[[else3]][[`Comment]][[endif3]]
-[[if master.supportTrackbacks]]
+					[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%page.master.haloscanUserName]]/[[=item.uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=item.uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=item.uniqueID]]'); </script></a>[[else3]][[`Comment]][[endif3]]
+[[if page.master.supportTrackbacks]]
 					<script type="text/javascript">document.write(' | ');</script>
-					[[if document.publishingMode]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=item.uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=item.uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=item.uniqueID]]'); </script></a>[[else4]][[`Trackback]][[endif4]]
+					[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%page.master.haloscanUserName]]/[[=item.uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=item.uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=item.uniqueID]]'); </script></a>[[else4]][[`Trackback]][[endif4]]
 <!-- Begin trackback -->
 <!-- Auto Discovery RDF Code
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -46,7 +46,7 @@ xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
 rdf:about="[[=&item.url]]"
 dc:identifier="[[=&item.url]]"
 dc:title="[[=&item.titleText]]"
-trackback:ping="http://haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=item.uniqueID]]" />
+trackback:ping="http://haloscan.com/tb/[[=&%page.master.haloscanUserName]]/[[=item.uniqueID]]" />
 </rdf:RDF>
 -->
 <!-- End trackback -->
