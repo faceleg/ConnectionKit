@@ -58,6 +58,7 @@
 #import "NSCharacterSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "NSWindow+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "KTManagedObjectContext.h"
@@ -295,7 +296,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(updateBuyNow:)
-													 name:kKSBadgeUpdateNotification
+													 name:kKSLicenseStatusChangeNotification
 												   object:nil];
 		[self updateBuyNow:nil];	// update them now
 		
@@ -2417,46 +2418,11 @@ from representedObject */
 	{
 		if (!myBuyNowButton)
 		{
-			// set up special button
-			NSButton *sisterButtton = [[self window] standardWindowButton:NSWindowToolbarButton];
-			NSView *container = [sisterButtton superview];
-			NSRect frame = [sisterButtton frame];
-			NSString* appName = [[NSProcessInfo processInfo] processName];	// NOT CFBundleExecutable!
-			NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Buy %@", @"button title to prompt user to buy application"), appName];
-			NSFont* font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
-			NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-			[aShadow setShadowOffset:NSMakeSize(3.0, -5.0)];
-			[aShadow setShadowBlurRadius:3.0];
-			[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.6]];
-			
-			NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-											   font, NSFontAttributeName, 
-											   // [NSColor redColor], NSForegroundColorAttributeName,
-											   [NSColor colorWithCalibratedRed:0.67 green:0 blue:0 alpha:1.0], NSForegroundColorAttributeName,
-											   nil];
-			NSAttributedString *attrTitle = [[[NSAttributedString alloc] initWithString:title attributes:attributes] autorelease];
-			
-			NSSize buttonSize = [title sizeWithAttributes:attributes];
-#define XEXTRA 10.0
-#define MARGIN 12.0
-#define HEIGHT 15.0
-#define YOFFSET 0.0
-			
-			buttonSize.width += XEXTRA;
-			myBuyNowButton = [[[NSButton alloc] initWithFrame:NSMakeRect(frame.origin.x  - MARGIN - buttonSize.width,frame.origin.y+YOFFSET,buttonSize.width,HEIGHT)] autorelease];
-			[myBuyNowButton setAutoresizingMask:NSViewMinYMargin|NSViewMinXMargin];
-			[myBuyNowButton setButtonType:NSMomentaryLightButton];
-			[myBuyNowButton setBezelStyle:NSTexturedRoundedBezelStyle];
-			[myBuyNowButton setAttributedTitle:attrTitle];
-			// [myBuyNowButton setTitle:title];
-			//[myBuyNowButton setBordered:NO];
-			[[myBuyNowButton cell] setControlSize:NSMiniControlSize];
-			
+			NSButton *newButton = [[self window] createBuyNowButton];
+			myBuyNowButton = [newButton retain];
 			[myBuyNowButton setAction:@selector(showRegistrationWindow:)];
 			[myBuyNowButton setTarget:[NSApp delegate]];
-			[container addSubview:myBuyNowButton];
 		}
-		
 		[myBuyNowButton setHidden:NO];
 	}
 	else
