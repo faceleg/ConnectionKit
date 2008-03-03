@@ -154,21 +154,27 @@ static unsigned sLastParserID;
 	return self;
 }
 
-- (id)initWithPage:(KTPage *)page
+- (id)initWithPage:(KTAbstractPage *)page
 {
+	// Archive pages are specially parsed so that the component is the parent page.
+	KTPage *component = (KTPage *)page;
+	if ([page isKindOfClass:[KTArchivePage class]]) component = [page parent];
+	
+	
 	// Pick the right template to use
-	NSString *template = nil;
-	if ([page pluginHTMLIsFullPage]) {
-		template = [page templateHTML];
+	NSString *template;
+	if ([component pluginHTMLIsFullPage]) {
+		template = [component templateHTML];
 	}
 	else {
-		template = [[page class] pageTemplate];
+		template = [[component class] pageTemplate];
 	}
 	
-	[self initWithTemplate:template component:page];
 	
-	// Set up as much of the environment as possible
+	// Create the parser and set up as much of the environment as possible
+	[self initWithTemplate:template component:component];
 	[self setCurrentPage:page];
+	
 	
 	return self;
 }

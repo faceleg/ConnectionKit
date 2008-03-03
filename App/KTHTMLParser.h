@@ -57,7 +57,7 @@
 			   useAbsoluteMediaPaths:(BOOL)useAbsoluteMediaPaths;
 
 - (id)initWithTemplate:(NSString *)HTMLTemplate component:(id <KTWebViewComponent>)parsedComponent;
-- (id)initWithPage:(KTPage *)page;	// Convenience method that parses the whole page
+- (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
 
 // Accessors
 - (NSString *)parserID;

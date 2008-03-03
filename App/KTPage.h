@@ -29,7 +29,7 @@
 @class WebView;
 @class KTMediaContainer;
 
-@interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving, KTWebViewComponent>
+@interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
 {
 	// these ivars are only set if the page is root
     KTDocument			*myDocument;				// not archived

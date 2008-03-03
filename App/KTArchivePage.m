@@ -36,27 +36,6 @@
 	return sPageTemplateString;
 }
 
-/*	We want to basically clone the main index page but with a few differences.
- */
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
-{
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self parent]];
-	[parser setDelegate:parserDelegate];
-	
-	if (isPreview) {
-		[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	} else {
-		[parser setHTMLGenerationPurpose:kGeneratingRemote];
-	}
-	
-	[parser setCurrentPage:self];
-	[parser overrideKey:@"master" withValue:[[self parent] master]];
-	
-	NSString *result = [parser parseTemplate];
-	[parser release];
-	return result;
-}
-
 - (NSString *)designDirectoryPath
 {
 	return [[self parent] designDirectoryPath];

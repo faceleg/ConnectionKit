@@ -357,17 +357,6 @@
 }
 
 #pragma mark -
-#pragma mark KTWebViewComponent protocol
-
-/*	Add to the default list of components: pagelets (and their components), index (if it exists)
- */
-- (NSString *)uniqueWebViewID
-{
-	NSString *result = [NSString stringWithFormat:@"ktpage-%@", [self uniqueID]];
-	return result;
-}
-
-#pragma mark -
 #pragma mark Media
 
 /*	Each page adds a number of possible required media to the default. e.g. thumbnail

@@ -103,23 +103,7 @@
 	}
 	
 	
-	// Fallback to show problem
-	NSString *result = @"[PAGE, UNABLE TO GET CONTENT HTML]";
-	
-	
-	// Build the HTML
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:self];
-	[parser setDelegate:parserDelegate];
-	[parser setCurrentPage:self];
-	
-	if (isPreview) {
-		[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	} else {
-		[parser setHTMLGenerationPurpose:kGeneratingRemote];
-	}
-	
-	result = [parser parseTemplate];
-	[parser release];
+	NSString *result = [super contentHTMLWithParserDelegate:parserDelegate isPreview:isPreview];
 	
 	
 	// Now that we have page contents in unicode, clean up to the desired character encoding.

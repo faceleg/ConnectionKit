@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
 
+#import "KTWebViewComponent.h"
+
 
 typedef enum	//	Defines the 3 ways of linking to a collection:
 {
@@ -19,8 +21,8 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@interface KTAbstractPage : KTAbstractElement {
-
+@interface KTAbstractPage : KTAbstractElement <KTWebViewComponent>
+{
 }
 
 + (NSString *)entityName;
