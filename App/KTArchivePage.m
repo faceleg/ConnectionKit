@@ -12,13 +12,54 @@
 #import "KTHTMLParser.h"
 
 #import "NSBundle+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
 
 #import "assertions.h"
 
 
 @implementation KTArchivePage
 
+#pragma mark -
+#pragma mark Core Data
+
 + (NSString *)entityName { return @"ArchivePage"; }
+
+/*	Hacks to override KSExtensibleManagedObject
+ */
+- (id)valueForUndefinedKey:(NSString *)key
+{
+	OBASSERT_NOT_REACHED("");
+	return nil;
+	return [super valueForUndefinedKey:key];
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+	OBASSERT_NOT_REACHED("");
+	[super setValue:value forUndefinedKey:key];
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (NSArray *)sortedPages
+{
+	NSMutableArray *result = [NSMutableArray arrayWithArray:[[[self parent] children] allObjects]];
+	
+	// Filter to only pages in our date range
+	NSDate *startDate = [self valueForKey:@"archiveStartDate"];
+	NSDate *endDate = [self valueForKey:@"archiveEndDate"];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"editableTimestamp BETWEEN { %@, %@ }", startDate, endDate];
+	[result filterUsingPredicate:predicate];
+	
+	// Sort by date, newest first
+	[result sortUsingDescriptors:[NSSortDescriptor reverseChronologicalSortDescriptors]];
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark HTML
 
 /*	Use a different template to most pages
  */
@@ -41,21 +82,6 @@
 	return [[self parent] designDirectoryPath];
 }
 
-
-/*	Hacks to override KSExtensibleManagedObject
- */
-- (id)valueForUndefinedKey:(NSString *)key
-{
-	OBASSERT_NOT_REACHED("");
-	return nil;
-	return [super valueForUndefinedKey:key];
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-	OBASSERT_NOT_REACHED("");
-	[super setValue:value forUndefinedKey:key];
-}
 
 - (KTElementPlugin *)plugin { return nil; }
 

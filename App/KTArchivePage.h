@@ -14,4 +14,6 @@
 {
 }
 
+- (NSArray *)sortedPages;
+
 @end
