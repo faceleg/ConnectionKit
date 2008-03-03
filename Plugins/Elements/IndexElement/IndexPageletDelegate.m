@@ -141,7 +141,7 @@
 	NSString *pageID = [pboard stringForType:@"kKTLocalLinkPboardType"];
 	if ( (pageID != nil) && ![pageID isEqualToString:@""]  && ![pageID isEqualToString:@"KTCollection"] )
 	{
-		KTPage *target = [[self managedObjectContext] pageWithUniqueID:pageID];
+		KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[self managedObjectContext]];
 		if ( nil != target )
 		{
 			[[self delegateOwner] setValue:target forKey:@"indexedPage"];

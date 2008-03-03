@@ -2176,7 +2176,7 @@ from representedObject */
 	NSString *aPageID;
 	while (aPageID = [pagesEnumerator nextObject])
 	{
-		KTAbstractPage *aPage = [moc pageWithUniqueID:aPageID];
+		KTPage *aPage = [KTPage pageWithUniqueID:aPageID inManagedObjectContext:moc];
 		[pages addObjectIgnoringNil:aPage];
 	}
 	

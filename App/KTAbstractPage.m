@@ -39,6 +39,14 @@
 	return result;
 }
 
+/*	As above, but uses a predicate to narrow down to a particular ID
+ */
++ (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC
+{
+	id result = [MOC objectWithUniqueID:ID entityName:[self entityName]];
+	return result;
+}
+
 /*	Generic creation method for all page types.
  */
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName

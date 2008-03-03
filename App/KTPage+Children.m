@@ -219,7 +219,7 @@
 + (void)invalidateSortedChildrenCacheOfPageWithID:(NSString *)uniqueID MOCPointer:(NSValue *)MOCValue
 {
 	NSManagedObjectContext *MOC = [MOCValue nonretainedObjectValue];
-	KTPage *page = [MOC pageWithUniqueID:uniqueID];
+	KTPage *page = [KTPage pageWithUniqueID:uniqueID inManagedObjectContext:MOC];
 	OBASSERT(page);
 	
 	

@@ -14,6 +14,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
+#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 
 #import "NSBundle+KTExtensions.h"
@@ -72,7 +73,7 @@
 													   intoString:&idString];
 				if (foundNumber)
 				{
-					KTPage* thePage = [context pageWithUniqueID:idString];
+					KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
 					NSString *newPath = nil;
 					if (thePage)
 					{

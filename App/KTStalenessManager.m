@@ -211,7 +211,7 @@
 	NSEnumerator *pagesEnumerator = [dependentPageIDs objectEnumerator];
 	while (aPageID = [pagesEnumerator nextObject])
 	{
-		KTAbstractPage *page = [[[self document] managedObjectContext] pageWithUniqueID:aPageID];
+		KTAbstractPage *page = [KTAbstractPage pageWithUniqueID:aPageID inManagedObjectContext:[[self document] managedObjectContext]];
 		[result addObject:page];
 	}
 	

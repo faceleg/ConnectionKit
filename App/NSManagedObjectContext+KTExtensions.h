@@ -84,9 +84,6 @@
 // returns objectWithUniqueID: searching only Media
 - (KTMedia *)mediaWithUniqueID:(NSString *)anID;
 
-// returns objectWithUniqueID: searching only Page
-- (KTAbstractPage *)pageWithUniqueID:(NSString *)anID;
-
 - (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
 
 // returns context's Root

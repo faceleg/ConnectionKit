@@ -291,18 +291,6 @@
 	return result;
 }
 
-- (KTAbstractPage *)pageWithUniqueID:(NSString *)anID
-{
-	KTPage *result = nil;
-	
-	if ( (nil != anID) && ![anID isEqualToString:@""] )
-	{
-		result = (KTPage *)[self objectWithUniqueID:anID entityName:@"AbstractPage"];
-	}
-	
-	return result;
-}
-
 - (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier
 {
 	NSArray *result = nil;

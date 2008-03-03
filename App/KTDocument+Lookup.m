@@ -552,7 +552,7 @@
 		{
 			NSString *idString = [path substringFromIndex:whereTilde+[kKTPageIDDesignator length]];
 			NSManagedObjectContext *context = [self managedObjectContext];
-			result = [context pageWithUniqueID:idString];
+			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
 		}
 		else if ([path isEqualToString:@""] || [path hasSuffix:@"/"])
 		{

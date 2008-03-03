@@ -384,7 +384,7 @@
 
 + (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document
 {
-	id result = [[document managedObjectContext] pageWithUniqueID:identifier];
+	id result = [KTAbstractPage pageWithUniqueID:identifier inManagedObjectContext:[document managedObjectContext]];
 	return result;
 }
 

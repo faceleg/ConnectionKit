@@ -27,6 +27,7 @@ KTCollectionPathStyle;
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
++ (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC;
 
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 

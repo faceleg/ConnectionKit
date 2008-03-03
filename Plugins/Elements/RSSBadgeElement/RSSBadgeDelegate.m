@@ -103,7 +103,7 @@
 	if (!collectionID || [collectionID isEqualToString:@""])
 		return;
 	
-	KTPage *target = [[self managedObjectContext] pageWithUniqueID:collectionID];
+	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[self managedObjectContext]];
 	if (target)
 	{
 		[[self delegateOwner] setValue:target forKey:@"collection"];
