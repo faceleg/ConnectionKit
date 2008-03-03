@@ -1514,13 +1514,13 @@
 
 - (IBAction)clearStaleness:(id)sender
 {
-	NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+	NSArray *pages = [KTAbstractPage allPagesInManagedObjectContext:[self managedObjectContext]];
 	[pages setBool:NO forKey:@"isStale"];
 }
 
 - (IBAction)markAllStale:(id)sender
 {
-	NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+	NSArray *pages = [KTAbstractPage allPagesInManagedObjectContext:[self managedObjectContext]];
 	[pages setBool:YES forKey:@"isStale"];
 }
 
