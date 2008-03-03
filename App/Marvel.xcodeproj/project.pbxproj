@@ -515,8 +515,6 @@
 		CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C20D7C720D0055D8E9 /* Crash.nib */; };
 		CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C40D7C720D0055D8E9 /* Exception.nib */; };
 		CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C60D7C720D0055D8E9 /* Feedback.nib */; };
-		CE22E5D40D7C720D0055D8E9 /* KTRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */; };
-		CE22E5D50D7C720D0055D8E9 /* News.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CA0D7C720D0055D8E9 /* News.nib */; };
 		CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */; };
 		CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */; };
 		CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */; };
@@ -697,7 +695,6 @@
 		CEC11B0F0D78BE3D00513E70 /* NSMutableDictionary+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA70D78BE3C00513E70 /* NSMutableDictionary+Karelia.m */; };
 		CEC11B100D78BE3D00513E70 /* NSMutableSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA80D78BE3C00513E70 /* NSMutableSet+Karelia.m */; };
 		CEC11B110D78BE3D00513E70 /* NSObject+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA90D78BE3C00513E70 /* NSObject+Karelia.m */; };
-		CEC11B120D78BE3D00513E70 /* NSObject+PerformOnMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAA0D78BE3C00513E70 /* NSObject+PerformOnMainThread.m */; };
 		CEC11B130D78BE3D00513E70 /* NSScanner+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAB0D78BE3C00513E70 /* NSScanner+Karelia.m */; };
 		CEC11B140D78BE3D00513E70 /* NSSortDescriptor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAC0D78BE3C00513E70 /* NSSortDescriptor+Karelia.m */; };
 		CEC11B150D78BE3D00513E70 /* NSString-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAD0D78BE3C00513E70 /* NSString-Utilities.m */; };
@@ -807,7 +804,6 @@
 		CEC11BEC0D78BE5300513E70 /* NSMutableDictionary+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B7F0D78BE5300513E70 /* NSMutableDictionary+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BED0D78BE5300513E70 /* NSMutableSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B800D78BE5300513E70 /* NSMutableSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BEE0D78BE5300513E70 /* NSObject+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B810D78BE5300513E70 /* NSObject+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BEF0D78BE5300513E70 /* NSObject+PerformOnMainThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B820D78BE5300513E70 /* NSObject+PerformOnMainThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BF00D78BE5300513E70 /* NSScanner+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B830D78BE5300513E70 /* NSScanner+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BF10D78BE5300513E70 /* NSSortDescriptor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B840D78BE5300513E70 /* NSSortDescriptor+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BF20D78BE5300513E70 /* NSString-Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B850D78BE5300513E70 /* NSString-Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -834,8 +830,6 @@
 		CEC11C070D78BE5300513E70 /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11C080D78BE5300513E70 /* ValuesAreEqualTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11C090D78BE5300513E70 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9C0D78BE5300513E70 /* WebView+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11C180D78C1DF00513E70 /* KTNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11C170D78C1DF00513E70 /* KTNewsController.m */; };
-		CEC11C1B0D78C1E600513E70 /* KTNewsController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11C1A0D78C1E600513E70 /* KTNewsController.h */; };
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC164620D3596EF005C1DE8 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC1645E0D3596EF005C1DE8 /* checkmark.tiff */; };
 		CEC164630D3596EF005C1DE8 /* refresh.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEC1645F0D3596EF005C1DE8 /* refresh.tiff */; };
@@ -2096,8 +2090,6 @@
 		CE22E5C30D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Crash.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5C50D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Exception.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5C70D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Feedback.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5C90D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KTRegistration.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5CB0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/News.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5CD0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/PluginInstaller.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5CF0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/SilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5E00D7C73780055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
@@ -2336,7 +2328,6 @@
 		CEC11AA70D78BE3C00513E70 /* NSMutableDictionary+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+Karelia.m"; path = "../../../Shared/trunk/App/NSMutableDictionary+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11AA80D78BE3C00513E70 /* NSMutableSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableSet+Karelia.m"; path = "../../../Shared/trunk/App/NSMutableSet+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11AA90D78BE3C00513E70 /* NSObject+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Karelia.m"; path = "../../../Shared/trunk/App/NSObject+Karelia.m"; sourceTree = SOURCE_ROOT; };
-		CEC11AAA0D78BE3C00513E70 /* NSObject+PerformOnMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+PerformOnMainThread.m"; path = "../../../Shared/trunk/App/NSObject+PerformOnMainThread.m"; sourceTree = SOURCE_ROOT; };
 		CEC11AAB0D78BE3C00513E70 /* NSScanner+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScanner+Karelia.m"; path = "../../../Shared/trunk/App/NSScanner+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11AAC0D78BE3C00513E70 /* NSSortDescriptor+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSortDescriptor+Karelia.m"; path = "../../../Shared/trunk/App/NSSortDescriptor+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11AAD0D78BE3C00513E70 /* NSString-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString-Utilities.m"; path = "../../../Shared/trunk/App/NSString-Utilities.m"; sourceTree = SOURCE_ROOT; };
@@ -2446,7 +2437,6 @@
 		CEC11B7F0D78BE5300513E70 /* NSMutableDictionary+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableDictionary+Karelia.h"; path = "../../../Shared/trunk/App/NSMutableDictionary+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B800D78BE5300513E70 /* NSMutableSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableSet+Karelia.h"; path = "../../../Shared/trunk/App/NSMutableSet+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B810D78BE5300513E70 /* NSObject+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Karelia.h"; path = "../../../Shared/trunk/App/NSObject+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		CEC11B820D78BE5300513E70 /* NSObject+PerformOnMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+PerformOnMainThread.h"; path = "../../../Shared/trunk/App/NSObject+PerformOnMainThread.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B830D78BE5300513E70 /* NSScanner+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSScanner+Karelia.h"; path = "../../../Shared/trunk/App/NSScanner+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B840D78BE5300513E70 /* NSSortDescriptor+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSortDescriptor+Karelia.h"; path = "../../../Shared/trunk/App/NSSortDescriptor+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B850D78BE5300513E70 /* NSString-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString-Utilities.h"; path = "../../../Shared/trunk/App/NSString-Utilities.h"; sourceTree = SOURCE_ROOT; };
@@ -2473,8 +2463,6 @@
 		CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrimTransformer.h; path = ../../../Shared/trunk/App/TrimTransformer.h; sourceTree = SOURCE_ROOT; };
 		CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValuesAreEqualTransformer.h; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.h; sourceTree = SOURCE_ROOT; };
 		CEC11B9C0D78BE5300513E70 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WebView+Karelia.h"; path = "../../../Shared/trunk/App/WebView+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		CEC11C170D78C1DF00513E70 /* KTNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTNewsController.m; sourceTree = SOURCE_ROOT; };
-		CEC11C1A0D78C1E600513E70 /* KTNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNewsController.h; sourceTree = SOURCE_ROOT; };
 		CEC1645E0D3596EF005C1DE8 /* checkmark.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = checkmark.tiff; sourceTree = "<group>"; };
 		CEC1645F0D3596EF005C1DE8 /* refresh.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = refresh.tiff; sourceTree = "<group>"; };
 		CEC164600D3596EF005C1DE8 /* follow.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = follow.tiff; sourceTree = "<group>"; };
@@ -4045,8 +4033,6 @@
 				CE22E5C20D7C720D0055D8E9 /* Crash.nib */,
 				CE22E5C40D7C720D0055D8E9 /* Exception.nib */,
 				CE22E5C60D7C720D0055D8E9 /* Feedback.nib */,
-				CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */,
-				CE22E5CA0D7C720D0055D8E9 /* News.nib */,
 				CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */,
 				CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */,
 				CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */,
@@ -4206,8 +4192,6 @@
 				CE510FCC090EA74C00547CFF /* KTTranscriptController.m */,
 				CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */,
 				CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */,
-				CEC11C170D78C1DF00513E70 /* KTNewsController.m */,
-				CEC11C1A0D78C1E600513E70 /* KTNewsController.h */,
 			);
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
@@ -4297,7 +4281,6 @@
 				CEC11B7F0D78BE5300513E70 /* NSMutableDictionary+Karelia.h */,
 				CEC11B800D78BE5300513E70 /* NSMutableSet+Karelia.h */,
 				CEC11B810D78BE5300513E70 /* NSObject+Karelia.h */,
-				CEC11B820D78BE5300513E70 /* NSObject+PerformOnMainThread.h */,
 				CEC11B830D78BE5300513E70 /* NSScanner+Karelia.h */,
 				CEC11B840D78BE5300513E70 /* NSSortDescriptor+Karelia.h */,
 				CEC11B850D78BE5300513E70 /* NSString-Utilities.h */,
@@ -4403,7 +4386,6 @@
 				CEC11AA70D78BE3C00513E70 /* NSMutableDictionary+Karelia.m */,
 				CEC11AA80D78BE3C00513E70 /* NSMutableSet+Karelia.m */,
 				CEC11AA90D78BE3C00513E70 /* NSObject+Karelia.m */,
-				CEC11AAA0D78BE3C00513E70 /* NSObject+PerformOnMainThread.m */,
 				CEC11AAB0D78BE3C00513E70 /* NSScanner+Karelia.m */,
 				CEC11AAC0D78BE3C00513E70 /* NSSortDescriptor+Karelia.m */,
 				CEC11AAD0D78BE3C00513E70 /* NSString-Utilities.m */,
@@ -4634,7 +4616,6 @@
 				CEC11BEC0D78BE5300513E70 /* NSMutableDictionary+Karelia.h in Headers */,
 				CEC11BED0D78BE5300513E70 /* NSMutableSet+Karelia.h in Headers */,
 				CEC11BEE0D78BE5300513E70 /* NSObject+Karelia.h in Headers */,
-				CEC11BEF0D78BE5300513E70 /* NSObject+PerformOnMainThread.h in Headers */,
 				CEC11BF00D78BE5300513E70 /* NSScanner+Karelia.h in Headers */,
 				CEC11BF10D78BE5300513E70 /* NSSortDescriptor+Karelia.h in Headers */,
 				CEC11BF20D78BE5300513E70 /* NSString-Utilities.h in Headers */,
@@ -4661,7 +4642,6 @@
 				CEC11C070D78BE5300513E70 /* TrimTransformer.h in Headers */,
 				CEC11C080D78BE5300513E70 /* ValuesAreEqualTransformer.h in Headers */,
 				CEC11C090D78BE5300513E70 /* WebView+Karelia.h in Headers */,
-				CEC11C1B0D78C1E600513E70 /* KTNewsController.h in Headers */,
 				CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5441,8 +5421,6 @@
 				CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */,
 				CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */,
 				CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */,
-				CE22E5D40D7C720D0055D8E9 /* KTRegistration.nib in Resources */,
-				CE22E5D50D7C720D0055D8E9 /* News.nib in Resources */,
 				CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */,
 				CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */,
 				CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */,
@@ -5916,7 +5894,6 @@
 				CEC11B0F0D78BE3D00513E70 /* NSMutableDictionary+Karelia.m in Sources */,
 				CEC11B100D78BE3D00513E70 /* NSMutableSet+Karelia.m in Sources */,
 				CEC11B110D78BE3D00513E70 /* NSObject+Karelia.m in Sources */,
-				CEC11B120D78BE3D00513E70 /* NSObject+PerformOnMainThread.m in Sources */,
 				CEC11B130D78BE3D00513E70 /* NSScanner+Karelia.m in Sources */,
 				CEC11B140D78BE3D00513E70 /* NSSortDescriptor+Karelia.m in Sources */,
 				CEC11B150D78BE3D00513E70 /* NSString-Utilities.m in Sources */,
@@ -5944,7 +5921,6 @@
 				CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */,
 				CEC11B2E0D78BE4600513E70 /* MoreAddrToSym.c in Sources */,
 				CEC11B2F0D78BE4600513E70 /* MoreBacktrace.c in Sources */,
-				CEC11C180D78C1DF00513E70 /* KTNewsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6421,22 +6397,6 @@
 				CE22E5C70D7C720D0055D8E9 /* en */,
 			);
 			name = Feedback.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5C90D7C720D0055D8E9 /* en */,
-			);
-			name = KTRegistration.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5CA0D7C720D0055D8E9 /* News.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5CB0D7C720D0055D8E9 /* en */,
-			);
-			name = News.nib;
 			sourceTree = SOURCE_ROOT;
 		};
 		CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */ = {

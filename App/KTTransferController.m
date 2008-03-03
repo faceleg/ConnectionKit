@@ -89,7 +89,6 @@
 #import "NSBundle+Karelia.h"
 #import "NSApplication+Karelia.h"
 
-#import "NSObject+PerformOnMainThread.h"
 #import "NSString+Publishing.h"
 #import "NSString-Utilities.h"
 

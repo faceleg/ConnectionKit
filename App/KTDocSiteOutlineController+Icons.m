@@ -12,7 +12,7 @@
 #import "KTMaster.h"
 #import "KTMediaContainer.h"
 #import "KTPage.h"
-#import "NSObject+PerformOnMainThread.h"
+#import "NSObject+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "KTAbstractMediaFile.h"
 #import "NSImage+Karelia.h"
