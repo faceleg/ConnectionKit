@@ -40,8 +40,10 @@
 	if (parameters && [parameters count] == 2)
 	{
 		KTAbstractIndex *index = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
+		NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
 		
 		KTHTMLParser *parser = [self newChildParserWithTemplate:[index templateHTML] component:(id)index];
+		[parser overrideKey:@"pages" withValue:indexPages];
 		result = [parser parseTemplate];
 		[parser release];
 	}

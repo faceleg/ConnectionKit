@@ -1,4 +1,4 @@
-[[foreach page.sortedChildrenInIndex item page.collectionMaxIndexItems]]
+[[foreach pages item]]
 	<div class="article [[i]] [[eo]][[last]]">
 [[if page.collectionHyperlinkPageTitles]]
 		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy anchor" id:item.uniqueID replacement:item.titleText code:h3]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>

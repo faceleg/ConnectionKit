@@ -1,4 +1,4 @@
-[[foreach page.sortedChildrenInIndex aPage page.collectionMaxIndexItems]]
+[[foreach pages aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
 [[if aPage.thumbnail.file]]
 	<a class="imageLink" [[target aPage]]href="[[path aPage]]"><img[[idClass entity:Page property:image flags:"anchor" id:aPage.uniqueID]]
