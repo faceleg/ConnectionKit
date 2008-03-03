@@ -97,7 +97,7 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[forEach document.siteMenu toplink]]
 
 [[if firstParentOrSelfInSiteMenu==toplink]]
-[[if toplink==self]]
+[[if toplink==parser.currentPage]]
 									<li class="[[i]] [[eo]][[last]] currentPage">
 										<span[[idClass class:in entity:Page_sitemenu property:titleHTML flags:"copy" id:toplink.uniqueID replacement:toplink.menuTitleOrTitle code:mc]]>
 											[[=toplink.menuTitleOrTitle]]
