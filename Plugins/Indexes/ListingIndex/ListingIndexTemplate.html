@@ -1,7 +1,7 @@
 <ul>
-[[foreach page.sortedChildrenInIndex item collectionMaxIndexItems]]
+[[foreach page.sortedChildrenInIndex item page.collectionMaxIndexItems]]
 	<li class="[[i]] [[eo]][[last]]">
-		<h3[[idClass entity:Page property:titleHTML flags:"line copy anchor" id:item.uniqueID]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
+		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy anchor" id:item.uniqueID]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
 	</li>
 [[endForEach]]
 </ul>

@@ -59,10 +59,7 @@
 {
 	NSLog(@"Attempt to access page property %@ from index", aKey);
 	
-	/// adding locks for thread safety (since we can't use wrappedValueForKey)
-	[myPage lockPSCAndMOC];
-	id result = [myPage valueForKey:aKey];	/// should not be wrappedValueForKey since we want accessor to be called, e.g. titleText
-	[myPage unlockPSCAndMOC];
+	id result = [myPage valueForKey:aKey];
 	return result;
 }
 
