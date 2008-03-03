@@ -509,6 +509,24 @@
 		CE2232C10869F47200341BAF /* rss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B70869F47200341BAF /* rss_on.png */; };
 		CE2232C20869F47200341BAF /* rss_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B80869F47200341BAF /* rss_off.png */; };
 		CE2234A20869F76800341BAF /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2234A10869F76800341BAF /* down.png */; };
+		CE22E5BE0D7C71BD0055D8E9 /* PDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */; };
+		CE22E5BF0D7C71BD0055D8E9 /* RTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */; };
+		CE22E5D00D7C720D0055D8E9 /* BugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */; };
+		CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C20D7C720D0055D8E9 /* Crash.nib */; };
+		CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C40D7C720D0055D8E9 /* Exception.nib */; };
+		CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C60D7C720D0055D8E9 /* Feedback.nib */; };
+		CE22E5D40D7C720D0055D8E9 /* KTRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */; };
+		CE22E5D50D7C720D0055D8E9 /* News.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CA0D7C720D0055D8E9 /* News.nib */; };
+		CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */; };
+		CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */; };
+		CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */; };
+		CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */; };
+		CE22E5ED0D7C73CC0055D8E9 /* feedback_rtfd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E60D7C73CC0055D8E9 /* feedback_rtfd.png */; };
+		CE22E5EE0D7C73CC0055D8E9 /* feedback_reply.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E70D7C73CC0055D8E9 /* feedback_reply.png */; };
+		CE22E5EF0D7C73CC0055D8E9 /* feedback_redbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E80D7C73CC0055D8E9 /* feedback_redbug.png */; };
+		CE22E5F00D7C73CC0055D8E9 /* feedback_qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E90D7C73CC0055D8E9 /* feedback_qmark.png */; };
+		CE22E5F10D7C73CC0055D8E9 /* feedback_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5EA0D7C73CC0055D8E9 /* feedback_edit.png */; };
+		CE22E5F20D7C73CC0055D8E9 /* feedback_bulb.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5EB0D7C73CC0055D8E9 /* feedback_bulb.png */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CE2622A60A35E7C2009467ED /* preview.mp4 */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
@@ -2072,6 +2090,24 @@
 		CE2232B70869F47200341BAF /* rss_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_on.png; sourceTree = "<group>"; };
 		CE2232B80869F47200341BAF /* rss_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_off.png; sourceTree = "<group>"; };
 		CE2234A10869F76800341BAF /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
+		CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PDFWindow.nib; path = ../../../Shared/trunk/App/PDFWindow.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = RTFDWindow.nib; path = ../../../Shared/trunk/App/RTFDWindow.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5C10D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/BugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5C30D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Crash.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5C50D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Exception.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5C70D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Feedback.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5C90D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KTRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5CB0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/News.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5CD0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/PluginInstaller.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5CF0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/SilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5E00D7C73780055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_yellowbug.png; path = ../../../Shared/trunk/App/feedback_yellowbug.png; sourceTree = SOURCE_ROOT; };
+		CE22E5E60D7C73CC0055D8E9 /* feedback_rtfd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_rtfd.png; path = ../../../Shared/trunk/App/feedback_rtfd.png; sourceTree = SOURCE_ROOT; };
+		CE22E5E70D7C73CC0055D8E9 /* feedback_reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_reply.png; path = ../../../Shared/trunk/App/feedback_reply.png; sourceTree = SOURCE_ROOT; };
+		CE22E5E80D7C73CC0055D8E9 /* feedback_redbug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_redbug.png; path = ../../../Shared/trunk/App/feedback_redbug.png; sourceTree = SOURCE_ROOT; };
+		CE22E5E90D7C73CC0055D8E9 /* feedback_qmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_qmark.png; path = ../../../Shared/trunk/App/feedback_qmark.png; sourceTree = SOURCE_ROOT; };
+		CE22E5EA0D7C73CC0055D8E9 /* feedback_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_edit.png; path = ../../../Shared/trunk/App/feedback_edit.png; sourceTree = SOURCE_ROOT; };
+		CE22E5EB0D7C73CC0055D8E9 /* feedback_bulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_bulb.png; path = ../../../Shared/trunk/App/feedback_bulb.png; sourceTree = SOURCE_ROOT; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE2622A60A35E7C2009467ED /* preview.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = preview.mp4; sourceTree = "<group>"; };
@@ -2882,7 +2918,7 @@
 				3C72D4F4094A240E0061A876 /* Libraries */,
 				3C5A73770BF7B82600776464 /* Debugging */,
 				2786962A0C32C46E00430B63 /* Deprecated Classes */,
-				CEC11A2E0D78BE0100513E70 /* Shared */,
+				CEC11A2E0D78BE0100513E70 /* Shared Classes */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
@@ -2903,6 +2939,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE22E5E40D7C73C00055D8E9 /* Shared Graphics */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				CED194330AC33F8F002E8A4A /* Sandvox Help */,
 				3C202E9D07E00FA700DE4994 /* Info Files */,
@@ -3198,6 +3235,7 @@
 			children = (
 				3C26C4400BC597D200FF874D /* Localized */,
 				3C26C43D0BC597B900FF874D /* Non-Localized */,
+				CE22E5B80D7C71A10055D8E9 /* Shared Nibs */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
@@ -3999,6 +4037,38 @@
 			name = WebView;
 			sourceTree = "<group>";
 		};
+		CE22E5B80D7C71A10055D8E9 /* Shared Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */,
+				CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */,
+				CE22E5C20D7C720D0055D8E9 /* Crash.nib */,
+				CE22E5C40D7C720D0055D8E9 /* Exception.nib */,
+				CE22E5C60D7C720D0055D8E9 /* Feedback.nib */,
+				CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */,
+				CE22E5CA0D7C720D0055D8E9 /* News.nib */,
+				CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */,
+				CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */,
+				CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */,
+				CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */,
+			);
+			name = "Shared Nibs";
+			sourceTree = "<group>";
+		};
+		CE22E5E40D7C73C00055D8E9 /* Shared Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */,
+				CE22E5E60D7C73CC0055D8E9 /* feedback_rtfd.png */,
+				CE22E5E70D7C73CC0055D8E9 /* feedback_reply.png */,
+				CE22E5E80D7C73CC0055D8E9 /* feedback_redbug.png */,
+				CE22E5E90D7C73CC0055D8E9 /* feedback_qmark.png */,
+				CE22E5EA0D7C73CC0055D8E9 /* feedback_edit.png */,
+				CE22E5EB0D7C73CC0055D8E9 /* feedback_bulb.png */,
+			);
+			name = "Shared Graphics";
+			sourceTree = "<group>";
+		};
 		CE2556CC0D3432AF003A5B5E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4142,7 +4212,7 @@
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
 		};
-		CEC11A2E0D78BE0100513E70 /* Shared */ = {
+		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
 				CEC11B300D78BE5300513E70 /* AMRollOverButton.h */,
@@ -4360,7 +4430,7 @@
 				CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */,
 				CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */,
 			);
-			name = Shared;
+			name = "Shared Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5365,6 +5435,24 @@
 				27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */,
 				2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */,
 				2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */,
+				CE22E5BE0D7C71BD0055D8E9 /* PDFWindow.nib in Resources */,
+				CE22E5BF0D7C71BD0055D8E9 /* RTFDWindow.nib in Resources */,
+				CE22E5D00D7C720D0055D8E9 /* BugReporterViews.nib in Resources */,
+				CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */,
+				CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */,
+				CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */,
+				CE22E5D40D7C720D0055D8E9 /* KTRegistration.nib in Resources */,
+				CE22E5D50D7C720D0055D8E9 /* News.nib in Resources */,
+				CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */,
+				CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */,
+				CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */,
+				CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */,
+				CE22E5ED0D7C73CC0055D8E9 /* feedback_rtfd.png in Resources */,
+				CE22E5EE0D7C73CC0055D8E9 /* feedback_reply.png in Resources */,
+				CE22E5EF0D7C73CC0055D8E9 /* feedback_redbug.png in Resources */,
+				CE22E5F00D7C73CC0055D8E9 /* feedback_qmark.png in Resources */,
+				CE22E5F10D7C73CC0055D8E9 /* feedback_edit.png in Resources */,
+				CE22E5F20D7C73CC0055D8E9 /* feedback_bulb.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6302,6 +6390,78 @@
 			);
 			name = LivePagesDisabled.html;
 			sourceTree = "<group>";
+		};
+		CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5C10D7C720D0055D8E9 /* en */,
+			);
+			name = BugReporterViews.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5C20D7C720D0055D8E9 /* Crash.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5C30D7C720D0055D8E9 /* en */,
+			);
+			name = Crash.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5C40D7C720D0055D8E9 /* Exception.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5C50D7C720D0055D8E9 /* en */,
+			);
+			name = Exception.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5C60D7C720D0055D8E9 /* Feedback.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5C70D7C720D0055D8E9 /* en */,
+			);
+			name = Feedback.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5C80D7C720D0055D8E9 /* KTRegistration.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5C90D7C720D0055D8E9 /* en */,
+			);
+			name = KTRegistration.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5CA0D7C720D0055D8E9 /* News.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5CB0D7C720D0055D8E9 /* en */,
+			);
+			name = News.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5CD0D7C720D0055D8E9 /* en */,
+			);
+			name = PluginInstaller.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5CF0D7C720D0055D8E9 /* en */,
+			);
+			name = SilencingWarningSheet.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE22E5E00D7C73780055D8E9 /* en */,
+			);
+			name = KSRegistration.nib;
+			sourceTree = SOURCE_ROOT;
 		};
 		CE53609A0A15303D00661E26 /* Introduction.nib */ = {
 			isa = PBXVariantGroup;
