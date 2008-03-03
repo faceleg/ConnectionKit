@@ -26,9 +26,11 @@
 
 #import "KTStalenessManager.h"
 
+#import "KTAbstractPage.h"
 #import "KTPage.h"
 #import "KTParsedKeyPath.h"
 #import "KTStalenessHTMLParser.h"
+
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
@@ -37,8 +39,8 @@
 
 @interface KTStalenessManager (Private)
 - (NSMutableDictionary *)nonStalePages;
-- (void)addNonStalePage:(KTPage *)page;
-- (void)removeNonStalePage:(KTPage *)page;
+- (void)addNonStalePage:(KTAbstractPage *)page;
+- (void)removeNonStalePage:(KTAbstractPage *)page;
 
 @end
 
@@ -86,7 +88,7 @@
 
 - (KTDocument *)document { return myDocument; }
 
-- (void)beginObservingPage:(KTPage *)page
+- (void)beginObservingPage:(KTAbstractPage *)page
 {
 	// We observe the staleness of all pages
 	if (![myObservedPages containsObject:page])
@@ -113,7 +115,7 @@
 	#endif
 	
 	
-	NSArray *pages = [[[self document] managedObjectContext] allObjectsWithEntityName:@"Page"
+	NSArray *pages = [[[self document] managedObjectContext] allObjectsWithEntityName:@"AbstractPage"
 																				error:NULL];
 	
 	// Little trick to make sure the dictionary is a decent size to start with
@@ -122,7 +124,7 @@
 	}
 	
 	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
-	KTPage *aPage;
+	KTAbstractPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
 		[self beginObservingPage:aPage];
@@ -134,7 +136,7 @@
 	#endif
 }
 
-- (void)stopObservingPage:(KTPage *)page
+- (void)stopObservingPage:(KTAbstractPage *)page
 {
 	[self removeNonStalePage:page];
 	
@@ -145,7 +147,7 @@
 - (void)stopObservingAllPages
 {
 	NSEnumerator *pagesEnumerator = [[NSSet setWithSet:myObservedPages] objectEnumerator];
-	KTPage *aPage;
+	KTAbstractPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
 		[self stopObservingPage:aPage];
@@ -179,7 +181,7 @@
 	return result;
 }
 
-- (NSMutableSet *)observedKeyPathsOfNonStalePage:(KTPage *)page
+- (NSMutableSet *)observedKeyPathsOfNonStalePage:(KTAbstractPage *)page
 {
 	return [self observedKeyPathsOfNonStalePageWithID:[page uniqueID]];
 }
@@ -209,7 +211,7 @@
 	NSEnumerator *pagesEnumerator = [dependentPageIDs objectEnumerator];
 	while (aPageID = [pagesEnumerator nextObject])
 	{
-		KTPage *page = [[[self document] managedObjectContext] pageWithUniqueID:aPageID];
+		KTAbstractPage *page = [[[self document] managedObjectContext] pageWithUniqueID:aPageID];
 		[result addObject:page];
 	}
 	
@@ -218,7 +220,7 @@
 	return result;
 }
 
-- (void)addNonStalePage:(KTPage *)page
+- (void)addNonStalePage:(KTAbstractPage *)page
 {
 	// Only begin observing the page if we're not already doing so
 	if (![[self nonStalePages] objectForKey:[page uniqueID]])
@@ -234,7 +236,7 @@
 	}
 }
 
-- (void)beginObservingKeyPath:(NSString *)keyPath ofObject:(id)object onNonStalePage:(KTPage *)page;
+- (void)beginObservingKeyPath:(NSString *)keyPath ofObject:(id)object onNonStalePage:(KTAbstractPage *)page;
 {
 	NSMutableSet *observedKeyPaths = [self observedKeyPathsOfNonStalePage:page];
 	KTParsedKeyPath *parsedKeyPath = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:object];
@@ -248,7 +250,7 @@
 	[parsedKeyPath release];
 }
 
-- (void)removeNonStalePage:(KTPage *)page
+- (void)removeNonStalePage:(KTAbstractPage *)page
 {
 	// Ignore pages without an ID
 	if (![page uniqueID]) {
@@ -285,9 +287,9 @@
 	NSManagedObject *aManagedObject;
 	while (aManagedObject = [enumerator nextObject])
 	{
-		if ([aManagedObject isKindOfClass:[KTPage class]])
+		if ([aManagedObject isKindOfClass:[KTAbstractPage class]])
 		{
-			[self beginObservingPage:(KTPage *)aManagedObject];
+			[self beginObservingPage:(KTAbstractPage *)aManagedObject];
 		}
 	}
 	
@@ -295,9 +297,9 @@
 	enumerator = [deletedObjects objectEnumerator];
 	while (aManagedObject = [enumerator nextObject])
 	{
-		if ([aManagedObject isKindOfClass:[KTPage class]])
+		if ([aManagedObject isKindOfClass:[KTAbstractPage class]])
 		{
-			[self stopObservingPage:(KTPage *)aManagedObject];
+			[self stopObservingPage:(KTAbstractPage *)aManagedObject];
 		}
 	}
 }
@@ -325,9 +327,9 @@
 	
 	
 	// When page staleness changes, begin or stop observing it as appropriate
-	if ([keyPath isEqualToString:@"isStale"] && [object isKindOfClass:[KTPage class]])
+	if ([keyPath isEqualToString:@"isStale"] && [object isKindOfClass:[KTAbstractPage class]])
 	{
-		KTPage *page = (KTPage *)object;
+		KTAbstractPage *page = (KTAbstractPage *)object;
 		if ([page boolForKey:@"isStale"])	// The delay ensures the rest of the system has caught up first. Otherwise we get
 		{									// strange KVO exceptions or the page immediately being set stale again.
 			[self performSelector:@selector(removeNonStalePage:) withObject:page afterDelay:0.0];

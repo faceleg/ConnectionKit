@@ -19,9 +19,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTPage;
+@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTAbstractPage, KTPage;
 
-@interface NSManagedObjectContext ( KTExtensions )
+
+@interface NSManagedObjectContext (KTExtensions)
 
 #pragma mark genernal NSManagedObjectContext extensions
 
@@ -84,7 +85,7 @@
 - (KTMedia *)mediaWithUniqueID:(NSString *)anID;
 
 // returns objectWithUniqueID: searching only Page
-- (KTPage *)pageWithUniqueID:(NSString *)anID;
+- (KTAbstractPage *)pageWithUniqueID:(NSString *)anID;
 
 - (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
 

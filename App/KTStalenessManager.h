@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTDocument, KTPage;
+@class KTDocument, KTAbstractPage;
 
 
 @interface KTStalenessManager : NSObject
@@ -24,10 +24,10 @@
 - (KTDocument *)document;
 
 // Observation
-- (void)beginObservingPage:(KTPage *)page;
+- (void)beginObservingPage:(KTAbstractPage *)page;
 - (void)beginObservingAllPages;
 
-- (void)stopObservingPage:(KTPage *)page;
+- (void)stopObservingPage:(KTAbstractPage *)page;
 - (void)stopObservingAllPages;
 
 @end
