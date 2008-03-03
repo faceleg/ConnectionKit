@@ -77,7 +77,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)showAddressBar:(BOOL)inShow;
 - (void)showDesigns:(BOOL)inShow;
 - (void)showInfo:(BOOL)inShow;
-- (void)showNews:(BOOL)aNews update:(BOOL)anUpdate buy:(BOOL)aBuy;
 - (void)showStatusBar:(BOOL)inShow;
 
 - (BOOL)validateCopyPagesItem:(id <NSValidatedUserInterfaceItem>)item;
@@ -2413,95 +2412,19 @@ from representedObject */
 
 - (void) updateStinkingBadges:(NSNotification *)aNotification
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[self showNews:[[NSApp delegate] newsHasChanged] && [defaults boolForKey:@"KTShowAnnouncements"]
-			update:(nil != [[NSApp delegate] newVersionString])
-			   buy:(nil == gRegistrationString)];
+	
+	if (nil == gRegistrationString)
+	{
+		
+		
+	}
+	else
+	{
+		
+	}
+	
 }
 
-#define BETWEEN 8
-
-- (void) showNews:(BOOL)aNews update:(BOOL)anUpdate buy:(BOOL)aBuy
-{
-	// attributes for calculating width
-	NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont boldSystemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]], NSFontAttributeName, nil];
-#define WIDTH_EXTRA 12
-	
-	// BUY
-	
-	// Get rightmost dimension from nib
-	float nextX = [oBuyMarvelBadge frame].origin.x + [oBuyMarvelBadge frame].size.width;
-	
-	[oBuyMarvelBadge setHidden:!aBuy];
-	if (aBuy)
-	{
-		[oBuyMarvelBadge setTitle:NSLocalizedString(@"Buy Sandvox",@"Button in document window")];
-		[oBuyMarvelBadge setControlSize:NSSmallControlSize];
-		[oBuyMarvelBadge setTextColor:				[NSColor colorWithCalibratedRed:0.75 green:0.25 blue:0.25 alpha:1.0]];
-		[oBuyMarvelBadge setHighlightedControlColor:[NSColor colorWithCalibratedRed:0.75 green:0.25 blue:0.25 alpha:1.0]];
-		[oBuyMarvelBadge setMouseoverControlColor:	[NSColor colorWithCalibratedRed:0.75 green:0.5  blue:0.5  alpha:1.0]];
-		[oBuyMarvelBadge setAction:@selector(showRegistrationWindow:)];
-
-		int width = WIDTH_EXTRA + [((NSAttributedString *)[[[NSAttributedString alloc] initWithString:	[oBuyMarvelBadge title] attributes:attr] autorelease]) size].width;
-
-		[oBuyMarvelBadge setFrame:NSMakeRect(
-												nextX - width,
-												[oBuyMarvelBadge frame].origin.y,
-												width,
-												[oBuyMarvelBadge frame].size.height)];
-		
-		// (Don't need to position; this is always against the right margin)
-		nextX = [oBuyMarvelBadge frame].origin.x - BETWEEN;
-	}
-	
-	// UPDATE
-	
-	[oUpdateMarvelBadge setHidden:!anUpdate];
-	if (anUpdate)
-	{
-		[oUpdateMarvelBadge setTitle:NSLocalizedString(@"Update Sandvox",@"Button in document window")];
-		[oUpdateMarvelBadge setControlSize:NSSmallControlSize];
-		int width = WIDTH_EXTRA + [((NSAttributedString *)[[[NSAttributedString alloc] initWithString:	[oUpdateMarvelBadge title] attributes:attr] autorelease]) size].width;
-
-		
-		NSString *newVersionString = [NSString stringWithFormat:NSLocalizedString(@"New Version: %@",@"tooltip prefix to show new version #"), [[NSApp delegate] newVersionString]];
-		NSString *tooltip = [NSString stringWithFormat:@"%@\n\n%@", newVersionString, [[NSApp delegate] newFeatures]];
-		[oUpdateMarvelBadge setToolTip:tooltip];
-		[oUpdateMarvelBadge setFrame:NSMakeRect(
-												nextX - width,
-												[oUpdateMarvelBadge frame].origin.y,
-												width,
-												[oUpdateMarvelBadge frame].size.height)];
-		
-//  DEPRECATING SLOWLY...		[oUpdateMarvelBadge setAction:@selector(getUpdatedApplication:)];
-		nextX = [oUpdateMarvelBadge frame].origin.x - BETWEEN;
-	}
-	
-	[oLatestNewsBadge setHidden:!aNews];
-	if (aNews)
-	{
-		[oLatestNewsBadge setTitle:NSLocalizedString(@"See Unread News",@"Button in document window")];
-		[oLatestNewsBadge setControlSize:NSSmallControlSize];
-		int width = WIDTH_EXTRA + [((NSAttributedString *)[[[NSAttributedString alloc] initWithString:	[oLatestNewsBadge title] attributes:attr] autorelease]) size].width;
-
-		[oLatestNewsBadge setFrame:NSMakeRect(
-											  nextX - width,
-											  [oLatestNewsBadge frame].origin.y,
-											  width,
-											  [oLatestNewsBadge frame].size.height)];
-		
-////		[oLatestNewsBadge setAction:@selector(showNewsWindow:)];
-		nextX = [oLatestNewsBadge frame].origin.x - BETWEEN;
-	}
-	// Now, make the status field go up next to that.
-	[oStatusBarField setFrame:NSMakeRect(
-										 [oStatusBarField frame].origin.x,
-										 [oStatusBarField frame].origin.y,
-										 nextX - [oStatusBarField frame].origin.x,
-										 [oStatusBarField frame].size.height)];
-	
-	[oStatusBar setNeedsDisplay:YES];
-}
 
 - (void)showDesigns:(BOOL)inShow
 {

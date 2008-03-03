@@ -62,6 +62,14 @@
 			<string>NSResponder</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSApplication</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>crash</key>
@@ -261,7 +269,7 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSApplication</string>
+			<string>KSApplication</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -397,6 +405,14 @@
 			</dict>
 			<key>CLASS</key>
 			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
