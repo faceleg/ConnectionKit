@@ -10,6 +10,7 @@
 #import "KTPage.h"
 
 #import "NSAttributedString+Karelia.h"
+#import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
@@ -156,6 +157,20 @@
 
 #pragma mark -
 #pragma mark HTML
+
++ (NSString *)pageMainContentTemplate
+{
+	static NSString *sPageTemplateString = nil;
+	
+	if (!sPageTemplateString)
+	{
+		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageMainContentTemplate" ofType:@"html"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return sPageTemplateString;
+}
 
 - (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
 {

@@ -11,12 +11,30 @@
 
 #import "KTHTMLParser.h"
 
+#import "NSBundle+KTExtensions.h"
+
 #import "assertions.h"
 
 
 @implementation KTArchivePage
 
 + (NSString *)entityName { return @"ArchivePage"; }
+
+/*	Use a different template to most pages
+ */
++ (NSString *)pageMainContentTemplate
+{
+	static NSString *sPageTemplateString = nil;
+	
+	if (!sPageTemplateString)
+	{
+		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTArchivePageTemplate" ofType:@"html"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return sPageTemplateString;
+}
 
 /*	We want to basically clone the main index page but with a few differences.
  */
@@ -33,8 +51,6 @@
 	
 	[parser setCurrentPage:self];
 	[parser overrideKey:@"master" withValue:[[self parent] master]];
-	[parser overrideKey:@"titleHTML" withValue:[self valueForKey:@"titleHTML"]];
-	[parser overrideKey:@"titleText" withValue:[self titleText]];
 	
 	NSString *result = [parser parseTemplate];
 	[parser release];

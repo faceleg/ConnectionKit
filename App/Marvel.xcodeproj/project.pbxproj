@@ -136,6 +136,7 @@
 
 /* Begin PBXBuildFile section */
 		2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */; };
+		2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */; };
 		270A41710D46A216002E998A /* KTAbstractMediaFile+ScaledImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 270A416F0D46A216002E998A /* KTAbstractMediaFile+ScaledImages.h */; settings = {ATTRIBUTES = (); }; };
 		270A41720D46A216002E998A /* KTAbstractMediaFile+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A41700D46A216002E998A /* KTAbstractMediaFile+ScaledImages.m */; };
 		270A41F70D46B6F9002E998A /* KTScaledImageProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 270A41F50D46B6F9002E998A /* KTScaledImageProperties.h */; settings = {ATTRIBUTES = (); }; };
@@ -1567,6 +1568,7 @@
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageMainContentTemplate.html; sourceTree = "<group>"; };
+		2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTArchivePageTemplate.html; sourceTree = "<group>"; };
 		270A416F0D46A216002E998A /* KTAbstractMediaFile+ScaledImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractMediaFile+ScaledImages.h"; sourceTree = "<group>"; };
 		270A41700D46A216002E998A /* KTAbstractMediaFile+ScaledImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractMediaFile+ScaledImages.m"; sourceTree = "<group>"; };
 		270A41F50D46B6F9002E998A /* KTScaledImageProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageProperties.h; sourceTree = "<group>"; };
@@ -3253,6 +3255,7 @@
 				CE1B90460B5EF68C0051B380 /* Empty.html */,
 				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
 				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
+				2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */,
 			);
 			name = "HTML,text,js";
 			sourceTree = "<group>";
@@ -5361,6 +5364,7 @@
 				3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */,
 				27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */,
 				2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */,
+				2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

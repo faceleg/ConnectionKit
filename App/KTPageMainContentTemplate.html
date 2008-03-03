@@ -70,17 +70,11 @@ trackback:ping="http://haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueI
 							</div>
 
 [[if index]]
-[[if generateArchives]]
-							<div id="index" class="[[=&archivesIndex.cssClassName]]">
-[[parsecomponent archivesIndex archivesIndex.templateHTML]]
-							</div> <!-- index (archives) -->
-[[else2]]
 							<div id="index" class="[[=&index.cssClassName]]">
 [[parsecomponent index index.templateHTML]]
 							</div> <!-- index -->
 [[if indexOverflowing]]
 							<p class="index-overflow"><a href="[[archivespath]]">[[`indexOverflowHTML]]</a></p>
-[[endif3]]
 [[endif2]]
 							<div class="clear"></div>
 [[endif]]
