@@ -81,7 +81,7 @@ KTCollectionPathStyle;
 
 // Other
 - (NSString *)publishedPathForResourceFile:(NSString *)resourcePath;
-- (NSString *)archivesURLPathRelativeToPage:(KTAbstractPage *)aPage;
+- (NSString *)designDirectoryPath;
 
 @end
 

@@ -48,6 +48,20 @@
 	return sPageTemplateString;
 }
 
++ (NSString *)pageMainContentTemplate
+{
+	static NSString *sPageTemplateString = nil;
+	
+	if (!sPageTemplateString)
+	{
+		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageMainContentTemplate" ofType:@"html"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return sPageTemplateString;
+}
+
 #pragma mark -
 #pragma mark HTML Generation
 

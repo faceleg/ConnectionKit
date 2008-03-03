@@ -347,17 +347,10 @@
 	return result;
 }
 
-- (NSString *)archivesURLPathRelativeToPage:(KTAbstractPage *)aPage
+- (NSString *)designDirectoryPath
 {
-	NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
-	NSString *archivePath = [collectionPath stringByAppendingPathComponent:[self archivesFilename]];
-	
-	NSString *comparisonArchivePath = [@"/" stringByAppendingString:archivePath];
-	NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage publishedPathRelativeToSite]];
-	
-	NSString *result = [comparisonArchivePath pathRelativeTo:comparisonPagePath];
-	
-	return result;
+	SUBCLASSMUSTIMPLEMENT;
+	return nil;
 }
 
 #pragma mark -

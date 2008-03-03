@@ -67,11 +67,6 @@
 		}
 		[self setWrappedValue:version forKey:@"pluginVersion"];
 		
-		//NSString *nextUniqueID = [[self document] nextUniqueID];
-		NSString *nextUniqueID = [NSString shortGUIDString];
-		NSAssert((nil != nextUniqueID),@"nextUniqueID cannot be nil!");
-		[self setWrappedValue:nextUniqueID forKey:@"uniqueID"];
-        
 		NSDictionary *localizedInfoDictionary = [[plugin bundle] localizedInfoDictionary];
         NSDictionary *initialProperties = [plugin pluginPropertyForKey:@"KTPluginInitialProperties"];
         if (nil != initialProperties)
@@ -106,6 +101,13 @@
 	
 	// Ensure our delegate is setup
 	[[[self document] pluginDelegatesManager] delegateForPlugin:self];
+}
+
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	
+	[self setWrappedValue:[NSString shortGUIDString] forKey:@"uniqueID"];
 }
 
 - (void)awakeFromFetch

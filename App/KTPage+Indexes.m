@@ -477,8 +477,8 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	}
 	else
 	{
-		NSArray *archivePages = [self valueForKey:@"archivePages"];
-		[[self managedObjectContext] deleteObjects:[NSSet setWithArray:archivePages]];
+		NSSet *archivePages = [self valueForKey:@"archivePages"];
+		[[self managedObjectContext] deleteObjects:archivePages];
 	}
 }
 

@@ -12,12 +12,15 @@
 #import "KTAbstractPluginDelegate.h"
 #import "KTMaster.h"
 #import "KTPage.h"
+#import "KTArchivePage.h"
 
 #import "NSBundle+QuickLook.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+
+#import "assertions.h"
 
 
 @interface KTHTMLParser (CSSPrivate)
@@ -31,7 +34,7 @@
 - (NSString *)stylesheetWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
 	NSMutableArray *stylesheetLines = [NSMutableArray array];
-	KTPage *page = [self currentPage];
+	KTPage *page = (KTPage *)[self component];
 	
 	
 	// Always include the global sandvox CSS.
@@ -82,7 +85,7 @@
 	// For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 	{
-		NSString *masterCSS = [[[self currentPage] master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
+		NSString *masterCSS = [[page master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
 		if (masterCSS)
 		{
 			[stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\r%@\r</style>", masterCSS]];
@@ -90,7 +93,7 @@
 	}
 	else
 	{
-		NSString *masterCSSPath = [[[self currentPage] master] publishedMasterCSSPathRelativeToSite];
+		NSString *masterCSSPath = [[page master] publishedMasterCSSPathRelativeToSite];
 		NSString *pagePath = [[self currentPage] publishedPathRelativeToSite];
 		
 		NSString *relativeMasterCSSPath =
@@ -121,7 +124,11 @@
 	NSString *result = nil;
 	
 	// Return nil if the file doesn't actually exist
-	KTDesign *design = [[[self currentPage] master] design];
+	KTAbstractPage *page = [self currentPage];
+	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
+	OBASSERT([page isKindOfClass:[KTPage class]]);
+	KTDesign *design = [[(KTPage *)page master] design];
+	
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{

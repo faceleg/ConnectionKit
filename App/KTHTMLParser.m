@@ -12,6 +12,7 @@
 #import "KTDocument.h"	// for constants, methods
 #import "KTMaster.h"
 #import "KTPage.h"
+#import "KTArchivePage.h"
 
 #import "KTMediaManager.h"
 #import "KTInDocumentMediaFile.h"
@@ -225,9 +226,9 @@ static unsigned sLastParserID;
  *	e.g. A single pagelet may be parsed be 50 times, each on a different page.
  *	Use these two methods to specify which the component is being parsed in the context of.
  */
-- (KTPage *)currentPage { return myCurrentPage; }
+- (KTAbstractPage *)currentPage { return myCurrentPage; }
 
-- (void)setCurrentPage:(KTPage *)page
+- (void)setCurrentPage:(KTAbstractPage *)page
 {
 	[page retain];
 	[myCurrentPage release];
@@ -311,7 +312,7 @@ static unsigned sLastParserID;
 	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser override key", key);
 	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key \"%@\" is already overidden", key);
 	
-	[[self _keyOverrides] setObject:key forKey:key];
+	[[self _keyOverrides] setObject:override forKey:key];
 }
 
 - (void)removeOverrideForKey:(NSString *)key
@@ -821,16 +822,20 @@ static unsigned sLastParserID;
 	BOOL usingImageReplacement = NO;
 		
 	// Mark for image replacement ONLY if QC supported.
-	NSString *designIdentifier = [[[[self currentPage] master] design] identifier];
+	KTAbstractPage *page = [self currentPage];
+	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
+	OBASSERT([page isKindOfClass:[KTPage class]]);
+	KTDesign *design = [[(KTPage *)page master] design];
+	
 	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
 		&& [[[[self cache] valueForKey:@"master"] valueForKey:@"enableImageReplacement"] boolValue])
 	{
 		//LOG((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
-		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:designIdentifier uniqueID:resultingID string:flatPropertyValue];
+		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatPropertyValue];
 	}
 	else	// no image replacement, make sure it's not used.  (In case we turned it off)
 	{
-		[myDocument removeImageReplacementEntryForDesign:designIdentifier uniqueID:resultingID string:flatProperty];
+		[myDocument removeImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatProperty];
 	}
 	
 	NSString *result;
@@ -853,7 +858,7 @@ static unsigned sLastParserID;
 
 - (NSString *)endbodyWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	KTPage *page = [self currentPage];
+	KTPage *page = (KTPage *)[self component];
 	NSMutableString *string = [NSMutableString string];
 	
 	@try
@@ -877,7 +882,7 @@ static unsigned sLastParserID;
 
 - (NSString *)extraheadersWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	KTPage *page = [self currentPage];
+	KTPage *page = (KTPage *)[self component];
 	NSMutableString *string = [NSMutableString string];
 	
 	@try
@@ -1363,7 +1368,7 @@ static unsigned sLastParserID;
 	}
 	
 	// Figure out the correct page
-	KTPage *page = [self currentPage];
+	KTAbstractPage *page = [self currentPage];
 	if ([params count] > 1)
 	{
 		page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
@@ -1410,23 +1415,6 @@ static unsigned sLastParserID;
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	return [targetPage feedURLPathRelativeToPage: sourcePage];
 }
-
-- (NSString *)archivespathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	id sourcePage = [[self cache] valueForKey:@"CurrentPage"];
-	KTPage *targetPage = sourcePage;
-	if (NSNotFound != [inRestOfTag rangeOfString:@" "].location)
-	{
-		NSLog(@"path: usage [[ { otherPage.keyPath } ]]");
-		return @"";
-	}
-	if (![inRestOfTag isEqualToString:@""])
-	{
-		targetPage = [[self cache] valueForKeyPath:inRestOfTag];
-	}
-	return [targetPage archivesURLPathRelativeToPage: sourcePage];
-}
-
 
 // Following parameters:  (1) key-value path to another page
 

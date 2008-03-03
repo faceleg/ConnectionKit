@@ -24,7 +24,7 @@
 
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTWebViewTextEditingBlock;
-@class KTPage;
+@class KTAbstractPage;
 @class KTAbstractMediaFile;
 
 @interface KTHTMLParser : NSObject
@@ -34,7 +34,7 @@
 	id <KTWebViewComponent>	myComponent;
 	KTHTMLParserMasterCache	*myCache;
 	id						myDelegate;
-	KTPage					*myCurrentPage;
+	KTAbstractPage			*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
 	NSNumber				*myLiveDataFeeds;
 	BOOL					myUseAbsoluteMediaPaths;
@@ -67,8 +67,8 @@
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
 
-- (KTPage *)currentPage;
-- (void)setCurrentPage:(KTPage *)page;
+- (KTAbstractPage *)currentPage;
+- (void)setCurrentPage:(KTAbstractPage *)page;
 
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
