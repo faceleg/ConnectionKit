@@ -5624,7 +5624,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n# we base the DeployRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\nif [ \"${SVN_VERSION}\" == \"\" ]\nthen\n\techo \"\"\n\techo \"No SVN_VERSION. Cannot deploy. Exiting...\"\n\texit 1\nfi\n\n# SCP assumes public key login through Karelia's (mt) account\nSCP_LOGIN=\"serveradmin%karelia.com@s19590.gridserver.com\"\n\n# determine the name of the dmg to upload and where to upload it\nif [ \"${SANDVOX_VARIANT}\" == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/wallace.karelia.com/html/beta\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}\"\n\t\tSERVER_PATH=\"/home/19590/domains/wallace.karelia.com}/html/release\"\nfi\nUPLOAD_PATH=\"${SERVER_PATH}/${DMG_FINAL_NAME}\"\n\n# the directory we're uploading from (based on convention, from the BuildAndPackageRelease script)\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\nDISTRO_PATH=\"${SCRATCH_DIR}/${DMG_FINAL_NAME}\"\n\n# if we don't have a distro ready, exit\nif test -r ${DISTRO_PATH}\nthen\n\techo \"Uploading ${DISTRO_PATH} ...\"\n\techo \"... to ${UPLOAD_PATH}\"\n\tscp \"${DISTRO_PATH}\" \"${SCP_LOGIN}:${UPLOAD_PATH}\"\nelse\n\techo \"\"\n\techo \"Nothing to upload at ${DISTRO_PATH}. Exiting...\"\n\texit 1\nfi\n\n# if we got through that, upload release notes\nRELEASE_NOTES_PATH=\"${SRCROOT}/ReleaseNotes.html\"\n\necho \"\"\necho \"Uploading ${RELEASE_NOTES_PATH} ...\"\necho \"... to ${SERVER_PATH}/releasenotes.html\"\nscp \"${RELEASE_NOTES_PATH}\" \"${SCP_LOGIN}:${SERVER_PATH}/releasenotes.html\"\n\n# if we got through that, upload new latest.php\n\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n# we base the DeployRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\nif [ \"${SVN_VERSION}\" == \"\" ]\nthen\n\techo \"\"\n\techo \"No SVN_VERSION. Cannot deploy. Exiting...\"\n\texit 1\nfi\n\n# SCP assumes public key login through Karelia's (mt) account\nSCP_LOGIN=\"serveradmin%karelia.com@s19590.gridserver.com\"\n\n# determine the name of the dmg to upload and where to upload it\nif [ \"${SANDVOX_VARIANT}\" == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/beta\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/files\"\nfi\n\n# set upload path, prepend _ to the filename to avoid URL rewrite rules \nUPLOAD_PATH=\"${SERVER_PATH}/_${DMG_FINAL_NAME}\"\n\n# the directory we're uploading from (based on convention, from the BuildAndPackageRelease script)\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\nDISTRO_PATH=\"${SCRATCH_DIR}/${DMG_FINAL_NAME}\"\n\n# if we don't have a distro ready, exit\nif test -r ${DISTRO_PATH}\nthen\n\techo \"Uploading ${DISTRO_PATH} ...\"\n\techo \"... to ${UPLOAD_PATH}\"\n\tscp \"${DISTRO_PATH}\" \"${SCP_LOGIN}:${UPLOAD_PATH}\"\nelse\n\techo \"\"\n\techo \"Nothing to upload at ${DISTRO_PATH}. Exiting...\"\n\texit 1\nfi\n\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */ = {
@@ -6552,7 +6552,7 @@
 		};
 		3C8883990BFCB4EE00921FA4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = DiskImage;
 			};
@@ -6560,7 +6560,7 @@
 		};
 		3C88839A0BFCB4EE00921FA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = DiskImage;
 			};
