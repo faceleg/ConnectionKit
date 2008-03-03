@@ -40,7 +40,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTDocumentController.h"
 #import "KTHostSetupController.h"
 #import "KTInfoWindowController.h"
-#import "KTNewsController.h"
 #import "KTPlaceholderController.h"
 #import "KTPrefsController.h"
 #import "KTQuickStartController.h"
