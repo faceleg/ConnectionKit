@@ -11,6 +11,12 @@
 <html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&master.language]]" [[endif]]lang="[[=&master.language]]">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
+[[if master.codeInjectionEarlyHead]]
+[[=master.codeInjectionEarlyHead]]
+[[endif]]
+[[if codeInjectionEarlyHead]]
+[[=codeInjectionEarlyHead]]
+[[endif]]
 		<title>
 			[[=&comboTitleText]]
 		</title>
@@ -55,6 +61,12 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[endif]]
 	</head>
 	<body class="sandvox [[if includeSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if isRoot]] home-page[[endif]]" id="[[=&document.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
+[[if master.codeInjectionBodyTagStart]]
+[[=master.codeInjectionBodyTagStart]]
+[[endif]]
+[[if codeInjectionBodyTagStart]]
+[[=codeInjectionBodyTagStart]]
+[[endif]]
 		<div id="page-container" class="[[=&cssClassName]]">
 			<div id="page">
 				<div id="page-top" class="[[if master.logoImage.file]]has-logo[[else]]no-logo[[endif]]">
