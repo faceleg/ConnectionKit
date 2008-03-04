@@ -7,11 +7,14 @@
 //
 
 #import "KTPage.h"
+#import "KTArchivePage.h"
 
-#import "Debug.h"
-#import "NSSortDescriptor+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableArray+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
+
+#import "Debug.h"
+
 
 @interface KTPage (ChildrenPrivate)
 
@@ -128,6 +131,7 @@
 	[archive setIsStale:YES];
 }
 
+
 /*	This method is remarkably simple since when you remove a page there is actually no need to update
  *	the childrens' -collectionIndex. They are ultimately still in the right overall order.
  */
@@ -136,7 +140,23 @@
 	// Remove the page and update the page cache
 	[[self mutableSetValueForKey:@"children"] removeObject:aPage];
 	[self invalidateSortedChildrenCache];
+	
+	// Delete / mark stale the corresponding archive page if unused now
+	KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
+	if (archive)
+	{
+		NSArray *archivePages = [archive sortedPages];
+		if (archivePages && [archivePages count] > 0)
+		{
+			[archive setIsStale:YES];
+		}
+		else
+		{
+			[[self managedObjectContext] deleteObject:archive];
+		}
+	}
 }
+
 
 /*	Batch equivalent of the above method. It's significantly faster because we guarantee that the
  *	-sortedChildren cache will only be invalidated the once.
@@ -145,6 +165,26 @@
 {
 	[[self mutableSetValueForKey:@"children"] minusSet:pages];
 	[self invalidateSortedChildrenCache];
+	
+	// Delete / mark stale the corresponding archive pages if unused now
+	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
+	KTPage *aPage;
+	while (aPage = [pagesEnumerator nextObject])
+	{
+		KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
+		if (archive)
+		{
+			NSArray *archivePages = [archive sortedPages];
+			if (archivePages && [archivePages count] > 0)
+			{
+				[archive setIsStale:YES];
+			}
+			else
+			{
+				[[self managedObjectContext] deleteObject:archive];
+			}
+		}
+	}
 }
 
 #pragma mark -
