@@ -486,8 +486,14 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	}
 }
 
+/*	Searches through our archive pages for one containing the specified date.
+ *	If archives are disabled, always returns nil.
+ */
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
 {
+	if (![self collectionGenerateArchives]) return nil;
+	
+	
 	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
 	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectOrNilIfEmpty];

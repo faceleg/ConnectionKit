@@ -7,6 +7,7 @@
 //
 
 #import "KTPage.h"
+#import "KTArchivePage.h"
 
 #import "KTMaster.h"
 #import "KTMediaManager.h"
@@ -246,11 +247,8 @@
 - (void)setEditableTimestamp:(NSDate *)aDate
 {
 	// Mark our old archive page (if there is one) stale
-	if ([[self parent] collectionGenerateArchives])
-	{
-		KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
-		[archivePage setIsStale:YES];
-	}
+	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
+	[oldArchivePage setIsStale:YES];
 	
 	
 	[self willChangeValueForKey:@"editableTimestamp"];
@@ -270,6 +268,14 @@
 	[self didChangeValueForKey:@"editableTimestamp"];
 	
 	
+	// Delete the old archive page if it has nothing on it now
+	if (oldArchivePage)
+	{
+		NSArray *pages = [oldArchivePage sortedPages];
+		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
+	}
+	
+	
 	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
 	KTCollectionSortType sortType = [[self parent] collectionSortOrder];
 	if (sortType == KTCollectionSortLatestAtTop || sortType == KTCollectionSortLatestAtBottom)
@@ -279,11 +285,8 @@
 	
 	
 	// Mark our new archive page (if there is one) stale
-	if ([[self parent] collectionGenerateArchives])
-	{
-		KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
-		[archivePage setIsStale:YES];
-	}
+	KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
+	[archivePage setIsStale:YES];
 }
 
 /*	Internally set the editableTimestamp property from corresponding permanent attribute
