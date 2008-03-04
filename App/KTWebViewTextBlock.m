@@ -1,12 +1,12 @@
 //
-//  KTWebViewTextEditingBlock.m
+//  KTWebViewTextBlock.m
 //  Marvel
 //
 //  Created by Mike on 19/12/2007.
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTWebViewTextEditingBlock.h"
+#import "KTWebViewTextBlock.h"
 
 #import "Debug.h"
 
@@ -20,7 +20,7 @@
 #import "NSString-Utilities.h"
 
 
-@interface KTWebViewTextEditingBlock (Private)
+@interface KTWebViewTextBlock (Private)
 
 + (NSMutableDictionary *)knownTextBlocks;
 
@@ -30,15 +30,15 @@
 @end
 
 
-@implementation KTWebViewTextEditingBlock
+@implementation KTWebViewTextBlock
 
 #pragma mark -
 #pragma mark Factory Methods
 
-+ (KTWebViewTextEditingBlock *)textBlockForDOMNode:(DOMNode *)node
++ (KTWebViewTextBlock *)textBlockForDOMNode:(DOMNode *)node
 								  webViewController:(KTDocWebViewController *)webViewController;
 {
-	KTWebViewTextEditingBlock *result = nil;
+	KTWebViewTextBlock *result = nil;
 	
 	
 	// Find the overall element encapsualting the editing block
@@ -63,7 +63,7 @@
 		// If we're sure that some actual editable text has been chosen, continue.
 		if (HTMLSourceObject)
 		{	
-			result = [[[KTWebViewTextEditingBlock alloc] initWithHTMLElement:textBlockDOMElement
+			result = [[[KTWebViewTextBlock alloc] initWithHTMLElement:textBlockDOMElement
 														   webViewController:webViewController] autorelease];
 		}
 	}
@@ -93,7 +93,7 @@
 	[super init];
 	
 	myDOMNodeID = [ID copy];
-	[[KTWebViewTextEditingBlock knownTextBlocks] setObject:self forKey:ID];	// That's a wak ref
+	[[KTWebViewTextBlock knownTextBlocks] setObject:self forKey:ID];	// That's a wak ref
 	
 	return self;
 }
@@ -136,7 +136,7 @@
 	OBASSERT(!myIsEditing);
 	
 	// Remove us from the list of known text blocks otherwise there will be a memory crasher later
-	[[KTWebViewTextEditingBlock knownTextBlocks] removeObjectForKey:[self DOMNodeID]];	// This was a weak ref
+	[[KTWebViewTextBlock knownTextBlocks] removeObjectForKey:[self DOMNodeID]];	// This was a weak ref
 	
 	[myDOMNode release];
 	[myDOMNodeID release];

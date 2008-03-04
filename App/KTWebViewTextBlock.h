@@ -1,5 +1,5 @@
 //
-//  KTWebViewTextEditingBlock.h
+//  KTWebViewTextBlock.h
 //  Marvel
 //
 //  Created by Mike on 19/12/2007.
@@ -12,7 +12,7 @@
 @class KTDocWebViewController;
 
 
-@interface KTWebViewTextEditingBlock : NSObject
+@interface KTWebViewTextBlock : NSObject
 {
 	@private
 	
@@ -31,7 +31,7 @@
 	BOOL	myIsEditing;
 }
 
-+ (KTWebViewTextEditingBlock *)textBlockForDOMNode:(DOMNode *)node
++ (KTWebViewTextBlock *)textBlockForDOMNode:(DOMNode *)node
 								  webViewController:(KTDocWebViewController *)webViewController;
 
 

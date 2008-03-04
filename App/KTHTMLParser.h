@@ -23,7 +23,7 @@
 #import "KTWebViewComponent.h"
 
 
-@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTWebViewTextEditingBlock;
+@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTWebViewTextBlock;
 @class KTAbstractPage;
 @class KTAbstractMediaFile;
 
@@ -96,5 +96,5 @@
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath;
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTAbstractMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextEditingBlock *)textBlock;
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock;
 @end

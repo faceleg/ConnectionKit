@@ -10,7 +10,7 @@
 
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
-#import "KTWebViewTextEditingBlock.h"
+#import "KTWebViewTextBlock.h"
 
 #import "KTWebKitCompatibility.h"
 
@@ -40,7 +40,7 @@
 	DOMHTMLElement *newElement = [aNode replaceWithElementName:anElement elementClass:aClass elementID:anID text:aText innerSpan:aSpan innerParagraph:aParagraph];
 
 	// Get it ready to edit (take off image substitution)
-	KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:newElement
+	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:newElement
 																		 webViewController:[myWindowController webViewController]];
 	
 	if (textBlock)

@@ -87,7 +87,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 
 @interface KTDocWebViewController (EditingPrivate)
-- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
 @end
 
 
@@ -1164,7 +1164,7 @@ but the only trick is -- how to display a highlight?
 		
 		if (selectedNode)
 		{
-			KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:selectedNode
+			KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:selectedNode
 																				 webViewController:[self webViewController]];
 			
 			if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])
@@ -1231,7 +1231,7 @@ forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 	NSDictionary *item = [oWebView elementAtPoint:location];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
-	KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
+	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
 	if (textBlock && textBlock != [[self webViewController] currentTextEditingBlock])	// avoid calling this again if we already have a selection since that clones the contents
 	{
 		[[self webViewController] setCurrentTextEditingBlock:textBlock];

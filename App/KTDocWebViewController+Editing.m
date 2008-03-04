@@ -12,7 +12,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTInfoWindowController.h"
-#import "KTWebViewTextEditingBlock.h"
+#import "KTWebViewTextBlock.h"
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
@@ -41,7 +41,7 @@
 
 
 @interface KTDocWebViewController (EditingPrivate)
-- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 @end
 
@@ -132,7 +132,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			// Check if it's empty ... if so, we will need to put in a "+" button
 			BOOL hasEmbed = NSNotFound != [[element outerHTML] rangeOfString:@"<embed"].location;
 			BOOL hasImage = NSNotFound != [[element outerHTML] rangeOfString:@"<img"].location;
-			BOOL hasObject = NSNotFound != [[element outerHTML] rangeOfString:@"<object"].location;		// logic duplicated in KTWebViewTextEditingBlock
+			BOOL hasObject = NSNotFound != [[element outerHTML] rangeOfString:@"<object"].location;		// logic duplicated in KTWebViewTextBlock
 			BOOL hasScript = NSNotFound != [[element outerHTML] rangeOfString:@"<script"].location;
 			BOOL hasIframe = NSNotFound != [[element outerHTML] rangeOfString:@"<iframe"].location;
 			BOOL hasContents = ![[[element textContent] trim] isEqualToString:@""];
@@ -229,9 +229,9 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Editing Status
 
-- (KTWebViewTextEditingBlock *)currentTextEditingBlock { return myTextEditingBlock; }
+- (KTWebViewTextBlock *)currentTextEditingBlock { return myTextEditingBlock; }
 
-- (void)setCurrentTextEditingBlock:(KTWebViewTextEditingBlock *)textBlock
+- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock
 {
 	// Ignore unecessary changes
 	if (textBlock == myTextEditingBlock) {
@@ -324,7 +324,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	WebView *theWebview = [notification object];
 	DOMRange *selectedDOMRange = [theWebview selectedDOMRange];
 	DOMHTMLElement *selectableDOMElement = [[selectedDOMRange startContainer] firstSelectableParentNode];
-	KTWebViewTextEditingBlock *currentTextBlock = [self currentTextEditingBlock];
+	KTWebViewTextBlock *currentTextBlock = [self currentTextEditingBlock];
 	
 	if (selectableDOMElement)
 	{
@@ -332,7 +332,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		{
 			if (!currentTextBlock || [currentTextBlock DOMNode] != selectableDOMElement)
 			{
-				KTWebViewTextEditingBlock *newBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:selectableDOMElement
+				KTWebViewTextBlock *newBlock = [KTWebViewTextBlock textBlockForDOMNode:selectableDOMElement
 																					webViewController:self];
 				
 				[self setCurrentTextEditingBlock:newBlock];
@@ -408,7 +408,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	BOOL result = YES;
 	
-	KTWebViewTextEditingBlock *textBlock = [KTWebViewTextEditingBlock textBlockForDOMNode:[range startContainer]
+	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:[range startContainer]
 																		 webViewController:self];
 	if (!textBlock) {
 		return NO;

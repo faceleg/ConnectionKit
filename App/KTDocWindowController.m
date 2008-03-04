@@ -36,7 +36,7 @@
 #import "KTDocSiteOutlineController.h"
 #import "KTCodeInjectionController.h"
 
-#import "KTWebViewTextEditingBlock.h"
+#import "KTWebViewTextBlock.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "KTAbstractDataSource.h"

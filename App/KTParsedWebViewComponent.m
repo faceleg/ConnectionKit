@@ -82,7 +82,7 @@
 
 - (NSSet *)textBlocks { return [NSSet setWithSet:mySummaryTextBlocks]; }
 
-- (void)addTextBlock:(KTWebViewTextEditingBlock *)textBlock { [[self _textBlocks] addObject:textBlock]; }
+- (void)addTextBlock:(KTWebViewTextBlock *)textBlock { [[self _textBlocks] addObject:textBlock]; }
 
 - (void)removeAllTextBlocks { [[self _textBlocks] removeAllObjects]; }
 

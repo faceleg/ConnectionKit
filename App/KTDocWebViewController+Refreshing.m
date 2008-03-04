@@ -338,7 +338,7 @@
 	[self addParsedKeyPath:keyPath ofObject:object forParser:parser];
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextEditingBlock *)textBlock
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
 {
 	KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
 	[component addTextBlock:textBlock];
