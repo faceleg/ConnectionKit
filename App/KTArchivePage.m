@@ -24,12 +24,6 @@
 
 + (NSString *)entityName { return @"ArchivePage"; }
 
-- (void)awakeFromInsert
-{
-	[super awakeFromInsert];
-	[self setTitleText:@"Collection archive test"];
-}
-
 /*	Hacks to override KSExtensibleManagedObject
  */
 - (id)valueForUndefinedKey:(NSString *)key

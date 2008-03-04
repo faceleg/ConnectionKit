@@ -512,10 +512,20 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		[oneMonthDateComponent setMonth:1];
 		NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
 		
+		
 		// Create the archive. Since it's new, it's automatically marked as stale.
 		result = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
 		[result setValue:monthStart forKey:@"archiveStartDate"];
 		[result setValue:monthEnd forKey:@"archiveEndDate"];
+		
+		
+		// Give the archive a decent title
+		NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
+		NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@ %@",
+															[self titleText],
+															NSLocalizedString(@"Archive", "Part of an archive's page title"),
+															monthDescription];
+		[result setTitleText:archiveTitle];
 	}
 	
 	return result;
