@@ -309,6 +309,32 @@
 	[self didChangeValueForKey:@"editableTimestamp"];
 }
 
+/*	Calls -loadEditableTimestamp and also updates archives to match
+ */
+- (void)reloadEditableTimestamp
+{
+	// Mark our old archive page (if there is one) stale
+	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
+	[oldArchivePage setIsStale:YES];
+	
+	
+	// Reload the timestamp
+	[self loadEditableTimestamp];
+	
+	
+	// Delete the old archive page if it has nothing on it now
+	if (oldArchivePage)
+	{
+		NSArray *pages = [oldArchivePage sortedPages];
+		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
+	}
+	
+	
+	// Mark our new archive page (if there is one) stale
+	KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
+	[archivePage setIsStale:YES];
+}
+
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 {
 	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];

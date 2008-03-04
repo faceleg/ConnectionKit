@@ -491,9 +491,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
  */
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
 {
-	NSParameterAssert(timestamp);
-	
-	if (![self collectionGenerateArchives]) return nil;
+	if (!timestamp || ![self collectionGenerateArchives])
+	{
+		return nil;
+	}
 	
 	
 	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];

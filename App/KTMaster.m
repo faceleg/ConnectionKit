@@ -336,7 +336,7 @@
 	
 	// Update pages to the new style
 	NSSet *pages = [self valueForKey:@"pages"];
-	[pages makeObjectsPerformSelector:@selector(loadEditableTimestamp)];
+	[pages makeObjectsPerformSelector:@selector(reloadEditableTimestamp)];
 }
 
 - (void)XsetTimestampFormat:(int)format

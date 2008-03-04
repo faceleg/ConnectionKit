@@ -113,7 +113,7 @@
 	[self setBool:YES forKey:@"isCollection"];
 	
 	
-	// If inserting a page into an manually sorted collection, place the page at the end of it
+	// If inserting a page into a manually sorted collection, place the page at the end of it
 	if ([self collectionSortOrder] == KTCollectionUnsorted)
 	{
 		unsigned index = [[[self sortedChildren] lastObject] childIndex] + 1;
