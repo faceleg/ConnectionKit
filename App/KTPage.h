@@ -25,7 +25,7 @@
 
 
 @class KTDesign, KTAbstractHTMLPlugin;
-@class KTAbstractIndex, KTMaster;
+@class KTArchivePage, KTAbstractIndex, KTMaster;
 @class WebView;
 @class KTMediaContainer;
 
@@ -176,6 +176,7 @@
 // Archive
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
+- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp;
 
 @end
 

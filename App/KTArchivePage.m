@@ -24,6 +24,12 @@
 
 + (NSString *)entityName { return @"ArchivePage"; }
 
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	[self setTitleText:@"Collection archive test"];
+}
+
 /*	Hacks to override KSExtensibleManagedObject
  */
 - (id)valueForUndefinedKey:(NSString *)key
@@ -41,6 +47,10 @@
 
 #pragma mark -
 #pragma mark Accessors
+
+- (KTElementPlugin *)plugin { return nil; }
+
+- (KTMaster *)master { return [[self parent] master]; }
 
 - (NSArray *)sortedPages
 {
@@ -82,15 +92,5 @@
 	return [[self parent] designDirectoryPath];
 }
 
-
-- (KTElementPlugin *)plugin { return nil; }
-
-- (KTMaster *)master { return [[self parent] master]; }
-
-- (void)awakeFromInsert
-{
-	[super awakeFromInsert];
-	[self setTitleText:@"Collection archive test"];
-}
 
 @end
