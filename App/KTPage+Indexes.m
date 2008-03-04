@@ -469,12 +469,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	// Delete or add archive pages as needed
 	if (generateArchive)
 	{
-		// Prepare date objects that will be used frequently in calculations
-		NSCalendar *calendar = [NSCalendar currentCalendar];
-		unsigned calendarComponents = (NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit);
-		NSDateComponents *oneMonthDateComponent = [[[NSDateComponents alloc] init] autorelease];
-		[oneMonthDateComponent setMonth:1];
-		
 		NSSet *children = [self children];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
 		KTPage *aPage;
@@ -482,23 +476,8 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		while (aPage = [pageEnumerator nextObject])
 		{
 			// Create any archives that are required
-			KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp]];
-			if (!archive)
-			{
-				// Figure out the range of the timestamp
-				NSDate *timestamp = [aPage editableTimestamp];
-				NSDateComponents *timestampComponents = [calendar components:calendarComponents fromDate:timestamp];
-				NSDate *monthStart = [calendar dateFromComponents:timestampComponents];
-				NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
-				
-				// Create the archive. Since it's new, it's automatically marked as stale.
-				archive = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
-				[archive setValue:monthStart forKey:@"archiveStartDate"];
-				[archive setValue:monthEnd forKey:@"archiveEndDate"];
-			}
+			[self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:YES];
 		}
-		
-		
 	}
 	else
 	{
@@ -507,11 +486,30 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	}
 }
 
-- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp
+- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
 {
 	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
 	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectOrNilIfEmpty];
+	
+	if (!result && flag)
+	{
+		// Figure out the range of the timestamp
+		NSCalendar *calendar = [NSCalendar currentCalendar];
+		unsigned calendarComponents = (NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit);
+		NSDateComponents *timestampComponents = [calendar components:calendarComponents fromDate:timestamp];
+		NSDate *monthStart = [calendar dateFromComponents:timestampComponents];
+		
+		NSDateComponents *oneMonthDateComponent = [[[NSDateComponents alloc] init] autorelease];
+		[oneMonthDateComponent setMonth:1];
+		NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
+		
+		// Create the archive. Since it's new, it's automatically marked as stale.
+		result = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
+		[result setValue:monthStart forKey:@"archiveStartDate"];
+		[result setValue:monthEnd forKey:@"archiveEndDate"];
+	}
+	
 	return result;
 }
 
