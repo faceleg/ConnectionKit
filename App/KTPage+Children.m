@@ -121,6 +121,11 @@
 	// Attach the page to ourself and update the page cache
 	[page setValue:self forKey:@"parent"];
 	[self invalidateSortedChildrenCache];
+	
+	
+	// Create an archive to conatin the page if needed
+	KTArchivePage *archive = [self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
+	[archive setIsStale:YES];
 }
 
 /*	This method is remarkably simple since when you remove a page there is actually no need to update
