@@ -536,6 +536,7 @@
 		CE26FA1408C4D9C500C9604B /* additionalEditingCSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */; };
 		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
+		CE3162860D7DE6A200B0951B /* GenericProgress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE3162850D7DE6A200B0951B /* GenericProgress.nib */; };
 		CE330CB50D510C4500DE8086 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE39C9A50D36BFF700364557 /* CyberDuck.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE39C9A40D36BFF700364557 /* CyberDuck.icns */; };
@@ -2113,6 +2114,7 @@
 		CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTExtensions.m"; sourceTree = "<group>"; };
 		CE27F6620D6193B200D211EA /* NSTextView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTExtensions.h"; sourceTree = "<group>"; };
 		CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTExtensions.m"; sourceTree = "<group>"; };
+		CE3162850D7DE6A200B0951B /* GenericProgress.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = GenericProgress.nib; path = ../../../Shared/trunk/App/GenericProgress.nib; sourceTree = SOURCE_ROOT; };
 		CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE39C9A40D36BFF700364557 /* CyberDuck.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CyberDuck.icns; sourceTree = "<group>"; };
@@ -4025,6 +4027,7 @@
 		CE22E5B80D7C71A10055D8E9 /* Shared Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				CE3162850D7DE6A200B0951B /* GenericProgress.nib */,
 				CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */,
 				CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */,
 				CE22E5C20D7C720D0055D8E9 /* Crash.nib */,
@@ -5427,6 +5430,7 @@
 				CE22E5F00D7C73CC0055D8E9 /* feedback_qmark.png in Resources */,
 				CE22E5F10D7C73CC0055D8E9 /* feedback_edit.png in Resources */,
 				CE22E5F20D7C73CC0055D8E9 /* feedback_bulb.png in Resources */,
+				CE3162860D7DE6A200B0951B /* GenericProgress.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
