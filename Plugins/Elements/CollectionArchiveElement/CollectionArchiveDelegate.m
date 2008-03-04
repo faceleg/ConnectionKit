@@ -29,6 +29,11 @@
 		if ([parent isCollection])
 		{
 			[[self delegateOwner] setValue:parent forKey:@"collection"];
+			
+			NSString *title = [NSString stringWithFormat:@"%@ %@",
+														 [parent titleText],
+														 NSLocalizedString(@"Archive", @"Portion of pagelet title")];
+			[(KTPagelet *)[self delegateOwner] setTitleHTML:title];
 		}
 	}
 	
