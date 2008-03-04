@@ -14,6 +14,7 @@
 {
 }
 
+- (NSString *)dateDescription;
 - (NSArray *)sortedPages;
 
 @end

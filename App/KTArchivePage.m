@@ -19,25 +19,16 @@
 
 @implementation KTArchivePage
 
++ (void)initialize
+{
+	[self setKeys:[NSArray arrayWithObject:@"archiveStartDate"]
+		triggerChangeNotificationsForDependentKey:@"dateDescription"];
+}
+
 #pragma mark -
 #pragma mark Core Data
 
 + (NSString *)entityName { return @"ArchivePage"; }
-
-/*	Hacks to override KSExtensibleManagedObject
- */
-- (id)valueForUndefinedKey:(NSString *)key
-{
-	OBASSERT_NOT_REACHED("");
-	return nil;
-	return [super valueForUndefinedKey:key];
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-	OBASSERT_NOT_REACHED("");
-	[super setValue:value forUndefinedKey:key];
-}
 
 #pragma mark -
 #pragma mark Accessors
@@ -45,6 +36,13 @@
 - (KTElementPlugin *)plugin { return nil; }
 
 - (KTMaster *)master { return [[self parent] master]; }
+
+- (NSString *)dateDescription
+{
+	NSDate *date = [self valueForKey:@"archiveStartDate"];
+	NSString *result = [date descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
+	return result;
+}
 
 - (NSArray *)sortedPages
 {
