@@ -245,6 +245,14 @@
 
 - (void)setEditableTimestamp:(NSDate *)aDate
 {
+	// Mark our old archive page (if there is one) stale
+	if ([[self parent] collectionGenerateArchives])
+	{
+		KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
+		[archivePage setIsStale:YES];
+	}
+	
+	
 	[self willChangeValueForKey:@"editableTimestamp"];
 	[self setPrimitiveValue:aDate forKey:@"editableTimestamp"];
 	
@@ -261,11 +269,20 @@
 	
 	[self didChangeValueForKey:@"editableTimestamp"];
 	
+	
 	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
 	KTCollectionSortType sortType = [[self parent] collectionSortOrder];
 	if (sortType == KTCollectionSortLatestAtTop || sortType == KTCollectionSortLatestAtBottom)
 	{
 		[[self parent] invalidateSortedChildrenCache];
+	}
+	
+	
+	// Mark our new archive page (if there is one) stale
+	if ([[self parent] collectionGenerateArchives])
+	{
+		KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
+		[archivePage setIsStale:YES];
 	}
 }
 
