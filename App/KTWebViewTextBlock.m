@@ -296,7 +296,15 @@
 
 - (BOOL)commitEditing
 {
+	// Fetch the HTML to save. Reduce to nil when appropriate
 	NSString *innerHTML = [[self DOMNode] cleanedInnerHTML];
+	if ([self isFieldEditor])
+	{
+		NSString *flattenedHTML = [innerHTML flattenHTML];
+		if ([flattenedHTML isEmptyString]) innerHTML = nil;
+	}
+	
+	// Save back to model
 	id sourceObject = [self HTMLSourceObject];
 	NSString *sourceKeyPath = [self HTMLSourceKeyPath];
 	if (![[sourceObject valueForKeyPath:sourceKeyPath] isEqualToString:innerHTML])
