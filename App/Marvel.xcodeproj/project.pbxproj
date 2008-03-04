@@ -269,7 +269,6 @@
 		27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */; settings = {ATTRIBUTES = (); }; };
 		27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */; };
 		27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */; };
-		3C036B3E095F5C9500E1DA3D /* criticalAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C036B3D095F5C9500E1DA3D /* criticalAlert.png */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
@@ -1721,7 +1720,6 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* Marvel_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marvel_Prefix.pch; sourceTree = "<group>"; };
-		3C036B3D095F5C9500E1DA3D /* criticalAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = criticalAlert.png; sourceTree = "<group>"; };
 		3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../Xcode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadIndex.xcodeproj; path = ../Plugins/Indexes/DownloadIndex/DownloadIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../Plugins/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3324,7 +3322,6 @@
 				CEC25E250997DC0F00335E28 /* diamondplate.png */,
 				795F035F098F0293000202D5 /* upload_warning.png */,
 				79EC3C020973CECD00FE7D50 /* upload_complete.png */,
-				3C036B3D095F5C9500E1DA3D /* criticalAlert.png */,
 				CED86ED909522E20000D78F9 /* karelia.png */,
 				798634F2094E763F003B2653 /* remove.png */,
 				3C59B05908A9B8E70076C6DC /* 13x13_empty.png */,
@@ -5331,7 +5328,6 @@
 				CED86EDA09522E20000D78F9 /* karelia.png in Resources */,
 				CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */,
 				CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */,
-				3C036B3E095F5C9500E1DA3D /* criticalAlert.png in Resources */,
 				79755CF9096BAF7E00F0E4CA /* KTTransfer.nib in Resources */,
 				CE6BC84D096CA10B00F94F8B /* home.icns in Resources */,
 				CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */,

@@ -739,7 +739,8 @@ void showMethodGroups(Class klass, char mType) {
 	[userInfo removeObjectForKey:NSStackTraceKey];
 	NSString *userInfoDescription = [userInfo count] ? [NSString stringWithFormat:@"UserInfo: %@\n\n", [userInfo description]] : @"";
 	
-#ifdef DEBUG
+#if 0
+// #ifdef DEBUG
 	
 	errorMessage = [NSString stringWithFormat:@"DEBUG ALERT:\n\nName: %@\n\nReason: %@\n\n%@\n%@", [anException name], [anException reason], userInfoDescription, [anException printStackTrace]];
     NSRunCriticalAlertPanel(alertTitle, errorMessage, nil, nil, nil);

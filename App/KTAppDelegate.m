@@ -176,6 +176,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	//  additionalDesigns
 	NSString *designs = [[self designManager] designReportShowingAll:NO];
 	[report setValue:designs forKey:@"additionalDesigns"];
+
+	NSString *urlString = [[self currentDocument] publishedSiteURL];
+	if (nil == urlString || [urlString isEqualToString:@"http://unpublished.example.com/"])
+	{
+		urlString = @"";
+	}
+	[report setValue:urlString forKey:@"URL"];
 	
 }
 
@@ -590,6 +597,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		//[oAcknowledgementsMenuItem setImage:trans];
 		[oSendFeedbackMenuItem setImage:globe];
 	}
+	[super awakeFromNib];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
