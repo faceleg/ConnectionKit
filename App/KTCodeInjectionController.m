@@ -82,7 +82,7 @@
 	
 	[oBodyEndTextView bind:@"value"
 				  toObject:pagesController
-			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionBeforeBodyTag"]
+			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionBodyTagEnd"]
 				   options:nil];
 	
 	[oBodyTagTextField bind:@"value"
