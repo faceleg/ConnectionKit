@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273E1F400D7F692D00E636B6 /* KSPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 273E1F3E0D7F692D00E636B6 /* KSPlugin.h */; };
+		273E1F410D7F692D00E636B6 /* KSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E1F3F0D7F692D00E636B6 /* KSPlugin.m */; };
 		27EF5CBA0D6B9BBA0024575B /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CB80D6B9BBA0024575B /* BDAlias.h */; };
 		27EF5CBB0D6B9BBA0024575B /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CB90D6B9BBA0024575B /* BDAlias.m */; };
 		27EF5CD50D6B9C7E0024575B /* NSData+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CD30D6B9C7E0024575B /* NSData+QuickLook.h */; };
 		27EF5CD60D6B9C7E0024575B /* NSData+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */; };
 		27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */; };
 		27EF5CDE0D6B9CF80024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */; };
-		27EF5D920D6C517C0024575B /* QuickLookSandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */; };
-		27EF5D930D6C517C0024575B /* QuickLookSandvoxPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */; };
 		2C05A19C06CAA52B00D84F6F /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */; };
 		61E3BCFB0870B4F2002186A0 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */; };
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
@@ -31,14 +31,14 @@
 /* Begin PBXFileReference section */
 		08FB77B6FE84183AC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		273E1F3E0D7F692D00E636B6 /* KSPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlugin.h; path = ../../../../Shared/trunk/App/KSPlugin.h; sourceTree = SOURCE_ROOT; };
+		273E1F3F0D7F692D00E636B6 /* KSPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlugin.m; path = ../../../../Shared/trunk/App/KSPlugin.m; sourceTree = SOURCE_ROOT; };
 		27EF5CB80D6B9BBA0024575B /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../../../Shared/trunk/App/BDAlias.h; sourceTree = SOURCE_ROOT; };
 		27EF5CB90D6B9BBA0024575B /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../../../Shared/trunk/App/BDAlias.m; sourceTree = SOURCE_ROOT; };
 		27EF5CD30D6B9C7E0024575B /* NSData+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+QuickLook.h"; sourceTree = "<group>"; };
 		27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+QuickLook.m"; sourceTree = "<group>"; };
 		27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = SOURCE_ROOT; };
 		27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = SOURCE_ROOT; };
-		27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickLookSandvoxPlugin.h; sourceTree = "<group>"; };
-		27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickLookSandvoxPlugin.m; sourceTree = "<group>"; };
 		2C05A19B06CAA52B00D84F6F /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		3CDB49A50D70FE6F00BEF8F1 /* Sandvox.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Sandvox.xcconfig; path = ../../XCode/Configurations/Sandvox.xcconfig; sourceTree = SOURCE_ROOT; };
 		61E3BCFA0870B4F2002186A0 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
@@ -109,6 +109,8 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				273E1F3E0D7F692D00E636B6 /* KSPlugin.h */,
+				273E1F3F0D7F692D00E636B6 /* KSPlugin.m */,
 				27EF5CDB0D6B9CF80024575B /* BDAlias+QuickLook.h */,
 				27EF5CDC0D6B9CF80024575B /* BDAlias+QuickLook.m */,
 				27EF5CB80D6B9BBA0024575B /* BDAlias.h */,
@@ -123,8 +125,6 @@
 				CE56ADB80CFF78670036FA3B /* tinygif.pl */,
 				27EF5CD30D6B9C7E0024575B /* NSData+QuickLook.h */,
 				27EF5CD40D6B9C7E0024575B /* NSData+QuickLook.m */,
-				27EF5D900D6C517C0024575B /* QuickLookSandvoxPlugin.h */,
-				27EF5D910D6C517C0024575B /* QuickLookSandvoxPlugin.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -148,7 +148,7 @@
 				27EF5CBA0D6B9BBA0024575B /* BDAlias.h in Headers */,
 				27EF5CD50D6B9C7E0024575B /* NSData+QuickLook.h in Headers */,
 				27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */,
-				27EF5D920D6C517C0024575B /* QuickLookSandvoxPlugin.h in Headers */,
+				273E1F400D7F692D00E636B6 /* KSPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +224,7 @@
 				27EF5CBB0D6B9BBA0024575B /* BDAlias.m in Sources */,
 				27EF5CD60D6B9C7E0024575B /* NSData+QuickLook.m in Sources */,
 				27EF5CDE0D6B9CF80024575B /* BDAlias+QuickLook.m in Sources */,
-				27EF5D930D6C517C0024575B /* QuickLookSandvoxPlugin.m in Sources */,
+				273E1F410D7F692D00E636B6 /* KSPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

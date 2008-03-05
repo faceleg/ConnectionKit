@@ -211,17 +211,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
                 withKeyPath:@"selection.selection.editableTimestamp" 
                     options:nil];
 	
-	[mySmallDatePicker bind:@"enabled" 
-                   toObject:oPageController 
-                withKeyPath:@"selection.selection.master.timestampType" 
-                    options:nil];
-	
-	[mySmallDatePicker bind:@"enabled2" 
-                   toObject:oPageController 
-                withKeyPath:@"selection.selection.includeTimestamp" 
-                    options:nil];
-	
-	
 	// Page menu title placeholder binding
 	[oPageMenuTitleField bind:@"placeholderValue"
 					 toObject:oPageController
