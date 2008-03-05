@@ -336,27 +336,19 @@
 }
 
 #pragma mark -
-#pragma mark Timestamps
+#pragma mark Timestamp
 
 - (KTTimestampType)timestampType { return [self wrappedIntegerForKey:@"timestampType"]; }
 
 - (void)setTimestampType:(KTTimestampType)timestampType
 {
+	NSParameterAssert(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
+	
 	[self setWrappedInteger:timestampType forKey:@"timestampType"];
 	
 	// Update pages to the new style
 	NSSet *pages = [self valueForKey:@"pages"];
 	[pages makeObjectsPerformSelector:@selector(reloadEditableTimestamp)];
-}
-
-- (void)XsetTimestampFormat:(int)format
-{
-	[self setValue:[NSNumber numberWithInt:format] forKey:@"timestampFormat"];
-}
-
-- (void)XsetTimestampShowTime:(BOOL)showTime
-{
-	[self setValue:[NSNumber numberWithBool:showTime] forKey:@"timestampShowTime"];
 }
 
 #pragma mark -

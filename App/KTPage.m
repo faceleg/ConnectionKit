@@ -170,7 +170,6 @@
 	// Attach the page to its parent & other relationships
 	
 	[page setValue:[aParent master] forKey:@"master"];
-	[page loadEditableTimestamp];	// Timestamp can't be loaded until master is in place
 	
 	NSAssert((nil != [aParent root]), @"parent page's root should not be nil");
 	[aParent addPage:page];	// Must use this method to correctly maintain ordering
@@ -215,13 +214,6 @@
 	
 	[self setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"]
 			forKey:@"collectionSummaryMaxPages"];
-}
-
-- (void)awakeFromFetch
-{
-	[super awakeFromFetch];
-	[self loadEditableTimestamp];	// Timestamp initialisation is done in the primitive -awkake... methods so that
-									// it is ready to go before the page is assigned a parent.
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert

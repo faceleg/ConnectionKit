@@ -242,7 +242,28 @@
 #pragma mark -
 #pragma mark Timestamp
 
-- (NSDate *)editableTimestamp { return [self wrappedValueForKey:@"editableTimestamp"]; }
+- (NSDate *)editableTimestamp
+{
+	// Load the date on-demand from creation/modification date
+	NSDate *result = [self wrappedValueForKey:@"editableTimestamp"];
+	if (!result)
+	{
+		switch ([[self master] timestampType])
+		{
+			case KTTimestampCreationDate:
+				result = [self valueForKey:@"creationDate"];
+				break;
+			case KTTimestampModificationDate:
+				result = [self valueForKey:@"modificationDate"];
+				break;
+		}
+		
+		[self setPrimitiveValue:result forKey:@"editableTimestamp"];
+	}
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
 
 - (void)setEditableTimestamp:(NSDate *)aDate
 {
@@ -289,27 +310,7 @@
 	[archivePage setIsStale:YES];
 }
 
-/*	Internally set the editableTimestamp property from corresponding permanent attribute
- */
-- (void)loadEditableTimestamp
-{
-	NSDate *date = nil;
-	switch ([[self master] integerForKey:@"timestampType"])
-	{
-		case KTTimestampCreationDate:
-			date = [self valueForKey:@"creationDate"];
-			break;
-		case KTTimestampModificationDate:
-			date = [self valueForKey:@"modificationDate"];
-			break;
-	}
-	
-	[self willChangeValueForKey:@"editableTimestamp"];
-	[self setPrimitiveValue:date forKey:@"editableTimestamp"];
-	[self didChangeValueForKey:@"editableTimestamp"];
-}
-
-/*	Calls -loadEditableTimestamp and also updates archives to match
+/*	A property affecting the timestamp has changed, update it.
  */
 - (void)reloadEditableTimestamp
 {
@@ -319,7 +320,17 @@
 	
 	
 	// Reload the timestamp
-	[self loadEditableTimestamp];
+	NSDate *date;
+	switch ([[self master] timestampType])
+	{
+		case KTTimestampCreationDate:
+			date = [self valueForKey:@"creationDate"];
+			break;
+		case KTTimestampModificationDate:
+			date = [self valueForKey:@"modificationDate"];
+			break;
+	}
+	[self setWrappedValue:date forKey:@"editableTimestamp"];
 	
 	
 	// Delete the old archive page if it has nothing on it now

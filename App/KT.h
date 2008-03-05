@@ -66,8 +66,7 @@ typedef enum {
 } KTCollectionSummaryType;
 
 typedef enum {
-	KTTimestampNone = 0,
-	KTTimestampCreationDate,
+	KTTimestampCreationDate = 1,
 	KTTimestampModificationDate
 } KTTimestampType;
 

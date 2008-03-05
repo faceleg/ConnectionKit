@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>KSPathInfoField</string>
+			<string>KSLabel</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -34,6 +34,14 @@
 			<string>NSResponder</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KSPathInfoField</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>imagePickerCancelled</key>
@@ -56,14 +64,6 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KSEdgeSnapWindow</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSPanel</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>KTPlaceholderBindingTextField</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -77,6 +77,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSSingletonWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -190,7 +198,7 @@
 				<string>KTImageView</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
+			<string>KSSingletonWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -237,11 +245,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KSLabel</string>
+			<string>NSCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSEdgeSnapWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSPanel</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

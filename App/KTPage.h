@@ -90,7 +90,6 @@
 - (NSDate *)editableTimestamp;
 - (void)setEditableTimestamp:(NSDate *)aDate;
 - (NSString *)timestamp;
-- (void)loadEditableTimestamp;
 
 // Thumbnail
 - (KTMediaContainer *)thumbnail;
