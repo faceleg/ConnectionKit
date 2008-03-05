@@ -1,6 +1,6 @@
 [[if deliciousID]]
 
-[[if document.publishingMode||parser.liveDataFeeds]]
+[[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
 
 <div id="delicious-container-[[=uniqueID]]">
 <script type="text/javascript" src="http://del.icio.us/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
@@ -15,6 +15,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 	li.setAttribute('class', 'i' + (i+1) + ' ' + (i%2?'e':'o'))
 	var a = document.createElement('a')
 	a.setAttribute('href', post.u)
+	[[if openLinksInNewWindow]]a.setAttribute('target', '_blank')[[endif4]]
 	a.innerHTML = post.d
 	li.appendChild(a)
 [[if showExtended]]
@@ -32,6 +33,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 		tagSpan.appendChild(document.createTextNode(' / '))
 		for (var t=0, tag; tag=post.t[t]; t++) {
 			var tagA = document.createElement('a')
+			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
 			tagA.setAttribute('href', 'http://del.icio.us/[[=&deliciousID]]/'+tag)
 			tagA.appendChild(document.createTextNode(tag))
 			tagSpan.appendChild(tagA)
@@ -50,6 +52,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 	var dd = document.createElement('dd')
 	var a = document.createElement('a')
 	a.setAttribute('href', post.u)
+	[[if openLinksInNewWindow]]a.setAttribute('target', '_blank')[[endif4]]
 	a.innerHTML = post.d
 	dt.appendChild(a)
 [[if showExtended]]
@@ -65,6 +68,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 		for (var t=0, tag; tag=post.t[t]; t++) {
 			var tagA = document.createElement('a')
 			tagA.setAttribute('href', 'http://del.icio.us/[[=&deliciousID]]/'+tag)
+			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
 			tagA.appendChild(document.createTextNode(tag))
 			tagSpan.appendChild(tagA)
 			tagSpan.appendChild(document.createTextNode(' '))
