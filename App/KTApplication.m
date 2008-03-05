@@ -778,6 +778,10 @@ void showMethodGroups(Class klass, char mType) {
 			}
 		}
 	}
+	
+#ifdef DEBUG
+	stackTraceIsKnown = NO;
+#endif
     
 	// if we've already seen it, just put up a normal panel
 	if ( stackTraceIsKnown )
