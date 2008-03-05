@@ -870,6 +870,7 @@
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
+		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
 		CEFD5F410AC8E6000091287B /* help.small.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFD5F3F0AC8E6000091287B /* help.small.png */; };
 		CEFD5F420AC8E6000091287B /* help.mini.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFD5F400AC8E6000091287B /* help.mini.png */; };
 /* End PBXBuildFile section */
@@ -2540,6 +2541,7 @@
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE0B9C909EDBD25004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/MultipleSelection.html; sourceTree = "<group>"; };
+		CEF0F6250D7F306C00AF5BC0 /* Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Debug.m; path = ../../../Shared/trunk/App/Debug.m; sourceTree = SOURCE_ROOT; };
 		CEF6E3DD0BD7278D0006417A /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E3E50BD727AF0006417A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E3EA0BD727C40006417A /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/CodeInjection.nib; sourceTree = "<group>"; };
@@ -4237,6 +4239,7 @@
 				CEC11B380D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h */,
 				CEC11B390D78BE5300513E70 /* ContainsValueTransformer.h */,
 				CEC11B3A0D78BE5300513E70 /* Debug.h */,
+				CEF0F6250D7F306C00AF5BC0 /* Debug.m */,
 				CEC11B3B0D78BE5300513E70 /* DNDArrayController.h */,
 				CEC11B3C0D78BE5300513E70 /* EscapeHTMLTransformer.h */,
 				CEC11B3D0D78BE5300513E70 /* KSAbstractBugReporter.h */,
@@ -5967,6 +5970,7 @@
 				CEC11B2F0D78BE4600513E70 /* MoreBacktrace.c in Sources */,
 				27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */,
 				27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */,
+				CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
