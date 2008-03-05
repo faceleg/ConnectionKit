@@ -218,7 +218,7 @@ TO DO:
 	NSEnumerator *theEnum = [allPlugins objectEnumerator];
 	NSBundle *bundle;
 
-	while (nil != (bundle = [theEnum nextObject]) )
+	while (nil != (bundle = [[theEnum nextObject] bundle]) )
 	{
 		NSString *bundlePath = [bundle bundlePath];
 		if ([bundlePath hasPrefix:builtInPath] && !aShowAll)
