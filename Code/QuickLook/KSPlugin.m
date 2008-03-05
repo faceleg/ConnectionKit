@@ -1,41 +1,41 @@
 //
-//  QuickLookSandvoxPlugin.m
+//  KSPlugin.m
 //  SandvoxQuickLook
 //
 //  Created by Mike on 20/02/2008.
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "QuickLookSandvoxPlugin.h"
+#import "KSPlugin.h"
 
 
-@interface QuickLookSandvoxPlugin ()
+@interface KSPlugin
 
 + (void)searchForPlugins;
 + (Class)registeredPluginClassForFileExtension:(NSString *)extension;
 
-+ (QuickLookSandvoxPlugin *)pluginForPath:(NSString *)path;
-+ (void)registerPlugin:(QuickLookSandvoxPlugin *)plugin forPath:(NSString *)path;
++ (KSPlugin *)pluginForPath:(NSString *)path;
++ (void)registerPlugin:(KSPlugin *)plugin forPath:(NSString *)path;
 + (NSMutableDictionary *)_pluginsByPath;
 
-+ (QuickLookSandvoxPlugin *)registeredPluginForIdentifier:(NSString *)identifier;
++ (KSPlugin *)registeredPluginForIdentifier:(NSString *)identifier;
 + (NSMutableDictionary *)_pluginsByIdentifier;
 + (NSComparisonResult)comparePluginPaths:(NSString *)pathA :(NSString *)pathB;
 
 @end
 
 
-@implementation QuickLookSandvoxPlugin
+@implementation KSPlugin
 
 #pragma mark -
 #pragma mark Accessing Plugins
 
 + (id)pluginWithPath:(NSString *)path
 {
-	QuickLookSandvoxPlugin *result = nil;
+	KSPlugin *result = nil;
 	
 	path = [path stringByResolvingSymlinksInPath];
-	QuickLookSandvoxPlugin *plugin = [self pluginForPath:path];
+	KSPlugin *plugin = [self pluginForPath:path];
 	
 	if (!plugin)
 	{
@@ -56,7 +56,7 @@
 + (id)pluginWithBundle:(NSBundle *)bundle
 {
 	NSString *path = [bundle bundlePath];
-	QuickLookSandvoxPlugin *result = [self pluginWithPath:path];
+	KSPlugin *result = [self pluginWithPath:path];
 	return result;
 }
 
@@ -77,8 +77,8 @@
 	}
 	
 	// Use an existing plugin object when possible
-	QuickLookSandvoxPlugin *result = nil;
-	QuickLookSandvoxPlugin *plugin = [self registeredPluginForIdentifier:identifier];
+	KSPlugin *result = nil;
+	KSPlugin *plugin = [self registeredPluginForIdentifier:identifier];
 	if (!plugin)
 	{
 		plugin = [self pluginWithBundle:[NSBundle bundleWithIdentifier:identifier]];
@@ -144,13 +144,13 @@
 #pragma mark -
 #pragma mark Path Registration
 
-+ (QuickLookSandvoxPlugin *)pluginForPath:(NSString *)path
++ (KSPlugin *)pluginForPath:(NSString *)path
 {
-	QuickLookSandvoxPlugin *result = [[self _pluginsByPath] objectForKey:path];
+	KSPlugin *result = [[self _pluginsByPath] objectForKey:path];
 	return result;
 }
 
-+ (void)registerPlugin:(QuickLookSandvoxPlugin *)plugin forPath:(NSString *)path
++ (void)registerPlugin:(KSPlugin *)plugin forPath:(NSString *)path
 {
 	NSParameterAssert(plugin);
 	[[self _pluginsByPath] setObject:plugin forKey:path];
@@ -171,12 +171,12 @@
 #pragma mark -
 #pragma mark Identifier Registration
 
-+ (QuickLookSandvoxPlugin *)registeredPluginForIdentifier:(NSString *)identifier
++ (KSPlugin *)registeredPluginForIdentifier:(NSString *)identifier
 {
 	return [[self _pluginsByIdentifier] objectForKey:identifier];
 }
 
-+ (void)registerPlugin:(QuickLookSandvoxPlugin *)plugin forIdentifier:(NSString *)identifier
++ (void)registerPlugin:(KSPlugin *)plugin forIdentifier:(NSString *)identifier
 {
 	[[self _pluginsByIdentifier] setObject:plugin forKey:identifier];
 }
@@ -240,9 +240,9 @@
 
 /*	For QuickLook we're not checking version, just location. KTAppPlugin will do both.
  */
-+ (QuickLookSandvoxPlugin *)preferredPlugin:(QuickLookSandvoxPlugin *)pluginA :(QuickLookSandvoxPlugin *)pluginB
++ (KSPlugin *)preferredPlugin:(KSPlugin *)pluginA :(KSPlugin *)pluginB
 {
-	QuickLookSandvoxPlugin *result = nil;
+	KSPlugin *result = nil;
 	
 	// Have to compare by path
 	NSComparisonResult pathComparison =
@@ -302,20 +302,20 @@
         myBundle = [bundle retain];
 		
 		// Register the path
-		[QuickLookSandvoxPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByResolvingSymlinksInPath]];
+		[KSPlugin registerPlugin:self forPath:[[bundle bundlePath] stringByResolvingSymlinksInPath]];
 		
 		
 		// Register the identfier if we are the best match for it
 		NSString *identifier = [bundle bundleIdentifier]; 
-		QuickLookSandvoxPlugin *bestPlugin = self;
+		KSPlugin *bestPlugin = self;
 		
-		QuickLookSandvoxPlugin *otherMatch = [QuickLookSandvoxPlugin registeredPluginForIdentifier:identifier];
+		KSPlugin *otherMatch = [KSPlugin registeredPluginForIdentifier:identifier];
 		if (otherMatch)
 		{
 			bestPlugin = [[self class] preferredPlugin:self :otherMatch];
 		}
 		
-		[QuickLookSandvoxPlugin registerPlugin:bestPlugin forIdentifier:identifier];
+		[KSPlugin registerPlugin:bestPlugin forIdentifier:identifier];
     }
 
     return self;

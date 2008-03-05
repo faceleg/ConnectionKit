@@ -8,18 +8,18 @@
 
 #import "NSBundle+QuickLook.h"
 
-#import "QuickLookSandvoxPlugin.h"
+#import "KSPlugin.h"
 
 
 @implementation NSBundle (QuickLook)
 
 /*	Supplements the default NSBundle behavior by:
- *		A) Using QuickLookSandvoxPlugin whenever possible.
+ *		A) Using KSPlugin whenever possible.
  *		B) Also trying NSWorkspace
  */
 + (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier
 {
-	NSBundle *result = [[QuickLookSandvoxPlugin pluginWithIdentifier:identifier] bundle];
+	NSBundle *result = [[KSPlugin pluginWithIdentifier:identifier] bundle];
 	
 	if (!result)
 	{

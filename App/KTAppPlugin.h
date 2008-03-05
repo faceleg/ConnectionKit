@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "QuickLookSandvoxPlugin.h"
+#import "KSPlugin.h"
 
 
-@interface KTAppPlugin : QuickLookSandvoxPlugin
+@interface KTAppPlugin : KSPlugin
 {
 }
 

@@ -1,5 +1,5 @@
 //
-//  QuickLookSandvoxPlugin.h
+//  KSPlugin.h
 //  SandvoxQuickLook
 //
 //  Created by Mike on 20/02/2008.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface QuickLookSandvoxPlugin : NSObject
+@interface KSPlugin : NSObject
 {
 	@private
 	NSBundle *myBundle;
@@ -20,7 +20,7 @@
 + (id)pluginWithIdentifier:(NSString *)identifier;
 
 + (NSArray *)pluginSearchPaths;
-+ (QuickLookSandvoxPlugin *)preferredPlugin:(QuickLookSandvoxPlugin *)pluginA :(QuickLookSandvoxPlugin *)pluginB;
++ (KSPlugin *)preferredPlugin:(KSPlugin *)pluginA :(KSPlugin *)pluginB;
 
 // designated initializer
 - (id)initWithBundle:(NSBundle *)bundle;

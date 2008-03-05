@@ -83,9 +83,9 @@
 	return result;
 }
 
-+ (QuickLookSandvoxPlugin *)preferredPlugin:(QuickLookSandvoxPlugin *)pluginA :(QuickLookSandvoxPlugin *)pluginB
++ (KSPlugin *)preferredPlugin:(KSPlugin *)pluginA :(KSPlugin *)pluginB
 {
-	QuickLookSandvoxPlugin *result = nil;
+	KSPlugin *result = nil;
 	
 	// First check by version
 	NSComparisonResult versionComparison =

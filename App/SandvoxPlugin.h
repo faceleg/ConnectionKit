@@ -150,7 +150,7 @@
 
 
 #import "KTPluginInspectorViewsManager.h"
-#import "QuickLookSandvoxPlugin.h"
+#import "KSPlugin.h"
 
 
 
