@@ -39,7 +39,7 @@
 		
 		
 		// Insert the new HTML
-		[[self DOMNode] setInnerHTML:[self unsummarisedContentHTML]];
+		[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 		
 		
 		// Recreate the selection
@@ -67,7 +67,7 @@
 		KTPage *page = [self HTMLSourceObject];
 		if (![page customSummaryHTML])
 		{
-			[[self DOMNode] setInnerHTML:[self summarisedContentHTML]];
+			[[self DOMNode] setInnerHTML:[self innerHTML]];
 		}
 	}
 	
@@ -94,7 +94,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (NSString *)summarisedContentHTML
+- (NSString *)innerHTML
 {
 	KTPage *page = [self HTMLSourceObject];
 	
@@ -111,7 +111,7 @@
 	return result;
 }
 
-- (NSString *)unsummarisedContentHTML
+- (NSString *)innerEditingHTML
 {
 	KTPage *page = [self HTMLSourceObject];
 	
@@ -136,8 +136,8 @@
 - (IBAction)overrideSummary:(id)sender		// respond to menu
 {
 	KTPage *page = [self HTMLSourceObject];
-	[page setCustomSummaryHTML:[self summarisedContentHTML]];
-	[[self DOMNode] setInnerHTML:[self unsummarisedContentHTML]];
+	[page setCustomSummaryHTML:[self innerHTML]];
+	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 }
 
 /*	Remove the page's custom summary
@@ -146,7 +146,7 @@
 {
 	KTPage *page = [self HTMLSourceObject];
 	[page setCustomSummaryHTML:nil];
-	[[self DOMNode] setInnerHTML:[self unsummarisedContentHTML]];
+	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 }
 
 

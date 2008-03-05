@@ -14,7 +14,7 @@
 {
 }
 
-- (NSString *)summarisedContentHTML;
-- (NSString *)unsummarisedContentHTML;
+- (NSString *)innerHTML;
+- (NSString *)innerEditingHTML;
 
 @end

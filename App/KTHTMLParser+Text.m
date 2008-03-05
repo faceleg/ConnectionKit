@@ -148,7 +148,7 @@
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
 		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
-		result = [textBlock HTMLRepresentation];
+		result = [textBlock outerHTML];
 		
 		[self didParseTextBlock:textBlock];
 		[textBlock release];

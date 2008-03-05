@@ -30,7 +30,7 @@
 	myTargetPage = page;
 }
 
-- (NSString *)HTMLRepresentation
+- (NSString *)outerHTML
 {
 	// Figure out our content
 	NSString *contentFormat = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];

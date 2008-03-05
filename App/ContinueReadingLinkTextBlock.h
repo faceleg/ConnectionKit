@@ -21,6 +21,6 @@
 - (KTPage *)targetPage;
 - (void)setTargetPage:(KTPage *)page;
 
-- (NSString *)HTMLRepresentation;
+- (NSString *)outerHTML;
 
 @end
