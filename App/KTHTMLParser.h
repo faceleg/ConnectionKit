@@ -92,6 +92,11 @@
 @end
 
 
+@interface KTHTMLParser (Text)
+- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags;
+@end
+
+
 @interface NSObject (KTHTMLParserDelegate)
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath;

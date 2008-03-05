@@ -5,7 +5,7 @@
 //  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
 //
 
-#import "KTHTMLParser.h"
+#import "KTHTMLParser+Private.h"
 #import "KTHTMLParserMasterCache.h"
 
 #import "Debug.h"
@@ -30,7 +30,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "KTMediaContainer.h"
 
-@interface KTHTMLParser (Private)
+@interface KTHTMLParser ()
 
 - (void)setParentParser:(KTHTMLParser *)parser;
 
@@ -53,7 +53,6 @@
 
 // Support
 - (id)parseValue:(NSString *)inString;
-+ (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
 
 @end
 
@@ -412,6 +411,15 @@ static unsigned sLastParserID;
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterResourceFile:)])
 	{
 		[delegate HTMLParser:self didEncounterResourceFile:resourcePath];
+	}
+}
+
+- (void)didParseTextBlock:(KTWebViewTextBlock *)textBlock
+{
+	id delegate = [self delegate];
+	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseTextBlock:)])
+	{
+		[delegate HTMLParser:self didParseTextBlock:textBlock];
 	}
 }
 
@@ -997,92 +1005,6 @@ static unsigned sLastParserID;
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceFile];
 
-	return result;
-}
-
-#pragma mark text
-
-// TODO: Generate nothing when publishing
-- (NSString *)textblockWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	NSDictionary *parameters = [[self class] parametersDictionaryWithString:inRestOfTag];
-	
-	// To actually generate a block of text all we need is a key path
-	NSString *textKeyPath = [parameters objectForKey:@"property"];
-	if (textKeyPath)
-	{
-		// What database entity does this text correspond to?
-		NSString *pseudoEntity = [[(NSManagedObject *)[self component] entity] name];
-		if ([pseudoEntity isEqualToString:@"Root"]) pseudoEntity = @"Page";
-		
-		
-		// Convert flags to CSS classnames. i.e. prepend "k" on each one.
-		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
-		NSMutableArray *flagClasses = [NSMutableArray arrayWithCapacity:[flags count]];
-		
-		NSEnumerator *flagsEnumerator = [flags objectEnumerator];
-		NSString *aFlag;
-		while (aFlag = [flagsEnumerator nextObject])
-		{
-			[flagClasses addObject:[NSString stringWithFormat:@"k%@", [aFlag capitalizedString]]];
-		}
-		
-		
-		// Fetch the text content
-		NSString *text = [[self cache] valueForKeyPath:textKeyPath];
-		if (!text) text = @"";
-		
-		
-		// Process the text according to HTML generation purpose
-		if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
-		{
-			NSScanner *scanner = [[NSScanner alloc] initWithString:text];
-			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[text length]];
-			NSString *aString;
-			
-			while (![scanner isAtEnd])
-			{
-				[scanner scanUpToString:@" src=\"" intoString:&aString];
-				[buffer appendString:aString];
-				if ([scanner isAtEnd]) break;
-				
-				[buffer appendString:@" src=\""];
-				[scanner setScanLocation:([scanner scanLocation] + 6)];
-				
-				[scanner scanUpToString:@"\"" intoString:&aString];
-				NSURL *aMediaURI = [NSURL URLWithString:aString];
-				KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
-				if (mediaContainer)
-				{
-					[buffer appendString:[[mediaContainer file] quickLookPseudoTag]];
-				}
-				else
-				{
-					[buffer appendString:aString];
-				}
-			}
-			
-			text = [NSString stringWithString:buffer];
-			[buffer release];
-			[scanner release];
-		}
-		
-		
-		// Construct the <div>
-		result = [NSString stringWithFormat:@"<div id=\"k-%@-%@-%@\" class=\"%@\">\r%@\r</div>",
-											pseudoEntity,
-											textKeyPath,
-											[(KTAbstractElement *)[self component] uniqueID],
-											[flagClasses componentsJoinedByString:@" "],
-											text];
-	}
-	else
-	{
-		NSLog(@"textblock: usage [[textblock property:text.keyPath (flags:\"some flags\")]]");
-	}
-	
 	return result;
 }
 

@@ -41,6 +41,16 @@
 	//	triggerChangeNotificationsForDependentKey:@"design"];
 }
 
+- (void)awakeFromInsert
+{
+	[super awakeFromInsert];
+	
+	// Prepare our continue reading link
+	NSString *continueReadingLink =
+		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
+	[self setValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
+}
+
 - (void)awakeFromFetch
 {
 	[super awakeFromFetch];

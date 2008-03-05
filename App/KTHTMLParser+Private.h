@@ -12,11 +12,16 @@
 
 @interface KTHTMLParser (Private)
 
++ (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
+
 - (KTHTMLParserMasterCache *)cache;
 
 - (KTHTMLParser *)newChildParserWithTemplate:(NSString *)templateHTML component:(id <KTWebViewComponent>)component;
 
 - (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile;
+
+// Delegate
+- (void)didParseTextBlock:(KTWebViewTextBlock *)textBlock;
 - (void)didEncounterResourceFile:(NSString *)resourcePath;
 
 @end

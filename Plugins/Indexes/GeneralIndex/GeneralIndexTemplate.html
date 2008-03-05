@@ -20,6 +20,11 @@
 [[endif]]
 		<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
 		<div class="article-info">
+[[if page.collectionTruncateCharacters>0]]
+			<div class="continue-reading-link">
+				[[if parser.HTMLGenerationPurpose]]<a href="[[path item]]">[[endif2]][[continueReadingLink item]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
+			</div>
+[[endif]]
 [[if item.shouldShowTimestamp]]
 			<div class="timestamp">
 [[if item.collectionShowPermanentLink]]

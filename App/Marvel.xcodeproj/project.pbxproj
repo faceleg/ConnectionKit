@@ -242,6 +242,7 @@
 		27CD67FC0CE37C1900919E41 /* KTPluginDelegatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD67FA0CE37C1900919E41 /* KTPluginDelegatesManager.m */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
+		27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */; };
 		27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
@@ -1690,6 +1691,7 @@
 		27CD67FA0CE37C1900919E41 /* KTPluginDelegatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginDelegatesManager.m; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
+		27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Text.m"; sourceTree = "<group>"; };
 		27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInspectorViewsManager.h; sourceTree = "<group>"; };
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
@@ -3802,6 +3804,7 @@
 				27AD53A40D6B40C300883550 /* KTHTMLParser+Private.h */,
 				27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */,
 				27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */,
+				27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */,
 			);
 			name = "HTML Parsing";
 			sourceTree = "<group>";
@@ -5921,6 +5924,7 @@
 				CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */,
 				CEC11B2E0D78BE4600513E70 /* MoreAddrToSym.c in Sources */,
 				CEC11B2F0D78BE4600513E70 /* MoreBacktrace.c in Sources */,
+				27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

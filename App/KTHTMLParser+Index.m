@@ -157,11 +157,7 @@
 		
 		
 		// Inform the delegate 
-		id delegate = [self delegate];
-		if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseTextBlock:)])
-		{
-			[delegate HTMLParser:self didParseTextBlock:textBlock];
-		}
+		[self didParseTextBlock:textBlock];
 	}
 	
 	
