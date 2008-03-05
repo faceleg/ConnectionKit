@@ -32,14 +32,27 @@
 
 - (NSString *)outerHTML
 {
-	// Figure out our content
-	NSString *contentFormat = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-	NSString *content = [contentFormat stringByReplacing:@"@@" with:[[self targetPage] titleText]];
-	
 	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\r%@\r</span>",
 												  [self DOMNodeID],
-												  content];
+												  [self innerHTML]];
 	
+	return result;
+}
+
+/*	Convert @@ to the page title
+ */
+- (NSString *)innerHTML
+{
+	NSString *contentFormat = [self innerEditingHTML];
+	NSString *result = [contentFormat stringByReplacing:@"@@" with:[[self targetPage] titleText]];
+	return result;
+}
+
+/*	When editing we display the exact format string
+ */
+- (NSString *)innerEditingHTML
+{
+	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
 	return result;
 }
 

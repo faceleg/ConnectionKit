@@ -22,5 +22,7 @@
 - (void)setTargetPage:(KTPage *)page;
 
 - (NSString *)outerHTML;
+- (NSString *)innerHTML;
+- (NSString *)innerEditingHTML;
 
 @end
