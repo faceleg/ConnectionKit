@@ -15,11 +15,17 @@
 
 @implementation ContinueReadingLinkTextBlock
 
+#pragma mark -
+#pragma mark Dealloc
+
 - (void)dealloc
 {
 	[myTargetPage release];
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark Accessors
 
 - (KTPage *)targetPage { return myTargetPage; }
 
@@ -29,6 +35,9 @@
 	[myTargetPage release];
 	myTargetPage = page;
 }
+
+#pragma mark -
+#pragma mark HTML
 
 - (NSString *)outerHTML
 {
@@ -53,6 +62,29 @@
 - (NSString *)innerEditingHTML
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	return result;
+}
+
+#pragma mark -
+#pragma mark Editing Status
+
+- (BOOL)becomeFirstResponder
+{
+	// Insert the new HTML
+	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
+	
+	return [super becomeFirstResponder];
+}
+
+- (BOOL)resignFirstResponder
+{
+	BOOL result = [super resignFirstResponder];
+	
+	if (result)
+	{
+		[[self DOMNode] setInnerHTML:[self innerHTML]];
+	}
+	
 	return result;
 }
 
