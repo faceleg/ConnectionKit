@@ -10,7 +10,7 @@
 
 #import "KTMediaContainer.h"
 #import "KTAbstractMediaFile.h"
-#import "KTWebViewTextBlock.h"
+#import "ContinueReadingLinkTextBlock.h"
 
 #import "NSString+Karelia.h"
 
@@ -139,17 +139,16 @@
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
 	if (parameters && [parameters count] == 1)
 	{
-		KTWebViewTextBlock *textBlock = [[KTWebViewTextBlock alloc] init];
+		ContinueReadingLinkTextBlock *textBlock = [[ContinueReadingLinkTextBlock alloc] init];
 		[textBlock setFieldEditor:YES];
 		[textBlock setRichText:NO];
 		[textBlock setImportsGraphics:NO];
 		[textBlock setHasSpanIn:NO];
 		[textBlock setHTMLSourceObject:[self component]];
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
+		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
-		result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\r%@\r</span>",
-											[textBlock DOMNodeID],
-											[[textBlock HTMLSourceObject] valueForKeyPath:[textBlock HTMLSourceKeyPath]]];
+		result = [textBlock HTMLRepresentation];
 		
 		[self didParseTextBlock:textBlock];
 		[textBlock release];
