@@ -186,6 +186,41 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 }
 
+- (NSString *) additionalFeedbackStringFromReportDictionary:(NSDictionary *)aReportDictionary
+{
+	NSString *result = [NSString stringWithFormat:@"Additional Plugins:\n%@\n", [aReportDictionary valueForKey:@"additionalPlugins"]];
+	result = [result stringByAppendingFormat:@"Additional Designs:\n%@\n", [aReportDictionary valueForKey:@"additionalDesigns"]];	
+	return result;
+}
+
+
+- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
+{
+	NSArray *designs = [[self homeBaseDict] objectForKey:@"Designs"];
+	NSImage *designImage = [NSImage imageNamed:@"designPlaceholder"];
+	float scaleFactor = [controller scaleFactor];
+	
+	NSMutableArray *list = [NSMutableArray array];
+	
+	//  install (bool), icon (image), title, InfoHTML,
+	NSEnumerator *theEnum = [designs objectEnumerator];
+	NSDictionary *theDict;
+
+	while ((theDict = [theEnum nextObject]) != nil)
+	{
+		NSMutableDictionary *adjustedDict = [controller adjustedDictionaryFromDictionary:theDict
+																			 placeholder:designImage
+																					size:NSMakeSize(100.0 * scaleFactor,65.0 * scaleFactor)
+																				  radius:scaleFactor * 6.0];
+		if (adjustedDict)
+		{
+			[list addObject:adjustedDict];
+		}
+	}
+	return list;
+}
+
+
 - (int) the16BitPrime
 {
 	return 65521;
