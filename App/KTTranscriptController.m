@@ -8,22 +8,8 @@
 
 #import "KTTranscriptController.h"
 
-static KTTranscriptController *sSharedTranscriptController = nil;
 
 @implementation KTTranscriptController
-
-+ (KTTranscriptController *)sharedTranscriptController;
-{
-    if ( nil == sSharedTranscriptController ) {
-        sSharedTranscriptController = [[self alloc] init];
-    }
-    return sSharedTranscriptController;
-}
-
-+ (KTTranscriptController *)sharedTranscriptControllerWithoutLoading;
-{
-    return sSharedTranscriptController;
-}
 
 - (NSTextStorage *)textStorage
 {

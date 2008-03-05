@@ -298,7 +298,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	
 	// this might be crazy inefficient
 	if ( nil != [[self windowController] selectedInlineImageElement]
-		 && [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] currentSelection] isEqual:[[self windowController] selectedInlineImageElement]] )
+		 && [[[KTInfoWindowController sharedControllerWithoutLoading] currentSelection] isEqual:[[self windowController] selectedInlineImageElement]] )
 	{
 		if ( ![[proposedRange startContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]]
 			 && ![[proposedRange endContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]] )

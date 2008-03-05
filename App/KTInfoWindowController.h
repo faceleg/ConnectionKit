@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSSingletonWindowController.h"
 
 enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
@@ -16,7 +17,7 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 @class KTPagelet;
 @class KTPage;
 
-@interface KTInfoWindowController : NSWindowController {
+@interface KTInfoWindowController : KSSingletonWindowController {
 
 	IBOutlet NSPanel			*oPanel;
 	IBOutlet NSObjectController	*oInfoWindowController;
@@ -83,9 +84,6 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 	BOOL	myDisclosedPreset;
 	BOOL	myPreventWindowAnimation;
 }
-
-+ (KTInfoWindowController *)sharedInfoWindowController;
-+ (KTInfoWindowController *)sharedInfoWindowControllerWithoutLoading;
 
 - (KTDocument *)associatedDocument;
 - (void)setAssociatedDocument:(KTDocument *)aDocument;

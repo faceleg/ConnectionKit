@@ -64,6 +64,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMediaBrowser/iMediaBrowser.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
+#import "KSPluginInstallerController.h"
 
 
 #import "KSEmailAddressComboBox.h"
@@ -880,16 +881,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		OFF((@"0 windows; so showing placeholder/violation window", windowCount));
 		if (gLicenseViolation)		// license violation dialog should open, not the new/open
 		{
-			[[KSRegistrationController sharedRegistrationController] showWindow:nil];
+			[[KSRegistrationController sharedController] showWindow:nil];
 		}
 		else
 		{
-			[[KTPlaceholderController sharedPlaceholderController] showWindow:nil];
+			[[KTPlaceholderController sharedController] showWindow:nil];
 		}
 	}
 	else	// we have a document; close this window
 	{
-		[[[KTPlaceholderController sharedPlaceholderControllerWithoutLoading] window] orderOut:nil];
+		[[[KTPlaceholderController sharedControllerWithoutLoading] window] orderOut:nil];
 		OFF((@"%d windows; so closing placeholder window", windowCount));
 	}
 }
@@ -1602,7 +1603,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
-    [[KTPrefsController sharedPrefsController] showWindow:sender];
+    [[KTPrefsController sharedController] showWindow:sender];
 }
 
 /*!	for manual save... though we're saving it automatically.
@@ -1617,12 +1618,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction) showTranscriptWindow:(id)sender
 {
-    [[KTTranscriptController sharedTranscriptController] showWindow:sender];
+    [[KTTranscriptController sharedController] showWindow:sender];
 	
 	// Clear the transcript if option key was down.  Just a quick hack...
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
 	{
-		[[KTTranscriptController sharedTranscriptController] clearTranscript:nil];
+		[[KTTranscriptController sharedController] clearTranscript:nil];
 	}
 }
 

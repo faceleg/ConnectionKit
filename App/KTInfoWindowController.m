@@ -50,8 +50,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 #define CUSTOM_TAG -99
 
-static KTInfoWindowController *sKTInfoWindowController = nil;
-
 // selectedLevel = root
 
 
@@ -119,19 +117,6 @@ static KTInfoWindowController *sKTInfoWindowController = nil;
 
 
 
-+ (KTInfoWindowController *)sharedInfoWindowController
-{
-    if (!sKTInfoWindowController)
-	{
-        sKTInfoWindowController = [[KTInfoWindowController alloc] init];
-    }
-    return sKTInfoWindowController;
-}
-
-+ (KTInfoWindowController *)sharedInfoWindowControllerWithoutLoading
-{
-    return sKTInfoWindowController;
-}
 
 #pragma mark awake
 

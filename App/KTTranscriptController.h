@@ -7,15 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSSingletonWindowController.h"
 
 
-@interface KTTranscriptController : NSWindowController {
+@interface KTTranscriptController : KSSingletonWindowController {
 
 	IBOutlet NSTextView *oLog;
 }
 
-+ (KTTranscriptController *)sharedTranscriptController;
-+ (KTTranscriptController *)sharedTranscriptControllerWithoutLoading;
 - (NSTextStorage *)textStorage;
 - (IBAction) clearTranscript:(id)sender;
 

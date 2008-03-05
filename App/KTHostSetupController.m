@@ -941,7 +941,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
-	[myTestConnection setTranscript:[[KTTranscriptController sharedTranscriptControllerWithoutLoading] textStorage]];
+	[myTestConnection setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 	[myTestConnection connect];
 }
 

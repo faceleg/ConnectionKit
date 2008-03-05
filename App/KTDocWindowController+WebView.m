@@ -789,7 +789,7 @@ clickedOnPagelet:
 
 			// see if we need to clear the inlineImage inspector
 			if ( nil != [self selectedInlineImageElement]
-				 && [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] currentSelection] 
+				 && [[[KTInfoWindowController sharedControllerWithoutLoading] currentSelection] 
 					isEqual:[self selectedInlineImageElement]] )
 			{
 				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification

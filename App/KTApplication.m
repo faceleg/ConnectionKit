@@ -792,7 +792,7 @@ void showMethodGroups(Class klass, char mType) {
 	else
 	{
 		// we have a new trace, encourage the user to send in a report
-		int alertResult = [[KSExceptionReporter sharedInstance] runAlertWithException:anException
+		int alertResult = [[KSExceptionReporter sharedController] runAlertWithException:anException
                                                                           messageText:alertTitle
                                                                       informativeText:[anException name]];
         

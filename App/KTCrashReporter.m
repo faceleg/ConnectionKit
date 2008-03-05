@@ -26,17 +26,6 @@ static NSString *sCrashSubmitURLString = @"https://ssl.karelia.com/bugsubmit/KTC
 
 @implementation KTCrashReporter
 
-+ (id)sharedInstance
-{
-	static KTCrashReporter *sSharedInstance = nil;
-	if ( nil == sSharedInstance )
-	{
-		sSharedInstance = [[KTCrashReporter alloc] init];
-	}
-	
-	return sSharedInstance;
-}
-
 - (int)runAlert
 {
 	// clear the details text

@@ -7,12 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSSingletonWindowController.h"
 
 
 @class KTPage, KTDocSiteOutlineController;
 
 
-@interface KTCodeInjectionController : NSWindowController 
+@interface KTCodeInjectionController : KSSingletonWindowController 
 {
 	IBOutlet NSTabView			*oTabView;
 	IBOutlet NSTextView			*oPreludeTextView;

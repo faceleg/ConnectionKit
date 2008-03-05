@@ -8,22 +8,8 @@
 
 #import "KTPlaceholderController.h"
 
-static KTPlaceholderController *sSharedPlaceholderController = nil;
 
 @implementation KTPlaceholderController
-
-+ (KTPlaceholderController *)sharedPlaceholderController;
-{
-    if ( nil == sSharedPlaceholderController ) {
-        sSharedPlaceholderController = [[self alloc] init];
-    }
-    return sSharedPlaceholderController;
-}
-
-+ (KTPlaceholderController *)sharedPlaceholderControllerWithoutLoading;
-{
-	return sSharedPlaceholderController;
-}
 
 - (id)init
 {

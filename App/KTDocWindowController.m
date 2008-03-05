@@ -2096,7 +2096,7 @@ from representedObject */
 - (void)anyWindowWillClose:(NSNotification *)aNotification
 {
 	id obj = [aNotification object];
-	if (obj == [[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] window])
+	if (obj == [[KTInfoWindowController sharedControllerWithoutLoading] window])
 	{
 		NSRect frame = [obj frame];
 		NSPoint topLeft = NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height);
@@ -2496,7 +2496,7 @@ from representedObject */
 {
 	if (inShow)	// show separate info
 	{
-		KTInfoWindowController *sharedController = [KTInfoWindowController sharedInfoWindowController];
+		KTInfoWindowController *sharedController = [KTInfoWindowController sharedController];
 		[sharedController setAssociatedDocument:[self document]];
 		if (nil != mySelectedInlineImageElement)
 		{
@@ -2549,7 +2549,7 @@ from representedObject */
 	}
 	else	// hide
 	{
-		KTInfoWindowController *sharedControllerMaybe = [KTInfoWindowController sharedInfoWindowControllerWithoutLoading];
+		KTInfoWindowController *sharedControllerMaybe = [KTInfoWindowController sharedControllerWithoutLoading];
  		if (sharedControllerMaybe)
 		{
 

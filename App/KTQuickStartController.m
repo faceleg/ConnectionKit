@@ -14,17 +14,6 @@
 
 @implementation KTQuickStartController
 
-+ (id)sharedController;
-{
-    static id sSharedController = nil;
-    if ( nil == sSharedController ) 
-    {
-        sSharedController = [[self alloc] init];
-    }
-    
-    return sSharedController;
-}
-
 - (id)init
 {
 	NSString *nibName = @"Introduction";

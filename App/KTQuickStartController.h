@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
+#import "KSSingletonWindowController.h"
 
-@interface KTQuickStartController : NSWindowController {
+@interface KTQuickStartController : KSSingletonWindowController {
 
 	IBOutlet NSButton *oHighLink;
 	IBOutlet NSButton *oLowLink;
@@ -24,6 +25,5 @@
 - (IBAction) openHigh:(id)sender;
 - (IBAction) openLow:(id)sender;
 - (IBAction) done:(id)sender;
-+ (id)sharedController;
 
 @end

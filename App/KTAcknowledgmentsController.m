@@ -11,6 +11,7 @@
 
 @implementation KTAcknowledgmentsController
 
+/*
 + (id)sharedController;
 {
     static id sSharedController = nil;
@@ -21,7 +22,7 @@
     
     return sSharedController;
 }
-
+*/
 
 - (void)windowDidLoad
 {

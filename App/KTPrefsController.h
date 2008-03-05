@@ -6,8 +6,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSSingletonWindowController.h"
 
-@interface KTPrefsController : NSWindowController
+@interface KTPrefsController : KSSingletonWindowController
 {
 	IBOutlet NSImageView *oCompressionSample;
 	IBOutlet NSObjectController *oObjectController;
@@ -15,7 +16,6 @@
 	NSImage *mySampleImage;
 }
 
-+ (KTPrefsController *)sharedPrefsController;
 - (IBAction) windowHelp:(id)sender;
 
 @end

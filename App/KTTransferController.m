@@ -727,11 +727,11 @@ static NSArray *sReservedNames = nil;
 	if ([self connection])	// attempt to get connection -- only proceed if we got a connection.
 	{
 
-		myInspectorWasDisplayed = [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] window] isVisible];
-		[[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] window] orderOut:self];
+		myInspectorWasDisplayed = [[[KTInfoWindowController sharedControllerWithoutLoading] window] isVisible];
+		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 			
 		//force the connection creation on  the main thread
-		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedTranscriptControllerWithoutLoading] textStorage]];
+		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		//[[[self associatedDocument] windowController] cancelFireUpdateElementTimer];
 		[[self associatedDocument] suspendAutosave];
 		mySuspended = YES;
@@ -945,13 +945,13 @@ static NSArray *sReservedNames = nil;
 	
 	if ([self connection])	// attempt to get connection -- only proceed if we got a connection.
 	{
-		myInspectorWasDisplayed = [[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] window] isVisible];
-		[[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] window] orderOut:self];
+		myInspectorWasDisplayed = [[[KTInfoWindowController sharedControllerWithoutLoading] window] isVisible];
+		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 		
 		//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];		// suspend until further notice
 		[self suspendUIUpdates];
 
-		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedTranscriptControllerWithoutLoading] textStorage]];
+		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		
 		//[[[self associatedDocument] windowController] cancelFireUpdateElementTimer];
 		[[self associatedDocument] suspendAutosave];
@@ -1563,7 +1563,7 @@ static NSArray *sReservedNames = nil;
 																									//we need to reactivate the autosave just in case	
 	if (myInspectorWasDisplayed)
 	{
-		[[[KTInfoWindowController sharedInfoWindowController] window] orderFront:self];
+		[[[KTInfoWindowController sharedController] window] orderFront:self];
 	}
 }
 

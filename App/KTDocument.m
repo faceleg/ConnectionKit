@@ -810,10 +810,10 @@
 
 	/// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
 	// tell info window to release inspector views and object controllers
-	if ( [self isEqual:[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] associatedDocument]] )
+	if ( [self isEqual:[[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument]] )
 	{
 		// close info window
-		[[KTInfoWindowController sharedInfoWindowControllerWithoutLoading] clearAll];
+		[[KTInfoWindowController sharedControllerWithoutLoading] clearAll];
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
@@ -1705,7 +1705,7 @@
 	}
 	
 	// Attach inspector, if visible
-	KTInfoWindowController *sharedController = [KTInfoWindowController sharedInfoWindowControllerWithoutLoading];
+	KTInfoWindowController *sharedController = [KTInfoWindowController sharedControllerWithoutLoading];
 	if ( nil != sharedController )
 	{
 		NSWindow *infoWindow = [sharedController window];

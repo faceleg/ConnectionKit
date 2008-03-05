@@ -19,23 +19,12 @@
 #import "NSApplication+Karelia.h"
 
 
-static KTPrefsController *sSharedPrefsController = nil;
 
 
 @implementation KTPrefsController
 
 #pragma mark Initialization Methods
 
-
-+ (KTPrefsController *)sharedPrefsController;
-{
-    if ( nil == sSharedPrefsController ) 
-	{
-        sSharedPrefsController = [[self alloc] init];
-	}
-
-    return sSharedPrefsController;
-}
 
 - (id)init
 {

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Connection/AbstractConnectionProtocol.h>
+#import "KSSingletonWindowController.h"
 
 @class KTHostProperties, AbstractConnection;
 
@@ -71,7 +72,7 @@ NO LONGER	save
 */
 @class KTBackgroundTabView;
 
-@interface KTHostSetupController : NSWindowController
+@interface KTHostSetupController : KSSingletonWindowController
 {
 	BOOL myShouldShowConnectionTroubleshooting;
 	BOOL myWantsNextWhenDoneLoading;

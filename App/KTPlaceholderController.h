@@ -7,14 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSSingletonWindowController.h"
 
 
-@interface KTPlaceholderController : NSWindowController {
+@interface KTPlaceholderController : KSSingletonWindowController {
 
 }
-
-+ (KTPlaceholderController *)sharedPlaceholderController;
-+ (KTPlaceholderController *)sharedPlaceholderControllerWithoutLoading;
 
 - (IBAction) doNew:(id)sender;
 
