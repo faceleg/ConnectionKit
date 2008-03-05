@@ -20,7 +20,7 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>KTMinimumAppVersion</key>
+	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>

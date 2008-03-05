@@ -28,7 +28,7 @@
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>Text</string>
-	<key>KTMinimumAppVersion</key>
+	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTPageAllowCallouts</key>
 	<true/>

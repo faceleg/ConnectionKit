@@ -63,7 +63,7 @@ int main (int argc, const char * argv[])
 				NSDictionary *translatingKeys = [NSDictionary dictionaryWithObjectsAndKeys:
 												 @"CFBundleIdentifier", @"CFBundleIdentifier",
 												 @"CFBundleVersion", @"CFBundleVersion",
-												 @"MinimumAppVersion", @"KTMinimumAppVersion",
+												 @"MinimumAppVersion", @"KSMinimumAppVersion",
 												 @"title", @"title",		// design name
 												 nil];
 				NSEnumerator *keyEnum = [translatingKeys objectEnumerator];

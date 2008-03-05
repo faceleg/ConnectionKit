@@ -6,7 +6,7 @@
 	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.Turntable</string>
-	<key>KTMinimumAppVersion</key>
+	<key>KSMinimumAppVersion</key>
 	<string>1.0</string>
 	<key>title</key>
 	<string>Turntable</string>

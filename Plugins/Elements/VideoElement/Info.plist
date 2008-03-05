@@ -30,7 +30,7 @@
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>Movie</string>
-	<key>KTMinimumAppVersion</key>
+	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTPageName</key>
 	<string>Video Page</string>
