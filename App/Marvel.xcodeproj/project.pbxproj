@@ -132,6 +132,17 @@
 			name = DeployRelease;
 			productName = DeployRelease;
 		};
+		3CE2B2B70D7F1DD900E2711E /* UpdateShared */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3CE2B2BA0D7F1DF700E2711E /* Build configuration list for PBXAggregateTarget "UpdateShared" */;
+			buildPhases = (
+				3CE2B2B60D7F1DD900E2711E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateShared;
+			productName = "Shared-UpdateToT";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1416,6 +1427,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
+		};
+		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E /* Shared-UpdateToT */;
+			remoteInfo = "Shared-UpdateToT";
 		};
 		3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4676,6 +4694,7 @@
 			);
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
+				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				CE9510B60D63B0A3008D163A /* PBXTargetDependency */,
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
@@ -4881,6 +4900,7 @@
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3C96ADE10CA06FB900C5249F /* UpdateVersion */,
+				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */,
@@ -5449,28 +5469,28 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A9A940D11E68A0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE CK_REVISION FOR RELEASE BUILDS\n###\n\nCK_PATH=${SRCROOT}/../../../connection\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing ConnectionKit with revision ${CK_REVISION}\"\ncd ${CK_PATH}\n${SVN_PATH} update -r${CK_REVISION}\necho \"finished syncing ConnectionKit\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
@@ -5521,14 +5541,14 @@
 		};
 		3C9B60220D382E5C003A8351 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE SP_REVISION FOR RELEASE BUILDS\n###\n\nSP_PATH=${SRCROOT}/../../../sparkleplus\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Sparkle+ with revision ${SP_REVISION}\"\ncd ${SP_PATH}\n${SVN_PATH} update -r${SP_REVISION}\necho \"finished syncing Sparkle+\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
@@ -5650,6 +5670,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			showEnvVarsInLog = 0;
+		};
+		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE Shared ToT FOR RELEASE BUILDS\n###\n\nSHARED_PATH=${SRCROOT}/../../../Shared\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Shared with ToT ...\"\ncd ${SHARED_PATH}\n${SVN_PATH} update\necho \"... finished syncing Shared\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -6159,6 +6193,11 @@
 			name = SandvoxQuickLook;
 			targetProxy = 3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */;
 		};
+		3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
+			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
+		};
 		3CE79D690D625E3600FCEE6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
@@ -6640,6 +6679,21 @@
 			};
 			name = Debug;
 		};
+		3CE2B2B80D7F1DD900E2711E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = UpdateShared;
+			};
+			name = Release;
+		};
+		3CE2B2B90D7F1DD900E2711E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = UpdateShared;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6702,6 +6756,15 @@
 			buildConfigurations = (
 				3CA0FEE50D7614AC0093562D /* Release */,
 				3CA0FEE60D7614AC0093562D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CE2B2BA0D7F1DF700E2711E /* Build configuration list for PBXAggregateTarget "UpdateShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CE2B2B80D7F1DD900E2711E /* Release */,
+				3CE2B2B90D7F1DD900E2711E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
