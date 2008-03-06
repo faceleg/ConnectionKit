@@ -626,7 +626,7 @@
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
 		CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */; };
-		CEBFCE6F0D7F53DC006B94B9 /* KSPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = CEBFCE6D0D7F53DC006B94B9 /* KSPlugin.h */; };
+		CEBFCE6F0D7F53DC006B94B9 /* KSPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = CEBFCE6D0D7F53DC006B94B9 /* KSPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEBFCE700D7F53DC006B94B9 /* KSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFCE6E0D7F53DC006B94B9 /* KSPlugin.m */; };
 		CEC118CD0D78A8E900513E70 /* NSURL+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC118CB0D78A8E900513E70 /* NSURL+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC118CE0D78A8E900513E70 /* NSURL+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC118CC0D78A8E900513E70 /* NSURL+KTExtensions.m */; };
