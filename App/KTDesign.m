@@ -23,40 +23,17 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (NSArray *)pluginSearchPaths
++ (NSString *)pluginSubfolder
 {
-	static NSArray *result;
-	
-	if (!result)
-	{
-		NSMutableArray *buffer = [NSMutableArray array];
-		
-		NSArray *basePaths =
-			NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSAllDomainsMask, YES);
-		
-		NSEnumerator *pathsEnumerator = [basePaths objectEnumerator];
-		NSString *aPath;
-		while (aPath = [pathsEnumerator nextObject])
-		{
-			// It is very important to standardize paths here in order to catch symlinks
-			NSString *sandvoxPath = [[aPath stringByAppendingPathComponent:
-										[NSApplication applicationName]]
-											stringByResolvingSymlinksInPath];
-			
-			NSString *pluginsPath = [[sandvoxPath stringByAppendingPathComponent:@"Designs"]
-										stringByResolvingSymlinksInPath];
-			
-			[buffer addObject:pluginsPath];
-			[buffer addObject:sandvoxPath];
-		}
-		
-		[buffer addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"]];
-		
-		result = [buffer copy];
-	}
-	
-	return result;
+	return @"Designs";	// subfolder in App Support/APPNAME where this kind of plugin MAY reside.
 }
+
++ (NSString *)applicationPluginPath	// Designs in their own top-level plugin dir
+{
+	return [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"];
+}
+
+
 
 + (void)load
 {
