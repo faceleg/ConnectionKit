@@ -194,8 +194,6 @@
 				<string>NSTabView</string>
 				<key>oSiteView</key>
 				<string>NSView</string>
-				<key>oSmallDatePickerPlaceholderView</key>
-				<string>NSView</string>
 				<key>oSortPopup</key>
 				<string>NSPopUpButton</string>
 				<key>oStackView</key>

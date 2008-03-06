@@ -254,7 +254,7 @@
 				result = [self valueForKey:@"creationDate"];
 				break;
 			case KTTimestampModificationDate:
-				result = [self valueForKey:@"modificationDate"];
+				result = [self valueForKey:@"lastModificationDate"];
 				break;
 		}
 		
@@ -282,7 +282,7 @@
 			[self setValue:aDate forKey:@"creationDate"];
 			break;
 		case KTTimestampModificationDate:
-			[self setValue:aDate forKey:@"modificationDate"];
+			[self setValue:aDate forKey:@"lastModificationDate"];
 			break;
 	}
 	
@@ -327,7 +327,7 @@
 			date = [self valueForKey:@"creationDate"];
 			break;
 		case KTTimestampModificationDate:
-			date = [self valueForKey:@"modificationDate"];
+			date = [self valueForKey:@"lastModificationDate"];
 			break;
 	}
 	[self setWrappedValue:date forKey:@"editableTimestamp"];
@@ -382,7 +382,7 @@
 	return [self timestampWithStyle:kCFDateFormatterMediumStyle];		// HARD-WIRE ????
 }
 
-- (NSString *) timestampTypeLabel
+- (NSString *)timestampTypeLabel
 {
 	NSString *result = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
 		? NSLocalizedString(@"(Modification Date)",@"Label to indicate that date shown is modification date")
