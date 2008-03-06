@@ -1,6 +1,6 @@
 <p style="text-align:center; padding-top:30px; padding-bottom:30px;">
 [[if badgeTypeTag]]
-<a class="imageLink" style="background:none; border:none;" href="http://www.sandvox.com/[[if anonymous]][[else2]][[if document.registrationHash]]?h=[[=%document.registrationHash]][[endif3]][[endif2]]" title="[[=&delegate.badgeTitleString]]"><img src="[[resourcepath delegate.badgeResourcePath]]" alt="[[=&delegate.badgeAltString]]" /></a>
+<a class="imageLink" style="background:none; border:none;" href="http://www.sandvox.com/[[if anonymous]][[else2]][[if document.registrationHash]]?h=[[=%document.registrationHash]][[endif3]][[endif2]]" title="[[=&delegate.badgeTitleString]]"[[if openLinkInNewWindow]] target="_blank"[[endif2]]><img src="[[resourcepath delegate.badgeResourcePath]]" alt="[[=&delegate.badgeAltString]]" /></a>
 [[else]]
 [[=&delegate.badgePreludeString]] <a href="http://www.sandvox.com/[[if anonymous]][[else2]][[if document.registrationHash]]?h=[[=%document.registrationHash]][[endif3]][[endif2]]" title="[[=&delegate.badgeTitleString]]">[[=&delegate.badgeLinkString]]</a>
 [[endif]]
