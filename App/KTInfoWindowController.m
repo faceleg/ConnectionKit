@@ -196,21 +196,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			  context:nil];
 	
 			
-	// replace standin for date picker with small date picker
-	NSView *superview = [oSmallDatePickerPlaceholderView superview];
-	
-	NSRect smallFrame = [oSmallDatePickerPlaceholderView frame];
-	mySmallDatePicker = [[KSSmallDatePicker alloc] initWithFrame:smallFrame];
-	
-	[oSmallDatePickerPlaceholderView removeFromSuperviewWithoutNeedingDisplay];
-	[superview addSubview:mySmallDatePicker];
-	[mySmallDatePicker setDatePickerElements:(NSHourMinuteDatePickerElementFlag|NSYearMonthDayDatePickerElementFlag)];
-	
-	[mySmallDatePicker bind:@"value" 
-                   toObject:oPageController 
-                withKeyPath:@"selection.selection.editableTimestamp" 
-                    options:nil];
-	
 	// Page menu title placeholder binding
 	[oPageMenuTitleField bind:@"placeholderValue"
 					 toObject:oPageController
@@ -360,15 +345,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 	[oPageController removeObserver:self forKeyPath:@"selection.selection.indexPresetDictionary"];
     
-    if ( nil != mySmallDatePicker )
-    {
-        [mySmallDatePicker unbind:@"value"];
-        [mySmallDatePicker unbind:@"hidden"];
-        [mySmallDatePicker unbind:@"enabled"];
-        [mySmallDatePicker unbind:@"enabled2"];
-        [mySmallDatePicker release]; mySmallDatePicker = nil;
-    }
-
+    
 //	[self setCurrentlyBoundControllers:nil];
 	
 	[self setPluginInspectorViews:nil];

@@ -12,7 +12,6 @@
 enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 
 @class KTStackView, KTImageView, KSPathInfoField;
-@class KSSmallDatePicker;
 @class KTDocument;
 @class KTPagelet;
 @class KTPage;
@@ -52,8 +51,6 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 	
 	// Page Controls
 	IBOutlet NSTextField		*oPageMenuTitleField;
-	IBOutlet NSView				*oSmallDatePickerPlaceholderView;
-    KSSmallDatePicker           *mySmallDatePicker; // takes over for oSmallDatePickerPlaceholderView
 	
 
 	IBOutlet NSPopUpButton			*oIndexPopup;
