@@ -156,9 +156,14 @@
 
 - (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)filename UTI:(NSString *)UTI;
 {
+	// Figure out a full filename
+	NSString *fileExtension = [NSString filenameExtensionForUTI:UTI];
+	NSAssert1(fileExtension && ![fileExtension isEqualToString:@""], @"UTI %@ has no corresponding file extension", UTI);
+	NSString *preferredFilename = [filename stringByAppendingPathExtension:fileExtension];
+	
+	// Create media container & file
 	KTMediaContainer *result = [self insertMediaContainer];
 	
-	NSString *preferredFilename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:UTI]];
 	KTAbstractMediaFile *mediaFile = [self mediaFileWithData:data preferredFilename:preferredFilename];
 	[result setValue:mediaFile forKey:@"file"];
 	
