@@ -1292,10 +1292,21 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	// apparently pool may not be in place yet?
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
 	
-	[iMediaBrowser class];	// force imedia browser to load just so we can get RBSplitView loaded
 	
-	// create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
+	// Register to receive sandvox: URLs
+	[[NSAppleEventManager sharedAppleEventManager] setEventHandler:self
+													   andSelector:@selector(handleGetURLAppleEvent:withReplyEvent:)
+													 forEventClass:kInternetEventClass
+														andEventID:kAEGetURL];
+	
+	
+	// Force imedia browser to load just so we can get RBSplitView loaded
+	[iMediaBrowser class];	
+	
+	
+	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
+	
 	
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
@@ -1724,6 +1735,20 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 #pragma mark -
+#pragma mark URL Handling
+
+- (void)handleGetURLAppleEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+{
+	NSString *URLString = [[event paramDescriptorForKeyword: keyDirectObject] stringValue];
+	NSURL *URL = [NSURL URLWithString:URLString];
+	
+	// Ignore non-sandvox: URLs
+	if (![[URL scheme] isEqualToString:@"sandvox"]) return;
+	
+	
+}
+
+#pragma mark -
 #pragma mark Utility Methods
 
 - (void)updateDuplicateMenuItemForDocument:(KTDocument *)aDocument
@@ -1780,9 +1805,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 #endif
 
-
-#pragma mark -
-#pragma mark Utility Methods
 
 - (KTDocument *)documentWithID:(NSString *)anID
 {
