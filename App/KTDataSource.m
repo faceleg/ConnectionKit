@@ -122,7 +122,7 @@
 {
 	//[self subclassResponsibility:_cmd];
 	//return nil;
-	LOG((@"%@ should be implementing acceptedDragTypes", [self class]));
+	LOG((@"%@ should be implementing acceptedDragTypesCreatingPagelet:", [self class]));
 	return nil;
 }
 

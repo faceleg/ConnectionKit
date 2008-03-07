@@ -5680,8 +5680,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /usr/bin/osascript;
-			shellScript = "tell application \"Xcode\"\n        set AppleScript's text item delimiters to \" \"\n        set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nanswer argz\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\n\n";
+			shellPath = "#!/bin/sh -";
+			shellScript = "/usr/bin/osascript <<-EOF\ntell application \"Xcode\"\n set AppleScript's text item delimiters to \" \"\n set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\nEOF\n\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
