@@ -14,7 +14,6 @@
 {
 }
 
-- (NSString *)innerHTML;
 - (NSString *)innerEditingHTML;
 
 @end

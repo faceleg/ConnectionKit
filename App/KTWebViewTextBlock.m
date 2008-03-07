@@ -210,6 +210,36 @@
 }
 
 #pragma mark -
+#pragma mark HTML
+
+- (NSString *)innerHTML
+{
+	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	return result;
+}
+
+/*	Includes the editable tag(s) + innerHTML
+ */
+- (NSString *)outerHTML
+{
+	NSString *innerHTML = [self innerHTML];
+	
+	// Single-line text blocks make use of a <span> tag as well as the default
+	if ([self isFieldEditor])
+	{
+		innerHTML = [NSString stringWithFormat:@"<span class=\"in\">%@</span>", innerHTML];
+	}
+	
+	NSString *result = [NSString stringWithFormat:@"<%@ id=\"%@\">%@</%@>",
+												  [self HTMLTag],
+												  [self DOMNodeID],
+												  innerHTML,
+												  [self HTMLTag]];
+	
+	return result;
+}
+
+#pragma mark -
 #pragma mark Editing
 
 - (BOOL)becomeFirstResponder

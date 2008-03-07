@@ -60,7 +60,9 @@
 - (NSString *)HTMLSourceKeyPath;
 - (void)setHTMLSourceKeyPath:(NSString *)keyPath;
 
-//- (KTDocWebViewController *)webViewController;
+#pragma mark HTML
+- (NSString *)innerHTML;
+- (NSString *)outerHTML;
 
 #pragma mark Editing
 
