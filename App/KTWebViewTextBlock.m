@@ -93,6 +93,7 @@
 	[super init];
 	
 	myDOMNodeID = [ID copy];
+	[self setHTMLTag:@"div"];
 	[[KTWebViewTextBlock knownTextBlocks] setObject:self forKey:ID];	// That's a wak ref
 	
 	return self;
@@ -140,6 +141,7 @@
 	
 	[myDOMNode release];
 	[myDOMNodeID release];
+	[myHTMLTag release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
 	
@@ -179,6 +181,15 @@
 - (BOOL)hasSpanIn { return myHasSpanIn; }
 
 - (void)setHasSpanIn:(BOOL)flag { myHasSpanIn = flag; }
+
+- (NSString *)HTMLTag { return myHTMLTag; }
+
+- (void)setHTMLTag:(NSString *)tag
+{
+	tag = [tag copy];
+	[myHTMLTag release];
+	myHTMLTag = tag;
+}
 
 - (id)HTMLSourceObject { return myHTMLSourceObject; }
 

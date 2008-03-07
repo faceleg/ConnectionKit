@@ -98,7 +98,8 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 						<h1[[idClass entity:Root property:master.siteTitleHTML flags:"line anchor" id:document.documentID replacement:master.siteTitleText code:h1]]><a href="[[path document.root]]"><span class="in">[[=master.siteTitleHTML]]</span></a></h1>
 [[endif2]]
 [[endif]]
-						<p[[idClass entity:Page property:master.siteSubtitleHTML flags:"line optional" id:uniqueID replacement:master.siteSubtitleText code:st]]><span class="in">[[=master.siteSubtitleHTML]]</span></p>
+						[[textblock property:master.siteSubtitleHTML flags:"line" tag:p]]
+						<!-- <p[[idClass entity:Page property:master.siteSubtitleHTML flags:"line optional" id:uniqueID replacement:master.siteSubtitleText code:st]]><span class="in">[[=master.siteSubtitleHTML]]</span></p> -->
 					</div><!-- title -->
 					<div id="sitemenu-container">
 [[if document.siteMenu]]

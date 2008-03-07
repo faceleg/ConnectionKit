@@ -19,11 +19,11 @@
 	NSString		*myDOMNodeID;
 	DOMHTMLElement	*myDOMNode;
 	
-	BOOL	myIsFieldEditor;
-	BOOL	myIsRichText;
-	BOOL	myImportsGraphics;
-	BOOL	myHasSpanIn;
-	
+	BOOL		myIsFieldEditor;
+	BOOL		myIsRichText;
+	BOOL		myImportsGraphics;
+	BOOL		myHasSpanIn;
+	NSString	*myHTMLTag;
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
@@ -51,6 +51,9 @@
 - (void)setImportsGraphics:(BOOL)flag;
 - (BOOL)hasSpanIn;
 - (void)setHasSpanIn:(BOOL)flag;
+
+- (NSString *)HTMLTag;
+- (void)setHTMLTag:(NSString *)tag;
 
 - (id)HTMLSourceObject;
 - (void)setHTMLSourceObject:(id)object;
