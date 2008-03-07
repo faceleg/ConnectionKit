@@ -1362,6 +1362,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		{
 			mediaContainer = [[plugin mediaManager] mediaContainerWithPath:[sourceURL path]];
 		}
+		else if ([[sourceURL scheme] isEqualToString:@"svxmedia"])	// Media container already exists
+		{
+			return;
+		}
 		else
 		{
 			// Pull the data for the URL from WebKit. May have to use a private method sometimes.

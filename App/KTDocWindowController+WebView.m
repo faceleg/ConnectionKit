@@ -1951,6 +1951,9 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		URLAsString = [URLAsString substringFromIndex:wherePageID.location];	// new URL, just the page ID
 	}
 	
+	if ([[theURL scheme] isEqualToString:@"svxmedia"]) return NO;
+	
+	
 	if ( (nil == title) || [title isEqualToString:@""] )
 	{
 		// if no title, set it to the body of the URL, no scheme
