@@ -36,7 +36,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface FolderSource : KTAbstractDataSource
+@interface FolderSource : KTDataSource
 {
 
 }

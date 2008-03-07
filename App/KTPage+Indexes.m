@@ -6,16 +6,14 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTPage.h"
-#import "KTArchivePage.h"
 
 #import "KTAbstractIndex.h"
-#import "KTAppPlugin.h"
+#import "KTArchivePage.h"
 #import "KTIndexPlugin.h"
-
+#import "KTPage.h"
 #import "NSArray+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSCharacterSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 #import "NSXMLElement+Karelia.h"

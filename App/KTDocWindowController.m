@@ -8,68 +8,53 @@
 
 #import "KTDocWindowController.h"
 
-#import "Debug.h"
-
-#import "NSException+Karelia.h"
-
-#import "KTDocWebViewController.h"
-
-#import "KTLinkSourceView.h"
 
 #import "AMRollOverButton.h"
+#import "Debug.h"
+#import "KSSilencingConfirmSheet.h"
+#import "KSTextField.h"
+#import "KSValidateCharFormatter.h"
 #import "KT.h"
+#import "KTDataSource.h"
+#import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
-
-#import "KTBundleManager.h"
-#import "KTIndexPlugin.h"
-
-#import "KTInlineImageElement.h"
-
+#import "KTCodeInjectionController.h"
 #import "KTDesignPickerView.h"
-#import "KTDocWindow.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
+#import "KTDocWebViewController.h"
+#import "KTDocWindow.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
+#import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
-#import "KTPluginInspectorViewsManager.h"
-#import "KTDocSiteOutlineController.h"
-#import "KTCodeInjectionController.h"
-
-#import "KTWebViewTextBlock.h"
-#import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
-#import "KTAbstractDataSource.h"
-
+#import "KTInlineImageElement.h"
+#import "KTLinkSourceView.h"
+#import "KTManagedObjectContext.h"
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
-
-#import "KSTextField.h"
+#import "KTPage.h"
+#import "KTPluginInspectorViewsManager.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"
+#import "KTWebViewTextBlock.h"
+#import "NSArray+KTExtensions.h"
+#import "NSBundle+Karelia.h"
+#import "NSCharacterSet+Karelia.h"
+#import "NSColor+Karelia.h"
+#import "NSException+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
+#import "NSOutlineView+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
+#import "NSThread+Karelia.h"
+#import "NSWindow+Karelia.h"
 #import "NTBoxView.h"
 #import "Registration.h"
-#import <WebKit/WebKit.h>
 #import <iMediaBrowser/iMedia.h>
-#import "NSArray+KTExtensions.h"
-#import "KSValidateCharFormatter.h"
-
-#import "NSCharacterSet+Karelia.h"
-#import "NSString+Karelia.h"
-#import "NSColor+Karelia.h"
-#import "NSWindow+Karelia.h"
-#import "KSSilencingConfirmSheet.h"
-
-#import "KTManagedObjectContext.h"
-
-#import "NSOutlineView+KTExtensions.h"
-
-#import "KTPage.h"
-
-#import "NSBundle+Karelia.h"
-#import "KTAbstractIndex.h"
-#import "NSThread+Karelia.h"
+#import <WebKit/WebKit.h>
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
@@ -817,15 +802,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)addPage:(id)sender
 {
     // LOG((@"%@: addPage using bundle: %@", self, [sender representedObject]));
-	NSBundle *pageBundle = nil;
-	
+	KTElementPlugin *plugin = nil;
 	if ( [sender respondsToSelector:@selector(representedObject)] )
 	{
-		KTElementPlugin *plugin = [sender representedObject];
-		pageBundle = [plugin bundle];
+		plugin = [sender representedObject];
 	}
 	
-	if ( nil != pageBundle && [pageBundle isMemberOfClass:[NSBundle class]] )
+	if ( nil != plugin )
     {
 		/// Case 17992, we now pass in a context to nearestParent
 		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
@@ -836,7 +819,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		}
 		
 		KTPage *page = [KTPage pageWithParent:nearestParent 
-									   bundle:pageBundle 
+									   plugin:plugin 
 			   insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 		
 		if ( nil != page )
@@ -911,24 +894,24 @@ from representedObject */
 	
 	NSDictionary *presetDict= [sender representedObject];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
+	KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:identifier];
 	
-	NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:identifier] bundle];
-	
-    if ( nil != indexBundle && [indexBundle isMemberOfClass:[NSBundle class]] )
+    if ( nil != indexPlugin )
     {		
+		NSBundle *indexBundle = [indexPlugin bundle];
 		// Figure out page type to construct based on info plist.  Be  a bit forgiving if not found.
 		NSString *pageIdentifier = [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"];
 		if (nil == pageIdentifier)
 		{
 			pageIdentifier = [indexBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
 		}
-		NSBundle *pageBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:pageIdentifier] bundle];
-		if (nil == pageBundle)
+		KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+		if (nil == pagePlugin)
 		{
 			pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-			pageBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:pageIdentifier] bundle];
+			pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
 		}
-		if (nil == pageBundle)
+		if (nil == pagePlugin)
 		{
 			[NSException raise: NSInternalInconsistencyException
 						format: @"Unable to create page of type %@.",
@@ -940,14 +923,14 @@ from representedObject */
 		/// Case 17992, added assert to better detect source of exception
 		NSAssert((nil != nearestParent), @"nearestParent should not be nil, root at worst");
 		KTPage *indexPage = [KTPage pageWithParent:nearestParent 
-											bundle:pageBundle 
+											plugin:pagePlugin 
 					insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 		[indexPage setBool:YES forKey:@"isCollection"]; // Duh!
 		
 		// Now set the index on the page
 		[indexPage setWrappedValue:identifier forKey:@"collectionIndexBundleIdentifier"];
 		Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
-		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:indexPage plugin:[KTAppPlugin pluginWithBundle:indexBundle]] autorelease];
+		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:indexPage plugin:indexPlugin] autorelease];
 		[indexPage setIndex:theIndex];
 		
 		
@@ -972,7 +955,7 @@ from representedObject */
 			[firstChildProperties removeObjectForKey:@"pluginIdentifier"];
 			
 			KTPage *firstChild = [KTPage pageWithParent:indexPage
-												 bundle:[[KTElementPlugin pluginWithIdentifier:firstChildIdentifier] bundle]
+												 plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]
 						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 			
 			NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
@@ -997,7 +980,7 @@ from representedObject */
 			NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultRSSBadgeBundleIdentifier"];
 			if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
 			{
-				KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
+				KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
 				if (badgePlugin)
 				{
 					[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
@@ -1123,28 +1106,29 @@ from representedObject */
 		}
 		
 		// create a new summary
-		NSBundle *collectionBundle = nil;
+		KTElementPlugin *collectionPlugin = nil;
 		if ( [sender respondsToSelector:@selector(representedObject)] )
 		{
-			collectionBundle = [sender representedObject];
+			collectionPlugin = [sender representedObject];
 		}
 		
-		if ( nil == collectionBundle )
+		if ( nil == collectionPlugin )
 		{
 			NSString *defaultIdentifier = [defaults stringForKey:@"DefaultIndexBundleIdentifier"];
-			collectionBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:defaultIdentifier] bundle];
+			collectionPlugin = [KTElementPlugin pluginWithIdentifier:defaultIdentifier];
 		}
 				
-		if ( (nil != collectionBundle) && [collectionBundle isMemberOfClass:[NSBundle class]] )
+		if ( nil != collectionPlugin )
 		{
+			NSBundle *collectionBundle = [collectionPlugin bundle];
 			NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-			NSBundle *pageBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:pageIdentifier] bundle];
-			if ( nil == pageBundle )
+			KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+			if ( nil == pagePlugin )
 			{
 				pageIdentifier = [defaults objectForKey:@"DefaultIndexBundleIdentifier"];
-				pageBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:pageIdentifier] bundle];
+				pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
 			}
-			if ( nil == pageBundle )
+			if ( nil == pagePlugin )
 			{
 				NSLog(@"Unable to create group: could not locate default index.");
 				[selectedPages release];
@@ -1165,7 +1149,7 @@ from representedObject */
             
             // now, create a new collection to hold selectedPages
 			KTPage *collection = [KTPage pageWithParent:parentCollection 
-												 bundle:pageBundle 
+												 plugin:pagePlugin 
 						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 			
 			
@@ -1174,7 +1158,7 @@ from representedObject */
 // FIXME: we should load up the properties from a KTPreset
 			
 			Class indexToAllocate = [NSBundle principalClassForBundle:collectionBundle];
-			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:[KTAppPlugin pluginWithBundle:collectionBundle]] autorelease];
+			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
 			[collection setIndex:theIndex];
 			[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
 			[collection setBool:YES forKey:@"isCollection"];
@@ -2222,7 +2206,7 @@ from representedObject */
 	[[self document] suspendAutosave];
 
 	BOOL result = NO;	// set to YES if at least one item got processed
-	int numberOfItems = [KTAbstractDataSource numberOfItemsToProcessDrag:info];
+	int numberOfItems = [KTDataSource numberOfItemsToProcessDrag:info];
 	
 	/*
 	/// Mike: I see no point in this artificial limit in 1.5
@@ -2257,7 +2241,7 @@ from representedObject */
 				[self updateSheetWithStatus:localizedStatus progressValue:i];
 			}
 			
-			KTAbstractDataSource *bestSource = [KTAbstractDataSource highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+			KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
 			if ( nil != bestSource )
 			{
 				NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
@@ -2269,10 +2253,10 @@ from representedObject */
 				
 				if ( didPerformDrag && (nil != theBundleIdentifier) )
 				{
-					NSBundle *theBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:theBundleIdentifier] bundle];
-					if ( nil != theBundle )
+					KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
+					if ( nil != thePlugin )
 					{
-						[dragDataDictionary setObject:theBundle forKey:kKTDataSourceBundle];
+						[dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
 						
 						KTPage *newPage = [KTPage pageWithParent:aCollection
 											dataSourceDictionary:dragDataDictionary
@@ -2302,13 +2286,14 @@ from representedObject */
 							if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
 							{
 								NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-								NSBundle *indexBundle = [[KTIndexPlugin pluginWithIdentifier:defaultIdentifier] bundle];
+								KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:defaultIdentifier];
+								NSBundle *indexBundle = [indexPlugin bundle];
 								
 // FIXME: we should load up the properties from a KTPreset
 								
 								[newPage setValue:[indexBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
 								Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
-								KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:[KTAppPlugin pluginWithBundle:indexBundle]] autorelease];
+								KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:indexPlugin] autorelease];
 								[newPage setIndex:theIndex];
 								[newPage setBool:YES forKey:@"isCollection"]; // should this info be specified in the plist?
 								[newPage setBool:NO forKey:@"includeTimestamp"];		// collection should generally not have timestamp
@@ -2364,7 +2349,7 @@ from representedObject */
 	}
 	
 	// Done
-	[KTAbstractDataSource doneProcessingDrag];
+	[KTDataSource doneProcessingDrag];
 	[[self document] resumeAutosave];
 	
 	return result;

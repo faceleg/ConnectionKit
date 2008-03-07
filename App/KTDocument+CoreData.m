@@ -9,28 +9,25 @@
 #import "KTDocument.h"
 
 #import "Debug.h"
-
 #import "KT.h"
+#import "KTAbstractElement.h"
+#import "KTAbstractPluginDelegate.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
-
-#import "KTDocWebViewController.h"
-#import "KTDocWindowController.h"
+#import "KTAppPlugin.h"
 #import "KTDocumentController.h"
 #import "KTDocumentInfo.h"
-#import "KTPersistentStoreCoordinator.h"
+#import "KTDocWebViewController.h"
+#import "KTDocWindowController.h"
 #import "KTHTMLParser.h"
 #import "KTManagedObjectContext.h"
-#import "KTAbstractElement.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "KTPage.h"
+#import "KTPersistentStoreCoordinator.h"
+#import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "NSString+Karelia.h"
-#import "NSApplication+Karelia.h"
-#import "KTAbstractPluginDelegate.h"
-
 #import "Registration.h"
 
 
@@ -171,7 +168,7 @@
                 NSString *bundleIdentifier;
                 while ( bundleIdentifier  = [e nextObject] )
                 {
-                    NSBundle *bundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:bundleIdentifier] bundle];
+                    NSBundle *bundle = [[KTAppPlugin pluginWithIdentifier:bundleIdentifier] bundle];
                     if ( nil != bundle )
                     {
                         // NB: bundles without delegates may not have a principal class

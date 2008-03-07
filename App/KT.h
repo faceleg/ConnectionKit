@@ -147,7 +147,7 @@ extern NSString *kKTDataSourcePreferExternalImageFlag;
 extern NSString *kKTDataSourceShouldIncludeLinkFlag;
 extern NSString *kKTDataSourceLinkToOriginalFlag;
 extern NSString *kKTDataSourceFeedURLString;
-extern NSString *kKTDataSourceBundle;
+extern NSString *kKTDataSourcePlugin;
 extern NSString *kKTDataSourceImage;
 extern NSString *kKTDataSourceData;
 extern NSString *kKTDataSourceUTI;

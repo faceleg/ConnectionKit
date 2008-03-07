@@ -14,7 +14,6 @@
 #import "KTAppDelegate.h"
 #import "KSBorderlessWindow.h"
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocument.h"
@@ -207,8 +206,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 {
 	OFF((@"IR>>>> %@", NSStringFromSelector(_cmd)));
 	
-	KTDesignManager *designManager = [[NSApp delegate] designManager];
-	KTDesign *design = [designManager designForIdentifier:aDesignBundleIdentifier];
+	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
 	
 	NSData *result = nil;
 	NSString *path = [[design bundle] pathForResource:@"main" ofType:@"css"];
@@ -445,7 +443,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	NSString *replacementCode = [self codeForDOMNodeID:aUniqueID];
 	NSMutableDictionary *renderEntry = [designEntry objectForKey:aUniqueID];
 	
-	KTDesign *design = [[[NSApp delegate] designManager] designForIdentifier:aDesign];
+	KTDesign *design = [KTDesign pluginWithIdentifier:aDesign];
 	
 	KTPage *selectedPage = [[self siteOutlineController] selectedPage];
 	NSNumber *aSize = [[selectedPage valueForKey:@"master"] valueForKey:@"graphicalTitleSize"];

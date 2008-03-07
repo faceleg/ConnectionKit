@@ -37,7 +37,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface HTMLSource : KTAbstractDataSource
+@interface HTMLSource : KTDataSource
 {
 
 }

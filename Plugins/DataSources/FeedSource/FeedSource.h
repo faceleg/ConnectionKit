@@ -36,7 +36,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface FeedSource : KTAbstractDataSource 
+@interface FeedSource : KTDataSource 
 {
 
 }

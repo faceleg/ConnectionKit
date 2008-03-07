@@ -10,7 +10,6 @@
 
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "NSString+Karelia.h"
@@ -83,7 +82,7 @@
 	else	// Read the resource in from the file
 	{
 		NSString *path = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(1, [pathComponents count] - 1)]];
-		KTDesign *design = [[[NSApp delegate] designManager] designForIdentifier:designBundleIdentifier];
+		KTDesign *design = [KTDesign pluginWithIdentifier:designBundleIdentifier];
 		result = [design dataForResourceAtPath:path MIMEType:aMimeType error:anError];
 	}
 	

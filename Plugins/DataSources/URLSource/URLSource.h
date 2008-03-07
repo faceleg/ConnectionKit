@@ -36,7 +36,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface URLSource : KTAbstractDataSource 
+@interface URLSource : KTDataSource 
 {
 
 }

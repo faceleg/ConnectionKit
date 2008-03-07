@@ -48,8 +48,4 @@
 
 
 
-#pragma mark Plugin Management
-
-+ (NSDictionary *)pluginsWithExtension:(NSString *)extension sisterDirectory:(NSString *)dirPath;
-
 @end

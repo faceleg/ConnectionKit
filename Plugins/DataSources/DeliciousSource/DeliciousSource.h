@@ -36,7 +36,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface DeliciousSource : KTAbstractDataSource
+@interface DeliciousSource : KTDataSource
 {
 
 }

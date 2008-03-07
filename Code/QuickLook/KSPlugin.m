@@ -9,7 +9,7 @@
 #import "KSPlugin.h"
 
 
-@interface KSPlugin
+@interface KSPlugin ( NSObject )
 
 + (void)searchForPlugins;
 + (Class)registeredPluginClassForFileExtension:(NSString *)extension;

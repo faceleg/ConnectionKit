@@ -37,7 +37,7 @@
 #import <SandvoxPlugin.h>
 
 
-@interface ImageSource : KTAbstractDataSource
+@interface ImageSource : KTDataSource
 {
 }
 

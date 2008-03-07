@@ -23,7 +23,6 @@
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDesignURLProtocol.h"
 #import "KTDocWindowController.h"
 #import "KTInfoWindowController.h"
@@ -433,7 +432,7 @@
 {
 	NSString *result = nil;
 	
-	KTDesign *design = [[[NSApp delegate] designManager] designForIdentifier:aDesignBundleIdentifier];
+	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
 	
 	result = [[self publishedSiteURL] stringByAppendingString:
 		[[design remotePath] stringByAppendingPathComponent:@"main.css"]];
@@ -462,7 +461,7 @@
 */
 - (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
 {
-	KTDesign *design = [[[NSApp delegate] designManager] designForIdentifier:aDesignBundleIdentifier];
+	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
 	return [design placeholderImagePath];
 }
 

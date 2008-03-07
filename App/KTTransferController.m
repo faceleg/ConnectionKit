@@ -64,7 +64,6 @@
 #import "KTPage.h"
 
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocument.h"
@@ -1432,7 +1431,7 @@ static NSArray *sReservedNames = nil;
 			// Record the app version published with
 			NSManagedObject *hostProperties = [[[self associatedDocument] documentInfo] valueForKey:@"hostProperties"];
 			[hostProperties setValue:[[NSBundle mainBundle] version] forKey:@"publishedAppVersion"];
-			[hostProperties setValue:[[NSBundle mainBundle] buildVersion] forKey:@"publishedAppBuildVersion"];
+			[hostProperties setValue:[NSString stringWithFormat:@"%d", [[NSBundle mainBundle] buildVersion]] forKey:@"publishedAppBuildVersion"];
 			
 			// Record the version of the designs that were published
 			NSSet *publishedDesigns = [self uploadedDesigns];

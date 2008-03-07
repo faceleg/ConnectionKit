@@ -12,7 +12,6 @@
 #import "KTDocWindowController.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTMaster.h"
@@ -189,14 +188,12 @@ static NSDictionary *sContributorLinkAttributes = nil;
 
 - (NSArray *)designsToShow
 {
-	KTDesignManager *designManager = [[NSApp delegate] designManager];
-	return [designManager sortedDesigns];	// all visible designs
+	return [KTDesign pluginSortedArray];	// all visible designs
 }
 
 - (int) totalDesignCount
 {
-	KTDesignManager *designManager = [[NSApp delegate] designManager];
-	return [[designManager sortedDesigns] count];
+	return [[KTDesign pluginSortedArray] count];	// all visible designs
 }
 
 #pragma mark -

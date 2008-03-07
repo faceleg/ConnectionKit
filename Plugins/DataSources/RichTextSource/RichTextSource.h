@@ -36,7 +36,7 @@
 
 #import <SandvoxPlugin.h>
 
-@interface RichTextSource : KTAbstractDataSource
+@interface RichTextSource : KTDataSource
 {
 
 }

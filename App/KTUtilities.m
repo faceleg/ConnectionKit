@@ -24,28 +24,24 @@
 
 #import "KTUtilities.h"
 
-#import "NSException+Karelia.h"
 
 #import "Debug.h"
 #import "KT.h"
-
-#import "KTAppPlugin.h"
-#import "KTAbstractHTMLPlugin.h"
 #import "KTAbstractElement.h"		// for the benefit of L'izedStringInKTComponents macro
+#import "KTAbstractHTMLPlugin.h"
 #import "KTManagedObjectContext.h"
-
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSError+Karelia.h"
+#import "NSException+Karelia.h"
 #import "NSString+Karelia.h"
-
+#import <Carbon/Carbon.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <IOKit/IOKitLib.h>
+#import <IOKit/network/IOEthernetController.h>
 #import <IOKit/network/IOEthernetInterface.h>
 #import <IOKit/network/IONetworkInterface.h>
-#import <IOKit/network/IOEthernetController.h>
-#import <Carbon/Carbon.h>
 #import <Security/Security.h>
 
 
@@ -152,119 +148,6 @@
 	return [model autorelease];
 }
 
-
-#pragma mark Plugin Management
-
-/*!	Get plug-ins of some given extension.
-	For the app wrapper, use the specified "sister directory" of the plug-ins path.
-	(If not specified, use the built-in plug-ins path.)
-	We also look in Application Support/Sandvox at all levels
-	and also, if the directory is specified, that subdir of the above, e.g. Application Support/Sandvox/Designs
-	It's optional to be in the specified sub-directory.
-
-	This is used for plugin bundles, but also for designs
-	As of 1.5, the returned objects are KTAppPlugins, not NSBundles
-*/
-+ (NSDictionary *)pluginsWithExtension:(NSString *)extension sisterDirectory:(NSString *)dirPath
-{
-    NSMutableDictionary *buffer = [NSMutableDictionary dictionary];
-    
-	float appVersion = [[[NSBundle mainBundle] version] floatVersion];
-    NSString *builtInPlugInsPath = [[NSBundle mainBundle] builtInPlugInsPath];
-    
-    if ( nil != dirPath & ![dirPath isEqualToString:@"Plugins"] )	// Sister directory of plugins?
-	{
-		// go up out of plug-ins, down into specified directory
-        builtInPlugInsPath = [[builtInPlugInsPath stringByDeletingLastPathComponent]
-			stringByAppendingPathComponent:dirPath];
-    }
-	else
-	{
-		dirPath = @"PlugIns";		// for looking in app support folder
-	}
-    
-	NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,NSAllDomainsMask,YES);
-	NSString *subDir = [NSString pathWithComponents:
-		[NSArray arrayWithObjects:[NSApplication applicationName], dirPath, nil]];
-		
-	// Add this sub-dir to each path, along with just the path without the subdir
-	NSEnumerator *theEnum = [libraryPaths objectEnumerator];
-	NSString *libraryPath;
-	NSMutableArray *paths = [NSMutableArray array];
-	
-	while (nil != (libraryPath = [theEnum nextObject]) )
-	{
-		[paths addObject:[libraryPath stringByAppendingPathComponent:subDir]];
-		[paths addObject:[libraryPath stringByAppendingPathComponent:[NSApplication applicationName]]];
-	}
-
-	// Add the app's built-in plug-in path too.
-	[paths addObject:builtInPlugInsPath];
-	
-	// Now go through each folder, backwards -- items in more local user
-	// folder override built-in ones.
-    NSEnumerator *pathsEnumerator = [paths reverseObjectEnumerator];
-    NSString *path;
-    
-    while ( path = [pathsEnumerator nextObject] ) {
-//		NSLog(@"Plugins Checking: %@ for *.%@", path, extension);
-        NSEnumerator *pluginsEnumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:path] objectEnumerator];
-        NSString *pluginName;
-        while (pluginName = [pluginsEnumerator nextObject])
-		{
-            NSString *pluginPath = [path stringByAppendingPathComponent:pluginName];
-            if ( [[pluginPath pathExtension] isEqualToString:extension] )
-			{
-                KTAbstractHTMLPlugin *plugin = [KTAppPlugin pluginWithPath:pluginPath];
-                if (plugin) 
-				{
-					NSString *identifier = [plugin identifier];
-					if (nil == identifier)
-					{
-						identifier = pluginName;
-					}
-					
-					// Only use an "override" if its version is >= the built-in version.
-					// This way, we can update the version with the app, and it supercedes any
-					// specially installed versions.
-					KTAppPlugin *alreadyInstalledPlugin = [buffer objectForKey:identifier];
-					if (nil != alreadyInstalledPlugin
-						|| [[[plugin bundle] version] floatVersion] >= [[alreadyInstalledPlugin version] floatVersion])
-					{
-						if (nil == [plugin minimumAppVersion]
-							|| [[plugin minimumAppVersion] floatVersion] <= appVersion)		// plugin's version must be less/equal than app version, not more!
-						{
-							[buffer setObject:plugin forKey:identifier];
-
-							if ([[NSUserDefaults standardUserDefaults] boolForKey:@"ShowSearchPaths"])
-							{
-								// ALWAYS show an override, regardless of preference, to help with support.  But don't do for DEBUG since it's just clutter to us!
-								NSLog(@"Found %@ in %@/", pluginName, [path stringByAbbreviatingWithTildeInPath]);
-							}
-						}
-						else
-						{
-							NSLog(@"Not loading %@, application version %@ is required",
-								  [[[plugin bundle] bundlePath] stringByAbbreviatingWithTildeInPath], [plugin minimumAppVersion]);
-						}
-					}
-                }
-            }
-        }
-    }
-    
-    if ( 0 == [buffer count] )
-	{
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"ShowSearchPaths"])
-		{
-			// Show item #1 in the list which is going to be the ~/Libary/Application Support/Sandvox SANS "PlugIns" or "Designs"?
-			NSLog(@"Searched for '.%@' plugins in %@/", extension, [[paths objectAtIndex:1] stringByAbbreviatingWithTildeInPath]);
-		}
-		return nil;
-    }
-    
-    return [NSDictionary dictionaryWithDictionary:buffer];
-}
 
 #pragma mark File Management
 

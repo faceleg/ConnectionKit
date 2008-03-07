@@ -8,12 +8,11 @@
 
 #import "KTPage.h"
 
+#import "BDAlias.h"
 #import "KTAbstractElement.h"
 #import "KTMediaContainer+Pasteboard.h"
 #import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
-
-#import "BDAlias.h"
 
 
 @interface KTPluginIDPasteboardRepresentation : NSObject <NSCoding>
@@ -183,7 +182,7 @@
 	
 	
 	// Create a basic page
-	KTPage *result = [self pageWithParent:parent bundle:nil insertIntoManagedObjectContext:(KTManagedObjectContext *)[parent managedObjectContext]];
+	KTPage *result = [self pageWithParent:parent plugin:nil insertIntoManagedObjectContext:(KTManagedObjectContext *)[parent managedObjectContext]];
 	
 	
 	// Set up our pagelets

@@ -5,17 +5,18 @@
 //  Copyright (c) 2004-2005 Biophony, LLC. All rights reserved.
 //
 
+
+
+#import "KT.h"
 #import "KTDesign.h"
-
 #import "KTImageScalingSettings.h"
-
 #import "KTStringRenderer.h"
-#import "NSString-Utilities.h"
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
-#import "NSString+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 
 
 @implementation KTDesign
@@ -37,13 +38,26 @@
 
 + (void)load
 {
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];
+	[self registerPluginClass:[self class] forFileExtension:kKTDesignExtension];
 }
 
-+ (KTDesign *)designWithBundle:(NSBundle *)bundle
+- (id)initWithBundle:(NSBundle *)bundle;
 {
-	[bundle loadLocalFonts];
-    return [[[self alloc] initWithBundle:bundle] autorelease];
+	if ((self = [super initWithBundle:bundle]) != nil) {
+		[bundle loadLocalFonts];			// load in the fonts
+	}
+	return self;
+}
+
++ (BOOL) validateBundle:(NSBundle *)aCandidateBundle;
+{
+	NSString *path = [aCandidateBundle pathForResource:@"main" ofType:@"css"];
+	BOOL result = (nil != path);
+	if (!result)
+	{
+		NSLog(@"Couldn't find main.css for %@, not enabling design", [aCandidateBundle bundlePath]);
+	}
+	return result;
 }
 
 #pragma mark -
@@ -69,19 +83,6 @@
 {
 	return nil;
 }
-
-- (NSString *)title
-{
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"title"];
-	if (nil == result)
-	{
-		// get it from the bundle name
-		result = [[[[self bundle] bundlePath] lastPathComponent] stringByDeletingPathExtension];
-	}
-	return result;
-}
-
-
 
 /*!	Generate a path to this design.  Remove white space, and append version string.
 	so Foo Bar Baz will look like FooBarBaz.1

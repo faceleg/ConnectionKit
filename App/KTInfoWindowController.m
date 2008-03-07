@@ -9,42 +9,31 @@
 #import "KTInfoWindowController.h"
 
 #import "Debug.h"
-
+#import "KSPathInfoField.h"
+#import "KSSmallDatePicker.h"
 #import "KT.h"
-#import "KTApplication.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
+#import "KTApplication.h"
 #import "KTDesign.h"
-
+#import "KTDocSiteOutlineController.h"
 #import "KTDocWindow.h"
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
-
-#import "KTPseudoElement.h"
+#import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
-#import "KTPluginInspectorViewsManager.h"
-#import "KTDocument.h"
+#import "KTMaster.h"
 #import "KTMediaManager.h"
-#import "KSPathInfoField.h"
-#import "KTStackView.h"
-
-#import "NSWorkspace+Karelia.h"
-#import "NSArray+Karelia.h"
-
-#import "NSBundle+Karelia.h"
-
-#import "KSSmallDatePicker.h"
-
-#import "NSString+Karelia.h"
-
 #import "KTPage.h"
 #import "KTPagelet.h"
-
-#import "ValuesAreEqualTransformer.h"
-
-#import "KTMaster.h"
+#import "KTPluginInspectorViewsManager.h"
+#import "KTPseudoElement.h"
+#import "KTStackView.h"
+#import "NSArray+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 #import "Registration.h"
+#import "ValuesAreEqualTransformer.h"
 
 enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
@@ -212,8 +201,8 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[[oIndexPopup itemAtIndex:0] setAction:@selector(changeIndexType:)];
 	[[oIndexPopup itemAtIndex:0] setTarget:self];
 
-	NSDictionary *indexPlugins = [[[NSApp delegate] bundleManager] pluginsOfType:kKTIndexExtension];
-	[[[NSApp delegate] bundleManager] addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
+	NSDictionary *indexPlugins = [KTIndexPlugin pluginDict];
+	[KTAbstractHTMLPlugin addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
 		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO];
 
 	[oCollectionStylePopup removeAllItems];
@@ -235,8 +224,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[[oCollectionStylePopup menu] addItem:[NSMenuItem separatorItem]];
 	
 	// Middle: All the presets
-	[[[NSApp delegate] bundleManager] addPresetPluginsOfType:kKTIndexExtension
-													  toMenu:[oCollectionStylePopup menu]
+	[KTIndexPlugin addPresetPluginsToMenu:[oCollectionStylePopup menu]
 													  target:self
 													  action:@selector(changeCollectionStyle:)
 												   pullsDown:NO
@@ -292,7 +280,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	{
 		NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 		
-		KTAbstractHTMLPlugin *plugin = [KTAppPlugin pluginWithIdentifier:identifier];
+		KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
 		NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
 		
 		@try
@@ -304,10 +292,10 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			
 			// Update the index menu "manually" since there's no bindings
 			NSString *indexIdentifier = [collection valueForKey:@"collectionIndexBundleIdentifier"];
-			KTAppPlugin *indexBundle = [[[NSApp delegate] bundleManager] pluginWithIdentifier:indexIdentifier];
-			[oIndexPopup selectItemAtIndex:(nil == indexBundle
+			KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:indexIdentifier];
+			[oIndexPopup selectItemAtIndex:(nil == indexPlugin
 				? 0
-				: [oIndexPopup indexOfItemWithRepresentedObject:indexBundle])];
+				: [oIndexPopup indexOfItemWithRepresentedObject:indexPlugin])];
 		}
 		@finally
 		{
@@ -619,7 +607,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			{
 				NSString *identifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
 				
-				KTAppPlugin *plugin = [[[NSApp delegate] bundleManager] pluginWithIdentifier:identifier];
+				KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
 				[oIndexPopup selectItemAtIndex:(nil == plugin
 												? 0 : 
 												[oIndexPopup indexOfItemWithRepresentedObject:plugin])];

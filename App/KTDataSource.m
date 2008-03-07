@@ -1,13 +1,14 @@
 //
-//  KTAbstractDataSource.m
+//  KTDataSource.m
 //  KTComponents
 //
 //  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
 //
 
-#import "KTAbstractDataSource.h"
+#import "KTDataSource.h"
 
 #import "Debug.h"
+#import "KT.h"
 #import "KTAppDelegate.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
@@ -17,20 +18,22 @@
 #import "Registration.h"
 #endif
 
-@interface NSObject ( Hack )
-- (NSArray *)dataSourceObjects;
-@end
 
-@implementation KTAbstractDataSource
+@implementation KTDataSource
+
++ (void)load
+{
+	[self registerPluginClass:[KTDataSource class] forFileExtension:kKTDataSourceExtension];
+}
 
 /*!	After the drag, clean up.... send message to all data source objects to let them clean up.  Called
 	after the last populateDictionary:... invocation.
 */
 + (void) doneProcessingDrag
 {
-    NSArray *dataSources = [[[NSApp delegate] bundleManager] dataSourceObjects];
+    NSDictionary *dataSources = [KTDataSource pluginDict];
     NSEnumerator  *e = [dataSources objectEnumerator];
-    KTAbstractDataSource *dataSource;
+    KTDataSource *dataSource;
 	
     while ( dataSource = [e nextObject] )
     {
@@ -51,9 +54,9 @@
 + (int) numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
 {
 	int result = 1;
-    NSArray *dataSources = [[[NSApp delegate] bundleManager] dataSourceObjects];
+    NSDictionary *dataSources = [KTDataSource pluginDict];
     NSEnumerator  *e = [dataSources objectEnumerator];
-    KTAbstractDataSource *dataSource;
+    KTDataSource *dataSource;
 		
     while ( dataSource = [e nextObject] )
     {
@@ -66,18 +69,18 @@
     return result;
 }
 
-+ (KTAbstractDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
++ (KTDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     NSArray *pboardTypes = [pboard types];
     NSSet *setOfTypes = [NSSet setWithArray:pboardTypes];
 	
-    NSArray *dataSources = [[[NSApp delegate] bundleManager] dataSourceObjects];
+    NSDictionary *dataSources = [KTDataSource pluginDict];
     NSEnumerator  *e = [dataSources objectEnumerator];
-    KTAbstractDataSource *dataSource;
+    KTDataSource *dataSource;
 	
-    KTAbstractDataSource *bestDataSource = nil;
-    KTAbstractDataSource *secondBestDataSource = nil;
+    KTDataSource *bestDataSource = nil;
+    KTDataSource *secondBestDataSource = nil;
 	int bestRating = 0;
    int secondBestRating = 0;
 	
@@ -154,6 +157,33 @@
 - (NSString *)pageletBundleIdentifier
 {
 	return nil;	// not defined unless overridden
+}
+
+
+/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
++ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet
+{
+    NSMutableSet *typesSet = [NSMutableSet setWithCapacity:10];
+	
+    NSEnumerator *e = [[self pluginDict] objectEnumerator];
+    id dataSource;
+	
+    while (dataSource = [e nextObject] )
+    {
+		NSArray *acceptedTypes = [dataSource acceptedDragTypesCreatingPagelet:isPagelet];
+		if (nil != acceptedTypes)
+		{
+			[typesSet addObjectsFromArray:acceptedTypes];
+		}
+    }
+	
+    return [NSSet setWithSet:typesSet];
+}
+
+/*! returns array of setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet */
++ (NSArray *)allDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet
+{
+    return [NSArray arrayWithArray:[[self setOfAllDragSourceAcceptedDragTypesForPagelets:isPagelet] allObjects]];
 }
 
 

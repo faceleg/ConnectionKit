@@ -25,9 +25,9 @@ TO DO:
 #import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
-
 #import "KTDocument.h"
+#import "KTElementPlugin.h"
+#import "KTIndexPlugin.h"
 #import "KTToolbars.h"
 #import "NSImage+KTExtensions.h"
 #import "NSImage+Karelia.h"
@@ -208,7 +208,7 @@ TO DO:
                     [myAddPagePopUpButton setShowsMenuWhenIconClicked:YES];
                     [[myAddPagePopUpButton cell] setToolbar:[[self window] toolbar]];
                     
-					[[[NSApp delegate] bundleManager] addPlugins:[[[NSApp delegate] bundleManager] pagePlugins]
+					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
 														  toMenu:[myAddPagePopUpButton menu]
 														  target:self
 														  action:@selector(addPage:)
@@ -221,7 +221,7 @@ TO DO:
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
 					
-					[[[NSApp delegate] bundleManager] addPlugins:[[[NSApp delegate] bundleManager] pagePlugins]
+					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
                                                                toMenu:menu
                                                                target:self
                                                                action:@selector(addPage:)
@@ -245,7 +245,7 @@ TO DO:
                     [myAddPageletPopUpButton setIconImage:image];
                     [myAddPageletPopUpButton setShowsMenuWhenIconClicked:YES];
                     [[myAddPageletPopUpButton cell] setToolbar:[[self window] toolbar]];
-                    [[[NSApp delegate] bundleManager] addPlugins:[[[NSApp delegate] bundleManager] pageletPlugins]
+                    [KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
                                                                toMenu:[myAddPageletPopUpButton menu]
                                                                target:self
                                                                action:@selector(addPagelet:)
@@ -257,7 +257,7 @@ TO DO:
 
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[[[NSApp delegate] bundleManager] addPlugins:[[[NSApp delegate] bundleManager] pageletPlugins]
+					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
                                                                toMenu:menu
                                                                target:self
                                                                action:@selector(addPagelet:)
@@ -282,8 +282,7 @@ TO DO:
                     [myAddCollectionPopUpButton setShowsMenuWhenIconClicked:YES];
                     [[myAddCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
 					
-                    [[[NSApp delegate] bundleManager]addPresetPluginsOfType:kKTIndexExtension
-                                                               toMenu:[myAddCollectionPopUpButton menu]
+                    [KTIndexPlugin addPresetPluginsToMenu:[myAddCollectionPopUpButton menu]
                                                                target:self
                                                                action:@selector(addCollection:)
                                                             pullsDown:YES
@@ -294,8 +293,7 @@ TO DO:
 			
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[[[NSApp delegate] bundleManager]addPresetPluginsOfType:kKTIndexExtension
-                                                               toMenu:menu
+					[KTIndexPlugin addPresetPluginsToMenu:menu
                                                                target:self
                                                                action:@selector(addCollection:)
                                                             pullsDown:NO

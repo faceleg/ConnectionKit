@@ -12,14 +12,12 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTManagedObjectContext.h"
 #import "KTMaster.h"
-
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -28,9 +26,9 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
-#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
-
+#import "NSString+Karelia.h"
+#import "KTIndexPlugin.h"
 
 @interface NSObject ( RichTextElementDelegateHack )
 - (NSString *)richTextHTML;
@@ -146,13 +144,13 @@
 	return root;
 }
 
-+ (KTPage *)pageWithParent:(KTPage *)aParent bundle:(NSBundle *)aBundle insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
++ (KTPage *)pageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {
-	NSParameterAssert(aParent);		NSParameterAssert([aBundle bundleIdentifier]);
+	NSParameterAssert(aParent);		NSParameterAssert([[aPlugin bundle] bundleIdentifier]);
 
 	// Create the page
 	id page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:aContext];
-	[page setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
+	[page setValue:[[aPlugin bundle] bundleIdentifier] forKey:@"pluginIdentifier"];
 	
 	
 	// Load properties from parent/sibling
@@ -186,10 +184,10 @@
 {
 	NSParameterAssert(nil != aParent);
 
-	NSBundle *bundle = [aDictionary objectForKey:kKTDataSourceBundle];
-	NSAssert((nil != bundle) && [bundle isKindOfClass:[NSBundle class]], @"drag dictionary does not have a real bundle");
+	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
+	NSAssert((nil != plugin), @"drag dictionary does not have a real plugin");
 	
-	id page = [self pageWithParent:aParent bundle:bundle insertIntoManagedObjectContext:aContext];
+	id page = [self pageWithParent:aParent plugin:plugin insertIntoManagedObjectContext:aContext];
 	
 	// anything else to do with the drag source dictionary other than to get the bundle?
 	// should the delegate be passed the dictionary and have an opportunity to use it?
@@ -242,7 +240,7 @@
 		NSString *identifier = [self valueForKey:@"collectionIndexBundleIdentifier"];
 		if (nil != identifier)
 		{
-			KTAbstractHTMLPlugin *plugin = (id)[[[NSApp delegate] bundleManager] pluginWithIdentifier:identifier];
+			KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
 			Class indexToAllocate = [NSBundle principalClassForBundle:[plugin bundle]];
 			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:plugin] autorelease];
 			[self setIndex:theIndex];

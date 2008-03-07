@@ -80,7 +80,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 #define CREATE_LINK_TOOLBARITEM_TITLE		NSLocalizedString(@"Create Link...", "Create Link... ToolbarItem")
 #define EDIT_LINK_TOOLBARITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... ToolbarItem")
 
-@class KTDocument, KTDocumentController, KTBundleManager, KTDesignManager, KTPrefsController, KTFeedbackReporter;
+@class KTDocument, KTDocumentController, KTPrefsController, KTFeedbackReporter;
 
 @interface KTAppDelegate : KSAppDelegate
 {
@@ -166,11 +166,9 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	NSPoint myCascadePoint;
 
     // ivars
-	KTDesignManager         *myDesignManager;
 	//KTDocument				*myCurrentDocument;
 	
 	KTDocumentController	*myDocumentController;
-	KTBundleManager         *myBundleManager;
 	
 
     BOOL applicationIsLaunching;
@@ -231,9 +229,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)toggleMediaBrowserShown:(id)sender;
 
 - (IBAction)reloadDebugTable:(id)sender;
-
-- (KTDesignManager *)designManager;
-- (KTBundleManager *)bundleManager;
 
 // methods to allow current document to update menus
 - (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;

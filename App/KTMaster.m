@@ -11,7 +11,6 @@
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
-#import "KTDesignManager.h"
 #import "KTDocument.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
@@ -147,7 +146,7 @@
 	if (!result)
 	{
 		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
-		result = [[[NSApp delegate] designManager] designForIdentifier:identifier];
+		result = [KTDesign pluginWithIdentifier:identifier];
 		[self setPrimitiveValue:result forKey:@"design"];
 	}
 	

@@ -17,11 +17,11 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTAbstractPage.h"
 
-#import "NSManagedObject+KTExtensions.h"
 #import "KT.h"
+#import "KTAbstractPage.h"
 #import "KTPagelet.h"
+#import "NSManagedObject+KTExtensions.h"
 
 
 @class KTDesign, KTAbstractHTMLPlugin;
@@ -41,7 +41,7 @@
 
 // Creation
 + (KTPage *)pageWithParent:(KTPage *)aParent 
-					bundle:(NSBundle *)aBundle insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;
+					plugin:(KTElementPlugin *)aPlugin insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;
 
 + (KTPage *)pageWithParent:(KTPage *)aParent
 	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;

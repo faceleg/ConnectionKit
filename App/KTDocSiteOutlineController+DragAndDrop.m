@@ -6,20 +6,20 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTDocSiteOutlineController.h"
 
 #import "Debug.h"
-#import "NSException+Karelia.h"
+#import "DOMNode+KTExtensions.h"
 #import "KT.h"
-#import "KTAppPlugin.h"
+#import "KTDataSource.h"
+#import "KTAppDelegate.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
-#import "KTPulsatingOverlay.h"
 #import "KTPage.h"
+#import "KTPulsatingOverlay.h"
 #import "NSArray+Karelia.h"
-#import "KTAbstractDataSource.h"
-#import "KTAppDelegate.h"
-#import "DOMNode+KTExtensions.h"
+#import "NSException+Karelia.h"
+#import "KTElementPlugin.h"
 
 
 @interface KTDocSiteOutlineController (DragAndDropPrivate)
@@ -413,7 +413,7 @@
 	
 	// do we have a good drag source?
 	/// check the *first* item in the list ... probably not perfect but it ought to do
-	KTAbstractDataSource *bestSource = [KTAbstractDataSource highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
+	KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
 	if ( nil != bestSource )
 	{
 		if ( NSOutlineViewDropOnItemIndex == anIndex )
@@ -473,7 +473,7 @@
 							NSString *bundleIdentifier = [bestSource pageBundleIdentifier];
 							if  ( nil != bundleIdentifier  )
 							{
-								id plugin = [[[NSApp delegate] bundleManager] pluginWithIdentifier:bundleIdentifier];
+								id plugin = [KTElementPlugin pluginWithIdentifier:bundleIdentifier];
 								if ( nil != plugin )
 								{
 									title = [plugin pluginPropertyForKey:@"KTPluginUntitledName"];
@@ -555,7 +555,7 @@
 		}
 		
 		// Done with that single pass process
-		[KTAbstractDataSource doneProcessingDrag];
+		[KTDataSource doneProcessingDrag];
 		
 	}
 	else

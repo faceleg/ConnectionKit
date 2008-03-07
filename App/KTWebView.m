@@ -30,14 +30,15 @@ TO DO:
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTBundleManager.h"
-#import "KTAppDelegate.h"
-#import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
-#import "NSString+Karelia.h"
-#import "KTAbstractDataSource.h"
-#import "KTPage.h"
+#import "KTDataSource.h"
 #import "KTAbstractPluginDelegate.h"
+#import "KTAppDelegate.h"
+#import "KTDocSiteOutlineController.h"
+#import "KTDocWindowController.h"
+#import "KTElementPlugin.h"
+#import "KTPage.h"
+#import "NSString+Karelia.h"
+
 
 @class ImageSource;
 
@@ -157,7 +158,7 @@ TO DO:
 - (void)registerForDraggedTypes:(NSArray *)newTypes
 {
 
-	NSMutableSet *collected = [NSMutableSet setWithSet:[[[NSApp delegate] bundleManager] setOfAllDragSourceAcceptedDragTypesForPagelets:YES]];
+	NSMutableSet *collected = [NSMutableSet setWithSet:[KTDataSource setOfAllDragSourceAcceptedDragTypesForPagelets:YES]];
 	[collected addObjectsFromArray:newTypes];
 
 	[super registerForDraggedTypes:[collected allObjects]];
@@ -326,7 +327,7 @@ TO DO:
 	// Not dragging into editable text; try to perform drag otherwise.
 
 	// Just handle first item for pagelet
-    KTAbstractDataSource *bestSource = [KTAbstractDataSource highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
+    KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
     if ( nil == bestSource )
 	{
 		return NO;
@@ -342,7 +343,7 @@ TO DO:
 	}
 	
 	// Done with the drag
-	[KTAbstractDataSource doneProcessingDrag];
+	[KTDataSource doneProcessingDrag];
 	
 	// If dragging into an image element, process it
 	KTDocWindowController *controller = ((KTDocWindowController *)[self UIDelegate]);
@@ -373,7 +374,7 @@ TO DO:
 	// Handle drag onto an image element
 	
 	if ([[bestSource className] isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
-		&& [[[draggedItem plugin] bundleIdentifier] isEqualToString:@"sandvox.ImageElement"])
+		&& [[[[draggedItem plugin] bundle]bundleIdentifier] isEqualToString:@"sandvox.ImageElement"])
 	{
 		LOG((@"Dragging into an image element"));
         [draggedItem willChangeValueForKey:@"media"];
@@ -485,10 +486,10 @@ TO DO:
 		return NO;
 	}
 
-	NSBundle *theBundle = [[[[NSApp delegate] bundleManager] pluginWithIdentifier:theBundleIdentifier] bundle];
-	if ( nil != theBundle )
+	KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
+	if ( nil != thePlugin )
 	{
-		[dragDataDictionary setObject:theBundle forKey:kKTDataSourceBundle];
+		[dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
 	}
 	else
 	{

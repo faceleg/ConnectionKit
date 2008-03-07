@@ -39,48 +39,43 @@
 #import "KTDocument.h"
 
 #import "Debug.h"
-#import "KT.h"
-#import "KTAppDelegate.h"
-
-#import "KTAppPlugin.h"
-#import "KTBundleManager.h"
-#import "KTElementPlugin.h"
-#import "KTIndexPlugin.h"
-
-#import "KTCodeInjectionController.h"
-
 #import "KSAbstractBugReporter.h"
-#import "KTDesignManager.h"
+#import "KSSilencingConfirmSheet.h"
+#import "KT.h"
+#import "KTAbstractIndex.h"
+#import "KTAppDelegate.h"
+#import "KTAppPlugin.h"
+#import "KTCodeInjectionController.h"
+#import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
+#import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
+#import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
+#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
+#import "KTPage.h"
 #import "KTStalenessManager.h"
 #import "KTTransferController.h"
 #import "KTUtilities.h"
-#import "NSBundle+Karelia.h"
-#import "KTAbstractIndex.h"
-#import "KSSilencingConfirmSheet.h"
-#import "KTManagedObjectContext.h"
-#import "KTPage.h"
+#import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSFileManager+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
-#import "NSFileManager+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
-#import "NSApplication+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "NSImage+Karelia.h"
-#import <iMediaBrowser/iMediaBrowser.h>
-
 #import "Registration.h"
+#import <iMediaBrowser/iMediaBrowser.h>
 
 //#import "KTUndoManager.h"
 
@@ -204,8 +199,8 @@
 	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
 	[savePanel setAccessoryView:oNewDocAccessoryView];
 	
-	NSSet *pagePlugins = [[[NSApp delegate] bundleManager] pagePlugins];
-	[[[NSApp delegate] bundleManager] addPlugins:pagePlugins
+	NSSet *pagePlugins = [KTElementPlugin pagePlugins];
+	[KTAbstractHTMLPlugin addPlugins:pagePlugins
 									      toMenu:[oNewDocHomePageTypePopup menu]
 									      target:nil
 									      action:nil
@@ -309,7 +304,7 @@
 		[root setValue:master forKey:@"master"];
 		
 		// Set the design
-		KTDesign *design = [[[[NSApp delegate] designManager] sortedDesigns] firstObject];
+		KTDesign *design = [[KTDesign pluginSortedArray] firstObject];
 		[master setDesign:design];		
 
 		// set up root properties that used to come from document defaults
@@ -344,7 +339,7 @@
 		NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
 		if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
 		{
-			KTElementPlugin *badgePlugin = [KTAppPlugin pluginWithIdentifier:initialBadgeBundleID];
+			KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
 			if (badgePlugin)
 			{
 				KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
@@ -355,13 +350,14 @@
 		NSString *defaultRootIndexIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultRootIndexBundleIdentifier"];
 		if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
 		{
-			NSBundle *bundle = [[KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier] bundle];
-			if (nil != bundle)
+			KTAbstractHTMLPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier];
+			if (nil != plugin)
 			{
+				NSBundle *bundle = [plugin bundle];
 				[root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
 				
 				Class indexToAllocate = [NSBundle principalClassForBundle:bundle];
-				KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:[KTAppPlugin pluginWithBundle:bundle]] autorelease];
+				KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:plugin] autorelease];
 				[root setIndex:theIndex];
 			}
 		}

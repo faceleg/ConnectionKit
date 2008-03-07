@@ -18,4 +18,7 @@
 - (NSString *)pageCSSClassName;
 - (NSString *)pageletCSSClassName;
 
++ (NSSet *)pageletPlugins;
++ (NSSet *)pagePlugins;
+
 @end

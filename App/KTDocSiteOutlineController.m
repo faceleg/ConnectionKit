@@ -11,21 +11,19 @@
 #import "Debug.h"
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
-#import "KTDocument.h"
+#import "KTDataSource.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
+#import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-
 #import "NSAttributedString+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSString+Karelia.h"
-
 
 #define LARGE_ICON_CELL_HEIGHT	34.00
 #define SMALL_ICON_CELL_HEIGHT	17.00
@@ -159,7 +157,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[[self siteOutline] setIntercellSpacing:NSMakeSize(3.0, 1.0)];
 	
 	// set drag types and mask
-	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[[[NSApp delegate] bundleManager] allDragSourceAcceptedDragTypesForPagelets:NO]];
+	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[KTDataSource allDragSourceAcceptedDragTypesForPagelets:NO]];
 	[dragTypes addObject:kKTOutlineDraggingPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardType];
 	[[self siteOutline] registerForDraggedTypes:dragTypes];

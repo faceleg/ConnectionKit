@@ -26,7 +26,6 @@
 // defines/enums used throughout Sandvox
 #import "KT.h"
 
-#import "KTBundleManager.h"
 #import "KTDocument.h"
 
 // debugging
@@ -59,7 +58,7 @@
 #import "KTMediaManager.h"
 
 // abstract superclass of all data sources (drag-and-drop external sources)
-#import "KTAbstractDataSource.h"
+#import "KTDataSource.h"
 
 // abstract superclass of all indexes
 #import "KTAbstractIndex.h"

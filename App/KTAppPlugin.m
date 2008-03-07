@@ -12,8 +12,6 @@
 
 @implementation KTAppPlugin
 
-#pragma mark -
-#pragma mark Accessors
 
 
 @end

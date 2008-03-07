@@ -1,5 +1,5 @@
 //
-//  KTAbstractDataSource.h
+//  KTDataSource.h
 //  KTComponents
 //
 //  Copyright (c) 2004-2006, Karelia Software. All rights reserved.
@@ -20,6 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 #import "KTAbstractElement.h"
+#import "KTAppPlugin.h"
 
 // Priority
 typedef enum { 
@@ -34,12 +35,20 @@ typedef enum {
 
 @class KTAbstractElement;
 
-@interface KTAbstractDataSource : NSObject
+@interface KTDataSource : KTAppPlugin
 {
     
 }
 
-+ (KTAbstractDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
+
+/*! returns array of setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet */
++ (NSArray *)allDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
+
+/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
++ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
+
+
++ (KTDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
 + (int) numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
 + (void) doneProcessingDrag;
 - (void) doneProcessingDrag;

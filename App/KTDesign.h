@@ -19,13 +19,9 @@
 	NSSet	*myResourceFiles;
 }
 
-
-+ (KTDesign *)designWithBundle:(NSBundle *)bundle;
-
 - (int)numberOfSubDesigns;
 - (NSArray *)subDesigns;
 
-- (NSString *)title;
 - (NSString *)remotePath;
 - (NSString *)contributor;		// externally visible author's name, shows up in design chooser
 - (NSURL *)URL;

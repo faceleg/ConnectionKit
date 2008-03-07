@@ -24,68 +24,58 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	x
  */
 
-#import "KTAppDelegate.h"
-
-#import "Debug.h"
 #import "BDAlias.h"
+#import "Debug.h"
+#import "KSEmailAddressComboBox.h"
+#import "KSPluginInstallerController.h"
+#import "KSRegistrationController.h"
+#import "KSSilencingConfirmSheet.h"
+#import "KSUtilities.h"
 #import "KT.h"
+#import "KTDataSource.h"
 #import "KTAcknowledgmentsController.h"
+#import "KTAppDelegate.h"
 #import "KTApplication.h"
-#import "KTDesignManager.h"
-#import "KTBundleManager.h"
+#import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTDocumentController.h"
+#import "KTElementPlugin.h"
 #import "KTHostSetupController.h"
+#import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
+#import "KTMediaManager.h"
+#import "KTPage.h"
 #import "KTPlaceholderController.h"
 #import "KTPrefsController.h"
 #import "KTQuickStartController.h"
-#import "KSRegistrationController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
+#import "KTUtilities.h"
 #import "KTWebView.h"
-#import "KSUtilities.h"
+#import "NSApplication+Karelia.h"
+#import "NSArray+KTExtensions.h"
+#import "NSBundle+Karelia.h"
+#import "NSDate+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSException+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-#import "NSError+Karelia.h"
-#import "NSArray+KTExtensions.h"
+#import "NSToolbar+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
+#import <ExceptionHandling/NSExceptionHandler.h>
 #import <OpenGL/CGLMacro.h>
 #import <Quartz/Quartz.h>
 #import <QuartzCore/QuartzCore.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMediaBrowser/iMediaBrowser.h>
-#import <ExceptionHandling/NSExceptionHandler.h>
-#import "KSPluginInstallerController.h"
-
-
-#import "KSEmailAddressComboBox.h"
-#import "KSSilencingConfirmSheet.h"
-#import "KTUtilities.h"
-
-#import "KTMediaManager.h"
-#import "NSWorkspace+Karelia.h"
-#import "NSBundle+Karelia.h"
-#import "NSDate+Karelia.h"
-
-#import "NSApplication+Karelia.h"
-#import "KTPage.h"
-
-#import "NSToolbar+Karelia.h"
-
-// ? #import </usr/include/objc/objc-class.h>
-// ? #import </usr/include/objc/Protocol.h>
-
-
-
 
 
 // NSLocalizedString(@"Comment", "String_On_Page_Template -- text for link on a blog posting")
@@ -171,11 +161,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void) addToFeedbackReport:(NSMutableDictionary *)report
 {
 	//  additionalPlugins
-	NSString *plugins = [[self bundleManager] pluginReportShowingAll:NO];
+	NSString *plugins = [KTAbstractHTMLPlugin pluginReportShowingAll:NO];
 	[report setValue:plugins forKey:@"additionalPlugins"];
 	
 	//  additionalDesigns
-	NSString *designs = [[self designManager] designReportShowingAll:NO];
+	NSString *designs = [KTDesign pluginReportShowingAll:NO];
 	[report setValue:designs forKey:@"additionalDesigns"];
 
 	NSString *urlString = [[self currentDocument] publishedSiteURL];
@@ -543,13 +533,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
     {
 
 		// fire up a components manager and discover our components
-        myBundleManager = [[KTBundleManager allocWithZone:[self zone]] init];
 
 		// force webkit to load so we can log the version early
 		(void) [[WebPreferences standardPreferences] setAutosaves:YES];
 
         // fire up a designs manager and discover our designs
-		myDesignManager = [[KTDesignManager allocWithZone:[self zone]] init];
 		myCascadePoint = NSMakePoint(100, 100);
 
         applicationIsLaunching = YES;
@@ -562,10 +550,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)dealloc
 {
-	[myDesignManager release]; myDesignManager = nil;
-	
-	[myBundleManager release]; myBundleManager = nil;
-
 	[myDocumentController release]; myDocumentController = nil;
 
 #ifdef OBSERVE_UNDO
@@ -1041,26 +1025,21 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		// load plugins
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-Ins...",
                                                                       "Message while loading plugins.")];
-		[myBundleManager loadAllPluginClassesOfType:kKTPageExtension instantiate:NO];
-		[myBundleManager loadAllPluginClassesOfType:kKTIndexExtension instantiate:NO];
-		[myBundleManager loadAllPluginClassesOfType:kKTDataSourceExtension instantiate:NO];
-
 		// build menus
-		[myBundleManager addPlugins:[myBundleManager pagePlugins]
+		[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
 								   toMenu:oAddPageMenu
 								   target:nil
 								   action:@selector(addPage:)
 								pullsDown:NO
 								showIcons:YES];
-		[myBundleManager addPlugins:[myBundleManager pageletPlugins]
+		[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
 								   toMenu:oAddPageletMenu
 								   target:nil
 								   action:@selector(addPagelet:)
 								pullsDown:NO
 								showIcons:YES];
 		
-		[myBundleManager addPresetPluginsOfType:kKTIndexExtension
-										 toMenu:oAddCollectionMenu
+		[KTIndexPlugin addPresetPluginsToMenu:oAddCollectionMenu
 										 target:nil
 										 action:@selector(addCollection:)
 									  pullsDown:NO
@@ -1315,6 +1294,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	[iMediaBrowser class];	// force imedia browser to load just so we can get RBSplitView loaded
 	
+	
+	// Load all the app's known plugins
+//		NSSet *extensionsToCheck = [NSSet setWithObjects:kKTPageletExtension, kKTPageExtension,
+//									kKTIndexExtension, kKTElementExtension, kKTDataSourceExtension, nil];
+//		NSEnumerator *extensionsEnumerator = [extensionsToCheck objectEnumerator];
+//		NSString *extension;
+		
+//		while (extension = [extensionsEnumerator nextObject])
+//		{
+//			(void) [KTAppPlugin pluginsWithExtension:extension sisterDirectory:@"Plugins"];
+//		}	
+	
 	// create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
 	
@@ -1527,12 +1518,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void)setAppIsTerminating:(BOOL)aFlag
 {
 	myAppIsTerminating = aFlag;
-}
-
-- (KTBundleManager *)bundleManager
-{
-	OBPOSTCONDITION(myBundleManager);
-    return myBundleManager;
 }
 
 #pragma mark -
@@ -1840,12 +1825,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	return !prefersPNG;
 }
 
-- (KTDesignManager *)designManager
-{
-	OBPOSTCONDITION(myDesignManager);
-	return myDesignManager;
-}
-
 //- (BOOL)shouldAutosave
 //{
 //	//return [[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"];
@@ -1921,25 +1900,21 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
-	[self showDebugTableForObject:[myDesignManager designs]
+	[self showDebugTableForObject:[KTDesign pluginDict]
                            titled:@"Designs"];
 }
 
 
 - (IBAction)showAvailableComponents:(id)sender
 {
-	KTBundleManager *components = [self bundleManager];
-
-	[self showDebugTableForObject:[components pluginsOfType:kKTPageExtension]
-                           titled:@"Available Components: Page Bundles"];
-	[self showDebugTableForObject:[components pluginsOfType:kKTElementExtension]
-                           titled:@"Available Components: Page Element Bundles"];
-	[self showDebugTableForObject:[components pluginsOfType:kKTPageletExtension]
-                           titled:@"Available Components: Pagelet Bundles"];
-	[self showDebugTableForObject:[components pluginsOfType:kKTIndexExtension]
+	[self showDebugTableForObject:[KTElementPlugin pluginDict]
+                           titled:@"Available Components: Element Bundles"];
+	[self showDebugTableForObject:[KTIndexPlugin pluginDict]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[components pluginsOfType:kKTDataSourceExtension]
+	[self showDebugTableForObject:[KTDataSource pluginDict]
                            titled:@"Available Components: Data Source Bundles"];
+	[self showDebugTableForObject:[KTDesign pluginDict]
+                           titled:@"Available Components: Design Bundles"];
 }
 
 #pragma mark -

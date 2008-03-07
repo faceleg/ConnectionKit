@@ -10,7 +10,6 @@
 #import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
@@ -22,7 +21,6 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-
 
 #ifdef APP_RELEASE
 #import "Registration.h"
@@ -85,8 +83,7 @@
 
 + (KTPagelet *)pageletWithPage:(KTPage *)aPage dataSourceDictionary:(NSDictionary *)aDictionary
 {
-	NSBundle *bundle = [aDictionary objectForKey:kKTDataSourceBundle];
-	KTElementPlugin *plugin = [KTElementPlugin pluginWithBundle:bundle];
+	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
 	
 	KTPagelet *pagelet = [self pageletWithPage:aPage plugin:plugin];
 	[pagelet awakeFromDragWithDictionary:aDictionary];

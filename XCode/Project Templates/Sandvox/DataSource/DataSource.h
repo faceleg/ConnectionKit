@@ -10,7 +10,7 @@
 #import <KTComponents.h>
 
 
-@interface «PROJECTNAME» : KTAbstractDataSource 
+@interface «PROJECTNAME» : KTDataSource 
 {
 
 }

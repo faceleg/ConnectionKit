@@ -26,7 +26,6 @@ TO DO:
 #import "KTDocument.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTBundleManager.h"
 #import "Debug.h"
 
 @implementation KTDocument ( Bindings )

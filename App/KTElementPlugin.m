@@ -7,13 +7,14 @@
 //
 
 #import "KTElementPlugin.h"
+#import "KT.h"
 
 
 @implementation KTElementPlugin
 
 + (void)load
 {
-	[KTAppPlugin registerPluginClass:[self class] forFileExtension:@"svxElement"];
+	[self registerPluginClass:[self class] forFileExtension:kKTElementExtension];
 }
 
 #pragma mark -
@@ -94,5 +95,64 @@
 	NSString *result = [[self CSSClassName] stringByAppendingString:@"-pagelet"];
 	return result;
 }
+
+
+#pragma mark -
+#pragma mark Plugins List
+
+/*	Returns all registered plugins that are either:
+ *		A) Of the svxPage plugin type
+ *		B) Of the svxElement plugin type and support page usage
+ */
++ (NSSet *)pagePlugins
+{
+	NSDictionary *pluginDict = [KTElementPlugin pluginDict];
+	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
+	
+	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
+	KTAppPlugin *aPlugin;
+	while (aPlugin = [pluginsEnumerator nextObject])
+	{
+		NSString *pluginType = [aPlugin pluginType];
+		if ([pluginType isEqualToString:kKTPageExtension] ||
+			([pluginType isEqualToString:kKTElementExtension] &&
+			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
+			)
+		{
+			[buffer addObject:aPlugin];
+		}
+	}
+	
+	NSSet *result = [NSSet setWithSet:buffer];
+	return result;
+}
+
+/*	Returns all registered plugins that are either:
+ *		A) Of the svxPagelet plugin type
+ *		B) Of the svxElement plugin type and support pagelet usage
+ */
++ (NSSet *)pageletPlugins
+{
+	NSDictionary *pluginDict = [KTElementPlugin pluginDict];
+	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
+	
+	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
+	KTAppPlugin *aPlugin;
+	while (aPlugin = [pluginsEnumerator nextObject])
+	{
+		NSString *pluginType = [aPlugin pluginType];
+		if ([pluginType isEqualToString:kKTPageletExtension] ||
+			([pluginType isEqualToString:kKTElementExtension] &&
+			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
+			)
+		{
+			[buffer addObject:aPlugin];
+		}
+	}
+	
+	NSSet *result = [NSSet setWithSet:buffer];
+	return result;
+}
+
 
 @end

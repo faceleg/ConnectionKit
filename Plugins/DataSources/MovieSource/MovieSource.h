@@ -37,7 +37,7 @@
 #import <SandvoxPlugin.h>
 
 
-@interface MovieSource : KTAbstractDataSource
+@interface MovieSource : KTDataSource
 {
 
 }
