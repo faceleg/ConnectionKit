@@ -96,6 +96,15 @@
 	return result;
 }
 
+/*
+ 
+ Maybe if I override this, I can easily get a list sorted by priority
+ 
+- (NSComparisonResult)compareTitles:(KSPlugin *)aPlugin;
+{
+	return [[self title] caseInsensitiveCompare:[aPlugin title]];
+}
+*/
 
 #pragma mark -
 #pragma mark Plugins List
@@ -113,9 +122,7 @@
 	KSPlugin *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
-		NSString *pluginType = [aPlugin pluginType];
-		if ([pluginType isEqualToString:kKTElementExtension] &&
-			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
+		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
 		{
 			[buffer addObject:aPlugin];
 		}
@@ -138,9 +145,7 @@
 	KSPlugin *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
-		NSString *pluginType = [aPlugin pluginType];
-		if ([pluginType isEqualToString:kKTElementExtension] &&
-			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
+		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
 		{
 			[buffer addObject:aPlugin];
 		}
