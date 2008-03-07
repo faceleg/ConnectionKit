@@ -1745,7 +1745,21 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// Ignore non-sandvox: URLs
 	if (![[URL scheme] isEqualToString:@"sandvox"]) return;
 	
-	
+	// Attempt to register a license command
+	NSString *URLResource = [URL resourceSpecifier];
+	if ([URLResource hasPrefix:@"license/"])
+	{
+		NSArray *pathComponents = [URLResource pathComponents];
+		if (!pathComponents || [pathComponents count] != 2) return;
+		
+		NSString *encodedLicenseKey = [pathComponents objectAtIndex:1];
+		NSString *licenseKey = [encodedLicenseKey stringByReplacing:@"_" with:@" "];
+		
+		if (licenseKey && ![licenseKey isEqualToString:@""])
+		{
+			[[KSRegistrationController sharedController] licenseCodeFromURL:licenseKey];
+		}
+	}
 }
 
 #pragma mark -
