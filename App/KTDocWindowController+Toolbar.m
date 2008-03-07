@@ -208,12 +208,12 @@ TO DO:
                     [myAddPagePopUpButton setShowsMenuWhenIconClicked:YES];
                     [[myAddPagePopUpButton cell] setToolbar:[[self window] toolbar]];
                     
-					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
-														  toMenu:[myAddPagePopUpButton menu]
-														  target:self
-														  action:@selector(addPage:)
-													   pullsDown:YES
-													   showIcons:YES];
+					[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
+										 toMenu:[myAddPagePopUpButton menu]
+										 target:self
+										 action:@selector(addPage:)
+									  pullsDown:YES
+									  showIcons:YES];
                     [toolbarItem setView:myAddPagePopUpButton];
                     [toolbarItem setMinSize:[[myAddPagePopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddPagePopUpButton cell] maximumSize]];
@@ -221,12 +221,12 @@ TO DO:
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
 					
-					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
-                                                               toMenu:menu
-                                                               target:self
-                                                               action:@selector(addPage:)
-                                                            pullsDown:NO
-															showIcons:NO];
+					[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
+										 toMenu:menu
+										 target:self
+										 action:@selector(addPage:)
+									  pullsDown:NO
+									  showIcons:NO];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];

@@ -1026,24 +1026,24 @@ IMPLEMENTATION NOTES & CAUTIONS:
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-Ins...",
                                                                       "Message while loading plugins.")];
 		// build menus
-		[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pagePlugins]
-								   toMenu:oAddPageMenu
-								   target:nil
-								   action:@selector(addPage:)
-								pullsDown:NO
-								showIcons:YES];
-		[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
-								   toMenu:oAddPageletMenu
-								   target:nil
-								   action:@selector(addPagelet:)
-								pullsDown:NO
-								showIcons:YES];
+		[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
+							 toMenu:oAddPageMenu
+							 target:nil
+							 action:@selector(addPage:)
+						  pullsDown:NO
+						  showIcons:YES];
+		[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+							 toMenu:oAddPageletMenu
+							 target:nil
+							 action:@selector(addPagelet:)
+						  pullsDown:NO
+						  showIcons:YES];
 		
 		[KTIndexPlugin addPresetPluginsToMenu:oAddCollectionMenu
-										 target:nil
-										 action:@selector(addCollection:)
-									  pullsDown:NO
-									  showIcons:YES];
+									   target:nil
+									   action:@selector(addCollection:)
+									pullsDown:NO
+									showIcons:YES];
 		
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Building Menus...",
                                                                       "Message while building menus.")];

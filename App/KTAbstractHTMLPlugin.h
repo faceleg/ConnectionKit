@@ -21,12 +21,4 @@
 - (NSString *)CSSClassName;
 - (NSString *)templateHTMLAsString;
 
-+ (void)addPlugins:(NSSet *)plugins
-		    toMenu:(NSMenu *)aMenu
-		    target:(id)aTarget
-		    action:(SEL)anAction
-	     pullsDown:(BOOL)isPullDown
-	     showIcons:(BOOL)showIcons;
-
-
 @end
