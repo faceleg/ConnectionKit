@@ -458,17 +458,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 				aNode = [it nextNode];
 			}
 		}
-		
-		
-		if (result)
-		{
-			// If the insertion is from drag and drop, select the range that will be pasted into.
-			// This may mean the editing block changes. If so our other code will take care of that.
-			if (action == WebViewInsertActionDropped)
-			{
-				[aWebView setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
-			}
-		}	
 	}
 	
 	
