@@ -200,12 +200,12 @@
 	[savePanel setAccessoryView:oNewDocAccessoryView];
 	
 	NSSet *pagePlugins = [KTElementPlugin pagePlugins];
-	[KTAbstractHTMLPlugin addPlugins:pagePlugins
-									      toMenu:[oNewDocHomePageTypePopup menu]
-									      target:nil
-									      action:nil
-									   pullsDown:NO
-									   showIcons:NO];
+	[KTElementPlugin addPlugins:pagePlugins
+						 toMenu:[oNewDocHomePageTypePopup menu]
+						 target:nil
+						 action:nil
+					  pullsDown:NO
+					  showIcons:NO];
 	
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {
