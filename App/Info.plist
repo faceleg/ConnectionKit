@@ -171,6 +171,17 @@
 	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>sandvox</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sandvox</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KTConnectionVersion</key>
