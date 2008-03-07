@@ -18,7 +18,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
 #import "KTWebViewComponent.h"
 
 typedef enum {
@@ -26,7 +25,6 @@ typedef enum {
 	KTNavigationArrowsStyleGraphical,
 	KTNavigationArrowsStyleText,
 } KTNavigationArrowsStyle;
-
 
 @class KTPage, KTAbstractHTMLPlugin;
 
