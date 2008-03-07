@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAppPlugin.h"
+#import "KSPlugin.h"
 
 
-@interface KTAbstractHTMLPlugin : KTAppPlugin
+@interface KTAbstractHTMLPlugin : KSPlugin
 {
 	NSImage *myIcon;
 	NSString *myTemplateHTML;

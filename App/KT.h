@@ -108,8 +108,6 @@ extern NSString *kKTPagePathURLScheme;
 extern NSString *kKTIndexExtension;
 extern NSString *kKTDataSourceExtension;
 extern NSString *kKTElementExtension;
-extern NSString *kKTPageExtension;
-extern NSString *kKTPageletExtension;
 extern NSString *kKTDesignExtension;
 
 extern NSString *kKTSourceMediaDirectory;

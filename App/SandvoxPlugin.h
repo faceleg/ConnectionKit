@@ -43,7 +43,6 @@
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
-#import "KTAppPlugin.h"
 #import "KTAbstractHTMLPlugin.h"
 #import "KTIndexPlugin.h"
 

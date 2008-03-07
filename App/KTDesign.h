@@ -6,13 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KTAppPlugin.h"
+#import "KSPlugin.h"
 
 
 @class KTImageScalingSettings;
 
 
-@interface KTDesign : KTAppPlugin
+@interface KTDesign : KSPlugin
 {
     @protected
     NSImage *myThumbnail;

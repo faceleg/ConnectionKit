@@ -260,8 +260,6 @@
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
-		27E31B5F0D4B748700895DA1 /* KTAppPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27E31B600D4B748700895DA1 /* KTAppPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31B5E0D4B748700895DA1 /* KTAppPlugin.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */; };
 		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
@@ -1715,8 +1713,6 @@
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
-		27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppPlugin.h; sourceTree = "<group>"; };
-		27E31B5E0D4B748700895DA1 /* KTAppPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAppPlugin.m; sourceTree = "<group>"; };
 		27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractHTMLPlugin.h; sourceTree = "<group>"; };
 		27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractHTMLPlugin.m; sourceTree = "<group>"; };
 		27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugin.h; sourceTree = "<group>"; };
@@ -2871,8 +2867,6 @@
 			children = (
 				CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */,
 				CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */,
-				27E31B5D0D4B748700895DA1 /* KTAppPlugin.h */,
-				27E31B5E0D4B748700895DA1 /* KTAppPlugin.m */,
 				27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */,
 				27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */,
 				27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */,
@@ -4497,7 +4491,6 @@
 				270A41F70D46B6F9002E998A /* KTScaledImageProperties.h in Headers */,
 				272321320D48013F0075F31F /* KTDocWebViewController+Private.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
-				27E31B5F0D4B748700895DA1 /* KTAppPlugin.h in Headers */,
 				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
 				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
 				27ACA2DC0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h in Headers */,
@@ -5784,7 +5777,6 @@
 				270A41F80D46B6F9002E998A /* KTScaledImageProperties.m in Sources */,
 				272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */,
 				272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */,
-				27E31B600D4B748700895DA1 /* KTAppPlugin.m in Sources */,
 				27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */,
 				27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */,
 				273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */,

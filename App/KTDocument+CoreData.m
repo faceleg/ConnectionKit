@@ -13,7 +13,7 @@
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTAppDelegate.h"
-#import "KTAppPlugin.h"
+#import "KSPlugin.h"
 #import "KTDocumentController.h"
 #import "KTDocumentInfo.h"
 #import "KTDocWebViewController.h"
@@ -168,7 +168,7 @@
                 NSString *bundleIdentifier;
                 while ( bundleIdentifier  = [e nextObject] )
                 {
-                    NSBundle *bundle = [[KTAppPlugin pluginWithIdentifier:bundleIdentifier] bundle];
+                    NSBundle *bundle = [[KSPlugin pluginWithIdentifier:bundleIdentifier] bundle];
                     if ( nil != bundle )
                     {
                         // NB: bundles without delegates may not have a principal class

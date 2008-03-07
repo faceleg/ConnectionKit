@@ -44,7 +44,7 @@
 #import "KT.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
-#import "KTAppPlugin.h"
+#import "KSPlugin.h"
 #import "KTCodeInjectionController.h"
 #import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"

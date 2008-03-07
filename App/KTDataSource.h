@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 #import "KTAbstractElement.h"
-#import "KTAppPlugin.h"
+#import "KSPlugin.h"
 
 // Priority
 typedef enum { 
@@ -35,7 +35,7 @@ typedef enum {
 
 @class KTAbstractElement;
 
-@interface KTDataSource : KTAppPlugin
+@interface KTDataSource : KSPlugin
 {
     
 }

@@ -1294,18 +1294,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	[iMediaBrowser class];	// force imedia browser to load just so we can get RBSplitView loaded
 	
-	
-	// Load all the app's known plugins
-//		NSSet *extensionsToCheck = [NSSet setWithObjects:kKTPageletExtension, kKTPageExtension,
-//									kKTIndexExtension, kKTElementExtension, kKTDataSourceExtension, nil];
-//		NSEnumerator *extensionsEnumerator = [extensionsToCheck objectEnumerator];
-//		NSString *extension;
-		
-//		while (extension = [extensionsEnumerator nextObject])
-//		{
-//			(void) [KTAppPlugin pluginsWithExtension:extension sisterDirectory:@"Plugins"];
-//		}	
-	
 	// create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
 	

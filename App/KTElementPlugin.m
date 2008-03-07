@@ -110,14 +110,12 @@
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KTAppPlugin *aPlugin;
+	KSPlugin *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
 		NSString *pluginType = [aPlugin pluginType];
-		if ([pluginType isEqualToString:kKTPageExtension] ||
-			([pluginType isEqualToString:kKTElementExtension] &&
+		if ([pluginType isEqualToString:kKTElementExtension] &&
 			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
-			)
 		{
 			[buffer addObject:aPlugin];
 		}
@@ -137,14 +135,12 @@
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KTAppPlugin *aPlugin;
+	KSPlugin *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
 		NSString *pluginType = [aPlugin pluginType];
-		if ([pluginType isEqualToString:kKTPageletExtension] ||
-			([pluginType isEqualToString:kKTElementExtension] &&
+		if ([pluginType isEqualToString:kKTElementExtension] &&
 			 [[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
-			)
 		{
 			[buffer addObject:aPlugin];
 		}

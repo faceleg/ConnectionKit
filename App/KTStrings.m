@@ -70,8 +70,6 @@ NSString *kKTMediaNotFoundMediaName = @"KT_MediaNotFound_KT";
 NSString *kKTIndexExtension = @"svxIndex";
 NSString *kKTDataSourceExtension = @"svxDataSource";
 NSString *kKTElementExtension = @"svxElement";
-NSString *kKTPageExtension = @"svxPage";
-NSString *kKTPageletExtension = @"svxPagelet";
 NSString *kKTDesignExtension = @"svxDesign";
 
 // Notifications
