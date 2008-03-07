@@ -245,24 +245,26 @@ TO DO:
                     [myAddPageletPopUpButton setIconImage:image];
                     [myAddPageletPopUpButton setShowsMenuWhenIconClicked:YES];
                     [[myAddPageletPopUpButton cell] setToolbar:[[self window] toolbar]];
-                    [KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
-                                                               toMenu:[myAddPageletPopUpButton menu]
-                                                               target:self
-                                                               action:@selector(addPagelet:)
-                                                            pullsDown:YES
-															showIcons:YES];
-                    [toolbarItem setView:myAddPageletPopUpButton];
+                    
+					[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+									     toMenu:[myAddPageletPopUpButton menu]
+									     target:self
+									     action:@selector(addPagelet:)
+									  pullsDown:YES
+									  showIcons:YES];
+                    
+					[toolbarItem setView:myAddPageletPopUpButton];
                     [toolbarItem setMinSize:[[myAddPageletPopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddPageletPopUpButton cell] maximumSize]];
 
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[KTAbstractHTMLPlugin addPlugins:[KTElementPlugin pageletPlugins]
-                                                               toMenu:menu
-                                                               target:self
-                                                               action:@selector(addPagelet:)
-                                                            pullsDown:NO
-															showIcons:NO];
+					[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+									     toMenu:menu
+									     target:self
+									     action:@selector(addPagelet:)
+									  pullsDown:NO
+									  showIcons:NO];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];

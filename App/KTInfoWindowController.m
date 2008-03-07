@@ -202,7 +202,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[[oIndexPopup itemAtIndex:0] setTarget:self];
 
 	NSDictionary *indexPlugins = [KTIndexPlugin pluginDict];
-	[KTAbstractHTMLPlugin addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
+	[KTElementPlugin addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
 		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO];
 
 	[oCollectionStylePopup removeAllItems];
