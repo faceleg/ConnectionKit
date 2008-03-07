@@ -36,20 +36,14 @@
 		if (!object) object = [self component];
 		
 		
-		// Convert flags to CSS classnames. i.e. prepend "k" on each one.
-		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
-		NSMutableArray *flagClasses = [NSMutableArray arrayWithCapacity:[flags count]];
-		
-		NSEnumerator *flagsEnumerator = [flags objectEnumerator];
-		NSString *aFlag;
-		while (aFlag = [flagsEnumerator nextObject])
-		{
-			[flagClasses addObject:[NSString stringWithFormat:@"k%@", [aFlag capitalizedString]]];
-		}
+		// HTML tag
+		NSString *tag = [parameters objectForKey:@"tag"];
+		if (tag && ![tag isKindOfClass:[NSString class]]) tag = nil;
 		
 		
 		// Build the text block
-		result = [self textblockForKeyPath:textKeyPath ofObject:object flags:flagClasses];
+		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
+		result = [self textblockForKeyPath:textKeyPath ofObject:object flags:flags HTMLTag:tag];
 		if (!result) result = @"";
 	}
 	else
@@ -60,26 +54,29 @@
 	return result;
 }
 
-- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags
+- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags HTMLTag:(NSString *)tag
 {
-	// What database entity does this text correspond to?
-	NSString *pseudoEntity;
-	if ([object isKindOfClass:[NSManagedObject class]])
-	{
-		pseudoEntity = [[(NSManagedObject *)object entity] name];
-	}
-	else
-	{
-		pseudoEntity = NSStringFromClass([object class]);
-	}
-	if ([pseudoEntity isEqualToString:@"Root"]) pseudoEntity = @"Page";
+	// Build the text block
+	KTWebViewTextBlock *textBlock = [[KTWebViewTextBlock alloc] init];
+	
+	[textBlock setFieldEditor:[flags containsObject:@"line"]];
+	[textBlock setRichText:[flags containsObject:@"block"]];
+	[textBlock setImportsGraphics:[flags containsObject:@"imageable"]];
+	if (tag) [textBlock setHTMLTag:tag];
+	
+	[textBlock setHTMLSourceObject:object];
+	[textBlock setHTMLSourceKeyPath:keypath];
 	
 	
-	// Fetch the text content
-	NSString *text = [object valueForKeyPath:keypath];
-	if (!text) text = @"";
+	// Generate HTML
+	NSString *result = [textBlock outerHTML];
 	
 	
+	// Inform delegate
+	[self didParseTextBlock:textBlock];
+	[textBlock release];
+	
+	/*
 	// Process the text according to HTML generation purpose
 	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 	{
@@ -113,15 +110,8 @@
 		[buffer release];
 		[scanner release];
 	}
+	*/
 	
-	
-	// Construct the <div>
-	NSString *result = [NSString stringWithFormat:@"<div id=\"k-%@-%@-%@\" class=\"%@\">\r%@\r</div>",
-										pseudoEntity,
-										keypath,
-										[(KTAbstractElement *)[self component] uniqueID],
-										[flags componentsJoinedByString:@" "],
-										text];
 	
 	return result;
 }

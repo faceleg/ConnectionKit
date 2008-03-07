@@ -93,7 +93,7 @@
 
 
 @interface KTHTMLParser (Text)
-- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags;
+- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags HTMLTag:(NSString *)tag;
 @end
 
 

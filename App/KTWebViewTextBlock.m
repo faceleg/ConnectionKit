@@ -186,6 +186,8 @@
 
 - (void)setHTMLTag:(NSString *)tag
 {
+	NSParameterAssert(tag);
+	
 	tag = [tag copy];
 	[myHTMLTag release];
 	myHTMLTag = tag;
@@ -222,20 +224,32 @@
  */
 - (NSString *)outerHTML
 {
-	NSString *innerHTML = [self innerHTML];
-	
-	// Single-line text blocks make use of a <span> tag as well as the default
-	if ([self isFieldEditor])
-	{
-		innerHTML = [NSString stringWithFormat:@"<span class=\"in\">%@</span>", innerHTML];
-	}
-	
-	NSString *result = [NSString stringWithFormat:@"<%@ id=\"%@\">%@</%@>",
+	// All content should have kBlock or kLine as its class to keep processEditableElements happy
+	NSString *openingHTML = [NSString stringWithFormat:@"<%@ id=\"%@\" class=\"%@\">",
 												  [self HTMLTag],
 												  [self DOMNodeID],
-												  innerHTML,
-												  [self HTMLTag]];
+												  ([self isRichText]) ? @"kBlock" : @"kLine"];
 	
+	if ([self isFieldEditor])
+	{
+		openingHTML = [openingHTML stringByAppendingString:@"<span class=\"in\">"];
+	}
+	
+	
+	// Figure out closing tag
+	NSString *closingHTML;
+	if ([self isFieldEditor])
+	{
+		closingHTML = [NSString stringWithFormat:@"</span></%@>", [self HTMLTag]];
+	}
+	else
+	{
+		closingHTML = [NSString stringWithFormat:@"</%@>", [self HTMLTag]];
+	}
+	
+	
+	// Build complete HTML
+	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, [self innerHTML], closingHTML];
 	return result;
 }
 
