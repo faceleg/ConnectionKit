@@ -1757,7 +1757,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		if (licenseKey && ![licenseKey isEqualToString:@""])
 		{
-			[[KSRegistrationController sharedController] licenseCodeFromURL:licenseKey];
+			[[KSRegistrationController sharedController]
+				setRegisteredCode:licenseKey delegate:nil didRegisterSelector:nil contextInfo:NULL];
 		}
 	}
 }
