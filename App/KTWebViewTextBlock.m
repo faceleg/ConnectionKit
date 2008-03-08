@@ -14,8 +14,11 @@
 #import "DOMNode+KTExtensions.h"
 
 #import "KTDocWindowController.h"
+#import "KTMediaContainer.h"
+#import "KTAbstractMediaFile.h"
 #import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
+
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 
@@ -217,6 +220,44 @@
 - (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	
+	
+	// Perform additional processing of the text according to HTML generation purpose
+	if ([self importsGraphics] && purpose == kGeneratingQuickLookPreview)
+	{
+		// Convert media sources to quick-look compatible paths
+		NSScanner *scanner = [[NSScanner alloc] initWithString:result];
+		NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
+		NSString *aString;
+		
+		while (![scanner isAtEnd])
+		{
+			[scanner scanUpToString:@" src=\"" intoString:&aString];
+			[buffer appendString:aString];
+			if ([scanner isAtEnd]) break;
+			
+			[buffer appendString:@" src=\""];
+			[scanner setScanLocation:([scanner scanLocation] + 6)];
+			
+			[scanner scanUpToString:@"\"" intoString:&aString];
+			NSURL *aMediaURI = [NSURL URLWithString:aString];
+			KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+			if (mediaContainer)
+			{
+				[buffer appendString:[[mediaContainer file] quickLookPseudoTag]];
+			}
+			else
+			{
+				[buffer appendString:aString];
+			}
+		}
+		
+		result = [NSString stringWithString:buffer];
+		[buffer release];
+		[scanner release];
+	}
+	
+	
 	return result;
 }
 

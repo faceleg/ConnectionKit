@@ -76,42 +76,6 @@
 	[self didParseTextBlock:textBlock];
 	[textBlock release];
 	
-	/*
-	// Process the text according to HTML generation purpose
-	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
-	{
-		NSScanner *scanner = [[NSScanner alloc] initWithString:text];
-		NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[text length]];
-		NSString *aString;
-		
-		while (![scanner isAtEnd])
-		{
-			[scanner scanUpToString:@" src=\"" intoString:&aString];
-			[buffer appendString:aString];
-			if ([scanner isAtEnd]) break;
-			
-			[buffer appendString:@" src=\""];
-			[scanner setScanLocation:([scanner scanLocation] + 6)];
-			
-			[scanner scanUpToString:@"\"" intoString:&aString];
-			NSURL *aMediaURI = [NSURL URLWithString:aString];
-			KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
-			if (mediaContainer)
-			{
-				[buffer appendString:[[mediaContainer file] quickLookPseudoTag]];
-			}
-			else
-			{
-				[buffer appendString:aString];
-			}
-		}
-		
-		text = [NSString stringWithString:buffer];
-		[buffer release];
-		[scanner release];
-	}
-	*/
-	
 	
 	return result;
 }
