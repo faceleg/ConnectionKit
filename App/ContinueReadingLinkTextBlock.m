@@ -39,18 +39,18 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)outerHTML
+- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\r%@\r</span>",
 												  [self DOMNodeID],
-												  [self innerHTML]];
+												  [self innerHTML:purpose]];
 	
 	return result;
 }
 
 /*	Convert @@ to the page title
  */
-- (NSString *)innerHTML
+- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	NSString *contentFormat = [self innerEditingHTML];
 	NSString *result = [contentFormat stringByReplacing:@"@@" with:[[self targetPage] titleText]];
@@ -82,7 +82,7 @@
 	
 	if (result)
 	{
-		[[self DOMNode] setInnerHTML:[self innerHTML]];
+		[[self DOMNode] setInnerHTML:[self innerHTML:kGeneratingPreview]];
 	}
 	
 	return result;

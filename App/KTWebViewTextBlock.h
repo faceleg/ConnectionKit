@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "KTDocument.h"
+
 
 @class KTDocWebViewController;
 
@@ -32,7 +34,7 @@
 }
 
 + (KTWebViewTextBlock *)textBlockForDOMNode:(DOMNode *)node
-								  webViewController:(KTDocWebViewController *)webViewController;
+						  webViewController:(KTDocWebViewController *)webViewController;
 
 
 #pragma mark Accessors
@@ -61,8 +63,8 @@
 - (void)setHTMLSourceKeyPath:(NSString *)keyPath;
 
 #pragma mark HTML
-- (NSString *)innerHTML;
-- (NSString *)outerHTML;
+- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose;
+- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose;
 
 #pragma mark Editing
 

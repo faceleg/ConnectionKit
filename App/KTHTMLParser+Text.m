@@ -69,7 +69,7 @@
 	
 	
 	// Generate HTML
-	NSString *result = [textBlock outerHTML];
+	NSString *result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
 	
 	
 	// Inform delegate
@@ -138,7 +138,7 @@
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
 		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
-		result = [textBlock outerHTML];
+		result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
 		
 		[self didParseTextBlock:textBlock];
 		[textBlock release];

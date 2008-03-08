@@ -139,7 +139,7 @@
 	[textBlock setHTMLSourceObject:page];
 	[textBlock setHTMLSourceKeyPath:[page summaryHTMLKeyPath]];
 	
-	NSString *result = [textBlock innerHTML];
+	NSString *result = [textBlock innerHTML:kGeneratingPreview];
 	
 	
 	// Enclose the HTML in an editable div if it needs it

@@ -214,7 +214,7 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)innerHTML
+- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
 	return result;
@@ -222,7 +222,7 @@
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (NSString *)outerHTML
+- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	// All content should have kBlock or kLine as its class to keep processEditableElements happy
 	NSString *openingHTML = [NSString stringWithFormat:@"<%@ id=\"%@\" class=\"%@\">",
@@ -249,7 +249,7 @@
 	
 	
 	// Build complete HTML
-	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, [self innerHTML], closingHTML];
+	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, [self innerHTML:purpose], closingHTML];
 	return result;
 }
 
