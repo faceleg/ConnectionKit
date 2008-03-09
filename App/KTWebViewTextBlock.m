@@ -266,14 +266,20 @@
 - (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	// All content should have kBlock or kLine as its class to keep processEditableElements happy
-	NSString *openingHTML = [NSString stringWithFormat:@"<%@ id=\"%@\" class=\"%@\">",
-												  [self HTMLTag],
-												  [self DOMNodeID],
-												  ([self isRichText]) ? @"kBlock" : @"kLine"];
-	
+	NSString *openingHTML;
 	if ([self isFieldEditor])
 	{
-		openingHTML = [openingHTML stringByAppendingString:@"<span class=\"in\">"];
+		openingHTML = [NSString stringWithFormat:@"<%@><span id=\"%@\" class=\"in %@\">",
+												 [self HTMLTag],
+												 [self DOMNodeID],
+												 ([self isRichText]) ? @"kBlock" : @"kLine"];
+	}
+	else
+	{
+		openingHTML = [NSString stringWithFormat:@"<%@ id=\"%@\" class=\"%@\">",
+												 [self HTMLTag],
+												 [self DOMNodeID],
+												 ([self isRichText]) ? @"kBlock" : @"kLine"];
 	}
 	
 	
