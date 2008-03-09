@@ -220,6 +220,8 @@
 - (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	if (!result) result = @"";
+
 	
 	
 	// Perform additional processing of the text according to HTML generation purpose
@@ -265,6 +267,14 @@
  */
 - (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
 {
+	// When publishing, generate an empty string (or maybe nil) for empty text blocks
+	NSString *innerHTML = [self innerHTML:purpose];
+	if (purpose != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
+	{
+		return @"";
+	}
+	
+	
 	// All content should have kBlock or kLine as its class to keep processEditableElements happy
 	NSString *openingHTML;
 	if ([self isFieldEditor])
@@ -296,7 +306,7 @@
 	
 	
 	// Build complete HTML
-	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, [self innerHTML:purpose], closingHTML];
+	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, innerHTML, closingHTML];
 	return result;
 }
 
