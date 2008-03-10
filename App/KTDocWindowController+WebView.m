@@ -1661,48 +1661,25 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 // paste some raw HTML
 - (IBAction)pasteLink:(id)sender
 {
-	//    NSString *markup = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-	//    [oWebView replaceSelectionWithMarkupString:markup ? markup : @""];
-	
-	DOMRange *selectedRange = [oWebView selectedDOMRange];
-	BOOL emptySel = ([selectedRange startOffset] == [selectedRange endOffset]);
-	
 	NSArray *urls = nil;
 	NSArray *titles = nil;
 	[NSURL getURLs:&urls andTitles:&titles fromPasteboard:[NSPasteboard generalPasteboard]];
+	
 	if ([urls count])
 	{
-		NSURL *url = [urls objectAtIndex:0];
-		NSString *title = nil;
-		if ([titles count] && [NSNull null] != [titles objectAtIndex:0])
-		{
-			title = [titles objectAtIndex:0];	// real string to replce text
-		}
-		if (emptySel && nil == title)
-		{
-			// we need to generate a title, so use the host.
-			title = [url host];
+		// Figure out the URL and title to paste
+		NSURL *URL = [urls objectAtIndex:0];
+		
+		NSString *title = [titles firstObjectOrNilIfEmpty];
+		if (!title || (id)title == [NSNull null] || [title isEmptyString]) {
+			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
 		}
 		
-		if (emptySel)	// insert link and title
-		{
-			NSLog(@"Inserting %@ with text %@ --- NEED TO MAKE TEXT LINKED", url, title);
-			
-			NSString *undoActionName = [self createLink:[url absoluteString] withDOMRange:selectedRange openLinkInNewWindow:NO];
-
-			[[[[self webViewController] webView] undoManager] setActionName:undoActionName];
-		}
-	
-	// update webview to reflect node changes
-	//[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:oWebView];	
-
-		else	// not empty selection -- just link the existing text.
-		{
-			// (In theory, I could replace text with title if title != nil....)
-			
-			NSLog(@"Need to link selected text to %@", url);
-			
-		}
+		
+		// Do the paste
+		WebView *webView = [[self webViewController] webView];
+		NSString *linkHTML = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", [URL absoluteString], title];
+		[webView replaceSelectionWithMarkupString:linkHTML];
 	}
 }
 
