@@ -2756,6 +2756,7 @@
 				278B95A80D382A3400E5053A /* MediaContainers */,
 				278B95A90D382A4E00E5053A /* MediaFiles */,
 				278B95AA0D382A5B00E5053A /* Other */,
+				27969F4B0CF6146700C03F45 /* Missing Media Sheet */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -2861,6 +2862,42 @@
 			name = Inspector;
 			sourceTree = "<group>";
 		};
+		27DF88CD0D85780100AEF4B5 /* Document UI */ = {
+			isa = PBXGroup;
+			children = (
+				27DF88CF0D85786A00AEF4B5 /* Window Controller */,
+				27DF88CE0D85785D00AEF4B5 /* Window */,
+				3C5188A10D2F4DDC002D7414 /* Site Outline */,
+				3C202DA507DFC4BA00DE4994 /* WebView */,
+				272321DB0D48B5A70075F31F /* Page Details */,
+			);
+			name = "Document UI";
+			sourceTree = "<group>";
+		};
+		27DF88CE0D85785D00AEF4B5 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */,
+				3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
+		27DF88CF0D85786A00AEF4B5 /* Window Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
+				7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */,
+				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
+				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
+				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
+				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
+				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
+				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
+			);
+			name = "Window Controller";
+			sourceTree = "<group>";
+		};
 		27E31BC10D4B795C00895DA1 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
@@ -2884,19 +2921,16 @@
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
-				3C5188A10D2F4DDC002D7414 /* Site Outline */,
-				3C202DA507DFC4BA00DE4994 /* WebView */,
-				272321DB0D48B5A70075F31F /* Page Details */,
 				3C5A736E0BF7B67300776464 /* Core Data */,
 				273864300D50A6A000A8A209 /* Page */,
 				2786BE970CAD10530086F9E0 /* Media */,
-				27969F4B0CF6146700C03F45 /* Missing Media Sheet */,
+				27DF88CD0D85780100AEF4B5 /* Document UI */,
+				27DB80770C84658200E29C38 /* Inspector */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
 				3C5A73830BF7B8F200776464 /* Index */,
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
 				3C5A73950BF7BA6800776464 /* HTML Parsing */,
-				27DB80770C84658200E29C38 /* Inspector */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
@@ -3122,16 +3156,6 @@
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
-				3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */,
-				3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */,
-				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
-				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
-				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
-				7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */,
-				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
-				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
-				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
-				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
