@@ -672,48 +672,42 @@ Note that this method is called AFTER the webview handles the click.
 	
 	if ([[aNode nodeName] isEqualToString:@"IMG"] && ![[aNode className] isEqualToString:kKTInternalImageClassName])
 	{
-		DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
+		KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
 		
 		// did we click on an image in a block of editable text, or on a photo (like a photo page/pagelet)
-		if (nil != selectedNode && ([self isEditableElement:selectedNode] || [DOMNode isImageFromDOMNodeClass:[selectedNode className]]) )
+		if (textBlock || [DOMNode isImageFromDOMNodeClass:[[textBlock DOMNode] className]])
 		{
-			NSString *theID = [selectedNode getAttribute:@"id"];
-			id itemToEdit = [self itemForDOMNodeID:theID];
-			if (nil != itemToEdit)
+			if (textBlock)
 			{
 				// we're here for instance if we clicked on an image in a pagelet or photo page
 				
-				id container = [itemToEdit wrappedValueForKey:@"container"];
 				
-				NSString *classes = [selectedNode className];
-				if ( (NSNotFound != [classes rangeOfString:@"kBlock"].location)
-					 || (NSNotFound != [classes rangeOfString:@"kLine"].location)///allow editing of line objects
-					 ||	nil == container )		// empty container means inline
-				{
-					[self selectInlineIMGNode:aNode container:itemToEdit];
-					[[self webViewController] setSelectedPageletHTMLElement:nil];
-					[self setSelectedPagelet:nil];
-				}
-				else if ([container isKindOfClass:[KTPage class]])	// image in a page, select that detail.	(An image in a pagelet has to put image inspector along with pagelet)
-				{
-					// clicked on an image in a page
-					[[self webViewController] setSelectedPageletHTMLElement:nil];
-					[self setSelectedPagelet:nil];
-					[self selectInlineIMGNode:nil container:nil];	// deselect any inline image
-					[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:itemToEdit];
-				}
-				else if ([container isKindOfClass:[KTPagelet class]])	// image in a pagelet, select that pagelet
-				{
-					[[self webViewController] setSelectedPageletHTMLElement:selectedNode];
-					// TODO: I need to be saving the pagelet, and then figuring out the pagelet element, and saving that, so it will survive across reloads!
-					
-					[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:container];
-				}
-				else
-				{
-					DJW((@"Clicked on an image, but not doing anything special"));
-				}
+				[self selectInlineIMGNode:aNode container:[textBlock HTMLSourceObject]];
+				[[self webViewController] setSelectedPageletHTMLElement:nil];
+				[self setSelectedPagelet:nil];
 			}
+			
+			// FIXME: Clicking on a photo page/pagelet has no effect without this
+			/*
+			else if ([container isKindOfClass:[KTPage class]])	// image in a page, select that detail.	(An image in a pagelet has to put image inspector along with pagelet)
+			{
+				// clicked on an image in a page
+				[[self webViewController] setSelectedPageletHTMLElement:nil];
+				[self setSelectedPagelet:nil];
+				[self selectInlineIMGNode:nil container:nil];	// deselect any inline image
+				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:itemToEdit];
+			}
+			else if ([container isKindOfClass:[KTPagelet class]])	// image in a pagelet, select that pagelet
+			{
+				[[self webViewController] setSelectedPageletHTMLElement:selectedNode];
+				// TODO: I need to be saving the pagelet, and then figuring out the pagelet element, and saving that, so it will survive across reloads!
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:container];
+			}
+			else
+			{
+				DJW((@"Clicked on an image, but not doing anything special"));
+			}*/
 		}
 		else
 		{
