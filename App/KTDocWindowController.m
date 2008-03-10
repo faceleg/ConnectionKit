@@ -39,6 +39,7 @@
 #import "KTToolbars.h"
 #import "KTTransferController.h"
 #import "KTWebViewTextBlock.h"
+
 #import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -50,8 +51,11 @@
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
+#import "NSURL+KTExtensions.h"
 #import "NSWindow+Karelia.h"
+
 #import "NTBoxView.h"
+
 #import "Registration.h"
 #import <iMediaBrowser/iMedia.h>
 #import <WebKit/WebKit.h>
@@ -1268,14 +1272,14 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	//LOG((@"asking window controller to validate menu item: %@", [menuItem title]));
+	SEL itemAction = [menuItem action];
 	
 	// File menu handled by KTDocument
 		
 	// Edit menu
 	
 	// "Cut" cut:
-	if ([menuItem action] == @selector(cut:))
+	if (itemAction == @selector(cut:))
 	{
 		// if there's a WebKit selection, let WebKit handle it
 		if ([oWebView selectedDOMRange])
@@ -1289,13 +1293,13 @@ from representedObject */
 	}
 	
 	// "Cut Page(s)" cutPages:
-	else if ([menuItem action] == @selector(cutPages:))
+	else if (itemAction == @selector(cutPages:))
 	{
 		return [self validateCutPagesItem:menuItem];
 	}
 	
 	// "Copy" copy:
-	else if ([menuItem action] == @selector(copy:))
+	else if (itemAction == @selector(copy:))
 	{
 		// if there's a selection, let WebKit handle it
 		if ( nil != [oWebView selectedDOMRange] )
@@ -1309,13 +1313,13 @@ from representedObject */
 	}	
 	
 	// "Copy Page(s)" copyPages:
-	else if ([menuItem action] == @selector(copyPages:))
+	else if (itemAction == @selector(copyPages:))
 	{
 		return [self validateCopyPagesItem:menuItem];
 	}
 	
 	// "Paste" paste:
-	else if ( [menuItem action] == @selector(paste:) )
+	else if ( itemAction == @selector(paste:) )
 	{
 		// if there's a selection, let WebKit handle it
 		if ( nil != [oWebView selectedDOMRange] )
@@ -1347,7 +1351,7 @@ from representedObject */
 	}	
 	
 	// "Paste" pasteAsRichText: NB: also intercepts general "paste" command
-	else if ( [menuItem action] == @selector(pasteAsRichText:) )
+	else if ( itemAction == @selector(pasteAsRichText:) )
 	{
 		// check the general pasteboard to see if there are any pages on it
 		NSPasteboard *generalPboard = [NSPasteboard generalPasteboard];
@@ -1368,21 +1372,30 @@ from representedObject */
 	}
 	
 	// "Paste as Plain Text" pasteAsPlainText:
-	else if ( [menuItem action] == @selector(pasteAsPlainText:) )
+	else if ( itemAction == @selector(pasteAsPlainText:) )
 	{
 		// let WebKit handle it
 		return [[self webViewController] webKitValidateMenuItem:menuItem];
 	}
 
 	// "Paste As HTML":
-	else if ( [menuItem action] == @selector(pasteTextAsMarkup:) )
+	else if ( itemAction == @selector(pasteTextAsMarkup:) )
 	{
 		// let WebKit handle it ?????
 		return [[self webViewController] webKitValidateMenuItem:menuItem];
 	}
 	
+	// "Paste Link"
+	else if (itemAction == @selector(pasteLink:))
+	{
+		NSArray *URLs = nil;
+		[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:[NSPasteboard generalPasteboard]];
+		BOOL result = (URLs != nil && [URLs count] > 0);
+		return result;
+	}
+
 	// "Delete Page(s)" deletePage:
-	else if ( [menuItem action] == @selector(deletePages:) )
+	else if ( itemAction == @selector(deletePages:) )
 	{
 		if ( ![[[self window] firstResponder] isEqual:oSiteOutline] )
 		{
@@ -1407,7 +1420,7 @@ from representedObject */
 	}
 	
 	// "Delete Pagelet(s)" deletePagelets:
-	else if ( [menuItem action] == @selector(deletePagelets:) )
+	else if ( itemAction == @selector(deletePagelets:) )
 	{
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
 		KTPagelet *selectedPagelet = [self selectedPagelet];
@@ -1422,7 +1435,7 @@ from representedObject */
 	}
 	
 	// "Create Link..." showLinkPanel:
-	else if ([menuItem action] == @selector(showLinkPanel:))
+	else if (itemAction == @selector(showLinkPanel:))
 	{
 		NSString *title;
 		BOOL result = [[self webViewController] validateCreateLinkItem:menuItem title:&title];
@@ -1432,7 +1445,7 @@ from representedObject */
 	
 	// View menu
 	// "Hide Designs" toggleDesignsShown:
-    else if ( [menuItem action] == @selector(toggleDesignsShown:) )
+    else if ( itemAction == @selector(toggleDesignsShown:) )
     {
         return YES;
     }
@@ -1440,13 +1453,13 @@ from representedObject */
 	// "Hide Status Bar" toggleStatusBarShown:
 	
 	// "Hide Site Outline" toggleSiteOutlineShown:
-	else if ( [menuItem action] == @selector(toggleSiteOutlineShown:) )
+	else if ( itemAction == @selector(toggleSiteOutlineShown:) )
 	{
 		return YES;
 	}
 	
 	// "Use Small Page Icons" toggleSmallPageIcons:
-    else if ( [menuItem action] == @selector(toggleSmallPageIcons:) )
+    else if ( itemAction == @selector(toggleSmallPageIcons:) )
 	{
 		[menuItem setState:
 			([[self document] displaySmallPageIcons] ? NSOnState : NSOffState)];
@@ -1455,23 +1468,23 @@ from representedObject */
 	}
 	
 	// "Make Text Bigger" makeTextLarger:
-	else if ( [menuItem action] == @selector(makeTextLarger:) )
+	else if ( itemAction == @selector(makeTextLarger:) )
 	{
 		return [oWebView canMakeTextLarger];
 	}
 	
 	// "Make Text Smaller" makeTextSmaller:
-	else if ( [menuItem action] == @selector(makeTextSmaller:) )
+	else if ( itemAction == @selector(makeTextSmaller:) )
 	{
 		return [oWebView canMakeTextSmaller];
 	}
 	
-	else if ( [menuItem action] == @selector(makeTextNormal:) )
+	else if ( itemAction == @selector(makeTextNormal:) )
 	{
 		return YES;
 	}
 	
-	else if ([menuItem action] == @selector(selectWebViewViewType:))
+	else if (itemAction == @selector(selectWebViewViewType:))
 	{
 		// Select the correct item for the current view type
 		KTWebViewViewType menuItemViewType = [menuItem tag];
@@ -1496,31 +1509,31 @@ from representedObject */
 	}
 	
 	// Site menu items
-    else if ( [menuItem action] == @selector(addPage:) )
+    else if ( itemAction == @selector(addPage:) )
     {
         return YES;
     }
-    else if ( [menuItem action] == @selector(addPagelet:) )
+    else if ( itemAction == @selector(addPagelet:) )
     {
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
 		return ([selectedPage includeCallout] || [selectedPage includeSidebar]);
     }
-	else if ( [menuItem action] == @selector(addCollection:) )
+	else if ( itemAction == @selector(addCollection:) )
     {
         return YES;
     }	
-    else if ( [menuItem action] == @selector(group:) )
+    else if ( itemAction == @selector(group:) )
     {
         return ( ![[oSiteOutline selectedItems] containsObject:[(KTDocument *)[self document] root]] );
     }
-    else if ( [menuItem action] == @selector(ungroup:) )
+    else if ( itemAction == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [oSiteOutline selectedItems];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
-	else if ( [menuItem action] == @selector(duplicate:) )
+	else if ( itemAction == @selector(duplicate:) )
     {
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
 		KTPagelet *selectedPagelet = [self selectedPagelet];
@@ -1537,7 +1550,7 @@ from representedObject */
     }
 	
 	// "Sync Page with Host" saveToHost:
-	else if ( [menuItem action] == @selector(saveToHost:) || [menuItem action] == @selector(saveAllToHost:) )
+	else if ( itemAction == @selector(saveToHost:) || itemAction == @selector(saveAllToHost:) )
 	{
 		BOOL canSave = NO;
 		
@@ -1558,13 +1571,13 @@ from representedObject */
 	}
 	
 	// "Export Site..." export:
-	else if ( [menuItem action] == @selector(export:)  || [menuItem action] == @selector(doExport:))	// export requires you to be set for remote hosting
+	else if ( itemAction == @selector(export:)  || itemAction == @selector(doExport:))	// export requires you to be set for remote hosting
     {
 		return YES;
     }
 	
 	// "Export Site Again" exportAgain:
-	else if ( [menuItem action] == @selector(exportAgain:) )	// export requires you to be set for remote hosting
+	else if ( itemAction == @selector(exportAgain:) )	// export requires you to be set for remote hosting
     {
 		// to work, we need an existing transfer controller and storage path.
 		KTTransferController *exportController = [[self document] exportTransferController];
@@ -1578,10 +1591,10 @@ from representedObject */
 	// Help menu
 	// Debug menu
     // Contextual menu
-	else if ( ([menuItem action] == @selector(cutViaContextualMenu:))
-			  || ([menuItem action] == @selector(copyViaContextualMenu:))
-			  || ([menuItem action] == @selector(deleteViaContextualMenu:))
-			  || ([menuItem action] == @selector(duplicateViaContextualMenu:)) )
+	else if ( (itemAction == @selector(cutViaContextualMenu:))
+			  || (itemAction == @selector(copyViaContextualMenu:))
+			  || (itemAction == @selector(deleteViaContextualMenu:))
+			  || (itemAction == @selector(duplicateViaContextualMenu:)) )
 	{
         id context = [menuItem representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
@@ -1595,7 +1608,7 @@ from representedObject */
 			return NO;
 		}
 	}
-    else if ( [menuItem action] == @selector(pasteViaContextualMenu:) )
+    else if ( itemAction == @selector(pasteViaContextualMenu:) )
     {
         if ( ![self canPastePages] )
         {
@@ -1630,7 +1643,7 @@ from representedObject */
         }
     }
 
-	else if ( [menuItem action] == @selector(validateSource:) )
+	else if ( itemAction == @selector(validateSource:) )
 	{
 		[menuItem setState:(KTHTMLValidationView == [[self webViewController] viewType]) ? NSOnState : NSOffState];
 		return YES;
