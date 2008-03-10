@@ -48,7 +48,7 @@
 		<string>amazonlist.css</string>
 	</array>
 	<key>KTPluginIconName</key>
-	<string>Amazon.png</string>
+	<string>Amazon</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>automaticListSorting</key>

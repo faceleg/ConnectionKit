@@ -31,7 +31,7 @@
 		<string>FlickrPagelet.css</string>
 	</array>
 	<key>KTPluginIconName</key>
-	<string>flickr.png</string>
+	<string>flickr</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>number</key>

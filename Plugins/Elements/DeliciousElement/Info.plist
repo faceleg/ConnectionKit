@@ -27,7 +27,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>delicious.32.png</string>
+	<string>delicious</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>listStyle</key>

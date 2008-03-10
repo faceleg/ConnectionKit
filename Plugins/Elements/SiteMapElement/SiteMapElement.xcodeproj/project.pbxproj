@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3C42DD770D64C20B004F35FD /* SiteMapDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */; };
-		3C42DD7C0D64C21E004F35FD /* sitemap.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7A0D64C21E004F35FD /* sitemap.icns */; };
 		3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */; };
 		3C42DD810D64C228004F35FD /* SiteMapPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7F0D64C228004F35FD /* SiteMapPage.nib */; };
 		3C42DD920D64C5A2004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD910D64C5A2004F35FD /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE722FC00D85CEDC00E9C592 /* sitemap.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FBF0D85CEDC00E9C592 /* sitemap.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,6 @@
 		32DBCF630370AF2F00C91783 /* SiteMapElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteMapElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42DD750D64C20B004F35FD /* SiteMapDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteMapDelegate.h; sourceTree = "<group>"; };
 		3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteMapDelegate.m; sourceTree = "<group>"; };
-		3C42DD7A0D64C21E004F35FD /* sitemap.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sitemap.icns; sourceTree = "<group>"; };
 		3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SiteMapTemplate.html; sourceTree = "<group>"; };
 		3C42DD7E0D64C228004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42DD800D64C228004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
@@ -46,6 +45,7 @@
 		3C42DD940D64C5B9004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* SiteMap.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiteMap.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE722FBF0D85CEDC00E9C592 /* sitemap.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sitemap.icns; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -86,9 +86,9 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE722FBF0D85CEDC00E9C592 /* sitemap.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42DD7F0D64C228004F35FD /* SiteMapPage.nib */,
-				3C42DD7A0D64C21E004F35FD /* sitemap.icns */,
 				3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42DD910D64C5A2004F35FD /* License.rtf */,
@@ -206,10 +206,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C42DD7C0D64C21E004F35FD /* sitemap.icns in Resources */,
 				3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */,
 				3C42DD810D64C228004F35FD /* SiteMapPage.nib in Resources */,
 				3C42DD920D64C5A2004F35FD /* License.rtf in Resources */,
+				CE722FC00D85CEDC00E9C592 /* sitemap.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
