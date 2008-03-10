@@ -42,11 +42,15 @@
 
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings
 {
+	float destinationWidth = [settings size].width;
+	float destinationHeight = [settings size].height;
+	
+	
 	// Create the image rep
 	NSBitmapImageRep *result = [[NSBitmapImageRep alloc]
 		initWithBitmapDataPlanes:nil
-					  pixelsWide:[settings size].width
-					  pixelsHigh:[settings size].height
+					  pixelsWide:destinationWidth
+					  pixelsHigh:destinationHeight
 				   bitsPerSample:8
 				 samplesPerPixel:4
 					    hasAlpha:YES
@@ -69,8 +73,9 @@
 	scaledRect.origin = NSMakePoint(0.0, 0.0);
 	scaledRect.size = [settings size];
 	
-	[self drawInRect:scaledRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	// TODO: handle all behaviors
+	NSRect sourceRect = [settings sourceRectForImageOfSize:[self size]];
+	
+	[self drawInRect:scaledRect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1.0];
 	
 	
 	// Tidy up

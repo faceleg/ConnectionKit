@@ -30,6 +30,8 @@
 					  size:(NSSize)size
 				sharpening:(NSNumber *)sharpening;
 
++ (id)cropToSize:(NSSize)size alignment:(NSImageAlignment)alignment;
+
 + (id)scalingSettingsWithDictionaryRepresentation:(NSDictionary *)dictionary;
 
 // Accessors
@@ -47,6 +49,8 @@
 - (unsigned)hash;
 
 // Resizing
+- (NSRect)sourceRectForImageOfSize:(NSSize)sourceSize;
+
 - (float)scaleFactorForImageOfSize:(NSSize)sourceSize;
 - (float)aspectRatioForImageOfSize:(NSSize)sourceSize;
 - (NSSize)sizeForImageOfSize:(NSSize)sourceSize;

@@ -232,7 +232,7 @@
  */
 - (void)setBannerImageFromSourceMedia:(KTMediaContainer *)media
 {
-	KTMediaContainer *banner = [media imageCroppedToSize:[[self design] bannerSize]];
+	KTMediaContainer *banner = [media imageCroppedToSize:[[self design] bannerSize] alignment:NSImageAlignTop];
 	[self setBannerImage:banner];
 }
 

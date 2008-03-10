@@ -49,6 +49,13 @@
 	return result;
 }
 
++ (id)cropToSize:(NSSize)size alignment:(NSImageAlignment)alignment
+{
+	KTImageScalingSettings *result = [self settingsWithBehavior:KTCropToSize size:size sharpening:nil];
+	[result setAlignment:alignment];
+	return result;
+}
+
 + (id)scalingSettingsWithDictionaryRepresentation:(NSDictionary *)dictionary
 {
 	// Set up the default object
@@ -292,6 +299,66 @@
 
 #pragma mark -
 #pragma mark Resizing
+
+#pragma mark source
+
+/*	Returns NSZeroRect if the entirety of the source image should be used
+ */
+- (NSRect)sourceRectForImageOfSize:(NSSize)sourceSize
+{
+	NSRect result = NSZeroRect;
+	
+	// Cropping requires using a smaller source area
+	if ([self behavior] == KTCropToSize)
+	{
+		// The source size must be the destination size scaled back down
+		float scaleFactor = [self scaleFactorForImageOfSize:sourceSize];
+		result.size = NSMakeSize(roundf([self size].width / scaleFactor), roundf([self size].height / scaleFactor));
+		
+		// The origin depends on the chosen alignment
+		switch ([self alignment])
+		{
+			case NSImageAlignTopLeft:
+			case NSImageAlignLeft:
+			case NSImageAlignBottomLeft:
+				result.origin.x = 0.0;
+				break;
+			case NSImageAlignTop:
+			case NSImageAlignCenter:
+			case NSImageAlignBottom:
+				result.origin.x = (sourceSize.width - result.size.width) / 2;
+				break;
+			case NSImageAlignTopRight:
+			case NSImageAlignRight:
+			case NSImageAlignBottomRight:
+				result.origin.x = sourceSize.width - result.size.width;
+				break;
+		}
+		
+		switch ([self alignment])
+		{
+			case NSImageAlignTopLeft:
+			case NSImageAlignTop:
+			case NSImageAlignTopRight:
+				result.origin.y = sourceSize.height - result.size.height;
+				break;
+			case NSImageAlignLeft:
+			case NSImageAlignCenter:
+			case NSImageAlignRight:
+				result.origin.y = (sourceSize.height - result.size.height) / 2;
+				break;
+			case NSImageAlignBottomLeft:
+			case NSImageAlignBottom:
+			case NSImageAlignBottomRight:
+				result.origin.y = 0.0;
+				break;
+		}
+	}
+	
+	return result;
+}
+
+#pragma mark destination
 
 /*	If we were to scale purely by image width, what is the required factor?
  */

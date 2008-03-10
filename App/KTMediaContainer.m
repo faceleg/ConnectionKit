@@ -195,13 +195,11 @@
 	return result;
 }
 
-- (KTMediaContainer *)imageCroppedToSize:(NSSize)size
+- (KTMediaContainer *)imageCroppedToSize:(NSSize)size alignment:(NSImageAlignment)alignment
 {
-	KTImageScalingSettings *settings =
-		[KTImageScalingSettings settingsWithBehavior:KTCropToSize size:size sharpening:nil];
+	KTImageScalingSettings *settings = [KTImageScalingSettings cropToSize:size alignment:alignment];
 	
 	KTMediaContainer *result = [self imageWithScalingSettings:settings];
-													
 	return result;
 }
 
