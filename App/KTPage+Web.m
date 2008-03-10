@@ -129,6 +129,21 @@
 	[self setWrappedBool:fullPage forKey:@"pluginHTMLIsFullPage"];
 }
 
+/*	Some page types (e.g. File Download) do not want to publish the HTML, it's just for peviewing.
+ */
+- (BOOL)shouldPublishHTMLTemplate
+{
+	BOOL result = YES;
+	
+	id delegate = [self delegate];
+	if (delegate && [delegate respondsToSelector:@selector(pageShouldPublishHTMLTemplate:)])
+	{
+		result = [delegate pageShouldPublishHTMLTemplate:self];
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark RSS
 

@@ -249,6 +249,7 @@
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 - (BOOL)pluginHTMLIsFullPage;
 - (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
+- (BOOL)shouldPublishHTMLTemplate;
 
 - (NSString *)javascriptURLPath;
 - (NSString *)RSSRepresentation;
@@ -269,6 +270,8 @@
 - (NSString *)urlAllowingIndexPage:(BOOL)aCanHaveIndexPage;
 - (BOOL)pageShouldClearThumbnail:(KTPage *)page;
 - (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page;
+
+- (BOOL)pageShouldPublishHTMLTemplate:(KTPage *)page;
 
 - (NSString *)summaryHTMLKeyPath;
 - (BOOL)summaryHTMLIsEditable;

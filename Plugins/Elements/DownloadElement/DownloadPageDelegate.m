@@ -217,4 +217,18 @@
 	return result;
 }
 
+/*	Users don't want to actually publish a Download page, they want its media instead.
+ */
+- (BOOL)pageShouldPublishHTMLTemplate:(KTPage *)page
+{
+	if ([page delegate] == self)
+	{
+		return NO;
+	}
+	else
+	{
+		return YES;
+	}
+}
+
 @end

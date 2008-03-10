@@ -454,13 +454,17 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Upload the page itself
-	NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
 	NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[publishingInfo objectForKey:@"uploadPath"]];
 	
-	[myUploadedPathsMap setObject:page forKey:uploadPath];
-	[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-	[self uploadFromData:pageData toFile:uploadPath];
-	[myController setPermissions:myPagePermissions forFile:uploadPath];
+	NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
+	if (pageData)
+	{
+		
+		[myUploadedPathsMap setObject:page forKey:uploadPath];
+		[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
+		[self uploadFromData:pageData toFile:uploadPath];
+		[myController setPermissions:myPagePermissions forFile:uploadPath];
+	}
 	
 	
 	// Publish the RSS feed if there is one
@@ -473,29 +477,15 @@ static NSArray *sReservedNames = nil;
 		[self uploadFromData:RSSData toFile:RSSUploadPath];
 		[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
 	}
-	
-	
-	// Publish the archives
-	NSData *archivesData = [publishingInfo objectForKey:@"archivesData"];
-	if (archivesData)
-	{
-		NSString *archivesFilename = [publishingInfo objectForKey:@"archivesFilename"];
-		NSString *archivesUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:archivesFilename];
-		
-		[self uploadFromData:archivesData toFile:archivesUploadPath];
-		[myController setPermissions:myPagePermissions forFile:archivesUploadPath];
-	}
 }
 
 
 /*	Support method for -threadedUploadPage: that is called on the MAIN THREAD.
  *	
  *	Returns a dictionary with the following keys:
- *		sourceData			-	The NSData representation of the page's HTML
- *		uploadPath			-	Our path relative to   docRoot/subFolder/
+ *		sourceData			-	NSData representation of the page's HTML. nil if not for publishing (e.g. Download page)
+ *		uploadPath			-	The page's path relative to   docRoot/subFolder/
  *		RSSData				-	If the collection has an RSS feed, its NSData representation
- *		archivesData		-	if the collection has an archives page, its NSData representation
- *		archivesFilename	-	... filename of archives
  *		isStale				-	NSNumber copy of the page's isStale attribute
  *	
  *	If the page will not be published because it or a parent is a draft, returns nil.
@@ -519,14 +509,16 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Source data
-	NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
-	
-	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
-	NSString *charset = [[masterPage master] valueForKey:@"charset"];
-	NSStringEncoding encoding = [charset encodingFromCharset];
-	NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
-	[info setObject:data forKey:@"sourceData"];
-	
+	if (![page isKindOfClass:[KTPage class]] || [(KTPage *)page shouldPublishHTMLTemplate])
+	{
+		NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
+		KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
+		NSString *charset = [[masterPage master] valueForKey:@"charset"];
+		NSStringEncoding encoding = [charset encodingFromCharset];
+		NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
+		[info setObject:data forKey:@"sourceData"];
+	}
+		
 	[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];
 	
 	
