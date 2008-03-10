@@ -518,6 +518,13 @@ static NSArray *sReservedNames = nil;
 		NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
 		[info setObject:data forKey:@"sourceData"];
 	}
+	else if ([[[[page plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.DownloadElement"])
+	{
+		// This is currently a special case to make sure Download Page media is published
+		// TODO: Generalise this code if any other plugins actually need it
+		KTMediaContainer *downloadMedia = [page valueForKey:@"downloadMedia"];
+		[self addParsedMediaFileUpload:[[downloadMedia file] defaultUpload]];
+	}
 		
 	[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];
 	
