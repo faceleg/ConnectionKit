@@ -131,6 +131,8 @@
 	}
 }
 
+/*	Keeps various page properties up-to-date with the plugin.
+ */
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
 	if ([key isEqualToString:@"linkType"])
@@ -141,6 +143,19 @@
 		[[self delegateOwner] setPluginHTMLIsFullPage:!linkTypeIsPageWithinPage];
 		[[self delegateOwner] setDisableComments:!linkTypeIsPageWithinPage];
 		[[self delegateOwner] setSidebarChangeable:linkTypeIsPageWithinPage];
+		
+		NSString *customPath = nil;
+		if (!linkTypeIsPageWithinPage) customPath = [plugin valueForKey:@"linkURL"];
+		[(KTPage *)plugin setCustomPathRelativeToSite:customPath];
+	}
+	else if ([key isEqualToString:@"linkURL"])
+	{
+		int linkType = [value intValue];
+		BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
+		if (!linkTypeIsPageWithinPage)
+		{
+			[(KTPage *)plugin setCustomPathRelativeToSite:value];
+		}
 	}
 }
 
