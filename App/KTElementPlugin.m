@@ -124,7 +124,7 @@
 	KSPlugin *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
-		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
+		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
 		{
 			[buffer addObject:aPlugin];
 		}

@@ -1289,20 +1289,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
+	[super applicationWillFinishLaunching:notification];
+	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	// apparently pool may not be in place yet?
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
 	
-	
-	// Register to receive sandvox: URLs
-	[[NSAppleEventManager sharedAppleEventManager] setEventHandler:self
-													   andSelector:@selector(handleGetURLAppleEvent:withReplyEvent:)
-													 forEventClass:kInternetEventClass
-														andEventID:kAEGetURL];
-	
-	
 	// Force imedia browser to load just so we can get RBSplitView loaded
-	[iMediaBrowser class];	
-	
+	[iMediaBrowser class];
 	
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
@@ -1732,35 +1725,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (IBAction)showReleaseNotes:(id)sender
 {
     [[KTReleaseNotesController sharedController] showWindow:nil];
-}
-
-#pragma mark -
-#pragma mark URL Handling
-
-- (void)handleGetURLAppleEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
-{
-	NSString *URLString = [[event paramDescriptorForKeyword: keyDirectObject] stringValue];
-	NSURL *URL = [NSURL URLWithString:URLString];
-	
-	// Ignore non-sandvox: URLs
-	if (![[URL scheme] isEqualToString:@"sandvox"]) return;
-	
-	// Attempt to register a license command
-	NSString *URLResource = [URL resourceSpecifier];
-	if ([URLResource hasPrefix:@"license/"])
-	{
-		NSArray *pathComponents = [URLResource pathComponents];
-		if (!pathComponents || [pathComponents count] != 2) return;
-		
-		NSString *encodedLicenseKey = [pathComponents objectAtIndex:1];
-		NSString *licenseKey = [encodedLicenseKey stringByReplacing:@"_" with:@" "];
-		
-		if (licenseKey && ![licenseKey isEqualToString:@""])
-		{
-			[[KSRegistrationController sharedController]
-				setRegisteredCode:licenseKey delegate:nil didRegisterSelector:nil contextInfo:NULL];
-		}
-	}
 }
 
 #pragma mark -
