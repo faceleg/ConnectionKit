@@ -212,27 +212,6 @@
 #pragma mark -
 #pragma mark WebView
 
-/*!	When we click on this pseudo-page, the path should be the path to the media.
-	Overrides KTPage's absolutePath.
-*/
-/*
-- (NSString *)absolutePathAllowingIndexPage:(BOOL)aCanHaveIndexPage
-{
-	NSString *result = [[self media] mediaPathRelativeTo:nil];
-	if (nil == result)
-	{
-		result = @"";		// never return nil; just return empty string if not there.
-	}
-	return result;
-}
-*/
-
-- (NSString *)urlAllowingIndexPage:(BOOL)aCanHaveIndexPage		// for feeds, we return the URL of the media
-{
-	NSString *result = [[[self delegateOwner] valueForKey:@"downloadMedia"] publishedURL];
-	return result;
-}
-
 - (NSString *)iconURL
 {
 	NSString *iconPath = [[self bundle] pathForImageResource:@"download"];

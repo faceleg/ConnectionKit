@@ -161,7 +161,7 @@
 					}
 					else
 					{
-						[string appendFormat:@"<a href=\"%@\">%@</a>\n", [aChildPage pathRelativeTo:thisPage], [[aChildPage titleText] escapedEntities]];
+						[string appendFormat:@"<a href=\"%@\">%@</a>\n", [aChildPage publishedPathRelativeToPage:thisPage], [[aChildPage titleText] escapedEntities]];
 					}
 					// need separator?				
 				}

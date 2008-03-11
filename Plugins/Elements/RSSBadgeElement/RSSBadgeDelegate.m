@@ -49,7 +49,6 @@
 		//
 		NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
 		NSString *theString = [theBundle localizedStringForKey:@"Subscribe to RSS feed" value:@"" table:nil];
-#warning TODO: Have a way to have localized strings in initialPluginProperties!
 		
 		[[self delegateOwner] setObject:theString forKey:@"label"];
 			
