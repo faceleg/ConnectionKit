@@ -1470,13 +1470,6 @@
 			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
-		CE16DC9C0D8713B40077C779 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CE16DC580D8711790077C779;
-			remoteInfo = MovieWebKitPlugin;
-		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
@@ -4813,7 +4806,6 @@
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
 				CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */,
-				CE16DC9D0D8713B40077C779 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6416,11 +6408,6 @@
 			isa = PBXTargetDependency;
 			name = iMediaBrowser;
 			targetProxy = 3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */;
-		};
-		CE16DC9D0D8713B40077C779 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CE16DC580D8711790077C779 /* MovieWebKitPlugin */;
-			targetProxy = CE16DC9C0D8713B40077C779 /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
