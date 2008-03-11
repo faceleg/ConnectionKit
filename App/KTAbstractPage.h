@@ -57,13 +57,21 @@ KTCollectionPathStyle;
 - (void)setFileName:(NSString *)fileName;
 - (NSString *)suggestedFileName;
 
+
 // File Extension
 - (NSString *)fileExtension;
+
 - (NSString *)customFileExtension;
 - (void)setCustomFileExtension:(NSString *)extension;
+
+- (BOOL)fileExtensionIsEditable;
+- (void)setFileExtensionIsEditable:(BOOL)editable;
+
 - (NSString *)defaultFileExtension;
 - (NSArray *)availableFileExtensions;
 
+
+// Summat else
 - (NSString *)indexFilename;
 - (NSString *)indexFileName;
 - (NSString *)archivesFilename;

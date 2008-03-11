@@ -63,6 +63,8 @@
 	{
 		[[self delegateOwner] setBool:NO forKey:@"includeSidebar"];
 	}
+	
+	[(KTPage *)[self delegateOwner] setFileExtensionIsEditable:NO];	// Transient property, so must set it each time
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary

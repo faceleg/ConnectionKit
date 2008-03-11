@@ -105,11 +105,21 @@
 			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
 }
 
+
 /*	A custom file extension of nil signifies that the value should be taken from the user defaults.
  */
 - (NSString *)customFileExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
 
 - (void)setCustomFileExtension:(NSString *)extension { [self setWrappedValue:extension forKey:@"customFileExtension"]; }
+
+
+/*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
+ *	By default, set to true.
+ */
+- (BOOL)fileExtensionIsEditable { return [self wrappedBoolForKey:@"fileExtensionIsEditable"]; }
+
+- (void)setFileExtensionIsEditable:(BOOL)editable { [self setWrappedBool:editable forKey:@"fileExtensionIsEditable"]; }
+
 
 /*	The value -fileExtension should return if there is no custom extensions set.
  *	Mainly used for bindings.
