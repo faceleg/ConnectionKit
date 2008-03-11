@@ -114,7 +114,7 @@
 
 
 /*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
- *	By default, set to true.
+ *	By default, set to true. The File Download and External Link plugins use this to disable editing.
  */
 - (BOOL)fileExtensionIsEditable { return [self wrappedBoolForKey:@"fileExtensionIsEditable"]; }
 

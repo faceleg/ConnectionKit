@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -31,7 +31,10 @@
 	<key>KTPluginIconName</key>
 	<string>download.icns</string>
 	<key>KTPluginInitialProperties</key>
-	<dict/>
+	<dict>
+		<key>uploadMediaInPlaceOfPage</key>
+		<true/>
+	</dict>
 	<key>KTPluginName</key>
 	<string>File Download</string>
 	<key>KTPluginNibFile</key>
