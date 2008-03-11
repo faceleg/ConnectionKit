@@ -87,13 +87,20 @@
 		[plugin setBool:YES forKey:@"uploadMediaInPlaceOfPage"];
 		
 		
-		// Set page's file extension to match media
+		// Set page's file extension (and if needed path) to match media
 		NSString *fileExtension = [[[(KTMediaContainer *)value file] valueForKey:@"filename"] pathExtension];
-		[(KTPage *)[self delegateOwner] setCustomFileExtension:fileExtension];
+		[(KTPage *)plugin setCustomFileExtension:fileExtension];
+		
+		NSString *mediaPath = nil;
+		if ([plugin boolForKey:@"uploadMediaInPlaceOfPage"])
+		{
+			mediaPath = [[[(KTMediaContainer *)value file] defaultUpload] valueForKey:@"pathRelativeToSite"];
+		}
+		[(KTPage *)plugin setCustomPathRelativeToSite:mediaPath];
 		
 		
 		// Set our page's thumbnail to match the file's Finder icon
-		[[self delegateOwner] setThumbnail:[value imageWithScaleFactor:1.0]];
+		[(KTPage *)plugin setThumbnail:[value imageWithScaleFactor:1.0]];
 		
 		
 		// Composite the download arrow onto the file's Finder icon

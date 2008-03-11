@@ -317,7 +317,7 @@
 - (void)setCustomPathRelativeToSite:(NSString *)path
 {
 	[self willChangeValueForKey:@"publishedPathRelativeToSite"];
-	[self setCustomPathRelativeToSite:path];
+	[self setWrappedValue:path forKey:@"customPathRelativeToSite"];
 	[self didChangeValueForKey:@"publishedPathRelativeToSite"];
 }
 
