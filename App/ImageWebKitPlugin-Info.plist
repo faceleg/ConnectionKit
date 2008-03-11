@@ -17,7 +17,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>ImageWebKitViewFactory</string>
+	<string>KTImageWebKitViewFactory</string>
 	<key>WebPluginDescription</key>
 	<string>Plugin for Sandvox to be able to edit images from within the WebView</string>
 	<key>WebPluginMIMETypes</key>

@@ -133,3 +133,62 @@ static KTEditableImageDOMFilter *sSharedEditableImageDOMFilter;
 	return result;
 }
 @end
+
+/* DON'T ACTUALLY NEED
+ 
+static KTEditableEmbedMovieDOMFilter *sSharedEditableEmbedMovieDOMFilter;
+
+@implementation KTEditableEmbedMovieDOMFilter
+
++ (KTEditableEmbedMovieDOMFilter *)sharedFilter
+{
+	if (!sSharedEditableEmbedMovieDOMFilter)
+		sSharedEditableEmbedMovieDOMFilter = [[KTEditableEmbedMovieDOMFilter alloc] init];
+	return sSharedEditableEmbedMovieDOMFilter;
+}
+
+- (short)acceptNode:(DOMNode *)node
+{
+	short result = DOM_FILTER_SKIP;
+	
+	DOMHTMLElement *element = ((DOMHTMLElement *)node);
+	
+	if( [element isKindOfClass:[DOMHTMLEmbedElement class]])
+	{
+		if ([[(DOMHTMLEmbedElement *)element type] isEqualToString:@"video/quicktime"])
+		{
+			result = DOM_FILTER_ACCEPT;
+		}
+	}
+	return result;
+}
+@end
+*/
+
+static KTEditableObjectMovieDOMFilter *sSharedEditableObjectMovieDOMFilter;
+
+@implementation KTEditableObjectMovieDOMFilter
+
++ (KTEditableObjectMovieDOMFilter *)sharedFilter
+{
+	if (!sSharedEditableObjectMovieDOMFilter)
+		sSharedEditableObjectMovieDOMFilter = [[KTEditableObjectMovieDOMFilter alloc] init];
+	return sSharedEditableObjectMovieDOMFilter;
+}
+
+- (short)acceptNode:(DOMNode *)node
+{
+	short result = DOM_FILTER_SKIP;
+	
+	DOMHTMLElement *element = ((DOMHTMLElement *)node);
+	
+	if( [element isKindOfClass:[DOMHTMLObjectElement class]])
+	{
+		if ([[(DOMHTMLObjectElement *)element getAttribute:@"classid"] isEqualToString:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"])
+		{
+			result = DOM_FILTER_ACCEPT;
+		}
+	}
+	return result;
+}
+@end

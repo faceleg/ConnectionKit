@@ -6,10 +6,10 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "ImageWebKitViewFactory.h"
+#import "KTImageWebKitViewFactory.h"
 
 
-@implementation ImageWebKitViewFactory
+@implementation KTImageWebKitViewFactory
 
 + (NSView *)plugInViewWithArguments:(NSDictionary *)arguments
 {

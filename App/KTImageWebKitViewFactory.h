@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface ImageWebKitViewFactory : NSObject <WebPlugInViewFactory>
+@interface KTImageWebKitViewFactory : NSObject <WebPlugInViewFactory>
 {
 }
 

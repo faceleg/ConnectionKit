@@ -503,6 +503,11 @@
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
 		CE16A3D9087319720006F80B /* KTStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16A3D7087319720006F80B /* KTStackView.m */; };
+		CE16DCA00D8713C40077C779 /* MovieWebKitPlugin.bundle in Copy Webkit Plugins */ = {isa = PBXBuildFile; fileRef = CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */; };
+		CE16DCE40D871C860077C779 /* KTMovieViewPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */; };
+		CE16DD090D871EA20077C779 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
+		CE16DD0B0D871EA90077C779 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */; };
 		CE1B90470B5EF68C0051B380 /* Empty.html in Resources */ = {isa = PBXBuildFile; fileRef = CE1B90460B5EF68C0051B380 /* Empty.html */; };
 		CE1D2FD50BD82CA100927C96 /* liveoak.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB490BCEC566001BF9F7 /* liveoak.png */; };
@@ -869,7 +874,7 @@
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
 		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
-		CEF9D0C30D862C4A00BD9895 /* ImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */; };
+		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */ = {isa = PBXBuildFile; fileRef = CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */; };
@@ -1465,6 +1470,13 @@
 			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
+		CE16DC9C0D8713B40077C779 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE16DC580D8711790077C779;
+			remoteInfo = MovieWebKitPlugin;
+		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
@@ -1619,6 +1631,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */,
+				CE16DCA00D8713C40077C779 /* MovieWebKitPlugin.bundle in Copy Webkit Plugins */,
 			);
 			name = "Copy Webkit Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2107,6 +2120,10 @@
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		CE16A3D7087319720006F80B /* KTStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStackView.m; sourceTree = "<group>"; };
 		CE16A3D8087319720006F80B /* KTStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStackView.h; sourceTree = "<group>"; };
+		CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMovieViewPlugin.h; sourceTree = "<group>"; };
+		CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMovieViewPlugin.m; sourceTree = "<group>"; };
+		CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE16DC5A0D8711790077C779 /* MovieWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MovieWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
 		CE1AD3520A7E83C90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = it; path = it.lproj/Credits.html; sourceTree = "<group>"; };
 		CE1AD3550A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CE1AD3560A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Info.nib; sourceTree = "<group>"; };
@@ -2576,8 +2593,8 @@
 		CEF6E40E0BD728190006417A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
-		CEF9D0C10D862C4A00BD9895 /* ImageWebKitViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWebKitViewFactory.h; sourceTree = "<group>"; };
-		CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageWebKitViewFactory.m; sourceTree = "<group>"; };
+		CEF9D0C10D862C4A00BD9895 /* KTImageWebKitViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageWebKitViewFactory.h; sourceTree = "<group>"; };
+		CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageWebKitViewFactory.m; sourceTree = "<group>"; };
 		CEF9D1F00D86446600BD9895 /* rounded.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rounded.pdf; sourceTree = "<group>"; };
 		CEF9D1F10D86446600BD9895 /* rotate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rotate.pdf; sourceTree = "<group>"; };
 		CEF9D1F20D86446600BD9895 /* grow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = grow.pdf; sourceTree = "<group>"; };
@@ -2613,6 +2630,16 @@
 				3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */,
 				3C3F54910D625952004885E7 /* iMediaBrowser.framework in Frameworks */,
 				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE16DC570D8711790077C779 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE16DD090D871EA20077C779 /* Cocoa.framework in Frameworks */,
+				CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */,
+				CE16DD0B0D871EA90077C779 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2657,6 +2684,7 @@
 				274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */,
 				3C42E6BB0D6510BE004F35FD /* HTML.svxElement */,
 				CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */,
+				CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2986,7 +3014,7 @@
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
 				3C5A73950BF7BA6800776464 /* HTML Parsing */,
-				CEF9D0BE0D862C2000BD9895 /* WebKit Plugin */,
+				CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
@@ -3012,7 +3040,6 @@
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
 				3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */,
-				CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -3031,6 +3058,8 @@
 			children = (
 				CE22E5E40D7C73C00055D8E9 /* Shared Graphics */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
+				CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */,
+				CE16DC5A0D8711790077C779 /* MovieWebKitPlugin-Info.plist */,
 				CED194330AC33F8F002E8A4A /* Sandvox Help */,
 				3C202E9D07E00FA700DE4994 /* Info Files */,
 				3C202E7807E00EB500DE4994 /* Interfaces */,
@@ -4515,13 +4544,15 @@
 			name = "Shared Classes";
 			sourceTree = "<group>";
 		};
-		CEF9D0BE0D862C2000BD9895 /* WebKit Plugin */ = {
+		CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				CEF9D0C10D862C4A00BD9895 /* ImageWebKitViewFactory.h */,
-				CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */,
+				CEF9D0C10D862C4A00BD9895 /* KTImageWebKitViewFactory.h */,
+				CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */,
+				CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */,
+				CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */,
 			);
-			name = "WebKit Plugin";
+			name = "WebKit Plugins";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -4782,12 +4813,30 @@
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
 				CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */,
+				CE16DC9D0D8713B40077C779 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
 			productName = Marvel;
 			productReference = 8D15AC370486D014006FF6A4 /* Sandvox.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CE16DC580D8711790077C779 /* MovieWebKitPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE16DC5D0D8711790077C779 /* Build configuration list for PBXNativeTarget "MovieWebKitPlugin" */;
+			buildPhases = (
+				CE16DC550D8711790077C779 /* Resources */,
+				CE16DC560D8711790077C779 /* Sources */,
+				CE16DC570D8711790077C779 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MovieWebKitPlugin;
+			productName = MovieWebKitPlugin;
+			productReference = CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 		CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */ = {
 			isa = PBXNativeTarget;
@@ -5004,6 +5053,7 @@
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
+				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -5572,6 +5622,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE16DC550D8711790077C779 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEF9D0AB0D862B5100BD9895 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6101,11 +6158,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE16DC560D8711790077C779 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE16DCE40D871C860077C779 /* KTMovieViewPlugin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEF9D0AC0D862B5100BD9895 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEF9D0C30D862C4A00BD9895 /* ImageWebKitViewFactory.m in Sources */,
+				CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6351,6 +6416,11 @@
 			isa = PBXTargetDependency;
 			name = iMediaBrowser;
 			targetProxy = 3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */;
+		};
+		CE16DC9D0D8713B40077C779 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE16DC580D8711790077C779 /* MovieWebKitPlugin */;
+			targetProxy = CE16DC9C0D8713B40077C779 /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6838,6 +6908,51 @@
 			};
 			name = Debug;
 		};
+		CE16DC5B0D8711790077C779 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "MovieWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MovieWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		CE16DC5C0D8711790077C779 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "MovieWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MovieWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
 		CEF9D0B20D862B5100BD9895 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -6963,6 +7078,15 @@
 			buildConfigurations = (
 				3CE2B2B80D7F1DD900E2711E /* Release */,
 				3CE2B2B90D7F1DD900E2711E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE16DC5D0D8711790077C779 /* Build configuration list for PBXNativeTarget "MovieWebKitPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE16DC5B0D8711790077C779 /* Release */,
+				CE16DC5C0D8711790077C779 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

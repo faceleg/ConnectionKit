@@ -1,13 +1,22 @@
+//
+//  KTMovieViewPlugin.m
+//  Marvel
+//
+//  Created by Dan Wood on 3/11/08.
+//  Copyright 2008 Karelia Software. All rights reserved.
+//
 
-#import "MovieView.h"
+#import "KTMovieViewPlugin.h"
 
-#import <WebKit/WebKit.h>
 
-@implementation MovieView
+/* THIS CODE IS SORT OF WORKING, BUT IT REALLY NEEDS TO BE MADE TO WORK FULLY TO OBEY THE EMBED ATTIRIBUTES LIKE AUTOPLAY
+ */
+
+@implementation KTMovieViewPlugin
 
 + (NSView *)plugInViewWithArguments:(NSDictionary *)arguments
 {
-    MovieView *movieView = [[[self alloc] init] autorelease];
+    KTMovieViewPlugin *movieView = [[[self alloc] init] autorelease];
     [movieView setArguments:arguments];
     return movieView;
 }
@@ -27,14 +36,14 @@
 
 - (void)webPlugInInitialize
 {
-    [self showController:YES adjustingSize:NO];
+    [self setControllerVisible:YES];
 }
 
 - (void)webPlugInStart
 {
-		/* register for dragged types */
+	/* register for dragged types */
 	[self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
-
+	
     if (!_loadedMovie) {
         _loadedMovie = YES;
         NSDictionary *webPluginAttributesObj = [_arguments objectForKey:WebPlugInAttributesKey];
@@ -42,36 +51,36 @@
         if (URLString != nil && [URLString length] != 0) {
             NSURL *baseURL = [_arguments objectForKey:WebPlugInBaseURLKey];
             NSURL *URL = [NSURL URLWithString:URLString relativeToURL:baseURL];
-            NSMovie *movie = [[NSMovie alloc] initWithURL:URL byReference:NO];
+            QTMovie *movie = [[QTMovie alloc] initWithURL:URL byReference:NO];
             [self setMovie:movie];
             [movie release];
         }
 		
-			/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 		
-			/* retrieve a reference to the container */
+		/* retrieve a reference to the container */
 		id pluginContainer = [_arguments objectForKey:WebPlugInContainerKey];
 		if (pluginContainer) {
-		
-				/* retrieve a reference to the webview */
+			
+			/* retrieve a reference to the webview */
 			WebView *myWebView = [[pluginContainer webFrame] webView];
 			
-				/* make a simple call through to JavaScript. */
+			/* make a simple call through to JavaScript. */
 			[myWebView stringByEvaluatingJavaScriptFromString:@"RunMyPlugin();"];
 		}
 		
-			/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+		
 		
     }
     
-    [self start:self];
+    [self play:self];
 }
 
 - (void)webPlugInStop
 {
 	[self unregisterDraggedTypes];
-    [self stop:self];
+    [self pause:self];
 }
 
 - (void)webPlugInDestroy
@@ -107,16 +116,13 @@
 
 - (void)play
 {
-    [self start:nil];
+    [self play:nil];
 }
 
 - (void)pause
 {
-    [self stop:nil];
+    [self pause:nil];
 }
-
-
-
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
@@ -129,13 +135,13 @@
 		[self unlockFocus];
 		[NSGraphicsContext restoreGraphicsState];
 		[self setNeedsDisplay:YES];
-
+		
         return NSDragOperationGeneric;
     }
     else
     {
         //since they aren't offering the type of operation we want, we have 
-            //to tell them we aren't interested
+		//to tell them we aren't interested
         return NSDragOperationNone;
     }
 }
@@ -153,17 +159,17 @@
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
     NSPasteboard *paste = [sender draggingPasteboard];
-        //gets the dragging-specific pasteboard from the sender
+	//gets the dragging-specific pasteboard from the sender
     NSArray *types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
-        //a list of types that we can accept
+	//a list of types that we can accept
     NSString *desiredType = [paste availableTypeFromArray:types];
     NSData *carriedData = [paste dataForType:desiredType];
-
+	
     if (nil == carriedData)
     {
         //the operation failed for some reason
         NSRunAlertPanel(@"Paste Error", @"Sorry, but the paste operation failed", 
-            nil, nil, nil);
+						nil, nil, nil);
         return NO;
     }
     else
@@ -173,15 +179,15 @@
         {
             //we have a list of file names in an NSData object
             NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
-                //be caseful since this method returns id.  
-                //We just happen to know that it will be an array.
+			//be caseful since this method returns id.  
+			//We just happen to know that it will be an array.
             NSString *path = [fileArray objectAtIndex:0];
 			CFShow(path);
-		/*	if([delegate responsesToSelector:@"handleDrop:"])
-				[delegate handleDrop:self];
-				
-				if(sender == myOutlet)
-		*/
+			/*	if([delegate responsesToSelector:@"handleDrop:"])
+			 [delegate handleDrop:self];
+			 
+			 if(sender == myOutlet)
+			 */
         }
         else
         {

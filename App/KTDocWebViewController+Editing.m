@@ -224,34 +224,85 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			}
 		}
 		
+		/*  NOT READY FOR YET -- WE NEED TO GET THE MOVIE PLUGIN FULLY WORKING.
+		 
+		// Now process the movies.  We'll just make our new embed to replace the <object> tag
+		it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[KTEditableObjectMovieDOMFilter sharedFilter] :YES];
+		
+		// Collect the elements into an array for processing later, since the loop messes with the DOM
+		NSMutableArray *movieElementsToProcess = [NSMutableArray array];
+		while ((element = (DOMHTMLElement *)[it nextNode]))
+		{
+			//NSLog(@"%@", [element outerHTML]);
+			[movieElementsToProcess addObject:element];
+		}
+		
+		NSEnumerator *objectEnum = [movieElementsToProcess objectEnumerator];
+		DOMHTMLObjectElement *object;
+		
+		while ((object = [objectEnum nextObject]) != nil)
+		{
+			// Find the embed within this object, since that's how I'm doing it, then replace this with a modified versino
+			// of that embed.
+			DOMNodeIterator *it = [[object ownerDocument] createNodeIterator:object :DOM_SHOW_ELEMENT :nil :YES];
+			DOMNode *subNode;
+			DOMHTMLEmbedElement *embed = nil;
+			
+			while ((subNode = [it nextNode]))
+			{
+				if (subNode != object)
+				{
+					DOMElement *theElement = (DOMElement *)subNode;
+					if ([[theElement tagName] isEqualToString:@"EMBED"])
+					{
+						embed = (DOMHTMLEmbedElement *)theElement;
+						break;
+					}
+				}
+			}
+			if (embed)
+			{
+				DOMHTMLEmbedElement *newEmbed = (DOMHTMLEmbedElement *)[aDOMDocument createElement:@"embed"];
+				[newEmbed setHeight:[embed height]];
+				[newEmbed setWidth:[embed width]];
+				[newEmbed setAlign:[embed align]];
+				[newEmbed setSrc:[embed src]];
+				[newEmbed setType:@"application/x-sandvox-movie-plugin"];
+				// [newEmbed removeAttribute:@"pluginspage"];
+				[[object parentNode] replaceChild:newEmbed :object];
+				
+				// NEED TO DO QUICKTIME ATTRIBUTES
+			}
+		}
+		 
+		 */
+		
+/* NOT DOING JUST YET -- WE WILL NEED TO DO A BUNCH OF WORK BEFORE THIS IS READY FOR PRIME TIME
 		// Now process the images.
 		it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[KTEditableImageDOMFilter sharedFilter] :YES];
-				
+		
 		// Collect the elements into an array for processing later, since the loop messes with the DOM
 		NSMutableArray *imageElementsToProcess = [NSMutableArray array];
 		while ((element = (DOMHTMLElement *)[it nextNode]))
 		{
-			//NSLog(@"%@", [element outerHTML]);
 			[imageElementsToProcess addObject:element];
 		}
 		
 		NSEnumerator *imageEnum = [imageElementsToProcess objectEnumerator];
 		DOMHTMLImageElement *img;
-
+		
 		while ((img = [imageEnum nextObject]) != nil)
 		{
 			DOMHTMLEmbedElement *embed = (DOMHTMLEmbedElement *)[aDOMDocument createElement:@"embed"];
-			embed.height = img.height;
-			embed.width = img.width;
-			embed.name = img.name;
-			embed.align = img.align;
-			embed.src = img.src;		// like Photos1 etc.
+			[embed setHeight:[img height]];
+			[embed setWidth:[img width]];
+			[embed setAlign:[img align]];
+			[embed setSrc:[img src]];
 			embed.type = @"application/x-sandvox-image-plugin";
-			// not sure about: align, name, src
-			NSLog(@"replacing with %@", [embed outerHTML]);
 			
 			[[img parentNode] replaceChild:embed :img];
 		}
+*/
 	}
 }
 

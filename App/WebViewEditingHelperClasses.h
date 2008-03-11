@@ -31,3 +31,18 @@
 - (short)acceptNode:(DOMNode *)node;
 
 @end
+
+
+@interface KTEditableEmbedMovieDOMFilter : NSObject <DOMNodeFilter>
+
++ (KTEditableEmbedMovieDOMFilter *)sharedFilter;
+- (short)acceptNode:(DOMNode *)node;
+
+@end
+
+@interface KTEditableObjectMovieDOMFilter : NSObject <DOMNodeFilter>
+
++ (KTEditableObjectMovieDOMFilter *)sharedFilter;
+- (short)acceptNode:(DOMNode *)node;
+
+@end
