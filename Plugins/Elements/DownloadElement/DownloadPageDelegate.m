@@ -81,6 +81,11 @@
 {
 	if ([key isEqualToString:@"downloadMedia"])
 	{
+		// Set page's file extension to match media
+		NSString *fileExtension = [[[(KTMediaContainer *)value file] valueForKey:@"filename"] pathExtension];
+		[(KTPage *)[self delegateOwner] setCustomFileExtension:fileExtension];
+		
+		
 		// Set our page's thumbnail to match the file's Finder icon
 		[[self delegateOwner] setThumbnail:[value imageWithScaleFactor:1.0]];
 		

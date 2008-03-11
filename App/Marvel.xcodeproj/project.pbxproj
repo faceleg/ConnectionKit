@@ -1581,7 +1581,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */;
+			remoteGlobalIDString = CEF9D0AE0D862B5100BD9895;
 			remoteInfo = ImageWebKitPlugin;
 		};
 /* End PBXContainerItemProxy section */
