@@ -10,6 +10,7 @@
 
 #import "KTMediaContainer.h"
 #import "KTAbstractMediaFile.h"
+#import "KTPage.h"
 #import "ContinueReadingLinkTextBlock.h"
 
 #import "NSString+Karelia.h"
@@ -63,6 +64,7 @@
 	[textBlock setRichText:[flags containsObject:@"block"]];
 	[textBlock setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [textBlock setHTMLTag:tag];
+	if ([[self currentPage] isKindOfClass:[KTPage class]]) [textBlock setPage:(KTPage *)[self currentPage]];
 	
 	[textBlock setHTMLSourceObject:object];
 	[textBlock setHTMLSourceKeyPath:keypath];

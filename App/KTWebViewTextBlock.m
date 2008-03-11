@@ -14,10 +14,12 @@
 #import "DOMNode+KTExtensions.h"
 
 #import "KTDocWindowController.h"
-#import "KTMediaContainer.h"
-#import "KTAbstractMediaFile.h"
 #import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
+
+#import "KTMediaContainer.h"
+#import "KTAbstractMediaFile.h"
+#import "KTMediaFileUpload.h"
 
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
@@ -147,6 +149,7 @@
 	[myHTMLTag release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
+	[myPage release];
 	
 	[super dealloc];
 }
@@ -214,6 +217,15 @@
 	myHTMLSourceKeyPath = keyPath;
 }
 
+- (KTPage *)page { return myPage; }
+
+- (void)setPage:(KTPage *)page
+{
+	[page retain];
+	[myPage release];
+	myPage = page;
+}
+
 #pragma mark -
 #pragma mark HTML
 
@@ -225,12 +237,12 @@
 	
 	
 	// Perform additional processing of the text according to HTML generation purpose
-	if ([self importsGraphics] && purpose == kGeneratingQuickLookPreview)
+	if ([self importsGraphics] && purpose != kGeneratingPreview)
 	{
-		// Convert media sources to quick-look compatible paths
+		// Convert media source paths
 		NSScanner *scanner = [[NSScanner alloc] initWithString:result];
 		NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
-		NSString *aString;
+		NSString *aString;	NSString *aMediaPath;
 		
 		while (![scanner isAtEnd])
 		{
@@ -241,17 +253,24 @@
 			[buffer appendString:@" src=\""];
 			[scanner setScanLocation:([scanner scanLocation] + 6)];
 			
-			[scanner scanUpToString:@"\"" intoString:&aString];
-			NSURL *aMediaURI = [NSURL URLWithString:aString];
+			[scanner scanUpToString:@"\"" intoString:&aMediaPath];
+			NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
 			KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+			
+			// Replace the path with one suitable for the specified purpose
 			if (mediaContainer)
 			{
-				[buffer appendString:[[mediaContainer file] quickLookPseudoTag]];
+				if (purpose == kGeneratingQuickLookPreview)
+				{
+					aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+				}
+				else
+				{
+					KTPage *page = [self page];		OBASSERT(page);
+					aMediaPath = [[[mediaContainer file] defaultUpload] publishedPathRelativeToPage:page];
+				}
 			}
-			else
-			{
-				[buffer appendString:aString];
-			}
+			[buffer appendString:aMediaPath];
 		}
 		
 		result = [NSString stringWithString:buffer];

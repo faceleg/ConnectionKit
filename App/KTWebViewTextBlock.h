@@ -29,6 +29,7 @@
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
+	KTPage		*myPage;
 		
 	BOOL	myIsEditing;
 }
@@ -61,6 +62,9 @@
 - (void)setHTMLSourceObject:(id)object;
 - (NSString *)HTMLSourceKeyPath;
 - (void)setHTMLSourceKeyPath:(NSString *)keyPath;
+
+- (KTPage *)page;
+- (void)setPage:(KTPage *)page;
 
 #pragma mark HTML
 - (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose;
