@@ -22,6 +22,10 @@
 	<string>${SVN_VERSION}</string>
 	<key>KTCSSClassName</key>
 	<string>file-download</string>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<false/>
 	<key>KTHelpAnchor</key>
 	<string>File_Download</string>
 	<key>KTIncludeSidebar</key>
