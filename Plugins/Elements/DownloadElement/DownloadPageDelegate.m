@@ -83,6 +83,10 @@
 {
 	if ([key isEqualToString:@"downloadMedia"])
 	{
+		// Turn on page replacement (it's off for imported pages)
+		[plugin setBool:YES forKey:@"uploadMediaInPlaceOfPage"];
+		
+		
 		// Set page's file extension to match media
 		NSString *fileExtension = [[[(KTMediaContainer *)value file] valueForKey:@"filename"] pathExtension];
 		[(KTPage *)[self delegateOwner] setCustomFileExtension:fileExtension];
