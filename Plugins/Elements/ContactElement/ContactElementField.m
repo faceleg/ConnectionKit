@@ -181,6 +181,7 @@
 			break;
 		
 		case ContactElementHiddenField:
+		case ContactElementSubmitButton:	// not really going to be there
 			result = @"hidden";
 			break;
 	}
