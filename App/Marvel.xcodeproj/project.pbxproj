@@ -2103,7 +2103,7 @@
 		CE01A07E0804A9DD009FE78A /* pageplugin.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pageplugin.icns; sourceTree = "<group>"; };
 		CE01A07F0804A9DD009FE78A /* datasource.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = datasource.icns; sourceTree = "<group>"; };
 		CE02AE450843EAD000D8A9F9 /* Sample Sites */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sample Sites"; path = "../Sample Sites"; sourceTree = SOURCE_ROOT; };
-		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
+		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		CE0F67BE0A39F53F0092DC43 /* trans16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trans16.png; sourceTree = "<group>"; };
 		CE11E2C709ED76B600A734DE /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
@@ -2547,7 +2547,7 @@
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
-		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
+		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED850770BD33EAE00FED416 /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
 		CED85A6A0BD35D5600FED416 /* draftPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draftPattern.png; sourceTree = "<group>"; };

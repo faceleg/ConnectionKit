@@ -270,12 +270,18 @@
  */
 - (NSString *)publishedPathRelativeToSite
 {
-	int collectionPathStyle = KTCollectionHTMLDirectoryPath;
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
-		collectionPathStyle = KTCollectionIndexFilePath;
+	NSString *result = [self customPathRelativeToSite];	// A plugin may have specified a custom path
+	
+	if (!result)
+	{
+		int collectionPathStyle = KTCollectionHTMLDirectoryPath;
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
+			collectionPathStyle = KTCollectionIndexFilePath;
+		}
+		
+		result = [self pathRelativeToSiteWithCollectionPathStyle:collectionPathStyle];
 	}
 	
-	NSString *result = [self pathRelativeToSiteWithCollectionPathStyle:collectionPathStyle];
 	return result;
 }
 
@@ -300,6 +306,19 @@
 // TODO:	// Make sure the result has a trailing slash if necessary
 	
 	return result;
+}
+
+
+/*	This accessor pair is used by plugins like the File Download and External Link to specify a custom path different
+ *	to the default behaviour.
+ */
+- (NSString *)customPathRelativeToSite { return [self wrappedValueForKey:@"customPathRelativeToSite"]; }
+
+- (void)setCustomPathRelativeToSite:(NSString *)path
+{
+	[self willChangeValueForKey:@"publishedPathRelativeToSite"];
+	[self setCustomPathRelativeToSite:path];
+	[self didChangeValueForKey:@"publishedPathRelativeToSite"];
 }
 
 #pragma mark -

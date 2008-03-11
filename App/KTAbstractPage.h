@@ -84,6 +84,9 @@ KTCollectionPathStyle;
 - (NSString *)publishedPathRelativeToSite;
 - (NSString *)publishedPathRelativeToPage:(KTAbstractPage *)otherPage;
 
+- (NSString *)customPathRelativeToSite;
+- (void)setCustomPathRelativeToSite:(NSString *)path;
+
 // Uploading
 - (NSString *)uploadPath;
 - (NSString *)uploadPathRelativeToParent;
