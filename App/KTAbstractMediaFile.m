@@ -19,6 +19,15 @@
 #import <QTKit/QTKit.h>
 
 
+@interface KTAbstractMediaFile ()
+- (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
+- (NSString *)uniqueUploadPath:(NSString *)preferredPath;
+@end
+
+
+#pragma mark -
+
+
 @implementation KTAbstractMediaFile
 
 + (void)initialize
@@ -56,6 +65,87 @@
 	return nil;
 }
 
+/*	Subclasses implement this to return a <!svxData> pseudo-tag for Quick Look previews
+ */
+- (NSString *)quickLookPseudoTag
+{
+	[self subclassResponsibility:_cmd];
+	return nil;
+}
+
+#pragma mark -
+#pragma mark Uploading
+
+- (KTMediaFileUpload *)defaultUpload
+{
+	// Create a MediaFileUpload object if needed
+	KTMediaFileUpload *result = [[self valueForKey:@"uploads"] anyObject];
+	
+	if (!result)
+	{
+		// Find a unique path to upload to
+		NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
+		
+		NSString *sourceFilename = nil;
+		if ([self isKindOfClass:[KTInDocumentMediaFile class]]) {
+			sourceFilename = [self valueForKey:@"sourceFilename"];
+		}
+		else {
+			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
+		}
+		
+		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:sourceFilename];
+		NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
+		result = [self insertUploadToPath:uploadPath];
+	}
+	
+	return result;
+}
+
+/*	If there isn't already an upload object for this path, create it.
+ */
+- (KTMediaFileUpload *)uploadForPath:(NSString *)path
+{
+	KTMediaFileUpload *result = nil;
+	
+	// Search for an existing upload
+	NSSet *uploads = [self valueForKey:@"uploads"];
+	NSEnumerator *uploadsEnumerator = [uploads objectEnumerator];
+	KTMediaFileUpload *anUpload;
+	
+	while (anUpload = [uploadsEnumerator nextObject])
+	{
+		if ([[anUpload valueForKey:@"pathRelativeToSite"] isEqualToString:path])
+		{
+			result = anUpload;
+			break;
+		}
+	}
+	
+	
+	// If none was found, create a new upload
+	if (!result)
+	{
+		result = [self insertUploadToPath:path];
+	}
+	
+	
+	return result;
+}
+
+/*	General, private method for creating a new media file upload.
+ */
+- (KTMediaFileUpload *)insertUploadToPath:(NSString *)path
+{
+	KTMediaFileUpload *result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaFileUpload"
+															  inManagedObjectContext:[self managedObjectContext]];
+	
+	[result setValue:path forKey:@"pathRelativeToSite"];
+	[result setValue:self forKey:@"file"];
+	
+	return result;
+}
+
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath
 {
 	NSString *result = preferredPath;
@@ -84,45 +174,8 @@
 	return result;
 }
 
-- (KTMediaFileUpload *)defaultUpload
-{
-	// Create a MediaFileUpload object if needed
-	KTMediaFileUpload *result = [[self valueForKey:@"uploads"] anyObject];
-	
-	if (!result)
-	{
-		result = [NSEntityDescription insertNewObjectForEntityForName:@"MediaFileUpload"
-														inManagedObjectContext:[self managedObjectContext]];
-		
-		// Find a unique path to upload to
-		NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
-		
-		NSString *sourceFilename = nil;
-		if ([self isKindOfClass:[KTInDocumentMediaFile class]]) {
-			sourceFilename = [self valueForKey:@"sourceFilename"];
-		}
-		else {
-			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
-		}
-		
-		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:sourceFilename];
-		NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
-		[result setValue:uploadPath forKey:@"pathRelativeToSite"];
-		
-		// Store the uload
-		[result setValue:self forKey:@"file"];
-	}
-	
-	return result;
-}
-
-/*	Subclasses implement this to return a <!svxData> pseudo-tag for Quick Look previews
- */
-- (NSString *)quickLookPseudoTag
-{
-	[self subclassResponsibility:_cmd];
-	return nil;
-}
+#pragma mark -
+#pragma mark Other
 
 + (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize
 {

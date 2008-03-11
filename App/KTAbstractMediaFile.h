@@ -24,9 +24,12 @@
 
 // Paths
 - (NSString *)currentPath;	// Where the file is currently being stored.
-- (KTMediaFileUpload *)defaultUpload;
 - (NSString *)quickLookPseudoTag;
 
+- (KTMediaFileUpload *)defaultUpload;
+- (KTMediaFileUpload *)uploadForPath:(NSString *)path;
+
+// Should be deprecated
 + (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize;
 + (NSSize)sizeOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize;
 

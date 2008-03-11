@@ -522,8 +522,8 @@ static NSArray *sReservedNames = nil;
 	{
 		// This is currently a special case to make sure Download Page media is published
 		// TODO: Generalise this code if any other plugins actually need it
-		KTMediaContainer *downloadMedia = [page valueForKey:@"downloadMedia"];
-		[self addParsedMediaFileUpload:[[downloadMedia file] defaultUpload]];
+		KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
+		[self addParsedMediaFileUpload:upload];
 	}
 		
 	[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];

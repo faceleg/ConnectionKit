@@ -178,6 +178,16 @@
 	return YES;
 }
 
+/*	Our underlying media file should be uploaded either in place of the page, or to the usual location
+ */
+- (KTMediaFileUpload *)mediaFileUpload
+{
+	NSString *path = [[self page] publishedPathRelativeToSite];
+	KTMediaContainer *media = [[self delegateOwner] valueForKey:@"downloadMedia"];
+	KTMediaFileUpload *result = [[media file] uploadForPath:path];
+	return result;
+}
+
 #pragma mark -
 #pragma mark WebView
 
