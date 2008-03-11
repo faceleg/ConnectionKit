@@ -25,3 +25,9 @@
 + (EditableNodeFilter *)sharedFilter;
 @end
 
+@interface KTEditableImageDOMFilter : NSObject <DOMNodeFilter>
+
++ (KTEditableImageDOMFilter *)sharedFilter;
+- (short)acceptNode:(DOMNode *)node;
+
+@end

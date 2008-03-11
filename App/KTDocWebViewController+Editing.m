@@ -223,6 +223,35 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 				}
 			}
 		}
+		
+		// Now process the images.
+		it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[KTEditableImageDOMFilter sharedFilter] :YES];
+				
+		// Collect the elements into an array for processing later, since the loop messes with the DOM
+		NSMutableArray *imageElementsToProcess = [NSMutableArray array];
+		while ((element = (DOMHTMLElement *)[it nextNode]))
+		{
+			//NSLog(@"%@", [element outerHTML]);
+			[imageElementsToProcess addObject:element];
+		}
+		
+		NSEnumerator *imageEnum = [imageElementsToProcess objectEnumerator];
+		DOMHTMLImageElement *img;
+
+		while ((img = [imageEnum nextObject]) != nil)
+		{
+			DOMHTMLEmbedElement *embed = (DOMHTMLEmbedElement *)[aDOMDocument createElement:@"embed"];
+			embed.height = img.height;
+			embed.width = img.width;
+			embed.name = img.name;
+			embed.align = img.align;
+			embed.src = img.src;		// like Photos1 etc.
+			embed.type = @"application/x-sandvox-image-plugin";
+			// not sure about: align, name, src
+			NSLog(@"replacing with %@", [embed outerHTML]);
+			
+			[[img parentNode] replaceChild:embed :img];
+		}
 	}
 }
 

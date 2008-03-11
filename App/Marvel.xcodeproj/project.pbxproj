@@ -869,6 +869,16 @@
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
 		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
+		CEF9D0C30D862C4A00BD9895 /* ImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */; };
+		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
+		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */ = {isa = PBXBuildFile; fileRef = CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */; };
+		CEF9D1F90D86449900BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
+		CEF9D1FA0D86449A00BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
+		CEF9D1FB0D86449A00BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
+		CEF9D2040D8644D500BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
+		CEF9D2050D8644D600BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
+		CEF9D2060D8644D600BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
 		CEFD5F410AC8E6000091287B /* help.small.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFD5F3F0AC8E6000091287B /* help.small.png */; };
 		CEFD5F420AC8E6000091287B /* help.mini.png in Resources */ = {isa = PBXBuildFile; fileRef = CEFD5F400AC8E6000091287B /* help.mini.png */; };
 /* End PBXBuildFile section */
@@ -1567,6 +1577,13 @@
 			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
 		};
+		CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */;
+			remoteInfo = ImageWebKitPlugin;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1593,6 +1610,17 @@
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
 			);
 			name = "Copy Frameworks ALWAYS";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEF9D17B0D86332F00BD9895 /* Copy Webkit Plugins */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */,
+			);
+			name = "Copy Webkit Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2546,6 +2574,13 @@
 		CEF6E4000BD727EC0006417A /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E40D0BD7280E0006417A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E40E0BD728190006417A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/CodeInjection.nib; sourceTree = "<group>"; };
+		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
+		CEF9D0C10D862C4A00BD9895 /* ImageWebKitViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWebKitViewFactory.h; sourceTree = "<group>"; };
+		CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageWebKitViewFactory.m; sourceTree = "<group>"; };
+		CEF9D1F00D86446600BD9895 /* rounded.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rounded.pdf; sourceTree = "<group>"; };
+		CEF9D1F10D86446600BD9895 /* rotate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rotate.pdf; sourceTree = "<group>"; };
+		CEF9D1F20D86446600BD9895 /* grow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = grow.pdf; sourceTree = "<group>"; };
 		CEFD5F3F0AC8E6000091287B /* help.small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.small.png; sourceTree = "<group>"; };
 		CEFD5F400AC8E6000091287B /* help.mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.mini.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2581,6 +2616,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEF9D0AD0D862B5100BD9895 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */,
+				CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2612,6 +2656,7 @@
 				8D15AC370486D014006FF6A4 /* Sandvox.app */,
 				274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */,
 				3C42E6BB0D6510BE004F35FD /* HTML.svxElement */,
+				CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2941,6 +2986,7 @@
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
 				3C5A73950BF7BA6800776464 /* HTML Parsing */,
+				CEF9D0BE0D862C2000BD9895 /* WebKit Plugin */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
@@ -2966,6 +3012,7 @@
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 				3CECB527085EA773000A9A69 /* Xcode Configurations */,
 				3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */,
+				CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -3330,6 +3377,9 @@
 		3C202F0A07E0126400DE4994 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CEF9D1F00D86446600BD9895 /* rounded.pdf */,
+				CEF9D1F10D86446600BD9895 /* rotate.pdf */,
+				CEF9D1F20D86446600BD9895 /* grow.pdf */,
 				CE7230E90D85D5BB00E9C592 /* syringe.tiff */,
 				2723219F0D48A7690075F31F /* action12.tiff */,
 				CE9CAB500BCEC56D001BF9F7 /* HostSetup */,
@@ -4465,6 +4515,15 @@
 			name = "Shared Classes";
 			sourceTree = "<group>";
 		};
+		CEF9D0BE0D862C2000BD9895 /* WebKit Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				CEF9D0C10D862C4A00BD9895 /* ImageWebKitViewFactory.h */,
+				CEF9D0C20D862C4A00BD9895 /* ImageWebKitViewFactory.m */,
+			);
+			name = "WebKit Plugin";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4706,6 +4765,7 @@
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
+				CEF9D17B0D86332F00BD9895 /* Copy Webkit Plugins */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
@@ -4721,12 +4781,30 @@
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
+				CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
 			productName = Marvel;
 			productReference = 8D15AC370486D014006FF6A4 /* Sandvox.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEF9D0B40D862B5200BD9895 /* Build configuration list for PBXNativeTarget "ImageWebKitPlugin" */;
+			buildPhases = (
+				CEF9D0AB0D862B5100BD9895 /* Resources */,
+				CEF9D0AC0D862B5100BD9895 /* Sources */,
+				CEF9D0AD0D862B5100BD9895 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ImageWebKitPlugin;
+			productName = ImageWebKitPlugin;
+			productReference = CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -4925,6 +5003,7 @@
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */,
+				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -5487,6 +5566,19 @@
 				CE7232140D85DC5A00E9C592 /* arrow_black.pdf in Resources */,
 				CE7232150D85DC5A00E9C592 /* arrow_grey_down.pdf in Resources */,
 				CE7232160D85DC5A00E9C592 /* arrow_grey_up.pdf in Resources */,
+				CEF9D1F90D86449900BD9895 /* rounded.pdf in Resources */,
+				CEF9D1FA0D86449A00BD9895 /* rotate.pdf in Resources */,
+				CEF9D1FB0D86449A00BD9895 /* grow.pdf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEF9D0AB0D862B5100BD9895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF9D2040D8644D500BD9895 /* rounded.pdf in Resources */,
+				CEF9D2050D8644D600BD9895 /* rotate.pdf in Resources */,
+				CEF9D2060D8644D600BD9895 /* grow.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6009,6 +6101,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEF9D0AC0D862B5100BD9895 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEF9D0C30D862C4A00BD9895 /* ImageWebKitViewFactory.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -6261,6 +6361,11 @@
 			isa = PBXTargetDependency;
 			name = Framework;
 			targetProxy = CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */;
+		};
+		CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */;
+			targetProxy = CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6733,6 +6838,60 @@
 			};
 			name = Debug;
 		};
+		CEF9D0B20D862B5100BD9895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "ImageWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ImageWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		CEF9D0B30D862B5100BD9895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "ImageWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ImageWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6822,6 +6981,15 @@
 			buildConfigurations = (
 				3C0CF98C085E3D50009E3AD3 /* Release */,
 				3C0CFA3F085E3E9C009E3AD3 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEF9D0B40D862B5200BD9895 /* Build configuration list for PBXNativeTarget "ImageWebKitPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEF9D0B20D862B5100BD9895 /* Release */,
+				CEF9D0B30D862B5100BD9895 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

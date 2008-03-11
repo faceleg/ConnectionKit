@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.karelia.Sandvox.ImageWebKitPlugin</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>WBPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>NSPrincipalClass</key>
+	<string>ImageWebKitViewFactory</string>
+	<key>WebPluginDescription</key>
+	<string>Plugin for Sandvox to be able to edit images from within the WebView</string>
+	<key>WebPluginMIMETypes</key>
+	<dict>
+		<key>application/x-sandvox-image-plugin</key>
+		<dict>
+			<key>WebPluginTypeDescription</key>
+			<string>Handler for image editing</string>
+		</dict>
+	</dict>
+	<key>WebPluginName</key>
+	<string>Sandvox Image WebKit Plugin</string>
+</dict>
+</plist>

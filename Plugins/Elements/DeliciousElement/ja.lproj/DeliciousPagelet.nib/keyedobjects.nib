@@ -366,7 +366,7 @@
 			</dict>
 		</dict>
 		<string>NSImage</string>
-		<string>delicious.16</string>
+		<string>delicious</string>
 		<dict>
 			<key>$classes</key>
 			<array>

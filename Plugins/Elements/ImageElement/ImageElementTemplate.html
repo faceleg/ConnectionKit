@@ -5,7 +5,7 @@
 [[if preferExternalImage]]
 [[if externalImageURL]]	
 [[if parser.liveDataFeeds]]
-		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif4]]<img src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif4]]
+		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif4]]<img class="imgelement" src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif4]]
 [[else3]]
 		<div style="padding:20px; background:rgba(0,0,0,0.25); text-align:center">
 			<p>[['This is a placeholder for the image at:]]</p>
@@ -18,12 +18,12 @@
 [[else]]
 		
 [[if delegate.linkURL]]
-		<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif2]][[if image.file.currentPath]]<img
+		<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif2]][[if image.file.currentPath]]<img class="imgelement"
 			src="[[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]]"
 			alt="[[=&altText]]"
 			width="[[mediainfo info:width media:image sizeToFit:delegate.boundingImageBox]]"
 			height="[[mediainfo info:height media:image sizeToFit:delegate.boundingImageBox]]"
-		/>[[else2]]<img 
+		/>[[else2]]<img  class="imgelement"
 			src="[[resourcepath delegate.placeholderImagePath]]"
 			alt="[[=&altText]]"
 			width="[[=delegate.boundingImageBoxWidth]]"
@@ -31,7 +31,7 @@
 		
 [[if shouldIncludeLink]][[if linkImageToOriginal]]
 		<div class="image-controls">
-			<a class="imageLink" href="[[mediainfo info:path media:image]]"><img src="[[resourcepath delegate.magResource]]" alt="[["magnify]]" title="[["View this image full-size]]"  /></a>
+			<a class="imageLink" href="[[mediainfo info:path media:image]]"><img class="imgelement" src="[[resourcepath delegate.magResource]]" alt="[["magnify]]" title="[["View this image full-size]]"  /></a>
 
 <!--
 			<a class="imageLink" href="_______"><img src="[[resourcepath delegate.dotphotoResource]]"

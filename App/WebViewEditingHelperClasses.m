@@ -105,3 +105,31 @@
 
 @end
 
+static KTEditableImageDOMFilter *sSharedEditableImageDOMFilter;
+
+@implementation KTEditableImageDOMFilter
+
++ (KTEditableImageDOMFilter *)sharedFilter
+{
+	if (!sSharedEditableImageDOMFilter)
+		sSharedEditableImageDOMFilter = [[KTEditableImageDOMFilter alloc] init];
+	return sSharedEditableImageDOMFilter;
+}
+
+- (short)acceptNode:(DOMNode *)node
+{
+	short result = DOM_FILTER_SKIP;
+	
+	DOMHTMLElement *element = ((DOMHTMLElement *)node);
+	
+	if( [element isKindOfClass:[DOMHTMLImageElement class]])
+	{
+		NSString *classes = [element className];
+		if (NSNotFound != [classes rangeOfString:@"imgelement"].location)	// // What will distinguish editable images?
+		{
+			result = DOM_FILTER_ACCEPT;
+		}
+	}
+	return result;
+}
+@end
