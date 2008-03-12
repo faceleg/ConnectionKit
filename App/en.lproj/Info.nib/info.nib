@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>IBFramework Version</key>
-	<string>629</string>
+	<string>644</string>
 	<key>IBLastKnownRelativeProjectPath</key>
-	<string>../../Marvel.xcodeproj</string>
+	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBOpenObjects</key>

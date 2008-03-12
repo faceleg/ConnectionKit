@@ -68,7 +68,7 @@
 {
 	[[self delegateOwner] lockPSCAndMOC];
 	
-	if (![aPage excludedFromSiteMap]) // addBool1 is indicator to EXCLUDE from a sitemap.
+	if (![aPage excludedFromSiteMap])
 	{
 		NSArray *children = [aPage sortedChildren];
 
@@ -122,15 +122,15 @@
 			
 			if (aWantCompact)
 			{
-				BOOL canBeCompact = YES;
+				BOOL canBeCompact = NO;
 				NSEnumerator *theEnum = [children objectEnumerator];
 				KTPage *aChildPage;
 
-				while (nil != (aChildPage = [theEnum nextObject]) )
+				while (aChildPage = [theEnum nextObject])
 				{
-					if ([aChildPage hasChildren])
+					if (![aChildPage hasChildren] && ![aChildPage excludedFromSiteMap])
 					{
-						canBeCompact = NO;
+						canBeCompact = YES;
 						break;
 					}
 				}
@@ -144,26 +144,29 @@
 				BOOL firstPass = YES;
 				[string appendIndent:anIndent+1];
 				[string appendString:@"<ul><li>\n"];
-				while (nil != (aChildPage = [theEnum nextObject]) )
+				while (aChildPage = [theEnum nextObject])
 				{
-					[string appendIndent:anIndent+2];
-					if (firstPass)
+					if (![aChildPage excludedFromSiteMap])
 					{
-						firstPass = NO;
+						[string appendIndent:anIndent+2];
+						if (firstPass)
+						{
+							firstPass = NO;
+						}
+						else
+						{
+							[string appendString:@"&middot; "];
+						}
+						if (aChildPage == thisPage)	// not likely but maybe possible
+						{
+							[string appendFormat:@"%@\n", [[aChildPage titleText] escapedEntities]];
+						}
+						else
+						{
+							[string appendFormat:@"<a href=\"%@\">%@</a>\n", [aChildPage publishedPathRelativeToPage:thisPage], [[aChildPage titleText] escapedEntities]];
+						}
+						// need separator?	
 					}
-					else
-					{
-						[string appendString:@"&middot; "];
-					}
-					if (aChildPage == thisPage)	// not likely but maybe possible
-					{
-						[string appendFormat:@"%@\n", [[aChildPage titleText] escapedEntities]];
-					}
-					else
-					{
-						[string appendFormat:@"<a href=\"%@\">%@</a>\n", [aChildPage publishedPathRelativeToPage:thisPage], [[aChildPage titleText] escapedEntities]];
-					}
-					// need separator?				
 				}
 				[string appendIndent:anIndent+1];
 				[string appendString:@"</li></ul>\n"];

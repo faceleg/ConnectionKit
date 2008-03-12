@@ -161,7 +161,7 @@
 
 - (BOOL)excludedFromSiteMap
 {
-	BOOL result = [self boolForKey:@"addBool1"];		// exclude from site map?
+	BOOL result = ![self boolForKey:@"includeInSiteMap"];		// exclude from site map?
 	if (!result)
 	{
 		// Not excluded by the flag, see if we should exclude it becuase it's an unpublished draft.
