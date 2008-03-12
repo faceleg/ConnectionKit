@@ -104,8 +104,11 @@ static NSMutableDictionary *sRendererDictionary = nil;
 		NSLog(@"QC Renderer %@ failed to render", myRenderer);
 	}
 
-	id image = [myRenderer valueForOutputKey:@"Image"];
-	NSData *data = [image TIFFRepresentation];
+	id theImage = [myRenderer valueForOutputKey:@"Image"];
+	
+	id whatsup = [theImage writeToFile:nil forManager:nil withOptions:0];
+	
+	NSData *data = [theImage TIFFRepresentation];
 	result = [[[NSImage alloc] initWithData:data] autorelease];
 	result = [result normalizeSize];
 	result = [result trimmedVertically];

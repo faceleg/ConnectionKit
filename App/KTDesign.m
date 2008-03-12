@@ -17,7 +17,7 @@
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-
+#import "Debug.h"
 
 @implementation KTDesign
 
@@ -176,7 +176,7 @@
 		fileName = [[self bundle] pathForResource:fileName ofType:@"qtz"];
 		if (nil != fileName)
 		{
-			//LOG((@"IR>>>> Using QC file: %@", fileName));
+			DJW((@"IR>>>> Using QC file: %@", fileName));
 			[params setObject:aString forKey:@"String"];		// put in mandatory string input
 			
 			if (nil != aSize)

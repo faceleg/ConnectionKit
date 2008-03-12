@@ -204,7 +204,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 - (NSData *)generatedCSSForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
 							 managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
 {
-	OFF((@"IR>>>> %@", NSStringFromSelector(_cmd)));
+	DJW((@"IR>>>> %@", NSStringFromSelector(_cmd)));
 	
 	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
 	
@@ -430,14 +430,14 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 								   string:(NSString *)aString;
 {
 	BOOL result = NO;
-	OFF((@"IR>>>> %@ %@ %@ %@", NSStringFromSelector(_cmd), aDesign, aUniqueID, aString));
+	DJW((@"IR>>>> %@ %@ %@ %@", NSStringFromSelector(_cmd), aDesign, aUniqueID, aString));
 	
 	NSMutableDictionary *designEntry = [myImageReplacementRegistry objectForKey:aDesign];
 	if (nil == designEntry)
 	{
 		designEntry = [NSMutableDictionary dictionary];
 		[myImageReplacementRegistry setObject:designEntry forKey:aDesign];		// put it in
-																				OFF((@"IR>>>> Created new entry in myImageReplacementRegistry for design:%@", aDesign));
+																				DJW((@"IR>>>> Created new entry in myImageReplacementRegistry for design:%@", aDesign));
 	}
 	
 	NSString *replacementCode = [self codeForDOMNodeID:aUniqueID];
@@ -487,12 +487,12 @@ OFF((@"size = %@", aSize));
 				nil];
 			[designEntry setObject:renderEntry forKey:aUniqueID];
 			[myReplacementImages setObject:renderedText forKey:imageKey];
-			OFF((@"IR>>>> Created new render entry: %@ - %@ - %@", [renderEntry objectForKey:@"code"], [renderEntry objectForKey:@"imageKey"], [renderEntry objectForKey:@"uniqueID"]));
+			DJW((@"IR>>>> Created new render entry: %@ - %@ - %@", [renderEntry objectForKey:@"code"], [renderEntry objectForKey:@"imageKey"], [renderEntry objectForKey:@"uniqueID"]));
 		}
 		else if (![[renderEntry objectForKey:@"string"] isEqualToString:aString]	// different string
 				 || fabsf([[renderEntry objectForKey:@"size"] floatValue] - [aSize floatValue]) > 0.01)	// or different size?
 		{
-			OFF((@"IR>>>> Updated render Entry, string changed from %@ to %@", [renderEntry objectForKey:@"string"], aString));
+			DJW((@"IR>>>> Updated render Entry, string changed from %@ to %@", [renderEntry objectForKey:@"string"], aString));
 			[renderEntry setObject:aString forKey:@"string"];
 			[renderEntry setObject:aSize forKey:@"size"];
 			[renderEntry setObject:renderedText forKey:@"image"];

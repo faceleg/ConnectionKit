@@ -509,6 +509,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[defaults setInteger:DEFAULT_LEVEL forKey:defaultsKey];
 		}
 	}
+
+#ifdef DEBUG
+	[defaults setBool:YES forKey:@"OBShouldAbortOnAssertFailureEnabled"];
+#endif
 }	
 
 // TODO: make sure that everything used with wrappedInheritedValueForKey gets mentioned here!

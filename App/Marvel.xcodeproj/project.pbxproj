@@ -503,7 +503,6 @@
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
 		CE16A3D9087319720006F80B /* KTStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16A3D7087319720006F80B /* KTStackView.m */; };
-		CE16DCA00D8713C40077C779 /* MovieWebKitPlugin.bundle in Copy Webkit Plugins */ = {isa = PBXBuildFile; fileRef = CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */; };
 		CE16DCE40D871C860077C779 /* KTMovieViewPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */; };
 		CE16DD090D871EA20077C779 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
@@ -877,7 +876,6 @@
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
-		CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */ = {isa = PBXBuildFile; fileRef = CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */; };
 		CEF9D1F90D86449900BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
 		CEF9D1FA0D86449A00BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
 		CEF9D1FB0D86449A00BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
@@ -1623,8 +1621,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CEF9D17E0D86333100BD9895 /* ImageWebKitPlugin.bundle in Copy Webkit Plugins */,
-				CE16DCA00D8713C40077C779 /* MovieWebKitPlugin.bundle in Copy Webkit Plugins */,
 			);
 			name = "Copy Webkit Plugins";
 			runOnlyForDeploymentPostprocessing = 0;

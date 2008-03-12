@@ -126,7 +126,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 				NSString *irPath = [[self document] pathForReplacementImageName:imageName designBundleIdentifier:currentDesignIdentifier];
 				
 				[element setAttribute:@"style" :[NSString stringWithFormat:@"background:url(\"%@\") top left no-repeat;", irPath]];
-				OFF((@"IR>>>> Replaced existing entry with new text and stuck on override CSS with new URL"));
+				DJW((@"IR>>>> Replaced existing entry with new text and stuck on override CSS with new URL"));
 			}
 			
 			// Check if it's empty ... if so, we will need to put in a "+" button

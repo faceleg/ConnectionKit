@@ -57,7 +57,6 @@
 @end
 
 
-#pragma mark -
 
 
 @implementation KTHTMLParser
@@ -905,11 +904,13 @@ static unsigned sLastParserID;
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 	KTDesign *design = [[(KTPage *)page master] design];
-	
+
+	OBASSERT(myDocument != nil);
+
 	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
 		&& [[(KTPage *)page master] boolForKey:@"enableImageReplacement"])
 	{
-		//LOG((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
+		DJW((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
 		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatPropertyValue];
 	}
 	else	// no image replacement, make sure it's not used.  (In case we turned it off)
