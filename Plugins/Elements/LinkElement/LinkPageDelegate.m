@@ -92,10 +92,12 @@
 		}
 	}
 	
-	int linkType = [[self delegateOwner] integerForKey:@"linkType"];
+	KTPage *page = [self delegateOwner];
+	int linkType = [page integerForKey:@"linkType"];
 	BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
-	[[self delegateOwner] setDisableComments:!linkTypeIsPageWithinPage];
-	[[self delegateOwner] setSidebarChangeable:linkTypeIsPageWithinPage];
+	[page setDisableComments:!linkTypeIsPageWithinPage];
+	[page setSidebarChangeable:linkTypeIsPageWithinPage];
+	[page setFileExtensionIsEditable:linkTypeIsPageWithinPage];
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
@@ -143,6 +145,7 @@
 		[[self delegateOwner] setPluginHTMLIsFullPage:!linkTypeIsPageWithinPage];
 		[[self delegateOwner] setDisableComments:!linkTypeIsPageWithinPage];
 		[[self delegateOwner] setSidebarChangeable:linkTypeIsPageWithinPage];
+		[(KTPage *)plugin setFileExtensionIsEditable:linkTypeIsPageWithinPage];
 		
 		NSString *customPath = nil;
 		if (!linkTypeIsPageWithinPage) customPath = [plugin valueForKey:@"linkURL"];
