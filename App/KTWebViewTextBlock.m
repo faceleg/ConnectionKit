@@ -342,8 +342,14 @@
 		NSString *newClass = [[[self DOMNode] className] stringByReplacing:@"replaced" with:@"TurnOffReplace"];
 		[[self DOMNode] setClassName:newClass];
 	}
+	
+	// <span class="in"> tags need to become blocks when beginning editing
+	if ([self isFieldEditor] && ![self hasSpanIn])
+	{
+		[[self DOMNode] setAttribute:@"style" :@"display:block;"];
+	}
 
-
+	
 	myIsEditing = YES;
 	return YES;
 }
@@ -416,8 +422,15 @@
 				[NSString stringWithFormat:@"<span class=\"in\">%@</span>", [[self DOMNode] cleanedInnerHTML]];
 			[[self DOMNode] setInnerHTML:newInnerHTML];
 		}
+	
+	
+		// <span class="in"> tags need to become blocks when beginning editing
+		if ([self isFieldEditor] && ![self hasSpanIn])
+		{
+			[[self DOMNode] removeAttribute:@"style"];
+		}
 
-
+		
 		myIsEditing = NO;
 	}
 	
