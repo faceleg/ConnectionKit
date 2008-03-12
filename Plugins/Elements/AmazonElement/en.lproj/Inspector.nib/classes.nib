@@ -59,6 +59,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSLabel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>DropShadowImageCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -120,14 +128,6 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSTextFieldCell</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSLabel</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>

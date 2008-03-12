@@ -14,6 +14,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSEmailAddressComboBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSComboBox</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>ContactElementInspectorController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -41,14 +49,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSArrayController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>UnifiedTableButton</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSButton</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -96,14 +96,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>DNDArrayController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSEmailAddressComboBox</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSComboBox</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
