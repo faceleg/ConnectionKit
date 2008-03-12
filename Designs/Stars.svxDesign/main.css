@@ -1,0 +1,466 @@
+/* 
+   css Copyright (c) 2006-2008 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+
+/*
+GLOBAL
+
+Try to define style properties as globally as possible. E.g. the basic font setting should be right there for the body element
+*/
+
+* { 
+	margin:0px;
+	padding:0px;
+}
+
+body {
+	font-family: Optima, Tahoma, sans-serif;
+	font-size: 76%; /* as recommended in CSS guide */
+	background-color:#fff;
+	color:#111;
+	word-wrap:break-word;
+	line-height:1.6;
+}
+
+a {
+	color:#5a4232;
+}
+
+a:hover {
+	color:#7b3711;
+}
+
+img {
+	border:0px #000 none;
+}
+
+ul {
+	padding-left:20px;
+	list-style-type:square;
+}
+
+#page {
+	margin-top:24px;
+	position:relative;
+}
+
+#page-top {
+	position:relative;
+	padding-top:2.7em;
+	width:100%;
+	background:url(45degreelightstripes.png);
+}
+
+#page-content {
+	margin:0px auto;
+	padding: 0px 24px;
+	max-width: 80em;
+}
+
+#main {
+}
+
+
+h2, h3, h4 {
+	background: #fff url(45degreelightstripes.png);
+	color:#5a4232;
+	text-align:center;
+	padding:3px 7px;
+	margin:10px 0px 5px 0px;
+}
+
+.article p, .article-info {
+	padding:0px 7px;
+}
+
+.article-info {
+	text-align:right;
+}
+
+#title {
+	position:relative;
+	height:128px;
+	width:100%;
+	background:url(defaultBanner.jpeg) center top no-repeat;
+}
+
+
+h1 {
+	text-align: center;
+	color: #fff;
+	text-shadow: #000 2px 1px 3px;
+	background: transparent;
+	font-size: 200%;
+	width: 770px;
+	margin:0px auto;
+	padding-top:24px;
+}
+
+
+h1 a {
+	text-decoration: none;
+	color: #fff;
+}
+
+h1 a:hover {
+	text-decoration:underline;
+	color:#fff;
+}
+
+h1 span.in {
+	width:770px;
+}
+
+.has-logo h1 span.in {
+	width:570px;
+	padding-right:200px;
+}
+
+#title p {
+	position:absolute;
+	bottom:4px;
+	width:100%;
+	font-size:120%;
+	text-align: center;
+	color: #fff;
+	text-shadow: #000 2px 1px 3px;
+}
+
+#title p span.in {
+	width:770px;
+	display:block;
+	margin:0px auto;
+}
+
+.has-logo #title p span.in {
+	width: 600px;
+	padding-right:200px;
+}
+
+#logo-container {
+	position:absolute;
+	left:50%;
+	margin-left:200px;
+	width:200px;
+	text-align:right;
+}
+
+
+
+
+/*
+SITEMENU
+*/
+#sitemenu-container {
+	position:absolute;
+	top: 0px;
+	width:100%;
+	background:#fff;
+}
+
+#sitemenu ul {
+	list-style:none;
+	line-height:2.5em;
+	height: 2.5em;
+	overflow:hidden;
+	background:#fff;
+	border-bottom: 3px double #999;
+}
+
+#sitemenu ul li {
+	display:inline;
+}
+
+#sitemenu ul li.currentPage span.in, 
+#sitemenu ul li.currentParent a span.in, 
+#sitemenu ul li a span.in {
+	display:inline-block;
+	background: #000 url(corner2.png) 0px -1px no-repeat;
+	margin:0em;
+	padding:0 1em 0.7em 1.5em;
+	color:#eee;
+	text-decoration:none;
+}
+
+#sitemenu ul li.currentPage span.in, 
+#sitemenu ul li.currentParent a span.in {
+	background: #000 url(cornerStar.png) -2px -2px no-repeat;
+}
+
+#sitemenu li a:hover span.in {
+	background: #000 url(cornerGreyStar.png) -6px -6px no-repeat;
+}
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+* html #sitemenu li a:hover span.in {
+	background: #000 url(cornerGreyStar.gif) -6px -6px no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+
+#sitemenu a {
+	text-decoration:none;
+}
+
+/*
+SIDEBAR & CALLOUTS
+*/
+
+body.allow-sidebar #main {
+	margin-right:245px;
+	padding-top:1px;
+}
+
+#sidebar {
+	margin-top:10px;
+	width:230px;
+	float:right;
+}
+
+.pagelet {
+	margin-bottom:15px;
+}
+
+.pagelet h4 {
+	margin-top:0px;
+	font-size: 133%;
+}
+
+.pagelet.bordered {
+	border:1px solid #999;
+}
+
+.pagelet.bordered.titled {
+	border-top: 0px none;
+}
+
+.pagelet.bordered h4 {
+	margin-left:-1px;
+	margin-right:-1px;
+	padding-left:24px;
+	background:#000 url(innerStar.png) -2px -2px no-repeat;
+	color: #fff;
+}
+
+.pagelet.bordered:hover h4 {
+	background:#000 url(cornerStar.png) 0px 0px no-repeat;
+}
+
+.pagelet div {
+	margin:0px 3px;
+}
+
+.pagelet p {
+	padding:0px;
+}
+
+.callout {
+	width:230px;
+	float:left;
+	margin-right:10px;
+}
+
+
+/* 
+PHOTO GRID PAGE
+*/
+
+.photogrid-index {
+    height:1%; /*  for the IEs */
+	position:relative; /* for IE < 7 */
+	margin:auto;
+    text-align: center;
+}
+
+.gridItem {
+/*	display:inline-block; argh! Firefox can't do this */
+	float:left;
+    position:relative;
+    width:150px;
+    height:190px;
+   	margin:5px;
+    overflow: hidden;
+}
+
+.gridItem * {
+	padding:0px;
+	margin: 0px;
+}
+
+.gridItem a.imageLink {
+	position: absolute;
+	bottom:54px;
+	left:10px;
+	width: 130px;
+	display:block;
+	text-align:center;
+}
+
+.gridItem img {
+    border: 1px solid #999;
+    margin: auto;
+ }
+
+.gridItem h3 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:150px;
+	height:190px;
+	background: transparent;
+    font-size: 100%;
+}
+
+.gridItem h3 a {
+	display:block;
+	position:absolute;
+	top:0px;
+	left: 0px;
+	width:150px;
+	height: 54px;
+	padding-top: 136px;
+	background: transparent;
+	text-decoration:none;
+	color:#5a4232;
+}
+
+.gridItem h3 a:hover {
+	 background:url(greyStar.png) no-repeat 2px 104px;
+}
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+* html .gridItem h3 a:hover {
+	 background:url(greyStar.gif) no-repeat 2px 104px;
+}
+/* End hide from IE5-mac */
+
+
+.gridItem h3 span.in {
+	display:block;
+	width: 100%;
+	padding:2px;
+	background: url(45degreelightstripes.png);
+}
+
+
+/*
+PHOTO NAVIGATION
+*/
+
+.photo-navigation {
+	position:relative;
+    height: 30px;
+    width:200px;
+    margin:0px auto 8px auto;
+}
+
+.photo-navigation div {
+	width:65px;
+	height:30px;
+	position: absolute;
+    text-indent: -5000em;
+}
+
+.photo-navigation a {
+	border-bottom:none;
+	display:block;
+	width:100%;
+	height:100%;
+}
+
+#previous-photo	{
+    background: url(NavigationStars.png) -1px -5px no-repeat;
+    left: 0px;
+}
+#previous-photo a {
+    background: url(NavigationStars.png) -1px -36px	no-repeat;
+}
+
+#next-photo {
+    background: url(NavigationStars.png) -75px -1px no-repeat;
+    left: 135px; 
+}
+#next-photo a {
+    background: url(NavigationStars.png) -75px -32px no-repeat;
+}
+
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
+* html #previous-photo	{
+    background: url(NavigationStars.gif) -1px -5px no-repeat;
+}
+* html #previous-photo a {
+    background: url(NavigationStars.gif) -1px -36px	no-repeat;
+}
+
+* html #next-photo {
+    background: url(NavigationStars.gif) -75px -1px no-repeat;
+}
+* html #next-photo a {
+    background: url(NavigationStars.gif) -75px -32px no-repeat;
+}
+/* End hide from IE5-mac */
+
+
+
+
+#photo-list {
+    background: url(photo-list-off.gif)	center center no-repeat;
+    left: 83px;
+    width:35px;
+}
+#photo-list a {
+    background: url(photo-list.gif)	center center	no-repeat;
+}
+
+.image-controls a {
+	border-bottom:none !important;
+}
+
+
+
+/* 
+PAGE BOTTOM
+*/
+#page-bottom {
+	margin-top:24px;
+	background: #000 url(innerStar.png) no-repeat left top;
+	padding: 0px 12px 0px 30px;
+	color:#fff;
+}
+
+#page-bottom p {
+	padding: 3px 0px 0px 0px;
+}
+
+#page-bottom p+p {
+	padding: 0px;
+}
+
+#page-bottom a {
+	color:#fff;
+}
+
+
+/* 
+SANDVOX INTERNALS
+	
+these should be present in every style sheeto ensure that certain classes used by Sandvox to hide and clear elements are respected.
+Don't change them unless you have very good reason to do so.
+*/
+
+.clear {clear: both; height: 0;}
+#main .clear {clear:left;}
+.hidden {display:none;}
+img.narrow {float: right;}
+img.wide {display: block;}
+.ImageElement, .VideoElement { text-align:center;}
