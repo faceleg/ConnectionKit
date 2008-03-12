@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -20,10 +20,14 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>KTHelpAnchor</key>
-	<string>Site_Map</string>
 	<key>KTCSSClassName</key>
 	<string>sitemap-page</string>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<false/>
+	<key>KTHelpAnchor</key>
+	<string>Site_Map</string>
 	<key>KTIncludeSidebar</key>
 	<true/>
 	<key>KTPageDisableComments</key>
