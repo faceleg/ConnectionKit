@@ -905,7 +905,7 @@ static unsigned sLastParserID;
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 	KTDesign *design = [[(KTPage *)page master] design];
 
-	OBASSERT(myDocument != nil);
+	OBASSERT([self document]);
 
 	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
 		&& [[(KTPage *)page master] boolForKey:@"enableImageReplacement"])

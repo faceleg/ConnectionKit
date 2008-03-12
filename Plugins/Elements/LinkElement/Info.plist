@@ -33,7 +33,7 @@
 	<key>KTPageDisableComments</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>url.icns</string>
+	<string>/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>iFrameHeight</key>
