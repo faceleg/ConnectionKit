@@ -1282,10 +1282,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (BOOL)iMediaBrowser:(iMediaBrowser *)browser willLoadBrowser:(NSString *)browserClassname;
 {
+	// TODO: we can take this out after the imedia update
 	BOOL result = (	[browserClassname isEqualToString:@"iMBPhotosController"]
-				|| 	[browserClassname isEqualToString:@"iMBMusicController"]
-				|| 	[browserClassname isEqualToString:@"iMBMoviesController"]
-				|| 	[browserClassname isEqualToString:@"iMBLinksController"] );
+				   || 	[browserClassname isEqualToString:@"iMBMusicController"]
+				   || 	[browserClassname isEqualToString:@"iMBMoviesController"]
+				   || 	[browserClassname isEqualToString:@"iMBLinksController"] );
+	
+	// compatibility with the new cmeyer branch
+	result |= (	[browserClassname isEqualToString:@"iMBPhotosView"]
+			   || 	[browserClassname isEqualToString:@"iMBMusicView"]
+			   || 	[browserClassname isEqualToString:@"iMBMoviesView"]
+			   || 	[browserClassname isEqualToString:@"iMBLinksView"] );
+	
 	LOG((@"iMediaBrowser: willLoadBrowser:%@ ==> %d", browserClassname, result));
 	return result;
 }
