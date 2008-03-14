@@ -13,7 +13,8 @@ function sandvoxdigg(obj) {
     var tpl = function() {
         return [
             'li', { 'class': 'rss-item' }, [
-                'a', { 'href': this.href+'?OTC-widget'[[if openLinksInNewWindow]], 'target': '_blank'[[endif2]] }, this.title[[if diggDescriptions]],
+                'a', { 'href': this.href+'?OTC-widget'[[if openLinksInNewWindow]], 'target': '_blank'[[endif2]] }, this.title[[if diggCount]],
+				'span', { 'style': 'font-size:75%' }, ' '+this.diggs+' diggs' [[endif2]][[if diggDescriptions]],
                 'div', { 'class': 'rss-body' }, this.description[[endif2]]
             ]
         ];
