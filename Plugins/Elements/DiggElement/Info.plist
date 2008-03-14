@@ -6,12 +6,12 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -31,7 +31,11 @@
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>diggCategory</key>
-		<string>All Categories</string>
+		<string>all stories</string>
+		<key>diggStoryPromotion</key>
+		<integer>1</integer>
+		<key>maximumStories</key>
+		<integer>10</integer>
 	</dict>
 	<key>KTPluginName</key>
 	<string>Digg List</string>

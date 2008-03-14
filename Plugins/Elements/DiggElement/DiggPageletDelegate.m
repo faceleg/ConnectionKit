@@ -40,17 +40,17 @@
 
 
 typedef enum { diggTypePromoted, diggTypeSubmitted, diggTypeUser, diggTypeFriends } diggType;
-typedef enum { diggHomepage, diggSubmitted, diggDugg, diggCommented } diggUserOptions;
-typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
+typedef enum { diggHomepage, diggSubmitted, diggDugg, diggCommented } DiggUserOption;
+typedef enum { DiggAllStories, DiggPopularStories, DiggUpcomingStories, DiggTopStories, DiggHotStories } DiggStoryPromotion;
+typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } DeprecatedDiggNumberMask;
 
 
 // LocalizedStringInThisBundle(@"Digg example no.", "String_On_Page_Template - followed by a number")
 
 
 @interface DiggPageletDelegate (Private)
-- (NSString *)diggMaskString;
-- (NSString *)diggTypeString;
-- (NSString *)diggCategoryString;
++ (NSString *)diggCategoryString:(NSString *)basis;
++ (NSString *)diggUserOptionString:(DiggUserOption)option;
 @end
 
 
@@ -60,8 +60,8 @@ typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } diggNumberMask;
 diggType (see enum)  --> diggTypeString
 diggUserOptions (see enum)  --> diggTypeString
 diggUser  --> diggTypeString
-diggNumberMask --> diggMaskString
-diggDescriptions --> diggMaskString
+maximumStories
+diggDescriptions
 diggCategory  (human readable version for popup) --> diggCategoryString
  */
 
@@ -92,71 +92,119 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
 	// Ensure our derived properties are up-to-date
-	[[self delegateOwner] setValue:[self diggMaskString] forKey:@"diggMaskString"];
-	[[self delegateOwner] setValue:[self diggTypeString] forKey:@"diggTypeString"];
-	[[self delegateOwner] setValue:[self diggCategoryString] forKey:@"diggCategoryString"];
+	KTPagelet *pagelet = [self delegateOwner];
+	[pagelet setValue:[[self class] diggCategoryString:[pagelet valueForKey:@"diggCategory"]] forKey:@"diggCategoryString"];
+	
+	[pagelet setValue:[[self class] diggUserOptionString:[pagelet integerForKey:@"diggUserOptions"]]
+			   forKey:@"diggUserOptionString"];
+	
+	
+	// Old pagelets have to be converted to storing their story count in the new manner
+	if (!isNewlyCreatedObject)
+	{
+		if (![[self delegateOwner] valueForKey:@"maximumStories"])
+		{
+			unsigned maxStories = 10;
+			switch([[self delegateOwner] integerForKey:@"diggNumberMask"])
+			{
+				case digg5:
+					maxStories = 5;
+					break;
+				case digg10:
+					maxStories = 10;
+					break;
+				case digg15:
+					maxStories = 15;
+					break;
+				case digg20:
+					maxStories = 20;
+					break;
+			}
+			[[self delegateOwner] setInteger:maxStories forKey:@"maximumStories"];
+		}
+	}
 }
 
 #pragma mark -
 #pragma mark HTML Generation
 
-- (NSString *)diggMaskString
++ (NSString *)diggUserOptionString:(DiggUserOption)option
 {
-	int mask = [[self delegateOwner] integerForKey:@"diggNumberMask"];
-	if (![[self delegateOwner] boolForKey:@"diggDescriptions"])
-	{
-		mask++;	// add one if NOT showing descriptions
-	}
-	return [NSString stringWithFormat:@"%u", mask];
+	NSArray *types = [NSArray arrayWithObjects:@"popular", @"submissions", @"dugg", @"commented", nil];
+	NSString *result = [types objectAtIndex:option];
+	return result;
 }
 
-// TODO: handle your friends' diggs
-
-- (NSString *)diggTypeString
++ (NSString *)diggStoryPromotionString:(DiggStoryPromotion)story
 {
-	NSArray *stringArray = [NSArray arrayWithObjects:
-		@"front", @"submitted", @"user", @"___TODO___", nil];
-	int theDiggType = [[self delegateOwner] integerForKey:@"diggType"];
-	NSString *result = [stringArray objectAtIndex:theDiggType];
-	
-	if (diggTypeUser == theDiggType)
+	NSString *result;
+	switch (story)
 	{
-		NSString *diggUser = [[self delegateOwner] valueForKey:@"diggUser"];
-		if (nil == diggUser)
-		{
-			diggUser = @"";
-		}
-		NSArray *stringArray = [NSArray arrayWithObjects:
-			@"homepage", @"submitted", @"dugg", @"commented", nil];
-		int theUserOption = [[self delegateOwner] integerForKey:@"diggUserOptions"];
-		NSString *diggUserOptionString = [stringArray objectAtIndex:theUserOption];
-		result = [NSString stringWithFormat:@"%@/%@/%@",
-						result,
-						diggUserOptionString,
-						diggUser];
-	}
-	else if (diggTypeFriends == theDiggType)
-	{
-		NSString *diggUser = [[self delegateOwner] valueForKey:@"diggUser"];
-		if (nil == diggUser)
-		{
-			diggUser = @"";
-		}
-		result = [NSString stringWithFormat:@"%@/%@",
-			result,
-			diggUser];
+		case DiggPopularStories:
+			result = @"popular";
+			break;
+		case DiggUpcomingStories:
+			result = @"upcoming";
+			break;
+		case DiggTopStories:
+			result = @"top";
+			break;
+		case DiggHotStories:
+			result = @"hot";
+			break;
+		default:
+			result = nil;
+			break;
 	}
 	return result;
 }
 
-- (NSString *)diggCategoryString
++ (NSString *)diggCategoryString:(NSString *)basis
 {
-	NSString *result = [[[self delegateOwner] valueForKey:@"diggCategory"] lowercaseString];
-	if ((nil == result) || [result hasPrefix:@"all"])
+	basis = [basis lowercaseString];
+	
+	// There are a few special cases to handle
+	if ([basis isEqualToString:@"political news"]) basis = @"politics";
+	
+	NSMutableString *buffer = [NSMutableString stringWithString:basis];
+	
+	[buffer replace:@"." with:@""];
+	[buffer replace:@" & " with:@"_"];	// Convert " & " with a simple underscore
+	[buffer replace:@" " with:@"_"];
+	[buffer replace:@"/" with:@"_"];
+	
+	if ([buffer hasPrefix:@"all"])
 	{
-		 result = @"all";
+		 buffer = nil;	/// New Digg API does not accept "all" as a parameter
 	}
-	result = [result stringByReplacing:@"/" with:@"_"];	// for linux/unix
+	
+	NSString *result = nil;
+	if (buffer) result = [NSString stringWithString:buffer];
+	
+	//[buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIICharacterSet]];
+	return result;
+}
+
+- (BOOL)diggCategoryIsTopic
+{
+	static NSSet *containers;
+	if (!containers)
+	{
+		containers = [[NSSet alloc] initWithObjects:@"Technology",
+													@"Science",
+													@"World & Business",
+													@"Sports",
+													@"Entertainment",
+													@"Gaming",
+													@"Lifestyle",
+													@"Offbeat",
+													@"News",
+													@"Videos",
+													@"Images", nil];
+	}
+	
+	NSString *diggCategory = [[self delegateOwner] valueForKey:@"diggCategory"];
+	BOOL result = ![containers containsObject:diggCategory];
 	return result;
 }
 
@@ -166,15 +214,15 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 {
 	if ([key isEqualToString:@"diggCategory"])
 	{
-		[plugin setValue:[self diggCategoryString] forKey:@"diggCategoryString"];
+		[plugin setValue:[[self class] diggCategoryString:value] forKey:@"diggCategoryString"];
 	}
-	else if ([key isEqualToString:@"diggNumberMask"] || [key isEqualToString:@"diggDescriptions"])
+	else if ([key isEqualToString:@"diggUserOptions"])
 	{
-		[plugin setValue:[self diggMaskString] forKey:@"diggMaskString"];
+		[plugin setValue:[[self class] diggUserOptionString:[value intValue]] forKey:@"diggUserOptionString"];
 	}
-	else if ([key isEqualToString:@"diggType"] || [key isEqualToString:@"diggUser"] || [key isEqualToString:@"diggUserOptions"])
+	else if ([key isEqualToString:@"diggStoryPromotion"])
 	{
-		[plugin setValue:[self diggTypeString] forKey:@"diggTypeString"];
+		[plugin setValue:[[self class] diggStoryPromotionString:[value intValue]] forKey:@"diggStoryPromotionString"];
 	}
 }
 

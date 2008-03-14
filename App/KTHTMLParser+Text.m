@@ -49,7 +49,7 @@
 	}
 	else
 	{
-		NSLog(@"textblock: usage [[textblock property:text.keyPath (flags:\"some flags\")]]");
+		NSLog(@"textblock: usage [[textblock (object:keyPath) property:keyPath (flags:\"some flags\") tag:HTMLTag]]");
 	}
 	
 	return result;

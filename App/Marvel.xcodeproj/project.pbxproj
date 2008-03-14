@@ -1580,13 +1580,6 @@
 			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
 		};
-		CEDB85A00D89E84A0052CBD1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A /* iMediaTesterSingle.app */;
-			remoteInfo = iMediaTesterSingle;
-		};
 		CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -4249,7 +4242,6 @@
 			isa = PBXGroup;
 			children = (
 				CE99830E0D614D7400F2DD12 /* iMediaTester.app */,
-				CEDB85A10D89E84A0052CBD1 /* iMediaTesterSingle.app */,
 				CE9983100D614D7400F2DD12 /* iMediaBrowser.framework */,
 				CE9983120D614D7400F2DD12 /* MetadataTool */,
 			);
@@ -5396,13 +5388,6 @@
 			fileType = wrapper.application;
 			path = "Sparkle Test App.app";
 			remoteRef = CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEDB85A10D89E84A0052CBD1 /* iMediaTesterSingle.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iMediaTesterSingle.app;
-			remoteRef = CEDB85A00D89E84A0052CBD1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
