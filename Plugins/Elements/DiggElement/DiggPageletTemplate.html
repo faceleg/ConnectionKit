@@ -1,4 +1,4 @@
-[[if document.publishingMode||parser.liveDataFeeds]]
+[[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
 
 <script type="text/javascript" src="http://digg.com/js/jquery.js"></script>
 <script type="text/javascript" src="http://digg.com/js/jquery-dom.js"></script>
@@ -13,7 +13,7 @@ function sandvoxdigg(obj) {
     var tpl = function() {
         return [
             'li', { 'class': 'rss-item' }, [
-                'a', { 'href': this.href+'?OTC-widget', 'class': 'digg-count' }, this.title[[if diggDescriptions]],
+                'a', { 'href': this.href+'?OTC-widget'[[if openLinksInNewWindow]], 'target': '_blank'[[endif2]] }, this.title[[if diggDescriptions]],
                 'div', { 'class': 'rss-body' }, this.description[[endif2]]
             ]
         ];
