@@ -26,6 +26,7 @@
 	BOOL		myImportsGraphics;
 	BOOL		myHasSpanIn;
 	NSString	*myHTMLTag;
+	NSString	*myGraphicalTextCode;
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
@@ -54,6 +55,8 @@
 - (void)setImportsGraphics:(BOOL)flag;
 - (BOOL)hasSpanIn;
 - (void)setHasSpanIn:(BOOL)flag;
+- (NSString *)graphicalTextCode;
+- (void)setGraphicalTextCode:(NSString *)code;
 
 - (NSString *)HTMLTag;
 - (void)setHTMLTag:(NSString *)tag;

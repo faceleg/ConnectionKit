@@ -147,6 +147,7 @@
 	[myDOMNode release];
 	[myDOMNodeID release];
 	[myHTMLTag release];
+	[myGraphicalTextCode release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
 	[myPage release];
@@ -180,6 +181,7 @@
 
 - (void)setImportsGraphics:(BOOL)flag { myImportsGraphics = flag; }
 
+
 /*	Many bits of editable text contain a tag like so:
  *		<span class="in">.....</span>
  *	If so, this method returns YES.
@@ -187,6 +189,20 @@
 - (BOOL)hasSpanIn { return myHasSpanIn; }
 
 - (void)setHasSpanIn:(BOOL)flag { myHasSpanIn = flag; }
+
+
+/*	When the code is a non-nil value, if the design specifies it, we swap the text for special Quartz Composer
+ *	generated images.
+ */
+- (NSString *)graphicalTextCode { return myGraphicalTextCode; }
+
+- (void)setGraphicalTextCode:(NSString *)code
+{
+	code = [code copy];
+	[myGraphicalTextCode release];
+	myGraphicalTextCode = code;
+}
+
 
 - (NSString *)HTMLTag { return myHTMLTag; }
 
