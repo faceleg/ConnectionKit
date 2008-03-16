@@ -13,7 +13,10 @@
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
 
+#import "KTDesign.h"
 #import "KTDocWindowController.h"
+#import "KTMaster.h"
+#import "KTPage.h"
 #import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
 
@@ -191,19 +194,6 @@
 - (void)setHasSpanIn:(BOOL)flag { myHasSpanIn = flag; }
 
 
-/*	When the code is a non-nil value, if the design specifies it, we swap the text for special Quartz Composer
- *	generated images.
- */
-- (NSString *)graphicalTextCode { return myGraphicalTextCode; }
-
-- (void)setGraphicalTextCode:(NSString *)code
-{
-	code = [code copy];
-	[myGraphicalTextCode release];
-	myGraphicalTextCode = code;
-}
-
-
 - (NSString *)HTMLTag { return myHTMLTag; }
 
 - (void)setHTMLTag:(NSString *)tag
@@ -240,6 +230,46 @@
 	[page retain];
 	[myPage release];
 	myPage = page;
+}
+
+#pragma mark -
+#pragma mark Graphical Text
+
+/*	When the code is a non-nil value, if the design specifies it, we swap the text for special Quartz Composer
+ *	generated images.
+ */
+- (NSString *)graphicalTextCode { return myGraphicalTextCode; }
+
+- (void)setGraphicalTextCode:(NSString *)code
+{
+	code = [code copy];
+	[myGraphicalTextCode release];
+	myGraphicalTextCode = code;
+}
+
+/*	Returns nil if there is no graphical text in use
+ */
+- (NSString *)graphicalTextPreviewStyle
+{
+	NSString *result = nil;
+	
+	NSString *graphicalTextCode = [self graphicalTextCode];
+	if (graphicalTextCode)
+	{
+		KTPage *page = [self page];		OBASSERT(page);
+		KTMaster *master = [page master];
+		if ([master boolForKey:@"enableImageReplacement"])
+		{
+			KTDesign *design = [master design];
+			NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+			if (graphicalTextSettings)
+			{
+				result = @"text-indent:-1000px;";
+			}
+		}
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -310,38 +340,49 @@
 	}
 	
 	
+	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<%@", [self HTMLTag]];
+	
 	// All content should have kBlock or kLine as its class to keep processEditableElements happy
-	NSString *openingHTML;
-	if ([self isFieldEditor])
+	NSString *idClass = [NSString stringWithFormat:@" id=\"%@\" class=\"in %@\"",
+												   [self DOMNodeID],
+												   ([self isRichText]) ? @"kBlock" : @"kLine"];
+	
+	if (![self isFieldEditor] && ![self hasSpanIn])
 	{
-		openingHTML = [NSString stringWithFormat:@"<%@><span id=\"%@\" class=\"in %@\">",
-												 [self HTMLTag],
-												 [self DOMNodeID],
-												 ([self isRichText]) ? @"kBlock" : @"kLine"];
+		[buffer appendString:idClass];
 	}
-	else
+	
+	
+	// Add in preview graphical text styling if there is any
+	NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
+	if (graphicalTextStyle)
 	{
-		openingHTML = [NSString stringWithFormat:@"<%@ id=\"%@\" class=\"%@\">",
-												 [self HTMLTag],
-												 [self DOMNodeID],
-												 ([self isRichText]) ? @"kBlock" : @"kLine"];
+		[buffer appendFormat:@" style=\"%@\"", graphicalTextStyle];
 	}
+	
+	
+	// Close off the first tag
+	[buffer appendString:@">"];	
+	if ([self isFieldEditor] && ![self hasSpanIn])	// For normal, single-line text the span is the editable bit
+	{
+		[buffer appendFormat:@"<span%@>", idClass];
+	}
+	
+	
+	// Stick in the main HTML
+	[buffer appendString:innerHTML];
 	
 	
 	// Figure out closing tag
-	NSString *closingHTML;
-	if ([self isFieldEditor])
+	if ([self isFieldEditor] && ![self hasSpanIn])
 	{
-		closingHTML = [NSString stringWithFormat:@"</span></%@>", [self HTMLTag]];
+		[buffer appendString:@"</span>"];
 	}
-	else
-	{
-		closingHTML = [NSString stringWithFormat:@"</%@>", [self HTMLTag]];
-	}
+	[buffer appendFormat:@"</%@>", [self HTMLTag]];
 	
 	
-	// Build complete HTML
-	NSString *result = [NSString stringWithFormat:@"%@\n%@\n%@", openingHTML, innerHTML, closingHTML];
+	// Tidy up
+	NSString *result = [NSString stringWithString:buffer];
 	return result;
 }
 
@@ -352,19 +393,19 @@
 {
 	NSAssert(!myIsEditing, @"Can't become first responder, already editing");
 	
-	// I don't entirely understand what this does yet
-	if ([[[self DOMNode] className] rangeOfString:@"replaced"].location != NSNotFound)
-	{
-		NSString *newClass = [[[self DOMNode] className] stringByReplacing:@"replaced" with:@"TurnOffReplace"];
-		[[self DOMNode] setClassName:newClass];
-	}
-	
 	// <span class="in"> tags need to become blocks when beginning editing
 	if ([self isFieldEditor] && ![self hasSpanIn])
 	{
 		[[self DOMNode] setAttribute:@"style" :@"display:block;"];
 	}
-
+	
+	
+	// Graphical text needs to be turned off
+	if ([self graphicalTextCode] && [self isFieldEditor] && ![self hasSpanIn])
+	{
+		DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
+		[node removeAttribute:@"style"];
+	}
 	
 	myIsEditing = YES;
 	return YES;
@@ -446,6 +487,14 @@
 			[[self DOMNode] removeAttribute:@"style"];
 		}
 
+		
+		// Graphical text needs to be turned back on
+		if ([self graphicalTextCode] && [self isFieldEditor] && ![self hasSpanIn])
+		{
+			DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
+			[node setAttribute:@"style" :[self graphicalTextPreviewStyle]];
+		}
+		
 		
 		myIsEditing = NO;
 	}

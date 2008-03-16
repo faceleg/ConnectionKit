@@ -82,7 +82,7 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[if master.headerImageHidesH1]]
 						<h1 class="hidden">[[=master.siteTitleHTML]]</h1>
 [[else2]]
-						<h1[[idClass entity:Root property:master.siteTitleHTML flags:"line" id:document.documentID replacement:master.siteTitleText code:h1h]]><span class="in">[[=master.siteTitleHTML]]</span></h1>
+						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1h]]
 [[endif2]]
 [[else]]
 [[if master.logoImage.file]]

@@ -42,9 +42,16 @@
 		if (tag && ![tag isKindOfClass:[NSString class]]) tag = nil;
 		
 		
-		// Build the text block
+		// Flags
 		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
-		result = [self textblockForKeyPath:textKeyPath ofObject:object flags:flags HTMLTag:tag];
+		
+		// Build the text block
+		result = [self textblockForKeyPath:textKeyPath
+								  ofObject:object
+									 flags:flags
+								   HTMLTag:tag
+						 graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]];
+		
 		if (!result) result = @"";
 	}
 	else
@@ -55,7 +62,8 @@
 	return result;
 }
 
-- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object flags:(NSArray *)flags HTMLTag:(NSString *)tag
+- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+							flags:(NSArray *)flags HTMLTag:(NSString *)tag graphicalTextCode:(NSString *)GTCode
 {
 	// Build the text block
 	KTWebViewTextBlock *textBlock = [[KTWebViewTextBlock alloc] init];
@@ -64,7 +72,12 @@
 	[textBlock setRichText:[flags containsObject:@"block"]];
 	[textBlock setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [textBlock setHTMLTag:tag];
-	if ([[self currentPage] isKindOfClass:[KTPage class]]) [textBlock setPage:(KTPage *)[self currentPage]];
+	[textBlock setGraphicalTextCode:GTCode];
+	
+	if ([[self currentPage] isKindOfClass:[KTPage class]])
+	{
+		[textBlock setPage:(KTPage *)[self currentPage]];
+	}
 	
 	[textBlock setHTMLSourceObject:object];
 	[textBlock setHTMLSourceKeyPath:keypath];

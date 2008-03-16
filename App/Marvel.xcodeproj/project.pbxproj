@@ -205,6 +205,8 @@
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2786BEE70CAD24980086F9E0 /* KTMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BEE50CAD24980086F9E0 /* KTMediaManager.m */; };
+		2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */; };
+		2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */; };
 		278B95AF0D382AC700E5053A /* KTSimpleScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
 		278B95B00D382AC700E5053A /* KTSimpleScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */; };
 		278B95B30D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
@@ -1690,6 +1692,8 @@
 		2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInDocumentMediaFile.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
+		2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTGraphicalTextMediaContainer.h; sourceTree = "<group>"; };
+		2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTGraphicalTextMediaContainer.m; sourceTree = "<group>"; };
 		278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSimpleScaledImageContainer.h; sourceTree = "<group>"; };
 		278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSimpleScaledImageContainer.m; sourceTree = "<group>"; };
 		278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNamedSettingsScaledImageContainer.h; sourceTree = "<group>"; };
@@ -2844,6 +2848,8 @@
 				278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */,
 				278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */,
 				278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */,
+				2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */,
+				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
 			);
 			name = MediaContainers;
 			sourceTree = "<group>";
@@ -4770,6 +4776,7 @@
 				CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */,
 				27D90B3B0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h in Headers */,
 				CEBFCE6F0D7F53DC006B94B9 /* KSPlugin.h in Headers */,
+				2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6143,6 +6150,7 @@
 				27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */,
 				CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */,
 				CEBFCE700D7F53DC006B94B9 /* KSPlugin.m in Sources */,
+				2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
