@@ -10,6 +10,9 @@
 #import "KTMediaManager.h"
 
 
+@class KTDesign, KTGraphicalTextMediaContainer;
+
+
 @interface KTMediaManager (Internal)
 
 // designated initializer
@@ -36,6 +39,13 @@
 
 // Missing media
 - (NSSet *)missingMediaFiles;
+
+
+// Graphical Text
+- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
+													design:(KTDesign *)design
+									  imageReplacementCode:(NSString *)imageReplacementCode
+													  size:(float)size;
 
 @end
 

@@ -20,7 +20,9 @@
 #import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
 
+#import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
+#import "KTGraphicalTextMediaContainer.h"
 #import "KTAbstractMediaFile.h"
 #import "KTMediaFileUpload.h"
 
@@ -264,7 +266,19 @@
 			NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
 			if (graphicalTextSettings)
 			{
-				result = @"text-indent:-1000px;";
+				// Generate the image
+				KTMediaManager *mediaManager = [page mediaManager];
+				KTMediaContainer *image = [mediaManager graphicalTextWithString:[self innerHTML:kGeneratingPreview]
+																		 design:design
+														   imageReplacementCode:graphicalTextCode
+																		  size:[master floatForKey:@"graphicalTitleSize"]];
+				
+				KTAbstractMediaFile *mediaFile = [image file];
+				
+				result = [NSString stringWithFormat:@"text-indent:-1000px; background:url(%@); width:%ipx; height:%ipx;",
+													[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
+													[mediaFile integerForKey:@"width"],
+													[mediaFile integerForKey:@"height"]];
 			}
 		}
 	}

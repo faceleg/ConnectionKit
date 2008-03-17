@@ -10,6 +10,7 @@
 
 #import "Debug.h"
 #import "KT.h"
+#import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTExternalMediaFile.h"
@@ -506,6 +507,50 @@
 	{
 		LOG((@"Creating external MediaFile from path:\r%@", path));
 		result = [KTExternalMediaFile insertExternalMediaFileWithPath:path inManagedObjectContext:[self managedObjectContext]];
+	}
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Graphical Text
+
+/*	Returns an existing graphical text MediaContainer or creates a new one.
+ */
+- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
+													design:(KTDesign *)design
+									  imageReplacementCode:(NSString *)imageReplacementCode
+													  size:(float)size
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:
+		@"text == %@ AND designIdentifier == %@ AND imageReplacementCode == %@ AND size == %f",
+		string,
+		[[design bundle] bundleIdentifier],
+		imageReplacementCode,
+		size];
+	
+	NSArray *objects = [[self managedObjectContext] objectsWithEntityName:@"GraphicalText" predicate:predicate error:NULL];
+	KTGraphicalTextMediaContainer *result = [objects firstObjectOrNilIfEmpty];
+	
+	if (!result)
+	{
+		// Create the container
+		result = [NSEntityDescription insertNewObjectForEntityForName:@"GraphicalText"
+											   inManagedObjectContext:[self managedObjectContext]];
+		
+		[result setValue:string forKey:@"text"];
+		[result setValue:[[design bundle] bundleIdentifier] forKey:@"designIdentifier"];
+		[result setValue:imageReplacementCode forKey:@"imageReplacementCode"];
+		[result setFloat:size forKey:@"size"];
+		
+		
+		// Create the actual graphic
+		NSImage *image = [design replacementImageForCode:imageReplacementCode
+												  string:string
+													size:[NSNumber numberWithFloat:size]];
+		
+		KTAbstractMediaFile *mediaFile = [self mediaFileWithImage:image];
+		[result setValue:mediaFile forKey:@"file"];
 	}
 	
 	return result;

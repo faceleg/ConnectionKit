@@ -106,7 +106,7 @@ static NSMutableDictionary *sRendererDictionary = nil;
 
 	id theImage = [myRenderer valueForOutputKey:@"Image"];
 	
-	id whatsup = [theImage writeToFile:nil forManager:nil withOptions:0];
+	//id whatsup = [theImage writeToFile:nil forManager:nil withOptions:0];
 	
 	NSData *data = [theImage TIFFRepresentation];
 	result = [[[NSImage alloc] initWithData:data] autorelease];
