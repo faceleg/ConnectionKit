@@ -30,7 +30,7 @@
 	unsigned long myDirectoryPermissions;
 	NSString *myPublishedURL;
 	int myWhere;
-
+	
 	BOOL myDoGrowl;
 	BOOL myKeepPublishing;
 	BOOL myHadFilesToUpload;
@@ -48,6 +48,7 @@
 	NSMutableSet		*myMediaFileUploads;
 	
 	NSMutableSet		*myParsedResources;
+	NSMutableDictionary	*myParsedGraphicalTextBlocks;
 	
 	NSMutableDictionary *myFilesTransferred;
 		

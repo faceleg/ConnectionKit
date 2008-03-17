@@ -523,11 +523,11 @@
 													  size:(float)size
 {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:
-		@"text == %@ AND designIdentifier == %@ AND imageReplacementCode == %@ AND size == %f",
+		@"text == %@ AND designIdentifier == %@ AND imageReplacementCode == %@ AND textSize BETWEEN { %f , %f }",
 		string,
 		[[design bundle] bundleIdentifier],
 		imageReplacementCode,
-		size];
+		size - 0.01, size + 0.01];
 	
 	NSArray *objects = [[self managedObjectContext] objectsWithEntityName:@"GraphicalText" predicate:predicate error:NULL];
 	KTGraphicalTextMediaContainer *result = [objects firstObjectOrNilIfEmpty];
@@ -541,7 +541,7 @@
 		[result setValue:string forKey:@"text"];
 		[result setValue:[[design bundle] bundleIdentifier] forKey:@"designIdentifier"];
 		[result setValue:imageReplacementCode forKey:@"imageReplacementCode"];
-		[result setFloat:size forKey:@"size"];
+		[result setFloat:size forKey:@"textSize"];
 		
 		
 		// Create the actual graphic

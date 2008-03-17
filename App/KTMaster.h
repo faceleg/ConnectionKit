@@ -9,12 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 #import "KT.h"
+#import "KTDocument.h"
+
+
 @class KTDesign;
 @class KTMediaContainer;
 
+
 @interface KTMaster : NSManagedObject 
 {
-
 }
 
 - (NSString *)siteTitleText;
@@ -37,6 +40,6 @@
 - (KTTimestampType)timestampType;
 - (void)setTimestampType:(KTTimestampType)timestampType;
 
-- (NSString *)masterCSSForPurpose:(int)generationPurpose;
+- (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 - (NSString *)publishedMasterCSSPathRelativeToSite;
 @end

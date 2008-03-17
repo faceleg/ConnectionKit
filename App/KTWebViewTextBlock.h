@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class KTDocWebViewController;
+@class KTDocWebViewController, KTMediaContainer;
 
 
 @interface KTWebViewTextBlock : NSObject
@@ -55,8 +55,6 @@
 - (void)setImportsGraphics:(BOOL)flag;
 - (BOOL)hasSpanIn;
 - (void)setHasSpanIn:(BOOL)flag;
-- (NSString *)graphicalTextCode;
-- (void)setGraphicalTextCode:(NSString *)code;
 
 - (NSString *)HTMLTag;
 - (void)setHTMLTag:(NSString *)tag;
@@ -68,6 +66,10 @@
 
 - (KTPage *)page;
 - (void)setPage:(KTPage *)page;
+
+- (NSString *)graphicalTextCode;
+- (void)setGraphicalTextCode:(NSString *)code;
+- (KTMediaContainer *)graphicalTextMedia;
 
 #pragma mark HTML
 - (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose;

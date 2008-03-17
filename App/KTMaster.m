@@ -353,7 +353,7 @@
 #pragma mark -
 #pragma mark CSS
 
-- (NSString *)masterCSSForPurpose:(int)generationPurpose;
+- (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 {
 	NSString *result = nil;
 	NSMutableString *buffer = [[NSMutableString alloc] init];

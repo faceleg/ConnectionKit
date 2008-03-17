@@ -71,25 +71,25 @@
 #import "KTInfoWindowController.h"
 #import "KTMaster.h"
 #import "KTTranscriptController.h"
+#import "KTWebViewTextBlock.h"
 #import "KTUtilities.h"
-#import "NSWorkspace+Karelia.h"
-#import "NSThread+Karelia.h"
-#import "NSString+Karelia.h"
 
 #import "KTMediaContainer.h"
-
 #import "KTAbstractMediaFile.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "NSApplication+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
 #import "NSData+Karelia.h"
 #import "NSHelpManager+KTExtensions.h"
-#import "NSBundle+Karelia.h"
-#import "NSApplication+Karelia.h"
-
 #import "NSString+Publishing.h"
 #import "NSString-Utilities.h"
+#import "NSWorkspace+Karelia.h"
+#import "NSThread+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
@@ -99,7 +99,7 @@
 static NSArray *sReservedNames = nil;
 
 
-@interface KTTransferController ( Private )
+@interface KTTransferController ()
 
 - (void)threadedPrepareHostForUpload;
 
@@ -112,6 +112,10 @@ static NSArray *sReservedNames = nil;
 
 - (void)setDocumentRoot:(NSString *)docRoot;
 - (void)setSubfolder:(NSString *)subfolder;
+
+- (NSDictionary *)graphicalTextBlocks;
+- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock;
+- (void)removeAllGraphicalTextBlocks;
 
 - (void)pingThisURLString:(NSString *)aURLString;
 @end
@@ -150,6 +154,7 @@ static NSArray *sReservedNames = nil;
 		myUploadedPathsMap = [[NSMutableDictionary alloc] init];
 		myUploadedDesigns = [[NSMutableSet alloc] init];
 		myParsedResources = [[NSMutableSet alloc] init];
+		myParsedGraphicalTextBlocks = [[NSMutableDictionary alloc] init];
 		myParsedMediaFileUploads = [[NSMutableSet alloc] init];
 		myMediaFileUploads = [[NSMutableSet alloc] init];
 		myFilesTransferred = [[NSMutableDictionary alloc] init];
@@ -237,6 +242,7 @@ static NSArray *sReservedNames = nil;
 	[myUploadedPathsMap release];
 	[myUploadedDesigns release];
 	[myParsedResources release];
+	[myParsedGraphicalTextBlocks release];
 	[myParsedMediaFileUploads release];
 	[myMediaFileUploads release];
 	
@@ -672,6 +678,7 @@ static NSArray *sReservedNames = nil;
 	[myUploadedPathsMap removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
+	[self removeAllGraphicalTextBlocks];
 	[self removeAllParsedMediaFileUploads];
 	[self removeAllMediaFileUploads];
 	
@@ -1096,53 +1103,6 @@ static NSArray *sReservedNames = nil;
 	
 	// Mark the design as being uploaded
 	[myUploadedDesigns addObject:design];
-			
-			
-			
-			
-			
-			
-			// Upload the Image Replacement Files for this design
-			/*
-			NSDictionary *imageReplacementRegistry = [[self associatedDocument] imageReplacementRegistry];
-			NSDictionary *designEntry = [imageReplacementRegistry objectForKey:designBundleIdentifier];
-			if ([designEntry count])
-			{
-				NSString *IRRemotePath = [path stringByAppendingPathComponent:kKTImageReplacementFolder];
-				[myController createDirectory:IRRemotePath permissions:myDirectoryPermissions];
-				
-				NSEnumerator *enumerator = [designEntry objectEnumerator];
-				id item;
-				
-				while ( (item = [enumerator nextObject]) && myKeepPublishing )
-				{
-					if (!myKeepPublishing) return NO;
-
-					NSImage *image = [item objectForKey:@"image"];
-					NSData *imageData = [image PNGRepresentation];
-					
-					NSString *imageName = [NSString stringWithFormat:@"replacementImages.%@.png",
-						[item objectForKey:@"imageKey"]];
-					NSString *remoteImagePath = [IRRemotePath stringByAppendingPathComponent:imageName];
-
-					[self uploadFromData:imageData toFile:remoteImagePath];
-
-					if (!myKeepPublishing) return NO;
-					[myController setPermissions:myPagePermissions forFile:remoteImagePath];					
-				}
-			}
-			poolLoopCounter++;
-			if (poolLoopCounter % 3 == 2)
-			{
-				[innerPool release];
-				innerPool = [[NSAutoreleasePool alloc] init];
-			}
-			if (!myKeepPublishing)
-			{
-				// cleanup!
-				[innerPool release];
-				return NO; // @finally will still be executed
-			}*/
 }
 
 /*	A dictionary with the information needeed to publish the main site design.
@@ -1162,19 +1122,48 @@ static NSArray *sReservedNames = nil;
 	KTDesign *design = [master design];
 	[info setObject:design forKey:@"design"];
 	
+	
 	// Version
 	NSString *versionLastPublished = [master valueForKeyPath:@"designPublishingInfo.versionLastPublished"];
 	[info setValue:versionLastPublished forKey:@"versionLastPublished"];	// Accounts for a nil version
 	
-	// Master CSS. Inform of the banner image if there is one
+	
+	// Master CSS. Inform of the banner image (if there is one) & graphical text.
 	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
-	[info setValue:masterCSS forKey:@"masterCSS"];
 	
 	KTAbstractMediaFile *bannerImage = [[master bannerImage] file];
 	if (bannerImage)
 	{
 		[self addParsedMediaFileUpload:[bannerImage defaultUpload]];
 	}
+	
+	NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
+	if (graphicalTextBlocks && [graphicalTextBlocks count] > 0)
+	{
+		if (!masterCSS) masterCSS = @"";
+		
+		// Add on CSS for each block
+		NSEnumerator *textBlocksEnumerator = [graphicalTextBlocks keyEnumerator];
+		NSString *aGraphicalTextID;
+		while (aGraphicalTextID = [textBlocksEnumerator nextObject])
+		{
+			KTWebViewTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
+			KTAbstractMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
+			
+			NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
+			
+			NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+			[CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
+			[CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
+			[CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
+			//[CSS replace:@"_URL_" with:[[aGraphicalText defaultUpload] publishedPathRelativeToSite]];
+			
+			masterCSS = [masterCSS stringByAppendingString:CSS];
+		}
+	}
+	
+	[info setValue:masterCSS forKey:@"masterCSS"];
+	
 	
 	// Tidy up and return
 	NSDictionary *result = [NSDictionary dictionaryWithDictionary:info];
@@ -1477,6 +1466,18 @@ static NSArray *sReservedNames = nil;
 	}
 }
 
+/*	Upload graphical text media
+ */
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
+{
+	KTMediaFileUpload *upload = [[[textBlock graphicalTextMedia] file] defaultUpload];
+	if (upload)
+	{
+		[self addGraphicalTextBlock:textBlock];
+		[self addParsedMediaFileUpload:upload];
+	}
+}
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -1532,6 +1533,24 @@ static NSArray *sReservedNames = nil;
 	return result;
 }
 
+#pragma mark graphical text
+
+- (NSDictionary *)graphicalTextBlocks
+{
+	return myParsedGraphicalTextBlocks;
+}
+
+- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock
+{
+	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[textBlock graphicalTextMedia] identifier]];
+	[myParsedGraphicalTextBlocks setObject:textBlock forKey:ID];
+}
+
+- (void)removeAllGraphicalTextBlocks
+{
+	[myParsedGraphicalTextBlocks removeAllObjects];
+}
+
 #pragma mark -
 #pragma mark Progress Panel
 
@@ -1552,6 +1571,7 @@ static NSArray *sReservedNames = nil;
 	[myUploadedPathsMap removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
+	[self removeAllGraphicalTextBlocks];
 	[self removeAllParsedMediaFileUploads];
 	[self removeAllMediaFileUploads];
 	

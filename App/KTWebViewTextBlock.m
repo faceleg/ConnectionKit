@@ -249,11 +249,9 @@
 	myGraphicalTextCode = code;
 }
 
-/*	Returns nil if there is no graphical text in use
- */
-- (NSString *)graphicalTextPreviewStyle
+- (KTMediaContainer *)graphicalTextMedia
 {
-	NSString *result = nil;
+	KTMediaContainer *result = nil;
 	
 	NSString *graphicalTextCode = [self graphicalTextCode];
 	if (graphicalTextCode)
@@ -268,19 +266,31 @@
 			{
 				// Generate the image
 				KTMediaManager *mediaManager = [page mediaManager];
-				KTMediaContainer *image = [mediaManager graphicalTextWithString:[self innerHTML:kGeneratingPreview]
-																		 design:design
-														   imageReplacementCode:graphicalTextCode
-																		  size:[master floatForKey:@"graphicalTitleSize"]];
-				
-				KTAbstractMediaFile *mediaFile = [image file];
-				
-				result = [NSString stringWithFormat:@"text-indent:-1000px; background:url(%@); width:%ipx; height:%ipx;",
-													[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
-													[mediaFile integerForKey:@"width"],
-													[mediaFile integerForKey:@"height"]];
+				result = [mediaManager graphicalTextWithString:[self innerHTML:kGeneratingPreview]
+														design:design
+										  imageReplacementCode:graphicalTextCode
+														  size:[master floatForKey:@"graphicalTitleSize"]];
 			}
 		}
+	}
+	
+	return result;
+}
+
+/*	Returns nil if there is no graphical text in use
+ */
+- (NSString *)graphicalTextPreviewStyle
+{
+	NSString *result = nil;
+	
+	KTMediaContainer *image = [self graphicalTextMedia];
+	KTAbstractMediaFile *mediaFile = [image file];
+	if (mediaFile)
+	{			
+		result = [NSString stringWithFormat:@"text-indent:-1000px; background:url(%@); width:%ipx; height:%ipx;",
+											[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
+											[mediaFile integerForKey:@"width"],
+											[mediaFile integerForKey:@"height"]];
 	}
 	
 	return result;
@@ -371,7 +381,14 @@
 	NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 	if (graphicalTextStyle)
 	{
-		[buffer appendFormat:@" style=\"%@\"", graphicalTextStyle];
+		if (purpose == kGeneratingPreview)
+		{
+			[buffer appendFormat:@" style=\"%@\"", graphicalTextStyle];
+		}
+		else
+		{
+			[buffer appendFormat:@" id=\"graphical-text-%@\"", [[self graphicalTextMedia] identifier]];
+		}
 	}
 	
 	

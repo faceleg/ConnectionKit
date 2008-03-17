@@ -73,7 +73,7 @@
 	}
 	
 	
-	// If we're in preview mode include addition edting CSS
+	// If we're in preview mode include additional edting CSS
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
