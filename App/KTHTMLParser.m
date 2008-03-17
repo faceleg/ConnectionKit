@@ -897,33 +897,15 @@ static unsigned sLastParserID;
 		resultingID = [NSString stringWithFormat:@"%@-%@", resultingID, code];
 	}
 	
-	BOOL usingImageReplacement = NO;
-		
 	// Mark for image replacement ONLY if QC supported.
 	KTAbstractPage *page = [self currentPage];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
-	KTDesign *design = [[(KTPage *)page master] design];
 
 	//OBASSERT([self document]);
 
-	if (nil != flatProperty && nil != code && CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay)
-		&& [[(KTPage *)page master] boolForKey:@"enableImageReplacement"])
-	{
-		DJW((@"IR>>>> Replacement [[id tag, id=%@ flatProperty=%@ selector=%@",resultingID, flatProperty, code));
-		usingImageReplacement = [myDocument useImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatPropertyValue];
-	}
-	else	// no image replacement, make sure it's not used.  (In case we turned it off)
-	{
-		[myDocument removeImageReplacementEntryForDesign:[design identifier] uniqueID:resultingID string:flatProperty];
-	}
 	
 	NSString *result;
-	if (usingImageReplacement)
-	{
-		[classes addObject:@"replaced"];	// class used for designs to have special behavior on replace elements
-	}
-
 	// return ID string as an ID declaration for the HTML
 	result = [NSString stringWithFormat:@" id=\"%@\"", resultingID];
 	

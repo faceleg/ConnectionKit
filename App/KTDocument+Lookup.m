@@ -290,34 +290,6 @@
 }
 
 
-- (BOOL)useImageReplacementEntryForDesign:(NSString *)aDesign
-								uniqueID:(NSString *)aUniqueID
-								  string:(NSString *)aString;
-{
-	return [[self windowController] useImageReplacementEntryForDesign:aDesign
-															uniqueID:aUniqueID
-															  string:aString];
-}
-
-- (void)removeImageReplacementEntryForDesign:(NSString *)aDesign
-								   uniqueID:(NSString *)aUniqueID
-									 string:(NSString *)aString;
-{
-	return [[self windowController] removeImageReplacementEntryForDesign:aDesign
-															   uniqueID:aUniqueID
-																 string:aString];
-}
-
-- (NSMutableDictionary *)replacementImages
-{
-    return [[self windowController] replacementImages];
-}
-
-- (NSMutableDictionary *)imageReplacementRegistry
-{
-    return [[self windowController] imageReplacementRegistry];
-}
-
 /*
 	Recursively build map.  Home page gets priority 1.0; second level pages 0.5, third 0.33, etc.
 	Items in the site map (besides home page) get 0.95, 0.90, 0.85, ... 0.55 in order that they appear
@@ -392,13 +364,6 @@
 	}
 	[buf appendString:@"</urlset>\n"];
 	return buf;
-}
-
-- (NSData *)generatedCSSForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
-							 managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
-{
-    return [[self windowController] generatedCSSForDesignBundleIdentifier:aDesignBundleIdentifier
-													 managedObjectContext:aManagedObjectContext];
 }
 
 /*!	Return path appropriate for inclusion in page; changes whether published or previewing

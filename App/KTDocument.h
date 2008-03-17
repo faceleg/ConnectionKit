@@ -212,21 +212,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 - (NSString *)registrationHash;
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 
-
-- (BOOL)useImageReplacementEntryForDesign:(NSString *)aDesign
-								uniqueID:(NSString *)aUniqueID
-								  string:(NSString *)aString;
-- (void)removeImageReplacementEntryForDesign:(NSString *)aDesign	
-								   uniqueID:(NSString *)aUniqueID
-									 string:(NSString *)aString;
-
-- (NSData *)generatedCSSForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
-							 managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
-
 - (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
-
-- (NSMutableDictionary *)imageReplacementRegistry;
-- (NSMutableDictionary *)replacementImages;
 
 - (NSString *)absoluteURLForResourceFile:(NSString *)aFile;
 - (NSString *)URLForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;

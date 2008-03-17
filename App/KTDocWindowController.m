@@ -150,8 +150,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setAddPagePopUpButton:nil];
     [self setAddPageletPopUpButton:nil];
     [self setHTMLSource:nil];
-    [self setImageReplacementRegistry:nil];
-    [self setReplacementImages:nil];
     [self setSelectedDOMRange:nil];
     [self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];

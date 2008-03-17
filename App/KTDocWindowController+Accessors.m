@@ -236,30 +236,6 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
     myLastClickedPoint = aLastClickedPoint;
 }
 
-- (NSMutableDictionary *)imageReplacementRegistry
-{
-    return myImageReplacementRegistry;
-}
-
-- (void)setImageReplacementRegistry:(NSMutableDictionary *)anImageReplacementRegistry
-{
-    [anImageReplacementRegistry retain];
-    [myImageReplacementRegistry release];
-    myImageReplacementRegistry = anImageReplacementRegistry;
-}
-
-- (NSMutableDictionary *)replacementImages
-{
-    return myReplacementImages;
-}
-
-- (void)setReplacementImages:(NSMutableDictionary *)aReplacementImages
-{
-    [aReplacementImages retain];
-    [myReplacementImages release];
-    myReplacementImages = aReplacementImages;
-}
-
 - (NSMutableDictionary *)toolbars
 {
     return myToolbars;

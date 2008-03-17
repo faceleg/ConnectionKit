@@ -105,29 +105,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			
 			// Turn back on "replaced" class and update its contents
 			NSString *theClass = [element className];
-			if (NSNotFound != [theClass rangeOfString:@"TurnOffReplace"].location)
-			{
-				NSString *newClass = [theClass stringByReplacing:@"TurnOffReplace" with:@"replaced"];
-				[element setClassName:newClass];
-				
-				NSString *currentDesignIdentifier = [[[[self windowController] siteOutlineController] selectedPage] valueForKey:@"master.design.identifier"];
-				
-				(void) [[self windowController] useImageReplacementEntryForDesign:currentDesignIdentifier
-													  uniqueID:theID
-														string:[element innerText]];
-				
-				// Now we have to trick the node to displaying the new image
-				
-				NSMutableDictionary *designEntry = [[[self windowController] imageReplacementRegistry] objectForKey:currentDesignIdentifier];
-				NSMutableDictionary *renderEntry = [designEntry objectForKey:theID];
-				
-				NSString *imageName = [NSString stringWithFormat:@"replacementImages.%@.png",
-					[renderEntry objectForKey:@"imageKey"]];
-				NSString *irPath = [[self document] pathForReplacementImageName:imageName designBundleIdentifier:currentDesignIdentifier];
-				
-				[element setAttribute:@"style" :[NSString stringWithFormat:@"background:url(\"%@\") top left no-repeat;", irPath]];
-				DJW((@"IR>>>> Replaced existing entry with new text and stuck on override CSS with new URL"));
-			}
 			
 			// Check if it's empty ... if so, we will need to put in a "+" button
 			BOOL hasEmbed = NSNotFound != [[element outerHTML] rangeOfString:@"<embed"].location;

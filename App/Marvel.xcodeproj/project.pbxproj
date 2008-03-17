@@ -628,7 +628,6 @@
 		CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34930082961880073A7A4 /* KTInfoWindowController.m */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
 		CEB3510D08298A1D0073A7A4 /* KTDocument+Lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */; };
-		CEB53A7A0899A99C006B0019 /* KTDesignURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
@@ -5907,7 +5906,6 @@
 				CE16A3D9087319720006F80B /* KTStackView.m in Sources */,
 				CE6FFB92088EF02500AD0154 /* KTDesignPickerView.m in Sources */,
 				CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */,
-				CEB53A7A0899A99C006B0019 /* KTDesignURLProtocol.m in Sources */,
 				CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */,
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,
 				CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */,

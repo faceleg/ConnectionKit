@@ -98,10 +98,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet KSBorderlessWindow		*oMessageWindow;
 	IBOutlet NSTextField			*oMessageTextField;
 	
-	// Image Replacement
-	NSMutableDictionary				*myImageReplacementRegistry;
-	NSMutableDictionary				*myReplacementImages;
-	
 	// selection
 	KTInlineImageElement			*mySelectedInlineImageElement;
 	KTPagelet						*mySelectedPagelet;
@@ -247,17 +243,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (id)itemForDOMNodeID:(NSString *)anID;
 
-- (NSData *)generatedCSSForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
-							 managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
-
-- (BOOL)useImageReplacementEntryForDesign:(NSString *)aDesign
-								 uniqueID:(NSString *)aUniqueID
-								   string:(NSString *)aString;
-
-- (void)removeImageReplacementEntryForDesign:(NSString *)aDesign
-									uniqueID:(NSString *)aUniqueID
-									  string:(NSString *)aString;
-
 - (NSMutableDictionary *)contextElementInformation;
 - (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation;
 
@@ -313,12 +298,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 //- (NSString *)selectedBlockItemProperty;
 //- (void)setSelectedBlockItemProperty:(NSString *)aSelectedBlockItemProperty;
-
-- (NSMutableDictionary *)imageReplacementRegistry;
-- (void)setImageReplacementRegistry:(NSMutableDictionary *)anImageReplacementRegistry;
-
-- (NSMutableDictionary *)replacementImages;
-- (void)setReplacementImages:(NSMutableDictionary *)aReplacementImages;
 
 - (NSMutableDictionary *)toolbars;
 - (void)setToolbars:(NSMutableDictionary *)aToolbars;
