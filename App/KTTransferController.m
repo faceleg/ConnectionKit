@@ -1156,7 +1156,10 @@ static NSArray *sReservedNames = nil;
 			[CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
 			[CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
 			[CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-			//[CSS replace:@"_URL_" with:[[aGraphicalText defaultUpload] publishedPathRelativeToSite]];
+			
+			NSString *baseMediaPath = [[aGraphicalText defaultUpload] valueForKey:@"pathRelativeToSite"];
+			NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
+			[CSS replace:@"_URL_" with:mediaPath];
 			
 			masterCSS = [masterCSS stringByAppendingString:CSS];
 		}
