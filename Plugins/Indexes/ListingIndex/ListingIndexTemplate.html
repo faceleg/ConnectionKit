@@ -1,7 +1,7 @@
 <ul>
 [[foreach pages item]]
 	<li class="[[i]] [[eo]][[last]]">
-		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy anchor" id:item.uniqueID]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
+		[[textblock property:item.titleHTML flags:"line" tag:h3 hyperlink:item]]
 	</li>
 [[endForEach]]
 </ul>

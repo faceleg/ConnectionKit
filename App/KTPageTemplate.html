@@ -111,19 +111,19 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[if firstParentOrSelfInSiteMenu==toplink]]
 [[if toplink==parser.currentPage]]
 									<li class="[[i]] [[eo]][[last]] currentPage">
-										[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:mc tag:span]]
+										[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:mc tag:span]]
 									</li>
 [[else3]]
 									<li class="[[i]] [[eo]][[last]] currentParent">
 										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:m tag:span]]
+											[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:m tag:span]]
 										</a>
 									</li>
 [[endif3]]
 [[else2]]
 									<li class="[[i]] [[eo]][[last]]">
 										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:m tag:span]]
+											[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:m tag:span]]
 										</a>
 									</li>
 [[endif2]]
@@ -148,11 +148,7 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 
 [[if aPagelet.canHaveTitle]]
 [[if aPagelet.titleHTML|editing]]
-[[if aPagelet.titleLinkURLPath]]
-									<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional anchor" id:aPagelet.uniqueID replacement:titleText code:h4s]]><a href="[[=&aPagelet.titleLinkURLPath]]"><span class="in">[[=aPagelet.titleHTML]]</span></a></h4>
-[[else5]]
-									<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional" id:aPagelet.uniqueID replacement:titleText code:h4s]]><span class="in">[[=aPagelet.titleHTML]]</span></h4>
-[[endif5]]
+									[[textblock property:aPagelet.titleHTML flags:"line" tag:h4 graphicalTextCode:h4s]]
 [[endif4]]
 [[endif3]]
 									<div class="pagelet-body">
@@ -180,7 +176,7 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 				<div class="clear"></div>
 
 				<div id="page-bottom">
-					<div[[idClass entity:Page property:master.copyrightHTML flags:"block optional" id:uniqueID]]>[[=master.copyrightHTML]]</div>
+					[[textblock property:master.copyrightHTML flags:"block"]]
 					<div class="hidden">[[`backToTopTitleHTML]]<a href="#title">[[`backToTopLinkHTML]]</a></div>
 				</div> <!-- page-bottom -->
 			</div> <!-- container -->
