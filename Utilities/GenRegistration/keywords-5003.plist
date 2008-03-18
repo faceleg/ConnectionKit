@@ -88,7 +88,16 @@
 	<array>
 		<string>cuadra</string>
 		<string>galilee</string>
-		<string>unnaked</string>
+		<string>coila</string>
+		<string>bandos</string>
+		<string>fermis</string>
+		<string>galilee</string>
+		<string>sherpas</string>
+		<string>coachers</string>
+		<string>impolite</string>
+		<string>nonnatty</string>
+		<string>oestroid</string>
+		<string>spinages</string>
 	</array>
 	<array>
 		<string>caret</string>
@@ -460,7 +469,6 @@
 		<string>lanyard</string>
 		<string>roseate</string>
 		<string>sausage</string>
-		<string>talbot</string>
 		<string>tarpum</string>
 		<string>thumper</string>
 	</array>
@@ -1405,6 +1413,19 @@
 		<string>stion</string>
 		<string>untress</string>
 		<string>warrior</string>
+		<string>oreas</string>
+		<string>walla</string>
+		<string>camisa</string>
+		<string>abandum</string>
+		<string>claying</string>
+		<string>gravior</string>
+		<string>piaroan</string>
+		<string>airdrops</string>
+		<string>brigalow</string>
+		<string>ladyhood</string>
+		<string>littling</string>
+		<string>usufruit</string>
+		<string>weddedly</string>
 	</array>
 	<array>
 		<string>airdock</string>
@@ -1690,6 +1711,13 @@
 		<string>hodful</string>
 		<string>mound</string>
 		<string>putty</string>
+		<string>pris</string>
+		<string>jibing</string>
+		<string>crambos</string>
+		<string>sandbar</string>
+		<string>drenches</string>
+		<string>poundman</string>
+		<string>unchosen</string>
 	</array>
 	<array>
 		<string>clipper</string>
@@ -1984,6 +2012,19 @@
 		<string>rheinic</string>
 		<string>silked</string>
 		<string>teleuto</string>
+		<string>kelts</string>
+		<string>ontic</string>
+		<string>coscob</string>
+		<string>harrod</string>
+		<string>zaramo</string>
+		<string>derides</string>
+		<string>achilles</string>
+		<string>broiling</string>
+		<string>exposers</string>
+		<string>joystick</string>
+		<string>photonic</string>
+		<string>rippling</string>
+		<string>unbought</string>
 	</array>
 	<array>
 		<string>gool</string>
@@ -2050,6 +2091,16 @@
 		<string>roomed</string>
 		<string>unbored</string>
 		<string>wog</string>
+		<string>cady</string>
+		<string>torta</string>
+		<string>welds</string>
+		<string>woken</string>
+		<string>awoken</string>
+		<string>founce</string>
+		<string>dislink</string>
+		<string>expound</string>
+		<string>untaken</string>
+		<string>mudproof</string>
 	</array>
 	<array>
 		<string>baffy</string>
