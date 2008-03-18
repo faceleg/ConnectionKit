@@ -7,6 +7,7 @@
 //
 
 #import "KTHTMLParser+Private.h"
+#import "KTHTMLParserMasterCache.h"
 
 #import "KTMediaContainer.h"
 #import "KTAbstractMediaFile.h"
@@ -32,9 +33,22 @@
 	NSString *textKeyPath = [parameters objectForKey:@"property"];
 	if (textKeyPath)
 	{
-		// Find the right object
+		// Find the right object and key path
 		id object = [parameters objectForKey:@"object"];
-		if (!object) object = [self component];
+		if (!object)
+		{
+			NSArray *keyPathComponents = [textKeyPath componentsSeparatedByString:@"."];
+			NSString *firstKey = [keyPathComponents objectAtIndex:0];
+			object = [[self cache] overridingValueForKey:firstKey];
+			if (object)
+			{
+				textKeyPath = [textKeyPath substringFromIndex:([firstKey length] + 1)];
+			}
+			else
+			{
+				object = [self component];
+			}
+		}
 		
 		
 		// HTML tag
@@ -45,12 +59,19 @@
 		// Flags
 		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
 		
+		// Hyperlink
+		KTAbstractPage *hyperlink = nil;
+		NSString *hyperlinkKeyPath = [parameters objectForKey:@"hyperlink"];
+		if (hyperlinkKeyPath) hyperlink = [[self cache] valueForKeyPath:hyperlinkKeyPath];
+		
+		
 		// Build the text block
 		result = [self textblockForKeyPath:textKeyPath
 								  ofObject:object
 									 flags:flags
 								   HTMLTag:tag
-						 graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]];
+						 graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
+							     hyperlink:hyperlink];
 		
 		if (!result) result = @"";
 	}
@@ -63,16 +84,29 @@
 }
 
 - (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-							flags:(NSArray *)flags HTMLTag:(NSString *)tag graphicalTextCode:(NSString *)GTCode
+							flags:(NSArray *)flags
+						  HTMLTag:(NSString *)tag
+				graphicalTextCode:(NSString *)GTCode
+						hyperlink:(KTAbstractPage *)hyperlink
 {
 	// Build the text block
 	KTWebViewTextBlock *textBlock = [[KTWebViewTextBlock alloc] init];
 	
-	[textBlock setFieldEditor:[flags containsObject:@"line"]];
-	[textBlock setRichText:[flags containsObject:@"block"]];
+	BOOL fieldEditor = [flags containsObject:@"line"];
+	BOOL richText = [flags containsObject:@"block"];
+	
+	if (!fieldEditor && !richText) [textBlock setEditable:NO];
+	[textBlock setFieldEditor:fieldEditor];
+	[textBlock setRichText:richText];
 	[textBlock setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [textBlock setHTMLTag:tag];
 	[textBlock setGraphicalTextCode:GTCode];
+	
+	if (hyperlink)
+	{
+		NSString *path = [self pathToPage:hyperlink];
+		[textBlock setHyperlink:path];
+	}
 	
 	if ([[self currentPage] isKindOfClass:[KTPage class]])
 	{

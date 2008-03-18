@@ -89,12 +89,18 @@
 // parsing
 - (NSString *)parseTemplate;
 
+// Fucntions
+- (NSString *)pathToPage:(KTAbstractPage *)page;
+
 @end
 
 
 @interface KTHTMLParser (Text)
 - (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-							flags:(NSArray *)flags HTMLTag:(NSString *)tag graphicalTextCode:(NSString *)GTCode;
+							flags:(NSArray *)flags
+						  HTMLTag:(NSString *)tag
+				graphicalTextCode:(NSString *)GTCode
+						hyperlink:(KTAbstractPage *)hyperlink;
 @end
 
 

@@ -1402,18 +1402,24 @@ static unsigned sLastParserID;
 	}
 	
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
-	
+	NSString *result = [self pathToPage:targetPage];
+	return result;
+}
+
+- (NSString *)pathToPage:(KTAbstractPage *)page
+{
 	NSString *result;
+	
 	switch ([self HTMLGenerationPurpose])
 	{
 		case kGeneratingPreview:
-			result = [targetPage previewPath];
+			result = [page previewPath];
 			break;
 		case kGeneratingQuickLookPreview:
 			result= @"javascript:void(0)";
 			break;
 		default:
-			result = [targetPage publishedPathRelativeToPage:[self currentPage]];
+			result = [page publishedPathRelativeToPage:[self currentPage]];
 			break;
 	}
 	

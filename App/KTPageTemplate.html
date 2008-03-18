@@ -95,7 +95,7 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path document.root]]">[[=master.siteTitleHTML]]</a></h1>
 [[else2]]
-						<h1[[idClass entity:Root property:master.siteTitleHTML flags:"line anchor" id:document.documentID replacement:master.siteTitleText code:h1]]><a href="[[path document.root]]"><span class="in">[[=master.siteTitleHTML]]</span></a></h1>
+						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:document.root]]
 [[endif2]]
 [[endif]]
 						[[textblock property:master.siteSubtitleHTML flags:"line" tag:p]]
@@ -111,25 +111,19 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[if firstParentOrSelfInSiteMenu==toplink]]
 [[if toplink==parser.currentPage]]
 									<li class="[[i]] [[eo]][[last]] currentPage">
-										<span[[idClass class:in entity:Page_sitemenu property:titleHTML flags:"copy" id:toplink.uniqueID replacement:toplink.menuTitleOrTitle code:mc]]>
-											[[=toplink.menuTitleOrTitle]]
-										</span>
+										[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:mc tag:span]]
 									</li>
 [[else3]]
 									<li class="[[i]] [[eo]][[last]] currentParent">
 										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											<span[[idClass class:in entity:Page_sitemenu property:titleHTML flags:"copy anchor" id:toplink.uniqueID replacement:toplink.menuTitleOrTitle code:m]]>
-												[[=toplink.menuTitleOrTitle]]
-											</span>
+											[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:m tag:span]]
 										</a>
 									</li>
 [[endif3]]
 [[else2]]
 									<li class="[[i]] [[eo]][[last]]">
 										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											<span[[idClass class:in entity:Page_sitemenu property:titleHTML flags:"copy anchor" id:toplink.uniqueID replacement:toplink.menuTitleOrTitle code:m]]>
-												[[=toplink.menuTitleOrTitle]]
-											</span>
+											[[textblock property:toplink.menuTitleOrTitle graphicalTextTag:m tag:span]]
 										</a>
 									</li>
 [[endif2]]

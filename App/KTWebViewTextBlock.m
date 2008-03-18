@@ -103,6 +103,7 @@
 	[super init];
 	
 	myDOMNodeID = [ID copy];
+	myIsEditable = YES;
 	[self setHTMLTag:@"div"];
 	[[KTWebViewTextBlock knownTextBlocks] setObject:self forKey:ID];	// That's a wak ref
 	
@@ -153,6 +154,7 @@
 	[myDOMNodeID release];
 	[myHTMLTag release];
 	[myGraphicalTextCode release];
+	[myHyperlink release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
 	[myPage release];
@@ -174,19 +176,6 @@
 	myDOMNode = node;
 }
 
-- (BOOL)isFieldEditor { return myIsFieldEditor; }
-
-- (void)setFieldEditor:(BOOL)flag { myIsFieldEditor = flag; }
-
-- (BOOL)isRichText { return myIsRichText; }
-
-- (void)setRichText:(BOOL)flag { myIsRichText = flag; }
-
-- (BOOL)importsGraphics { return myImportsGraphics; }
-
-- (void)setImportsGraphics:(BOOL)flag { myImportsGraphics = flag; }
-
-
 /*	Many bits of editable text contain a tag like so:
  *		<span class="in">.....</span>
  *	If so, this method returns YES.
@@ -205,6 +194,18 @@
 	tag = [tag copy];
 	[myHTMLTag release];
 	myHTMLTag = tag;
+}
+
+- (NSString *)hyperlink { return myHyperlink; }
+
+- (void)setHyperlink:(NSString *)hyperlink
+{
+	// We can't have a hyperlink and be editable at the same time
+	if ([self isEditable]) [self setEditable:NO];
+	
+	hyperlink = [hyperlink copy];
+	[myHyperlink release];
+	myHyperlink = hyperlink;
 }
 
 - (id)HTMLSourceObject { return myHTMLSourceObject; }
@@ -233,6 +234,25 @@
 	[myPage release];
 	myPage = page;
 }
+
+#pragma mark NSTextView clone
+
+- (BOOL)isEditable { return myIsEditable; }
+
+- (void)setEditable:(BOOL)flag { myIsEditable = flag; }
+
+- (BOOL)isFieldEditor { return myIsFieldEditor; }
+
+- (void)setFieldEditor:(BOOL)flag { myIsFieldEditor = flag; }
+
+- (BOOL)isRichText { return myIsRichText; }
+
+- (void)setRichText:(BOOL)flag { myIsRichText = flag; }
+
+- (BOOL)importsGraphics { return myImportsGraphics; }
+
+- (void)setImportsGraphics:(BOOL)flag { myImportsGraphics = flag; }
+
 
 #pragma mark -
 #pragma mark Graphical Text
@@ -364,20 +384,28 @@
 	}
 	
 	
+	// Construct the actual HTML
 	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<%@", [self HTMLTag]];
 	
-	// All content should have kBlock or kLine as its class to keep processEditableElements happy
-	NSString *idClass = [NSString stringWithFormat:@" id=\"%@\" class=\"in %@\"",
-												   [self DOMNodeID],
-												   ([self isRichText]) ? @"kBlock" : @"kLine"];
 	
-	if (![self isFieldEditor] && ![self hasSpanIn])
+	// Open the main tag
+	// In some situations we generate both the main tag, and a <span class="in">
+	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
+	if (!generateSpanIn)
 	{
-		[buffer appendString:idClass];
+		[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
+		if ([self isEditable])
+		{
+			[buffer appendFormat:@" class=\"%@\"", ([self isRichText]) ? @"kBlock" : @"kLine"];
+		}
+		else if (![self isEditable])
+		{
+			[buffer appendString:@" class=\"in\""];
+		}
 	}
 	
 	
-	// Add in preview graphical text styling if there is any
+	// Add in graphical text styling if there is any
 	NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 	if (graphicalTextStyle)
 	{
@@ -392,11 +420,27 @@
 	}
 	
 	
-	// Close off the first tag
-	[buffer appendString:@">"];	
-	if ([self isFieldEditor] && ![self hasSpanIn])	// For normal, single-line text the span is the editable bit
+	// Close off the main tag
+	[buffer appendString:@">"];
+	
+	
+	
+	// Place a hyperlink if required
+	if ([self hyperlink])
 	{
-		[buffer appendFormat:@"<span%@>", idClass];
+		[buffer appendFormat:@"<a href=\"%@\">", [self hyperlink]];
+	}
+	
+	
+	// Generate <span class="in"> if desired
+	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
+	{
+		[buffer appendFormat:@"<span id=\"%@\"", [self DOMNodeID]];
+		if ([self isEditable])
+		{
+			[buffer appendFormat:@" class=\"%@\"", ([self isRichText]) ? @"kBlock" : @"kLine"];
+		}
+		[buffer appendString:@">"];
 	}
 	
 	
@@ -404,11 +448,12 @@
 	[buffer appendString:innerHTML];
 	
 	
-	// Figure out closing tag
-	if ([self isFieldEditor] && ![self hasSpanIn])
+	// End all tags
+	if (generateSpanIn)
 	{
 		[buffer appendString:@"</span>"];
 	}
+	if ([self hyperlink]) [buffer appendString:@"</a>"];
 	[buffer appendFormat:@"</%@>", [self HTMLTag]];
 	
 	

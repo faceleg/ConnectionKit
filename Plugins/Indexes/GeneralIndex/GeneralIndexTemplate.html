@@ -3,7 +3,7 @@
 [[if page.collectionHyperlinkPageTitles]]
 		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy anchor" id:item.uniqueID replacement:item.titleText code:h3]]><a [[target item]]href="[[path item]]"><span class="in">[[=item.titleHTML]]</span></a></h3>
 [[else]]
-		<h3[[idClass entity:Page property:item.titleHTML flags:"line copy" id:item.uniqueID replacement:item.titleText code:h3]]><span class="in">[[=item.titleHTML]]</span></h3>
+		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
 [[endif]]
 [[if item.thumbnail]]
 		<div class="article-thumbnail">

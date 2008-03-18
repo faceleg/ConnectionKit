@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class KTDocWebViewController, KTMediaContainer;
+@class KTDocWebViewController, KTMediaContainer, KTAbstractPage;
 
 
 @interface KTWebViewTextBlock : NSObject
@@ -21,12 +21,14 @@
 	NSString		*myDOMNodeID;
 	DOMHTMLElement	*myDOMNode;
 	
-	BOOL		myIsFieldEditor;
-	BOOL		myIsRichText;
-	BOOL		myImportsGraphics;
-	BOOL		myHasSpanIn;
-	NSString	*myHTMLTag;
-	NSString	*myGraphicalTextCode;
+	BOOL			myIsEditable;
+	BOOL			myIsFieldEditor;
+	BOOL			myIsRichText;
+	BOOL			myImportsGraphics;
+	BOOL			myHasSpanIn;
+	NSString		*myHTMLTag;
+	NSString		*myGraphicalTextCode;
+	NSString		*myHyperlink;
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
@@ -47,6 +49,8 @@
 - (NSString *)DOMNodeID;
 - (DOMHTMLElement *)DOMNode;
 
+- (BOOL)isEditable;
+- (void)setEditable:(BOOL)flag;
 - (BOOL)isFieldEditor;
 - (void)setFieldEditor:(BOOL)flag;
 - (BOOL)isRichText;
@@ -58,6 +62,9 @@
 
 - (NSString *)HTMLTag;
 - (void)setHTMLTag:(NSString *)tag;
+
+- (NSString *)hyperlink;
+- (void)setHyperlink:(NSString *)hyperlink;
 
 - (id)HTMLSourceObject;
 - (void)setHTMLSourceObject:(id)object;

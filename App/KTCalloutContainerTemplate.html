@@ -10,7 +10,7 @@
 [[if aPagelet.titleLinkURLPath]]
 						<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional anchor" id:aPagelet.uniqueID replacement:titleText code:h4c]]><a href="[[=&aPagelet.titleLinkURLPath]]"><span class="in">[[=aPagelet.titleHTML]]</span></a></h4>
 [[else4]]
-						<h4[[idClass entity:Pagelet property:titleHTML flags:"line optional" id:aPagelet.uniqueID replacement:titleText code:h4c]]><span class="in">[[=aPagelet.titleHTML]]</span></h4>
+						[[textblock property:aPagelet.titleHTML flags:"line" tag:h4 graphicalTextCode:h4c]]
 [[endif4]]
 [[endif3]]
 [[endif2]]
