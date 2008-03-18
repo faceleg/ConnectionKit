@@ -206,7 +206,7 @@
 	<key>SUCheckAtStartup</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>http://launch.karelia.com/marvel/marvel-alpha.xml</string>
+	<string>http://launch.karelia.com/appcast.php?appname=${PRODUCT_NAME}&amp;version=${SVN_VERSION}</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
