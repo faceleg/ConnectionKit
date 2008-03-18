@@ -129,9 +129,11 @@
 #pragma mark -
 #pragma mark KVC Overriding
 
-- (NSSet *)overriddenKeys
+- (id)overridingValueForKey:(NSString *)key;
 {
-	return [NSSet setWithArray:[myOverrides allKeys]];
+	KTHTMLParserCache *subCache = [myOverrides objectForKey:key];
+	id result = [subCache proxyObject];
+	return result;
 }
 
 /*	Overrides the default behaviour for any further -valueForKey: or -valueForKeyPath: calls

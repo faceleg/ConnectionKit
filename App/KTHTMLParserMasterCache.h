@@ -29,7 +29,7 @@
 - (id)valueForKeyPath:(NSString *)keyPath informDelegate:(BOOL)informDelegate;
 
 // KVC Overrides
-- (NSSet *)overriddenKeys;
+- (id)overridingValueForKey:(NSString *)key;
 - (void)overrideKey:(NSString *)key withValue:(id)override;
 - (void)removeOverrideForKey:(NSString *)key;
 
