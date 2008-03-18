@@ -17,6 +17,8 @@
 			<dict>
 				<key>reportLatestCrash</key>
 				<string>id</string>
+				<key>showFeedbackReporter</key>
+				<string>id</string>
 				<key>showPluginWindow</key>
 				<string>id</string>
 				<key>showRegistrationWindow</key>
