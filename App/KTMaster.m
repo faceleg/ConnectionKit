@@ -48,6 +48,9 @@
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
 	[self setValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
+	
+	// Enable/disable graphical text
+	[self setBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"] forKey:@"enableImageReplacement"];
 }
 
 - (void)awakeFromFetch
