@@ -170,7 +170,7 @@
 	
 	if (movie)
 	{
-		result = [movie betterPosterImage];		// from iMedia 
+		result = [movie betterPosterImage]; 
 	}
 	else
 	{

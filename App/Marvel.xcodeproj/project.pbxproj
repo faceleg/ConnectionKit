@@ -603,6 +603,8 @@
 		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
 		CE8E83500917EFE2001DC88D /* designCoverRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834C0917EFE2001DC88D /* designCoverRight.png */; };
 		CE8E83510917EFE2001DC88D /* designCoverRightSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834D0917EFE2001DC88D /* designCoverRightSearch.png */; };
+		CE8F6F210D917F4500BDB69B /* QTMovie+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8F6F1F0D917F4500BDB69B /* QTMovie+Karelia.h */; };
+		CE8F6F220D917F4500BDB69B /* QTMovie+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8F6F200D917F4500BDB69B /* QTMovie+Karelia.m */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
 		CE9218850809A40500E7F46B /* toolbar_collection.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218830809A40500E7F46B /* toolbar_collection.png */; };
 		CE9218860809A40500E7F46B /* toolbar_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218840809A40500E7F46B /* toolbar_group.png */; };
@@ -1486,14 +1488,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A /* iMediaTesterSingle.app */;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
 			remoteInfo = iMediaTesterSingle;
 		};
 		CE8F64540D91788100BDB69B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD /* movietool */;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
 			remoteInfo = movietool;
 		};
 		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
@@ -2268,6 +2270,8 @@
 		CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeftSearch.png; sourceTree = "<group>"; };
 		CE8E834C0917EFE2001DC88D /* designCoverRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverRight.png; sourceTree = "<group>"; };
 		CE8E834D0917EFE2001DC88D /* designCoverRightSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverRightSearch.png; sourceTree = "<group>"; };
+		CE8F6F1F0D917F4500BDB69B /* QTMovie+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "QTMovie+Karelia.h"; path = "../../../Shared/trunk/App/QTMovie+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE8F6F200D917F4500BDB69B /* QTMovie+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "QTMovie+Karelia.m"; path = "../../../Shared/trunk/App/QTMovie+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CE91721109D51E530003310B /* target_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_set.png; sourceTree = "<group>"; };
 		CE9218830809A40500E7F46B /* toolbar_collection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_collection.png; sourceTree = "<group>"; };
 		CE9218840809A40500E7F46B /* toolbar_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_group.png; sourceTree = "<group>"; };
@@ -4567,6 +4571,8 @@
 				CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */,
 				CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */,
 				CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */,
+				CE8F6F1F0D917F4500BDB69B /* QTMovie+Karelia.h */,
+				CE8F6F200D917F4500BDB69B /* QTMovie+Karelia.m */,
 			);
 			name = "Shared Classes";
 			sourceTree = "<group>";
@@ -4818,6 +4824,7 @@
 				CEBFCE6F0D7F53DC006B94B9 /* KSPlugin.h in Headers */,
 				2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */,
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
+				CE8F6F210D917F4500BDB69B /* QTMovie+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6213,6 +6220,7 @@
 				CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */,
 				CEBFCE700D7F53DC006B94B9 /* KSPlugin.m in Sources */,
 				2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */,
+				CE8F6F220D917F4500BDB69B /* QTMovie+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

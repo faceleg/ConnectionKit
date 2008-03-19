@@ -2210,7 +2210,7 @@ dataReferenceWithReferenceToData:[self data]
 	
 	if ( nil != movie )
 	{
-		[self setPosterImage:[movie betterPosterImage]];		// from iMedia 
+		[self setPosterImage:[movie betterPosterImage]]; 
 	}
 	else
 	{
