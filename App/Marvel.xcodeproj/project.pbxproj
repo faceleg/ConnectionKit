@@ -117,6 +117,7 @@
 				274339F10D7733B600164FA5 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
+				CEF12E810D908ED400FCAC70 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -877,9 +878,6 @@
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
-		CEF9D1F90D86449900BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
-		CEF9D1FA0D86449A00BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
-		CEF9D1FB0D86449A00BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
 		CEF9D2040D8644D500BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
 		CEF9D2050D8644D600BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
 		CEF9D2060D8644D600BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
@@ -1483,6 +1481,13 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
+		CE8978640D9012BA00904939 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
+			remoteInfo = iMediaTesterSingle;
+		};
 		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
@@ -1580,6 +1585,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
+		};
+		CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* YouTube.svxElement.svxElement */;
+			remoteInfo = YouTubeElement;
+		};
+		CEF12E800D908ED400FCAC70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteInfo = YouTubeElement;
+		};
+		CEF1FCC50D90270400FCAC70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
+			remoteInfo = movietool;
 		};
 		CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2576,6 +2602,7 @@
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE0B9C909EDBD25004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/MultipleSelection.html; sourceTree = "<group>"; };
 		CEF0F6250D7F306C00AF5BC0 /* Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Debug.m; path = ../../../Shared/trunk/App/Debug.m; sourceTree = SOURCE_ROOT; };
+		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF6E3DD0BD7278D0006417A /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E3E50BD727AF0006417A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E3EA0BD727C40006417A /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/CodeInjection.nib; sourceTree = "<group>"; };
@@ -4068,6 +4095,7 @@
 				3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */,
 				3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */,
 				3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */,
+				CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -4247,8 +4275,10 @@
 			isa = PBXGroup;
 			children = (
 				CE99830E0D614D7400F2DD12 /* iMediaTester.app */,
+				CE8978650D9012BA00904939 /* iMediaTesterSingle.app */,
 				CE9983100D614D7400F2DD12 /* iMediaBrowser.framework */,
 				CE9983120D614D7400F2DD12 /* MetadataTool */,
+				CEF1FCC60D90270400FCAC70 /* movietool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4536,6 +4566,14 @@
 				CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */,
 			);
 			name = "Shared Classes";
+			sourceTree = "<group>";
+		};
+		CEF12E780D908EB400FCAC70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */ = {
@@ -5034,6 +5072,10 @@
 					ProductGroup = 3C095BFE0D5D281900DE6F62 /* Products */;
 					ProjectRef = 3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */;
 				},
+				{
+					ProductGroup = CEF12E780D908EB400FCAC70 /* Products */;
+					ProjectRef = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5305,6 +5347,13 @@
 			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CE8978650D9012BA00904939 /* iMediaTesterSingle.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iMediaTesterSingle.app;
+			remoteRef = CE8978640D9012BA00904939 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CE9982EA0D614CB600F2DD12 /* AmazonSupport.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -5394,6 +5443,20 @@
 			fileType = wrapper.application;
 			path = "Sparkle Test App.app";
 			remoteRef = CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = YouTube.svxElement.svxElement;
+			remoteRef = CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEF1FCC60D90270400FCAC70 /* movietool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = movietool;
+			remoteRef = CEF1FCC50D90270400FCAC70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -5610,9 +5673,6 @@
 				CE7232140D85DC5A00E9C592 /* arrow_black.pdf in Resources */,
 				CE7232150D85DC5A00E9C592 /* arrow_grey_down.pdf in Resources */,
 				CE7232160D85DC5A00E9C592 /* arrow_grey_up.pdf in Resources */,
-				CEF9D1F90D86449900BD9895 /* rounded.pdf in Resources */,
-				CEF9D1FA0D86449A00BD9895 /* rotate.pdf in Resources */,
-				CEF9D1FB0D86449A00BD9895 /* grow.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6420,6 +6480,11 @@
 			isa = PBXTargetDependency;
 			name = Framework;
 			targetProxy = CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */;
+		};
+		CEF12E810D908ED400FCAC70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YouTubeElement;
+			targetProxy = CEF12E800D908ED400FCAC70 /* PBXContainerItemProxy */;
 		};
 		CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
