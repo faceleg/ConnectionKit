@@ -727,6 +727,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			// set up labels
 			NSString *titleLabel = NSLocalizedString(@"Title: ", @"tooltip Title: ");
 			NSString *pageTypeLabel = NSLocalizedString(@"Page Type: ", @"tooltip Page Type: ");
+			NSString *sortingLabel = NSLocalizedString(@"Sorting:", @"tooltip Collection sorting");
 			NSString *indexTypeLabel = NSLocalizedString(@"Index Type: ", @"tooltip Index Type: ");
 			NSString *createdLabel = NSLocalizedString(@"Created: ", @"tooltip Created: ");
 			NSString *lastUpdatedLabel = NSLocalizedString(@"Last Updated: ", @"tooltip Last Updated: ");
@@ -740,7 +741,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			NSString *title = [cell stringValue];
 			if ( [defaults boolForKey:@"OutlineTooltipShowTitle"] )
 			{
-				result = [NSString stringWithFormat:@"%@ %@", titleLabel, title];
+				result = [NSString stringWithFormat:@"%@%@", titleLabel, title];
 			}
 			else
 			{
@@ -753,9 +754,36 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSString *pageType = [[item plugin] pluginPropertyForKey:@"KTPluginName"];
 				if ( nil != pageType )
 				{
-					result = [result stringByAppendingFormat:@"\n%@ %@", pageTypeLabel, pageType];
+					result = [result stringByAppendingFormat:@"\n%@%@", pageTypeLabel, pageType];
 				}
 			}		   
+			
+			
+			// Sorting
+			if ([item isCollection])
+			{
+				NSString *sortingDescription = @"";
+				KTCollectionSortType sorting = [item collectionSortOrder];
+				switch (sorting)
+				{
+					case KTCollectionSortAlpha:
+						sortingDescription = NSLocalizedString(@"Alphabetical", "tooltip Collection sorting");
+						break;
+					case KTCollectionSortReverseAlpha:
+						sortingDescription = NSLocalizedString(@"Reverse alphabetical", "tooltip Collection sorting");
+						break;
+					case KTCollectionSortLatestAtBottom:
+						sortingDescription = NSLocalizedString(@"Latest at bottom", "tooltip Collection sorting");
+						break;
+					case KTCollectionSortLatestAtTop:
+						sortingDescription = NSLocalizedString(@"Latest at top", "tooltip Collection sorting");
+						break;
+					default:
+						sortingDescription = NSLocalizedString(@"Not sorted", "tooltip Collection sorting");
+						break;
+				}
+				result = [result stringByAppendingFormat:@"\n%@ %@", sortingLabel, sortingDescription];
+			}
 			
 			// index type, if applicable
 			if ( [defaults boolForKey:@"OutlineTooltipShowIndexType"] )
@@ -765,7 +793,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 					NSString *indexType = [[[(KTPage *)item index] plugin] pluginName];
 					if ( nil != indexType )
 					{
-						result = [result stringByAppendingFormat:@"\n%@ %@", indexTypeLabel, indexType];
+						result = [result stringByAppendingFormat:@"\n%@%@", indexTypeLabel, indexType];
 					}
 				}
 			}		   
@@ -779,12 +807,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				{
 					if ( [creationDate isEqualToDate:lastModificationDate] )
 					{
-						result = [result stringByAppendingFormat:@"\n%@ %@", lastUpdatedLabel, [lastModificationDate relativeShortDescription]];
+						result = [result stringByAppendingFormat:@"\n%@%@", lastUpdatedLabel, [lastModificationDate relativeShortDescription]];
 					}
 					else
 					{
-						result = [result stringByAppendingFormat:@"\n%@ %@", createdLabel, [creationDate relativeShortDescription]];
-						result = [result stringByAppendingFormat:@"\n%@ %@", lastUpdatedLabel, [lastModificationDate relativeShortDescription]];
+						result = [result stringByAppendingFormat:@"\n%@%@", createdLabel, [creationDate relativeShortDescription]];
+						result = [result stringByAppendingFormat:@"\n%@%@", lastUpdatedLabel, [lastModificationDate relativeShortDescription]];
 					}
 				}
 			}
@@ -795,7 +823,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSString *serverPath = [item wrappedValueForKey:@"publishedPath"];
 				if ( nil != serverPath )
 				{
-					result = [result stringByAppendingFormat:@"\n%@ %@", serverPathLabel, serverPath];
+					result = [result stringByAppendingFormat:@"\n%@%@", serverPathLabel, serverPath];
 				}
 			}
 			
@@ -805,7 +833,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSString *author = [[item master] valueForKey:@"author"];
 				if ( nil != author && ![author isEqualToString:@""])
 				{
-					result = [result stringByAppendingFormat:@"\n%@ %@", authorLabel, author];
+					result = [result stringByAppendingFormat:@"\n%@%@", authorLabel, author];
 				}
 			}
 			
@@ -815,7 +843,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSString *language = [[item master] valueForKey:@"language"];
 				if ( nil != language && ![language isEqualToString:@""])
 				{
-					result = [result stringByAppendingFormat:@"\n%@ %@", languageLabel, language];
+					result = [result stringByAppendingFormat:@"\n%@%@", languageLabel, language];
 				}
 			}
 			
@@ -823,14 +851,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 //		   if ( [defaults boolForKey:@"OutlineTooltipShowIsDraft"] )
 //		   {
 //			   NSString *status = [item boolForKey:@"isDraft"] ? NSLocalizedString(@"Yes",@"Yes") : NSLocalizedString(@"No",@"No");
-//			   result = [result stringByAppendingFormat:@"\n%@ %@", draftLabel, status];
+//			   result = [result stringByAppendingFormat:@"\n%@%@", draftLabel, status];
 //		   }
 //
 //		   // needs uploading 
 //		   if ( [defaults boolForKey:@"OutlineTooltipShowNeedsUploading"] )
 //		   {
 //			   NSString *status = [item boolForKey:@"isStale"] ? NSLocalizedString(@"Yes",@"Yes") : NSLocalizedString(@"No",@"No");
-//			   result = [result stringByAppendingFormat:@"\n%@ %@", needsUploadingLabel, status];
+//			   result = [result stringByAppendingFormat:@"\n%@%@", needsUploadingLabel, status];
 //		   }
 		}
 	}
