@@ -439,8 +439,9 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:myQuickLookThumbnailWebView];
 	
 	// Get rid of the webview and its window
-	[[myQuickLookThumbnailWebView window] release];
+	NSWindow *window = [myQuickLookThumbnailWebView window];
 	[myQuickLookThumbnailWebView release];	myQuickLookThumbnailWebView = nil;
+	[window release];
 	
 	// This information was temporary while we waited. Clear it out.
 	[mySavingURL release];	mySavingURL = nil;
@@ -471,6 +472,7 @@
 	
 	NSWindow *window = [[NSWindow alloc]
 		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when termintating?
 	
 	myQuickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
 	[window setContentView:myQuickLookThumbnailWebView];
