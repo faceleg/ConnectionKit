@@ -214,6 +214,8 @@
 	// Display the open panel allowing the user to find the replacement file
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseDirectories:NO];
+	[panel setTreatsFilePackagesAsDirectories:YES];
+
 	
 	NSString *fileExtension = [[mediaFile valueForKey:@"filename"] pathExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];

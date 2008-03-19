@@ -90,6 +90,7 @@ static ImageCropperController *sImageCropperController = nil;
 - (IBAction) chooseFile:(id)sender
 {
 	[[NSOpenPanel openPanel] setAllowsMultipleSelection:NO];
+	[[NSOpenPanel openPanel] setTreatsFilePackagesAsDirectories:YES];
 	[[NSOpenPanel openPanel]
 		beginSheetForDirectory:nil
 						  file:nil

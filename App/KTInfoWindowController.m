@@ -881,6 +881,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
+	[imageChooser setTreatsFilePackagesAsDirectories:YES];
 	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
@@ -907,6 +908,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
+	[imageChooser setTreatsFilePackagesAsDirectories:YES];
 	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
@@ -1008,6 +1010,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
+	[imageChooser setTreatsFilePackagesAsDirectories:YES];
 	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
@@ -1034,6 +1037,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	NSOpenPanel *imageChooser = [NSOpenPanel openPanel];
 	[imageChooser setCanChooseDirectories:NO];
 	[imageChooser setAllowsMultipleSelection:NO];
+	[imageChooser setTreatsFilePackagesAsDirectories:YES];
 	[imageChooser setPrompt:NSLocalizedString(@"Choose", "choose button - open panel")];
 	
 // TODO: Open the panel at a reasonable location
