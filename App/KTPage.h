@@ -253,7 +253,6 @@
 
 - (NSString *)javascriptURLPath;
 - (NSString *)RSSRepresentation;
-- (NSString *)archivesRepresentation;
 - (BOOL)isNewPage;
 - (void)setNewPage:(BOOL)flag;
 - (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(KTManagedObjectContext *)context;

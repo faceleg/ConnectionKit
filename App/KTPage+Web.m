@@ -175,14 +175,6 @@
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
 #pragma mark -
-#pragma mark Archives
-
-- (NSString *)archivesRepresentation;
-{
-	return [NSString stringWithFormat:@"Archives of %@", self];
-}
-
-#pragma mark -
 #pragma mark CSS
 
 - (NSString *)cssClassName { return [[self plugin] pageCSSClassName]; }
@@ -193,7 +185,15 @@
 /*!	Generate path to javascript.  Nil if not there */
 - (NSString *)javascriptURLPath
 {
-	NSString *result = [[self designDirectoryPath] stringByAppendingPathComponent:@"javascript.js"];
+	NSString *result = nil;
+	
+	NSBundle *designBundle = [[[self master] design] bundle];
+	BOOL scriptExists = ([designBundle pathForResource:@"javascript" ofType:@"js"] != nil);
+	if (scriptExists)
+	{
+		result = [[self designDirectoryPath] stringByAppendingPathComponent:@"javascript.js"];
+	}
+	
 	return result;
 }
 
