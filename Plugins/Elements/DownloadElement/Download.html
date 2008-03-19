@@ -16,19 +16,17 @@
 			<br />
 [[if downloadMedia.file.currentPath]]
 			<div style="font-size:10px;">
-			
 				[['This display is a placeholder for this file:]] [[=&delegate.fileName]].
 				
 				<br />
 				
 				[['Clicking on a link to this file will cause it to be downloaded in your browser.]]
-				
+				<br />
+				[[=&delegate.mediaFileUpload.absoluteURL]]
 			</div>
 [[else]]
 			<div style="font-size: 24px">
-			
 				[['No file specified]]
-				
 			</div>
 			
 			<br />

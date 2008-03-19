@@ -8,19 +8,28 @@
 
 #import "KTMediaFileUpload.h"
 
+#import "KTDocument.h"
 #import "KTPage.h"
+
 #import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 
 @implementation KTMediaFileUpload
 
-- (NSString *)publishedPathRelativeToPage:(KTPage *)page
+/*	Combines the site URL and our path relative to it to build the full URL
+ */
+- (NSURL *)absoluteURL;
 {
-	NSString *mediaPath = [@"/" stringByAppendingString:[self valueForKey:@"pathRelativeToSite"]];
-	NSString *pagePath = [@"/" stringByAppendingString:[page publishedPathRelativeToSite]];
-	
-	NSString *result = [mediaPath pathRelativeTo:pagePath];
+	NSURL *siteURL = [NSURL URLWithString:[[[self managedObjectContext] document] publishedSiteURL]];
+	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
+	return [result absoluteURL];
+}
+
+- (NSString *)pathRelativeToSite;
+{
+	NSString *result = [self wrappedValueForKey:@"pathRelativeToSite"];
 	return result;
 }
 
@@ -37,6 +46,20 @@
 	{
 		[self setWrappedValue:path forKey:@"pathRelativeToSite"];
 	}
+}
+
+- (NSString *)pathRelativeTo:(id <KTWebPaths>)path2;
+{
+	return nil;
+}
+
+- (NSString *)publishedPathRelativeToPage:(KTPage *)page
+{
+	NSString *mediaPath = [@"/" stringByAppendingString:[self pathRelativeToSite]];
+	NSString *pagePath = [@"/" stringByAppendingString:[page publishedPathRelativeToSite]];
+	
+	NSString *result = [mediaPath pathRelativeTo:pagePath];
+	return result;
 }
 
 @end

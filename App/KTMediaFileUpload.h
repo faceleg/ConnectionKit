@@ -7,10 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTWebPathsProtocol.h"
+
 
 @class KTPage;
 
-@interface KTMediaFileUpload : NSManagedObject
+
+@interface KTMediaFileUpload : NSManagedObject <KTWebPaths>
 {
 }
 
