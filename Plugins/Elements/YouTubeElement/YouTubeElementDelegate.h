@@ -35,15 +35,17 @@
 //
 //
 //	Plugin keys used:
-//		remoteURL, autoplay, isWindowsMedia, kiskmode, isFlash, video, controller, movieSize
 
 #import <SandvoxPlugin.h>
 
 
 @interface YouTubeElementDelegate : KTAbstractPluginDelegate 
 {
-	
+	IBOutlet NSButton *oVideoSourceButton;
+	IBOutlet NSButton *oHomePageButton;
 }
 
+- (IBAction) openHomePage:(id)sender;
+- (IBAction) openVideoSource:(id)sender;
 
 @end

@@ -70,23 +70,9 @@ video.aol.com
  
  
 
-@interface YouTubeElementDelegate (Private)
+@interface YouTubeElementDelegate ()
 
-- (void)updateDependentThumbnailsFrom:(KTMediaContainer *)oldFile to:(KTMediaContainer *)newFile;
-
-- (BOOL)attemptToGetSize:(NSSize *)outSize fromSWFData:(NSData *)data;
-
-- (QTMovie *)movie;
-- (void)setMovie:(QTMovie *)aMovie;
-- (void)loadMovie;
-
-- (NSSize)movieSize;
-- (void)setMovieSize:(NSSize)movieSize;
-
-- (void)loadMovieFromAttributes:(NSDictionary *)anAttributes;
-
-- (void)calculateMovieDimensions:(QTMovie *)aMovie;
-- (NSSize)pageDimensions;
+- (NSArray *) sources;
 
 @end
 
@@ -98,24 +84,24 @@ static NSArray *sSources = nil;
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
-	if (!sSources)
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		NSString *path = [bundle pathForResource:@"sources" ofType:@"plist"];
-		sSources = [[NSArray arrayWithContentsOfFile:path] retain];
-		NSLog(@"%@", [sSources description]);
-	}
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
 	
 	// set default properties
 	if ( isNewObject )
 	{
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		[[self delegateOwner] setBool:[defaults boolForKey:@"movie autoplay"] forKey:@"autoplay"];
-		[[self delegateOwner] setBool:[defaults boolForKey:@"movie controller"] forKey:@"controller"];
-		[[self delegateOwner] setBool:[defaults boolForKey:@"movie kioskmode"] forKey:@"kioskmode"];
-		[[self delegateOwner] setBool:[defaults boolForKey:@"movie loop"] forKey:@"loop"];
-		
+		NSDictionary *defaultItem = [[self sources] lastObject];
+		NSEnumerator *enumerator = [[self sources] objectEnumerator];
+		NSDictionary *dict;
+
+		while ((dict = [enumerator nextObject]) != nil)
+		{
+			if ([dict objectForKey:@"default"])
+			{
+				defaultItem = dict;
+				break;
+			}
+		}
+		[[self delegateOwner] setValue:defaultItem forKey:@"currentSource"];
 	}
 
 }
@@ -145,6 +131,23 @@ static NSArray *sSources = nil;
 		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] escapedEntities]
 									forKey:@"captionHTML"];
 	}
+}
+
+- (void) awakeFromNib
+{
+	NSImage *im1 = [NSImage imageNamed:@"arrow_grey_up"];
+	NSImage *im2 = [NSImage imageNamed:@"arrow_grey_down"];
+	[im1 setScalesWhenResized:YES];
+	[im2 setScalesWhenResized:YES];
+	[im1 setSize:[oVideoSourceButton frame].size];
+	[im2 setSize:[oVideoSourceButton frame].size];
+	[oVideoSourceButton setImage:im1];
+	[oVideoSourceButton setAlternateImage:im2];
+	[oHomePageButton setImage:im1];
+	[oHomePageButton setAlternateImage:im2];
+	
+	[oVideoSourceButton setState:NSOffState];
+	[oHomePageButton setState:NSOffState];
 }
 
 #pragma mark -
@@ -212,33 +215,27 @@ static NSArray *sSources = nil;
 }
 
 #pragma mark -
-#pragma mark Media Storage
+#pragma mark Actions
 
-
-
-- (BOOL)pathInfoField:(KSPathInfoField *)field
- performDragOperation:(id <NSDraggingInfo>)sender
-	 expectedDropType:(NSDragOperation)dragOp
+- (IBAction) openVideoSource:(id)sender;
 {
-	BOOL fileShouldBeExternal = NO;
-	if (dragOp & NSDragOperationLink)
+	NSString *urlString = [[self delegateOwner] valueForKeyPath:@"currentSource.url"];
+	NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
+	if (url)
 	{
-		fileShouldBeExternal = YES;
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
 	}
-	
-	KTMediaContainer *video = [[[self delegateOwner] mediaManager] mediaContainerWithDraggingInfo:sender
-																			   preferExternalFile:fileShouldBeExternal];
-																				  
-	[[self delegateOwner] setValue:video forKey:@"video"];
-	
-	return YES;
+	else
+	{
+		NSBeep();
+	}
 }
 
-/*	We want to support all video types but not images
- */
-- (NSArray *)supportedDragTypesForPathInfoField:(KSPathInfoField *)pathInfoField
+- (IBAction) openHomePage:(id)sender;
 {
-	return [NSArray array];
+	NSString *urlString = [[self delegateOwner] valueForKeyPath:@"currentSource.homeURL"];
+	NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
 }
 
 
@@ -249,21 +246,29 @@ static NSArray *sSources = nil;
 
 #pragma mark accessors
 
-- (id) sources
+- (NSString *)embedHTML
 {
+	NSString *videoID = [[self delegateOwner] valueForKeyPath:@"videoID"];
+	if (nil == videoID || [videoID isEqualToString:@""])
+	{
+		return @"PLEASE SET ID";
+	}
+	NSMutableString *template = [NSMutableString stringWithString:[[self delegateOwner] valueForKeyPath:@"currentSource.embed"]];
+	[template replaceOccurrencesOfString:@"%@" withString:videoID options:0 range:NSMakeRange(0,[template length])];
+	[template replaceOccurrencesOfString:@"%1$@" withString:videoID options:0 range:NSMakeRange(0,[template length])];
+	return template;
+}
+
+- (NSArray *) sources
+{
+	if (!sSources)
+	{
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSString *path = [bundle pathForResource:@"sources" ofType:@"plist"];
+		sSources = [[NSArray arrayWithContentsOfFile:path] retain];
+	}
 	return sSources;
 }
-
-- (id)currentSource
-{
-	return nil;
-}
-
-- (id)videoID
-{
-	return nil;
-}
-
 
 #pragma mark -
 #pragma mark Page Thumbnail

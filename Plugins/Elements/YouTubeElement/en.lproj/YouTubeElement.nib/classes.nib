@@ -33,11 +33,22 @@
 			<dict>
 				<key>chooseMovieFile</key>
 				<string>id</string>
+				<key>openHomePage</key>
+				<string>id</string>
+				<key>openVideoSource</key>
+				<string>id</string>
 			</dict>
 			<key>CLASS</key>
 			<string>YouTubeElementDelegate</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oHomePageButton</key>
+				<string>NSButton</string>
+				<key>oVideoSourceButton</key>
+				<string>NSButton</string>
+			</dict>
 			<key>SUPERCLASS</key>
 			<string>KTAbstractPluginDelegate</string>
 		</dict>

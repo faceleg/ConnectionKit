@@ -476,6 +476,7 @@
 	myQuickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
 	[window setContentView:myQuickLookThumbnailWebView];
 	[myQuickLookThumbnailWebView release];
+	myQuickLookThumbnailWebView = nil;
 	
 	
 	// We want to know when the webview's done loading
