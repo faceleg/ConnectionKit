@@ -439,9 +439,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:myQuickLookThumbnailWebView];
 	
 	// Get rid of the webview and its window
-	NSWindow *window = [myQuickLookThumbnailWebView window];
-	[window release];
-	myQuickLookThumbnailWebView = nil;
+	[[myQuickLookThumbnailWebView window] release];
+	[myQuickLookThumbnailWebView release];	myQuickLookThumbnailWebView = nil;
 	
 	// This information was temporary while we waited. Clear it out.
 	[mySavingURL release];	mySavingURL = nil;
@@ -473,10 +472,8 @@
 	NSWindow *window = [[NSWindow alloc]
 		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	
-	myQuickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
+	myQuickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
 	[window setContentView:myQuickLookThumbnailWebView];
-	[myQuickLookThumbnailWebView release];
-	myQuickLookThumbnailWebView = nil;
 	
 	
 	// We want to know when the webview's done loading
@@ -495,6 +492,7 @@
 - (void)quickLookThumbnailWebviewDidFinishLoading:(NSNotification *)notification
 {
 	if ([notification object] != [self quickLookThumbnailWebView]) return;
+	if (![[notification name] isEqualToString:WebViewProgressFinishedNotification]) return;
 	
 	
 	[super saveToURL:mySavingURL

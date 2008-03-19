@@ -794,6 +794,9 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Closing Documents
+
 - (void)close
 {	
 	LOGMETHOD;
@@ -846,61 +849,86 @@
 	OFF((@"KTDocument -canCloseDocumentWithDelegate initial selector: %@", NSStringFromSelector(shouldCloseSelector)));
 	OFF((@"contextInfo = %@", contextInfo));
 	
-	if ( ![[[self windowController] window] makeFirstResponder:nil] )
+	if (![[[self windowController] window] makeFirstResponder:nil])
 	{
 		return;
 	}
+	
 	
 	// CRITICAL: we need to signal writeToURL:::: that we're closing
 	[self setClosing:YES];
 	
-	// close link panel
-	if ( [[[self windowController] linkPanel] isVisible] )
+	
+	// Close link panel
+	if ([[[self windowController] linkPanel] isVisible])
 	{
 		[[self windowController] closeLinkPanel];
 	}
 	
-	if ( [[self managedObjectContext] hasChanges] && [self isReadOnly] )
+	
+	// Is there actually anything to be saved?
+	if ([[self managedObjectContext] hasChanges])
 	{
-		// document is read only, offer to Save As...
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"This document is read-only. Would you like to save it to a new location?", 
-		"alert message text: Document is read-only.") 
-		defaultButton:NSLocalizedString(@"Save As...",
-		"Save As... Button") 
-		alternateButton:NSLocalizedString(@"Don\\U2019t Save",
-		"Don't Save Button") 
-		otherButton:NSLocalizedString(@"Cancel",
-		"Cancel Button")
-							 informativeTextWithFormat:NSLocalizedString(@"If you don\\U2019t save, your changes will be lost.",
-		"alert informative text: If you don’t save, your changes will be lost.")];
-		
-		NSMutableDictionary *alertContextInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-		@"canCloseDocumentWithDelegate:", @"context",
-		delegate, @"delegate",
-		NSStringFromSelector(shouldCloseSelector), @"selector",
-		nil];
-		
-		[alert beginSheetModalForWindow:[[self windowController] window]
-						  modalDelegate:self 
-		didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
-		contextInfo:[alertContextInfo retain]];
-		return;
+		if ([self isReadOnly])
+		{
+			// Document is read only, offer to Save As...
+			NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"This document is read-only. Would you like to save it to a new location?", 
+			"alert message text: Document is read-only.") 
+			defaultButton:NSLocalizedString(@"Save As...",
+			"Save As... Button") 
+			alternateButton:NSLocalizedString(@"Don\\U2019t Save",
+			"Don't Save Button") 
+			otherButton:NSLocalizedString(@"Cancel",
+			"Cancel Button")
+								 informativeTextWithFormat:NSLocalizedString(@"If you don\\U2019t save, your changes will be lost.",
+			"alert informative text: If you don’t save, your changes will be lost.")];
+			
+			NSMutableDictionary *alertContextInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+			@"canCloseDocumentWithDelegate:", @"context",
+			delegate, @"delegate",
+			NSStringFromSelector(shouldCloseSelector), @"selector",
+			nil];
+			
+			[alert beginSheetModalForWindow:[[self windowController] window]
+							  modalDelegate:self 
+			didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+			contextInfo:[alertContextInfo retain]];
+			return;
+		}
+		else
+		{
+			// Go for it, save the document!
+			NSInvocation *callback =
+				[NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:shouldCloseSelector]];
+			[callback setTarget:delegate];
+			[callback setSelector:shouldCloseSelector];
+			[callback setArgument:&self atIndex:2];
+			[callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the saving result
+			
+			[self saveToURL:[self fileURL]
+					 ofType:[self fileType]
+		   forSaveOperation:NSSaveOperation
+				   delegate:self
+			didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
+				contextInfo:[callback retain]];		// Our callback method will release it
+		}
 	}
 	else
 	{
-		[self autosaveDocument:nil];
+		// If there are no changes, we can go ahead with the default NSDocument behavior
+		[super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
 	}
+}
+
+/*	Callback used by above method.
+ */
+- (void)document:(NSDocument *)document didSaveWhileClosing:(BOOL)didSaveSuccessfully contextInfo:(void  *)contextInfo
+{
+	NSInvocation *callback = [(NSInvocation *)contextInfo autorelease];	// It was retained at the start
 	
-	// we want to exit this method by sending [delegate shouldCloseSelector] with YES or NO
-	// since the selector is a private method, we'll use an NSInvocation to do it properly
-	// i.e., simulate [delegate _document:self shouldClose:YES contextInfo:contextInfo];
-	BOOL shouldClose = YES;
-	NSInvocation *callback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:shouldCloseSelector]];
-	[callback setSelector:shouldCloseSelector]; // not sure why this is necessary, but it is
-	[callback setArgument:&self atIndex:2];
-	[callback setArgument:&shouldClose atIndex:3];
-	[callback setArgument:&contextInfo atIndex:4];
-	[callback invokeWithTarget:delegate];
+	// Let the delegate know if the save was successful or not
+	[callback setArgument:&didSaveSuccessfully atIndex:3];
+	[callback invoke];
 }
 
 - (BOOL)isClosing
