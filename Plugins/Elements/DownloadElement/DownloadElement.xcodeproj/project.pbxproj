@@ -10,7 +10,7 @@
 		3CA901230D63D03C00815310 /* DownloadPageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA901220D63D03C00815310 /* DownloadPageDelegate.m */; };
 		3CA901290D63D04C00815310 /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901260D63D04C00815310 /* Download.html */; };
 		3CA9012A0D63D04C00815310 /* download.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901270D63D04C00815310 /* download.icns */; };
-		3CA9012B0D63D04C00815310 /* download.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901280D63D04C00815310 /* download.tiff */; };
+		3CA9012B0D63D04C00815310 /* download-overlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901280D63D04C00815310 /* download-overlay.tiff */; };
 		3CA901310D63D05600815310 /* DownloadPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9012C0D63D05600815310 /* DownloadPage.nib */; };
 		3CA901320D63D05600815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9012F0D63D05600815310 /* Localizable.strings */; };
 		3CA901490D63D0B500815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901480D63D0B500815310 /* License.rtf */; };
@@ -27,7 +27,7 @@
 		3CA901220D63D03C00815310 /* DownloadPageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadPageDelegate.m; sourceTree = "<group>"; };
 		3CA901260D63D04C00815310 /* Download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Download.html; sourceTree = "<group>"; };
 		3CA901270D63D04C00815310 /* download.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = download.icns; sourceTree = "<group>"; };
-		3CA901280D63D04C00815310 /* download.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = download.tiff; sourceTree = "<group>"; };
+		3CA901280D63D04C00815310 /* download-overlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "download-overlay.tiff"; sourceTree = "<group>"; };
 		3CA9012D0D63D05600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/DownloadPage.nib; sourceTree = "<group>"; };
 		3CA9012E0D63D05600815310 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA901300D63D05600815310 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 				3CA9012C0D63D05600815310 /* DownloadPage.nib */,
 				3CA901260D63D04C00815310 /* Download.html */,
 				3CA901270D63D04C00815310 /* download.icns */,
-				3CA901280D63D04C00815310 /* download.tiff */,
+				3CA901280D63D04C00815310 /* download-overlay.tiff */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9012F0D63D05600815310 /* Localizable.strings */,
 				3CA901480D63D0B500815310 /* License.rtf */,
@@ -222,7 +222,7 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3CA901290D63D04C00815310 /* Download.html in Resources */,
 				3CA9012A0D63D04C00815310 /* download.icns in Resources */,
-				3CA9012B0D63D04C00815310 /* download.tiff in Resources */,
+				3CA9012B0D63D04C00815310 /* download-overlay.tiff in Resources */,
 				3CA901310D63D05600815310 /* DownloadPage.nib in Resources */,
 				3CA901320D63D05600815310 /* Localizable.strings in Resources */,
 				3CA901490D63D0B500815310 /* License.rtf in Resources */,

@@ -107,7 +107,7 @@
 		NSString *UTI = [NSString UTIForFileAtPath:[[value file] currentPath]];
 		NSImage *fileIcon = [[NSWorkspace sharedWorkspace] iconImageForUTI:UTI];
 		
-		NSString *overlayImagePath = [[self bundle] pathForResource:@"download" ofType:@"tiff"];
+		NSString *overlayImagePath = [[self bundle] pathForImageResource:@"download-overlay"];
 		NSImage *overlayImage = [[NSImage alloc] initWithContentsOfFile:overlayImagePath];
 		
 		NSImage *thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(128.0, 128.0)];
