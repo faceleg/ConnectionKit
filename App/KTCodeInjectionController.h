@@ -15,17 +15,18 @@
 
 @interface KTCodeInjectionController : KSSingletonWindowController 
 {
-	IBOutlet NSTabView			*oTabView;
+	IBOutlet NSTabView		*oTabView;
 	
-	IBOutlet NSTextView			*oPreludeTextView;
+	IBOutlet NSTextView		*oPreludeTextView;
 	
 	IBOutlet KTCodeInjectionSplitView	*oHeadSplitView;
 	IBOutlet NSTextView					*oEarlyHeadTextView;
 	IBOutlet NSTextView					*oHeadTextView;
 	
-	IBOutlet NSTextView			*oBodyStartTextView;
-	IBOutlet NSTextView			*oBodyEndTextView;
-	IBOutlet NSTextField		*oBodyTagTextField;
+	IBOutlet KTCodeInjectionSplitView	*oBodySplitView;
+	IBOutlet NSTextView					*oBodyStartTextView;
+	IBOutlet NSTextView					*oBodyEndTextView;
+	IBOutlet NSTextField				*oBodyTagTextField;
 	
 	KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
 	BOOL	myIsMaster;

@@ -137,6 +137,9 @@
 	
 	[oHeadSplitView setDividerDescription:
 		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
+	
+	[oBodySplitView setDividerDescription:
+		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
