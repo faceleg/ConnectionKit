@@ -8,6 +8,7 @@
 
 #import "KTCodeInjectionController.h"
 
+#import "KTCodeInjectionSplitView.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 
@@ -133,6 +134,9 @@
 	
 	[[self window] setFrameAutosaveName:@"CodeInjectionPanel"];
 	[[self window] setFrameUsingName:@"CodeInjectionPanel"];
+	
+	[oHeadSplitView setDividerDescription:
+		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
@@ -194,31 +198,7 @@
 
 - (IBAction)showHelp:(id)sender
 {
-	NSString *pageName = @"Code_Injection";
-	
-	NSTabViewItem *selectedTabViewItem = [oTabView selectedTabViewItem];
-	NSString *identifier = [selectedTabViewItem identifier];
-	
-	// Go to the sub-section of this page....
-	
-	if ( [identifier isEqualToString:@"<html>"] )
-	{
-		pageName = [NSString stringWithFormat:@"%@#%@", pageName, @"Before_.3Chtml.3E"];
-	}
-	else if ( [identifier isEqualToString:@"<head>"] )
-	{
-		pageName = [NSString stringWithFormat:@"%@#%@", pageName, @".3Chead.3E_area"];
-	}
-	else if ( [identifier isEqualToString:@"<body>"] )
-	{
-		pageName = [NSString stringWithFormat:@"%@#%@", pageName, @"Within_.3Cbody.3E_tag"];
-	}
-	else if ( [identifier isEqualToString:@"</body>"] )
-	{
-		pageName = [NSString stringWithFormat:@"%@#%@", pageName, @"Before_.3C.2Fbody.3E"];
-	}
-	
-	[(KTApplication *)NSApp showHelpPage:pageName];
+	[(KTApplication *)NSApp showHelpPage:@"Code_Injection"];
 }
 
 @end

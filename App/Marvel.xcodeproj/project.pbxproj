@@ -232,6 +232,8 @@
 		27A50E8B0D19282B00149038 /* KTWebViewTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* KTWebViewTextBlock.m */; };
 		27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50F270D19443800149038 /* DOM+KTWebViewController.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; };
+		27A832860D92D8F7005FF13D /* KTCodeInjectionSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A832840D92D8F7005FF13D /* KTCodeInjectionSplitView.h */; };
+		27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A832850D92D8F7005FF13D /* KTCodeInjectionSplitView.m */; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27AA102D0CDA06C6001D6B9B /* MissingMedia.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */; };
@@ -1733,6 +1735,8 @@
 		27A50F260D19443800149038 /* DOM+KTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+KTWebViewController.h"; sourceTree = "<group>"; };
 		27A50F270D19443800149038 /* DOM+KTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+KTWebViewController.m"; sourceTree = "<group>"; };
 		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
+		27A832840D92D8F7005FF13D /* KTCodeInjectionSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjectionSplitView.h; sourceTree = "<group>"; };
+		27A832850D92D8F7005FF13D /* KTCodeInjectionSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjectionSplitView.m; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
 		27AA102C0CDA06C6001D6B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MissingMedia.nib; sourceTree = "<group>"; };
@@ -2930,6 +2934,17 @@
 			name = "Missing Media Sheet";
 			sourceTree = "<group>";
 		};
+		27A832830D92D8CC005FF13D /* Code Injection */ = {
+			isa = PBXGroup;
+			children = (
+				3C26D8010BC5B7DD00FF874D /* KTCodeInjectionController.h */,
+				3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */,
+				27A832840D92D8F7005FF13D /* KTCodeInjectionSplitView.h */,
+				27A832850D92D8F7005FF13D /* KTCodeInjectionSplitView.m */,
+			);
+			name = "Code Injection";
+			sourceTree = "<group>";
+		};
 		27D064550C6A02830075C6BC /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -3029,6 +3044,7 @@
 				3C5A73950BF7BA6800776464 /* HTML Parsing */,
 				CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
+				27A832830D92D8CC005FF13D /* Code Injection */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
 				3C5A73EB0BF7BAB200776464 /* Support */,
@@ -4317,8 +4333,6 @@
 		CEB34AC8082972820073A7A4 /* Other Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3C26D8010BC5B7DD00FF874D /* KTCodeInjectionController.h */,
-				3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */,
 				CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */,
 				CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */,
 				3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */,
@@ -4809,6 +4823,7 @@
 				2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */,
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				CE8F6F210D917F4500BDB69B /* QTMovie+Karelia.h in Headers */,
+				27A832860D92D8F7005FF13D /* KTCodeInjectionSplitView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6191,6 +6206,7 @@
 				CEBFCE700D7F53DC006B94B9 /* KSPlugin.m in Sources */,
 				2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */,
 				CE8F6F220D917F4500BDB69B /* QTMovie+Karelia.m in Sources */,
+				27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

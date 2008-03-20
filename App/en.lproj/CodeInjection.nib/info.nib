@@ -7,10 +7,11 @@
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>5</integer>
+	<integer>4</integer>
 	<key>IBOpenObjects</key>
 	<array>
-		<integer>9</integer>
+		<integer>6</integer>
+		<integer>230</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>9C31</string>

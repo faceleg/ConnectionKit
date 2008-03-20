@@ -35,6 +35,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KTCodeInjectionSplitView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>RBSplitView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSWindow</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -61,6 +69,8 @@
 				<string>NSTextField</string>
 				<key>oEarlyHeadTextView</key>
 				<string>NSTextView</string>
+				<key>oHeadSplitView</key>
+				<string>KTCodeInjectionSplitView</string>
 				<key>oHeadTextView</key>
 				<string>NSTextView</string>
 				<key>oObjectController</key>

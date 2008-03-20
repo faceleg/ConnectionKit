@@ -10,15 +10,19 @@
 #import "KSSingletonWindowController.h"
 
 
-@class KTPage, KTDocSiteOutlineController;
+@class KTPage, KTDocSiteOutlineController, KTCodeInjectionSplitView;
 
 
 @interface KTCodeInjectionController : KSSingletonWindowController 
 {
 	IBOutlet NSTabView			*oTabView;
+	
 	IBOutlet NSTextView			*oPreludeTextView;
-	IBOutlet NSTextView			*oEarlyHeadTextView;
-	IBOutlet NSTextView			*oHeadTextView;
+	
+	IBOutlet KTCodeInjectionSplitView	*oHeadSplitView;
+	IBOutlet NSTextView					*oEarlyHeadTextView;
+	IBOutlet NSTextView					*oHeadTextView;
+	
 	IBOutlet NSTextView			*oBodyStartTextView;
 	IBOutlet NSTextView			*oBodyEndTextView;
 	IBOutlet NSTextField		*oBodyTagTextField;
