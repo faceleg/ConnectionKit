@@ -118,6 +118,7 @@
 		<string>html</string>
 		<string>phtm</string>
 		<string>phtml</string>
+		<string>shtml</string>
 	</array>
 </dict>
 </plist>

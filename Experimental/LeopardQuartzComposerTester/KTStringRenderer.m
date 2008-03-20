@@ -103,8 +103,9 @@ static NSMutableDictionary *sRendererDictionary = nil;
 		NSLog(@"QC Renderer %@ failed to render", myRenderer);
 	}
 
-	id image = [myRenderer valueForOutputKey:@"Image"];
-	NSData *data = [image TIFFRepresentation];
+	id image = [myRenderer valueForOutputKey:@"Image" ofType:@"CGImage"];
+	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithCGImage:image] autorelease];
+	NSData *data = [bitmap TIFFRepresentation];
 	result = [[[NSImage alloc] initWithData:data] autorelease];
 	return result;
 }

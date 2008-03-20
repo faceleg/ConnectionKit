@@ -97,18 +97,25 @@ static NSMutableDictionary *sRendererDictionary = nil;
 			NSLog(@"Unable to setValue:%@ forInputKey:%@ for composition:%@, please update this Quartz Composer file to current Sandvox Spec.", value, key, [myFileName stringByAbbreviatingWithTildeInPath]);
 		}
 	}
-	
+
     BOOL renderSuccess = [myRenderer renderAtTime:0.0 arguments:nil];
 	if (!renderSuccess)
 	{
 		NSLog(@"QC Renderer %@ failed to render", myRenderer);
 	}
 
-	id theImage = [myRenderer valueForOutputKey:@"Image"];
-	
-	//id whatsup = [theImage writeToFile:nil forManager:nil withOptions:0];
-	
-	NSData *data = [theImage TIFFRepresentation];
+	NSData *data = nil;
+	if ([myRenderer respondsToSelector:@selector(valueForOutputKey:ofType:)])	// Leopard
+	{
+		CGImageRef cgimage = (CGImageRef) [myRenderer valueForOutputKey:@"Image" ofType:@"CGImage"];		// TODO: make a category to hide warning
+		NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithCGImage:cgimage] autorelease];
+		data = [bitmap TIFFRepresentation];
+	}
+	else	// Tiger; old way that worked
+	{
+		NSImage *image = [myRenderer valueForOutputKey:@"Image"];
+		data = [image TIFFRepresentation];
+	}
 	result = [[[NSImage alloc] initWithData:data] autorelease];
 	result = [result normalizeSize];
 	result = [result trimmedVertically];

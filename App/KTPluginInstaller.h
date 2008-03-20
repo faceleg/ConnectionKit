@@ -11,6 +11,7 @@
 
 @interface KTPluginInstaller : NSDocument {
 
+	NSMutableArray *myURLs;
 }
 
 @end
