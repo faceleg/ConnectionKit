@@ -37,7 +37,8 @@
 #import "FeedPageletDelegate.h"
 
 // LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number")
-// LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Pagelet Inspector.", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item")
 
 
 @implementation FeedPageletDelegate
@@ -143,6 +144,12 @@
 	NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
 	NSString *result = [data sha1DigestString];
 	return result;
+}
+
+- (BOOL)isPage
+{
+	id container = [self delegateOwner];
+	return ( [container isKindOfClass:[KTPage class]] );
 }
 
 #pragma mark -

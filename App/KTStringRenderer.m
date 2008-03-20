@@ -12,6 +12,10 @@
 
 static NSMutableDictionary *sRendererDictionary = nil;
 
+@interface NSObject (QCRendererHack)
+- (id) valueForOutputKey:(NSString*)key ofType:(NSString*)type;
+@end
+
 @implementation KTStringRenderer
 
 /*!	Create a dictionary so we can keep our renderers around so we don't have to keep creating them.
