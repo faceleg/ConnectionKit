@@ -533,7 +533,6 @@
 		CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C20D7C720D0055D8E9 /* Crash.nib */; };
 		CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C40D7C720D0055D8E9 /* Exception.nib */; };
 		CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C60D7C720D0055D8E9 /* Feedback.nib */; };
-		CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */; };
 		CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */; };
 		CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */; };
 		CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */; };
@@ -672,7 +671,6 @@
 		CEC11ADF0D78BE3D00513E70 /* KSPathInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A770D78BE3C00513E70 /* KSPathInfoField.m */; };
 		CEC11AE00D78BE3D00513E70 /* KSPathInfoFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A780D78BE3C00513E70 /* KSPathInfoFieldCell.m */; };
 		CEC11AE10D78BE3D00513E70 /* KSPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A790D78BE3C00513E70 /* KSPDFViewController.m */; };
-		CEC11AE20D78BE3D00513E70 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7A0D78BE3C00513E70 /* KSPluginInstallerController.m */; };
 		CEC11AE30D78BE3D00513E70 /* KSPluginLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7B0D78BE3C00513E70 /* KSPluginLoader.m */; };
 		CEC11AE40D78BE3D00513E70 /* KSPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7C0D78BE3C00513E70 /* KSPopUpButton.m */; };
 		CEC11AE50D78BE3D00513E70 /* KSPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7D0D78BE3C00513E70 /* KSPopUpButtonCell.m */; };
@@ -777,7 +775,6 @@
 		CEC11BBA0D78BE5300513E70 /* KSPathInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4D0D78BE5300513E70 /* KSPathInfoField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBB0D78BE5300513E70 /* KSPathInfoFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4E0D78BE5300513E70 /* KSPathInfoFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBC0D78BE5300513E70 /* KSPDFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4F0D78BE5300513E70 /* KSPDFViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BBD0D78BE5300513E70 /* KSPluginInstallerController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B500D78BE5300513E70 /* KSPluginInstallerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBE0D78BE5300513E70 /* KSPluginLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B510D78BE5300513E70 /* KSPluginLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBF0D78BE5300513E70 /* KSPopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B520D78BE5300513E70 /* KSPopUpButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BC00D78BE5300513E70 /* KSPopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B530D78BE5300513E70 /* KSPopUpButtonCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -4757,7 +4754,6 @@
 				CEC11BBA0D78BE5300513E70 /* KSPathInfoField.h in Headers */,
 				CEC11BBB0D78BE5300513E70 /* KSPathInfoFieldCell.h in Headers */,
 				CEC11BBC0D78BE5300513E70 /* KSPDFViewController.h in Headers */,
-				CEC11BBD0D78BE5300513E70 /* KSPluginInstallerController.h in Headers */,
 				CEC11BBE0D78BE5300513E70 /* KSPluginLoader.h in Headers */,
 				CEC11BBF0D78BE5300513E70 /* KSPopUpButton.h in Headers */,
 				CEC11BC00D78BE5300513E70 /* KSPopUpButtonCell.h in Headers */,
@@ -5683,7 +5679,6 @@
 				CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */,
 				CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */,
 				CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */,
-				CE22E5D60D7C720D0055D8E9 /* PluginInstaller.nib in Resources */,
 				CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */,
 				CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */,
 				CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */,
@@ -6157,7 +6152,6 @@
 				CEC11ADF0D78BE3D00513E70 /* KSPathInfoField.m in Sources */,
 				CEC11AE00D78BE3D00513E70 /* KSPathInfoFieldCell.m in Sources */,
 				CEC11AE10D78BE3D00513E70 /* KSPDFViewController.m in Sources */,
-				CEC11AE20D78BE3D00513E70 /* KSPluginInstallerController.m in Sources */,
 				CEC11AE30D78BE3D00513E70 /* KSPluginLoader.m in Sources */,
 				CEC11AE40D78BE3D00513E70 /* KSPopUpButton.m in Sources */,
 				CEC11AE50D78BE3D00513E70 /* KSPopUpButtonCell.m in Sources */,

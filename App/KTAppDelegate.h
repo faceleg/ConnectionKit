@@ -152,6 +152,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oAcknowledgementsMenuItem;
 	IBOutlet NSMenuItem		*oSendFeedbackMenuItem;
 	IBOutlet NSMenuItem		*oProductPageMenuItem;
+	
+	IBOutlet SUUpdater		*oSparkleUpdater;
 
 
     // we have pages and collections (summary pages)
@@ -254,6 +256,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (void)checkPlaceholderWindow:(id)bogus;
 
+- (SUUpdater *) sparkleUpdater;
 
 @end
 

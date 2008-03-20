@@ -203,10 +203,12 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
-	<key>SUCheckAtStartup</key>
-	<false/>
 	<key>SUFeedURL</key>
 	<string>http://launch.karelia.com/appcast.php?appname=${PRODUCT_NAME}&amp;version=${SVN_VERSION}</string>
+	<key>SUIncludeProfile</key>
+	<false/>
+	<key>SUScheduledCheckInterval</key>
+	<real>86400</real> <!-- one day -->
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

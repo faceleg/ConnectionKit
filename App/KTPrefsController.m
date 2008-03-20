@@ -18,6 +18,12 @@
 #import "NSImage+KTExtensions.h"
 #import "NSApplication+Karelia.h"
 
+@interface KTPrefsController ()
+
+- (int)sparkleOption;
+- (void)setSparkleOption:(int)aSparkleOption;
+
+@end
 
 
 
@@ -45,7 +51,8 @@
 	[controller removeObserver:self forKeyPath:@"values.KTPreferredJPEGQuality"];
 	[controller removeObserver:self forKeyPath:@"values.KTPrefersPNGFormat"];
 	[controller removeObserver:self forKeyPath:@"values.LiveDataFeeds"];
-//	[controller removeObserver:self forKeyPath:@"values.AutosaveDocuments"];
+
+	[self removeObserver:self forKeyPath:@"sparkleOption"];
 
 	[mySampleImage release];
 	
@@ -141,14 +148,37 @@
 - (void)windowDidLoad
 {
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-	
+	NSUserDefaults *defaults = [controller defaults];
+
 	[controller addObserver:self forKeyPath:@"values.KTPreferredJPEGQuality" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTPrefersPNGFormat" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.LiveDataFeeds" options:(NSKeyValueObservingOptionNew) context:nil];
-//	[controller addObserver:self forKeyPath:@"values.AutosaveDocuments" options:(NSKeyValueObservingOptionNew) context:nil];
 
-	[oObjectController setContent:self];
+
+	// setup sparkeOption
+	if ([defaults boolForKey:SUCheckAtStartupKey])
+	{
+		if ([[[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey]
+			 isEqualToString:[defaults objectForKey:SUFeedURLKey]])
+		{
+			[self setSparkleOption:sparkleRelease];
+		}
+		else
+		{
+			[self setSparkleOption:sparkleBeta];	// SOME kind of special feed, overridden.
+		}
+	}
+	else
+	{
+		[self setSparkleOption:sparkleNone];
+	}
+
+	// Now start observing
 	
+	[self addObserver:self forKeyPath:@"sparkleOption" options:(NSKeyValueObservingOptionNew) context:nil];
+
+	
+	[oObjectController setContent:self];	
 
 	[oCompressionSample setEditable:YES];
 	[oCompressionSample setImageFrameStyle:NSImageFrameGrayBezel];	// NSImageFrameGrayBezel
@@ -183,10 +213,31 @@
 //		[[NSNotificationCenter defaultCenter] postNotificationName:kKTWebViewMayNeedRefreshingNotification
 //															object:nil];
 	}
-//	else if ([aKeyPath isEqualToString:@"values.AutosaveDocuments"])
-//	{
-//		[[NSApp delegate] toggleAutosave:nil];
-//	}
+	else if ([aKeyPath isEqualToString:@"sparkleOption"])
+	{
+		int sparkleOption = [self sparkleOption];
+		
+		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
+		NSUserDefaults *defaults = [controller defaults];
+		NSString *SUFeedURL = [[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey];	// default feed.
+		
+		switch (sparkleOption)
+		{
+			case sparkleNone:
+				[defaults setBool:NO forKey:SUCheckAtStartupKey];
+				break;
+			case sparkleRelease:
+				[defaults setBool:YES forKey:SUCheckAtStartupKey];
+				[defaults removeObjectForKey:SUFeedURLKey];	// revert to regular
+				break;
+			case sparkleBeta:
+				[defaults setBool:YES forKey:SUCheckAtStartupKey];
+				NSString *newString = [SUFeedURL stringByAppendingString:@"&type=beta"];
+				[defaults setObject:newString forKey:SUFeedURLKey];	// revert to regular
+				break;
+		}
+		[defaults synchronize];
+	}
 	else
 	{
 		[self updateImageSettingsBlowAway:(nil != aKeyPath)];
@@ -198,6 +249,20 @@
 	[NSApp showHelpPage:@"Preferences"];	// HELPSTRING
 }
 
+- (IBAction) checkForUpdates:(id)sender
+{
+	[[[NSApp delegate] sparkleUpdater] checkForUpdates:sender];
+}
 
+
+- (int)sparkleOption
+{
+    return mySparkleOption;
+}
+
+- (void)setSparkleOption:(int)aSparkleOption
+{
+    mySparkleOption = aSparkleOption;
+}
 
 @end

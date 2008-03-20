@@ -259,6 +259,8 @@
 				<string>NSMenuItem</string>
 				<key>oSourceViewMenuItem</key>
 				<string>NSMenuItem</string>
+				<key>oSparkleUpdater</key>
+				<string>SUUpdater</string>
 				<key>oStandardViewMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oStandardViewWithoutStylesMenuItem</key>

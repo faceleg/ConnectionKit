@@ -6,6 +6,14 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>KSLabel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSApplication</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -64,15 +72,17 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KSLabel</string>
+			<string>NSCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>checkForUpdates</key>
+				<string>id</string>
 				<key>windowHelp</key>
 				<string>id</string>
 			</dict>

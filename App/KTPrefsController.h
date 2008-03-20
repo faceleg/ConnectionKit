@@ -13,10 +13,15 @@
 	IBOutlet NSImageView *oCompressionSample;
 	IBOutlet NSObjectController *oObjectController;
 	
+	int mySparkleOption;
+	
 	NSImage *mySampleImage;
 }
 
 - (IBAction) windowHelp:(id)sender;
+- (IBAction) checkForUpdates:(id)sender;
+
+enum { sparkleNone = 0, sparkleRelease, sparkleBeta }; 
 
 @end
 
