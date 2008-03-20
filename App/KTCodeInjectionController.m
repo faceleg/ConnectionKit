@@ -56,7 +56,9 @@
 - (void)awakeFromNib
 {
 	[oPreludeTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
+	[oEarlyHeadTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	[oHeadTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
+	[oBodyStartTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	[oBodyEndTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	[oBodyTagTextField setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
 	
@@ -75,10 +77,20 @@
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionBeforeHTML"]
 				   options:nil];
 	
+	[oEarlyHeadTextView bind:@"value"
+					toObject:pagesController
+				 withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionEarlyHead"]
+				     options:nil];
+	
 	[oHeadTextView bind:@"value"
 				  toObject:pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionHeadArea"]
 				   options:nil];
+	
+	[oBodyStartTextView bind:@"value"
+				    toObject:pagesController
+			     withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjectionBodyTagStart"]
+				     options:nil];
 	
 	[oBodyEndTextView bind:@"value"
 				  toObject:pagesController
@@ -147,33 +159,33 @@
 	if (![[self window] isVisible])
 	{
 		NSString *stringValue = [[oPreludeTextView textStorage] string];
-		if (!stringValue || [stringValue isEqualToString:@""])
+		if (stringValue && ![stringValue isEqualToString:@""])
 		{
-			stringValue = [[oHeadTextView textStorage] string];
-			if (!stringValue || [stringValue isEqualToString:@""])
-			{
-				stringValue = [oBodyTagTextField stringValue];
-				if (!stringValue || [stringValue isEqualToString:@""])
-				{
-					stringValue = [[oBodyEndTextView textStorage] string];
-					if (stringValue && ![stringValue isEqualToString:@""])
-					{
-						[oTabView selectTabViewItemWithIdentifier:@"</body>"];
-					}
-				}
-				else
-				{
-					[oTabView selectTabViewItemWithIdentifier:@"<body>"];
-				}
-			}
-			else
-			{
-				[oTabView selectTabViewItemWithIdentifier:@"<head>"];
-			}
+			[oTabView selectTabViewItemWithIdentifier:@"html"];
 		}
 		else
 		{
-			[oTabView selectTabViewItemWithIdentifier:@"<html>"];
+			stringValue = [[oEarlyHeadTextView textStorage] string];
+			NSString *stringValue2 = [[oHeadTextView textStorage] string];
+			
+			if ((stringValue && ![stringValue isEqualToString:@""]) ||
+				(stringValue2 && ![stringValue2 isEqualToString:@""]))
+			{
+				[oTabView selectTabViewItemWithIdentifier:@"head"];
+			}
+			else
+			{
+				stringValue = [oBodyTagTextField stringValue];
+				stringValue2 = [[oBodyStartTextView textStorage] string];
+				NSString *stringValue3 = [[oBodyEndTextView textStorage] string];
+				
+				if ((stringValue && ![stringValue isEqualToString:@""]) ||
+					(stringValue2 && ![stringValue2 isEqualToString:@""]) ||
+					(stringValue3 && ![stringValue3 isEqualToString:@""]))
+				{
+					[oTabView selectTabViewItemWithIdentifier:@"body"];
+				}
+			}
 		}
 	}
 	

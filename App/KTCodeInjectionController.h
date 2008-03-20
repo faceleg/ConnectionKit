@@ -17,7 +17,9 @@
 {
 	IBOutlet NSTabView			*oTabView;
 	IBOutlet NSTextView			*oPreludeTextView;
+	IBOutlet NSTextView			*oEarlyHeadTextView;
 	IBOutlet NSTextView			*oHeadTextView;
+	IBOutlet NSTextView			*oBodyStartTextView;
 	IBOutlet NSTextView			*oBodyEndTextView;
 	IBOutlet NSTextField		*oBodyTagTextField;
 	

@@ -55,8 +55,12 @@
 			<dict>
 				<key>oBodyEndTextView</key>
 				<string>NSTextView</string>
+				<key>oBodyStartTextView</key>
+				<string>NSTextView</string>
 				<key>oBodyTagTextField</key>
 				<string>NSTextField</string>
+				<key>oEarlyHeadTextView</key>
+				<string>NSTextView</string>
 				<key>oHeadTextView</key>
 				<string>NSTextView</string>
 				<key>oObjectController</key>
@@ -67,7 +71,7 @@
 				<string>NSTabView</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
+			<string>KSSingletonWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -76,6 +80,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSSingletonWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -96,6 +108,14 @@
 		<dict>
 			<key>CLASS</key>
 			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
