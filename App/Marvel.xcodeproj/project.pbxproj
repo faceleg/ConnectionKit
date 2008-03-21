@@ -599,6 +599,9 @@
 		CE7779C80AE4945D002E6844 /* Placeholder.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE7779C60AE4945D002E6844 /* Placeholder.nib */; };
 		CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
+		CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */; };
+		CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */; };
+		CE8DECDE0D935E8E00CEB9F7 /* KeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */; };
 		CE8E719D0912F5E7001DC88D /* paypal.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE8E71960912F5E7001DC88D /* paypal.gif */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
 		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
@@ -2266,6 +2269,9 @@
 		CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSKeepInTouchController.m; path = ../../../Shared/trunk/App/KSKeepInTouchController.m; sourceTree = SOURCE_ROOT; };
+		CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSKeepInTouchController.h; path = ../../../Shared/trunk/App/KSKeepInTouchController.h; sourceTree = SOURCE_ROOT; };
+		CE8DECDD0D935E8E00CEB9F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KeepInTouch.nib; sourceTree = SOURCE_ROOT; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE8E834A0917EFE2001DC88D /* designCoverLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeft.png; sourceTree = "<group>"; };
 		CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeftSearch.png; sourceTree = "<group>"; };
@@ -4192,6 +4198,7 @@
 		CE22E5B80D7C71A10055D8E9 /* Shared Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */,
 				CE3162850D7DE6A200B0951B /* GenericProgress.nib */,
 				CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */,
 				CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */,
@@ -4367,6 +4374,8 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */,
+				CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */,
 				CEBFCE6D0D7F53DC006B94B9 /* KSPlugin.h */,
 				CEBFCE6E0D7F53DC006B94B9 /* KSPlugin.m */,
 				CEC11B300D78BE5300513E70 /* AMRollOverButton.h */,
@@ -4836,6 +4845,7 @@
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				CE8F6F210D917F4500BDB69B /* QTMovie+Karelia.h in Headers */,
 				27A832860D92D8F7005FF13D /* KTCodeInjectionSplitView.h in Headers */,
+				CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5694,6 +5704,7 @@
 				CE7232140D85DC5A00E9C592 /* arrow_black.pdf in Resources */,
 				CE7232150D85DC5A00E9C592 /* arrow_grey_down.pdf in Resources */,
 				CE7232160D85DC5A00E9C592 /* arrow_grey_up.pdf in Resources */,
+				CE8DECDE0D935E8E00CEB9F7 /* KeepInTouch.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6231,6 +6242,7 @@
 				2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */,
 				CE8F6F220D917F4500BDB69B /* QTMovie+Karelia.m in Sources */,
 				27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */,
+				CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6793,6 +6805,14 @@
 			);
 			name = Placeholder.nib;
 			sourceTree = "<group>";
+		};
+		CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE8DECDD0D935E8E00CEB9F7 /* en */,
+			);
+			name = KeepInTouch.nib;
+			sourceTree = SOURCE_ROOT;
 		};
 		CEA234C1086B6EC5007A4C2D /* Prefs.nib */ = {
 			isa = PBXVariantGroup;
