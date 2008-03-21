@@ -1321,10 +1321,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[defaults setBool:[defaults boolForKey:@"contactHomeBase"] forKey:SUCheckAtStartupKey];	// copy default from old (now unused) key.
 			[defaults removeObjectForKey:@"contactHomeBase"];
 		}
-		else
-		{
-			[defaults setBool:YES forKey:SUCheckAtStartupKey];	// Initially we will check, user can turn off in prefs
-		}
+		// if we didn't have this setting, then it will be turned on when somebody has a first run
 		[defaults synchronize];
 	}
 		 
