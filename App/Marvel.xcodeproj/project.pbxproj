@@ -342,7 +342,6 @@
 		3C5C20E807E7A49000994477 /* KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1B07DFC0AA00DE4994 /* KTApplication.m */; };
 		3C5C20EA07E7A4A400994477 /* KTPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */; };
 		3C5C20FD07E7B09200994477 /* KTHostArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7907DFC30800DE4994 /* KTHostArrayController.m */; };
-		3C5C210107E7B2B700994477 /* KTDocument+Bindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3507DFC0F000DE4994 /* KTDocument+Bindings.m */; };
 		3C66E3EA08A9781400EC7716 /* 16x16_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C66E3E908A9781400EC7716 /* 16x16_empty.png */; };
 		3C682B0F0D622EC200B4D485 /* KTComponents.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */; };
 		3C682B120D622F1D00B4D485 /* KTDocumentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B110D622F1D00B4D485 /* KTDocumentInfo.m */; };
@@ -5973,7 +5972,6 @@
 				3C5C20E807E7A49000994477 /* KTApplication.m in Sources */,
 				3C5C20EA07E7A4A400994477 /* KTPrefsController.m in Sources */,
 				3C5C20FD07E7B09200994477 /* KTHostArrayController.m in Sources */,
-				3C5C210107E7B2B700994477 /* KTDocument+Bindings.m in Sources */,
 				3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */,
 				3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */,
 				3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */,
