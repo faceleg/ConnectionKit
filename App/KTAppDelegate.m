@@ -477,10 +477,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		/// setting DotMacPersonalDomain will automatically override all DotMac* defaults
 		@"", @"DotMacPersonalDomain",
 		
-		
-										 // THIS MIGHT BE NIL -- it should be last to not destroy the rest of the dictionary
-										 [KSEmailAddressComboBox primaryEmailAddress], @"KSEmailAddress",
-		
 		nil];
 	
 	OBASSERT(defaultsBase);
@@ -488,6 +484,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// Load in the syntax coloring defaults
 	NSDictionary *syntaxColorDefaults = [NSDictionary dictionaryWithContentsOfFile: [[NSBundle mainBundle] pathForResource: @"SyntaxColorDefaults" ofType: @"plist"]];
 	[defaultsBase addEntriesFromDictionary:syntaxColorDefaults];
+	
+	NSString *email = [KSEmailAddressComboBox primaryEmailAddress];
+	if (email)
+	{
+		[defaultsBase setObject:email forKey:@"KSEmailAddress"];
+	}
 			
     [defaults registerDefaults:defaultsBase];
 	
