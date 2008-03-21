@@ -50,7 +50,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTPage.h"
 #import "KTPlaceholderController.h"
 #import "KTPrefsController.h"
-#import "KTQuickStartController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
@@ -1335,16 +1334,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #else
 	[self checkRegistrationString:nil];
 #endif
-
-	// Show Welcome alert if unlicensed, or the Apple Design Awards entry
-	if (nil == gRegistrationString )
-	{
-		[[KTQuickStartController sharedController] performSelector:@selector(doWelcomeAlert:) withObject:nil afterDelay:0.0];
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		[defaults setBool:YES forKey:@"ToldAboutScreencast"];
-		[defaults synchronize];
-	}		
-		
 		
 	// Fix menus appropriately
 	if (nil == gRegistrationString)

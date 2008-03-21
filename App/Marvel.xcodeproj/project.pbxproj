@@ -318,7 +318,6 @@
 		3C26FAC80898777500FCC13F /* 32favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C26FAC70898777500FCC13F /* 32favicon.png */; };
 		3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FE01096F198E00702991 /* KTReleaseNotesController.m */; };
 		3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */; };
-		3C27FF7A096F512500702991 /* KTQuickStartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF78096F512500702991 /* KTQuickStartController.m */; };
 		3C2EA6D00819F95500C35FCD /* KTDocument+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */; };
 		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; settings = {ATTRIBUTES = (); }; };
 		3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */; };
@@ -1893,8 +1892,6 @@
 		3C27FE01096F198E00702991 /* KTReleaseNotesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTReleaseNotesController.m; sourceTree = "<group>"; };
 		3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAcknowledgmentsController.h; sourceTree = "<group>"; };
 		3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAcknowledgmentsController.m; sourceTree = "<group>"; };
-		3C27FF77096F512500702991 /* KTQuickStartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTQuickStartController.h; sourceTree = "<group>"; };
-		3C27FF78096F512500702991 /* KTQuickStartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTQuickStartController.m; sourceTree = "<group>"; };
 		3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+CoreData.m"; sourceTree = "<group>"; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
@@ -4361,8 +4358,6 @@
 				3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */,
 				3C27FE00096F198E00702991 /* KTReleaseNotesController.h */,
 				3C27FE01096F198E00702991 /* KTReleaseNotesController.m */,
-				3C27FF77096F512500702991 /* KTQuickStartController.h */,
-				3C27FF78096F512500702991 /* KTQuickStartController.m */,
 				CE510FCB090EA74C00547CFF /* KTTranscriptController.h */,
 				CE510FCC090EA74C00547CFF /* KTTranscriptController.m */,
 				CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */,
@@ -6006,7 +6001,6 @@
 				3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */,
 				3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */,
 				3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */,
-				3C27FF7A096F512500702991 /* KTQuickStartController.m in Sources */,
 				CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */,
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
