@@ -10,22 +10,22 @@
 #import "KSSingletonWindowController.h"
 
 
-@class KTPage, KTDocSiteOutlineController, KTCodeInjectionSplitView;
+@class KTPage, KTDocSiteOutlineController, KTCodeInjectionSplitView, KSPlaceholderTextView;
 
 
 @interface KTCodeInjectionController : KSSingletonWindowController 
 {
 	IBOutlet NSTabView		*oTabView;
 	
-	IBOutlet NSTextView		*oPreludeTextView;
+	IBOutlet KSPlaceholderTextView	*oPreludeTextView;
 	
 	IBOutlet KTCodeInjectionSplitView	*oHeadSplitView;
-	IBOutlet NSTextView					*oEarlyHeadTextView;
-	IBOutlet NSTextView					*oHeadTextView;
+	IBOutlet KSPlaceholderTextView		*oEarlyHeadTextView;
+	IBOutlet KSPlaceholderTextView		*oHeadTextView;
 	
 	IBOutlet KTCodeInjectionSplitView	*oBodySplitView;
-	IBOutlet NSTextView					*oBodyStartTextView;
-	IBOutlet NSTextView					*oBodyEndTextView;
+	IBOutlet KSPlaceholderTextView		*oBodyStartTextView;
+	IBOutlet KSPlaceholderTextView		*oBodyEndTextView;
 	IBOutlet NSTextField				*oBodyTagTextField;
 	
 	KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref

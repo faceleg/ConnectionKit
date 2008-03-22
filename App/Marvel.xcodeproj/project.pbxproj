@@ -232,11 +232,11 @@
 		27A50E8B0D19282B00149038 /* KTWebViewTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* KTWebViewTextBlock.m */; };
 		27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50F270D19443800149038 /* DOM+KTWebViewController.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; };
-		27A832860D92D8F7005FF13D /* KTCodeInjectionSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A832840D92D8F7005FF13D /* KTCodeInjectionSplitView.h */; };
 		27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A832850D92D8F7005FF13D /* KTCodeInjectionSplitView.m */; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27AA102D0CDA06C6001D6B9B /* MissingMedia.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */; };
+		27AA4B520D959BDF00B871A9 /* KSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4B500D959BDF00B871A9 /* KSPlaceholderTextView.m */; };
 		27ACA2DC0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */; settings = {ATTRIBUTES = (); }; };
 		27ACA2DD0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */; };
 		27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */; settings = {ATTRIBUTES = (); }; };
@@ -1470,20 +1470,6 @@
 			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
-		CE06F2FF0D92D5080079209A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
-			remoteInfo = iMediaTesterSingle;
-		};
-		CE06F3010D92D5080079209A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
-			remoteInfo = movietool;
-		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
@@ -1752,6 +1738,8 @@
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
 		27AA102C0CDA06C6001D6B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		27AA4B4F0D959BDF00B871A9 /* KSPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlaceholderTextView.h; path = ../../../Shared/trunk/App/KSPlaceholderTextView.h; sourceTree = SOURCE_ROOT; };
+		27AA4B500D959BDF00B871A9 /* KSPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlaceholderTextView.m; path = ../../../Shared/trunk/App/KSPlaceholderTextView.m; sourceTree = SOURCE_ROOT; };
 		27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWeakReferenceMutableDictionary.h; sourceTree = "<group>"; };
 		27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWeakReferenceMutableDictionary.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
@@ -2950,6 +2938,8 @@
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
 			isa = PBXGroup;
 			children = (
+				27AA4B4F0D959BDF00B871A9 /* KSPlaceholderTextView.h */,
+				27AA4B500D959BDF00B871A9 /* KSPlaceholderTextView.m */,
 				3C26D8010BC5B7DD00FF874D /* KTCodeInjectionController.h */,
 				3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */,
 				27A832840D92D8F7005FF13D /* KTCodeInjectionSplitView.h */,
@@ -4298,10 +4288,8 @@
 			isa = PBXGroup;
 			children = (
 				CE99830E0D614D7400F2DD12 /* iMediaTester.app */,
-				CE06F3000D92D5080079209A /* iMediaTesterSingle.app */,
 				CE9983100D614D7400F2DD12 /* iMediaBrowser.framework */,
 				CE9983120D614D7400F2DD12 /* MetadataTool */,
-				CE06F3020D92D5080079209A /* movietool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4838,7 +4826,6 @@
 				2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */,
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				CE8F6F210D917F4500BDB69B /* QTMovie+Karelia.h in Headers */,
-				27A832860D92D8F7005FF13D /* KTCodeInjectionSplitView.h in Headers */,
 				CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5364,20 +5351,6 @@
 			fileType = wrapper.cfbundle;
 			path = Feed.svxElement;
 			remoteRef = 3CA9FF860D63C4DA00815310 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE06F3000D92D5080079209A /* iMediaTesterSingle.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iMediaTesterSingle.app;
-			remoteRef = CE06F2FF0D92D5080079209A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE06F3020D92D5080079209A /* movietool */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = movietool;
-			remoteRef = CE06F3010D92D5080079209A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */ = {
@@ -6235,6 +6208,7 @@
 				CE8F6F220D917F4500BDB69B /* QTMovie+Karelia.m in Sources */,
 				27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */,
 				CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */,
+				27AA4B520D959BDF00B871A9 /* KSPlaceholderTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

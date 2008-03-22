@@ -62,23 +62,23 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>oBodyEndTextView</key>
-				<string>NSTextView</string>
+				<string>KSPlaceholderTextView</string>
 				<key>oBodySplitView</key>
 				<string>KTCodeInjectionSplitView</string>
 				<key>oBodyStartTextView</key>
-				<string>NSTextView</string>
+				<string>KSPlaceholderTextView</string>
 				<key>oBodyTagTextField</key>
 				<string>NSTextField</string>
 				<key>oEarlyHeadTextView</key>
-				<string>NSTextView</string>
+				<string>KSPlaceholderTextView</string>
 				<key>oHeadSplitView</key>
 				<string>KTCodeInjectionSplitView</string>
 				<key>oHeadTextView</key>
-				<string>NSTextView</string>
+				<string>KSPlaceholderTextView</string>
 				<key>oObjectController</key>
 				<string>NSObjectController</string>
 				<key>oPreludeTextView</key>
-				<string>NSTextView</string>
+				<string>KSPlaceholderTextView</string>
 				<key>oTabView</key>
 				<string>NSTabView</string>
 			</dict>
@@ -92,6 +92,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSPlaceholderTextView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

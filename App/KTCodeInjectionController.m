@@ -56,12 +56,13 @@
 
 - (void)awakeFromNib
 {
-	[oPreludeTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-	[oEarlyHeadTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-	[oHeadTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-	[oBodyStartTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-	[oBodyEndTextView setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
-	[oBodyTagTextField setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
+	NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+	[oPreludeTextView setFont:font];
+	[oEarlyHeadTextView setFont:font];
+	[oHeadTextView setFont:font];
+	[oBodyStartTextView setFont:font];
+	[oBodyEndTextView setFont:font];
+	[oBodyTagTextField setFont:font];
 	
 	
 	// Bind our text fields to the right controller.
@@ -140,6 +141,30 @@
 	
 	[oBodySplitView setDividerDescription:
 		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
+	
+	[oPreludeTextView setPlaceholderString:NSLocalizedString(
+		@"Code here is inserted at the very beginning of the document, before the opening <html> tag. This is never any HTML or Javascript code; it's only for server-side scripts (such as PHP code) to affect the headers, set cookies, etc.",
+		"Code Injection placeholder text")];
+	
+	[oEarlyHeadTextView setPlaceholderString:NSLocalizedString(
+		@"Code here is inserted shortly after the <head> tag. Useful for scripts that must be placed at this location. Otherwise, use the field below to insert code after the main tags.",
+		"Code Injection placeholder text")];
+	
+	[oHeadTextView setPlaceholderString:NSLocalizedString(
+		@"Code here is inserted right before the </head> tag. Useful for additional <meta> tags, JavaScript <script> tags, stylesheets, etc.",
+		"Code Injection placeholder text")];
+	
+	[[oBodyTagTextField cell] setPlaceholderString:NSLocalizedString(
+		@"Inserted directly inside of the <body> tag itself.",
+		"Code Injection placeholder text")];
+	
+	[oBodyStartTextView setPlaceholderString:NSLocalizedString(
+		@"Code here is inserted after the <body> tag. This is generally used by JavaScripts that prepare for the rest of the page contents.",
+		"Code Injection placeholder text")];
+	
+	[oBodyEndTextView setPlaceholderString:NSLocalizedString(
+		@"Code here is inserted at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
+		"Code Injection placeholder text")];
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
