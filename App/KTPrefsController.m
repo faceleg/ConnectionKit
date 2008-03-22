@@ -156,7 +156,7 @@
 
 
 	// setup sparkeOption
-	if ([defaults boolForKey:SUCheckAtStartupKey])
+	if ([defaults boolForKey:@"contactHomeBase"])
 	{
 		if ([[[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey]
 			 isEqualToString:[defaults objectForKey:SUFeedURLKey]])
@@ -224,14 +224,15 @@
 		switch (sparkleOption)
 		{
 			case sparkleNone:
-				[defaults setBool:NO forKey:SUCheckAtStartupKey];
+				[defaults setBool:NO forKey:@"contactHomeBase"];
+				[[[NSApp delegate] sparkleUpdater] scheduleCheckWithInterval:0.0];	// cancel it now
 				break;
 			case sparkleRelease:
-				[defaults setBool:YES forKey:SUCheckAtStartupKey];
+				[defaults setBool:YES forKey:@"contactHomeBase"];
 				[defaults removeObjectForKey:SUFeedURLKey];	// revert to regular
 				break;
 			case sparkleBeta:
-				[defaults setBool:YES forKey:SUCheckAtStartupKey];
+				[defaults setBool:YES forKey:@"contactHomeBase"];
 				NSString *newString = [SUFeedURL stringByAppendingString:@"&type=beta"];
 				[defaults setObject:newString forKey:SUFeedURLKey];	// revert to regular
 				break;

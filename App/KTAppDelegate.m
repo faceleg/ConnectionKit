@@ -1311,20 +1311,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
-	
-	// Convert old homebase preference to Sparkle.  WE DO THIS EARLY BEFORE SPARKLE DID-FINISH-LAUNCHING CODE RUNS.
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (![defaults objectForKey:SUCheckAtStartupKey])
-	{
-		if ([defaults objectForKey:@"contactHomeBase"])
-		{
-			[defaults setBool:[defaults boolForKey:@"contactHomeBase"] forKey:SUCheckAtStartupKey];	// copy default from old (now unused) key.
-			[defaults removeObjectForKey:@"contactHomeBase"];
-		}
-		// if we didn't have this setting, then it will be turned on when somebody has a first run
-		[defaults synchronize];
-	}
-		 
+			 
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
 #ifdef APPLE_DESIGN_AWARDS_KEY
