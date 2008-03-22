@@ -50,7 +50,8 @@
 
 - (NSString *)pathRelativeTo:(id <KTWebPaths>)path2;
 {
-	return nil;
+	NSString *result = [[self pathRelativeToSite] pathRelativeTo:[path2 pathRelativeToSite]];
+	return result;
 }
 
 - (NSString *)publishedPathRelativeToPage:(KTPage *)page
