@@ -54,13 +54,4 @@
 	return result;
 }
 
-- (NSString *)publishedPathRelativeToPage:(KTPage *)page
-{
-	NSString *mediaPath = [@"/" stringByAppendingString:[self pathRelativeToSite]];
-	NSString *pagePath = [@"/" stringByAppendingString:[page publishedPathRelativeToSite]];
-	
-	NSString *result = [mediaPath pathRelativeTo:pagePath];
-	return result;
-}
-
 @end

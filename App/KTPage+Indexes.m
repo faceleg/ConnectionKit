@@ -122,7 +122,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 		NSString *feedPath = [collectionPath stringByAppendingPathComponent:feedFileName];
 		
 		NSString *comparisonFeedPath = [@"/" stringByAppendingString:feedPath];
-		NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage publishedPathRelativeToSite]];
+		NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage pathRelativeToSite]];
 		
 		result = [comparisonFeedPath pathRelativeTo:comparisonPagePath];
 	}

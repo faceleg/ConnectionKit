@@ -94,7 +94,7 @@
 	else
 	{
 		NSString *masterCSSPath = [[page master] publishedMasterCSSPathRelativeToSite];
-		NSString *pagePath = [[self currentPage] publishedPathRelativeToSite];
+		NSString *pagePath = [[self currentPage] pathRelativeToSite];
 		
 		NSString *relativeMasterCSSPath =
 			[[@"/" stringByAppendingString:masterCSSPath] pathRelativeTo:[@"/" stringByAppendingString:pagePath]];

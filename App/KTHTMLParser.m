@@ -1219,7 +1219,7 @@ static unsigned sLastParserID;
 			default:
 			{
 				upload = [mediaFile defaultUpload];
-				result = [upload publishedPathRelativeToPage:[self currentPage]];
+				result = [upload pathRelativeTo:[self currentPage]];
 				break;
 			}
 		}
@@ -1272,7 +1272,7 @@ static unsigned sLastParserID;
 		else
 		{
 			upload = [mediaFile defaultUpload];
-			result = [upload publishedPathRelativeToPage:[self currentPage]];
+			result = [upload pathRelativeTo:[self currentPage]];
 		}
 		
 		// The delegate may want to know
@@ -1419,7 +1419,7 @@ static unsigned sLastParserID;
 			result= @"javascript:void(0)";
 			break;
 		default:
-			result = [page publishedPathRelativeToPage:[self currentPage]];
+			result = [page pathRelativeTo:[self currentPage]];
 			break;
 	}
 	

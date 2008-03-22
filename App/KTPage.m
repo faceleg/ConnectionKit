@@ -327,7 +327,7 @@
 	KTDesign *design = [[self master] design];
 	NSString *designPath = [@"/" stringByAppendingString:[design remotePath]];
 	
-	NSString *pagePath = [@"/" stringByAppendingString:[self publishedPathRelativeToSite]];
+	NSString *pagePath = [@"/" stringByAppendingString:[self pathRelativeToSite]];
 	
 	NSString *result = [designPath pathRelativeTo:pagePath];
 	return result;

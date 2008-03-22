@@ -13,6 +13,7 @@
 
 #import "KTAbstractPage.h"
 
+
 #import "Debug.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
@@ -236,7 +237,7 @@
 	if (!result)
 	{
 		NSURL *parentURL = [[self parent] publishedURLAllowingIndexPage:aCanHaveIndexPage];
-		NSString *myRelativePath = [self publishedPathRelativeToParent];
+		NSString *myRelativePath = [self pathRelativeToParent];
 		result = [NSURL URLWithString:myRelativePath relativeToURL:parentURL];
 	}
 	
@@ -247,7 +248,7 @@
  *	However, the index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
  */
-- (NSString *)publishedPathRelativeToParent
+- (NSString *)pathRelativeToParent
 {
 	int collectionPathStyle = KTCollectionHTMLDirectoryPath;
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
@@ -268,7 +269,7 @@
  *							-	The home page
  *		index.html			-	The home page (with index.html turned on in user defaults)
  */
-- (NSString *)publishedPathRelativeToSite
+- (NSString *)_pathRelativeToSite
 {
 	NSString *result = [self customPathRelativeToSite];	// A plugin may have specified a custom path
 	
@@ -284,30 +285,6 @@
 	
 	return result;
 }
-
-/*	Very useful method. Returns the path of the specifed page relative to our own published path.
- *	If there appears to be no relative path between the two, returns nil.
- */
-- (NSString *)publishedPathRelativeToPage:(KTAbstractPage *)otherPage
-{
-	NSString *result = nil;
-	
-	// Get the paths of the two pages relative to the site
-	NSString *myPathRelativeToSite = [self publishedPathRelativeToSite];
-	NSString *otherPathRelativeToSite = [otherPage publishedPathRelativeToSite];	// Makes links FROM collections work
-	
-	// Then pretend these are actually absolute paths
-	NSString *myPath = [@"/" stringByAppendingString:myPathRelativeToSite];
-	NSString *otherPagePath = [@"/" stringByAppendingString:otherPathRelativeToSite];
-	
-	// Compare the two to get the relative path
-	result = [myPath pathRelativeTo:otherPagePath];
-	
-// TODO:	// Make sure the result has a trailing slash if necessary
-	
-	return result;
-}
-
 
 /*	This accessor pair is used by plugins like the File Download and External Link to specify a custom path different
  *	to the default behaviour.
@@ -369,7 +346,7 @@
 	NSString *resourcePath = [resourcesDirectory stringByAppendingPathComponent:[onDiskResourcePath lastPathComponent]];
 	NSString *absoluteResourcePath = [@"/" stringByAppendingString:resourcePath];
 	
-	NSString *myAbsolutePath = [@"/" stringByAppendingString:[self publishedPathRelativeToSite]];
+	NSString *myAbsolutePath = [@"/" stringByAppendingString:[self _pathRelativeToSite]];
 	
 	// Compare the paths
 	NSString *result = [absoluteResourcePath pathRelativeTo:myAbsolutePath];

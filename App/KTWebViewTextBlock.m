@@ -357,7 +357,7 @@
 				else
 				{
 					KTPage *page = [self page];		OBASSERT(page);
-					aMediaPath = [[[mediaContainer file] defaultUpload] publishedPathRelativeToPage:page];
+					aMediaPath = [[[mediaContainer file] defaultUpload] pathRelativeTo:page];
 				}
 			}
 			[buffer appendString:aMediaPath];

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
 
+#import "KTWebPathsProtocol.h"
 #import "KTWebViewComponent.h"
 
 
@@ -21,7 +22,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@interface KTAbstractPage : KTAbstractElement <KTWebViewComponent>
+@interface KTAbstractPage : KTAbstractElement <KTWebPaths, KTWebViewComponent>
 {
 }
 
@@ -80,9 +81,7 @@ KTCollectionPathStyle;
 // Publishing
 - (NSURL *)publishedURL;
 - (NSURL *)publishedURLAllowingIndexPage:(BOOL)aCanHaveIndexPage;
-- (NSString *)publishedPathRelativeToParent;
-- (NSString *)publishedPathRelativeToSite;
-- (NSString *)publishedPathRelativeToPage:(KTAbstractPage *)otherPage;
+- (NSString *)pathRelativeToParent;
 
 - (NSString *)customPathRelativeToSite;
 - (void)setCustomPathRelativeToSite:(NSString *)path;

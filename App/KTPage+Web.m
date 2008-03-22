@@ -77,7 +77,7 @@
 					NSString *newPath = nil;
 					if (thePage)
 					{
-						newPath = [thePage publishedPathRelativeToPage:self];
+						newPath = [thePage pathRelativeTo:self];
 					}
 					else
 					{

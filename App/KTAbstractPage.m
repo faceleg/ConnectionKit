@@ -16,8 +16,14 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSString+KTExtensions.h"
 
 #import "Debug.h"
+
+
+@interface KTAbstractPage (PathsPrivate)
+- (NSString *)_pathRelativeToSite;
+@end
 
 
 @interface KTPage (ChildrenPrivate)
@@ -210,6 +216,24 @@
 	[parser release];
 	
 	
+	return result;
+}
+
+#pragma mark -
+#pragma mark KTWebPathsProtocol
+
+/*	These methods are in KTAbstractPage.m to keep the compiler happy.
+ *	They just call through where appropriate to the real methods in the +Paths category.
+ */
+
+- (NSURL *)absoluteURL { return [self publishedURL]; }
+
+- (NSString *)pathRelativeToSite { return [self _pathRelativeToSite]; }
+
+- (NSString *)pathRelativeTo:(id <KTWebPaths>)path2
+{
+	NSString *result = [[self pathRelativeToSite] pathRelativeTo:[path2 pathRelativeToSite]];
+	// TODO:	// Make sure the result has a trailing slash if necessary
 	return result;
 }
 
