@@ -15,6 +15,7 @@
 
 @interface KTCodeInjectionController : KSSingletonWindowController 
 {
+	IBOutlet NSTextField	*oCodeInjectionDescriptionLabel;
 	IBOutlet NSTabView		*oTabView;
 	
 	IBOutlet KSPlaceholderTextView	*oPreludeTextView;
@@ -34,6 +35,8 @@
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)siteOutline
 							 master:(BOOL)isMaster;
+
+- (BOOL)isMaster;
 
 - (IBAction)showHelp:(id)sender;
 

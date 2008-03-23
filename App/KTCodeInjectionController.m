@@ -136,6 +136,25 @@
 	[[self window] setFrameAutosaveName:@"CodeInjectionPanel"];
 	[[self window] setFrameUsingName:@"CodeInjectionPanel"];
 	
+	
+	// Localize the description field
+	NSString *description;
+	if ([self isMaster])
+	{
+		description = NSLocalizedString(
+			@"Use Code Injection to insert custom code, such as <script> tags or additional HTML, into every page of the site.",
+			"Code Injection information");
+	}
+	else
+	{
+		description = NSLocalizedString(
+			@"Use Code Injection to insert custom code, such as <script> tags or additional HTML, into the selected page(s).",
+			"Code Injection information");
+	}
+	[oCodeInjectionDescriptionLabel setStringValue:description];
+	
+	
+	// Localize other text
 	[oHeadSplitView setDividerDescription:
 		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
 	
@@ -143,27 +162,27 @@
 		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
 	
 	[oPreludeTextView setPlaceholderString:NSLocalizedString(
-		@"Code here is inserted at the very beginning of the document, before the opening <html> tag. This is never any HTML or Javascript code; it's only for server-side scripts (such as PHP code) to affect the headers, set cookies, etc.",
+		@"Use this field to insert code at the very beginning of the document, before the opening <html> tag. This is never any HTML or Javascript code; it's only for server-side scripts (such as PHP code) to affect the headers, set cookies, etc.",
 		"Code Injection placeholder text")];
 	
 	[oEarlyHeadTextView setPlaceholderString:NSLocalizedString(
-		@"Code here is inserted shortly after the <head> tag. Useful for scripts that must be placed at this location. Otherwise, use the field below to insert code after the main tags.",
+		@"Use this field to insert code after the first <meta> tag. Useful for scripts that must be placed at this location. Otherwise, use the field below to insert code after the main tags.",
 		"Code Injection placeholder text")];
 	
 	[oHeadTextView setPlaceholderString:NSLocalizedString(
-		@"Code here is inserted right before the </head> tag. Useful for additional <meta> tags, JavaScript <script> tags, stylesheets, etc.",
+		@"Use this field to insert code before the closing </head> tag. Useful for additional <meta> tags, JavaScript <script> tags, stylesheets, etc.",
 		"Code Injection placeholder text")];
 	
 	[[oBodyTagTextField cell] setPlaceholderString:NSLocalizedString(
-		@"Inserted directly inside of the <body> tag itself.",
+		@"Use this field to insert code directly inside of the <body> tag itself.",
 		"Code Injection placeholder text")];
 	
 	[oBodyStartTextView setPlaceholderString:NSLocalizedString(
-		@"Code here is inserted after the <body> tag. This is generally used by JavaScripts that prepare for the rest of the page contents.",
+		@"Use this field to insert code after the <body> tag. This is generally used by JavaScripts that prepare for the rest of the page contents.",
 		"Code Injection placeholder text")];
 	
 	[oBodyEndTextView setPlaceholderString:NSLocalizedString(
-		@"Code here is inserted at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
+		@"Use this field to insert code at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
 		"Code Injection placeholder text")];
 }
 
@@ -223,6 +242,8 @@
 	
 	[super showWindow:sender];
 }
+
+- (BOOL)isMaster { return myIsMaster; }
 
 - (IBAction)showHelp:(id)sender
 {

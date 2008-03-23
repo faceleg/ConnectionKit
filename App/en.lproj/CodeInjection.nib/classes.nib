@@ -69,6 +69,8 @@
 				<string>KSPlaceholderTextView</string>
 				<key>oBodyTagTextField</key>
 				<string>NSTextField</string>
+				<key>oCodeInjectionDescriptionLabel</key>
+				<string>NSTextField</string>
 				<key>oEarlyHeadTextView</key>
 				<string>KSPlaceholderTextView</string>
 				<key>oHeadSplitView</key>
