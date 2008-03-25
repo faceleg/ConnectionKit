@@ -158,4 +158,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 	[[NSApp delegate] openLow:nil];
 }
 
+#warning TODO -- hide the intro panel if we're not online
+
 @end

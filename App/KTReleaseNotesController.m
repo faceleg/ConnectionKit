@@ -26,6 +26,7 @@
 
 - (void)windowDidLoad
 {
+	// TODO: load the release notes from the net, right?  (Or the bundled release notes in HTML).  If not network, turn off the 'globe' icon for this
     // load ReleaseNotes.rtf
     NSString *path = [[NSBundle mainBundle] pathForResource:@"ReleaseNotes" ofType:@"rtf"];
     (void)[oTextView readRTFDFromFile:path];

@@ -13,6 +13,7 @@
 #import "Debug.h"
 #import "KSSilencingConfirmSheet.h"
 #import "KSTextField.h"
+#import "KSNetworkNotifier.h"
 #import "KSValidateCharFormatter.h"
 #import "KT.h"
 #import "KTDataSource.h"
@@ -1270,6 +1271,7 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+	DJW((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
 	
 	// File menu handled by KTDocument
@@ -1644,7 +1646,7 @@ from representedObject */
 	else if ( itemAction == @selector(validateSource:) )
 	{
 		[menuItem setState:(KTHTMLValidationView == [[self webViewController] viewType]) ? NSOnState : NSOffState];
-		return YES;
+		return [KSNetworkNotifier isNetworkAvailable];
 	}	
 	
 	// DEFAULT: let webKit handle it

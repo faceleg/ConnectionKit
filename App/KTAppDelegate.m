@@ -25,6 +25,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
  */
 
 #import "BDAlias.h"
+#import "KSNetworkNotifier.h"
 #import "Debug.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSPluginInstallerController.h"
@@ -186,7 +187,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
 {
-	NSArray *designs = [[self homeBaseDict] objectForKey:@"Designs"];
+// TODO: load a dictionary from the 
+	NSArray *designs = nil; // [nil objectForKey:@"Designs"];
 	NSImage *designImage = [NSImage imageNamed:@"designPlaceholder"];
 	float scaleFactor = [controller scaleFactor];
 	
@@ -616,10 +618,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[oCheckForUpdatesMenuItem setImage:globe];
 
 		[oViewPublishedSiteMenuItem setImage:globe];
-		[oLatestNewsMenuItem setImage:globe];
-		[oReleaseNotesMenuItem setImage:globe];
+		
+		// TODO: if we load from the net -- ???? -- then set this on
+		// [oReleaseNotesMenuItem setImage:globe];
 		//[oAcknowledgementsMenuItem setImage:trans];
 		[oSendFeedbackMenuItem setImage:globe];
+		[oJoinListMenuItem setImage:globe];
 	}
 	[super awakeFromNib];
 }
@@ -627,7 +631,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OBPRECONDITION(menuItem);
-	//LOG((@"asking app delegate to validate menu item: %@", [menuItem title]));
+	DJW((@"KTAppDelegate validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 
 	SEL action = [menuItem action];
 	
@@ -645,9 +649,37 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
-		return nil != [self homeBaseDict];
+		return [KSNetworkNotifier isNetworkAvailable];
 	}
-	
+	else if (action == @selector(openHigh:))
+	{
+		return [KSNetworkNotifier isNetworkAvailable];
+	}
+	else if (action == @selector(openLow:))
+	{
+		return [KSNetworkNotifier isNetworkAvailable];
+	}
+	else if (action == @selector(showEmailListWindow:))
+	{
+		return [KSNetworkNotifier isNetworkAvailable];
+	}
+	else if (action == @selector(checkForUpdates:))
+	{
+		return [KSNetworkNotifier isNetworkAvailable] && [[self sparkleUpdater] validateMenuItem:menuItem];
+	}
+	else if (action == @selector(showRegistrationWindow:))	// hide the globe, and make available, if network is down
+	{
+		if ([KSNetworkNotifier isNetworkAvailable])
+		{
+			NSImage *globe = [NSImage imageNamed:@"globe"];
+			[menuItem setImage:globe];
+		}
+		else
+		{
+			[menuItem setImage:nil];
+		}
+		return YES;	// OK regardless
+	}
 	return YES;
 }
 
@@ -937,43 +969,40 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		
 
-		NSDictionary *systemVersionDict = [NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"];
-		NSString *sysVersion = [systemVersionDict objectForKey:@"ProductVersion"];
-		if (nil != sysVersion)
+		NSString *sysVersion = [NSApplication systemVersion];
+//TODO: use Sparkle version check
+		BOOL sufficient = NO;
+		// Check system version 
+		NSArray *versionPieces = [sysVersion componentsSeparatedByString:@"."];
+		if ([versionPieces count] >= 1 && [[versionPieces objectAtIndex:0] intValue] == 10)
 		{
-			BOOL sufficient = NO;
-			// Check system version 
-			NSArray *versionPieces = [sysVersion componentsSeparatedByString:@"."];
-			if ([versionPieces count] >= 1 && [[versionPieces objectAtIndex:0] intValue] == 10)
+			if ([versionPieces count] >= 2)
 			{
-				if ([versionPieces count] >= 2)
+				if ([[versionPieces objectAtIndex:1] intValue] == 4)
 				{
-					if ([[versionPieces objectAtIndex:1] intValue] == 4)
-					{
-						sufficient = ([[versionPieces objectAtIndex:2] intValue] >= 11);	// Need 10.4.11 +
-					}
-					else if ([[versionPieces objectAtIndex:1] intValue] >= 5)
-					{
-						sufficient = YES;	// Need 10.5.x
-					}
+					sufficient = ([[versionPieces objectAtIndex:2] intValue] >= 11);	// Need 10.4.11 +
+				}
+				else if ([[versionPieces objectAtIndex:1] intValue] >= 5)
+				{
+					sufficient = YES;	// Need 10.5.x
 				}
 			}
-			else
-			{
-				sufficient = YES;	// major version not 10 ... so 11 ?  Assume OK I guess
-			}
-			
-			if (!sufficient)
-			{
-				NSRunCriticalAlertPanel(
-										@"",
-										NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \"Leopard\" for this new version of Sandvox to function.", @""), 
-										NSLocalizedString(@"Quit", @"Quit button"),
-										nil,
-										nil
-										);
-				[NSApp terminate:nil];
-			}
+		}
+		else
+		{
+			sufficient = YES;	// major version not 10 ... so 11 ?  Assume OK I guess
+		}
+		
+		if (!sufficient)
+		{
+			NSRunCriticalAlertPanel(
+									@"",
+									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \"Leopard\" for this new version of Sandvox to function.", @""), 
+									NSLocalizedString(@"Quit", @"Quit button"),
+									nil,
+									nil
+									);
+			[NSApp terminate:nil];
 		}
 		
 #ifdef EXPIRY_TIMESTAMP
@@ -1513,11 +1542,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	myAppIsTerminating = aFlag;
 }
 
-- (SUUpdater *) sparkleUpdater
-{
-	return oSparkleUpdater;
-}
-
 #pragma mark -
 #pragma mark IBActions
 
@@ -1777,14 +1801,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void)warnExpiring:(id)bogus
 {
 #ifndef DEBUG
-    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"];
-    NSString *appBuildNumber = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleVersion"];
+    NSString *appVersion = [NSApplication appVersion];
+    NSString *buildVersion = [NSApplication buildVersion];
     
 	NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Sandvox Public Beta", "Alert: Beta Message") 
 									 defaultButton:nil 
 								   alternateButton:nil 
 									   otherButton:nil
-						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Help menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), appVersion, appBuildNumber, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Help menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), appVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
 	(void)[alert runModal];
 #endif
 }

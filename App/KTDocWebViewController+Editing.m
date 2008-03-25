@@ -894,7 +894,7 @@ through.  We seem to do OK by filtering later.
 
 - (BOOL)webKitValidateMenuItem:(NSMenuItem *)menuItem
 {
-	OFF((@"asking webkit to validate menu item: %@", [menuItem title]));
+	DJW((@"KTDocWindowController webkitValidateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 
 	SEL action = [menuItem action];
 

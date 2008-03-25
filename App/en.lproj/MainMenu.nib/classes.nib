@@ -15,7 +15,11 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>checkForUpdates</key>
+				<string>id</string>
 				<key>reportLatestCrash</key>
+				<string>id</string>
+				<key>showEmailListWindow</key>
 				<string>id</string>
 				<key>showFeedbackReporter</key>
 				<string>id</string>
@@ -40,6 +44,8 @@
 				<string>NSTextField</string>
 				<key>oGenericProgressView</key>
 				<string>NSView</string>
+				<key>oSparkleUpdater</key>
+				<string>SUUpdater</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
@@ -224,6 +230,8 @@
 				<key>oGenericProgressView</key>
 				<string>NSView</string>
 				<key>oInstallPluginsMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oJoinListMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oLatestNewsMenuItem</key>
 				<string>NSMenuItem</string>

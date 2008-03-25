@@ -178,6 +178,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		if (nil == [[self properties] valueForKey:@"localHostName"])
 		{
+/* Not doing this branch any more ... no more homebasedict.
 			// Try to figure out host name based on external IP address.
 			NSString *hostIP = [[[NSApp delegate] homeBaseDict] objectForKey:@"REMOTE_ADDR"];
 			if (nil != hostIP)
@@ -210,7 +211,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 					}
 				}
 			}
+*/
 		}
+
 		if (nil == [[self properties] valueForKey:@"hostTypeMatrix"])
 		{
 			// Default to my ISP if there is no .mac name set up for this account right now.

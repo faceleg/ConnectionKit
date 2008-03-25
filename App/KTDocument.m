@@ -1031,7 +1031,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	//LOG((@"asking document to validate menu item: %@", [menuItem title]));
+	DJW((@"KTDocument validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	
 	// File menu	
 	// "Save Snapshot" saveDocumentSnapshot:

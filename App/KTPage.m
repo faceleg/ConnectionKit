@@ -338,7 +338,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	//LOG((@"asking page to validate menu item %@", [menuItem title]));
+	DJW((@"KTPage validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
     if ( [menuItem action] == @selector(movePageletToSidebar:) )
     {
         return YES;

@@ -596,8 +596,7 @@
 			}
 			
 			//  kKTMetadataAppVersionKey (internal build number)
-			NSBundle *bundle = [NSBundle mainBundle];
-			[metadata setObject:[[bundle infoDictionary] valueForKey:@"CFBundleVersion"] forKey:kKTMetadataAppVersionKey];
+			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppVersionKey];
 							
 			//  kMDItemCreator (Sandvox is the creator of this site document)
 			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];

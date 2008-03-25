@@ -22,7 +22,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	// LOG((@"asking document controller to validate menu item: %@", [menuItem title]));
+	DJW((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	//return (!gLicenseViolation);
 	
 	if ( gLicenseViolation )

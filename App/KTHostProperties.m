@@ -146,10 +146,13 @@
 - (NSString *)localHostNameOrAddress
 {
 	NSString * hostName = [self valueForKey:@"localHostName"];
+/*
+ No longer doing -- no home base dict.
 	if (nil == hostName || [hostName isEqualToString:@""])
 	{
 		hostName = [[[NSApp delegate] homeBaseDict] valueForKey:@"REMOTE_ADDR"];
 	}
+*/
 	return hostName;
 }
 

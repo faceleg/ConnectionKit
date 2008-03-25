@@ -56,7 +56,7 @@
 */
 - (NSString *)appNameVersion
 {
-	NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+	NSString *version = [NSApplication appVersion];
 	
 	NSString *applicationName = [NSApplication applicationName];
 	if ([[NSApp delegate] isPro])
