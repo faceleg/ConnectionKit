@@ -1273,7 +1273,7 @@ static NSArray *sReservedNames = nil;
 {
 	if (myPublishedURL != nil) {
 		NSURL *url = [NSURL URLWithString:[myPublishedURL encodeLegally]];
-		[[NSWorkspace sharedWorkspace] openURL:url];
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
 	}
 	return NO;
 }
@@ -1655,7 +1655,7 @@ static NSArray *sReservedNames = nil;
 			NSURL *URL = [NSURL URLWithString:URLString];
 			if ( nil != URL )
 			{
-				(void)[[NSWorkspace sharedWorkspace] openURL:URL];
+				(void)[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
 			}
 		}
 	}

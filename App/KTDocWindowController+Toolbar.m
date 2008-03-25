@@ -213,7 +213,7 @@ TO DO:
 										 target:self
 										 action:@selector(addPage:)
 									  pullsDown:YES
-									  showIcons:YES];
+									  showIcons:YES smallIcons:NO];
                     [toolbarItem setView:myAddPagePopUpButton];
                     [toolbarItem setMinSize:[[myAddPagePopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddPagePopUpButton cell] maximumSize]];
@@ -226,7 +226,7 @@ TO DO:
 										 target:self
 										 action:@selector(addPage:)
 									  pullsDown:NO
-									  showIcons:NO];
+									  showIcons:NO smallIcons:NO];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];
@@ -251,7 +251,7 @@ TO DO:
 									     target:self
 									     action:@selector(addPagelet:)
 									  pullsDown:YES
-									  showIcons:YES];
+									  showIcons:YES smallIcons:NO];
                     
 					[toolbarItem setView:myAddPageletPopUpButton];
                     [toolbarItem setMinSize:[[myAddPageletPopUpButton cell] minimumSize]];
@@ -264,7 +264,7 @@ TO DO:
 									     target:self
 									     action:@selector(addPagelet:)
 									  pullsDown:NO
-									  showIcons:NO];
+									  showIcons:NO smallIcons:NO];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];
@@ -288,7 +288,7 @@ TO DO:
                                                                target:self
                                                                action:@selector(addCollection:)
                                                             pullsDown:YES
-															showIcons:YES];
+															showIcons:YES smallIcons:NO];
                     [toolbarItem setView:myAddCollectionPopUpButton];
                     [toolbarItem setMinSize:[[myAddCollectionPopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddCollectionPopUpButton cell] maximumSize]];
@@ -299,7 +299,7 @@ TO DO:
                                                                target:self
                                                                action:@selector(addCollection:)
                                                             pullsDown:NO
-															showIcons:NO];
+															showIcons:NO smallIcons:NO];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];

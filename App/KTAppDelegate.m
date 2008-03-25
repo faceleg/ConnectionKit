@@ -468,17 +468,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
 		[NSNumber numberWithBool:NO],	@"RSSFeedEnclosuresAreOriginalImages",
-		
-		
-		/// defaults to change .Mac publishing settings
-		@"/Sites/", @"DotMacDocumentRoot",
-		@"mac.com", @"DotMacDomainName",
-		@"http://www.mac.com/", @"DotMacHomePageURL",
-		@"http://homepage.mac.com/?/", @"DotMacStemURL",
-		
-		/// setting DotMacPersonalDomain will automatically override all DotMac* defaults
-		@"", @"DotMacPersonalDomain",
-		
+				
 		nil];
 	
 	OBASSERT(defaultsBase);
@@ -1064,19 +1054,19 @@ IMPLEMENTATION NOTES & CAUTIONS:
 							 target:nil
 							 action:@selector(addPage:)
 						  pullsDown:NO
-						  showIcons:YES];
+						  showIcons:YES smallIcons:NO];
 		[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 							 toMenu:oAddPageletMenu
 							 target:nil
 							 action:@selector(addPagelet:)
 						  pullsDown:NO
-						  showIcons:YES];
+						  showIcons:YES smallIcons:NO];
 		
 		[KTIndexPlugin addPresetPluginsToMenu:oAddCollectionMenu
 									   target:nil
 									   action:@selector(addCollection:)
 									pullsDown:NO
-									showIcons:YES];
+									showIcons:YES smallIcons:NO];
 		
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Building Menus...",
                                                                       "Message while building menus.")];
@@ -1659,12 +1649,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showProductPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.sandvox.com/"]];
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.sandvox.com/"]];
 }
 
 - (IBAction)showDiscussionGroup:(id)sender
 {
-    //[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://secure.karelia.com/fogbugz/?beta"]];
+    //[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"https://secure.karelia.com/fogbugz/?beta"]];
 }
 
 - (IBAction)toggleMediaBrowserShown:(id)sender

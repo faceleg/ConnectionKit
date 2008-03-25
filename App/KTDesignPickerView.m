@@ -168,6 +168,7 @@ static NSDictionary *sContributorLinkAttributes = nil;
 		[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 		[NSColor colorWithCalibratedRed:0.2 green:0.3 blue:0.6 alpha:1.0], NSForegroundColorAttributeName,
 		[NSNumber numberWithInt:1], NSUnderlineStyleAttributeName,
+		[NSCursor pointingHandCursor], NSCursorAttributeName,
 		// [NSColor colorWithCalibratedRed:0.2 green:0.3 blue:0.6 alpha:1.0], NSUnderlineColorAttributeName,
 		nil];
 	[pool release];

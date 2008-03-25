@@ -16,6 +16,7 @@ enum { DOT_MAC = 0, UNUSED_NOW, OTHER_ISP };
 enum { WEBDAV = 0, FTP, DOTMAC };
 enum { HOMEDIR = 0, SHARED };
 
+enum { PERSONAL_DOTMAC_DOMAIN, HOMEPAGE_MAC_COM, WEB_MAC_COM };
 enum { TEST_UPLOAD = 1, TEST_FETCH, TEST_DELETE };	// states for testing connection
 
 enum { LOCALHOST_UNVERIFIED = -1, LOCALHOST_REACHABLE = 0, LOCALHOST_UNREACHABLE, LOCALHOST_WRONGCOMPUTER, LOCALHOST_404, LOCALHOST_NOAPACHE };
@@ -87,6 +88,7 @@ NO LONGER	save
 	IBOutlet NSButton *oGetDotMacButton;
 	IBOutlet NSButton *oNextButton;
 	IBOutlet NSButton *oPreviousButton;
+	IBOutlet NSButton *oDotMacSetupLink;
 	IBOutlet NSMatrix *oHostTypeMatrix;
 	IBOutlet NSObjectController *oMainObjectController;
 	IBOutlet NSPanel *oBrowseHostAccountPanel;
@@ -135,6 +137,8 @@ NO LONGER	save
 - (IBAction) createNewConfiguration:(id)sender;
 - (IBAction) browseHostToSelectPath:(id)sender;
 - (IBAction) openPreferredHost:(id)sender;
+- (IBAction) settingUpDotMacPersnalDomains:(id)sender;
+
 
 - (NSMutableData *)connectionData;
 - (void)setConnectionData:(NSMutableData *)aConnectionData;

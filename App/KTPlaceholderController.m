@@ -99,6 +99,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 	
 	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor] range:range];
 	[attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1]  range:range];
+	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
 	[oHighLink setAttributedTitle:attrString];
 	
 	attrString = [[[oLowLink attributedTitle] mutableCopyWithZone:[oLowLink zone]] autorelease];
@@ -106,6 +107,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 	
 	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor] range:range];
 	[attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1]  range:range];
+	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
 	[oLowLink setAttributedTitle:attrString];
 	
 	[[self window] center];

@@ -70,6 +70,7 @@
 #import "NSDate+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -205,7 +206,7 @@
 						 target:nil
 						 action:nil
 					  pullsDown:NO
-					  showIcons:NO];
+					  showIcons:YES smallIcons:YES];
 	
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {
@@ -1433,7 +1434,7 @@
 	if ( nil != publishedSiteURL )
 	{
 		NSURL *URL = [NSURL URLWithString:publishedSiteURL];
-		[[NSWorkspace sharedWorkspace] openURL:URL];
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
 	}
 }
 

@@ -39,6 +39,7 @@
 						action:(SEL)anAction
 					 pullsDown:(BOOL)isPullDown
 					 showIcons:(BOOL)showIcons
+					smallIcons:(BOOL)smallIcons
 {
     if ( isPullDown ) {
         // if it's a pulldown, we need to add an empty menu item at the top of the menu
@@ -126,7 +127,7 @@
 			[image setDataRetained:YES];	// allow image to be scaled.
 			[image setScalesWhenResized:YES];
 			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
-			[image setSize:NSMakeSize(32.0, 32.0)];
+			[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
 			[menuItem setImage:image];
 			[style setMinimumLineHeight:[image size].height];
 			

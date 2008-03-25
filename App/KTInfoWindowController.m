@@ -203,7 +203,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 	NSDictionary *indexPlugins = [KTIndexPlugin pluginDict];
 	[KTElementPlugin addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
-		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO];
+		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO smallIcons:NO];
 
 	[oCollectionStylePopup removeAllItems];
 	
@@ -228,7 +228,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 													  target:self
 													  action:@selector(changeCollectionStyle:)
 												   pullsDown:NO
-												   showIcons:NO];
+												   showIcons:NO smallIcons:NO];
 	
 	// Last item: custom
 	[[oCollectionStylePopup menu] addItem:[NSMenuItem separatorItem]];

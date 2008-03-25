@@ -26,6 +26,7 @@
 		    target:(id)aTarget
 		    action:(SEL)anAction
 	     pullsDown:(BOOL)isPullDown
-	     showIcons:(BOOL)showIcons;
+	     showIcons:(BOOL)showIcons
+		smallIcons:(BOOL)smallIcons;
 
 @end

@@ -35,6 +35,7 @@ TO DO:
 #import "KSUtilities.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSColor+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSWorkspace+Karelia.h"
@@ -138,6 +139,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[NSArray arrayWithObjects:@"hostName", @"userName", nil]
 		triggerChangeNotificationsForDependentKey:@"password"];
 	
+//	[KTHostSetupController setKeys:
+//	 [NSArray arrayWithObjects:@"dotMacDomainStyle", nil]
+//		triggerChangeNotificationsForDependentKey:@"docRoot"];		// domain style affects docRoot, which affects other stuff.
+	
 	[KTHostSetupController setKeys:[NSArray arrayWithObject:@"protocol"] triggerChangeNotificationsForDependentKey:@"showSFTPMessage"];
 	
 	[KTHostSetupController setKeys:
@@ -173,6 +178,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[self addObserver:self forKeyPath:@"protocol" options:(NSKeyValueObservingOptionNew) context:nil];
 		[self addObserver:self forKeyPath:@"userName" options:(NSKeyValueObservingOptionNew) context:nil];
 		[self addObserver:self forKeyPath:@"hostName" options:(NSKeyValueObservingOptionNew) context:nil];
+		[self addObserver:self forKeyPath:@"dotMacDomainStyle" options:(NSKeyValueObservingOptionNew) context:nil];
 
 		[self setTrail:[NSMutableArray array]];
 		
@@ -267,6 +273,18 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self updatePortPlaceholder];
 
 	
+	NSMutableAttributedString *attrString = [[[oDotMacSetupLink attributedTitle] mutableCopyWithZone:[oDotMacSetupLink zone]] autorelease];
+	NSRange range = NSMakeRange(0,[attrString length]);
+	
+	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor]
+					   range:range];
+	[attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1]
+					   range:range];
+	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor]
+					   range:range];
+	[oDotMacSetupLink setAttributedTitle:attrString];
+
+	
 	// turn off the radio group
 	[oHostTypeMatrix deselectAllCells];
 }
@@ -309,10 +327,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) openPreferredHost:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[sender title]]];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:[sender title]]];
 	
 }
 
+- (IBAction) settingUpDotMacPersnalDomains:(id)sender;
+{
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=Dotmac/Member/en/gen367.html"]];
+}
 
 - (IBAction) windowHelp:(id)sender
 {
@@ -348,6 +370,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"remoteHosting"];	// choose NEITHER
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"hostTypeMatrix"];
+	[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];	// initially homepage.mac.com
 	[self doNext:sender];
 }
 
@@ -1714,38 +1737,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Put .Mac-specific properties into general properties
-		NSDictionary *ispInfo = nil;
-		
-		/// setting DotMacPersonalDomain overrides everythings and tries to "just work"
-		NSString *dotMacPersonalDomain = [defaults stringForKey:@"DotMacPersonalDomain"];
-		if ( (nil != dotMacPersonalDomain) && ![dotMacPersonalDomain isEmptyString] )
-		{
-			NSString *domainURLString = [NSString stringWithFormat:@"http://%@/", dotMacPersonalDomain];
-			ispInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-				@"/Web/Sites/", @"docRoot",
-				dotMacPersonalDomain, @"domainName",
-				domainURLString, @"homePageURL",
-				domainURLString, @"stemURL",
+		NSDictionary *ispInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+			@"mac.com", @"domainName",
+			@"http://www.mac.com/", @"homePageURL",
 			@"idisk.mac.com", @"hostName",
 			@"webDAV", @"protocol",
 			nil];
-		}
-		else
-		{
-			NSString *dotMacDocRoot = [defaults stringForKey:@"DotMacDocumentRoot"]; OBASSERT(nil != dotMacDocRoot);
-			NSString *dotMacDomainName = [defaults stringForKey:@"DotMacDomainName"]; OBASSERT(nil != dotMacDomainName);
-			NSString *dotMacHomePageURL = [defaults stringForKey:@"DotMacHomePageURL"]; OBASSERT(nil != dotMacHomePageURL);
-			NSString *dotMacStemURL = [defaults stringForKey:@"DotMacStemURL"]; OBASSERT(nil != dotMacStemURL);
-			
-			ispInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-				dotMacDocRoot, @"docRoot",
-				dotMacDomainName, @"domainName",
-				dotMacHomePageURL, @"homePageURL",
-				dotMacStemURL, @"stemURL",
-				@"idisk.mac.com", @"hostName",
-				@"webDAV", @"protocol",
-				nil];
-		}
 				
 		[[self properties] setValuesForKeysWithDictionary:ispInfo];
 		[self setValuesForKeysWithDictionary:ispInfo];
@@ -2980,6 +2977,33 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	else if ([keyPath isEqualToString:@"protocol"])
 	{
 		[self updatePortPlaceholder];
+	}
+	else if ([keyPath isEqualToString:@"dotMacDomainStyle"])
+	{
+		// This affects various properties for dot mac.
+		int style = [[[self properties] valueForKey:@"dotMacDomainStyle"] intValue];
+		switch(style)
+		{
+			case HOMEPAGE_MAC_COM:
+			case WEB_MAC_COM:
+				[self setValue:@"mac.com" forKey:@"domainName"];
+				break;
+			case PERSONAL_DOTMAC_DOMAIN:
+				[self setValue:[self valueForKey:@"dotMacPersonalDomain"] forKey:@"domainName"];
+				break;
+		}
+		switch(style)
+		{
+			case PERSONAL_DOTMAC_DOMAIN:
+			case WEB_MAC_COM:
+				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
+				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
+				break;
+			case HOMEPAGE_MAC_COM:
+				[self setValue:@"/Sites/" forKey:@"docRoot"];
+				[self setValue:@"http://web.mac.com/?/" forKey:@"stemURL"];
+				break;
+		}
 	}
 	else
 	{
