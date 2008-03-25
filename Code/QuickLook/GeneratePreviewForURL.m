@@ -110,18 +110,6 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	
 	
 	
-	// Put a sticky note on there for metadata
-	NSString *stickyHTML =
-	@"<div style='z-index:999; background:#fef49c; position: fixed; top:50px; right:50px; padding:10px; border:1px solid #CCC; -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5); width:200px; height:100px;'>Published at <a href='http://www.karelia.com/'>http://www.karelia.com/</a>.<br />Pages: 34</div></body>";
-	
-	// I think what we need to do is to use dojo to create a sticky note.  I'll have to research that!
-	
-	
-	[buffer replaceOccurrencesOfString:@"</body>" withString:stickyHTML options:NSLiteralSearch range:NSMakeRange(0, [buffer length])];
-	
-	
-	
-	
 	NSMutableDictionary *props=[[[NSMutableDictionary alloc] init] autorelease]; 
 	[props setObject:@"UTF-8" forKey:(NSString 
 									  *)kQLPreviewPropertyTextEncodingNameKey]; 

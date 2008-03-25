@@ -33,6 +33,15 @@
 #import "Debug.h"
 
 
+/*	These strings are used for generating Quick Look preview sticky-note text
+ */
+// NSLocalizedString(@"Published at", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"Last updated", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"Author", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"Language", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"Pages", "Quick Look preview sticky-note text");
+
+
 // TODO: change these into defaults
 #define FIRST_AUTOSAVE_DELAY 3
 #define SECOND_AUTOSAVE_DELAY 60

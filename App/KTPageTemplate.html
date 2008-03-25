@@ -195,5 +195,33 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 [[=codeInjectionBodyTagEnd]]
 [[endif]]
 
+[[if parser.HTMLGenerationPurpose==10]]
+<!-- Quick Look preview sticky-note -->
+	<div style="z-index:999;
+				background:#fef49c;
+				position: fixed;
+				top:50px;
+				right:50px;
+				padding:10px;
+				border:1px solid #CCC;
+				-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);">
+		<dl>
+			<dt>[["Published at]]:</dt>
+			<dd><a href='http://www.karelia.com/'>http://www.karelia.com/</a></dd>
+			<dt>[["Last updated]]:</dt>
+			<dd>12/3/01</dd>
+			<dt>[["Author]]:</dt>
+			<dd>Mike Abdullah</dd>
+			<dt>[["Language]]:</dt>
+			<dd>en-GB</dd>
+			<dt>[["Pages]]:</dt>
+			<dd>34</dd>
+		</dl>
+	</div>
+<!-- /Quick Look preview sticky-note -->
+[[endif]]
+	
+	
+
 	</body>
 </html>
