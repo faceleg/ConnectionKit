@@ -26,15 +26,6 @@
 		result = [self bundleWithIdentifier:identifier];
 	}
 	
-	if (!result)
-	{
-		NSString *path = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:identifier];
-		if (path)
-		{
-			result = [self bundleWithPath:path];
-		}
-	}
-	
 	return result;
 }
 

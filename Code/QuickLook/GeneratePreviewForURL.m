@@ -5,6 +5,8 @@
 #import <QuickLook/QuickLook.h>
 #import <Quartz/Quartz.h>
 
+#import "KSPlugin.h"
+
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+QuickLook.h"
 
@@ -17,7 +19,8 @@
 OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, 
 							   CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options) 
 { 
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
+    // Prepare the general environment
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
 
 	NSString *docPath = [((NSURL *)url) path];
 	NSString *mediaPath = [[docPath stringByAppendingPathComponent:@"Site"] stringByAppendingPathComponent:@"_Media"];
@@ -27,11 +30,18 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	{
         return noErr; 
 	}
-    // Before proceeding make sure the user didn't cancel the request 
-    if (QLPreviewRequestIsCancelled(preview)) 
+	
+	NSString *sandvoxPath = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"com.karelia.Sandvox"];
+	NSBundle *sandvoxBundle = [NSBundle bundleWithPath:sandvoxPath];
+	[KSPlugin setApplicationBundle:sandvoxBundle];
+    
+    if (QLPreviewRequestIsCancelled(preview))	// Before proceeding make sure the user didn't cancel the request 
 	{
 		return noErr; 
 	}
+	
+	
+	// Let's build some preview HTML!
 	NSString *htmlString = [NSString stringWithContentsOfFile:previewPath encoding:NSUTF8StringEncoding error:NULL];
 	NSMutableString *buffer = [NSMutableString stringWithCapacity:[htmlString length]];
 	
