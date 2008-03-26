@@ -120,7 +120,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
         [NSArray arrayWithObjects: @"localHostName", @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"globalSiteURL"];
     [KTHostSetupController setKeys:
-        [NSArray arrayWithObjects: @"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", nil]
+        [NSArray arrayWithObjects: @"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", @"domainName", nil]
         triggerChangeNotificationsForDependentKey: @"remoteSiteURL"];
 
 	[KTHostSetupController setKeys:
@@ -139,9 +139,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[NSArray arrayWithObjects:@"hostName", @"userName", nil]
 		triggerChangeNotificationsForDependentKey:@"password"];
 	
-//	[KTHostSetupController setKeys:
-//	 [NSArray arrayWithObjects:@"dotMacDomainStyle", nil]
-//		triggerChangeNotificationsForDependentKey:@"docRoot"];		// domain style affects docRoot, which affects other stuff.
+	[KTHostSetupController setKeys:
+	 [NSArray arrayWithObjects:@"dotMacPersonalDomain", nil]
+		triggerChangeNotificationsForDependentKey:@"docRoot"];		// domain affects docRoot, which affects other stuff.
+
+	[KTHostSetupController setKeys:
+	 [NSArray arrayWithObjects:@"dotMacPersonalDomain", nil]
+		triggerChangeNotificationsForDependentKey:@"domainName"];		// domain affects docRoot, which affects other stuff.
 	
 	[KTHostSetupController setKeys:[NSArray arrayWithObject:@"protocol"] triggerChangeNotificationsForDependentKey:@"showSFTPMessage"];
 	
@@ -2984,24 +2988,20 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		int style = [[[self properties] valueForKey:@"dotMacDomainStyle"] intValue];
 		switch(style)
 		{
-			case HOMEPAGE_MAC_COM:
-			case WEB_MAC_COM:
-				[self setValue:@"mac.com" forKey:@"domainName"];
-				break;
 			case PERSONAL_DOTMAC_DOMAIN:
+				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
+				[self setValue:[NSString stringWithFormat:@"http://%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
 				[self setValue:[self valueForKey:@"dotMacPersonalDomain"] forKey:@"domainName"];
 				break;
-		}
-		switch(style)
-		{
-			case PERSONAL_DOTMAC_DOMAIN:
 			case WEB_MAC_COM:
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
-				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
+				[self setValue:@"http://web.mac.com/?/" forKey:@"stemURL"];
+				[self setValue:@"mac.com" forKey:@"domainName"];
 				break;
 			case HOMEPAGE_MAC_COM:
 				[self setValue:@"/Sites/" forKey:@"docRoot"];
-				[self setValue:@"http://web.mac.com/?/" forKey:@"stemURL"];
+				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
+				[self setValue:@"mac.com" forKey:@"domainName"];
 				break;
 		}
 	}
