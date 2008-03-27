@@ -28,7 +28,6 @@
 	[KSPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];
 	[KSPlugin registerPluginClass:[KSPlugin class] forFileExtension:@"svxElement"];
 	[KSPlugin registerPluginClass:[KSPlugin class] forFileExtension:@"svxIndex"];
-	[KSPlugin registerPluginClass:[KSPlugin class] forFileExtension:@"svxDataSource"];
 }
 
 @end
