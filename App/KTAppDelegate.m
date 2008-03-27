@@ -158,29 +158,28 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 }
 
-- (void) addToFeedbackReport:(NSMutableDictionary *)report
+
+- (NSString *) additionalProfileStringForFeedback;
 {
+	NSMutableString *result = [NSMutableString string];
 	//  additionalPlugins
 	NSString *plugins = [KTAbstractHTMLPlugin pluginReportShowingAll:NO];
-	[report setValue:plugins forKey:@"additionalPlugins"];
-	
-	//  additionalDesigns
-	NSString *designs = [KTDesign pluginReportShowingAll:NO];
-	[report setValue:designs forKey:@"additionalDesigns"];
-
-	NSString *urlString = [[self currentDocument] publishedSiteURL];
-	if (nil == urlString || [urlString isEqualToString:@"http://unpublished.example.com/"])
+	if (![plugins isEqualToString:@""])
 	{
-		urlString = @"";
+		[result appendFormat:@"\nAdditional Plugins:\n%@\n", plugins];
 	}
-	[report setValue:urlString forKey:@"URL"];
-	
-}
 
-- (NSString *) additionalFeedbackStringFromReportDictionary:(NSDictionary *)aReportDictionary
-{
-	NSString *result = [NSString stringWithFormat:@"Additional Plugins:\n%@\n", [aReportDictionary valueForKey:@"additionalPlugins"]];
-	result = [result stringByAppendingFormat:@"Additional Designs:\n%@\n", [aReportDictionary valueForKey:@"additionalDesigns"]];	
+	NSString *designs = [KTDesign pluginReportShowingAll:NO];
+	if (![designs isEqualToString:@""])
+	{
+		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
+	}
+		
+	NSString *urlString = [[self currentDocument] publishedSiteURL];
+	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.example.com/"])
+	{
+		[result appendFormat:@"\nURL:\n%@\n", urlString];
+	}
 	return result;
 }
 

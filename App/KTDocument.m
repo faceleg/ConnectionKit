@@ -1698,7 +1698,7 @@
 //  screenshot3 = inspector window, if visible
 // alternative: use screencapture to write a jpeg of the entire screen to the user's temp directory
 
-- (void)addScreenshotsToReport:(NSMutableDictionary *)report  attachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
+- (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 {
 	
 	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
@@ -1710,8 +1710,7 @@
 		
 		KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName 
 																				   data:snapshotData];
-		[report setValue:attachment forKey:@"screenshot1"];
-		[attachments addObject:@"screenshot1"];
+		[attachments addObject:attachment];
 	}
 	
 	// Also attach any sheet (host setup, etc.)
@@ -1724,8 +1723,7 @@
 			NSString *snapshotName = [NSString stringWithFormat:@"sheet-%@.jp2", attachmentOwner];
 			
 			KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
-			[report setValue:attachment forKey:@"screenshot2"];
-			[attachments addObject:@"screenshot2"];
+			[attachments addObject:attachment];
 		}
 	}
 	
@@ -1743,8 +1741,7 @@
 				NSString *snapshotName = [NSString stringWithFormat:@"inspector-%@.jp2", attachmentOwner];
 				
 				KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
-				[report setValue:attachment forKey:@"screenshot3"];
-				[attachments addObject:@"screenshot3"];
+				[attachments addObject:attachment];
 			}
 		}
 	}

@@ -247,7 +247,7 @@
 
 - (IBAction)showHelp:(id)sender
 {
-	[(KTApplication *)NSApp showHelpPage:@"Code_Injection"];
+	[(KTApplication *)NSApp showHelpPage:@"Code_Injection"];		// HELPSTRING
 }
 
 @end

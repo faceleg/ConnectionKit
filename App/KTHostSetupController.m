@@ -361,9 +361,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (myShouldShowConnectionTroubleshooting
 		&& ([myCurrentState isEqualToString:@"summary"] || [myCurrentState isEqualToString:@"introduction"]) )
 	{
-		pageName = @"Troubleshooting_Publishing_and_Connections";
+		pageName = @"Troubleshooting_Publishing_and_Connections";	// HELPSTRING
 	}
-	if (nil == pageName) pageName = @"Setting_Up_Your_Host";
+	if (nil == pageName) pageName = @"Setting_Up_Your_Host";	// HELPSTRING
 
 	[NSApp showHelpPage:pageName];
 }

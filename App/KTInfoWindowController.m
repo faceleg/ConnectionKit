@@ -1512,7 +1512,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			break;
 		}
 	}
-	[NSApp showHelpPage:pageName];
+	[NSApp showHelpPage:pageName];		// HELPSTRING .... ABOVE
 }
 
 #pragma mark -
