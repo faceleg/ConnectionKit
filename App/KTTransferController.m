@@ -683,7 +683,7 @@ static NSArray *sReservedNames = nil;
 	[self removeAllMediaFileUploads];
 	
 	BOOL hasRSSFeeds = [[self associatedDocument] hasRSSFeeds];
-	BOOL hasGoogleSiteMap = [[self associatedDocument] boolForKey:@"generateGoogleSiteMap"];
+	BOOL hasGoogleSiteMap = [[[self associatedDocument] documentInfo] boolForKey:@"generateGoogleSiteMap"];
 	
 	// Make sure we can upload somewhere. Select path if not.
 	if (kGeneratingRemoteExport ==  [self where]
