@@ -62,6 +62,9 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 @interface KTImageTextCell ( Private )
 - (BOOL)useGradientHighlight;
+
++ (NSImage *)codeInjectionIcon;
+- (float)codeInjectionIconWidth;
 @end
 
 
@@ -102,15 +105,28 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     return cell;
 }
 
-/*	The rect to fit text in
+/*	The rect to fit the text in
  */
 - (NSRect)titleRectForBounds:(NSRect)theRect
 {
-	NSRect almostResult;	NSRect otherRect;
+	// Calculate the area to the left of the image
+	NSRect nonImageRect;	NSRect otherRect;
 	NSDivideRect(theRect,
-				 &otherRect, &almostResult,
+				 &otherRect, &nonImageRect,
 				 [self padding] + [self maxImageSize], NSMinXEdge);
 	
+	
+	
+	// Crop off the right-hand side of that rect to account for drafts/code injection
+	float iconsWidth = 0.0;
+	if ([self isDraft]) iconsWidth += 8.0;
+	if ([self hasCodeInjection]) iconsWidth += [self codeInjectionIconWidth];
+	
+	NSRect almostResult;
+	NSDivideRect(nonImageRect, &otherRect, &almostResult, iconsWidth, NSMaxXEdge);
+	
+	
+	// We have to inset by a pixel for proper text drawing. Not sure why.
 	NSRect result = NSInsetRect(almostResult, 1.0, 1.0);
 	return result;
 }
@@ -377,6 +393,16 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 		}
     }
 	
+	
+	// Draw Code Injection icon if needed
+	if ([self hasCodeInjection])
+	{
+		NSRect codeInjectionIconRect = [self codeInjectionIconRectForBounds:cellFrame];
+		NSImage *codeInjectionIcon = [[self class] codeInjectionIcon];
+		[codeInjectionIcon drawInRect:codeInjectionIconRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	}
+	
+	
 	// if drawing on top of a gradient, make the text color white
 	if ( [self useGradientHighlight] && [self isHighlighted] )
 	{
@@ -482,5 +508,56 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (BOOL)isRoot { return myIsRoot; }
 
 - (void)setRoot:(BOOL)isRoot { myIsRoot = isRoot; }
+
+#pragma mark -
+#pragma mark Code Injection
+
+- (BOOL)hasCodeInjection { return myHasCodeInjection; }
+
+- (void)setHasCodeInjection:(BOOL)flag { myHasCodeInjection = flag; }
+
++ (NSImage *)codeInjectionIcon
+{
+	static NSImage *result;
+	
+	if (!result)
+	{
+		result = [[NSImage imageNamed:@"syringe"] retain];
+		[result setFlipped:YES];
+	}
+	
+	return result;
+}
+
+- (NSRect)codeInjectionIconRectForBounds:(NSRect)cellFrame
+{
+	// Get a slice of the right width from the right-hand edge
+	NSRect sliceRect;	NSRect otherRect;
+	float iconSize = [self codeInjectionIconWidth];
+	NSDivideRect(cellFrame, &sliceRect, &otherRect, iconSize, NSMaxXEdge);
+	
+	// Budge sideways if a draft
+	if ([self isDraft]) sliceRect.origin.x -= 8.0;
+	
+	// Inset to get the right height & vertical location
+	NSRect result = NSInsetRect(sliceRect, 0.0, (cellFrame.size.height - iconSize) / 2);
+	
+	return result;
+}
+
+- (float)codeInjectionIconWidth
+{
+	float result;
+	if ([self controlSize] == NSRegularControlSize)
+	{
+		result = 20.0;
+	}
+	else
+	{
+		result = 14.0;
+	}
+	
+	return result;
+}
 
 @end

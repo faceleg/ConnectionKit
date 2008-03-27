@@ -19,6 +19,7 @@
 	int			myStaleness;
 	BOOL		myIsDraft;
 	BOOL		myIsRoot;
+	BOOL		myHasCodeInjection;
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
@@ -41,5 +42,9 @@
 
 - (BOOL)isRoot;	// The root page has extra padding at the top
 - (void)setRoot:(BOOL)isRoot;
+
+- (BOOL)hasCodeInjection;
+- (void)setHasCodeInjection:(BOOL)flag;
+- (NSRect)codeInjectionIconRectForBounds:(NSRect)cellFrame;
 
 @end
