@@ -21,10 +21,18 @@
 
 @implementation KTDataSource
 
+#pragma mark -
+#pragma mark KSPlugin
+
 + (void)load
 {
 	[self registerPluginClass:[KTDataSource class] forFileExtension:kKTDataSourceExtension];
 }
+
++ (BOOL)supportPluginSubclasses { return YES; }
+
+#pragma mark -
+#pragma mark Other
 
 /*!	After the drag, clean up.... send message to all data source objects to let them clean up.  Called
 	after the last populateDictionary:... invocation.
