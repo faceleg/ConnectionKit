@@ -155,7 +155,6 @@
 		270A41F80D46B6F9002E998A /* KTScaledImageProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */; };
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
-		270FAE6F0D994B0B00C02187 /* DocumentMigration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 270FAE6D0D994B0B00C02187 /* DocumentMigration.nib */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -271,6 +270,7 @@
 		27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */; };
 		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */; };
+		27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
@@ -1659,7 +1659,6 @@
 		270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageProperties.m; sourceTree = "<group>"; };
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
-		270FAE6E0D994B0B00C02187 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/DocumentMigration.nib; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
 		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
@@ -1781,6 +1780,7 @@
 		27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractHTMLPlugin.m; sourceTree = "<group>"; };
 		27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugin.h; sourceTree = "<group>"; };
 		27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugin.m; sourceTree = "<group>"; };
+		27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DocumentMigration.nib; sourceTree = "<group>"; };
 		27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+QuickLook.h"; path = "../Code/QuickLook/NSBundle+QuickLook.h"; sourceTree = SOURCE_ROOT; };
 		27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+QuickLook.m"; path = "../Code/QuickLook/NSBundle+QuickLook.m"; sourceTree = SOURCE_ROOT; };
 		27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = "<group>"; };
@@ -3558,6 +3558,7 @@
 		3C26C43D0BC597B900FF874D /* Non-Localized */ = {
 			isa = PBXGroup;
 			children = (
+				27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */,
 				CE470B6D0BA71FA2006D6CDD /* DebugMenu.nib */,
 				3C202E7A07E00EE800DE4994 /* DebugTable.nib */,
 				CEC3B5120BA9107A006DA002 /* KTTranscript.nib */,
@@ -3570,7 +3571,6 @@
 		3C26C4400BC597D200FF874D /* Localized */ = {
 			isa = PBXGroup;
 			children = (
-				270FAE6D0D994B0B00C02187 /* DocumentMigration.nib */,
 				3CF942160D6243AF00B1C83D /* ImageCropper.nib */,
 				3CF942070D62432500B1C83D /* InlineImageElement.nib */,
 				27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */,
@@ -5692,8 +5692,8 @@
 				CE7232150D85DC5A00E9C592 /* arrow_grey_down.pdf in Resources */,
 				CE7232160D85DC5A00E9C592 /* arrow_grey_up.pdf in Resources */,
 				CE8DECDE0D935E8E00CEB9F7 /* KeepInTouch.nib in Resources */,
-				270FAE6F0D994B0B00C02187 /* DocumentMigration.nib in Resources */,
 				CEE359A60D9AF9D40060802A /* JoinList.nib in Resources */,
+				27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6518,14 +6518,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		270FAE6D0D994B0B00C02187 /* DocumentMigration.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				270FAE6E0D994B0B00C02187 /* en */,
-			);
-			name = DocumentMigration.nib;
-			sourceTree = "<group>";
-		};
 		27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
