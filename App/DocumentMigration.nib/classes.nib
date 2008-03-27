@@ -35,6 +35,25 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KTDocumentMigrationController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>cancelButton</key>
+				<string>NSButton</string>
+				<key>informativeTextField</key>
+				<string>NSTextField</string>
+				<key>messageTextField</key>
+				<string>NSTextField</string>
+				<key>progressIndicator</key>
+				<string>NSProgressIndicator</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
