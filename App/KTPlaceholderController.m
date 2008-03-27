@@ -12,8 +12,9 @@
 #import <QTKit/QTKit.h>
 #import "Registration.h"
 #import "KSAppDelegate.h"
+#import "KSNetworkNotifier.h"
 
-enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
+enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 @implementation KTPlaceholderController
 
@@ -21,6 +22,12 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 {
     self = [super initWithWindowNibName:@"Placeholder"];
     return self;
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
 }
 
 
@@ -32,6 +39,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 		case LICENSED:		newBottom = NSMaxY([oHideWhenLicensed frame]);		break;
 		case UNDISCLOSED:	newBottom = NSMaxY([oDisclosureTop frame]);			break;
 		case DISCLOSED:		newBottom = NSMinY([oDisclosureBottom frame]) - 20;	break;
+		case NO_NETWORK:	newBottom = NSMaxY([oDisclosureBottom frame]);		break;
 	}
 	
 	NSWindow *window = [self window];
@@ -73,7 +81,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 	{
 		// show disclosure triangle and such.
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		windowState = [defaults boolForKey:@"hiddenIntro"] ? UNDISCLOSED : DISCLOSED;
+		windowState = [defaults boolForKey:@"hiddenIntro"] ? UNDISCLOSED : ([KSNetworkNotifier isNetworkAvailable] ? DISCLOSED : NO_NETWORK);
 	}
 	[self adjustWindow:windowState animate:(nil != aNotification)];	// animate if it's a real notification
 }
@@ -92,6 +100,10 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 											 selector:@selector(updateLicenseStatus:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsAvailableNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
+
 	[self updateLicenseStatus:nil];
 		
 	NSMutableAttributedString *attrString = [[[oHighLink attributedTitle] mutableCopyWithZone:[oHighLink zone]] autorelease];
@@ -121,7 +133,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 	NSUserDefaults *defaults = [controller defaults];
 	BOOL shouldAnimate = [defaults boolForKey:@"DoAnimations"];
 	
-	[self adjustWindow:([sender state] ? DISCLOSED : UNDISCLOSED) animate:shouldAnimate];
+	[self adjustWindow:([sender state] ? ([KSNetworkNotifier isNetworkAvailable] ? DISCLOSED : NO_NETWORK) : UNDISCLOSED) animate:shouldAnimate];
 }
 
 - (IBAction) doNew:(id)sender
@@ -159,7 +171,5 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED };
 {
 	[[NSApp delegate] openLow:nil];
 }
-
-#warning TODO -- hide the intro panel if we're not online
 
 @end
