@@ -22,4 +22,6 @@
 - (NSString *)remoteSiteURL;
 - (NSString *)uploadURL;
 
+- (NSString *)hostPropertiesReport;
+
 @end

@@ -10,7 +10,11 @@
 
 #import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
+
+#import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
+
+#import "debug.h"
 
 
 @implementation KTHostProperties
@@ -324,9 +328,20 @@ to be verified.
 	return result;
 }
 
+#pragma mark -
+#pragma mark Troubleshooting
 
-
-
-
+- (NSString *)hostPropertiesReport
+{
+	NSMutableDictionary *properties = [[[self currentValues] mutableCopy] autorelease];
+	OBASSERT(properties);
+	
+	// We don't want to log the documentInfo object
+	[properties removeObjectForKey:@"documentInfo"];
+	
+	NSString *result = [NSString stringWithFormat:@"hostProperties = %@", properties];
+	return result;
+}
 
 @end
+

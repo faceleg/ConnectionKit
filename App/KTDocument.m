@@ -453,8 +453,8 @@
 		}
 
 		// For diagnostics, log the value of the host properties
-		// TODO: use a default to decide whether to log this and make the default be NO
-		NSLog(@"hostProperties = %@", [self valueForKeyPath:@"documentInfo.hostProperties"]);
+		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
+		NSLog(@"%@", [hostProperties hostPropertiesReport]);
 		
 		// note whether we should backup/snapshot before document (any context) is first saved
 		mySnapshotOrBackupUponFirstSave  = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
