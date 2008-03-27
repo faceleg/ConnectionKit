@@ -42,4 +42,7 @@
 
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 - (NSString *)publishedMasterCSSPathRelativeToSite;
+
+- (BOOL)hasCodeInjection;
+
 @end

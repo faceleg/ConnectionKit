@@ -53,15 +53,6 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	[self setKeys:[NSArray arrayWithObjects:@"bannerImageID",nil]
-		triggerChangeNotificationsForDependentKey:@"bannerImageData"];
-	[self setKeys:[NSArray arrayWithObjects:@"headerImage",nil]
-		triggerChangeNotificationsForDependentKey:@"headerImageData"];
-	
-	// Thumbnail
-	[self setKeys:[NSArray arrayWithObjects:@"customThumbnail", @"defaultThumbnail", nil]
-		triggerChangeNotificationsForDependentKey:@"thumbnail"];
-
 	[self setKeys:[NSArray arrayWithObjects:@"root",nil]
 		triggerChangeNotificationsForDependentKey:@"isRoot"];
 	[self setKeys:[NSArray arrayWithObjects:@"isRoot",nil]
@@ -86,6 +77,16 @@
 	// Sidebars
 	[self setKeys:[NSArray arrayWithObjects:@"pagelets", @"includeInheritedSidebar", nil]
 		triggerChangeNotificationsForDependentKey:@"allSidebars"];
+	
+	
+	// Site Outline
+	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
+											@"codeInjectionBodyTag",
+											@"codeInjectionBodyTagEnd",
+											@"codeInjectionBodyTagStart",
+											@"codeInjectionEarlyHead",
+											@"codeInjectionHeadArea", nil]
+		triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
 	
 	
 	// this is so we get notification of updaates to any properties that affect index type.

@@ -104,6 +104,8 @@
 - (KTMediaContainer *)customSiteOutlineIcon;
 - (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon;
 
+- (BOOL)hasCodeInjection;
+
 @end
 
 

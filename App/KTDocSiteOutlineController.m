@@ -253,6 +253,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		keyPaths = [[NSSet alloc] initWithObjects:@"titleHTML",
 												  @"isStale",
+												  @"hasCodeInjection",
 												  @"isDraft",
 												  @"customSiteOutlineIcon",
 												  @"index", nil];
@@ -296,9 +297,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				   options:(NSKeyValueObservingOptionNew)
 				   context:nil];
 		
-		if ([aPage isRoot])	// Observe home page's favicon
+		if ([aPage isRoot])	// Observe home page's favicon & master code injection
 		{
 			[aPage addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
+			[aPage addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
 		}
 		
 		// Add to the set
@@ -325,7 +327,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		if ([aPage isRoot])	// Observe home page's favicon
 		{
-			[aPage removeObserver:self forKeyPath:@"master.favicon"];
+			[aPage removeObserver:self forKeyPaths:
+				[NSSet setWithObjects:@"master.favicon", @"master.hasCodeInjection", nil]];
 		}
 		
 		// Uncache custom icon to free memory
@@ -666,6 +669,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	
 	
+	KTPage *page = (KTPage *)item;
+	
 	// Set the cell's appearance
 	if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{
@@ -681,6 +686,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		// Draft
 		BOOL isDraft = [item pageOrParentDraft];
 		[cell setDraft:isDraft];
+		
+		// Code Injection
+		[cell setHasCodeInjection:[page hasCodeInjection]];
+		if ([page isRoot] && ![cell hasCodeInjection])
+		{
+			[cell setHasCodeInjection:[[page master] hasCodeInjection]];
+		}
 		
 		// Home page is drawn slightly differently
 		[cell setRoot:[item isRoot]];
