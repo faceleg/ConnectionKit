@@ -339,7 +339,7 @@ to be verified.
 	// We don't want to log the documentInfo object
 	[properties removeObjectForKey:@"documentInfo"];
 	
-	NSString *result = [NSString stringWithFormat:@"hostProperties = %@", properties];
+	NSString *result = [NSString stringWithFormat:@"%@", properties];
 	return result;
 }
 

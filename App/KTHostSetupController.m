@@ -146,6 +146,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[KTHostSetupController setKeys:
 	 [NSArray arrayWithObjects:@"dotMacPersonalDomain", nil]
 		triggerChangeNotificationsForDependentKey:@"domainName"];		// domain affects docRoot, which affects other stuff.
+
+	[KTHostSetupController setKeys:
+	 [NSArray arrayWithObjects:@"dotMacPersonalDomain", nil]
+		triggerChangeNotificationsForDependentKey:@"stemURL"];
 	
 	[KTHostSetupController setKeys:[NSArray arrayWithObject:@"protocol"] triggerChangeNotificationsForDependentKey:@"showSFTPMessage"];
 	
@@ -183,7 +187,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[self addObserver:self forKeyPath:@"userName" options:(NSKeyValueObservingOptionNew) context:nil];
 		[self addObserver:self forKeyPath:@"hostName" options:(NSKeyValueObservingOptionNew) context:nil];
 		[self addObserver:self forKeyPath:@"dotMacDomainStyle" options:(NSKeyValueObservingOptionNew) context:nil];
-
+		[self addObserver:self forKeyPath:@"dotMacPersonalDomain" options:(NSKeyValueObservingOptionNew) context:nil];
 		[self setTrail:[NSMutableArray array]];
 		
 		if (nil == [[self properties] valueForKey:@"localHostName"])
@@ -2500,7 +2504,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			list.count = 4;
 			list.attr = attributes;
 			
-			NSString *pwString;
+			char *pwString = NULL;
 			theStatus = SecKeychainItemCopyContent (kcItem, NULL, &list, &length, (void **)&pwString);		// ASKS FOR UNLOCK
 			
 			if (theStatus == noErr)
@@ -2513,7 +2517,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 												   encoding:NSUTF8StringEncoding] autorelease];
 				}
 				
-				SecKeychainItemFreeContent (&list, password);
+				SecKeychainItemFreeContent (&list, pwString);
 			}
 			
 			// Get the actual account name now
@@ -2982,6 +2986,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 		[self updatePortPlaceholder];
 	}
+	else if ([keyPath isEqualToString:@"dotMacPersonalDomain"])
+	{
+		[self setValue:[NSString stringWithFormat:@"http://www.%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
+	}
 	else if ([keyPath isEqualToString:@"dotMacDomainStyle"])
 	{
 		// This affects various properties for dot mac.
@@ -2990,7 +2998,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			case PERSONAL_DOTMAC_DOMAIN:
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
-				[self setValue:[NSString stringWithFormat:@"http://%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
+				[self setValue:[NSString stringWithFormat:@"http://www.%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
 				[self setValue:[self valueForKey:@"dotMacPersonalDomain"] forKey:@"domainName"];
 				break;
 			case WEB_MAC_COM:

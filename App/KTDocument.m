@@ -454,7 +454,7 @@
 
 		// For diagnostics, log the value of the host properties
 		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
-		NSLog(@"%@", [hostProperties hostPropertiesReport]);
+		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 		
 		// note whether we should backup/snapshot before document (any context) is first saved
 		mySnapshotOrBackupUponFirstSave  = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
@@ -1455,7 +1455,7 @@
 		[self setValue:hostProperties forKeyPath:@"documentInfo.hostProperties"];
 
 		// For diagnostics, log the value of the host properties
-		NSLog(@"new hostProperties = %@", [[hostProperties description] condenseWhiteSpace]);
+		NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 
 		[self setLocalTransferController:nil];		// clear old settings after we have changed host properties
 		[self setRemoteTransferController:nil];

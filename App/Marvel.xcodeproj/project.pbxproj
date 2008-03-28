@@ -1590,6 +1590,20 @@
 			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
 		};
+		CEE35CC50D9C6A180060802A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A /* iMediaTesterSingle.app */;
+			remoteInfo = iMediaTesterSingle;
+		};
+		CEE35CC70D9C6A180060802A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD /* movietool */;
+			remoteInfo = movietool;
+		};
 		CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
@@ -4308,8 +4322,10 @@
 			isa = PBXGroup;
 			children = (
 				CE99830E0D614D7400F2DD12 /* iMediaTester.app */,
+				CEE35CC60D9C6A180060802A /* iMediaTesterSingle.app */,
 				CE9983100D614D7400F2DD12 /* iMediaBrowser.framework */,
 				CE9983120D614D7400F2DD12 /* MetadataTool */,
+				CEE35CC80D9C6A180060802A /* movietool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5476,6 +5492,20 @@
 			fileType = wrapper.application;
 			path = "Sparkle Test App.app";
 			remoteRef = CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEE35CC60D9C6A180060802A /* iMediaTesterSingle.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iMediaTesterSingle.app;
+			remoteRef = CEE35CC50D9C6A180060802A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEE35CC80D9C6A180060802A /* movietool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = movietool;
+			remoteRef = CEE35CC70D9C6A180060802A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */ = {
