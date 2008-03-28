@@ -973,6 +973,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)pageIconSizeDidChange:(NSNotification *)notification
 {
 	[self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
+	
+	// Set cellsize to match page size
+	NSControlSize controlSize = ([[self document] displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
+	NSTableColumn *tableColumn = [[[self siteOutline] tableColumns] objectAtIndex:0];
+	[[tableColumn dataCell] setControlSize:controlSize];
+	
+	// Setup is complete, reload outline
 	[self reloadSiteOutline];
 }
 
