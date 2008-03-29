@@ -12,12 +12,15 @@
 
 #import "KTTransferController.h"
 #import "KTDocWindowController.h"
-
+#import "KTDocSiteOutlineController.h"
 #import "KTHTMLInspectorController.h"
 #import "KTPluginDelegatesManager.h"
 #import "KTStalenessManager.h"
 
 #import "NSIndexSet+Karelia.h"
+
+#import <iMediaBrowser/RBSplitView.h>
+
 
 @interface KTDocument (PropertiesPrivate)
 - (void)updateDefaultDocumentProperty:(NSString *)key;
@@ -65,103 +68,6 @@
 	[value retain];
 	[myRoot release];
 	myRoot = value;
-}
-
-#pragma mark -
-#pragma mark UI Properties that inherit from the preferences if not set for document
-
-// these were changed from setWrapped to setPrimitive to avoid being marked on undo stack
-
-- (BOOL)displaySiteOutline { return myDisplaySiteOutline; }
-
-- (void)setDisplaySiteOutline:(BOOL)value
-{
-	myDisplaySiteOutline = value;
-	[self updateDefaultDocumentProperty:@"displaySiteOutline"];
-}
-
-- (BOOL)displayStatusBar { return myDisplayStatusBar; }
-
-- (void)setDisplayStatusBar:(BOOL)value
-{
-	myDisplayStatusBar = value;
-	[self updateDefaultDocumentProperty:@"displayStatusBar"];
-}
-
-- (BOOL)displayEditingControls { return myDisplayEditingControls; }
-
-- (void)setDisplayEditingControls:(BOOL)value
-{
-	myDisplayEditingControls = value;
-	[self updateDefaultDocumentProperty:@"displayEditingControls"];
-}
-
-- (BOOL)displaySmallPageIcons { return myDisplaySmallPageIcons; }
-
-- (void)setDisplaySmallPageIcons:(BOOL)aSmall
-{
-	myDisplaySmallPageIcons = aSmall;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
-														object:self];
-														
-	[[self windowController] updatePopupButtonSizesSmall:aSmall];
-	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
-}
-
-- (short)sourceOutlineSize { return mySiteOutlineSize; }
-
-- (void)setSourceOutlineSize:(short)value
-{
-	mySiteOutlineSize = value;
-	[self updateDefaultDocumentProperty:@"sourceOutlineSize"];
-}
-
-- (float)textSizeMultiplier { return myTextSizeMultiplier; }
-
-- (void)setTextSizeMultiplier:(float)value { myTextSizeMultiplier = value; }
-
-- (BOOL)displayCodeInjectionWarnings { return myDisplayCodeInjectionWarnings; }
-
-- (void)setDisplayCodeInjectionWarnings:(BOOL)flag
-{
-	myDisplayCodeInjectionWarnings = flag;
-	[self updateDefaultDocumentProperty:@"displayCodeInjectionWarnings"];
-}
-
-- (NSRect)documentWindowContentRect
-{
-	NSString *rectAsString = [self wrappedValueForKey:@"documentWindowContentRect"];
-	if ( nil != rectAsString )
-	{
-		return NSRectFromString(rectAsString);
-	}
-	else
-	{
-		return NSZeroRect;
-	}
-}
-
-/*	Support method for whenever the user changes a view property of the document.
- *	We write a copy of the last used properties out to the defaults so that new documents can use them.
- */
-- (void)updateDefaultDocumentProperty:(NSString *)key
-{
-	NSDictionary *existingProperties =
-		[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
-	
-	NSMutableDictionary *updatedProperties;
-	if (existingProperties)
-	{
-		updatedProperties = [NSMutableDictionary dictionaryWithDictionary:existingProperties];
-		[updatedProperties setObject:[self valueForKey:key] forKey:key];
-	}
-	else
-	{
-		updatedProperties = [NSDictionary dictionaryWithObject:[self valueForKey:key] forKey:key];
-	}
-	
-	[[NSUserDefaults standardUserDefaults] setObject:updatedProperties forKey:@"defaultDocumentProperties"];
 }
 
 #pragma mark ivar accessors (not stored objects)
@@ -423,6 +329,147 @@
 	return myPluginDelegatesManager;
 }
 
+#pragma mark -
+#pragma mark Document Display Properties
+
+// these were changed from setWrapped to setPrimitive to avoid being marked on undo stack
+
+- (BOOL)displaySiteOutline { return myDisplaySiteOutline; }
+
+- (void)setDisplaySiteOutline:(BOOL)value
+{
+	myDisplaySiteOutline = value;
+	[self updateDefaultDocumentProperty:@"displaySiteOutline"];
+}
+
+- (BOOL)displayStatusBar { return myDisplayStatusBar; }
+
+- (void)setDisplayStatusBar:(BOOL)value
+{
+	myDisplayStatusBar = value;
+	[self updateDefaultDocumentProperty:@"displayStatusBar"];
+}
+
+- (BOOL)displayEditingControls { return myDisplayEditingControls; }
+
+- (void)setDisplayEditingControls:(BOOL)value
+{
+	myDisplayEditingControls = value;
+	[self updateDefaultDocumentProperty:@"displayEditingControls"];
+}
+
+- (BOOL)displaySmallPageIcons { return myDisplaySmallPageIcons; }
+
+- (void)setDisplaySmallPageIcons:(BOOL)aSmall
+{
+	myDisplaySmallPageIcons = aSmall;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
+														object:self];
+														
+	[[self windowController] updatePopupButtonSizesSmall:aSmall];
+	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
+}
+
+- (float)textSizeMultiplier { return myTextSizeMultiplier; }
+
+- (void)setTextSizeMultiplier:(float)value { myTextSizeMultiplier = value; }
+
+- (BOOL)displayCodeInjectionWarnings { return myDisplayCodeInjectionWarnings; }
+
+- (void)setDisplayCodeInjectionWarnings:(BOOL)flag
+{
+	myDisplayCodeInjectionWarnings = flag;
+	[self updateDefaultDocumentProperty:@"displayCodeInjectionWarnings"];
+}
+
+- (NSRect)documentWindowContentRect
+{
+	NSString *rectAsString = [self wrappedValueForKey:@"documentWindowContentRect"];
+	if ( nil != rectAsString )
+	{
+		return NSRectFromString(rectAsString);
+	}
+	else
+	{
+		return NSZeroRect;
+	}
+}
+
+#pragma mark support
+
+/*	Support method for whenever the user changes a view property of the document.
+ *	We write a copy of the last used properties out to the defaults so that new documents can use them.
+ */
+- (void)updateDefaultDocumentProperty:(NSString *)key
+{
+	NSDictionary *existingProperties =
+		[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
+	
+	NSMutableDictionary *updatedProperties;
+	if (existingProperties)
+	{
+		updatedProperties = [NSMutableDictionary dictionaryWithDictionary:existingProperties];
+		[updatedProperties setObject:[self valueForKey:key] forKey:key];
+	}
+	else
+	{
+		updatedProperties = [NSDictionary dictionaryWithObject:[self valueForKey:key] forKey:key];
+	}
+	
+	[[NSUserDefaults standardUserDefaults] setObject:updatedProperties forKey:@"defaultDocumentProperties"];
+}
+
+/*	Generally this method is used when saving the document.
+ *	We don't want manage these view properties in the model normally since they would be affected by undo/redo.
+ *	Instead, they are kept within KTDocument and then only written out at save-time.
+ */
+- (void)copyDocumentDisplayPropertiesToModel
+{
+	// Selected pages
+	NSIndexSet *outlineSelectedRowIndexSet = [[[[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
+	NSIndexSet *storedIndexSet = [self lastSelectedRows];
+	
+	if ( ![storedIndexSet isEqualToIndexSet:outlineSelectedRowIndexSet] )
+	{
+		[self setLastSelectedRows:outlineSelectedRowIndexSet];	
+	}
+	
+	
+	// Source Outline width
+	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
+	[[self documentInfo] setInteger:width forKey:@"sourceOutlineSize"];
+	
+	
+	// Icon size
+	[[self documentInfo] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
+	
+	
+	// Window size
+	BOOL saveContentRect = NO;
+	NSRect currentContentRect = NSZeroRect;
+	NSRect storedContentRect = [self documentWindowContentRect];
+	NSWindow *window = [[self windowController] window];
+	if ( nil != window )
+	{
+		NSRect frame = [window frame];
+		currentContentRect = [window contentRectForFrameRect:frame];
+		if ( !NSEqualRects(currentContentRect, NSZeroRect) )
+		{
+			if ( !NSEqualRects(currentContentRect, storedContentRect) )
+			{
+				saveContentRect = YES;
+			}
+		}
+	}
+	
+	if (saveContentRect)	// store content rect, if needed
+	{
+		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
+	}
+}
+
+#pragma mark -
 #pragma mark *valueForKey: support
 
 - (id)wrappedValueForKey:(NSString *)aKey

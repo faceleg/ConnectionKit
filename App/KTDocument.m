@@ -422,17 +422,23 @@
 	self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError];
 	if ( nil != self )
 	{
-		if ( [[self documentInfo] boolForKey:@"isNewDocument"] )
+		if ([[self documentInfo] boolForKey:@"isNewDocument"])
 		{
 			[self setShowDesigns:YES];	// new doc needs designs showing initially
-			[[self documentInfo] setValue:[NSNumber numberWithBool:NO] forKey:@"isNewDocument"];
+			[[self documentInfo] setBool:NO forKey:@"isNewDocument"];
 		}
 		else
 		{
 			[self setShowDesigns:NO];	// assume doc already opened doesn't need to show designs initially
 		}
 		
+		
+		// Load up document display properties
+		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
+		
+		
 		// cache documentID, we use it often, we don't want to fetch it every time
+		/// Is this actually backed up by any benchmarking? Mike.
 		NSString *siteID = [[self documentInfo] valueForKey:@"siteID"];
 		[self setDocumentID:siteID];
 		

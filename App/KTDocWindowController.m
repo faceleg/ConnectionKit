@@ -217,7 +217,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		// Split View
 		// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
-		short sourceOutlineSize = [[self document] sourceOutlineSize];
+		short sourceOutlineSize = [[[self document] documentInfo] integerForKey:@"sourceOutlineSize"];
 		if ( sourceOutlineSize > 0)
         {
 			[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];

@@ -28,8 +28,6 @@
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
-#import <iMediaBrowser/RBSplitView.h>
-
 #import "Debug.h"
 
 
@@ -47,6 +45,11 @@
 #define SECOND_AUTOSAVE_DELAY 60
 
 
+@interface KTDocument (PropertiesPrivate)
+- (void)copyDocumentDisplayPropertiesToModel;
+@end
+
+
 @interface KTDocument (SavingPrivate)
 
 - (void)threadedSaveToURL:(NSURL *)absoluteURL
@@ -55,7 +58,6 @@
 		 
 - (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError;
 
-- (void)rememberDocumentDisplayProperties;
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError;
 
 - (WebView *)quickLookThumbnailWebView;
@@ -70,7 +72,7 @@
 
 @implementation KTDocument (Saving)
 
-/*	Override of default NSDocument behaviour. We split off a new thread to perform the save.
+/*	Override of default NSDocument behaviour. Thumbnail generation begins asynchronously, and once complete, the doc is saved.
  */
 - (void)saveToURL:(NSURL *)absoluteURL
 		   ofType:(NSString *)typeName
@@ -221,7 +223,16 @@
 			}
 		}
 		
-		if ( [self isClosing] )
+		
+		// Record display properties
+		[managedObjectContext processPendingChanges];
+		[[managedObjectContext undoManager] disableUndoRegistration];
+		[self copyDocumentDisplayPropertiesToModel];
+		[managedObjectContext processPendingChanges];
+		[[managedObjectContext undoManager] enableUndoRegistration];
+			
+		
+		if ([self isClosing])
 		{
 			// grab any last edits
 			[[[self windowController] webViewController] commitEditing];
@@ -231,9 +242,6 @@
 			[[managedObjectContext undoManager] disableUndoRegistration];
 
 								
-			// remember important things that we don't usually update
-			[self rememberDocumentDisplayProperties];
-			
 			// collect garbage
 			if ([self upateMediaStorageAtNextSave])
 			{
@@ -303,52 +311,6 @@
 	}
 	
 	return result;
-}
-
-- (void)rememberDocumentDisplayProperties
-{
-	// Selected pages
-	NSIndexSet *outlineSelectedRowIndexSet = [[[(KTDocWindowController *)[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
-	NSIndexSet *storedIndexSet = [self lastSelectedRows];
-	
-	if ( ![storedIndexSet isEqualToIndexSet:outlineSelectedRowIndexSet] )
-	{
-		[self setLastSelectedRows:outlineSelectedRowIndexSet];	
-	}	
-	
-	
-	// Source Outline width
-	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
-	[[self documentInfo] setInteger:width forKey:@"sourceOutlineSize"];
-	
-	
-	// Icon size
-	[[self documentInfo] setPrimitiveValue:[NSNumber numberWithBool:[self displaySmallPageIcons]]
-									forKey:@"displaySmallPageIcons"];
-	
-	
-	// Window size
-	BOOL saveContentRect = NO;
-	NSRect currentContentRect = NSZeroRect;
-	NSRect storedContentRect = [self documentWindowContentRect];
-	NSWindow *window = [[self windowController] window];
-	if ( nil != window )
-	{
-		NSRect frame = [window frame];
-		currentContentRect = [window contentRectForFrameRect:frame];
-		if ( !NSEqualRects(currentContentRect, NSZeroRect) )
-		{
-			if ( !NSEqualRects(currentContentRect, storedContentRect) )
-			{
-				saveContentRect = YES;
-			}
-		}
-	}
-	
-	if (saveContentRect)	// store content rect, if needed
-	{
-		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
-	}
 }
 
 /*	Called when performaing a "Save As" operation on an existing document

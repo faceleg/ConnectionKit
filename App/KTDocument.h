@@ -230,27 +230,10 @@ extern NSString *kKTMetadataSiteTitleKey;
 @end
 
 
-@interface KTDocument ( Properties )
+@interface KTDocument (Properties)
 
 - (KTPluginDelegatesManager *)pluginDelegatesManager;
 - (KTStalenessManager *)stalenessManager;
-
-- (BOOL)showDesigns;
-- (void)setShowDesigns:(BOOL)value;
-
-- (BOOL)displayEditingControls;
-- (void)setDisplayEditingControls:(BOOL)value;
-
-- (BOOL)displaySiteOutline;
-- (void)setDisplaySiteOutline:(BOOL)value;
-
-- (BOOL)displayStatusBar;
-- (void)setDisplayStatusBar:(BOOL)value;
-
-- (BOOL)displaySmallPageIcons;
-- (void)setDisplaySmallPageIcons:(BOOL)value;
-
-- (NSRect)documentWindowContentRect;
 
 - (BOOL)isReadOnly;
 
@@ -262,9 +245,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 - (KTPage *)root;
 - (void)setRoot:(KTPage *)value;
-
-- (short)sourceOutlineSize;
-- (void)setSourceOutlineSize:(short)value;
 
 - (float)textSizeMultiplier;
 - (void)setTextSizeMultiplier:(float)value;
@@ -307,6 +287,25 @@ extern NSString *kKTMetadataSiteTitleKey;
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
+
+- (BOOL)showDesigns;
+- (void)setShowDesigns:(BOOL)value;
+
+// Display properties
+- (BOOL)displayEditingControls;
+- (void)setDisplayEditingControls:(BOOL)value;
+
+- (BOOL)displaySiteOutline;
+- (void)setDisplaySiteOutline:(BOOL)value;
+
+- (BOOL)displayStatusBar;
+- (void)setDisplayStatusBar:(BOOL)value;
+
+- (BOOL)displaySmallPageIcons;
+- (void)setDisplaySmallPageIcons:(BOOL)value;
+
+- (NSRect)documentWindowContentRect;
+
 @end
 
 
