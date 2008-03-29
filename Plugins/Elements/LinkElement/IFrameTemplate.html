@@ -1,5 +1,5 @@
 <iframe class="[[if iFrameIsBordered]]iframe-border[[else]]iframe-no-border[[endif]]"
-		[[if document.publishingMode]][[else]]style="background:url(keypath:/[[=document.documentID]]/z0/hashPattern);"[[endif]]
+		[[if parser.HTMLGenerationPurpose]][[else]]style="background:url(keypath:/[[=document.documentID]]/z0/hashPattern);"[[endif]]
 		src="[[=&linkURL]]"
 		title="[[=&titleText]]"
 		width="[[if iFrameWidth]][[=iFrameWidth]]px[[else]]100%[[endif]]"

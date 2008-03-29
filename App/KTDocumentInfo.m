@@ -67,4 +67,14 @@
 	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
 }
 
+#pragma mark -
+#pragma mark Quick Look
+
+- (NSString *)pageCount
+{
+	NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+	NSString *result = [NSString stringWithFormat:@"%u", [pages count]];
+	return result;
+}
+
 @end

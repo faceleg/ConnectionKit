@@ -1,4 +1,4 @@
-[[if document.publishingMode||parser.liveDataFeeds]]
+[[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
 [[if url]]
 <script src="http://service.karelia.com/feed.js.php?url=[[=%delegate.urlAsHTTP]]&amp;[[if max]]max=[[=%max]]&amp;[[endif3]]k=[[=%delegate.key]][[if openLinksInNewWindow]]&amp;n=1[[endif3]][[if summaryChars]]&amp;s=[[=summaryChars]][[endif3]][[if delegate.isPage]]&amp;p=1[[endif3]]" type="text/javascript"></script>
 [[endif2]]

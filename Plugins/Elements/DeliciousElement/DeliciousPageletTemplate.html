@@ -93,5 +93,5 @@ document.getElementById('delicious-container-[[=uniqueID]]').appendChild(dl)
 </ul>
 [[endif2]]
 [[else]]
-[[if document.publishingMode]][[else2]]<p style="text-align:center;">[['(Please set your del.icio.us ID using the Pagelet Inspector)]]</p>[[endif2]]
+[[if parser.HTMLGenerationPurpose]][[else2]]<p style="text-align:center;">[['(Please set your del.icio.us ID using the Pagelet Inspector)]]</p>[[endif2]]
 [[endif]]

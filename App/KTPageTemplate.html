@@ -240,17 +240,17 @@ Licensing for this website's design:     <[[=&designDirectoryPath]]/License.rtf>
 				<td class="quick-look-key">[["Last updated]]</td>
 				<td class="quick-look-value">12/3/01</td>
 			</tr>
-			<tr>
+			[[if master.author]]<tr>
 				<td class="quick-look-key">[["Author]]</td>
-				<td class="quick-look-value">Mike Abdullah</td>
-			</tr>
+				<td class="quick-look-value">[[=&master.author]]</td>
+			</tr>[[endif2]]
 			<tr>
 				<td class="quick-look-key">[["Language]]</td>
-				<td class="quick-look-value">en-GB</td>
+				<td class="quick-look-value">[[=&master.language]]</td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[["Pages]]</td>
-				<td class="quick-look-value">34</td>
+				<td class="quick-look-value">[[=documentInfo.pageCount]]</td>
 			</tr>
 		</table>
 	</div>
