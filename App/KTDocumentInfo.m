@@ -77,4 +77,18 @@
 	return result;
 }
 
+/*	This could go anywhere really, it's just a convenience method for Quick Look
+ */
+- (NSString *)currentDate
+{
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateStyle:NSDateFormatterMediumStyle];
+	[formatter setTimeStyle:NSDateFormatterShortStyle];
+	NSString *result = [formatter stringFromDate:[NSDate date]];
+	
+	// Tidy up
+	[formatter release];
+	return result;
+}
+
 @end
