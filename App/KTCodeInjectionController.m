@@ -17,12 +17,7 @@
 
 #import "Registration.h"
 
-@interface KTPage ( CodeInjectionBindings )
-- (void)setInsertEndBody:(NSString *)aString;
-@end
-
-
-@interface KTCodeInjectionController ( Private )
+@interface KTCodeInjectionController (Private)
 @end
 
 
@@ -50,6 +45,10 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	// Make sure the timer's shut down properly
+	[myTextEditingTimer invalidate];
+	[myTextEditingTimer release];
 	
 	[super dealloc];
 }
@@ -109,30 +108,21 @@
 {
 	[super windowDidLoad];
 	
-	/*
-	// insertPrelude
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(processPrelude:)
-												 name:NSTextStorageDidProcessEditingNotification
-											   object:[oPreludeTextView textStorage]];
-	[oPreludeTextView setSelectedRange:NSMakeRange(0,0)];
-
-
-	// insertHead
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(processHead:)
-												 name:NSTextStorageDidProcessEditingNotification
-											   object:[oHeadTextView textStorage]];
-	[oHeadTextView setSelectedRange:NSMakeRange(0,0)];
-
-	// insertEndBody
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(processEndBody:)
-												 name:NSTextStorageDidProcessEditingNotification
-											   object:[oBodyEndTextView textStorage]];
-	[oBodyEndTextView setSelectedRange:NSMakeRange(0,0)];
-	*/
 	
+	// Editing notifications
+	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
+	NSEnumerator *textViewsEnumerator = [textViews objectEnumerator];
+	NSTextView *aTextView;
+	while (aTextView = [textViewsEnumerator nextObject])
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:self 
+												 selector:@selector(textViewDidProcessEditing:)
+													 name:NSTextStorageDidProcessEditingNotification
+												   object:[aTextView textStorage]];
+	}
+	
+	
+	// Frame autosaving
 	[[self window] setFrameAutosaveName:@"CodeInjectionPanel"];
 	[[self window] setFrameUsingName:@"CodeInjectionPanel"];
 	
@@ -248,6 +238,53 @@
 - (IBAction)showHelp:(id)sender
 {
 	[(KTApplication *)NSApp showHelpPage:@"Code_Injection"];		// HELPSTRING
+}
+
+#pragma mark -
+#pragma mark Editing Timer
+
+/*	The user has made an edit. Reset our internal time so that if this is the last edit they make, the
+ *	webview will refresh shortly.
+ */
+- (void)textViewDidProcessEditing:(NSNotification *)notification
+{
+	NSDate *fireDate = [[NSDate date] addTimeInterval:0.8];
+	
+	if (myTextEditingTimer)		// We may have to create & schedule a new timer if none exists
+	{
+		[myTextEditingTimer setFireDate:fireDate];
+	}
+	else
+	{
+		myTextEditingTimer = [[NSTimer alloc] initWithFireDate:fireDate
+													  interval:0.0
+														target:self
+													  selector:@selector(textEditingDidPause:)
+													  userInfo:nil
+													   repeats:NO];
+	
+		[[NSRunLoop currentRunLoop] addTimer:myTextEditingTimer forMode:NSDefaultRunLoopMode];
+	}
+}
+
+/*	Called when there has been a pause in the user's editing. We thus need to commit changes to the model.
+ */
+- (void)textEditingDidPause:(NSTimer *)timer
+{
+	// Get rid of the old timer. Next time the user edits something, a fresh timer will be set up.
+	[myTextEditingTimer invalidate];
+	[myTextEditingTimer release];	myTextEditingTimer = nil;
+	
+	// Force editing to be committed by messing around with the first responder quickly
+	NSResponder *firstResponder = [[self window] firstResponder];
+	if (firstResponder && [firstResponder isKindOfClass:[NSTextView class]])
+	{
+		NSTextView *textView = (NSTextView *)firstResponder;
+		//NSArray *selection = [textView selectedRanges];	// Seems restoring selection isn't actually needed
+		[[self window] makeFirstResponder:nil];
+		[[self window] makeFirstResponder:textView];
+		//[textView setSelectedRanges:selection];
+	}
 }
 
 @end

@@ -29,8 +29,11 @@
 	IBOutlet KSPlaceholderTextView		*oBodyEndTextView;
 	IBOutlet NSTextField				*oBodyTagTextField;
 	
+@private
 	KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
 	BOOL	myIsMaster;
+	
+	NSTimer	*myTextEditingTimer;
 }
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)siteOutline
