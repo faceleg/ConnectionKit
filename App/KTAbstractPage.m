@@ -45,6 +45,9 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Initialisation
+
 /*	As above, but uses a predicate to narrow down to a particular ID
  */
 + (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC
@@ -228,12 +231,26 @@
 
 - (NSURL *)absoluteURL { return [self publishedURL]; }
 
-- (NSString *)pathRelativeToSite { return [self _pathRelativeToSite]; }
+/*	The result of this method is cached until the path changes agan in some way from a -invalidatePathRelativeToSite
+ *	method call. -_pathRelativeToSite will return the uncached path.
+ */
+- (NSString *)pathRelativeToSite
+{
+	NSString *result = [self wrappedValueForKey:@"pathRelativeToSite"];
+	
+	if (!result)
+	{
+		result = [self _pathRelativeToSite];
+		[self setPrimitiveValue:result forKey:@"pathRelativeToSite"];
+	}
+	
+	return result;
+}
 
 - (NSString *)pathRelativeTo:(id <KTWebPaths>)path2
 {
 	NSString *result = [[self pathRelativeToSite] pathRelativeTo:[path2 pathRelativeToSite]];
-	// TODO:	// Make sure the result has a trailing slash if necessary
+	// TODO:	Make sure the result has a trailing slash if necessary
 	return result;
 }
 

@@ -321,6 +321,35 @@
 
 - (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
 
+#pragma mark -
+#pragma mark Paths
+
+/*	KTAbstractPage doesn't support recursive operations, so we do instead
+ */
+- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive
+{
+	[super invalidatePathRelativeToSiteRecursive:recursive];
+	
+	// Children should be affected last since they depend on parents' path
+	if (recursive)
+	{
+		NSSet *children = [self children];
+		NSEnumerator *pageEnumerator = [children objectEnumerator];
+		KTAbstractPage *aPage;
+		while (aPage = [pageEnumerator nextObject])
+		{
+			[aPage invalidatePathRelativeToSiteRecursive:YES];
+		}
+		
+		NSSet *archives = [self valueForKey:@"archivePages"];
+		pageEnumerator = [archives objectEnumerator];
+		while (aPage = [pageEnumerator nextObject])
+		{
+			[aPage invalidatePathRelativeToSiteRecursive:YES];
+		}
+	}
+}
+
 /*	The published path to the design directory relative to the receiver.
  */
 - (NSString *)designDirectoryPath

@@ -44,7 +44,11 @@
  */
 - (NSString *)fileName { return [self wrappedValueForKey:@"fileName"]; }
 
-- (void)setFileName:(NSString *)fileName { [self setWrappedValue:fileName forKey:@"fileName"]; }
+- (void)setFileName:(NSString *)fileName
+{
+	[self setWrappedValue:fileName forKey:@"fileName"];
+	[self invalidatePathRelativeToSiteRecursive:YES];	// For collections this affects all children
+}
 
 /*	Looks at sibling pages and the page title to determine the best possible filename.
  *	Guaranteed to return something unique.
@@ -111,7 +115,11 @@
  */
 - (NSString *)customFileExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
 
-- (void)setCustomFileExtension:(NSString *)extension { [self setWrappedValue:extension forKey:@"customFileExtension"]; }
+- (void)setCustomFileExtension:(NSString *)extension
+{
+	[self setWrappedValue:extension forKey:@"customFileExtension"];
+	[self invalidatePathRelativeToSiteRecursive:NO];
+}
 
 
 /*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
@@ -260,6 +268,7 @@
 }
 
 /*	Returns out path relative to the site as a whole.
+ *	Unlike the -pathRelativeToSite method the result is never cached.
  *	Some typical examples:
  *
  *		text.html			-	A top-level text page
@@ -286,6 +295,18 @@
 	return result;
 }
 
+/*	Sends out a KVO notification that the page's path has changed. Upon the next request for the path it will be
+ *	regenerated and cached.
+ *	KTAbstractPage does not support children, so it is up to KTAbstractPage to implement the recursive portion.
+ */
+- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive
+{
+	[self willChangeValueForKey:@"pathRelativeToSite"];
+	[self setPrimitiveValue:nil forKey:@"pathRelativeToSite"];
+	[self didChangeValueForKey:@"pathRelativeToSite"];
+}
+
+
 /*	This accessor pair is used by plugins like the File Download and External Link to specify a custom path different
  *	to the default behaviour.
  */
@@ -293,9 +314,8 @@
 
 - (void)setCustomPathRelativeToSite:(NSString *)path
 {
-	[self willChangeValueForKey:@"publishedPathRelativeToSite"];
 	[self setWrappedValue:path forKey:@"customPathRelativeToSite"];
-	[self didChangeValueForKey:@"publishedPathRelativeToSite"];
+	[self invalidatePathRelativeToSiteRecursive:YES];
 }
 
 #pragma mark -

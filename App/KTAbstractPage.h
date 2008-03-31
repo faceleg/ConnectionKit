@@ -82,6 +82,7 @@ KTCollectionPathStyle;
 - (NSURL *)publishedURL;
 - (NSURL *)publishedURLAllowingIndexPage:(BOOL)aCanHaveIndexPage;
 - (NSString *)pathRelativeToParent;
+- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive;
 
 - (NSString *)customPathRelativeToSite;
 - (void)setCustomPathRelativeToSite:(NSString *)path;
