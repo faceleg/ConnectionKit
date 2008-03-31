@@ -92,6 +92,9 @@
 // Fucntions
 - (NSString *)pathToPage:(KTAbstractPage *)page;
 
+// Support
++ (NSString *)stringValueOfObject:(id)object;
+
 @end
 
 

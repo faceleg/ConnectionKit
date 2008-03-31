@@ -581,7 +581,7 @@ static unsigned sLastParserID;
 					}
 					else
 					{
-						NSString *toAppend = [element description];		// convert to a string
+						NSString *toAppend = [[self class] stringValueOfObject:element];
 						
 						// first replace spaces with an underscore
 						if (NSNotFound != spacesToUnderscoreLocation)
@@ -1688,6 +1688,27 @@ static unsigned sLastParserID;
 	}
 	return result;
 }
+
+
+/*	When adding a keypath [[=key.path]] we want a decent description of non-string objects. Normally -description suffices,
+ *	but in some cases we want special behaviour.
+ */
++ (NSString *)stringValueOfObject:(id)object
+{
+	NSString *result;
+	
+	if ([object isKindOfClass:[NSURL class]])
+	{
+		result = [object absoluteString];
+	}
+	else
+	{
+		result = [object description];	// Good general fallback
+	}
+	
+	return result;
+}
+
 
 /*	Builds up a dictionary from a string of parameters like this:
  *
