@@ -6,7 +6,7 @@
 <ul>
 	[[foreach delegate.productsSuitableForPublishing aProduct]]
 	<li class="amazonList">
-		<p class="amazonListBulletsParagraph"><a href="[[=&aProduct.URL.absoluteString]]">[[=&aProduct.title]]</a></p>
+		<p class="amazonListBulletsParagraph"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
 		[[if showCreators&&aProduct.creator]]<p class="amazonListBulletsParagraph">[[=&aProduct.creator]]</p>[[endif4]]
 		[[if showComments&&aProduct.comment]]<p class="amazonListBulletsParagraph"><i>[[=&aProduct.comment]]</i></p>[[endif4]]
 	</li>
@@ -18,7 +18,7 @@
 <div class="amazonList [[=delegate.layoutString]]">
 	
 	[[if layout==8]]
-	<iframe	src="[[=delegate.randomLayoutIFrameURL.absoluteString]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
+	<iframe	src="[[=delegate.randomLayoutIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
 			style="width:120px; height:240px;"
 			scrolling="no"
 			marginwidth="0"
@@ -32,7 +32,7 @@
 		[[if layout==7]]
 		
 		[[if HTMLGenerationPurpose||parser.liveDataFeeds]]
-		<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL.absoluteString]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
+		<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
 				style="width:120px; height:240px;"
 				scrolling="no"
 				marginwidth="0"
@@ -48,9 +48,9 @@
 		[[else5]]
 		
 		[[if showThumbnails&&aProduct.publishingThumbnailURLString]]
-		<a class="imageLink" href="[[=&aProduct.URL.absoluteString]]">
+		<a class="imageLink" href="[[=&aProduct.URL]]">
 			<img	class="amazonProductThumbnail[[if frameThumbnails]] amazonProductThumbnailFrame[[endif7]]"
-					src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL.absoluteString]][[endif7]]"
+					src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
 					alt="[[=&aProduct.title]]"
 					width="[[=&thumbnailWidthsString]]" />
 		</a>
@@ -60,7 +60,7 @@
 				[[if aProduct.publishingThumbnailURLString]]<div class="amazonTextWithThumbnail">[[endif6]]
 					
 					[[if showTitles]]
-					<p class="amazonText"><a href="[[=&aProduct.URL.absoluteString]]">[[=&aProduct.title]]</a></p>
+					<p class="amazonText"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
 					[[endif6]]
 					
 					[[if showCreators&&aProduct.creator]]
@@ -96,7 +96,7 @@
 	
 [[if automaticListType>0]]
 [[if HTMLGenerationPurpose||parser.liveDataFeeds]]
-<script src="[[=&delegate.kareliaHTMLURL.absoluteString]]" type="text/javascript"></script>
+<script src="[[=&delegate.kareliaHTMLURL]]" type="text/javascript"></script>
 [[else3]]
 <div class="amazonListPlaceholder">
 	[['This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.]]
