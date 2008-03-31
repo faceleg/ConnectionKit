@@ -96,11 +96,11 @@
 
 
 @interface KTHTMLParser (Text)
-- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-							flags:(NSArray *)flags
-						  HTMLTag:(NSString *)tag
-				graphicalTextCode:(NSString *)GTCode
-						hyperlink:(KTAbstractPage *)hyperlink;
+- (KTWebViewTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+									  flags:(NSArray *)flags
+								    HTMLTag:(NSString *)tag
+						  graphicalTextCode:(NSString *)GTCode
+								  hyperlink:(KTAbstractPage *)hyperlink;
 @end
 
 

@@ -21,6 +21,7 @@
 - (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile;
 
 // Delegate
+- (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)didParseTextBlock:(KTWebViewTextBlock *)textBlock;
 - (void)didEncounterResourceFile:(NSString *)resourcePath;
 

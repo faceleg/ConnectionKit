@@ -395,6 +395,15 @@ static unsigned sLastParserID;
 
 - (void)setDelegate:(id)delegate { myDelegate = delegate; }		// It's a weak ref
 
+- (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
+{
+	id delegate = [self delegate];
+	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterKeyPath:ofObject:)])
+	{
+		[delegate HTMLParser:self didEncounterKeyPath:keyPath ofObject:object];
+	}
+}
+
 - (void)didEncounterMediaFile:(KTAbstractMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
 {
 	id delegate = [self delegate];

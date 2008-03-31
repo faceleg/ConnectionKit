@@ -66,13 +66,15 @@
 		
 		
 		// Build the text block
-		result = [self textblockForKeyPath:textKeyPath
-								  ofObject:object
-									 flags:flags
-								   HTMLTag:tag
-						 graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
-							     hyperlink:hyperlink];
+		KTWebViewTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
+													     ofObject:object
+														    flags:flags
+													      HTMLTag:tag
+											    graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
+													    hyperlink:hyperlink];
 		
+		// Generate HTML
+		result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
 		if (!result) result = @"";
 	}
 	else
@@ -83,47 +85,42 @@
 	return result;
 }
 
-- (NSString *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-							flags:(NSArray *)flags
-						  HTMLTag:(NSString *)tag
-				graphicalTextCode:(NSString *)GTCode
-						hyperlink:(KTAbstractPage *)hyperlink
+- (KTWebViewTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+									  flags:(NSArray *)flags
+								    HTMLTag:(NSString *)tag
+						  graphicalTextCode:(NSString *)GTCode
+								  hyperlink:(KTAbstractPage *)hyperlink
 {
 	// Build the text block
-	KTWebViewTextBlock *textBlock = [[KTWebViewTextBlock alloc] init];
+	KTWebViewTextBlock *result = [[[KTWebViewTextBlock alloc] init] autorelease];
 	
 	BOOL fieldEditor = [flags containsObject:@"line"];
 	BOOL richText = [flags containsObject:@"block"];
 	
-	if (!fieldEditor && !richText) [textBlock setEditable:NO];
-	[textBlock setFieldEditor:fieldEditor];
-	[textBlock setRichText:richText];
-	[textBlock setImportsGraphics:[flags containsObject:@"imageable"]];
-	if (tag) [textBlock setHTMLTag:tag];
-	[textBlock setGraphicalTextCode:GTCode];
+	if (!fieldEditor && !richText) [result setEditable:NO];
+	[result setFieldEditor:fieldEditor];
+	[result setRichText:richText];
+	[result setImportsGraphics:[flags containsObject:@"imageable"]];
+	if (tag) [result setHTMLTag:tag];
+	[result setGraphicalTextCode:GTCode];
 	
 	if (hyperlink)
 	{
 		NSString *path = [self pathToPage:hyperlink];
-		[textBlock setHyperlink:path];
+		[result setHyperlink:path];
 	}
 	
-	if ([[self currentPage] isKindOfClass:[KTPage class]])
-	{
-		[textBlock setPage:(KTPage *)[self currentPage]];
-	}
+	//if ([[self currentPage] isKindOfClass:[KTPage class]])
+	//{
+		[result setPage:(KTPage *)[self currentPage]];
+	//}
 	
-	[textBlock setHTMLSourceObject:object];
-	[textBlock setHTMLSourceKeyPath:keypath];
-	
-	
-	// Generate HTML
-	NSString *result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
+	[result setHTMLSourceObject:object];
+	[result setHTMLSourceKeyPath:keypath];
 	
 	
 	// Inform delegate
-	[self didParseTextBlock:textBlock];
-	[textBlock release];
+	[self didParseTextBlock:result];
 	
 	
 	return result;
