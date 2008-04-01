@@ -1045,7 +1045,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 		// load plugins
-        [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-Ins...",
+        [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-ins...",
                                                                       "Message while loading plugins.")];
 		// build menus
 		[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
