@@ -65,8 +65,7 @@
 
 - (NSString *)overridingPathForResource:(NSString *)name ofType:(NSString *)ext;
 {
-	NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-	NSString *path = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent:[NSApplication applicationName]];
+	NSString *path = [NSApplication applicationSupportPath];
 	NSBundle *ktComponentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
 	NSString *bundleDescription = nil;
 	if (self == [NSBundle mainBundle])

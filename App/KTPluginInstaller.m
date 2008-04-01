@@ -57,14 +57,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 - (void) finishInstalling	// finally called when they are all done opening
 {
-	NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-	NSString *destPath = [libraryPaths objectAtIndex:0];
-	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	(void) [fm createDirectoryAtPath:destPath attributes:nil];
-	
-	NSString *destFolder = [destPath stringByAppendingPathComponent:[NSApplication applicationName]];
-	(void) [fm createDirectoryAtPath:destFolder attributes:nil];
+	NSString *destFolder = [NSApplication applicationSupportPath];
 	
 	NSEnumerator *enumerator = [myURLs objectEnumerator];
 	NSURL *url;
@@ -74,9 +67,8 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 	while ((url = [enumerator nextObject]) != nil)
 	{
 		NSString *sourcePath = [url path];
-		
-		destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];	
-		
+		NSString *destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];	
+		NSFileManager *fm = [NSFileManager defaultManager];
 		if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
 		{
 			BOOL success = [fm removeFileAtPath:destPath handler:nil];

@@ -708,13 +708,8 @@
 - (NSString *)temporaryMediaPath;
 {
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	NSArray *applicationSupportDirectorys = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-																				NSUserDomainMask,
-																				YES);
-	
-	NSString *applicationSupportDirectory = [applicationSupportDirectorys firstObjectOrNilIfEmpty];
-	NSString *sandvoxSupportDirectory = [applicationSupportDirectory stringByAppendingPathComponent:@"Sandvox"];
+	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
+
 	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
 	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[self documentID]];
 	
@@ -1621,19 +1616,12 @@
 {
     if ( nil == mySnapshotPath )
 	{
-		NSString *snapshotPath = nil;
-		
 		// construct path
-		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,NSUserDomainMask,YES);
-		if ( [libraryPaths count] == 1 )
-        {
-			snapshotPath = [libraryPaths objectAtIndex:0];
-			snapshotPath = [snapshotPath stringByAppendingPathComponent:[NSApplication applicationName]];
-			snapshotPath = [snapshotPath stringByAppendingPathComponent:@"Snapshots"];
-			snapshotPath = [snapshotPath stringByAppendingPathComponent:[self documentID]];
-			snapshotPath = [snapshotPath stringByAppendingPathComponent:[self snapshotName]];
-			[self setSnapshotPath:snapshotPath];
-		}
+		NSString *snapshotPath = [NSApplication applicationSupportPath];
+		snapshotPath = [snapshotPath stringByAppendingPathComponent:@"Snapshots"];
+		snapshotPath = [snapshotPath stringByAppendingPathComponent:[self documentID]];
+		snapshotPath = [snapshotPath stringByAppendingPathComponent:[self snapshotName]];
+		[self setSnapshotPath:snapshotPath];
     }
     
     return mySnapshotPath;
