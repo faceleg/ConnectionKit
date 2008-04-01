@@ -1154,7 +1154,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
                         NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
                         [oGenericProgressTextField setStringValue:message];
                         [oGenericProgressImageView setImage:[NSImage imageNamed:@"document"]];
-                        [oGenericProgressTextField displayIfNeeded];
+						[oGenericProgressImageView display];
+                       [oGenericProgressTextField displayIfNeeded];
                         
                         NSURL *fileURL = [NSURL fileURLWithPath:path];
                         
