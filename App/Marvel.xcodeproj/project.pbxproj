@@ -581,6 +581,8 @@
 		CE5CA36A0D15C1DE0021E9B3 /* pagemask.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3680D15C1DE0021E9B3 /* pagemask.tiff */; };
 		CE603A680D0C7EA60016A30E /* quality_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = CE603A670D0C7EA60016A30E /* quality_sample.png */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
+		CE6907230DA2B063003FE259 /* KSSavedFeedbackSender.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6907210DA2B063003FE259 /* KSSavedFeedbackSender.h */; };
+		CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6907220DA2B063003FE259 /* KSSavedFeedbackSender.m */; };
 		CE6BC84D096CA10B00F94F8B /* home.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE6BC84C096CA10B00F94F8B /* home.icns */; };
 		CE6FFB83088EEFD100AD0154 /* designBG.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB79088EEFD100AD0154 /* designBG.png */; };
 		CE6FFB84088EEFD100AD0154 /* designBGSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7A088EEFD100AD0154 /* designBGSearch.png */; };
@@ -879,7 +881,6 @@
 		CED45B900947904D00BB172E /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED45B8F0947904D00BB172E /* ScreenSaver.framework */; };
 		CED850780BD33EAE00FED416 /* dotmac.png in Resources */ = {isa = PBXBuildFile; fileRef = CED850770BD33EAE00FED416 /* dotmac.png */; };
 		CED85A6B0BD35D5600FED416 /* draftPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = CED85A6A0BD35D5600FED416 /* draftPattern.png */; };
-		CED86EDA09522E20000D78F9 /* karelia.png in Resources */ = {isa = PBXBuildFile; fileRef = CED86ED909522E20000D78F9 /* karelia.png */; };
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
@@ -2140,7 +2141,7 @@
 		CE02AE450843EAD000D8A9F9 /* Sample Sites */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sample Sites"; path = "../Sample Sites"; sourceTree = SOURCE_ROOT; };
 		CE0321210D98640F00EC55FC /* KSJoinListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSJoinListController.h; path = ../../../Shared/trunk/App/KSJoinListController.h; sourceTree = SOURCE_ROOT; };
 		CE0321220D98640F00EC55FC /* KSJoinListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSJoinListController.m; path = ../../../Shared/trunk/App/KSJoinListController.m; sourceTree = SOURCE_ROOT; };
-		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
+		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		CE0F67BE0A39F53F0092DC43 /* trans16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trans16.png; sourceTree = "<group>"; };
 		CE11E2C709ED76B600A734DE /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
@@ -2257,6 +2258,8 @@
 		CE5CA3680D15C1DE0021E9B3 /* pagemask.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = pagemask.tiff; sourceTree = "<group>"; };
 		CE603A670D0C7EA60016A30E /* quality_sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quality_sample.png; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
+		CE6907210DA2B063003FE259 /* KSSavedFeedbackSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSavedFeedbackSender.h; path = ../../../Shared/trunk/App/KSSavedFeedbackSender.h; sourceTree = SOURCE_ROOT; };
+		CE6907220DA2B063003FE259 /* KSSavedFeedbackSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSavedFeedbackSender.m; path = ../../../Shared/trunk/App/KSSavedFeedbackSender.m; sourceTree = SOURCE_ROOT; };
 		CE6BC84C096CA10B00F94F8B /* home.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = home.icns; sourceTree = "<group>"; };
 		CE6FFB79088EEFD100AD0154 /* designBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designBG.png; sourceTree = "<group>"; };
 		CE6FFB7A088EEFD100AD0154 /* designBGSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designBGSearch.png; sourceTree = "<group>"; };
@@ -2591,7 +2594,7 @@
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
-		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
+		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED850770BD33EAE00FED416 /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
 		CED85A6A0BD35D5600FED416 /* draftPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draftPattern.png; sourceTree = "<group>"; };
@@ -3477,7 +3480,6 @@
 				2723219F0D48A7690075F31F /* action12.tiff */,
 				CE9CAB500BCEC56D001BF9F7 /* HostSetup */,
 				CE6FFB78088EEFD100AD0154 /* DesignPicker */,
-				3C728F0F08EC901000BADA0A /* Feedback Reporter */,
 				CE01A0230804A8DC009FE78A /* File Icons */,
 				CE8E71900912F5E7001DC88D /* payment */,
 				3C202F2907E012DB00DE4994 /* Toolbar */,
@@ -4018,13 +4020,6 @@
 			name = "Data Migration";
 			sourceTree = "<group>";
 		};
-		3C728F0F08EC901000BADA0A /* Feedback Reporter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Feedback Reporter";
-			sourceTree = "<group>";
-		};
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -4392,6 +4387,8 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE6907210DA2B063003FE259 /* KSSavedFeedbackSender.h */,
+				CE6907220DA2B063003FE259 /* KSSavedFeedbackSender.m */,
 				CE1BB2720D9892D7003F0F4A /* KSNetworkNotifier.h */,
 				CE1BB2730D9892D7003F0F4A /* KSNetworkNotifier.m */,
 				CE0321210D98640F00EC55FC /* KSJoinListController.h */,
@@ -4870,6 +4867,7 @@
 				CE0321230D98640F00EC55FC /* KSJoinListController.h in Headers */,
 				CE1BB2740D9892D7003F0F4A /* KSNetworkNotifier.h in Headers */,
 				27E3F8330D9C34B000A64154 /* KTDocumentMigrationController.h in Headers */,
+				CE6907230DA2B063003FE259 /* KSSavedFeedbackSender.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5621,7 +5619,6 @@
 				CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */,
 				798634F4094E763F003B2653 /* remove.png in Resources */,
 				CE70D9EE094EA86F003169B8 /* qmark50.png in Resources */,
-				CED86EDA09522E20000D78F9 /* karelia.png in Resources */,
 				CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */,
 				CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */,
 				79755CF9096BAF7E00F0E4CA /* KTTransfer.nib in Resources */,
@@ -6271,6 +6268,7 @@
 				CE0321240D98640F00EC55FC /* KSJoinListController.m in Sources */,
 				CE1BB2750D9892D7003F0F4A /* KSNetworkNotifier.m in Sources */,
 				27E3F8340D9C34B000A64154 /* KTDocumentMigrationController.m in Sources */,
+				CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
