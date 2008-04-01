@@ -347,7 +347,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		//								   @"atom.xml", @"AtomFileName",
 		[NSNumber numberWithInt:KTXHTMLStrictDocType], @"DocType",
-					@"karelsofwa-20",	@"AmazonAssociatesToken",		// TODO: get one for sandvox
+					@"karelsofwa-20",	@"AmazonAssociatesToken",
 		
 		[NSNumber numberWithBool:NO],			@"PreferRelativeLinks", // obsolete
 		

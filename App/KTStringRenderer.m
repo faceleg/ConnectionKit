@@ -111,7 +111,7 @@ static NSMutableDictionary *sRendererDictionary = nil;
 	NSData *data = nil;
 	if ([myRenderer respondsToSelector:@selector(valueForOutputKey:ofType:)])	// Leopard
 	{
-		CGImageRef cgimage = (CGImageRef) [myRenderer valueForOutputKey:@"Image" ofType:@"CGImage"];		// TODO: make a category to hide warning
+		CGImageRef cgimage = (CGImageRef) [myRenderer valueForOutputKey:@"Image" ofType:@"CGImage"];
 		NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithCGImage:cgimage] autorelease];
 		data = [bitmap TIFFRepresentation];
 	}
