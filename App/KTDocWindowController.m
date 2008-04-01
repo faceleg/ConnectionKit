@@ -821,9 +821,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			return;
 		}
 		
-		KTPage *page = [KTPage pageWithParent:nearestParent 
-									   plugin:plugin 
-			   insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		KTPage *page = [KTPage insertNewPageWithParent:nearestParent 
+									   plugin:plugin];
 		
 		if ( nil != page )
 		{
@@ -925,9 +924,8 @@ from representedObject */
 		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 		/// Case 17992, added assert to better detect source of exception
 		NSAssert((nil != nearestParent), @"nearestParent should not be nil, root at worst");
-		KTPage *indexPage = [KTPage pageWithParent:nearestParent 
-											plugin:pagePlugin 
-					insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		KTPage *indexPage = [KTPage insertNewPageWithParent:nearestParent 
+											plugin:pagePlugin];
 		[indexPage setBool:YES forKey:@"isCollection"]; // Duh!
 		
 		// Now set the index on the page
@@ -957,9 +955,8 @@ from representedObject */
 				[NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
 			[firstChildProperties removeObjectForKey:@"pluginIdentifier"];
 			
-			KTPage *firstChild = [KTPage pageWithParent:indexPage
-												 plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]
-						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+			KTPage *firstChild = [KTPage insertNewPageWithParent:indexPage
+												 plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]];
 			
 			NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
 			NSString *aKey;
@@ -1151,9 +1148,8 @@ from representedObject */
 			}
             
             // now, create a new collection to hold selectedPages
-			KTPage *collection = [KTPage pageWithParent:parentCollection 
-												 plugin:pagePlugin 
-						 insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+			KTPage *collection = [KTPage insertNewPageWithParent:parentCollection 
+												 plugin:pagePlugin];
 			
 			
 			[collection setValue:[collectionBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];

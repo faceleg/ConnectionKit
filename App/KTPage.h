@@ -40,8 +40,7 @@
 
 
 // Creation
-+ (KTPage *)pageWithParent:(KTPage *)aParent 
-					plugin:(KTElementPlugin *)aPlugin insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;
++ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin;
 
 + (KTPage *)pageWithParent:(KTPage *)aParent
 	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;

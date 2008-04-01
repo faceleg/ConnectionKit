@@ -173,7 +173,7 @@
 	return result;
 }
 
-+ (KTPage *)pageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
++ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin
 {
 	// Create the page
 	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
@@ -206,7 +206,7 @@
 	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
 	NSAssert((nil != plugin), @"drag dictionary does not have a real plugin");
 	
-	id page = [self pageWithParent:aParent plugin:plugin insertIntoManagedObjectContext:aContext];
+	id page = [self insertNewPageWithParent:aParent plugin:plugin];
 	
 	// anything else to do with the drag source dictionary other than to get the bundle?
 	// should the delegate be passed the dictionary and have an opportunity to use it?

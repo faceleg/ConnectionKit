@@ -150,6 +150,11 @@
 #pragma mark -
 
 
+@interface KTPage (Private)
++ (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier;
+@end
+
+
 @implementation KTPage (Pasteboard)
 
 /*	There are several relationships we don't want archived
