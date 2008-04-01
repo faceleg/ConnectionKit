@@ -126,7 +126,7 @@
 	[self invalidateSortedChildrenCache];
 	
 	
-	// Create an archive to conatin the page if needed
+	// Create an archive to conatain the page if needed
 	KTArchivePage *archive = [self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
 	[archive setIsStale:YES];
 }

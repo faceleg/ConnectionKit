@@ -1350,7 +1350,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		[NSNumber numberWithBool:[page boolForKey:@"collectionSyndicate"]], @"collectionSyndicate",
 		[NSNumber numberWithBool:[page boolForKey:@"collectionShowPermanentLink"]], @"collectionShowPermanentLink",
 		[NSNumber numberWithBool:[page boolForKey:@"collectionHyperlinkPageTitles"]], @"collectionHyperlinkPageTitles",
-		[page wrappedValueForKey:@"collectionSummaryType"], @"collectionSummaryType",
+		[page valueForKey:@"collectionSummaryType"], @"collectionSummaryType",
 		nil];
 
 

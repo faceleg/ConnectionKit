@@ -145,13 +145,38 @@
 	return root;
 }
 
+#pragma mark -
+#pragma mark Initialisation
+
+/*	Private support method that creates a generic, blank page.
+ *	It gets created either by unarchiving or the user creating a new page.
+ */
++ (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier
+{
+	NSParameterAssert([parent managedObjectContext]);		NSParameterAssert(pluginIdentifier);
+	
+	
+	// Create the page
+	KTPage *result =
+		[NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:[parent managedObjectContext]];
+	
+	
+	// Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.
+	[result setValue:pluginIdentifier forKey:@"pluginIdentifier"];
+	
+	
+	// Attach to parent & other relationships
+	[result setValue:[parent master] forKey:@"master"];
+	[result setValue:[parent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
+	[parent addPage:result];	// Must use this method to correctly maintain ordering
+	
+	return result;
+}
+
 + (KTPage *)pageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {
-	NSParameterAssert(aParent);		NSParameterAssert([[aPlugin bundle] bundleIdentifier]);
-
 	// Create the page
-	id page = [NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:aContext];
-	[page setValue:[[aPlugin bundle] bundleIdentifier] forKey:@"pluginIdentifier"];
+	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
 	
 	
 	// Load properties from parent/sibling
@@ -166,15 +191,8 @@
 	[page setBool:[previousPage boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
 	
 	
-	// Attach the page to its parent & other relationships
-	
-	[page setValue:[aParent master] forKey:@"master"];
-	
-	NSAssert((nil != [aParent root]), @"parent page's root should not be nil");
-	[aParent addPage:page];	// Must use this method to correctly maintain ordering
-	[page setValue:[aParent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
-	
-	[page awakeFromBundleAsNewlyCreatedObject:YES];		// now it should be real data
+	// And we're finally ready to let normal initalisation take over
+	[page awakeFromBundleAsNewlyCreatedObject:YES];
 
 	return page;
 }

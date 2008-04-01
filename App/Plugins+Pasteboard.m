@@ -164,6 +164,7 @@
 		
 		NSSet *myIgnoredKeys = [NSSet setWithObjects:@"master",
 													 @"parent",
+													 @"childIndex",
 													 @"plugins",
 													 @"documentInfo",
 													 @"isStale",
@@ -178,11 +179,12 @@
 + (KTPage *)pageWithPasteboardRepresentation:(NSDictionary *)archive parent:(KTPage *)parent
 {
 	NSParameterAssert(archive && [archive isKindOfClass:[NSDictionary class]]);
-	NSParameterAssert(parent);	
+	NSParameterAssert(parent);
 	
 	
 	// Create a basic page
-	KTPage *result = [self pageWithParent:parent plugin:nil insertIntoManagedObjectContext:(KTManagedObjectContext *)[parent managedObjectContext]];
+	KTPage *result = [self _insertNewPageWithParent:parent
+								   pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]];
 	
 	
 	// Set up our pagelets
@@ -213,6 +215,7 @@
 	NSArray *relationships = [[[result entity] relationshipsByName] allKeys];
 	[attributes removeObjectsForKeys:relationships];
 	[attributes removeObjectsForKeys:[[self keysToIgnoreForPasteboardRepresentation] allObjects]];
+	[attributes removeObjectForKey:@"pluginIdentifier"];	// It was handled at the top of the method
 	
 	
 	// Convert Media and PluginIdentifiers back into real objects

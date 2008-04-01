@@ -258,7 +258,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 				if ([page isCollection])
 				{
 					// yes only if the page is a KTSummarizeAutomatic summary type
-					result = ([page integerForKey:@"collectionSummaryType"] == KTSummarizeAutomatic);
+					result = ([page collectionSummaryType] == KTSummarizeAutomatic);
 				}
 			}
 		}
