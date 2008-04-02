@@ -39,6 +39,7 @@
 	self = [super initWithWindowNibName:@"Prefs"];
     if (self)
 	{
+		
     }
     return self;
 }
@@ -120,6 +121,11 @@
 	}	
 }
 
+- (IBAction) emailComboChanged:(id)sender;
+{
+	[oAddressComboBox saveSelectionToDefaults];
+}
+
 // Scale down if it's bigger than 150% of what will show.  That will allow us to drag in approximately sized
 // small images for an exact test.
 
@@ -161,16 +167,16 @@
 		if ([[[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey]
 			 isEqualToString:[defaults objectForKey:SUFeedURLKey]])
 		{
-			[self setSparkleOption:sparkleRelease];
+			[self setSparkleOption:kSparkleRelease];
 		}
 		else
 		{
-			[self setSparkleOption:sparkleBeta];	// SOME kind of special feed, overridden.
+			[self setSparkleOption:kSparkleBeta];	// SOME kind of special feed, overridden.
 		}
 	}
 	else
 	{
-		[self setSparkleOption:sparkleNone];
+		[self setSparkleOption:kSparkleNone];
 	}
 
 	// Now start observing
@@ -223,15 +229,15 @@
 		
 		switch (sparkleOption)
 		{
-			case sparkleNone:
+			case kSparkleNone:
 				[defaults setBool:NO forKey:@"contactHomeBase"];
 				[[[NSApp delegate] sparkleUpdater] scheduleCheckWithInterval:0.0];	// cancel it now
 				break;
-			case sparkleRelease:
+			case kSparkleRelease:
 				[defaults setBool:YES forKey:@"contactHomeBase"];
 				[defaults removeObjectForKey:SUFeedURLKey];	// revert to regular
 				break;
-			case sparkleBeta:
+			case kSparkleBeta:
 				[defaults setBool:YES forKey:@"contactHomeBase"];
 				NSString *newString = [SUFeedURL stringByAppendingString:@"&type=beta"];
 				[defaults setObject:newString forKey:SUFeedURLKey];	// revert to regular

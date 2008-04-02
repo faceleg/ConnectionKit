@@ -23,6 +23,19 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>showWindow</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
 				<key>imagePickerCancelled</key>
 				<string>id</string>
 				<key>imagePickerSet</key>
@@ -40,6 +53,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSEmailAddressComboBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSComboBox</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -91,6 +112,8 @@
 			<dict>
 				<key>checkForUpdates</key>
 				<string>id</string>
+				<key>emailComboChanged</key>
+				<string>id</string>
 				<key>windowHelp</key>
 				<string>id</string>
 			</dict>
@@ -100,6 +123,8 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>oAddressComboBox</key>
+				<string>KSEmailAddressComboBox</string>
 				<key>oCompressionSample</key>
 				<string>NSImageView</string>
 				<key>oObjectController</key>

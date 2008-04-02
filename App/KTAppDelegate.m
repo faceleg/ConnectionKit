@@ -25,18 +25,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
  */
 
 #import "BDAlias.h"
-#import "KSNetworkNotifier.h"
 #import "Debug.h"
 #import "KSEmailAddressComboBox.h"
+#import "KSNetworkNotifier.h"
 #import "KSPluginInstallerController.h"
 #import "KSRegistrationController.h"
 #import "KSSilencingConfirmSheet.h"
 #import "KSUtilities.h"
 #import "KT.h"
-#import "KTDataSource.h"
 #import "KTAcknowledgmentsController.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
+#import "KTDataSource.h"
 #import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
@@ -50,6 +50,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTMediaManager.h"
 #import "KTPage.h"
 #import "KTPlaceholderController.h"
+#import "KTPrefsController.h"
 #import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
@@ -390,6 +391,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithBool:NO],			@"ShowSearchPaths",			// NSLog where items are searched for
 		
+		[NSNumber numberWithInt:kReportAsk],	@"ReportErrors",
 		
 		@"sandvox.Aqua",		@"designBundleIdentifier",
 		

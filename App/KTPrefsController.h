@@ -8,20 +8,27 @@
 #import <Cocoa/Cocoa.h>
 #import "KSSingletonWindowController.h"
 
+@class KSEmailAddressComboBox;
+
 @interface KTPrefsController : KSSingletonWindowController
 {
 	IBOutlet NSImageView *oCompressionSample;
 	IBOutlet NSObjectController *oObjectController;
-	
+	IBOutlet KSEmailAddressComboBox *oAddressComboBox;
+
 	int mySparkleOption;
 	
 	NSImage *mySampleImage;
+
 }
 
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) checkForUpdates:(id)sender;
+- (IBAction) emailComboChanged:(id)sender;
 
-enum { sparkleNone = 0, sparkleRelease, sparkleBeta }; 
+enum { kSparkleNone = 0, kSparkleRelease, kSparkleBeta }; 
+
+enum { kReportNever = 0, kReportAsk, kReportAlways }; 
 
 @end
 
