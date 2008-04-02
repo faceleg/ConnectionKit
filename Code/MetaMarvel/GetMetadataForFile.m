@@ -3,6 +3,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 Boolean GetMetadataForFile(
 						   void* thisInterface,
 						   CFMutableDictionaryRef attributes,
@@ -10,9 +11,16 @@ Boolean GetMetadataForFile(
 						   CFStringRef pathToFile
 						   )
 {
-	// we're just going to return all of our file's Core Data metadata for this
-	NSURL *URL = [NSURL fileURLWithPath:(NSString *)pathToFile];
-	NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:URL error:NULL];
+	// we need to compute the path to the datastore inside the document
+	// this computation mirrors [KTDocument datastoreURLforDocumentURL:] and assumes NSSQLiteStoreType
+	NSString *datastorePath = [NSString stringWithString:(NSString *)pathToFile];
+	datastorePath = [datastorePath stringByAppendingPathComponent:@"datastore"];
+	datastorePath = [datastorePath stringByAppendingPathExtension:@"sqlite3"];
+	
+	NSURL *datastoreURL = [NSURL fileURLWithPath:datastorePath];
+	
+	// we're just going to return all of our document's Core Data metadata
+	NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL error:NULL];
 	if ( nil != metadata )
 	{
 		[(NSMutableDictionary *)attributes addEntriesFromDictionary:metadata];
@@ -22,3 +30,4 @@ Boolean GetMetadataForFile(
 	// default if we didn't make it
 	return NO;
 }
+
