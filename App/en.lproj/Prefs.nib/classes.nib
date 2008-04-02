@@ -51,6 +51,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSSingletonWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -98,7 +106,7 @@
 				<string>NSObjectController</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
+			<string>KSSingletonWindowController</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>
