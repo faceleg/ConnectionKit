@@ -45,7 +45,7 @@
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>
-				<false/>
+				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
 				<key>collectionShowNavigationArrows</key>
@@ -79,7 +79,7 @@
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>
-				<false/>
+				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>20</integer>
 				<key>collectionShowNavigationArrows</key>
