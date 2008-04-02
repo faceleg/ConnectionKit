@@ -291,7 +291,7 @@
  */
 - (AmazonListType)listTypeToTryAfterType:(AmazonListType)previousType
 {
-	AmazonListType result;
+	AmazonListType result = 0;
 	
 	switch (previousType)
 	{

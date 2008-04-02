@@ -320,7 +320,7 @@
 	
 	
 	// Reload the timestamp
-	NSDate *date;
+	NSDate *date = nil;
 	switch ([[self master] timestampType])
 	{
 		case KTTimestampCreationDate:
