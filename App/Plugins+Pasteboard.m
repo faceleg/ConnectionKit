@@ -188,8 +188,10 @@
 	
 	
 	// Create a basic page
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
 	KTPage *result = [self _insertNewPageWithParent:parent
 								   pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]];
+	[attributes removeObjectForKey:@"pluginIdentifier"];
 	
 	
 	// Set up our pagelets
@@ -216,11 +218,10 @@
 	
 	
 	// Prune away any properties no longer needing to be set
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
 	NSArray *relationships = [[[result entity] relationshipsByName] allKeys];
 	[attributes removeObjectsForKeys:relationships];
 	[attributes removeObjectsForKeys:[[self keysToIgnoreForPasteboardRepresentation] allObjects]];
-	[attributes removeObjectForKey:@"pluginIdentifier"];	// It was handled at the top of the method
+	[attributes removeObjectForKey:@"fileName"];	// Handled below
 	
 	
 	// Convert Media and PluginIdentifiers back into real objects
@@ -246,6 +247,11 @@
 	
 	// Set the attributes
 	[result setValuesForKeysWithDictionary:attributes];
+			
+	
+	// Give the page a decent filename
+	NSString *suggestedFileName = [result suggestedFileName];
+	[result setFileName:suggestedFileName];
 	
 	
 	// Wake up the page
