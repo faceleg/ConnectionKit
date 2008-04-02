@@ -26,6 +26,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #import "BDAlias.h"
 #import "Debug.h"
+#import "KSAbstractBugReporter.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSNetworkNotifier.h"
 #import "KSPluginInstallerController.h"

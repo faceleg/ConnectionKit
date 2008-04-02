@@ -28,7 +28,6 @@
 
 enum { kSparkleNone = 0, kSparkleRelease, kSparkleBeta }; 
 
-enum { kReportNever = 0, kReportAsk, kReportAlways }; 
 
 @end
 

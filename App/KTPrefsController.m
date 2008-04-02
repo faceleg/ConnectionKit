@@ -17,6 +17,7 @@
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSApplication+Karelia.h"
+#import "KSAbstractBugReporter.h"
 
 @interface KTPrefsController ()
 
