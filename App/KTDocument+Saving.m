@@ -187,9 +187,6 @@
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
 					  error:(NSError **)outError
 {
-	BOOL result = NO;
-	
-	
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
 	if ( ((0 == gRegistrationWasChecked) && random() < (LONG_MAX / 10) ) )
 	{
@@ -246,8 +243,7 @@
 															   storeOptions:nil
 																	  error:outError];
 		
-		NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
-		id newStore = [coord persistentStoreForURL:persistentStoreURL];
+		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
 		if ( !newStore || !didConfigure )
 		{
 			NSLog(@"error: unable to create document: %@", [*outError description]);
@@ -257,42 +253,45 @@
 	
 	
 	// Set metadata
-	result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
-	
-	
-	if (result)
+	if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
 	{
-		// Record display properties
-		[managedObjectContext processPendingChanges];
-		[[managedObjectContext undoManager] disableUndoRegistration];
-		[self copyDocumentDisplayPropertiesToModel];
-		[managedObjectContext processPendingChanges];
-		[[managedObjectContext undoManager] enableUndoRegistration];
-		
-		
-		if ([self isClosing])
+		if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
 		{
-			// grab any last edits
-			[[[self windowController] webViewController] commitEditing];
-			[managedObjectContext processPendingChanges];
-			
-			// remembering and collecting should not be undoable
-			[[managedObjectContext undoManager] disableUndoRegistration];
-			
-			// collect garbage
-			if ([self updateMediaStorageAtNextSave])
-			{
-				[[self mediaManager] resetMediaFileStorage];
-			}
-			[[self mediaManager] garbageCollect];
-			
-			// force context to record all changes before saving
-			[managedObjectContext processPendingChanges];
-			[[managedObjectContext undoManager] enableUndoRegistration];
+			return NO;
 		}
 	}
 	
-	return result;
+
+	// Record display properties
+	[managedObjectContext processPendingChanges];
+	[[managedObjectContext undoManager] disableUndoRegistration];
+	[self copyDocumentDisplayPropertiesToModel];
+	[managedObjectContext processPendingChanges];
+	[[managedObjectContext undoManager] enableUndoRegistration];
+	
+	
+	if ([self isClosing])
+	{
+		// grab any last edits
+		[[[self windowController] webViewController] commitEditing];
+		[managedObjectContext processPendingChanges];
+		
+		// remembering and collecting should not be undoable
+		[[managedObjectContext undoManager] disableUndoRegistration];
+		
+		// collect garbage
+		if ([self updateMediaStorageAtNextSave])
+		{
+			[[self mediaManager] resetMediaFileStorage];
+		}
+		[[self mediaManager] garbageCollect];
+		
+		// force context to record all changes before saving
+		[managedObjectContext processPendingChanges];
+		[[managedObjectContext undoManager] enableUndoRegistration];
+	}
+
+	return YES;
 }
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL 
