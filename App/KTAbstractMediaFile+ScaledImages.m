@@ -53,36 +53,48 @@
  */
 - (KTScaledImageProperties *)scaledImageWithProperties:(NSDictionary *)properties
 {
+	KTScaledImageProperties *result;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	
-	// Build the canonical version of the settings
-	properties = [self canonicalImagePropertiesForProperties:properties];
-	
-	
-	// Search for an existing match
-	KTScaledImageProperties *result = [self anyScaledImageWithProperties:properties];
-	
-	
-	// Go ahead and generate the image if no match is found
-	if (!result)
+	// We can only generate a scaled image directly from an image file.
+	// If not an image, create a full-size image and then scale from that
+	NSString *sourceUTI = [self fileType];
+	if ([[CIImage imageTypes] containsObject:sourceUTI])
 	{
-		NSString *sourceUTI = [self fileType];
-		if ([[CIImage imageTypes] containsObject:sourceUTI])
+		// Build the canonical version of the settings
+		properties = [self canonicalImagePropertiesForProperties:properties];
+		
+		// Search for an existing match
+		result = [self anyScaledImageWithProperties:properties];
+		if (!result)
 		{
 			result = [self generateImageUsingCoreImageWithProperties:properties];
 		}
-		else if ([NSString UTI:sourceUTI conformsToUTI:(NSString *)kUTTypeAudiovisualContent])
+	}
+	else
+	{
+		// Go for a super-simple unscaled image from the source media
+		NSMutableDictionary *unscaledImageProperties = [NSMutableDictionary dictionary];
+		[unscaledImageProperties setObject:[KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil] forKey:@"scalingBehavior"];
+		
+		
+		KTAbstractMediaFile *unscaledImage;
+		if ([NSString UTI:sourceUTI conformsToUTI:(NSString *)kUTTypeAudiovisualContent])
 		{
-			result = [self generateImageUsingQTKitWithProperties:properties];
+			unscaledImage = [[self generateImageUsingQTKitWithProperties:unscaledImageProperties] valueForKey:@"destinationFile"];
 		}
 		else
 		{
-			result = [self generateImageFromFileIconWithProperties:properties];
+			unscaledImage = [[self generateImageFromFileIconWithProperties:unscaledImageProperties] valueForKey:@"destinationFile"];
 		}
+		
+		// And then scale it properly
+		result = [unscaledImage scaledImageWithProperties:properties];
 	}
 	
 	
+	// Tidy up
 	[result retain];
 	[pool release];
 	
@@ -151,7 +163,8 @@
 - (KTScaledImageProperties *)generateImageUsingQTKitWithProperties:(NSDictionary *)properties
 {
 	NSImage *image = [self moviePosterImage];
-	KTScaledImageProperties *result = [self scaleImage:image withProperties:properties];
+	KTInDocumentMediaFile *mediaFile = [[self mediaManager] mediaFileWithImage:image];
+	KTScaledImageProperties *result = [KTScaledImageProperties connectSourceFile:self toFile:mediaFile withProperties:properties];
 	
 	return result;
 }
