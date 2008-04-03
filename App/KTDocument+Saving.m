@@ -260,6 +260,10 @@
 			return NO;
 		}
 	}
+	else
+	{
+		LOG((@"wants to setMetadata but no persistent store at %@", persistentStoreURL));
+	}
 	
 
 	// Record display properties
@@ -318,7 +322,7 @@
 			}
 			else
 			{
-				result = [self setMetadataForStoreAtURL:inURL
+				result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL]
 												  error:outError];
 			}
 		}
