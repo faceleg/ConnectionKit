@@ -94,7 +94,7 @@
 	
 	// Store the information until it's needed later
 	mySavingURL = [absoluteURL copy];
-	mySavingType = [mySavingType copy];
+	mySavingType = [typeName copy];
 	mySavingOperationType = saveOperation;
 	mySavingDelegate = delegate;	// weak ref
 	mySavingFinishedSelector = didSaveSelector;
