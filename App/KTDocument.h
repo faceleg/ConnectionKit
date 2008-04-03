@@ -94,13 +94,8 @@ extern NSString *kKTMetadataSiteTitleKey;
 	
 	
 	// Quick Look thumbnail saving. We have to hang onto these till the webview is laoded.
-	WebView				*myQuickLookThumbnailWebView;
-	NSURL				*mySavingURL;
-	NSString			*mySavingType;
-	NSSaveOperationType	mySavingOperationType;
-	id					mySavingDelegate;			// weak ref
-	SEL					mySavingFinishedSelector;
-	void				*mySavingContextInfo;
+	WebView			*myQuickLookThumbnailWebView;
+	NSInvocation	*myDocumentDidSaveCallback;
 	
 	
 	// UI

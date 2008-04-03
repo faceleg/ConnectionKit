@@ -81,7 +81,11 @@
 
 @implementation KTDocument (Saving)
 
-/*	Override of default NSDocument behaviour. Thumbnail generation begins asynchronously, and once complete, the doc is saved.
+#pragma mark -
+#pragma mark Save To URL
+
+/*	Override of default NSDocument behaviour. Thumbnail generation begins asynchronously, and we save the document as normal.
+ *	Once thumbnail generation is complete, the callback is invoked.
  */
 - (void)saveToURL:(NSURL *)absoluteURL
 		   ofType:(NSString *)typeName
@@ -92,20 +96,65 @@
 {
 	NSAssert(![self quickLookThumbnailWebView], @"A save is already in progress");
 	
-	// Store the information until it's needed later
-	mySavingURL = [absoluteURL copy];
-	mySavingType = [typeName copy];
-	mySavingOperationType = saveOperation;
-	mySavingDelegate = delegate;	// weak ref
-	mySavingFinishedSelector = didSaveSelector;
-	mySavingContextInfo = contextInfo;
 	
-	// Start generating thumbnail
+	// Start generating Quick Look thumbnail
 	[self beginLoadingQuickLookThumbnailWebView];
+	
+	
+	// Store the didSave callback info until it's needed later
+	if (delegate && didSaveSelector)
+	{
+		myDocumentDidSaveCallback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:didSaveSelector]];
+		[myDocumentDidSaveCallback setTarget:delegate];
+		[myDocumentDidSaveCallback setSelector:didSaveSelector];
+		[myDocumentDidSaveCallback setArgument:&self atIndex:2];	// Argument 3 is filled in after saving
+		[myDocumentDidSaveCallback setArgument:&contextInfo atIndex:4];
+		[myDocumentDidSaveCallback retain];
+	}
+	
+	
+	// Perform a standard save but afterwards wait for thumbnail to generate
+	[super saveToURL:absoluteURL
+			  ofType:typeName
+	forSaveOperation:saveOperation
+			delegate:self
+	 didSaveSelector:@selector(document:didSaveWhileGeneratingQuickLookThumbnail:contextInfo:)
+		 contextInfo:NULL];
+}
+
+
+/*	In the event that document saving failed, we need to alert the delegate rather than waiting for the thumbnail to generate first.
+ */
+- (void)document:(NSDocument *)document didSaveWhileGeneratingQuickLookThumbnail:(BOOL)didSaveSuccessfully contextInfo:(void  *)contextInfo
+{
+	if (!didSaveSuccessfully)
+	{
+		[myDocumentDidSaveCallback setArgument:&didSaveSuccessfully atIndex:3];
+		[myDocumentDidSaveCallback invoke];
+		
+		[myDocumentDidSaveCallback release];	myDocumentDidSaveCallback = nil;
+	}
 }
 
 // TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m. Should be in one of the -saveToURL methods.
 
+
+/*	In addition to the default behavior, cancel thumbnail generation if saving failed as we're no longer interested in it.
+ */
+- (BOOL)saveToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError
+{
+	BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+	
+	if (!result)
+	{
+		[self quickLookThumbnailWebViewIsFinishedWith];
+	}
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Write To URL
 
 /*	Called when creating a new document and when performing saveDocumentAs:
  */
@@ -125,28 +174,6 @@
 	{
 		// Save the context
 		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
-		
-		if (result)
-		{
-			// Write out Quick Look thumbnail if available
-			WebView *thumbnailWebView = [self quickLookThumbnailWebView];
-			if (thumbnailWebView && ![thumbnailWebView isLoading])
-			{
-				// Write out the thumbnail
-				[thumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-				NSImage *snapshot = [[[[thumbnailWebView mainFrame] frameView] documentView] snapshot];
-				
-				NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
-														  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
-														 alignment:NSImageAlignTop];
-				
-				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
-				[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
-				
-				
-				[self quickLookThumbnailWebViewIsFinishedWith];
-			}
-		}
 	}
 	
 	return result;
@@ -465,14 +492,6 @@
 	NSWindow *window = [myQuickLookThumbnailWebView window];
 	[myQuickLookThumbnailWebView release];	myQuickLookThumbnailWebView = nil;
 	[window release];
-	
-	// This information was temporary while we waited. Clear it out.
-	[mySavingURL release];	mySavingURL = nil;
-	[mySavingType release];	mySavingType = nil;
-	mySavingOperationType = 0;
-	mySavingDelegate = nil;		// weak ref
-	mySavingFinishedSelector = nil;
-	mySavingContextInfo = NULL;
 }
 
 - (void)beginLoadingQuickLookThumbnailWebView
@@ -512,20 +531,37 @@
 	[[myQuickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
 }
 
-/*	Once the thumbnail webview has loaded we can go ahead and do normal document saving
+/*	Once the thumbnail webview, we can write it to disk and inform the delegate that saving is finished
  */
 - (void)quickLookThumbnailWebviewDidFinishLoading:(NSNotification *)notification
 {
+	// Check this is the right notification
 	if ([notification object] != [self quickLookThumbnailWebView]) return;
 	if (![[notification name] isEqualToString:WebViewProgressFinishedNotification]) return;
 	
 	
-	[super saveToURL:mySavingURL
-			  ofType:mySavingType
-	forSaveOperation:mySavingOperationType
-			delegate:mySavingDelegate
-	 didSaveSelector:mySavingFinishedSelector
-		 contextInfo:mySavingContextInfo];
+	// Write out thumbnail
+	WebView *thumbnailWebView = [self quickLookThumbnailWebView];
+	[thumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+	NSImage *snapshot = [[[[thumbnailWebView mainFrame] frameView] documentView] snapshot];
+	
+	NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
+											  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+											 alignment:NSImageAlignTop];
+	
+	NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
+	[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
+	
+	
+	// Dispose of the webview
+	[self quickLookThumbnailWebViewIsFinishedWith];
+	
+	
+	// Invoke document saving callback
+	BOOL result = YES;
+	[myDocumentDidSaveCallback setArgument:&result atIndex:3];
+	[myDocumentDidSaveCallback invoke];
+	[myDocumentDidSaveCallback release];	myDocumentDidSaveCallback = nil;
 }
 
 #pragma mark -
