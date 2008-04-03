@@ -65,7 +65,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	KTMediaManager				*myMediaManager;
-	BOOL						myShouldUpateMediaStorageAtNextSave;
+	BOOL						myShouldUpdateMediaStorageAtNextSave;
 	
 	KTPluginDelegatesManager	*myPluginDelegatesManager;
 	KTStalenessManager			*myStalenessManager;
@@ -185,7 +185,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 - (void)revertPersistentStoreToSnapshot:(id)notUsedButRequiredParameter;
 
 // spotlight
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL;
+- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
 // support
 - (void)processPendingChangesAndClearChangeCount;
@@ -312,7 +312,7 @@ extern NSString *kKTMetadataSiteTitleKey;
 @interface KTDocument (Media)
 - (KTMediaManager *)mediaManager;
 
-- (BOOL)upateMediaStorageAtNextSave;
+- (BOOL)updateMediaStorageAtNextSave;
 - (void)setUpdateMediaStorageAtNextSave:(BOOL)update;
 @end
 

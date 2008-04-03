@@ -566,7 +566,7 @@
 		
 		
 		// Do Garbage Collection etc. (but only if there is a location to move it to!)
-		if ([self upateMediaStorageAtNextSave])
+		if ([self updateMediaStorageAtNextSave])
 		{
 			[[self mediaManager] resetMediaFileStorage];
 		}
