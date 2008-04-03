@@ -2144,14 +2144,23 @@ from representedObject */
  */
 - (void)setDocument:(NSDocument *)document
 {
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	// Throw away any existing plugin Inspector manager we might have otherwise it will attempt to access an invalid
+	// managed object context later.
+	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
 	
+	
+	// Stop notifications from old doc
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter removeObserver:self
 								  name:NSUndoManagerWillCloseUndoGroupNotification
 								object:[[self document] undoManager]];
 	
+	
+	// Default behaviour
 	[super setDocument:document];
 	
+	
+	// Observe new document
 	[notificationCenter addObserver:self
 						   selector:@selector(undoManagerWillCloseUndoGroup:)
 						       name:NSUndoManagerWillCloseUndoGroupNotification
