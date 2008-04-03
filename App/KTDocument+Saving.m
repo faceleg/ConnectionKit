@@ -104,6 +104,8 @@
 	[self beginLoadingQuickLookThumbnailWebView];
 }
 
+// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m. Should be in one of the -saveToURL methods.
+
 
 /*	Called when creating a new document and when performing saveDocumentAs:
  */
@@ -133,16 +135,17 @@
 		return NO;
 	}
 	
-	// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m
 	
 	// Prepare to save the context
 	result = [self prepareToWriteToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
-	if ( result )
+	
+	
+	if (result)
 	{
 		// Save the context
 		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
 		
-		if ( result )
+		if (result)
 		{
 			// Write out Quick Look thumbnail if available
 			WebView *thumbnailWebView = [self quickLookThumbnailWebView];
@@ -168,6 +171,9 @@
 	return result;
 }
 
+
+/*	Support method that sets the environment ready for the MOC and other document contents to be written to disk.
+ */
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
@@ -176,7 +182,8 @@
 	BOOL result = NO;
 	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	
-	// if we haven't been saved before, create document wrapper paths on disk before we do anything else
+	
+	// For the first save of a document, create the wrapper paths on disk before we do anything else
 	if ( NSSaveAsOperation == inSaveOperation )
 	{
 		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
@@ -187,7 +194,39 @@
 		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
 	}
 	
-	// we really want to write to a URL inside the wrapper, so compute the real URL
+	
+	// Make sure we have a persistent store coordinator properly set up
+	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
+	{
+		// NSDocument does atomic saves so the first time the user saves it's in a temporary
+		// directory and the file is then moved to the actual save path, so we need to tell the 
+		// persistentStoreCoordinator to remove the old persistentStore, otherwise if we attempt
+		// to migrate it, the coordinator complains because it knows they are the same store
+		// despite having two different URLs
+		(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
+												error:outError];
+	}
+	
+	if ([[storeCoordinator persistentStores] count] < 1) 
+	{ 
+		// this is our first save so we just set the persistentStore and save normally
+		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+																	 ofType:[KTDocument defaultStoreType]
+														 modelConfiguration:nil
+															   storeOptions:nil
+																	  error:outError];
+		
+		NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
+		id newStore = [coord persistentStoreForURL:newSaveURL];
+		if ( !newStore || !didConfigure )
+		{
+			NSLog(@"error: unable to create document: %@", [*outError description]);
+			return NO; // bail out and display outError
+		}
+	} 
+	
+	
+	// We really want to write to a URL inside the wrapper, so compute the real URL
 	NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
 
 	// set metadata
@@ -222,15 +261,6 @@
 			[managedObjectContext processPendingChanges];
 			[[managedObjectContext undoManager] enableUndoRegistration];
 		}
-		
-		// Store QuickLook preview
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-		NSString *previewHTML = [parser parseTemplate];
-		[parser release];
-		
-		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 	}
 	
 	return result;
@@ -253,35 +283,8 @@
 		NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 		NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 		
-		if ( (NSSaveOperation == inSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
-		{
-			// NSDocument does atomic saves so the first time the user saves it's in a temporary
-			// directory and the file is then moved to the actual save path, so we need to tell the 
-			// persistentStoreCoordinator to remove the old persistentStore, otherwise if we attempt
-			// to migrate it, the coordinator complains because it knows they are the same store
-			// despite having two different URLs
-			(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
-													error:outError];
-		}
 		
-		if ( [[storeCoordinator persistentStores] count] < 1 ) 
-		{ 
-			// this is our first save so we just set the persistentStore and save normally
-			BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-																		 ofType:[KTDocument defaultStoreType]
-															 modelConfiguration:nil
-																   storeOptions:nil
-																		  error:outError];
-			
-			NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
-			id newStore = [coord persistentStoreForURL:newSaveURL];
-			if ( !newStore || !didConfigure )
-			{
-				NSLog(@"error: unable to create document: %@", [*outError description]);
-				return NO; // bail out and display outError
-			}
-		} 
-		else if (NSSaveAsOperation == inSaveOperation)
+		if (inSaveOperation == NSSaveAsOperation)
 		{
 			result = [self migrateToURL:inURL ofType:inType error:outError];
 			if (!result)
@@ -294,6 +297,16 @@
 												  error:outError];
 			}
 		}
+		
+		
+		// Store QuickLook preview
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+		NSString *previewHTML = [parser parseTemplate];
+		[parser release];
+		
+		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 		
 		
 		// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
