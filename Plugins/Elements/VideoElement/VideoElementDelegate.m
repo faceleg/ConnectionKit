@@ -482,9 +482,9 @@ After deflating starting at byte 8, you get:
 				z.next_out = (Bytef *)[outputData bytes];
 				z.avail_out = dataLength - 8;
 		
-				int status = inflateInit((const char *)&z);
+				int status = inflateInit((z_streamp)&z);
 				status = inflate(&z, Z_FINISH);
-				status = inflateEnd((const char *)&z);
+				status = inflateEnd((z_streamp)&z);
 				
 				myBytePointer = (char *)[outputData bytes];
 			}
