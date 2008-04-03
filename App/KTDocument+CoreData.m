@@ -552,6 +552,7 @@
 
 /*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL
+						   error:(NSError **)outError
 {
 	//LOGMETHOD;
 	
@@ -679,9 +680,21 @@
 	@catch (NSException * e)
 	{
 		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
+		
+		if ( nil != outError )
+		{
+			// pass metadataError back to the document for presentation
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+											code:134070 // NSPersistentStoreOperationError
+										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												  [aStoreURL path], @"path",
+												  [e name], @"name",
+												  [e reason], @"reason",
+												  nil]]; 
+		}
 	}
 	
-	return result; // currently no caller relies on the return value of this method
+	return result;
 }
 
 #pragma mark document support
