@@ -101,7 +101,7 @@
 		
 		if ( nil == metadata )
 		{
-			LOG((@"***Can't open %@ : unable to read metadata!", requestedPath));
+			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
 			NSString *description = NSLocalizedString(@"Unable to read document metadata.",
@@ -121,14 +121,9 @@
 		}
 		
 		NSString *modelVersion = [metadata valueForKey:kKTMetadataModelVersionKey];
-        if ( nil == modelVersion )
-        {
-            // backward compatibility with old key
-            modelVersion = [metadata valueForKey:@"KTModelVersion"];
-        }
 		if ( (nil == modelVersion) || [modelVersion isEqualToString:@""] )
 		{
-			LOG((@"***Can't open %@ : no model version!", requestedPath));
+			NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
 			
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
@@ -150,14 +145,9 @@
 
 		
 		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppVersionKey];
-        if ( nil == mainBundleVersion )
-        {
-            // backward compatibility with old key
-            mainBundleVersion = [metadata valueForKey:@"KTMainBundleVersion"];
-        }
 		if ( ![modelVersion isEqualToString:kKTModelVersion] )
 		{
-			NSLog(@"error: only document with model %@ are supported in 1.5 until KTDataMigrator is re-examined.", kKTModelVersion);
+			NSLog(@"error: only documents with model %@ are supported in 1.5 until KTDataMigrator is re-examined.", kKTModelVersion);
 			
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
