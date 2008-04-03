@@ -196,7 +196,9 @@
 	
 	
 	// Make sure we have a persistent store coordinator properly set up
-	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
+	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
+	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL];
+	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
 	{
 		// NSDocument does atomic saves so the first time the user saves it's in a temporary
 		// directory and the file is then moved to the actual save path, so we need to tell the 
@@ -207,7 +209,7 @@
 												error:outError];
 	}
 	
-	if ([[storeCoordinator persistentStores] count] < 1) 
+	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
 		// this is our first save so we just set the persistentStore and save normally
 		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
@@ -217,7 +219,7 @@
 																	  error:outError];
 		
 		NSPersistentStoreCoordinator *coord = [[self managedObjectContext] persistentStoreCoordinator];
-		id newStore = [coord persistentStoreForURL:newSaveURL];
+		id newStore = [coord persistentStoreForURL:persistentStoreURL];
 		if ( !newStore || !didConfigure )
 		{
 			NSLog(@"error: unable to create document: %@", [*outError description]);
@@ -226,11 +228,8 @@
 	} 
 	
 	
-	// We really want to write to a URL inside the wrapper, so compute the real URL
-	NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
-
 	// set metadata
-	result = [self setMetadataForStoreAtURL:newSaveURL error:outError];
+	result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
 	if ( result )
 	{
 		// Record display properties
