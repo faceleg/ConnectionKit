@@ -114,26 +114,7 @@
   forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
 	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
-	
 	BOOL result = NO;
-	
-	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
-	if ( ((0 == gRegistrationWasChecked) && random() < (LONG_MAX / 10) ) )
-	{
-		// NB: this is a trick to make a licensing issue look like an Unknown Store Type error
-		// KTErrorReason/KTErrorDomain is a nonsense response to flag this as bad license
-		NSError *registrationError = [NSError errorWithDomain:NSCocoaErrorDomain
-														 code:134000 // invalid type error, for now
-													 userInfo:[NSDictionary dictionaryWithObject:@"KTErrorDomain"
-																						  forKey:@"KTErrorReason"]];
-		if ( nil != outError )
-		{
-			// we'll pass registrationError back to the document for presentation
-			*outError = registrationError;
-		}
-		
-		return NO;
-	}
 	
 	
 	// Prepare to save the context
@@ -180,11 +161,29 @@
 					  error:(NSError **)outError
 {
 	BOOL result = NO;
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	
+	
+	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
+	if ( ((0 == gRegistrationWasChecked) && random() < (LONG_MAX / 10) ) )
+	{
+		// NB: this is a trick to make a licensing issue look like an Unknown Store Type error
+		// KTErrorReason/KTErrorDomain is a nonsense response to flag this as bad license
+		NSError *registrationError = [NSError errorWithDomain:NSCocoaErrorDomain
+														 code:134000 // invalid type error, for now
+													 userInfo:[NSDictionary dictionaryWithObject:@"KTErrorDomain"
+																						  forKey:@"KTErrorReason"]];
+		if ( nil != outError )
+		{
+			// we'll pass registrationError back to the document for presentation
+			*outError = registrationError;
+		}
+		
+		return NO;
+	}
 	
 	
 	// For the first save of a document, create the wrapper paths on disk before we do anything else
-	if ( NSSaveAsOperation == inSaveOperation )
+	if (inSaveOperation == NSSaveAsOperation)
 	{
 		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
 		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
@@ -196,8 +195,10 @@
 	
 	
 	// Make sure we have a persistent store coordinator properly set up
-	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
+	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL];
+	
 	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
 	{
 		// NSDocument does atomic saves so the first time the user saves it's in a temporary
@@ -228,9 +229,11 @@
 	} 
 	
 	
-	// set metadata
+	// Set metadata
 	result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
-	if ( result )
+	
+	
+	if (result)
 	{
 		// Record display properties
 		[managedObjectContext processPendingChanges];
@@ -274,16 +277,13 @@
 	
 	BOOL result = NO;
 	
-	// we really want to write to a URL inside the wrapper, so compute the real URL
-	NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
-	
 	@try 
 	{
 		NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-		NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 		
 		
-		if (inSaveOperation == NSSaveAsOperation)
+		// Handle the user choosing "Save As" for an EXISTING document
+		if (inSaveOperation == NSSaveAsOperation && [self fileURL])
 		{
 			result = [self migrateToURL:inURL ofType:inType error:outError];
 			if (!result)
@@ -312,8 +312,10 @@
 		// so that saveDocumentAs: can find us again until the new context is fully ready
 		/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
 		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
+		
 		result = [managedObjectContext save:outError];
 		if (result) result = [[[self mediaManager] managedObjectContext] save:outError];
+		
 		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
 		
 		if (result)
