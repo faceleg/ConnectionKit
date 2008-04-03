@@ -299,9 +299,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 		[NSNumber numberWithInt:60 * 60 * 6],	@"SecondsBetweenHomeBaseChecks",
 		[NSNumber numberWithBool:YES],			@"ContinuousSpellChecking",
-				
-		@"",									@"CrashReporterFromAddress",
-		
+						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
 		//[NSNumber numberWithBool:YES],			@"AutosaveDocuments",
