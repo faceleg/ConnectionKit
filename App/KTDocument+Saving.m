@@ -55,15 +55,24 @@
 - (void)threadedSaveToURL:(NSURL *)absoluteURL
 				   ofType:(NSString *)typeName
 		 forSaveOperation:(NSSaveOperationType)saveOperation;
-		 
-- (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError;
 
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError;
+- (BOOL)prepareToWriteToURL:(NSURL *)inURL 
+					 ofType:(NSString *)inType 
+		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
+					  error:(NSError **)outError;
+
+- (BOOL)writeMOCToURL:(NSURL *)inURL 
+			   ofType:(NSString *)inType 
+	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
+				error:(NSError **)outError;
+
+- (BOOL)migrateToURL:(NSURL *)URL 
+			  ofType:(NSString *)typeName 
+			   error:(NSError **)outError;
 
 - (WebView *)quickLookThumbnailWebView;
 - (void)beginLoadingQuickLookThumbnailWebView;
 - (void)quickLookThumbnailWebViewIsFinishedWith;
-
 @end
 
 
@@ -83,7 +92,6 @@
 {
 	NSAssert(![self quickLookThumbnailWebView], @"A save is already in progress");
 	
-	
 	// Store the information until it's needed later
 	mySavingURL = [absoluteURL copy];
 	mySavingType = [mySavingType copy];
@@ -99,7 +107,9 @@
 
 /*	Called when creating a new document and when performing saveDocumentAs:
  */
-- (BOOL)writeToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
+- (BOOL)writeToURL:(NSURL *)inURL 
+			ofType:(NSString *)inType 
+  forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
 	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
 	
@@ -123,13 +133,48 @@
 		return NO;
 	}
 	
-	
-	
 	// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m
 	
+	// Prepare to save the context
+	result = [self prepareToWriteToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
+	if ( result )
+	{
+		// Save the context
+		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
+		
+		if ( result )
+		{
+			// Write out Quick Look thumbnail if available
+			WebView *thumbnailWebView = [self quickLookThumbnailWebView];
+			if (thumbnailWebView && ![thumbnailWebView isLoading])
+			{
+				// Write out the thumbnail
+				[thumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+				NSImage *snapshot = [[[[thumbnailWebView mainFrame] frameView] documentView] snapshot];
+				
+				NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
+														  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+														 alignment:NSImageAlignTop];
+				
+				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
+				[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
+				
+				
+				[self quickLookThumbnailWebViewIsFinishedWith];
+			}
+		}
+	}
 	
-	
-	
+	return result;
+}
+
+- (BOOL)prepareToWriteToURL:(NSURL *)inURL 
+					 ofType:(NSString *)inType 
+		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
+					  error:(NSError **)outError
+{
+	BOOL result = NO;
+	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	
 	// if we haven't been saved before, create document wrapper paths on disk before we do anything else
 	if ( NSSaveAsOperation == inSaveOperation )
@@ -142,35 +187,59 @@
 		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
 	}
 	
-	
-	// Save the context
-	result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
-	
-	
-	// Write out Quick Look thumbnail if available
-	WebView *thumbnailWebView = [self quickLookThumbnailWebView];
-	if (thumbnailWebView && ![thumbnailWebView isLoading])
+	// we really want to write to a URL inside the wrapper, so compute the real URL
+	NSURL *newSaveURL = [KTDocument datastoreURLForDocumentURL:inURL];
+
+	// set metadata
+	result = [self setMetadataForStoreAtURL:newSaveURL error:outError];
+	if ( result )
 	{
-		// Write out the thumbnail
-		[thumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-		NSImage *snapshot = [[[[thumbnailWebView mainFrame] frameView] documentView] snapshot];
-		
-		NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
-												  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
-												 alignment:NSImageAlignTop];
-		
-		NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:[self fileURL]]];
-		[[snapshot512 PNGRepresentation] writeToURL:thumbnailURL atomically:NO];
+		// Record display properties
+		[managedObjectContext processPendingChanges];
+		[[managedObjectContext undoManager] disableUndoRegistration];
+		[self copyDocumentDisplayPropertiesToModel];
+		[managedObjectContext processPendingChanges];
+		[[managedObjectContext undoManager] enableUndoRegistration];
 		
 		
-		[self quickLookThumbnailWebViewIsFinishedWith];
+		if ([self isClosing])
+		{
+			// grab any last edits
+			[[[self windowController] webViewController] commitEditing];
+			[managedObjectContext processPendingChanges];
+			
+			// remembering and collecting should not be undoable
+			[[managedObjectContext undoManager] disableUndoRegistration];
+			
+			// collect garbage
+			if ([self updateMediaStorageAtNextSave])
+			{
+				[[self mediaManager] resetMediaFileStorage];
+			}
+			[[self mediaManager] garbageCollect];
+			
+			// force context to record all changes before saving
+			[managedObjectContext processPendingChanges];
+			[[managedObjectContext undoManager] enableUndoRegistration];
+		}
+		
+		// Store QuickLook preview
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+		NSString *previewHTML = [parser parseTemplate];
+		[parser release];
+		
+		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 	}
-	
 	
 	return result;
 }
 
-- (BOOL)writeMOCToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)inSaveOperation error:(NSError **)outError
+- (BOOL)writeMOCToURL:(NSURL *)inURL 
+			   ofType:(NSString *)inType 
+	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
+				error:(NSError **)outError
 {
 	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
 	
@@ -183,6 +252,7 @@
 	{
 		NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 		NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
+		
 		if ( (NSSaveOperation == inSaveOperation) && ![storeCoordinator persistentStoreForURL:newSaveURL] ) 
 		{
 			// NSDocument does atomic saves so the first time the user saves it's in a temporary
@@ -192,7 +262,6 @@
 			// despite having two different URLs
 			(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
 													error:outError];
-			
 		}
 		
 		if ( [[storeCoordinator persistentStores] count] < 1 ) 
@@ -209,61 +278,22 @@
 			if ( !newStore || !didConfigure )
 			{
 				NSLog(@"error: unable to create document: %@", [*outError description]);
+				return NO; // bail out and display outError
+			}
+		} 
+		else if (NSSaveAsOperation == inSaveOperation)
+		{
+			result = [self migrateToURL:inURL ofType:inType error:outError];
+			if (!result)
+			{
+				return NO; // bail out and display outError
 			}
 			else
 			{
-				(void)[self setMetadataForStoreAtURL:newSaveURL];
-			}
-		} 
-		else if (inSaveOperation == NSSaveAsOperation)
-		{
-			result = [self migrateToURL:inURL ofType:inType error:outError];
-			if (!result) {
-				return result;
+				result = [self setMetadataForStoreAtURL:inURL
+												  error:outError];
 			}
 		}
-		
-		
-		// Record display properties
-		[managedObjectContext processPendingChanges];
-		[[managedObjectContext undoManager] disableUndoRegistration];
-		[self copyDocumentDisplayPropertiesToModel];
-		[managedObjectContext processPendingChanges];
-		[[managedObjectContext undoManager] enableUndoRegistration];
-			
-		
-		if ([self isClosing])
-		{
-			// grab any last edits
-			[[[self windowController] webViewController] commitEditing];
-			[managedObjectContext processPendingChanges];
-			
-			// remembering and collecting should not be undoable
-			[[managedObjectContext undoManager] disableUndoRegistration];
-
-								
-			// collect garbage
-			if ([self upateMediaStorageAtNextSave])
-			{
-				[[self mediaManager] resetMediaFileStorage];
-			}
-			[[self mediaManager] garbageCollect];
-			
-			// force context to record all changes before saving
-			[managedObjectContext processPendingChanges];
-			[[managedObjectContext undoManager] enableUndoRegistration];
-		}
-		
-		
-		// Store QuickLook preview
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-		NSString *previewHTML = [parser parseTemplate];
-		[parser release];
-		
-		NSString *previewPath =
-			[[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 		
 		
 		// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
@@ -285,14 +315,16 @@
 		NSLog(@"writeToURL: %@", [e description]);
 	}
 	
-	
 	return result;
 }
 
 /*	We override the behavior to save directly ('unsafely' I suppose!) to the URL,
  *	rather than via a temporary file as is the default.
  */
-- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError **)outError
+- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL 
+				  ofType:(NSString *)typeName 
+		forSaveOperation:(NSSaveOperationType)saveOperation 
+				   error:(NSError **)outError
 {
 	BOOL result;
 	
@@ -307,7 +339,10 @@
 	}
 	else
 	{
-		result = [super writeSafelyToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+		result = [super writeSafelyToURL:absoluteURL 
+								  ofType:typeName 
+						forSaveOperation:saveOperation 
+								   error:outError];
 	}
 	
 	return result;
@@ -352,8 +387,11 @@
 		return NO;
 	}
 	
-	[self setMetadataForStoreAtURL:storeURL];
-	
+	// Set the new metadata
+	if ( ![self setMetadataForStoreAtURL:storeURL error:outError] )
+	{
+		return NO;
+	}	
 	
 	// Migrate the media store
 	storeURL = [KTDocument mediaStoreURLForDocumentURL:URL];
