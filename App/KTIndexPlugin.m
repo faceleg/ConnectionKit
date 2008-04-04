@@ -49,7 +49,7 @@
 	// First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
 	
-    NSDictionary *plugins = [KTIndexPlugin pluginDict];
+    NSDictionary *plugins = [KSPlugin pluginsWithFileExtension:kKTIndexExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
     KTAbstractHTMLPlugin *plugin;
     

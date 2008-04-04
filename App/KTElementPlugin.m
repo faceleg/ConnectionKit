@@ -117,7 +117,7 @@
  */
 + (NSSet *)pagePlugins
 {
-	NSDictionary *pluginDict = [KTElementPlugin pluginDict];
+	NSDictionary *pluginDict = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
@@ -140,7 +140,7 @@
  */
 + (NSSet *)pageletPlugins
 {
-	NSDictionary *pluginDict = [KTElementPlugin pluginDict];
+	NSDictionary *pluginDict = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];

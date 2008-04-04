@@ -302,7 +302,7 @@
 		[root setValue:master forKey:@"master"];
 		
 		// Set the design
-		KTDesign *design = [[KTDesign pluginSortedArray] firstObject];
+		KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObject];
 		[master setDesign:design];		
 
 		// set up root properties that used to come from document defaults

@@ -1915,20 +1915,20 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
-	[self showDebugTableForObject:[KTDesign pluginDict]
+	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDesignExtension]
                            titled:@"Designs"];
 }
 
 
 - (IBAction)showAvailableComponents:(id)sender
 {
-	[self showDebugTableForObject:[KTElementPlugin pluginDict]
+	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTElementExtension]
                            titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KTIndexPlugin pluginDict]
+	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTIndexExtension]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KTDataSource pluginDict]
+	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDataSourceExtension]
                            titled:@"Available Components: Data Source Bundles"];
-	[self showDebugTableForObject:[KTDesign pluginDict]
+	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDesignExtension]
                            titled:@"Available Components: Design Bundles"];
 }
 

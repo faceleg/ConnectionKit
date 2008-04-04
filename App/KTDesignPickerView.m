@@ -189,12 +189,12 @@ static NSDictionary *sContributorLinkAttributes = nil;
 
 - (NSArray *)designsToShow
 {
-	return [KTDesign pluginSortedArray];	// all visible designs
+	return [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];	// all visible designs
 }
 
 - (int) totalDesignCount
 {
-	return [[KTDesign pluginSortedArray] count];	// all visible designs
+	return [[self designsToShow] count];	// all visible designs
 }
 
 #pragma mark -

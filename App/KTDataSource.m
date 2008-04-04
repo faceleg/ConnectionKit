@@ -37,9 +37,9 @@
 /*!	After the drag, clean up.... send message to all data source objects to let them clean up.  Called
 	after the last populateDictionary:... invocation.
 */
-+ (void) doneProcessingDrag
++ (void)doneProcessingDrag
 {
-    NSDictionary *dataSources = [KTDataSource pluginDict];
+    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
     NSEnumerator  *e = [dataSources objectEnumerator];
     KTDataSource *dataSource;
 	
@@ -62,7 +62,7 @@
 + (int) numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
 {
 	int result = 1;
-    NSDictionary *dataSources = [KTDataSource pluginDict];
+    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
     NSEnumerator  *e = [dataSources objectEnumerator];
     KTDataSource *dataSource;
 		
@@ -83,7 +83,7 @@
     NSArray *pboardTypes = [pboard types];
     NSSet *setOfTypes = [NSSet setWithArray:pboardTypes];
 	
-    NSDictionary *dataSources = [KTDataSource pluginDict];
+    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
     NSEnumerator  *e = [dataSources objectEnumerator];
     KTDataSource *dataSource;
 	
@@ -173,7 +173,7 @@
 {
     NSMutableSet *typesSet = [NSMutableSet setWithCapacity:10];
 	
-    NSEnumerator *e = [[self pluginDict] objectEnumerator];
+    NSEnumerator *e = [[KSPlugin pluginsWithFileExtension:kKTDataSourceExtension] objectEnumerator];
     id dataSource;
 	
     while (dataSource = [e nextObject] )
