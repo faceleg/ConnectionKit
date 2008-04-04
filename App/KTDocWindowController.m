@@ -128,6 +128,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)dealloc
 {
 	[self setWebViewController:nil];
+	[self setSiteOutlineController:nil];
 	
 	  // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -189,7 +190,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 		// Now let the webview and the site outline initialize themselves.
 		[self webViewDidLoad];
-		[oSiteOutlineController siteOutlineDidLoad];		
+		[[self siteOutlineController] siteOutlineDidLoad];		
 		[self linkPanelDidLoad];
 		
 		// Early on, window-related stuff

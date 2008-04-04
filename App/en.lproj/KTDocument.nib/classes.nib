@@ -29,6 +29,21 @@
 			<string>NSTableView</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KTLinkSourceView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+				<key>myDelegate</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>updateWebView</key>
@@ -49,21 +64,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTLinkSourceView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-				<key>myDelegate</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -249,6 +249,8 @@
 				<string>WebView</string>
 				<key>oWebViewController</key>
 				<string>KTDocWebViewController</string>
+				<key>siteOutlineController</key>
+				<string>KTDocSiteOutlineController</string>
 				<key>webViewController</key>
 				<string>KTDocWebViewController</string>
 			</dict>
@@ -333,19 +335,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>WebView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>KTCollectionIndexFilenameButton</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>KSPopUpButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>WebView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

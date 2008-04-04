@@ -14,10 +14,11 @@
 
 @interface KTDocSiteOutlineController : NSObjectController
 {
-	IBOutlet KTDocWindowController	*oWindowController;
 	IBOutlet NSOutlineView			*siteOutline;
 	
-	@private
+@private
+	
+	KTDocWindowController	*myWindowController;
 	
 	NSMutableSet			*myPages;
 	NSManagedObjectContext	*myMOC;
@@ -37,8 +38,9 @@
 - (NSOutlineView *)siteOutline;
 - (void)siteOutlineDidLoad;
 
+- (KTDocWindowController *)windowController;
+- (void)setWindowController:(KTDocWindowController *)controller;
 - (KTDocument *)document;
-- (KTDocWindowController *)docWindowController;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;

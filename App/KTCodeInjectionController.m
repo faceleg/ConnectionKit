@@ -65,7 +65,7 @@
 	
 	
 	// Bind our text fields to the right controller.
-	KTDocSiteOutlineController *pagesController = [[mySiteOutlineController docWindowController] siteOutlineController];
+	KTDocSiteOutlineController *pagesController = [[mySiteOutlineController windowController] siteOutlineController];
 	
 	NSString *baseKeyPath = @"selection";
 	if (myIsMaster)

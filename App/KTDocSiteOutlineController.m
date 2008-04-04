@@ -153,7 +153,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)siteOutlineDidLoad
 {	
 	// set up the Source outline
-	[[self siteOutline] setTarget:oWindowController];
+	[[self siteOutline] setTarget:myWindowController];
 	[[self siteOutline] setDoubleAction:@selector(showInfo:)];
 	
 	// set up cell to show graphics
@@ -202,9 +202,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 #pragma mark Accessors
 
-- (KTDocument *)document { return [[self docWindowController] document]; }
+- (KTDocWindowController *)windowController { return myWindowController; }
 
-- (KTDocWindowController *)docWindowController { return oWindowController; }
+- (void)setWindowController:(KTDocWindowController *)controller { myWindowController = controller; }
+
+- (KTDocument *)document { return [[self windowController] document]; }
 
 - (NSOutlineView *)siteOutline { return siteOutline; }
 
@@ -468,7 +470,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		// add 1 at top level for "My Site"
 		KTPage *root = [[self document] root];
-		result = 1 + [[root valueForKeyPath:@"children.@count"] intValue];
+		if (root)
+		{
+			result = 1 + [[root valueForKeyPath:@"children.@count"] intValue];
+		}
 	}
 	else if ( [(NSObject *)item isKindOfClass:[KTPage class]] && [(KTPage *)item isCollection] )
 	{

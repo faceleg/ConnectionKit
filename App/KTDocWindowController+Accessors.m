@@ -312,7 +312,18 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 	[[self webViewController] setWindowController:self];
 }
 
-- (KTDocSiteOutlineController *)siteOutlineController { return oSiteOutlineController; }
+- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
+
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
+{
+	[[self siteOutlineController] setWindowController:nil];
+	
+	[controller retain];
+	[mySiteOutlineController release];
+	mySiteOutlineController = controller;
+	
+	[[self siteOutlineController] setWindowController:self];
+}
 
 @end
 

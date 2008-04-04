@@ -716,7 +716,7 @@
 				
 				if ( displayProgressIndicator )
 				{
-					[[self docWindowController] beginSheetWithStatus:localizedStatus
+					[[self windowController] beginSheetWithStatus:localizedStatus
 									  minValue:1 
 									  maxValue:[archivedPages count] 
 										 image:nil];
@@ -727,7 +727,7 @@
 				if ( didDisplayProgressIndicator )
 				{
 					i = 1;
-					[[self docWindowController] setSheetMinValue:1 maxValue:[archivedPages count]];
+					[[self windowController] setSheetMinValue:1 maxValue:[archivedPages count]];
 				}				
 				NSEnumerator *e = [archivedPages objectEnumerator];
 				NSDictionary *rep;
@@ -736,7 +736,7 @@
 					if ( didDisplayProgressIndicator )
 					{
 						localizedStatus = NSLocalizedString(@"Copying pages...", "");
-						[[self docWindowController] updateSheetWithStatus:localizedStatus progressValue:i];
+						[[self windowController] updateSheetWithStatus:localizedStatus progressValue:i];
 						i++;
 					}
 					
@@ -753,7 +753,7 @@
 				
 				if (didDisplayProgressIndicator)
 				{
-					[[self docWindowController] endSheet];
+					[[self windowController] endSheet];
 				}
 				
 				return YES;				
@@ -779,7 +779,7 @@
 		dropIndex = anIndex-1;
 	}
 	//LOG((@"accepting drop from external source on %@ at index %i", [dropItem fileName], dropIndex));
-	BOOL result = [[self docWindowController] addPagesViaDragToCollection:dropItem atIndex:dropIndex draggingInfo:info];
+	BOOL result = [[self windowController] addPagesViaDragToCollection:dropItem atIndex:dropIndex draggingInfo:info];
 	return result;
 }
 

@@ -130,6 +130,13 @@
 
 - (NSSet *)itemsForRows:(NSIndexSet *)rowIndexes
 {
+	// We can bail early in certain curcumstances
+	if (!rowIndexes || [rowIndexes count] <= 0)
+	{
+		return nil;
+	}
+	
+	
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[rowIndexes count]];
 	
 	unsigned index = [rowIndexes firstIndex];

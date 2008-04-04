@@ -78,8 +78,8 @@
 - (void)_setSelectedPages:(NSSet *)selectedPages;
 {
 	[self willChangeValueForKey:@"selectedPage"];
-	[[self docWindowController] willChangeValueForKey:@"selectedPagesIncludesACollection"];
-	[[self docWindowController] willChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
+	[[self windowController] willChangeValueForKey:@"selectedPagesIncludesACollection"];
+	[[self windowController] willChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
 	
 	selectedPages = [selectedPages copy];
 	[mySelectedPages release];
@@ -90,18 +90,18 @@
 	[myTempSelectionController setSelectedObjects:[selectedPages allObjects]];
 	
 	[self didChangeValueForKey:@"selectedPage"];
-	[[self docWindowController] didChangeValueForKey:@"selectedPagesIncludesACollection"];
-	[[self docWindowController] didChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
+	[[self windowController] didChangeValueForKey:@"selectedPagesIncludesACollection"];
+	[[self windowController] didChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
 	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
 														object:[selectedPages anyObject]];
 	
 	// update window title
-	[[self docWindowController] synchronizeWindowTitleWithDocumentName];
+	[[self windowController] synchronizeWindowTitleWithDocumentName];
 	
 	// Refresh webview
-	[[[self docWindowController] webViewController] setWebViewNeedsRefresh:YES];
+	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];
 }
 
 /*	Select the pages in the UI, and thereby the appropriate storage methods will get called here

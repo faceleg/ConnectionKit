@@ -39,7 +39,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet WebView					*oWebView;
 	IBOutlet KTDocWebViewController		*webViewController;
 	IBOutlet NSOutlineView				*oSiteOutline;
-	IBOutlet KTDocSiteOutlineController	*oSiteOutlineController;
+	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
 	// Status bar below the webview
@@ -79,7 +79,10 @@ extern NSString *gInfoWindowAutoSaveName;
 	@public
 	BOOL							myHasSavedVisibleRect;
 	NSRect							myDocumentVisibleRect;
-		
+	
+	// Site Outline
+	KTDocSiteOutlineController	*mySiteOutlineController;
+	
 	// Editing
 	BOOL							myRichText;
 	BOOL							mySingleLine;
@@ -318,6 +321,7 @@ extern NSString *KTSelectedDOMRangeKey;
 - (void)setWebViewController:(KTDocWebViewController *)controller;
 
 - (KTDocSiteOutlineController *)siteOutlineController;
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
 
 @end
 
