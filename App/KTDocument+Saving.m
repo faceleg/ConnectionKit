@@ -217,14 +217,17 @@
 	{
 		if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
 		{
-			return NO;
+			return NO; // couldn't setMetadata, but we should have, bail...
 		}
 	}
 	else
 	{
-		LOG((@"wants to setMetadata but no persistent store at %@", persistentStoreURL));
+		if ( inSaveOperation != NSSaveAsOperation )
+		{
+			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
+			return NO; // this case should not happen, stop
+		}
 	}
-	
 
 	// Record display properties
 	[managedObjectContext processPendingChanges];
