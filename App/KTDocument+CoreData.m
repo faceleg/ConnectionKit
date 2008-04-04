@@ -596,8 +596,14 @@
 				[metadata setObject:author forKey:(NSString *)kMDItemAuthors];
 			}
 			
-			//  kKTMetadataAppVersionKey (internal build number)
-			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppVersionKey];
+			// kKTMetadataAppCreatedVersionKey should only be set once
+			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
+			{
+				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
+			}
+			
+			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
+			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
 							
 			//  kMDItemCreator (Sandvox is the creator of this site document)
 			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];

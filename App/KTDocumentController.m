@@ -144,7 +144,7 @@
 		}
 
 		
-		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppVersionKey];
+//		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppLastSavedVersionKey];
 		if ( ![modelVersion isEqualToString:kKTModelVersion] )
 		{
 			NSLog(@"error: only documents with model %@ are supported in 1.5 until KTDataMigrator is re-examined.", kKTModelVersion);

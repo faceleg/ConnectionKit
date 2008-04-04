@@ -37,13 +37,6 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-// Spotlight metadata keys
-extern NSString *kKTMetadataAppVersionKey;
-extern NSString *kKTMetadataModelVersionKey;
-extern NSString *kKTMetadataPageCountKey;
-extern NSString *kKTMetadataSiteAuthorKey;
-extern NSString *kKTMetadataSiteTitleKey;
-
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController, KTPluginDelegatesManager;
 @class KTAbstractElement, KTMediaContainer, KTPage;

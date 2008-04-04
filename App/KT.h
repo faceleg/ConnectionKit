@@ -95,6 +95,13 @@ extern NSString *kKTDocumentType;
 extern NSString *kKTDocumentExtension;
 extern NSString *kKTDocumentUTI;
 
+extern NSString *kKTMetadataAppCreatedVersionKey;
+extern NSString *kKTMetadataAppLastSavedVersionKey;
+extern NSString *kKTMetadataModelVersionKey;
+extern NSString *kKTMetadataPageCountKey;
+extern NSString *kKTMetadataSiteAuthorKey;
+extern NSString *kKTMetadataSiteTitleKey;
+
 extern NSString *kKTSampleSitesDirectory;
 extern NSString *kKTAutoOpenSampleSiteName;
 
