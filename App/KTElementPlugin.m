@@ -226,7 +226,7 @@
 			pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
 		}
 		else if (anAction == @selector(addPagelet:)) {
-			pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
+			pluginName = [plugin pluginPropertyForKey:@"KTPageletName"];
 		}
 		
 		
