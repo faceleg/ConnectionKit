@@ -93,11 +93,6 @@ extern NSString *kKTMetadataSiteTitleKey;
 	NSMutableDictionary	*myBottomSidebarsCache;
 	
 	
-	// Quick Look thumbnail saving. We have to hang onto these till the webview is laoded.
-	WebView			*myQuickLookThumbnailWebView;
-	NSInvocation	*myDocumentDidSaveCallback;
-	
-	
 	// UI
 	BOOL	myShowDesigns;				// is designs panel showing?
 	BOOL	myDisplaySiteOutline;

@@ -119,9 +119,6 @@
 - (void)setSnapshotPath:(NSString *)aPath;
 - (NSDate *)lastSnapshotDate;
 
-// Saving
-- (void)quickLookThumbnailWebViewIsFinishedWith;
-
 @end
 
 
@@ -495,7 +492,6 @@
 
 	[myMediaManager release];
 	[myPluginDelegatesManager release];
-	[self quickLookThumbnailWebViewIsFinishedWith];
 	
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];
