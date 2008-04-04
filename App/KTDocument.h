@@ -145,6 +145,7 @@ typedef enum {
 - (void)editKTHTMLElement:(KTAbstractElement *)anElement;
 
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
+- (BOOL)mayAddScreenshotsToAttachments;
 
 @end
 

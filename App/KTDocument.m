@@ -1683,6 +1683,12 @@
 #pragma mark -
 #pragma mark screenshot for feedback
 
+- (BOOL)mayAddScreenshotsToAttachments;
+{
+	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
+	return (window && [window isVisible]);
+}
+
 //  screenshot1 = document window
 //  screenshot2 = document sheet, if any
 //  screenshot3 = inspector window, if visible
