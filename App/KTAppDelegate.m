@@ -281,7 +281,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #endif
 		
 		[NSNumber numberWithBool:NO],			@"KTLogAllContextChanges",
-		
+
+#ifdef EXPIRY_TIMESTAMP
+		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
+#else
+		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
+#endif
 		[NSNumber numberWithBool:YES],			@"KTLogToConsole",
 		
 		[NSNumber numberWithBool:NO],			@"urls in background",
