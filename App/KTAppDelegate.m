@@ -165,13 +165,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	NSMutableString *result = [NSMutableString string];
 	//  additionalPlugins
-	NSString *plugins = [KTAbstractHTMLPlugin pluginReportShowingAll:NO];
+	NSArray *extensions = [NSArray arrayWithObjects:kKTElementExtension, kKTIndexExtension, nil];
+	NSString *plugins = [KSPlugin generateReportOfPluginsWithFileExtensions:extensions thirdPartyPluginsOnly:YES];
 	if (![plugins isEqualToString:@""])
 	{
 		[result appendFormat:@"\nAdditional Plugins:\n%@\n", plugins];
 	}
 
-	NSString *designs = [KTDesign pluginReportShowingAll:NO];
+	NSString *designs = [KSPlugin generateReportOfPluginsWithFileExtension:kKTDesignExtension thirdPartyPluginsOnly:YES];
 	if (![designs isEqualToString:@""])
 	{
 		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
