@@ -217,7 +217,8 @@
 {
 	// Pick up the image from the workspace manager
 	NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile:[self currentPath]];
-	KTScaledImageProperties *result = [self scaleImage:image withProperties:properties];
+	KTInDocumentMediaFile *mediaFile = [[self mediaManager] mediaFileWithImage:image];
+	KTScaledImageProperties *result = [KTScaledImageProperties connectSourceFile:self toFile:mediaFile withProperties:properties];
 	
 	return result;
 }
