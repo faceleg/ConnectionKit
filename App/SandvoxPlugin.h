@@ -82,7 +82,6 @@
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSCalendarDate+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSDate+Karelia.h"
@@ -155,8 +154,6 @@
 #import "KTWebViewComponent.h"
 
 #import "KTPasteboardArchiving.h"
-
-#import "KTInDocumentMediaFile.h"
 
 #import "DNDArrayController.h"
 #import <NTBoxView.h>
