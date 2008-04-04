@@ -36,7 +36,7 @@
 - (KTMediaContainer *)insertMediaContainer;
 
 // New media files
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path keepExternal:(BOOL)isExternal;
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path keepExternal:(BOOL)isExternal;
 
 - (KTInDocumentMediaFile *)temporaryMediaFileWithPath:(NSString *)path;
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
@@ -133,7 +133,7 @@
 	KTMediaContainer *result = [self insertMediaContainer];
 	[result setSourceAlias:[BDAlias aliasWithPath:path]];
 	
-	KTAbstractMediaFile *mediaFile = [self mediaFileWithPath:path];
+	KTMediaFile *mediaFile = [self mediaFileWithPath:path];
 	[result setValue:mediaFile forKey:@"file"];
 	
 	return result;
@@ -165,7 +165,7 @@
 	// Create media container & file
 	KTMediaContainer *result = [self insertMediaContainer];
 	
-	KTAbstractMediaFile *mediaFile = [self mediaFileWithData:data preferredFilename:preferredFilename];
+	KTMediaFile *mediaFile = [self mediaFileWithData:data preferredFilename:preferredFilename];
 	[result setValue:mediaFile forKey:@"file"];
 	
 	return result;
@@ -175,7 +175,7 @@
 {
 	KTMediaContainer *result = [self insertMediaContainer];
 	
-	KTAbstractMediaFile *mediaFile = [self mediaFileWithImage:image];
+	KTMediaFile *mediaFile = [self mediaFileWithImage:image];
 	[result setValue:mediaFile forKey:@"file"];
 	
 	return result;
@@ -185,7 +185,7 @@
 {
 	KTMediaContainer *result = [self insertMediaContainer];
 	
-	KTAbstractMediaFile *mediaFile = [self mediaFileWithDraggingInfo:info preferExternalFile:external];
+	KTMediaFile *mediaFile = [self mediaFileWithDraggingInfo:info preferExternalFile:external];
 	[result setValue:mediaFile forKey:@"file"];
 	
 	// If the drag was a file, store the source alias
@@ -323,26 +323,26 @@
 /*	Used to add new media files to the DB.
  *	The media manager will automatically decide whether to add the file as external or temporary media.
  */
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path
 {
-	KTAbstractMediaFile *result = [self mediaFileWithPath:path keepExternal:[self mediaFileShouldBeExternal:path]];
+	KTMediaFile *result = [self mediaFileWithPath:path keepExternal:[self mediaFileShouldBeExternal:path]];
 	return result;
 }
 
 /*	Basically the same as the above method, but allows the expression of a preference as to where the underlying file is stored
  */
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal
 {
 	// For the time being we shall always obey the preference
-	KTAbstractMediaFile *result = [self mediaFileWithPath:path keepExternal:preferExternal];
+	KTMediaFile *result = [self mediaFileWithPath:path keepExternal:preferExternal];
 	return result;
 }
 
 /*	Does the work for the above two methods. The storage type is ALWAYS obeyed.
  */
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path keepExternal:(BOOL)isExternal
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path keepExternal:(BOOL)isExternal
 {
-	KTAbstractMediaFile *result = nil;
+	KTMediaFile *result = nil;
 	
 	if (isExternal)
 	{
@@ -417,9 +417,9 @@
 	return result;
 }
 
-- (KTAbstractMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal
+- (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal
 {
-	KTAbstractMediaFile *result = nil;
+	KTMediaFile *result = nil;
 	
 	if ([[[info draggingPasteboard] types] containsObject:NSFilenamesPboardType])
 	{
@@ -549,7 +549,7 @@
 												  string:string
 													size:[NSNumber numberWithFloat:size]];
 		
-		KTAbstractMediaFile *mediaFile = [self mediaFileWithImage:image];
+		KTMediaFile *mediaFile = [self mediaFileWithImage:image];
 		[result setValue:mediaFile forKey:@"file"];
 	}
 	

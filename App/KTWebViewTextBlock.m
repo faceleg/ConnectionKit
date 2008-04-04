@@ -23,7 +23,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
 #import "KTGraphicalTextMediaContainer.h"
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 
 #import "NSString+Karelia.h"
@@ -304,7 +304,7 @@
 	NSString *result = nil;
 	
 	KTMediaContainer *image = [self graphicalTextMedia];
-	KTAbstractMediaFile *mediaFile = [image file];
+	KTMediaFile *mediaFile = [image file];
 	if (mediaFile)
 	{			
 		result = [NSString stringWithFormat:@"text-indent:-1000px; background:url(%@); width:%ipx; height:%ipx;",

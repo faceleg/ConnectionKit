@@ -865,7 +865,7 @@
 			NSString *mediaIdentifier = [requestURLString lastPathComponent];
 			
 			KTMediaContainer *mediaContainer = [[[self document] mediaManager] mediaContainerWithIdentifier:mediaIdentifier];
-			KTAbstractMediaFile *mediaFile = [mediaContainer file];
+			KTMediaFile *mediaFile = [mediaContainer file];
 			NSString *path = [mediaFile currentPath];
 			if (path)
 			{

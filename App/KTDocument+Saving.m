@@ -366,7 +366,7 @@
 	NSMutableSet *pathsToMove = [[NSMutableSet alloc] initWithCapacity:[mediaFiles count]];
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
-	KTAbstractMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		NSString *path = [aMediaFile currentPath];

@@ -25,7 +25,7 @@
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTWebViewTextBlock;
 @class KTAbstractPage;
-@class KTAbstractMediaFile;
+@class KTMediaFile;
 
 @interface KTHTMLParser : NSObject
 {
@@ -110,6 +110,6 @@
 @interface NSObject (KTHTMLParserDelegate)
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath;
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTAbstractMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock;
 @end

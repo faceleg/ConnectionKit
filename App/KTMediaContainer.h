@@ -19,7 +19,7 @@ typedef enum {
 } KTMediaScalingOperation;
 
 
-@class KTMediaManager, KTAbstractMediaFile, KTImageScalingSettings, BDAlias;
+@class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias;
 
 
 @interface KTMediaContainer : NSManagedObject <KTExtensiblePluginPropertiesArchiving>
@@ -33,7 +33,7 @@ typedef enum {
 - (NSString *)identifier;
 - (NSURL *)URIRepresentation;
 
-- (KTAbstractMediaFile *)file;
+- (KTMediaFile *)file;
 
 - (BDAlias *)sourceAlias;
 - (void)setSourceAlias:(BDAlias *)alias;	// Only the media manager should do this

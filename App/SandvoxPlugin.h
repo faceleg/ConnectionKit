@@ -52,7 +52,7 @@
 #import "KTPagelet.h"
 
 //  media
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 
@@ -165,7 +165,7 @@
 #import <KTDesign.h>
 #import <KTMaster.h>
 #import <KTMediaContainer.h>
-#import <KTAbstractMediaFile.h>
+#import <KTMediaFile.h>
 #import <KSPathInfoField.h>
 #import <NSMutableSet+Karelia.h>
 #import <KTHTMLParser.h>

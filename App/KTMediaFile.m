@@ -1,12 +1,12 @@
 //
-//  KTAbstractMediaFile.m
+//  KTMediaFile.m
 //  Marvel
 //
 //  Created by Mike on 05/11/2007.
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTExternalMediaFile.h"
 
 #import "Debug.h"
@@ -19,7 +19,7 @@
 #import <QTKit/QTKit.h>
 
 
-@interface KTAbstractMediaFile ()
+@interface KTMediaFile ()
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 @end
@@ -28,7 +28,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractMediaFile
+@implementation KTMediaFile
 
 + (void)initialize
 {
@@ -60,7 +60,7 @@
  */
 - (NSString *)currentPath
 {
-	OBASSERT_NOT_REACHED("A KTAbstractMediaFile subclass is not overriding -currentPath as it should");
+	OBASSERT_NOT_REACHED("A KTMediaFile subclass is not overriding -currentPath as it should");
 	
 	return nil;
 }
@@ -266,7 +266,7 @@
 	
 	// Run through the list of scaled images. Bail if a good one is found
 	NSEnumerator *scaledImagesEnumerator = [scaledImages objectEnumerator];
-	KTAbstractMediaFile *bestMatch;
+	KTMediaFile *bestMatch;
 	while (bestMatch = [scaledImagesEnumerator nextObject])
 	{
 		if ([bestMatch floatForKey:@"scaleFactor"] >= scaleFactor) {

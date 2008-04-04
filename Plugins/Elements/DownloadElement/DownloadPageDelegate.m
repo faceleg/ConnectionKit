@@ -201,7 +201,7 @@
 - (KTMediaFileUpload *)mediaFileUpload
 {
 	KTMediaFileUpload *result;
-	KTAbstractMediaFile *media = [[[self delegateOwner] valueForKey:@"downloadMedia"] file];
+	KTMediaFile *media = [[[self delegateOwner] valueForKey:@"downloadMedia"] file];
 	
 	if ([[self delegateOwner] boolForKey:@"uploadMediaInPlaceOfPage"])
 	{

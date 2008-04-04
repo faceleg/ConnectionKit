@@ -12,7 +12,7 @@
 #import "BDAlias.h"
 
 #import "KTExternalMediaFile.h"
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTDocument.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -83,7 +83,7 @@
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
 	LOG((@"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]));
 	NSEnumerator *mediaFilesEnumerator = [mediaFilesForDeletion objectEnumerator];
-	KTAbstractMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		[[self managedObjectContext] deleteObject:aMediaFile];

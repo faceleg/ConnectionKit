@@ -13,7 +13,7 @@
 
 @implementation KTScaledImageProperties
 
-+ (id)connectSourceFile:(KTAbstractMediaFile *)sourceFile
++ (id)connectSourceFile:(KTMediaFile *)sourceFile
 				 toFile:(KTInDocumentMediaFile *)destinationFile
 		 withProperties:(NSDictionary *)properties;
 {

@@ -1,5 +1,5 @@
 //
-//  KTAbstractMediaFile.h
+//  KTMediaFile.h
 //  Marvel
 //
 //  Created by Mike on 05/11/2007.
@@ -12,7 +12,7 @@
 @class KTMediaManager, KTPage, KTMediaFileUpload;
 
 
-@interface KTAbstractMediaFile : NSManagedObject
+@interface KTMediaFile : NSManagedObject
 {
 }
 

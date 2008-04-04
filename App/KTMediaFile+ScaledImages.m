@@ -1,12 +1,12 @@
 //
-//  KTAbstractMediaFile+ScaledImages.m
+//  KTMediaFile+ScaledImages.m
 //  Marvel
 //
 //  Created by Mike on 22/01/2008.
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractMediaFile+ScaledImages.h"
+#import "KTMediaFile+ScaledImages.h"
 #import "MediaFiles+Internal.h"
 
 #import "KTImageScalingSettings.h"
@@ -27,7 +27,7 @@
 @end
 
 
-@interface KTAbstractMediaFile (ScaledImagesPrivate)
+@interface KTMediaFile (ScaledImagesPrivate)
 
 // Generation
 - (KTScaledImageProperties *)generateImageUsingCoreImageWithProperties:(NSDictionary *)properties;
@@ -46,7 +46,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractMediaFile (ScaledImages)
+@implementation KTMediaFile (ScaledImages)
 
 /*	Settings, compression & UTI are all validated against the current environment.
  *	e.g. if you specify a nil UTI, the returned object will have a UTI for JPEG or PNG; whichever suits the image.
@@ -79,7 +79,7 @@
 		[unscaledImageProperties setObject:[KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil] forKey:@"scalingBehavior"];
 		
 		
-		KTAbstractMediaFile *unscaledImage;
+		KTMediaFile *unscaledImage;
 		if ([NSString UTI:sourceUTI conformsToUTI:(NSString *)kUTTypeAudiovisualContent])
 		{
 			unscaledImage = [[self generateImageUsingQTKitWithProperties:unscaledImageProperties] valueForKey:@"destinationFile"];

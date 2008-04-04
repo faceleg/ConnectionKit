@@ -8,7 +8,7 @@
 
 #import "KTMissingMediaController.h"
 
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTExternalMediaFile.h"
 #import "KTMediaManager+Internal.h"
 #import "NSArray+Karelia.h"
@@ -191,7 +191,7 @@
 		NSString *path = [NSString pathWithComponents:destPathComponents];
 			
 			// Create a new MediaFile and migrate MediaContainers to it
-		KTAbstractMediaFile *newMediaFile = [[self mediaManager] mediaFileWithPath:path];
+		KTMediaFile *newMediaFile = [[self mediaManager] mediaFileWithPath:path];
 		[[newMediaFile mutableSetValueForKey:@"containers"] unionSet:[aMediaFile valueForKey:@"containers"]];
 		
 		// Replace the item in our missing media list with the new one.

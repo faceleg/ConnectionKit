@@ -1,5 +1,5 @@
 //
-//  KTAbstractMediaFile+MediaManagerPrivate.m
+//  KTMediaFile+MediaManagerPrivate.m
 //  Marvel
 //
 //  Created by Mike on 07/11/2007.
@@ -20,7 +20,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractMediaFile (Internal)
+@implementation KTMediaFile (Internal)
 
 + (id)insertMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 {

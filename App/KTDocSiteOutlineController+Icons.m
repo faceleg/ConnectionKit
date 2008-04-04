@@ -14,7 +14,7 @@
 #import "KTPage.h"
 #import "NSObject+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "NSImage+Karelia.h"
 #import "KTDocument.h"
 #import "NSArray+Karelia.h"

@@ -404,7 +404,7 @@ static unsigned sLastParserID;
 	}
 }
 
-- (void)didEncounterMediaFile:(KTAbstractMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
+- (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
 {
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseMediaFile:upload:)])
@@ -1206,7 +1206,7 @@ static unsigned sLastParserID;
 	
 	
 	// What information is desired?
-	KTAbstractMediaFile *mediaFile = [media file];
+	KTMediaFile *mediaFile = [media file];
 	KTMediaFileUpload *upload = nil;
 	
 	NSString *infoRequested = [parameters objectForKey:@"info"];
@@ -1250,7 +1250,7 @@ static unsigned sLastParserID;
 	return result;
 }
 
-/*	Produces a link to the specified media file. Handles anything of the KTAbstractMediaFile class.
+/*	Produces a link to the specified media file. Handles anything of the KTMediaFile class.
  *	Does NOT inform the delegate that the keypath was parsed.
  *
  *	Usage:	[[mediafile keypath.to.file]]
@@ -1267,7 +1267,7 @@ static unsigned sLastParserID;
 	}
 	else
 	{
-		KTAbstractMediaFile *mediaFile = [[self cache] valueForKeyPath:[parameters objectAtIndex:0] informDelegate:YES];
+		KTMediaFile *mediaFile = [[self cache] valueForKeyPath:[parameters objectAtIndex:0] informDelegate:YES];
 		KTMediaFileUpload *upload = nil;
 		
 		// The link we provide depends on the HTML generation mode

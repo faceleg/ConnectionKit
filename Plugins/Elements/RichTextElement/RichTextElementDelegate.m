@@ -45,7 +45,7 @@
 #import <KTDesign.h>
 #import <KTMaster.h>
 #import <KTMediaContainer.h>
-#import <KTAbstractMediaFile.h>
+#import <KTMediaFile.h>
 #import <KSPathInfoField.h>
 
 #import <WebKit/WebKit.h>

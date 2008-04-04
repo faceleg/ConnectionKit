@@ -1,5 +1,5 @@
 //
-//  KTAbstractMediaFile+ScaledImages.h
+//  KTMediaFile+ScaledImages.h
 //  Marvel
 //
 //  Created by Mike on 22/01/2008.
@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 
 
 @class KTScaledImageProperties;
 
 
-@interface KTAbstractMediaFile (ScaledImages)
+@interface KTMediaFile (ScaledImages)
 
 - (KTScaledImageProperties *)scaledImageWithProperties:(NSDictionary *)properties;
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties;

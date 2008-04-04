@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 
 
 @class BDAlias;
 
 
-@interface KTInDocumentMediaFile : KTAbstractMediaFile
+@interface KTInDocumentMediaFile : KTMediaFile
 {
 	
 }

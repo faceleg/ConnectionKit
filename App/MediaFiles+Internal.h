@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTExternalMediaFile.h"
 #import "KTInDocumentMediaFile.h"
 
@@ -16,7 +16,7 @@
 @class KTImageScalingSettings;
 
 
-@interface KTAbstractMediaFile (Internal)
+@interface KTMediaFile (Internal)
 
 + (id)insertMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 

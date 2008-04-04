@@ -8,7 +8,7 @@
 
 #import "KTScaledImageContainer.h"
 
-#import "KTAbstractMediaFile+ScaledImages.h"
+#import "KTMediaFile+ScaledImages.h"
 #import "KTScaledImageProperties.h"
 
 
@@ -25,9 +25,9 @@
 /*	When a ScaledImageContainer is first created it has no MediaFile attached. When this method is called
  *	for the first time we create a MediaFile. After that, we regularly check to see if the MediaFile nees updating.
  */
-- (KTAbstractMediaFile *)file
+- (KTMediaFile *)file
 {
-	KTAbstractMediaFile *result = [super file];
+	KTMediaFile *result = [super file];
 	
 	if (!mediaFileIsGenerating)
 	{
@@ -37,7 +37,7 @@
 		if (result)
 		{
 			KTScaledImageProperties *oldPropertiesObject = [self valueForKey:@"generatedProperties"];
-			KTAbstractMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
+			KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
 			
 			NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
 			NSDictionary *oldProperties = [oldPropertiesObject dictionaryWithValuesForKeys:[newProperties allKeys]];

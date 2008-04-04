@@ -153,7 +153,7 @@
 		fileShouldBeExternal = YES;
 	}
 	
-	KTAbstractMediaFile *replacementMediaFile = [[windowController mediaManager] mediaFileWithDraggingInfo:info
+	KTMediaFile *replacementMediaFile = [[windowController mediaManager] mediaFileWithDraggingInfo:info
 																	preferExternalFile:fileShouldBeExternal];
 	
 	// Move the old media containers to the new media file

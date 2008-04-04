@@ -152,7 +152,7 @@
 	[self setWrappedValue:alias forKey:@"sourceAlias"];
 }
 
-- (KTAbstractMediaFile *)file { return [self wrappedValueForKey:@"file"]; }
+- (KTMediaFile *)file { return [self wrappedValueForKey:@"file"]; }
 
 #pragma mark -
 #pragma mark Scaled Images

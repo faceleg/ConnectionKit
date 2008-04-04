@@ -8,7 +8,7 @@
 
 #import "KTSimpleScaledImageContainer.h"
 
-#import "KTAbstractMediaFile+ScaledImages.h"
+#import "KTMediaFile+ScaledImages.h"
 #import "NSManagedObject+KTExtensions.h"
 
 
@@ -49,7 +49,7 @@
 - (void)generateMediaFile
 {
 	NSDictionary *properties = [self latestProperties];
-	KTAbstractMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
+	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
 	
 	KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:properties];
 	[self setValue:generatedProperties forKey:@"generatedProperties"];

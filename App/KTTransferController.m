@@ -75,7 +75,7 @@
 #import "KTUtilities.h"
 
 #import "KTMediaContainer.h"
-#import "KTAbstractMediaFile.h"
+#import "KTMediaFile.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -1131,7 +1131,7 @@ static NSArray *sReservedNames = nil;
 	// Master CSS. Inform of the banner image (if there is one) & graphical text.
 	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
 	
-	KTAbstractMediaFile *bannerImage = [[master bannerImage] file];
+	KTMediaFile *bannerImage = [[master bannerImage] file];
 	if (bannerImage)
 	{
 		[self addParsedMediaFileUpload:[bannerImage defaultUpload]];
@@ -1148,7 +1148,7 @@ static NSArray *sReservedNames = nil;
 		while (aGraphicalTextID = [textBlocksEnumerator nextObject])
 		{
 			KTWebViewTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
-			KTAbstractMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
+			KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
 			
 			NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
 			
@@ -1460,7 +1460,7 @@ static NSArray *sReservedNames = nil;
 	[myParsedResources addObject:resourcePath];
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTAbstractMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
 	// Add the upload to our list
 	if (upload)

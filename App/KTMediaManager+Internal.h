@@ -30,11 +30,11 @@
 
 
 // Media file creation
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path;
-- (KTAbstractMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path;
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
 - (KTInDocumentMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
 - (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image;
-- (KTAbstractMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
+- (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
 
 
 // Missing media
