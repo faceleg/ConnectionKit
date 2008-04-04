@@ -60,7 +60,7 @@
 	// We can only generate a scaled image directly from an image file.
 	// If not an image, create a full-size image and then scale from that
 	NSString *sourceUTI = [self fileType];
-	if ([[CIImage imageTypes] containsObject:sourceUTI])
+	if ([[CIImage imageTypes] containsObject:sourceUTI] && ![sourceUTI isEqualToString:(NSString *)kUTTypePDF])
 	{
 		// Build the canonical version of the settings
 		properties = [self canonicalImagePropertiesForProperties:properties];
