@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-    <meta name="keywords" content="crash, crashes, crashing, sandvox, exception, exceptions, report, reporter, error, errors, problem, problems, inconsistent, state, filter, filtered, console, log, logs, built, in, builtin, built-in" />
+    <meta name="keywords" content="crash, crashes, crashing, sandvox, exception, exceptions, report, reporter, error, errors, problem, problems, inconsistent, state, filter, filtered, console, log, logs, built, in, builtin, built-in, NSInvalidArgumentException" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>What to do if Sandvox encounters a problem</title>
@@ -29,8 +29,8 @@
 
         <div class="center">
             <div class="thumb tnone">
-                <div style="width:293px;">
-                    <img src="img/c/c2/Exception_reporter.jp2" alt="Sandvox's built-in exception reporter" width="291" height="339" />
+                <div class="thumbinner" style="width:293px;">
+                    <img alt="Sandvox's built-in exception reporter" class="thumbimage" src="img/c/c2/Exception_reporter.jp2" width="291" height="339" />
 
                     <div class="thumbcaption">
                         Sandvox's built-in exception reporter
@@ -39,12 +39,14 @@
             </div>
         </div>
 
-        <p>Please fill in what you were doing with Sandvox that caused the problem and click the "Report to Karelia" button. This will help us to track down bugs in the software as quickly as possible.</p>
+        <p>If you get this kind of message, please click the "Report to Karelia" button to help us make improvements to the application. This will send an excerpt of your console log along with information about where the error occurred in the flow of the program. Although optional, providing an email address will allow us to contact you should we need to follow up. No personal data will be transmitted other than what you provide to us (e.g. your email address and the contents of your console log relating to Sandvox).</p>
+
+        <p>When Sandvox has an error condition like this, the program <i>may</i> be in an inconsistent state; you may want to quit and restart the application.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
 
-            <h2>Related Articles</h2>
+            <h2><span class="mw-headline">Related Articles</span></h2>
 
             <ul>
                 <li><a href="What_to_do_if_Sandvox_crashes.html" title="What to do if Sandvox crashes">What to do if Sandvox crashes</a></li>
@@ -52,6 +54,10 @@
                 <li><a href="Support_and_Feedback.html" title="Support and Feedback">Support and Feedback</a></li>
             </ul>
         </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href='http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=What_to_do_if_Sandvox_encounters_a_problem.html'>Let us know.</a>
     </div>
 </body>
 </html>

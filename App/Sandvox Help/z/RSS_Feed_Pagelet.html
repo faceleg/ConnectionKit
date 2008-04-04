@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-    <meta name="keywords" content="rss, feed, feeds, pagelet, find, locate, atom" />
+    <meta name="keywords" content="rss, feed, feeds, pagelet, find, locate, atom, refresh, refreshes, refresher, refreshing, refreshed, rate, rates, xml, update, updates, updated, updating, cache, caches, cached, caching" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>RSS Feed Pagelet</title>
@@ -27,32 +27,38 @@
 
         <p>Many websites provide an <a href="RSS_Feed.html" title="RSS Feed">RSS feed</a> allowing people to subscribe to it. An RSS Feed pagelet takes such a <a href="RSS_Feed.html" title="RSS Feed">feed</a> and displays the headlines inside a <a href="Pagelet.html" title="Pagelet">pagelet</a> on your site. Visitors can click on an item in the <a href="Pagelet.html" title="Pagelet">pagelet</a> to read the full article.</p>
 
-        <p><img src="img/3/35/RSSFeedPagelet.jp2" alt="RSSFeedPagelet" width="237" height="319" /></p><a name="Editing" id="Editing"></a>
+        <p><img alt="RSSFeedPagelet" src="img/3/35/RSSFeedPagelet.jp2" width="237" height="319" /></p><a name="Editing" id="Editing"></a>
 
-        <h2>Editing</h2>
+        <h2><span class="mw-headline">Editing</span></h2>
 
         <div class="floatright">
-            <span><img src="img/4/4f/RSSFeedPageletInspector.jp2" alt="" width="174" height="219" /></span>
+            <span><img alt="" src="img/4/4f/RSSFeedPageletInspector.jp2" width="174" height="219" /></span>
         </div>
 
         <p>To edit an RSS feed pagelet, you use the <a href="The_Inspector.html" title="Selection Inspector">Selection Inspector</a>. In addition to those listed below, there are some <a href="General_Pagelet_Attributes.html" title="General Pagelet Attributes">general pagelet attributes</a> that can be set.</p>
 
-        <p>Also, don't forget that you can insert additional text into the <a href="Pagelet.html" title="Pagelet">pagelet</a> by clicking the <a href="Editing_Marker.html" title="Editing Marker">Editing Marker</a> (<img src="img/8/8d/TinyAdd.png" alt="TinyAdd" width="13" height="14" />).</p><a name="Feed_URL" id="Feed_URL"></a>
+        <p>Also, don't forget that you can insert additional text into the <a href="Pagelet.html" title="Pagelet">pagelet</a> by clicking the <a href="Editing_Marker.html" title="Editing Marker">Editing Marker</a> (<img alt="TinyAdd" src="img/8/8d/TinyAdd.png" width="13" height="14" />).</p><a name="Feed_URL" id="Feed_URL"></a>
 
-        <h4>Feed URL</h4>
+        <h4><span class="mw-headline">Feed URL</span></h4>
 
         <p>The full URL of the <a href="RSS_Feed.html" title="RSS Feed">RSS feed</a>. For information on how to find the URL of a <a href="RSS_Feed.html" title="RSS Feed">feed</a>, please see the "<a href="RSS_Feed.html#Subscribing_to_a_Sandvox_RSS_Feed" title="RSS Feed">RSS Feed</a>" article.</p><a name="Maximum_number_of_entries" id="Maximum_number_of_entries"></a>
 
-        <h4>Maximum number of entries</h4>
+        <h4><span class="mw-headline">Maximum number of entries</span></h4>
 
         <p>Limits the number of items displayed in the <a href="Pagelet.html" title="Pagelet">pagelet</a>. If you enter "0" there will be no limit.</p>
 
-        <p><br style="clear:both" /></p>
+        <p><br style="clear:both" /></p><a name="Implementation_Details" id="Implementation_Details"></a>
+
+        <h2><span class="mw-headline">Implementation Details</span></h2>
+
+        <p>The RSS Feed <a href="Pagelet.html" title="Pagelet">pagelet</a> uses <a href="Karelia_Services.html" title="Karelia Services">Karelia Services</a> to handle <a href="RSS_Feed.html" title="RSS Feed">RSS feeds</a>. The server takes a feed and transforms it into HTML code that is displayed on your site. Karelia use <a href="http://magpierss.sourceforge.net/" class="external text" title="http://magpierss.sourceforge.net/">MagpieRSS</a> to power this service.</p>
+
+        <p>To ease the load on the sites whose <a href="RSS_Feed.html" title="RSS Feed">RSS feed</a> is to be displayed, each <a href="RSS_Feed.html" title="RSS Feed">feed</a> is cached and updated once an hour.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
 
-            <h2>Related Articles</h2>
+            <h2><span class="mw-headline">Related Articles</span></h2>
 
             <ul>
                 <li><a href="RSS_Feed.html" title="RSS Feed">RSS Feed</a></li>
@@ -60,6 +66,10 @@
                 <li><a href="Karelia_Services.html" title="Karelia Services">Karelia Services</a></li>
             </ul>
         </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href='http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=RSS_Feed_Pagelet.html'>Let us know.</a>
     </div>
 </body>
 </html>
