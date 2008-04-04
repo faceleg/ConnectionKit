@@ -156,6 +156,19 @@ static float sGrowCutoffSidebarDimension;
 }
 
 
+// Intercept a drag early on so we can set the class method for the desired cursor type
+
+- (BOOL)splitView:(RBSplitView*)sender shouldHandleEvent:(NSEvent*)theEvent inDivider:(unsigned int)divider betweenView:(RBSplitSubview*)leading andView:(RBSplitSubview*)trailing;
+{
+	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
+	return YES;
+}
+
+- (void)willAdjustSubviews:(RBSplitView*)sender;
+{
+	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
+}
+
 /*!	Grow the window if the webview is already at its minimum size (growing only)
 or if the option key is held down while dragging.
 This will shrink the window to APPROXIMATELY return the window to its original size before
@@ -167,6 +180,8 @@ you start dragging to enlarge.  Not exact, depending on how fast mouse is moved.
 								  andView:(RBSplitSubview*)trailing
 								 willGrow:(BOOL)grow
 {
+	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
+
 	if (sender == oSidebarSplitView)
 	{
 		RBSplitSubview *sidebarSplit = [sender subviewAtPosition:0];
