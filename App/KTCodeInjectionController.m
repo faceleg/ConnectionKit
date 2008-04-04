@@ -164,7 +164,7 @@
 		"Code Injection placeholder text")];
 	
 	[[oBodyTagTextField cell] setPlaceholderString:NSLocalizedString(
-		@"Use this field to insert code directly inside of the <body> tag itself.",
+		@"Use this field to insert code directly (e.g JavaScript 'onload') inside of the <body> tag itself.",
 		"Code Injection placeholder text")];
 	
 	[oBodyStartTextView setPlaceholderString:NSLocalizedString(

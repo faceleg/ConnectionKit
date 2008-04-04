@@ -224,7 +224,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
 			[oSidebarSplitView adjustSubviews];
 		}
-		[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
+//		[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
 		
 		// UI setup of box views
 		[oStatusBar setDrawsFrame:YES];

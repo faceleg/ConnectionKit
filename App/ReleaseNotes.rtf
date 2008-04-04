@@ -3,7 +3,7 @@
 {\colortbl;\red255\green255\blue255;\red191\green191\blue191;\red0\green64\blue128;}
 {\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid0\'02\'05.;}{\levelnumbers\'01;}}{\listlevel\levelnfc23\levelnfcn23\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid1\'02\'05.;}{\levelnumbers\'01;}}{\listname ;}\listid1}}
 {\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
-\vieww18700\viewh20020\viewkind0
+\vieww25020\viewh20340\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\b\fs48 \cf0 Sandvox
@@ -29,17 +29,17 @@
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Designs:\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}New designs _______\
-{\listtext	\uc0\u8259 	}New background image for Grey Leaf\
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}New design(s) _______\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Page/Pagelets:\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Amazon: caption below pagelet 3578 Field for your associates ID (4882)\
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}New Page/Pagelet(s) _______\
+{\listtext	\uc0\u8259 	}Amazon: caption below pagelet 3578 Field for your associates ID (4882)\
 {\listtext	\uc0\u8259 	}Link List pagelet: comments on each link (3592 ????); use <dl> style (3645)\
 {\listtext	\uc0\u8259 	}Revamp of contact element to support additional custom inputs; copy sender option, Ajax-style results instead of navigating to an external web page.\
 {\listtext	\uc0\u8259 	}RSS badge pagelet - ??? 3644\
 {\listtext	\uc0\u8259 	}Major redesign of Digg pagelet (now available as a page as well) 6128\
-{\listtext	\uc0\u8259 	}Many Pagelets are now available as Page types (TO LIST)\
+{\listtext	\uc0\u8259 	}Many Pagelets are now available as Page types (RSS Feed (6182), ....TO LIST)\
 {\listtext	\uc0\u8259 	}IM Status pagelet supports Yahoo! messenger\
 {\listtext	\uc0\u8259 	}Embedded Page pagelet can now specify a width (4644).  Show border option on embedded pages/pagelets.(4697, 4698)\
 {\listtext	\uc0\u8259 	}Download "pages" now show a preview in the site outline (composited with an arrow) 5023+\
@@ -49,34 +49,49 @@
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Sandvox site documents are now stored as packages (directories of files) rather than monolithic files with all media embedded.. (3753)\
 {\listtext	\'95	}Inspector uses a new method to choose image files by drag and drop OR button (4334)\
-{\listtext	\'95	}iMedia browser updated ....\
-{\listtext	\'95	}Developers: KTComponents.framework is now gone; third-party plugins need to link against the Sandvox application. (3622). KTElement is now the only class; there is no KTPage and KTPagelet.\
-{\listtext	\'95	}General Application Changes\
+{\listtext	\'95	}iMedia browser updated .... (OR MAYBE NOT, LATEST CHANGES ARE IN 1.2.7)\
+{\listtext	\'95	}Developers: KTComponents.framework is now gone; third-party plugins need to link against the Sandvox application. (3622). There are no longer KTPage and KTPagelet classes.\
+{\listtext	\'95	}Appearance/UI\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Removed the capsule-style buttons from the status bar at the bottom of the document window.\
+{\listtext	\uc0\u8259 	}Large versions of many icons now available to better support future high-resolution displays\
+{\listtext	\uc0\u8259 	}Menu items that will not work without a network connection are disabled when no network is available.\
+{\listtext	\uc0\u8259 	}Reworked interface for Code Injection; you can now set injection for pages or for the website (no more confusing, hidden "levels")\
+{\listtext	\uc0\u8259 	}Code Injection "syringe" markers indicate which pages have code injection installed\
+{\listtext	\uc0\u8259 	}Initial dialog box that showed when you first launched, unlicensed, is gone.  It has been merged into the New/Open (when no docs open) placeholder window.\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}General Application Changes\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}We now use Sparkle for update checking; future updates will be delivered via Sparkle.\
-{\listtext	\uc0\u8259 	}Removed the capsule-style buttons from the status bar at the bottom of the document window.\
-{\listtext	\uc0\u8259 	}Large versions of many icons now available to better support future high-resolution displays\
-{\listtext	\uc0\u8259 	}New menu items (Add Banner Image, 4421)\
+{\listtext	\uc0\u8259 	}Upon first launch of this new version, you will be asked to join our email list (Unless you downloaded from a special already-on-our-list link). If you are not online when you chose this, the request will be sent on next launch.\
+{\listtext	\uc0\u8259 	}New menu item to request to join our email list\
 {\listtext	\uc0\u8259 	}You can now select multiple pages and change their properties using the Inspector. (4512)\
 {\listtext	\uc0\u8259 	}New UI for setting the file extension of a page (4528) and collectioon (5324)\
 {\listtext	\uc0\u8259 	}Upon opening a file with missing media, you are given the opportunity to re-find the files. (4550)\
 {\listtext	\uc0\u8259 	}Users can use the modifier keys to change whether dragged media files will be stored internally or referenced. (4662)\
-{\listtext	\uc0\u8259 	}Sandvox documents now support QuickLook; the home page is shown in the preview. (4767+)\
+{\listtext	\uc0\u8259 	}Sandvox documents now support QuickLook; the home page is shown in the preview. (4767+) A yellow "sticky" note shows document information in the full preview.\
 {\listtext	\uc0\u8259 	}Links can now be pasted into text (4865...)\
 {\listtext	\uc0\u8259 	}New preferences for image sharpening (4881)\
 {\listtext	\uc0\u8259 	}New Edit Raw HTML toolbar icon available. (5012)\
-{\listtext	\uc0\u8259 	}[EXPLAIN?] 5090\
+{\listtext	\uc0\u8259 	}[TO EXPLAIN?] 5090\
 {\listtext	\uc0\u8259 	}Collections can be sorted reverse-alphabetically. (5479)\
 {\listtext	\uc0\u8259 	}When creating a collection, an initial page is created automatically. (5705)\
-{\listtext	\uc0\u8259 	}Code Injection "syringe" markers (DONE YET?????) indicating which pages have code injection installed\
 {\listtext	\uc0\u8259 	}When you create a new site, you can choose the page type of the home page. (5796)  [This is not changeable once set]\
-{\listtext	\uc0\u8259 	}Simplified the dialogs you get for reporting a crash, handling an error message, or sending feedback to Karelia.\
+{\listtext	\uc0\u8259 	}New code injection points: early in the <head>, early in the <body>\
 \pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl0\cf0 {\listtext	\'95	}"Under the hood" changes\
+\ls1\ilvl0\cf0 {\listtext	\'95	}Feedback Reporting\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Simplified the dialogs you get for reporting an unexpected quit, handling an error message, or sending feedback to Karelia. No message fields for problem reports, just your email address.\
+{\listtext	\uc0\u8259 	}Problem reporting can now be handled automatically via an extra button in the error-reporting dialog.  Also settable in the preferences.\
+{\listtext	\uc0\u8259 	}If you get an "exception" error, you will only see the error message with an OK button if you have problem reporting turned off, or reporting is automatic, or you have already reported that problem before, or if your previous submission indicated that you are running an OLD version of the application and there's no point submitting problems.\
+{\listtext	\uc0\u8259 	}FOR THE ALPHAS/BETAS ONLY, you may receive a message upon submission of an error already known in our bug database.\
+{\listtext	\uc0\u8259 	}If a feedback report cannot be made (due to errors or not being online), the report will be saved for an automatic retry later.\
+\pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}\'95	"Under the hood" changes\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Much better Undo support across the board\
 {\listtext	\uc0\u8259 	}Better observation and tracking of changes; this greatly improves the likelihood of the webview to update its display properly when changes are made via the inspector.\
-{\listtext	\uc0\u8259 	}Checks to read the current browser's frontmost URL now works with Camino, Firefox, OmniWeb, and Opera as well as Safari, depending on preferred web browser. (4094)'\
+{\listtext	\uc0\u8259 	}Checks to read the current browser's frontmost URL now works with Camino, Firefox, OmniWeb, and Opera as well as Safari, depending on preferred web browser. (4094)\
 {\listtext	\uc0\u8259 	}Changes to HTML parser that result in _____________\
 {\listtext	\uc0\u8259 	}Major improvements to speed in media processing (4361)\
 {\listtext	\uc0\u8259 	}More bugfixes than we could possibly list here\
@@ -84,12 +99,13 @@
 \pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Blogging\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Truncate here....______ & Continue Reading (6002) __________\
-{\listtext	\uc0\u8259 	}Collection Archives pagelet (5898). If you add this pagelet and point it to a collection that has been truncated [EXACT DETAILS???] then additional archival pages will be generated for each week/month (as set by the inspector).\
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Continue Reading (6002) link generated for truncated blog content\
+{\listtext	\uc0\u8259 	}Collection Archives pagelet (5898). If you add this pagelet and point it to a collection that has been truncated [EXACT DETAILS???] then additional archival pages will be generated for each week/month (as set by the inspector).  STILL MISSING THE CORRECT ICON FOR THIS PAGELET.\
 \pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Publishing\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}When publishing, only media (4878) and designs (4885) needing to be uploaded will be uploaded. \
+{\listtext	\uc0\u8259 	}.mac personal domains, and ability to publish to web.mac.com, are now supported directly. (6229+)\
 \pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
 \ls1\ilvl0\cf0 {\listtext	\'95	}Generated Websites\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
@@ -97,17 +113,19 @@
 {\listtext	\uc0\u8259 	}Graphical Arrows on all page types possible now if supported by index (DONE????)\
 {\listtext	\uc0\u8259 	}Textual navigation possible as well (5696).\
 \pard\tx220\tx720\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl0\cf0 {\listtext	\'95	}THINGS TO FINISH FOR SURE\
+\ls1\ilvl0\cf0 {\listtext	\'95	}THINGS TO FINISH BEFORE RELEASE\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sa140\ql\qnatural\pardirnatural
-\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}New Host Setup\
-{\listtext	\uc0\u8259 	}Plugin Installer (really, just hooking up properly)\
-{\listtext	\uc0\u8259 	}Help pages & new screenshots (I wish Netan were around...)\
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Updated Help pages & new screenshots\
 {\listtext	\uc0\u8259 	}Translations\
 {\listtext	\uc0\u8259 	}Data Migrator\
-{\listtext	\uc0\u8259 	}Design Chooser -- We have too many designs now!  Need categories and scroll bar, grab code from PeaceKeeper\
 \pard\tx560\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sa140\ql\qnatural\pardirnatural
 \cf0 \
-\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 EARLIER VERSIONS -- THESE WILL BE MERGED IN LATER.\cf2 \
+\pard\tx560\tx1120\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sa140\ql\qnatural\pardirnatural
+
+\b0\fs24 \cf0 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \
