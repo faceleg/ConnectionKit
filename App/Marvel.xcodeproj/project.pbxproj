@@ -175,7 +175,7 @@
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
-		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		273D840C0D099C4200057448 /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; settings = {ATTRIBUTES = (); }; };
 		273D840D0D099C4200057448 /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -202,7 +202,7 @@
 		2775612E0CA718C200D8A412 /* KTWebViewComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277EE9230CFD8CFF005617FE /* KTStalenessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 277EE9210CFD8CFF005617FE /* KTStalenessManager.m */; };
-		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2786BEE70CAD24980086F9E0 /* KTMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BEE50CAD24980086F9E0 /* KTMediaManager.m */; };
@@ -280,7 +280,7 @@
 		27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27EF5F260D6C94BF0024575B /* NewDocumentAccessoryView.nib */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
-		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27F0EDC20D0C556600B7555A /* KTTransferController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27F0EDC30D0C556600B7555A /* KTTransferController+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0EDC10D0C556600B7555A /* KTTransferController+Media.m */; };
 		27F0F3A40D0F46AC00B7555A /* KTExternalMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F0F3A20D0F46AC00B7555A /* KTExternalMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		27F0F3A50D0F46AC00B7555A /* KTExternalMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0F3A30D0F46AC00B7555A /* KTExternalMediaFile.m */; };
@@ -680,7 +680,6 @@
 		CEC11ADE0D78BE3D00513E70 /* KSNoCascadeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A760D78BE3C00513E70 /* KSNoCascadeWindow.m */; };
 		CEC11ADF0D78BE3D00513E70 /* KSPathInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A770D78BE3C00513E70 /* KSPathInfoField.m */; };
 		CEC11AE00D78BE3D00513E70 /* KSPathInfoFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A780D78BE3C00513E70 /* KSPathInfoFieldCell.m */; };
-		CEC11AE10D78BE3D00513E70 /* KSPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A790D78BE3C00513E70 /* KSPDFViewController.m */; };
 		CEC11AE30D78BE3D00513E70 /* KSPluginLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7B0D78BE3C00513E70 /* KSPluginLoader.m */; };
 		CEC11AE40D78BE3D00513E70 /* KSPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7C0D78BE3C00513E70 /* KSPopUpButton.m */; };
 		CEC11AE50D78BE3D00513E70 /* KSPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A7D0D78BE3C00513E70 /* KSPopUpButtonCell.m */; };
@@ -766,29 +765,28 @@
 		CEC11BA70D78BE5300513E70 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3A0D78BE5300513E70 /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA80D78BE5300513E70 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3B0D78BE5300513E70 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA90D78BE5300513E70 /* EscapeHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3C0D78BE5300513E70 /* EscapeHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BAA0D78BE5300513E70 /* KSAbstractBugReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3D0D78BE5300513E70 /* KSAbstractBugReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BAA0D78BE5300513E70 /* KSAbstractBugReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3D0D78BE5300513E70 /* KSAbstractBugReporter.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BAB0D78BE5300513E70 /* KSAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3E0D78BE5300513E70 /* KSAppDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BAC0D78BE5300513E70 /* KSApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3F0D78BE5300513E70 /* KSApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BAD0D78BE5300513E70 /* KSBorderlessWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B400D78BE5300513E70 /* KSBorderlessWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BAD0D78BE5300513E70 /* KSBorderlessWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B400D78BE5300513E70 /* KSBorderlessWindow.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BAE0D78BE5300513E70 /* KSCircularProgressCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B410D78BE5300513E70 /* KSCircularProgressCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BAF0D78BE5300513E70 /* KSCrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B420D78BE5300513E70 /* KSCrashReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BAF0D78BE5300513E70 /* KSCrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B420D78BE5300513E70 /* KSCrashReporter.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BB00D78BE5300513E70 /* KSEdgeSnapWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B430D78BE5300513E70 /* KSEdgeSnapWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BB10D78BE5300513E70 /* KSEmailAddressComboBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B440D78BE5300513E70 /* KSEmailAddressComboBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BB20D78BE5300513E70 /* KSExceptionReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B450D78BE5300513E70 /* KSExceptionReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BB30D78BE5300513E70 /* KSExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B460D78BE5300513E70 /* KSExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BB40D78BE5300513E70 /* KSFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B470D78BE5300513E70 /* KSFeedbackReporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BB50D78BE5300513E70 /* KSImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B480D78BE5300513E70 /* KSImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BB40D78BE5300513E70 /* KSFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B470D78BE5300513E70 /* KSFeedbackReporter.h */; settings = {ATTRIBUTES = (); }; };
+		CEC11BB50D78BE5300513E70 /* KSImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B480D78BE5300513E70 /* KSImageLoader.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BB60D78BE5300513E70 /* KSLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B490D78BE5300513E70 /* KSLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BB70D78BE5300513E70 /* KSNoCascadePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4A0D78BE5300513E70 /* KSNoCascadePanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BB80D78BE5300513E70 /* KSNoCascadeWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4B0D78BE5300513E70 /* KSNoCascadeWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BB90D78BE5300513E70 /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4C0D78BE5300513E70 /* KSOverrideConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BB90D78BE5300513E70 /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4C0D78BE5300513E70 /* KSOverrideConstants.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BBA0D78BE5300513E70 /* KSPathInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4D0D78BE5300513E70 /* KSPathInfoField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBB0D78BE5300513E70 /* KSPathInfoFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4E0D78BE5300513E70 /* KSPathInfoFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BBC0D78BE5300513E70 /* KSPDFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B4F0D78BE5300513E70 /* KSPDFViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BBE0D78BE5300513E70 /* KSPluginLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B510D78BE5300513E70 /* KSPluginLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BBF0D78BE5300513E70 /* KSPopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B520D78BE5300513E70 /* KSPopUpButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BBF0D78BE5300513E70 /* KSPopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B520D78BE5300513E70 /* KSPopUpButton.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BC00D78BE5300513E70 /* KSPopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B530D78BE5300513E70 /* KSPopUpButtonCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BC10D78BE5300513E70 /* KSRegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B540D78BE5300513E70 /* KSRegistrationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BC10D78BE5300513E70 /* KSRegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B540D78BE5300513E70 /* KSRegistrationController.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BC20D78BE5300513E70 /* KSSelfRegisteringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B550D78BE5300513E70 /* KSSelfRegisteringValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BC30D78BE5300513E70 /* KSSilencingConfirmSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B560D78BE5300513E70 /* KSSilencingConfirmSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BC40D78BE5300513E70 /* KSSingletonWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B570D78BE5300513E70 /* KSSingletonWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -796,7 +794,7 @@
 		CEC11BC60D78BE5300513E70 /* KSSmallDatePickerCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B590D78BE5300513E70 /* KSSmallDatePickerCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BC70D78BE5300513E70 /* KSTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5A0D78BE5300513E70 /* KSTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BC80D78BE5300513E70 /* KSTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5B0D78BE5300513E70 /* KSTextFieldCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BC90D78BE5300513E70 /* KSTextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5C0D78BE5300513E70 /* KSTextViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BC90D78BE5300513E70 /* KSTextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5C0D78BE5300513E70 /* KSTextViewController.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BCA0D78BE5300513E70 /* KSTrimFirstLineFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5D0D78BE5300513E70 /* KSTrimFirstLineFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BCB0D78BE5300513E70 /* KSUnifiedTableButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5E0D78BE5300513E70 /* KSUnifiedTableButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BCC0D78BE5300513E70 /* KSUnifiedTableButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B5F0D78BE5300513E70 /* KSUnifiedTableButtonCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -816,7 +814,7 @@
 		CEC11BDA0D78BE5300513E70 /* NSBezierPath+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6D0D78BE5300513E70 /* NSBezierPath+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDB0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6E0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDC0D78BE5300513E70 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6F0D78BE5300513E70 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BDD0D78BE5300513E70 /* NSCalendarDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B700D78BE5300513E70 /* NSCalendarDate+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BDD0D78BE5300513E70 /* NSCalendarDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B700D78BE5300513E70 /* NSCalendarDate+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BDE0D78BE5300513E70 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B710D78BE5300513E70 /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDF0D78BE5300513E70 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B720D78BE5300513E70 /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BE00D78BE5300513E70 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B730D78BE5300513E70 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2394,7 +2392,6 @@
 		CEC11A760D78BE3C00513E70 /* KSNoCascadeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSNoCascadeWindow.m; path = ../../../Shared/trunk/App/KSNoCascadeWindow.m; sourceTree = SOURCE_ROOT; };
 		CEC11A770D78BE3C00513E70 /* KSPathInfoField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoField.m; path = ../../../Shared/trunk/App/KSPathInfoField.m; sourceTree = SOURCE_ROOT; };
 		CEC11A780D78BE3C00513E70 /* KSPathInfoFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoFieldCell.m; path = ../../../Shared/trunk/App/KSPathInfoFieldCell.m; sourceTree = SOURCE_ROOT; };
-		CEC11A790D78BE3C00513E70 /* KSPDFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPDFViewController.m; path = ../../../Shared/trunk/App/KSPDFViewController.m; sourceTree = SOURCE_ROOT; };
 		CEC11A7A0D78BE3C00513E70 /* KSPluginInstallerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPluginInstallerController.m; path = ../../../Shared/trunk/App/KSPluginInstallerController.m; sourceTree = SOURCE_ROOT; };
 		CEC11A7B0D78BE3C00513E70 /* KSPluginLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPluginLoader.m; path = ../../../Shared/trunk/App/KSPluginLoader.m; sourceTree = SOURCE_ROOT; };
 		CEC11A7C0D78BE3C00513E70 /* KSPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPopUpButton.m; path = ../../../Shared/trunk/App/KSPopUpButton.m; sourceTree = SOURCE_ROOT; };
@@ -2500,7 +2497,6 @@
 		CEC11B4C0D78BE5300513E70 /* KSOverrideConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSOverrideConstants.h; path = ../../../Shared/trunk/App/KSOverrideConstants.h; sourceTree = SOURCE_ROOT; };
 		CEC11B4D0D78BE5300513E70 /* KSPathInfoField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoField.h; path = ../../../Shared/trunk/App/KSPathInfoField.h; sourceTree = SOURCE_ROOT; };
 		CEC11B4E0D78BE5300513E70 /* KSPathInfoFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoFieldCell.h; path = ../../../Shared/trunk/App/KSPathInfoFieldCell.h; sourceTree = SOURCE_ROOT; };
-		CEC11B4F0D78BE5300513E70 /* KSPDFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPDFViewController.h; path = ../../../Shared/trunk/App/KSPDFViewController.h; sourceTree = SOURCE_ROOT; };
 		CEC11B500D78BE5300513E70 /* KSPluginInstallerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPluginInstallerController.h; path = ../../../Shared/trunk/App/KSPluginInstallerController.h; sourceTree = SOURCE_ROOT; };
 		CEC11B510D78BE5300513E70 /* KSPluginLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPluginLoader.h; path = ../../../Shared/trunk/App/KSPluginLoader.h; sourceTree = SOURCE_ROOT; };
 		CEC11B520D78BE5300513E70 /* KSPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPopUpButton.h; path = ../../../Shared/trunk/App/KSPopUpButton.h; sourceTree = SOURCE_ROOT; };
@@ -4429,7 +4425,6 @@
 				CEC11B4C0D78BE5300513E70 /* KSOverrideConstants.h */,
 				CEC11B4D0D78BE5300513E70 /* KSPathInfoField.h */,
 				CEC11B4E0D78BE5300513E70 /* KSPathInfoFieldCell.h */,
-				CEC11B4F0D78BE5300513E70 /* KSPDFViewController.h */,
 				CEC11B500D78BE5300513E70 /* KSPluginInstallerController.h */,
 				CEC11B510D78BE5300513E70 /* KSPluginLoader.h */,
 				CEC11B520D78BE5300513E70 /* KSPopUpButton.h */,
@@ -4537,7 +4532,6 @@
 				CEC11A760D78BE3C00513E70 /* KSNoCascadeWindow.m */,
 				CEC11A770D78BE3C00513E70 /* KSPathInfoField.m */,
 				CEC11A780D78BE3C00513E70 /* KSPathInfoFieldCell.m */,
-				CEC11A790D78BE3C00513E70 /* KSPDFViewController.m */,
 				CEC11A7A0D78BE3C00513E70 /* KSPluginInstallerController.m */,
 				CEC11A7B0D78BE3C00513E70 /* KSPluginLoader.m */,
 				CEC11A7C0D78BE3C00513E70 /* KSPopUpButton.m */,
@@ -4781,7 +4775,6 @@
 				CEC11BB90D78BE5300513E70 /* KSOverrideConstants.h in Headers */,
 				CEC11BBA0D78BE5300513E70 /* KSPathInfoField.h in Headers */,
 				CEC11BBB0D78BE5300513E70 /* KSPathInfoFieldCell.h in Headers */,
-				CEC11BBC0D78BE5300513E70 /* KSPDFViewController.h in Headers */,
 				CEC11BBE0D78BE5300513E70 /* KSPluginLoader.h in Headers */,
 				CEC11BBF0D78BE5300513E70 /* KSPopUpButton.h in Headers */,
 				CEC11BC00D78BE5300513E70 /* KSPopUpButtonCell.h in Headers */,
@@ -6183,7 +6176,6 @@
 				CEC11ADE0D78BE3D00513E70 /* KSNoCascadeWindow.m in Sources */,
 				CEC11ADF0D78BE3D00513E70 /* KSPathInfoField.m in Sources */,
 				CEC11AE00D78BE3D00513E70 /* KSPathInfoFieldCell.m in Sources */,
-				CEC11AE10D78BE3D00513E70 /* KSPDFViewController.m in Sources */,
 				CEC11AE30D78BE3D00513E70 /* KSPluginLoader.m in Sources */,
 				CEC11AE40D78BE3D00513E70 /* KSPopUpButton.m in Sources */,
 				CEC11AE50D78BE3D00513E70 /* KSPopUpButtonCell.m in Sources */,
