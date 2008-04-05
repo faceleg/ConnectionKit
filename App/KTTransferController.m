@@ -838,7 +838,7 @@ static NSArray *sReservedNames = nil;
 		}
 //	TODO:	Need to heed sitemap flag
 		// Upload the Google Site Map
-		if ([root boolForKey:@"addBool2"])
+		if ([root boolForKey:@"addBool2"])	// Should be using @"generateGoogleSiteMap"
 		{
 			NSString *googleSiteMap = [[self associatedDocument] generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)moc];
 			NSData *siteMapData = [googleSiteMap dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];

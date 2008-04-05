@@ -31,7 +31,9 @@
 
 + (NSString *)applicationPluginPath	// Designs in their own top-level plugin dir
 {
-	return [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Designs"];
+	NSString *genericPluginsPath = [super applicationPluginPath];
+	NSString *result = [[genericPluginsPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Designs"];
+	return result;
 }
 
 
