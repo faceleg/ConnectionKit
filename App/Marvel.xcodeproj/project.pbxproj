@@ -93,7 +93,6 @@
 				3C095C0F0D5D284D00DE6F62 /* PBXTargetDependency */,
 				3C095C090D5D282F00DE6F62 /* PBXTargetDependency */,
 				3C095C0B0D5D283200DE6F62 /* PBXTargetDependency */,
-				3C095C070D5D282B00DE6F62 /* PBXTargetDependency */,
 				3C4C6AB00D64137F00398BDA /* PBXTargetDependency */,
 				3CA9FF330D63C17C00815310 /* PBXTargetDependency */,
 				3C4C6A730D64110700398BDA /* PBXTargetDependency */,
@@ -952,13 +951,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = ViewerIndex;
 		};
-		3C095C060D5D282B00DE6F62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = ViewerIndex;
-		};
 		3C095C080D5D282F00DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
@@ -1602,13 +1594,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
-		};
-		CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CEF9D0AE0D862B5100BD9895;
-			remoteInfo = ImageWebKitPlugin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -4876,7 +4861,6 @@
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
-				CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6264,11 +6248,6 @@
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
 		};
-		3C095C070D5D282B00DE6F62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ViewerIndex;
-			targetProxy = 3C095C060D5D282B00DE6F62 /* PBXContainerItemProxy */;
-		};
 		3C095C090D5D282F00DE6F62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GeneralIndex;
@@ -6508,11 +6487,6 @@
 			isa = PBXTargetDependency;
 			name = YouTubeElement;
 			targetProxy = CEF12E800D908ED400FCAC70 /* PBXContainerItemProxy */;
-		};
-		CEF9D0B60D862BE900BD9895 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */;
-			targetProxy = CEF9D0B50D862BE900BD9895 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
