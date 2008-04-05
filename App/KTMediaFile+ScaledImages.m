@@ -77,6 +77,8 @@
 		// Go for a super-simple unscaled image from the source media
 		NSMutableDictionary *unscaledImageProperties = [NSMutableDictionary dictionary];
 		[unscaledImageProperties setObject:[KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil] forKey:@"scalingBehavior"];
+		[unscaledImageProperties setObject:[NSNumber numberWithFloat:0.0] forKey:@"compression"];
+		[unscaledImageProperties setObject:[NSNumber numberWithFloat:0.0] forKey:@"sharpeningFactor"];
 		
 		
 		KTMediaFile *unscaledImage;
