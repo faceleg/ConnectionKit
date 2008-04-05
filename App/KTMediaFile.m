@@ -7,6 +7,7 @@
 //
 
 #import "KTMediaFile.h"
+#import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 
 #import "Debug.h"

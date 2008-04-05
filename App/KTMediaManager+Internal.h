@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "KTMediaManager.h"
 
+#import "KTInDocumentMediaFile.h"
+#import "KTExternalMediaFile.h"
+
 
 @class KTDesign, KTGraphicalTextMediaContainer;
 

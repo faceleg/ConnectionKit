@@ -8,10 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTInDocumentMediaFile.h"
 
-
-@class KTDocument, KTExternalMediaFile, KTInDocumentMediaFile;
+@class KTDocument;
 @class KTMediaContainer;
 
 @interface KTMediaManager : NSObject
