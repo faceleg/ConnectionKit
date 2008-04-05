@@ -12,8 +12,11 @@
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "KTMediaContainer.h"
+
 #import "KTMediaManager.h"
+#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
+
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"

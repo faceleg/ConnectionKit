@@ -20,8 +20,11 @@
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "NSURL+Karelia.h"
-#import "KTMediaContainer.h"
+
 #import "KTMediaManager.h"
+#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
+
 #import "KTPage.h"
 #import "NSImage+Karelia.h"
 #import "CIImage+Karelia.h"

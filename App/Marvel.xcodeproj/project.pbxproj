@@ -6985,7 +6985,7 @@
 		};
 		3C9B65960BFA7F9E007A4871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = Sandvox;
 			};
