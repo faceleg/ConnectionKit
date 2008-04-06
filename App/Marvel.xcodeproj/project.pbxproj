@@ -77,6 +77,7 @@
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
+				2770641E0DA985AA001EB02A /* Script - Add QuickLook */,
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
@@ -1434,13 +1435,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedElement;
 		};
-		3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
-			remoteInfo = SandvoxQuickLook;
-		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1621,16 +1615,6 @@
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
 			);
 			name = "Copy Frameworks ALWAYS";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CEF9D17B0D86332F00BD9895 /* Copy Webkit Plugins */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Copy Webkit Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -4845,11 +4829,9 @@
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
-				CEF9D17B0D86332F00BD9895 /* Copy Webkit Plugins */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
-				3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */,
 			);
 			buildRules = (
 			);
@@ -4860,7 +4842,6 @@
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
 				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
-				3CDC2EE20D6B4736007E800E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5698,6 +5679,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2770641E0DA985AA001EB02A /* Script - Add QuickLook */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Add QuickLook";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			showEnvVarsInLog = 0;
+		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -5888,21 +5884,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n# we base the DeployRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\nif [ \"${SVN_VERSION}\" == \"\" ]\nthen\n\techo \"\"\n\techo \"No SVN_VERSION. Cannot deploy. Exiting...\"\n\texit 1\nfi\n\n# SCP assumes public key login through Karelia's (mt) account\nSCP_LOGIN=\"serveradmin%karelia.com@s19590.gridserver.com\"\n\n# determine the name of the dmg to upload and where to upload it\nif [ \"${SANDVOX_VARIANT}\" == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/beta\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/files\"\nfi\n\n# set upload path, prepend _ to the filename to avoid URL rewrite rules \nUPLOAD_PATH=\"${SERVER_PATH}/_${DMG_FINAL_NAME}\"\n\n# the directory we're uploading from (based on convention, from the BuildAndPackageRelease script)\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\nDISTRO_PATH=\"${SCRATCH_DIR}/${DMG_FINAL_NAME}\"\n\n# if we don't have a distro ready, exit\nif test -r ${DISTRO_PATH}\nthen\n\techo \"Uploading ${DISTRO_PATH} ...\"\n\techo \"... to ${UPLOAD_PATH}\"\n\tscp \"${DISTRO_PATH}\" \"${SCP_LOGIN}:${UPLOAD_PATH}\"\nelse\n\techo \"\"\n\techo \"Nothing to upload at ${DISTRO_PATH}. Exiting...\"\n\texit 1\nfi\n\n\nexit 0\n\n";
-			showEnvVarsInLog = 0;
-		};
-		3CDC2EE60D6B4768007E800E /* Script - Add QuickLook */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Add QuickLook";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
@@ -6448,11 +6429,6 @@
 			name = FeedElement;
 			targetProxy = 3CA9FF880D63C4E700815310 /* PBXContainerItemProxy */;
 		};
-		3CDC2EE20D6B4736007E800E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SandvoxQuickLook;
-			targetProxy = 3CDC2EE10D6B4736007E800E /* PBXContainerItemProxy */;
-		};
 		3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
@@ -6938,7 +6914,7 @@
 		};
 		3C9B65970BFA7F9E007A4871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = Sandvox;
 			};
