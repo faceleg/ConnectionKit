@@ -11,6 +11,7 @@
 #import "Debug.h"
 #import "KTDocument.h"
 #import "KTMediaManager.h"
+#import "KTMediaManager+Internal.h"
 #import "MediaFiles+Internal.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -41,7 +42,7 @@
 			NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
 			
 			LOG((@"Moving temporary MediaFile %@ into the document", filename));
-			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:nil]) {
+			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
 				[NSException raise:NSInternalInconsistencyException
 							format:@"Unable to move temporary MediaFile %@ into the document", filename];
 			}
@@ -57,7 +58,8 @@
 		NSString *destinationPath = [[[moc document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		LOG((@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename));
-		if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:nil]) {
+		[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
+		if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
 			[NSException raise:NSInternalInconsistencyException
 						format:@"Unable to move deleted MediaFile %@ to the temp media directory", filename];
 		}

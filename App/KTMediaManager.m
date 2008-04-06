@@ -452,6 +452,33 @@
 	return result;
 }
 
+/*	Support method that ensures the temporary media directory does not already contain a file with the same name
+ */
+- (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename
+{
+	// See if there's already a file there
+	NSString *proposedPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:filename];
+	BOOL result = !([[NSFileManager defaultManager] fileExistsAtPath:proposedPath]);
+	
+	// If there is an existing file, try to delete it. Log the operation for debugging purposes
+	if (!result)
+	{
+		NSLog(@"Preparing to add new temporary media file at\n%@\nbut one already exists. Attempting to movie it to the trash...",
+			  proposedPath);
+		
+		int tag = 0;
+		result = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
+															  source:[proposedPath stringByDeletingLastPathComponent]
+														 destination:@""
+															   files:[NSArray arrayWithObject:filename]
+															     tag:&tag]; 
+		
+		NSLog(@"...move %@", (result) ? @"successful" : @"unsuccessful");
+	}
+	
+	return result;
+}
+
 /*	Creates a brand new entry in the DB for the media at the path.
  *	The path itself is copied to app support as a temporary store; it is moved internally at save-time.
  */
@@ -464,6 +491,7 @@
 	NSString *destinationFilename = [self uniqueInDocumentFilename:sourceFilename];
 	NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
 	
+	[self prepareTemporaryMediaDirectoryForFileNamed:destinationFilename];
 	if (![[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:nil]) {
 		[NSException raise:NSInternalInconsistencyException
 					format:@"Unable to copy file:\r%@\r to %@ in the temporary media folder", path, destinationFilename];
