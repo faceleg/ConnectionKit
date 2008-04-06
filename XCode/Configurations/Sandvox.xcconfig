@@ -11,7 +11,7 @@ SANDVOX_VARIANT = beta
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 857
+CK_REVISION = 858
 
 // iMedia
 IMEDIA_REVISION = 541
