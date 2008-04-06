@@ -6936,15 +6936,16 @@
 		};
 		3C9B65960BFA7F9E007A4871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = Sandvox;
 			};
 			name = Release;
 		};
 		3C9B65970BFA7F9E007A4871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = Sandvox;
 			};
