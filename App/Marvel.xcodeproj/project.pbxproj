@@ -1323,6 +1323,20 @@
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
 		};
+		3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
+			remoteInfo = iMediaTesterSingle;
+		};
+		3C8344620DA98E160051A2A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
+			remoteInfo = movietool;
+		};
 		3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -4268,8 +4282,10 @@
 			isa = PBXGroup;
 			children = (
 				CE99830E0D614D7400F2DD12 /* iMediaTester.app */,
+				3C8344610DA98E160051A2A3 /* iMediaTesterSingle.app */,
 				CE9983100D614D7400F2DD12 /* iMediaBrowser.framework */,
 				CE9983120D614D7400F2DD12 /* MetadataTool */,
+				3C8344630DA98E160051A2A3 /* movietool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5294,6 +5310,20 @@
 			remoteRef = 3C4C6AAD0D64136C00398BDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3C8344610DA98E160051A2A3 /* iMediaTesterSingle.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iMediaTesterSingle.app;
+			remoteRef = 3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C8344630DA98E160051A2A3 /* movietool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = movietool;
+			remoteRef = 3C8344620DA98E160051A2A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3CA9006C0D63C76100815310 /* IFrame.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5724,7 +5754,7 @@
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -5732,7 +5762,7 @@
 			name = "Build Disk Image";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\n# we base the BuildAndPackageRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Sandvox ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"SANDVOX_VARIANT is ${SANDVOX_VARIANT}\"\necho \"\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nBUILD_ROOT=\"/private/tmp/build-sandvox-install\"\nBUILT_APP=\"${TARGET_BUILD_DIR}/Sandvox.app\"\n\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\n# determine which SLA to use\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tSLA_ZIP_FILE=\"${PROJECT_DIR}/SLA-Sandvox-Beta.zip\"\n\t\tSLA_FILE=\"${BUILDSETTINGS_DIR}/SLA-Sandvox-Beta\"\n\telse\n\t\tSLA_ZIP_FILE=\"${PROJECT_DIR}/SLA-Sandvox.zip\"\n\t\tSLA_FILE=\"${BUILDSETTINGS_DIR}/SLA-Sandvox\"\nfi\n\n# we keep the .zip of the SLA with the project, then copy it to /tmp and inflate it, if needed\nif test -r ${SLA_FILE}\nthen\n\techo \"Removing previous SLA file...\"\n\trm ${SLA_FILE}\nfi\n\necho \"copying ${SLA_ZIP_FILE} to ${SLA_FILE}.zip\"\ncp \"${SLA_ZIP_FILE}\" \"${SLA_FILE}.zip\"\necho \"unarchving ${SLA_FILE}.zip\"\nditto -x -k --rsrc \"${SLA_FILE}.zip\" ${BUILDSETTINGS_DIR}\n\n# the dmg names that we'll use\nVOLUME_NAME=\"Sandvox\"\nDMG_TEMP_NAME=\"temp\"\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}\"\nfi\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\n\nif test -d ${SCRATCH_DIR}\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf ${SCRATCH_DIR}\nfi\nmkdir -p ${SCRATCH_DIR}\n\necho \"Packaging Sandvox...\"\npushd ${SCRATCH_DIR}\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -size 128m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach ${DMG_TEMP_NAME}.dmg\n\n# copy Sandvox.app to dmg\necho \"Copying ${BUILT_APP} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${BUILT_APP}\" \"/Volumes/${VOLUME_NAME}\"\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach ${DMG_TEMP_NAME}.dmg | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach $DEV\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert ${DMG_TEMP_NAME}.dmg -format UDZO -o ${DMG_FINAL_NAME}.dmg\nrm ${DMG_TEMP_NAME}.dmg\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes ${DMG_FINAL_NAME}.dmg\n\n# copy to ${DMG_FINAL_NAME}u.dmg\necho \"Copying ${DMG_FINAL_NAME}.dmg to ${DMG_FINAL_NAME}u.dmg for use with Sparkle Appcast\"\n/bin/cp -fpv ${DMG_FINAL_NAME}.dmg ${DMG_FINAL_NAME}u.dmg\n\n# install license agreement\necho \"Installing License Agreement...\"\nhdiutil unflatten ${DMG_FINAL_NAME}.dmg\n/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\nhdiutil flatten ${DMG_FINAL_NAME}.dmg\nrm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox SLA distribution is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"Your Sandvox Sparkle Update distribution is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}u.dmg.\"\necho \"\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
@@ -6860,7 +6890,7 @@
 		};
 		3C8883990BFCB4EE00921FA4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = DiskImage;
 			};
@@ -6868,7 +6898,7 @@
 		};
 		3C88839A0BFCB4EE00921FA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = DiskImage;
 			};
