@@ -172,7 +172,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[result appendFormat:@"\nAdditional Plugins:\n%@\n", plugins];
 	}
 
-	NSString *designs = [KSPlugin generateReportOfPluginsWithFileExtension:kKTDesignExtension thirdPartyPluginsOnly:YES];
+	// Call the following method on KTDesign to get the right plugin path
+	NSString *designs = [KTDesign generateReportOfPluginsWithFileExtension:kKTDesignExtension thirdPartyPluginsOnly:YES];
 	if (![designs isEqualToString:@""])
 	{
 		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
