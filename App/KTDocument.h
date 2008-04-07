@@ -193,7 +193,7 @@ typedef enum {
 // derived properties
 - (NSString *)domainNameDashes;
 - (NSString *)documentLastBuildDate;
-- (NSString *)registrationHash;
+- (NSString *)hash;	// registration hash
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 
 - (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;

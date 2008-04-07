@@ -70,7 +70,7 @@
 /*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
 	Returns a nonsense value
 */
-- (NSString *) registrationHash
+- (NSString *) hash
 {
 	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
 }
