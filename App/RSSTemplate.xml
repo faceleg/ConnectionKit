@@ -24,7 +24,7 @@
 			<description>
 [[if item.thumbnail]]
 				&lt;div class="article-thumbnail"&gt;
-					&lt;img[[idClass entity:Page property:image flags:"anchor" id:item.uniqueID]]
+					&lt;img[[idClass entity:Page property:thumbnail flags:"anchor" id:item.uniqueID]]
 						src="[[mediainfo info:path media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
 						alt="[[=&item.titleText]]"
 						width="[[mediainfo info:width media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
