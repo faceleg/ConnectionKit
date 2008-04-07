@@ -64,8 +64,8 @@
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
-@interface KTDocWindowController ( Private )
-- (void)showAddressBar:(BOOL)inShow;
+@interface KTDocWindowController ()
+
 - (void)showDesigns:(BOOL)inShow;
 - (void)showInfo:(BOOL)inShow;
 - (void)showStatusBar:(BOOL)inShow;
@@ -76,6 +76,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)updateCutMenuItem;
 - (void)updateCopyMenuItem;
 - (void)updateDeletePagesMenuItem;
+
++ (NSSet *)windowTitleKeyPaths;
+
 @end
 
 
@@ -288,12 +291,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 												   object:nil];
 		[self updateBuyNow:nil];	// update them now
 		
-		// register for requests to refresh the document title
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(refreshDocumentTitle:)
-													 name:kKTDocumentTitleNeedsRefreshingNotification
-												   object:nil];
-		
 		/// turn off undo within the cell to avoid exception
 		/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
 		/// this still leaves the setting of keywords for the page undo'able, it's
@@ -345,55 +342,69 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 						  afterDelay:0.0];
 }
 
-/*!	Gets invoked when defaults change, for instance.
-*/
+#pragma mark -
+#pragma mark Site Outline
+
+- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
+
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
+{
+	// Dump the old controller
+	NSSet *windowTitleKeyPaths = [[self class] windowTitleKeyPaths];
+	[[self siteOutlineController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
+	
+	[[self siteOutlineController] setWindowController:nil];
+	
+	
+	// Set up the new controller
+	[controller retain];
+	[mySiteOutlineController release];
+	mySiteOutlineController = controller;
+	
+	[controller setWindowController:self];
+	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
+}
+
+#pragma mark -
+#pragma mark Window Title
+
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+	if ([[self siteOutlineController] selectedPage])
+	{
+		return [NSString stringWithFormat:@"%@ %C %@",
+			displayName,
+			0x2014,	// em dash
+			[[[self siteOutlineController] selectedPage] comboTitleText]];
+	}
+	return displayName;
+}
+
+/*	When something changes to affect it, reload the window title.
+ */
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-//	if ([keyPath isEqualToString:@"selectedPage.collectionSortOrder"])
-//	{
-//		OFF((@"observe of selectedPage.collectionSortOrder reloading outline"));
-//		[self reloadItemAndChildren:[self selectedPage]];
-//	}
-//	else if ( [keyPath isEqualToString:@"selectedPage.titleHTML"] )
-//	{
-//		[NSObject cancelPreviousPerformRequestsWithTarget:oSiteOutline];	// cancel all so we aren't caring about the object
-//		OFF((@"selectedPage.titleHTML changed; re-selecting page %@", [[self selectedPage] titleText]));
-//		[oSiteOutline performSelector:@selector(selectItem:)
-//						   withObject:[self selectedPage] 
-//						   afterDelay:0.0];
-//	}
-//	else if ( [keyPath isEqualToString:@"children"] )
-//	{
-//		TJT((@"children have changed, reloading (%@)", [object managedObjectDescription]));
-//		[self reloadItem:object reloadChildren:YES];
-//	}
-//	else if ( [keyPath isEqualToString:@"titleHTML"] )
-//	{
-//		TJT((@"titleHTML has changed, reloading (%@)", [object managedObjectDescription]));
-//		[self reloadItem:object reloadChildren:NO];
-//	}
-//	else if ( [keyPath isEqualToString:@"collectionSortOrder"] )
-//	{
-//		TJT((@"collectionSortOrder has changed, reloading (%@)", [object managedObjectDescription]));
-//		[self reloadItem:object reloadChildren:YES];
-//	}
-//	else	// other ...
-//	{
-//		OFF((@"observeValueForKeyPath: %@", keyPath));
-//		OFF((@"                object: %@", object));
-//		OFF((@"                change: %@", [change description]));
-//		// in case author changed
-//		[self synchronizeWindowTitleWithDocumentName];
-//	}
-	
-	LOG((@"%@ observing %@", keyPath));
-	if ( [keyPath isEqualToString:@"selectedPage.master.author"] )
+	if ([[[self class] windowTitleKeyPaths] containsObject:keyPath])
 	{
 		[self synchronizeWindowTitleWithDocumentName];
 	}
+}
+
++ (NSSet *)windowTitleKeyPaths
+{
+	static NSSet *result;
+	
+	if (!result)
+	{
+		result = [[NSSet alloc] initWithObjects:@"selection.master.siteTitleHTML",
+												@"selection.master.author",
+												@"selection.titleText", nil];
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -431,26 +442,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[[self window] performClose:self]; 
 	}
-}
-
-#pragma mark -
-#pragma mark NSWindowController overrides
-
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
-{
-	if ([[self siteOutlineController] selectedPage])
-	{
-		return [NSString stringWithFormat:@"%@ %C %@",
-			displayName,
-			0x2014,	// em dash
-			[[[self siteOutlineController] selectedPage] comboTitleText]];
-	}
-	return displayName;
-}
-
-- (void)refreshDocumentTitle:(NSNotification *)aNotification
-{
-	[self synchronizeWindowTitleWithDocumentName];
 }
 
 #pragma mark -

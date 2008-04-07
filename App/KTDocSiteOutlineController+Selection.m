@@ -26,6 +26,21 @@
 	return result; 
 }
 
+/*	To counter the insanity that is this controller's selection proxy, redirect observers straight to the
+ *	array controller when appropriate.
+ */
+- (void)addObserver:(NSObject *)anObserver forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+{
+	if ([keyPath hasPrefix:@"selection."])
+	{
+		[myTempSelectionController addObserver:anObserver forKeyPath:keyPath options:options context:context];
+	}
+	else
+	{
+		[super addObserver:anObserver forKeyPath:keyPath options:options context:context];
+	}
+}
+
 #pragma mark -
 #pragma mark Selection Indexes
 
@@ -96,9 +111,6 @@
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
 														object:[selectedPages anyObject]];
-	
-	// update window title
-	[[self windowController] synchronizeWindowTitleWithDocumentName];
 	
 	// Refresh webview
 	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];

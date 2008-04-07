@@ -312,19 +312,6 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 	[[self webViewController] setWindowController:self];
 }
 
-- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
-
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
-{
-	[[self siteOutlineController] setWindowController:nil];
-	
-	[controller retain];
-	[mySiteOutlineController release];
-	mySiteOutlineController = controller;
-	
-	[[self siteOutlineController] setWindowController:self];
-}
-
 @end
 
 
@@ -333,7 +320,7 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 
 @implementation NSObject ( isa )
 
--(id) isa
+- (id)isa
 {
 	return self->isa;
 }

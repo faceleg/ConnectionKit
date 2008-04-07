@@ -133,6 +133,10 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSButton *myBuyNowButton;
 }
 
+- (KTDocSiteOutlineController *)siteOutlineController;
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
+
+
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
 
 // Getters
@@ -319,9 +323,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (KTDocWebViewController *)webViewController;
 - (void)setWebViewController:(KTDocWebViewController *)controller;
-
-- (KTDocSiteOutlineController *)siteOutlineController;
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
 
 @end
 

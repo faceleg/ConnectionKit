@@ -123,7 +123,6 @@ extern NSString *kKTTemplateParserException;
 
 extern NSString *kKTDefaultCalendarFormat;
 
-extern NSString *kKTDocumentTitleNeedsRefreshingNotification;
 extern NSString *kKTRootPageSavingNotification;
 extern NSString *kKTInfoWindowMayNeedRefreshingNotification;
 extern NSString *kKTDesignChangedNotification;

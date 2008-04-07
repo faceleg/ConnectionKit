@@ -75,7 +75,6 @@ NSString *kKTElementExtension = @"svxElement";
 NSString *kKTDesignExtension = @"svxDesign";
 
 // Notifications
-NSString *kKTDocumentTitleNeedsRefreshingNotification = @"KTDocumentTitleNeedsRefreshingNotification";
 NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
 NSString *kKTRootPageSavingNotification = @"KTRootPageSavingNotification";
 NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";

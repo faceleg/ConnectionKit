@@ -231,7 +231,7 @@
 	}
 	
 	
-	NSString *siteTitleText = [[self master] siteTitleText];
+	NSString *siteTitleText = [[[self master] valueForKey:@"siteTitleHTML"] flattenHTML];
 	if ( (nil != siteTitleText) && ![siteTitleText isEqualToString:@""] && ![siteTitleText isEqualToString:titleText] )
 	{
 		if (needsSeparator)
