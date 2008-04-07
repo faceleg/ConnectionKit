@@ -15,12 +15,12 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
-
+ 
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>
 
 
-@interface KTMediaFile ()
+@interface KTMediaFile ( Private )
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 @end

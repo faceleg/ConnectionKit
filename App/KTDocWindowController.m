@@ -64,7 +64,7 @@
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
-@interface KTDocWindowController ()
+@interface KTDocWindowController ( Private )
 
 - (void)showDesigns:(BOOL)inShow;
 - (void)showInfo:(BOOL)inShow;

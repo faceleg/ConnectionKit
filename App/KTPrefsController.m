@@ -19,7 +19,7 @@
 #import "NSApplication+Karelia.h"
 #import "KSAbstractBugReporter.h"
 
-@interface KTPrefsController ()
+@interface KTPrefsController ( Private )
 
 - (int)sparkleOption;
 - (void)setSparkleOption:(int)aSparkleOption;

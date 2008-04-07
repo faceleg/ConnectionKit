@@ -217,8 +217,8 @@
 	
 	// Draw the thumbnail
 	NSImage *thumbnail = [[NSImage alloc] initWithContentsOfFile:path ofMaximumSize:maxSize];
-	float thumbOriginX = 0.5 * (thumbnail.size.width - iconSize);
-	float thumbOriginY = 0.5 * (thumbnail.size.height - iconSize);
+	float thumbOriginX = 0.5 * ([thumbnail size].width - iconSize);
+	float thumbOriginY = 0.5 * ([thumbnail size].height - iconSize);
 	NSRect thumbSourceRect = NSMakeRect(thumbOriginX, thumbOriginY, iconSize, iconSize);
 	[thumbnail drawInRect:iconRect fromRect:thumbSourceRect operation:NSCompositeSourceAtop fraction:1.0];
 	[thumbnail release];

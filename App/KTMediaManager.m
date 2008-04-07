@@ -27,7 +27,7 @@
 #import "BDAlias.h"
 
 
-@interface KTMediaManager ()
+@interface KTMediaManager ( Private )
 // MediaContainer Creation
 - (KTMediaContainer *)insertMediaContainer;
 @end

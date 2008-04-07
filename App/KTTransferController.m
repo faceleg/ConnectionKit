@@ -99,7 +99,7 @@
 static NSArray *sReservedNames = nil;
 
 
-@interface KTTransferController ()
+@interface KTTransferController ( Private )
 
 - (void)threadedPrepareHostForUpload;
 

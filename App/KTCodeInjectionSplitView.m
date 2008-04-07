@@ -11,7 +11,7 @@
 #import "KSVerticallyAlignedTextCell.h"
 
 
-@interface KTCodeInjectionSplitView ()
+@interface KTCodeInjectionSplitView ( Private )
 + (NSTextFieldCell *)dividerDescriptionCell;
 @end
 
