@@ -116,8 +116,8 @@
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
 				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
 				274339F10D7733B600164FA5 /* PBXTargetDependency */,
-				274E82800D627180004F89C2 /* PBXTargetDependency */,
-				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
+				CE1B862C0DAAAEAD00C044F1 /* PBXTargetDependency */,
+				CE1B862E0DAAAEC200C044F1 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -911,13 +911,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
-		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
-			remoteInfo = MetaSandvox;
-		};
 		3C095BE00D5D27F100DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -1478,18 +1471,25 @@
 			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
+		CE1B862B0DAAAEAD00C044F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* MetaSandvox */;
+			remoteInfo = MetaSandvox;
+		};
+		CE1B862D0DAAAEC200C044F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* SandvoxQuickLook */;
+			remoteInfo = SandvoxQuickLook;
+		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SandvoxQuickLook;
-		};
-		CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
 		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
@@ -5858,7 +5858,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\nrm -rf ${PLUGINS_FOLDER_PATH}/*\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxDataSource *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n#rm -rf ${PLUGINS_FOLDER_PATH}/*\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxDataSource *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
@@ -5873,7 +5873,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude Info.plist -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-include ${BUILDSETTINGS_PATH} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n#rm -rf ${DESIGNS_FOLDER_PATH}/*\n\npushd ../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude Info.plist -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-include ${BUILDSETTINGS_PATH} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -6274,11 +6274,6 @@
 			name = CollectionArchiveElement;
 			targetProxy = 274339F00D7733B600164FA5 /* PBXContainerItemProxy */;
 		};
-		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MetaSandvox;
-			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
-		};
 		3C095C090D5D282F00DE6F62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GeneralIndex;
@@ -6499,10 +6494,15 @@
 			name = iMediaBrowser;
 			targetProxy = 3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */;
 		};
-		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
+		CE1B862C0DAAAEAD00C044F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MetaSandvox;
+			targetProxy = CE1B862B0DAAAEAD00C044F1 /* PBXContainerItemProxy */;
+		};
+		CE1B862E0DAAAEC200C044F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
-			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+			targetProxy = CE1B862D0DAAAEC200C044F1 /* PBXContainerItemProxy */;
 		};
 		CE9510B60D63B0A3008D163A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
