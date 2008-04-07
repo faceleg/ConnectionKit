@@ -78,7 +78,7 @@
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				2770641E0DA985AA001EB02A /* Script - Add QuickLook */,
-				CE71FB6F0DAA9CB100DB4D82 /* Script - Remove Unsupported Languages */,
+				CE9D3ED20DAAB8450025717A /* Script - Remove unsupported languages */,
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
@@ -116,8 +116,8 @@
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
 				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
 				274339F10D7733B600164FA5 /* PBXTargetDependency */,
-				CE1B862C0DAAAEAD00C044F1 /* PBXTargetDependency */,
-				CE1B862E0DAAAEC200C044F1 /* PBXTargetDependency */,
+				274E82800D627180004F89C2 /* PBXTargetDependency */,
+				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -911,6 +911,13 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = CollectionArchiveElement;
 		};
+		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
+			remoteInfo = MetaSandvox;
+		};
 		3C095BE00D5D27F100DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -1471,25 +1478,18 @@
 			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
-		CE1B862B0DAAAEAD00C044F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* MetaSandvox */;
-			remoteInfo = MetaSandvox;
-		};
-		CE1B862D0DAAAEC200C044F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* SandvoxQuickLook */;
-			remoteInfo = SandvoxQuickLook;
-		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
+			remoteInfo = SandvoxQuickLook;
+		};
+		CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
 		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
@@ -4847,7 +4847,7 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
-				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */,
+				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
@@ -5725,7 +5725,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
@@ -5827,7 +5827,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\necho \"###\"\necho \"Removing Headers from ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmazonSupport/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmazonSupport.framework/PrivateHeaders\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellScript = "\necho \"###\"\necho \"Removing Headers from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
@@ -5842,7 +5842,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/${PRIVATE_HEADERS_FOLDER_PATH}/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/${PRIVATE_HEADERS_FOLDER_PATH}\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/ContactPassword.h\n\n";
+			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}//Sandvox.app/Contents/Headers/ContactPassword.h\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */ = {
@@ -5858,7 +5858,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${PLUGINS_FOLDER_PATH}\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n#rm -rf ${PLUGINS_FOLDER_PATH}/*\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxDataSource *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxDataSource *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
@@ -5873,7 +5873,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n#rm -rf ${DESIGNS_FOLDER_PATH}/*\n\npushd ../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude Info.plist -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-include ${BUILDSETTINGS_PATH} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude Info.plist -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-include ${BUILDSETTINGS_PATH} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -5888,7 +5888,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
@@ -5903,7 +5903,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
@@ -5934,32 +5934,32 @@
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE Shared ToT FOR RELEASE BUILDS\n###\n\nSHARED_PATH=${SRCROOT}/../../../Shared\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Shared with ToT ...\"\ncd ${SHARED_PATH}\n${SVN_PATH} update\necho \"... finished syncing Shared\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
-		CE71FB6F0DAA9CB100DB4D82 /* Script - Remove Unsupported Languages */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Remove Unsupported Languages";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\..|/it\\.|/zh_CN\\.|/zh_TW\\.|/ja\\.|/fr\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
-			showEnvVarsInLog = 0;
-		};
-		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings (UNUSED) */ = {
+		CE9D3ED20DAAB8450025717A /* Script - Remove unsupported languages */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Smarter Localizable.strings (UNUSED)";
+			name = "Script - Remove unsupported languages";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\..|/it\\.|/zh_CN\\.|/zh_TW\\.|/ja\\.|/fr\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
+			showEnvVarsInLog = 0;
+		};
+		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Smarter Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "#!/bin/sh -";
 			shellScript = "exit\n\n\n/usr/bin/osascript <<-EOF\ntell application \"Xcode\"\n set AppleScript's text item delimiters to \" \"\n set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\nEOF\n";
 			showEnvVarsInLog = 0;
@@ -6274,6 +6274,11 @@
 			name = CollectionArchiveElement;
 			targetProxy = 274339F00D7733B600164FA5 /* PBXContainerItemProxy */;
 		};
+		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MetaSandvox;
+			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
+		};
 		3C095C090D5D282F00DE6F62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GeneralIndex;
@@ -6494,15 +6499,10 @@
 			name = iMediaBrowser;
 			targetProxy = 3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */;
 		};
-		CE1B862C0DAAAEAD00C044F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MetaSandvox;
-			targetProxy = CE1B862B0DAAAEAD00C044F1 /* PBXContainerItemProxy */;
-		};
-		CE1B862E0DAAAEC200C044F1 /* PBXTargetDependency */ = {
+		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
-			targetProxy = CE1B862D0DAAAEC200C044F1 /* PBXContainerItemProxy */;
+			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
 		};
 		CE9510B60D63B0A3008D163A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
