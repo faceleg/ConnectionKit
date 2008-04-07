@@ -224,15 +224,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	
 	// peform fetch
 	NSManagedObjectContext *context = [[self document] managedObjectContext];
-	NSError *fetchError = nil;
-	NSArray *fetchedObjects = [context objectsWithEntityName:entityName
-												   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", uniqueID]
-													   error:&fetchError];	
-	// extract result
-	if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
-	{
-		result = [fetchedObjects objectAtIndex:0];
-	}
+	result = [context objectWithUniqueID:uniqueID];
 	
 	return result;
 }
