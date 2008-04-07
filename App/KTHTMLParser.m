@@ -30,7 +30,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "KTMediaContainer.h"
 
-@interface KTHTMLParser ( Private )
+@interface KTHTMLParser ( ExtraPrivate )
 
 - (void)setParentParser:(KTHTMLParser *)parser;
 
