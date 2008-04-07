@@ -24,22 +24,12 @@
 
 
 // Queries
-- (NSArray *)externalMediaFiles;
 - (NSSet *)temporaryMediaFiles;
 - (NSString *)uniqueInDocumentFilename:(NSString *)preferredFilename;
 
 - (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest;
 - (KTInDocumentMediaFile *)anyInDocumentMediaFileEqualToFile:(NSString *)path;
 
-
-// Media file creation
-- (KTMediaFile *)mediaFileWithPath:(NSString *)path;
-- (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
-- (KTInDocumentMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
-- (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image;
-- (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
-
-- (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename;
 
 // Missing media
 - (NSSet *)missingMediaFiles;
@@ -66,4 +56,24 @@
 
 @end
 
+
+/*	At the lowest level of the system is raw KTMediaFile management. Media Files are simple objects that
+ *	represent a single unique piece of media, internal or external to the document. Code outside the media
+ *	system should never have to manage KTMediaFile objects directly; the higher-level APIs do that.
+ */
+@interface KTMediaManager (MediaFiles)
+
+// Queries
+- (NSArray *)externalMediaFiles;
+
+// MediaFile creation/re-use
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path;
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
+- (KTInDocumentMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
+- (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image;
+- (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
+
+- (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename;
+
+@end
 

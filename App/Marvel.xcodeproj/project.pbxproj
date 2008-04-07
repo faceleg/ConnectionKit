@@ -161,6 +161,7 @@
 		2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */; };
 		271575540D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575520D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
+		27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
 		272321320D48013F0075F31F /* KTDocWebViewController+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321310D48013F0075F31F /* KTDocWebViewController+Private.h */; settings = {ATTRIBUTES = (); }; };
@@ -1650,6 +1651,7 @@
 		271575520D60664500A91E58 /* KTDocSiteOutlineController+DragAndDrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+DragAndDrop.m"; sourceTree = "<group>"; };
 		271575CB0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNodeList+KTExtensions.h"; sourceTree = "<group>"; };
 		271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNodeList+KTExtensions.m"; sourceTree = "<group>"; };
+		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
@@ -2703,6 +2705,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		27168E5F0DAA456B00BBC2C6 /* Media Manager */ = {
+			isa = PBXGroup;
+			children = (
+				2796A0200CF7193A00C03F45 /* KTMediaManager+DocumentSaving.m */,
+				27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */,
+				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
+				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
+				27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */,
+			);
+			name = "Media Manager";
+			sourceTree = "<group>";
+		};
 		272321DB0D48B5A70075F31F /* Page Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -2850,15 +2864,16 @@
 		2786BE970CAD10530086F9E0 /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				278B95A80D382A3400E5053A /* MediaContainers */,
-				278B95A90D382A4E00E5053A /* MediaFiles */,
+				27168E5F0DAA456B00BBC2C6 /* Media Manager */,
+				278B95A80D382A3400E5053A /* Media Containers */,
+				278B95A90D382A4E00E5053A /* Media Files */,
 				278B95AA0D382A5B00E5053A /* Other */,
 				27969F4B0CF6146700C03F45 /* Missing Media Sheet */,
 			);
 			name = Media;
 			sourceTree = "<group>";
 		};
-		278B95A80D382A3400E5053A /* MediaContainers */ = {
+		278B95A80D382A3400E5053A /* Media Containers */ = {
 			isa = PBXGroup;
 			children = (
 				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
@@ -2872,10 +2887,10 @@
 				2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */,
 				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
 			);
-			name = MediaContainers;
+			name = "Media Containers";
 			sourceTree = "<group>";
 		};
-		278B95A90D382A4E00E5053A /* MediaFiles */ = {
+		278B95A90D382A4E00E5053A /* Media Files */ = {
 			isa = PBXGroup;
 			children = (
 				270A41F50D46B6F9002E998A /* KTScaledImageProperties.h */,
@@ -2891,20 +2906,16 @@
 				27CD65360CE1F32E00919E41 /* MediaFiles+Internal.h */,
 				27CD65370CE1F32E00919E41 /* MediaFiles+Internal.m */,
 			);
-			name = MediaFiles;
+			name = "Media Files";
 			sourceTree = "<group>";
 		};
 		278B95AA0D382A5B00E5053A /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
-				27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */,
 				27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */,
 				27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */,
-				2796A0200CF7193A00C03F45 /* KTMediaManager+DocumentSaving.m */,
 				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
 				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
-				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -6227,6 +6238,7 @@
 				CE1BB2750D9892D7003F0F4A /* KSNetworkNotifier.m in Sources */,
 				27E3F8340D9C34B000A64154 /* KTDocumentMigrationController.m in Sources */,
 				CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */,
+				27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

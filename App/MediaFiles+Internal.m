@@ -22,7 +22,7 @@
 
 @implementation KTMediaFile (Internal)
 
-+ (id)insertMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 {
 	id result = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
 											  inManagedObjectContext:moc];
@@ -69,10 +69,10 @@
 
 @implementation KTExternalMediaFile (MediaManager)
 
-+ (KTExternalMediaFile *)insertExternalMediaFileWithPath:(NSString *)path
++ (KTExternalMediaFile *)insertNewMediaFileWithPath:(NSString *)path
 						  inManagedObjectContext:(NSManagedObjectContext *)moc
 {
-	id result = [self insertMediaFileWithPath:path inManagedObjectContext:moc];
+	id result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
 	
 	[result setAlias:[BDAlias aliasWithPath:path]];
 	
@@ -87,9 +87,9 @@
 
 @implementation KTInDocumentMediaFile (MediaManager)
 
-+ (id)insertMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc
 {
-	id result = [super insertMediaFileWithPath:path inManagedObjectContext:moc];
+	id result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
 	
 	[result setValue:[path lastPathComponent] forKey:@"filename"];
 	[result setValue:[NSData partiallyDigestStringFromContentsOfFile:path] forKey:@"digest"];
@@ -102,7 +102,7 @@
 + (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 						   inManagedObjectContext:(NSManagedObjectContext *)moc
 {
-	id result = [self insertMediaFileWithPath:path inManagedObjectContext:moc];
+	id result = [self insertNewMediaFileWithPath:path inManagedObjectContext:moc];
 	return result;
 }
 

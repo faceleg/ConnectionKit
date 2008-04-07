@@ -18,16 +18,10 @@
 
 @interface KTMediaFile (Internal)
 
-+ (id)insertMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 
 - (NSString *)preferredFileName;
 
-@end
-
-
-@interface KTExternalMediaFile (MediaManager)
-+ (KTExternalMediaFile *)insertExternalMediaFileWithPath:(NSString *)path
-						  inManagedObjectContext:(NSManagedObjectContext *)moc;
 @end
 
 
