@@ -42,14 +42,16 @@ static NSString *sMainThreadID = nil;
 //}
 
 // in RELEASE, we want KTManagedObjectContext to poseAsClass: NSManagedObjectContext so that saveDocumentAs: works!
-#ifdef DEBUG
+#ifndef DEBUG
 + (void)initialize		// Not +load; we have problems with that.  But then we need to get the class loaded right.
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self poseAsClass:[NSManagedObjectContext class]];
 	[pool release];
 }
-//#endif
+#endif
+
+#ifdef DEBUG
 
 - (id)init 
 {
