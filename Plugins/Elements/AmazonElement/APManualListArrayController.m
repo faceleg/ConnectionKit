@@ -29,7 +29,7 @@
 	
 	NSString *placeholder = LocalizedStringInThisBundle(@"Drag Amazon products here from your web browser",
 														@"Appears in an empty tableview");
-	[(KTPlaceholderTableView *)tableView setPlaceholderString: placeholder];
+	[(KSPlaceholderTableView *)tableView setPlaceholderString: placeholder];
 }
 
 #pragma mark -

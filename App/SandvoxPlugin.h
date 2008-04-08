@@ -66,7 +66,7 @@
 #import "KSSilencingConfirmSheet.h"
 #import "KTImageView.h"
 #import "KSLabel.h"
-#import "KTPlaceholderTableView.h"
+#import "KSPlaceholderTableView.h"
 #import "KSSmallDatePicker.h"
 #import "KSSmallDatePickerCell.h"
 #import "KSTrimFirstLineFormatter.h"

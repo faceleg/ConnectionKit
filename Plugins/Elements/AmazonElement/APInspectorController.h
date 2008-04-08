@@ -33,7 +33,7 @@
 	IBOutlet NSButton			*oManualListRemoveProductButton;
 	IBOutlet NSArrayController	*manualProductsArrayController;
 	
-	IBOutlet KTPlaceholderTableView	*automaticListTableView;
+	IBOutlet KSPlaceholderTableView	*automaticListTableView;
 	IBOutlet NTBoxView				*automaticTableButtonsBox;
 	
 	IBOutlet NSSegmentedControl	*listLayoutSegmentedControl;

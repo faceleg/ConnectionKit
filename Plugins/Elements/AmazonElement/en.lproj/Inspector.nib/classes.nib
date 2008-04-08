@@ -22,6 +22,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSPlaceholderTableView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>DNDArrayController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -82,14 +90,6 @@
 			<string>NSPopUpButton</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>AmazonIDFormatter</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>KSTrimFirstLineFormatter</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>openProductURL</key>
@@ -101,6 +101,14 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>DNDArrayController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>AmazonIDFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>KSTrimFirstLineFormatter</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -148,7 +156,7 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>automaticListTableView</key>
-				<string>KTPlaceholderTableView</string>
+				<string>KSPlaceholderTableView</string>
 				<key>automaticTableButtonsBox</key>
 				<string>NTBoxView</string>
 				<key>listLayoutSegmentedControl</key>
@@ -176,14 +184,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTPlaceholderTableView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTableView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

@@ -377,7 +377,6 @@
 		3C682B6C0D62327E00B4D485 /* KTLinkConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B6B0D62327E00B4D485 /* KTLinkConnector.m */; };
 		3C682B6F0D62328E00B4D485 /* KTLinkSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B6E0D62328E00B4D485 /* KTLinkSourceView.m */; };
 		3C682B720D62329A00B4D485 /* KTMagnifyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B710D62329A00B4D485 /* KTMagnifyButton.m */; };
-		3C682B750D6232AA00B4D485 /* KTPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B740D6232AA00B4D485 /* KTPlaceholderTableView.m */; };
 		3C682B840D6232EF00B4D485 /* KTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B830D6232EF00B4D485 /* KTView.m */; };
 		3C682BAD0D62345B00B4D485 /* NSBundle+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BAC0D62345B00B4D485 /* NSBundle+KTExtensions.m */; };
 		3C682BB10D62347400B4D485 /* NSObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB00D62347400B4D485 /* NSObject+KTExtensions.m */; };
@@ -405,7 +404,6 @@
 		3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6A0D62327900B4D485 /* KTLinkConnector.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BD70D62353C00B4D485 /* KTPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B730D6232A500B4D485 /* KTPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
 		3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2707DFC0AA00DE4994 /* KTWebView.m */; };
 		3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */; };
@@ -572,6 +570,8 @@
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
 		CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */; };
 		CE4F81010891B55600556D47 /* designSelectedClickGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4F81000891B55600556D47 /* designSelectedClickGloss.png */; };
+		CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */; };
+		CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
 		CE53609C0A15303D00661E26 /* Introduction.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE53609A0A15303D00661E26 /* Introduction.nib */; };
 		CE57F2960D57F194005C1D64 /* follow15.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE57F2950D57F194005C1D64 /* follow15.tiff */; };
@@ -1955,8 +1955,6 @@
 		3C682B6E0D62328E00B4D485 /* KTLinkSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLinkSourceView.m; sourceTree = "<group>"; };
 		3C682B700D62329500B4D485 /* KTMagnifyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMagnifyButton.h; sourceTree = "<group>"; };
 		3C682B710D62329A00B4D485 /* KTMagnifyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMagnifyButton.m; sourceTree = "<group>"; };
-		3C682B730D6232A500B4D485 /* KTPlaceholderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderTableView.h; sourceTree = "<group>"; };
-		3C682B740D6232AA00B4D485 /* KTPlaceholderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderTableView.m; sourceTree = "<group>"; };
 		3C682B820D6232EA00B4D485 /* KTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTView.h; sourceTree = "<group>"; };
 		3C682B830D6232EF00B4D485 /* KTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTView.m; sourceTree = "<group>"; };
 		3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+KTExtensions.h"; sourceTree = "<group>"; };
@@ -2188,6 +2186,8 @@
 		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
 		CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPickerBackground.m; sourceTree = "<group>"; };
 		CE4F81000891B55600556D47 /* designSelectedClickGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedClickGloss.png; sourceTree = "<group>"; };
+		CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlaceholderTableView.m; path = ../../../Shared/trunk/App/KSPlaceholderTableView.m; sourceTree = SOURCE_ROOT; };
+		CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlaceholderTableView.h; path = ../../../Shared/trunk/App/KSPlaceholderTableView.h; sourceTree = SOURCE_ROOT; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
 		CE53609B0A15303D00661E26 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Introduction.nib; sourceTree = "<group>"; };
@@ -3909,8 +3909,6 @@
 				3C682B6E0D62328E00B4D485 /* KTLinkSourceView.m */,
 				3C682B700D62329500B4D485 /* KTMagnifyButton.h */,
 				3C682B710D62329A00B4D485 /* KTMagnifyButton.m */,
-				3C682B730D6232A500B4D485 /* KTPlaceholderTableView.h */,
-				3C682B740D6232AA00B4D485 /* KTPlaceholderTableView.m */,
 				CE16A3D8087319720006F80B /* KTStackView.h */,
 				CE16A3D7087319720006F80B /* KTStackView.m */,
 				3C682B820D6232EA00B4D485 /* KTView.h */,
@@ -4344,6 +4342,8 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */,
+				CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */,
 				CE6907210DA2B063003FE259 /* KSSavedFeedbackSender.h */,
 				CE6907220DA2B063003FE259 /* KSSavedFeedbackSender.m */,
 				CE1BB2720D9892D7003F0F4A /* KSNetworkNotifier.h */,
@@ -4680,7 +4680,6 @@
 				3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */,
 				3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */,
 				3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */,
-				3C682BD70D62353C00B4D485 /* KTPlaceholderTableView.h in Headers */,
 				3C682BDC0D62354700B4D485 /* KTView.h in Headers */,
 				3CF941DB0D623E4900B1C83D /* NSImagePicker.h in Headers */,
 				3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */,
@@ -4819,6 +4818,7 @@
 				CE1BB2740D9892D7003F0F4A /* KSNetworkNotifier.h in Headers */,
 				27E3F8330D9C34B000A64154 /* KTDocumentMigrationController.h in Headers */,
 				CE6907230DA2B063003FE259 /* KSSavedFeedbackSender.h in Headers */,
+				CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6082,7 +6082,6 @@
 				3C682B6C0D62327E00B4D485 /* KTLinkConnector.m in Sources */,
 				3C682B6F0D62328E00B4D485 /* KTLinkSourceView.m in Sources */,
 				3C682B720D62329A00B4D485 /* KTMagnifyButton.m in Sources */,
-				3C682B750D6232AA00B4D485 /* KTPlaceholderTableView.m in Sources */,
 				3C682B840D6232EF00B4D485 /* KTView.m in Sources */,
 				3C682BAD0D62345B00B4D485 /* NSBundle+KTExtensions.m in Sources */,
 				3C682BB10D62347400B4D485 /* NSObject+KTExtensions.m in Sources */,
@@ -6215,6 +6214,7 @@
 				27E3F8340D9C34B000A64154 /* KTDocumentMigrationController.m in Sources */,
 				CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */,
 				27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */,
+				CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
