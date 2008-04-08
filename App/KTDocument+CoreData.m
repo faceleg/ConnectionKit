@@ -94,10 +94,15 @@
 
 #pragma mark store coordinator
 
+//- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
+//										   ofType:(NSString *)fileType 
+//							   modelConfiguration:(NSString *)configuration 
+//									 storeOptions:(NSDictionary *)storeOptions 
+//											error:(NSError **)error
+
+// this method is deprecated in Leopard, but we must continue to use its signature for Tiger
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
 										   ofType:(NSString *)fileType 
-							   modelConfiguration:(NSString *)configuration 
-									 storeOptions:(NSDictionary *)storeOptions 
 											error:(NSError **)error
 {
 	//LOGMETHOD;
