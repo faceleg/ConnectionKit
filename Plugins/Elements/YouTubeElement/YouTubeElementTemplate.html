@@ -1,8 +1,20 @@
-<div[[idClass entity:Element property:videoHTML id:uniqueID class:VideoPlayer]]>
-	<div class="videoplayer">
-[[=delegate.embedHTML]]
-	</div>
-[[if captionHTML|editing]]
-	<div[[idClass entity:Element property:captionHTML flags:"block optional" id:uniqueID class:caption]]>[[=captionHTML]]</div>
-[[endif]]
+[[if videoID]]
+<div class="videoplayer">
+	<object width="425" height="355">
+		<param name="movie" value="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=0x5d1719&color2=0xcd311b[[if showBorder]]&border=1[[endif2]]&hl=en"></param>
+		<param name="wmode" value="transparent"></param>
+		<embed src="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=0x5d1719&color2=0xcd311b[[if showBorder]]&border=1[[endif2]]&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+	</object>
 </div>
+
+[[else]]
+
+[[endif]]
+
+[[comment
+<object width="425" height="373">
+	<param name="movie" value="http://www.youtube.com/v/V50ex8sOLL4&rel=0&color1=0x5d1719&color2=0xcd311b&border=1&hl=en"></param>
+	<param name="wmode" value="transparent"></param>
+	<embed src="http://www.youtube.com/v/V50ex8sOLL4&rel=0&color1=0x5d1719&color2=0xcd311b&border=1&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="373"></embed></object>
+
+]]

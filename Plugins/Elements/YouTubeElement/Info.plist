@@ -20,6 +20,8 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
 	<key>KTCSSClassName</key>
 	<string>Movie</string>
 	<key>KTElementAllowsIntroduction</key>
@@ -30,8 +32,6 @@
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>Movie</string>
-	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
 	<key>KTPageName</key>
 	<string>YouTube Page</string>
 	<key>KTPageShowSidebar</key>
@@ -44,10 +44,10 @@
 	<string>YouTube.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
-		<key>captionHTML</key>
-		<string></string>
-		<key>movieSource</key>
-		<integer>0</integer>
+		<key>includeRelatedVideos</key>
+		<false/>
+		<key>showBorder</key>
+		<false/>
 	</dict>
 	<key>KTPluginName</key>
 	<string>YouTube</string>

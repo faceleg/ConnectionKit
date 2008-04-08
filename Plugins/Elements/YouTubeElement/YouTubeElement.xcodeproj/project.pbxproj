@@ -15,7 +15,6 @@
 		CEF1206A0D9055E600FCAC70 /* YouTubeElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */; };
 		CEF120CB0D90563E00FCAC70 /* YouTubeElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */; };
 		CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF120DE0D90567900FCAC70 /* InfoPlist.strings */; };
-		CEF12D920D9073CE00FCAC70 /* sources.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEF12D910D9073CE00FCAC70 /* sources.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +57,6 @@
 		CEF120EC0D9056B500FCAC70 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEF120ED0D9056B500FCAC70 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120EE0D9056C400FCAC70 /* YouTubeElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElement_Prefix.pch; sourceTree = "<group>"; };
-		CEF12D910D9073CE00FCAC70 /* sources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sources.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +104,6 @@
 				CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */,
 				3C42E5B00D650888004F35FD /* Localizable.strings */,
 				3C42E5C50D65091C004F35FD /* License.rtf */,
-				CEF12D910D9073CE00FCAC70 /* sources.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -229,7 +226,6 @@
 				CEF1206A0D9055E600FCAC70 /* YouTubeElementTemplate.html in Resources */,
 				CEF120CB0D90563E00FCAC70 /* YouTubeElement.nib in Resources */,
 				CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */,
-				CEF12D920D9073CE00FCAC70 /* sources.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
