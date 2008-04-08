@@ -698,7 +698,6 @@
 		CEC11AF20D78BE3D00513E70 /* KSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */; };
 		CEC11AF30D78BE3D00513E70 /* KSValidateCharFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */; };
 		CEC11AF40D78BE3D00513E70 /* KSVerticallyAlignedTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */; };
-		CEC11AF60D78BE3D00513E70 /* MyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8E0D78BE3C00513E70 /* MyTableView.m */; };
 		CEC11AF70D78BE3D00513E70 /* NSAppleScript+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */; };
 		CEC11AF80D78BE3D00513E70 /* NSApplication+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */; };
 		CEC11AF90D78BE3D00513E70 /* NSArray+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A910D78BE3C00513E70 /* NSArray+Karelia.m */; };
@@ -804,7 +803,6 @@
 		CEC11BD00D78BE5300513E70 /* MoreAddrToSym.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */; };
 		CEC11BD10D78BE5300513E70 /* MoreBacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B640D78BE5300513E70 /* MoreBacktrace.h */; };
 		CEC11BD20D78BE5300513E70 /* MoreSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B650D78BE5300513E70 /* MoreSetup.h */; };
-		CEC11BD30D78BE5300513E70 /* MyTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B660D78BE5300513E70 /* MyTableView.h */; };
 		CEC11BD40D78BE5300513E70 /* NSAppleScript+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BD50D78BE5300513E70 /* NSApplication+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B680D78BE5300513E70 /* NSApplication+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BD60D78BE5300513E70 /* NSArray+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B690D78BE5300513E70 /* NSArray+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2367,7 +2365,6 @@
 		CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSUtilities.m; path = ../../../Shared/trunk/App/KSUtilities.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSValidateCharFormatter.m; path = ../../../Shared/trunk/App/KSValidateCharFormatter.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSVerticallyAlignedTextCell.m; path = ../../../Shared/trunk/App/KSVerticallyAlignedTextCell.m; sourceTree = SOURCE_ROOT; };
-		CEC11A8E0D78BE3C00513E70 /* MyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTableView.m; path = ../../../Shared/trunk/App/MyTableView.m; sourceTree = SOURCE_ROOT; };
 		CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAppleScript+Karelia.m"; path = "../../../Shared/trunk/App/NSAppleScript+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSApplication+Karelia.m"; path = "../../../Shared/trunk/App/NSApplication+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A910D78BE3C00513E70 /* NSArray+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Karelia.m"; path = "../../../Shared/trunk/App/NSArray+Karelia.m"; sourceTree = SOURCE_ROOT; };
@@ -2475,7 +2472,6 @@
 		CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreAddrToSym.h; path = ../../../Shared/trunk/App/MoreAddrToSym.h; sourceTree = SOURCE_ROOT; };
 		CEC11B640D78BE5300513E70 /* MoreBacktrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MoreBacktrace.h; path = ../../../Shared/trunk/App/MoreBacktrace.h; sourceTree = SOURCE_ROOT; };
 		CEC11B650D78BE5300513E70 /* MoreSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreSetup.h; path = ../../../Shared/trunk/App/MoreSetup.h; sourceTree = SOURCE_ROOT; };
-		CEC11B660D78BE5300513E70 /* MyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTableView.h; path = ../../../Shared/trunk/App/MyTableView.h; sourceTree = SOURCE_ROOT; };
 		CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAppleScript+Karelia.h"; path = "../../../Shared/trunk/App/NSAppleScript+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B680D78BE5300513E70 /* NSApplication+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSApplication+Karelia.h"; path = "../../../Shared/trunk/App/NSApplication+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B690D78BE5300513E70 /* NSArray+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Karelia.h"; path = "../../../Shared/trunk/App/NSArray+Karelia.h"; sourceTree = SOURCE_ROOT; };
@@ -4412,7 +4408,6 @@
 				CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */,
 				CEC11B640D78BE5300513E70 /* MoreBacktrace.h */,
 				CEC11B650D78BE5300513E70 /* MoreSetup.h */,
-				CEC11B660D78BE5300513E70 /* MyTableView.h */,
 				CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */,
 				CEC11B680D78BE5300513E70 /* NSApplication+Karelia.h */,
 				CEC11B690D78BE5300513E70 /* NSArray+Karelia.h */,
@@ -4516,7 +4511,6 @@
 				CEC11A8A0D78BE3C00513E70 /* KSUtilities.m */,
 				CEC11A8B0D78BE3C00513E70 /* KSValidateCharFormatter.m */,
 				CEC11A8C0D78BE3C00513E70 /* KSVerticallyAlignedTextCell.m */,
-				CEC11A8E0D78BE3C00513E70 /* MyTableView.m */,
 				CEC11A8F0D78BE3C00513E70 /* NSAppleScript+Karelia.m */,
 				CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */,
 				CEC11A910D78BE3C00513E70 /* NSArray+Karelia.m */,
@@ -4761,7 +4755,6 @@
 				CEC11BD00D78BE5300513E70 /* MoreAddrToSym.h in Headers */,
 				CEC11BD10D78BE5300513E70 /* MoreBacktrace.h in Headers */,
 				CEC11BD20D78BE5300513E70 /* MoreSetup.h in Headers */,
-				CEC11BD30D78BE5300513E70 /* MyTableView.h in Headers */,
 				CEC11BD40D78BE5300513E70 /* NSAppleScript+Karelia.h in Headers */,
 				CEC11BD50D78BE5300513E70 /* NSApplication+Karelia.h in Headers */,
 				CEC11BD60D78BE5300513E70 /* NSArray+Karelia.h in Headers */,
@@ -6155,7 +6148,6 @@
 				CEC11AF20D78BE3D00513E70 /* KSUtilities.m in Sources */,
 				CEC11AF30D78BE3D00513E70 /* KSValidateCharFormatter.m in Sources */,
 				CEC11AF40D78BE3D00513E70 /* KSVerticallyAlignedTextCell.m in Sources */,
-				CEC11AF60D78BE3D00513E70 /* MyTableView.m in Sources */,
 				CEC11AF70D78BE3D00513E70 /* NSAppleScript+Karelia.m in Sources */,
 				CEC11AF80D78BE3D00513E70 /* NSApplication+Karelia.m in Sources */,
 				CEC11AF90D78BE3D00513E70 /* NSArray+Karelia.m in Sources */,

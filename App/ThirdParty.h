@@ -21,4 +21,3 @@
 
 // via Apple sample code
 #import "DNDArrayController.h"
-#import "MyTableView.h"
