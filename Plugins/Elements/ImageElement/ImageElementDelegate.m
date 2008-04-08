@@ -49,7 +49,7 @@
 // LocalizedStringInThisBundle(@"magnify", "alt text of mag link");
 
 
-@interface ImageElementDelegate ()
+@interface ImageElementDelegate (Private)
 - (NSSize)boundingImageBox;
 @end
 
