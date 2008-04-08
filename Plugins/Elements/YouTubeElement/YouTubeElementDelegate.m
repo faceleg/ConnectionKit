@@ -35,48 +35,41 @@
 //
 
 #import "YouTubeElementDelegate.h"
-
-#import "NSMutableSet+Karelia.h"
 #import <SandvoxPlugin.h>
-#import <QTKit/QTKit.h>
-#include <zlib.h>
 
-#import <KSPathInfoField.h>
+#import "YouTubeCocoaExtensions.h"
 
 
 /*
+Services it'd be nice to support eventually:
  
-Some alternatives to YouTube and Google Video:
- 
- MetaCafe
- Vimeo
- Revver
- Viddler
- http://v.youku.com/v_show/id_cf00XOTc3MzgwNA==.html
+MetaCafe
+Vimeo
+Revver
+Viddler
+http://v.youku.com/v_show/id_cf00XOTc3MzgwNA==.html
 video.aol.com
- blip.tv
- 
- 
- 
- These are the services we looked at: blip.tv, Brightcove.tv, ClipShack, Crackle, DailyMotion, Sony eyeVio, Google Video, Megavideo, Metacafe, Motionbox, Revver, Spike (ifilm), Stage6, Veoh, Viddler, Vimeo, Yahoo Video, and YouTube.
- 
-, LiveLeak, LiveVideo, , SoapBox, Break
- 
- 
+blip.tv
+
+Brightcove.tv,
+ClipShack,
+Crackle,
+DailyMotion,
+Sony eyeVio,
+Google Video,
+Megavideo,
+Motionbox,
+Spike (ifilm),
+Stage6,
+Veoh,
+Vimeo,
+Yahoo Video,
+LiveLeak,
+LiveVideo,
+SoapBox,
+Break
  */
 
-
- 
- 
- 
-
-@interface YouTubeElementDelegate ()
-
-- (NSArray *) sources;
-
-@end
-
-static NSArray *sSources = nil;
 
 @implementation YouTubeElementDelegate
 
@@ -85,28 +78,10 @@ static NSArray *sSources = nil;
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
-	
-	// set default properties
-	if ( isNewObject )
-	{
-		NSDictionary *defaultItem = [[self sources] lastObject];
-		NSEnumerator *enumerator = [[self sources] objectEnumerator];
-		NSDictionary *dict;
-
-		while ((dict = [enumerator nextObject]) != nil)
-		{
-			if ([dict objectForKey:@"default"])
-			{
-				defaultItem = dict;
-				break;
-			}
-		}
-		[[self delegateOwner] setValue:defaultItem forKey:@"currentSource"];
-	}
-
 }
 
-
+// TODO: Rewrite for YouTube URLs
+/*
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
 {
 	[super awakeFromDragWithDictionary:aDataSourceDictionary];
@@ -132,41 +107,22 @@ static NSArray *sSources = nil;
 									forKey:@"captionHTML"];
 	}
 }
-
-- (void) awakeFromNib
-{
-	NSImage *im1 = [NSImage imageNamed:@"arrow_grey_up"];
-	NSImage *im2 = [NSImage imageNamed:@"arrow_grey_down"];
-	[im1 setScalesWhenResized:YES];
-	[im2 setScalesWhenResized:YES];
-	[im1 setSize:[oVideoSourceButton frame].size];
-	[im2 setSize:[oVideoSourceButton frame].size];
-	[oVideoSourceButton setImage:im1];
-	[oVideoSourceButton setAlternateImage:im2];
-	[oHomePageButton setImage:im1];
-	[oHomePageButton setAlternateImage:im2];
-	
-	[oVideoSourceButton setState:NSOffState];
-	[oHomePageButton setState:NSOffState];
-}
-
-#pragma mark -
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
-}
-
+*/
 
 #pragma mark -
 #pragma mark Plugin
 
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+{
+	if ([key isEqualToString:@"userVideoCode"])
+	{
+		NSString *videoID = [[NSURL URLWithString:value] youTubeVideoID];
+		[plugin setValue:videoID forKey:@"videoID"];
+	}
+}
 
-/*!	Cut a strict down -- we shouldn't have strict with the 'embed' tag
+/*	Cut a strict down -- we shouldn't have strict with the 'embed' tag
 */
-// Called via recursiveComponentPerformSelector
 - (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
 {
 	int *docType = (int *)aDocTypePointer;
@@ -175,112 +131,6 @@ static NSArray *sSources = nil;
 	{
 		*docType = KTXHTMLTransitionalDocType;
 	}
-}
-
-/*	When a user updates one of these settings, update the defaults accordingly
- */
-- (void)setDelegateOwner:(id)plugin
-{
-	NSSet *keyPaths = [NSSet setWithObjects:@"autoplay", @"controller", @"kioskmode", @"loop", nil];
-	
-	[[self delegateOwner] removeObserver:self forKeyPaths:keyPaths];
-	[super setDelegateOwner:plugin];
-	[plugin addObserver:self forKeyPaths:keyPaths options:NSKeyValueObservingOptionNew context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if (object == [self delegateOwner])
-	{
-		id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-		if (newValue && newValue != [NSNull null])
-		{
-			if ([keyPath isEqualToString:@"autoplay"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"movie autoplay"];
-			}
-			
-			if ([keyPath isEqualToString:@"controller"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"movie controller"];
-			}
-			
-			if ([keyPath isEqualToString:@"kioskmode"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"movie kioskmode"];
-			}
-			
-			if ([keyPath isEqualToString:@"loop"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"movie loop"];
-			}
-		}
-	}
-}
-
-#pragma mark -
-#pragma mark Actions
-
-- (IBAction) openVideoSource:(id)sender;
-{
-	NSString *urlString = [[self delegateOwner] valueForKeyPath:@"currentSource.url"];
-	NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
-	if (url)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
-	}
-	else
-	{
-		NSBeep();
-	}
-}
-
-- (IBAction) openHomePage:(id)sender;
-{
-	NSString *urlString = [[self delegateOwner] valueForKeyPath:@"currentSource.homeURL"];
-	NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
-}
-
-
-#pragma mark -
-#pragma mark HTML template
-
-
-
-#pragma mark accessors
-
-- (NSString *)embedHTML
-{
-	NSString *videoID = [[self delegateOwner] valueForKeyPath:@"videoID"];
-	if (nil == videoID || [videoID isEqualToString:@""])
-	{
-		return @"PLEASE SET ID";
-	}
-	NSMutableString *template = [NSMutableString stringWithString:[[self delegateOwner] valueForKeyPath:@"currentSource.embed"]];
-	[template replaceOccurrencesOfString:@"%@" withString:videoID options:0 range:NSMakeRange(0,[template length])];
-	[template replaceOccurrencesOfString:@"%1$@" withString:videoID options:0 range:NSMakeRange(0,[template length])];
-	return template;
-}
-
-- (NSArray *) sources
-{
-	if (!sSources)
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		NSString *path = [bundle pathForResource:@"sources" ofType:@"plist"];
-		sSources = [[NSArray arrayWithContentsOfFile:path] retain];
-	}
-	return sSources;
-}
-
-#pragma mark -
-#pragma mark Page Thumbnail
-
-/*	Whenever the user tries to "clear" the thumbnail image, we'll instead reset it to match the page content.
- */
-- (BOOL)pageShouldClearThumbnail:(KTPage *)page
-{
-	KTMediaContainer *posterImage = [[self delegateOwner] valueForKeyPath:@"posterImage"];
-	[[self delegateOwner] setThumbnail:posterImage];
-	
-	return NO;
 }
 
 #pragma mark -

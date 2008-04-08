@@ -41,11 +41,5 @@
 
 @interface YouTubeElementDelegate : KTAbstractPluginDelegate 
 {
-	IBOutlet NSButton *oVideoSourceButton;
-	IBOutlet NSButton *oHomePageButton;
 }
-
-- (IBAction) openHomePage:(id)sender;
-- (IBAction) openVideoSource:(id)sender;
-
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */; };
+		2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */; };
 		3C42E5A80D65086D004F35FD /* YouTubeElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */; };
 		3C42E5B40D650888004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5B00D650888004F35FD /* Localizable.strings */; };
 		3C42E5C60D65091C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5C50D65091C004F35FD /* License.rtf */; };
@@ -21,6 +23,10 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeVideoIDFormatter.h; sourceTree = "<group>"; };
+		271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeVideoIDFormatter.m; sourceTree = "<group>"; };
+		2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeCocoaExtensions.h; sourceTree = "<group>"; };
+		2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeCocoaExtensions.m; sourceTree = "<group>"; };
 		3C42E5A50D65086D004F35FD /* YouTubeElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElementDelegate.h; sourceTree = "<group>"; };
 		3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeElementDelegate.m; sourceTree = "<group>"; };
 		3C42E5B10D650888004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -113,6 +119,10 @@
 			children = (
 				3C42E5A50D65086D004F35FD /* YouTubeElementDelegate.h */,
 				3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */,
+				271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */,
+				271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */,
+				2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */,
+				2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -255,6 +265,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C42E5A80D65086D004F35FD /* YouTubeElementDelegate.m in Sources */,
+				271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */,
+				2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
