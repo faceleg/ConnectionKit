@@ -501,10 +501,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C4A16880D5E7135009476BF /* Debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Builds/Products/Debug\"",
-				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
@@ -519,10 +515,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C4A16890D5E7135009476BF /* Release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Builds/Products/Debug\"",
-				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
