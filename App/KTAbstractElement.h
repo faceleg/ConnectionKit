@@ -74,7 +74,8 @@
 - (NSString *)spotlightHTML;
 
 // HTML
-+ (NSString *)elementTemplate;
+- (NSString *)elementTemplate;	// instance method too for key paths to work in tiger
+
 - (NSString *)templateHTML;
 - (NSString *)cssClassName;
 

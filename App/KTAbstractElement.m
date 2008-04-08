@@ -453,7 +453,7 @@
 #pragma mark -
 #pragma mark HTML
 
-+ (NSString *)elementTemplate
+- (NSString *)elementTemplate;	// instance method too for key paths to work in tiger
 {
 	static NSString *result;
 	

@@ -177,7 +177,7 @@
 #pragma mark -
 #pragma mark HTML
 
-+ (NSString *)pageMainContentTemplate
+- (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 {
 	static NSString *sPageTemplateString = nil;
 	
