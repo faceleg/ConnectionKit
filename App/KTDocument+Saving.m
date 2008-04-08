@@ -197,10 +197,15 @@
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
 		// this is our first save so we just set the persistentStore and save normally
+//		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+//																	 ofType:[KTDocument defaultStoreType]
+//														 modelConfiguration:nil
+//															   storeOptions:nil
+//																	  error:outError];
+		// the above method isn't available in Tiger, so we use the old, deprecated method
+		
 		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
 																	 ofType:[KTDocument defaultStoreType]
-														 modelConfiguration:nil
-															   storeOptions:nil
 																	  error:outError];
 		
 		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
