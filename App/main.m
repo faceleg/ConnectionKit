@@ -14,6 +14,7 @@
 #import <sys/resource.h>
 #include <stdio.h>
 #include <errno.h>
+#include "Debug.h"
 
 #ifdef DEBUG
 	#ifdef OOM
