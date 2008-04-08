@@ -36,7 +36,6 @@
 				3C88838C0BFCB49C00921FA4 /* Build Disk Image */,
 			);
 			dependencies = (
-				3C095C170D5D2ABA00DE6F62 /* PBXTargetDependency */,
 				3C5A9A9A0D11E7440054058C /* PBXTargetDependency */,
 				3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */,
 				3C9B605B0D383044003A8351 /* PBXTargetDependency */,
@@ -973,13 +972,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
-		};
-		3C095C160D5D2ABA00DE6F62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
-			remoteInfo = "Update Version";
 		};
 		3C1D06680D5D667C00782A95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5778,7 +5770,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SVN_VERSION FOR ALL BUILDS\n###\n\n# to test Sparkle, temporarily, MANUALLY set SANDVOX_SVN_VERSION < current Sandvox Version\n\n# this script creates two versions\n# .xcconfig is used with build settings\n# .h is used with *some* Info.plist post-processing\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\necho \"\"\necho \"Updating SVN_VERSION ...\"\n\n# get current revsion\npushd ${SRCROOT}\nSANDVOX_SVN_VERSION=`$SVN_PATH info -r HEAD | awk '$1==\"Revision:\" { print $2 }'`;\npopd\n\n# make sure we have a file to write to\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\nmkdir -p ${BUILDSETTINGS_DIR}\nBUILDSETTINGS_PATH=\"${BUILDSETTINGS_DIR}/BuildSettings.h\"\nBUILDSETTINGS_XCCONFIG_PATH=\"${BUILDSETTINGS_DIR}/BuildSettings.xcconfig\"\n\nif test -r ${BUILDSETTINGS_PATH}\nthen\n\trm ${BUILDSETTINGS_PATH}\nfi\n\ntouch ${BUILDSETTINGS_PATH}\n\nif test -r ${BUILDSETTINGS_XCCONFIG_PATH}\nthen\n\trm ${BUILDSETTINGS_XCCONFIG_PATH}\nfi\n\ntouch ${BUILDSETTINGS_XCCONFIG_PATH}\n\n\nBUILD_DATE=`/bin/date`\n\necho \"\" > $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"// Sandvox Build, generated on $BUILD_DATE\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"SVN_VERSION = $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\n\nchgrp admin $BUILDSETTINGS_XCCONFIG_PATH\necho \"... wrote $BUILDSETTINGS_XCCONFIG_PATH\"\n\necho \"\" > $BUILDSETTINGS_PATH\necho \"#define SVN_VERSION $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\n\necho \"... wrote $BUILDSETTINGS_PATH\"\necho \"\"\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SVN_VERSION FOR ALL BUILDS\n###\n\n# to test Sparkle, temporarily, MANUALLY set SANDVOX_SVN_VERSION < current Sandvox Version\n\n# this script creates two versions\n# .xcconfig is used with build settings\n# .h is used with *some* Info.plist post-processing\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\necho \"\"\necho \"Updating SVN_VERSION ...\"\n\n# get current revsion\npushd ${SRCROOT}\nSANDVOX_SVN_VERSION=`$SVN_PATH info | awk '$1==\"Revision:\" { print $2 }'`;\npopd\n\n# make sure we have a file to write to\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\nmkdir -p ${BUILDSETTINGS_DIR}\nBUILDSETTINGS_PATH=\"${BUILDSETTINGS_DIR}/BuildSettings.h\"\nBUILDSETTINGS_XCCONFIG_PATH=\"${BUILDSETTINGS_DIR}/BuildSettings.xcconfig\"\n\nif test -r ${BUILDSETTINGS_PATH}\nthen\n\trm ${BUILDSETTINGS_PATH}\nfi\n\ntouch ${BUILDSETTINGS_PATH}\n\nif test -r ${BUILDSETTINGS_XCCONFIG_PATH}\nthen\n\trm ${BUILDSETTINGS_XCCONFIG_PATH}\nfi\n\ntouch ${BUILDSETTINGS_XCCONFIG_PATH}\n\n\nBUILD_DATE=`/bin/date`\n\necho \"\" > $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"// Sandvox Build, generated on $BUILD_DATE\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"//\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"SVN_VERSION = $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\necho \"\" >> $BUILDSETTINGS_XCCONFIG_PATH\n\nchgrp admin $BUILDSETTINGS_XCCONFIG_PATH\necho \"... wrote $BUILDSETTINGS_XCCONFIG_PATH\"\n\necho \"\" > $BUILDSETTINGS_PATH\necho \"#define SVN_VERSION $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\n\necho \"... wrote $BUILDSETTINGS_PATH\"\necho \"\"\n\nexit 0\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6276,11 +6269,6 @@
 			isa = PBXTargetDependency;
 			name = PhotoGridIndex;
 			targetProxy = 3C095C0E0D5D284D00DE6F62 /* PBXContainerItemProxy */;
-		};
-		3C095C170D5D2ABA00DE6F62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3C095C160D5D2ABA00DE6F62 /* PBXContainerItemProxy */;
 		};
 		3C1D06B90D5D67B400782A95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
