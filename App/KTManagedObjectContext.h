@@ -17,6 +17,7 @@
 #endif
 }
 
+#ifdef DEBUG
 // lock context if context wouldBeAccessedInOtherThanCreationThread
 - (BOOL)lockIfNeeded;
 - (void)unlockIfNeeded:(BOOL)didLock;
@@ -32,6 +33,7 @@
 
 // compares current thread against original thread
 - (BOOL)wouldBeAccessedInOtherThanCreationThread;
+#endif
 
 #ifdef DEBUG
 - (int)lockCount;

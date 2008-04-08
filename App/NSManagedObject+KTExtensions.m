@@ -408,12 +408,13 @@
 
 - (BOOL)lockContextIfNeeded
 {
-	return [(KTManagedObjectContext *)[self managedObjectContext] lockIfNeeded];
+	[(KTManagedObjectContext *)[self managedObjectContext] lock];
+	return YES;
 }
 
 - (void)unlockContextIfNeeded:(BOOL)didLock
 {
-	[(KTManagedObjectContext *)[self managedObjectContext] unlockIfNeeded:didLock];
+	[(KTManagedObjectContext *)[self managedObjectContext] unlock];
 }
 
 // these two methods should be paired

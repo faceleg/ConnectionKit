@@ -16,8 +16,10 @@
 
 //#import "KTDataMigrator.h"
 
+#ifdef DEBUG
 static NSMutableDictionary *sAllMOCs = nil;	// key: %p of self, value: %p of thread
 static NSString *sMainThreadID = nil;
+#endif
 
 
 #ifdef DEBUG
@@ -40,14 +42,14 @@ static NSString *sMainThreadID = nil;
 //}
 
 // in RELEASE, we want KTManagedObjectContext to poseAsClass: NSManagedObjectContext so that saveDocumentAs: works!
-#ifndef DEBUG
+#ifdef DEBUG
 + (void)initialize		// Not +load; we have problems with that.  But then we need to get the class loaded right.
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self poseAsClass:[NSManagedObjectContext class]];
 	[pool release];
 }
-#endif
+//#endif
 
 - (id)init 
 {
@@ -88,9 +90,9 @@ static NSString *sMainThreadID = nil;
 
 - (NSArray *)executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error
 {
-#ifdef DEBUG
+//#ifdef DEBUG
 	[self checkThread:_cmd];
-#endif
+//#endif
 	
 	NSArray *result = [super executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error];
 	
@@ -151,7 +153,7 @@ static NSString *sMainThreadID = nil;
 #pragma mark -
 #pragma mark DEBUG ONLY BELOW
 	
-#ifdef DEBUG
+//#ifdef DEBUG
 
 - (void)checkThread:(SEL)aSel
 {

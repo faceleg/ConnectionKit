@@ -244,7 +244,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		KTPage *parent = [page parent];
 		[parent removePage:page];
-		[aContext threadSafeDeleteObject:page];
+		[aContext deleteObject:page];
 	}
 	
 	[aContext processPendingChanges];
@@ -317,7 +317,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	KTPagelet *pagelet = nil;
 	while ( pagelet = [e nextObject] )
 	{
-		[aContext threadSafeDeleteObject:pagelet];
+		[aContext deleteObject:pagelet];
 	}
 	
 	[aContext processPendingChanges];
