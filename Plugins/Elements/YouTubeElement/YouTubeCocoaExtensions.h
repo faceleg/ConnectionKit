@@ -11,9 +11,11 @@
 
 @interface NSString (YouTubeExtensions)
 - (BOOL)isYouTubeVideoID;
+- (NSURL *)HTMLEmbedYouTubeVideoURL;
 @end
 
 
 @interface NSURL (YouTubeExtensions)
++ (NSURL *)youTubeVideoURLWithID:(NSString *)videoID;
 - (NSString *)youTubeVideoID;
 @end

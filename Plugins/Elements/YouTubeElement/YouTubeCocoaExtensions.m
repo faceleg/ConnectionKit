@@ -20,11 +20,49 @@
 	
 	if ([self length] == 11)
 	{
+		// There doesn't seem to be a prebuilt characterset that does what we want, so build our own
+		static NSCharacterSet *validCharacters;
+		if (!validCharacters)
+		{
+			validCharacters = [NSCharacterSet characterSetWithCharactersInString:
+				@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"];
+			[validCharacters retain];
+		}
+		
+		
 		NSCharacterSet *characters = [NSCharacterSet characterSetWithCharactersInString:self];
-		NSCharacterSet *validCharacters = [NSCharacterSet alphanumericASCIICharacterSet];
 		result = [validCharacters isSupersetOfSet:characters];
 	}
 	
+	return result;
+}
+
+
+/*	Searches the receiver for an <embed> tag whose source is a YouTube video.
+ *	Returns nil if no suitable URL was found.
+ */
+- (NSURL *)HTMLEmbedYouTubeVideoURL
+{
+	NSURL *result = nil;
+	
+	// Look for the open of such a tag
+	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
+	[scanner scanUpToString:@"<embed src=\"" intoString:NULL];
+	if (![scanner isAtEnd])
+	{
+		[scanner setScanLocation:([scanner scanLocation] + [@"<embed src=\"" length])];
+		
+		// Scan in the URL string
+		NSString *URLString;
+		if ([scanner scanUpToString:@"\"" intoString:&URLString])
+		{
+			NSURL *URL = [NSURL URLWithString:URLString];
+			if ([URL youTubeVideoID]) result = URL;
+		}
+	}
+	
+	// Tidy up
+	[scanner release];
 	return result;
 }
 
@@ -32,6 +70,15 @@
 
 
 @implementation NSURL (YouTubeExtensions)
+
++ (NSURL *)youTubeVideoURLWithID:(NSString *)videoID;
+{
+	NSParameterAssert(videoID);
+	
+	NSString *URLString = [@"http://youtube.com/watch?v=" stringByAppendingString:videoID];
+	NSURL *result = [NSURL URLWithString:URLString];
+	return result;
+}
 
 /*	Searches the URL for a video ID. If none is found, returns nil
  */
@@ -43,12 +90,39 @@
 	NSString *host = [self host];
 	if (host && ([host hasPrefix:@"youtube."] || [host rangeOfString:@".youtube."].location != NSNotFound))
 	{
-		NSDictionary *query = [self queryDictionary];
+		// The video could be referenced as a "/watch?" or "/v/" style URL
+		NSArray *pathComponents = [[self path] pathComponents];
 		
-		NSString *videoID = [query objectForKey:@"v"];		// For invalid URLs this will be nil
-		if (videoID && [videoID isYouTubeVideoID])
+		
+		// "/watch?" URLs
+		if (pathComponents &&
+			[pathComponents count] == 2 &&
+			[[pathComponents objectAtIndex:1] isEqualToString:@"watch"])
 		{
-			result = videoID;
+			NSDictionary *query = [self queryDictionary];
+			
+			NSString *videoID = [query objectForKey:@"v"];		// For invalid URLs this will be nil
+			if (videoID && [videoID isYouTubeVideoID])
+			{
+				result = videoID;
+			}
+		}
+		
+		
+		// "/v/" URLs
+		else if (pathComponents &&
+				 [pathComponents count] == 3 &&
+				 [[pathComponents objectAtIndex:1] isEqualToString:@"v"])
+		{
+			NSString *queryishString = [pathComponents objectAtIndex:2];
+			if ([queryishString length] >= 11)
+			{
+				NSString *videoID = [queryishString substringToIndex:11];
+				if (videoID && [videoID isYouTubeVideoID])
+				{
+					result = videoID;
+				}
+			}
 		}
 	}
 	
