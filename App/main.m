@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
 		enableCoreDumps();
 	}
 	
+	LOG((@"required = %d, allowed = %d", MAC_OS_X_VERSION_MIN_REQUIRED, MAC_OS_X_VERSION_MAX_ALLOWED));
 	
     return NSApplicationMain(argc, (const char **) argv);
 }
