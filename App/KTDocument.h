@@ -167,7 +167,7 @@ typedef enum {
 // this method is deprecated in Leopard, but we must continue to use its signature for Tiger
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
 										   ofType:(NSString *)fileType 
-											error:(NSError **)error
+											error:(NSError **)error;
 
 // backup
 - (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
