@@ -116,7 +116,9 @@ Break
 {
 	if ([key isEqualToString:@"userVideoCode"])
 	{
-		NSString *videoID = [[NSURL URLWithString:value] youTubeVideoID];
+		NSString *videoID = nil;
+		if (value) videoID = [[NSURL URLWithString:value] youTubeVideoID];
+		
 		[plugin setValue:videoID forKey:@"videoID"];
 	}
 }

@@ -30,7 +30,7 @@
 		if (!videoID && [string isYouTubeVideoID])
 		{
 			videoID = string;
-			*anObject = [NSURL youTubeVideoURLWithID:videoID];
+			*anObject = [[NSURL youTubeVideoURLWithID:videoID] absoluteString];
 		}
 		
 		// Lastly look for an  <embed> code
