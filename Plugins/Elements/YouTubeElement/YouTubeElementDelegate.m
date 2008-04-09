@@ -95,34 +95,21 @@ Break
 	}
 }
 
-// TODO: Rewrite for YouTube URLs
-/*
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
 {
 	[super awakeFromDragWithDictionary:aDataSourceDictionary];
 	
-	// grab media
-	KTMediaContainer *video =
-		[[[self delegateOwner] mediaManager] mediaContainerWithDataSourceDictionary:aDataSourceDictionary];
-	
-	[[self delegateOwner] setValue:video forKey:@"video"];
-	
-	// set title
-	NSString *title = [aDataSourceDictionary valueForKey:kKTDataSourceTitle];
-	if ( nil == title )
+	// Look for a YouTube URL
+	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
+	if (URLString)
 	{
-		// No title specified; use file name (minus extension)
-		title = [[aDataSourceDictionary valueForKey:kKTDataSourceFileName] stringByDeletingPathExtension];
-	}
-	
-	// set caption
-	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceCaption])
-	{
-		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] escapedEntities]
-									forKey:@"captionHTML"];
+		NSURL *URL = [NSURL URLWithString:URLString];
+		if (URL && [URL youTubeVideoID])
+		{
+			[[self delegateOwner] setValue:URLString forKey:@"userVideoCode"];
+		}
 	}
 }
-*/
 
 #pragma mark -
 #pragma mark Plugin
