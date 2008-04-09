@@ -88,7 +88,7 @@
  */
 - (NSSet *)selectedPages { return mySelectedPages; }
 
-/*	As with _setSelectedIndexes, there is a private method that does no UI update
+/*	As with _setSelectedIndexes, this is a private method that does no UI update
  */
 - (void)_setSelectedPages:(NSSet *)selectedPages;
 {

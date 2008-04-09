@@ -188,19 +188,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		|| [lastSelectedRows isEqualToIndexSet:[NSIndexSet indexSetWithIndex:0]] )
 	{
 		// no selection exists, or just root selected
-		[[self siteOutline] selectRow:0 byExtendingSelection:NO];
-		// Kick start the root selection
-		[self outlineViewSelectionDidChange:nil];
+		[self setSelectedIndexes:[NSIndexSet indexSetWithIndex:0]];
 	}
 	else
 	{
 		[[self siteOutline] expandItem:[[self document] root] expandChildren:YES];
-		[[self siteOutline] selectRowIndexes:lastSelectedRows byExtendingSelection:NO];
-		if (0 == [[self siteOutline] selectedRow])	// was that selection bogus, meaning selection is stil 0?
-		{
-			// If so, force an update since we wouldn't get it otherwise
-			[self outlineViewSelectionDidChange:nil];
-		}
+		[self setSelectedIndexes:lastSelectedRows];
 	}
 }
 
