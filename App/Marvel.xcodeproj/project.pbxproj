@@ -424,7 +424,6 @@
 		3CB5E2B6080303C7006BB008 /* qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AC080303C7006BB008 /* qmark.png */; };
 		3CB5E2B7080303C7006BB008 /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AD080303C7006BB008 /* design.icns */; };
 		3CBC1F240AC9CA11007D6C52 /* KTDocument+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC1F230AC9CA11007D6C52 /* KTDocument+Alert.m */; };
-		3CBD8A650B5B4370004BB49D /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBD8A640B5B4370004BB49D /* libcurl.dylib */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
 		3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */; };
 		3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD6B0EE0BFA380600B9287E /* ThirdParty.h */; settings = {ATTRIBUTES = (); }; };
@@ -882,6 +881,7 @@
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
 		CEE359A60D9AF9D40060802A /* JoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEE359A40D9AF9D40060802A /* JoinList.nib */; };
+		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
@@ -1995,7 +1995,6 @@
 		3CB5E2AC080303C7006BB008 /* qmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qmark.png; sourceTree = "<group>"; };
 		3CB5E2AD080303C7006BB008 /* design.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = design.icns; sourceTree = "<group>"; };
 		3CBC1F230AC9CA11007D6C52 /* KTDocument+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Alert.m"; sourceTree = "<group>"; };
-		3CBD8A640B5B4370004BB49D /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
 		3CBFD396093C45930057668A /* KTSiteOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineView.m; sourceTree = "<group>"; };
 		3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../../imedia/trunk/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2579,6 +2578,7 @@
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE0B9C909EDBD25004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/MultipleSelection.html; sourceTree = "<group>"; };
 		CEE359A50D9AF9D40060802A /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/JoinList.nib; sourceTree = SOURCE_ROOT; };
+		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF0F6250D7F306C00AF5BC0 /* Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Debug.m; path = ../../../Shared/trunk/App/Debug.m; sourceTree = SOURCE_ROOT; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF6E3DD0BD7278D0006417A /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/CodeInjection.nib; sourceTree = "<group>"; };
@@ -2620,13 +2620,13 @@
 				79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */,
 				CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */,
 				CE26237F0A360332009467ED /* QTKit.framework in Frameworks */,
-				3CBD8A650B5B4370004BB49D /* libcurl.dylib in Frameworks */,
 				3C5C0DB40BF8213E003594F8 /* ApplicationServices.framework in Frameworks */,
 				3C5C0DB20BF820EA003594F8 /* libbz2.dylib in Frameworks */,
 				3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */,
 				3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */,
 				3C3F54910D625952004885E7 /* iMediaBrowser.framework in Frameworks */,
 				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
+				CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3979,7 +3979,7 @@
 			isa = PBXGroup;
 			children = (
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
-				3CBD8A640B5B4370004BB49D /* libcurl.dylib */,
+				CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
 			name = Libraries;
@@ -5711,6 +5711,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5724,6 +5725,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		3C5A9A940D11E68A0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5737,6 +5739,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE CK_REVISION FOR RELEASE BUILDS\n###\n\nCK_PATH=${SRCROOT}/../../../connection\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing ConnectionKit with revision ${CK_REVISION}\"\ncd ${CK_PATH}\n${SVN_PATH} update -r${CK_REVISION}\necho \"finished syncing ConnectionKit\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5751,6 +5754,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\n# we base the BuildAndPackageRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Sandvox ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"SANDVOX_VARIANT is ${SANDVOX_VARIANT}\"\necho \"\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nBUILD_ROOT=\"/private/tmp/build-sandvox-install\"\nBUILT_APP=\"${TARGET_BUILD_DIR}/Sandvox.app\"\n\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\n# determine which SLA to use\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tSLA_ZIP_FILE=\"${PROJECT_DIR}/SLA-Sandvox-Beta.zip\"\n\t\tSLA_FILE=\"${BUILDSETTINGS_DIR}/SLA-Sandvox-Beta\"\n\telse\n\t\tSLA_ZIP_FILE=\"${PROJECT_DIR}/SLA-Sandvox.zip\"\n\t\tSLA_FILE=\"${BUILDSETTINGS_DIR}/SLA-Sandvox\"\nfi\n\n# we keep the .zip of the SLA with the project, then copy it to /tmp and inflate it, if needed\nif test -r ${SLA_FILE}\nthen\n\techo \"Removing previous SLA file...\"\n\trm ${SLA_FILE}\nfi\n\necho \"copying ${SLA_ZIP_FILE} to ${SLA_FILE}.zip\"\ncp \"${SLA_ZIP_FILE}\" \"${SLA_FILE}.zip\"\necho \"unarchving ${SLA_FILE}.zip\"\nditto -x -k --rsrc \"${SLA_FILE}.zip\" ${BUILDSETTINGS_DIR}\n\n# the dmg names that we'll use\nVOLUME_NAME=\"Sandvox\"\nDMG_TEMP_NAME=\"temp\"\nif [ ${SANDVOX_VARIANT} == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}\"\nfi\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\n\nif test -d ${SCRATCH_DIR}\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf ${SCRATCH_DIR}\nfi\nmkdir -p ${SCRATCH_DIR}\n\necho \"Packaging Sandvox...\"\npushd ${SCRATCH_DIR}\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -size 128m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach ${DMG_TEMP_NAME}.dmg\n\n# copy Sandvox.app to dmg\necho \"Copying ${BUILT_APP} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${BUILT_APP}\" \"/Volumes/${VOLUME_NAME}\"\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach ${DMG_TEMP_NAME}.dmg | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach $DEV\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert ${DMG_TEMP_NAME}.dmg -format UDZO -o ${DMG_FINAL_NAME}.dmg\nrm ${DMG_TEMP_NAME}.dmg\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes ${DMG_FINAL_NAME}.dmg\n\n# copy to ${DMG_FINAL_NAME}u.dmg\necho \"Copying ${DMG_FINAL_NAME}.dmg to ${DMG_FINAL_NAME}u.dmg for use with Sparkle Appcast\"\n/bin/cp -fpv ${DMG_FINAL_NAME}.dmg ${DMG_FINAL_NAME}u.dmg\n\n# install license agreement\necho \"Installing License Agreement...\"\nhdiutil unflatten ${DMG_FINAL_NAME}.dmg\n/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\nhdiutil flatten ${DMG_FINAL_NAME}.dmg\nrm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox SLA distribution is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"Your Sandvox Sparkle Update distribution is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}u.dmg.\"\necho \"\"\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		3C96ADE00CA06FB900C5249F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5780,6 +5784,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../../Shared/trunk/App/*.[hm]\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B60220D382E5C003A8351 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5793,6 +5798,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE SP_REVISION FOR RELEASE BUILDS\n###\n\nSP_PATH=${SRCROOT}/../../../sparkleplus\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Sparkle+ with revision ${SP_REVISION}\"\ncd ${SP_PATH}\n${SVN_PATH} update -r${SP_REVISION}\necho \"finished syncing Sparkle+\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5807,6 +5813,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\necho \"###\"\necho \"Removing Headers from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5821,6 +5828,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}//Sandvox.app/Contents/Headers/ContactPassword.h\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5836,6 +5844,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxDataSource *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5850,6 +5859,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude Info.plist -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-include ${BUILDSETTINGS_PATH} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5864,6 +5874,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5878,6 +5889,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5891,6 +5903,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n# we base the DeployRelease target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, SANDVOX_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\nif [ \"${SVN_VERSION}\" == \"\" ]\nthen\n\techo \"\"\n\techo \"No SVN_VERSION. Cannot deploy. Exiting...\"\n\texit 1\nfi\n\n# SCP assumes public key login through Karelia's (mt) account\nSCP_LOGIN=\"serveradmin%karelia.com@s19590.gridserver.com\"\n\n# determine the name of the dmg to upload and where to upload it\nif [ \"${SANDVOX_VARIANT}\" == \"beta\" ]\n\tthen\n\t\tDMG_FINAL_NAME=\"Sandvox-beta-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/beta\"\n\telse\n\t\tDMG_FINAL_NAME=\"Sandvox-${SVN_VERSION}.dmg\"\n\t\tSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/files\"\nfi\n\n# set upload path, prepend _ to the filename to avoid URL rewrite rules \nUPLOAD_PATH=\"${SERVER_PATH}/_${DMG_FINAL_NAME}\"\n\n# the directory we're uploading from (based on convention, from the BuildAndPackageRelease script)\nSCRATCH_DIR=\"/private/tmp/build-sandvox-dmg\"\nDISTRO_PATH=\"${SCRATCH_DIR}/${DMG_FINAL_NAME}\"\n\n# if we don't have a distro ready, exit\nif test -r ${DISTRO_PATH}\nthen\n\techo \"Uploading ${DISTRO_PATH} ...\"\n\techo \"... to ${UPLOAD_PATH}\"\n\tscp \"${DISTRO_PATH}\" \"${SCP_LOGIN}:${UPLOAD_PATH}\"\nelse\n\techo \"\"\n\techo \"Nothing to upload at ${DISTRO_PATH}. Exiting...\"\n\texit 1\nfi\n\n\nexit 0\n\n";
+			showEnvVarsInLog = 0;
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5904,6 +5917,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE Shared ToT FOR RELEASE BUILDS\n###\n\nSHARED_PATH=${SRCROOT}/../../../Shared\n\n# for some reason using which to find svn works on Leopard, not on Tiger\nSVN_PATH=`which svn`\n\npushd ${SRCROOT}\n\necho \"syncing Shared with ToT ...\"\ncd ${SHARED_PATH}\n${SVN_PATH} update\necho \"... finished syncing Shared\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove unsupported languages */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5918,6 +5932,7 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\..|/it\\.|/zh_CN\\.|/zh_TW\\.|/ja\\.|/fr\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
+			showEnvVarsInLog = 0;
 		};
 		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5932,6 +5947,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "#!/bin/sh -";
 			shellScript = "exit\n\n\n/usr/bin/osascript <<-EOF\ntell application \"Xcode\"\n set AppleScript's text item delimiters to \" \"\n set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\nEOF\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
