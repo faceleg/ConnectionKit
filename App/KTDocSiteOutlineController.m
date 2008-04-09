@@ -176,7 +176,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[[self siteOutline] setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
     [[self siteOutline] setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
 	
-	// update the selection from what was saved in document
+	
+	// Setup should be out of the way, load the Site Outline
+	[self reloadSiteOutline];
+	
+	
+	// Update the selection from what was saved in document
 	NSIndexSet *lastSelectedRows = [[self document] lastSelectedRows];
 	if ( (nil == lastSelectedRows)
 		|| ( 0 == [lastSelectedRows count] )
