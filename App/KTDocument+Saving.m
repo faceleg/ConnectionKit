@@ -270,6 +270,8 @@
 	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
 	
 	BOOL result = NO;
+	NSError *error = nil;
+	
 	
 	@try 
 	{
@@ -279,15 +281,16 @@
 		// Handle the user choosing "Save As" for an EXISTING document
 		if (inSaveOperation == NSSaveAsOperation && [self fileURL])
 		{
-			result = [self migrateToURL:inURL ofType:inType error:outError];
+			result = [self migrateToURL:inURL ofType:inType error:&error];
 			if (!result)
 			{
+				*outError = error;
 				return NO; // bail out and display outError
 			}
 			else
 			{
 				result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL]
-												  error:outError];
+												  error:&error];
 			}
 		}
 		
@@ -307,8 +310,8 @@
 		/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
 		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
 		
-		result = [managedObjectContext save:outError];
-		if (result) result = [[[self mediaManager] managedObjectContext] save:outError];
+		result = [managedObjectContext save:&error];
+		if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
 		
 		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
 		
@@ -323,6 +326,9 @@
 		NSLog(@"writeToURL: %@", [e description]);
 	}
 	
+	
+	// Return, making sure to supply appropriate error info
+	if (!result) *outError = error;
 	return result;
 }
 
