@@ -1940,7 +1940,7 @@
 		3C682B4B0D6231DA00B4D485 /* KTStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStrings.m; sourceTree = "<group>"; };
 		3C682B4D0D6231E100B4D485 /* KTUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUtilities.h; sourceTree = "<group>"; };
 		3C682B4E0D6231E700B4D485 /* KTUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUtilities.m; sourceTree = "<group>"; };
-		3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = KTScaledImageTypes.plist; sourceTree = "<group>"; };
+		3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = KTScaledImageTypes.plist; sourceTree = "<group>"; };
 		3C682B550D62321500B4D485 /* CropMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropMarker.h; sourceTree = "<group>"; };
 		3C682B560D62321900B4D485 /* CropMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropMarker.m; sourceTree = "<group>"; };
 		3C682B580D62322000B4D485 /* CroppingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CroppingImageView.h; sourceTree = "<group>"; };
