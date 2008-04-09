@@ -146,6 +146,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		270460810DAD7ED100D74480 /* KSRoundingValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704607F0DAD7ED100D74480 /* KSRoundingValueTransformer.h */; };
+		270460820DAD7ED100D74480 /* KSRoundingValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 270460800DAD7ED100D74480 /* KSRoundingValueTransformer.m */; };
 		2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */; };
 		2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */; };
 		270A41710D46A216002E998A /* KTMediaFile+ScaledImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 270A416F0D46A216002E998A /* KTMediaFile+ScaledImages.h */; settings = {ATTRIBUTES = (); }; };
@@ -1619,6 +1621,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2704607F0DAD7ED100D74480 /* KSRoundingValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSRoundingValueTransformer.h; path = ../../../Shared/trunk/App/KSRoundingValueTransformer.h; sourceTree = SOURCE_ROOT; };
+		270460800DAD7ED100D74480 /* KSRoundingValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSRoundingValueTransformer.m; path = ../../../Shared/trunk/App/KSRoundingValueTransformer.m; sourceTree = SOURCE_ROOT; };
 		2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageMainContentTemplate.html; sourceTree = "<group>"; };
 		2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTArchivePageTemplate.html; sourceTree = "<group>"; };
 		270A416F0D46A216002E998A /* KTMediaFile+ScaledImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+ScaledImages.h"; sourceTree = "<group>"; };
@@ -4342,6 +4346,8 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2704607F0DAD7ED100D74480 /* KSRoundingValueTransformer.h */,
+				270460800DAD7ED100D74480 /* KSRoundingValueTransformer.m */,
 				CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */,
 				CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */,
 				CE6907210DA2B063003FE259 /* KSSavedFeedbackSender.h */,
@@ -4819,6 +4825,7 @@
 				27E3F8330D9C34B000A64154 /* KTDocumentMigrationController.h in Headers */,
 				CE6907230DA2B063003FE259 /* KSSavedFeedbackSender.h in Headers */,
 				CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */,
+				270460810DAD7ED100D74480 /* KSRoundingValueTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6231,6 +6238,7 @@
 				CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */,
 				27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */,
 				CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */,
+				270460820DAD7ED100D74480 /* KSRoundingValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
