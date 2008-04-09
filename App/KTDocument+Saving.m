@@ -52,10 +52,6 @@
 
 @interface KTDocument (SavingPrivate)
 
-- (void)threadedSaveToURL:(NSURL *)absoluteURL
-				   ofType:(NSString *)typeName
-		 forSaveOperation:(NSSaveOperationType)saveOperation;
-
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
