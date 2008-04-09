@@ -48,6 +48,8 @@
 		<false/>
 		<key>showBorder</key>
 		<false/>
+		<key>useCustomSecondaryColor</key>
+		<false/>
 	</dict>
 	<key>KTPluginName</key>
 	<string>YouTube</string>

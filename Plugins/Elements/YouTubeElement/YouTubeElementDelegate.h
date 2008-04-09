@@ -41,5 +41,8 @@
 
 @interface YouTubeElementDelegate : KTAbstractPluginDelegate 
 {
+	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
 }
+
+- (IBAction)resetColors:(id)sender;
 @end

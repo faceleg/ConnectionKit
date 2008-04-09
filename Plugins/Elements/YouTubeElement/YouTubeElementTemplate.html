@@ -1,9 +1,9 @@
 [[if videoID]]
 <div class="videoplayer">
 	<object width="425" height="355">
-		<param name="movie" value="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=0x5d1719&color2=0xcd311b[[if showBorder]]&border=1[[endif2]]&hl=en"></param>
+		<param name="movie" value="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=[[=color1.youTubeVideoColorString]]&color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&border=1[[endif2]]&hl=en"></param>
 		<param name="wmode" value="transparent"></param>
-		<embed src="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=0x5d1719&color2=0xcd311b[[if showBorder]]&border=1[[endif2]]&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+		<embed src="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=[[=color1.youTubeVideoColorString]]&color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&border=1[[endif2]]&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
 	</object>
 </div>
 
@@ -21,4 +21,4 @@ Enter a video ID dummy!
 	<param name="wmode" value="transparent"></param>
 	<embed src="http://www.youtube.com/v/V50ex8sOLL4&rel=0&color1=0x5d1719&color2=0xcd311b&border=1&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="373"></embed></object>
 
-]]
+<object width="425" height="355"><param name="movie" value="http://www.youtube.com/v/V50ex8sOLL4&rel=0&color1=0x3a3a3a&color2=0x999999&hl=en"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/V50ex8sOLL4&rel=0&color1=0x3a3a3a&color2=0x999999&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed></object>]]

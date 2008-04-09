@@ -50,6 +50,7 @@ Viddler
 http://v.youku.com/v_show/id_cf00XOTc3MzgwNA==.html
 video.aol.com
 blip.tv
+Flickr
 
 Brightcove.tv,
 ClipShack,
@@ -78,6 +79,12 @@ Break
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
+	
+	if (isNewObject)
+	{
+		// Prepare initial colors
+		[self resetColors:self];
+	}
 }
 
 // TODO: Rewrite for YouTube URLs
@@ -114,12 +121,32 @@ Break
 
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
+	// When the user sets a video code, figure the ID from it
 	if ([key isEqualToString:@"userVideoCode"])
 	{
 		NSString *videoID = nil;
 		if (value) videoID = [[NSURL URLWithString:value] youTubeVideoID];
 		
 		[plugin setValue:videoID forKey:@"videoID"];
+	}
+	
+	
+	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
+	// a new second colour from it
+	else if ([key isEqualToString:@"color2"] && ![plugin boolForKey:@"useCustomSecondaryColor"])
+	{
+		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:value];
+		
+		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us
+		[plugin setValue:lightenedColor forKey:@"color1"];	// mis-interpeting the setter
+		myAutomaticallyUpdatingSecondaryColorFlag = NO;
+	}
+	
+	
+	// When the user sets their own secondary color mark it so no future changes are made by accident
+	else if ([key isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
+	{
+		[plugin setBool:YES forKey:@"useCustomSecondaryColor"];
 	}
 }
 
@@ -142,4 +169,20 @@ Break
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
+#pragma mark -
+#pragma mark Colors
+
++ (NSColor *)defaultPrimaryColor
+{
+	return [NSColor colorWithCalibratedWhite:0.62 alpha:1.0];
+}
+
+- (IBAction)resetColors:(id)sender
+{
+	KTAbstractElement *element = [self delegateOwner];
+	[element setBool:NO forKey:@"useCustomSecondaryColor"];
+	[element setValue:[[self class] defaultPrimaryColor] forKey:@"color2"];
+}
+
 @end
+
