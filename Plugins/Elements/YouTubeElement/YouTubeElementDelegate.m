@@ -82,6 +82,14 @@ Break
 	
 	if (isNewObject)
 	{
+		// Try to load video from web browser
+		NSURL *URL = nil;
+		[NSAppleScript getWebBrowserURL:&URL title:NULL source:NULL];
+		if (URL && [URL youTubeVideoID])
+		{
+			[[self delegateOwner] setValue:[URL absoluteString] forKey:@"userVideoCode"];
+		}
+		
 		// Prepare initial colors
 		[self resetColors:self];
 	}
