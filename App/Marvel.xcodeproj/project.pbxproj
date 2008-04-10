@@ -117,6 +117,7 @@
 				274339F10D7733B600164FA5 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
+				CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -1581,6 +1582,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
 			remoteInfo = "Sparkle Test App";
+		};
+		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteInfo = YouTubeElement;
 		};
 		CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6495,6 +6503,11 @@
 			isa = PBXTargetDependency;
 			name = Framework;
 			targetProxy = CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */;
+		};
+		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YouTubeElement;
+			targetProxy = CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
