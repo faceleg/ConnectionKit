@@ -35,10 +35,10 @@
 //
 
 
-//	NSLocalizedString(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-//	NSLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-//	NSLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-//	NSLocalizedString(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
+//	LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
+//	LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
+//	LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
+//	LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
 
 
 #import "YouTubeElementDelegate.h"
@@ -217,13 +217,13 @@ Break
 	switch (size)
 	{
 		case YouTubeVideoSizePageletWidth:
-			result = 200;
+			result = 200;	// width regardless of border size
 			break;
 		case YouTubeVideoSizeNatural:
-			result = ([[self delegateOwner] boolForKey:@"showBorder"]) ? 350 : 320;
+			result = ([[self delegateOwner] boolForKey:@"showBorder"]) ? 347 : 320;
 			break;
 		case YouTubeVideoSizeDefault:
-			result = 425;
+			result = 425;	// Do what YouTube does, fixed width regardless of border
 			break;
 		case YouTubeVideoSizeSidebarPageWidth:
 			result = 480;
@@ -247,7 +247,8 @@ Break
 				result = 178;
 				break;
 			case YouTubeVideoSizeNatural:
-				result = 311;
+				result = 308;
+				// empirical width to force video itself to be exactly 320 pixels wide
 				break;
 			case YouTubeVideoSizeDefault:
 				result = 373;
@@ -279,7 +280,6 @@ Break
 				OBASSERT_NOT_REACHED("Unknown YouTube video size");
 		}
 	}
-		
 	return result;
 }
 

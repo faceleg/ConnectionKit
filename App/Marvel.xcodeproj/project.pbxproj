@@ -1587,7 +1587,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* YouTubeElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = YouTubeElement;
 		};
 		CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */ = {
