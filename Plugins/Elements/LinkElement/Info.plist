@@ -27,7 +27,7 @@
 	<key>KTElementSupportsPageletUsage</key>
 	<false/>
 	<key>KTHelpAnchor</key>
-	<string>External_Link</string>
+	<string>External_Page</string>
 	<key>KTIncludeSidebar</key>
 	<false/>
 	<key>KTPageDisableComments</key>
@@ -50,7 +50,7 @@
 	<key>KTPluginNibFile</key>
 	<string>LinkPage</string>
 	<key>KTPluginUntitledName</key>
-	<string>External Link</string>
+	<string>External Page</string>
 	<key>KTSidebarChangeable</key>
 	<true/>
 	<key>KTTemplateName</key>

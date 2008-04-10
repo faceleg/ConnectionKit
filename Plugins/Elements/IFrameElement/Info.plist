@@ -21,7 +21,7 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KTHelpAnchor</key>
-	<string>Embedded_Page</string>
+	<string>External_Page</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
@@ -36,11 +36,11 @@
 		<string></string>
 	</dict>
 	<key>KTPluginName</key>
-	<string>Embedded Page</string>
+	<string>External Page</string>
 	<key>KTPluginNibFile</key>
 	<string>IFramePagelet</string>
 	<key>KTPluginUntitledName</key>
-	<string>Embedded Page</string>
+	<string>External Page</string>
 	<key>KTTemplateName</key>
 	<string>IFramePageletTemplate</string>
 	<key>NSPrincipalClass</key>

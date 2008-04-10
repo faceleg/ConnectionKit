@@ -33,11 +33,11 @@
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTPageName</key>
-	<string>Video Page</string>
+	<string>Video</string>
 	<key>KTPageShowSidebar</key>
 	<false/>
 	<key>KTPageletName</key>
-	<string>Video Pagelet</string>
+	<string>Video</string>
 	<key>KTPluginDescription</key>
 	<string>Play video, audio and Flash files</string>
 	<key>KTPluginIconName</key>

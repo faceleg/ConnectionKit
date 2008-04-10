@@ -35,11 +35,11 @@
 	<key>KTPageAllowsNavigation</key>
 	<true/>
 	<key>KTPageName</key>
-	<string>Text</string>
+	<string>Rich Text</string>
 	<key>KTPageShowSidebar</key>
 	<true/>
 	<key>KTPageletName</key>
-	<string>Text</string>
+	<string>Rich Text</string>
 	<key>KTPluginDescription</key>
 	<string>Rich Text with Embedded Images</string>
 	<key>KTPluginIconName</key>

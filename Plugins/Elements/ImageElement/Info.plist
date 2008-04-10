@@ -33,7 +33,7 @@
 	<key>KTHelpAnchor</key>
 	<string>Photo</string>
 	<key>KTPageName</key>
-	<string>Photo Page</string>
+	<string>Photo</string>
 	<key>KTPageSeparateInspectorSegment</key>
 	<true/>
 	<key>KTPageShowSidebar</key>
@@ -43,7 +43,7 @@
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPageletName</key>
-	<string>Photo Pagelet</string>
+	<string>Photo</string>
 	<key>KTPageletUntitledName</key>
 	<string>Photo Pagelet</string>
 	<key>KTPluginIconName</key>
