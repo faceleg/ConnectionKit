@@ -22,6 +22,14 @@
 #import "KTElementPlugin.h"
 
 
+/// these are localized strings for Case 26766 Disposable Dialog When Changing A Published Page's Path
+// NSLocalizedString(@"Are you sure you wish to change the file name of this page?", @"title of alert when changing page file name")
+// NSLocalizedString(@"Changing the file name of this page will also change the URL of this page. Because this page has been previously published, any bookmarks or links to this page from other websites will no longer work.", @"body of alert when changing page file name")
+// NSLocalizedString(@"Change", @"alert button when changing file name")
+// NSLocaiizedString(@"Note: the previously published page '%@' will not be deleted from your server.", @"alert optional note when changing page file name")
+
+
+
 @interface KTDocSiteOutlineController (DragAndDropPrivate)
 - (NSArray *)itemsForRows:(NSArray *)anArray;
 - (BOOL)item:(id)anItem isDescendantOfItem:(id)anotherItem;
