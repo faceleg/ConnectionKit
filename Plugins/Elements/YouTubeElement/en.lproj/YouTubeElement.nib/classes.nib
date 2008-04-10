@@ -58,6 +58,8 @@
 				<string>NSButton</string>
 				<key>oVideoSourceButton</key>
 				<string>NSButton</string>
+				<key>videoSizeSlider</key>
+				<string>NSSlider</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KTAbstractPluginDelegate</string>

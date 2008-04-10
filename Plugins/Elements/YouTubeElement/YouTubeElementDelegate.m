@@ -78,6 +78,7 @@ Break
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
+	KTAbstractElement *element = [self delegateOwner];
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
 	
 	if (isNewObject)
@@ -87,11 +88,22 @@ Break
 		[NSAppleScript getWebBrowserURL:&URL title:NULL source:NULL];
 		if (URL && [URL youTubeVideoID])
 		{
-			[[self delegateOwner] setValue:[URL absoluteString] forKey:@"userVideoCode"];
+			[element setValue:[URL absoluteString] forKey:@"userVideoCode"];
 		}
+		
+		// Initial size depends on our location
+		YouTubeVideoSize videoSize = ([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
+		[element setInteger:videoSize forKey:@"videoSize"];
 		
 		// Prepare initial colors
 		[self resetColors:self];
+	}
+	
+	
+	// Pagelets cannot adjust their size
+	if ([element isKindOfClass:[KTPagelet class]])
+	{
+		[videoSizeSlider setEnabled:NO];
 	}
 }
 
@@ -108,6 +120,15 @@ Break
 		{
 			[[self delegateOwner] setValue:URLString forKey:@"userVideoCode"];
 		}
+	}
+}
+
+- (void)awakeFromNib
+{
+	// Pagelets cannot adjust their size
+	if ([[self delegateOwner] isKindOfClass:[KTPagelet class]])
+	{
+		[videoSizeSlider setEnabled:NO];
 	}
 }
 

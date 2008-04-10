@@ -49,6 +49,8 @@ typedef enum {
 
 @interface YouTubeElementDelegate : KTAbstractPluginDelegate 
 {
+	IBOutlet NSSlider	*videoSizeSlider;
+	
 	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
 }
 
