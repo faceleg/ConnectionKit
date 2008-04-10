@@ -104,6 +104,21 @@
 		
 		if (result)
 		{
+			// Wait a second before putting up a progress sheet
+			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 8.0)
+			{
+				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
+			}
+			BOOL beganSheet = NO;
+			if ([quickLookThumbnailWebView isLoading])
+			{
+				[[self windowController] beginSheetWithStatus:NSLocalizedString(@"Saving\\U2026","Message title when performing a lengthy save")
+														image:nil];
+				beganSheet = YES;
+			}
+			
+			
+			
 			// Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
 			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
 			{
@@ -122,6 +137,13 @@
 				
 				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:inURL]];
 				result = [[snapshot512 PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:outError];
+			}
+			
+			
+			// Close the progress sheet
+			if (beganSheet)
+			{
+				[[self windowController] endSheet];
 			}
 		}
 	}
