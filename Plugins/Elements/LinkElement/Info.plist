@@ -46,7 +46,7 @@
 		<integer>0</integer>
 	</dict>
 	<key>KTPluginName</key>
-	<string>External Link</string>
+	<string>External Page</string>
 	<key>KTPluginNibFile</key>
 	<string>LinkPage</string>
 	<key>KTPluginUntitledName</key>
