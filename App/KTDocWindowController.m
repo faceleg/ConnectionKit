@@ -982,7 +982,7 @@ from representedObject */
 			// Give weblogs special introductory text
 			if ([[presetDict objectForKey:@"KTPresetIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
 			{
-				NSString *intro = NSLocalizedString(@"<p>This is a new weblog. You can replace this text with an introduction to your blog, or just delete it if you wish.</p><p>To add an entry to the weblog, add a new page using the \"Pages\" button in the toolbar.</p><p>For more information on blogging with Sandvox, please have a look through our <a href=\"http://docs.karelia.com/z/Blogging_with_Sandvox.html\">help guide</a>.</p>",
+				NSString *intro = NSLocalizedString(@"<p>This is a new weblog. You can replace this text with an introduction to your blog, or just delete it if you wish. To add an entry to the weblog, add a new page using the \\U201CPages\\U201D button in the toolbar. For more information on blogging with Sandvox, please have a look through our <a href=\"help:Blogging_with_Sandvox\">help guide</a>.</p>",
 													"Introductory text for Weblogs");
 				
 				[indexPage setValue:intro forKey:@"richTextHTML"];

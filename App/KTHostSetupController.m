@@ -2646,7 +2646,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			NSRunAlertPanel(
 							NSLocalizedString(@"Could not store password in keychain",@"Title of alert"),
-							[NSString stringWithFormat:NSLocalizedString(@"The keychain manager returned error %d, so your password was not stored in the keychain.  You may need to run the \"Keychain Access\" utility and repair your keychain, and then set up your host again.",@"Message in alert"), result],
+							[NSString stringWithFormat:NSLocalizedString(@"The keychain manager returned error %d, so your password was not stored in the keychain.  You may need to run the \\U201CKeychain Access\\U201D utility and repair your keychain, and then set up your host again.",@"Message in alert"), result],
 							nil, nil, nil);
 			NSLog(@"Could not set password -- status = %d", result);
 		}

@@ -995,7 +995,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		{
 			NSRunCriticalAlertPanel(
 									@"",
-									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \"Leopard\" for this new version of Sandvox to function.", @""), 
+									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \\U201CLeopard\\U201D for this new version of Sandvox to function.", @""), 
 									NSLocalizedString(@"Quit", @"Quit button"),
 									nil,
 									nil
