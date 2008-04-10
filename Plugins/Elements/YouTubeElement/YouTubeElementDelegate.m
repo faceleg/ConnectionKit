@@ -139,6 +139,11 @@ Break
 	}
 }
 
+- (IBAction)openYouTubeURL:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://youtube.com"]];
+}
+
 #pragma mark -
 #pragma mark Plugin
 

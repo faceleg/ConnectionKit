@@ -45,6 +45,8 @@
 				<string>id</string>
 				<key>openVideoSource</key>
 				<string>id</string>
+				<key>openYouTubeURL</key>
+				<string>id</string>
 				<key>resetColors</key>
 				<string>id</string>
 			</dict>

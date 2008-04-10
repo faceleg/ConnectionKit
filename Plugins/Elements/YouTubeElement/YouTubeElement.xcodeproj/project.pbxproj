@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 270461D30DAE7FF000D74480 /* youtube-logo.png */; };
 		271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */; };
 		2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */; };
 		3C42E5A80D65086D004F35FD /* YouTubeElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */; };
@@ -23,6 +24,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		270461D30DAE7FF000D74480 /* youtube-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-logo.png"; sourceTree = "<group>"; };
 		271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeVideoIDFormatter.h; sourceTree = "<group>"; };
 		271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeVideoIDFormatter.m; sourceTree = "<group>"; };
 		2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeCocoaExtensions.h; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				270461D30DAE7FF000D74480 /* youtube-logo.png */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
 				CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */,
 				CEF120670D9055B700FCAC70 /* YouTube.icns */,
@@ -236,6 +239,7 @@
 				CEF1206A0D9055E600FCAC70 /* YouTubeElementTemplate.html in Resources */,
 				CEF120CB0D90563E00FCAC70 /* YouTubeElement.nib in Resources */,
 				CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */,
+				270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

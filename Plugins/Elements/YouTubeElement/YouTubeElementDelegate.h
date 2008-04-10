@@ -55,6 +55,7 @@ typedef enum {
 }
 
 - (IBAction)resetColors:(id)sender;
+- (IBAction)openYouTubeURL:(id)sender;
 
 - (unsigned)videoWidthForSize:(YouTubeVideoSize)size;
 - (unsigned)videoHeightForSize:(YouTubeVideoSize)size;
