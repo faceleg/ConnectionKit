@@ -1,9 +1,9 @@
 [[if videoID]]
 <div class="videoplayer">
-	<object width="425" height="355">
+	<object width="[[=videoWidth]]" height="[[=videoHeight]]">
 		<param name="movie" value="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=[[=color1.youTubeVideoColorString]]&color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&border=1[[endif2]]&hl=en"></param>
 		<param name="wmode" value="transparent"></param>
-		<embed src="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=[[=color1.youTubeVideoColorString]]&color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&border=1[[endif2]]&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+		<embed src="http://www.youtube.com/v/[[=videoID]][[if includeRelatedVideos]][[else2]]&rel=0[[endif2]]&color1=[[=color1.youTubeVideoColorString]]&color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&border=1[[endif2]]&hl=en" type="application/x-shockwave-flash" wmode="transparent" width="[[=videoWidth]]" height="[[=videoHeight]]"></embed>
 	</object>
 </div>
 

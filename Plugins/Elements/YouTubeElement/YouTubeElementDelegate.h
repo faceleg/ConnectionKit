@@ -39,10 +39,22 @@
 #import <SandvoxPlugin.h>
 
 
+typedef enum {
+	YouTubeVideoSizePageletWidth,
+	YouTubeVideoSizeNatural,
+	YouTubeVideoSizeDefault,
+	YouTubeVideoSizeSidebarPageWidth,
+} YouTubeVideoSize;
+
+
 @interface YouTubeElementDelegate : KTAbstractPluginDelegate 
 {
 	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
 }
 
 - (IBAction)resetColors:(id)sender;
+
+- (unsigned)videoWidthForSize:(YouTubeVideoSize)size;
+- (unsigned)videoHeightForSize:(YouTubeVideoSize)size;
+
 @end

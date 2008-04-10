@@ -126,6 +126,16 @@ Break
 	}
 	
 	
+	// Update video width & height to match chosen size
+	else if ([key isEqualToString:@"videoSize"] || [key isEqualToString:@"showBorder"])
+	{
+		YouTubeVideoSize videoSize = [plugin integerForKey:@"videoSize"];
+		unsigned videoWidth = [self videoWidthForSize:videoSize];
+		[plugin setInteger:videoWidth forKey:@"videoWidth"];
+		[plugin setInteger:[self videoHeightForSize:videoSize] forKey:@"videoHeight"];
+	}
+	
+	
 	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
 	// a new second colour from it
 	else if ([key isEqualToString:@"color2"] && ![plugin boolForKey:@"useCustomSecondaryColor"])
@@ -163,6 +173,82 @@ Break
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
+
+#pragma mark -
+#pragma mark Width
+
+- (unsigned)videoWidthForSize:(YouTubeVideoSize)size
+{
+	unsigned result = 425;
+	
+	switch (size)
+	{
+		case YouTubeVideoSizePageletWidth:
+			result = 200;
+			break;
+		case YouTubeVideoSizeNatural:
+			result = ([[self delegateOwner] boolForKey:@"showBorder"]) ? 350 : 320;
+			break;
+		case YouTubeVideoSizeDefault:
+			result = 425;
+			break;
+		case YouTubeVideoSizeSidebarPageWidth:
+			result = 480;
+			break;
+		default:
+			OBASSERT_NOT_REACHED("Unknown YouTube video size");
+	}
+	
+	return result;
+}
+
+- (unsigned)videoHeightForSize:(YouTubeVideoSize)size;
+{
+	unsigned result = 0;
+	
+	if ([[self delegateOwner] boolForKey:@"showBorder"])
+	{
+		switch (size)
+		{
+			case YouTubeVideoSizePageletWidth:
+				result = 178;
+				break;
+			case YouTubeVideoSizeNatural:
+				result = 311;
+				break;
+			case YouTubeVideoSizeDefault:
+				result = 373;
+				break;
+			case YouTubeVideoSizeSidebarPageWidth:
+				result = 414;
+				break;
+			default:
+				OBASSERT_NOT_REACHED("Unknown YouTube video size");
+		}
+	}
+	else
+	{
+		switch (size)
+		{
+			case YouTubeVideoSizePageletWidth:
+				result = 169;
+				break;
+			case YouTubeVideoSizeNatural:
+				result = 269;
+				break;
+			case YouTubeVideoSizeDefault:
+				result = 355;
+				break;
+			case YouTubeVideoSizeSidebarPageWidth:
+				result = 397;
+				break;
+			default:
+				OBASSERT_NOT_REACHED("Unknown YouTube video size");
+		}
+	}
+		
+	return result;
+}
 
 #pragma mark -
 #pragma mark Colors
