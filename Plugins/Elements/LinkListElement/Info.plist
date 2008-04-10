@@ -22,6 +22,10 @@
 	<string>${SVN_VERSION}</string>
 	<key>KTHelpAnchor</key>
 	<string>List_of_Links</string>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
