@@ -28,6 +28,8 @@
 	<string>Links to the RSS feed for a collection</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>
+	<key>KTPluginIconName</key>
+	<string>CollectionArchive.icns</string>
 	<key>KTPluginName</key>
 	<string>Collection Archive</string>
 	<key>KTPluginNibFile</key>
