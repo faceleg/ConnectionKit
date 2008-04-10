@@ -145,6 +145,22 @@
 
 - (NSString *)copyrightHTML
 {
+	NSString *result = [self wrappedValueForKey:@"copyrightHTML"];
+	if (!result)
+	{
+		result = [self defaultCopyrightHTML];
+	}
+	
+	return result;
+}
+
+- (void)setCopyrightHTML:(NSString *)copyrightHTML
+{
+	[self setWrappedValue:copyrightHTML forKey:@"copyrightHTML"];
+}
+
+- (NSString *)defaultCopyrightHTML
+{
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"copyrightHTML" language:[self valueForKey:@"language"]
 		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"<p>Parting Words (copyright, contact information, etc.)</p>", @"Default text for page bottom")];
 	return result;

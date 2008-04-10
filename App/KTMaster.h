@@ -23,6 +23,8 @@
 - (NSString *)siteTitleText;
 
 - (NSString *)copyrightHTML;
+- (void)setCopyrightHTML:(NSString *)copyrightHTML;
+- (NSString *)defaultCopyrightHTML;
 
 - (KTDesign *)design;
 - (void)setDesign:(KTDesign *)design;
