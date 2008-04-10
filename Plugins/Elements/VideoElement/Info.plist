@@ -32,11 +32,9 @@
 	<string>Movie</string>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
-	<key>KTPageName</key>
-	<string>Video</string>
 	<key>KTPageShowSidebar</key>
 	<false/>
-	<key>KTPageletName</key>
+	<key>KTPluginName</key>
 	<string>Video</string>
 	<key>KTPluginDescription</key>
 	<string>Play video, audio and Flash files</string>

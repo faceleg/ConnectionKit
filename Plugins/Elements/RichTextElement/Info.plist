@@ -34,11 +34,9 @@
 	<true/>
 	<key>KTPageAllowsNavigation</key>
 	<true/>
-	<key>KTPageName</key>
-	<string>Rich Text</string>
 	<key>KTPageShowSidebar</key>
 	<true/>
-	<key>KTPageletName</key>
+	<key>KTPluginName</key>
 	<string>Rich Text</string>
 	<key>KTPluginDescription</key>
 	<string>Rich Text with Embedded Images</string>
