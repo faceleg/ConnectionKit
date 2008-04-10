@@ -14,6 +14,7 @@
 		3C42DE010D64CB6C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DE000D64CB6C004F35FD /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE91032A0DAEB52D008D9144 /* CollectionArchive.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE9103290DAEB52D008D9144 /* CollectionArchive.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		3C42DE030D64CB7E004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollectionArchive.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE9103290DAEB52D008D9144 /* CollectionArchive.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CollectionArchive.icns; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +95,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE9103290DAEB52D008D9144 /* CollectionArchive.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42DDE60D64CAFE004F35FD /* Inspector.nib */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -218,6 +221,7 @@
 				3C42DDE90D64CAFE004F35FD /* Inspector.nib in Resources */,
 				3C42DE010D64CB6C004F35FD /* License.rtf in Resources */,
 				2740553B0D772386001E759E /* template.html in Resources */,
+				CE91032A0DAEB52D008D9144 /* CollectionArchive.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

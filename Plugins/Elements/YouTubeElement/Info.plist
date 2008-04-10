@@ -35,7 +35,7 @@
 	<key>KTPageName</key>
 	<string>YouTube Page</string>
 	<key>KTPageShowSidebar</key>
-	<false/>
+	<true/>
 	<key>KTPageletName</key>
 	<string>YouTube Pagelet</string>
 	<key>KTPluginDescription</key>
