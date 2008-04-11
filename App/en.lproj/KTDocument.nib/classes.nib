@@ -44,6 +44,14 @@
 			<string>NSView</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>NSString</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>updateWebView</key>
@@ -62,14 +70,6 @@
 				<key>windowController</key>
 				<string>KTDocWindowController</string>
 			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSString</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
 		</dict>
