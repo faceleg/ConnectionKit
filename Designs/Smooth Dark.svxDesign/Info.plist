@@ -1,0 +1,39 @@
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+ <key>CFBundleIdentifier</key>
+ <string>sandvox.SmoothDark</string>
+ <key>CFBundleShortVersionString</key>
+ <string>1</string>
+ <key>CFBundleVersion</key>
+ <string>5218</string>
+ <key>CalloutBorderable</key>
+ <false/>
+ <key>KTMinimumAppVersion</key>
+ <string>1.0</string>
+ <key>SidebarBorderable</key>
+ <false/>
+ <key>backgroundRGB</key>
+ <string>ffffff</string>
+ <key>comments</key>
+ <string>
+ </string>
+ <key>copyright</key>
+ <string>Copyright © 2006, Karelia Software</string>
+ <key>frameRGB</key>
+ <string>333333</string>
+ <key>genre</key>
+ <string>simple</string>
+ <key>tallViewer</key>
+ <true/>
+ <key>textRGB</key>
+ <string>000000</string>
+ <key>title</key>
+ <string>Smooth Dark</string>
+ <key>viewport</key>
+ <integer>772</integer>
+</dict>
+</plist>
