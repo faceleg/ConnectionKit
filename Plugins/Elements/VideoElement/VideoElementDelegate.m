@@ -34,6 +34,10 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+
+//	LocalizedStringInThisBundle(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Lve data feeds disabled message.")
+
+
 #import "VideoElementDelegate.h"
 
 #import "NSMutableSet+Karelia.h"
