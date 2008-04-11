@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.A3</string>
+	<string>sandvox.Minty Fresh</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
@@ -27,7 +27,7 @@
 	<key>tallViewer</key>
 	<true/>
 	<key>title</key>
-	<string>A3</string>
+	<string>Minty Fresh</string>
 	<key>viewport</key>
 	<integer>800</integer>
 </dict>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.A2</string>
+	<string>sandvox.Distinction</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
@@ -27,7 +27,7 @@
 	<key>tallViewer</key>
 	<true/>
 	<key>title</key>
-	<string>A2</string>
+	<string>Distinction</string>
 	<key>viewport</key>
 	<integer>771</integer>
 </dict>
