@@ -76,6 +76,14 @@
 	{
 		return [self pluginPropertyForKey:@"KTPluginUntitledName"];
 	}
+	else if ([key isEqualToString:@"KTPluginDescription"])
+	{
+		return @"";
+	}
+	else if ([key isEqualToString:@"KTPageDescription"] || [key isEqualToString:@"KTPageletDescription"])
+	{
+		return [self pluginPropertyForKey:@"KTPluginDescription"];
+	}
 	else if ([key isEqualToString:@"KTPageNibFile"])
 	{
 		return [self pluginPropertyForKey:@"KTPluginNibFile"];

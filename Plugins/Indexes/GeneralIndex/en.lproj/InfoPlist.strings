@@ -1,3 +1,3 @@
 ﻿KTPluginName = "General Text";
 KTPluginDescription = "General index showing contents of collection";
-richTextHTML = "<p>This is your first blog entry.</p><p>What are you waiting for? Replace this text with some of your own and start blogging!</p>";
+"<p>This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!</p>" = "<p>This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!</p>";

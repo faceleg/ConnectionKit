@@ -41,7 +41,7 @@
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>html</key>
-		<string>&lt;p&gt;This is some &lt;b&gt;HTML text&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vestibulum bibendum, ligula ut feugiat rutrum, mauris libero ultricies nulla, at hendrerit lectus dui bibendum metus.&lt;/p&gt;</string>
+		<string>&lt;p&gt;&lt;b&gt;This is some HTML text.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, &lt;i&gt;consectetuer adipiscing&lt;/i&gt; elit. Vestibulum bibendum, ligula ut feugiat rutrum, mauris libero ultricies nulla, at hendrerit lectus dui bibendum metus.&lt;/p&gt;</string>
 		<key>htmlType</key>
 		<integer>2</integer>
 	</dict>
