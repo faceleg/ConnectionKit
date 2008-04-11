@@ -65,7 +65,7 @@ ul {
 	margin: 14px -1em 14px -1em;
 	z-index: 0;
 	border: solid 1px #dddcc5;
-	background: #611427 url(bannerImage.jpeg) 0% 50% no-repeat;
+	background: #611427;
 	color: #dddcc5;
 	border: 2px solid #dddcc5;
 	-webkit-border-top-left-radius: 10px; 

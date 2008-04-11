@@ -127,7 +127,7 @@ body > #page-container {
 /* TITLE */
 
 #page-top {
-	background: #303530 url(bannerImage.jpeg) center bottom no-repeat;	
+	background: #303530;	
 	color: #fff;
 	padding: 1em 1em 0em 1em;
 }
