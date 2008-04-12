@@ -287,6 +287,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #ifdef EXPIRY_TIMESTAMP
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 		@"Testing Reports",						@"AssignSubmission",	// Virtual user for testing reports, DON'T go to normal support person when testing
+										 
+		[NSNumber numberWithBool:NO],			SUDelayAlertUntilSystemIdle,	// don't delay alert til idle time if debugging; we want to be notified right away so that we will know before we expire a beta
+										 
+										 
 #else
 		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",
 #endif
@@ -1004,35 +1008,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		}
 		
 #ifdef EXPIRY_TIMESTAMP
-
-#ifndef DEBUG
-#warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
-#endif
-		
-		unsigned char km[16];
-		GetKeys((void *)km);
-		BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
-		
-		if ( !overrideKeyPressed &&
-			([[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0) )
-		{
-			NSRunCriticalAlertPanel(
-                                    @"This version of Sandvox has expired.",
-                                    @"This version of Sandvox is no longer functional. Please contact Karelia Software for an update.", 
-                                    @"Quit",
-                                    nil,
-                                    nil
-                                    );
-			[NSApp terminate:nil];
-		}
-
-// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
-#ifndef DEBUG
-#ifndef APPLE_DESIGN_AWARDS_KEY
-	[self warnExpiring:nil];
-#endif
-#endif
-
+		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
         
 // log SQL statements
@@ -1297,6 +1273,55 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
     applicationIsLaunching = NO; // we're done
 }
+
+#ifdef EXPIRY_TIMESTAMP
+
+- (void) alertAndQuit
+{
+	NSRunCriticalAlertPanel(
+							@"This version of Sandvox has expired.",
+							@"This version of Sandvox is no longer functional. Please contact Karelia Software for an update.", 
+							@"Quit",
+							nil,
+							nil
+							);
+	[NSApp terminate:nil];
+	
+}
+- (void) warnOrQuitIfExpiring
+{
+#ifndef DEBUG
+#warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
+#endif
+	
+	unsigned char km[16];
+	GetKeys((void *)km);
+	BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
+	
+	if ( !overrideKeyPressed &&
+		([[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0) )
+	{
+		NSRunCriticalAlertPanel(
+								@"This version of Sandvox has expired.",
+								@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", 
+								@"Check for Updates",
+								nil,
+								nil
+								);
+		
+		[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
+		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
+		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:300.0];	// give user enough time to download and install
+	}
+	
+	// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
+#ifndef DEBUG
+#ifndef APPLE_DESIGN_AWARDS_KEY
+	[self warnExpiring:nil];
+#endif
+#endif
+}
+#endif
 
 - (BOOL)iMediaBrowser:(iMediaBrowser *)browser willUseMediaParser:(NSString *)parserClassname forMediaType:(NSString *)media;
 {
