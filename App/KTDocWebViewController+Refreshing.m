@@ -29,6 +29,10 @@
 
 #import "DOMNode+KTExtensions.h"
 
+@interface DOMHTMLDocument ( TenFourElevenAndAboveWebkit )
+- (DOMDocumentFragment *)createDocumentFragmentWithMarkupString:(NSString *)markupString baseURL:(NSURL *)baseURL;
+- (DOMDocumentFragment *)createDocumentFragmentWithText:(NSString *)text;
+@end
 
 @interface KTDocWebViewController (RefreshingPrivate)
 
@@ -191,7 +195,8 @@
 	
 	// Search for the div with the right ID.
 	NSString *divID = [component divID];
-	DOMDocument *document = [[[self webView] mainFrame] DOMDocument];
+	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
+	OBASSERT([document isKindOfClass:[DOMHTMLDocument class]]);
 	DOMElement *element = [document getElementById:divID];
 	
 	// If a suitable element couldn't be found try the component's parent instead
@@ -231,7 +236,23 @@
 	
 	
 	// Replace HTML in the DOM and reprocess editable elements
-	[(DOMHTMLElement *)element setInnerHTML:replacementHTML];
+	// OLD WAY -- DOESN'T EXECUTE THE JAVASCRIPT [(DOMHTMLElement *)element setInnerHTML:replacementHTML];
+	DOMDocumentFragment *fragment = [document createDocumentFragmentWithMarkupString:replacementHTML baseURL:[NSURL fileURLWithPath:@"/"]];
+
+	if ([element hasChildNodes])
+	{
+		DOMNodeList *childNodes = [element childNodes];
+		int i, length = [childNodes length];
+		// Move to parent
+		for (i = 0 ; i < length ; i++)
+		{
+			DOMNode *child = [childNodes item:0];	// removing, so always get item 0
+			[element removeChild:child];
+		}
+	}
+	[element appendChildren:[fragment childNodes]];
+	//[element appendChild:fragment];
+	
 	[self processEditableElementsFromDoc:[element ownerDocument]];
 	
 	
