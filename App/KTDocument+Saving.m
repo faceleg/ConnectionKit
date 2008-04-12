@@ -522,7 +522,26 @@
 		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", "Status: Autosaving...")];
 		
 		// save the document through normal channels (ultimately calls writeToURL:::)
-		[self saveDocument:nil];
+		
+		/// Case 28554, use an NSDocument save method that returns an NSError
+		///[self saveDocument:nil];
+		
+		/// Issues: 
+		///	1. the string we need to pass, @"Sandvox Document", isn't defined by our code but in a plist
+		/// 2. will is always be an NSSaveOperation? (should be)
+		OBASSERT(nil != [self fileURL]);
+		NSError *localError = nil;
+		BOOL didSave = [self saveToURL:[self fileURL] ofType:@"Sandvox Document" forSaveOperation:NSSaveOperation error:&localError];
+		if ( !didSave )
+		{
+			// TODO: handle error
+			OBASSERT(nil != localError);
+			BOOL didRecover = [self presentError:localError];
+			if ( !didRecover )
+			{
+				; // now what? // TODO: handle error recovery
+			}
+		}
 		
 		// restore status
 		[[self windowController] setStatusField:status];
