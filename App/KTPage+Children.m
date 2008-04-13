@@ -404,26 +404,25 @@
 	return NO;
 }
 
-- (NSIndexPath *)indexPathFromRoot;
+/*	Returns the page's index path relative to root parent. i.e. the DocumentInfo object.
+ *	This means every index starts with 0 to signify root.
+ */
+- (NSIndexPath *)indexPath;
 {
-	NSIndexPath *result = nil;
+	NSIndexPath *result;
 	
 	KTPage *parent = [self parent];
-	if (parent)							// Querying root should yield a nil path
+	if (parent)
 	{
 		unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:self];
 		OBASSERT(index != NSNotFound);
 		
-		NSIndexPath *parentPath = [parent indexPathFromRoot];
-		if (parentPath)
-		{
-			result = [parentPath indexPathByAddingIndex:index];
-
-		}
-		else
-		{
-			result = [NSIndexPath indexPathWithIndex:index];
-		}
+		NSIndexPath *parentPath = [parent indexPath];
+		result = [parentPath indexPathByAddingIndex:index];
+	}
+	else
+	{
+		result = [NSIndexPath indexPathWithIndex:0];
 	}
 	
 	return result;

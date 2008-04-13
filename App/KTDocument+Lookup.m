@@ -112,7 +112,7 @@
 	
 	if (!result)
 	{
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"indexPathFromRoot" ascending:YES];
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"indexPath" ascending:YES];
 		result = [[NSArray alloc] initWithObject:sortDescriptor];
 		[sortDescriptor release];
 	}

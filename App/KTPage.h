@@ -133,7 +133,7 @@
 - (BOOL)hasChildren;
 - (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;
 
-- (NSIndexPath *)indexPathFromRoot;
+- (NSIndexPath *)indexPath;
 
 - (KTPage *)previousPage;
 - (KTPage *)nextPage;
