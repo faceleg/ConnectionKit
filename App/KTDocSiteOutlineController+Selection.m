@@ -19,6 +19,9 @@
 
 @implementation KTDocSiteOutlineController (Selection)
 
+#pragma mark -
+#pragma mark Selection Accessors
+
 - (NSArray *)selectedPages { return mySelectedPages; }
 
 /*	This is the public version of -setSelectedPages. It updates internal storage as well as the UI itself.

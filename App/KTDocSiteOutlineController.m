@@ -124,21 +124,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	// Clear out the pages list
-	NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		[self removePagesObject:aPage];
-	}
-	[myPages release];
-	
-	
 	[self setSiteOutline:nil];
 	
 	
 	// Release remaining iVars
 	[mySelectedPages release];
+	[myPages release];
 	
 	[myCachedFavicon release];
 	[myCachedPluginIcons release];
@@ -187,6 +178,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)setWindowController:(KTDocWindowController *)controller
 {
+	
+	
 	myWindowController = controller;
 	
 	// Connect tree controller stuff up to the controller/doc
@@ -210,6 +203,24 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	[outlineView setDataSource:self];
 	[outlineView setDelegate:self];
+}
+
+
+/*	Supplement our default behaviour by also rebuilding the -pages list as it should now be invalid
+ */
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+	// Rebuild our pages list
+	NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
+	KTPage *aPage;
+	while (aPage = [pagesEnumerator nextObject])
+	{
+		[self removePagesObject:aPage];
+	}
+	
+	
+	// Super
+	[super setManagedObjectContext:managedObjectContext];
 }
 
 #pragma mark -
