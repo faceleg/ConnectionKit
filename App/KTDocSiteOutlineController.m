@@ -199,8 +199,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[siteOutline release];
 	siteOutline = outlineView;
 	
-	[outlineView setDataSource:self];
 	[outlineView setDelegate:self];
+	[outlineView setDataSource:self];
 }
 
 
