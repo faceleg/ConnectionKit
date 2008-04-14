@@ -574,7 +574,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	if (selectedItem != myCurrentSelection ||
 		[selectedItem isKindOfClass:[KTPseudoElement class]] ||
-		[[[self siteOutlineController] selectedIndexes] count] >= 2)
+		[[[self siteOutlineController] selectionIndexPaths] count] > 1)
 	{
 //		NSLog(@"setupViewStackFor: %@", 
 //			  ( [selectedItem respondsToSelector:@selector(entity)] 

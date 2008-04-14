@@ -66,11 +66,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 @end
 
 
-@interface KTDocSiteOutlineController (SelectionPrivate)
-- (void)generateSelectedPagesSet;
-@end
-
-
 #pragma mark -
 
 
@@ -98,7 +93,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if ( nil != self )
 	{
 		myPages = [[NSMutableSet alloc] initWithCapacity:200];
-		myTempSelectionController = [[NSArrayController alloc] initWithContent:nil];
 		
 		// Caches
 		myCachedPluginIcons = [[NSMutableDictionary alloc] init];
@@ -106,6 +100,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		// Icon queue
 		myCustomIconGenerationQueue = [[NSMutableArray alloc] init];
+		
+		
+		// Prepare tree controller parameters
+		[self setChildrenKeyPath:@"sortedChildren"];
+		[self setAvoidsEmptySelection:NO];
+		[self setPreservesSelection:NO];
+		[self setSelectsInsertedObjects:NO];
 	}
 	
 	return self;
@@ -137,9 +138,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	
 	// Release remaining iVars
-	[myMOC release];
 	[mySelectedPages release];
-	[myTempSelectionController release];
 	
 	[myCachedFavicon release];
 	[myCachedPluginIcons release];
@@ -179,22 +178,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Setup should be out of the way, load the Site Outline
 	[self reloadSiteOutline];
-	
-	
-	// Update the selection from what was saved in document
-	NSIndexSet *lastSelectedRows = [[self document] lastSelectedRows];
-	if ( (nil == lastSelectedRows)
-		|| ( 0 == [lastSelectedRows count] )
-		|| [lastSelectedRows isEqualToIndexSet:[NSIndexSet indexSetWithIndex:0]] )
-	{
-		// no selection exists, or just root selected
-		[self setSelectedIndexes:[NSIndexSet indexSetWithIndex:0]];
-	}
-	else
-	{
-		[[self siteOutline] expandItem:[[self document] root] expandChildren:YES];
-		[self setSelectedIndexes:lastSelectedRows];
-	}
 }
 
 #pragma mark -
@@ -202,7 +185,15 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (KTDocWindowController *)windowController { return myWindowController; }
 
-- (void)setWindowController:(KTDocWindowController *)controller { myWindowController = controller; }
+- (void)setWindowController:(KTDocWindowController *)controller
+{
+	myWindowController = controller;
+	
+	// Connect tree controller stuff up to the controller/doc
+	KTDocument *document = [controller document];
+	[self setManagedObjectContext:[document managedObjectContext]];
+	[self setContent:[document root]];
+}
 
 - (KTDocument *)document { return [[self windowController] document]; }
 
@@ -219,15 +210,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	[outlineView setDataSource:self];
 	[outlineView setDelegate:self];
-}
-
-- (NSManagedObjectContext *)managedObjectContext { return myMOC; }
-
-- (void)setManagedObjectContext:(NSManagedObjectContext *)context
-{
-	[context retain];
-	[myMOC release];
-	myMOC = context;
 }
 
 #pragma mark -
@@ -363,7 +345,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// When pages are added or removed, adjust the page list to match
 	// If a deleted page happens to be selected, we also need to update our -selectedPages set
+	NSSet *selectedPages = [NSSet setWithArray:[self selectedPages]];
 	BOOL selectedPagesNeedsUpdating = NO;
+	
 	if ([keyPath isEqualToString:@"sortedChildren"])
 	{
 		int changeKind = [(NSNumber *)[change valueForKey:NSKeyValueChangeKindKey] intValue];
@@ -374,7 +358,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSSet *removedPages = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
 				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 				
-				if ([[self selectedPages] intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
+				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 								
 				break;
 			}
@@ -388,7 +372,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				
 				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 				
-				if ([[self selectedPages] intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
+				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 								
 				break;
 			}
@@ -429,7 +413,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Regenerate -selectedPages if required
 	if (selectedPagesNeedsUpdating)
 	{
-		[self generateSelectedPagesSet];
+		//[self generateSelectedPagesSet];	// TODO: Write a replacement for this
 	}
 }
 

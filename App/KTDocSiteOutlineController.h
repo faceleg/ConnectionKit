@@ -12,7 +12,7 @@
 @class KTPage, KTDocument, KTDocWindowController;
 
 
-@interface KTDocSiteOutlineController : NSObjectController
+@interface KTDocSiteOutlineController : NSTreeController
 {
 	IBOutlet NSOutlineView			*siteOutline;
 	
@@ -21,11 +21,8 @@
 	KTDocWindowController	*myWindowController;
 	
 	NSMutableSet			*myPages;
-	NSManagedObjectContext	*myMOC;
 	
-	NSIndexSet	*mySelectedIndexes;
-	NSSet		*mySelectedPages;
-	NSArrayController	*myTempSelectionController;
+	NSArray		*mySelectedPages;
 	
 	NSImage				*myCachedFavicon;
 	NSMutableDictionary	*myCachedPluginIcons;
@@ -41,9 +38,6 @@
 - (KTDocWindowController *)windowController;
 - (void)setWindowController:(KTDocWindowController *)controller;
 - (KTDocument *)document;
-
-- (NSManagedObjectContext *)managedObjectContext;
-- (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)reloadSiteOutline;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
@@ -65,10 +59,7 @@
 
 @interface KTDocSiteOutlineController (Selection)
 
-- (NSIndexSet *)selectedIndexes;
-- (void)setSelectedIndexes:(NSIndexSet *)indexes;
-
-- (NSSet *)selectedPages;	// Generated on-demand, can be slow
+- (NSArray *)selectedPages;
 - (void)setSelectedPages:(NSSet *)selectedPages;
 - (KTPage *)selectedPage;	// Always fast!
 

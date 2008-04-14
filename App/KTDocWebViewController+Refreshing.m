@@ -156,7 +156,7 @@
 {
 	[self setMainWebViewComponent:nil];
 	
-	NSSet *selectedPages = [[[self windowController] siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedPages];
 	
 	if (!selectedPages || [selectedPages count] == 0)
 	{
@@ -167,7 +167,7 @@
 		[[WebPreferences standardPreferences] setJavaScriptEnabled:YES];	// enable javascript to force + button to work
 		[[self webView] setPreferences:[WebPreferences standardPreferences]];	// force it to load new prefs
 		
-		KTPage *selectedPage = [selectedPages anyObject];
+		KTPage *selectedPage = [selectedPages objectAtIndex:0];
         [self loadPageIntoWebView:selectedPage];
 		
 		
