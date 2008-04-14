@@ -11,6 +11,9 @@
 #import "KT.h"
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
+#import "KTPage.h"
+
+#import "NSArray+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 
 
@@ -44,7 +47,7 @@
 	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-														object:[selectedPages objectAtIndex:0]];
+														object:[selectedPages firstObjectOrNilIfEmpty]];
 	
 	// Refresh webview
 	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];
@@ -84,4 +87,29 @@
 	[self setSelectionIndexPaths:selectionIndexPaths];
 }
 
+/*	If the current selection is about to be collapsed away, select the parent.
+ */
+- (void)outlineViewItemWillCollapse:(NSNotification *)notification
+{
+	KTPage *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
+	BOOL shouldSelectCollapsingItem = YES;
+	NSEnumerator *selectionEnumerator = [[self selectedPages] objectEnumerator];
+	KTPage *aPage;
+	
+	while (aPage = [selectionEnumerator nextObject])
+	{
+		if (![collapsingItem containsDescendant:aPage])
+		{
+			shouldSelectCollapsingItem = NO;
+			break;
+		}
+	}
+	
+	if (shouldSelectCollapsingItem)
+	{
+		[[self siteOutline] selectItem:collapsingItem];
+	}
+}
+
 @end
+

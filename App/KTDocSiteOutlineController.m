@@ -886,18 +886,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 #pragma mark Delegate (Selection)
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
-{
-	if ( item == [(KTPage *)[self document] root] ) 
-	{
-		return NO;
-	}
-	else
-	{
-		return YES;
-	}
-}
-
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
 	if ( [item isDeleted] )
