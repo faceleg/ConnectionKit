@@ -1737,7 +1737,7 @@ from representedObject */
 {
 	BOOL result = NO;
 	
-	NSSet *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if (selectedPages && [selectedPages count] > 0)
 	{
 		result = YES;
@@ -1752,7 +1752,7 @@ from representedObject */
 {
 	BOOL result = NO;
 	
-	NSSet *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[self document] root]])
 	{
 		result = YES;

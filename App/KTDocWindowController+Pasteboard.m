@@ -689,7 +689,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	}
     else
     {
-        selectedPages = [NSMutableArray arrayWithArray:[[[self siteOutlineController] selectedPages] allObjects]];
+        selectedPages = [[[[self siteOutlineController] selectedPages] mutableCopy] autorelease];
         selectedPage = [[self siteOutlineController] selectedPage];
     }
 	
@@ -788,7 +788,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 {	
 	// FIXME: we could do away with the context dictionay, since we're going off of selected pages,
 	// but first test whether this is OK for deleting from a contextual menu
-	NSSet *selectedPages = [[self siteOutlineController] selectedPages];
+	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedPages]];
 	NSAssert(![selectedPages containsObject:[[self document] root]], @"You can't delete root");
 	
 	if ([selectedPages count] > 0)
