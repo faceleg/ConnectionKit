@@ -180,6 +180,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	myWindowController = controller;
 	
+	if (!controller)
+	{
+		[self setSiteOutline:nil];
+	}
+	
 	// Connect tree controller stuff up to the controller/doc
 	KTDocument *document = [controller document];
 	[self setManagedObjectContext:[document managedObjectContext]];
