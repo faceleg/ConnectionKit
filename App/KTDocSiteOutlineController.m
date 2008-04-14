@@ -178,8 +178,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)setWindowController:(KTDocWindowController *)controller
 {
-	
-	
 	myWindowController = controller;
 	
 	// Connect tree controller stuff up to the controller/doc

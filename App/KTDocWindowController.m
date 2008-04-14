@@ -130,10 +130,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)dealloc
 {
-	[self setWebViewController:nil];
+	// Get rid of the siter outline controller
+	[oDesignsView unbind:@"selectedDesign"];
 	[self setSiteOutlineController:nil];
 	
-	  // stop observing
+	
+	// Dispose of the web view controller
+	[self setWebViewController:nil];
+	
+	// stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // release my copy of the window script object.
