@@ -33,7 +33,6 @@
 }
 
 - (NSOutlineView *)siteOutline;
-- (void)siteOutlineDidLoad;
 
 - (KTDocWindowController *)windowController;
 - (void)setWindowController:(KTDocWindowController *)controller;

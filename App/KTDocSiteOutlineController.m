@@ -140,37 +140,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[super dealloc];
 }
 
-- (void)siteOutlineDidLoad
-{	
-	// set up the Source outline
-	[[self siteOutline] setTarget:myWindowController];
-	[[self siteOutline] setDoubleAction:@selector(showInfo:)];
-	
-	// set up cell to show graphics
-	NSTableColumn *tableColumn = [[self siteOutline] tableColumnWithIdentifier:@"displayName"];
-	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
-	[imageTextCell setEditable:YES];
-	//[imageTextCell setImagePosition:NSImageRight];
-	[tableColumn setDataCell:imageTextCell];
-	
-	// Causes a crash?
-	[[self siteOutline] setIntercellSpacing:NSMakeSize(3.0, 1.0)];
-	
-	// set drag types and mask
-	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[KTDataSource allDragSourceAcceptedDragTypesForPagelets:NO]];
-	[dragTypes addObject:kKTOutlineDraggingPboardType];
-	[dragTypes addObject:kKTLocalLinkPboardType];
-	[[self siteOutline] registerForDraggedTypes:dragTypes];
-	[[self siteOutline] setVerticalMotionCanBeginDrag:YES];
-	
-	[[self siteOutline] setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    [[self siteOutline] setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
-	
-	
-	// Setup should be out of the way, load the Site Outline
-	[self reloadSiteOutline];
-}
-
 #pragma mark -
 #pragma mark Accessors
 
@@ -197,15 +166,44 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)setSiteOutline:(NSOutlineView *)outlineView
 {
+	// Dump the old outline
 	[[self siteOutline] setDataSource:nil];
 	[[self siteOutline] setDelegate:nil];
 	
+	
+	// Set up the appearance of the new view
+	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
+	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
+	[imageTextCell setEditable:YES];
+	[tableColumn setDataCell:imageTextCell];
+	
+	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
+	
+	
+	// Set up the behaviour of the new view
+	[outlineView setTarget:myWindowController];
+	[outlineView setDoubleAction:@selector(showInfo:)];
+	
+	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[KTDataSource allDragSourceAcceptedDragTypesForPagelets:NO]];
+	[dragTypes addObject:kKTOutlineDraggingPboardType];
+	[dragTypes addObject:kKTLocalLinkPboardType];
+	[outlineView registerForDraggedTypes:dragTypes];
+	[outlineView setVerticalMotionCanBeginDrag:YES];
+	[outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+    [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
+	
+	
+	// Retain the new view
 	[outlineView retain];
 	[siteOutline release];
 	siteOutline = outlineView;
 	
-	[outlineView setDelegate:self];
+	
+	// Finally, hook up outline delegate & data source
+	[outlineView setDelegate:self];		// -setDelegate: MUST come first to receive all notifications
 	[outlineView setDataSource:self];
+	
+	[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
 

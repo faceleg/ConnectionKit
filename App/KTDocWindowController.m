@@ -198,7 +198,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 		// Now let the webview and the site outline initialize themselves.
 		[self webViewDidLoad];
-		[[self siteOutlineController] siteOutlineDidLoad];		
 		[self linkPanelDidLoad];
 		
 		// Early on, window-related stuff
