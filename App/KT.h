@@ -93,7 +93,8 @@ extern NSString *kKTComponentsVersion;
 
 extern NSString *kKTDocumentType;
 extern NSString *kKTDocumentExtension;
-extern NSString *kKTDocumentUTI;
+extern NSString *kKTDocumentUTI; // 1.5+ documents
+extern NSString *kKTDocumentUTI_ORIGINAL; // 1.0-1.2 documents
 
 extern NSString *kKTMetadataAppCreatedVersionKey;
 extern NSString *kKTMetadataAppLastSavedVersionKey;

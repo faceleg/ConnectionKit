@@ -5,9 +5,10 @@ NSString *kKTSampleSitesDirectory = @"Sample Sites";
 NSString *kKTAutoOpenSampleSiteName = @"Sample Site";
 
 // Document
-NSString *kKTDocumentType = @"KTDocument";
+NSString *kKTDocumentType = @"Sandvox Document";
 NSString *kKTDocumentExtension = @"svxSite";
-NSString *kKTDocumentUTI = @"com.karelia.sandvox.document";
+NSString *kKTDocumentUTI = @"com.karelia.sandvox.site-document";
+NSString *kKTDocumentUTI_ORIGINAL = @"com.karelia.sandvox.document";
 
 NSString *kKTPageIDDesignator = @"~PAGEID~";
 
