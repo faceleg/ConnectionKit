@@ -43,20 +43,22 @@
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings
 {
 	NSSize destinationSize = [settings destinationSizeForImageOfSize:[self size]];
+	int integralWidth = destinationSize.width = roundf(destinationSize.width);
+	int integralHeight = destinationSize.height = roundf(destinationSize.height);
 	
 	
 	// Create the image rep
 	NSBitmapImageRep *result = [[NSBitmapImageRep alloc]
 		initWithBitmapDataPlanes:nil
-					  pixelsWide:destinationSize.width
-					  pixelsHigh:destinationSize.height
+					  pixelsWide:integralWidth
+					  pixelsHigh:integralHeight
 				   bitsPerSample:8
 				 samplesPerPixel:4
 					    hasAlpha:YES
                         isPlanar:NO
 				  colorSpaceName:NSCalibratedRGBColorSpace
 					bitmapFormat:0
-					 bytesPerRow:(4 * destinationSize.width)
+					 bytesPerRow:(4 * integralWidth)
 					bitsPerPixel:32];
 	
 	
