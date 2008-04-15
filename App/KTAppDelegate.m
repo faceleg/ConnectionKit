@@ -1099,7 +1099,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 					{
 						NSString *lastKnownPath = [alias lastKnownPath];
 						[filesNotFound addObject:lastKnownPath];
-						LOG((@"Can't find '%@'", lastKnownPath));
+						LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
 					}
 					
                     // is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
@@ -1107,7 +1107,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                     {
                         // path contains localized .Trash, let's skip it
                         [filesInTrash addObject:alias];
-						LOG((@"Not opening '%@'; it is in the trash", path));
+						LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
                     }
                     else
                     {
