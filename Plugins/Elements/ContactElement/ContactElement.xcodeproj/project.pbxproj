@@ -16,7 +16,6 @@
 		3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC7309B4D7BC0086EF83 /* License.rtf */; };
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		CE863FF10D80481300AD05CF /* ajax-loader.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE863FF00D80481300AD05CF /* ajax-loader.gif */; };
 		CE98EACF099947EE00EDCEE7 /* ContactElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE98EACD099947EE00EDCEE7 /* ContactElement.nib */; };
 		CE98EF3209994D7E00EDCEE7 /* ContactElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98EF3109994D7E00EDCEE7 /* ContactElementDelegate.m */; };
 		CE98EF3609994DE400EDCEE7 /* ContactElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */; };
@@ -56,7 +55,6 @@
 		CE1AD37C0A7E83E90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE55B0830AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CE55B0840AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE863FF00D80481300AD05CF /* ajax-loader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "ajax-loader.gif"; sourceTree = "<group>"; };
 		CE98EACE099947EE00EDCEE7 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CE98EF3009994D7E00EDCEE7 /* ContactElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElementDelegate.h; sourceTree = "<group>"; };
 		CE98EF3109994D7E00EDCEE7 /* ContactElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactElementDelegate.m; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE863FF00D80481300AD05CF /* ajax-loader.gif */,
 				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
 				27EF28F80C677862001055D3 /* lock.png */,
 				CE98EACD099947EE00EDCEE7 /* ContactElement.nib */,
@@ -251,7 +248,6 @@
 				3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */,
 				27EF28F90C677862001055D3 /* lock.png in Resources */,
 				27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */,
-				CE863FF10D80481300AD05CF /* ajax-loader.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

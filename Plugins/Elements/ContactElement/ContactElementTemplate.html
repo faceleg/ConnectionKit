@@ -1,85 +1,6 @@
 [[if address]]
 <script type="text/javascript"><!--
 
-var xhrContact[[=uniqueID]] = false;
-
-function makeContactRequest[[=uniqueID]](form) {
-	var requestOK = true;
-	
-	if (window.XMLHttpRequest) {
-		xhrContact[[=uniqueID]] = new XMLHttpRequest();
-	}
-	else {
-		if (window.ActiveXObject) {
-			try {
-				xhrContact[[=uniqueID]] = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			catch (e) { }
-		}
-	}
-
-	if (xhrContact[[=uniqueID]]) {
-		xhrContact[[=uniqueID]].onreadystatechange = showContactStatus[[=uniqueID]];
-		xhrContact[[=uniqueID]].open("POST", "[[=delegate.mailmeAjaxURL]]", true);
-		xhrContact[[=uniqueID]].setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-		
-		var toPost = '';
-		var aDict = { "subject": "contact[[=uniqueID]]-subject", "message":"contact[[=uniqueID]]-message",
-[[foreach delegate.fields aField]]
-		"[[=&aField.inputName]]": "contact[[=uniqueID]]-[[=_&aField.inputName]]",
-[[endforeach]]
-[[if copyToSender]]
-		"c": "contact[[=uniqueID]]-c",
-[[endif2]]
-		"a": "contact[[=uniqueID]]-a",
-		"t": "contact[[=uniqueID]]-t",
-		"v": "contact[[=uniqueID]]-v" };
-		for (var formKey in aDict)
-		{
-			var elementID = aDict[formKey];
-			var theElement = document.getElementById( elementID );
-			if (theElement)
-			{
-				var theValue = theElement.value;
-				toPost += '&' + formKey + '=' + encodeURI( theValue );
-			}
-		}
-		toPost = toPost.substring(1);
-		xhrContact[[=uniqueID]].send(toPost);
-	}
-	else {
-		requestOK = false;
-	}
-	return requestOK;
-}
-
-function showContactStatus[[=uniqueID]]() {
-	if (xhrContact[[=uniqueID]].readyState == 4)
-	{
-		var isOK = false;
-		var theResults	= document.getElementById("contact[[=uniqueID]]-results");
-		var message;
-		
-		if (xhrContact[[=uniqueID]].status == 200)
-		{
-			message = xhrContact[[=uniqueID]].responseText;
-			isOK = (message == 'OK');
-			if (isOK)
-			{
-				message = '[["Message sent.]]';
-			}
-		}
-		else
-		{
-			message = "[["Unable to Submit form. Result code = ]]" + xhrContact[[=uniqueID]].status;
-		}
-		document.getElementById("contact[[=uniqueID]]-submit").disabled = isOK;	// disable if sent; enable if not sent
-		theResults.className = isOK ? 'contactOK' : 'contactError';
-		theResults.innerHTML = message;		
-		setTimeout('document.getElementById("contact[[=uniqueID]]-submit").disabled = false',5000);	// re-enable after a few seconds
-	}
-}
-
 function verifyAndSubmit[[=uniqueID]](form) {
 
 	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
@@ -99,19 +20,13 @@ function verifyAndSubmit[[=uniqueID]](form) {
 		theResults.innerHTML = message;
 		return false;
 	}
-
-	var theResults = document.getElementById("contact[[=uniqueID]]-results");
-	document.getElementById("contact[[=uniqueID]]-submit").disabled = true;
-	theResults.className = '';
-	theResults.innerHTML = "[["Submitting Form...]]";
-	var requestedOK = makeContactRequest[[=uniqueID]](form);
-	
-	return !requestedOK;		// return false if requested OK 
-	
+	return true;
 }
+
 function doblur[[=uniqueID]](anInput) {
 	if (anInput.value == '') { anInput.value = anInput.title; }
 }
+
 function dofocus[[=uniqueID]](anInput) {
 	if (anInput.value == anInput.title) { anInput.value = ''; }
 }

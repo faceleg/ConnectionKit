@@ -15,9 +15,7 @@ form.contactElement th {
 	width:25%;
 }
 
-.contactOK {  font-weight:bold; }
 .contactError { color:red; font-weight:bold; }
-
 
 /* Contact Element For IE 7 */
 *:first-child+html form.contactElement input.submit {
