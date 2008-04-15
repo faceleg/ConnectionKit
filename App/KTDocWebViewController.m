@@ -8,6 +8,7 @@
 
 #import "KTDocWebViewController.h"
 #import "KTDocWebViewController+Private.h"
+#import "KTAsyncOffscreenWebViewController.h"
 
 #import "Debug.h"
 #import "KT.h"
@@ -84,10 +85,14 @@
 - (void)dealloc
 {
 	[[self webView] stopLoading:nil];
+	[[self asyncOffscreenWebViewController] stopLoading];
+
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[self setWebView:nil];
+    [self setElementWaitingForFragmentLoad:nil];
+    [self setAsyncOffscreenWebViewController:nil];
 	[self setSavedPageletStyle:nil];
     [self setSelectedPageletHTMLElement:nil];
 	[self setAnimationCoverWindow:nil];
@@ -112,6 +117,35 @@
 
 #pragma mark -
 #pragma mark Accessors
+
+
+
+- (DOMHTMLElement *)elementWaitingForFragmentLoad
+{
+    return myElementWaitingForFragmentLoad; 
+}
+- (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad
+{
+    [anElementWaitingForFragmentLoad retain];
+    [myElementWaitingForFragmentLoad release];
+    myElementWaitingForFragmentLoad = anElementWaitingForFragmentLoad;
+}
+
+
+- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
+{
+	if (nil == myAsyncOffscreenWebViewController)
+	{
+		myAsyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
+	}
+    return myAsyncOffscreenWebViewController; 
+}
+- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController
+{
+    [anAsyncOffscreenWebViewController retain];
+    [myAsyncOffscreenWebViewController release];
+    myAsyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
+}
 
 - (WebView *)webView { return myWebView; }
 

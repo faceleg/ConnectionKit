@@ -31,6 +31,7 @@ typedef enum {
 @class KTAbstractElement;
 @class KTDocument;
 @class KTDocWindowController;
+@class KTAsyncOffscreenWebViewController;
 
 @interface KTDocWebViewController : NSObject
 {
@@ -43,6 +44,8 @@ typedef enum {
 	WebView					*myWebView;
 	KTDocWindowController	*myWindowController;
 	
+	DOMHTMLElement			*myElementWaitingForFragmentLoad;
+	KTAsyncOffscreenWebViewController				*myAsyncOffscreenWebViewController;
 	
 	// Refreshing
 	KTParsedWebViewComponent	*myMainWebViewComponent;
@@ -91,6 +94,11 @@ typedef enum {
 // Accessors
 - (WebView *)webView;
 - (void)setWebView:(WebView *)webView;	// No-one should have to call this.
+
+- (DOMHTMLElement *)elementWaitingForFragmentLoad;
+- (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad;
+- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController;
+- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController;
 
 - (NSTextView *)sourceCodeTextView;
 
@@ -160,6 +168,8 @@ typedef enum {
 				ofObject:(NSObject *)object
 			   forParser:(KTHTMLParser *)parser;
 
+- (void) spliceElement:(DOMHTMLElement *)loadedBody;
+
 @end
 
 @interface KTDocWebViewController (Editing)
@@ -178,5 +188,6 @@ typedef enum {
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;
 
 - (BOOL)webKitValidateMenuItem:(NSMenuItem *)menuItem;
+
 
 @end

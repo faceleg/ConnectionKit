@@ -27,6 +27,7 @@
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 #import "WebViewEditingHelperClasses.h"
+#import "KTAsyncOffscreenWebViewController.h"
 
 #import "DOMNode+KTExtensions.h"
 
@@ -198,7 +199,7 @@
 	NSString *divID = [component divID];
 	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
 	OBASSERT([document isKindOfClass:[DOMHTMLDocument class]]);
-	DOMElement *element = [document getElementById:divID];
+	DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:divID];
 	
 	// If a suitable element couldn't be found try the component's parent instead
 	if (!element || ![element isKindOfClass:[DOMHTMLDivElement class]])
@@ -234,8 +235,8 @@
 	[parser setCurrentPage:page];
 	NSString *replacementHTML = [parser parseTemplate];
 	[parser release];
-	
-	
+
+/*
 	// Replace HTML in the DOM and reprocess editable elements
 	// OLD WAY -- DOESN'T EXECUTE THE JAVASCRIPT [(DOMHTMLElement *)element setInnerHTML:replacementHTML];
 	DOMDocumentFragment *fragment = [document createDocumentFragmentWithMarkupString:replacementHTML baseURL:[NSURL fileURLWithPath:@"/"]];
@@ -259,9 +260,9 @@
 		DOMHTMLScriptElement *newScript = (DOMHTMLScriptElement *)[subNode cloneNode:YES];
 		[[subNode parentNode] replaceChild:newScript :subNode];
 	}
-
-	// Replace old with new
-	
+*/
+	// Take out the old (now, so we see the change?)
+/*
 	if ([element hasChildNodes])
 	{
 		DOMNodeList *childNodes = [element childNodes];
@@ -273,7 +274,13 @@
 			[element removeChild:child];
 		}
 	}
-	[element appendChildren:[fragment childNodes]];
+*/	
+	[[self asyncOffscreenWebViewController] setDelegate:self];
+	[self setElementWaitingForFragmentLoad:element];
+	// Kick off load of fragment, we will be notified when it's done.
+	[[self asyncOffscreenWebViewController]  loadHTMLFragment:replacementHTML];
+	
+	//[element appendChildren:[fragment childNodes]];
 	//[element appendChild:fragment];
 	
 	[self processEditableElementsFromDoc:[element ownerDocument]];
@@ -284,6 +291,29 @@
 	{
 		[self loadPageIntoSourceCodeTextView:page];
 	}
+}
+
+- (void) spliceElement:(DOMHTMLElement *)loadedBody;
+{
+	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
+	if ([element hasChildNodes])
+	{
+		DOMNodeList *childNodes = [element childNodes];
+		int i, length = [childNodes length];
+		// Move to parent
+		for (i = 0 ; i < length ; i++)
+		{
+			DOMNode *child = [childNodes item:0];	// removing, so always get item 0
+			[element removeChild:child];
+		}
+	}
+
+	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
+	DOMNode *imported = [document importNode:loadedBody :YES];
+	[element appendChildren:[imported childNodes]];
+	
+//	DOMElement *main = [document documentElement];
+//	NSLog(@"main = %@", [main outerHTML]);
 }
 
 - (void)refreshWebViewIfNeeded;
