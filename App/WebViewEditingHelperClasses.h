@@ -46,3 +46,11 @@
 - (short)acceptNode:(DOMNode *)node;
 
 @end
+
+@interface ScriptNodeFilter : NSObject <DOMNodeFilter>
+
++ (ScriptNodeFilter *)sharedFilter;
+- (short)acceptNode:(DOMNode *)node;
+
+@end
+

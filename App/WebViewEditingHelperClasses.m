@@ -192,3 +192,29 @@ static KTEditableObjectMovieDOMFilter *sSharedEditableObjectMovieDOMFilter;
 	return result;
 }
 @end
+
+@implementation ScriptNodeFilter
+
++ (ScriptNodeFilter *)sharedFilter
+{
+	static ScriptNodeFilter *sSharedEditableNodeFilter;
+	
+	if (!sSharedEditableNodeFilter)
+		sSharedEditableNodeFilter = [[ScriptNodeFilter alloc] init];
+	return sSharedEditableNodeFilter;
+}
+
+- (short)acceptNode:(DOMNode *)node
+{
+	short result = DOM_FILTER_SKIP;
+	
+	DOMHTMLElement *element = ((DOMHTMLScriptElement *)node);
+	
+	if( [element isKindOfClass:[DOMHTMLScriptElement class]])
+	{
+		result = DOM_FILTER_ACCEPT;
+	}
+	return result;
+}
+
+@end

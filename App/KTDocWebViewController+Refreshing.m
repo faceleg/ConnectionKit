@@ -26,6 +26,7 @@
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
+#import "WebViewEditingHelperClasses.h"
 
 #import "DOMNode+KTExtensions.h"
 
@@ -239,6 +240,28 @@
 	// OLD WAY -- DOESN'T EXECUTE THE JAVASCRIPT [(DOMHTMLElement *)element setInnerHTML:replacementHTML];
 	DOMDocumentFragment *fragment = [document createDocumentFragmentWithMarkupString:replacementHTML baseURL:[NSURL fileURLWithPath:@"/"]];
 
+	// Re-build the <script> tags to allow code to be executed when we insert it.
+	// Workaround for rdar:5862507 (filed by Apple, not me) based on dts incident (Follow-up:  45775449)
+	
+	DOMNodeIterator *it = [document createNodeIterator:fragment :DOM_SHOW_ELEMENT :[ScriptNodeFilter sharedFilter] :NO];
+	DOMHTMLScriptElement *subNode;
+	
+	NSMutableArray *scriptsToRebuild = [NSMutableArray array];
+	
+	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
+	{
+		[scriptsToRebuild addObject:subNode];
+	}
+	NSEnumerator *enumy = [scriptsToRebuild objectEnumerator];
+	
+	while ((subNode = [enumy nextObject]) != nil)
+	{
+		DOMHTMLScriptElement *newScript = (DOMHTMLScriptElement *)[subNode cloneNode:YES];
+		[[subNode parentNode] replaceChild:newScript :subNode];
+	}
+
+	// Replace old with new
+	
 	if ([element hasChildNodes])
 	{
 		DOMNodeList *childNodes = [element childNodes];
