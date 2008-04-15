@@ -628,7 +628,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 }
 
--(void) showValidationResultsAlert
+- (void)showValidationResultsAlert
 {
 				[KSSilencingConfirmSheet
 				alertWithWindow:[self window]
@@ -640,11 +640,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark WebView View Type
 
-/*	The sender's tag should correspond to a view type
+/*	The sender's tag should correspond to a view type. If the user clicks the currently selected option for the second time,
+ *	we revert back to standard preview.
  */
 - (IBAction)selectWebViewViewType:(id)sender;
 {
 	KTWebViewViewType viewType = [sender tag];
+	if (viewType == [[self webViewController] viewType])
+	{
+		viewType = KTStandardWebView;
+	}
+	
 	[[self webViewController] setViewType:viewType];
 }
 
