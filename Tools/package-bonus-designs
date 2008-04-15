@@ -80,7 +80,6 @@ then
 		        -exclude CVS \
 		        -exclude .svn \
 				-exclude BONUS \
-				-exclude Info.plist \
 		        -resolve-src-symlinks \
 		        "${PWD}/${i}" "${DMG_DIR}"
 
