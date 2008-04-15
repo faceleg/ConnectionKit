@@ -49,11 +49,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 @end
 
 
-@interface KTDocWindowController (PrivateSiteOutline)
-- (NSAttributedString *)attributedStringForDisplayOfItem:(id)anItem;
-@end
-
-
 #pragma mark -
 
 
@@ -539,114 +534,38 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	if ( [[tableColumn identifier] isEqualToString:@"displayName"] )
+	NSString *result = nil;
+	
+	if ([[tableColumn identifier] isEqualToString:@"displayName"] && [item isKindOfClass:[KTPage class]])
 	{
-		// get title (attributedStringForDisplayOfItem: locks context)
-		NSMutableAttributedString *displayName = [[self attributedStringForDisplayOfItem:item] mutableCopy];
-		
-		// set up a line break mode
-		NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-		[style setLineBreakMode:NSLineBreakByTruncatingMiddle];
-		
-		// apply the style
-		[displayName addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, [displayName length])];
-		[style release];
-		
-		// return the string
-		return [displayName autorelease];
+		KTPage *page = item;
+		if ([page isRoot])
+		{
+			result = [[page master] siteTitleText];
+		}
+		else
+		{
+			result = [page titleText];
+		}
 	}
 	else
 	{
 		id result = [NSString stringWithFormat:@"%i:%i", [[self siteOutline] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
 		return result;
 	}
-}
-
-- (NSAttributedString *)attributedStringForDisplayOfItem:(id)anItem
-{
-	NSAttributedString *attrString = nil;
 	
-	if ( [anItem isKindOfClass:[KTPage class]] && [(KTPage *)anItem isRoot] )
+	
+	// If there is no title, display a placeholder
+	if (!result || [result isEqualToString:@""])
 	{
-		if ( nil != [[anItem master] valueForKey:@"siteTitleAttributed"] )
-		{
-			id fetchedValue = [[anItem master] valueForKey:@"siteTitleAttributed"];
-			if ( nil != fetchedValue )
-			{
-				if ( [fetchedValue isKindOfClass:[NSAttributedString class]] )
-				{
-					// compatibility for sites created under Tiger with 1.0.4 or previous
-					attrString = [[fetchedValue mutableCopy] autorelease];
-				}
-				else if ( [fetchedValue isKindOfClass:[NSData class]] )
-				{
-					// Leopard compatibility
-					attrString = [NSAttributedString attributedStringWithArchivedData:fetchedValue];
-				}
-				else
-				{
-					LOG((@"valueForKey: siteTitleAttributed returned data of unknown class"));
-				}
-			}
-		}
-		else if ( nil != [anItem wrappedValueForKey:@"titleAttributed"] )
-		{
-			id fetchedValue = [anItem wrappedValueForKey:@"titleAttributed"];
-			if ( nil != fetchedValue )
-			{
-				if ( [fetchedValue isKindOfClass:[NSAttributedString class]] )
-				{
-					// compatibility for sites created under Tiger with 1.0.4 or previous
-					attrString = [[fetchedValue mutableCopy] autorelease];
-				}
-				else if ( [fetchedValue isKindOfClass:[NSData class]] )
-				{
-					// Leopard compatibility
-					attrString = [NSAttributedString attributedStringWithArchivedData:fetchedValue];
-				}
-				else
-				{
-					LOG((@"valueForKey: siteTitleAttributed returned data of unknown class"));
-				}
-			}
-			
-		}
-	}
-	else if ( nil != [anItem wrappedValueForKey:@"titleAttributed"] )
-	{
-		id fetchedValue = [anItem wrappedValueForKey:@"titleAttributed"];
-		if ( nil != fetchedValue )
-		{
-			if ( [fetchedValue isKindOfClass:[NSAttributedString class]] )
-			{
-				// compatibility for sites created under Tiger with 1.0.4 or previous
-				attrString = [[fetchedValue mutableCopy] autorelease];
-			}
-			else if ( [fetchedValue isKindOfClass:[NSData class]] )
-			{
-				// Leopard compatibility
-				attrString = [NSAttributedString attributedStringWithArchivedData:fetchedValue];
-			}
-			else
-			{
-				LOG((@"valueForKey: siteTitleAttributed returned data of unknown class"));
-			}
-		}
-		
-	}
-	else
-	{
-		attrString = [NSAttributedString systemFontStringWithString:@"     "];
+		result = NSLocalizedString(@"(Empty title)",
+			@"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.");
 	}
 	
-	if (0 == [attrString length])
-	{
-		attrString = [NSAttributedString systemFontStringWithString:
-					  NSLocalizedString(@"(Empty title)",@"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.")
-					  ];
-	}
 	
-	return attrString;
+	// Tidy up
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)aNewValue forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item

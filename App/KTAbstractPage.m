@@ -122,11 +122,6 @@
 
 - (void)setTitleHTML:(NSString *)value
 {
-	// set titleAttributed FIRST
-	NSString *titleText = [value flattenHTML];
-	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:titleText];
-	
-	[self setPrimitiveValue:[attrString archivableData] forKey:@"titleAttributed"];
 	[self setWrappedValue:value forKey:@"titleHTML"];
 	
 	// If the page hasn't been published yet, update the filename to match

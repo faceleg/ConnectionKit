@@ -41,9 +41,6 @@
 - (void)reloadSiteOutline;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
 
-// FIXME: is this the right object to implement this?
-- (NSAttributedString *)attributedStringForDisplayOfItem:(id)anItem;
-
 @end
 
 

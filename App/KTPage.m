@@ -59,8 +59,6 @@
 		triggerChangeNotificationsForDependentKey:@"canEditTitle"];
 
 	[self setKeys:[NSArray arrayWithObjects:@"titleHTML",nil]
-		triggerChangeNotificationsForDependentKey:@"titleAttributed"];
-	[self setKeys:[NSArray arrayWithObjects:@"titleHTML",nil]
 		triggerChangeNotificationsForDependentKey:@"titleText"];
 	[self setKeys:[NSArray arrayWithObjects:@"titleHTML",nil]
 		triggerChangeNotificationsForDependentKey:@"fileName"];
@@ -263,16 +261,6 @@
 			Class indexToAllocate = [NSBundle principalClassForBundle:[plugin bundle]];
 			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:plugin] autorelease];
 			[self setIndex:theIndex];
-		}
-		
-		
-		// set transient. (for loading from disk -- already set if we created object)
-		NSString *html = [self valueForKey:@"titleHTML"];
-		if (nil != html)
-		{
-			NSString *flattenedTitle = [html flattenHTML];
-			NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:flattenedTitle];
-			[self setPrimitiveValue:[attrString archivableData] forKey:@"titleAttributed"];
 		}
 	}
 		
