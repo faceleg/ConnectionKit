@@ -42,7 +42,7 @@
 
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings
 {
-	NSSize destinationSize = [settings sizeForImageOfSize:[self size]];
+	NSSize destinationSize = [settings destinationSizeForImageOfSize:[self size]];
 	
 	
 	// Create the image rep
@@ -70,7 +70,7 @@
 	// Draw the scaled image
 	NSRect scaledRect;
 	scaledRect.origin = NSMakePoint(0.0, 0.0);
-	scaledRect.size = [settings size];
+	scaledRect.size = destinationSize;
 	
 	NSRect sourceRect = [settings sourceRectForImageOfSize:[self size]];
 	

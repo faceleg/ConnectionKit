@@ -100,7 +100,7 @@
 	*scaleFactor = [settings scaleFactorForImageOfSize:sourceImageSize];
 	*aspectRatio = [settings aspectRatioForImageOfSize:sourceImageSize];
 	
-	NSSize cropSize = [settings sizeForImageOfSize:sourceImageSize];
+	NSSize cropSize = [settings destinationSizeForImageOfSize:sourceImageSize];
 	float cropWidth = roundf(cropSize.width);
 	float cropHeight = roundf(cropSize.height);
 	

@@ -138,7 +138,7 @@
 	
 	// Init with default parameters
 	myBehaviour = KTScaleByFactor;
-	mySize = NSZeroSize;
+	_size = NSZeroSize;
 	myScaleFactor = 1.0;
 	myImageAlignment = NSImageAlignCenter;
 	mySharpeningFactor = nil;
@@ -226,9 +226,9 @@
 
 - (void)setBehavior:(KTMediaScalingOperation)behaviour { myBehaviour = behaviour; }
 
-- (NSSize)size { return mySize; }
+- (NSSize)size { return _size; }
 
-- (void)setSize:(NSSize)size { mySize = size; }
+- (void)setSize:(NSSize)size { _size = size; }
 
 - (float)scaleFactor { return myScaleFactor; }
 
@@ -453,16 +453,21 @@
 	// TODO: Properly handle stretchToFit
 }
 
-- (NSSize)sizeForImageOfSize:(NSSize)sourceSize
+- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize
 {
 	NSSize result;
+	NSSize mySize = [self size];
 	
 	switch ([self behavior])
 	{
 		case KTStretchToSize:	// Dead easy
-			result = [self size];
+			result = mySize;
 			break;
 		
+		case KTCropToSize:		// The image will fill the frame unless the image is undersized
+			result = NSMakeSize(MIN(mySize.width, sourceSize.width), MIN(mySize.height, sourceSize.height));
+			break;
+			
 		default:
 		{
 			float scale = [self scaleFactorForImageOfSize:sourceSize];

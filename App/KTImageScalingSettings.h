@@ -15,7 +15,7 @@
 	@private
 	
 	KTMediaScalingOperation	myBehaviour;
-	NSSize					mySize;
+	NSSize					_size;
 	float					myScaleFactor;
 	NSImageAlignment		myImageAlignment;
 	NSNumber				*mySharpeningFactor;
@@ -53,7 +53,7 @@
 
 - (float)scaleFactorForImageOfSize:(NSSize)sourceSize;
 - (float)aspectRatioForImageOfSize:(NSSize)sourceSize;
-- (NSSize)sizeForImageOfSize:(NSSize)sourceSize;
+- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize;
 //- (float)heightForImageOfSize:(NSSize)sourceSize;
 
 @end
