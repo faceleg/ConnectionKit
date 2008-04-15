@@ -1,5 +1,5 @@
 /* 
-   css Copyright (c) 2005-2006 by Karelia Software. All rights reserved.
+   css Copyright (c) 2005-2008 by Karelia Software. All rights reserved.
    css released under Creative Commons License 
         - http://creativecommons.org/licenses/by-sa/2.5/ 
    All associated graphics belong to their respective owners 
@@ -47,18 +47,14 @@ body {
 	word-wrap: break-word;
 }
 
-* html #sidebar-container { margin-right: 0px; }
-/*\*/
 * html #sidebar-container { margin-right: 6px;  }
-/**/
 
-#sidebar { line-height: 1.3em; font-size: .9em; background: #6a91b4; }
+#sidebar { line-height: 1.3em; font-size: .9em; background: #6a91b4;  position:relative;}
+#sidebar-top { height: 13px; width:100%; background: url(mod_sidebartopbg.gif) no-repeat top left; position:absolute; top:0px; }
+#sidebar-bottom { height: 13px; width:100%; background: url(mod_sidebarbottombg.gif) no-repeat top left; position: absolute; top:100%;}
+#sidebar .pagelet.i1 {padding-top:8px;}
 
-#sidebar-top { height: 13px; margin-bottom: -8px; background: url(mod_sidebartopbg.gif) no-repeat top left; }
-#sidebar-bottom { height: 13px;  background: url(mod_sidebarbottombg.gif) no-repeat top left; }
-#sidebar-content { margin: 0 5px; }
 
-* html #sidebar-bottom { margin-bottom: -1px; }
 
 #main {
 	width: 461px;
@@ -169,11 +165,14 @@ body {
 	overflow:hidden;
 }
 
+#sidebar .pagelet {
+	margin-left:5px;
+}
+
 	.pagelet h4 {
 		padding: 0 8px;
 		color: #fff;
 		padding: 5px 0 0 0;
-		position:relative; /* for IE/Win */
 	}
 
 	.pagelet h4 span.in { display: block; padding: 4px 8px 9px 8px; }
