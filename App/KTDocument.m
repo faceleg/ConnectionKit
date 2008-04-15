@@ -1155,7 +1155,7 @@
 	LOG((@"========= beginning Save As... ========="));
 // FIXME: the prompt for the panel should really be Save As, not Create
 	//[self saveAllContexts]; // could be autosaveDocument
-	[self autosaveDocument:nil];
+	//[self autosaveDocument:nil];
 	
 	[super saveDocumentAs:sender];
 }
