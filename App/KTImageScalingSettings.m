@@ -466,7 +466,7 @@
 		default:
 		{
 			float scale = [self scaleFactorForImageOfSize:sourceSize];
-			result = NSMakeSize(scale * sourceSize.width, scale * sourceSize.height);
+			result = NSMakeSize(roundf(scale * sourceSize.width), roundf(scale * sourceSize.height));
 			break;
 		}	
 	}
