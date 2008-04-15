@@ -35,7 +35,7 @@
  */
 - (void)_setSelectedPages:(NSArray *)selectedPages;
 {
-	[self willChangeValueForKey:@"selectedPage"];
+	[self willChangeValueForKey:@"selectedPages"];
 	[[self windowController] willChangeValueForKey:@"selectedPagesIncludesACollection"];
 	[[self windowController] willChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
 	
@@ -44,7 +44,7 @@
 	mySelectedPages = selectedPages;
 	
 	
-	[self didChangeValueForKey:@"selectedPage"];
+	[self didChangeValueForKey:@"selectedPages"];
 	[[self windowController] didChangeValueForKey:@"selectedPagesIncludesACollection"];
 	[[self windowController] didChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
 	

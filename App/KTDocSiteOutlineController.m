@@ -68,7 +68,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {
-	if ([key isEqualToString:@"selectionIndexPaths"] || [key isEqualToString:@"selectedPages"])
+	if ([key isEqualToString:@"selectedPages"])
 	{
 		return NO;
 	}
@@ -76,6 +76,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		return [super automaticallyNotifiesObserversForKey:key];
 	}
+}
+
++ (void)initialize
+{
+	[self setKey:@"selectedPages" triggersChangeNotificationsForDependentKey:@"selectedPage"];
 }
 
 #pragma mark -
@@ -333,6 +338,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                         change:(NSDictionary *)change
                        context:(void *)context
 {
+	// Allow super to deal with the observation normally
+	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	
+	
 	// Ignore objects not in our pages list. If we don't NSOutlineView can occasionally embark on an endless loop.
 	if (![[self pages] containsObject:object])
 	{
