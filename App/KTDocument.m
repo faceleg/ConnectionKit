@@ -1646,7 +1646,7 @@
         {
 			siteCachePath = [libraryPaths objectAtIndex:0];
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:[NSApplication applicationName]];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:@"SiteCache"]; // changed from Sites to not interfere with 1.2 cache
+			siteCachePath = [siteCachePath stringByAppendingPathComponent:@"Sites"];
 			siteCachePath = [siteCachePath stringByAppendingPathExtension:@"noindex"];
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:[self documentID]];
 			[self setSiteCachePath:siteCachePath];
