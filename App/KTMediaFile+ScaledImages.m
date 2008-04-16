@@ -153,12 +153,28 @@
 	return result;
 }
 
+
+/*	Called if the receiver holds an image.
+ *	This method is responsible for checking that the image is actually suitable for scaling.
+ */
 - (KTScaledImageProperties *)generateImageUsingCoreImageWithProperties:(NSDictionary *)properties;
 {
-	NSImage *image = [[NSImage alloc] initByReferencingFile:[self currentPath]];
-	KTScaledImageProperties *result = [self scaleImage:image withProperties:properties];
-	[image release];
+	KTScaledImageProperties *result = nil;
 	
+	NSString *imagePath = [self currentPath];
+	NSImage *image = [[NSImage alloc] initByReferencingFile:imagePath];
+	
+	if (image && [[image representations] count] > 0)
+	{
+		result = [self scaleImage:image withProperties:properties];
+	}
+	else
+	{
+		NSLog(@"%@\rThe image could not be read into memory for scaling", [imagePath stringByAbbreviatingWithTildeInPath]);
+	}
+	
+	// Tidy up
+	[image release];
 	return result;
 }
 
