@@ -4,14 +4,16 @@
 <dict>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.Urban Forest</string>
+	<key>CFBundleGetInfoString</key>
+	<string>SANDVOX_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>SANDVOX_VERSION</string>
 	<key>CFBundleVersion</key>
 	<string>SVN_VERSION</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
 	<key>CalloutBorderable</key>
 	<true/>
-	<key>KTMinimumAppVersion</key>
-	<string>1.0</string>
 	<key>SidebarBorderable</key>
 	<true/>
 	<key>comments</key>

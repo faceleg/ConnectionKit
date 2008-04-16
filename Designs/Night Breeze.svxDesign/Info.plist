@@ -4,14 +4,16 @@
 <dict>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.Night Breeze</string>
+	<key>CFBundleGetInfoString</key>
+	<string>SANDVOX_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>SANDVOX_VERSION</string>
 	<key>CFBundleVersion</key>
-	<string>1589</string>
+	<string>SVN_VERSION</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
 	<key>CalloutBorderable</key>
 	<false/>
-	<key>KTMinimumAppVersion</key>
-	<string>1.1</string>
 	<key>SidebarBorderable</key>
 	<false/>
 	<key>bannerHeight</key>
