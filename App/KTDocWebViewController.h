@@ -174,7 +174,7 @@ typedef enum {
 
 @interface KTDocWebViewController (Editing)
 
-- (void)processEditableElementsFromDoc:(DOMDocument *)aDOMDocument;
+- (void)processEditableElementsFromElement:(DOMElement *)aDOMElement;
 
 // Editing status
 - (BOOL)webViewIsEditing;

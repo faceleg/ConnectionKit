@@ -800,7 +800,7 @@
 			[[self windowController] setHTMLSource:source];
 		}
 		
-		[self processEditableElementsFromDoc:[frame DOMDocument]];
+		[self processEditableElementsFromElement:[[frame DOMDocument] documentElement]];
 		
 		[self setHilite:YES onHTMLElement:[self selectedPageletHTMLElement]];
 		// need to do this with inline images too probably

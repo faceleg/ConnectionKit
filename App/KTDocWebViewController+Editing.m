@@ -56,16 +56,16 @@
 
 /*! Make all editable style nodes be editable.	Fix all "kOptional" elements and replace empty ones with + button
 */
-- (void)processEditableElementsFromDoc:(DOMDocument *)aDOMDocument;
+- (void)processEditableElementsFromElement:(DOMElement *)aDOMElement;
 {
+	DOMDocument *doc = [aDOMElement ownerDocument];
 	BOOL isNew = [[[[self windowController] siteOutlineController] selectedPage] isNewPage];
 	OFF((@"%@", NSStringFromSelector(_cmd) ));
-	DOMNode *root = [aDOMDocument documentElement];
 	BOOL displayEditingControls = [[self document] displayEditingControls];
 
-	if (nil != root)
+	if (nil != aDOMElement)
 	{
-		DOMNodeIterator *it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[EditableNodeFilter sharedFilter] :YES];
+		DOMNodeIterator *it = [doc createNodeIterator:aDOMElement :DOM_SHOW_ELEMENT :[EditableNodeFilter sharedFilter] :YES];
 		DOMHTMLElement *element;
 		
 		// Collect the elements into an array for processing later, since the loop messes with the DOM
@@ -162,7 +162,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 				// NSString *class = [element className];
 				// if( NSNotFound != [class rangeOfString:@"kOptional"].location )
 				{
-					DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)[aDOMDocument createElement:@"A"];
+					DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)[doc createElement:@"A"];
 					[a setHref:@"#"];
 					[a setTitle:NSLocalizedString(@"Click on + to insert an element", @"title of '+' button; instructions for what to do")];
 					// replace_withElementName_elementClass_elementID_text_innerSpan_innerParagraph_
@@ -177,7 +177,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 					[a setAttribute:@"onclick" :jsFunction];
 					[a setAttribute:@"style" :@"float:none; width:13px; height:14px; border:none; text-decoration:none;"];	// ??also?? position:absolute;
 					
-					DOMHTMLImageElement *img = (DOMHTMLImageElement *)[aDOMDocument createElement:@"IMG"];
+					DOMHTMLImageElement *img = (DOMHTMLImageElement *)[doc createElement:@"IMG"];
 					
 					NSString *addImagePath = [[NSBundle mainBundle] pathForImageResource:@"TinyAdd"];
 					NSURL *imageURL = [NSURL fileURLWithPath:addImagePath];
@@ -186,7 +186,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 					[img setAttribute:@"style" :@"border:none;"];	// ??also?? position:absolute;
 					[img setClassName:kKTInternalImageClassName];
 					
-					DOMText *zeroWidthSpace = [aDOMDocument createTextNode:[NSString stringWithUnichar:0x200b]];
+					DOMText *zeroWidthSpace = [doc createTextNode:[NSString stringWithUnichar:0x200b]];
 					// Put it all together
 					(void) [a appendChild:img];
 					(void) [a appendChild:zeroWidthSpace];
@@ -204,7 +204,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		/*  NOT READY FOR YET -- WE NEED TO GET THE MOVIE PLUGIN FULLY WORKING.
 		 
 		// Now process the movies.  We'll just make our new embed to replace the <object> tag
-		it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[KTEditableObjectMovieDOMFilter sharedFilter] :YES];
+		it = [doc createNodeIterator:aDOMElement :DOM_SHOW_ELEMENT :[KTEditableObjectMovieDOMFilter sharedFilter] :YES];
 		
 		// Collect the elements into an array for processing later, since the loop messes with the DOM
 		NSMutableArray *movieElementsToProcess = [NSMutableArray array];
@@ -239,7 +239,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			}
 			if (embed)
 			{
-				DOMHTMLEmbedElement *newEmbed = (DOMHTMLEmbedElement *)[aDOMDocument createElement:@"embed"];
+				DOMHTMLEmbedElement *newEmbed = (DOMHTMLEmbedElement *)[doc createElement:@"embed"];
 				[newEmbed setHeight:[embed height]];
 				[newEmbed setWidth:[embed width]];
 				[newEmbed setAlign:[embed align]];
@@ -256,7 +256,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		
 /* NOT DOING JUST YET -- WE WILL NEED TO DO A BUNCH OF WORK BEFORE THIS IS READY FOR PRIME TIME
 		// Now process the images.
-		it = [aDOMDocument createNodeIterator:root :DOM_SHOW_ELEMENT :[KTEditableImageDOMFilter sharedFilter] :YES];
+		it = [doc createNodeIterator:aDOMElement :DOM_SHOW_ELEMENT :[KTEditableImageDOMFilter sharedFilter] :YES];
 		
 		// Collect the elements into an array for processing later, since the loop messes with the DOM
 		NSMutableArray *imageElementsToProcess = [NSMutableArray array];
@@ -270,7 +270,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		
 		while ((img = [imageEnum nextObject]) != nil)
 		{
-			DOMHTMLEmbedElement *embed = (DOMHTMLEmbedElement *)[aDOMDocument createElement:@"embed"];
+			DOMHTMLEmbedElement *embed = (DOMHTMLEmbedElement *)[doc createElement:@"embed"];
 			[embed setHeight:[img height]];
 			[embed setWidth:[img width]];
 			[embed setAlign:[img align]];
@@ -309,9 +309,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		[[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];
 		
 		// Convert empty text blocks back into + editing markers.
-		// Presumably this could be more efficient by only processing the edited block.
-		DOMDocument *DOMDoc = [[myTextEditingBlock DOMNode] ownerDocument];
-		[self processEditableElementsFromDoc:DOMDoc];
+		[self processEditableElementsFromElement:[myTextEditingBlock DOMNode]];
 	}
 	
 	

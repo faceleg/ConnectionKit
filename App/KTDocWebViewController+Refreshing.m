@@ -236,34 +236,11 @@
 	NSString *replacementHTML = [parser parseTemplate];
 	[parser release];
 
-/*
-	// Replace HTML in the DOM and reprocess editable elements
-	// OLD WAY -- DOESN'T EXECUTE THE JAVASCRIPT [(DOMHTMLElement *)element setInnerHTML:replacementHTML];
-	DOMDocumentFragment *fragment = [document createDocumentFragmentWithMarkupString:replacementHTML baseURL:[NSURL fileURLWithPath:@"/"]];
 
-	// Re-build the <script> tags to allow code to be executed when we insert it.
-	// Workaround for rdar:5862507 (filed by Apple, not me) based on dts incident (Follow-up:  45775449)
-	
-	DOMNodeIterator *it = [document createNodeIterator:fragment :DOM_SHOW_ELEMENT :[ScriptNodeFilter sharedFilter] :NO];
-	DOMHTMLScriptElement *subNode;
-	
-	NSMutableArray *scriptsToRebuild = [NSMutableArray array];
-	
-	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
-	{
-		[scriptsToRebuild addObject:subNode];
-	}
-	NSEnumerator *enumy = [scriptsToRebuild objectEnumerator];
-	
-	while ((subNode = [enumy nextObject]) != nil)
-	{
-		DOMHTMLScriptElement *newScript = (DOMHTMLScriptElement *)[subNode cloneNode:YES];
-		[[subNode parentNode] replaceChild:newScript :subNode];
-	}
-*/
-	// Take out the old (now, so we see the change?)
 /*
-	if ([element hasChildNodes])
+ // Take out the old (now, so we see the change?)
+ 
+ if ([element hasChildNodes])
 	{
 		DOMNodeList *childNodes = [element childNodes];
 		int i, length = [childNodes length];
@@ -279,12 +256,7 @@
 	[self setElementWaitingForFragmentLoad:element];
 	// Kick off load of fragment, we will be notified when it's done.
 	[[self asyncOffscreenWebViewController]  loadHTMLFragment:replacementHTML];
-	
-	//[element appendChildren:[fragment childNodes]];
-	//[element appendChild:fragment];
-	
-	[self processEditableElementsFromDoc:[element ownerDocument]];
-	
+
 	
 	// Reload the source code text view if it's visible
 	if ([self hideWebView])
@@ -310,10 +282,21 @@
 
 	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
 	DOMNode *imported = [document importNode:loadedBody :YES];
-	[element appendChildren:[imported childNodes]];
 	
-//	DOMElement *main = [document documentElement];
-//	NSLog(@"main = %@", [main outerHTML]);
+	// I have to turn off the script nodes from actually executing
+	DOMNodeIterator *it = [document createNodeIterator:imported :DOM_SHOW_ELEMENT :[ScriptNodeFilter sharedFilter] :NO];
+	DOMHTMLScriptElement *subNode;
+		
+	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
+	{
+		[subNode setText:@""];		/// HACKS -- clear out the <script> tags so that scripts are not executed AGAIN
+		[subNode setSrc:@""];
+		[subNode setType:@""];
+	}
+	
+	[element appendChildren:[imported childNodes]];
+	[self processEditableElementsFromElement:element];
+
 }
 
 - (void)refreshWebViewIfNeeded;

@@ -9,7 +9,7 @@
 // works in conjunction with KTDocWebViewController+Refreshing.m refreshWebViewComponent:
 
 #import "KTAsyncOffscreenWebViewController.h"
-
+#import "KTDocWebViewController.h"
 
 @implementation KTAsyncOffscreenWebViewController
 
@@ -21,13 +21,18 @@
 		NSRect frame = NSMakeRect(0.0, 0.0, 800,800);
 		
 		myWindow = [[NSWindow alloc]
-							initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-		[myWindow setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when termintating?
+							initWithContentRect:frame styleMask:NSBorderlessWindowMask
+// |NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask|NSMiniaturizableWindowMask
+					backing:NSBackingStoreBuffered defer:NO];
+
+		[myWindow setReleasedWhenClosed:NO];
 		
-		myWebView = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
+		myWebView = [[WebView alloc] initWithFrame:frame];
 		[myWindow setContentView:myWebView];
 		
 		[myWebView setFrameLoadDelegate:self];
+		
+//		[myWindow orderFront:nil]; 
 	}
 	return self;
 }
@@ -60,7 +65,7 @@
 	}
 	else
 	{
-		body = [bodyList item:0];
+		body = (DOMHTMLElement *)[bodyList item:0];
 	}
 	[myDelegate spliceElement:body];
 }
