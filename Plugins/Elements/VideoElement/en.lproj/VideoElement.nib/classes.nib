@@ -6,6 +6,14 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>KTAbstractPluginDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KSPathInfoField</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -14,14 +22,6 @@
 				<key>delegate</key>
 				<string>id</string>
 			</dict>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

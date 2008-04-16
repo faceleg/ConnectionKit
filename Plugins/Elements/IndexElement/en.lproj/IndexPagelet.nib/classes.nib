@@ -31,6 +31,14 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KSLabel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key></key>
@@ -66,14 +74,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KTAbstractPluginDelegate</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSLabel</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

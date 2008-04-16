@@ -487,7 +487,6 @@
 		3CF941F70D623EBE00B1C83D /* crop.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941F60D623EBE00B1C83D /* crop.png */; };
 		3CF941F90D623ECF00B1C83D /* KTPageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */; };
 		3CF942090D62432500B1C83D /* InlineImageElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF942070D62432500B1C83D /* InlineImageElement.nib */; };
-		3CF942180D6243AF00B1C83D /* ImageCropper.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF942160D6243AF00B1C83D /* ImageCropper.nib */; };
 		3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CF9422B0D6244C000B1C83D /* DOMNode+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */; };
 		3CF948B90D624A0F00B1C83D /* getOmniWebFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FA0D623EDF00B1C83D /* getOmniWebFrontmostPage.scpt */; };
@@ -5670,7 +5669,6 @@
 				3CF941F70D623EBE00B1C83D /* crop.png in Resources */,
 				3CF941F90D623ECF00B1C83D /* KTPageTemplate.html in Resources */,
 				3CF942090D62432500B1C83D /* InlineImageElement.nib in Resources */,
-				3CF942180D6243AF00B1C83D /* ImageCropper.nib in Resources */,
 				3CF948B90D624A0F00B1C83D /* getOmniWebFrontmostPage.scpt in Resources */,
 				3CF948BA0D624A0F00B1C83D /* getOperaFrontmostPage.scpt in Resources */,
 				3CF948BB0D624A1000B1C83D /* getCaminoFrontmostPage.scpt in Resources */,

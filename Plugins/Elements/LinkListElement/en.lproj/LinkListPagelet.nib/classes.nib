@@ -92,6 +92,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSUnifiedTableButton</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KTAbstractPlugin</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>

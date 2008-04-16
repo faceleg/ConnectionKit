@@ -59,11 +59,11 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>AmazonListDelegate</string>
+			<string>DropShadowImageCell</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>NSImageCell</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -75,11 +75,11 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>DropShadowImageCell</string>
+			<string>AmazonListDelegate</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSImageCell</string>
+			<string>KTAbstractPluginDelegate</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -187,11 +187,27 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSTrimFirstLineFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSFormatter</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSTabView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSUnifiedTableButton</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSButton</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
