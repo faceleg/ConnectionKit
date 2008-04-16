@@ -542,18 +542,21 @@
 
 		// save the document through normal channels (ultimately calls writeToURL:::)
 		[self saveDocumentWithDelegate:self
-					   didSaveSelector:@selector(didAutosave:) contextInfo:status];
+					   didSaveSelector:@selector(document:didAutosave:contextInfo:) contextInfo:status];
 	}
 }
 
-- (void)didAutosave:(void *)contextInfo
+- (void)document:(NSDocument *)doc didAutosave:(BOOL)didSave contextInfo:(void  *)contextInfo
 {
-	if ( [(NSString *)contextInfo isKindOfClass:[NSString class]] )
+	NSAssert1(doc == self, @"%@ called for unknown document", _cmd);
+	
+	if ([(id)contextInfo isKindOfClass:[NSString class]])
 	{
 		// restore status
-		[[self windowController] setStatusField:contextInfo];
+		NSString *contextInfoString = contextInfo;
+		[[self windowController] setStatusField:contextInfoString];
 		
-		[(NSString *)contextInfo release]; // balances copy in autosaveDocument:
+		[contextInfoString release]; // balances copy in autosaveDocument:
 	}
 	
 	[self resumeAutosave];
