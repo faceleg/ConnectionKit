@@ -589,7 +589,6 @@
 		CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */; };
 		CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
-		CE53609C0A15303D00661E26 /* Introduction.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE53609A0A15303D00661E26 /* Introduction.nib */; };
 		CE57F2960D57F194005C1D64 /* follow15.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE57F2950D57F194005C1D64 /* follow15.tiff */; };
 		CE5CA31A0D15B90B0021E9B3 /* toolbar_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3190D15B90B0021E9B3 /* toolbar_html.tiff */; };
 		CE5CA3470D15BE580021E9B3 /* GenericFileServerIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */; };
@@ -2147,7 +2146,6 @@
 		CE1AD3550A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CE1AD3560A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Info.nib; sourceTree = "<group>"; };
 		CE1AD3570A7E83C90083C01E /* it */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CE1AD3580A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CE1AD3590A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CE1AD35C0A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CE1AD35D0A7E83C90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2223,13 +2221,10 @@
 		CE50F5110DAC18CE000A0943 /* KSPlaceholderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlaceholderTableView.h; path = ../../../Shared/trunk/App/KSPlaceholderTableView.h; sourceTree = SOURCE_ROOT; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
-		CE53609B0A15303D00661E26 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Introduction.nib; sourceTree = "<group>"; };
-		CE536A8C0A154FF400661E26 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CE55B0E30AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_CN; path = zh_CN.lproj/Credits.html; sourceTree = "<group>"; };
 		CE55B0E60AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CE55B0E70AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Info.nib; sourceTree = "<group>"; };
 		CE55B0E80AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CE55B0E90AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CE55B0EA0AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CE55B0ED0AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CE55B0EE0AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2310,7 +2305,6 @@
 		CEA9AE8D0A6420F700855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CEA9AE8E0A6420F700855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/Info.nib; sourceTree = "<group>"; };
 		CEA9AE8F0A6420F700855897 /* ja */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEA9AE900A6420F700855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CEA9AE910A6420F700855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CEA9AE940A6420F700855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CEA9AE950A6420F700855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2337,7 +2331,6 @@
 		CEB5630D0A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CEB5630E0A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Info.nib; sourceTree = "<group>"; };
 		CEB5630F0A7AB6D60081179A /* de */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEB563100A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CEB563110A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CEB563140A7AB6D60081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CEB563150A7AB6D60081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2584,7 +2577,6 @@
 		CEDE18990A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CEDE189A0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/Info.nib; sourceTree = "<group>"; };
 		CEDE189B0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEDE189C0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CEDE189D0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CEDE18A00A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CEDE18A10A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2595,7 +2587,6 @@
 		CEDE18AE0A5C69840055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CEDE18AF0A5C69840055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/Info.nib; sourceTree = "<group>"; };
 		CEDE18B00A5C69840055352C /* da */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEDE18B10A5C69840055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/Introduction.nib; sourceTree = "<group>"; };
 		CEDE18B20A5C69840055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KTDocument.nib; sourceTree = "<group>"; };
 		CEDE18B50A5C69840055352C /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KTTransfer.nib; sourceTree = "<group>"; };
 		CEDE18B60A5C69840055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3594,7 +3585,6 @@
 				CECDC3E008287E920090F560 /* Info.nib */,
 				3C26D7980BC5ADA700FF874D /* CodeInjection.nib */,
 				3C202E7B07E00EE800DE4994 /* HostSetup.nib */,
-				CE53609A0A15303D00661E26 /* Introduction.nib */,
 				79755CF2096BAF7E00F0E4CA /* KTTransfer.nib */,
 				CE7779C60AE4945D002E6844 /* Placeholder.nib */,
 				CEA234C1086B6EC5007A4C2D /* Prefs.nib */,
@@ -5618,7 +5608,6 @@
 				CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */,
 				795D666309D356C6005F166D /* target.png in Resources */,
 				CE91721209D51E530003310B /* target_set.png in Resources */,
-				CE53609C0A15303D00661E26 /* Introduction.nib in Resources */,
 				CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */,
 				CE0F676A0A39EEE50092DC43 /* globe.png in Resources */,
 				CE0F67BF0A39F53F0092DC43 /* trans16.png in Resources */,
@@ -6804,21 +6793,6 @@
 			);
 			name = KSRegistration.nib;
 			sourceTree = SOURCE_ROOT;
-		};
-		CE53609A0A15303D00661E26 /* Introduction.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE53609B0A15303D00661E26 /* en */,
-				CE536A8C0A154FF400661E26 /* fr */,
-				CEDE189C0A5C697E0055352C /* zh_TW */,
-				CEDE18B10A5C69840055352C /* da */,
-				CEA9AE900A6420F700855897 /* ja */,
-				CEB563100A7AB6D60081179A /* de */,
-				CE1AD3580A7E83C90083C01E /* it */,
-				CE55B0E90AD19B650091C8AE /* zh_CN */,
-			);
-			name = Introduction.nib;
-			sourceTree = "<group>";
 		};
 		CE7779C60AE4945D002E6844 /* Placeholder.nib */ = {
 			isa = PBXVariantGroup;
