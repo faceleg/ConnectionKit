@@ -26,7 +26,7 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
+	<string>${SANDVOX_VERSION}</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>CFPlugInDynamicRegisterFunction</key>
