@@ -6,26 +6,30 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2008 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
+	<string>${SANDVOX_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>KTHelpAnchor</key>
-	<string>RSS_Feed_Pagelet</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
+	<key>KTHelpAnchor</key>
+	<string>RSS_Feed_Pagelet</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
