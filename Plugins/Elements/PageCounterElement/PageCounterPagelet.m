@@ -38,112 +38,114 @@ NSString *PCHeightKey = @"height";
 NSString *PCImagesPathKey = @"path";
 NSString *PCSampleImageKey = @"sampleImage";
 
-static NSMutableArray *sThemes = nil;
+
 
 @implementation PageCounterPagelet
 
 #pragma mark -
 #pragma mark Initialization
 
-// Only do this once
-+ (void) initialize
++ (NSArray *)themes
 {
-	if (self != [PageCounterPagelet class]) {
-		return;
-	}
+	static NSArray *sThemes;
 	
-	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSMutableArray *themes = [NSMutableArray array];
-	NSMutableDictionary *d;
-	
-	d = [NSMutableDictionary dictionary];
-	[d setObject:LocalizedStringInThisBundle(@"Text", @"Text style of page counter") forKey:PCThemeKey];
-	[d setObject:[NSNumber numberWithInt:PC_TEXT] forKey:PCTypeKey];
-	[themes addObject:d];
-	
-	d = [NSMutableDictionary dictionary];
-	[d setObject:LocalizedStringInThisBundle(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
-	[d setObject:[NSNumber numberWithInt:PC_INVISIBLE] forKey:PCTypeKey];
-	[themes addObject:d];
-	
-	NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPagelet class]] resourcePath];
-	resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];
-	NSString *fileName;
-	NSDirectoryEnumerator *dirEnum =
-	[[NSFileManager defaultManager] enumeratorAtPath:resourcePath];
-	
-	while (fileName = [dirEnum nextObject])
+	if (!sThemes)
 	{
-		// Look for all "0" digits to represent the whole group.
-		// MUST END WITH .png
-		unsigned int whereZeroPng = [fileName rangeOfString:@"-0.png"].location;
-		if (NSNotFound != whereZeroPng)
+		NSMutableArray *themes = [NSMutableArray array];
+		NSMutableDictionary *d;
+		
+		d = [NSMutableDictionary dictionary];
+		[d setObject:LocalizedStringInThisBundle(@"Text", @"Text style of page counter") forKey:PCThemeKey];
+		[d setObject:[NSNumber numberWithInt:PC_TEXT] forKey:PCTypeKey];
+		[themes addObject:d];
+		
+		d = [NSMutableDictionary dictionary];
+		[d setObject:LocalizedStringInThisBundle(@"Invisible", @"Invisible style of page counter; outputs no number") forKey:PCThemeKey];
+		[d setObject:[NSNumber numberWithInt:PC_INVISIBLE] forKey:PCTypeKey];
+		[themes addObject:d];
+		
+		NSString *resourcePath = [[NSBundle bundleForClass:[PageCounterPagelet class]] resourcePath];
+		resourcePath = [resourcePath stringByAppendingPathComponent:@"digits"];
+		NSString *fileName;
+		NSDirectoryEnumerator *dirEnum =
+		[[NSFileManager defaultManager] enumeratorAtPath:resourcePath];
+		
+		while (fileName = [dirEnum nextObject])
 		{
-			NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-			
-			// Determine image size
-			NSSize size = NSMakeSize(0,0);
-			NSURL *url = [NSURL fileURLWithPath:path];
-			CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-			if (source)
+			// Look for all "0" digits to represent the whole group.
+			// MUST END WITH .png
+			unsigned int whereZeroPng = [fileName rangeOfString:@"-0.png"].location;
+			if (NSNotFound != whereZeroPng)
 			{
-				NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
+				NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
 				
-				size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] intValue],
-								  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] intValue]);
-				CFRelease(source);
-				[props release];
-				
-				if (!NSEqualSizes(size, NSZeroSize))
+				// Determine image size
+				NSSize size = NSMakeSize(0,0);
+				NSURL *url = [NSURL fileURLWithPath:path];
+				CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+				if (source)
 				{
-					// Get the other properties into a dictionary
-					NSString *baseName = [fileName substringToIndex:whereZeroPng];
-					d = [NSMutableDictionary dictionary];
-					[d setObject:[NSNumber numberWithInt:PC_GRAPHICS] forKey:PCTypeKey];
-					[d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
-					[d setObject:[NSNumber numberWithInt:(int)size.width] forKey:PCWidthKey];
-					[d setObject:[NSNumber numberWithInt:(int)size.height] forKey:PCHeightKey];
-					[themes addObject:d];
+					NSDictionary *props = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,  0,  NULL );
 					
-#define MAX_SAMPLE_WIDTH 148	// best width for a 250 pixel inspector; depends on nib width!
+					size = NSMakeSize([[props objectForKey:(NSString *)kCGImagePropertyPixelWidth] intValue],
+									  [[props objectForKey:(NSString *)kCGImagePropertyPixelHeight] intValue]);
+					CFRelease(source);
+					[props release];
 					
-					int maxDigits = MAX_SAMPLE_WIDTH / (int) size.width;
-					
-					NSRect digitRect = NSMakeRect(0,0,size.width, size.height);
-					NSImage *sampleImage = [[[NSImage alloc] initWithSize:NSMakeSize(size.width * maxDigits, size.height)] autorelease];
-					[sampleImage lockFocus];
-					int i;
-					for (i = 0 ; i < maxDigits ; i++)
+					if (!NSEqualSizes(size, NSZeroSize))
 					{
-						NSString *digitFilePath = [resourcePath stringByAppendingPathComponent:
-							[NSString stringWithFormat:@"%@-%d.png", baseName, i]];
-						NSImage *digitImage = [[[NSImage alloc] initWithContentsOfFile:digitFilePath] autorelease];
-						[digitImage drawAtPoint:NSMakePoint(size.width * i, 0) fromRect:digitRect operation:NSCompositeSourceOver fraction:1.0];
+						// Get the other properties into a dictionary
+						NSString *baseName = [fileName substringToIndex:whereZeroPng];
+						d = [NSMutableDictionary dictionary];
+						[d setObject:[NSNumber numberWithInt:PC_GRAPHICS] forKey:PCTypeKey];
+						[d setObject:baseName forKey:PCThemeKey];	// Used internally not for display
+						[d setObject:[NSNumber numberWithInt:(int)size.width] forKey:PCWidthKey];
+						[d setObject:[NSNumber numberWithInt:(int)size.height] forKey:PCHeightKey];
+						[themes addObject:d];
+						
+	#define MAX_SAMPLE_WIDTH 148	// best width for a 250 pixel inspector; depends on nib width!
+						
+						int maxDigits = MAX_SAMPLE_WIDTH / (int) size.width;
+						
+						NSRect digitRect = NSMakeRect(0,0,size.width, size.height);
+						NSImage *sampleImage = [[[NSImage alloc] initWithSize:NSMakeSize(size.width * maxDigits, size.height)] autorelease];
+						[sampleImage lockFocus];
+						int i;
+						for (i = 0 ; i < maxDigits ; i++)
+						{
+							NSString *digitFilePath = [resourcePath stringByAppendingPathComponent:
+								[NSString stringWithFormat:@"%@-%d.png", baseName, i]];
+							NSImage *digitImage = [[[NSImage alloc] initWithContentsOfFile:digitFilePath] autorelease];
+							[digitImage drawAtPoint:NSMakePoint(size.width * i, 0) fromRect:digitRect operation:NSCompositeSourceOver fraction:1.0];
+						}
+								
+						[sampleImage unlockFocus];
+						[d setObject:sampleImage forKey:PCSampleImageKey];
 					}
-							
-					[sampleImage unlockFocus];
-					[d setObject:sampleImage forKey:PCSampleImageKey];
 				}
 			}
 		}
+		
+		// Add any from user defaults  (NOT SURE HOW THIS WOULD REALLY WORK...
+		NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"PageCounterThemes"];
+		if (ud)
+		{ 
+			[themes addObjectsFromArray:ud];
+		}
+		
+		
+		// Store the themes
+		sThemes = [[NSArray alloc] initWithArray:themes];
 	}
 	
-	// Add any from user defaults  (NOT SURE HOW THIS WOULD REALLY WORK...
-	NSArray *ud = [[NSUserDefaults standardUserDefaults] objectForKey:@"PageCounterThemes"];
-	if (ud)
-	{ 
-		[themes addObjectsFromArray:ud];
-	}
-	sThemes = [[NSArray alloc] initWithArray:themes];
-	[pool release];
+	return sThemes;
 }
 
 - (void)awakeFromNib
 {
 	[oTheme removeAllItems];
 	
-	NSEnumerator *themeEnum = [sThemes objectEnumerator];
+	NSEnumerator *themeEnum = [[[self class] themes] objectEnumerator];
 	NSDictionary *themeDict;
 	BOOL hasDoneGraphicsYet = NO;
 	int tag = 0;
@@ -218,8 +220,8 @@ static NSMutableArray *sThemes = nil;
 - (NSDictionary *)currentThemeDict
 {
 	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-	if (index >= [sThemes count]) index = 0;
-	NSDictionary *result = [sThemes objectAtIndex:index];
+	if (index >= [[[self class] themes] count]) index = 0;
+	NSDictionary *result = [[[self class] themes] objectAtIndex:index];
 	return result;
 }
 
@@ -245,7 +247,7 @@ static NSMutableArray *sThemes = nil;
 
 - (NSArray *)themes
 {
-	return sThemes;
+	return [[self class] themes];
 }
 
 #pragma mark -
