@@ -5485,7 +5485,7 @@
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = YouTube.svxElement.svxElement;
+			path = YouTube.svxElement;
 			remoteRef = CEF12E7E0D908EB400FCAC70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
