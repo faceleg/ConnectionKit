@@ -361,21 +361,28 @@
 }
 
 #pragma mark -
-#pragma mark Other Paths
+#pragma mark Resources
 
-- (NSString *)publishedPathForResourceFile:(NSString *)onDiskResourcePath
+/*	Provides the path of the _Resources directory relative to the reciever.
+ */
+- (NSString *)pathToResourcesDirectory
 {
-	// Get the path of us & the resource relative to the site. Pretend they're absolute to fool NSString
 	NSString *resourcesDirectory = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSString *resourcePath = [resourcesDirectory stringByAppendingPathComponent:[onDiskResourcePath lastPathComponent]];
-	NSString *absoluteResourcePath = [@"/" stringByAppendingString:resourcePath];
+	NSString *result = [resourcesDirectory pathRelativeTo:[self pathRelativeToSite]];
 	
-	NSString *myAbsolutePath = [@"/" stringByAppendingString:[self _pathRelativeToSite]];
-	
-	// Compare the paths
-	NSString *result = [absoluteResourcePath pathRelativeTo:myAbsolutePath];
 	return result;
 }
+
+/*	As above, but takes the resource's filename into account.
+ */
+- (NSString *)pathToResourceFile:(NSString *)onDiskResourcePath
+{
+	NSString *result = [[self pathToResourcesDirectory] stringByAppendingPathComponent:[onDiskResourcePath lastPathComponent]];
+	return result;
+}
+
+#pragma mark -
+#pragma mark Other Paths
 
 - (NSString *)designDirectoryPath
 {

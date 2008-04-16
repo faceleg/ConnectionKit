@@ -990,7 +990,7 @@ static unsigned sLastParserID;
 			break;
 			
 		default:
-			result = [[self currentPage] publishedPathForResourceFile:resourceFile];
+			result = [[self currentPage] pathToResourceFile:resourceFile];
 			break;
 	}
 		
@@ -1376,7 +1376,7 @@ static unsigned sLastParserID;
 				break;
 				
 			default:
-				result = [page publishedPathForResourceFile:resourceFilePath];
+				result = [page pathToResourceFile:resourceFilePath];
 				break;
 		}
 		

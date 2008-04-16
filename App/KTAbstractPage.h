@@ -98,8 +98,10 @@ KTCollectionPathStyle;
 // Preview
 - (NSString *)previewPath;
 
-// Other
-- (NSString *)publishedPathForResourceFile:(NSString *)resourcePath;
+// Resources
+- (NSString *)pathToResourcesDirectory;
+- (NSString *)pathToResourceFile:(NSString *)resourcePath;
+
 - (NSString *)designDirectoryPath;
 
 @end
