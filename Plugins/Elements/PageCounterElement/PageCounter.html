@@ -1,11 +1,15 @@
 <div class="page_counter" style="text-align: center;" id="pc-[[=uniqueID]]">
+
 [[if parser.HTMLGenerationPurpose]]
-<script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&parser.currentPage.url]]"></script>
+	<script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&parser.currentPage.url]]"></script>
 [[else]]
-<script type="text/javascript">var svxPageCount = "1234";</script>
+	<script type="text/javascript">var svxPageCount = "1234";</script>
 [[endif]]
+
+[[comment - A little trick to register our dependence on the selectedTheme key]][[if selectedTheme]] [[endif]]
+
 [[if delegate.type==2]]
-<script type="text/javascript">
+	<script type="text/javascript">
 var resourceDir = "[[=delegate.resourceDirectory]]";
 var theme = "[[=&delegate.theme]]";
 var countRequest = false;
@@ -28,8 +32,9 @@ function showCount(countStr)
 	}
 }
 showCount(svxPageCount);
-</script>
+	</script>
 [[endif]]
+
 [[if delegate.type==1]]
 <script type="text/javascript">
 var paragraph = document.createElement("p");
@@ -38,18 +43,20 @@ paragraph.appendChild(text);
 document.getElementById("pc-[[=uniqueID]]").appendChild(paragraph);
 </script>
 [[endif]]
+
 [[if delegate.type==0]]
 <script type="text/javascript">
 var commentNode = document.createComment(svxPageCount);
 document.getElementById("pc-[[=uniqueID]]").appendChild(commentNode);
 </script>
 [[endif]]
+
 <noscript>
-<!-- tickle pagecounter by loading a small image -->
-[[if delegate.type]]
-<p><img src="http://service.karelia.com/ctr/noscript.gif?u=[[=%&CurrentPage.url]]" alt="" /></p>
-[[else]]
-<div><img src="http://service.karelia.com/ctr/1x1.gif?u=[[=%&CurrentPage.url]]" alt="" height="1" width="1" /></div>
-[[endif]]
-</noscript>
+	<!-- tickle pagecounter by loading a small image -->
+	[[if delegate.type]]
+	<p><img src="http://service.karelia.com/ctr/noscript.gif?u=[[=%&CurrentPage.url]]" alt="" /></p>
+	[[else]]
+	<div><img src="http://service.karelia.com/ctr/1x1.gif?u=[[=%&CurrentPage.url]]" alt="" height="1" width="1" /></div>
+	[[endif]]
+	</noscript>
 </div>
