@@ -118,17 +118,21 @@
 #pragma mark -
 #pragma mark Title
 
-// Flatten the string and just store a fake attributed string.
-
 - (void)setTitleHTML:(NSString *)value
 {
 	[self setWrappedValue:value forKey:@"titleHTML"];
+	
+	
+	// The site structure has changed as a result of this
+	[self postSiteStructureDidChangeNotification];
+	
 	
 	// If the page hasn't been published yet, update the filename to match
 	if (![self valueForKey:@"publishedPath"])
 	{
 		[self setValue:[self suggestedFileName] forKey:@"fileName"];
 	}
+	
 	
 	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
 	KTCollectionSortType sorting = [[self parent] collectionSortOrder];
@@ -215,6 +219,17 @@
 	
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Notifications
+
+/*	A convenience method for posting the kKTSiteStructureDidChangeNotification
+ */
+- (void)postSiteStructureDidChangeNotification;
+{
+	KTDocumentInfo *site = [self valueForKey:@"documentInfo"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:KTSiteStructureDidChangeNotification object:site];
 }
 
 #pragma mark -

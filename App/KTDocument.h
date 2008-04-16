@@ -129,7 +129,6 @@ typedef enum {
 - (BOOL)hasValidSnapshot;
 
 // cover for KTDocWindowController method
-- (void)siteStructureChanged;
 - (BOOL)isClosing;
 - (void)setClosing:(BOOL)aFlag;
 

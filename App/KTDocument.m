@@ -586,23 +586,6 @@
 	return result;
 }
 
-- (void)siteStructureChanged
-{
-	/// Case 19023: this method is being called during terminate: and messing things up
-	/// so let's not do this if we're closing
-	if ( ![self isClosing] )
-	{
-		@try
-		{
-			KTPage *root = [self root];
-			[root makeSelfOrDelegatePerformSelector:@selector(siteStructureChanged:forPage:) withObject:nil withPage:root recursive:YES];
-		}
-		@finally
-		{
-		}
-	}
-}
-
 + (NSString *)defaultStoreType
 {
 	// options are NSSQLiteStoreType, NSXMLStoreType, NSBinaryStoreType, or NSInMemoryStoreType

@@ -1050,7 +1050,6 @@ from representedObject */
 		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because page inserted but not in site menu", NSStringFromSelector(_cmd), [aCollection titleText]));
 		//[aCollection markStale:kStaleFamily];
 	}
-	[[self document] siteStructureChanged];	// allows site map page to notice change in site structure
 	
 }
 

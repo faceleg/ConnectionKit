@@ -55,7 +55,45 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation SiteMapDelegate
+
+#pragma mark -
+#pragma mark Site Structure Notification
+
+- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
+{
+	id site = [[[self delegateOwner] page] valueForKey:@"documentInfo"];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(siteStructureDidChange:)
+												 name:KTSiteStructureDidChangeNotification
+											   object:site];
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
+}
+
+/*	Due to the unique nature of the Site Map, we want to be marked as stale whenever a change happens to another page that affects
+ *	the overall site structure.
+ */
+- (void)siteStructureDidChange:(NSNotification *)notification
+{
+	// If this is during an undo, ignore it as the staleness is managed for us
+	NSUndoManager *undoManager = [self undoManager];
+	if (![undoManager isUndoing] && ![undoManager isRedoing])
+	{
+		[[self delegateOwner] setIsStale:YES];
+	}
+}
+
+#pragma mark -
+#pragma mark HTML
 
 /*!	Recursive method
 */
@@ -249,12 +287,6 @@
 	
 	[[self delegateOwner] unlockPSCAndMOC];
 	return string;
-}
-
-- (void)siteStructureChanged:(id)bogus forPage:(KTPage *)aPage
-{
-	 LOG((@"~~~~~~~~~ %@ ....", NSStringFromSelector(_cmd)));
-	[[self delegateOwner] setIsStale:YES];
 }
 
 @end

@@ -71,6 +71,7 @@
 - (void)setDocument:(KTDocument *)aDocument;
 
 // Draft
+- (void)setIsDraft:(BOOL)flag;
 - (BOOL)pageOrParentDraft;
 - (void)setPageOrParentDraft:(BOOL)inDraft;
 - (BOOL)includeInIndexAndPublish;

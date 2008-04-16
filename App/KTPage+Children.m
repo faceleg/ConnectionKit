@@ -126,6 +126,10 @@
 	[self invalidateSortedChildrenCache];
 	
 	
+	// As it has a new parent, the page's path must have changed.
+	[page invalidatePathRelativeToSiteRecursive:YES];
+	
+	
 	// Create an archive to conatain the page if needed
 	KTArchivePage *archive = [self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
 	[archive setIsStale:YES];
@@ -244,11 +248,17 @@
 									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	[self didChangeValueForKey:@"sortedChildren"];
 	
+	
+	// It is assumed that if the cache is invalid, the site structure must have changed, so we post a notification
+	[self postSiteStructureDidChangeNotification];
+	
+	
 	// Register the operation as an undo.
 	[[[[self managedObjectContext] undoManager] prepareWithInvocationTarget:[KTPage class]]
 		invalidateSortedChildrenCacheOfPageWithID:[self uniqueID]
 									   MOCPointer:[NSValue valueWithNonretainedObject:[self managedObjectContext]]];
 }
+
 
 /*	Undo operations on the cache HAVE to go through this method. This is because we can guarantee that the
  *	page ID is valid, but the original managed object might not be.

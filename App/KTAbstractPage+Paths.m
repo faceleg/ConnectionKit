@@ -297,13 +297,17 @@
 
 /*	Sends out a KVO notification that the page's path has changed. Upon the next request for the path it will be
  *	regenerated and cached.
- *	KTAbstractPage does not support children, so it is up to KTAbstractPage to implement the recursive portion.
+ *	KTAbstractPage does not support children, so it is up to KTPage to implement the recursive portion.
+ *
+ *	If the path is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
  */
 - (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive
 {
 	[self willChangeValueForKey:@"pathRelativeToSite"];
 	[self setPrimitiveValue:nil forKey:@"pathRelativeToSite"];
 	[self didChangeValueForKey:@"pathRelativeToSite"];
+	
+	[self postSiteStructureDidChangeNotification];
 }
 
 

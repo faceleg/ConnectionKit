@@ -45,8 +45,12 @@ KTCollectionPathStyle;
 - (void)setTitleText:(NSString *)value;
 - (BOOL)canEditTitle;
 
+// Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
+
+// Notifications
+- (void)postSiteStructureDidChangeNotification;
 
 @end
 

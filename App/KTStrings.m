@@ -77,6 +77,7 @@ NSString *kKTDesignExtension = @"svxDesign";
 
 // Notifications
 NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
+NSString *KTSiteStructureDidChangeNotification = @"KTSiteStructureDidChange";
 NSString *kKTRootPageSavingNotification = @"KTRootPageSavingNotification";
 NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
 NSString *kKTInternalImageClassName = @"InternalImageClassName";

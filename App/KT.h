@@ -126,6 +126,7 @@ extern NSString *kKTDefaultCalendarFormat;
 
 extern NSString *kKTRootPageSavingNotification;
 extern NSString *kKTInfoWindowMayNeedRefreshingNotification;
+extern NSString *KTSiteStructureDidChangeNotification;
 extern NSString *kKTDesignChangedNotification;
 extern NSString *kKTDesignWillChangeNotification;
 extern NSString *kKTItemSelectedNotification;

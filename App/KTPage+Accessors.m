@@ -119,6 +119,14 @@
 #pragma mark -
 #pragma mark Drafts
 
+- (void)setIsDraft:(BOOL)flag;
+{
+	[self setWrappedBool:flag forKey:@"isDraft"];
+	
+	// By toggling draft status, the site structure must have changed
+	[self postSiteStructureDidChangeNotification];
+}
+
 - (BOOL)pageOrParentDraft
 {
 	BOOL result = [self boolForKey:@"isDraft"];
@@ -131,7 +139,7 @@
 
 - (void)setPageOrParentDraft:(BOOL)inDraft	// setter for binding, actually store into isDraft
 {
-	[self setWrappedValue:[NSNumber numberWithBool:inDraft] forKey:@"isDraft"];
+	[self setIsDraft:inDraft];
 	if (!inDraft)
 	{
 		// turning off draft -- also mark the family stale since it's no longer a draft
