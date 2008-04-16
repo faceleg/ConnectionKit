@@ -20,6 +20,8 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
 	<key>KTCSSClassName</key>
 	<string>text</string>
 	<key>KTElementSupportsPageUsage</key>
@@ -28,16 +30,12 @@
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>Text</string>
-	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
-	<key>KTPageAllowCallouts</key>
+	<key>KTPageAllowsCallouts</key>
 	<true/>
 	<key>KTPageAllowsNavigation</key>
 	<true/>
 	<key>KTPageShowSidebar</key>
 	<true/>
-	<key>KTPluginName</key>
-	<string>Rich Text</string>
 	<key>KTPluginDescription</key>
 	<string>Rich Text with Embedded Images</string>
 	<key>KTPluginIconName</key>

@@ -38,7 +38,8 @@
 */
 - (BOOL)includeSidebar
 {
-	return [[self wrappedValueForKey:@"includeSidebar"] boolValue];		// not an optional property, so it's OK to convert to a non-object
+	BOOL result = [self wrappedBoolForKey:@"includeSidebar"];		// not an optional property, so it's OK to convert to a non-object
+	return result;
 }
 
 /*!	Returns a constant of whether this page template can do callouts.  Contrast to includeSidebar,
@@ -46,7 +47,8 @@
 */
 - (BOOL)includeCallout
 {
-	return [[[self plugin] pluginPropertyForKey:@"KTPageAllowsCallouts"] boolValue];
+	BOOL result = [[[self plugin] pluginPropertyForKey:@"KTPageAllowsCallouts"] boolValue];
+	return result;
 }
 
 /*	Whether this page template can show or hide the sidebar is there or not. Normally static, but some plugins
