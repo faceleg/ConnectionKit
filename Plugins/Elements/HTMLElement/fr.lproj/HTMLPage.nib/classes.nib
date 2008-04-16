@@ -6,19 +6,19 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>KTManagedObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSManagedObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>NSManagedObject</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTManagedObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSManagedObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

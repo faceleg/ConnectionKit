@@ -1,0 +1,56 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                cancelReport = id; 
+                sendReportFromNonModal = id; 
+                stopSubmission = id; 
+                submitReport = id; 
+                submitReportButtonAction = id; 
+                windowHelp = id; 
+            }; 
+            CLASS = KSAbstractBugReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAddressComboBox = KSEmailAddressComboBox; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressReceivedMessageField = NSTextField; 
+                oGenericProgressRedTextField = NSTextField; 
+                oGenericProgressStopButton = NSButton; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+            }; 
+            SUPERCLASS = KSSingletonWindowController; 
+        }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {
+            ACTIONS = {sendFeedback = id; showReportWindow = id; }; 
+            CLASS = KSFeedbackReporter; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {oDetailsTextView = NSTextView; oSummaryTextField = NSTextField; }; 
+            SUPERCLASS = KSAbstractBugReporter; 
+        }, 
+        {
+            CLASS = KSSingletonWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSCell; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {imagePickerCancelled = id; imagePickerSet = id; }; 
+            CLASS = NSObject; 
+            LANGUAGE = ObjC; 
+        }, 
+        {CLASS = NSTextView; LANGUAGE = ObjC; SUPERCLASS = NSText; }, 
+        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
+    ); 
+    IBVersion = 1; 
+}

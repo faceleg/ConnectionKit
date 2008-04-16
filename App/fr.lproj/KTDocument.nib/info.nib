@@ -3,14 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>91 547 535 402 0 0 1920 1178 </string>
+	<string>69 14 356 240 0 0 1280 1002 </string>
 	<key>IBFramework Version</key>
 	<string>439.0</string>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>IBSystem Version</key>
-	<string>8L127</string>
-	<key>IBUsesTextArchiving</key>
-	<true/>
+	<string>8S165</string>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
 </dict>
 </plist>

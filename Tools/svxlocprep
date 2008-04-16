@@ -72,8 +72,8 @@ do
     BASE=`echo $PLUGIN | sed 's/.svxIndex//'`
     if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
         echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/Plugins/Indexes/${BASE}Element
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox/trunk/Plugins/Indexes/${BASE}Element
+        mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/Plugins/Indexes/${BASE}Index
+        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox/trunk/Plugins/Indexes/${BASE}Index
     else
         echo "Not copying $PLUGIN - no $1.lproj"
     fi

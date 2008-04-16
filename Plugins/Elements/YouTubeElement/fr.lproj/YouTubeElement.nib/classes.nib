@@ -13,17 +13,12 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>chooseFile</key>
-				<string>id</string>
-			</dict>
 			<key>CLASS</key>
-			<string>YouTubeElementDelegate</string>
+			<string>YouTubeVideoIDFormatter</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>KSTrimFirstLineFormatter</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -32,6 +27,52 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSTextFieldCell</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSActionCell</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSTrimFirstLineFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSFormatter</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>chooseMovieFile</key>
+				<string>id</string>
+				<key>openHomePage</key>
+				<string>id</string>
+				<key>openVideoSource</key>
+				<string>id</string>
+				<key>openYouTubeURL</key>
+				<string>id</string>
+				<key>resetColors</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>YouTubeElementDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oHomePageButton</key>
+				<string>NSButton</string>
+				<key>oVideoSourceButton</key>
+				<string>NSButton</string>
+				<key>videoSizeSlider</key>
+				<string>NSSlider</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KTAbstractPluginDelegate</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>
