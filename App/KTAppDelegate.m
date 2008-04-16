@@ -604,28 +604,28 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[self setCopyMenuItemTitle:KTCopyMenuItemTitle];
 		[self setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
 				
-		NSImage *globe = [NSImage imageNamed:@"globe"];
+		//NSImage *globe = [NSImage imageNamed:@"globe"];
 		//NSImage *trans = [NSImage imageNamed:@"trans16"];
 		
-		[oValidateSourceViewMenuItem setImage:globe];
-		[oBuyRegisterSandvoxMenuItem setImage:globe];
-		[oSetupHostMenuItem setImage:globe];
+		//[oValidateSourceViewMenuItem setImage:globe];
+		//[oBuyRegisterSandvoxMenuItem setImage:globe];
+		//[oSetupHostMenuItem setImage:globe];
 		//[oExportSiteMenuItem setImage:trans];
 		//[oExportSiteAgainMenuItem setImage:trans];
-		[oPublishChangesMenuItem setImage:globe];
-		[oPublishEntireSiteMenuItem setImage:globe];
-		[oProductPageMenuItem setImage:globe];
-		[oVideoIntroductionMenuItem setImage:globe];
-		[oInstallPluginsMenuItem setImage:globe];
-		[oCheckForUpdatesMenuItem setImage:globe];
+		//[oPublishChangesMenuItem setImage:globe];
+		//[oPublishEntireSiteMenuItem setImage:globe];
+		//[oProductPageMenuItem setImage:globe];
+		//[oVideoIntroductionMenuItem setImage:globe];
+		//[oInstallPluginsMenuItem setImage:globe];
+		//[oCheckForUpdatesMenuItem setImage:globe];
 
-		[oViewPublishedSiteMenuItem setImage:globe];
+		//[oViewPublishedSiteMenuItem setImage:globe];
 		
 		// TODO: if we load from the net -- ???? -- then set this on
 		// [oReleaseNotesMenuItem setImage:globe];
 		//[oAcknowledgementsMenuItem setImage:trans];
-		[oSendFeedbackMenuItem setImage:globe];
-		[oJoinListMenuItem setImage:globe];
+		//[oSendFeedbackMenuItem setImage:globe];
+		//[oJoinListMenuItem setImage:globe];
 	}
 	[super awakeFromNib];
 }
@@ -671,15 +671,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(showRegistrationWindow:))	// hide the globe, and make available, if network is down
 	{
-		if ([KSNetworkNotifier isNetworkAvailable])
-		{
-			NSImage *globe = [NSImage imageNamed:@"globe"];
-			[menuItem setImage:globe];
-		}
-		else
-		{
-			[menuItem setImage:nil];
-		}
+		//if ([KSNetworkNotifier isNetworkAvailable])
+		//{
+		//	NSImage *globe = [NSImage imageNamed:@"globe"];
+		//	[menuItem setImage:globe];
+		//}
+		//else
+		//{
+		//	[menuItem setImage:nil];
+		//}
 		return YES;	// OK regardless
 	}
 	return YES;
@@ -1380,7 +1380,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		// unregistered, label advanced menu as pro
 		[self setMenuItemPro:oAdvancedMenu];
 		[self setMenuItemPro:oPasteAsMarkupMenuItem];
-		[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
+		//[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
 		
 		[self setMenuItemPro:oEditRawHTMLMenuItem];
 		[self setMenuItemPro:oFindSubmenu];
@@ -1392,7 +1392,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 		if (gIsPro || (nil == gRegistrationString))
 		{
-			[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
+			//[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
 		}
 		else
 		{
