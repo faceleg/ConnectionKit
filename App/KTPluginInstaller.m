@@ -15,6 +15,7 @@
 #import "NSHelpManager+Karelia.h"
 #import "NSError+Karelia.h"
 #import "KSAppDelegate.h"
+#import "KSPlugin.h"
 
 static KTPluginInstaller *sSharedPluginInstaller = nil;
 
@@ -57,7 +58,9 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 - (void) finishInstalling	// finally called when they are all done opening
 {
-	NSString *destFolder = [NSApplication applicationSupportPath];
+	NSString *destFolder = [[[NSApplication applicationSupportPath] stringByResolvingSymlinksInPath] stringByStandardizingPath];
+		// we are going to copy directly into the app's app support folder, but if the file already
+		// exists there, or in a subfolder of this app support folder, then we won't.
 	
 	NSEnumerator *enumerator = [myURLs objectEnumerator];
 	NSURL *url;
@@ -66,22 +69,43 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 	while ((url = [enumerator nextObject]) != nil)
 	{
-		NSString *sourcePath = [url path];
-		NSString *destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];	
-		NSFileManager *fm = [NSFileManager defaultManager];
-		if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
+		NSString *urlPath = [url path];
+		NSString *extension = [urlPath pathExtension];
+		Class pluginClass = [KSPlugin registeredPluginClassForFileExtension:extension];
+		NSString *pluginSubfolder = [pluginClass pluginSubfolder];
+		NSString *altDestFolder = [[[[NSApplication applicationSupportPath] stringByAppendingPathComponent:pluginSubfolder]
+								  stringByResolvingSymlinksInPath] stringByStandardizingPath];
+		NSString *sourcePath = [[[url path] stringByResolvingSymlinksInPath] stringByStandardizingPath];
+		NSString *destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
+		NSString *altDestPath = [altDestFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
+
+		if ([sourcePath isEqualToString:destPath] || [sourcePath isEqualToString:altDestPath])
 		{
-			BOOL success = [fm removeFileAtPath:destPath handler:nil];
-			LOG((@"success of removing:%d", success));
+			NSLog(@"Not copying; already %@ is already installed.", sourcePath);
+			[errorURLs addObject:url];
 		}
-		BOOL copied = [fm copyPath:sourcePath toPath:destPath handler:nil];
-		if (copied)
+		else if ([sourcePath hasPrefix:destFolder])
 		{
-			[successURLs addObject:url];
+			NSLog(@"Not copying; %@ is already living in %@", sourcePath, destFolder);
 		}
 		else
 		{
-			[errorURLs addObject:url];
+			NSFileManager *fm = [NSFileManager defaultManager];
+			if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
+			{
+				BOOL success = [fm removeFileAtPath:destPath handler:nil];
+				LOG((@"success of removing:%d", success));
+			}
+			BOOL copied = [fm copyPath:sourcePath toPath:destPath handler:nil];
+			if (copied)
+			{
+				[successURLs addObject:url];
+			}
+			else
+			{
+				NSLog(@"Unable to copy %@ to %@", sourcePath, destPath);
+				[errorURLs addObject:url];
+			}
 		}
 	}
 	[myURLs removeAllObjects];
