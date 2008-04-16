@@ -78,6 +78,59 @@
 // TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m. Should be in one of the -saveToURL methods.
 
 #pragma mark -
+#pragma mark Write Safely
+
+/*	We override the behavior to save directly ('unsafely' I suppose!) to the URL,
+ *	rather than via a temporary file as is the default.
+ */
+- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL 
+				  ofType:(NSString *)typeName 
+		forSaveOperation:(NSSaveOperationType)saveOperation 
+				   error:(NSError **)outError
+{
+	// We're only interested in special behaviour for Save As operations
+	if (saveOperation != NSSaveAsOperation)
+	{
+		return [super writeSafelyToURL:absoluteURL 
+								ofType:typeName 
+					  forSaveOperation:saveOperation 
+								 error:outError];
+	}
+	
+	
+	// We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
+	// be dealt with at the moment.
+	BOOL result = NO;
+	
+	@try
+	{
+		// Write to the new URL
+		result = [self writeToURL:absoluteURL
+						   ofType:typeName
+				 forSaveOperation:saveOperation
+			  originalContentsURL:[self fileURL]
+							error:outError];
+	}
+	@catch (NSException *exception) 
+	{
+		// TODO: Recover from an exception here.
+		NSLog(@"writeToURL: %@", [exception description]);
+		
+		// Rethrow the exception so it goes the exception reporter mechanism
+		[exception raise];
+	}
+	
+	
+	// There was an error saving, recover from it
+	if (!result)
+	{
+		// TODO: Recover from an error here.
+	}
+	
+	return result;
+}
+
+#pragma mark -
 #pragma mark Write To URL
 
 /*	Called when creating a new document and when performing saveDocumentAs:
@@ -295,92 +348,55 @@
 	NSError *error = nil;
 	
 	
-	@try 
+	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	
+	
+	// Handle the user choosing "Save As" for an EXISTING document
+	if (inSaveOperation == NSSaveAsOperation && [self fileURL])
 	{
-		NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-		
-		
-		// Handle the user choosing "Save As" for an EXISTING document
-		if (inSaveOperation == NSSaveAsOperation && [self fileURL])
+		result = [self migrateToURL:inURL ofType:inType error:&error];
+		if (!result)
 		{
-			result = [self migrateToURL:inURL ofType:inType error:&error];
-			if (!result)
-			{
-				*outError = error;
-				return NO; // bail out and display outError
-			}
-			else
-			{
-				result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL]
-												  error:&error];
-			}
+			*outError = error;
+			return NO; // bail out and display outError
 		}
-		
-		
-		// Store QuickLook preview
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-		NSString *previewHTML = [parser parseTemplate];
-		[parser release];
-		
-		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
-		
-		
-		// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
-		// so that saveDocumentAs: can find us again until the new context is fully ready
-		/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
-		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
-		
-		result = [managedObjectContext save:&error];
-		if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
-		
-		//[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
-		
-		if (result)
+		else
 		{
-			// if we've saved, we don't need to autosave until after the next context change
-			[self cancelAndInvalidateAutosaveTimers];
+			result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL]
+											  error:&error];
 		}
 	}
-	@catch (NSException * e) 
+	
+	
+	// Store QuickLook preview
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+	[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+	NSString *previewHTML = [parser parseTemplate];
+	[parser release];
+	
+	NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+	[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+	
+	
+	// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
+	// so that saveDocumentAs: can find us again until the new context is fully ready
+	/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
+	//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
+	
+	result = [managedObjectContext save:&error];
+	if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
+	
+	//[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
+	
+	if (result)
 	{
-		NSLog(@"writeToURL: %@", [e description]);
+		// if we've saved, we don't need to autosave until after the next context change
+		[self cancelAndInvalidateAutosaveTimers];
 	}
 	
 	
 	// Return, making sure to supply appropriate error info
 	if (!result) *outError = error;
-	return result;
-}
-
-/*	We override the behavior to save directly ('unsafely' I suppose!) to the URL,
- *	rather than via a temporary file as is the default.
- */
-- (BOOL)writeSafelyToURL:(NSURL *)absoluteURL 
-				  ofType:(NSString *)typeName 
-		forSaveOperation:(NSSaveOperationType)saveOperation 
-				   error:(NSError **)outError
-{
-	BOOL result;
-	
-	if (saveOperation == NSSaveAsOperation)
-	{
-		// Write to the new URL
-		result = [self writeToURL:absoluteURL
-						   ofType:typeName
-				 forSaveOperation:saveOperation
-			  originalContentsURL:[self fileURL]
-							error:outError];
-	}
-	else
-	{
-		result = [super writeSafelyToURL:absoluteURL 
-								  ofType:typeName 
-						forSaveOperation:saveOperation 
-								   error:outError];
-	}
-	
 	return result;
 }
 
