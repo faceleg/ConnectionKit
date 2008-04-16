@@ -44,7 +44,7 @@
 		3C42E5C80D650935004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42E5E30D650A4F004F35FD /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		3C42E5E60D650A64004F35FD /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		8D5B49B6048680CD000E48DA /* YouTube.svxElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTube.svxElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* YouTube.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTube.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEF120670D9055B700FCAC70 /* YouTube.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = YouTube.icns; sourceTree = "<group>"; };
 		CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YouTubeElementTemplate.html; sourceTree = "<group>"; };
@@ -105,13 +105,13 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				270461D30DAE7FF000D74480 /* youtube-logo.png */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
+				3C42E5B00D650888004F35FD /* Localizable.strings */,
 				CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */,
 				CEF120670D9055B700FCAC70 /* YouTube.icns */,
-				8D5B49B7048680CD000E48DA /* Info.plist */,
+				270461D30DAE7FF000D74480 /* youtube-logo.png */,
 				CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */,
-				3C42E5B00D650888004F35FD /* Localizable.strings */,
 				3C42E5C50D65091C004F35FD /* License.rtf */,
 			);
 			name = Resources;
@@ -153,7 +153,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* YouTube.svxElement.svxElement */,
+				8D5B49B6048680CD000E48DA /* YouTube.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -194,7 +194,7 @@
 			name = YouTubeElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = YouTubeElement;
-			productReference = 8D5B49B6048680CD000E48DA /* YouTube.svxElement.svxElement */;
+			productReference = 8D5B49B6048680CD000E48DA /* YouTube.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -335,7 +335,7 @@
 					"-seg1addr",
 					0x50280000,
 				);
-				PRODUCT_NAME = YouTube.svxElement;
+				PRODUCT_NAME = YouTube;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -350,7 +350,7 @@
 					"-seg1addr",
 					0x50280000,
 				);
-				PRODUCT_NAME = YouTube.svxElement;
+				PRODUCT_NAME = YouTube;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
