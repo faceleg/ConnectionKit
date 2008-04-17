@@ -22,7 +22,7 @@
 #endif
 
 #import <Cocoa/Cocoa.h>
-#import "KSAppDelegate.h"
+#import "KSLicensedAppDelegate.h"
 
 extern BOOL gWantToCatchSystemExceptions;
 
@@ -82,7 +82,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 @class KTDocument, KTDocumentController, KTPrefsController, KTFeedbackReporter;
 
-@interface KTAppDelegate : KSAppDelegate
+@interface KTAppDelegate : KSLicensedAppDelegate
 {
     // IBOutlets
     IBOutlet NSMenuItem     *oToggleAddressBarMenuItem;

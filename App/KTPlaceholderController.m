@@ -11,7 +11,7 @@
 #import "NSColor+Karelia.h"
 #import <QTKit/QTKit.h>
 #import "Registration.h"
-#import "KSAppDelegate.h"
+#import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };

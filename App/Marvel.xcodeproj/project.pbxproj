@@ -521,6 +521,8 @@
 		CE018C1C0DB6D7F1003E008B /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C110DB6D7F1003E008B /* KSKeepInTouch.nib */; };
 		CE018C1D0DB6D7F1003E008B /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C130DB6D7F1003E008B /* KSRegistration.nib */; };
 		CE018C1E0DB6D7F1003E008B /* KSSilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */; };
+		CE01952F0DB7180B003E008B /* KSLicensedAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01952D0DB7180B003E008B /* KSLicensedAppDelegate.h */; };
+		CE0195300DB7180B003E008B /* KSLicensedAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01952E0DB7180B003E008B /* KSLicensedAppDelegate.m */; };
 		CE01A0800804A9DD009FE78A /* index.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07C0804A9DD009FE78A /* index.icns */; };
 		CE01A0820804A9DD009FE78A /* pageplugin.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07E0804A9DD009FE78A /* pageplugin.icns */; };
 		CE01A0830804A9DD009FE78A /* datasource.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07F0804A9DD009FE78A /* datasource.icns */; };
@@ -2207,6 +2209,8 @@
 		CE018C920DB6DD23003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE018C970DB6DD43003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = es; path = es.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE018C980DB6DD43003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = es; path = es.lproj/MultipleSelection.html; sourceTree = "<group>"; };
+		CE01952D0DB7180B003E008B /* KSLicensedAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSLicensedAppDelegate.h; path = ../../../Shared/trunk/App/KSLicensedAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		CE01952E0DB7180B003E008B /* KSLicensedAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSLicensedAppDelegate.m; path = ../../../Shared/trunk/App/KSLicensedAppDelegate.m; sourceTree = SOURCE_ROOT; };
 		CE01A07C0804A9DD009FE78A /* index.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = index.icns; sourceTree = "<group>"; };
 		CE01A07D0804A9DD009FE78A /* pref.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pref.icns; sourceTree = "<group>"; };
 		CE01A07E0804A9DD009FE78A /* pageplugin.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pageplugin.icns; sourceTree = "<group>"; };
@@ -4574,6 +4578,8 @@
 				CEC11A660D78BE3C00513E70 /* DNDArrayController.m */,
 				CEC11A670D78BE3C00513E70 /* EscapeHTMLTransformer.m */,
 				CEC11A680D78BE3C00513E70 /* KSAbstractBugReporter.m */,
+				CE01952D0DB7180B003E008B /* KSLicensedAppDelegate.h */,
+				CE01952E0DB7180B003E008B /* KSLicensedAppDelegate.m */,
 				CEC11A690D78BE3C00513E70 /* KSAppDelegate.m */,
 				CEC11A6A0D78BE3C00513E70 /* KSApplication.m */,
 				CEC11A6B0D78BE3C00513E70 /* KSBorderlessWindow.m */,
@@ -4919,6 +4925,7 @@
 				CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */,
 				270460810DAD7ED100D74480 /* KSRoundingValueTransformer.h in Headers */,
 				CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */,
+				CE01952F0DB7180B003E008B /* KSLicensedAppDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6336,6 +6343,7 @@
 				CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */,
 				270460820DAD7ED100D74480 /* KSRoundingValueTransformer.m in Sources */,
 				CE2E80E50DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m in Sources */,
+				CE0195300DB7180B003E008B /* KSLicensedAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

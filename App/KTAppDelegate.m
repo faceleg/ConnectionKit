@@ -569,7 +569,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #define SHA1_DIGEST_LENGTH	20
 
-// Override of KSAppDelegate
+// Override of KSLicensedAppDelegate
 - (BOOL) checkForBlacklist:(NSData *)aHash
 {
 	// BLACKLIST -- subtle non-functionality, for cracked codes.  
@@ -581,7 +581,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 }
 
-// Override of KSAppDelegate
+// Override of KSLicensedAppDelegate
 - (BOOL) checkForInvalidLicense:(NSData *)aHash
 {
 #include "SandvoxInvalidLicenses.h"
