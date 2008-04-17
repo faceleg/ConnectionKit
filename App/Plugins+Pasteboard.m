@@ -245,8 +245,8 @@
 	}
 	
 	
-	// Set the attributes
-	[result setValuesForKeysWithDictionary:attributes];
+	// Set the attributes. MUST set all values or some non-optional properties may be ignored. BUGSID:28711
+	[result setValuesForKeysWithDictionary:attributes setAllValues:YES];
 			
 	
 	// Give the page a decent filename

@@ -203,6 +203,7 @@
 
 // General accessors
 - (BOOL)includeSidebar;
+- (void)setIncludeSidebar:(BOOL)flag;
 - (BOOL)includeCallout;
 
 - (BOOL)sidebarChangeable;

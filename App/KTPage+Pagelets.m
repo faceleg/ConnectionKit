@@ -42,6 +42,11 @@
 	return result;
 }
 
+- (void)setIncludeSidebar:(BOOL)flag
+{
+	[self setWrappedBool:flag forKey:@"includeSidebar"];
+}
+
 /*!	Returns a constant of whether this page template can do callouts.  Contrast to includeSidebar,
 	which is a property.
 */
