@@ -298,7 +298,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		if ([self products] && [[self products] count] > 0)
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = LocalizedStringInThisBundle([AmazonECSOperation nameOfStore:[*store intValue]], nil);
+			NSString *storeName = [AmazonECSOperation nameOfStore:[*store intValue]];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
