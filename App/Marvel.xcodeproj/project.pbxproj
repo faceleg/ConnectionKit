@@ -510,6 +510,18 @@
 		79EC3C030973CECD00FE7D50 /* upload_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC3C020973CECD00FE7D50 /* upload_complete.png */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		CE018C040DB6D7DE003E008B /* KSGenericProgress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */; };
+		CE018C050DB6D7DE003E008B /* KSPDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */; };
+		CE018C060DB6D7DE003E008B /* KSRTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */; };
+		CE018C170DB6D7F1003E008B /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C070DB6D7F1003E008B /* KSBugReporterViews.nib */; };
+		CE018C180DB6D7F1003E008B /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C090DB6D7F1003E008B /* KSCrash.nib */; };
+		CE018C190DB6D7F1003E008B /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C0B0DB6D7F1003E008B /* KSException.nib */; };
+		CE018C1A0DB6D7F1003E008B /* KSFeedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C0D0DB6D7F1003E008B /* KSFeedback.nib */; };
+		CE018C1B0DB6D7F1003E008B /* KSJoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C0F0DB6D7F1003E008B /* KSJoinList.nib */; };
+		CE018C1C0DB6D7F1003E008B /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C110DB6D7F1003E008B /* KSKeepInTouch.nib */; };
+		CE018C1D0DB6D7F1003E008B /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C130DB6D7F1003E008B /* KSRegistration.nib */; };
+		CE018C1E0DB6D7F1003E008B /* KSSilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */; };
+		CE018C330DB6D7FD003E008B /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C2F0DB6D7FD003E008B /* KSPluginInstaller.nib */; };
 		CE01A0800804A9DD009FE78A /* index.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07C0804A9DD009FE78A /* index.icns */; };
 		CE01A0820804A9DD009FE78A /* pageplugin.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07E0804A9DD009FE78A /* pageplugin.icns */; };
 		CE01A0830804A9DD009FE78A /* datasource.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE01A07F0804A9DD009FE78A /* datasource.icns */; };
@@ -543,14 +555,6 @@
 		CE2232C10869F47200341BAF /* rss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B70869F47200341BAF /* rss_on.png */; };
 		CE2232C20869F47200341BAF /* rss_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B80869F47200341BAF /* rss_off.png */; };
 		CE2234A20869F76800341BAF /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2234A10869F76800341BAF /* down.png */; };
-		CE22E5BE0D7C71BD0055D8E9 /* PDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */; };
-		CE22E5BF0D7C71BD0055D8E9 /* RTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */; };
-		CE22E5D00D7C720D0055D8E9 /* BugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */; };
-		CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C20D7C720D0055D8E9 /* Crash.nib */; };
-		CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C40D7C720D0055D8E9 /* Exception.nib */; };
-		CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5C60D7C720D0055D8E9 /* Feedback.nib */; };
-		CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */; };
-		CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */; };
 		CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */; };
 		CE22E5ED0D7C73CC0055D8E9 /* feedback_rtfd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E60D7C73CC0055D8E9 /* feedback_rtfd.png */; };
 		CE22E5EE0D7C73CC0055D8E9 /* feedback_reply.png in Resources */ = {isa = PBXBuildFile; fileRef = CE22E5E70D7C73CC0055D8E9 /* feedback_reply.png */; };
@@ -572,7 +576,6 @@
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */; };
 		CE2E80E50DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
-		CE3162860D7DE6A200B0951B /* GenericProgress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE3162850D7DE6A200B0951B /* GenericProgress.nib */; };
 		CE330CB50D510C4500DE8086 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE39C9A50D36BFF700364557 /* CyberDuck.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE39C9A40D36BFF700364557 /* CyberDuck.icns */; };
@@ -622,7 +625,6 @@
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */; };
 		CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */; };
-		CE8DECDE0D935E8E00CEB9F7 /* KeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */; };
 		CE8E719D0912F5E7001DC88D /* paypal.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE8E71960912F5E7001DC88D /* paypal.gif */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
 		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
@@ -895,7 +897,6 @@
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
-		CEE359A60D9AF9D40060802A /* JoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEE359A40D9AF9D40060802A /* JoinList.nib */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
@@ -2087,9 +2088,6 @@
 		3CF9420F0D62438500B1C83D /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/InlineImageElement.nib; sourceTree = "<group>"; };
 		3CF942100D62439000B1C83D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/InlineImageElement.nib; sourceTree = "<group>"; };
 		3CF942170D6243AF00B1C83D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/ImageCropper.nib; sourceTree = "<group>"; };
-		3CF942190D6243BC00B1C83D /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/ImageCropper.nib; sourceTree = "<group>"; };
-		3CF9421A0D6243F000B1C83D /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/ImageCropper.nib; sourceTree = "<group>"; };
-		3CF9421B0D62440900B1C83D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/ImageCropper.nib; sourceTree = "<group>"; };
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
 		3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../../../sparkleplus/Sparkle.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2113,6 +2111,96 @@
 		79EC3C020973CECD00FE7D50 /* upload_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_complete.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sandvox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandvox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSGenericProgress.nib; path = ../../../Shared/trunk/App/KSGenericProgress.nib; sourceTree = SOURCE_ROOT; };
+		CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSPDFWindow.nib; path = ../../../Shared/trunk/App/KSPDFWindow.nib; sourceTree = SOURCE_ROOT; };
+		CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSRTFDWindow.nib; path = ../../../Shared/trunk/App/KSRTFDWindow.nib; sourceTree = SOURCE_ROOT; };
+		CE018C080DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C0A0DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C0C0DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C0E0DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C100DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C120DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C140DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C160DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C1F0DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C200DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C210DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C220DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C230DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C240DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C250DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C260DB6D7F8003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = ../../../Shared/trunk/App/de.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C290DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C2A0DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C2B0DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C2C0DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C2D0DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C2E0DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C300DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSPluginInstaller.nib; sourceTree = SOURCE_ROOT; };
+		CE018C310DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C320DB6D7FD003E008B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C340DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C350DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C360DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C370DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C380DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C390DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3A0DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3B0DB6D803003E008B /* es */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = es; path = ../../../Shared/trunk/App/es.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3C0DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3D0DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3E0DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C3F0DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C400DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C410DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C420DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C430DB6D808003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = ../../../Shared/trunk/App/fr.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C440DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C450DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C460DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C470DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C480DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C490DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4A0DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4B0DB6D80E003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = ../../../Shared/trunk/App/it.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4C0DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4D0DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4E0DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C4F0DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C500DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C510DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C520DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C530DB6D813003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ../../../Shared/trunk/App/ja.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C540DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C550DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C560DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C570DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C580DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C590DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5A0DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5B0DB6D819003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = ../../../Shared/trunk/App/zh_CN.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5C0DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5D0DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSCrash.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5E0DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSException.nib; sourceTree = SOURCE_ROOT; };
+		CE018C5F0DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSFeedback.nib; sourceTree = SOURCE_ROOT; };
+		CE018C600DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSJoinList.nib; sourceTree = SOURCE_ROOT; };
+		CE018C610DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSKeepInTouch.nib; sourceTree = SOURCE_ROOT; };
+		CE018C620DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
+		CE018C630DB6D81F003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = ../../../Shared/trunk/App/zh_TW.lproj/KSSilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
+		CE018C650DB6D959003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C660DB6D959003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C670DB6D963003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C680DB6D963003E008B /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C690DB6D96B003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C6A0DB6D96B003E008B /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C6B0DB6D97A003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C6C0DB6D97A003E008B /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C6D0DB6D981003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C6E0DB6D981003E008B /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C6F0DB6D98B003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C700DB6D98B003E008B /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
+		CE018C710DB6D992003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/MissingMedia.nib; sourceTree = "<group>"; };
+		CE018C720DB6D992003E008B /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/NewDocumentAccessoryView.nib; sourceTree = "<group>"; };
 		CE01A07C0804A9DD009FE78A /* index.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = index.icns; sourceTree = "<group>"; };
 		CE01A07D0804A9DD009FE78A /* pref.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pref.icns; sourceTree = "<group>"; };
 		CE01A07E0804A9DD009FE78A /* pageplugin.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pageplugin.icns; sourceTree = "<group>"; };
@@ -2165,15 +2253,6 @@
 		CE2232B70869F47200341BAF /* rss_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_on.png; sourceTree = "<group>"; };
 		CE2232B80869F47200341BAF /* rss_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_off.png; sourceTree = "<group>"; };
 		CE2234A10869F76800341BAF /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
-		CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PDFWindow.nib; path = ../../../Shared/trunk/App/PDFWindow.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = RTFDWindow.nib; path = ../../../Shared/trunk/App/RTFDWindow.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5C10D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/BugReporterViews.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5C30D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Crash.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5C50D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Exception.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5C70D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/Feedback.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5CD0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/PluginInstaller.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5CF0D7C720D0055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/SilencingWarningSheet.nib; sourceTree = SOURCE_ROOT; };
-		CE22E5E00D7C73780055D8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KSRegistration.nib; sourceTree = SOURCE_ROOT; };
 		CE22E5E50D7C73CC0055D8E9 /* feedback_yellowbug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_yellowbug.png; path = ../../../Shared/trunk/App/feedback_yellowbug.png; sourceTree = SOURCE_ROOT; };
 		CE22E5E60D7C73CC0055D8E9 /* feedback_rtfd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_rtfd.png; path = ../../../Shared/trunk/App/feedback_rtfd.png; sourceTree = SOURCE_ROOT; };
 		CE22E5E70D7C73CC0055D8E9 /* feedback_reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feedback_reply.png; path = ../../../Shared/trunk/App/feedback_reply.png; sourceTree = SOURCE_ROOT; };
@@ -2198,7 +2277,6 @@
 		CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTExtensions.m"; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
-		CE3162850D7DE6A200B0951B /* GenericProgress.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = GenericProgress.nib; path = ../../../Shared/trunk/App/GenericProgress.nib; sourceTree = SOURCE_ROOT; };
 		CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE39C9A40D36BFF700364557 /* CyberDuck.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CyberDuck.icns; sourceTree = "<group>"; };
@@ -2266,7 +2344,6 @@
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSKeepInTouchController.m; path = ../../../Shared/trunk/App/KSKeepInTouchController.m; sourceTree = SOURCE_ROOT; };
 		CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSKeepInTouchController.h; path = ../../../Shared/trunk/App/KSKeepInTouchController.h; sourceTree = SOURCE_ROOT; };
-		CE8DECDD0D935E8E00CEB9F7 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/KeepInTouch.nib; sourceTree = SOURCE_ROOT; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE8E834A0917EFE2001DC88D /* designCoverLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeft.png; sourceTree = "<group>"; };
 		CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeftSearch.png; sourceTree = "<group>"; };
@@ -2601,7 +2678,6 @@
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE0B9C909EDBD25004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/MultipleSelection.html; sourceTree = "<group>"; };
-		CEE359A50D9AF9D40060802A /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = ../../../Shared/trunk/App/en.lproj/JoinList.nib; sourceTree = SOURCE_ROOT; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF0F6250D7F306C00AF5BC0 /* Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Debug.m; path = ../../../Shared/trunk/App/Debug.m; sourceTree = SOURCE_ROOT; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4191,18 +4267,18 @@
 		CE22E5B80D7C71A10055D8E9 /* Shared Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				CEE359A40D9AF9D40060802A /* JoinList.nib */,
-				CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */,
-				CE3162850D7DE6A200B0951B /* GenericProgress.nib */,
-				CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */,
-				CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */,
-				CE22E5C20D7C720D0055D8E9 /* Crash.nib */,
-				CE22E5C40D7C720D0055D8E9 /* Exception.nib */,
-				CE22E5C60D7C720D0055D8E9 /* Feedback.nib */,
-				CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */,
-				CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */,
-				CE22E5BC0D7C71BD0055D8E9 /* PDFWindow.nib */,
-				CE22E5BD0D7C71BD0055D8E9 /* RTFDWindow.nib */,
+				CE018C2F0DB6D7FD003E008B /* KSPluginInstaller.nib */,
+				CE018C070DB6D7F1003E008B /* KSBugReporterViews.nib */,
+				CE018C090DB6D7F1003E008B /* KSCrash.nib */,
+				CE018C0B0DB6D7F1003E008B /* KSException.nib */,
+				CE018C0D0DB6D7F1003E008B /* KSFeedback.nib */,
+				CE018C0F0DB6D7F1003E008B /* KSJoinList.nib */,
+				CE018C110DB6D7F1003E008B /* KSKeepInTouch.nib */,
+				CE018C130DB6D7F1003E008B /* KSRegistration.nib */,
+				CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */,
+				CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */,
+				CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */,
+				CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */,
 			);
 			name = "Shared Nibs";
 			sourceTree = "<group>";
@@ -4933,6 +5009,7 @@
 				da,
 				it,
 				zh_CN,
+				es,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Marvel */;
 			projectDirPath = "";
@@ -5678,14 +5755,6 @@
 				27EF5F270D6C94BF0024575B /* NewDocumentAccessoryView.nib in Resources */,
 				2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */,
 				2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */,
-				CE22E5BE0D7C71BD0055D8E9 /* PDFWindow.nib in Resources */,
-				CE22E5BF0D7C71BD0055D8E9 /* RTFDWindow.nib in Resources */,
-				CE22E5D00D7C720D0055D8E9 /* BugReporterViews.nib in Resources */,
-				CE22E5D10D7C720D0055D8E9 /* Crash.nib in Resources */,
-				CE22E5D20D7C720D0055D8E9 /* Exception.nib in Resources */,
-				CE22E5D30D7C720D0055D8E9 /* Feedback.nib in Resources */,
-				CE22E5D70D7C720D0055D8E9 /* SilencingWarningSheet.nib in Resources */,
-				CE22E5E10D7C73780055D8E9 /* KSRegistration.nib in Resources */,
 				CE22E5EC0D7C73CC0055D8E9 /* feedback_yellowbug.png in Resources */,
 				CE22E5ED0D7C73CC0055D8E9 /* feedback_rtfd.png in Resources */,
 				CE22E5EE0D7C73CC0055D8E9 /* feedback_reply.png in Resources */,
@@ -5693,15 +5762,24 @@
 				CE22E5F00D7C73CC0055D8E9 /* feedback_qmark.png in Resources */,
 				CE22E5F10D7C73CC0055D8E9 /* feedback_edit.png in Resources */,
 				CE22E5F20D7C73CC0055D8E9 /* feedback_bulb.png in Resources */,
-				CE3162860D7DE6A200B0951B /* GenericProgress.nib in Resources */,
 				CE7230EA0D85D5BB00E9C592 /* syringe.tiff in Resources */,
 				CE7231220D85D96F00E9C592 /* favicon.icns in Resources */,
 				CE7232140D85DC5A00E9C592 /* arrow_black.pdf in Resources */,
 				CE7232150D85DC5A00E9C592 /* arrow_grey_down.pdf in Resources */,
 				CE7232160D85DC5A00E9C592 /* arrow_grey_up.pdf in Resources */,
-				CE8DECDE0D935E8E00CEB9F7 /* KeepInTouch.nib in Resources */,
-				CEE359A60D9AF9D40060802A /* JoinList.nib in Resources */,
 				27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */,
+				CE018C040DB6D7DE003E008B /* KSGenericProgress.nib in Resources */,
+				CE018C050DB6D7DE003E008B /* KSPDFWindow.nib in Resources */,
+				CE018C060DB6D7DE003E008B /* KSRTFDWindow.nib in Resources */,
+				CE018C170DB6D7F1003E008B /* KSBugReporterViews.nib in Resources */,
+				CE018C180DB6D7F1003E008B /* KSCrash.nib in Resources */,
+				CE018C190DB6D7F1003E008B /* KSException.nib in Resources */,
+				CE018C1A0DB6D7F1003E008B /* KSFeedback.nib in Resources */,
+				CE018C1B0DB6D7F1003E008B /* KSJoinList.nib in Resources */,
+				CE018C1C0DB6D7F1003E008B /* KSKeepInTouch.nib in Resources */,
+				CE018C1D0DB6D7F1003E008B /* KSRegistration.nib in Resources */,
+				CE018C1E0DB6D7F1003E008B /* KSSilencingWarningSheet.nib in Resources */,
+				CE018C330DB6D7FD003E008B /* KSPluginInstaller.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6548,6 +6626,13 @@
 			isa = PBXVariantGroup;
 			children = (
 				27AA102C0CDA06C6001D6B9B /* en */,
+				CE018C650DB6D959003E008B /* da */,
+				CE018C670DB6D963003E008B /* de */,
+				CE018C690DB6D96B003E008B /* fr */,
+				CE018C6B0DB6D97A003E008B /* it */,
+				CE018C6D0DB6D981003E008B /* ja */,
+				CE018C6F0DB6D98B003E008B /* zh_CN */,
+				CE018C710DB6D992003E008B /* zh_TW */,
 			);
 			name = MissingMedia.nib;
 			sourceTree = "<group>";
@@ -6556,6 +6641,13 @@
 			isa = PBXVariantGroup;
 			children = (
 				27EF5F280D6C94D50024575B /* en */,
+				CE018C660DB6D959003E008B /* da */,
+				CE018C680DB6D963003E008B /* de */,
+				CE018C6A0DB6D96B003E008B /* fr */,
+				CE018C6C0DB6D97A003E008B /* it */,
+				CE018C6E0DB6D981003E008B /* ja */,
+				CE018C700DB6D98B003E008B /* zh_CN */,
+				CE018C720DB6D992003E008B /* zh_TW */,
 			);
 			name = NewDocumentAccessoryView.nib;
 			sourceTree = "<group>";
@@ -6699,9 +6791,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3CF942170D6243AF00B1C83D /* en */,
-				3CF942190D6243BC00B1C83D /* da */,
-				3CF9421A0D6243F000B1C83D /* ja */,
-				3CF9421B0D62440900B1C83D /* zh_TW */,
 			);
 			name = ImageCropper.nib;
 			sourceTree = "<group>";
@@ -6721,6 +6810,142 @@
 			name = KTTransfer.nib;
 			sourceTree = "<group>";
 		};
+		CE018C070DB6D7F1003E008B /* KSBugReporterViews.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C080DB6D7F1003E008B /* da */,
+				CE018C1F0DB6D7F8003E008B /* de */,
+				CE018C290DB6D7FD003E008B /* en */,
+				CE018C340DB6D803003E008B /* es */,
+				CE018C3C0DB6D808003E008B /* fr */,
+				CE018C440DB6D80E003E008B /* it */,
+				CE018C4C0DB6D813003E008B /* ja */,
+				CE018C540DB6D819003E008B /* zh_CN */,
+				CE018C5C0DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSBugReporterViews.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C090DB6D7F1003E008B /* KSCrash.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C0A0DB6D7F1003E008B /* da */,
+				CE018C200DB6D7F8003E008B /* de */,
+				CE018C2A0DB6D7FD003E008B /* en */,
+				CE018C350DB6D803003E008B /* es */,
+				CE018C3D0DB6D808003E008B /* fr */,
+				CE018C450DB6D80E003E008B /* it */,
+				CE018C4D0DB6D813003E008B /* ja */,
+				CE018C550DB6D819003E008B /* zh_CN */,
+				CE018C5D0DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSCrash.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C0B0DB6D7F1003E008B /* KSException.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C0C0DB6D7F1003E008B /* da */,
+				CE018C210DB6D7F8003E008B /* de */,
+				CE018C2B0DB6D7FD003E008B /* en */,
+				CE018C360DB6D803003E008B /* es */,
+				CE018C3E0DB6D808003E008B /* fr */,
+				CE018C460DB6D80E003E008B /* it */,
+				CE018C4E0DB6D813003E008B /* ja */,
+				CE018C560DB6D819003E008B /* zh_CN */,
+				CE018C5E0DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSException.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C0D0DB6D7F1003E008B /* KSFeedback.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C0E0DB6D7F1003E008B /* da */,
+				CE018C220DB6D7F8003E008B /* de */,
+				CE018C2C0DB6D7FD003E008B /* en */,
+				CE018C370DB6D803003E008B /* es */,
+				CE018C3F0DB6D808003E008B /* fr */,
+				CE018C470DB6D80E003E008B /* it */,
+				CE018C4F0DB6D813003E008B /* ja */,
+				CE018C570DB6D819003E008B /* zh_CN */,
+				CE018C5F0DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSFeedback.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C0F0DB6D7F1003E008B /* KSJoinList.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C100DB6D7F1003E008B /* da */,
+				CE018C230DB6D7F8003E008B /* de */,
+				CE018C2D0DB6D7FD003E008B /* en */,
+				CE018C380DB6D803003E008B /* es */,
+				CE018C400DB6D808003E008B /* fr */,
+				CE018C480DB6D80E003E008B /* it */,
+				CE018C500DB6D813003E008B /* ja */,
+				CE018C580DB6D819003E008B /* zh_CN */,
+				CE018C600DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSJoinList.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C110DB6D7F1003E008B /* KSKeepInTouch.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C120DB6D7F1003E008B /* da */,
+				CE018C240DB6D7F8003E008B /* de */,
+				CE018C2E0DB6D7FD003E008B /* en */,
+				CE018C390DB6D803003E008B /* es */,
+				CE018C410DB6D808003E008B /* fr */,
+				CE018C490DB6D80E003E008B /* it */,
+				CE018C510DB6D813003E008B /* ja */,
+				CE018C590DB6D819003E008B /* zh_CN */,
+				CE018C610DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSKeepInTouch.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C130DB6D7F1003E008B /* KSRegistration.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C140DB6D7F1003E008B /* da */,
+				CE018C250DB6D7F8003E008B /* de */,
+				CE018C310DB6D7FD003E008B /* en */,
+				CE018C3A0DB6D803003E008B /* es */,
+				CE018C420DB6D808003E008B /* fr */,
+				CE018C4A0DB6D80E003E008B /* it */,
+				CE018C520DB6D813003E008B /* ja */,
+				CE018C5A0DB6D819003E008B /* zh_CN */,
+				CE018C620DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSRegistration.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C160DB6D7F1003E008B /* da */,
+				CE018C260DB6D7F8003E008B /* de */,
+				CE018C320DB6D7FD003E008B /* en */,
+				CE018C3B0DB6D803003E008B /* es */,
+				CE018C430DB6D808003E008B /* fr */,
+				CE018C4B0DB6D80E003E008B /* it */,
+				CE018C530DB6D813003E008B /* ja */,
+				CE018C5B0DB6D819003E008B /* zh_CN */,
+				CE018C630DB6D81F003E008B /* zh_TW */,
+			);
+			name = KSSilencingWarningSheet.nib;
+			sourceTree = SOURCE_ROOT;
+		};
+		CE018C2F0DB6D7FD003E008B /* KSPluginInstaller.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE018C300DB6D7FD003E008B /* en */,
+			);
+			name = KSPluginInstaller.nib;
+			sourceTree = SOURCE_ROOT;
+		};
 		CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -6736,62 +6961,6 @@
 			name = LivePagesDisabled.html;
 			sourceTree = "<group>";
 		};
-		CE22E5C00D7C720D0055D8E9 /* BugReporterViews.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5C10D7C720D0055D8E9 /* en */,
-			);
-			name = BugReporterViews.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5C20D7C720D0055D8E9 /* Crash.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5C30D7C720D0055D8E9 /* en */,
-			);
-			name = Crash.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5C40D7C720D0055D8E9 /* Exception.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5C50D7C720D0055D8E9 /* en */,
-			);
-			name = Exception.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5C60D7C720D0055D8E9 /* Feedback.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5C70D7C720D0055D8E9 /* en */,
-			);
-			name = Feedback.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5CC0D7C720D0055D8E9 /* PluginInstaller.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5CD0D7C720D0055D8E9 /* en */,
-			);
-			name = PluginInstaller.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5CE0D7C720D0055D8E9 /* SilencingWarningSheet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5CF0D7C720D0055D8E9 /* en */,
-			);
-			name = SilencingWarningSheet.nib;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE22E5DF0D7C73780055D8E9 /* KSRegistration.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE22E5E00D7C73780055D8E9 /* en */,
-			);
-			name = KSRegistration.nib;
-			sourceTree = SOURCE_ROOT;
-		};
 		CE7779C60AE4945D002E6844 /* Placeholder.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -6806,14 +6975,6 @@
 			);
 			name = Placeholder.nib;
 			sourceTree = "<group>";
-		};
-		CE8DECDC0D935E8E00CEB9F7 /* KeepInTouch.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE8DECDD0D935E8E00CEB9F7 /* en */,
-			);
-			name = KeepInTouch.nib;
-			sourceTree = SOURCE_ROOT;
 		};
 		CEA234C1086B6EC5007A4C2D /* Prefs.nib */ = {
 			isa = PBXVariantGroup;
@@ -6844,14 +7005,6 @@
 			);
 			name = Info.nib;
 			sourceTree = "<group>";
-		};
-		CEE359A40D9AF9D40060802A /* JoinList.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEE359A50D9AF9D40060802A /* en */,
-			);
-			name = JoinList.nib;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXVariantGroup section */
 
