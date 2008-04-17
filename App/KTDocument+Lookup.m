@@ -212,6 +212,7 @@
 
 - (NSString *) titleHTML
 {
+	// Note: the use of NS...Localized...String...With...Default...Value below gets this string picked up by genstrings for 
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"titleHTML" language:[[[self root] master] valueForKey:@"language"]
 		fallback:NSLocalizedStringWithDefaultValue(@"titleHTML", nil, [NSBundle mainBundle], @"Untitled",  @"Default Title of page")
 		];

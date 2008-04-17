@@ -314,9 +314,7 @@
 		
 		NSString *subtitle = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML"
 																	language:[master valueForKey:@"language"]
-			fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML",
-													   nil,
-													   [NSBundle mainBundle],
+			fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML", nil, [NSBundle mainBundle],
 													   @"This is the subtitle for your site.",
 													   @"Default introduction statement for a page")];
 		[master setValue:subtitle forKey:@"siteSubtitleHTML"];
