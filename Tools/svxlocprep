@@ -30,6 +30,8 @@ fi
 
 FILENAME="svx-$1";
 
+rm -rf $WD/$FILENAME
+
 echo "Extracting language $1 out of $2 into $WD/$FILENAME"
 
 pushd "$2" > /dev/null
@@ -50,8 +52,20 @@ cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources
 mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/Code/MetaMarvel
 cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/Sandvox/trunk/Code/MetaMarvel
 
+# Put things NOT beginning with KS in the app, and things beginning with KS into Shared.
+
 mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/App
-cp -R$VERBOSE ./Contents/Resources/$1.lproj $WD/Subversion/Sandvox/trunk/App
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/App/$1.lproj
+echo ./Contents/Resources/$1.lproj/[^K][^S]*
+echo $WD/Subversion/Sandvox/trunk/App/$1.lproj/
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/[^K][^S]* $WD/Subversion/Sandvox/trunk/App/$1.lproj/
+
+mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App
+mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App/$1.lproj
+echo ./Contents/Resources/$1.lproj/KS*
+echo $WD/Subversion/Shared/trunk/App/$1.lproj/
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/trunk/App/$1.lproj/
+
 
 # plugins with their own project
 
