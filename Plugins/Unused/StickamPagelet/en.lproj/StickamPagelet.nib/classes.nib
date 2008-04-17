@@ -1,24 +1,34 @@
 {
-    IBClasses = (
-        {
-            ACTIONS = {"" = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            CLASS = KTAbstractPluginDelegate; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {myDelegateOwner = id; }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
-        {
-            ACTIONS = {openStickam = id; }; 
-            CLASS = StickamPageletDelegate; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = KTAbstractPluginDelegate; 
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSLabel;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegateOwner = id;
+            };
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                openStickam = id;
+            };
+            CLASS = StickamPageletDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

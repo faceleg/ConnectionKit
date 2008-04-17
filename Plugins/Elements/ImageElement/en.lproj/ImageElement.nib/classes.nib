@@ -1,67 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>IBClasses</key>
-	<array>
-		<dict>
-			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSPathInfoField</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key></key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>chooseImage</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>ImageElementDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-		</dict>
-	</array>
-	<key>IBVersion</key>
-	<string>1</string>
-</dict>
-</plist>
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                chooseImage = id;
+            };
+            CLASS = ImageElementDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            CLASS = KSPathInfoField;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSView;
+        },
+                {
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        }
+    );
+    IBVersion = 1;
+}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>$archiver</key>
@@ -171,9 +171,40 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>13</integer>
+					<integer>12</integer>
 				</dict>
 			</array>
+		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>28</integer>
+			</dict>
+			<key>NSCell</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>14</integer>
+			</dict>
+			<key>NSEnabled</key>
+			<true/>
+			<key>NSFrame</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>13</integer>
+			</dict>
+			<key>NSNextResponder</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>12</integer>
+			</dict>
+			<key>NSSuperview</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>12</integer>
+			</dict>
+			<key>NSvFlags</key>
+			<integer>256</integer>
 		</dict>
 		<dict>
 			<key>$class</key>
@@ -204,65 +235,20 @@
 			<key>NSSubviews</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>12</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>9</integer>
-			</dict>
-			<key>NS.objects</key>
-			<array>
-				<dict>
-					<key>CF$UID</key>
-					<integer>13</integer>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
 				<integer>29</integer>
 			</dict>
-			<key>NSCell</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>15</integer>
-			</dict>
-			<key>NSEnabled</key>
-			<true/>
-			<key>NSFrame</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>14</integer>
-			</dict>
-			<key>NSNextResponder</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>11</integer>
-			</dict>
-			<key>NSSuperview</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>11</integer>
-			</dict>
-			<key>NSvFlags</key>
-			<integer>256</integer>
 		</dict>
 		<string>{{17, 20}, {216, 112}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>28</integer>
+				<integer>27</integer>
 			</dict>
 			<key>NSBackgroundColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>20</integer>
+				<integer>19</integer>
 			</dict>
 			<key>NSCellFlags</key>
 			<integer>67239424</integer>
@@ -271,22 +257,22 @@
 			<key>NSContents</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>16</integer>
+				<integer>15</integer>
 			</dict>
 			<key>NSControlView</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>13</integer>
+				<integer>11</integer>
 			</dict>
 			<key>NSSupport</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>17</integer>
+				<integer>16</integer>
 			</dict>
 			<key>NSTextColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>25</integer>
+				<integer>24</integer>
 			</dict>
 		</dict>
 		<string>Developed by and for del.icio.us, this JSON powered Tagometer adds some extra flair to your site.
@@ -296,12 +282,12 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>19</integer>
+				<integer>18</integer>
 			</dict>
 			<key>NSName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>18</integer>
+				<integer>17</integer>
 			</dict>
 			<key>NSSize</key>
 			<real>11</real>
@@ -322,22 +308,22 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>24</integer>
+				<integer>23</integer>
 			</dict>
 			<key>NSCatalogName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>21</integer>
+				<integer>20</integer>
 			</dict>
 			<key>NSColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>23</integer>
+				<integer>22</integer>
 			</dict>
 			<key>NSColorName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>22</integer>
+				<integer>21</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>6</integer>
@@ -348,7 +334,7 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>24</integer>
+				<integer>23</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>3</integer>
@@ -370,22 +356,22 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>24</integer>
+				<integer>23</integer>
 			</dict>
 			<key>NSCatalogName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>21</integer>
+				<integer>20</integer>
 			</dict>
 			<key>NSColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>27</integer>
+				<integer>26</integer>
 			</dict>
 			<key>NSColorName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>26</integer>
+				<integer>25</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>6</integer>
@@ -395,7 +381,7 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>24</integer>
+				<integer>23</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>3</integer>
@@ -427,6 +413,20 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			</array>
 			<key>$classname</key>
 			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>9</integer>
+			</dict>
+			<key>NS.objects</key>
+			<array>
+				<dict>
+					<key>CF$UID</key>
+					<integer>11</integer>
+				</dict>
+			</array>
 		</dict>
 		<string>{250, 152}</string>
 		<dict>
@@ -479,11 +479,11 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
+					<integer>12</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -497,15 +497,15 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>13</integer>
+					<integer>12</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
 					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -531,9 +531,9 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 				</dict>
 			</array>
 		</dict>
-		<string>File's Owner</string>
-		<string>NSTextField1</string>
 		<string>View</string>
+		<string>NSTextField1</string>
+		<string>File's Owner</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -562,7 +562,7 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>13</integer>
+					<integer>12</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -596,8 +596,8 @@ With this badge, it’s easy to show both tags and number of saves, so it’s ea
 				</dict>
 			</array>
 		</dict>
-		<integer>6</integer>
 		<integer>5</integer>
+		<integer>6</integer>
 		<integer>1</integer>
 		<dict>
 			<key>$class</key>
