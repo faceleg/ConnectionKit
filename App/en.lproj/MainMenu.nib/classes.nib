@@ -295,7 +295,7 @@
 				<string>NSMenuItem</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>KSAppDelegate</string>
+			<string>KSLicensedAppDelegate</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -451,6 +451,19 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>showRegistrationWindow</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KSLicensedAppDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>KSAppDelegate</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>
