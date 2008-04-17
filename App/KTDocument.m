@@ -823,15 +823,31 @@
 	[super close];
 }
 
+
+/*	Called when the user goes to close the document.
+ *	By default, if there are unsaved changes NSDocument prompts the user, but we just want to go ahead and save.
+ */
 - (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(id)contextInfo
 {
 	LOGMETHOD;
 	
-	OFF((@"KTDocument -canCloseDocumentWithDelegate initial selector: %@", NSStringFromSelector(shouldCloseSelector)));
-	OFF((@"contextInfo = %@", contextInfo));
 	
-	if (![[[self windowController] window] makeFirstResponder:nil])
+	// In order to inform the delegate, we will have to send this callback at some point
+	NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:shouldCloseSelector];
+	NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
+	[callback setTarget:delegate];
+	[callback setSelector:shouldCloseSelector];
+	[callback setArgument:&self atIndex:2];
+	[callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
+	
+	
+	
+	// Stop editing
+	BOOL result = [[[self windowController] window] makeFirstResponder:nil];
+	if (!result)
 	{
+		[callback setArgument:&result atIndex:3];
+		[callback invoke];
 		return;
 	}
 	
@@ -879,13 +895,6 @@
 		else
 		{
 			// Go for it, save the document!
-			NSInvocation *callback =
-				[NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:shouldCloseSelector]];
-			[callback setTarget:delegate];
-			[callback setSelector:shouldCloseSelector];
-			[callback setArgument:&self atIndex:2];
-			[callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the saving result
-			
 			[self saveToURL:[self fileURL]
 					 ofType:[self fileType]
 		   forSaveOperation:NSSaveOperation
