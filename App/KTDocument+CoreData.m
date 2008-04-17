@@ -28,7 +28,10 @@
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
 
 
 @interface KTDocument (CoreDataPrivate)

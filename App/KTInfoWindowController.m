@@ -32,8 +32,11 @@
 #import "NSBundle+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "Registration.h"
 #import "ValuesAreEqualTransformer.h"
+
+#ifdef APP_RELEASE
+#import "Registration.h"
+#endif
 
 enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 

@@ -57,7 +57,10 @@
 
 #import "NTBoxView.h"
 
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
+
 #import <iMediaBrowser/iMedia.h>
 #import <WebKit/WebKit.h>
 

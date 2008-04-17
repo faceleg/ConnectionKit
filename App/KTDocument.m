@@ -75,8 +75,11 @@
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "Registration.h"
 #import <iMediaBrowser/iMediaBrowser.h>
+
+#ifdef APP_RELEASE
+#import "Registration.h"
+#endif
 
 //#import "KTUndoManager.h"
 

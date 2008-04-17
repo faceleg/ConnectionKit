@@ -16,7 +16,9 @@
 #import "NSOutlineView+KTExtensions.h"
 #import "KTAbstractPluginDelegate.h"
 
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
 
 
 NSString *kKTSelectedObjectsKey = @"KTSelectedObjects";

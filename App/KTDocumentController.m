@@ -15,7 +15,10 @@
 #import "KTPersistentStoreCoordinator.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSString+Karelia.h"
+
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
 
 
 @implementation KTDocumentController

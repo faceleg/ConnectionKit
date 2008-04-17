@@ -50,7 +50,9 @@
 #import <CoreServices/CoreServices.h>
 #import <QuartzCore/QuartzCore.h>
 
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
 
 typedef enum {
     WebKitEditableLinkDefaultBehavior = 0,

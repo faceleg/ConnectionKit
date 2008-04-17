@@ -10,9 +10,12 @@
 #import "NSThread+Karelia.h"
 #import "NSColor+Karelia.h"
 #import <QTKit/QTKit.h>
-#import "Registration.h"
 #import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"
+
+#ifdef APP_RELEASE
+#import "Registration.h"
+#endif
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 

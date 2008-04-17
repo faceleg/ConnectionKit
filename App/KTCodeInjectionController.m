@@ -15,7 +15,9 @@
 #import "KTApplication.h"
 #import "KTPage.h"
 
+#ifdef APP_RELEASE
 #import "Registration.h"
+#endif
 
 @interface KTCodeInjectionController (Private)
 @end

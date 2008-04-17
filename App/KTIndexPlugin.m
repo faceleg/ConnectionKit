@@ -8,9 +8,12 @@
 
 #import "KTIndexPlugin.h"
 #import "KT.h"
-#import "Registration.h"
 #import "NSBundle+Karelia.h"
 #import "KTAppDelegate.h"
+
+#ifdef APP_RELEASE
+#import "Registration.h"
+#endif
 
 @implementation KTIndexPlugin
 
