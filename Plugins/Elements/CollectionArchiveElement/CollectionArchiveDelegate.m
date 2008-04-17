@@ -32,7 +32,7 @@
 			
 			NSString *title = [NSString stringWithFormat:@"%@ %@",
 														 [parent titleText],
-														 NSLocalizedString(@"Archive", @"Portion of pagelet title")];
+														 LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
 			[(KTPagelet *)[self delegateOwner] setTitleHTML:title];
 		}
 	}
