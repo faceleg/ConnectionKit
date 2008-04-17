@@ -691,7 +691,7 @@ static unsigned sLastParserID;
     return [NSString stringWithString:htmlString];    
 }
 
-/*	These 3 methdos are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
+/*	These 3 methods are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
  */
 - (NSString *)componentLocalizedString:(NSString *)tag
 {

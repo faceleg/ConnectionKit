@@ -11,10 +11,10 @@ PRODUCT_VARIANT = beta
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 875
+CK_REVISION = 878
 
 // iMedia
-IMEDIA_REVISION = 545
+IMEDIA_REVISION = 551
 
 // Sparkle+
 SP_REVISION = 115
