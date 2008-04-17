@@ -42,7 +42,7 @@
 
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings
 {
-	NSSize destinationSize = [settings destinationSizeForImageOfSize:[self size]];
+	NSSize destinationSize = [settings scaledSizeForImageOfSize:[self size]];
 	int integralWidth = destinationSize.width = roundf(destinationSize.width);
 	int integralHeight = destinationSize.height = roundf(destinationSize.height);
 	

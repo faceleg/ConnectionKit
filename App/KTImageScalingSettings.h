@@ -53,7 +53,8 @@
 
 - (float)scaleFactorForImageOfSize:(NSSize)sourceSize;
 - (float)aspectRatioForImageOfSize:(NSSize)sourceSize;
-- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize;
+- (NSSize)scaledSizeForImageOfSize:(NSSize)sourceSize;
+//- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize;
 //- (float)heightForImageOfSize:(NSSize)sourceSize;
 
 @end

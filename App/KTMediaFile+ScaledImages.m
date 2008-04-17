@@ -280,7 +280,7 @@
 		case KTScaleByFactor:
 		{
 			// Convert these wishy washy behaviours to a definite stretch operation
-			NSSize suggestedSize = [settings destinationSizeForImageOfSize:[self dimensions]];
+			NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
 			NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
 			
 			KTImageScalingSettings *canonicalBehavior = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize

@@ -53,6 +53,7 @@
 {
 	KTImageScalingSettings *result = [self settingsWithBehavior:KTCropToSize size:size sharpening:nil];
 	[result setAlignment:alignment];
+	[result setScaleFactor:0.0];	// By default -cropToFit items are infinitely scalable
 	return result;
 }
 
@@ -453,7 +454,7 @@
 	// TODO: Properly handle stretchToFit
 }
 
-- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize
+- (NSSize)scaledSizeForImageOfSize:(NSSize)sourceSize
 {
 	NSSize result;
 	NSSize mySize = [self size];
@@ -461,13 +462,14 @@
 	switch ([self behavior])
 	{
 		case KTStretchToSize:	// Dead easy
+		case KTCropToSize:		// The image will fill the frame unless the image is undersized
 			result = mySize;
 			break;
 		
-		case KTCropToSize:		// The image will fill the frame unless the image is undersized
+		/*case KTCropToSize:		// The image will fill the frame unless the image is undersized
 			result = NSMakeSize(MIN(mySize.width, sourceSize.width), MIN(mySize.height, sourceSize.height));
 			break;
-			
+		*/	
 		default:
 		{
 			float scale = [self scaleFactorForImageOfSize:sourceSize];
