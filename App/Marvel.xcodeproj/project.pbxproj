@@ -959,13 +959,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
 		};
-		3C095C040D5D281900DE6F62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = ViewerIndex;
-		};
 		3C095C080D5D282F00DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
@@ -1808,7 +1801,6 @@
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../Plugins/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../Plugins/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../Plugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ViewerIndex.xcodeproj; path = ../Plugins/Indexes/ViewerIndex/ViewerIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /System/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../../Shared/trunk/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousSource.xcodeproj; path = ../Plugins/DataSources/DeliciousSource/DeliciousSource.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3266,14 +3258,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C095BFE0D5D281900DE6F62 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C095C050D5D281900DE6F62 /* Viewer.svxIndex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C0C021E0905883E00CFFE3E /* Testing Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4175,7 +4159,6 @@
 				3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */,
 				3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */,
 				3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */,
-				3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */,
 			);
 			name = Indexes;
 			sourceTree = "<group>";
@@ -5189,10 +5172,6 @@
 					ProjectRef = 3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C095BFE0D5D281900DE6F62 /* Products */;
-					ProjectRef = 3C095BFD0D5D281900DE6F62 /* ViewerIndex.xcodeproj */;
-				},
-				{
 					ProductGroup = CEF12E780D908EB400FCAC70 /* Products */;
 					ProjectRef = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 				},
@@ -5249,13 +5228,6 @@
 			fileType = wrapper.cfbundle;
 			path = PhotoGrid.svxIndex;
 			remoteRef = 3C095BFB0D5D281000DE6F62 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C095C050D5D281900DE6F62 /* Viewer.svxIndex */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Viewer.svxIndex;
-			remoteRef = 3C095C040D5D281900DE6F62 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C1D06690D5D667C00782A95 /* Delicious.svxDataSource */ = {
