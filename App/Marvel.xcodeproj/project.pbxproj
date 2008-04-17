@@ -4598,7 +4598,7 @@
 		CEF12E780D908EB400FCAC70 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */,
+				CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5482,7 +5482,7 @@
 			remoteRef = CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement.svxElement */ = {
+		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = YouTube.svxElement;
