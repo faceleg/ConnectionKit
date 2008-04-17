@@ -34,6 +34,8 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+//  NOTE: No LocalizedStrings in this plugin, so no genstrings build phase needed
+
 #import "SiteMapDelegate.h"
 
 

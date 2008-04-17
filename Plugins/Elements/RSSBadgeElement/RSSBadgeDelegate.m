@@ -8,6 +8,8 @@
 
 #import "RSSBadgeDelegate.h"
 
+#import <NSBundle+Karelia.h>
+
 
 @implementation RSSBadgeDelegate
 
@@ -44,11 +46,11 @@
 		//
 		// Make the string we want get generated, but we are forcing the string to be in target language.
 		//
-		//
-		// LocalizedStringInThisBundle(@"Subscribe to RSS feed", @"Prompt to subscribe to the given collection via RSS")
-		//
 		NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
-		NSString *theString = [theBundle localizedStringForKey:@"Subscribe to RSS feed" value:@"" table:nil];
+		NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
+														 language:[[[self page] master] valueForKey:@"language"]
+														 fallback:LocalizedStringInThisBundle(@"Subscribe to RSS feed", 
+																							  @"Prompt to subscribe to the given collection via RSS")];
 		
 		[[self delegateOwner] setObject:theString forKey:@"label"];
 			
