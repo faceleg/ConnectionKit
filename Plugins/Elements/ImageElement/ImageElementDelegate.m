@@ -48,7 +48,6 @@
 // LocalizedStringInThisBundle(@"View this image full-size", "Title of mag link");
 // LocalizedStringInThisBundle(@"magnify", "alt text of mag link");
 
-
 @interface ImageElementDelegate (Private)
 - (NSSize)boundingImageBox;
 @end

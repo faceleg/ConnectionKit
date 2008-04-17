@@ -80,6 +80,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <iMediaBrowser/iMediaBrowser.h>
 
 
+// Triggers to localize for the Comment/trackback stuff
+
 // NSLocalizedString(@"Comment", "String_On_Page_Template -- text for link on a blog posting")
 // NSLocalizedString(@"Other Posts About This", "String_On_Page_Template - description of trackbacks")
 // NSLocalizedString(@"Trackback", "String_On_Page_Template - text for trackback link")
