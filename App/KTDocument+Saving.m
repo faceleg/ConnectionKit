@@ -304,7 +304,8 @@
 			return NO; // this case should not happen, stop
 		}
 	}
-
+	
+	
 	// Record display properties
 	[managedObjectContext processPendingChanges];
 	[[managedObjectContext undoManager] disableUndoRegistration];
@@ -313,27 +314,6 @@
 	[[managedObjectContext undoManager] enableUndoRegistration];
 	
 	
-	if ([self isClosing])
-	{
-		// grab any last edits
-		[[[self windowController] webViewController] commitEditing];
-		[managedObjectContext processPendingChanges];
-		
-		// remembering and collecting should not be undoable
-		[[managedObjectContext undoManager] disableUndoRegistration];
-		
-		// collect garbage
-		if ([self updateMediaStorageAtNextSave])
-		{
-			[[self mediaManager] resetMediaFileStorage];
-		}
-		[[self mediaManager] garbageCollect];
-		
-		// force context to record all changes before saving
-		[managedObjectContext processPendingChanges];
-		[[managedObjectContext undoManager] enableUndoRegistration];
-	}
-
 	return YES;
 }
 

@@ -58,10 +58,18 @@
 		NSString *destinationPath = [[[moc document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		LOG((@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename));
-		[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
-		if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
-			[NSException raise:NSInternalInconsistencyException
-						format:@"Unable to move deleted MediaFile %@ to the temp media directory", filename];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:sourcePath])
+		{
+			[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
+			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
+				[NSException raise:NSInternalInconsistencyException
+							format:@"Unable to move deleted MediaFile %@ to the temp media directory", filename];
+			}
+		}
+		else
+		{
+			NSLog(@"No file could be found at\r%@\rDeleting the MediaFile object it anyway",
+				  [sourcePath stringByAbbreviatingWithTildeInPath]);
 		}
 	}
 }

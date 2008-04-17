@@ -841,9 +841,10 @@
 	[callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
 	
 	
-	
 	// Stop editing
-	BOOL result = [[[self windowController] window] makeFirstResponder:nil];
+	BOOL result = [[[self windowController] webViewController] commitEditing];
+	if (result) result = [[[self windowController] window] makeFirstResponder:nil];
+	
 	if (!result)
 	{
 		[callback setArgument:&result atIndex:3];
@@ -852,7 +853,7 @@
 	}
 	
 	
-	// CRITICAL: we need to signal writeToURL:::: that we're closing
+	// CRITICAL: we need to signal -writeToURL: that we're closing
 	[self setClosing:YES];
 	
 	
@@ -863,8 +864,17 @@
 	}
 	
 	
+	// Garbage collect media
+	if ([self updateMediaStorageAtNextSave])
+	{
+		[[self mediaManager] resetMediaFileStorage];
+	}
+	[[self mediaManager] garbageCollect];
+	
+	
+	
 	// Is there actually anything to be saved?
-	if ([[self managedObjectContext] hasChanges])
+	if ([[self managedObjectContext] hasChanges] || [[[self mediaManager] managedObjectContext] hasChanges])
 	{
 		if ([self isReadOnly])
 		{
