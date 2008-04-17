@@ -369,7 +369,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 	if (nil == pageName) pageName = @"Setting_Up_Your_Host";	// HELPSTRING
 
-	[NSApp showHelpPage:pageName];
+	[[NSApp delegate] showHelpPage:pageName];
 }
 
 - (IBAction)createNewConfiguration:(id)sender

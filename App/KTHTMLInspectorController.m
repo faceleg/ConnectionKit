@@ -222,7 +222,7 @@ initial syntax coloring.
 
 - (IBAction) windowHelp:(id)sender
 {
-	[NSApp showHelpPage:@"Edit_Raw_HTML"];	// HELPSTRING
+	[[NSApp delegate] showHelpPage:@"Edit_Raw_HTML"];	// HELPSTRING
 }
 
 

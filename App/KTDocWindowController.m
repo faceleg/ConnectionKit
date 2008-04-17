@@ -515,7 +515,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction) windowHelp:(id)sender
 {
-	[NSApp showHelpPage:@"Link"];		// HELPSTRING
+	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
 
 - (IBAction)saveDocumentTo:(id)sender

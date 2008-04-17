@@ -254,7 +254,7 @@
 
 - (IBAction) windowHelp:(id)sender
 {
-	[NSApp showHelpPage:@"Preferences"];	// HELPSTRING
+	[[NSApp delegate] showHelpPage:@"Preferences"];	// HELPSTRING
 }
 
 - (IBAction) checkForUpdates:(id)sender

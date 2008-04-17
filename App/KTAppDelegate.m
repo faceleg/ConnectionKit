@@ -853,6 +853,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 
+#pragma mark -svn 
+#pragma mark Help
+
+- (NSString *)appHelpURLFragment;		// used to construct the help URLs for this app
+{
+	return @"z";		// this uses "z" in the URL for help strings
+}
+
 
 #pragma mark -
 #pragma mark NSApplication Delegate

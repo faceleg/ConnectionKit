@@ -241,7 +241,7 @@
 
 - (IBAction)showHelp:(id)sender
 {
-	[(KTApplication *)NSApp showHelpPage:@"Code_Injection"];		// HELPSTRING
+	[[NSApp delegate] showHelpPage:@"Code_Injection"];		// HELPSTRING
 }
 
 #pragma mark -
