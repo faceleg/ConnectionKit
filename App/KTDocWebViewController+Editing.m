@@ -331,7 +331,12 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 - (BOOL)commitEditing
 {
-	BOOL result = [[self currentTextEditingBlock] commitEditing];
+	BOOL result = ![self webViewIsEditing];
+	if (!result)	// If there's nothing being edited then -commitEditing upon a nil object returns NO
+	{
+		result = [[self currentTextEditingBlock] commitEditing];
+	}
+	
 	return result;
 }
 
