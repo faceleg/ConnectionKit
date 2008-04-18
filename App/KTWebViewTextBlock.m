@@ -307,10 +307,11 @@
 	KTMediaFile *mediaFile = [image file];
 	if (mediaFile)
 	{			
-		result = [NSString stringWithFormat:@"text-indent:-1000px; background:url(%@); width:%ipx; height:%ipx;",
-											[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
-											[mediaFile integerForKey:@"width"],
-											[mediaFile integerForKey:@"height"]];
+		result = [NSString stringWithFormat:
+			@"text-indent:-1000px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",
+			[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
+			[mediaFile integerForKey:@"width"],
+			[mediaFile integerForKey:@"height"]];
 	}
 	
 	return result;
