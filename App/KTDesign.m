@@ -95,7 +95,7 @@
 	NSString *version = [self version];
 	if ((version != nil) 
 		&& ![version isEqualToString:@""] 
-		&& ![version isEqualToString:@"APP_VERSION"] 
+		&& ![version isEqualToString:@"SANDVOX_VERSION"] 
 		&& ([version floatVersion] > 1.0))
 	{
 		result = [result stringByAppendingFormat:@".%@", version];
