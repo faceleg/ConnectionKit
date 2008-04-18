@@ -56,9 +56,10 @@ cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resou
 
 mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/App
 mkdir -p$VERBOSE $WD/Subversion/Sandvox/trunk/App/$1.lproj
-echo ./Contents/Resources/$1.lproj/[^K][^S]*
-echo $WD/Subversion/Sandvox/trunk/App/$1.lproj/
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/[^K][^S]* $WD/Subversion/Sandvox/trunk/App/$1.lproj/
+
+# silly hack: copy in all the files, then remove the KS* files
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox/trunk/App/$1.lproj/
+rm -rf$VERBOSE $WD/Subversion/Sandvox/trunk/App/$1.lproj/KS*
 
 mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App
 mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App/$1.lproj
