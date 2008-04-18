@@ -1903,18 +1903,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #pragma mark -
 #pragma mark Debug Methods
 
-- (IBAction) crash:(id)sender
-{
-	*((int*)(-1)) = 0;
-}
-- (IBAction) generateException:(id)sender
-{
-	
-//	[NSException raise:NSInvalidArgumentException format:@"%@: %s: passed DOMRange %p has a different document (%p) to the current document (%p)", self, __FUNCTION__, 10102, 1234, 456];
-	NSArray *theArray = [NSArray array];
-	id foo = [theArray objectAtIndex:99];
-	NSLog(@"foo = %@", foo);
-}
 
 
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle	// a table or array

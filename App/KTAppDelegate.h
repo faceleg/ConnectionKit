@@ -182,8 +182,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 }
 
 
-- (IBAction) crash:(id)sender;
-- (IBAction) generateException:(id)sender;
 - (IBAction) openHigh:(id)sender;
 - (IBAction) openLow:(id)sender;
 
