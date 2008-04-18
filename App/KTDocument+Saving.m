@@ -585,7 +585,7 @@
 	// but we only want to save if hasChanges
 	if ( [[self managedObjectContext] hasChanges] && (nil != [self fileURL]) )
 	{
-		LOGMETHOD;
+		//LOGMETHOD;
 		OBASSERT([NSThread isMainThread]);
 		
 		// remember the current status
@@ -693,7 +693,7 @@
 
 - (void)suspendAutosave
 {
-	LOGMETHOD;
+	//LOGMETHOD;
 	
 	//LOG((@"---------------------------------------------- deactivating autosave"));
 	if ( !myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
@@ -712,7 +712,7 @@
 
 - (void)resumeAutosave
 {
-	LOGMETHOD;
+	//LOGMETHOD;
 	
 	//LOG((@"---------------------------------------------- (re)activating autosave"));
 	if ( myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
