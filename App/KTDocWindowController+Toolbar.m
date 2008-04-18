@@ -240,22 +240,28 @@ TO DO:
                     [image normalizeSize];
 					[image setDataRetained:YES];	// allow image to be scaled.
 					// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
-                    [self setAddPageletPopUpButton:[[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease]];
-                    [[myAddPageletPopUpButton cell] setUsesItemFromMenu:NO];
-                    [myAddPageletPopUpButton setIconImage:image];
-                    [myAddPageletPopUpButton setShowsMenuWhenIconClicked:YES];
-                    [[myAddPageletPopUpButton cell] setToolbar:[[self window] toolbar]];
+                    
+					// Build the popup button
+					RYZImagePopUpButton *button = [[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease];
+					[self setAddPageletPopUpButton:button];
+                    [[button cell] setUsesItemFromMenu:NO];
+                    [button setIconImage:image];
+                    [button setShowsMenuWhenIconClicked:YES];
+                    [[button cell] setToolbar:[[self window] toolbar]];
+					
+					// Disable the button for pages that don't support it.
+					[button bind:@"enabled" toObject:[self siteOutlineController] withKeyPath:@"selection.sidebarChangeable" options:nil];
                     
 					[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-									     toMenu:[myAddPageletPopUpButton menu]
+									     toMenu:[button menu]
 									     target:self
 									     action:@selector(addPagelet:)
 									  pullsDown:YES
 									  showIcons:YES smallIcons:NO];
                     
-					[toolbarItem setView:myAddPageletPopUpButton];
-                    [toolbarItem setMinSize:[[myAddPageletPopUpButton cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[myAddPageletPopUpButton cell] maximumSize]];
+					[toolbarItem setView:button];
+                    [toolbarItem setMinSize:[[button cell] minimumSize]];
+                    [toolbarItem setMaxSize:[[button cell] maximumSize]];
 
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
