@@ -39,13 +39,15 @@ TO DO:
 
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName;
 
+- (void)buildAddPageletToolbarItem:(NSToolbarItem *)toolbarItem imageName:(NSString *)imageName;
+
 @end
 
 // NB: there's about two-thirds the work here to make this a separate controller for BiophonyAppKit
 //  it needs a way to define views that aren't app specific, should all be doable via xml
 //  for "standard" controls, like an RYZImagePopUpButton
 
-@implementation KTDocWindowController ( Toolbar )
+@implementation KTDocWindowController (Toolbar)
 
 - (void)makeDocumentToolbar
 {
@@ -233,48 +235,9 @@ TO DO:
 					[toolbarItem setMenuFormRepresentation:mItem];
 					
                 }
-                else if ( [[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"] ) 
+                else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
 				{
-                    // construct Add Pagelet popup
-                    NSImage *image = [NSImage imageNamed:imageName];
-                    [image normalizeSize];
-					[image setDataRetained:YES];	// allow image to be scaled.
-					// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
-                    
-					// Build the popup button
-					RYZImagePopUpButton *button = [[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease];
-					[self setAddPageletPopUpButton:button];
-                    [[button cell] setUsesItemFromMenu:NO];
-                    [button setIconImage:image];
-                    [button setShowsMenuWhenIconClicked:YES];
-                    [[button cell] setToolbar:[[self window] toolbar]];
-					
-					// Disable the button for pages that don't support it.
-					[button bind:@"enabled" toObject:[self siteOutlineController] withKeyPath:@"selection.sidebarChangeable" options:nil];
-                    
-					[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-									     toMenu:[button menu]
-									     target:self
-									     action:@selector(addPagelet:)
-									  pullsDown:YES
-									  showIcons:YES smallIcons:NO];
-                    
-					[toolbarItem setView:button];
-                    [toolbarItem setMinSize:[[button cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[button cell] maximumSize]];
-
-					// Create menu for text-only view
-					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-									     toMenu:menu
-									     target:self
-									     action:@selector(addPagelet:)
-									  pullsDown:NO
-									  showIcons:NO smallIcons:NO];
-					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
-					[mItem setSubmenu: menu];
-					[mItem setTitle: [toolbarItem label]];
-					[toolbarItem setMenuFormRepresentation:mItem];
+					[self buildAddPageletToolbarItem:toolbarItem imageName:imageName];
 				}
                 else if ( [[itemInfo valueForKey:@"view"] isEqualToString:@"myAddCollectionPopUpButton"] ) 
 				{
@@ -332,6 +295,62 @@ TO DO:
 
     return toolbarItem;
 }
+
+/*	Support method that turns toolbarItem into a "Add Pagelet" button
+ */
+- (void)buildAddPageletToolbarItem:(NSToolbarItem *)toolbarItem imageName:(NSString *)imageName
+{
+	// Preapre the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
+	NSImage *image = [NSImage imageNamed:imageName];
+	[image normalizeSize];
+	[image setDataRetained:YES];	// allow image to be scaled.
+	
+	
+	// Build the basic popup button
+	RYZImagePopUpButton *button = [[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease];
+	[self setAddPageletPopUpButton:button];
+	[[button cell] setUsesItemFromMenu:NO];
+	[button setIconImage:image];
+	[button setShowsMenuWhenIconClicked:YES];
+	[[button cell] setToolbar:[[self window] toolbar]];
+	
+	
+	// Disable the button for pages that don't support it.
+	NSAssert([self siteOutlineController], @"Could not bind Pagelets popup button as there is no Site Outline controller");
+	NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
+														forKey:NSMultipleValuesPlaceholderBindingOption];
+	[button bind:@"enabled" toObject:[self siteOutlineController] withKeyPath:@"selection.sidebarChangeable" options:options];
+	
+	
+	// Add the proper menu items
+	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+						 toMenu:[button menu]
+						 target:self
+						 action:@selector(addPagelet:)
+					  pullsDown:YES
+					  showIcons:YES smallIcons:NO];
+	
+	
+	// Control sizing
+	[toolbarItem setView:button];
+	[toolbarItem setMinSize:[[button cell] minimumSize]];
+	[toolbarItem setMaxSize:[[button cell] maximumSize]];
+
+
+	// Create menu for text-only view
+	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+						 toMenu:menu
+						 target:self
+						 action:@selector(addPagelet:)
+					  pullsDown:NO
+					  showIcons:NO smallIcons:NO];
+	NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
+	[mItem setSubmenu: menu];
+	[mItem setTitle: [toolbarItem label]];
+	[toolbarItem setMenuFormRepresentation:mItem];
+}
+
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
