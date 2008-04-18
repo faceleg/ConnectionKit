@@ -25,7 +25,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	DJW((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	OFF((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	//return (!gLicenseViolation);
 	
 	if ( gLicenseViolation )

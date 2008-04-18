@@ -635,7 +635,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OBPRECONDITION(menuItem);
-	DJW((@"KTAppDelegate validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	OFF((@"KTAppDelegate validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 
 	SEL action = [menuItem action];
 	

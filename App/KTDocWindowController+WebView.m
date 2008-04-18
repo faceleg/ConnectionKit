@@ -435,12 +435,12 @@ Note that this method is called AFTER the webview handles the click.
 			}
 			else
 			{
-				DJW((@"Clicked on an image, but not doing anything special"));
+				OFF((@"Clicked on an image, but not doing anything special"));
 			}*/
 		}
 		else
 		{
-			DJW((@"You clicked on some other kind of image -- jump to pagelet checking"));
+			OFF((@"You clicked on some other kind of image -- jump to pagelet checking"));
 			// Total hack -- try to act as if we clicked elsewhere, like a pagelet.
 			goto clickedOnPagelet;
 		}
@@ -944,7 +944,7 @@ but the only trick is -- how to display a highlight?
 willPerformDragDestinationAction:(WebDragDestinationAction)action
 forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 {
-	DJW((@"%@, %d %@", NSStringFromSelector(_cmd), action, draggingInfo));
+	OFF((@"%@, %d %@", NSStringFromSelector(_cmd), action, draggingInfo));
 	
 	// Dragging location is in window coordinates.
 	// location is converted to webview coordinates
@@ -978,7 +978,7 @@ forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 
 - (unsigned)webView:(WebView *)inWebView dragSourceActionMaskForPoint:(NSPoint)inPoint
 {
-	DJW((@"%@ %@", NSStringFromSelector(_cmd), NSStringFromPoint(inPoint)));
+	OFF((@"%@ %@", NSStringFromSelector(_cmd), NSStringFromPoint(inPoint)));
 	return WebDragSourceActionAny;
 }
 
@@ -1264,7 +1264,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 	else
 	{
-		DJW((@"selectedRange of anchor has more than one anchor, ignoring..."));
+		OFF((@"selectedRange of anchor has more than one anchor, ignoring..."));
 		return nil;
 	}
 }
@@ -1293,7 +1293,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 	else
 	{
-		DJW((@"unable to locate parent anchor for node: %@", element));
+		OFF((@"unable to locate parent anchor for node: %@", element));
 		return nil;
 	}
 }
@@ -1635,7 +1635,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	// filter out file:// URLs ... let webview handle it and insert any images
 	if ( [[theURL scheme] isEqualToString:@"file"] )
 	{
-		DJW((@"dropping in a file: URL"));
+		OFF((@"dropping in a file: URL"));
 		return NO;
 	}
 
@@ -1769,7 +1769,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	else
 	{
 		NSBeep();
-		DJW((@"insertHref:inRange: DOMRange does not contain a useable DOMText!"));
+		NSLog(@"insertHref:inRange: DOMRange does not contain a useable DOMText!");
 	}
 	
 }
@@ -1798,7 +1798,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	else
 	{
 		NSBeep();
-		DJW((@"insertText:href:inRange:atPosition: DOMRange does not respond to splitText:!"));
+		OFF((@"insertText:href:inRange:atPosition: DOMRange does not respond to splitText:!"));
 	}
 }
 

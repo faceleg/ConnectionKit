@@ -560,7 +560,7 @@ TO DO:
 
 - (void)paste:(id)sender
 {
-	DJW((@"paste: %@", [[NSPasteboard generalPasteboard] types]));
+	OFF((@"paste: %@", [[NSPasteboard generalPasteboard] types]));
 	[super paste:sender];
 }
 

@@ -310,7 +310,7 @@
         
         if ( [selectedItem isDeleted] )
         {
-            DJW((@"WebView told to load deleted page, substituting root. Page: %@", [selectedItem managedObjectDescription]));
+            OFF((@"WebView told to load deleted page, substituting root. Page: %@", [selectedItem managedObjectDescription]));
             selectedItem = [[self document] root];
             [[[self windowController] siteOutline] selectItem:selectedItem];
             return;

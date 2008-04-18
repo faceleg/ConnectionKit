@@ -178,7 +178,7 @@
 		fileName = [[self bundle] pathForResource:fileName ofType:@"qtz"];
 		if (nil != fileName)
 		{
-			DJW((@"IR>>>> Using QC file: %@", fileName));
+			OFF((@"IR>>>> Using QC file: %@", fileName));
 			[params setObject:aString forKey:@"String"];		// put in mandatory string input
 			
 			if (nil != aSize)

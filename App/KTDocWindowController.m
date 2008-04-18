@@ -1270,7 +1270,7 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	DJW((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
 	
 	// File menu handled by KTDocument
