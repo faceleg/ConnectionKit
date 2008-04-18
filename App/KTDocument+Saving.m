@@ -18,7 +18,7 @@
 #import "KTMediaManager+Internal.h"
 
 #import "CIImage+Karelia.h"
-#import "KTWebKitCompatibility.h"
+#import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -27,6 +27,8 @@
 #import "NSThread+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+
+#import "KTWebKitCompatibility.h"
 
 #import "Debug.h"
 
@@ -52,6 +54,11 @@
 
 @interface KTDocument (SavingPrivate)
 
+// Write Safely
+- (NSString *)backupExistingFileForSaveAsOperation:(NSString *)path error:(NSError **)error;
+- (void)recoverBackupFile:(NSString *)backupPath toURL:(NSURL *)saveURL;
+
+// Write To URL
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
@@ -98,6 +105,20 @@
 	}
 	
 	
+	// We'll need a path for various operations below
+	NSAssert2([absoluteURL isFileURL], @"%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
+	NSString *path = [absoluteURL path];
+	
+	
+	// If a file already exists at the desired location move it out of the way
+	NSString *backupPath = nil;
+	if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+	{
+		backupPath = [self backupExistingFileForSaveAsOperation:path error:outError];
+		if (!backupPath) return NO;
+	}
+	
+	
 	// We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
 	// be dealt with at the moment.
 	BOOL result = NO;
@@ -113,21 +134,77 @@
 	}
 	@catch (NSException *exception) 
 	{
-		// TODO: Recover from an exception here.
-		NSLog(@"writeToURL: %@", [exception description]);
-		
-		// Rethrow the exception so it goes the exception reporter mechanism
+		// Recover from an exception as best as possible and then rethrow the exception so it goes the exception reporter mechanism
+		[self recoverBackupFile:backupPath toURL:absoluteURL];
 		[exception raise];
 	}
 	
 	
-	// There was an error saving, recover from it
-	if (!result)
+	if (result)
 	{
-		// TODO: Recover from an error here.
+		// The save was successful, delete the backup file
+		if (backupPath)
+		{
+			[[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
+		}
+	}
+	else
+	{
+		// There was an error saving, recover from it
+		[self recoverBackupFile:backupPath toURL:absoluteURL];
 	}
 	
 	return result;
+}
+
+/*	Support method for -writeSafelyToURL:
+ *	Returns nil and an error if the file cannot be backed up.
+ */
+- (NSString *)backupExistingFileForSaveAsOperation:(NSString *)path error:(NSError **)error
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	// Move the existing file to the best available backup path
+	NSString *backupDirectory = [path stringByDeletingLastPathComponent];
+	NSString *preferredFilename = [NSString stringWithFormat:@"Backup of %@", [path lastPathComponent]];
+	NSString *preferredPath = [backupDirectory stringByAppendingPathComponent:preferredFilename];
+	NSString *backupFilename = [fileManager uniqueFilenameAtPath:preferredPath];
+	NSString *result = [backupDirectory stringByAppendingPathComponent:backupFilename];
+	
+	BOOL success = [fileManager movePath:path toPath:result handler:nil];
+	if (!success)
+	{
+		// The backup failed, construct an error
+		result = nil;
+		
+		NSString *failureReason = [NSString stringWithFormat:@"Could not remove the existing file at:\r%@", path];
+		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"Unable to save document", NSLocalizedDescriptionKey,
+																			failureReason, NSLocalizedFailureReasonErrorKey,
+																			path, NSFilePathErrorKey, nil];
+		*error = [NSError errorWithDomain:@"KTDocument" code:0 userInfo:userInfo];
+	}
+	
+	return result;
+}
+
+/*	In the event of a Save As operation failing, we copy the backup file back to the original location.
+ */
+- (void)recoverBackupFile:(NSString *)backupPath toURL:(NSURL *)saveURL
+{
+	// Dump the failed save
+	NSString *savePath = [saveURL path];
+	BOOL result = [[NSFileManager defaultManager] removeFileAtPath:savePath handler:nil];
+	
+	// Recover the backup if there is one
+	if (backupPath)
+	{
+		result = [[NSFileManager defaultManager] movePath:backupPath toPath:[saveURL path] handler:nil];
+	}
+	
+	if (!result)
+	{
+		NSLog(@"Could not recover backup file:\r%@\rafter Save As operation failed for URL:\r%@", backupPath, [saveURL path]);
+	}
 }
 
 #pragma mark -
