@@ -155,7 +155,7 @@
  */
 - (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media
 {
-	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",
+	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\" />",
 																stylesheetPath];
 	
 	if (title)
