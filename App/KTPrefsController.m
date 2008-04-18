@@ -88,38 +88,40 @@
 		[oCompressionSample setImage:newImage];
 	}
 	
-	// Blow away caches, but only if the keypath is real -- meaning the value actually changed.
-	if (aBlowAway)
-	{
-		// Blow away the ENTIRE cache, of all documents ever opened.
-		
-		// Note that NSSearchPath.. and NSHomeDirectory return home directory path without resolving
-		// symbolic links so they should match up.
-		
-		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
-		if ( [libraryPaths count] == 1 )
-		{
-			NSString *cachePath = [libraryPaths objectAtIndex:0];
-			cachePath = [cachePath stringByAppendingPathComponent:[NSApplication applicationName]];
-			cachePath = [cachePath stringByAppendingPathComponent:@"Sites"];
-			cachePath = [cachePath stringByAppendingPathExtension:@"noindex"];
-			
-			// Double-check!
-			if (![cachePath hasPrefix:NSHomeDirectory()]
-				|| [cachePath isEqualToString:NSHomeDirectory()]
-				|| [cachePath isEqualToString:@"/"]
-				|| NSNotFound == [cachePath rangeOfString:@"Library/Caches"].location)
-			{
-				NSLog(@"Not removing image cache path from %@", cachePath);
-			}
-			else
-			{
-				NSFileManager *fm = [NSFileManager defaultManager];
-				[fm removeFileAtPath:cachePath handler:nil];
-				NSLog(@"Removed cache files from %@", cachePath);
-			}
-		}
-	}	
+	/// Don't blow away in 1.5, the cache isn't used anyway
+	// TODO: remove this code, make sure all prefs work
+//	// Blow away caches, but only if the keypath is real -- meaning the value actually changed.
+//	if (aBlowAway)
+//	{
+//		// Blow away the ENTIRE cache, of all documents ever opened.
+//		
+//		// Note that NSSearchPath.. and NSHomeDirectory return home directory path without resolving
+//		// symbolic links so they should match up.
+//		
+//		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
+//		if ( [libraryPaths count] == 1 )
+//		{
+//			NSString *cachePath = [libraryPaths objectAtIndex:0];
+//			cachePath = [cachePath stringByAppendingPathComponent:[NSApplication applicationName]];
+//			cachePath = [cachePath stringByAppendingPathComponent:@"Sites"];
+//			cachePath = [cachePath stringByAppendingPathExtension:@"noindex"];
+//			
+//			// Double-check!
+//			if (![cachePath hasPrefix:NSHomeDirectory()]
+//				|| [cachePath isEqualToString:NSHomeDirectory()]
+//				|| [cachePath isEqualToString:@"/"]
+//				|| NSNotFound == [cachePath rangeOfString:@"Library/Caches"].location)
+//			{
+//				NSLog(@"Not removing image cache path from %@", cachePath);
+//			}
+//			else
+//			{
+//				NSFileManager *fm = [NSFileManager defaultManager];
+//				[fm removeFileAtPath:cachePath handler:nil];
+//				NSLog(@"Removed cache files from %@", cachePath);
+//			}
+//		}
+//	}	
 }
 
 - (IBAction) emailComboChanged:(id)sender;
