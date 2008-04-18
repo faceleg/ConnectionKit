@@ -1515,7 +1515,7 @@ from representedObject */
     else if ( itemAction == @selector(addPagelet:) )
     {
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		return ([selectedPage includeCallout] || [selectedPage includeSidebar]);
+		return ([selectedPage sidebarChangeable]);
     }
 	else if ( itemAction == @selector(addCollection:) )
     {
@@ -1675,11 +1675,6 @@ from representedObject */
     if ( [toolbarItem action] == @selector(addPage:) )
     {
         return YES;
-    }
-    else if ( [toolbarItem action] == @selector(addPagelet:) )
-    {
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		return ([selectedPage includeCallout] || [selectedPage includeSidebar]);
     }
     else if ( [toolbarItem action] == @selector(addCollection:) )
     {
