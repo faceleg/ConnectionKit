@@ -1,20 +1,56 @@
 {
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {pickSomeone = id; }; 
-            CLASS = KTImageView; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {delegate = id; oDelegateController = NSObjectController; }; 
-            SUPERCLASS = NSImageView; 
-        }, 
-        {CLASS = KTInlineImageElement; LANGUAGE = ObjC; SUPERCLASS = KTPseudoElement; }, 
-        {
-            CLASS = KTPseudoElement; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {oInspectorView = NSView; oObjectController = NSObjectController; }; 
-            SUPERCLASS = NSObject; 
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSPathInfoField;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            ACTIONS =             {
+                chooseImage = id;
+            };
+            CLASS = KTInlineImageElement;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTPseudoElement;
+        },
+                {
+            CLASS = KTPseudoElement;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSButton;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSControl;
+        },
+                {
+            CLASS = NSManagedObjectContext;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

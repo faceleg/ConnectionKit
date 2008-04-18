@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>485 146 572 304 0 0 1920 1178 </string>
+	<string>120 94 356 240 0 0 1680 1028 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>1225</key>
-		<string>707 653 270 64 0 0 1680 1028 </string>
+		<string>707 723 270 64 0 0 1680 1028 </string>
 		<key>1265</key>
-		<string>707 653 270 64 0 0 1680 1028 </string>
+		<string>707 723 270 64 0 0 1680 1028 </string>
 		<key>1270</key>
-		<string>707 621 270 128 0 0 1680 1028 </string>
+		<string>707 675 270 128 0 0 1680 1028 </string>
 		<key>129</key>
-		<string>707 579 270 212 0 0 1680 1028 </string>
+		<string>707 612 270 212 0 0 1680 1028 </string>
 		<key>1311</key>
-		<string>707 654 270 62 0 0 1680 1028 </string>
+		<string>707 724 270 62 0 0 1680 1028 </string>
 		<key>165</key>
-		<string>561 563 272 43 0 0 1440 878 </string>
+		<string>706 738 272 43 0 0 1680 1028 </string>
 		<key>168</key>
-		<string>707 514 270 341 0 0 1680 1028 </string>
+		<string>707 525 270 328 0 0 1680 1028 </string>
 		<key>169</key>
-		<string>707 656 270 58 0 0 1680 1028 </string>
+		<string>707 727 270 58 0 0 1680 1028 </string>
 		<key>258</key>
-		<string>707 466 270 437 0 0 1680 1028 </string>
+		<string>707 443 270 437 0 0 1680 1028 </string>
 		<key>356</key>
-		<string>707 654 270 62 0 0 1680 1028 </string>
+		<string>707 724 270 62 0 0 1680 1028 </string>
 		<key>821</key>
-		<string>708 646 268 77 0 0 1680 1028 </string>
+		<string>708 713 268 77 0 0 1680 1028 </string>
 		<key>913</key>
-		<string>707 539 270 292 0 0 1680 1028 </string>
+		<string>707 543 270 304 0 0 1680 1028 </string>
 		<key>94</key>
-		<string>707 564 270 242 0 0 1680 1028 </string>
+		<string>707 589 270 242 0 0 1680 1028 </string>
 	</dict>
 	<key>IBFramework Version</key>
-	<string>446.1</string>
-	<key>IBLockedTabItems</key>
-	<array>
-		<integer>270</integer>
-	</array>
+	<string>489.0</string>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBSystem Version</key>
-	<string>8P135</string>
+	<string>9C7010</string>
 	<key>IBUsesTextArchiving</key>
 	<true/>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
 </dict>
 </plist>
