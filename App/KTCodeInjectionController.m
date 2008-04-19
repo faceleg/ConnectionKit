@@ -15,6 +15,8 @@
 #import "KTApplication.h"
 #import "KTPage.h"
 
+#import "KSAppDelegate.h"
+
 #ifdef APP_RELEASE
 #import "Registration.h"
 #endif

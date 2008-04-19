@@ -21,6 +21,7 @@
 #import "KTApplication.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
+#import "KSAppDelegate.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
