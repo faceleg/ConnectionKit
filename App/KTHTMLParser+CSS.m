@@ -95,9 +95,7 @@
 	{
 		NSString *masterCSSPath = [[page master] publishedMasterCSSPathRelativeToSite];
 		NSString *pagePath = [[self currentPage] pathRelativeToSite];
-		
-		NSString *relativeMasterCSSPath =
-			[[@"/" stringByAppendingString:masterCSSPath] pathRelativeTo:[@"/" stringByAppendingString:pagePath]];
+		NSString *relativeMasterCSSPath = [masterCSSPath URLPathRelativeTo:pagePath];
 		
 		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
 	}

@@ -121,10 +121,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 		NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
 		NSString *feedPath = [collectionPath stringByAppendingPathComponent:feedFileName];
 		
-		NSString *comparisonFeedPath = [@"/" stringByAppendingString:feedPath];
-		NSString *comparisonPagePath = [@"/" stringByAppendingString:[aPage pathRelativeToSite]];
-		
-		result = [comparisonFeedPath pathRelativeTo:comparisonPagePath];
+		result = [feedPath URLPathRelativeTo:collectionPath];
 	}
 	
 	return result;

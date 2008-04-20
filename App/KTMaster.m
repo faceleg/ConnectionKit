@@ -402,15 +402,15 @@
 			if (bannerCSS)
 			{
 				NSString *bannerPath = nil;
-				if (generationPurpose == kGeneratingPreview) {
+				if (generationPurpose == kGeneratingPreview)
+				{
 					bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
 				}
-				else {
+				else
+				{
 					NSString *CSSPath = [self publishedMasterCSSPathRelativeToSite];
 					NSString *mediaPath = [[[banner file] defaultUpload] valueForKey:@"pathRelativeToSite"];
-					
-					bannerPath = [[@"/" stringByAppendingString:mediaPath] pathRelativeTo:
-								  [@"/" stringByAppendingString:CSSPath]];
+					bannerPath = [mediaPath URLPathRelativeTo:CSSPath];
 				}
 				
 				bannerCSS = [bannerCSS stringByReplacing:@"banner_image.jpg" with:bannerPath];

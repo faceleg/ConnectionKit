@@ -368,7 +368,7 @@
 - (NSString *)pathToResourcesDirectory
 {
 	NSString *resourcesDirectory = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSString *result = [resourcesDirectory pathRelativeTo:[self pathRelativeToSite]];
+	NSString *result = [resourcesDirectory URLPathRelativeTo:[self pathRelativeToSite]];
 	
 	return result;
 }

@@ -361,11 +361,8 @@
 - (NSString *)designDirectoryPath
 {
 	KTDesign *design = [[self master] design];
-	NSString *designPath = [@"/" stringByAppendingString:[design remotePath]];
-	
-	NSString *pagePath = [@"/" stringByAppendingString:[self pathRelativeToSite]];
-	
-	NSString *result = [designPath pathRelativeTo:pagePath];
+	NSString *designPath = [design remotePath];
+	NSString *result = [designPath URLPathRelativeTo:[self pathRelativeToSite]];
 	return result;
 }
 
