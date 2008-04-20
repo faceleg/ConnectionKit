@@ -183,15 +183,15 @@
  */
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath
 {
+	otherPath = [@"/" stringByAppendingString:otherPath];
 	if ([self isEqualToString:@""])
 	{
-		otherPath = [@"/" stringByAppendingString:otherPath];
 		NSString *result = [@"/" pathRelativeTo:otherPath];
 		return result;
 	}
 	else
 	{
-		return [self pathRelativeTo:otherPath];
+		return [[@"/" stringByAppendingString:self] pathRelativeTo:otherPath];
 	}
 }
 

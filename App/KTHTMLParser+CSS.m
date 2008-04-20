@@ -55,7 +55,7 @@
 	[stylesheetLines addObject:[self stylesheetLink:mainCSS title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities] media:nil]];
 	
 	
-	// Ask the page and it's components for extra CSS files required
+	// Ask the page and its components for extra CSS files required
 	NSMutableSet *pluginCSSFiles = [NSMutableSet set];
 	[page makeComponentsPerformSelector:@selector(addCSSFilePathToSet:forPage:)
 							 withObject:pluginCSSFiles
