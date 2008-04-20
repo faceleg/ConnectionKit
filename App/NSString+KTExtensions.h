@@ -24,6 +24,8 @@
 
 
 - (NSString *)pathRelativeTo:(NSString *)otherPath;
+- (NSString *)URLPathRelativeTo:(NSString *)otherPath;
+
 - (NSString *)domainName;
 - (BOOL) looksLikeValidHost;
 

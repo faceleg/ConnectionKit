@@ -50,7 +50,7 @@
 
 - (NSString *)pathRelativeTo:(id <KTWebPaths>)path2;
 {
-	NSString *result = [[self pathRelativeToSite] pathRelativeTo:[path2 pathRelativeToSite]];
+	NSString *result = [[self pathRelativeToSite] URLPathRelativeTo:[path2 pathRelativeToSite]];
 	return result;
 }
 

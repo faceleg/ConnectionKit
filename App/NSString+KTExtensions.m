@@ -178,6 +178,22 @@
 	return result;
 }
 
+/*	A specialised version of the above that handles URL-like strings. For example, -pathRelativeToSite returns an empty
+ *	string for the home page which -pathRelativeTo: cannot handle. This method can.
+ */
+- (NSString *)URLPathRelativeTo:(NSString *)otherPath
+{
+	if ([self isEqualToString:@""])
+	{
+		otherPath = [@"/" stringByAppendingString:otherPath];
+		NSString *result = [@"/" pathRelativeTo:otherPath];
+		return result;
+	}
+	else
+	{
+		return [self pathRelativeTo:otherPath];
+	}
+}
 
 //- (NSString *)pathRelativeToRoot
 //{
