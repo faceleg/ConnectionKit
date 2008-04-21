@@ -128,7 +128,7 @@
     return [self itemAtRow:[[self selectedRowIndexes] firstIndex]-1];
 }
 
-- (NSSet *)itemsForRows:(NSIndexSet *)rowIndexes
+- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
 {
 	// We can bail early in certain curcumstances
 	if (!rowIndexes || [rowIndexes count] <= 0)
@@ -137,7 +137,7 @@
 	}
 	
 	
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[rowIndexes count]];
+	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
 	
 	unsigned index = [rowIndexes firstIndex];
 	[buffer addObject:[self itemAtRow:index]];
@@ -147,7 +147,7 @@
 		[buffer addObject:[self itemAtRow:index]];
 	}
 	
-	return [NSSet setWithSet:buffer];
+	return [[buffer copy] autorelease];
 }
 
 /*! returns outline cell via private name */

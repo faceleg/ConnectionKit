@@ -17,9 +17,12 @@
 #import "KTDocWindowController.h"
 #import "KTPage.h"
 #import "KTPulsatingOverlay.h"
+#import "KTElementPlugin.h"
+
 #import "NSArray+Karelia.h"
 #import "NSException+Karelia.h"
-#import "KTElementPlugin.h"
+#import "NSIndexSet+Karelia.h"
+#import "NSOutlineView+KTExtensions.h"
 
 
 /// these are localized strings for Case 26766 Disposable Dialog When Changing A Published Page's Path
@@ -580,20 +583,18 @@
 	NSPasteboard *pboard = [info draggingPasteboard];
 	(void)[pboard types];
 	
+	// The new page must be a child of something
 	KTPage *proposedParent = item;
-	if ( nil == proposedParent )
-	{
-		proposedParent = [(KTDocument *)[self document] root];
-	}
+	if (!proposedParent) proposedParent = [[self document] root];
 	
 	BOOL cameFromProgram = nil != [info draggingSource];
 	
-	if ( cameFromProgram )
+	if (cameFromProgram)
 	{
-		if  ( [[self siteOutline] isEqual:[info draggingSource]] )
+		if  ([[self siteOutline] isEqual:[info draggingSource]])
 		{
 			// drag is internal to document
-			if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]] )
+			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
 			{
 				NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 				
@@ -619,14 +620,8 @@
 					dropRow = anIndex;
 				}
 				
-				NSMutableArray *draggedItems = [NSMutableArray arrayWithCapacity:[parentRows count]];
 				
-				e = [parentRows objectEnumerator];
-				while ( row = [e nextObject] )
-				{
-					[draggedItems addObject:[[self siteOutline] itemAtRow:[row intValue]]];
-				}
-				
+				NSArray *draggedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
 				
 				
 				// The behavior is different depending on if we're dropping ON or INTO.
