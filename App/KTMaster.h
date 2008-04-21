@@ -28,6 +28,7 @@
 
 - (KTDesign *)design;
 - (void)setDesign:(KTDesign *)design;
+- (NSURL *)designDirectoryURL;
 
 - (KTMediaContainer *)bannerImage;
 - (void)setBannerImage:(KTMediaContainer *)banner;

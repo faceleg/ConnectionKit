@@ -26,6 +26,8 @@
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSMutableSet+Karelia.h"
+#import "NSURL+Karelia.h"
+
 
 @interface KTMaster (Private)
 - (KTMediaManager *)mediaManager;
@@ -220,6 +222,15 @@
 	[self didChangeValueForKey:@"design"];
 	
 	[self setValue:[self _designPublishInfoWithDesign:design] forKey:@"designPublishingInfo"];
+}
+
+- (NSURL *)designDirectoryURL
+{
+	NSString *designDirectoryName = [[self design] remotePath];
+	NSURL *siteURL = [NSURL URLWithString:[[[[self valueForKey:@"pages"] anyObject] document] publishedSiteURL]];	// May be nil
+	NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
+	
+	return result;
 }
 
 #pragma mark -
