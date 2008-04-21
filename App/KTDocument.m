@@ -1709,7 +1709,10 @@
 		
 		KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName 
 																				   data:snapshotData];
-		[attachments addObject:attachment];
+		if (attachment)
+		{
+			[attachments addObject:attachment];
+		}
 	}
 	
 	// Also attach any sheet (host setup, etc.)
@@ -1722,7 +1725,10 @@
 			NSString *snapshotName = [NSString stringWithFormat:@"sheet-%@.jp2", attachmentOwner];
 			
 			KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
-			[attachments addObject:attachment];
+			if (attachment)
+			{
+				[attachments addObject:attachment];
+			}
 		}
 	}
 	
@@ -1740,7 +1746,10 @@
 				NSString *snapshotName = [NSString stringWithFormat:@"inspector-%@.jp2", attachmentOwner];
 				
 				KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:snapshotName data:snapshotData];
-				[attachments addObject:attachment];
+				if (attachment)
+				{
+					[attachments addObject:attachment];
+				}
 			}
 		}
 	}
