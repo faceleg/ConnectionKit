@@ -18,7 +18,6 @@
  
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>
-#import "Debug.h"
 
 
 @interface KTMediaFile ( Private )

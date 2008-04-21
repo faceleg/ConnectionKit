@@ -20,6 +20,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <QTKit/QTKit.h>
+#import "Debug.h"
 
 
 @interface QTMovie (iMediaHack)
