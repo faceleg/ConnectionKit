@@ -166,6 +166,7 @@
 	if ([self isCollection])
 	{
 		NSString *indexFileName = [self valueForKeyPath:@"document.documentInfo.hostProperties.htmlIndexBaseName"];
+		OBASSERT([self fileExtension]);
 		result = [indexFileName stringByAppendingPathExtension:[self fileExtension]];
 	}
 	
@@ -176,6 +177,7 @@
  */
 - (NSString *)defaultIndexFileName
 {
+	OBASSERT([self defaultFileExtension]);
 	NSString *filename = [[self indexFileName] stringByAppendingPathExtension:[self defaultFileExtension]];
 	
 	NSString *result = [NSString stringWithFormat:NSLocalizedString(@"Default (%@)", "The default item in a list."),
@@ -197,6 +199,7 @@
 	if ([self isCollection])
 	{
 		NSString *archivesFileName = [self valueForKeyPath:@"document.documentInfo.hostProperties.archivesBaseName"];
+		OBASSERT([self fileExtension]);
 		result = [archivesFileName stringByAppendingPathExtension:[self fileExtension]];
 	}
 	
@@ -214,6 +217,7 @@
 	
 	while (anExtension = [extensionsEnumerator nextObject])
 	{
+		OBASSERT(anExtension);
 		NSString *aFilename = [[self indexFileName] stringByAppendingPathExtension:anExtension];
 		[result addObject:aFilename];
 	}
@@ -417,6 +421,7 @@
 	}
 	else
 	{
+		OBASSERT([self fileExtension]);
 		result = [result stringByAppendingPathExtension:[self fileExtension]];
 	}
 	

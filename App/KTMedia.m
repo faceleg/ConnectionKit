@@ -1024,6 +1024,7 @@ NSString *kKTMediaException = @"KTMediaException";
 	if ( nil != extension )
 	{
 		NSAssert([name length], @"Trying to append to an empty string");
+		OBASSERT(extension);
 		name = [name stringByAppendingPathExtension:extension];
 	}
 	//TJT((@"media fileName => %@", name));

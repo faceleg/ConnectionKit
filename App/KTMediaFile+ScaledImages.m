@@ -139,7 +139,9 @@
 	
 	// Create the MediaFile
 	KTMediaManager *mediaManager = [self mediaManager];
-	NSString *preferredFilename = [[self preferredFileName] stringByAppendingPathExtension:[NSString filenameExtensionForUTI:UTI]];
+	NSString *extension = [NSString filenameExtensionForUTI:UTI];
+	OBASSERT(extension);
+	NSString *preferredFilename = [[self preferredFileName] stringByAppendingPathExtension:extension];
 	NSData *imageData = [finalImage representationForUTI:UTI];
 	KTInDocumentMediaFile *mediaFile = [mediaManager mediaFileWithData:imageData preferredFilename:preferredFilename];
 	

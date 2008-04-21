@@ -166,6 +166,7 @@
 	{
 		count++;
 		NSString *aPath = [NSString stringWithFormat:@"%@-%u", basePath, count];
+		OBASSERT(extension);
 		result = [aPath stringByAppendingPathExtension:extension];
 		[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"pathRelativeToSite == %@", result]];
 	}

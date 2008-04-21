@@ -335,7 +335,9 @@
 		NSString *fileExtension = [originalPath pathExtension];
 		
 		NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
+		OBASSERT(fileName);
 		backupFileName = [backupFileName stringByAppendingString:fileName];
+		OBASSERT(fileExtension);
 		backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
 		
 		// commenting this out for another day 20061213 -- currently can cause crash after hitting OK
