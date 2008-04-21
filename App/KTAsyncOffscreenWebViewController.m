@@ -48,6 +48,7 @@
 
 - (void)loadHTMLFragment:(NSString *)anHTMLFragment;
 {
+	[myWebView setApplicationNameForUserAgent:[NSApplication applicationName]];
 	
 	// Create the webview. It must be in an offscreen window to do this properly.
 	

@@ -10,3 +10,6 @@
 	position:relative;
 	top:0px;
 }
+
+/* Firefox reduce dotted lines on links */
+.photo-navigation a:focus, .replaced a:focus {overflow:hidden;}
