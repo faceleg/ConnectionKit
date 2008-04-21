@@ -36,6 +36,8 @@
 	<false/>
 	<key>KTPageDisableComments</key>
 	<true/>
+	<key>KTPageSidebarChangeable</key>
+	<false/>
 	<key>KTPluginIconName</key>
 	<string>download.icns</string>
 	<key>KTPluginInitialProperties</key>

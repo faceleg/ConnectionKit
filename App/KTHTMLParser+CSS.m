@@ -153,7 +153,7 @@
  */
 - (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media
 {
-	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\" />",
+	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",
 																stylesheetPath];
 	
 	if (title)
@@ -166,6 +166,9 @@
 		[buffer appendFormat:@" media=\"%@\"", media];
 	}
 	
+	[buffer appendString:@" />"];	// Close the tag
+	
+	// Tidy up
 	NSString *result = [[buffer copy] autorelease];
 	return result;
 }
