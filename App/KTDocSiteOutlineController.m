@@ -627,7 +627,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	
 	
-	//if ( (item == [context root]) && ![[oSiteOutline selectedItems] containsObject:item] )
+	//if ( (item == [context root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
 	if ( (item == [[self document] root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
 	{
 		// draw a line to "separate" the root from its children

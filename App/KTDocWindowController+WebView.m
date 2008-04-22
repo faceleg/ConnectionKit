@@ -352,21 +352,12 @@ Node was retained so that it lives to this invocation!
 - (void)selectOwnerPageAndPageletRetainedElement:(DOMHTMLElement *)anElement
 {
 	KTPagelet *pagelet = [self pageletEnclosing:anElement];
-	
-	int row = [oSiteOutline rowForItem:[pagelet page]];
-	if (row >= 0)
-	{
-		[oSiteOutline selectRow:row byExtendingSelection:NO];
+	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:[pagelet page]]];
 		
 // FIXME: - here I need to find the DOM element with the same ID as the given pagelet.
 		
-		[[self webViewController] performSelector:@selector(selectPagelet:) withObject:pagelet afterDelay:0.4];	// long delay to accomdate refresh we seem to get 
-	}
-	else
-	{
-		NSLog(@"couldn't select containing page in outline view");
-		NSBeep();
-	}
+	[[self webViewController] performSelector:@selector(selectPagelet:) withObject:pagelet afterDelay:0.4];	// long delay to accomdate refresh we seem to get 
+	
 	[anElement autorelease];		// go ahead and let it go now
 }
 

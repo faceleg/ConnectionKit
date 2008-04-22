@@ -18,10 +18,12 @@
 #import "KTPagelet.h"
 #import "KTPasteboardArchiving.h"
 #import "KSSilencingConfirmSheet.h"
+
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
-#import "NSOutlineView+KTExtensions.h"
+#import "NSIndexSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSOutlineView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 
 
@@ -58,7 +60,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self copyPagelets:sender];
 	}
-	else if ( [[oSiteOutline selectedItems] count] > 0 )
+	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
 	{
 		[self copyPages:sender];
 	}
@@ -91,7 +93,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 // copy selected pages
 - (IBAction)copyPages:(id)sender
 {
-    NSArray *selectedPages = [oSiteOutline selectedItems];
+    NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]))
     {
         // copy was sent from a contextual menuitem, get the selection from the context
@@ -174,7 +176,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self cutPagelets:sender];
 	}
-	else if ( [[oSiteOutline selectedItems] count] > 0 )
+	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
 	{
 		[self cutPages:sender];
 	}
@@ -208,7 +210,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 - (IBAction)cutPages:(id)sender
 {
 	// Figure out the selection
-	NSArray *selectedPages = [oSiteOutline selectedItems];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
         // cut was sent from a contextual menuitem, get the selection from the context
@@ -384,7 +386,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[oSiteOutline selectedItems] objectAtIndex:0];
+        selectedPage = [[[self siteOutlineController] selectedPages] objectAtIndex:0];
     }
     
     // if we haven't selected a collection, use its parent
@@ -491,7 +493,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[oSiteOutline selectedItems] objectAtIndex:0];
+        selectedPage = [[[self siteOutlineController] selectedPages] objectAtIndex:0];
     }
     
     if ( [selectedPage isKindOfClass:[KTPage class]] )
@@ -663,14 +665,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 		if ( nil != pboardData )
 		{
 			NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
-			NSEnumerator *e = [parentRows objectEnumerator];
-			NSString *row;
-
-			selectedPages = [NSMutableArray arrayWithCapacity:[parentRows count]];			
-			while ( row = [e nextObject] )
-			{
-				[selectedPages addObject:[oSiteOutline itemAtRow:[row intValue]]];
-			}
+			selectedPages = [[[self siteOutlineController] siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
 			
 			switch ( [selectedPages count] )
 			{
@@ -907,7 +902,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	{
 		[self duplicatePagelets:sender];
 	}
-	else if ([[oSiteOutline selectedItems] count] > 0)
+	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
 	{
 		[self duplicatePages:sender];
 	}
@@ -929,7 +924,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 - (IBAction)duplicatePages:(id)sender
 {
 	// figure out our selection
-	NSArray *selectedPages = [oSiteOutline selectedItems];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
     if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
         // copy was sent from a contextual menuitem, get the selection from the context
@@ -952,7 +947,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 		
 		// Select into the first available collection
 		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObject] parent];
-		[oSiteOutline selectItem:parentOfFirstSelectedItem];
+		[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:parentOfFirstSelectedItem]];
 		
 		
 		// Do the duplication
@@ -961,18 +956,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 		
 		
 		// Select the new pages
-		NSMutableIndexSet *newSelectionSet = [NSMutableIndexSet indexSet];
-		NSEnumerator *e = [newPages objectEnumerator];
-		KTPage *page = nil;
-		while ( page = [e nextObject] )
-		{
-			int pageRow = [oSiteOutline rowForItem:page];
-			if ( pageRow >= 0 )
-			{
-				[newSelectionSet addIndex:pageRow];
-			}
-		}
-		[oSiteOutline selectRowIndexes:newSelectionSet byExtendingSelection:NO];
+		[[self siteOutlineController] setSelectedPages:[NSSet setWithArray:newPages]];
 		
 		
 		// Label the Undo menu item

@@ -831,9 +831,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		if ( nil != page )
 		{
 			[self insertPage:page parent:nearestParent];
-			[oSiteOutline scrollRowToVisible:[oSiteOutline rowForItem:page]];
-			/// Case 18433: force didChangeNotification since selectedRowIndex may not actually change
-			[oSiteOutline selectItem:page forceDidChangeNotification:YES];	// Shouldn't the SiteOutlineController handle this?
+			[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:page]];
 		}
 		else
 		{
@@ -1023,14 +1021,7 @@ from representedObject */
 	// add component to parent
 	[aCollection addPage:aPage];
 	
-	// preserve the selection for undo
-	id selectedRowIndexes = [[oSiteOutline selectedRowIndexes] copyWithZone:[self zone]];
-	
-	[oSiteOutline selectItem:aPage];	// Shouldn't the SiteOutlineController handle this?
-	if ( [aPage isKindOfClass:[KTPage class]] )
-	{
-		[oSiteOutline expandSelectedRow];
-	}
+	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:aPage]];
 	
 	// label undo and perserve the current selection
     if ( [aPage isCollection] )
@@ -1041,7 +1032,6 @@ from representedObject */
 	{
 		[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Page", "action name for adding a page")];
     }
-	[selectedRowIndexes release];
 	
 	if (([aPage boolForKey:@"includeInSiteMenu"])) 
 	{
@@ -1086,7 +1076,7 @@ from representedObject */
 /*! group the selection in a new summary */
 - (void)group:(id)sender
 {
-	NSMutableArray *selectedPages = [[oSiteOutline selectedItems] mutableCopy];
+	NSMutableArray *selectedPages = [[[self siteOutlineController] selectedPages] mutableCopy];
 	if ( [selectedPages count] > 0 )
     {
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1167,7 +1157,7 @@ from representedObject */
 			[collection setBool:NO forKey:@"includeTimestamp"];
 			
 			// insert the new collection
-			int insertIndex = [[[oSiteOutline itemAboveFirstSelectedRow] wrappedValueForKey:@"ordering"] intValue]+1;
+			int insertIndex = [[[[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow] wrappedValueForKey:@"ordering"] intValue]+1;
 			[collection setInteger:insertIndex forKey:@"ordering"];
 			[parentCollection addPage:collection];
             
@@ -1179,8 +1169,7 @@ from representedObject */
 				[page setInteger:i forKey:@"ordering"];
 			}            
 			
-			[oSiteOutline selectItem:collection forceDidChangeNotification:YES]; /// Case 18433	// Shouldn't the SiteOutlineController handle this?
-			[oSiteOutline expandSelectedRow];
+			[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:collection]];
 			
 			// tidy up the undo stack with a relevant name
 			[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
@@ -1225,8 +1214,8 @@ from representedObject */
 	NSAssert([NSThread isMainThread], @"should be main thread");
 	
 	// here's the naive approach
-	NSArray *selectedPages = [[oSiteOutline selectedItems] copy];
-	id itemAbove = [oSiteOutline itemAboveFirstSelectedRow];
+	NSArray *selectedPages = [[[self siteOutlineController] selectedPages] copy];
+	id itemAbove = [[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow];
 	
 	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
 	if (nil == selectedParent)
@@ -1259,7 +1248,7 @@ from representedObject */
 		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Pages", @"action name for removing selected pages")];
 	}
 	
-	[oSiteOutline selectItem:itemAbove forceDidChangeNotification:YES]; /// Case 18433	// Shouldn't the SiteOutlineController handle this?
+	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:itemAbove]];
 	
 	[itemAbove release];
 	[selectedPages release];
@@ -1327,7 +1316,7 @@ from representedObject */
 		}
 		else
 		{
-			NSArray *selectedPages = [oSiteOutline selectedItems];
+			NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 			if (1 != [selectedPages count])
 			{
 				return NO;	// can't paste if zero or >1 pages selected
@@ -1396,13 +1385,13 @@ from representedObject */
 	// "Delete Page(s)" deletePage:
 	else if ( itemAction == @selector(deletePages:) )
 	{
-		if ( ![[[self window] firstResponder] isEqual:oSiteOutline] )
+		if (![[[self window] firstResponder] isEqual:[[self siteOutlineController] siteOutline]])
 		{
 			return NO;
 		}
 
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		NSArray *selectedPages = [oSiteOutline selectedItems];
+		NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 		
 		if ( (nil != selectedPage) && ![selectedPage isRoot] )
 		{
@@ -1523,11 +1512,11 @@ from representedObject */
     }	
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[oSiteOutline selectedItems] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [oSiteOutline selectedItems];
+		NSArray *selectedItems = [[self siteOutlineController] selectedPages];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
@@ -1544,7 +1533,7 @@ from representedObject */
 		else
 		{
 			// we're going to be duplicating a page or pages
-			return ( ![[oSiteOutline selectedItems] containsObject:[[self document] root]] );
+			return ( ![[[self siteOutlineController] selectedPages] containsObject:[[self document] root]] );
 		}
     }
 	
@@ -1682,15 +1671,15 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[oSiteOutline selectedItems] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[oSiteOutline selectedItems] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [oSiteOutline selectedItems];
+		NSArray *selectedItems = [[self siteOutlineController] selectedPages];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
@@ -1701,7 +1690,7 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(duplicate:) )
     {
-        return ( ![[oSiteOutline selectedItems] containsObject:[[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedPages] containsObject:[[self document] root]] );
     }
 	else if ([toolbarItem action] == @selector(showLinkPanel:))
 	{
@@ -1822,14 +1811,14 @@ from representedObject */
 
 - (void)updateCutMenuItem
 {
-	NSArray *selectedPages = [oSiteOutline selectedItems];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if ([selectedPages count])
 	{
 		
 		NSResponder *firstResponder = [[self window] firstResponder];
 		// Is the first responder other than the outline view, or no pages selected? Fix the title.
 		
-		if ( (firstResponder != oSiteOutline) || ([selectedPages count] == 0) )
+		if ( (firstResponder != [[self siteOutlineController] siteOutline]) || ([selectedPages count] == 0) )
 		{
 			[[NSApp delegate] setCutMenuItemTitle:KTCutMenuItemTitle];
 		}
@@ -1856,13 +1845,13 @@ from representedObject */
 
 - (void)updateCopyMenuItem
 {
-	NSArray *selectedPages = [oSiteOutline selectedItems];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if ([selectedPages count])
 	{
 		NSResponder *firstResponder = [[self window] firstResponder];
 		// Is the first responder other than this window, or no pages selected? Fix the title.
 		
-		if ( (firstResponder != oSiteOutline) || ([selectedPages count] == 0) )
+		if ( (firstResponder != [[self siteOutlineController] siteOutline]) || ([selectedPages count] == 0) )
 		{
 			[[NSApp delegate] setCopyMenuItemTitle:KTCopyMenuItemTitle];
 		}
@@ -1889,7 +1878,7 @@ from representedObject */
 
 - (void)updateDeletePagesMenuItem
 {
-	NSArray *selectedPages = [oSiteOutline selectedItems];
+	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
 	if ([selectedPages count])
 	{
 		if ( [selectedPages count] > 1 )
@@ -2357,11 +2346,7 @@ from representedObject */
 	// if not dropping on an item, set the selection to the last page created
 	if ( latestPage != nil )
 	{
-		if (aCollection != (KTPage *)[[self document] root])
-		{
-			[oSiteOutline expandItem:aCollection];
-		}
-		[oSiteOutline selectItem:latestPage forceDidChangeNotification:YES]; /// Case 18433	// Shouldn't the SiteOutlineController handle this?
+		[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:latestPage]];
 	}
 	
 	// Done
