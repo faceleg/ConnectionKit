@@ -600,13 +600,8 @@
 				
 				// remember all selected rows
 				NSArray *allRows = [pboardData objectForKey:@"allRows"];
-				NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:[allRows count]];
-				NSEnumerator *e = [allRows objectEnumerator];
-				id row;
-				while ( row = [e nextObject] )
-				{
-					[selectedItems addObject:[[self siteOutline] itemAtRow:[row intValue]]];
-				}
+				NSArray *selectedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
+				
 				
 				// we use parentRows here as moving the parent rows should move all the children as well
 				NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
@@ -627,7 +622,7 @@
 				// The behavior is different depending on if we're dropping ON or INTO.
 				if (dropRow == -1)
 				{
-					e = [draggedItems objectEnumerator];
+					NSEnumerator *e = [draggedItems objectEnumerator];
 					KTPage *aPage;
 					while (aPage = [e nextObject])
 					{
@@ -639,7 +634,7 @@
 				}
 				else
 				{
-					e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
+					NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
 					KTPage *draggedItem;
 					while ( draggedItem = [e nextObject] )
 					{
@@ -660,17 +655,10 @@
 				}
 				
 				// select what was selected during the drag
-				NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-				e = [selectedItems objectEnumerator];
-				KTPage *selectedPage;
-				while ( selectedPage = [e nextObject] )
-				{
-					int selectedRow = [[self siteOutline] rowForItem:selectedPage];
-					[indexSet addIndex:selectedRow];
-				}
-				OFF((@"selecting indexes: %@", indexSet));
-				[[self siteOutline] selectRowIndexes:indexSet byExtendingSelection:NO];
+				NSIndexSet *selectedRows = [[self siteOutline] rowsForItems:selectedItems];
+				[[self siteOutline] selectRowIndexes:selectedRows byExtendingSelection:NO];
 				
+				// Record the Undo operation
 				[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
 				
 				return YES;

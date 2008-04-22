@@ -150,6 +150,24 @@
 	return [[buffer copy] autorelease];
 }
 
+- (NSIndexSet *)rowsForItems:(NSArray *)items;
+{
+	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
+	NSEnumerator *itemsEnumerator = [items objectEnumerator];
+	id anItem;		int aRow;
+	
+	while (anItem = [itemsEnumerator nextObject])
+	{
+		aRow = [self rowForItem:anItem];
+		[buffer addIndex:aRow];
+	}
+	
+	// Tidy up
+	NSIndexSet *result = [[buffer copy] autorelease];
+	[buffer release];
+	return result;
+}
+
 /*! returns outline cell via private name */
 - (id)_outlineCell
 {
