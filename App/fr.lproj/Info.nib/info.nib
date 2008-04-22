@@ -3,63 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>112 375 356 240 0 0 1920 1178 </string>
+	<string>69 10 356 240 0 0 1440 878 </string>
 	<key>IBEditorPositions</key>
 	<dict>
-		<key>1225</key>
-		<string>824 835 320 64 0 0 1920 1178 </string>
-		<key>1265</key>
-		<string>824 835 320 64 0 0 1920 1178 </string>
-		<key>1270</key>
-		<string>824 787 320 128 0 0 1920 1178 </string>
-		<key>129</key>
-		<string>824 717 320 222 0 0 1920 1178 </string>
-		<key>1311</key>
-		<string>824 837 320 62 0 0 1920 1178 </string>
-		<key>165</key>
-		<string>824 851 320 43 0 0 1920 1178 </string>
-		<key>168</key>
-		<string>824 637 320 328 0 0 1920 1178 </string>
-		<key>169</key>
-		<string>824 840 320 57 0 0 1920 1178 </string>
 		<key>258</key>
-		<string>824 524 320 479 0 0 1920 1178 </string>
-		<key>356</key>
-		<string>824 837 320 62 0 0 1920 1178 </string>
-		<key>821</key>
-		<string>824 825 320 77 0 0 1920 1178 </string>
-		<key>913</key>
-		<string>824 631 320 336 0 0 1920 1178 </string>
-		<key>94</key>
-		<string>824 702 320 242 0 0 1920 1178 </string>
+		<string>38 373 320 479 0 0 1440 878 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
 	<key>IBLastKnownRelativeProjectPath</key>
-	<string>../Marvel.xcodeproj</string>
+	<string>../../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>IBOpenObjects</key>
 	<array>
-		<integer>1265</integer>
-		<integer>1311</integer>
-		<integer>1225</integer>
-		<integer>94</integer>
-		<integer>821</integer>
-		<integer>913</integer>
-		<integer>168</integer>
-		<integer>129</integer>
-		<integer>169</integer>
-		<integer>356</integer>
-		<integer>1270</integer>
-		<integer>165</integer>
-		<integer>171</integer>
 		<integer>258</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>9C7010</string>
-	<key>IBUsesTextArchiving</key>
-	<true/>
 	<key>targetFramework</key>
 	<string>IBCocoaFramework</string>
 </dict>
