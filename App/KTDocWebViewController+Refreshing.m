@@ -23,13 +23,16 @@
 #import "KTPage.h"
 #import "KTParsedKeyPath.h"
 #import "KTParsedWebViewComponent.h"
+#import "WebViewEditingHelperClasses.h"
+#import "KTAsyncOffscreenWebViewController.h"
+#import "KTWebViewTextBlock.h"
+
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
-#import "WebViewEditingHelperClasses.h"
-#import "KTAsyncOffscreenWebViewController.h"
 
 #import "DOMNode+KTExtensions.h"
+
 
 @interface DOMHTMLDocument ( TenFourElevenAndAboveWebkit )
 - (DOMDocumentFragment *)createDocumentFragmentWithMarkupString:(NSString *)markupString baseURL:(NSURL *)baseURL;
@@ -395,10 +398,18 @@
 	[self addParsedKeyPath:keyPath ofObject:object forParser:parser];
 }
 
+/*	We want to record the text block.
+ *	This includes making sure the webview refreshes upon a graphical text size change.
+ */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
 {
 	KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
 	[component addTextBlock:textBlock];
+	
+	if ([textBlock graphicalTextCode])
+	{
+		[self addParsedKeyPath:@"master.graphicalTitleSize" ofObject:[parser currentPage] forParser:parser];
+	}
 }
 
 
