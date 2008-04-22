@@ -19,6 +19,9 @@
 [[endif]]
 
 							<div class="article [[if orderedCallouts]]has-callout[[else]]no-callout[[endif]]">
+[[if orderedCallouts]]
+[[parseComponent self parser.calloutContainerTemplateHTML]]
+[[endif]]
 								<div class="article-content">
 [[parsecomponent self elementTemplate]]
 								</div>

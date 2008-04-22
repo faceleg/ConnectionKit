@@ -98,12 +98,16 @@ static unsigned sLastParserID;
 	if (!sCalloutContainerTemplateHTML)
 	{
 		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCalloutContainerTemplate" ofType:@"html"];
+		OBASSERT(templatePath);
+		
 		sCalloutContainerTemplateHTML = [[NSString alloc] initWithContentsOfFile:templatePath];
+		OBASSERT(sCalloutContainerTemplateHTML);
 	}
 	
 	return sCalloutContainerTemplateHTML;
 }
 
+- (NSString *)calloutContainerTemplateHTML { return [[self class] calloutContainerTemplateHTML]; }
 
 // Usual case, no absolute media paths
 + (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id)component
@@ -476,7 +480,6 @@ static unsigned sLastParserID;
 	if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
 	[cache overrideKey:@"HTMLGenerationPurpose" withValue:[NSNumber numberWithInt:[self HTMLGenerationPurpose]]];
 	[cache overrideKey:@"userDefaults" withValue:[NSUserDefaults standardUserDefaults]];
-	[cache overrideKey:@"calloutContainerTemplateHTML" withValue:[[self class] calloutContainerTemplateHTML]];
 	
 	NSEnumerator *overridesEnumerator = [myOverriddenKeys keyEnumerator];
 	NSString *aKey;

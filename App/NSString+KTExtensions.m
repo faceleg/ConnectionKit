@@ -196,6 +196,9 @@
  */
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath
 {
+	NSParameterAssert(otherPath);
+	
+	
 	otherPath = [@"/" stringByAppendingString:otherPath];
 	if ([self isEqualToString:@""])
 	{

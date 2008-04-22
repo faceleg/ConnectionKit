@@ -95,6 +95,10 @@
 // Support
 + (NSString *)stringValueOfObject:(id)object;
 
+// Prebuilt templates
++ (NSString *)calloutContainerTemplateHTML;
+- (NSString *)calloutContainerTemplateHTML;
+
 @end
 
 
