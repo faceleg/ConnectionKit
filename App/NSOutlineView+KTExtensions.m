@@ -128,7 +128,7 @@
     return [self itemAtRow:[[self selectedRowIndexes] firstIndex]-1];
 }
 
-- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
+- (NSMutableArray *)itemsAtRows:(NSIndexSet *)rowIndexes
 {
 	// We can bail early in certain curcumstances
 	if (!rowIndexes || [rowIndexes count] <= 0)
