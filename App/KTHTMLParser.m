@@ -372,7 +372,7 @@ static unsigned sLastParserID;
 			result = [parser parseTemplate];
 			
 			// If possible, wrap the result inside a uniqueID <div> to allow the WebViewController to identify it later.
-			if ([component conformsToProtocol:@protocol(KTWebViewComponent)])
+			if ([self HTMLGenerationPurpose] == kGeneratingPreview && [component conformsToProtocol:@protocol(KTWebViewComponent)])
 			{
 				result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
 													[component uniqueWebViewID],
