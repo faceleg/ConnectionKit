@@ -58,8 +58,23 @@
 	NSParameterAssert(page);	NSParameterAssert(plugin);
 	
 	
-	KTPageletLocation location = ([page includeSidebar]) ? KTSidebarPageletLocation : KTCalloutPageletLocation;
+	// Figure out where to place the pagelet
+	KTPageletLocation location = KTSidebarPageletLocation;
+	if (![page includeSidebar])
+	{
+		if ([page includeCallout])
+		{
+			location = KTCalloutPageletLocation;
+		}
+		else
+		{
+			NSAssert([page sidebarChangeable], @"Attempting to create pagelet on page which allows neither sidebar or callouts");
+			[page setIncludeSidebar:YES];
+		}
+	}
 	
+	
+	// Create the pagelet
 	KTPagelet *result = [self _insertNewPageletWithPage:page
 									   pluginIdentifier:[[plugin bundle] bundleIdentifier]
 											   location:location];
