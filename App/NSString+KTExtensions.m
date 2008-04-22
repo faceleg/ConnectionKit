@@ -15,6 +15,19 @@
 @implementation NSString ( KTExtensions )
 
 
+// TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
+- (NSString *)identifier
+{
+	[NSException raise:NSInternalInconsistencyException format:@"calling identifier on %@", self];
+	return self;
+}
+
+
+
+
+
+
+
 /*!	Return the last two components of an email address or host name. Returns nil if no domain name found
  */
 - (NSString *)domainName

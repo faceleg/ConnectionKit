@@ -130,6 +130,8 @@
 	}
 	else
 	{
+		OBASSERT([myComponentsNeedingRefresh isKindOfClass:[NSSet class]]);
+
 		// There is no point refreshing a component AND its parent. So ensure we have the most efficient set of objects listed.
 		BOOL aSuperComponentAlreadyNeedsRefreshing = [myComponentsNeedingRefresh intersectsSet:[component allSuperComponents]];
 		if (!aSuperComponentAlreadyNeedsRefreshing)

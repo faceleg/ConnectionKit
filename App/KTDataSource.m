@@ -100,6 +100,9 @@
 		{
 			// for each dataSource, see if it will handle what's on the pboard
 			NSArray *acceptedTypes = [dataSource acceptedDragTypesCreatingPagelet:isCreatingPagelet];
+			
+			OBASSERT([setOfTypes isKindOfClass:[NSSet class]]);
+
 			if ( nil != acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]] )
 			{
 				// yep, so get the rating and see if it's better than our current bestRating
