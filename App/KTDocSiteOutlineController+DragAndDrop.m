@@ -619,28 +619,16 @@
 				NSArray *draggedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
 				
 				
-				// The behavior is different depending on if we're dropping ON or INTO.
-				if (dropRow == -1)
-				{
-					NSEnumerator *e = [draggedItems objectEnumerator];
-					KTPage *aPage;
-					while (aPage = [e nextObject])
-					{
-						[aPage retain];
-						[[aPage parent] removePage:aPage];
-						[proposedParent addPage:aPage];
-						[aPage release];
-					}
-				}
-				else
+				// The behavior is different depending on the drag destination.
+				// Drops into the middle of an unsorted collection need to also have their indexes set.
+				if (dropRow != -1 && [proposedParent collectionSortOrder] == KTCollectionUnsorted)
 				{
 					NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
 					KTPage *draggedItem;
-					while ( draggedItem = [e nextObject] )
+					while (draggedItem = [e nextObject])
 					{
 						[draggedItem retain];
 						
-						// When moving between collections, remove the page from its parent first.
 						KTPage *draggedItemParent = [draggedItem parent];
 						if (proposedParent != draggedItemParent)
 						{
@@ -651,6 +639,18 @@
 						[draggedItem moveToIndex:dropRow];
 						
 						[draggedItem release];
+					}
+				}
+				else
+				{
+					NSEnumerator *e = [draggedItems objectEnumerator];
+					KTPage *aPage;
+					while (aPage = [e nextObject])
+					{
+						[aPage retain];
+						[[aPage parent] removePage:aPage];
+						[proposedParent addPage:aPage];
+						[aPage release];
 					}
 				}
 				
