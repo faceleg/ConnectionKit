@@ -374,6 +374,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				NSSet *removedPages = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
 				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 				
+				OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
 				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 								
 				break;
@@ -388,6 +389,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				
 				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 				
+				OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
 				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 								
 				break;
