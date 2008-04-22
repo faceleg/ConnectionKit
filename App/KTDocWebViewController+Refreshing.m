@@ -268,6 +268,23 @@
 	}
 }
 
+/*
+	This splices the DOM tree that has been loaded into the offscreen webview into the element
+	that is waiting for this fragment to have finished loading, [self elementWaitingForFragmentLoad].
+	First it removes any existing children of that element (since we are replacing it),
+	Then it imports the loaded body into the destination webview's DOMDocument (via importNode::)
+	Finally, it loops through each element and find all the <script> elements, and, in order to
+	prevent any script tags from executing (again, since they would have executed in the offscreen
+	view), it strips out the info that will allow the script to execute.  This unfortunately affects
+	the DOM for view source, but this isn't stored in the permanent database since this is just
+	surgery on the currently viewed webview.
+ 
+	Finally, after processing, we insert the new tree into the webview's tree, and process editing
+	nodes to bring us the green + markers.
+ 
+ 
+ */
+
 - (void) spliceElement:(DOMHTMLElement *)loadedBody;
 {
 	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
