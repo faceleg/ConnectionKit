@@ -38,7 +38,6 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet RBSplitView				*oDesignsSplitView;
 	IBOutlet WebView					*oWebView;
 	IBOutlet KTDocWebViewController		*webViewController;
-	IBOutlet NSOutlineView				*oSiteOutline;
 	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
