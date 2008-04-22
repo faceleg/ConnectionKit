@@ -24,6 +24,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
+	<key>KTElementAllowsIntroduction</key>
+	<true/>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
