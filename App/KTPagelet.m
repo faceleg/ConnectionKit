@@ -28,6 +28,7 @@
 
 
 @interface KTPagelet (Private)
++ (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location;
 - (NSSet *)allPagesThatInheritSidebarsFromPage:(KTPage *)page;
 @end
 
@@ -56,6 +57,27 @@
 {	
 	NSParameterAssert(page);	NSParameterAssert(plugin);
 	
+	
+	KTPageletLocation location = ([page includeSidebar]) ? KTSidebarPageletLocation : KTCalloutPageletLocation;
+	
+	KTPagelet *result = [self _insertNewPageletWithPage:page
+									   pluginIdentifier:[[plugin bundle] bundleIdentifier]
+											   location:location];
+	
+	// Tell the pagelet to awake
+	[result awakeFromBundleAsNewlyCreatedObject:YES];
+	
+	
+	return result;
+}
+
+/*	Private support method that creates a basic pagelet.
+ */
++ (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location
+{
+	NSParameterAssert([page managedObjectContext]);		NSParameterAssert(identifier);
+	
+	
 	// Create the pagelet
 	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
@@ -63,20 +85,10 @@
 	
 	
 	// Seup the pagelet's properties
-	[result setValue:[[plugin bundle] bundleIdentifier] forKey:@"pluginIdentifier"];
+	[result setValue:identifier forKey:@"pluginIdentifier"];
+	[result setLocation:location];
 	
-	
-	// Add the pagelet to the page
-	if (![page includeSidebar])	// If the page's sidebar is hidden make this pagelet a callout (by default it's a top sidebar)
-	{
-		[result setLocation:KTCalloutPageletLocation];
-	}
 	[page addPagelet:result];
-	
-	
-	// Tell the pagelet to awake
-	[result awakeFromBundleAsNewlyCreatedObject:YES];
-	
 	
 	return result;
 }

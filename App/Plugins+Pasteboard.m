@@ -267,6 +267,13 @@
 #pragma mark -
 
 
+@interface KTPagelet (Private)
++ (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page
+						pluginIdentifier:(NSString *)pluginIdentifier
+								location:(KTPageletLocation)location;
+@end
+
+
 @implementation KTPagelet (Pasteboard)
 
 /*	Ignore our page relationship, the page will set it for us
@@ -284,12 +291,18 @@
 	NSParameterAssert(page);	
 	
 	
-	// Create a basic page
-	KTPagelet *result = [self pageletWithPage:page plugin:nil];
+	// Create a basic pagelet
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
+	
+	KTPagelet *result = [self _insertNewPageletWithPage:page
+									  pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]
+											  location:[archive integerForKey:@"location"]];
+	
+	[attributes removeObjectForKey:@"pluginIdentifier"];
+	[attributes removeObjectForKey:@"location"];
 	
 	
 	// Prune away any properties no longer needing to be set
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
 	NSArray *relationships = [[[result entity] relationshipsByName] allKeys];
 	[attributes removeObjectsForKeys:relationships];
 	[attributes removeObjectsForKeys:[[self keysToIgnoreForPasteboardRepresentation] allObjects]];
@@ -317,7 +330,7 @@
 	
 	
 	// Set the attributes
-	[result setValuesForKeysWithDictionary:attributes];
+	[result setValuesForKeysWithDictionary:attributes setAllValues:YES];
 	
 	
 	// Wake up the page
