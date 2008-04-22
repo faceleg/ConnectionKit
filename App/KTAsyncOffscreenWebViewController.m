@@ -10,6 +10,7 @@
 
 #import "KTAsyncOffscreenWebViewController.h"
 #import "KTDocWebViewController.h"
+#import "NSApplication+Karelia.h"
 
 @implementation KTAsyncOffscreenWebViewController
 
