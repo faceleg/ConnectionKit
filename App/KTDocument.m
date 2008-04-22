@@ -1701,7 +1701,7 @@
 {
 	
 	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
-	NSImage *snapshot = [window snapshot];
+	NSImage *snapshot = [window snapshotShowingBorder:NO];
 	if ( nil != snapshot )
 	{
 		NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
@@ -1718,7 +1718,7 @@
 	// Also attach any sheet (host setup, etc.)
 	if (nil != [window attachedSheet])
 	{
-		snapshot = [[window attachedSheet] snapshot];
+		snapshot = [[window attachedSheet] snapshotShowingBorder:NO];
 		if ( nil != snapshot )
 		{
 			NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
@@ -1739,7 +1739,7 @@
 		NSWindow *infoWindow = [sharedController window];
 		if ( [infoWindow isVisible] )
 		{
-			snapshot = [infoWindow snapshot];
+			snapshot = [infoWindow snapshotShowingBorder:YES];
 			if ( nil != snapshot )
 			{
 				NSData *snapshotData = [snapshot JPEG2000RepresentationWithQuality:0.40];
