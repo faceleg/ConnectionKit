@@ -1076,7 +1076,7 @@ from representedObject */
 /*! group the selection in a new summary */
 - (void)group:(id)sender
 {
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[[[self siteOutlineController] selectedPages] retain] autorelease];	// Hang onto it for length of method
 	
 	// This shouldn't happen
 	if ([selectedPages count] == 0)
@@ -1113,75 +1113,66 @@ from representedObject */
 		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
 		collectionPlugin = [KTIndexPlugin pluginWithIdentifier:defaultIdentifier];
 	}
-			
-	if (collectionPlugin)
+	NSAssert(collectionPlugin, @"Must have a new collection plugin to group the pages into");
+	
+	
+	NSBundle *collectionBundle = [collectionPlugin bundle];
+	NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
+	KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+	if ( nil == pagePlugin )
 	{
-		NSBundle *collectionBundle = [collectionPlugin bundle];
-		NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-		KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
-		if ( nil == pagePlugin )
-		{
-			pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-			pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
-		}
-		if ( nil == pagePlugin )
-		{
-			NSLog(@"Unable to create group: could not locate default index.");
-			return;
-		}
-		
-		///////////////////////////////////////////////////////////////////////////////////////////////////
-		// at this point, we should be good to go
-		
-		// first, remove the selectedPages from their parents
-		// the selectedPages array will hold pointers so we don't lose them
-		unsigned int i;
-		for ( i=0; i < [selectedPages count]; i++ )
-		{
-			KTPage *page = [selectedPages objectAtIndex:i];
-			[[page parent] removePage:page];
-		}
-		
-		// now, create a new collection to hold selectedPages
-		KTPage *collection = [KTPage insertNewPageWithParent:parentCollection 
-											 plugin:pagePlugin];
-		
-		
-		[collection setValue:[collectionBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-		
+		pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
+		pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+	}
+	if ( nil == pagePlugin )
+	{
+		NSLog(@"Unable to create group: could not locate default index.");
+		return;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	// at this point, we should be good to go
+	
+	// first, remove the selectedPages from their parents
+	// the selectedPages array will hold pointers so we don't lose them
+	unsigned int i;
+	for ( i=0; i < [selectedPages count]; i++ )
+	{
+		KTPage *page = [selectedPages objectAtIndex:i];
+		[[page parent] removePage:page];
+	}
+	
+	
+	// now, create a new collection to hold selectedPages
+	KTPage *collection = [KTPage insertNewPageWithParent:parentCollection 
+										 plugin:pagePlugin];
+	
+	
+	[collection setValue:[collectionBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
+	
 // FIXME: we should load up the properties from a KTPreset
-		
-		Class indexToAllocate = [NSBundle principalClassForBundle:collectionBundle];
-		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
-		[collection setIndex:theIndex];
-		[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
-		[collection setBool:YES forKey:@"isCollection"];
-		[collection setBool:NO forKey:@"includeTimestamp"];
-		
-		// insert the new collection
-		int insertIndex = [[[[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow] wrappedValueForKey:@"ordering"] intValue]+1;
-		[collection setInteger:insertIndex forKey:@"ordering"];
-		[parentCollection addPage:collection];
-		
-		// add our selectedPages back to the new collection
-		for ( i=0; i < [selectedPages count]; i++ )
-		{
-			KTPage *page = [selectedPages objectAtIndex:i];
-			[collection addPage:page];
-			[page setInteger:i forKey:@"ordering"];
-		}            
-		
-		[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:collection]];
-		
-		// tidy up the undo stack with a relevant name
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
-	}
-	else
+	
+	Class indexToAllocate = [NSBundle principalClassForBundle:collectionBundle];
+	KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
+	[collection setIndex:theIndex];
+	[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
+	[collection setBool:YES forKey:@"isCollection"];
+	[collection setBool:NO forKey:@"includeTimestamp"];
+	
+	// insert the new collection
+	[parentCollection addPage:collection];
+	
+	// add our selectedPages back to the new collection
+	for ( i=0; i < [selectedPages count]; i++ )
 	{
-		NSLog(@"Unable to create group: could not create default collection.");
-	}
+		KTPage *page = [selectedPages objectAtIndex:i];
+		[collection addPage:page];
+	}            
 	
+	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:collection]];
 	
+	// tidy up the undo stack with a relevant name
+	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
 }
 
 // paste some raw HTML
