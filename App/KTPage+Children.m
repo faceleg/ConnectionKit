@@ -25,6 +25,7 @@
 - (void)invalidateSortedChildrenCache;
 + (void)invalidateSortedChildrenCacheOfPageWithID:(NSString *)uniqueID MOCPointer:(NSValue *)MOCValue;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
+- (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType;
 
 @end
 
@@ -37,7 +38,13 @@
 #pragma mark -
 #pragma mark Basic Accessors
 
-- (KTCollectionSortType)collectionSortOrder { return [self wrappedIntegerForKey:@"collectionSortOrder"]; }
+- (KTCollectionSortType)collectionSortOrder
+{
+	KTCollectionSortType result = [self wrappedIntegerForKey:@"collectionSortOrder"];
+	
+	OBPOSTCONDITION(result != KTCollectionSortUnspecified);
+	return result;
+}
 
 - (void)setCollectionSortOrder:(KTCollectionSortType)sorting
 {
@@ -299,6 +306,8 @@
 	[self release];	// Balances the retain when signing up to the notification.
 }
 
+#pragma mark arbitrary sorting
+
 /*	Public support method that will return the receiver's children with the specified sorting.
  *	Not cached like -sortedChildren.
 */
@@ -311,29 +320,40 @@
 		return [children allObjects];
 	}
 	
-	// Figure out the correct sort descriptors
-	NSArray *descriptors;
+	// Do the sort
+	NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType];
+	NSArray *result = [[children allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+	
+	return result;
+}
+
+/*	Translates between KTCollectionSortType & the right sort descriptor objects
+ */
+- (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType
+{
+	NSArray *result;
 	switch (sortType)
 	{
+		case KTCollectionSortUnspecified:	// Use whatever is currently selected for this collection
+			result = [self sortDescriptorsForCollectionSortType:[self collectionSortOrder]];
+			break;
 		case KTCollectionSortAlpha:
-			descriptors = [NSSortDescriptor alphabeticalTitleTextSortDescriptors];
+			result = [NSSortDescriptor alphabeticalTitleTextSortDescriptors];
 			break;
 		case KTCollectionSortReverseAlpha:
-			descriptors = [NSSortDescriptor reverseAlphabeticalTitleTextSortDescriptors];
+			result = [NSSortDescriptor reverseAlphabeticalTitleTextSortDescriptors];
 			break;
 		case KTCollectionSortLatestAtBottom:
-			descriptors = [NSSortDescriptor chronologicalSortDescriptors];
+			result = [NSSortDescriptor chronologicalSortDescriptors];
 			break;
 		case KTCollectionSortLatestAtTop:
-			descriptors = [NSSortDescriptor reverseChronologicalSortDescriptors];
+			result = [NSSortDescriptor reverseChronologicalSortDescriptors];
 			break;
 		default:
-			descriptors = [NSSortDescriptor unsortedPagesSortDescriptors];	// use the "childIndex" values
+			result = [NSSortDescriptor unsortedPagesSortDescriptors];	// use the "childIndex" values
 			break;
 	}
 	
-	// Do the sort
-	NSArray *result = [[children allObjects] sortedArrayUsingDescriptors:descriptors];
 	return result;
 }
 
