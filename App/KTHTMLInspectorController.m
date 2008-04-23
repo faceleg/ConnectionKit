@@ -49,7 +49,7 @@
 - (NSString *)intersectsSet:(id)aSet
 {
 	[NSException raise:NSInternalInconsistencyException format:@"calling intersectsSet:%@ on %@", aSet, self];
-	return self;
+	return @"";
 }
 
 
