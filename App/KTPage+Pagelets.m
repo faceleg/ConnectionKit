@@ -130,6 +130,20 @@
 	[self insertPagelet:pagelet atIndex:index];
 }
 
+/* Contextual menu item actions to move pagelets between locations.
+ */
+- (void)movePageletToCallouts:(id)sender
+{
+	KTPagelet *pagelet = [sender representedObject];
+	[pagelet setLocation:KTCalloutPageletLocation];
+}
+
+- (void)movePageletToSidebar:(id)sender
+{
+	KTPagelet *pagelet = [sender representedObject];
+	[pagelet setLocation:KTSidebarPageletLocation];
+}
+
 #pragma mark -
 #pragma mark -pageletsInLocation: shortcuts
 

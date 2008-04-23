@@ -810,8 +810,7 @@ but the only trick is -- how to display a highlight?
 			}
 			
 			KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-			if ( [[selectedPage valueForKeyPath:@"callouts"] containsObject:pagelet]
-				 || [[selectedPage valueForKeyPath:@"sidebars"] containsObject:pagelet])
+			if ( [[selectedPage pagelets] containsObject:pagelet] )
 			{
 				[self setSelectedPagelet:pagelet];
 				
@@ -825,7 +824,7 @@ but the only trick is -- how to display a highlight?
 				
 				// if on selectedPage's calloutsList, put up Move to Sidebar
 				NSMenuItem *moveMenuItem = nil;
-				if ( [[selectedPage valueForKeyPath:@"callouts"] containsObject:pagelet] 
+				if ( [[selectedPage orderedCallouts] containsObject:pagelet] 
                      && [selectedPage includeSidebar] )
 				{
 					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Sidebar", "Move to Sidebar MenuItem")
@@ -835,7 +834,7 @@ but the only trick is -- how to display a highlight?
 					[moveMenuItem setRepresentedObject:pagelet];
 				}
 				// else, if on selectedPage's sidebarsList, put up Move to Callout
-				else if ( [[selectedPage valueForKeyPath:@"sidebars"] containsObject:pagelet] 
+				else if ( [[selectedPage orderedSidebars] containsObject:pagelet] 
                           && [selectedPage includeCallout] )
 				{
 					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Callout", "Move to Callout MenuItem")
