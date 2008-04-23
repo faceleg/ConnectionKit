@@ -338,6 +338,7 @@
 		while (![scanner isAtEnd])
 		{
 			[scanner scanUpToString:@" src=\"" intoString:&aString];
+			OBASSERT(aString);
 			[buffer appendString:aString];
 			if ([scanner isAtEnd]) break;
 			
@@ -361,6 +362,7 @@
 					aMediaPath = [[[mediaContainer file] defaultUpload] pathRelativeTo:page];
 				}
 			}
+			OBASSERT(aMediaPath);
 			[buffer appendString:aMediaPath];
 		}
 		
