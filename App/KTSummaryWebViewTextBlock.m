@@ -12,6 +12,9 @@
 #import "KTPage.h"
 #import "DOMNode+KTExtensions.h"
 
+#import "Debug.h"
+
+
 @implementation KTSummaryWebViewTextBlock
 
 /*	When the user starts editing a truncated piece of text, we need to, um, untruncate it
@@ -108,6 +111,9 @@
 		result = [page summaryHTMLWithTruncation:[[page parent] integerForKey:@"collectionTruncateCharacters"]];
 	}
 	
+	if (!result) result = @"";
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
