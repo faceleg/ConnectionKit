@@ -34,6 +34,8 @@
 
 
 @interface KTDocSiteOutlineController (DragAndDropPrivate)
+- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard page:(KTPage *)page childIndex:(int)anIndex;
+
 - (NSArray *)itemsForRows:(NSArray *)anArray;
 - (BOOL)item:(id)anItem isDescendantOfItem:(id)anotherItem;
 - (BOOL)items:(NSArray *)items containsParentOfItem:(id)item;
@@ -596,72 +598,8 @@
 			// drag is internal to document
 			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
 			{
-				NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
-				
-				// remember all selected rows
-				NSArray *allRows = [pboardData objectForKey:@"allRows"];
-				NSArray *selectedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
-				
-				
-				// we use parentRows here as moving the parent rows should move all the children as well
-				NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
-				
-				// Adjust dropRow to account for "home"
-				int dropRow;
-				if ([proposedParent isRoot]) {
-					dropRow = anIndex-1;
-				}
-				else {
-					dropRow = anIndex;
-				}
-				
-				
-				NSArray *draggedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
-				
-				
-				// The behavior is different depending on the drag destination.
-				// Drops into the middle of an unsorted collection need to also have their indexes set.
-				if (dropRow != -1 && [proposedParent collectionSortOrder] == KTCollectionUnsorted)
-				{
-					NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
-					KTPage *draggedItem;
-					while (draggedItem = [e nextObject])
-					{
-						[draggedItem retain];
-						
-						KTPage *draggedItemParent = [draggedItem parent];
-						if (proposedParent != draggedItemParent)
-						{
-							[draggedItemParent removePage:draggedItem];
-							[proposedParent addPage:draggedItem];
-						}
-						
-						[draggedItem moveToIndex:dropRow];
-						
-						[draggedItem release];
-					}
-				}
-				else
-				{
-					NSEnumerator *e = [draggedItems objectEnumerator];
-					KTPage *aPage;
-					while (aPage = [e nextObject])
-					{
-						[aPage retain];
-						[[aPage parent] removePage:aPage];
-						[proposedParent addPage:aPage];
-						[aPage release];
-					}
-				}
-				
-				// select what was selected during the drag
-				NSIndexSet *selectedRows = [[self siteOutline] rowsForItems:selectedItems];
-				[[self siteOutline] selectRowIndexes:selectedRows byExtendingSelection:NO];
-				
-				// Record the Undo operation
-				[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
-				
-				return YES;
+				BOOL result = [self acceptInternalDrop:pboard page:proposedParent childIndex:anIndex];
+				return result;
 			}
 			else if ( NO )
 			{
@@ -774,6 +712,79 @@
 	return result;
 }
 
+
+/*	Called when rearranging pages within the Site Outline
+ */
+- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard page:(KTPage *)page childIndex:(int)anIndex
+{
+	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
+	
+	// remember all selected rows
+	NSArray *allRows = [pboardData objectForKey:@"allRows"];
+	NSArray *selectedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
+	
+	
+	// we use parentRows here as moving the parent rows should move all the children as well
+	NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
+	
+	// Adjust dropRow to account for "home"
+	int dropRow;
+	if ([page isRoot]) {
+		dropRow = anIndex-1;
+	}
+	else {
+		dropRow = anIndex;
+	}
+	
+	
+	NSArray *draggedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
+	
+	
+	// The behavior is different depending on the drag destination.
+	// Drops into the middle of an unsorted collection need to also have their indexes set.
+	if (dropRow != -1 && [page collectionSortOrder] == KTCollectionUnsorted)
+	{
+		NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
+		KTPage *draggedItem;
+		while (draggedItem = [e nextObject])
+		{
+			[draggedItem retain];
+			
+			KTPage *draggedItemParent = [draggedItem parent];
+			if (page != draggedItemParent)
+			{
+				[draggedItemParent removePage:draggedItem];
+				[page addPage:draggedItem];
+			}
+			
+			[draggedItem moveToIndex:dropRow];
+			
+			[draggedItem release];
+		}
+	}
+	else
+	{
+		NSEnumerator *e = [draggedItems objectEnumerator];
+		KTPage *aPage;
+		while (aPage = [e nextObject])
+		{
+			[aPage retain];
+			[[aPage parent] removePage:aPage];
+			[page addPage:aPage];
+			[aPage release];
+		}
+	}
+	
+	// select what was selected during the drag
+	NSIndexSet *selectedRows = [[self siteOutline] rowsForItems:selectedItems];
+	[[self siteOutline] selectRowIndexes:selectedRows byExtendingSelection:NO];
+	
+	// Record the Undo operation
+	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
+	
+	return YES;
+}
+			
 #pragma mark -
 #pragma mark Support
 
