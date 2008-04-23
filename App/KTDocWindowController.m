@@ -1171,6 +1171,9 @@ from representedObject */
 	
 	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:collection]];
 	
+	// expand the new collection
+	[[[self siteOutlineController] siteOutline] expandItem:collection];
+	
 	// tidy up the undo stack with a relevant name
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
 }
