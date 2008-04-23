@@ -264,8 +264,32 @@
 				NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
 														  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
 														 alignment:NSImageAlignTop];
+				// Now composite "SANDVOX" at the bottom
+				NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
+				NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
+				[aShadow setShadowOffset:NSMakeSize(0,0)];
+				[aShadow setShadowBlurRadius:32.0];
+				[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
+				
+				NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+												   font, NSFontAttributeName, 
+												   aShadow, NSShadowAttributeName, 
+												   [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
+												   nil];
+				NSString *s = @"SANDVOX";	// No need to localize of course
+				
+				NSSize textSize = [s sizeWithAttributes:attributes];
+				float left = ([snapshot512 size].width - textSize.width) / 2.0;
+				float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
+				
+				[snapshot512 lockFocus];
+				[s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
+				[snapshot512 unlockFocus];
+				
+				
 				
 				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:inURL]];
+				OBASSERT(thumbnailURL);	// shouldn't be nil, right?
 				result = [[snapshot512 PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:outError];
 			}
 			
