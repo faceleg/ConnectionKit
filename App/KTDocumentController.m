@@ -85,7 +85,7 @@
 	NSString *UTI = [NSString UTIForFileAtPath:requestedPath];
 	
 	// are we opening a KTDocument (and not a sample site)?
-	if ( [NSString UTI:UTI conformsToUTI:kKTDocumentUTI] 
+	if ( ([NSString UTI:UTI conformsToUTI:kKTDocumentUTI] || [NSString UTI:UTI conformsToUTI:kKTDocumentUTI_ORIGINAL])
 		 && ![requestedPath hasPrefix:[[NSBundle mainBundle] bundlePath]] )
 	{		
 		// check compatibility with KTModelVersion
