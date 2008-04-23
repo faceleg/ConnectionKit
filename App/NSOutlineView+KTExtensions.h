@@ -35,7 +35,7 @@
 
 - (id)itemAboveFirstSelectedRow;
 
-- (NSMutableArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
+- (NSArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
 - (NSIndexSet *)rowsForItems:(NSArray *)items;
 
 /*! returns outline cell via private name */

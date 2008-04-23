@@ -665,7 +665,8 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 		if ( nil != pboardData )
 		{
 			NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
-			selectedPages = [[[self siteOutlineController] siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
+			NSOutlineView *siteOutline = [[self siteOutlineController] siteOutline];
+			selectedPages = [NSMutableArray arrayWithArray:[siteOutline itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]]];
 			
 			switch ( [selectedPages count] )
 			{
