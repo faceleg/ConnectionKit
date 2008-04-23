@@ -273,10 +273,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 								 // General defaults ... app behavior. NOTE: THESE ARE CAPITALIZED
 #ifdef DEBUG
 		[NSNumber numberWithBool:YES],			@"IncludeDebugMenu",
-		[NSNumber numberWithBool:YES],			@"OBShouldAbortOnAssertFailureEnabled",
 #else
 		[NSNumber numberWithBool:NO],			@"IncludeDebugMenu",
 #endif
+										 
+// For now, we want 
 		@"all",									@"metaRobots",
 #ifdef APPLE_DESIGN_AWARDS_KEY
 		[NSNumber numberWithBool:YES],			@"LiveDataFeeds",		// I want ADA entries to have this on as default
@@ -518,7 +519,19 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #ifdef DEBUG
 	[defaults setBool:YES forKey:@"OBShouldAbortOnAssertFailureEnabled"];
+	NSLog(@"Aborting on Assertion failures; running build %@", [NSApplication buildVersion]);
+#else
+	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
+	
+	// For beta testers, throw an exception.
+#ifdef OMNI_FORCE_ASSERTIONS
+	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
+	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
+#else
+	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
+#endif
+	
 }	
 
 // TODO: make sure that everything used with wrappedInheritedValueForKey gets mentioned here!
