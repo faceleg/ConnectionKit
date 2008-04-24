@@ -312,7 +312,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
 		[NSArray array],						@"LastOpened",
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
-		[NSNumber numberWithInt:60 * 60 * 6],	@"SecondsBetweenHomeBaseChecks",
 		[NSNumber numberWithBool:YES],			@"ContinuousSpellChecking",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
@@ -325,7 +324,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 		
 		[NSNumber numberWithBool:NO],			@"AllowPasswordToBeLogged", // for Connection class
-		[NSNumber numberWithBool:YES],			@"DebugConnection",	// obsolete
 		
 		[NSNumber numberWithBool:YES],			@"ShowOutlineTooltips",
 		[NSNumber numberWithBool:YES],			@"OutlineTooltipShowPageType",
@@ -399,8 +397,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithFloat:0.3],			@"KTSharpeningFactor",
 		[NSNumber numberWithFloat:0.7],			@"KTPreferredJPEGQuality",
 		[NSNumber numberWithBool:NO],			@"KTPrefersPNGFormat",
-		[NSNumber numberWithBool:NO],			@"KTSendMeEmail",
-		[NSNumber numberWithBool:YES],			@"KTShowAnnouncements",		// show weblog badge
 		[NSNumber numberWithBool:YES],			@"KTHaloscanTrackbacks",	// KTHaloscanID is nil initially
 		
 		[NSNumber numberWithBool:NO],			@"ShowSearchPaths",			// NSLog where items are searched for
