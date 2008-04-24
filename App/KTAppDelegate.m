@@ -518,9 +518,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 
 #ifdef DEBUG
-	[defaults setBool:YES forKey:@"OBShouldAbortOnAssertFailureEnabled"];
+	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	NSLog(@"Aborting on Assertion failures; running build %@", [NSApplication buildVersion]);
 #else
+	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
 	
@@ -530,6 +531,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
 #else
 	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
+	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
 	
 }	
