@@ -69,7 +69,7 @@
                 oWindowController = KTDocWindowController;
                 siteOutline = NSOutlineView;
             };
-            SUPERCLASS = NSObjectController;
+            SUPERCLASS = NSTreeController;
         },
                 {
             ACTIONS =             {
