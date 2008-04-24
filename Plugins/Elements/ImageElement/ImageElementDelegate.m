@@ -378,8 +378,13 @@
 {
 	if ([[self delegateOwner] boolForKey:@"imageIsPlaceholder"])
 	{
-		KTMediaContainer *image = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[self placeholderImagePath]];
-		[[self delegateOwner] setValue:image forKey:@"image"];
+		NSUndoManager *undoManager = [self undoManager];
+		if (![undoManager isUndoing] && ![undoManager isRedoing])
+		{
+			KTMediaContainer *image = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[self placeholderImagePath]];
+			[[self delegateOwner] setValue:image forKey:@"image"];
+			[[self delegateOwner] setBool:YES forKey:@"imageIsPlaceholder"];	// Otherwise it gets set to NO
+		}
 	}
 }
 
