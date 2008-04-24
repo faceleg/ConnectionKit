@@ -481,10 +481,14 @@
 - (void)setTransientValue:(id)value forKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey
 {
 	NSString *error = nil;
-	NSData *data = [NSPropertyListSerialization dataFromPropertyList:value
-															  format:NSPropertyListBinaryFormat_v1_0
-													errorDescription:&error];
-													
+	NSData *data = nil;
+	if (value)
+	{
+		data = [NSPropertyListSerialization dataFromPropertyList:value
+														  format:NSPropertyListBinaryFormat_v1_0
+												errorDescription:&error];
+	}
+	
 	if (error) {
 		[NSException raise:NSInvalidArgumentException format:@"The value for key \"%@\" is not a valid property list", key];
 	}

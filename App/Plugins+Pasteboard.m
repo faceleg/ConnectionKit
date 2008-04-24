@@ -106,8 +106,15 @@
 	}
 	
 	
-	// Add in all attributes and keys from the model
+	// Add in all attributes and keys from the model. This deliberately ignores transient properties
 	[buffer addEntriesFromDictionary:[self currentValues]];
+	
+	
+	// Special case: pages need their thumbnail copied
+	if ([self isKindOfClass:[KTPage class]])
+	{
+		[buffer setValue:[self valueForKey:@"thumbnail"] forKey:@"thumbnail"];
+	}
 	
 	
 	// Ignore keys us or our subclasses don't want archived
