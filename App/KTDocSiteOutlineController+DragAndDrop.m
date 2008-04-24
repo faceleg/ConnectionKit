@@ -742,7 +742,7 @@
 	
 	// The behavior is different depending on the drag destination.
 	// Drops into the middle of an unsorted collection need to also have their indexes set.
-	if (dropRow != -1 && [page collectionSortOrder] == KTCollectionUnsorted)
+	if (dropRow > -1 && [page collectionSortOrder] == KTCollectionUnsorted)
 	{
 		NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
 		KTPage *draggedItem;
