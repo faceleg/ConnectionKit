@@ -3,7 +3,7 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.5a8
+SANDVOX_VERSION = 1.5a9
 
 // the SLA variant to wrap around the .dmg [beta,release]
 PRODUCT_VARIANT = beta
@@ -11,7 +11,7 @@ PRODUCT_VARIANT = beta
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 883
+CK_REVISION = 887
 
 // iMedia
 IMEDIA_REVISION = 557
