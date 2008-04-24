@@ -11,9 +11,9 @@
 [[endif2]]
 [[if parent.index.navigationArrowsStyle==2]]
 							<div class="collection-navigation text-navigation">
-								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]">&laquo; [[=&previousPage.titleText]]</a></div>[[endif3]]
+								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.titleText]]</a></div>[[endif3]]
 								<div class="collection-index"><a href="[[path parent]]">[[`navigateListHTML]]</a></div>
-								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] &raquo;</a></div>[[endif3]]
+								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] <span>&raquo;</span></a></div>[[endif3]]
 							</div>
 [[endif2]]
 [[endif]]
