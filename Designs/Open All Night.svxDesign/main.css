@@ -60,7 +60,7 @@ body.no-sidebar #page {
 }
 
 #title {
-    padding: 0;
+    padding: 70px 0px 0px 0px ;
     text-decoration:none;
     margin: 0;
     height: 225px;
@@ -88,7 +88,7 @@ h1 {
     font-size: 1.8em;
     text-align: center!important;
     color: white;
-	margin:70px 0px 0px 155px;    
+	margin:0px 0px 0px 155px;    
     display: block;
     width:450px;
     height:75px!important;

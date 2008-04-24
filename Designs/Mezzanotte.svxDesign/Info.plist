@@ -14,6 +14,8 @@
 	<string>1.5</string>
 	<key>CalloutBorderable</key>
 	<true/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.0</string>
 	<key>SidebarBorderable</key>
 	<true/>
 	<key>copyright</key>
@@ -24,5 +26,11 @@
 	<string>Mezzanotte</string>
 	<key>viewport</key>
 	<integer>772</integer>
+	<key>bannerHeight</key>
+	<integer>128</integer>
+	<key>bannerName</key>
+	<string>banner_image.jpg</string>
+	<key>bannerWidth</key>
+	<string>800</string>
 </dict>
 </plist>

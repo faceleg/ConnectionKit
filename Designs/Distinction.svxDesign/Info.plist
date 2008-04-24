@@ -14,10 +14,12 @@
 	<string>1.5</string>
 	<key>CalloutBorderable</key>
 	<true/>
+	<key>KTMinimumAppVersion</key>
+	<string>1.0</string>
 	<key>SidebarBorderable</key>
 	<true/>
 	<key>bannerHeight</key>
-	<string>120</string>
+	<string>200</string>
 	<key>bannerName</key>
 	<string>bannerImage.jpeg</string>
 	<key>bannerWidth</key>

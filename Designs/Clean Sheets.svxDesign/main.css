@@ -57,14 +57,22 @@ h4 {
 	color: #666;
 }
 
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
+}
+
+
 #title {
 	overflow:auto;
 	height:100%;
 	text-align:center;
+	margin: 0px auto;
+	width: 800px;
 }
 
 #title h1 {
-	margin:2.25em 5px 0.75em 5px;
+	font-size: 200%;
+	margin:2.25em 12px 0.75em 12px;
 }
 
 #title h1 a {

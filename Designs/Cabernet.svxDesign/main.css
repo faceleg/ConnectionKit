@@ -70,6 +70,10 @@ img {
 	border:0px none;
 }
 
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
+}
+
 
 /* 
 TITLE AREA

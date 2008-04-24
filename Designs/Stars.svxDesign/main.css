@@ -74,13 +74,20 @@ h2, h3, h4 {
 	margin:10px 0px 5px 0px;
 }
 
-.article p, .article-info {
+.article p {
+	margin-bottom: 0.8em;
 	padding:0px 7px;
 }
 
 .article-info {
 	text-align:right;
+	padding:0px 7px;
 }
+
+.article h3 {
+	margin-top: 2em;
+}
+
 
 #title {
 	position:relative;
@@ -258,6 +265,7 @@ body.allow-sidebar #main {
 
 .pagelet p {
 	padding:0px;
+	margin-bottom: 0.8em;
 }
 
 .callout {

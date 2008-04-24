@@ -155,7 +155,13 @@ MAIN PAGE SETUP
 	margin:0px 3px 0px 0px;
 }
 
+.article p {
+	margin-bottom: 0.8em;
+}
 
+.article h4 {
+	margin-top:1em;
+}
 
 /*
 SIDEBAR & CALLOUTS
@@ -209,6 +215,7 @@ body.allow-sidebar #main {
 
 .pagelet p {
 	padding:0px;
+	margin-bottom: 0.8em;
 }
 
 .callout {

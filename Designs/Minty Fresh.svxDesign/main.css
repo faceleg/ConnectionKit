@@ -108,6 +108,10 @@ body > #page-container {
 }
 
 
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
+}
+
 
 .article p, .article-info, .caption {
 	padding:0px 10px;
@@ -169,7 +173,7 @@ h2 {
 
 .article h3 {
 	padding:0px 10px;
-	margin:1em 0em;
+	margin:2em 0em 1em 0em;
 	border-top: 2px solid #303530;
 	border-bottom: 1px solid #bbb;
 }

@@ -65,6 +65,10 @@ h1, h2, h3, h4 {
 	padding:0px 7px;
 }
 
+.article p {
+	margin-bottom:0.8em;
+}
+
 /* IE Hack */
 /* Hides from IE5-mac \*/
 html > body h1.replaced, h1.TurnOffReplace {
@@ -147,6 +151,7 @@ body.allow-sidebar #main {
 
 .pagelet p {
 	padding:0px;
+	margin-bottom: 0.4em;
 }
 
 .callout {

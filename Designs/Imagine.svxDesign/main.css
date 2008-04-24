@@ -188,6 +188,13 @@ a:hover {
 	background: rgba(31,31,47,0.5);
 }
 
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
+}
+
+
+
+
 /* head */
 
 #page-container {

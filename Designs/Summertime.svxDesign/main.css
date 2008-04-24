@@ -47,6 +47,14 @@ ul {
 	padding-left:20px;
 }
 
+.article p {
+	margin-bottom: 0.8em;
+}
+
+.article h3 {
+	margin-top: 2em;
+}
+
 #page {
 	margin: 198px auto 60px auto;
 	background: url(page-background.png);
@@ -191,6 +199,7 @@ SIDEBAR & CALLOUTS
 	margin-left:5px;
 	margin-right: 5px;	
 }
+
 body.allow-sidebar #main {
 	margin-left:245px;
 	padding-top:1px;
@@ -248,12 +257,13 @@ html>body .pagelet.bordered.titled  div.pagelet-body {
 
 .pagelet p {
 	padding:0px;
+	margin-bottom: 0.6em;
 }
 
 .callout {
-	width:234px;
+	width:237px;
 	float:right;
-	margin:0px 0px 0px 5px;
+	margin:0px 0px 0px 12px;
 }
 
 

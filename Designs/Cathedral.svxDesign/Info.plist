@@ -23,8 +23,7 @@
 	<key>bannerWidth</key>
 	<integer>800</integer>
 	<key>comments</key>
-	<string>
- </string>
+	<string></string>
 	<key>copyright</key>
 	<string>Copyright © 2006, Karelia Software</string>
 	<key>genre</key>

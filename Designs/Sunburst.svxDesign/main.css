@@ -61,7 +61,7 @@ body.no-sidebar #page {
 #title {
     padding: 0;
     background: rgb(251, 245, 171) url(new_header.jpg) bottom no-repeat;
-    padding-bottom: 2px;
+    padding: 10px 0px 2px 0px;
     text-align: center;
     text-decoration:none;
     margin: 0;
@@ -77,10 +77,7 @@ h1 {
     text-align: center;
     text-transform: uppercase;
     color: black;
-    margin: 10px;
-    margin-top: 0;
-    padding-top: 10px;
-    margin-bottom: 5px;
+    margin: 0px 10px 5px 10px;
     display: block;
     text-shadow: 0px 1px 1px white;
 }

@@ -55,7 +55,6 @@ a:hover, a:active {
 	overflow: hidden;
 	height:200px;
 	background: url(default-header.jpeg) center top no-repeat;
-	text-shadow: #000 3px 1px 1px;
 	position:relative;
 
 }
@@ -65,6 +64,7 @@ a:hover, a:active {
 	top: 60px;
 	left: 250px;
 	font-size: 217% !important;
+	text-shadow: #333 2px 1px 2px;
 }
 
 #title h1 a {
@@ -78,6 +78,7 @@ a:hover, a:active {
 #title p {
 	margin-left: 250px;
 	font-size:120%;
+	text-shadow: #333 1px 1px 2px;
 }
 
 #title h1 a {
@@ -106,7 +107,7 @@ SITEMENU
 
 #sitemenu ul {
 	margin:0px 0px 16px 0px;
-	padding:1px 6px 1px 2px;
+	padding:1px 6px 1px 0px;
 	list-style:none;
 	text-align:left;
 	background:#0a1725 ;
@@ -151,6 +152,9 @@ MAIN PART
 	clear:right;
 }
 
+.article p {
+	margin-bottom: 0.8em;
+}
 
 .article-info {
 	clear:right;
@@ -204,6 +208,10 @@ body.allow-sidebar #main {
 
 .pagelet div {
 	margin:0px 3px;
+}
+
+.pagelet p {
+	margin-bottom: 0.8em;
 }
 
 

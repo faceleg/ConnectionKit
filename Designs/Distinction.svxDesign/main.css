@@ -58,6 +58,9 @@ ol {
 	padding:0px 10px;
 }
 
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
+}
 
 #logo-container {
 	float:right;
@@ -117,7 +120,7 @@ h2 {
 
 .article h3 {
 	padding:0px 10px;
-	margin:1em 0em;
+	margin:2em 0em 1em 0em;
 	border-top: 3px solid #000;
 	border-bottom: 1px solid #bbb;
 }
@@ -130,9 +133,7 @@ h4 {
 /*
 SITEMENU
 */
-#sitemenu-container {
-	padding-bottom:120px;
-}
+
 
 #sitemenu ul {
 	width:100%;

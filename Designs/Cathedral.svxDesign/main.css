@@ -84,7 +84,7 @@ a img {
 }
 
 p {
-	margin-bottom: 20px;
+	margin-bottom: 0.8em;
 }
 
 body {
@@ -148,11 +148,11 @@ body {
 						h1 a {
 						  text-decoration: none;
 						  color: #ddd;
-						  font-weight: normal;
-							}
+						  font-weight: normal!important;
+						}
 
 					#title h1 {
-						margin: 15px 0 0 15px;
+						margin: 15px 15px 0 15px;
 					}
 
 				#sitemenu-container {

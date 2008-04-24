@@ -86,21 +86,22 @@ body {
 
 	#title {
 		vertical-align: middle;
-		padding-top: 101px;
-		padding-left: 38px;
-		width: 700px;
-		height: 128px;
+		position: absolute;
+		left: 28px;
+		top: 40px;
+		width: 708px;
+		height: 147px;
 	}
-	* html #title { padding-top: 102px; }
 
-	.no-sidebar #title { padding-top: 46px; }
-	* html .no-sidebar #title { padding-top: 49px; }
-
+		.allow-sidebar #title {
+		top: 92px;
+	}
+	
 	#title h1 {
-		margin: 35px 20px 0px 5px;
+		margin: 45px 20px 0px 15px;
 		font-size: 1.7em;
 		color:white;
-		text-shadow:black 2px 2px 1px;
+		text-shadow:black 2px 2px 2px;
 		overflow: hidden;
 	}
 	
@@ -135,8 +136,8 @@ body {
 		font-size: 1em;
 		color: #fff;
 		position: absolute;
-		top: 8px;
-		left: 265px;
+		top: -85px;
+		left: 235px;
 		text-align: right;
 	}
 	

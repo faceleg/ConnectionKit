@@ -1,3 +1,9 @@
 #page-top {
-	background: #303530 url(banner_image.jpg) center bottom no-repeat;	
+	background: #303530 url(banner_image.jpg) center top no-repeat;	
 }
+ 
+#title {
+	min-height: 100px;
+	text-shadow: #303530 2px 1px 2px;
+	font-weight: bold;
+} 

@@ -60,6 +60,8 @@ a:active {
 	background: url(DiagonalPatternLight.gif);
 }
 
+
+
 #title h1, #title p {
 	margin:2px 8px;
 }
@@ -153,6 +155,10 @@ MAIN PART
 	border-width: 1px 1px 0px 1px;
 	border-color: #3b0700;
 	border-style: solid;
+}
+
+.article p, .pagelet p {
+	margin-bottom: 0.8em;
 }
 
 /*

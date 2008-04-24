@@ -227,7 +227,7 @@ h2 span.in { display: block; padding: 0 8px 5px 8px; background: #2c557c url(h2b
 
 .article p {
 	line-height: 1.4em;
-	margin:0px;
+	margin:0px 0px 0.8em 0em;
 	position:relative;
 }
 

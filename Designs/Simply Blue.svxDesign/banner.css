@@ -1,0 +1,14 @@
+#title {
+	background: url(banner_image.jpg) center top no-repeat; 
+	height: 200px;
+}
+
+
+h1 {
+	padding-top: 36px;
+}
+
+h1, #title p {
+	font-weight: bold;	
+	text-shadow: #102536 1px 1px 2px;
+}

@@ -165,13 +165,6 @@ body.no-sidebar #sitemenu-container {
     overflow: hidden;
 }
 
-#sitemenu {
-
-}
-
-body.no-sidebar #sitemenu {
-}
-
 #sitemenu-content ul {
     text-align: right;
     list-style: none;
@@ -188,8 +181,8 @@ body.no-sidebar #sitemenu {
 }
 
 body.no-sidebar #sitemenu-content li {
-    float: right;
-    margin-left: 20px;
+	display:inline;
+	margin-left: 20px;
 }
 
 #sitemenu-content a{

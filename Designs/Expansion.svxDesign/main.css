@@ -53,6 +53,10 @@ ul {
 	padding-left:20px;
 }
 
+.article p, .article h3, .pagelet p  {
+	margin-bottom: 0.8em;
+}
+
 
 /* 
 	TITLE & LOGO
@@ -70,8 +74,7 @@ ul {
 	border: 2px solid #dddcc5;
 	-webkit-border-top-left-radius: 10px; 
 	-webkit-border-top-right-radius: 10px;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-topright: 10px;	
+	/* no border radius for mozilla because of potential background image */
 }
 
 h1 {
@@ -195,7 +198,6 @@ h1 a {
 *:first-child+html #sitemenu li:hover {
 	background-color: #ffe;
 }
-
 
 #sitemenu li span.in {
 	padding: 2px 6px;

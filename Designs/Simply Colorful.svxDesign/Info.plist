@@ -21,6 +21,12 @@
 	<key>comments</key>
 	<string>
  </string>
+ 	<key>bannerHeight</key>
+	<string>120</string>
+	<key>bannerName</key>
+	<string>bannerImage.jpeg</string>
+	<key>bannerWidth</key>
+	<string>800</string>
 	<key>copyright</key>
 	<string>Copyright © 2006, Karelia Software</string>
 	<key>frameRGB</key>

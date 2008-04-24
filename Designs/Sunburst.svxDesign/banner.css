@@ -1,4 +1,4 @@
-#sitemenu-container {
+#title {
 	background: url(banner_image.jpg) center top no-repeat; 
-	padding-bottom:120px;
+	min-height:140px;
 }

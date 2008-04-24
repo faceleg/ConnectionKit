@@ -24,5 +24,11 @@
 	<string>Skyline</string>
 	<key>viewport</key>
 	<integer>770</integer>
+	<key>bannerHeight</key>
+	<string>147</string>
+	<key>bannerName</key>
+	<string>banner_image.jpg</string>
+	<key>bannerWidth</key>
+	<string>708</string>
 </dict>
 </plist>

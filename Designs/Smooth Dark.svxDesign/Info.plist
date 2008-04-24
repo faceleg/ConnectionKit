@@ -4,35 +4,35 @@
 <dict>
 	<key>CFBundleGetInfoString</key>
 	<string>SANDVOX_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
-	<key>CFBundleIdentifier</key>
-	<string>sandvox.SmoothDark</string>
-	<key>CFBundleShortVersionString</key>
+ <key>CFBundleIdentifier</key>
+ <string>sandvox.SmoothDark</string>
+ <key>CFBundleShortVersionString</key>
 	<string>SANDVOX_VERSION</string>
-	<key>CFBundleVersion</key>
+ <key>CFBundleVersion</key>
 	<string>SVN_VERSION</string>
-	<key>CalloutBorderable</key>
-	<false/>
+ <key>CalloutBorderable</key>
+ <false/>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
-	<key>SidebarBorderable</key>
-	<false/>
-	<key>backgroundRGB</key>
-	<string>ffffff</string>
-	<key>comments</key>
+ <key>SidebarBorderable</key>
+ <false/>
+ <key>backgroundRGB</key>
+ <string>ffffff</string>
+ <key>comments</key>
 	<string></string>
-	<key>copyright</key>
-	<string>Copyright © 2006, Karelia Software</string>
-	<key>frameRGB</key>
-	<string>333333</string>
-	<key>genre</key>
-	<string>simple</string>
-	<key>tallViewer</key>
-	<true/>
-	<key>textRGB</key>
-	<string>000000</string>
-	<key>title</key>
-	<string>Smooth Dark</string>
-	<key>viewport</key>
-	<integer>772</integer>
+ <key>copyright</key>
+ <string>Copyright © 2006, Karelia Software</string>
+ <key>frameRGB</key>
+ <string>333333</string>
+ <key>genre</key>
+ <string>simple</string>
+ <key>tallViewer</key>
+ <true/>
+ <key>textRGB</key>
+ <string>000000</string>
+ <key>title</key>
+ <string>Smooth Dark</string>
+ <key>viewport</key>
+ <integer>772</integer>
 </dict>
 </plist>
