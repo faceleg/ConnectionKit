@@ -18,6 +18,7 @@
 #import "NSImage+Karelia.h"
 #import "KTDocument.h"
 #import "NSArray+Karelia.h"
+#import "assertions.h"
 
 @interface KTDocSiteOutlineController (IconsPrivate)
 
@@ -49,6 +50,7 @@
 
 - (NSImage *)iconForPage:(KTPage *)page
 {
+	OBPRECONDITION(page);
 	NSImage *result = nil;
 	
 	// The home page always appears as some kind of favicon
@@ -70,7 +72,7 @@
 			result = [self iconForPlugin:[[self class] defaultIconPluginForPage:page]];
 		}
 	}
-	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -125,9 +127,10 @@
 
 - (NSImage *)iconForPlugin:(KTAbstractHTMLPlugin *)plugin
 {
-	NSParameterAssert(plugin);
+	OBPRECONDITION(plugin);
 	
 	NSString *bundleIdentifier = [plugin identifier];
+	OBASSERT(bundleIdentifier);
 	NSImage *result = [myCachedPluginIcons objectForKey:bundleIdentifier];
 	
 	if (!result)
@@ -144,6 +147,7 @@
  */
 + (KTAbstractHTMLPlugin *)defaultIconPluginForPage:(KTPage *)page
 {
+	OBPRECONDITION(page);
 	KTAbstractHTMLPlugin *result;
 	
 	if ([page isCollection] && [page index])
@@ -154,7 +158,7 @@
 	{
 		result = [page plugin];
 	}
-	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -288,7 +292,7 @@
 - (void)beginGeneratingCustomIconForPage:(KTPage *)page
 {
 	// We only ever generate 1 icon at a time since it's a pretty low priority task
-	NSAssert(!myGeneratingCustomIcon, @"Can only generate 1 icon at a time");
+	OBASSERTSTRING(!myGeneratingCustomIcon, @"Can only generate 1 icon at a time");
 	
 	// Remove the page from the queue
 	[myCustomIconGenerationQueue removeObject:page];

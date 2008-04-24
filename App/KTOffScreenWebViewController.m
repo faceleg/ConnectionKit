@@ -22,7 +22,7 @@ static WebView *sOffscreenWebView = nil;
 + (DOMDocument *)DOMDocumentForHTMLString:(NSString *)inHTML baseURL:(NSURL *)aURL
 {
 	DOMDocument *result = nil;
-	NSParameterAssert(inHTML != nil);
+	OBPRECONDITION(inHTML != nil);
 	
 	if (  nil == sRenderingFragmentLock )
 	{

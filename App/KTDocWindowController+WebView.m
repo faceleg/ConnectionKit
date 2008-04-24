@@ -1436,7 +1436,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	{
 		// grab our element info
 		NSDictionary *info = [self contextElementInformation];
-		NSAssert((nil != info), @"contextElementInformation cannot be nil!");
+		OBASSERTSTRING((nil != info), @"contextElementInformation cannot be nil!");
 		
 		// have we set up a local link?
 		if ( nil != [info valueForKey:@"KTLocalLink"] )
@@ -1662,7 +1662,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	// figure out where we are in the WebHTMLView
 	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
 	NSView *documentView = [[[oWebView mainFrame] frameView] documentView];
-	NSAssert([documentView isKindOfClass:[WebHTMLView class]], @"documentView should be a WebHTMLView");
+	OBASSERTSTRING([documentView isKindOfClass:[WebHTMLView class]], @"documentView should be a WebHTMLView");
 	
 	// determine dragCaretDOMRange (DOMRange, of 0 length, where drop will go, between chars)
 	id bridge = [documentView _bridge];

@@ -124,7 +124,7 @@
 
 + (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
 {
-	NSParameterAssert([aBundle bundleIdentifier]);
+	OBPRECONDITION([aBundle bundleIdentifier]);
 	
 	id root = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
 											inManagedObjectContext:[aDocument managedObjectContext]];
@@ -151,7 +151,7 @@
  */
 + (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier
 {
-	NSParameterAssert([parent managedObjectContext]);		NSParameterAssert(pluginIdentifier);
+	OBPRECONDITION([parent managedObjectContext]);		OBPRECONDITION(pluginIdentifier);
 	
 	
 	// Create the page
@@ -199,10 +199,10 @@
 				dataSourceDictionary:(NSDictionary *)aDictionary
 	  insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;
 {
-	NSParameterAssert(nil != aParent);
+	OBPRECONDITION(nil != aParent);
 
 	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
-	NSAssert((nil != plugin), @"drag dictionary does not have a real plugin");
+	OBASSERTSTRING((nil != plugin), @"drag dictionary does not have a real plugin");
 	
 	id page = [self insertNewPageWithParent:aParent plugin:plugin];
 	

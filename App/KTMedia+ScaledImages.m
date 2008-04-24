@@ -360,7 +360,7 @@ static id sSelectorLocker;
 // NB: this is obviously not hugely efficient. pre-load a static table?
 - (NSString *)imageNameForTag:(NSString *)aTag
 {
-	NSAssert((nil != aTag), @"aTag should not be nil");
+	OBASSERTSTRING((nil != aTag), @"aTag should not be nil");
 	
 	NSDictionary *types = [[self class] defaultMediaUses];
 	NSEnumerator *e = [[types allKeys] objectEnumerator];

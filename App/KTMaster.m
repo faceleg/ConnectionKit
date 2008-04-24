@@ -384,7 +384,7 @@
 
 - (void)setTimestampType:(KTTimestampType)timestampType
 {
-	NSParameterAssert(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
+	OBPRECONDITION(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
 	
 	[self setWrappedInteger:timestampType forKey:@"timestampType"];
 	

@@ -513,9 +513,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		}
 	}
 
+		// Set these for the next run -- it's probably too late now; the assertion thing may have already been set
 #ifdef DEBUG
 	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	NSLog(@"Aborting on Assertion failures; running build %@", [NSApplication buildVersion]);
+
+
 #else
 	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
@@ -525,11 +528,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #ifdef OMNI_FORCE_ASSERTIONS
 	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
+
 #else
 	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
-	
+	[defaults synchronize];
+	OBSetupFromDefaults();
 }	
 
 // TODO: make sure that everything used with wrappedInheritedValueForKey gets mentioned here!
@@ -2218,7 +2223,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		if (result)
 		{
 			NSString *checkingQCFilePath = [[NSBundle mainBundle] pathForResource:@"CheckOpenGL" ofType:@"qtz"];
-			NSAssert(nil != checkingQCFilePath, @"Cannot find CheckOpenGL.qtz");
+			OBASSERTSTRING(nil != checkingQCFilePath, @"Cannot find CheckOpenGL.qtz");
 			
 			NSOpenGLPixelFormatAttribute	attributes[] = {
 				NSOpenGLPFAAccelerated,

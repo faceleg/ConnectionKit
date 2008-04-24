@@ -291,12 +291,12 @@
 		
 		// make a new root
 		NSBundle *defaultRootBundle = [[[oNewDocHomePageTypePopup selectedItem] representedObject] bundle];
-		NSAssert(defaultRootBundle, @"No root bundle for new site");
+		OBASSERTSTRING(defaultRootBundle, @"No root bundle for new site");
 		// POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
 		[defaultRootBundle load];
 		
 		KTPage *root = [KTPage rootPageWithDocument:self bundle:defaultRootBundle];
-		NSAssert((nil != root), @"root page is nil!");
+		OBASSERTSTRING((nil != root), @"root page is nil!");
 		[self setRoot:root];
 		[[self documentInfo] setValue:root forKey:@"root"];
 		
@@ -528,7 +528,7 @@
 /*! return the single KTDocWindowController associated with this document */
 - (KTDocWindowController *)windowController
 {
-	//NSAssert(nil != myDocWindowController, @"windowController should not be nil");
+	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
 	return myDocWindowController;
 }
 

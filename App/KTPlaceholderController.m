@@ -60,7 +60,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 		// fire up the quicktime preview
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"preview" ofType:@"mp4"];
 		NSError *error = nil;
-		NSAssert([NSThread isMainThread], @"should not be creating intro movie from a background thread");
+		OBASSERTSTRING([NSThread isMainThread], @"should not be creating intro movie from a background thread");
 		QTMovie *movie = [QTMovie movieWithFile:path error:&error];
 		if (nil == movie)
 		{

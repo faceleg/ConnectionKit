@@ -55,7 +55,7 @@
  */
 + (KTPagelet *)pageletWithPage:(KTPage *)page plugin:(KTElementPlugin *)plugin;
 {	
-	NSParameterAssert(page);	NSParameterAssert(plugin);
+	OBPRECONDITION(page);	OBPRECONDITION(plugin);
 	
 	
 	// Figure out where to place the pagelet
@@ -68,7 +68,7 @@
 		}
 		else
 		{
-			NSAssert([page sidebarChangeable], @"Attempting to create pagelet on page which allows neither sidebar or callouts");
+			OBASSERTSTRING([page sidebarChangeable], @"Attempting to create pagelet on page which allows neither sidebar or callouts");
 			[page setIncludeSidebar:YES];
 		}
 	}
@@ -90,7 +90,7 @@
  */
 + (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location
 {
-	NSParameterAssert([page managedObjectContext]);		NSParameterAssert(identifier);
+	OBPRECONDITION([page managedObjectContext]);		OBPRECONDITION(identifier);
 	
 	
 	// Create the pagelet
@@ -319,7 +319,7 @@
 {
 	// Ensure no-one tries to set a top or bottom sidebar location
 	BOOL isTopOrBottomLocation = (location == KTTopSidebarPageletLocation || location == KTBottomSidebarPageletLocation);
-	NSAssert(!isTopOrBottomLocation, @"Can't directly set the location of a pagelet to top or bottom sidebar; use -setPrefersBottom: instead");
+	OBASSERTSTRING(!isTopOrBottomLocation, @"Can't directly set the location of a pagelet to top or bottom sidebar; use -setPrefersBottom: instead");
 	
 	// Store the value
 	[self willChangeValueForKey:@"location"];

@@ -65,7 +65,7 @@
 		[psc release];
 	}
 	
-	NSAssert((nil != myManagedObjectContext), @"myManagedObjectContext should not be nil");
+	OBASSERTSTRING((nil != myManagedObjectContext), @"myManagedObjectContext should not be nil");
 	
 	return (NSManagedObjectContext *)myManagedObjectContext;
 }
@@ -90,7 +90,7 @@
         }
 	}
 	
-	NSAssert((nil != myManagedObjectModel), @"myManagedObjectModel should not be nil");
+	OBASSERTSTRING((nil != myManagedObjectModel), @"myManagedObjectModel should not be nil");
 	
 	return myManagedObjectModel;
 }

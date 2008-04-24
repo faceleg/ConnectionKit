@@ -656,7 +656,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (NSString *)outlineView:(NSOutlineView *)ov toolTipForCell:(NSCell *)cell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)tc item:(id)item mouseLocation:(NSPoint)mouseLocation
 {
-	NSAssert([item isKindOfClass:[KTPage class]], @"item is not a page!");
+	OBASSERTSTRING([item isKindOfClass:[KTPage class]], @"item is not a page!");
 	
 	NSString *result = nil;
 	

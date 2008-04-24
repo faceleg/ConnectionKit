@@ -190,8 +190,8 @@
 
 + (KTPage *)pageWithPasteboardRepresentation:(NSDictionary *)archive parent:(KTPage *)parent
 {
-	NSParameterAssert(archive && [archive isKindOfClass:[NSDictionary class]]);
-	NSParameterAssert(parent);
+	OBPRECONDITION(archive && [archive isKindOfClass:[NSDictionary class]]);
+	OBPRECONDITION(parent);
 	
 	
 	// Create a basic page
@@ -294,8 +294,8 @@
 
 + (KTPagelet *)pageletWithPasteboardRepresentation:(NSDictionary *)archive page:(KTPage *)page
 {
-	NSParameterAssert(archive && [archive isKindOfClass:[NSDictionary class]]);
-	NSParameterAssert(page);	
+	OBPRECONDITION(archive && [archive isKindOfClass:[NSDictionary class]]);
+	OBPRECONDITION(page);	
 	
 	
 	// Create a basic pagelet

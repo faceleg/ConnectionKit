@@ -45,7 +45,7 @@
 		if (delegateClass)
 		{
 			result = [[delegateClass alloc] init];
-            NSAssert(result, @"plugin delegate cannot be nil!");
+            OBASSERTSTRING(result, @"plugin delegate cannot be nil!");
 			
 			[result setDelegateOwner:plugin];
 			[myPluginDelegates setObject:result forKey:pluginID];

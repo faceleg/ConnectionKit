@@ -103,7 +103,7 @@
 {
 	// A set cannot contain the same object twice. Trying to insert a pagelet for a second time
 	// would screw up the ordering keys.
-	NSAssert(![[self pagelets] containsObject:pagelet], @"Attempting to insert a pagelet twice");
+	OBASSERTSTRING(![[self pagelets] containsObject:pagelet], @"Attempting to insert a pagelet twice");
 	
 	// Get the array of pagelets BEFORE the new one is added to it
 	KTPageletLocation location = [pagelet locationByDifferentiatingTopAndBottomSidebars];

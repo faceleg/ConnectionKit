@@ -82,7 +82,7 @@
 - (unsigned)hash
 {
 	// turn myUniqueID+myName into an integer
-	NSAssert((nil != myUniqueID), @"myUniqueID should not be nil");
+	OBASSERTSTRING((nil != myUniqueID), @"myUniqueID should not be nil");
 	unsigned result = [myUniqueID intValue];
 	
 	if ( nil != myName )
@@ -110,7 +110,7 @@
 {
 	if ( nil == myRealData )
 	{
-		NSAssert([myDocumentWeakRef isKindOfClass:[KTDocument class]], @"myDocumentWeakRef should (still) exist and be a KTDocument");
+		OBASSERTSTRING([myDocumentWeakRef isKindOfClass:[KTDocument class]], @"myDocumentWeakRef should (still) exist and be a KTDocument");
 		
 		KTManagedObjectContext *context = [myDocumentWeakRef createPeerContext];
 		[context lockPSCAndSelf];

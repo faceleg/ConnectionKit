@@ -96,8 +96,8 @@
 		imageName = [components objectAtIndex:1];
 	}
 	
-	NSAssert((nil != mediaID), @"mediaID should not be nil");
-	NSAssert((nil != imageName), @"imageName should not be nil");
+	OBASSERTSTRING((nil != mediaID), @"mediaID should not be nil");
+	OBASSERTSTRING((nil != imageName), @"imageName should not be nil");
 	
 	BOOL shouldUseThreadedLoading = NO;
 	@synchronized ( [[[self document] windowController] addingPagesViaDragPseudoLock] )
@@ -173,7 +173,7 @@ NEWER WEBKIT: (Jan 2007):
 	NSData *data = nil;
 	
 	NSArray *components = [aSpecifier pathComponents];
-	NSAssert((([components count] == 1) || ([components count] == 2)), @"bad component count");
+	OBASSERTSTRING((([components count] == 1) || ([components count] == 2)), @"bad component count");
 	NSString *mediaID = [components objectAtIndex:0];
 	
 	NSString *imageName = nil;

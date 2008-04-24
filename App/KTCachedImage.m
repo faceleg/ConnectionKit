@@ -59,8 +59,8 @@
 		maxWidth = [[typeInfo valueForKey:@"maxWidth"] intValue];
 		maxHeight = [[typeInfo valueForKey:@"maxHeight"] intValue];
 	}
-	NSAssert((maxWidth > 0), @"maxWidth should be > 0");
-	NSAssert((maxHeight > 0), @"maxHeight should be > 0");
+	OBASSERTSTRING((maxWidth > 0), @"maxWidth should be > 0");
+	OBASSERTSTRING((maxHeight > 0), @"maxHeight should be > 0");
 	
 	// if we're looking for a thumbnailImage and we have specific data for that, use that
 	if ( [aName isEqualToString:@"thumbnailImage"] && (nil != [aMediaObject thumbnailData]) )
@@ -128,7 +128,7 @@
 	}
 	
 // FIXME: CASE 14405: IF THE UNDERLYING MEDIA IS USING ALIAS STORAGE AND THE FILE IS MOVED RESULT WILL BE NIL
-	//NSAssert((nil != result), @"Image (before scaling) should not be nil. Has the original file been moved?");
+	//OBASSERTSTRING((nil != result), @"Image (before scaling) should not be nil. Has the original file been moved?");
 	if ( nil == result )
 	{
 // TODO: put up an NSError panel or ask user to locate underlying media
@@ -141,7 +141,7 @@
 
 	// do we need to scale? let's check ...
 	NSSize resultSize = [result size];
-	NSAssert(!NSEqualSizes(NSZeroSize,resultSize), @"result should not be NSZeroSize");
+	OBASSERTSTRING(!NSEqualSizes(NSZeroSize,resultSize), @"result should not be NSZeroSize");
 	if ( (resultSize.width > maxWidth) || (resultSize.height > maxHeight) )
 	{
 		// pull out behaviour and alignment; if not set, defaults are returned
@@ -152,7 +152,7 @@
 									height:maxHeight
 								  behavior:behavior
 								 alignment:alignment];
-		NSAssert(!NSEqualSizes(NSZeroSize,[result size]), @"scaledImage should not be NSZeroSize");
+		OBASSERTSTRING(!NSEqualSizes(NSZeroSize,[result size]), @"scaledImage should not be NSZeroSize");
 	}
 	    
 	// square it up once more
@@ -467,8 +467,8 @@
 
 - (void)cacheFaviconData:(NSData *)faviconData
 {
-    NSAssert((nil != faviconData), @"faviconData should not be nil");
-    NSAssert([[self name] isEqualToString:@"faviconImage"], @"method should only be used with faviconImages");
+    OBASSERTSTRING((nil != faviconData), @"faviconData should not be nil");
+    OBASSERTSTRING([[self name] isEqualToString:@"faviconImage"], @"method should only be used with faviconImages");
     
 	// set digest
 	[self setWrappedValue:[faviconData partiallyDigestString] forKey:@"imageDigest"];        
@@ -531,7 +531,7 @@
 - (void)cacheImageInPreferredFormat:(NSImage *)anImage
 {
 	OFF((@"cacheImageInPreferredFormat:"));
-    NSAssert((nil != anImage), @"anImage should not be nil");
+    OBASSERTSTRING((nil != anImage), @"anImage should not be nil");
 	
     // normalize size before examining values
     [anImage normalizeSize];
@@ -680,7 +680,7 @@
 
 			// regenerate faviconData and cache it
 			NSData *data = [self faviconData];
-			NSAssert((nil != data), @"faviconData should not be nil if you want to cache it");
+			OBASSERTSTRING((nil != data), @"faviconData should not be nil if you want to cache it");
 			[self cacheFaviconData:data];
 		}
 		[self unlockPSCAndMOC];
@@ -689,8 +689,8 @@
 	{
 		KTMedia *media = [self media];
 		NSImage *scaledImage = [KTCachedImage scaledImageWithImageName:name media:media];
-		NSAssert((nil != scaledImage), @"scaledImage should not be nil if you want to cache it");
-		NSAssert(!NSEqualSizes(NSZeroSize,[scaledImage size]), @"scaledImage must not be zero size");
+		OBASSERTSTRING((nil != scaledImage), @"scaledImage should not be nil if you want to cache it");
+		OBASSERTSTRING(!NSEqualSizes(NSZeroSize,[scaledImage size]), @"scaledImage must not be zero size");
 		
 		[self lockPSCAndMOC];
 		

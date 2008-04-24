@@ -24,7 +24,7 @@
 
 - (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTHTMLParser *)parser
 {
-	NSAssert(proxyObject, @"-[KTHTMLParserMasterCahce initWithProxyObject:parser:] Attempt with nil proxy object");
+	OBASSERTSTRING(proxyObject, @"-[KTHTMLParserMasterCahce initWithProxyObject:parser:] Attempt with nil proxy object");
 	
 	[super initWithProxyObject:proxyObject];
 	
@@ -142,8 +142,8 @@
  */
 - (void)overrideKey:(NSString *)key withValue:(id)override
 {
-	NSAssert(key, @"Attempt to override a nil key in the parser cache");
-	NSAssert(override, @"Attempt to override parser cache key with nil value");
+	OBASSERTSTRING(key, @"Attempt to override a nil key in the parser cache");
+	OBASSERTSTRING(override, @"Attempt to override parser cache key with nil value");
 	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser cache override key", key);
 	NSAssert1(![myOverrides objectForKey:key], @"The key \"%@\" is already in overidden", key);
 	

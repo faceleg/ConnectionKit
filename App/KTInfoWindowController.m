@@ -272,7 +272,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (IBAction) changeCollectionStyle:(id)sender
 {
-	NSAssert( [sender respondsToSelector:@selector(representedObject)], @"Sender needs to have a representedObject" );
+	OBASSERTSTRING( [sender respondsToSelector:@selector(representedObject)], @"Sender needs to have a representedObject" );
 	NSDictionary *presetDict= [sender representedObject];
 	
 	if (CUSTOM_TAG == [sender tag])

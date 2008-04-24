@@ -60,7 +60,7 @@
  */
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName
 {
-	NSParameterAssert(aParent);
+	OBPRECONDITION(aParent);
 	
 	// Create the page
 	KTAbstractPage *result = [NSEntityDescription insertNewObjectForEntityForName:entityName

@@ -313,8 +313,8 @@ static unsigned sLastParserID;
 
 - (void)overrideKey:(NSString *)key withValue:(id)override
 {
-	NSAssert(key, @"Attempt to override a nil key");
-	NSAssert(override, @"Attempt to override parser key with nil value");
+	OBASSERTSTRING(key, @"Attempt to override a nil key");
+	OBASSERTSTRING(override, @"Attempt to override parser key with nil value");
 	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser override key", key);
 	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key \"%@\" is already overidden", key);
 	
@@ -900,9 +900,9 @@ static unsigned sLastParserID;
 		}
 	}
 	
-	NSAssert(pseudoEntity, @"entity cannot be null");
-	NSAssert(property, @"property cannot be null");
-	NSAssert(uniqueID, @"uniqueID cannot be null");
+	OBASSERTSTRING(pseudoEntity, @"entity cannot be null");
+	OBASSERTSTRING(property, @"property cannot be null");
+	OBASSERTSTRING(uniqueID, @"uniqueID cannot be null");
 	NSString *resultingID = [NSString stringWithFormat:@"k-%@-%@-%@", pseudoEntity, property, uniqueID];
 	if (nil != code)
 	{

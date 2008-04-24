@@ -320,7 +320,7 @@
 	
 	[peerContext release];
 	
-	NSAssert((nil != peerContext), @"peerContext should still be retained by myPeerContexts");
+	OBASSERTSTRING((nil != peerContext), @"peerContext should still be retained by myPeerContexts");
 	
 	return peerContext;
 }
@@ -372,7 +372,7 @@
 
 - (void)releasePeerContext:(KTManagedObjectContext *)aContext
 {
-	NSAssert(![aContext isEqual:[self managedObjectContext]], @"aContext should not be the document's main context");
+	OBASSERTSTRING(![aContext isEqual:[self managedObjectContext]], @"aContext should not be the document's main context");
 	
 	BOOL isPeer = NO;
 	@synchronized ( myPeerContexts )
@@ -434,7 +434,7 @@
 
 - (void)resetOtherPeerContexts:(KTManagedObjectContext *)currentContext
 {
-	NSAssert(![currentContext isEqual:[self managedObjectContext]], @"currentContext should not be the document's main context");
+	OBASSERTSTRING(![currentContext isEqual:[self managedObjectContext]], @"currentContext should not be the document's main context");
 	@synchronized ( myPeerContexts )
 	{
 		// optimization
@@ -895,7 +895,7 @@
 // TODO: THIS IS COMPLICATED! CAN THIS BE MADE ANY MORE EFFICIENT? SHARK THIS METHOD
 - (BOOL)isOnlyRichTextChange:(NSSet *)changedObjects
 {
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	// if the set consists of only three objects, one Page, one PluginPropertiesDictionary, and one KeyValueAsString
 	// and the only change to the Page is lastModificationDate

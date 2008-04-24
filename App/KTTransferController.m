@@ -1248,7 +1248,7 @@ static NSArray *sReservedNames = nil;
 // Returns whether or not to close the window.  In this case, doesn't close the window; we will take care of that in finishTransferAndCloseSheet.
 - (BOOL)transferControllerDefaultButtonAction:(CKTransferController *)controller
 {
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	if (myKeepPublishing)
 	{
@@ -1287,7 +1287,7 @@ static NSArray *sReservedNames = nil;
 	[[self associatedDocument] resumeAutosave];	// balance to upload...toSuggestedPath
 	mySuspended = NO;
 	
-	NSAssert([NSThread isMainThread], @"should be main thread"); // if not, we have to make sure UI calls are performed on main thread
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread"); // if not, we have to make sure UI calls are performed on main thread
 	
 	[myController setDefaultButtonTitle:NSLocalizedString(@"OK", @"OK")];
 
@@ -1590,7 +1590,7 @@ static NSArray *sReservedNames = nil;
 
 - (void)showIndeterminateProgressWithStatus:(NSString *)msg
 {	
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	if ([self connection])
 	{

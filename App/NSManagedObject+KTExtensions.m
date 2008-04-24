@@ -89,7 +89,7 @@
 
 - (BOOL)isValidForKey:(NSString *)aKey
 {
-	NSAssert([self hasAttributeNamed:aKey],@"object has no attribute with that name!");
+	OBASSERTSTRING([self hasAttributeNamed:aKey],@"object has no attribute with that name!");
 
 	BOOL result = NO;
 	@try

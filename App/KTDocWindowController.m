@@ -894,7 +894,7 @@ from representedObject */
 
 - (IBAction)addCollection:(id)sender
 {
-	NSAssert( [sender respondsToSelector:@selector(representedObject)], @"Sender needs to have a representedObject" );
+	OBASSERTSTRING( [sender respondsToSelector:@selector(representedObject)], @"Sender needs to have a representedObject" );
 	
 	NSDictionary *presetDict= [sender representedObject];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
@@ -925,7 +925,7 @@ from representedObject */
 		/// Case 17992, nearestParent method now requires we pass in a context
 		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 		/// Case 17992, added assert to better detect source of exception
-		NSAssert((nil != nearestParent), @"nearestParent should not be nil, root at worst");
+		OBASSERTSTRING((nil != nearestParent), @"nearestParent should not be nil, root at worst");
 		KTPage *indexPage = [KTPage insertNewPageWithParent:nearestParent 
 											plugin:pagePlugin];
 		[indexPage setBool:YES forKey:@"isCollection"]; // Duh!
@@ -1088,7 +1088,7 @@ from representedObject */
 	
 	
 	// It is not possible to make a group containing root
-	NSAssert(![selectedPages containsObject:[[self document] root]], @"Can't create a group containing root");
+	OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"Can't create a group containing root");
 	
 	
 	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
@@ -1113,7 +1113,7 @@ from representedObject */
 		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
 		collectionPlugin = [KTIndexPlugin pluginWithIdentifier:defaultIdentifier];
 	}
-	NSAssert(collectionPlugin, @"Must have a new collection plugin to group the pages into");
+	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plugin to group the pages into");
 	
 	
 	NSBundle *collectionBundle = [collectionPlugin bundle];
@@ -1200,7 +1200,7 @@ from representedObject */
 /*! removes the selected pages */
 - (IBAction)remove:(id)sender
 {
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	// here's the naive approach
 	NSArray *selectedPages = [[[self siteOutlineController] selectedPages] copy];

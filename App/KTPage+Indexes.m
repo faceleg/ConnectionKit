@@ -486,7 +486,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
  */
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
 {
-	NSParameterAssert(timestamp);
+	OBPRECONDITION(timestamp);
 	
 	if (![self collectionGenerateArchives]) return nil;
 	

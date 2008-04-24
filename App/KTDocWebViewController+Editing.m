@@ -408,7 +408,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	
 	NSView *documentView = [[[theWebview mainFrame] frameView] documentView];
 	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
-	NSAssert([documentView isKindOfClass:[WebHTMLView class]], @"documentView not of expected class!");
+	OBASSERTSTRING([documentView isKindOfClass:[WebHTMLView class]], @"documentView not of expected class!");
 	
 	// do we have an active link panel?
 	if ( [[[self windowController] linkPanel] isVisible] )

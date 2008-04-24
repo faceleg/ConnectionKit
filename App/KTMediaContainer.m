@@ -221,7 +221,7 @@
 
 - (KTSimpleScaledImageContainer *)existingImageWithProperties:(NSDictionary *)properties
 {
-	NSParameterAssert(properties);
+	OBPRECONDITION(properties);
 	
 	KTSimpleScaledImageContainer *result = nil;
 	

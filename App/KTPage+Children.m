@@ -114,7 +114,7 @@
  */
 - (void)addPage:(KTPage *)page
 {
-	NSParameterAssert(page);
+	OBPRECONDITION(page);
 	
 	// To have a child page we must be a collection
 	[self setBool:YES forKey:@"isCollection"];

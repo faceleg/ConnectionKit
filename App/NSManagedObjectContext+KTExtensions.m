@@ -81,7 +81,7 @@
 						 predicate:(NSPredicate *)aPredicate
 							 error:(NSError **)anError
 {
-	NSAssert((nil != anEntityName), @"anEntityName cannot be nil");
+	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
 	// nil predicate means "return all objects of anEntityName"
 	
 	NSArray *fetchedObjects = nil;
@@ -90,7 +90,7 @@
 	
 	NSEntityDescription *entity = [NSEntityDescription entityForName:anEntityName
 											  inManagedObjectContext:self];
-	NSAssert((nil != entity), @"entity should not be nil");
+	OBASSERTSTRING((nil != entity), @"entity should not be nil");
 	[fetchRequest setEntity:entity];
 	
 	if ( nil != aPredicate )
@@ -168,7 +168,7 @@
 - (KTMedia *)objectMatchingMediaDigest:(NSString *)aMediaDigest
 					   thumbnailDigest:(NSString *)aThumbnailDigest
 {
-	NSAssert((nil != aMediaDigest), @"aMediaDigest cannot be nil");
+	OBASSERTSTRING((nil != aMediaDigest), @"aMediaDigest cannot be nil");
 	
 	KTMedia *result = nil;
 	
@@ -203,8 +203,8 @@
 
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray
 {
-	NSAssert((nil != aUniqueID), @"aUniqueID cannot be nil");
-	NSAssert((nil != aNamesArray), @"aNamesArray cannot be nil");
+	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
+	OBASSERTSTRING((nil != aNamesArray), @"aNamesArray cannot be nil");
 	
 	NSEnumerator *e = [aNamesArray objectEnumerator];
 	NSString *entityName;
@@ -222,8 +222,8 @@
 
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName
 {
-	NSAssert((nil != aUniqueID), @"aUniqueID cannot be nil");
-	NSAssert((nil != anEntityName), @"anEntityName cannot be nil");
+	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
+	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
 	
 	KTManagedObject *result = nil;
     
@@ -256,7 +256,7 @@
 
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID
 {
-	NSAssert((nil != aUniqueID), @"aUniqueID cannot be nil");
+	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
 	
 	// we have to search in Root, Page, Pagelet, Element, and Media
 	NSArray *entityNames = [NSArray arrayWithObjects:
@@ -308,7 +308,7 @@
 
 - (NSManagedObject *)objectWithURIRepresentation:(NSURL *)aURL
 {
-	NSAssert((nil != aURL), @"aURL cannot be nil");
+	OBASSERTSTRING((nil != aURL), @"aURL cannot be nil");
 	
 	NSManagedObject *result = nil;
 	

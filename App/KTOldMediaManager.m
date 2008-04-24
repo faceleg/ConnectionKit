@@ -92,7 +92,7 @@ TO DO:
 
 - (NSArray *)allObjects:(KTManagedObjectContext *)aManagedObjectContext
 {
-	NSAssert((nil != aManagedObjectContext), @"myDocument is nil!");
+	OBASSERTSTRING((nil != aManagedObjectContext), @"myDocument is nil!");
 	return [aManagedObjectContext allObjectsWithEntityName:@"Media" error:nil];
 }
 
@@ -139,7 +139,7 @@ TO DO:
 /*! @discussion objectWithUniueID: is actually the most important method, though all are used. It is this method that fetches media objects referenced by templates from the datastore, caching them as needed. */
 - (KTMedia *)objectWithUniqueID:(NSString *)aUniqueID managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
 {
-	NSAssert((nil != aUniqueID), @"aUniqueID cannot be nil");
+	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
 	KTMedia *media = nil;
 	
 	// see if we can return a cached object first
@@ -166,7 +166,7 @@ TO DO:
 
 - (KTMedia *)objectWithName:(NSString *)aName managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
 {
-	NSAssert((nil != aName), @"aName cannot be nil"); NSAssert([aName length] > 0, @"name should not be empty string");
+	OBASSERTSTRING((nil != aName), @"aName cannot be nil"); OBASSERTSTRING([aName length] > 0, @"name should not be empty string");
 	
 	// see if we've already loaded and cached the object first
 	NSEnumerator *e = [[myMediaCache allValues] objectEnumerator];
@@ -239,7 +239,7 @@ TO DO:
 
 - (void)collectGarbage
 {
-	//NSAssert(![myDocument hasPeerContextsInFlight], @"there should be no peer contexts");
+	//OBASSERTSTRING(![myDocument hasPeerContextsInFlight], @"there should be no peer contexts");
 	
 	[[[self document] undoManager] disableUndoRegistration];
 	
@@ -332,13 +332,13 @@ TO DO:
 	// rather than remove aMediaObject from either uploadCache or mediaCache
 	// we now just let dealloc take care of it
 
-	//NSAssert(![myDocument hasPeerContextsInFlight], @"there should be no peer contexts");
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	//OBASSERTSTRING(![myDocument hasPeerContextsInFlight], @"there should be no peer contexts");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
 	KTDocument *document = [aMediaObject document];
 	KTManagedObjectContext *context = (KTManagedObjectContext *)[document managedObjectContext];
 	
-	NSAssert([context isEqual:[aMediaObject managedObjectContext]], @"contexts should be the same");
+	OBASSERTSTRING([context isEqual:[aMediaObject managedObjectContext]], @"contexts should be the same");
 		
 	// if aMediaObject is MEDIA_NOT_FOUND media, don't remove
 	if ( [[aMediaObject name] isEqualToString:kKTMediaNotFoundMediaName] )
@@ -559,22 +559,22 @@ key = filePath, value = data
 	
 	while ( proxy = [e nextObject] )
 	{
-		NSAssert([proxy isKindOfClass:[KTMediaDataProxy class]], @"proxy should be a KTMediaDataProxy");
+		OBASSERTSTRING([proxy isKindOfClass:[KTMediaDataProxy class]], @"proxy should be a KTMediaDataProxy");
 		
 		NSMutableDictionary *record = [NSMutableDictionary dictionary];
 		
 		id proxiedObject = nil;
 		
 		KTMedia *media = [self objectWithUniqueID:[(KTMediaDataProxy *)proxy mediaID] managedObjectContext:aManagedObjectContext];
-		NSAssert((nil != media), @"media should not be nil");
+		OBASSERTSTRING((nil != media), @"media should not be nil");
 		
 		NSString *imageName = [(KTMediaDataProxy *)proxy name];
 		if ( nil != imageName )
 		{
 			// if we have an imageName, we're a proxy for a CachedImage
 			proxiedObject = [media imageForImageName:imageName];
-			NSAssert((nil != proxiedObject), @"proxiedObject should not be nil");
-			NSAssert([proxiedObject isKindOfClass:[KTCachedImage class]], @"proxiedObject should be a KTCachedImage");			
+			OBASSERTSTRING((nil != proxiedObject), @"proxiedObject should not be nil");
+			OBASSERTSTRING([proxiedObject isKindOfClass:[KTCachedImage class]], @"proxiedObject should be a KTCachedImage");			
 		}
 		
 		if ( nil == proxiedObject )
@@ -1050,7 +1050,7 @@ Scans for Media_/  and then backs up to beginning quote mark, and forward to pre
 
 - (NSString *)uniqueNameWithName:(NSString *)aName managedObjectContext:(KTManagedObjectContext *)aManagedObjectContext
 {
-	NSAssert((nil != aName), @"uniqueNameWithName cannot use nil");
+	OBASSERTSTRING((nil != aName), @"uniqueNameWithName cannot use nil");
 	
 	NSString *uniqueName = aName;
 	

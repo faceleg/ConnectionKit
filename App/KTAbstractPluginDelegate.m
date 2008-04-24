@@ -98,7 +98,7 @@
 	}
 	
 	// At this point we should have a page
-	NSAssert([container isKindOfClass:[KTPage class]], @"unable to get page from a KTAbstractPluginDelegate");
+	OBASSERTSTRING([container isKindOfClass:[KTPage class]], @"unable to get page from a KTAbstractPluginDelegate");
 	return container;
 }
 

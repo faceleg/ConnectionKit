@@ -75,7 +75,7 @@
 	// If the caller requested both URL and title lists, make sure they match.
 	if (URLs && titles)
 	{
-		NSAssert([*URLs count] == [*titles count], @"URL and title arrays must be of same length");
+		OBASSERTSTRING([*URLs count] == [*titles count], @"URL and title arrays must be of same length");
 	}
 }
 

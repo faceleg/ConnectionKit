@@ -35,8 +35,8 @@
                              name:(NSString *)aName
                             owner:(KTAbstractElement *)anOwner
 {
-	NSParameterAssert(nil != aName);
-	NSParameterAssert(nil != aMediaObject);
+	OBPRECONDITION(nil != aName);
+	OBPRECONDITION(nil != aMediaObject);
 	
 	KTManagedObjectContext *context = (KTManagedObjectContext *)[aMediaObject managedObjectContext];
 	[context lockPSCAndSelf];
@@ -72,7 +72,7 @@
 + (KTMediaRef *)mediaRefWithArchiveDictionary:(NSDictionary *)aDictionary
 										owner:(KTAbstractElement *)anOwner
 {
-	NSParameterAssert([anOwner isKindOfClass:[KTAbstractElement class]]);
+	OBPRECONDITION([anOwner isKindOfClass:[KTAbstractElement class]]);
 
     KTMediaRef *result = nil;
     
@@ -119,9 +119,9 @@
                        name:(NSString *)aName
 					  owner:(KTAbstractElement *)anOwner
 {
-    NSParameterAssert(nil != aMediaObject);
-    NSParameterAssert(nil != aName);
-    NSParameterAssert(nil != anOwner);
+    OBPRECONDITION(nil != aMediaObject);
+    OBPRECONDITION(nil != aName);
+    OBPRECONDITION(nil != anOwner);
 	    
     if ( nil != [anOwner mediaRefNamed:aName] )
 	{
@@ -161,8 +161,8 @@
                 name:(NSString *)aName
 			   owner:(KTAbstractElement *)anOwner
 {
-    NSParameterAssert(nil != aMediaObject);
-    NSParameterAssert(nil != anOwner);
+    OBPRECONDITION(nil != aMediaObject);
+    OBPRECONDITION(nil != anOwner);
 	
 	KTMediaRef *mediaRef = [KTMediaRef objectMatchingMedia:aMediaObject
                                                       name:aName
@@ -217,9 +217,9 @@
                                name:(NSString *)aName
 							  owner:(KTAbstractElement *)anOwner
 {
-	NSParameterAssert(nil != aName);
-	NSParameterAssert(nil != aMediaObject);
-	NSParameterAssert(nil != anOwner);
+	OBPRECONDITION(nil != aName);
+	OBPRECONDITION(nil != aMediaObject);
+	OBPRECONDITION(nil != anOwner);
 	
 	KTMediaRef *result = nil;
 	
@@ -545,15 +545,15 @@
 	
 	// copy owner	
 	KTAbstractElement *owner = [self valueForKey:@"owner"];
-	NSAssert((nil != owner), @"owner cannot be nil!");
+	OBASSERTSTRING((nil != owner), @"owner cannot be nil!");
 	[newMediaRef copyToOneRelationshipForKey:@"owner" fromObject:self useExisting:YES];
 	
 	// locate media in aContext and connect relationship
 	KTMedia *media = [self media];
-	NSAssert((nil != media), @"media cannot be nil!");
+	OBASSERTSTRING((nil != media), @"media cannot be nil!");
 	
 	KTMedia *mediaInOtherContext = (KTMedia *)[media similarObjectInContext:aContext];
-	NSAssert((nil != mediaInOtherContext), @"mediaInOtherContext cannot be nil!");
+	OBASSERTSTRING((nil != mediaInOtherContext), @"mediaInOtherContext cannot be nil!");
 	[newMediaRef setValue:mediaInOtherContext forKey:@"media"];
 	
 	// save and refresh context(s)

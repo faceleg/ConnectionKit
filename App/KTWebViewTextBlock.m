@@ -189,7 +189,7 @@
 
 - (void)setHTMLTag:(NSString *)tag
 {
-	NSParameterAssert(tag);
+	OBPRECONDITION(tag);
 	
 	tag = [tag copy];
 	[myHTMLTag release];
@@ -470,7 +470,7 @@
 
 - (BOOL)becomeFirstResponder
 {
-	NSAssert(!myIsEditing, @"Can't become first responder, already editing");
+	OBASSERTSTRING(!myIsEditing, @"Can't become first responder, already editing");
 	
 	// <span class="in"> tags need to become blocks when beginning editing
 	if ([self isFieldEditor] && ![self hasSpanIn])
@@ -539,7 +539,7 @@
  */
 - (BOOL)resignFirstResponder
 {
-	NSAssert(myIsEditing, @"Can't resign first responder, not currently editing");
+	OBASSERTSTRING(myIsEditing, @"Can't resign first responder, not currently editing");
 	
 	// Tidy up HTML
 	[self removeDOMJunkAllowingEmptyParagraphs:YES];

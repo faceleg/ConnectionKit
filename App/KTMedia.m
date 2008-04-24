@@ -115,7 +115,7 @@ NSString *kKTMediaException = @"KTMediaException";
 + (KTMedia *)mediaWithContentsOfFile:(NSString *)aPath
 	  insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {
-	NSParameterAssert(nil != aContext);
+	OBPRECONDITION(nil != aContext);
 	
 	KTMedia *result = nil;
 	
@@ -205,7 +205,7 @@ NSString *kKTMediaException = @"KTMediaException";
     }
 
 	KTDocument *document = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:aContext];
-	NSAssert((nil != document), @"document is nil!");
+	OBASSERTSTRING((nil != document), @"document is nil!");
 		
 	KTCopyMediaType copyType = [[document root] integerForKey:@"copyMediaOriginalsInherited"];
 	switch ( copyType )
@@ -292,8 +292,8 @@ NSString *kKTMediaException = @"KTMediaException";
 						 storageType:(KTMediaStorageType)aStorageType
 	  insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 {	
-	NSAssert((nil != aPath), @"aPath cannot be nil");
-	NSAssert((nil != aContext), @"aContext cannot be nil");
+	OBASSERTSTRING((nil != aPath), @"aPath cannot be nil");
+	OBASSERTSTRING((nil != aContext), @"aContext cannot be nil");
 		
 	KTDocument *document = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:aContext];
 
@@ -429,10 +429,10 @@ NSString *kKTMediaException = @"KTMediaException";
 		// make sure uniqueName is actually unique
 		if ( nil != document )
 		{
-            NSAssert((nil != [document oldMediaManager]), @"neither document nor media manager should be nil");
+            OBASSERTSTRING((nil != [document oldMediaManager]), @"neither document nor media manager should be nil");
 			uniqueName = [[document oldMediaManager] uniqueNameWithName:uniqueName managedObjectContext:aContext];
 		}
-		NSAssert((nil != uniqueName), @"uniqueName should not be nil");
+		OBASSERTSTRING((nil != uniqueName), @"uniqueName should not be nil");
 		
 		// make sure we can store the data
 		KTManagedObject *storage = [NSEntityDescription insertNewObjectForEntityForName:@"MediaData"
@@ -594,14 +594,14 @@ NSString *kKTMediaException = @"KTMediaException";
 	NSString *mediaDigest = [storableData partiallyDigestString];
 	
 	KTManagedObjectContext *context = (KTManagedObjectContext *)[aDocument managedObjectContext];
-	NSAssert((nil != context), @"context should not be nil");
+	OBASSERTSTRING((nil != context), @"context should not be nil");
 	[context lockPSCAndSelf];
 	
 	media = [NSEntityDescription insertNewObjectForEntityForName:@"Media" inManagedObjectContext:context];
 	if ( nil != media )
 	{		
         [media setUniqueID:[aDocument nextUniqueID]];
-		NSAssert((nil != [media valueForKey:@"uniqueID"]), @"media has nil uniqueID");
+		OBASSERTSTRING((nil != [media valueForKey:@"uniqueID"]), @"media has nil uniqueID");
 		[media setName:kKTMediaNotFoundMediaName];
 		[media setStorageType:KTMediaCopyContentsStorage];
 		
@@ -643,9 +643,9 @@ NSString *kKTMediaException = @"KTMediaException";
 		insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext
 		   convertOriginal:(BOOL)aConvertFlag
 {
-	NSAssert((nil != someData), @"someData is nil!");
-	NSAssert((nil != aUTI), @"UTI is nil!");
-	NSAssert((nil != aContext), @"aContext is nil!");
+	OBASSERTSTRING((nil != someData), @"someData is nil!");
+	OBASSERTSTRING((nil != aUTI), @"UTI is nil!");
+	OBASSERTSTRING((nil != aContext), @"aContext is nil!");
 	
 	KTDocument *document = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:aContext];
 
@@ -709,7 +709,7 @@ NSString *kKTMediaException = @"KTMediaException";
 	{		
 		// we need a uniqueID first!
         [media setUniqueID:[[media document] nextUniqueID]];
-		NSAssert((nil != [media valueForKey:@"uniqueID"]), @"media has nil uniqueID");
+		OBASSERTSTRING((nil != [media valueForKey:@"uniqueID"]), @"media has nil uniqueID");
 		//TJT((@"+mediaWithData: creating new media %@", [media uniqueID]));
 
 		// we need a unique name, before we do *anything* else
@@ -909,7 +909,7 @@ NSString *kKTMediaException = @"KTMediaException";
 
 - (KTManagedObject *)copyToContext:(KTManagedObjectContext *)aContext
 {
-	NSAssert(![[[self managedObjectContext] persistentStoreCoordinator] isEqual:[aContext persistentStoreCoordinator]],
+	OBASSERTSTRING(![[[self managedObjectContext] persistentStoreCoordinator] isEqual:[aContext persistentStoreCoordinator]],
 			 @"persistentStoreCoordinators should be different, or the locks will deadlock");
 	
 	[self lockPSCAndMOC];
@@ -1023,7 +1023,7 @@ NSString *kKTMediaException = @"KTMediaException";
         
 	if ( nil != extension )
 	{
-		NSAssert([name length], @"Trying to append to an empty string");
+		OBASSERTSTRING([name length], @"Trying to append to an empty string");
 		OBASSERT(extension);
 		name = [name stringByAppendingPathExtension:extension];
 	}
@@ -1126,7 +1126,7 @@ NSString *kKTMediaException = @"KTMediaException";
 
 - (NSString *)imageNameForFileName:(NSString *)aFileName
 {
-    NSAssert((nil != aFileName), @"aFileName should not be nil");
+    OBASSERTSTRING((nil != aFileName), @"aFileName should not be nil");
     
     NSString *result = nil;
     
@@ -2168,7 +2168,7 @@ It might not scale it if doing so won't be much of a speed advantage. */
 {
 	if ( nil == myPosterImage )
 	{
-		NSAssert([self isMovie], @"media object should be a movie");
+		OBASSERTSTRING([self isMovie], @"media object should be a movie");
 
 		NSDictionary *attributes = nil;
 		NSString *filePath = [self dataFilePath];
@@ -2193,7 +2193,7 @@ dataReferenceWithReferenceToData:[self data]
 		
 		[self performSelectorOnMainThread:@selector(computePosterImageFromMovieWithAttributes:) withObject:attributes
 							waitUntilDone:YES];
-		NSAssert((nil != myPosterImage), @"myPosterImage should not be nil");
+		OBASSERTSTRING((nil != myPosterImage), @"myPosterImage should not be nil");
 	}
 	
 	return myPosterImage;
@@ -2204,7 +2204,7 @@ dataReferenceWithReferenceToData:[self data]
 
 - (void)computePosterImageFromMovieWithAttributes:(NSDictionary *)aMovieAttributes
 {	
-	NSAssert([NSThread isMainThread], @"should not be calling from a background thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should not be calling from a background thread");
 	
 	NSError *error = nil;
 	QTMovie *movie = [[[QTMovie alloc] initWithAttributes:aMovieAttributes error:&error] autorelease];
@@ -2236,7 +2236,7 @@ dataReferenceWithReferenceToData:[self data]
 		}
 	}		
 
-	NSAssert((nil != myPosterImage), @"myPosterImage should not be nil");
+	OBASSERTSTRING((nil != myPosterImage), @"myPosterImage should not be nil");
 }
 
 /*! returns NSSize of image representation of original */

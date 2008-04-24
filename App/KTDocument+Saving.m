@@ -216,7 +216,7 @@
 			ofType:(NSString *)inType 
   forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
-	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be called only from the main thread");
 	BOOL result = NO;
 	
 	
@@ -423,7 +423,7 @@
 	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
 				error:(NSError **)outError
 {
-	NSAssert([NSThread isMainThread], @"should be called only from the main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be called only from the main thread");
 	
 	BOOL result = NO;
 	NSError *error = nil;
@@ -647,7 +647,7 @@
 {
 	//LOGMETHOD;
 	
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	[self cancelAndInvalidateAutosaveTimers];
 	[self performSelector:@selector(autosaveDocument:)
@@ -659,7 +659,7 @@
 {
 	//LOGMETHOD;
 	
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
     if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
     {
@@ -674,7 +674,7 @@
 {
 	//LOGMETHOD;
 	
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	if ( !myIsSuspendingAutosave )
 	{
@@ -702,7 +702,7 @@
 {
 	//LOGMETHOD;
 	
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
 	//LOG((@"cancelling autosave timers"));
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];

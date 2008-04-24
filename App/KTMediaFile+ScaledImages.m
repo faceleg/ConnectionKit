@@ -228,7 +228,7 @@
 		}
 	}		
 
-	NSAssert(result, @"Could not generate movie thumbnail");
+	OBASSERTSTRING(result, @"Could not generate movie thumbnail");
 	
 	[movie release];
 	return result;

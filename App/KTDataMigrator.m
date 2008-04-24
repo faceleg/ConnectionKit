@@ -214,7 +214,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 					NSString *newObjectID = [[self objectIDCache] valueForKey:oldObjectID];
 					
 					KTMedia *newMedia = (KTMedia *)[[self newManagedObjectContext] objectWithURIRepresentationString:newObjectID];
-					NSAssert((nil != newMedia), @"did not find newMedia in context!");
+					OBASSERTSTRING((nil != newMedia), @"did not find newMedia in context!");
 					
 					NSMutableDictionary *mediaMap = [NSMutableDictionary dictionary];
 					[mediaMap setValue:newMedia forKey:@"newMedia"];
@@ -294,9 +294,9 @@ Note: "isStale" does not seem to be used.  See staleness.
 							 fromObject:(NSManagedObject *)managedObjectA
 							   toObject:(NSManagedObject *)managedObjectB
 {
-	NSAssert((nil != aRelationshipName), @"aRelationshipName cannot be nil!");
-	NSAssert((nil != managedObjectA), @"managedObjectA cannot be nil!");
-	NSAssert((nil != managedObjectB), @"managedObjectB cannot be nil!");
+	OBASSERTSTRING((nil != aRelationshipName), @"aRelationshipName cannot be nil!");
+	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
+	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
 	
 	
 	id storageObjectA = [managedObjectA valueForKey:aRelationshipName];
@@ -307,7 +307,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 
 		storageObjectB = [NSEntityDescription insertNewObjectForEntityForName:[[storageObjectA entity] name]
 													   inManagedObjectContext:[managedObjectB managedObjectContext]];
-		NSAssert((nil != storageObjectB), @"storageObjectB cannot be nil!");
+		OBASSERTSTRING((nil != storageObjectB), @"storageObjectB cannot be nil!");
 		
 		[[self objectIDCache] setValue:[storageObjectB URIRepresentationString] 
 								forKey:[storageObjectA URIRepresentationString]];		
@@ -335,20 +335,20 @@ Note: "isStale" does not seem to be used.  See staleness.
 	}
 	
 	[managedObjectB setValue:storageObjectB forKey:aRelationshipName];
-	NSAssert([[storageObjectB valueForKey:@"owner"] isEqual:managedObjectB], @"owner is not set correctly!");
+	OBASSERTSTRING([[storageObjectB valueForKey:@"owner"] isEqual:managedObjectB], @"owner is not set correctly!");
 }
 
 - (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											toObject:(NSManagedObject *)managedObjectB
 {
-	NSAssert((nil != managedObjectA), @"managedObjectA cannot be nil!");
-	NSAssert((nil != managedObjectB), @"managedObjectB cannot be nil!");
+	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
+	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
 	
 	// root
 	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
-	NSAssert((nil != newRootURIString), @"newRootURIString cannot be nil!");
+	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
 	NSManagedObject *newRoot = [[managedObjectB managedObjectContext] objectWithURIRepresentationString:newRootURIString];
-	NSAssert((nil != newRoot), @"newRoot cannot be nil!");
+	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
 	[managedObjectB setValue:newRoot forKey:@"root"];
 	
 	// pluginProperties	
@@ -370,7 +370,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 			{
 				mediaRefB = [NSEntityDescription insertNewObjectForEntityForName:@"MediaRef"
 														  inManagedObjectContext:[managedObjectB managedObjectContext]];
-				NSAssert((nil != mediaRefB), @"mediaRefB cannot be nil!");
+				OBASSERTSTRING((nil != mediaRefB), @"mediaRefB cannot be nil!");
 				[[self objectIDCache] setValue:[mediaRefB URIRepresentationString] forKey:[mediaRefA URIRepresentationString]];
 			}
 			[self migrateFromMediaRef:mediaRefA toMediaRef:mediaRefB];
@@ -405,7 +405,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 		// no elementB, make one
 		elementB = [NSEntityDescription insertNewObjectForEntityForName:@"Element"
 												 inManagedObjectContext:[containerB managedObjectContext]];
-		NSAssert((nil != elementB), @"elementB cannot be nil!");
+		OBASSERTSTRING((nil != elementB), @"elementB cannot be nil!");
 		[[self objectIDCache] setValue:[elementB URIRepresentationString] forKey:[elementA URIRepresentationString]];
 	}
 	
@@ -433,7 +433,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	
 	// first, find our root
 	NSManagedObject *oldRoot = (NSManagedObject *)[[self oldManagedObjectContext] root];
-	NSAssert((nil != oldRoot), @"oldRoot is nil!");
+	OBASSERTSTRING((nil != oldRoot), @"oldRoot is nil!");
 	// cache it under the name "oldRoot"
 	[[self objectIDCache] setValue:[oldRoot URIRepresentationString] forKey:@"oldRoot"];
 	
@@ -521,7 +521,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 			// create a placeholder and cache it for later population
 			parentB = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
 													inManagedObjectContext:[pageB managedObjectContext]];
-			NSAssert((nil != parentB), @"parentB cannot be nil!");
+			OBASSERTSTRING((nil != parentB), @"parentB cannot be nil!");
 			[[self objectIDCache] setValue:[parentB URIRepresentationString] forKey:[parentA URIRepresentationString]];
 		}
 		[pageB setValue:parentB forKey:@"parent"];
@@ -539,7 +539,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 			// create a placeholder and cache it for later population
 			childB = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
 												   inManagedObjectContext:[pageB managedObjectContext]];
-			NSAssert((nil != childB), @"childB cannot be nil!");
+			OBASSERTSTRING((nil != childB), @"childB cannot be nil!");
 			[[self objectIDCache] setValue:[childB URIRepresentationString] forKey:[childA URIRepresentationString]];
 		}
 		[[pageB mutableSetValueForKey:@"children"] addObject:childB];
@@ -560,7 +560,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 			{
 				calloutB = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 														 inManagedObjectContext:[pageB managedObjectContext]];
-				NSAssert((nil != calloutB), @"calloutB cannot be nil!");
+				OBASSERTSTRING((nil != calloutB), @"calloutB cannot be nil!");
 				[[self objectIDCache] setValue:[calloutB URIRepresentationString] forKey:[calloutA URIRepresentationString]];
 			}
 			[self migrateFromPagelet:calloutA toPagelet:calloutB];
@@ -582,7 +582,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 			{
 				sidebarB = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 														 inManagedObjectContext:[pageB managedObjectContext]];
-				NSAssert((nil != sidebarB), @"sidebarB cannot be nil!");
+				OBASSERTSTRING((nil != sidebarB), @"sidebarB cannot be nil!");
 				[[self objectIDCache] setValue:[sidebarB URIRepresentationString] forKey:[sidebarA URIRepresentationString]];
 			}
 			[self migrateFromPagelet:sidebarA toPagelet:sidebarB];
@@ -638,7 +638,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	//  all we need to do is find the corresponding object
 	NSManagedObject *mediaA = [mediaRefA valueForKey:@"media"];
 	NSManagedObject *mediaB = [self correspondingObjectForObject:mediaA];
-	NSAssert((nil != mediaB), @"mediaB cannot be nil! should have been copied by now");
+	OBASSERTSTRING((nil != mediaB), @"mediaB cannot be nil! should have been copied by now");
 	[mediaRefB setValue:mediaB forKey:@"media"];
 	
 	// migrate owner relationship
@@ -667,7 +667,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 		// create a new media object
 		NSManagedObject *newMedia = [NSEntityDescription insertNewObjectForEntityForName:@"Media"
 																  inManagedObjectContext:[self newManagedObjectContext]];
-		NSAssert(nil != newMedia, @"newMedia is nil!");
+		OBASSERTSTRING(nil != newMedia, @"newMedia is nil!");
 		
 		// cache URI for matching
 		[[self objectIDCache] setValue:[newMedia URIRepresentationString] forKey:[oldMedia URIRepresentationString]];
@@ -742,12 +742,12 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
 		return NO;
 	}	
-	NSAssert(([fetchedObjects count] == 1), @"should only be 1 DocumentInfo per document");
+	OBASSERTSTRING(([fetchedObjects count] == 1), @"should only be 1 DocumentInfo per document");
 	NSManagedObject *oldDocumentInfo = [fetchedObjects objectAtIndex:0];
 	
 	NSManagedObject *newDocumentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo"
 																	 inManagedObjectContext:[self newManagedObjectContext]];
-	NSAssert((nil != newDocumentInfo), @"newDocumentInfo is nil!");
+	OBASSERTSTRING((nil != newDocumentInfo), @"newDocumentInfo is nil!");
 	
 	// migrate attributes
 	[self migrateMatchingAttributesFromObject:oldDocumentInfo 
@@ -777,9 +777,9 @@ Note: "isStale" does not seem to be used.  See staleness.
     	
 	//  root
 	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
-	NSAssert((nil != newRootURIString), @"newRootURIString cannot be nil!");
+	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
 	NSManagedObject *newRoot = [[self newManagedObjectContext] objectWithURIRepresentationString:newRootURIString];
-	NSAssert((nil != newRoot), @"newRoot cannot be nil!");
+	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
 	[newDocumentInfo setValue:newRoot forKey:@"root"];
 	
 	return YES; // could later beef this up with error checking

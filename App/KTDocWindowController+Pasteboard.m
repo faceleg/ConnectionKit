@@ -101,8 +101,8 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         selectedPages = [context valueForKey:kKTSelectedObjectsKey];
     }
     
-    NSAssert((nil != selectedPages), @"selectedPages cannot be nil.");
-    NSAssert([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
+    OBASSERTSTRING((nil != selectedPages), @"selectedPages cannot be nil.");
+    OBASSERTSTRING([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
         
 	if ([selectedPages count] > 0)
     {
@@ -219,9 +219,9 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
 	
 	// We should never get here if the root page is in the selection
-    NSAssert((nil != selectedPages), @"selectedPages cannot be nil.");
-    NSAssert([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
-    NSAssert(![selectedPages containsObject:[[self document] root]], @"Cannot cut the home page");
+    OBASSERTSTRING((nil != selectedPages), @"selectedPages cannot be nil.");
+    OBASSERTSTRING([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
+    OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"Cannot cut the home page");
 	
 	
 	// Copy to the clipboard
@@ -381,7 +381,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         // paste was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         selectedPage = [selection objectAtIndex:0];
     }
     else
@@ -488,7 +488,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         // paste was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         selectedPage = [selection objectAtIndex:0];
     }
     else
@@ -649,7 +649,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         // delete was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         if ( [selection count] > 1 )
         {
             selectedPages = [[selection mutableCopy] autorelease];
@@ -785,7 +785,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	// FIXME: we could do away with the context dictionay, since we're going off of selected pages,
 	// but first test whether this is OK for deleting from a contextual menu
 	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedPages]];
-	NSAssert(![selectedPages containsObject:[[self document] root]], @"You can't delete root");
+	OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"You can't delete root");
 	
 	if ([selectedPages count] > 0)
 	{		
@@ -829,7 +829,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (IBAction)deletePagelets:(id)sender
 {
-	NSAssert([NSThread isMainThread], @"should be main thread");
+	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
 	[[self document] suspendAutosave];
 	[[[self document] managedObjectContext] lock];
@@ -842,7 +842,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         // paste was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         // we're only going to delete the first selected pagelet
         selectedPagelet = [selection objectAtIndex:0];
     }
@@ -931,13 +931,13 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
         // copy was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         selectedPages = [[selection mutableCopy] autorelease];
     }
 	
 	
 	// Don't duplicate root
-	NSAssert(![selectedPages containsRoot], @"Can't duplicate root page");
+	OBASSERTSTRING(![selectedPages containsRoot], @"Can't duplicate root page");
 	
 	
 	if ([selectedPages count] > 0)
@@ -987,7 +987,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
         // paste was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
-        NSAssert([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
+        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
         // we're only going to duplicate the first selected pagelet
         selectedPagelet = [selection objectAtIndex:0];
     }

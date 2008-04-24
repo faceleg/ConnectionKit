@@ -192,7 +192,7 @@
         else
         {
             //this can't happen
-            NSAssert(NO, @"This can't happen");
+            OBASSERTSTRING(NO, @"This can't happen");
             return NO;
         }
     }
