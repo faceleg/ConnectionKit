@@ -186,10 +186,10 @@
 	<string>${SVN_VERSION}</string>
 	<key>KTConnectionVersion</key>
 	<string>${CK_REVISION}</string>
-	<key>KTSparklePlusVersion</key>
-	<string>${SP_REVISION}</string>
 	<key>KTiMediaVersion</key>
 	<string>${IMEDIA_REVISION}</string>
+	<key>KTSparklePlusVersion</key>
+	<string>${SP_REVISION}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
@@ -203,12 +203,14 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
-	<key>SUFeedURL</key>
-	<string>http://launch.karelia.com/appcast.php?appname=${PRODUCT_NAME}&amp;version=${SVN_VERSION}&amp;type=${PRODUCT_VARIANT}</string>
-	<key>SUIncludeProfile</key>
-	<false/>
 	<key>SUDelayAlertUntilSystemIdle</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>http://launch.karelia.com/appcast.php?appname=${PRODUCT_NAME}&amp;version=${SVN_VERSION}</string>
+	<key>KSFeedType</key>
+	<string>${PRODUCT_VARIANT}</string>
+	<key>SUIncludeProfile</key>
+	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
