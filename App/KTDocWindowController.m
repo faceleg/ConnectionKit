@@ -133,8 +133,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)dealloc
 {
-	// Get rid of the siter outline controller
-	[oDesignsView unbind:@"selectedDesign"];
+	// Get rid of the site outline controller
 	[self setSiteOutlineController:nil];
 	
 	
@@ -368,6 +367,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[mySiteOutlineController release];
 	mySiteOutlineController = controller;
 	
+	[controller setContent:[[self document] root]];
 	[controller setWindowController:self];
 	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
@@ -2055,9 +2055,14 @@ from representedObject */
 		}
 	}
 
+	[oDesignsView unbind:@"selectedDesign"];
 	[oDocumentController unbind:@"contentObject"];
 	[oKeywordsField unbind:@"value"];			// balance out the bind in code
-	[oDocumentController setContent:nil];
+	
+	[[self siteOutlineController] setContent:nil];
+	[self setSiteOutlineController:nil];
+	
+	 [oDocumentController setContent:nil];
 }
 
 /*!	Notification that some window is closing

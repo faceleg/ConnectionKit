@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTPage, KTDocument, KTDocWindowController;
+@class KTPage, KTDocument, KTDocWindowController, KTSiteOutlineDataSource;
 
 
 @interface KTDocSiteOutlineController : NSTreeController
@@ -19,36 +19,15 @@
 @private
 	
 	KTDocWindowController	*myWindowController;
-	
-	NSMutableSet			*myPages;
+	KTSiteOutlineDataSource	*mySiteOutlineDataSource;
 	
 	NSArray		*mySelectedPages;
-	
-	NSImage				*myCachedFavicon;
-	NSMutableDictionary	*myCachedPluginIcons;
-	NSMutableDictionary	*myCachedCustomPageIcons;
-	
-	NSMutableArray		*myCustomIconGenerationQueue;
-	KTPage				*myGeneratingCustomIcon;
 }
 
 - (NSOutlineView *)siteOutline;
 
 - (KTDocWindowController *)windowController;
 - (void)setWindowController:(KTDocWindowController *)controller;
-- (KTDocument *)document;
-
-- (void)reloadSiteOutline;
-- (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
-
-@end
-
-
-@interface KTDocSiteOutlineController (Icons)
-- (NSImage *)iconForPage:(KTPage *)page;
-
-- (void)invalidateIconCaches;
-- (void)setCachedFavicon:(NSImage *)icon;
 
 @end
 

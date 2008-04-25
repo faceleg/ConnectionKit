@@ -1,12 +1,12 @@
 //
-//  KTDocSiteOutlineController+Icons.m
+//  KTSiteOutlineDataSource+Icons.m
 //  Marvel
 //
 //  Created by Mike on 17/01/2008.
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTDocSiteOutlineController.h"
+#import "KTSiteOutlineDataSource.h"
 
 #import "KTElementPlugin.h"
 #import "KTMaster.h"
@@ -20,7 +20,7 @@
 #import "NSArray+Karelia.h"
 #import "assertions.h"
 
-@interface KTDocSiteOutlineController (IconsPrivate)
+@interface KTSiteOutlineDataSource (IconsPrivate)
 
 - (NSImage *)favicon;
 - (NSImage *)cachedFavicon;
@@ -43,7 +43,7 @@
 #pragma mark -
 
 
-@implementation KTDocSiteOutlineController (Icons)
+@implementation KTSiteOutlineDataSource (Icons)
 
 #pragma mark -
 #pragma mark General
@@ -95,7 +95,7 @@
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		KTMediaContainer *faviconSource = [[[[self managedObjectContext] root] master] favicon];
+		KTMediaContainer *faviconSource = [[[[[self siteOutlineController] managedObjectContext] root] master] favicon];
 		NSString *faviconSourcePath = [[faviconSource file] currentPath];
 		
 		// If there is no favicon chosen, default to 32favicon

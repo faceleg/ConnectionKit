@@ -1,5 +1,5 @@
 //
-//  KTDocSiteOutlineController+DragAndDrop.m
+//  KTSiteOutlineDataSource+DragAndDrop.m
 //  Marvel
 //
 //  Created by Mike on 11/02/2008.
@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "KTDataSource.h"
 #import "KTAppDelegate.h"
-#import "KTDocSiteOutlineController.h"
+#import "KTSiteOutlineDataSource.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
@@ -33,16 +33,17 @@
 
 
 
-@interface KTDocSiteOutlineController (DragAndDropPrivate)
+@interface KTSiteOutlineDataSource (DragAndDropPrivate)
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard page:(KTPage *)page childIndex:(int)anIndex;
 
+- (KTDocWindowController *)windowController;
 - (NSArray *)itemsForRows:(NSArray *)anArray;
 - (BOOL)item:(id)anItem isDescendantOfItem:(id)anotherItem;
 - (BOOL)items:(NSArray *)items containsParentOfItem:(id)item;
 @end
 
 
-@implementation KTDocSiteOutlineController (DragAndDrop)
+@implementation KTSiteOutlineDataSource (DragAndDrop)
 
 #pragma mark -
 #pragma mark Drag
@@ -787,6 +788,8 @@
 			
 #pragma mark -
 #pragma mark Support
+
+- (KTDocWindowController *)windowController { return [[self siteOutlineController] windowController]; }
 
 - (NSArray *)itemsForRows:(NSArray *)anArray
 {
