@@ -20,10 +20,12 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface NSEntityDescription ( KTExtensions )
+@interface NSEntityDescription (KTExtensions)
+
+- (NSDictionary *)propertiesByNameOfClass:(Class)propertyClass
+			   includeTransientProperties:(BOOL)includeTransient;
 
 - (void)addPropertiesOfEntity:(NSEntityDescription *)anEntity;
-
 - (void)addSubentity:(NSEntityDescription *)anEntity;
 
 @end

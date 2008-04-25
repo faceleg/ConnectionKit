@@ -11,6 +11,56 @@
 
 @implementation NSEntityDescription ( KTExtensions )
 
+/*	A convenience method on top -propertiesByName etc. that allows you to easily specify which
+ *	type to use (attributes, relationships, all) and whether to include transients.
+ */
+- (NSDictionary *)propertiesByNameOfClass:(Class)propertyClass
+			   includeTransientProperties:(BOOL)includeTransient;
+{
+	OBPRECONDITION(propertyClass);
+	OBPRECONDITION([propertyClass isSubclassOfClass:[NSPropertyDescription class]]);
+	
+	
+	// Get the basic result from the right set of properties
+	NSDictionary *result = nil;
+	if (propertyClass == [NSPropertyDescription class])
+	{
+		result = [self propertiesByName];
+	}
+	else if (propertyClass == [NSAttributeDescription class])
+	{
+		result = [self attributesByName];
+	}
+	else if (propertyClass == [NSRelationshipDescription class])
+	{
+		result = [self relationshipsByName];
+	}
+	OBASSERT(result);
+	
+	
+	// Remove transient properties if requested
+	if (!includeTransient)
+	{
+		NSMutableDictionary *buffer = [result mutableCopy];
+		
+		NSEnumerator *keysEnumerator = [result keyEnumerator];
+		NSString *aKey;		NSPropertyDescription *aProperty;
+		while (aKey = [keysEnumerator nextObject])
+		{
+			aProperty = [result objectForKey:aKey];
+			if ([aProperty isTransient]) [buffer removeObjectForKey:aKey];
+		}
+		
+		result = [[buffer copy] autorelease];
+		[buffer release];
+	}
+	
+	
+	// Finish up
+	OBPOSTCONDITION(result);
+	return result;
+}
+
 - (void)addPropertiesOfEntity:(NSEntityDescription *)anEntity
 {
 	NSMutableArray *properties = [NSMutableArray arrayWithArray:[self properties]];

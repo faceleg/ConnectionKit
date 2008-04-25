@@ -14,6 +14,8 @@
 #import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
 
+#import "NSEntityDescription+KTExtensions.h"
+
 
 @interface KTPluginIDPasteboardRepresentation : NSObject <NSCoding>
 {
@@ -106,8 +108,11 @@
 	}
 	
 	
-	// Add in all attributes and keys from the model. This deliberately ignores transient properties
-	[buffer addEntriesFromDictionary:[self currentValues]];
+	// Add in all attributes and keys from the model. Ignor transient properties.
+	NSArray *propertyKeys = [[[self entity] propertiesByNameOfClass:[NSPropertyDescription class]
+										 includeTransientProperties:NO] allKeys];
+	NSDictionary *properties = [self dictionaryWithValuesForKeys:propertyKeys];
+	[buffer addEntriesFromDictionary:properties];
 	
 	
 	// Special case: pages need their thumbnail copied
