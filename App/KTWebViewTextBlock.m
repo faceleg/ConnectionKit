@@ -438,12 +438,12 @@
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
-		[buffer appendFormat:@"<span id=\"%@\"", [self DOMNodeID]];
+		[buffer appendFormat:@"<span id=\"%@\" class=\"in", [self DOMNodeID]];
 		if ([self isEditable])
 		{
-			[buffer appendFormat:@" class=\"%@\"", ([self isRichText]) ? @"kBlock" : @"kLine"];
+			[buffer appendFormat:@" %@", ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
-		[buffer appendString:@">"];
+		[buffer appendString:@"\">"];
 	}
 	
 	
