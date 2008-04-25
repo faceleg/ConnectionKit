@@ -34,11 +34,6 @@
 NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
-@interface KTSiteOutlineDataSource (Private)
-
-@end
-
-
 @implementation KTSiteOutlineDataSource
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller
@@ -289,7 +284,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Regenerate -selectedPages if required
 	if (selectedPagesNeedsUpdating)
 	{
-		//[self generateSelectedPagesSet];	// TODO: Write a replacement for this
+		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
+															object:[self siteOutline]];
 	}
 }
 
