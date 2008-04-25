@@ -389,10 +389,8 @@
 
 - (NSDictionary *)currentValues
 {
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithDictionary:[self committedValuesForKeys:nil]];
-	
-    [result addEntriesFromDictionary:[self changedValues]];
-	
+    NSArray *propertyKeys = [[[self entity] propertiesByName] allKeys];
+	NSDictionary *result = [self dictionaryWithValuesForKeys:propertyKeys];
     return result;
 }
 
