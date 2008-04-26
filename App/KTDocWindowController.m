@@ -800,7 +800,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)reloadOutline:(id)sender
 {
-	[[self siteOutlineController] reloadSiteOutline];
+	[[[self siteOutlineController] siteOutline] reloadData];
 }
 
 #pragma mark Page Actions
