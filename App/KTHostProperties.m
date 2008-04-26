@@ -11,6 +11,7 @@
 #import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
 
+#import "NSEntityDescription+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
 
@@ -333,13 +334,20 @@ to be verified.
 
 - (NSString *)hostPropertiesReport
 {
-	NSMutableDictionary *properties = [[[self currentValues] mutableCopy] autorelease];
-	OBASSERT(properties);
+	NSMutableDictionary *propertyDescriptions = [NSMutableDictionary dictionaryWithDictionary:
+		[[self entity] propertiesByNameOfClass:[NSAttributeDescription class] includeTransientProperties:NO]];
+	[propertyDescriptions removeObjectForKey:[[self class] extensiblePropertiesDataKey]];
 	
-	// We don't want to log the documentInfo object
-	[properties removeObjectForKey:@"documentInfo"];
 	
-	NSString *result = [NSString stringWithFormat:@"%@", properties];
+	NSMutableDictionary *buffer = [[self dictionaryWithValuesForKeys:[propertyDescriptions allKeys]] mutableCopy];
+	OBASSERT(buffer);
+	[buffer addEntriesFromDictionary:[self extensibleProperties]];
+	[buffer removeObjectsForKeys:[buffer allKeysForObject:[NSNull null]]];	// Ignore NULL properties
+	
+	
+	// Finish up
+	NSString *result = [buffer description];
+	[buffer release];
 	return result;
 }
 
