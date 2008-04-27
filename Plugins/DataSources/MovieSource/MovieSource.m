@@ -96,11 +96,11 @@
 
 - (NSString *)pageBundleIdentifier
 {
-	return @"sandvox.MoviePage";
+	return @"sandvox.VideoElement";
 }
 - (NSString *)pageletBundleIdentifier
 {
-	return @"sandvox.MoviePagelet";
+	return @"sandvox.VideoElement";
 }
 
 
