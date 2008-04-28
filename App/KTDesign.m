@@ -92,14 +92,6 @@
 - (NSString *)remotePath;
 {
 	NSString *result = [[self identifier] removeWhiteSpace];
-	NSString *version = [self version];
-	if ((version != nil) 
-		&& ![version isEqualToString:@""] 
-		&& ![version isEqualToString:@"SANDVOX_VERSION"] 
-		&& ([version floatVersion] > 1.0))
-	{
-		result = [result stringByAppendingFormat:@".%@", version];
-	}
 	result = [result stringByReplacing:@"." with:@"_"];		// some ISPs don't like "."
 	return result;
 }
