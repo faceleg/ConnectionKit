@@ -339,9 +339,12 @@ h2 {
 	float: right;
 }
 
+.article p {
+	margin-bottom: 0.6em;
+}
+
 #sidebar p{
-	text-align: justify;
-	margin: 0px 4px 2px 6px;
+	margin: 0px 4px 0.6em 6px;
 }
 
 #page-bottom p {
