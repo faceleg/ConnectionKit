@@ -39,7 +39,8 @@
 - (NSString *)placeholderImagePath;
 
 - (BOOL)allowsBannerSubstitution;
-- (NSString *)bannerName;
+- (NSString *)bannerCSSSelector;
+- (NSString *)bannerName;	// These 2 should be deprecated
 - (NSSize)bannerSize;
 
 - (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse;

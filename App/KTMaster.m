@@ -30,6 +30,7 @@
 
 
 @interface KTMaster (Private)
+- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose;
 - (KTMediaManager *)mediaManager;
 @end
 
@@ -279,6 +280,38 @@
 	[self setBannerImage:banner];
 }
 
+- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose
+{
+	NSString *result = nil;
+	
+	// If the user has specified a custom banner and the design supports it, load it in
+	KTMediaContainer *banner = [self bannerImage];
+	if ([[banner file] currentPath])
+	{
+		if ([[self design] allowsBannerSubstitution])
+		{
+			NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
+			
+			NSString *bannerPath = nil;
+			if (generationPurpose == kGeneratingPreview)
+			{
+				bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
+			}
+			else
+			{
+				NSString *CSSPath = [self publishedMasterCSSPathRelativeToSite];
+				NSString *mediaPath = [[[banner file] defaultUpload] valueForKey:@"pathRelativeToSite"];
+				bannerPath = [mediaPath URLPathRelativeTo:CSSPath];
+			}
+			
+			result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerPath];
+		}
+	}
+	
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Logo
 
@@ -403,32 +436,8 @@
 	
 	
 	// If the user has specified a custom banner and the design supports it, load it in
-	KTMediaContainer *banner = [self bannerImage];
-	if ([[banner file] currentPath])
-	{
-		NSString *bannerCSSPath = [[[self design] bundle] pathForResource:@"banner" ofType:@"css"];
-		if (bannerCSSPath)
-		{
-			NSString *bannerCSS = [NSMutableString stringWithContentsOfFile:bannerCSSPath];
-			if (bannerCSS)
-			{
-				NSString *bannerPath = nil;
-				if (generationPurpose == kGeneratingPreview)
-				{
-					bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
-				}
-				else
-				{
-					NSString *CSSPath = [self publishedMasterCSSPathRelativeToSite];
-					NSString *mediaPath = [[[banner file] defaultUpload] valueForKey:@"pathRelativeToSite"];
-					bannerPath = [mediaPath URLPathRelativeTo:CSSPath];
-				}
-				
-				bannerCSS = [bannerCSS stringByReplacing:@"banner_image.jpg" with:bannerPath];
-				[buffer appendString:bannerCSS];
-			}
-		}
-	}
+	NSString *bannerCSS = [self bannerCSS:generationPurpose];
+	if (bannerCSS) [buffer appendString:bannerCSS];
 	
 	
 	// Tidy up

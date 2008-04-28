@@ -166,7 +166,7 @@ body {
 
 				.home-page #sitemenu-container {
 					padding-top: 265px;
-					background: url(c-bk-header.jpg) center top no-repeat;
+					background-position: center top;
 				}
 
 					#sitemenu-content {
@@ -526,4 +526,3 @@ body.no-sidebar .gridItem {
 	#photo-list a {
 		background: url(photo-menu.png) no-repeat;
 	}
-

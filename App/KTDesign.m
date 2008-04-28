@@ -220,8 +220,14 @@
 
 - (BOOL)allowsBannerSubstitution
 {
-	NSString *bannerName = [self bannerName];
-	BOOL result = ( (nil != bannerName) && ([bannerName length] > 0) );
+	NSString *bannerCSSSelector = [self bannerCSSSelector];
+	BOOL result = (bannerCSSSelector && ![bannerCSSSelector isEqualToString:@""]);
+	return result;
+}
+
+- (NSString *)bannerCSSSelector
+{
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"bannerCSSSelector"];
 	return result;
 }
 
