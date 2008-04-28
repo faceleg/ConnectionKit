@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key>
-	<string>sandvox.Crimson Royale</string>
-	<key>CFBundleGetInfoString</key>
-	<string>SANDVOX_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
-	<key>CFBundleShortVersionString</key>
-	<string>SANDVOX_VERSION</string>
-	<key>CFBundleVersion</key>
-	<string>SVN_VERSION</string>
-	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
-	<key>CalloutBorderable</key>
-	<false/>
-	<key>SidebarBorderable</key>
-	<false/>
+	<key>bannerCSSSelector</key>
+	<string>#page-top</string>
 	<key>backgroundRGB</key>
 	<string>ffffff</string>
 	<key>bannerHeight</key>
@@ -24,12 +12,26 @@
 	<string>new_header_bkgd.jpg</string>
 	<key>bannerWidth</key>
 	<integer>800</integer>
+	<key>CalloutBorderable</key>
+	<false/>
+	<key>CFBundleGetInfoString</key>
+	<string>SANDVOX_VERSION (SVN_VERSION), © 2004–2008 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.Crimson Royale</string>
+	<key>CFBundleShortVersionString</key>
+	<string>SANDVOX_VERSION</string>
+	<key>CFBundleVersion</key>
+	<string>SVN_VERSION</string>
 	<key>copyright</key>
 	<string>Copyright © 2006, Karelia Software</string>
 	<key>frameRGB</key>
 	<string>FF3300</string>
 	<key>genre</key>
 	<string>business</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
+	<key>SidebarBorderable</key>
+	<false/>
 	<key>tallViewer</key>
 	<true/>
 	<key>textRGB</key>

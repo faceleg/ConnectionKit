@@ -142,7 +142,7 @@ body {
 
 				.home-page #sitemenu-container {
 					padding-top: 265px;
-					background: url(bk-header.jpg) center top no-repeat;
+					background-position: center top;
 				}
 
 					#sitemenu-content {

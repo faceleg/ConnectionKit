@@ -75,6 +75,7 @@ body.no-sidebar #page {
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+	min-height: 200px;
 }
 
 #title a {
