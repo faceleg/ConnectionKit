@@ -16,7 +16,15 @@
 #import "Debug.h"
 
 
-@implementation KTDesign ( ScaledImages )
+@interface KTDesign (Deprecated)
+- (NSSize)bannerSize;
+@end
+
+
+#pragma mark -
+
+
+@implementation KTDesign (ScaledImages)
 
 #pragma mark -
 #pragma mark Defaults

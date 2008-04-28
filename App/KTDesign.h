@@ -40,8 +40,6 @@
 
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;
-- (NSString *)bannerName;	// These 2 should be deprecated
-- (NSSize)bannerSize;
 
 // Viewport
 - (unsigned)viewport;	// Mainly used by the iPhone to know a page's optimum width
