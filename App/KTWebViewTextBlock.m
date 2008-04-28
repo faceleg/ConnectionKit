@@ -414,11 +414,11 @@
 	{
 		if (purpose == kGeneratingPreview)
 		{
-			[buffer appendFormat:@" style=\"%@\"", graphicalTextStyle];
+			[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 		}
 		else
 		{
-			[buffer appendFormat:@" id=\"graphical-text-%@\"", [[self graphicalTextMedia] identifier]];
+			[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[self graphicalTextMedia] identifier]];
 		}
 	}
 	
