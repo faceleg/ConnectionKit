@@ -154,12 +154,16 @@
 {
 	// Dump the old outline
 	NSOutlineView *oldSiteOutline = [self siteOutline];
-	[oldSiteOutline setDataSource:nil];
-	[oldSiteOutline setDelegate:nil];
+	if (oldSiteOutline)
+	{
+		[oldSiteOutline setDataSource:nil];
+		[oldSiteOutline setDelegate:nil];
+		
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+		[notificationCenter removeObserver:self name:NSOutlineViewSelectionDidChangeNotification object:oldSiteOutline];
+		[notificationCenter removeObserver:self name:NSOutlineViewItemWillCollapseNotification object:oldSiteOutline];
+	}
 	
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter removeObserver:self name:NSOutlineViewSelectionDidChangeNotification object:oldSiteOutline];
-	[notificationCenter removeObserver:self name:NSOutlineViewItemWillCollapseNotification object:oldSiteOutline];
 	
 	// Set up the appearance of the new view
 	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
@@ -190,20 +194,23 @@
 	
 	
 	// Finally, hook up outline delegate & data source
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(outlineViewSelectionDidChange:)
-												 name:NSOutlineViewSelectionDidChangeNotification
-											   object:siteOutline];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(outlineViewItemWillCollapse:)
-												 name:NSOutlineViewItemWillCollapseNotification
-											   object:siteOutline];
-	
-	[outlineView setDelegate:mySiteOutlineDataSource];		// -setDelegate: MUST come first to receive all notifications
-	[outlineView setDataSource:mySiteOutlineDataSource];
-	
-	[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+	if (siteOutline)
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(outlineViewSelectionDidChange:)
+													 name:NSOutlineViewSelectionDidChangeNotification
+												   object:siteOutline];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(outlineViewItemWillCollapse:)
+													 name:NSOutlineViewItemWillCollapseNotification
+												   object:siteOutline];
+		
+		[outlineView setDelegate:mySiteOutlineDataSource];		// -setDelegate: MUST come first to receive all notifications
+		[outlineView setDataSource:mySiteOutlineDataSource];
+		
+		[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+	}
 }
 
 
