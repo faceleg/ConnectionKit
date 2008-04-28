@@ -84,7 +84,6 @@
 				3C1D06BB0D5D67B800782A95 /* PBXTargetDependency */,
 				3C1D06BD0D5D67BC00782A95 /* PBXTargetDependency */,
 				3C1D06C50D5D67DA00782A95 /* PBXTargetDependency */,
-				3C1D06C10D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06B90D5D67B400782A95 /* PBXTargetDependency */,
 				3C1D06C30D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */,
@@ -1030,13 +1029,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FeedSource;
 		};
-		3C1D06C00D5D67DA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = FolderSource;
-		};
 		3C1D06C20D5D67DA00782A95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */;
@@ -1307,14 +1299,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Video.svxDataSource */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = VideoSource;
 		};
 		3C8B329A0DC632A1001405AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* VideoSource */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = VideoSource;
 		};
 		3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */ = {
@@ -6345,11 +6337,6 @@
 			isa = PBXTargetDependency;
 			name = FeedSource;
 			targetProxy = 3C1D06BC0D5D67BC00782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06C10D5D67DA00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FolderSource;
-			targetProxy = 3C1D06C00D5D67DA00782A95 /* PBXContainerItemProxy */;
 		};
 		3C1D06C30D5D67DA00782A95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
