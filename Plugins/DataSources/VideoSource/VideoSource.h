@@ -1,5 +1,5 @@
 //
-//  MovieSource.h
+//  VideoSource.h
 //  KTPlugins
 //
 //  Copyright (c) 2005, Karelia Software. All rights reserved.
@@ -37,7 +37,7 @@
 #import <SandvoxPlugin.h>
 
 
-@interface MovieSource : KTDataSource
+@interface VideoSource : KTDataSource
 {
 
 }

@@ -1,5 +1,5 @@
 //
-//  MovieSource.m
+//  VideoSource.m
 //  KTPlugins
 //
 //  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
@@ -34,11 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "MovieSource.h"
+#import "VideoSource.h"
 #import <QTKit/QTKit.h>
 
 
-@implementation MovieSource
+@implementation VideoSource
 
 /// QTMovie: + (id)movieWithPasteboard:(NSPasteboard *)pasteboard error:(NSError **)errorPtr
 // - (id)initWithPasteboard:(NSPasteboard *)pasteboard error:(NSError **)errorPtr
