@@ -32,7 +32,6 @@
 
 - (KTMediaContainer *)bannerImage;
 - (void)setBannerImage:(KTMediaContainer *)banner;
-- (void)setBannerImageFromSourceMedia:(KTMediaContainer *)media;
 
 - (KTMediaContainer *)logoImage;
 - (void)setLogoImage:(KTMediaContainer *)logo;

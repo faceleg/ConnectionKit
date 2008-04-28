@@ -898,7 +898,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	}
 	
 	KTMediaContainer *media  = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
-	[[[self selectedLevel] master] setBannerImageFromSourceMedia:media];
+	[[[self selectedLevel] master] setBannerImage:media];
 }
 
 - (IBAction)clearBannerImage:(id)sender;
@@ -993,7 +993,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		KTMediaContainer *banner = [[[self associatedDocument] mediaManager] mediaContainerWithDraggingInfo:sender
 																				  preferExternalFile:fileShouldBeExternal];
 		
-		[[[self selectedLevel] master] setBannerImageFromSourceMedia:banner];
+		[[[self selectedLevel] master] setBannerImage:banner];
 		result = YES;
 	}
 	else if (field == oLogoPathInfoField)

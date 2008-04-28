@@ -272,14 +272,6 @@
 	[self didChangeValueForKey:@"bannerImage"];
 }
 
-/*	Like -setBannerImage but crops the media to fit first, as the design likes it
- */
-- (void)setBannerImageFromSourceMedia:(KTMediaContainer *)media
-{
-	KTMediaContainer *banner = [media imageCroppedToSize:[[self design] bannerSize] alignment:NSImageAlignTop];
-	[self setBannerImage:banner];
-}
-
 - (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose
 {
 	NSString *result = nil;
@@ -468,7 +460,7 @@
 {
 	NSMutableSet *result = [NSMutableSet setWithCapacity:4];
 	
-	[result addObjectIgnoringNil:[self valueForKey:@"bannerImageMediaIdentifier"]];
+	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[[[self logoImage] imageToFitSize:NSMakeSize(200.0, 128.0)] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
