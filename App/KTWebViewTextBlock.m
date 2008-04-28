@@ -308,7 +308,7 @@
 	if (mediaFile)
 	{			
 		result = [NSString stringWithFormat:
-			@"text-indent:-1000px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",
+			@"text-align:left; text-indent:-1000px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",
 			[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
 			[mediaFile integerForKey:@"width"],
 			[mediaFile integerForKey:@"height"]];
