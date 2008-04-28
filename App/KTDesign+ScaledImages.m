@@ -8,33 +8,28 @@
 
 #import "KTDesign.h"
 
-#import "Debug.h"
+#import "KTImageScalingSettings.h"
+
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
+
+#import "Debug.h"
 
 
 @implementation KTDesign ( ScaledImages )
 
 #pragma mark -
-#pragma mark Media Uses
+#pragma mark Defaults
 
-+ (NSMutableDictionary *)_defaultMediaUses
++ (NSDictionary *)defaultMediaUses
 {
-	// we make the dictionary mutable so that we can add image types to it at runtime
-	static NSMutableDictionary *sImageTypes = nil;
-	if ( nil == sImageTypes )
+	static NSDictionary *result = nil;
+	if (!result)
 	{
 		NSString *imageTypesPath = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTScaledImageTypes" ofType:@"plist"];
-		sImageTypes = [[NSMutableDictionary alloc] initWithContentsOfFile:imageTypesPath];
+		result = [[NSDictionary alloc] initWithContentsOfFile:imageTypesPath];
 	}
-	return sImageTypes;
-}
-
-/*	This is just a cover that hides the mutable nature of the dictionary
- */
-+ (NSDictionary *)defaultMediaUses;
-{
-	return [self _defaultMediaUses];
+	return result;
 }
 
 + (NSDictionary *)infoForMediaUse:(NSString *)anImageName;
@@ -48,9 +43,64 @@
 	return typeInfo;
 }
 
-+ (void)setInfo:(NSDictionary *)aTypeInfoDictionary forMediaUse:(NSString *)anImageName;
+#pragma mark -
+#pragma mark Design-specific
+
+/*	This is used by plugins (e.g. Photo and Movie) to determine what size they should fit their media into.
+ *	Default values are taken from KTCachedImageTypes.plist but this allows designs to override them.
+ */
+- (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse
 {
-	[[self _defaultMediaUses] setValue:aTypeInfoDictionary forKey:anImageName];
+	KTImageScalingSettings *result = nil;
+	
+	
+	// Where possible, we use the values from the design itself
+	NSDictionary *allMediaInfo = [[self bundle] objectForInfoDictionaryKey:@"KTScaledImageTypes"];
+	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
+	
+	
+	if (!mediaInfo)
+	{
+		// Banners are a special case as we want to fallback to the -bannerSize method
+		if ([mediaUse isEqualToString:@"bannerImage"])
+		{
+			result = [KTImageScalingSettings cropToSize:[self bannerSize] alignment:NSImageAlignTop];
+		}
+		else
+		{
+			mediaInfo = [[self class] infoForMediaUse:mediaUse];
+		}
+	}
+	
+	
+	if (!result) result = [KTImageScalingSettings scalingSettingsWithDictionaryRepresentation:mediaInfo];
+	return result;
 }
+
+
+- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse
+{
+	// Pull the values out of the design bundle. They may well be nil
+	NSDictionary *allMediaInfo = [[[self bundle] infoDictionary] objectForKey:@"KTScaledImageTypes"];
+	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
+	
+	NSNumber *maxWidth = [mediaInfo objectForKey:@"maxWidth"];
+	NSNumber *maxHeight = [mediaInfo objectForKey:@"maxHeight"];
+	
+	// Replace nil values with the default
+	if (!maxWidth)
+	{
+		maxWidth = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxWidth"];
+	}
+	
+	if (!maxHeight)
+	{
+		maxHeight = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxHeight"];
+	}
+	
+	NSSize result = NSMakeSize([maxWidth unsignedIntValue], [maxHeight unsignedIntValue]);
+	return result;
+}
+
 
 @end

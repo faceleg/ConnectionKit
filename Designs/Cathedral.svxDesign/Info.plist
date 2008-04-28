@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>bannerHeight</key>
-	<integer>265</integer>
 	<key>bannerCSSSelector</key>
 	<string>#sitemenu-container</string>
+	<key>bannerHeight</key>
+	<integer>265</integer>
 	<key>bannerName</key>
 	<string>c-bk-header.jpg</string>
 	<key>bannerWidth</key>
@@ -41,6 +41,20 @@
 	</dict>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
+	<key>KTScaledImageTypes</key>
+	<dict>
+		<key>bannerImage</key>
+		<dict>
+			<key>maxWidth</key>
+			<integer>800</integer>
+			<key>maxHeight</key>
+			<integer>265</integer>
+			<key>behavior</key>
+			<string>CropToRect</string>
+			<key>alignment</key>
+			<string>top</string>
+		</dict>
+	</dict>
 	<key>SidebarBorderable</key>
 	<true/>
 	<key>title</key>

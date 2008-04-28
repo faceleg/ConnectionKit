@@ -218,6 +218,9 @@
 	return [NSString stringWithFormat:@"%@ %@", [super description], [[self bundle] bundleIdentifier]];
 }
 
+#pragma mark -
+#pragma mark Banner
+
 - (BOOL)allowsBannerSubstitution
 {
 	NSString *bannerCSSSelector = [self bannerCSSSelector];
@@ -246,49 +249,6 @@
 	if (!width) width = 800;
 	if (!height) height = 200;
 	return NSMakeSize(width, height);
-}
-
-/*	This is used by plugins (e.g. Photo and Movie) to determine what size they should fit their media into.
- *	Default values are taken from KTCachedImageTypes.plist but this allows designs to override them.
- */
-- (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse
-{
-	KTImageScalingSettings *result = nil;
-	
-	// Pull the values out of the design bundle. They may well be nil
-	NSDictionary *allMediaInfo = [[[self bundle] infoDictionary] objectForKey:@"KTScaledImageTypes"];
-	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
-	if (!mediaInfo)
-	{
-		mediaInfo = [[self class] infoForMediaUse:mediaUse];
-	}
-	
-	result = [KTImageScalingSettings scalingSettingsWithDictionaryRepresentation:mediaInfo];
-	return result;
-} 
-
-- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse
-{
-	// Pull the values out of the design bundle. They may well be nil
-	NSDictionary *allMediaInfo = [[[self bundle] infoDictionary] objectForKey:@"KTScaledImageTypes"];
-	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
-	
-	NSNumber *maxWidth = [mediaInfo objectForKey:@"maxWidth"];
-	NSNumber *maxHeight = [mediaInfo objectForKey:@"maxHeight"];
-	
-	// Replace nil values with the default
-	if (!maxWidth)
-	{
-		maxWidth = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxWidth"];
-	}
-	
-	if (!maxHeight)
-	{
-		maxHeight = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxHeight"];
-	}
-	
-	NSSize result = NSMakeSize([maxWidth unsignedIntValue], [maxHeight unsignedIntValue]);
-	return result;
 }
 
 /*	The width of the design for the iPhone's benefit.

@@ -2,27 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>KTPageMedia</key>
-	<dict>
-		<key>maxHeight</key>
-		<integer>640</integer>
-		<key>maxWidth</key>
-		<integer>640</integer>
-	</dict>
-	<key>KTPageletMedia</key>
-	<dict>
-		<key>maxHeight</key>
-		<integer>500</integer>
-		<key>maxWidth</key>
-		<integer>200</integer>
-	</dict>
-	<key>KTSidebarPageMedia</key>
-	<dict>
-		<key>maxHeight</key>
-		<integer>320</integer>
-		<key>maxWidth</key>
-		<integer>320</integer>
-	</dict>
 	<key>bannerImage</key>
 	<dict>
 		<key>alignment</key>
@@ -30,7 +9,7 @@
 		<key>behavior</key>
 		<string>CropToRect</string>
 		<key>maxHeight</key>
-		<integer>300</integer>
+		<integer>200</integer>
 		<key>maxWidth</key>
 		<integer>800</integer>
 		<key>tag</key>
@@ -74,6 +53,27 @@
 		<string>textmedium</string>
 		<key>upload</key>
 		<true/>
+	</dict>
+	<key>KTPageletMedia</key>
+	<dict>
+		<key>maxHeight</key>
+		<integer>500</integer>
+		<key>maxWidth</key>
+		<integer>200</integer>
+	</dict>
+	<key>KTPageMedia</key>
+	<dict>
+		<key>maxHeight</key>
+		<integer>640</integer>
+		<key>maxWidth</key>
+		<integer>640</integer>
+	</dict>
+	<key>KTSidebarPageMedia</key>
+	<dict>
+		<key>maxHeight</key>
+		<integer>320</integer>
+		<key>maxWidth</key>
+		<integer>320</integer>
 	</dict>
 	<key>largeImage</key>
 	<dict>

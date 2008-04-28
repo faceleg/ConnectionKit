@@ -282,8 +282,14 @@
 	{
 		if ([[self design] allowsBannerSubstitution])
 		{
-			NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
+			// Scale the banner
+			KTImageScalingSettings *scalingSettings = [[self design] imageScalingSettingsForUse:@"bannerImage"];
+			NSDictionary *scalingProperties =
+				[NSDictionary dictionaryWithObject:scalingSettings forKey:@"scalingBehavior"];
+			banner = [banner scaledImageWithProperties:scalingProperties];
 			
+			
+			// Find the right path
 			NSString *bannerPath = nil;
 			if (generationPurpose == kGeneratingPreview)
 			{
@@ -296,6 +302,7 @@
 				bannerPath = [mediaPath URLPathRelativeTo:CSSPath];
 			}
 			
+			NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
 			result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerPath];
 		}
 	}

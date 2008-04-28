@@ -43,9 +43,6 @@
 - (NSString *)bannerName;	// These 2 should be deprecated
 - (NSSize)bannerSize;
 
-- (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse;
-- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse;	// e.g. how big a Photo page should be
-
 // Viewport
 - (unsigned)viewport;	// Mainly used by the iPhone to know a page's optimum width
 
@@ -59,11 +56,14 @@
 
 @end
 
-@interface KTDesign ( ScaledImages )
+@interface KTDesign (ScaledImages)
+
 // Media uses. e.g. KTSidebarPageMedia which covers photo pages which have a sidebar
-+ (NSDictionary *)defaultMediaUses;
 + (NSDictionary *)infoForMediaUse:(NSString *)anImageName;
-+ (void)setInfo:(NSDictionary *)aTypeInfoDictionary forMediaUse:(NSString *)anImageName;
+
+- (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse;
+- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse;	// e.g. how big a Photo page should be
+
 @end
 
 /*
