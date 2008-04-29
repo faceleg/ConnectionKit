@@ -388,18 +388,29 @@ h2 {
 #sitemenu-content ul {
 	list-style-type: none;
 	width: 752px;
-	padding:0px 4px;
+	padding: 2px 4px 0px 4px;
 	margin: 0px;
 	overflow:hidden;
 	text-align:left;
-	line-height:200%;
+	line-height:220%;
 }
 
 #sitemenu-content li {
-	display: inline;
+	display: inline-block;
 	padding:3px 0px 6px 0px;
 	margin: 0 10px;
 }
+
+/* Hides from IE5-mac \*/
+* #sitemenu-content li {
+	display:inline;
+}
+
+*:first-child+html #sitemenu-content li {
+	display:inline;
+}
+/* End hide from IE5-mac */
+
 
 #sitemenu-content li.currentPage, #sitemenu-content li.currentParent {
 	background: transparent url(current-arrow.gif) no-repeat 50% 100%;
@@ -506,7 +517,7 @@ border: 10px solid #f4f4f4;
 	margin-bottom:18px;
 }
 .allow-sidebar .photo-navigation {
-	margin-left:20px;
+	margin-right:10px;
 }
 .photo-navigation div {
 	position:absolute;

@@ -471,6 +471,10 @@ body.no-sidebar h2 {
     margin-bottom: 3px;
 }
 
+.has-photo-navigation h2 {
+	width:380px;
+}
+
 /* Hides from IE5-mac \*/
 * html h2 {
 	position:absolute;
@@ -968,6 +972,11 @@ div.photo-viewer-summary .article {
 
 .image-controls a {
 	border:none;
+}
+
+
+.collection-navigation a {
+	text-decoration:none;
 }
 
 

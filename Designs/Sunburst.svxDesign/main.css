@@ -39,7 +39,7 @@ body {
 }
 
 /* heading font */
-h1, h2, h3,  h4, #title p, #sitemenu-content li, #page-bottom p, .caption {
+h1, h2, h3,  h4, #title p, #sitemenu-content li, #page-bottom p, .caption, .collection-navigation {
 	font-family:Futura, Verdana, Helvetica, Arial, sans-serif;
 }
 
@@ -265,6 +265,8 @@ body.no-sidebar #page-content {
     text-shadow: 0px 1px 1px white;
     text-align: center;
     line-height: 2.35em;
+	height: 35px;
+	overflow: hidden;
 }
 
 /* photo-page, html-page (in some cases), iframe-page don't have sidebar */
@@ -612,7 +614,7 @@ body.no-sidebar .photogrid-index {
     width: 46px;
     height: 44px;
     text-indent: -5000em;
-    margin-top:-15px;
+    margin-top:-21px;
     position: absolute;
 }	
 
@@ -648,6 +650,16 @@ body.no-sidebar .photogrid-index {
 .image-controls a {
 	border:none;
 }
+
+
+.collection-navigation {
+	margin-top: 6px;
+}
+
+.collection-navigation a {
+	border-bottom: 0px none;
+}
+
 
 
 /* IE 5/5.5 Hackery */

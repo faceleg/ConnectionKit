@@ -119,28 +119,24 @@ h1 a:hover, h1 a:focus, h1 a:active {
     border-bottom: 1px solid #232323;
 	border-left: 1px solid #525252;
 	border-right: 1px solid #525252;
-	overflow: auto;
+	overflow: hidden;
 }
 
 #sitemenu-content ul {
     text-align: center;
-    padding:0;
+    padding: 3px 0px 0px 0px;
 	margin: 0 10px auto 10px;
+	overflow: hidden;
+	line-height: 200%;
 }
 
 #sitemenu-content li {
-    margin: 0;
-    padding: 0;
-    display: block;
-	float: left;
-    padding-left: 5px;
-    padding-right: 5px;
-	padding-top: 6px;
-	padding-bottom: 6px;
-    margin-top: -1px;
-	margin-right: 5px;
-    font-size: 1.1em;
+    margin: -1px 5px 0px 0px;
+    padding: 8px 5px 4px 5px;
+	display:inline;
+	font-size: 1.1em;
 }
+
 
 #sitemenu-content a{
     text-decoration: none;
@@ -204,6 +200,14 @@ body.no-sidebar #page-content {
     overflow:hidden;
 }
 
+.callout .pagelet {
+	padding:5px;
+}
+
+.callout .pagelet.bordered {
+	background: #343434;	
+}
+
 .pagelet h4 {
     margin: 0px 3px 6px 3px;
 	padding-top:14px;
@@ -215,6 +219,9 @@ body.no-sidebar #page-content {
     text-align: center;
 }
 
+.pagelet.bordered h4 {
+	border-bottom-color: rgb(158,158,158);
+}
 
 #main {
     min-height: 190px;
@@ -242,15 +249,19 @@ body.allow-sidebar #main {
     margin:0;
     padding:0;
     margin-right: 2px;
-    width: 523px;
+    width: 513px;
 }
 /* End hide from IE5-mac */
 
-.photo-page h2 {
-	min-height:23px;
+/* IE5/Mac Love */
+* html>body.allow-sidebar #main {
+	width: 470px;
 }
-.allow-sidebar .photo-page h2 {
-	padding-right:150px;
+
+
+.has-photo-navigation h2 {
+	min-height:23px;
+	padding-right:130px;
 }
 
 h2 {
@@ -334,11 +345,9 @@ li h3 {
 }
 
 .callout {
-    background: rgb(239, 244, 248);
     float: right;
     margin: 10px;
     margin-right: 0px;
-    padding: 5px;
     border: 1px solid rgb(158, 158, 158);
 }
 
@@ -581,6 +590,12 @@ li a:hover {
 
 
 
+.text-navigation {
+	margin-top: 6px;	
+}
+
+
+
 /* IE 5/5.5 Hackery */
 
 @media tty {
@@ -591,11 +606,6 @@ i{content:"\";/*" "*/}} @import 'ie.css'; /*";}
 
 /*\*//*/
 
-body.allow-sidebar #main {
-    float: right;
-    width: 511px;
-    font-size: 1em;
-}
 
 .article {
     margin:0;

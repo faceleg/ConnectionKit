@@ -224,8 +224,8 @@ h2 {
 }
 * html h2 { font-weight: bold; }
 
-.photo-page h2 {
-	margin-right:150px;
+.has-photo-navigation h2 {
+	margin-right:155px;
 }
 
 * html #page-content h3 { font-size: 1em; }
@@ -330,7 +330,7 @@ h2 {
 
 .photo-navigation {
 	float: right;
-	margin-top: -40px;
+	margin-top: -35px;
 	margin-right: 16px;
 }
 

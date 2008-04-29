@@ -1,0 +1,16 @@
+#page-top {
+	background-position: center -15px;	
+}
+
+#title {
+	background: url(banner_image.jpg) center top no-repeat;
+	margin: 0px 13px 0px 14px;
+	text-shadow: #eee 1px 2px 2px;
+	font-weight:bold ;
+	min-height: 140px;
+}
+
+#title p {
+	text-shadow: #eee 1px 1px 1.5px;
+	background:transparent;
+}

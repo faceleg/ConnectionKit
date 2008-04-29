@@ -1,0 +1,23 @@
+#title {
+	margin: 0px 0px -14px 0px;
+	background: url(banner_image.jpg) center top no-repeat; 
+	min-height:140px;
+}
+
+
+
+* html #title {
+	margin-bottom: 0px;
+}
+
+/* Hides from IE5-mac \*/
+* html #title {
+	margin-bottom: -14px;
+}
+/* End hide from IE5-mac */
+
+
+h1, #title p {
+	font-weight: bold;
+	text-shadow: #fff 0px 0px 3px;
+}

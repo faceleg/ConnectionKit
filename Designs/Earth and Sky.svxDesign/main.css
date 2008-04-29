@@ -28,7 +28,7 @@ body {
 }
 
 /* sans-serif font for headings & sitemenu */
-#sitemenu, h2, h3, h4, #title p {
+#sitemenu, h2, h3, h4, #title p, .collection-navigation {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -400,6 +400,14 @@ PHOTO NAVIGATION
 }
 /* End hide from IE5-mac */
 
+
+.collection-navigation {
+	font-weight: bold;
+}
+
+.collection-navigation a {
+	text-decoration: none;
+}
 
 
 

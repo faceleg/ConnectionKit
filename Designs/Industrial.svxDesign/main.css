@@ -129,26 +129,24 @@ body {
 #sitemenu-content {
 	height: 80px;
 	font-size: .9em;
+	overflow:hidden;
 }
 
 	#sitemenu-content ul {
 		list-style: none;
 		margin: 0;
-		padding: 37px 30px 20px 30px;
+		height: 2em;
+		overflow: hidden;
+		margin: 30px 35px 20px 5px;
 	}
 
-	/* hack ie/mac */
-	* html #sitemenu-content ul { padding-top: 57px; }
-	/*\*/
-	* html #sitemenu-content ul { padding-top: 37px; }
-	/**/
 
 	#sitemenu-content li {
 		margin: 0 15px 0 0;
 		padding: 0;
-		float: left;
+		display:inline;
 		font-weight: normal;
-		line-height:1.3em;
+		line-height:2em;
 	}
 
 		#sitemenu-content a, .currentPage span.in, .currentPage { 
@@ -173,6 +171,11 @@ body {
 	overflow:hidden;
 }
 
+/* IE5/Mac Love */
+* html>body .pagelet {
+	width: 216px;	
+}
+
 	.pagelet h4 {
 		height: 44px;
 		line-height: 41px;
@@ -184,28 +187,18 @@ body {
 	.o h4 { background: url(subheaderbg-o.jpg) no-repeat top left; }
 	.e h4 { background: url(subheaderbg-e.jpg) no-repeat top left; }
 
-/* Multi-Line (Looks Ugly)
-
-	.pagelet h4 {
-		padding-bottom: 15px;
-	}
-
-	.pagelet h4 span { display: block; padding: 10px 20px 0 20px; min-height: 26px; padding-bottom: 1px; }
-
-	.o h4 span { background: url(subheaderbg-o.jpg) no-repeat top left; }
-	.e h4 span { background: url(subheaderbg-e.jpg) no-repeat top left; }
-
-	.o h4  { background: url(subheaderbg-o-bottom.gif) no-repeat bottom left; }
-	.e h4  { background: url(subheaderbg-e-bottom.gif) no-repeat bottom left; }
-
-*/
 
 #photo-page #main img { border: 2px solid #fff; }
 #photo-page .caption { color: #999; padding: 2px 4px; text-align: center;}
 
+
+/* IE Hack */
+/* Hides from IE5-mac \*/
 ul {
 	padding-left:28px;
 }
+/* End hide from IE5-mac */
+
 
 h2 {
 	margin-top: 6px;
@@ -218,6 +211,8 @@ h2 {
 }
 
 .no-sidebar h2 { margin-top: 2px; background: url(headerbg-nosidebar.jpg) no-repeat top left; }
+
+.has-photo-navigation h2 { padding-right: 130px;}
 
 * html #page-content h3 { font-size: 1.1em; }
 * html #page-content h4 { font-size: 1em; }
@@ -233,6 +228,9 @@ h2 {
 	float: left;
 	margin: 6px 6px 6px 0;
 }
+
+/* IE/Mac Love*/
+* html>body #index .article  { width: 450px;}
 
 .callout-container .callout {
 	clear: both;

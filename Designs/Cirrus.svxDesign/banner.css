@@ -1,0 +1,18 @@
+#page-top {
+	background: transparent;
+}
+
+#title {
+	margin:0px 13px;
+	background: url(banner_image.jpg) center top no-repeat;
+	min-height: 160px;
+}
+
+* html #title {
+	margin-bottom: -15px;
+}
+
+#title p {
+	text-shadow: #fff 0px 1px 3px;
+	font-weight: bold;
+}

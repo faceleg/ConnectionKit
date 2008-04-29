@@ -40,7 +40,7 @@ body.allow-sidebar {
 	color:#fff;
 }
 
-#sidebar, .callout, #page-top, h1, h2, h3, h4 {
+#sidebar, .callout, #page-top, h1, h2, h3, h4, .collection-navigation {
 	font-family: "Trebuchet MS", Arial,  sans-serif;
 	font-weight:normal;
 	background-color:inherit;

@@ -465,64 +465,47 @@ body.no-sidebar .gridItem {
 /* Individual Photo Pages */
 
 .photo-navigation {
-	margin-left: 208px;
+	position: relative;
+	margin:-8px auto 8px auto;
+	width: 300px;
+	height: 48px;
 	padding:0px;
 }
 
-.allow-sidebar .photo-navigation {
-	margin-left:77px;
-}
 
-/* IE Hack */
-/* Hides from IE5-mac \*/
-* html .photo-navigation {
-	margin-left:196px;
+.photo-navigation div {
+	position: absolute;
+	height: 48px;
+	width: 76px;
 }
-
-* html .allow-sidebar .photo-navigation {
-	margin-left:67px;
-}
-/* End hide from IE5-mac */
-
 
 .photo-navigation a { 
-		display: block;  
-		text-indent: -5000px; 
-		height:100%; 
-		width:100%;
+	display: block;  
+	text-indent: -5000px; 
+	height:100%; 
+	width:100%;
 }
-
-	#previous-photo, #next-photo, #photo-list {
-		position: relative;
-		float:left;
-		height: 48px;
-		width: 76px;
-		margin: 0 10px 0 10px;
-	}
 
 	#previous-photo	{
 		left:0px;
 		background: url(photo-prev-inactive.png) no-repeat;
 	}
-
 	#previous-photo a {
 		background: url(photo-prev.png) no-repeat;
 	}
 	
 	#next-photo {
-		left:100px;
+		right:0px;
 		background: url(photo-next-inactive.png) no-repeat;
 	}
-
 	#next-photo a {
 		background: url(photo-next.png) no-repeat;
 	}
 
 	#photo-list {
-		left:-95px;
+		left:112px;
 		background: url(photo-menu-inactive.png) no-repeat;
-	}
-	
+	}	
 	#photo-list a {
 		background: url(photo-menu.png) no-repeat;
 	}

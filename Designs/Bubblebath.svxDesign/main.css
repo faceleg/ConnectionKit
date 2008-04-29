@@ -39,7 +39,7 @@ body { background: #ffd3f1 url(bodybg.gif) repeat-x; margin: 0; padding: 0 0 30p
 }
 /* End hide from IE5-mac */
 
-#sitemenu ul {float: left;  margin: 0; padding: 0 0 0 14px; background: url(sitemenubg.gif) repeat-y;width:750px;}
+#sitemenu ul {display:inline; margin: 0; padding: 0 0 0 14px; background: url(sitemenubg.gif) repeat-y;width:750px;}
 #sitemenu {float: left; background: url(sitemenutopbg.gif) no-repeat; padding-top: 13px;width:764px;}
 #sitemenu li { float: left; margin-right: 12px; height: 12px; line-height: 12px; list-style: none; }
  a { color: #ffdc63; font-weight: bold; text-decoration: none; }
@@ -58,13 +58,14 @@ body { background: #ffd3f1 url(bodybg.gif) repeat-x; margin: 0; padding: 0 0 30p
 	.pagelet p {margin:0px; padding:0px 0px 0.5em !important;}
 	.pagelet { margin-bottom: 12px; }
 #sidebar-content .caption {margin-bottom: 1em;}
-#main {width: 491px; float: right; color: #300; }
+#main {width: 491px; float: right; color: #300; position:relative; }
 #main-top { background: url(maintopbg.gif) no-repeat top left; height: 14px; }
 #main-content { margin: 0; padding: 0 9px 14px; background: #f975cc }
 #main-bottom { background: url(mainbottombg.gif) no-repeat bottom left; height: 132px; }
 
 	#main-content h4 { position: relative; font-size: 11px; }
 	#main-content h2{position: relative;  margin: 0 0 1em; padding: 0; font-size: 14px;  color: #000; line-height: 14px; background: transparent; }
+	#main-content.has-photo-navigation h2 {margin-right: 125px;}
 	#main-content .e h3, #main-content .o h3  { margin: 0 0 1em; font-size: 14px; color: #971b6c; padding-left: 32px; height: 43px; line-height: 43px; background: url(mainh3bg.gif) no-repeat 0 9px; }
 	#main-content .o h3 a, #main-content .e h3 a { color: #971b6c; }
 	#main-content .o h3 a:visited, #main-content .e h3 a:visited, #main-content a:visited { color: #6c1b97; }
@@ -76,6 +77,7 @@ body { background: #ffd3f1 url(bodybg.gif) repeat-x; margin: 0; padding: 0 0 30p
 
 
 .callout {
+	clear:right;
     float: right;
 	padding:10px 10px 0px 10px;
 	margin-right:0px;
@@ -94,7 +96,7 @@ body { background: #ffd3f1 url(bodybg.gif) repeat-x; margin: 0; padding: 0 0 30p
 .no-sidebar #main-bottom { background: url(mainbottombg-nosidebar.gif) no-repeat bottom left; height: 132px; }
 
 #index ul { margin: 1em 0;list-style: none; }
-.callout ul {magin:0px!important; list-style:disc!important;padding-left:20px;}
+.callout ul {margin:0px!important; list-style:disc!important;padding-left:20px;}
 
 .photogrid-index { text-align:center; }
 .photogrid-index a {
@@ -156,17 +158,19 @@ body.no-sidebar .gridItem h3 {
 /* End hide from IE5-mac */
 
 
-.photo-page #main-content h2 { padding-right: 130px; }
 .photo-page .photo { text-align: center; clear: both; padding-top: 12px; }
 .photo-page .caption { padding: 10px 0; text-align: center; }
 .photo-page .photo img { border: none; }
 
-.photo-navigation { float: right; margin-top: -35px; width: 114px; }
-#previous-photo, #next-photo, #photo-list { float: left; margin-top: 35px; margin-right: 5px;}
-.photo-navigation a { display: block; width: 31px; height: 36px; text-decoration: none; text-indent: -5000px; overflow: hidden; }
+.photo-navigation { position:absolute; top: 5px; right: 8px; width: 115px; height: 36px;}
+.photo-navigation div { position: absolute; width: 31px; height: 36px; }
+#photo-list {right: 0px; }
+#next-photo {right: 40px;}
+#previous-photo {right: 80px;}
+.photo-navigation a { text-indent: -5000px; display:block; height: 36px; width: 31px; position:absolute;}
 #previous-photo a { background: url(photo-prev.gif) no-repeat top left; }
 #next-photo a { background: url(photo-next.gif) no-repeat top left; }
-#photo-list a { background: url(photo-list.gif) no-repeat top left; }
+#photo-list a { background: url(photo-list.gif) no-repeat top left;  }
 
 
 

@@ -1,0 +1,20 @@
+/* doesn't work yet but could be nice. */
+
+#title {
+	background: url(banner_image.jpg) center top no-repeat;
+	border: #fff 4px solid;
+	border-bottom-width: 0px;
+	margin: 0px 0px 0px 7px;
+	width: 762px;
+}
+
+html > body #title {
+	background: url(banner_image.jpg) center top no-repeat;
+	border: #fff 4px solid;
+	border-bottom-width: 0px;
+	margin: 0px 0px 0px 7px;
+	width: 762px;
+	-webkit-border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;
+}
+

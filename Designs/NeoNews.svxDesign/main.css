@@ -301,9 +301,8 @@ h2 {
 }
 /* End hide from IE5-mac */
 
-.photo-page h2 {
-	padding-left:75px;
-	padding-right:100px;
+.has-photo-navigation h2 {
+	padding-right: 104px;
 }
 
 .article {
@@ -567,6 +566,13 @@ body.no-sidebar .photogrid-index {
 #photo-list a {
     background: url(photo-buttons-02.png)		no-repeat;
 }
+
+
+.text-navigation {
+	margin-top:6px;
+}
+
+
 
 
 /* IE 5/5.5 Hackery */

@@ -301,11 +301,11 @@ h2 span.in {
 }
 
 
-.allow-sidebar .photo-page h2 {
+.has-photo-navigation h2 {
 	padding-top:0px;
 }
 
-.allow-sidebar .photo-page h2 span.in {
+.has-photo-navigation h2 span.in {
 	padding-right:170px;
 }
 

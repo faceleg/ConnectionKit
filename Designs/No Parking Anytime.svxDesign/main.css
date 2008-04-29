@@ -164,11 +164,11 @@ body {
 							margin: 0 10px;
 						}
 
-							#sitemenu-content a, {
+							#sitemenu-content a {
 								line-height: 1.5em;
 							}
 
-							.currentPage span.in, {
+							.currentPage span.in {
 								font-weight: bold;
 								color: #eee;
 								border-bottom: 5px solid #eee;
@@ -463,44 +463,47 @@ body.no-sidebar .gridItem {
 /* Individual Photo Pages */
 
 .photo-navigation {
-	margin-left: 230px;
+	position: relative;
+	margin:-8px auto 8px auto;
+	width: 300px;
+	height: 54px;
+	padding:0px;
 }
 
-.allow-sidebar .photo-navigation {
-	margin-left:74px;
-}
+
+	.photo-navigation div {
+		position:absolute;
+		height: 48px;
+		width:80px;
+		margin: 0 10px;
+	}
 
 	.photo-navigation a { 
 		display: block;  
 		text-indent: -5000px; 
 		height:100%; 
 		width:100%;
-}
-
-	#previous-photo, #next-photo, #photo-list {
-		float: left;
-		height: 60px;
-		width:80px;
-		margin: 0 10px 0 10px;
 	}
 
 	#previous-photo	{
-		background: url(button-previous-disabled.gif) no-repeat;
+		background: url(button-previous-disabled.gif)  no-repeat;
+		left: 0px;
 	}
 	#previous-photo	a {
 		background: url(button-previous.gif) no-repeat;
 	}
-
 	
 	#next-photo {
-		background: url(button-next-disabled.gif) no-repeat;
+		background: url(button-next-disabled.gif)  no-repeat;
+		right: 0px;
 	}
 	#next-photo a {
 		background: url(button-next.gif) no-repeat;
 	}
 	
 	#photo-list {
-		background: url(button-list-disabled.gif) no-repeat;
+		left: 100px;
+		background: url(button-list-disabled.gif)  no-repeat;
 	}
 	#photo-list a {
 		background: url(button-list.gif) no-repeat;

@@ -426,13 +426,6 @@ body.no-sidebar .gridItem h3 {
 /* End hide from IE5-mac */
 
 
-/* fix positioning for IE5/Win*/
-@media tty {
-i{content:"\";/*" "*/}} @import 'ie.css'; /*";}
-}/* */
-
-
-
 /* 
 SANDVOX INTERNALS
 */

@@ -463,7 +463,7 @@ div.photo-viewer-summary .article {
 /* Used on Photo Grid Pages ... */
 .photogrid-index {
     text-align: center;
-    margin-top: 10px auto 10px 0px;
+    margin-top: 10px;
     padding: 5px;
     padding-left: 10px;
     border-top: 10px solid white;

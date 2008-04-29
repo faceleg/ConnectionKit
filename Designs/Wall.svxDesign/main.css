@@ -40,7 +40,7 @@ a:visited {
 }
 
 a:hover, a:active {
-	color: #fff;
+	color: #bbb;
 }
 
 
@@ -166,7 +166,7 @@ MAIN PART
 	color:#efefe7;
 	padding:0px 6px;
 	border-width: 0px 0px 2px 0px;
-	border-color: #;
+	border-color: #efefe7;
 	border-style: solid;
 }
 
@@ -276,6 +276,7 @@ body.allow-sidebar .gridItem {
     position:absolute;
 	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
 	width: 128px;
+	color: #ddd;
 }
 
 body.allow-sidebar .gridItem h3 {
@@ -366,6 +367,13 @@ PHOTO NAVIGATION
 /* End hide from IE5-mac */
 
 
+.collection-navigation {
+	margin-top: 6px;
+}
+
+.collection-navigation a {
+	text-decoration: none;
+}
 
 
 /* 

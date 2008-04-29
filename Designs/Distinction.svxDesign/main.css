@@ -337,7 +337,7 @@ PHOTO NAVIGATION
 	position:relative;
     height: 21px;
     width:200px;
-    margin:0px auto 8px auto;
+    margin:-8px auto 15px auto;
 }
 
 .photo-navigation div {

@@ -78,7 +78,7 @@ ul {
 	overflow: hidden;
 }
 
-#title, #page-bottom, #sitemenu {
+#title, #page-bottom, #sitemenu, .collection-navigation {
 	font-family: Optima, Helvetica, Arial, sans-serif;
 }
 
@@ -381,6 +381,14 @@ PHOTO NAVIGATION
     background: url(yellow-buttons.gif)		no-repeat;
 }
 
+
+.text-navigation a {
+	text-decoration: none;
+}
+
+
+
+
 .image-controls a {
 	border-bottom:none !important;
 }
@@ -442,3 +450,4 @@ Don't change them unless you have very good reason to do so.
 img.narrow {float: right;}
 img.wide {display: block;}
 .ImageElement, .VideoElement { text-align:center;}
+

@@ -1,0 +1,10 @@
+#title {
+	margin: 0px 0px -14px 0px;
+	background: url(banner_image.jpg) center top no-repeat; 
+	min-height:140px;
+}
+
+#title h1, #title p {
+	text-shadow: #fff 0px 0px 3px;
+	font-weight: bold;
+}

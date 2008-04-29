@@ -227,7 +227,7 @@ h2 span.in {
 	background: url(headerbg-nosidebar-top.png) no-repeat top left; 
 }
 
-.photo-page h2 span.in {
+.has-photo-navigation h2 span.in {
 	padding-right:135px;
 }
 
@@ -372,7 +372,7 @@ body.no-sidebar .gridItem {
 
 .photo-navigation {
 	float: right;
-	margin-top: -56px;
+	margin-top: -50px;
 	margin-right: 22px;
 }
 

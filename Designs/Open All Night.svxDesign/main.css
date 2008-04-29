@@ -63,7 +63,7 @@ body.no-sidebar #page {
     padding: 70px 0px 0px 0px ;
     text-decoration:none;
     margin: 0;
-    height: 225px;
+    height: 155px;
     margin-bottom: 25px;
     overflow: hidden;
 }
@@ -341,7 +341,7 @@ body.no-sidebar #page-content {
     margin-top: -25px;
 }
 
-.photo-page #sidebar {
+.has-photo-navigation #sidebar {
 	margin-top:80px;
 }
 
@@ -468,13 +468,13 @@ body.no-sidebar h2 span.in {
     padding-left:18px;
 }
 
-div.photo-page h2 {
+div.has-photo-navigation h2 {
     background: url(page_title_top.jpg) top left no-repeat !important;
     margin-left: 4px!important;
     width: 465px!important;
 }
 
-.photo-page h2 span.in {
+div.has-photo-navigation h2 span.in {
     background: url(page_title_bottom.jpg) bottom left no-repeat !important;
 }
 

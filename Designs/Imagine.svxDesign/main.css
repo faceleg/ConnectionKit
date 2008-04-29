@@ -307,7 +307,7 @@ a:hover {
 }
 
 #sitemenu li.currentParent a:hover span.in {
-	text-decoration none;
+	text-decoration: none;
 }
 
 

@@ -2,3 +2,7 @@
 	background: url(banner_image.jpg) center top no-repeat; 
 	min-height:140px;
 }
+
+#sitemenu-container {
+	background-position: center -14px;
+}

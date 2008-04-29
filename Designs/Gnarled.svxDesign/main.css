@@ -125,13 +125,12 @@ body.no-sidebar #title {
 
 
 	#sitemenu-content ul { list-style-type: none; margin: 0; padding-left:40px;}
-	#sitemenu-content li { margin: 0 15px 0 0; float: left; }
+	#sitemenu-content li { margin: 0 15px 0 0; display:inline; }
 
 	/*
 		IE5/mac needs a width for floated items, 
 		so we hack ie/mac, then correct ie/pc
 	*/
-	* html #sitemenu-content li { width: 110px; text-align: center; margin-right: 0;}
 	/*\*/
 	* html #sitemenu-content li { width: auto; text-align: left;  margin-right: 20px;}
 	/**/
@@ -140,9 +139,16 @@ body.no-sidebar #title {
 
 	#sitemenu-content a, .currentPage {
 		color: #5f4416;
-		display: block; 
+		display: inline; 
 		padding: 2px 4px 6px 4px;
 	}
+
+	/* IE5/Mac doesn't like this, so we hide it */
+	/*\*/   
+	#sitemenu-content a, .currentPage {
+		display:inline-block;
+	}
+	/**/
 
 	#sitemenu-content a:link, #sitemenu-content a:visited {
 		color: #5f4416;
@@ -210,10 +216,14 @@ h2 {
 	color: #fff;
 }
 
-.allow-sidebar .photo-page  h2 {
-	padding-right:120px;
+.no-sidebar h2 { 
+	margin: 1em auto; 
+	background: url(h2bgwide.gif) no-repeat top left; 
 }
 
+.has-photo-navigation h2 {
+	padding-right:130px;
+}
 
 * html h2 {
 	height: 41px;
@@ -429,11 +439,6 @@ body.no-sidebar .gridItem {
 	width: 706px; 
 	margin:0 auto; 
 	background: transparent; 
-}
-.no-sidebar h2 { 
-	width: 706px; 
-	margin: 1em auto; 
-	background: url(h2bgwide.gif) no-repeat top left; 
 }
 
 .no-sidebar #page-top { 

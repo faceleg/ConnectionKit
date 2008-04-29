@@ -68,6 +68,10 @@ body {
 * html #main { height: 370px; }
 /**/
 
+.no-sidebar #main a {
+	color: #fff;
+}
+
 #page {
 	width: 768px;
 	border: 2px solid #fff;
@@ -155,26 +159,29 @@ body {
 	.no-sidebar #title p { margin-top: -32px; }
 
 #sitemenu-content {
-	width: 447px;
+	width: 464px;
 	height: 14px;
 	position: absolute;
-	right: 28px;
-	bottom: 3px;
+	left: 270px;
+	top:245px;
 	font-size: .9em;
+}
+
+.no-sidebar #sitemenu-content {
+	top: 196px;
 }
 * html #sitemenu-content { font-size: .8em; }
 
 	#sitemenu-content ul {
-		float: right;
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
 	#sitemenu-content li {
-		margin: 0 0 0 10px;
+		margin: 0 10px 0 0px;
 		padding: 0;
-		float: left;
+		display:inline;
 	}
 
 		.currentPage span.in, .currentPage .currentParent span.in, .currentParent { text-decoration: underline; }
@@ -235,7 +242,7 @@ h2 {
 }
 * html h2 { font-weight: bold; }
 
-.photo-page h2 {
+.has-photo-navigation h2 {
 	margin-right:150px;
 }
 

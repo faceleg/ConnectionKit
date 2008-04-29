@@ -205,7 +205,6 @@ li a {
 h2 {
 	margin-top: 0px;
 	margin-left: -6px;
-	width: 449px;
 	padding: 5px 0 0 0;
 	font-size: 1.4em;
 	color: #fff;
@@ -214,10 +213,33 @@ h2 {
 
 * html h2 { margin-left: 0; }
 
-h2 span.in { display: block; padding: 0 8px 5px 8px; background: #2c557c url(h2bg-bottom.gif) no-repeat bottom left; }
+.has-photo-navigation h2 {
+	margin-right: -6px;	
+}
+* html .has-photo-navigation h2 {
+	margin-right: 0px;	
+}
+.has-photo-navigation h2 span.in {
+	padding-right: 110px;
+}
 
-.no-sidebar h2 { height: 33px; line-height: 33px; margin-top: 2px; padding-top: 0; background:  url(headerbg-nosidebar.gif) no-repeat top left; width: 706px; }
-.no-sidebar h2 span.in { background: transparent; }
+h2 span.in {
+	display: block;
+	padding: 0 8px 5px 8px;
+	background: #2c557c url(h2bg-bottom.gif) no-repeat bottom left;
+}
+
+.no-sidebar h2 {
+	height: 33px;
+	line-height: 33px;
+	margin-top: 2px;
+	padding-top: 0;
+	background: url(headerbg-nosidebar.gif) no-repeat top left;
+	width: 706px;
+}
+.no-sidebar h2 span.in {
+	background: transparent;
+}
 
 * html #page-content h3 { font-size: 1.1em; }
 * html #page-content h4 { font-size: 1em; }
@@ -353,10 +375,11 @@ h2 span.in { display: block; padding: 0 8px 5px 8px; background: #2c557c url(h2b
 .photo-navigation {
 	float: right;
 	margin-top: -40px;
-	margin-right: 28px;
+	margin-right: 10px;
 }
 
-* html .photo-navigation { 	margin-top: -50px; margin-right: 12px; }
+* html .photo-navigation {  margin-top: -45px; margin-right: 5px; }
+*:first-child+html .photo-navigation {margin-top: -45px; margin-right: 5px; }
 
     .photo-navigation div {
     	margin-left: 18px;

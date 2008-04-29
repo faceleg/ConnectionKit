@@ -20,7 +20,7 @@ body { background: #c4d7f7 url(bodybg.gif) repeat-x; margin: 0; padding:0px; fon
 #page-top h1, #page-top p { margin-top: 0; }
 #page-content {float: left; margin-top: 10px;}
 #title { min-height: 183px;float: left; padding: 10px 10px 10px 484px; clear: both; }
-
+* html #title { height: 200px; padding-bottom: 0px;}
 
 #logo-container img { display: block; margin-left:60px;}
 
@@ -31,19 +31,9 @@ body { background: #c4d7f7 url(bodybg.gif) repeat-x; margin: 0; padding:0px; fon
 #title h1 a:hover { text-decoration: underline; }
 
 #sitemenu-container {float: left; padding-bottom: 13px; background: url(sitemenubottombg.gif) no-repeat bottom left; clear: both;}
-/* IE Hack */
-/* Hides from IE5-mac \*/
-* html #sitemenu-container {
-	margin-top:110px;
-	margin-bottom:0px;
-}
-/* End hide from IE5-mac */
-
-
-
 #sitemenu ul {float: left; width:736px; margin: 0; padding: 0 14px; background: url(sitemenubg.gif) repeat-y 0 0;}
 #sitemenu {float: left; background: url(sitemenutopbg.gif) no-repeat 0 0; padding-top: 13px;}
-#sitemenu li { float: left; margin-right: 10px; height: 12px; line-height: 12px; list-style: none; }
+#sitemenu li { display:inline; margin-right: 10px; height: 12px; line-height: 12px; list-style: none; }
 #sitemenu a { color: #ffdc63; font-weight: normal; text-decoration: none; }
 #sitemenu a:hover { color: #ffdc63; text-decoration: underline; }
 #sitemenu .currentPage, #sitemenu .currentParent a { font-weight: bold; color: #fff; }
