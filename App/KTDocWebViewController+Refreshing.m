@@ -264,6 +264,9 @@
 		}
 	}
 */	
+	// We ought to be able to turn off javascript instead but that doesn't work.
+	// <rdar://problem/5898308> setJavaScriptEnabled:NO doesn't immediately disable JavaScript execution
+
 	[[self asyncOffscreenWebViewController] setDelegate:self];
 	[self setElementWaitingForFragmentLoad:element];
 	// Kick off load of fragment, we will be notified when it's done.
