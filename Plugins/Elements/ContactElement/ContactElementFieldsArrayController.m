@@ -8,7 +8,7 @@
 
 #import "ContactElementFieldsArrayController.h"
 #import "ContactElementField.h"
-
+#import "ContactElementFieldCell.h"
 
 
 @implementation ContactElementFieldsArrayController
@@ -71,6 +71,19 @@
 	if (index >= count) {
 		[self setSelectionIndex:(count - 1)];
 	}
+}
+
+#pragma mark -
+#pragma mark Drawing
+
+/*	Set the -locked property of cells before they draw
+ */
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+{
+	if (![aCell isKindOfClass:[ContactElementFieldCell class]]) return;
+	
+	ContactElementField *field = [[self arrangedObjects] objectAtIndex:rowIndex];
+	[aCell setLocked:[field shouldDrawLockIcon]];
 }
 
 @end

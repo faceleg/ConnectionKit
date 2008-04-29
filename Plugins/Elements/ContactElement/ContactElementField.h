@@ -67,6 +67,9 @@ typedef enum
 - (NSArray *)visitorChoices;
 - (void)setVisitorChoices:(NSArray *)choices;
 
+// UI
+- (BOOL)shouldDrawLockIcon;
+
 // Storage
 - (NSDictionary *)dictionaryRepresentation;
 

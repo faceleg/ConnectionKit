@@ -11,8 +11,12 @@
 
 @interface ContactElementFieldCell : NSTextFieldCell
 {
-	NSTextFieldCell	*myTextCell;
 	NSImageCell		*myLockIconCell;
+	
+	BOOL	myLocked;
 }
+
+- (BOOL)isLocked;
+- (void)setLocked:(BOOL)locked;
 
 @end

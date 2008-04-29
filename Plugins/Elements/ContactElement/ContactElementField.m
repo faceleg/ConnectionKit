@@ -24,7 +24,7 @@
 		triggerChangeNotificationsForDependentKey:@"tabViewIdentifierForFieldType"];
 	
 	[self setKeys:[NSArray arrayWithObjects:@"identifier", @"label", nil]
-		triggerChangeNotificationsForDependentKey:@"self"];
+		triggerChangeNotificationsForDependentKey:@"UILabel"];
 	
 	
 }
@@ -157,6 +157,57 @@
 
 #pragma mark -
 #pragma mark UI
+
+/*	A specialised version of -label that is displayed in the Inspector table view.
+ */
+- (NSString *)UILabel
+{
+	NSString *result = nil;
+	
+	NSString *identifier = [self identifier];
+	
+	if ([@"visitorName" isEqualToString:identifier]) {
+		result = LocalizedStringInThisBundle(@"Name", "field label");
+	}
+	else if ([@"email" isEqualToString:identifier]) {
+		result = LocalizedStringInThisBundle(@"Email", @"field label");
+	}
+	else if ([@"subject" isEqualToString:identifier]) {
+		result = LocalizedStringInThisBundle(@"Subject", @"field label");
+	}
+	else if ([@"message" isEqualToString:identifier]) {
+		result = LocalizedStringInThisBundle(@"Message", @"field label");
+	}
+	else if ([@"send" isEqualToString:identifier]) {
+		result = LocalizedStringInThisBundle(@"Send", @"button label");
+	}
+	else {
+		result = [self label];
+	}
+	
+	if (!result || [result isEqualToString:@""]) {
+		result = LocalizedStringInThisBundle(@"N/A", @"field label");
+	}
+	
+	return result;
+}
+
+- (BOOL)shouldDrawLockIcon
+{
+	BOOL result = NO;
+	
+	NSString *identifier = [self identifier];
+	if ([identifier isEqualToString:@"visitorName"] ||
+		[identifier isEqualToString:@"email"] ||
+		[identifier isEqualToString:@"subject"] ||
+		[identifier isEqualToString:@"send"] ||
+		[identifier isEqualToString:@"message"])
+	{
+		result = YES;
+	}
+	
+	return result;
+}
 
 /*	Which of the tab view items to display in the Inspector for our type
  */
