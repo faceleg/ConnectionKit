@@ -36,17 +36,10 @@
 - (void)_setSelectedPages:(NSArray *)selectedPages;
 {
 	[self willChangeValueForKey:@"selectedPages"];
-	[[self windowController] willChangeValueForKey:@"selectedPagesIncludesACollection"];
-	[[self windowController] willChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
-	
 	selectedPages = [selectedPages copy];
 	[mySelectedPages release];
 	mySelectedPages = selectedPages;
-	
-	
 	[self didChangeValueForKey:@"selectedPages"];
-	[[self windowController] didChangeValueForKey:@"selectedPagesIncludesACollection"];
-	[[self windowController] didChangeValueForKey:@"allSelectedPageTitlesAreEditable"];
 	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification

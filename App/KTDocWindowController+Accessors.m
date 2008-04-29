@@ -123,47 +123,6 @@
 	return parentCollection;
 }
 
-/*	Used for binding the visibility of the filename settings
- *	We don't want to show the UI for file extension if one or more collections is selected
- */
-- (BOOL)selectedPagesIncludesACollection
-{
-	BOOL result = NO;
-	
-	NSEnumerator *pagesEnumerator = [[[self siteOutlineController] selectedPages] objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		if ([aPage isCollection])
-		{
-			result = YES;
-			break;
-		}
-	}
-	
-	return result;
-}
-
-/*	Again used for controlling availability of the filename/extension UI
- */
-- (BOOL)allSelectedPageTitlesAreEditable
-{
-	BOOL result = YES;
-	
-	NSEnumerator *pagesEnumerator = [[[self siteOutlineController] selectedPages] objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		if (![aPage canEditTitle])
-		{
-			result = NO;
-			break;
-		}
-	}
-	
-	return result;
-}
-
 #pragma mark -
 #pragma mark Pagelet Selection
 
