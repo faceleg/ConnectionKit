@@ -1,7 +1,0 @@
-* html #sitemenu-content li {
-	float:left;
-}
-
-* html #sitemenu-content li.currentPage, * html #sitemenu-content li.currentParent {
-	display:block;
-}
