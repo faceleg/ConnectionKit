@@ -14,4 +14,7 @@
 - (BOOL)hideWebView;
 
 - (void)loadPageIntoSourceCodeTextView:(KTPage *)page;
+
+// Editing
+- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
 @end

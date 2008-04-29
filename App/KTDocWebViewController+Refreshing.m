@@ -43,7 +43,6 @@
 
 - (NSSet *)webViewComponentsNeedingRefresh;
 
-- (void)_refreshWebView;
 - (void)loadPageIntoWebView:(KTPage *)page;
 
 - (KTParsedWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser;
@@ -93,7 +92,7 @@
 }
 
 #pragma mark -
-#pragma mark Public Refresh API
+#pragma mark Needs Refresh
 
 /*	The web view needs refreshing if any of our components do
  */
@@ -150,21 +149,21 @@
 	return [NSSet setWithSet:myComponentsNeedingRefresh];
 }
 
+#pragma mark -
+#pragma mark Refresh
+
 - (void)refreshWebView
 {
-	[self _refreshWebView];	// Does the real work
+	// The notification to do this doesn't get called, so we have to manually set it before reloading
+	[self setCurrentTextEditingBlock:nil];
 	
-	[[self windowController] setStatusField:@""];		// clear out status field, need to move over something to get it populated
 	
-	[self setWebViewNeedsRefresh:NO];
-}
-
-- (void)_refreshWebView
-{
+	// Throw away the old component tree
 	[self setMainWebViewComponent:nil];
 	
-	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedPages];
 	
+	// How we load depends on the current selection
+	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedPages];
 	if (!selectedPages || [selectedPages count] == 0)
 	{
 		[[[self webView] mainFrame] loadHTMLString:@"" baseURL:nil];
@@ -188,6 +187,14 @@
 	{
 		[self loadMultiplePagesMarkerIntoWebView];
 	}
+	
+	
+	// Clear out status field, need to move over something to get it populated
+	[[self windowController] setStatusField:@""];
+	
+	
+	// Clearly the webview is no longer in need of refreshing
+	[self setWebViewNeedsRefresh:NO];
 }
 
 - (void)refreshWebViewComponent:(KTParsedWebViewComponent *)component
@@ -270,24 +277,21 @@
 	}
 }
 
-/*
-	This splices the DOM tree that has been loaded into the offscreen webview into the element
-	that is waiting for this fragment to have finished loading, [self elementWaitingForFragmentLoad].
-	First it removes any existing children of that element (since we are replacing it),
-	Then it imports the loaded body into the destination webview's DOMDocument (via importNode::)
-	Finally, it loops through each element and find all the <script> elements, and, in order to
-	prevent any script tags from executing (again, since they would have executed in the offscreen
-	view), it strips out the info that will allow the script to execute.  This unfortunately affects
-	the DOM for view source, but this isn't stored in the permanent database since this is just
-	surgery on the currently viewed webview.
- 
-	Finally, after processing, we insert the new tree into the webview's tree, and process editing
-	nodes to bring us the green + markers.
- 
- 
- */
 
-- (void) spliceElement:(DOMHTMLElement *)loadedBody;
+/*	This splices the DOM tree that has been loaded into the offscreen webview into the element
+ *	that is waiting for this fragment to have finished loading, [self elementWaitingForFragmentLoad].
+ *	First it removes any existing children of that element (since we are replacing it),
+ *	Then it imports the loaded body into the destination webview's DOMDocument (via importNode::)
+ *	Finally, it loops through each element and find all the <script> elements, and, in order to
+ *	prevent any script tags from executing (again, since they would have executed in the offscreen
+ *	view), it strips out the info that will allow the script to execute.  This unfortunately affects
+ *	the DOM for view source, but this isn't stored in the permanent database since this is just
+ *	surgery on the currently viewed webview.
+ * 
+ *	Finally, after processing, we insert the new tree into the webview's tree, and process editing
+ *	nodes to bring us the green + markers.
+ */
+- (void)spliceElement:(DOMHTMLElement *)loadedBody;
 {
 	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
 	if ([element hasChildNodes])
