@@ -672,10 +672,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		return (!gLicenseViolation);
 	}
-	else if ( action == @selector(viewPublishedSite:) )
-	{
-		return NO; // no document has handled it, so there's no site to view
-	}
 	else if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
 		return [[self currentDocument] validateMenuItem:menuItem];
@@ -1765,11 +1761,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
 	[[self currentDocument] editRawHTMLInSelectedBlock:sender];
-}
-
-- (IBAction)viewPublishedSite:(id)sender
-{
-	[[self currentDocument] viewPublishedSite:sender];
 }
 
 - (IBAction) openHigh:(id)sender
