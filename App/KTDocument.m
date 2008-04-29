@@ -1430,8 +1430,8 @@
 
 - (IBAction)viewPublishedSite:(id)sender
 {
-	NSString *publishedSiteURL = [self publishedSiteURL];
-	if ( nil != publishedSiteURL )
+	NSString *publishedSiteURL = [[self root] publishedURL];
+	if (publishedSiteURL)
 	{
 		NSURL *URL = [NSURL URLWithString:publishedSiteURL];
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
