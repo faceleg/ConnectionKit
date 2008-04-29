@@ -56,9 +56,7 @@
 - (NSString *)suggestedFileName
 {
 	// The home page's title isn't settable, so keep it constant
-	if ([self isRoot]) {
-		return @"home_page";
-	}
+	if ([self isRoot]) return nil;
 	
 	
 	// Build a list of the file names already taken
