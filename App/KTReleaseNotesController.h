@@ -6,9 +6,9 @@
 //  Copyright 2006 Biophony LLC. All rights reserved.
 //
 
-#import "KSTextViewController.h"
+#import "KSWebViewController.h"
 
 
-@interface KTReleaseNotesController : KSTextViewController { }
+@interface KTReleaseNotesController : KSWebViewController { }
 
 @end

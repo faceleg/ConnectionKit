@@ -684,6 +684,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
+	else if (action == @selector(showReleaseNotes:))
+	{
+		return [KSNetworkNotifier isNetworkAvailable];
+	}
 	else if (action == @selector(openHigh:))
 	{
 		return [KSNetworkNotifier isNetworkAvailable];

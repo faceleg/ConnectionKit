@@ -636,6 +636,9 @@
 		CE9DFF5409FD4E6A00007D04 /* DebugTable.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E7A07E00EE800DE4994 /* DebugTable.nib */; };
 		CEA2349C086B6E02007A4C2D /* Haloscan.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA2349B086B6E02007A4C2D /* Haloscan.png */; };
 		CEA234C3086B6EC5007A4C2D /* Prefs.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA234C1086B6EC5007A4C2D /* Prefs.nib */; };
+		CEA2BA370DC79F0C00A8023F /* KSWebViewWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2BA360DC79F0C00A8023F /* KSWebViewWindow.nib */; };
+		CEA2BA3B0DC79F2D00A8023F /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEA2BA390DC79F2D00A8023F /* KSWebViewController.h */; };
+		CEA2BA3C0DC79F2D00A8023F /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2BA3A0DC79F2D00A8023F /* KSWebViewController.m */; };
 		CEA36D1E091AEF430073219B /* Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA36D1D091AEF430073219B /* Lock.png */; };
 		CEA962C30AF6A924008A1367 /* sandvox.css in Resources */ = {isa = PBXBuildFile; fileRef = CEA962C20AF6A924008A1367 /* sandvox.css */; };
 		CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */ = {isa = PBXBuildFile; fileRef = CEAE132B08450536007025D4 /* RSSTemplate.xml */; };
@@ -882,7 +885,6 @@
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
-		CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F6250D7F306C00AF5BC0 /* Debug.m */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
@@ -1843,7 +1845,6 @@
 		3C202EA307E0101100DE4994 /* Acknowledgments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		3C202EA507E0101100DE4994 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = en.lproj/Credits.html; sourceTree = "<group>"; };
 		3C202EA907E0101100DE4994 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ReleaseNotes.rtf; sourceTree = "<group>"; };
 		3C202EF707E0111300DE4994 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C202F0507E0124E00DE4994 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = en; path = en.lproj/MultipleSelection.html; sourceTree = "<group>"; };
 		3C202F1307E012C800DE4994 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
@@ -2202,7 +2203,7 @@
 		CE02AE450843EAD000D8A9F9 /* Sample Sites */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sample Sites"; path = "../Sample Sites"; sourceTree = SOURCE_ROOT; };
 		CE0321210D98640F00EC55FC /* KSJoinListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSJoinListController.h; path = ../../../Shared/trunk/App/KSJoinListController.h; sourceTree = SOURCE_ROOT; };
 		CE0321220D98640F00EC55FC /* KSJoinListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSJoinListController.m; path = ../../../Shared/trunk/App/KSJoinListController.m; sourceTree = SOURCE_ROOT; };
-		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
+		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE04723B0DC6D18B00FF39C0 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../../Designs; sourceTree = SOURCE_ROOT; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		CE0F67BE0A39F53F0092DC43 /* trans16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trans16.png; sourceTree = "<group>"; };
@@ -2352,6 +2353,9 @@
 		CEA0326A0AE59C0000FA3F68 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/Placeholder.nib; sourceTree = "<group>"; };
 		CEA2349B086B6E02007A4C2D /* Haloscan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Haloscan.png; sourceTree = "<group>"; };
 		CEA234C2086B6EC5007A4C2D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Prefs.nib; sourceTree = "<group>"; };
+		CEA2BA360DC79F0C00A8023F /* KSWebViewWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSWebViewWindow.nib; path = ../../../Shared/trunk/App/KSWebViewWindow.nib; sourceTree = SOURCE_ROOT; };
+		CEA2BA390DC79F2D00A8023F /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSWebViewController.h; path = ../../../Shared/trunk/App/KSWebViewController.h; sourceTree = SOURCE_ROOT; };
+		CEA2BA3A0DC79F2D00A8023F /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSWebViewController.m; path = ../../../Shared/trunk/App/KSWebViewController.m; sourceTree = SOURCE_ROOT; };
 		CEA3598E091939330073219B /* amex.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amex.jpg; sourceTree = "<group>"; };
 		CEA3598F091939330073219B /* discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover.png; sourceTree = "<group>"; };
 		CEA35990091939330073219B /* echeck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = echeck.png; sourceTree = "<group>"; };
@@ -2629,7 +2633,7 @@
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
-		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
+		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED850770BD33EAE00FED416 /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
 		CED85A6A0BD35D5600FED416 /* draftPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draftPattern.png; sourceTree = "<group>"; };
@@ -3460,7 +3464,6 @@
 			children = (
 				CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */,
 				CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */,
-				3C202EAB07E0101100DE4994 /* ReleaseNotes.rtf */,
 				3C202EA307E0101100DE4994 /* Acknowledgments.rtf */,
 				3C27FDA8096EFE6E00702991 /* License Agreement.rtf */,
 				3C202EA407E0101100DE4994 /* Credits.html */,
@@ -4249,6 +4252,7 @@
 				CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */,
 				CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */,
 				CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */,
+				CEA2BA360DC79F0C00A8023F /* KSWebViewWindow.nib */,
 				CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */,
 			);
 			name = "Shared Nibs";
@@ -4421,6 +4425,8 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CEA2BA390DC79F2D00A8023F /* KSWebViewController.h */,
+				CEA2BA3A0DC79F2D00A8023F /* KSWebViewController.m */,
 				2704607F0DAD7ED100D74480 /* KSRoundingValueTransformer.h */,
 				270460800DAD7ED100D74480 /* KSRoundingValueTransformer.m */,
 				CE50F5100DAC18CE000A0943 /* KSPlaceholderTableView.m */,
@@ -4906,6 +4912,7 @@
 				CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */,
 				CE01952F0DB7180B003E008B /* KSLicensedAppDelegate.h in Headers */,
 				27EF1BCF0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h in Headers */,
+				CEA2BA3B0DC79F2D00A8023F /* KSWebViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5554,7 +5561,6 @@
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
 				3C202EAF07E0101100DE4994 /* Localizable.strings in Resources */,
-				CEE09F7609ED95D2004850FB /* ReleaseNotes.rtf in Resources */,
 				3C202EF807E0111300DE4994 /* InfoPlist.strings in Resources */,
 				3C202F0707E0124E00DE4994 /* MultipleSelection.html in Resources */,
 				3C202F1D07E012C800DE4994 /* AppIcon.icns in Resources */,
@@ -5722,6 +5728,7 @@
 				CEBCFEFE0DB909E4001BF0DF /* arrow_grey_up.pdf in Resources */,
 				CEBCFF040DB90A1D001BF0DF /* help.mini.png in Resources */,
 				CEBCFF050DB90A1D001BF0DF /* help.small.png in Resources */,
+				CEA2BA370DC79F0C00A8023F /* KSWebViewWindow.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6310,6 +6317,7 @@
 				CE2E80E50DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m in Sources */,
 				CE0195300DB7180B003E008B /* KSLicensedAppDelegate.m in Sources */,
 				27EF1BD00DC1F9BF00976C66 /* KTSiteOutlineDataSource.m in Sources */,
+				CEA2BA3C0DC79F2D00A8023F /* KSWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
