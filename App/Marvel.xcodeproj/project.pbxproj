@@ -763,7 +763,6 @@
 		CEC11B290D78BE3D00513E70 /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */; };
 		CEC11B2A0D78BE3D00513E70 /* ValuesAreEqualTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */; };
 		CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */; };
-		CEC11B2E0D78BE4600513E70 /* MoreAddrToSym.c in Sources */ = {isa = PBXBuildFile; fileRef = CEC11B2C0D78BE4600513E70 /* MoreAddrToSym.c */; };
 		CEC11B9D0D78BE5300513E70 /* AMRollOverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B300D78BE5300513E70 /* AMRollOverButton.h */; };
 		CEC11B9E0D78BE5300513E70 /* AMRollOverButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B310D78BE5300513E70 /* AMRollOverButtonCell.h */; };
 		CEC11B9F0D78BE5300513E70 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B320D78BE5300513E70 /* AQDataExtensions.h */; };
@@ -813,7 +812,6 @@
 		CEC11BCD0D78BE5300513E70 /* KSUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B600D78BE5300513E70 /* KSUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BCE0D78BE5300513E70 /* KSValidateCharFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B610D78BE5300513E70 /* KSValidateCharFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BCF0D78BE5300513E70 /* KSVerticallyAlignedTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B620D78BE5300513E70 /* KSVerticallyAlignedTextCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BD00D78BE5300513E70 /* MoreAddrToSym.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */; };
 		CEC11BD10D78BE5300513E70 /* MoreBacktrace.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B640D78BE5300513E70 /* MoreBacktrace.h */; };
 		CEC11BD20D78BE5300513E70 /* MoreSetup.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B650D78BE5300513E70 /* MoreSetup.h */; };
 		CEC11BD40D78BE5300513E70 /* NSAppleScript+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2516,7 +2514,6 @@
 		CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrimTransformer.m; path = ../../../Shared/trunk/App/TrimTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValuesAreEqualTransformer.m; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WebView+Karelia.m"; path = "../../../Shared/trunk/App/WebView+Karelia.m"; sourceTree = SOURCE_ROOT; };
-		CEC11B2C0D78BE4600513E70 /* MoreAddrToSym.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = MoreAddrToSym.c; path = ../../../Shared/trunk/App/MoreAddrToSym.c; sourceTree = SOURCE_ROOT; };
 		CEC11B2D0D78BE4600513E70 /* MoreBacktrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = MoreBacktrace.c; path = ../../../Shared/trunk/App/MoreBacktrace.c; sourceTree = SOURCE_ROOT; };
 		CEC11B300D78BE5300513E70 /* AMRollOverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButton.h; path = ../../../Shared/trunk/App/AMRollOverButton.h; sourceTree = SOURCE_ROOT; };
 		CEC11B310D78BE5300513E70 /* AMRollOverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButtonCell.h; path = ../../../Shared/trunk/App/AMRollOverButtonCell.h; sourceTree = SOURCE_ROOT; };
@@ -2568,7 +2565,6 @@
 		CEC11B600D78BE5300513E70 /* KSUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSUtilities.h; path = ../../../Shared/trunk/App/KSUtilities.h; sourceTree = SOURCE_ROOT; };
 		CEC11B610D78BE5300513E70 /* KSValidateCharFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSValidateCharFormatter.h; path = ../../../Shared/trunk/App/KSValidateCharFormatter.h; sourceTree = SOURCE_ROOT; };
 		CEC11B620D78BE5300513E70 /* KSVerticallyAlignedTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSVerticallyAlignedTextCell.h; path = ../../../Shared/trunk/App/KSVerticallyAlignedTextCell.h; sourceTree = SOURCE_ROOT; };
-		CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreAddrToSym.h; path = ../../../Shared/trunk/App/MoreAddrToSym.h; sourceTree = SOURCE_ROOT; };
 		CEC11B640D78BE5300513E70 /* MoreBacktrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MoreBacktrace.h; path = ../../../Shared/trunk/App/MoreBacktrace.h; sourceTree = SOURCE_ROOT; };
 		CEC11B650D78BE5300513E70 /* MoreSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreSetup.h; path = ../../../Shared/trunk/App/MoreSetup.h; sourceTree = SOURCE_ROOT; };
 		CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAppleScript+Karelia.h"; path = "../../../Shared/trunk/App/NSAppleScript+Karelia.h"; sourceTree = SOURCE_ROOT; };
@@ -4492,7 +4488,6 @@
 				CEC11B600D78BE5300513E70 /* KSUtilities.h */,
 				CEC11B610D78BE5300513E70 /* KSValidateCharFormatter.h */,
 				CEC11B620D78BE5300513E70 /* KSVerticallyAlignedTextCell.h */,
-				CEC11B630D78BE5300513E70 /* MoreAddrToSym.h */,
 				CEC11B640D78BE5300513E70 /* MoreBacktrace.h */,
 				CEC11B650D78BE5300513E70 /* MoreSetup.h */,
 				CEC11B670D78BE5300513E70 /* NSAppleScript+Karelia.h */,
@@ -4548,7 +4543,6 @@
 				CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */,
 				CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */,
 				CEC11B9C0D78BE5300513E70 /* WebView+Karelia.h */,
-				CEC11B2C0D78BE4600513E70 /* MoreAddrToSym.c */,
 				CEC11B2D0D78BE4600513E70 /* MoreBacktrace.c */,
 				CEC11A5C0D78BE3C00513E70 /* AMRollOverButton.m */,
 				CEC11A5D0D78BE3C00513E70 /* AMRollOverButtonCell.m */,
@@ -4840,7 +4834,6 @@
 				CEC11BCD0D78BE5300513E70 /* KSUtilities.h in Headers */,
 				CEC11BCE0D78BE5300513E70 /* KSValidateCharFormatter.h in Headers */,
 				CEC11BCF0D78BE5300513E70 /* KSVerticallyAlignedTextCell.h in Headers */,
-				CEC11BD00D78BE5300513E70 /* MoreAddrToSym.h in Headers */,
 				CEC11BD10D78BE5300513E70 /* MoreBacktrace.h in Headers */,
 				CEC11BD20D78BE5300513E70 /* MoreSetup.h in Headers */,
 				CEC11BD40D78BE5300513E70 /* NSAppleScript+Karelia.h in Headers */,
@@ -6297,7 +6290,6 @@
 				CEC11B290D78BE3D00513E70 /* TrimTransformer.m in Sources */,
 				CEC11B2A0D78BE3D00513E70 /* ValuesAreEqualTransformer.m in Sources */,
 				CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */,
-				CEC11B2E0D78BE4600513E70 /* MoreAddrToSym.c in Sources */,
 				27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */,
 				27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */,
 				CEF0F6260D7F306C00AF5BC0 /* Debug.m in Sources */,
