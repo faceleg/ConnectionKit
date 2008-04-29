@@ -1,87 +1,99 @@
-{
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {
-                buyApplication = id; 
-                chooseTheme = id; 
-                dumpDocument = id; 
-                getUpdatedApplication = id; 
-                orderFrontLicensingPanel = id; 
-                orderFrontPreferencesPanel = id; 
-                populateTestDocument = id; 
-                reloadDebugTable = id; 
-                saveWindowSize = id; 
-                showAvailableComponents = id; 
-                showAvailableISPs = id; 
-                showAvailableMedia = id; 
-                showNewsWindow = id; 
-                showPendingDeletions = id; 
-            }; 
-            CLASS = KTAppDelegate; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                oAddCollectionMenu = NSMenu; 
-                oAddPageMenu = NSMenu; 
-                oAddPageletMenu = NSMenu; 
-                oDebugMediaPanel = NSPanel; 
-                oDebugMenuItem = NSMenuItem; 
-                oDebugTable = NSTableView; 
-                oGenericProgressImageView = NSImageView; 
-                oGenericProgressIndicator = NSProgressIndicator; 
-                oGenericProgressTextField = NSTextField; 
-                oGenericProgressView = NSView; 
-                oMakeTextLargerMenuItem = NSMenuItem; 
-                oMakeTextSmallerMenuItem = NSMenuItem; 
-                oProMenuItem = NSMenuItem; 
-                oToggleAddressBarMenuItem = NSMenuItem; 
-                oToggleDetachInfoMenuItem = NSMenuItem; 
-                oToggleInfoMenuItem = NSMenuItem; 
-                oToggleSiteOutlineMenuItem = NSMenuItem; 
-                oToggleSmallPageIconsMenuItem = NSMenuItem; 
-                oToggleStatusBarMenuItem = NSMenuItem; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                addPage = id; 
-                addSection = id; 
-                delete = id; 
-                group = id; 
-                groupAsSection = id; 
-                ungroup = id; 
-                updateNavigationBarShown = id; 
-                updateStatusBarShown = id; 
-            }; 
-            CLASS = KTDocument; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                oBackButton = NSButton; 
-                oExtrasTable = NSTableView; 
-                oForwardButton = NSButton; 
-                oMainBox = NTBoxView; 
-                oMainSplitterView = NSSplitView; 
-                oNavigationBar = NSBox; 
-                oReloadButton = NSButton; 
-                oSearchField = NSTextField; 
-                oSharedDefaultsController = NSUserDefaultsController; 
-                oSourceOutline = NSOutlineView; 
-                oSourceOutlineBox = NTBoxView; 
-                oSourceSplitterView = NSSplitView; 
-                oStatusBar = NSBox; 
-                oStatusBarField = NSTextField; 
-                oStatusField = NSTextField; 
-                oStatusIndicator = NSProgressIndicator; 
-                oStopButton = NSButton; 
-                oURLField = NSTextField; 
-                oWebView = WebView; 
-                oWebViewBox = NTBoxView; 
-            }; 
-            SUPERCLASS = NSDocument; 
-        }, 
-        {CLASS = KTWebView; LANGUAGE = ObjC; SUPERCLASS = WebView; }, 
-        {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>buyApplication</key>
+				<string>id</string>
+				<key>chooseTheme</key>
+				<string>id</string>
+				<key>dumpDocument</key>
+				<string>id</string>
+				<key>getUpdatedApplication</key>
+				<string>id</string>
+				<key>orderFrontLicensingPanel</key>
+				<string>id</string>
+				<key>orderFrontPreferencesPanel</key>
+				<string>id</string>
+				<key>populateTestDocument</key>
+				<string>id</string>
+				<key>reloadDebugTable</key>
+				<string>id</string>
+				<key>saveWindowSize</key>
+				<string>id</string>
+				<key>showAvailableComponents</key>
+				<string>id</string>
+				<key>showAvailableISPs</key>
+				<string>id</string>
+				<key>showAvailableMedia</key>
+				<string>id</string>
+				<key>showNewsWindow</key>
+				<string>id</string>
+				<key>showPendingDeletions</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTAppDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oAddCollectionMenu</key>
+				<string>NSMenu</string>
+				<key>oAddPageMenu</key>
+				<string>NSMenu</string>
+				<key>oAddPageletMenu</key>
+				<string>NSMenu</string>
+				<key>oDebugMediaPanel</key>
+				<string>NSPanel</string>
+				<key>oDebugMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oDebugTable</key>
+				<string>NSTableView</string>
+				<key>oGenericProgressImageView</key>
+				<string>NSImageView</string>
+				<key>oGenericProgressIndicator</key>
+				<string>NSProgressIndicator</string>
+				<key>oGenericProgressTextField</key>
+				<string>NSTextField</string>
+				<key>oGenericProgressView</key>
+				<string>NSView</string>
+				<key>oMakeTextLargerMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oMakeTextSmallerMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oProMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleAddressBarMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleDetachInfoMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleInfoMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleSiteOutlineMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleSmallPageIconsMenuItem</key>
+				<string>NSMenuItem</string>
+				<key>oToggleStatusBarMenuItem</key>
+				<string>NSMenuItem</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>
