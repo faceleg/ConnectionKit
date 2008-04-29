@@ -26,9 +26,9 @@
 	<string>1.5</string>
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
 	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>Contact_Form</string>
@@ -44,51 +44,6 @@
 	<dict>
 		<key>copyToSender</key>
 		<false/>
-		<key>fields</key>
-		<array>
-			<dict>
-				<key>identifier</key>
-				<string>visitorName</string>
-				<key>label</key>
-				<string>Name</string>
-				<key>type</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>defaultString</key>
-				<string>email@domain.com</string>
-				<key>identifier</key>
-				<string>email</string>
-				<key>label</key>
-				<string>Email</string>
-				<key>type</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>identifier</key>
-				<string>subject</string>
-				<key>label</key>
-				<string>Subject</string>
-				<key>type</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>identifier</key>
-				<string>message</string>
-				<key>label</key>
-				<string>Message</string>
-				<key>type</key>
-				<integer>2</integer>
-			</dict>
-			<dict>
-				<key>identifier</key>
-				<string>send</string>
-				<key>label</key>
-				<string>Send</string>
-				<key>type</key>
-				<integer>6</integer>
-			</dict>
-		</array>
 		<key>sideLabels</key>
 		<integer>0</integer>
 		<key>subjectType</key>

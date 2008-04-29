@@ -53,6 +53,7 @@
 }
 
 - (void)dealloc
+
 {
 	[myIdentifier release];
 	[myLabel release];

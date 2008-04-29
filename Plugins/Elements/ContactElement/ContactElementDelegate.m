@@ -118,8 +118,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
+	KTAbstractElement *element = [self delegateOwner];
+	
 	if (isNewObject)
 	{
+		// Figure out e-mail address
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		NSString *address = [defaults objectForKey:@"KSEmailAddress"];
 		if (nil != address)
@@ -134,10 +137,49 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		{
 			address = @"";
 		}
-		[[self delegateOwner] setValue:address forKey:@"address"];
+		[element setValue:address forKey:@"address"];
+		
+		
+		
+		// Set up default bunch of fields
+		NSString *language = [[[element page] master] valueForKey:@"language"];
+		NSMutableArray *fields = [NSMutableArray array];
+		
+		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
+		[aField setLabel:[[self bundle] localizedStringForString:@"Name" language:language]];
+		[aField setType:ContactElementTextFieldField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
+		[aField setLabel:[[self bundle] localizedStringForString:@"Email" language:language]];
+		[aField setType:ContactElementTextFieldField];
+		[aField setDefaultString:@"email@domain.com"];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"subject"];
+		[aField setLabel:[[self bundle] localizedStringForString:@"Subject" language:language]];
+		[aField setType:ContactElementTextFieldField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"message"];
+		[aField setLabel:[[self bundle] localizedStringForString:@"Message" language:language]];
+		[aField setType:ContactElementTextAreaField];
+		[fields addObject:aField];
+		[aField release];
+		
+		aField = [[ContactElementField alloc] initWithIdentifier:@"send"];
+		[aField setLabel:[[self bundle] localizedStringForString:@"Send" language:language]];
+		[aField setType:ContactElementSubmitButton];
+		[fields addObject:aField];
+		[aField release];
+		
+		[self setFields:fields];
 	}
 	
-	myPluginProperties = [[self delegateOwner] retain];
+	myPluginProperties = [element retain];
 	[myPluginProperties addObserver:self forKeyPath:@"fields" options:0 context:NULL];
 }
 
