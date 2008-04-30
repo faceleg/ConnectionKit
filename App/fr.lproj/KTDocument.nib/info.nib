@@ -3,17 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>498 91 356 240 0 0 1680 1028 </string>
+	<string>58 91 356 240 0 0 1680 1028 </string>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>6</integer>
-	</array>
 	<key>IBSystem Version</key>
 	<string>9C7010</string>
 	<key>targetFramework</key>
