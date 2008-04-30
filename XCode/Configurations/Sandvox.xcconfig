@@ -17,7 +17,7 @@ CK_REVISION = 890
 IMEDIA_REVISION = 563
 
 // Sparkle+
-SP_REVISION = 115
+SP_REVISION = 116
 
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS for release
