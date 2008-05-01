@@ -15,7 +15,6 @@
 
 #import "NSMutableArray+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
-#import "NSUndoManager+KTExtensions.h"
 
 
 @interface KTPage (PageletsPrivate)
@@ -25,8 +24,6 @@
 - (NSArray *)bottomSidebars;
 - (NSArray *)sidebars;
 - (NSArray *)sortedPageletsWithPredicate:(NSPredicate *)predicate;
-
-- (void)invalidateAllSidebarPageletsCache;
 
 - (NSArray *)allInheritableTopSidebars;
 - (NSArray *)allInheritableBottomSidebars;
@@ -54,9 +51,13 @@
 	return result;
 }
 
-- (void)setIncludeSidebar:(BOOL)flag
+- (void)setIncludeSidebar:(BOOL)flag { [self setWrappedBool:flag forKey:@"includeSidebar"]; }
+
+- (BOOL)includeInheritedSidebar { return [self wrappedBoolForKey:@"includeInheritedSidebar"]; }
+
+- (void)setIncludeInheritedSidebar:(BOOL)flag
 {
-	[self setWrappedBool:flag forKey:@"includeSidebar"];
+	[self setWrappedBool:flag forKey:@"includeInheritedSidebar"];
 	
 	// Our -allSidebars list has changed since we have presumably inherited some pagelets
 	[self invalidateSidebarPageletsCache:YES recursive:YES];
@@ -354,26 +355,25 @@
 {
 	if (invalidateCache)
 	{
-		[self invalidateAllSidebarPageletsCache];
+		[self setWrappedValue:nil forKey:@"sidebarPagelets"];
 	}
 	
 	if (recursive)
 	{
-		NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [childrenEnumerator nextObject])
-		{
-			[aPage invalidateSidebarPageletsCache:YES recursive:YES];
-		}
+		[[self children] makeObjectsPerformSelector:@selector(recursiveInvalidateSidebarPageletsCache)];
 	}
 }
 
-- (void)invalidateAllSidebarPageletsCache
+/*	This is a special private method that should ONLY be invoked on child pages as a result of calling
+ *	-invalidateSidebarPageletsCache:recursive: on their parent.
+ *	This method calls through to the -invalidateSidebarPageletsCache:recursive: but only if the sidebar is inherited.
+ */
+- (void)recursiveInvalidateSidebarPageletsCache
 {
-	// Clear the cache, very simple
-	[self willChangeValueForKey:@"sidebarPagelets"];
-	[self setPrimitiveValue:nil forKey:@"sidebarPagelets"];
-	[self didChangeValueForKey:@"sidebarPagelets"];
+	if ([self boolForKey:@"includeInheritedSidebar"])
+	{
+		[self invalidateSidebarPageletsCache:YES recursive:YES];
+	}
 }
 
 #pragma mark support
