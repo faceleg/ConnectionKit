@@ -156,6 +156,17 @@
 			name = PackageBonusDesigns;
 			productName = PackageBonusDesigns;
 		};
+		3CD5B7840DCA668D006EE4D9 /* DeploySymbols */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3CD5B7880DCA66FB006EE4D9 /* Build configuration list for PBXAggregateTarget "DeploySymbols" */;
+			buildPhases = (
+				3CD5B7830DCA668D006EE4D9 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = DeploySymbols;
+			productName = DeployTarget;
+		};
 		3CE2B2B70D7F1DD900E2711E /* UpdateShared */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3CE2B2BA0D7F1DF700E2711E /* Build configuration list for PBXAggregateTarget "UpdateShared" */;
@@ -5177,6 +5188,7 @@
 				3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
+				3CD5B7840DCA668D006EE4D9 /* DeploySymbols */,
 			);
 		};
 /* End PBXProject section */
@@ -5978,6 +5990,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n# we base the PackageBonusDesigns target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Bonus Designs ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"PRODUCT_VARIANT is ${PRODUCT_VARIANT}\"\necho \"\"\n\nDESIGNS_DIR=\"${SRCROOT}/../Designs\"\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nREAD_ME=\"READ ME - Sandvox Bonus Designs\"\nREAD_ME_ZIP_FILE=\"${SRCROOT}/../Other/${READ_ME}.zip\"\nREAD_ME_FILE=\"${BUILDSETTINGS_DIR}/${READ_ME}.rtfd\"\n\n# we keep the .zip of the READ_ME in Other, then copy it to /tmp and inflate it, if needed\nif test -r \"${READ_ME_FILE}\"\nthen\n\techo \"Removing previous READ_ME file...\"\n\trm -rf \"${READ_ME_FILE}\"\nfi\n\necho \"copying ${READ_ME_ZIP_FILE} to ${READ_ME_FILE}.zip\"\ncp \"${READ_ME_ZIP_FILE}\" \"${READ_ME_FILE}.zip\"\necho \"unarchving ${READ_ME_FILE}.zip\"\nditto -x -k --rsrc \"${READ_ME_FILE}.zip\" \"${BUILDSETTINGS_DIR}\"\n\n# the dmg names that we'll use\nVOLUME_NAME=\"SandvoxBonusDesigns\"\nDMG_TEMP_NAME=\"temp\"\nDMG_FINAL_NAME=\"_SandvoxBonusDesigns-${SVN_VERSION}\"\n\n# the directory that will appear on ~/Desktop after download\nBONUS_DIR_NAME=\"Sandvox Bonus Designs\"\n\n# the directory within the mounted .dmg we'll copy to\nDMG_DIR=\"/Volumes/${VOLUME_NAME}/${BONUS_DIR_NAME}\"\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-bonusdesigns-dmg\"\n\nif test -d \"${SCRATCH_DIR}\"\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf \"${SCRATCH_DIR}\"\nfi\nmkdir -p \"${SCRATCH_DIR}\"\n\necho \"Packaging Bonus Designs...\"\npushd \"${SCRATCH_DIR}\"\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -size 128m -fs HFS+ -volname \"${VOLUME_NAME}\" \"${DMG_TEMP_NAME}.dmg\"\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach \"${DMG_TEMP_NAME}.dmg\"\n\n# create directory\nmkdir -p \"${DMG_DIR}\"\n\n# copy READ ME to dmg (we use PBXCP to copy the rtfd)\necho \"Copying ${READ_ME_FILE} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${READ_ME_FILE}\" \"${DMG_DIR}\"\n\n# set READ ME's extension to be hidden\necho \"Setting ${READ_ME}.rtfd extension to be hidden...\"\n/Developer/Tools/SetFile -a E \"${DMG_DIR}/${READ_ME}.rtfd\"\n\n# copy Designs to dmg\necho \"Copying Designs marked BONUS...\"\npushd \"${DESIGNS_DIR}\"\nfor i in *\ndo\n\tif [ -e \"${i}/BONUS\" ];\n    \tthen\n        \t# copy to DMG \n        \techo \"BONUS DESIGN: PBXCp \\\"$i\\\" ${DMG_DIR}\"\n\n        \t${PBXCP} \\\n\t\t\t-exclude .DS_Store \\\n\t\t\t-exclude CVS \\\n\t\t\t-exclude .svn \\\n\t\t\t-exclude BONUS \\\n\t\t\t-resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${DMG_DIR}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DMG_DIR}/${i}/Info.plist\"\n\n   \telse\n        \techo \"--------------  Not including $i\"\n    \tfi\ndone\npopd\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach \"${DMG_TEMP_NAME}.dmg\" | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach \"$DEV\"\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert \"${DMG_TEMP_NAME}.dmg\" -format UDZO -o \"${DMG_FINAL_NAME}.dmg\"\nrm \"${DMG_TEMP_NAME}.dmg\"\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes \"${DMG_FINAL_NAME}.dmg\"\n\n# install license agreement (there isn't one for bonus designs as of 11/6/2007)\n#echo \"Installing License Agreement...\"\n#hdiutil unflatten ${DMG_FINAL_NAME}.dmg\n#/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n#/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\n#hdiutil flatten ${DMG_FINAL_NAME}.dmg\n#rm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox Bonus Designs are waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"\"\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
+		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n# we base the DeploySymbols target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\nZIP_FILE=\"Sandvox-symbols-${SVN_VERSION}.tar.gz\"\nLOCAL_PATH=\"/private/tmp/${ZIP_FILE}\"\nSERVER_PATH=\"/home/19590/domains/karelia.com/MANUAL/private/${ZIP_FILE}\"\nEMAIL_PATH=\"/private/tmp/Sandvox-${SVN_VERSION}-msg.txt\"\n\necho \"\"\necho \"Gathering resources for deploying Sandvox symbols ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"IMEDIA_BROWSER_VERSION is ${IMEDIA_BROWSER_VERSION}\"\necho \"PRODUCT_VARIANT is ${PRODUCT_VARIANT}\"\necho \"BUILT_PRODUCTS_DIR is ${BUILT_PRODUCTS_DIR}\"\necho \"ZIP_FILE is ${ZIP_FILE}\"\necho \"LOCAL_PATH is ${LOCAL_PATH}\"\necho \"EMAIL_PATH is ${EMAIL_PATH}\"\necho \"SERVER_PATH is ${SERVER_PATH}\"\necho \"\"\n\necho \"Does ${BUILT_PRODUCTS_DIR} contain only the symbols build for Sandvox?\"\necho \"I hope so...because we're going to upload the whole thing as ${ZIP_FILE}.\"\necho \"\"\n\nif [ \"${SVN_VERSION}\" == \"\" ]\nthen\n\techo \"\"\n\techo \"No SVN_VERSION. Cannot deploy. Exiting...\"\n\texit 1\nfi\n\n# zip up ${BUILT_PRODUCTS_DIR}\npushd ${BUILT_PRODUCTS_DIR}\necho \"\"\necho \"Tar'ing and Zip'ing symbols ...\"\necho \"\"\ntar -cvzf ${LOCAL_PATH} .\npopd\n\n# SCP assumes public key login through Karelia's (mt) account\nSCP_LOGIN=\"serveradmin%karelia.com@s19590.gridserver.com\"\n\n# if we don't have a symbols zip ready, exit\nif test -r ${LOCAL_PATH}\nthen\n\techo \"\"\n\techo \"Uploading ${LOCAL_PATH} ...\"\n\techo \"... to ${SERVER_PATH}\"\n\tscp \"${LOCAL_PATH}\" \"${SCP_LOGIN}:${SERVER_PATH}\"\nelse\n\techo \"\"\n\techo \"Nothing to upload at ${DISTRO_PATH}. Exiting...\"\n\texit 1\nfi\n\n# email engineering\necho \"\"\necho \"Emailing URL to engineering ...\"\n\n\necho \"\" > $EMAIL_PATH\necho \"Greetings!\" >> $EMAIL_PATH\necho \"\" >> $EMAIL_PATH\necho \"The Sandvox Symbols distribution for build ${SVN_VERSION} is now available at:\" >> $EMAIL_PATH\necho \"\" >> $EMAIL_PATH\necho \"<http://karelia.com/private/${ZIP_FILE}>\" >> $EMAIL_PATH\necho \"\" >> $EMAIL_PATH\necho \"Please download should you need to decode a stack trace.\" >> $EMAIL_PATH\necho \"\" >> $EMAIL_PATH\necho \"Happy Hunting!\" >> $EMAIL_PATH\necho \"\" >> $EMAIL_PATH\n\nchgrp admin $EMAIL_PATH\n\nmail -s \"Sandvox Symbols Build ${SVN_VERSION} Now Available\" engineering@karelia.com < ${EMAIL_PATH}\n\necho \"\"\necho \"Deployment completeled.\"\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
@@ -7154,6 +7180,23 @@
 			};
 			name = Debug;
 		};
+		3CD5B7850DCA668E006EE4D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = DeploySymbols;
+			};
+			name = Release;
+		};
+		3CD5B7860DCA668E006EE4D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = DeploySymbols;
+			};
+			name = Debug;
+		};
 		3CE2B2B80D7F1DD900E2711E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7348,6 +7391,15 @@
 			buildConfigurations = (
 				3CA786E70DB546070014AD7E /* Release */,
 				3CA786E80DB546070014AD7E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CD5B7880DCA66FB006EE4D9 /* Build configuration list for PBXAggregateTarget "DeploySymbols" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CD5B7850DCA668E006EE4D9 /* Release */,
+				3CD5B7860DCA668E006EE4D9 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
