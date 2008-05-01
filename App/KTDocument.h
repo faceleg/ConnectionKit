@@ -82,9 +82,6 @@ typedef enum {
 	
 	int mySnapshotOrBackupUponFirstSave;
 	
-	NSMutableDictionary	*myTopSidebarsCache;
-	NSMutableDictionary	*myBottomSidebarsCache;
-	
 	
 	// UI
 	BOOL	myShowDesigns;				// is designs panel showing?
@@ -190,10 +187,6 @@ typedef enum {
 // exception handling
 - (void)resetUndoManager;
 
-// Export/Publishing pagelet cache
-- (NSArray *)cachedAllInheritableTopSidebarsForPage:(KTPage *)page;
-- (NSArray *)cachedAllInheritableBottomSidebarsForPage:(KTPage *)page;
-- (void)clearInheritedSidebarsCaches;
 @end
 
 

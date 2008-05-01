@@ -18,24 +18,29 @@
 
 
 @interface KTPage (PageletsPrivate)
-- (NSArray *)pageletsForPredicate:(NSPredicate *)predicate;
 
-+ (NSPredicate *)calloutsPredicate;
-+ (NSPredicate *)sidebarsPredicate;
-+ (NSPredicate *)topSidebarsPredicate;
-+ (NSPredicate *)bottomSidebarsPredicate;
-+ (NSPredicate *)inheritableTopSidebarsPredicate;
-+ (NSPredicate *)inheritableBottomSidebarsPredicate;
+- (NSArray *)allInheritableTopSidebars;
+- (NSArray *)allInheritableBottomSidebars;
+
+- (NSArray *)_allSidebarPagelets;
+
 @end
+
+
+#pragma mark -
 
 
 @implementation KTPage (Pagelets)
 
++ (void)initialize_pagelets
+{
+	[self setKeys:[NSArray arrayWithObjects:@"topSidebarPagelets", @"bottomSidebarPagelets", nil]
+		triggerChangeNotificationsForDependentKey:@"sidebarPagelets"];
+}
+
 #pragma mark -
 #pragma mark Raw accessors
 
-/*!	Defined here to be parallel to includeCallout, even though it's just a wrapper
-*/
 - (BOOL)includeSidebar
 {
 	BOOL result = [self wrappedBoolForKey:@"includeSidebar"];		// not an optional property, so it's OK to convert to a non-object
@@ -45,6 +50,9 @@
 - (void)setIncludeSidebar:(BOOL)flag
 {
 	[self setWrappedBool:flag forKey:@"includeSidebar"];
+	
+	// Our -allSidebars list has changed since we have presumably inherited some pagelets
+	[self invalidateAllSidebarPageletsCache:YES recursive:YES];
 }
 
 /*!	Returns a constant of whether this page template can do callouts.  Contrast to includeSidebar,
@@ -78,16 +86,16 @@
 	switch (location)
 	{
 		case KTCalloutPageletLocation:
-			result = [self orderedCallouts];
+			result = [self callouts];
 			break;
 		case KTSidebarPageletLocation:
-			result = [self orderedSidebars];
+			result = [self sidebarPagelets];
 			break;
 		case KTTopSidebarPageletLocation:
-			result = [self orderedTopSidebars];
+			result = [self topSidebarPagelets];
 			break;
 		case KTBottomSidebarPageletLocation:
-			result = [self orderedBottomSidebars];
+			result = [self bottomSidebarPagelets];
 			break;
 	}
 	
@@ -105,20 +113,31 @@
 	// would screw up the ordering keys.
 	OBASSERTSTRING(![[self pagelets] containsObject:pagelet], @"Attempting to insert a pagelet twice");
 	
+	
 	// Get the array of pagelets BEFORE the new one is added to it
 	KTPageletLocation location = [pagelet locationByDifferentiatingTopAndBottomSidebars];
 	NSArray *existingPagelets = [self pageletsInLocation:location];
+	
 	
 	// Add the pagelet to our set
 	[self lockPSCAndMOC];
 	[pagelet setValue:self forKey:@"page"];
 	[self unlockPSCAndMOC];
 	
+	
 	// Insert the pagelet into the array and update the ordering of all pagelets
 	NSMutableArray *pagelets = [[NSMutableArray alloc] initWithArray:existingPagelets];
 	[pagelets insertObject:pagelet atIndex:index];
 	[KTPage updatePageletOrderingsFromArray:pagelets];
 	[pagelets release];
+	
+	
+	// And finally cached pagelet lists must have been affected
+	[self invalidateSimplePageletCaches];
+	if ([pagelet location] == KTSidebarPageletLocation)
+	{
+		[self invalidateAllSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+	}
 }
 
 /*	A nice shortcut to doing -insertPagelet:atIndex: at the end of the array.
@@ -145,54 +164,128 @@
 }
 
 #pragma mark -
-#pragma mark -pageletsInLocation: shortcuts
+#pragma mark Non-Inherited Pagelets
 
-/*	These 4 just call straight through to -pageletsInLocation: with the right argument
+- (NSArray *)callouts { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
+
+- (NSArray *)topSidebarPagelets { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
+
+- (NSArray *)bottomSidebarPagelets { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
+
+- (NSArray *)sidebarPagelets
+{
+	NSArray *result = [[self topSidebarPagelets] arrayByAddingObjectsFromArray:[self bottomSidebarPagelets]];
+	return result;
+}
+
+- (void)invalidateSimplePageletCaches
+{
+	[[self managedObjectContext] refreshObject:self mergeChanges:YES];
+}
+
+#pragma mark inheritable
+
+/*	The following 2 methods use their counterparts above but also filter out any non-propogating pagelets
+*	IMPORTANT: These methods are NOT KVO-compliant.
  */
 
-- (NSArray *)orderedCallouts { return [self pageletsForPredicate:[KTPage calloutsPredicate]]; }
+- (NSArray *)inheritableTopSidebarPagelets
+{
+	// Build the predicate
+	static NSPredicate *sPredicate;
+	if (!sPredicate)
+	{
+		sPredicate = [[NSPredicate predicateWithFormat:@"shouldPropagate == 1",
+					  KTSidebarPageletLocation] retain];
+	}
+	
+	// Filter usual result
+	NSArray *result = [[self topSidebarPagelets] filteredArrayUsingPredicate:sPredicate];
+	return result;
+}
 
-- (NSArray *)orderedTopSidebars { return [self pageletsForPredicate:[KTPage topSidebarsPredicate]]; }
-
-- (NSArray *)orderedBottomSidebars { return [self pageletsForPredicate:[KTPage bottomSidebarsPredicate]]; }
-
-- (NSArray *)orderedSidebars { return [self pageletsForPredicate:[KTPage sidebarsPredicate]]; }
+- (NSArray *)inheritableBottomSidebarPagelets
+{
+	// Build the predicate
+	static NSPredicate *sPredicate;
+	if (!sPredicate)
+	{
+		sPredicate = [[NSPredicate predicateWithFormat:@"shouldPropagate == 1",
+					   KTSidebarPageletLocation] retain];
+	}
+	
+	// Filter usual result
+	NSArray *result = [[self bottomSidebarPagelets] filteredArrayUsingPredicate:sPredicate];
+	return result;
+}
 
 #pragma mark -
-#pragma mark Inheritable sidebar pagelets
-
-/*	Filters out the top sidebar pagelets that won't appear on child pages
+#pragma mark All Sidebar Pagelets
+					   
+/*	All the sidebar pagelets that should appear on the page, including those inherited from our parent as appropriate.
+ *	This is the culmination of all the other methods and is used to generate the HTML.
  */
-- (NSArray *)orderedInheritableTopSidebars
+- (NSArray *)allSidebarPagelets
 {
-	return [self pageletsForPredicate:[KTPage inheritableTopSidebarsPredicate]];
-}
-
-/*	Filters out the bottom sidebar pagelets that won't appear on child pages
- */
-- (NSArray *)orderedInheritableBottomSidebars
-{
-	return [self pageletsForPredicate:[KTPage inheritableBottomSidebarsPredicate]];
-}
-
-/*	Our inheritable sidebar pagelets plus any inherited from our parent.
- *	During publishing these methods are cached for performance.
- */
-- (NSArray *)allInheritableTopSidebars
-{
-	NSArray *result = nil;
+	if (!myAllSidebarPageletsCache)
+	{
+		myAllSidebarPageletsCache = [[self _allSidebarPagelets] copy];
+	}
 	
-	//if ([[self document] XpublishingMode] == kGeneratingPreview) {
-		result = [self _allInheritableTopSidebars];
-	//}
-	//else {
-	//	result = [[self document] cachedAllInheritableTopSidebarsForPage:self];
-	//}
+	return myAllSidebarPageletsCache;
+}	
+
+/*	Uncached version of the above.
+ */
+- (NSArray *)_allSidebarPagelets
+{
+	BOOL includePageletsFromParent = ([self boolForKey:@"includeInheritedSidebar"] && ![self isRoot]);
+	
+	// Gather the 3 groups of pagelets into one single array
+	NSMutableArray *result = [NSMutableArray array];
+	
+	if (includePageletsFromParent) {
+		[result addObjectsFromArray:[[self parent] allInheritableTopSidebars]];
+	}
+	
+	[result addObjectsFromArray:[self sidebarPagelets]];
+	
+	if (includePageletsFromParent) {
+		[result addObjectsFromArray:[[self parent] allInheritableBottomSidebars]];
+	}
 	
 	return result;
 }
 
-- (NSArray *)_allInheritableTopSidebars
+/*	Very simple method to invalidate our cache. Does pretty much as it says on the tin
+ *	If you pass NO for invalidateCache, but YES for recursive then the receiver won't be affected, but children will.
+ */
+- (void)invalidateAllSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
+{
+	if (invalidateCache)
+	{
+		[self willChangeValueForKey:@"allSidebarPagelets"];
+		[myAllSidebarPageletsCache release];	myAllSidebarPageletsCache = nil;
+		[self didChangeValueForKey:@"allSidebarPagelets"];
+	}
+	
+	if (recursive)
+	{
+		NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
+		KTPage *aPage;
+		while (aPage = [childrenEnumerator nextObject])
+		{
+			[aPage invalidateAllSidebarPageletsCache:YES recursive:YES];
+		}
+	}
+}
+
+#pragma mark support
+
+/*	Our inheritable sidebar pagelets plus any inherited from our parent.
+ *	IMPORTANT: These 2 methods are NOT KVO-compliant.
+ */
+- (NSArray *)allInheritableTopSidebars
 {
 	NSMutableArray *array = [[NSMutableArray alloc] init];
 	
@@ -200,7 +293,7 @@
 		[array fastAddObjectsFromArray:[[self parent] allInheritableTopSidebars]];	// recurse
 	}
 	
-	[array fastAddObjectsFromArray:[self orderedInheritableTopSidebars]];	// add my own sidebars that can be inherited
+	[array fastAddObjectsFromArray:[self inheritableTopSidebarPagelets]];	// add my own sidebars that can be inherited
 	
 	// Tidy up
 	NSArray *result = [NSArray arrayWithArray:array];
@@ -211,22 +304,8 @@
 
 - (NSArray *)allInheritableBottomSidebars
 {
-	NSArray *result = nil;
-	
-	//if ([[self document] XpublishingMode] == kGeneratingPreview) {
-		result = [self _allInheritableBottomSidebars];
-	//}
-	//else {
-	//	result = [[self document] cachedAllInheritableBottomSidebarsForPage:self];
-	//}
-	
-	return result;
-}
-
-- (NSArray *)_allInheritableBottomSidebars
-{
 	NSMutableArray *array = [[NSMutableArray alloc] initWithArray:
-		[self orderedInheritableBottomSidebars]];	// add my own sidebars at the bottom first
+		[self inheritableBottomSidebarPagelets]];	// add my own sidebars at the bottom first
 
 	if (![self isRoot] && [self boolForKey:@"includeInheritedSidebar"]) {
 		[array fastAddObjectsFromArray:[[self parent] allInheritableBottomSidebars]];	// recurse
@@ -240,53 +319,7 @@
 }
 
 #pragma mark -
-#pragma mark Inherited sidebar pagelets
-
-/*	All the sidebar pagelets that should appear on the page, including those inherited from our parent as appropriate
- */
-- (NSArray *)allSidebars
-{
-	BOOL includeInheritedSidebar = ([self boolForKey:@"includeInheritedSidebar"] && ![self isRoot]);
-	
-	// Gather the 3 groups of pagelets into one single array
-	NSMutableArray *tempResult = [[NSMutableArray alloc] init];
-	
-	if (includeInheritedSidebar) {
-		[tempResult fastAddObjectsFromArray:[[self parent] allInheritableTopSidebars]];
-	}
-	
-	[tempResult fastAddObjectsFromArray:[self pageletsInLocation:KTSidebarPageletLocation]];
-	
-	if (includeInheritedSidebar) {
-		[tempResult fastAddObjectsFromArray:[[self parent] allInheritableBottomSidebars]];
-	}
-	
-	// Tidy up
-	NSArray *result = [NSArray arrayWithArray:tempResult];
-	[tempResult release];
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Support
-
-- (NSArray *)pageletsForPredicate:(NSPredicate *)predicate
-{
-	NSMutableArray *result = [NSMutableArray arrayWithArray:[[self pagelets] allObjects]];
-	[result filterUsingPredicate:predicate];
-	
-	if (predicate == [KTPage sidebarsPredicate])
-	{
-		[result sortUsingDescriptors:[NSSortDescriptor sidebarPageletsSortDescriptors]];
-	}
-	else
-	{
-		[result sortUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-	}
-	
-	return result;
-}
 
 /*	Runs through each pagelet in the array and ensures its -ordering property matches with the
  *	index in the array.
@@ -308,72 +341,6 @@
 		KTPagelet *pagelet = [pagelets objectAtIndex:i];
 		[pagelet setOrdering:i];
 	}
-}
-
-#pragma mark predicates
-
-+ (NSPredicate *)calloutsPredicate
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i", KTCalloutPageletLocation] retain];
-	}
-	return predicate;
-}
-
-+ (NSPredicate *)sidebarsPredicate;
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i", KTSidebarPageletLocation] retain];
-	}
-	return predicate;
-}
-
-+ (NSPredicate *)topSidebarsPredicate;
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i AND prefersBottom == 0",
-													  KTSidebarPageletLocation] retain];
-	}
-	return predicate;
-}
-
-+ (NSPredicate *)bottomSidebarsPredicate;
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i AND prefersBottom == 1",
-													  KTSidebarPageletLocation] retain];
-	}
-	return predicate;
-}
-
-+ (NSPredicate *)inheritableTopSidebarsPredicate;
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i AND prefersBottom == 0 AND shouldPropagate == 1",
-													  KTSidebarPageletLocation] retain];
-	}
-	return predicate;
-}
-
-+ (NSPredicate *)inheritableBottomSidebarsPredicate;
-{
-	static NSPredicate *predicate;
-	if (!predicate)
-	{
-		predicate = [[NSPredicate predicateWithFormat:@"location == %i AND prefersBottom == 1 AND shouldPropagate == 1",
-													  KTSidebarPageletLocation] retain];
-	}
-	return predicate;
 }
 
 @end

@@ -52,6 +52,9 @@ typedef enum {
 - (int)ordering;
 - (void)setOrdering:(int)ordering;
 
+- (BOOL)shouldPropagate;
+- (void)setShouldPropagate:(BOOL)propagate;
+
 - (NSString *)introductionHTML;
 - (void)setIntroductionHTML:(NSString *)value;
 

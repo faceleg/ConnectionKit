@@ -159,12 +159,20 @@
 
 - (void)setOrdering:(int)ordering
 {
-	// Since our ordering has changed, send the appropriate willChange/didChange notifications on our parent page
-	NSSet *changedPages = [self allPages];
-	
-	[changedPages makeObjectsPerformSelector:@selector(willChangeValueForKey:) withObject:@"allSidebars"];
 	[self setWrappedInteger:ordering forKey:@"ordering"];
-	[changedPages makeObjectsPerformSelector:@selector(didChangeValueForKey:) withObject:@"allSidebars"];
+}
+
+- (BOOL)shouldPropagate { return [self wrappedBoolForKey:@"shouldPropagate"]; }
+
+- (void)setShouldPropagate:(BOOL)propagate
+{
+	[self setWrappedBool:propagate forKey:@"shouldPropagate"];
+	
+	// Our page's simple caches are not affected, but child pages are if in the sidebar.
+	if ([self location] == KTSidebarPageletLocation)
+	{
+		[[self page] invalidateAllSidebarPageletsCache:NO recursive:YES];
+	}
 }
 
 - (NSString *)introductionHTML 
@@ -221,7 +229,7 @@
 {
 	NSSet *result = nil;
 	
-	if ([self location] == KTCalloutPageletLocation || ![self boolForKey:@"shouldPropagate"])
+	if ([self location] == KTCalloutPageletLocation || ![self shouldPropagate])
 	{
 		result = [NSSet setWithObject:[self page]];
 	}
@@ -286,7 +294,7 @@
 }
 
 /*	Returns the key of our parent page that matches our location.
- *	e.g. @"orderedTopSidebars" for KTTopSidebarPageletLocation
+ *	e.g. @"topSidebarPagelets" for KTTopSidebarPageletLocation
  */
 - (NSString *)locationPageKey
 {
@@ -295,16 +303,16 @@
 	switch ([self locationByDifferentiatingTopAndBottomSidebars])
 	{
 		case KTTopSidebarPageletLocation:
-			result = @"orderedTopSidebars";
+			result = @"topSidebarPagelets";
 			break;
 		case KTBottomSidebarPageletLocation:
-			result = @"orderedBottomSidebars";
+			result = @"bottomSidebarPagelets";
 			break;
 		case KTCalloutPageletLocation:
-			result = @"orderedCallouts";
+			result = @"callouts";
 			break;
 		default:
-			OBASSERT_NOT_REACHED("It should be impossible to place a pagelet genericly in the sidebar");
+			OBASSERT_NOT_REACHED("It should be impossible to place a pagelet generically in the sidebar");
 			break;
 	}
 	
@@ -318,8 +326,8 @@
 - (void)setLocation:(KTPageletLocation)location
 {
 	// Ensure no-one tries to set a top or bottom sidebar location
-	BOOL isTopOrBottomLocation = (location == KTTopSidebarPageletLocation || location == KTBottomSidebarPageletLocation);
-	OBASSERTSTRING(!isTopOrBottomLocation, @"Can't directly set the location of a pagelet to top or bottom sidebar; use -setPrefersBottom: instead");
+	OBASSERTSTRING((location == KTSidebarPageletLocation || location == KTCalloutPageletLocation),
+				   @"Can't directly set the location of a pagelet to top or bottom sidebar; use -setPrefersBottom: instead");
 	
 	// Store the value
 	[self willChangeValueForKey:@"location"];
@@ -329,6 +337,10 @@
 	[KTPage updatePageletOrderingsFromArray:[self pageletsInSameLocation]];
 	
 	[self didChangeValueForKey:@"location"];
+	
+	// Our location has changed so various caches are affected
+	[[self page] invalidateSimplePageletCaches];
+	[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
 }
 
 - (BOOL)prefersBottom {	return [self wrappedBoolForKey:@"prefersBottom"]; }
@@ -342,7 +354,25 @@
 	[KTPage updatePageletOrderingsFromArray:[self pageletsInSameLocation]];
 	
 	[self didChangeValueForKey:@"prefersBottom"];
+	
+	
+	// For callouts this has no affect on position, so no caches need updating
+	if ([self location] != KTCalloutPageletLocation)
+	{
+		[[self page] invalidateSimplePageletCaches];
+		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+	}
 }
+
+/*	A shortcut to the methods in KTPage for getting all the pagelets in the same location as us
+ */
+- (NSArray *)pageletsInSameLocation
+{
+	NSArray *result = [[self page] pageletsInLocation:[self locationByDifferentiatingTopAndBottomSidebars]];
+	return result;
+}
+
+#pragma mark moving
 
 - (BOOL)canMoveUp
 {
@@ -369,6 +399,13 @@
 	
 	// Tidy up
 	[fellowPagelets release];
+	
+	// The move will have affected various caches
+	[[self page] invalidateSimplePageletCaches];
+	if ([self location] == KTSidebarPageletLocation)
+	{
+		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+	}
 }
 
 /*	Swaps the pagelet with the one below it
@@ -382,14 +419,13 @@
 	
 	// Tidy up
 	[fellowPagelets release];
-}
-
-/*	A shortcut to the methods in KTPage for getting all the pagelets in the same location as us
- */
-- (NSArray *)pageletsInSameLocation
-{
-	NSArray *result = [[self page] pageletsInLocation:[self locationByDifferentiatingTopAndBottomSidebars]];
-	return result;
+	
+	// The move will have affected various caches
+	[[self page] invalidateSimplePageletCaches];
+	if ([self location] == KTSidebarPageletLocation)
+	{
+		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+	}
 }
 
 #pragma mark -

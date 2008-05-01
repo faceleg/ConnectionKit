@@ -72,10 +72,6 @@
 	[self setKeys:[NSArray arrayWithObjects: @"collectionSummaryType", nil]
         triggerChangeNotificationsForDependentKey: @"summaryHTML"];
 	
-	// Sidebars
-	[self setKeys:[NSArray arrayWithObjects:@"pagelets", @"includeInheritedSidebar", nil]
-		triggerChangeNotificationsForDependentKey:@"allSidebars"];
-	
 	
 	// Site Outline
 	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
@@ -114,6 +110,10 @@
 	NSValueTransformer *transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:collectionTypes];
 	[NSValueTransformer setValueTransformer:transformer forName:@"KTCollectionSummaryTypeIsTitleList"];
 	[transformer release];
+	
+	
+	// Pagelets
+	[self performSelector:@selector(initialize_pagelets)];
 	
 	[pool release];
 }

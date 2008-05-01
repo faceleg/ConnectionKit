@@ -161,10 +161,6 @@
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
 		
 		
-		// Initialize the sidebar caches
-		myTopSidebarsCache = [[NSMutableDictionary alloc] init];
-		myBottomSidebarsCache = [[NSMutableDictionary alloc] init];
-		
 #ifdef DEBUG
 		// custom undo manager for debugging only
 		//		KTUndoManager *undoManager = [[[KTUndoManager alloc] init] autorelease];
@@ -502,10 +498,6 @@
 	
 	[myStalenessManager stopObservingAllPages];
 	[myStalenessManager release];
-	
-	// Empty sidebar caches
-	[myTopSidebarsCache release];
-	[myBottomSidebarsCache release];
 	
 	// release context
 	[myManagedObjectContext release]; myManagedObjectContext = nil;

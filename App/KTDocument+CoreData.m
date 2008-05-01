@@ -22,9 +22,11 @@
 #import "KTManagedObjectContext.h"
 #import "KTPage.h"
 #import "KTPersistentStoreCoordinator.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWorkspace+Karelia.h"
@@ -72,28 +74,65 @@
 
 #pragma mark model
 
-- (NSManagedObjectModel *)managedObjectModel
+/*	The first time the model is loaded, we need to give Fetched Properties sort descriptors.
+ */
++ (NSManagedObjectModel *)managedObjectModel
 {
-	if ( nil == myManagedObjectModel )
+	static NSManagedObjectModel *result;
+	
+	if (!result)
 	{
-		//LOGMETHOD;
-		
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
 		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
-        if ( nil != componentsBundle )
-        {
-            NSURL *modelURL = [NSURL fileURLWithPath:[componentsBundle pathForResource:@"Sandvox" ofType:@"mom"]];
-            if ( nil != modelURL )
-            {
-                myManagedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-            }
-        }
+        OBASSERT(componentsBundle);
+		
+		NSURL *modelURL = [NSURL fileURLWithPath:[componentsBundle pathForResource:@"Sandvox" ofType:@"mom"]];
+		OBASSERT(modelURL);
+		
+		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+		
+		
+		// Give fetched properties sort descriptors
+		NSEntityDescription *pageEntity = [[result entitiesByName] objectForKey:@"Page"];
+		NSDictionary *pageProperties = [pageEntity propertiesByName];
+		
+		NSFetchedPropertyDescription *aFetchedProperty = [pageProperties objectForKey:@"callouts"];
+		NSFetchRequest *aFetchRequest = [aFetchedProperty fetchRequest];
+		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+		[aFetchedProperty setFetchRequest:aFetchRequest];
+		
+		aFetchedProperty = [pageProperties objectForKey:@"topSidebarPagelets"];
+		aFetchRequest = [aFetchedProperty fetchRequest];
+		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+		[aFetchedProperty setFetchRequest:aFetchRequest];
+		
+		aFetchedProperty = [pageProperties objectForKey:@"bottomSidebarPagelets"];
+		aFetchRequest = [aFetchedProperty fetchRequest];
+		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+		[aFetchedProperty setFetchRequest:aFetchRequest];
+		
+		
+		// We have to keep subentities up-to-date manually
+		NSDictionary *updatedProperties = [pageProperties dictionaryWithValuesForKeys:
+			[NSArray arrayWithObjects:@"callouts", @"topSidebarPagelets", @"bottomSidebarPagelets", nil]];
+		
+		NSEnumerator *subentityEnumerator = [[pageEntity subentities] objectEnumerator];
+		NSEntityDescription *anEntity;
+		while (anEntity = [subentityEnumerator nextObject])
+		{
+			NSMutableDictionary *properties = [[[anEntity propertiesByName] mutableCopy] autorelease];
+			[properties addEntriesFromDictionary:updatedProperties];
+			[anEntity setProperties:[properties allValues]];
+		}
 	}
 	
-	OBASSERTSTRING((nil != myManagedObjectModel), @"myManagedObjectModel should not be nil");
-	
-	return myManagedObjectModel;
+	OBPOSTCONDITION(result);
+	return result;
 }
+
+/*	We override NSPersistentDocument to use a global model.
+ */
+- (NSManagedObjectModel *)managedObjectModel { return [[self class] managedObjectModel]; }
 
 #pragma mark store coordinator
 
@@ -797,49 +836,6 @@
 //	[[NSNotificationCenter defaultCenter] removeObserver:self
 //													name:NSManagedObjectContextDidSaveNotification
 //												  object:aManagedObjectContext];
-}
-
-#pragma mark -
-#pragma mark Publishing/export pagelet cache
-
-/*	We maintain a cache of the inherited sidebar pagelets for each page when exporting a site
- *	since these methods will be called many times upon collection pages.
- *	The cache is in the document, not the individual pages, so we can easily clear it after
- *	publishing.
- */
-
-- (NSArray *)cachedAllInheritableTopSidebarsForPage:(KTPage *)page
-{
-	NSString *pageID = [page uniqueID];
-	
-	// Cache the value if we haven't already done so
-	NSArray *result = [myTopSidebarsCache objectForKey:pageID];
-	if (!result) {
-		result = [page _allInheritableTopSidebars];
-		[myTopSidebarsCache setValue:result forKey:pageID];
-	}
-	
-	return result;
-}
-
-- (NSArray *)cachedAllInheritableBottomSidebarsForPage:(KTPage *)page
-{
-	NSString *pageID = [page uniqueID];
-	
-	// Cache the value if we haven't already done so
-	NSArray *result = [myBottomSidebarsCache objectForKey:pageID];
-	if (!result) {
-		result = [page _allInheritableBottomSidebars];
-		[myBottomSidebarsCache setValue:result forKey:pageID];
-	}
-	
-	return result;
-}
-
-- (void)clearInheritedSidebarsCaches
-{
-	[myTopSidebarsCache removeAllObjects];
-	[myBottomSidebarsCache removeAllObjects];
 }
 
 @end

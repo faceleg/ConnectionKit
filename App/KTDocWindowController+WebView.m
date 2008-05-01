@@ -824,7 +824,7 @@ but the only trick is -- how to display a highlight?
 				
 				// if on selectedPage's calloutsList, put up Move to Sidebar
 				NSMenuItem *moveMenuItem = nil;
-				if ( [[selectedPage orderedCallouts] containsObject:pagelet] 
+				if ( [[selectedPage callouts] containsObject:pagelet] 
                      && [selectedPage includeSidebar] )
 				{
 					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Sidebar", "Move to Sidebar MenuItem")
@@ -834,7 +834,7 @@ but the only trick is -- how to display a highlight?
 					[moveMenuItem setRepresentedObject:pagelet];
 				}
 				// else, if on selectedPage's sidebarsList, put up Move to Callout
-				else if ( [[selectedPage orderedSidebars] containsObject:pagelet] 
+				else if ( [[selectedPage sidebarPagelets] containsObject:pagelet] 
                           && [selectedPage includeCallout] )
 				{
 					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Callout", "Move to Callout MenuItem")

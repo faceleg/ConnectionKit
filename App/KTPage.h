@@ -36,6 +36,8 @@
 	BOOL				myIsNewPage;
 	
 	NSArray	*mySortedChildrenCache;
+	
+	NSArray *myAllSidebarPageletsCache;
 }
 
 
@@ -217,22 +219,16 @@
 - (void)insertPagelet:(KTPagelet *)pagelet atIndex:(unsigned)index;
 - (void)addPagelet:(KTPagelet *)pagelet;
 
-- (NSArray *)orderedCallouts;
-- (NSArray *)orderedTopSidebars;
-- (NSArray *)orderedBottomSidebars;
-- (NSArray *)orderedSidebars;
-
-// Inheritable sidebar pagelets
-- (NSArray *)orderedInheritableTopSidebars;
-- (NSArray *)orderedInheritableBottomSidebars;
-
-- (NSArray *)allInheritableTopSidebars;		// Result cached during publishing
-- (NSArray *)_allInheritableTopSidebars;	// Uncached
-- (NSArray *)allInheritableBottomSidebars;	// Result cached during publishing
-- (NSArray *)_allInheritableBottomSidebars;	// Uncached
+// All the below methods returning an NSArray should be KVO-compliant
+- (NSArray *)callouts;
+- (NSArray *)topSidebarPagelets;
+- (NSArray *)bottomSidebarPagelets;
+- (NSArray *)sidebarPagelets;
+- (void)invalidateSimplePageletCaches;
 
 // All sidebar pagelets that will appear in the HTML. i.e. Our sidebars plus any inherited ones
-- (NSArray *)allSidebars;
+- (NSArray *)allSidebarPagelets;
+- (void)invalidateAllSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
 
 // Support
 + (void)updatePageletOrderingsFromArray:(NSArray *)pagelets;

@@ -1,9 +1,9 @@
-[[if orderedCallouts]]
+[[if callouts]]
 	<div class="callout-container">
 		<div class="callout">
 			<div class="callout-top"></div>
 			<div class="callout-content">
-[[forEach orderedCallouts aPagelet]]
+[[forEach callouts aPagelet]]
 				<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif2]][[if aPagelet.titleHTML]]titled[[else2]]untitled[[endif2]] [[i]] [[eo]][[last]]" id="k-[[=aPagelet.uniqueID]]">
 [[if aPagelet.canHaveTitle]]
 [[if aPagelet.titleHTML|editing]]

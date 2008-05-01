@@ -459,7 +459,7 @@
         }
 
 		// add sidebars
-        enumerator = [[(KTPage *)aPlugin orderedSidebars] objectEnumerator];
+        enumerator = [[(KTPage *)aPlugin sidebarPagelets] objectEnumerator];
         while ( item = [enumerator nextObject] )
         {
             [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
@@ -479,7 +479,7 @@
         }
 
         // add Page's callouts
-        enumerator = [[(KTPage *)aPlugin orderedCallouts] objectEnumerator];
+        enumerator = [[(KTPage *)aPlugin callouts] objectEnumerator];
         while ( item = [enumerator nextObject] )
         {
             [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
