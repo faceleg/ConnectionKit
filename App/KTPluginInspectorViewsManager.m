@@ -47,11 +47,17 @@
 	myPluginInspectorViews = [[NSMutableDictionary alloc] init];
 	myPluginControllers = [[NSMutableDictionary alloc] init];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(managedObjectContextObjectsDidChange:)
+												 name:NSManagedObjectContextObjectsDidChangeNotification
+											   object:nil];
 	return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	// Disconnect each plugin's controller from its content to ensure nothing tries to access the MOC later.
 	[[myPluginControllers allValues] makeObjectsPerformSelector:@selector(setContent:) withObject:nil];
 	
@@ -121,9 +127,34 @@
  */
 - (void)removeInspectorViewForPlugin:(id <KTInspectorPlugin>)plugin
 {
-	[myPluginControllers removeObjectForKey:[plugin uniqueID]];
-	[myPluginTopLevelObjects removeObjectForKey:[plugin uniqueID]];
-	[myPluginInspectorViews removeObjectForKey:[plugin uniqueID]];
+	NSString *pluginID = [plugin uniqueID];
+	
+	[[myPluginControllers objectForKey:pluginID] setContent:nil];
+	[myPluginControllers removeObjectForKey:pluginID];
+	
+	[myPluginTopLevelObjects removeObjectForKey:pluginID];
+	[myPluginInspectorViews removeObjectForKey:pluginID];
+}
+
+#pragma mark -
+#pragma mark Managed Object Context
+
+/*	We keep an eye on the managed object context in order to remove the UI once an element is deleted.
+ */
+- (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
+{
+	NSSet *deletedObjects = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
+	NSEnumerator *deletedObjectsEnumerator = [deletedObjects objectEnumerator];
+	id aDeletedObject;
+	
+	while (aDeletedObject = [deletedObjectsEnumerator nextObject])
+	{
+		if ([aDeletedObject conformsToProtocol:@protocol(KTInspectorPlugin)] &&
+			[myPluginInspectorViews objectForKey:[(<KTInspectorPlugin>)aDeletedObject uniqueID]])
+		{
+			[self removeInspectorViewForPlugin:aDeletedObject];
+		}
+	}
 }
 
 @end
