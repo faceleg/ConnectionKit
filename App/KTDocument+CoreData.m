@@ -90,40 +90,6 @@
 		OBASSERT(modelURL);
 		
 		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-		
-		
-		// Give fetched properties sort descriptors
-		NSEntityDescription *pageEntity = [[result entitiesByName] objectForKey:@"Page"];
-		NSDictionary *pageProperties = [pageEntity propertiesByName];
-		
-		NSFetchedPropertyDescription *aFetchedProperty = [pageProperties objectForKey:@"callouts"];
-		NSFetchRequest *aFetchRequest = [aFetchedProperty fetchRequest];
-		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-		[aFetchedProperty setFetchRequest:aFetchRequest];
-		
-		aFetchedProperty = [pageProperties objectForKey:@"topSidebarPagelets"];
-		aFetchRequest = [aFetchedProperty fetchRequest];
-		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-		[aFetchedProperty setFetchRequest:aFetchRequest];
-		
-		aFetchedProperty = [pageProperties objectForKey:@"bottomSidebarPagelets"];
-		aFetchRequest = [aFetchedProperty fetchRequest];
-		[aFetchRequest setSortDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-		[aFetchedProperty setFetchRequest:aFetchRequest];
-		
-		
-		// We have to keep subentities up-to-date manually
-		NSDictionary *updatedProperties = [pageProperties dictionaryWithValuesForKeys:
-			[NSArray arrayWithObjects:@"callouts", @"topSidebarPagelets", @"bottomSidebarPagelets", nil]];
-		
-		NSEnumerator *subentityEnumerator = [[pageEntity subentities] objectEnumerator];
-		NSEntityDescription *anEntity;
-		while (anEntity = [subentityEnumerator nextObject])
-		{
-			NSMutableDictionary *properties = [[[anEntity propertiesByName] mutableCopy] autorelease];
-			[properties addEntriesFromDictionary:updatedProperties];
-			[anEntity setProperties:[properties allValues]];
-		}
 	}
 	
 	OBPOSTCONDITION(result);

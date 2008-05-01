@@ -75,7 +75,6 @@ typedef enum {
 
 - (KTPageletLocation)location;
 - (KTPageletLocation)locationByDifferentiatingTopAndBottomSidebars;
-- (NSString *)locationPageKey;
 - (void)setLocation:(KTPageletLocation)location;
 
 - (BOOL)prefersBottom;

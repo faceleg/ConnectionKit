@@ -834,8 +834,7 @@ but the only trick is -- how to display a highlight?
 					[moveMenuItem setRepresentedObject:pagelet];
 				}
 				// else, if on selectedPage's sidebarsList, put up Move to Callout
-				else if ( [[selectedPage sidebarPagelets] containsObject:pagelet] 
-                          && [selectedPage includeCallout] )
+				else if ([pagelet location] == KTSidebarPageletLocation && [selectedPage includeCallout])
 				{
 					moveMenuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Move to Callout", "Move to Callout MenuItem")
 															  action:@selector(movePageletToCallouts:)

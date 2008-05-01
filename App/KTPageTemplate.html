@@ -138,12 +138,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-content" class="[[if parent.collectionShowNavigationArrows]][[if parent.index.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]]">
 [[if includeSidebar]]
 					<div id="sidebar-container">
-[[if allSidebarPagelets|editing]]
+[[if sidebarPagelets|editing]]
 						<div id="sidebar">
 					  		<div id="sidebar-top"></div>
 							<div id="sidebar-content">
 								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
-[[forEach allSidebarPagelets aPagelet]]
+[[forEach sidebarPagelets aPagelet]]
 								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTML]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="k-[[=aPagelet.uniqueID]]">
 
 [[if aPagelet.canHaveTitle]]
@@ -156,7 +156,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 									</div>
 								</div>
 [[endForEach]]
-[[if allSidebarPagelets==0]]
+[[if sidebarPagelets==0]]
 									<div class="pagelet-body">
 										Sidebars go here
 									</div>

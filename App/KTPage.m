@@ -319,7 +319,6 @@
 	[self setDocument:nil];
     
 	[mySortedChildrenCache release];
-	[myAllSidebarPageletsCache release];
 	
     [super dealloc];
 }

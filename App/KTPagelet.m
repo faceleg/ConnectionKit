@@ -171,7 +171,7 @@
 	// Our page's simple caches are not affected, but child pages are if in the sidebar.
 	if ([self location] == KTSidebarPageletLocation)
 	{
-		[[self page] invalidateAllSidebarPageletsCache:NO recursive:YES];
+		[[self page] invalidateSidebarPageletsCache:NO recursive:YES];
 	}
 }
 
@@ -294,34 +294,6 @@
 	return result;
 }
 
-/*	Returns the key of our parent page that matches our location.
- *	e.g. @"topSidebarPagelets" for KTTopSidebarPageletLocation
- */
-- (NSString *)locationPageKey
-{
-	NSString *result = nil;
-	
-	switch ([self locationByDifferentiatingTopAndBottomSidebars])
-	{
-		case KTTopSidebarPageletLocation:
-			result = @"topSidebarPagelets";
-			break;
-		case KTBottomSidebarPageletLocation:
-			result = @"bottomSidebarPagelets";
-			break;
-		case KTCalloutPageletLocation:
-			result = @"callouts";
-			break;
-		default:
-			OBASSERT_NOT_REACHED("It should be impossible to place a pagelet generically in the sidebar");
-			break;
-	}
-	
-	OBPOSTCONDITION(result);
-	
-	return result;
-}
-
 /*	If you try to set the location to be a top or bottom sidebar, an exception is raised
  */
 - (void)setLocation:(KTPageletLocation)location
@@ -340,8 +312,8 @@
 	[self didChangeValueForKey:@"location"];
 	
 	// Our location has changed so various caches are affected
-	[[self page] invalidateSimplePageletCaches];
-	[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+	[[self page] invalidateCalloutsCache];
+	[[self page] invalidateSidebarPageletsCache:YES recursive:[self shouldPropagate]];
 }
 
 - (BOOL)prefersBottom {	return [self wrappedBoolForKey:@"prefersBottom"]; }
@@ -360,8 +332,7 @@
 	// For callouts this has no affect on position, so no caches need updating
 	if ([self location] != KTCalloutPageletLocation)
 	{
-		[[self page] invalidateSimplePageletCaches];
-		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+		[[self page] invalidateSidebarPageletsCache:YES recursive:[self shouldPropagate]];
 	}
 }
 
@@ -401,11 +372,14 @@
 	// Tidy up
 	[fellowPagelets release];
 	
-	// The move will have affected various caches
-	[[self page] invalidateSimplePageletCaches];
-	if ([self location] == KTSidebarPageletLocation)
+	// The move will have some cache
+	if ([self location] == KTCalloutPageletLocation)
 	{
-		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+		[[self page] invalidateCalloutsCache];
+	}
+	else
+	{
+		[[self page] invalidateSidebarPageletsCache:YES recursive:[self shouldPropagate]];
 	}
 }
 
@@ -421,11 +395,14 @@
 	// Tidy up
 	[fellowPagelets release];
 	
-	// The move will have affected various caches
-	[[self page] invalidateSimplePageletCaches];
-	if ([self location] == KTSidebarPageletLocation)
+	// The move will have some cache
+	if ([self location] == KTCalloutPageletLocation)
 	{
-		[[self page] invalidateAllSidebarPageletsCache:YES recursive:[self shouldPropagate]];
+		[[self page] invalidateCalloutsCache];
+	}
+	else
+	{
+		[[self page] invalidateSidebarPageletsCache:YES recursive:[self shouldPropagate]];
 	}
 }
 

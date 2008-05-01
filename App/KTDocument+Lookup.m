@@ -459,7 +459,7 @@
         }
 
 		// add sidebars
-        enumerator = [[(KTPage *)aPlugin sidebarPagelets] objectEnumerator];
+        enumerator = [[(KTPage *)aPlugin pageletsInLocation:KTSidebarPageletLocation] objectEnumerator];
         while ( item = [enumerator nextObject] )
         {
             [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];

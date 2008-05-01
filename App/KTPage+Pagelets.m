@@ -15,14 +15,23 @@
 
 #import "NSMutableArray+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
+#import "NSUndoManager+KTExtensions.h"
 
 
 @interface KTPage (PageletsPrivate)
 
+// Private, non-KVO-compliant accessors
+- (NSArray *)topSidebars;
+- (NSArray *)bottomSidebars;
+- (NSArray *)sidebars;
+- (NSArray *)sortedPageletsWithPredicate:(NSPredicate *)predicate;
+
+- (void)invalidateAllSidebarPageletsCache;
+
 - (NSArray *)allInheritableTopSidebars;
 - (NSArray *)allInheritableBottomSidebars;
 
-- (NSArray *)_allSidebarPagelets;
+- (NSArray *)_sidebarPagelets;
 
 @end
 
@@ -34,8 +43,6 @@
 
 + (void)initialize_pagelets
 {
-	[self setKeys:[NSArray arrayWithObjects:@"topSidebarPagelets", @"bottomSidebarPagelets", nil]
-		triggerChangeNotificationsForDependentKey:@"sidebarPagelets"];
 }
 
 #pragma mark -
@@ -52,7 +59,7 @@
 	[self setWrappedBool:flag forKey:@"includeSidebar"];
 	
 	// Our -allSidebars list has changed since we have presumably inherited some pagelets
-	[self invalidateAllSidebarPageletsCache:YES recursive:YES];
+	[self invalidateSidebarPageletsCache:YES recursive:YES];
 }
 
 /*!	Returns a constant of whether this page template can do callouts.  Contrast to includeSidebar,
@@ -89,13 +96,13 @@
 			result = [self callouts];
 			break;
 		case KTSidebarPageletLocation:
-			result = [self sidebarPagelets];
+			result = [self sidebars];
 			break;
 		case KTTopSidebarPageletLocation:
-			result = [self topSidebarPagelets];
+			result = [self topSidebars];
 			break;
 		case KTBottomSidebarPageletLocation:
-			result = [self bottomSidebarPagelets];
+			result = [self bottomSidebars];
 			break;
 	}
 	
@@ -133,10 +140,13 @@
 	
 	
 	// And finally cached pagelet lists must have been affected
-	[self invalidateSimplePageletCaches];
 	if ([pagelet location] == KTSidebarPageletLocation)
 	{
-		[self invalidateAllSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+		[self invalidateSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+	}
+	else
+	{
+		[self invalidateCalloutsCache];
 	}
 }
 
@@ -149,15 +159,18 @@
 	[self insertPagelet:pagelet atIndex:index];
 }
 
-- (void)removePagelet:(KTPagelet *)pagelet;
+- (void)removePagelet:(KTPagelet *)pagelet
 {
 	[[self mutableSetValueForKey:@"pagelets"] removeObject:pagelet];
 	
 	// Some caches must have been affected by the change
-	[self invalidateSimplePageletCaches];
 	if ([pagelet location] == KTSidebarPageletLocation)
 	{
-		[self invalidateAllSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+		[self invalidateSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+	}
+	else
+	{
+		[self invalidateCalloutsCache];
 	}
 }
 
@@ -176,23 +189,79 @@
 }
 
 #pragma mark -
-#pragma mark Non-Inherited Pagelets
+#pragma mark Callouts
 
-- (NSArray *)callouts { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
-
-- (NSArray *)topSidebarPagelets { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
-
-- (NSArray *)bottomSidebarPagelets { return [self wrappedValueForKey:NSStringFromSelector(_cmd)]; }
-
-- (NSArray *)sidebarPagelets
+- (NSArray *)callouts
 {
-	NSArray *result = [[self topSidebarPagelets] arrayByAddingObjectsFromArray:[self bottomSidebarPagelets]];
+	NSString *key = NSStringFromSelector(_cmd);
+	NSArray *result = [self primitiveValueForKey:key];
+	
+	if (!result)
+	{
+		// Build the predicate if needed
+		static NSPredicate *sPredicate;
+		if (!sPredicate)
+		{
+			sPredicate = [[NSPredicate predicateWithFormat:@"location == 3"] retain];
+		}
+		
+		// Filter and sort the array
+		result = [self sortedPageletsWithPredicate:sPredicate];
+		[self setPrimitiveValue:result forKey:key];
+	}
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
-- (void)invalidateSimplePageletCaches
+- (void)invalidateCalloutsCache
 {
-	[[self managedObjectContext] refreshObject:self mergeChanges:YES];
+	[self setWrappedValue:nil forKey:@"callouts"];
+}
+
+#pragma mark -
+#pragma mark Non-Inherited Sidebar
+
+- (NSArray *)topSidebars
+{
+	// Build the predicate if needed
+	static NSPredicate *sPredicate;
+	if (!sPredicate)
+	{
+		sPredicate = [[NSPredicate predicateWithFormat:@"location == 1 AND prefersBottom == 0"] retain];
+	}
+	
+	NSArray *result = [self sortedPageletsWithPredicate:sPredicate];
+	return result;
+}
+
+- (NSArray *)bottomSidebars
+{
+	// Build the predicate if needed
+	static NSPredicate *sPredicate;
+	if (!sPredicate)
+	{
+		sPredicate = [[NSPredicate predicateWithFormat:@"location == 1 AND prefersBottom == 1"] retain];
+	}
+	
+	NSArray *result = [self sortedPageletsWithPredicate:sPredicate];
+	return result;
+}
+
+- (NSArray *)sidebars
+{
+	NSArray *result = [[self topSidebars] arrayByAddingObjectsFromArray:[self bottomSidebars]];
+	return result;
+}
+
+- (NSArray *)sortedPageletsWithPredicate:(NSPredicate *)predicate
+{
+	// Filter and sort the array
+	NSArray *unsortedCallouts = [[[self pagelets] allObjects] filteredArrayUsingPredicate:predicate];
+	NSArray *result = [unsortedCallouts sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+	
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 #pragma mark inheritable
@@ -212,7 +281,7 @@
 	}
 	
 	// Filter usual result
-	NSArray *result = [[self topSidebarPagelets] filteredArrayUsingPredicate:sPredicate];
+	NSArray *result = [[self topSidebars] filteredArrayUsingPredicate:sPredicate];
 	return result;
 }
 
@@ -227,7 +296,7 @@
 	}
 	
 	// Filter usual result
-	NSArray *result = [[self bottomSidebarPagelets] filteredArrayUsingPredicate:sPredicate];
+	NSArray *result = [[self bottomSidebars] filteredArrayUsingPredicate:sPredicate];
 	return result;
 }
 
@@ -237,48 +306,55 @@
 /*	All the sidebar pagelets that should appear on the page, including those inherited from our parent as appropriate.
  *	This is the culmination of all the other methods and is used to generate the HTML.
  */
-- (NSArray *)allSidebarPagelets
+- (NSArray *)sidebarPagelets
 {
-	if (!myAllSidebarPageletsCache)
+	NSString *key = NSStringFromSelector(_cmd);
+	NSArray *result = [self wrappedValueForKey:key];
+	
+	if (!result)
 	{
-		myAllSidebarPageletsCache = [[self _allSidebarPagelets] copy];
+		result = [self _sidebarPagelets];
+		[self setPrimitiveValue:result forKey:key];
 	}
 	
-	return myAllSidebarPageletsCache;
+	OBPOSTCONDITION(result);
+	return result;
 }	
 
 /*	Uncached version of the above.
  */
-- (NSArray *)_allSidebarPagelets
+- (NSArray *)_sidebarPagelets
 {
 	BOOL includePageletsFromParent = ([self boolForKey:@"includeInheritedSidebar"] && ![self isRoot]);
 	
 	// Gather the 3 groups of pagelets into one single array
-	NSMutableArray *result = [NSMutableArray array];
+	NSMutableArray *buffer = [[NSMutableArray alloc] init];
 	
 	if (includePageletsFromParent) {
-		[result addObjectsFromArray:[[self parent] allInheritableTopSidebars]];
+		[buffer addObjectsFromArray:[[self parent] allInheritableTopSidebars]];
 	}
 	
-	[result addObjectsFromArray:[self sidebarPagelets]];
+	[buffer addObjectsFromArray:[self sidebars]];
 	
 	if (includePageletsFromParent) {
-		[result addObjectsFromArray:[[self parent] allInheritableBottomSidebars]];
+		[buffer addObjectsFromArray:[[self parent] allInheritableBottomSidebars]];
 	}
 	
+	
+	// Tidy up
+	NSArray *result = [[buffer copy] autorelease];
+	[buffer release];
 	return result;
 }
 
 /*	Very simple method to invalidate our cache. Does pretty much as it says on the tin
  *	If you pass NO for invalidateCache, but YES for recursive then the receiver won't be affected, but children will.
  */
-- (void)invalidateAllSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
+- (void)invalidateSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
 {
 	if (invalidateCache)
 	{
-		[self willChangeValueForKey:@"allSidebarPagelets"];
-		[myAllSidebarPageletsCache release];	myAllSidebarPageletsCache = nil;
-		[self didChangeValueForKey:@"allSidebarPagelets"];
+		[self invalidateAllSidebarPageletsCache];
 	}
 	
 	if (recursive)
@@ -287,9 +363,17 @@
 		KTPage *aPage;
 		while (aPage = [childrenEnumerator nextObject])
 		{
-			[aPage invalidateAllSidebarPageletsCache:YES recursive:YES];
+			[aPage invalidateSidebarPageletsCache:YES recursive:YES];
 		}
 	}
+}
+
+- (void)invalidateAllSidebarPageletsCache
+{
+	// Clear the cache, very simple
+	[self willChangeValueForKey:@"sidebarPagelets"];
+	[self setPrimitiveValue:nil forKey:@"sidebarPagelets"];
+	[self didChangeValueForKey:@"sidebarPagelets"];
 }
 
 #pragma mark support
