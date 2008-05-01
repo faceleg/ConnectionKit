@@ -317,7 +317,9 @@
 {
     // release ivars
 	[self setDocument:nil];
-    [mySortedChildrenCache release];
+    
+	[mySortedChildrenCache release];
+	[myAllSidebarPageletsCache release];
 	
     [super dealloc];
 }
