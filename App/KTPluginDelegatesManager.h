@@ -12,7 +12,7 @@
 
 @interface KTPluginDelegatesManager : NSObject
 {
-	NSMutableDictionary	*myPluginDelegates;
+	NSMutableDictionary		*myPluginDelegates;
 }
 
 - (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractElement *)plugin;

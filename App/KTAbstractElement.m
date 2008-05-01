@@ -143,7 +143,12 @@
 
 - (id)delegate { return myDelegate; }
 
-- (void)setDelegate:(id)newDelegate { myDelegate = newDelegate; }
+- (void)setDelegate:(id)newDelegate
+{
+	[self willChangeValueForKey:@"delegate"];
+	myDelegate = newDelegate;
+	[self didChangeValueForKey:@"delegate"];
+}
 
 - (KTElementPlugin *)plugin
 {

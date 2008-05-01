@@ -13,17 +13,29 @@
 #import "NSString+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 
+
 @implementation KTPluginDelegatesManager
+
+#pragma mark -
+#pragma mark Init
 
 - (id)init
 {
 	[super init];
+	
 	myPluginDelegates = [[NSMutableDictionary alloc] init];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(managedObjectContextObjectsDidChange:)
+												 name:NSManagedObjectContextObjectsDidChangeNotification
+											   object:nil];
 	return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	// To keep the UI happy, we want to detach all delegates fromt their plugin
 	[[myPluginDelegates allValues] makeObjectsPerformSelector:@selector(setDelegateOwner:)
 												   withObject:nil];
@@ -32,6 +44,9 @@
 	
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark Delegates
 
 - (KTAbstractPluginDelegate *)delegateForPlugin:(KTAbstractElement *)plugin
 {
@@ -61,6 +76,34 @@
 	}
 	
 	return result;
+}
+
+- (void)removeDelegateForPlugin:(KTAbstractElement *)plugin
+{
+	[[plugin delegate] setDelegateOwner:nil];
+	[myPluginDelegates removeObjectForKey:[plugin uniqueID]];
+}
+
+#pragma mark -
+#pragma mark Managed Object Context
+
+/*	We keep an eye on the managed object context in order to disconnect a delegate from its plugin if
+ *	the plugin is deleted.
+ */
+- (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
+{
+	NSSet *deletedObjects = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
+	NSEnumerator *deletedObjectsEnumerator = [deletedObjects objectEnumerator];
+	id aDeletedObject;
+	
+	while (aDeletedObject = [deletedObjectsEnumerator nextObject])
+	{
+		if ([aDeletedObject isKindOfClass:[KTAbstractElement class]] &&
+			[myPluginDelegates objectForKey:[(KTAbstractElement *)aDeletedObject uniqueID]])
+		{
+			[self removeDelegateForPlugin:aDeletedObject];
+		}
+	}
 }
 
 @end
