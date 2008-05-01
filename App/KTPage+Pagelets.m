@@ -39,7 +39,7 @@
 }
 
 #pragma mark -
-#pragma mark Raw accessors
+#pragma mark Simple Accessors
 
 - (BOOL)includeSidebar
 {
@@ -74,7 +74,7 @@
 - (NSSet *)pagelets { return [self wrappedValueForKey:@"pagelets"]; }
 
 #pragma mark -
-#pragma mark Ordered accessors
+#pragma mark Modifying Pagelet Positioning
 
 /*	Fetches all pagelets in the specified KTPageletLocation, correctly ordered.
  *	Even works for KTSidebarPageletLocation!
@@ -121,7 +121,7 @@
 	
 	// Add the pagelet to our set
 	[self lockPSCAndMOC];
-	[pagelet setValue:self forKey:@"page"];
+	[[self mutableSetValueForKey:@"pagelets"] addObject:pagelet];
 	[self unlockPSCAndMOC];
 	
 	
@@ -147,6 +147,18 @@
 	KTPageletLocation location = [pagelet locationByDifferentiatingTopAndBottomSidebars];
 	unsigned index = [[self pageletsInLocation:location] count];
 	[self insertPagelet:pagelet atIndex:index];
+}
+
+- (void)removePagelet:(KTPagelet *)pagelet;
+{
+	[[self mutableSetValueForKey:@"pagelets"] removeObject:pagelet];
+	
+	// Some caches must have been affected by the change
+	[self invalidateSimplePageletCaches];
+	if ([pagelet location] == KTSidebarPageletLocation)
+	{
+		[self invalidateAllSidebarPageletsCache:YES recursive:[pagelet shouldPropagate]];
+	}
 }
 
 /* Contextual menu item actions to move pagelets between locations.

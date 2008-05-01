@@ -859,10 +859,8 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
             KTManagedObjectContext *context = (KTManagedObjectContext *)[selectedPage managedObjectContext];
             
             // remove pagelet from the page
-			[selectedPage lockPSCAndMOC];
-            [selectedPagelet setValue:nil forKey:@"page"];
-			[selectedPage unlockPSCAndMOC];
-            
+			[[selectedPagelet page] removePagelet:selectedPagelet];
+			
             // delete it from the context
             LOG((@"deleting pagelet \"%@\" from context", [selectedPagelet valueForKey:@"pluginIdentifier"]));
             [context deleteObject:selectedPagelet];

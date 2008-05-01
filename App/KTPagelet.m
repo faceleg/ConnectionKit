@@ -222,7 +222,8 @@
 
 - (KTPage *)page { return [self wrappedValueForKey:@"page"]; }
 
-/*	Sidebar pagelets put in an appearence on many pages. This returns a list of all those pages.
+
+/*	Sidebar pagelets put in an appearance on many pages. This returns a list of all those pages.
  *	Obviously for a callout, it just contains the one page.
  */
 - (NSSet *)allPages

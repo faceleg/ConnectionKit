@@ -212,12 +212,12 @@
 - (void)setSidebarChangeable:(BOOL)flag;
 
 // Pagelet accessors
-- (NSSet *)pagelets;	// IMPORTANT: Never try to add to this set yourself. Use the methods below.
-						// Removing pagelets is OK though.
+- (NSSet *)pagelets;	// IMPORTANT: Never try to use -mutableSetValueForKey:@"pagelets"
 
 - (NSArray *)pageletsInLocation:(KTPageletLocation)location;
 - (void)insertPagelet:(KTPagelet *)pagelet atIndex:(unsigned)index;
 - (void)addPagelet:(KTPagelet *)pagelet;
+- (void)removePagelet:(KTPagelet *)pagelet;
 
 // All the below methods returning an NSArray should be KVO-compliant
 - (NSArray *)callouts;
