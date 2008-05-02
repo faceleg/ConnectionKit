@@ -1,23 +1,26 @@
 <div[[idClass entity:Element property:videoHTML id:uniqueID class:VideoElement]]>
 	<div class="video">
+
 [[if isFlash]]
+[[if parser.HTMLGenerationPurpose>0]]
 		<script type="text/javascript">
 QT_WriteOBJECT_XHTML (
-  "[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
+  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
   "classid", "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",
-  "play","[[if autoplay]]true[[else2]]false[[endif2]]",
-  "menu","[[if kioskmode]]false[[else2]]true[[endif2]]",
-  "loop","[[if loop]]true[[else2]]false[[endif2]]",
+  "play","[[if autoplay]]true[[else3]]false[[endif3]]",
+  "menu","[[if kioskmode]]false[[else3]]true[[endif3]]",
+  "loop","[[if loop]]true[[else3]]false[[endif3]]",
   "scale","showall",
   "type","application/x-shockwave-flash",
   "align","middle",
   "quality","autohigh",
-  "movie","[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]",
+  "movie","[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]",
   "codebase","http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0",
   "pluginspage", "http://www.macromedia.com/go/getflashplayer"
 );
 		</script>
 		<noscript>
+[[endif2]]
 			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 					codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
 					width="[[=delegate.width]]"
@@ -42,9 +45,11 @@ QT_WriteOBJECT_XHTML (
 					scale="showall"
 					type="application/x-shockwave-flash"
 					pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
-		</noscript>
-[[else]]
+		[[if parser.HTMLGenerationPurpose>0]]</noscript>[[endif2]]
+[[endif]]
+
 [[if isWindowsMedia]]
+[[if parser.HTMLGenerationPurpose>0]]
 		<script type="text/javascript">
 		
 var WMP7;
@@ -91,29 +96,32 @@ QT_WriteOBJECT_XHTML (
 }
 		</script>
 		<noscript>
+[[endif2]]
 			<object classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
 				width="[[=delegate.width]]"
 				height="[[=delegate.height]]">
-				<param name="url" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]" />
-				<param name="autostart" value="[[if autoplay]]true[[else3]]false[[endif3]]" />
-				<param name="showcontrols" value="[[if controller]]true[[else3]]false[[endif3]]" />
-				<param name="enablecontextmenu" value="[[if kioskmode]]false[[else3]]true[[endif3]]" />
-				<param name="playcount" value="[[if loop]]9999[[else3]]1[[endif3]]" />
+				<param name="url" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
+				<param name="autostart" value="[[if autoplay]]true[[else2]]false[[endif2]]" />
+				<param name="showcontrols" value="[[if controller]]true[[else2]]false[[endif2]]" />
+				<param name="enablecontextmenu" value="[[if kioskmode]]false[[else2]]true[[endif2]]" />
+				<param name="playcount" value="[[if loop]]9999[[else2]]1[[endif2]]" />
 				<param name="type" value="application/x-oleobject" />
 				<param name="uiMode" value="mini" />
 				<param name="pluginspage" value="http://microsoft.com/windows/mediaplayer/en/download/" />
-				<embed SRC="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]"
+				<embed SRC="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
 				    name="MediaPlayer"
 					width="[[=delegate.width]]"
 					height="[[=delegate.height]]"
-					autostart="[[if autoplay]]true[[else3]]false[[endif3]]"
-					showcontrols="[[if controller]]true[[else3]]false[[endif3]]"
-					enablecontextmenu="[[if kioskmode]]false[[else3]]true[[endif3]]"
-					playcount="[[if loop]]9999[[else3]]1[[endif3]]"
+					autostart="[[if autoplay]]true[[else2]]false[[endif2]]"
+					showcontrols="[[if controller]]true[[else2]]false[[endif2]]"
+					enablecontextmenu="[[if kioskmode]]false[[else2]]true[[endif2]]"
+					playcount="[[if loop]]9999[[else2]]1[[endif2]]"
 					pluginspage="http://microsoft.com/windows/mediaplayer/en/download/"
 					type="application/x-mplayer2"></embed></object>
-		</noscript>
-[[else2]]
+		[[if parser.HTMLGenerationPurpose>0]]</noscript>[[endif2]]
+
+[[else]]
+[[if parser.HTMLGenerationPurpose>0]]
 		<script type="text/javascript">
 QT_WriteOBJECT_XHTML (
   "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
@@ -126,30 +134,30 @@ QT_WriteOBJECT_XHTML (
 );
 		</script>
 		<noscript>
+[[endif2]]
 			<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 					width="[[=delegate.width]]"
 					height="[[=delegate.height]]"
 					codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-				<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]" />
-				<param name="autoplay" value="[[if autoplay]]true[[else3]]false[[endif3]]" />
-				<param name="controller" value="[[if controller]]true[[else3]]false[[endif3]]" />	
-				<param name="kioskmode" value="[[if kioskmode]]true[[else3]]false[[endif3]]" />	
-				<param name="loop" value="[[if loop]]true[[else3]]false[[endif3]]" />	
+				<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
+				<param name="autoplay" value="[[if autoplay]]true[[else2]]false[[endif2]]" />
+				<param name="controller" value="[[if controller]]true[[else2]]false[[endif2]]" />	
+				<param name="kioskmode" value="[[if kioskmode]]true[[else2]]false[[endif2]]" />	
+				<param name="loop" value="[[if loop]]true[[else2]]false[[endif2]]" />	
 				<param name="scale" value="tofit" />	
 				<param name="type" value="video/quicktime" />
 				<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
-				<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]"
+				<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
 					width="[[=delegate.width]]"
 					height="[[=delegate.height]]"
 					scale="tofit"
-					autoplay="[[if autoplay]]true[[else3]]false[[endif3]]"
-					controller="[[if controller]]true[[else3]]false[[endif3]]"
-					kioskmode="[[if kioskmode]]true[[else3]]false[[endif3]]"
-					loop="[[if loop]]true[[else3]]false[[endif3]]"
+					autoplay="[[if autoplay]]true[[else2]]false[[endif2]]"
+					controller="[[if controller]]true[[else2]]false[[endif2]]"
+					kioskmode="[[if kioskmode]]true[[else2]]false[[endif2]]"
+					loop="[[if loop]]true[[else2]]false[[endif2]]"
 					type="video/quicktime"
 					pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
-		</noscript>
-[[endif2]]
+		[[if parser.HTMLGenerationPurpose>0]]</noscript>[[endif2]]
 [[endif]]
 	</div>
 [[if captionHTML|editing]]
