@@ -164,7 +164,7 @@
 - (void)addPageTextToHead:(NSMutableString *)ioString forPage:(KTPage *)aPage
 {
 	NSString *bundleResourcePath = [[self bundle] pathForResource:@"AC_QuickTime" ofType:@"js"];
-	NSString *relativePath = [[NSURL fileURLWithPath:bundleResourcePath] absoluteString];
+	NSString *relativePath = [aPage pathToResourceFile:bundleResourcePath];
 	
 	NSString *jsString = [NSString stringWithFormat:
 		@"<script src=\"%@\" type=\"text/javascript\"></script>\n", relativePath];
