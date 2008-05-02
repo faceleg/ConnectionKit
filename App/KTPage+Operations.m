@@ -65,8 +65,14 @@
 	
 	
 	// Pagelets
-	NSEnumerator *pageletsEnumerator = [[self pagelets] objectEnumerator];
+	NSEnumerator *pageletsEnumerator = [[self callouts] objectEnumerator];
 	KTPagelet *aPagelet;
+	while (aPagelet = [pageletsEnumerator nextObject])
+	{
+		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
+	}
+	
+	pageletsEnumerator = [[self sidebarPagelets] objectEnumerator];
 	while (aPagelet = [pageletsEnumerator nextObject])
 	{
 		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
