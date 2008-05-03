@@ -488,7 +488,6 @@
     [self setRoot:nil];
 
 	[myMediaManager release];
-	[myPluginDelegatesManager release];
 	
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];

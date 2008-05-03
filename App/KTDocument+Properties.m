@@ -14,7 +14,6 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTHTMLInspectorController.h"
-#import "KTPluginDelegatesManager.h"
 #import "KTStalenessManager.h"
 
 #import "NSIndexSet+Karelia.h"
@@ -318,16 +317,6 @@
 //{
 //	mySuspendSavesDuringPeerCreation = aFlag;
 //}
-
-- (KTPluginDelegatesManager *)pluginDelegatesManager;
-{
-	if (!myPluginDelegatesManager)
-	{
-		myPluginDelegatesManager = [[KTPluginDelegatesManager alloc] init];
-	}
-	
-	return myPluginDelegatesManager;
-}
 
 #pragma mark -
 #pragma mark Document Display Properties

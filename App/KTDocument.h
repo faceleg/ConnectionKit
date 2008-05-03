@@ -38,7 +38,7 @@ typedef enum {
 
 
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
-@class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController, KTPluginDelegatesManager;
+@class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController;
 @class KTAbstractElement, KTMediaContainer, KTPage;
 
 @interface KTDocument : NSPersistentDocument
@@ -60,7 +60,6 @@ typedef enum {
 	KTMediaManager				*myMediaManager;
 	BOOL						myShouldUpdateMediaStorageAtNextSave;
 	
-	KTPluginDelegatesManager	*myPluginDelegatesManager;
 	KTStalenessManager			*myStalenessManager;
 	
 	KTTransferController		*myLocalTransferController;
@@ -217,7 +216,6 @@ typedef enum {
 
 @interface KTDocument (Properties)
 
-- (KTPluginDelegatesManager *)pluginDelegatesManager;
 - (KTStalenessManager *)stalenessManager;
 
 - (BOOL)isReadOnly;

@@ -110,13 +110,9 @@
 
 - (void)setDelegateOwner:(id)anObject
 {
-	[[self delegateOwner] setDelegate:nil];
-	
 	[anObject retain];
 	[myDelegateOwner release];
 	myDelegateOwner = anObject;
-	
-	[[self delegateOwner] setDelegate:self];
 }
 
 #pragma mark content change propagation

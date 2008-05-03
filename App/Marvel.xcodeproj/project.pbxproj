@@ -292,8 +292,6 @@
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
 		27CD65380CE1F32E00919E41 /* MediaFiles+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* MediaFiles+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27CD65390CE1F32E00919E41 /* MediaFiles+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD65370CE1F32E00919E41 /* MediaFiles+Internal.m */; };
-		27CD67FB0CE37C1900919E41 /* KTPluginDelegatesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD67F90CE37C1900919E41 /* KTPluginDelegatesManager.h */; settings = {ATTRIBUTES = (); }; };
-		27CD67FC0CE37C1900919E41 /* KTPluginDelegatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD67FA0CE37C1900919E41 /* KTPluginDelegatesManager.m */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */; };
@@ -1754,8 +1752,6 @@
 		27CD65360CE1F32E00919E41 /* MediaFiles+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MediaFiles+Internal.h"; sourceTree = "<group>"; };
 		27CD65370CE1F32E00919E41 /* MediaFiles+Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MediaFiles+Internal.m"; sourceTree = "<group>"; };
 		27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Deprecated.m"; sourceTree = "<group>"; };
-		27CD67F90CE37C1900919E41 /* KTPluginDelegatesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginDelegatesManager.h; sourceTree = "<group>"; };
-		27CD67FA0CE37C1900919E41 /* KTPluginDelegatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginDelegatesManager.m; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Text.m"; sourceTree = "<group>"; };
@@ -3951,8 +3947,6 @@
 			children = (
 				3C682B360D62303700B4D485 /* KTAbstractPluginDelegate.h */,
 				3C682B370D62303C00B4D485 /* KTAbstractPluginDelegate.m */,
-				27CD67F90CE37C1900919E41 /* KTPluginDelegatesManager.h */,
-				27CD67FA0CE37C1900919E41 /* KTPluginDelegatesManager.m */,
 			);
 			name = "Plugin Delegate";
 			sourceTree = "<group>";
@@ -4719,7 +4713,6 @@
 				27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */,
 				27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */,
 				27CD65380CE1F32E00919E41 /* MediaFiles+Internal.h in Headers */,
-				27CD67FB0CE37C1900919E41 /* KTPluginDelegatesManager.h in Headers */,
 				2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */,
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				27969F110CF5DCBC00C03F45 /* NSString+Publishing.h in Headers */,
@@ -6124,7 +6117,6 @@
 				27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */,
 				27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */,
 				27CD65390CE1F32E00919E41 /* MediaFiles+Internal.m in Sources */,
-				27CD67FC0CE37C1900919E41 /* KTPluginDelegatesManager.m in Sources */,
 				2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */,
 				27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */,
 				27969F120CF5DCBC00C03F45 /* NSString+Publishing.m in Sources */,

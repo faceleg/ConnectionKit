@@ -15,7 +15,6 @@
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
-#import "KTPluginDelegatesManager.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
@@ -100,7 +99,7 @@
 	}
 	
 	// Ensure our delegate is setup
-	[[[self document] pluginDelegatesManager] delegateForPlugin:self];
+	//[[[self document] pluginDelegatesManager] delegateForPlugin:self];
 }
 
 - (void)awakeFromInsert
@@ -135,19 +134,40 @@
 		[delegate awakenedDidTurnIntoFaultSupport];
 	}
 	
+	
+	// Dispose of delegate
+	[myDelegate setDelegateOwner:nil];
+	[myDelegate release];	myDelegate = nil;
+	
+	
 	[super didTurnIntoFault];
 }
 
 #pragma mark -
 #pragma mark Delegate / Plugin
 
-- (id)delegate { return myDelegate; }
-
-- (void)setDelegate:(id)newDelegate
+- (id)delegate
 {
-	[self willChangeValueForKey:@"delegate"];
-	myDelegate = newDelegate;
-	[self didChangeValueForKey:@"delegate"];
+	if (!myDelegate)
+	{
+		Class delegateClass = [[[self plugin] bundle] principalClass];
+		if (delegateClass)
+		{
+			myDelegate = [[delegateClass alloc] init];
+            OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
+			
+			[myDelegate setDelegateOwner:self];
+			
+			
+			// Let the delegate know that it's awoken
+			if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
+			{
+				[myDelegate awakeFromBundleAsNewlyCreatedObject:[self isTemporaryObject]];
+			}
+		}
+	}
+	
+	return myDelegate;
 }
 
 - (KTElementPlugin *)plugin

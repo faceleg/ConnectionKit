@@ -41,7 +41,6 @@
 
 // Delegate
 - (id)delegate;
-- (void)setDelegate:(id)anObject;
 - (KTElementPlugin *)plugin;
 
 
