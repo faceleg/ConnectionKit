@@ -180,6 +180,7 @@
 	     pullsDown:(BOOL)isPullDown
 	     showIcons:(BOOL)showIcons
 		smallIcons:(BOOL)smallIcons
+		 smallText:(BOOL)smallText
 {
     if ( isPullDown ) {
         // if it's a pulldown, we need to add an empty menu item at the top of the menu
@@ -273,7 +274,7 @@
 			[menuItem setImage:image];
 			[style setMinimumLineHeight:[image size].height];
 			
-			NSFont *titleFont = [NSFont menuFontOfSize:[NSFont smallSystemFontSize]];
+			NSFont *titleFont = [NSFont menuFontOfSize:(smallText ? [NSFont smallSystemFontSize] : [NSFont systemFontSize])];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 										titleFont, NSFontAttributeName,
 										style, NSParagraphStyleAttributeName,

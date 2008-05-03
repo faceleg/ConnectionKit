@@ -202,7 +202,7 @@
 						 target:nil
 						 action:nil
 					  pullsDown:NO
-					  showIcons:YES smallIcons:YES];
+					  showIcons:YES smallIcons:YES smallText:NO];
 	
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {

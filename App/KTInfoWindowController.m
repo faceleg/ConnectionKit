@@ -206,7 +206,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 	NSDictionary *indexPlugins = [KSPlugin pluginsWithFileExtension:kKTIndexExtension];
 	[KTElementPlugin addPlugins:[NSSet setWithArray:[indexPlugins allValues]]
-		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO smallIcons:NO];
+		toMenu:[oIndexPopup menu] target:self action:@selector(changeIndexType:) pullsDown:NO showIcons:NO smallIcons:NO smallText:YES];
 
 	[oCollectionStylePopup removeAllItems];
 	
@@ -228,10 +228,12 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	// Middle: All the presets
 	[KTIndexPlugin addPresetPluginsToMenu:[oCollectionStylePopup menu]
-													  target:self
-													  action:@selector(changeCollectionStyle:)
-												   pullsDown:NO
-												   showIcons:NO smallIcons:NO];
+								   target:self
+								   action:@selector(changeCollectionStyle:)
+								pullsDown:NO
+								showIcons:NO
+							   smallIcons:NO
+								smallText:YES];
 	
 	// Last item: custom
 	[[oCollectionStylePopup menu] addItem:[NSMenuItem separatorItem]];

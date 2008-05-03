@@ -1077,19 +1077,19 @@ IMPLEMENTATION NOTES & CAUTIONS:
 							 target:nil
 							 action:@selector(addPage:)
 						  pullsDown:NO
-						  showIcons:YES smallIcons:NO];
+						  showIcons:YES smallIcons:NO smallText:NO];
 		[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 							 toMenu:oAddPageletMenu
 							 target:nil
 							 action:@selector(addPagelet:)
 						  pullsDown:NO
-						  showIcons:YES smallIcons:NO];
+						  showIcons:YES smallIcons:NO smallText:NO];
 		
 		[KTIndexPlugin addPresetPluginsToMenu:oAddCollectionMenu
 									   target:nil
 									   action:@selector(addCollection:)
 									pullsDown:NO
-									showIcons:YES smallIcons:NO];
+									showIcons:YES smallIcons:NO smallText:NO];
 		
         [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Building Menus...",
                                                                       "Message while building menus.")];

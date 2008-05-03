@@ -215,7 +215,9 @@ TO DO:
 										 target:self
 										 action:@selector(addPage:)
 									  pullsDown:YES
-									  showIcons:YES smallIcons:NO];
+									  showIcons:YES
+									 smallIcons:NO 
+									  smallText:YES];
                     [toolbarItem setView:myAddPagePopUpButton];
                     [toolbarItem setMinSize:[[myAddPagePopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddPagePopUpButton cell] maximumSize]];
@@ -228,7 +230,9 @@ TO DO:
 										 target:self
 										 action:@selector(addPage:)
 									  pullsDown:NO
-									  showIcons:NO smallIcons:NO];
+									  showIcons:NO
+									 smallIcons:NO
+									  smallText:YES];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];
@@ -254,10 +258,11 @@ TO DO:
                     [[myAddCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
 					
                     [KTIndexPlugin addPresetPluginsToMenu:[myAddCollectionPopUpButton menu]
-                                                               target:self
-                                                               action:@selector(addCollection:)
-                                                            pullsDown:YES
-															showIcons:YES smallIcons:NO];
+												   target:self
+												   action:@selector(addCollection:)
+												pullsDown:YES
+												showIcons:YES smallIcons:NO
+												smallText:YES];
                     [toolbarItem setView:myAddCollectionPopUpButton];
                     [toolbarItem setMinSize:[[myAddCollectionPopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddCollectionPopUpButton cell] maximumSize]];
@@ -265,10 +270,11 @@ TO DO:
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
 					[KTIndexPlugin addPresetPluginsToMenu:menu
-                                                               target:self
-                                                               action:@selector(addCollection:)
-                                                            pullsDown:NO
-															showIcons:NO smallIcons:NO];
+												   target:self
+												   action:@selector(addCollection:)
+												pullsDown:NO
+												showIcons:NO smallIcons:NO
+												smallText:YES];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];
@@ -328,7 +334,7 @@ TO DO:
 						 target:self
 						 action:@selector(addPagelet:)
 					  pullsDown:YES
-					  showIcons:YES smallIcons:NO];
+					  showIcons:YES smallIcons:NO smallText:YES];
 	
 	
 	// Control sizing
@@ -344,7 +350,8 @@ TO DO:
 						 target:self
 						 action:@selector(addPagelet:)
 					  pullsDown:NO
-					  showIcons:NO smallIcons:NO];
+					  showIcons:NO smallIcons:NO
+					  smallText:YES];
 	NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 	[mItem setSubmenu: menu];
 	[mItem setTitle: [toolbarItem label]];

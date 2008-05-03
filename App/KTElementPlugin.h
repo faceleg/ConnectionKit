@@ -27,6 +27,7 @@
 		    action:(SEL)anAction
 	     pullsDown:(BOOL)isPullDown
 	     showIcons:(BOOL)showIcons
-		smallIcons:(BOOL)smallIcons;
+		smallIcons:(BOOL)smallIcons
+		 smallText:(BOOL)smallText;
 
 @end
