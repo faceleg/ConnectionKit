@@ -55,7 +55,7 @@ function dofocus[[=uniqueID]](anInput) {
 	[[if aField.type==6]]
 	<!-- Send Button -->
 	<td colspan="2">
-	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&delegate.sendButtonTitle]]" />
+	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
 	</td>
 
 	[[else4]]
@@ -131,7 +131,7 @@ function dofocus[[=uniqueID]](anInput) {
 
 	[[if aField.type==6]]
 	<!-- Send Button -->
-	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&delegate.sendButtonTitle]]" />
+	<input type="submit" class="submit" id="contact[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
 
 	[[else4]]
 	[[if aField.label]]<label for="contact[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
