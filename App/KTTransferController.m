@@ -515,10 +515,10 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Source data
+	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	if (![page isKindOfClass:[KTPage class]] || [(KTPage *)page shouldPublishHTMLTemplate])
 	{
 		NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
-		KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 		NSString *charset = [[masterPage master] valueForKey:@"charset"];
 		NSStringEncoding encoding = [charset encodingFromCharset];
 		NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
@@ -531,7 +531,19 @@ static NSArray *sReservedNames = nil;
 		KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
 		[self addParsedMediaFileUpload:upload];
 	}
-		
+	
+	
+	// Also have to manually request resources
+	NSMutableSet *resources = [[NSMutableSet alloc] init];
+	[masterPage makeComponentsPerformSelector:@selector(addResourcesToSet:forPage:) 
+								   withObject:resources 
+									 withPage:masterPage 
+									recursive:NO];
+	[myParsedResources unionSet:resources];
+	[resources release];
+	
+	
+	// Staleness
 	[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];
 	
 	

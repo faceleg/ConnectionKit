@@ -22,6 +22,8 @@
 - (NSString *)remoteSiteURL;
 - (NSString *)uploadURL;
 
+- (NSURL *)siteURL;
+
 - (NSURL *)resourcesDirectoryURL;
 - (NSURL *)URLForResourceFile:(NSString *)filename;
 

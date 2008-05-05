@@ -330,14 +330,37 @@ to be verified.
 	return result;
 }
 
+/*!	Returns the base of the url like http://mysite.mydomain.com/~user/thisSite/ 
+ */
+- (NSURL *)siteURL
+{
+	NSString *result = @"http://unpublished.example.com/";
+	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
+	
+	NSString *remoteSiteURL = [hostProperties remoteSiteURL];
+	if (nil != remoteSiteURL)
+	{
+		result = remoteSiteURL;
+	}
+	else
+	{
+		NSString *globalSiteURL = [hostProperties globalSiteURL];
+		if (nil != globalSiteURL)
+		{
+			result = globalSiteURL;
+		}
+	}
+	
+	return [NSURL URLWithString:result];
+}
+
 #pragma mark -
 #pragma mark Resources
 
 - (NSURL *)resourcesDirectoryURL
 {
 	NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSURL *siteURL = [NSURL URLWithString:[self globalSiteURL]];
-	NSURL *result = [NSURL URLWithPath:resourcesDirectoryName relativeToURL:siteURL isDirectory:YES];
+	NSURL *result = [NSURL URLWithPath:resourcesDirectoryName relativeToURL:[self siteURL] isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;
