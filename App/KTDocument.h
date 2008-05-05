@@ -37,7 +37,7 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
+@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTHostProperties, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController;
 @class KTAbstractElement, KTMediaContainer, KTPage;
 
@@ -198,7 +198,6 @@ typedef enum {
 
 - (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
 
-- (NSString *)absoluteURLForResourceFile:(NSString *)aFile;
 - (NSString *)URLForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;
 - (NSString *)pathForReplacementImageName:(NSString *)anImageName designBundleIdentifier:(NSString *)aDesignBundleIdentifier;
 - (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;
@@ -245,6 +244,8 @@ typedef enum {
 
 - (BOOL)connectionsAreConnected;
 - (void)terminateConnections;
+
+- (KTHostProperties *)hostProperties;
 
 // support
 

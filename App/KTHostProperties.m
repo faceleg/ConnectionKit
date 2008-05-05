@@ -14,6 +14,7 @@
 #import "NSEntityDescription+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "debug.h"
 
@@ -326,6 +327,31 @@ to be verified.
 			}
 		}
 	}
+	return result;
+}
+
+#pragma mark -
+#pragma mark Resources
+
+- (NSURL *)resourcesDirectoryURL
+{
+	NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+	NSURL *siteURL = [NSURL URLWithString:[self globalSiteURL]];
+	NSURL *result = [NSURL URLWithPath:resourcesDirectoryName relativeToURL:siteURL isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (NSURL *)URLForResourceFile:(NSString *)filename
+{
+	OBPRECONDITION(filename);
+	
+	NSURL *result = [NSURL URLWithPath:[filename lastPathComponent] 
+						 relativeToURL:[self resourcesDirectoryURL]
+						   isDirectory:NO];
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 

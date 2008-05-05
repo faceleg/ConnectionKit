@@ -141,6 +141,9 @@
 	myDocumentID = anID;
 }
 
+#pragma mark -
+#pragma mark Publishing
+
 - (KTTransferController *)exportTransferController
 {
     return myExportTransferController; 
@@ -182,6 +185,10 @@
 	return result;
 }
 
+- (KTHostProperties *)hostProperties
+{
+	return [self wrappedValueForKey:@"hostProperties"];
+}
 
 - (NSDate *)lastSavedTime { return myLastSavedTime; }
 

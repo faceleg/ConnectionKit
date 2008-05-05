@@ -412,23 +412,6 @@
 	return result;
 }
 
-- (NSString *)absoluteURLForResourceFile:(NSString *)aFile
-{
-	OBASSERT_NOT_REACHED("Mike thought this methods was unused.");
-	
-	NSString *result = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	if (![result hasSuffix:@"/"])
-	{
-		result = [result stringByAppendingString:@"/"];
-	}
-	result = [result stringByAppendingString:[aFile lastPathComponent]];
-	
-	// make into an absolute URL
-	result = [[self publishedSiteURL] stringByAppendingString:result];
-
-	return result;
-}
-
 /*!	Gets path to design's placeholder image, or nil
 */
 - (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier

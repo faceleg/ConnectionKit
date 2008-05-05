@@ -294,6 +294,7 @@
 		27CD65390CE1F32E00919E41 /* MediaFiles+Internal.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD65370CE1F32E00919E41 /* MediaFiles+Internal.m */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
+		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */; };
 		27D90B3B0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */; };
 		27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */; };
@@ -4910,6 +4911,7 @@
 				CE01952F0DB7180B003E008B /* KSLicensedAppDelegate.h in Headers */,
 				27EF1BCF0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h in Headers */,
 				CEA2BA3B0DC79F2D00A8023F /* KSWebViewController.h in Headers */,
+				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,6 +56,9 @@
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 
+// publishing
+#import "KTHostProperties.h"
+
 // abstract superclass of all data sources (drag-and-drop external sources)
 #import "KTDataSource.h"
 
