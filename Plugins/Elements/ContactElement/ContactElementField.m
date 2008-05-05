@@ -220,6 +220,7 @@
 	{
 		case ContactElementTextFieldField:
 		case ContactElementTextAreaField:
+		case ContactElementSubmitButton:	// the "Default value" field will be hidden
 			result = @"text";
 			break;
 		
@@ -233,12 +234,22 @@
 			break;
 		
 		case ContactElementHiddenField:
-		case ContactElementSubmitButton:	// not really going to be there
 			result = @"hidden";
 			break;
 	}
 	
 	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (BOOL)hideValueField
+{
+	BOOL result = NO;
+	if ([self type] == ContactElementSubmitButton)
+	{
+		result = YES;
+	}
+	
 	return result;
 }
 
