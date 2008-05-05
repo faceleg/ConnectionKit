@@ -79,6 +79,11 @@ Break
  */
 
 
+@interface YouTubeElementDelegate (Private)
+- (KTMediaContainer *)defaultThumbnail;
+@end
+
+
 @implementation YouTubeElementDelegate
 
 #pragma mark awake
@@ -111,6 +116,14 @@ Break
 	if ([element isKindOfClass:[KTPagelet class]])
 	{
 		[videoSizeSlider setEnabled:NO];
+	}
+	// Pages should have a thumbnail
+	else
+	{
+		if (![(KTPage *)element thumbnail])
+		{
+			[(KTPage *)element setThumbnail:[self defaultThumbnail]];
+		}
 	}
 }
 
@@ -188,6 +201,7 @@ Break
 	}
 }
 
+
 /*	Cut a strict down -- we shouldn't have strict with the 'embed' tag
 */
 - (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
@@ -206,6 +220,27 @@ Break
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
+
+#pragma mark -
+#pragma mark Thumbnail
+
+/*	Instead of clearing the thumbnail, reset it to the default.
+ */
+- (BOOL)pageShouldClearThumbnail:(KTPage *)page
+{
+	[page setThumbnail:[self defaultThumbnail]];
+	return NO;
+}
+
+- (KTMediaContainer *)defaultThumbnail
+{
+	NSString *iconPath = [[self bundle] pathForImageResource:@"YouTube"];
+	OBASSERT(iconPath);
+	
+	KTMediaContainer *result = [[self mediaManager] mediaContainerWithPath:iconPath];
+	OBPOSTCONDITION(result);
+	return result;
+}
 
 #pragma mark -
 #pragma mark Width
