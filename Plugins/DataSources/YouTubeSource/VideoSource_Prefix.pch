@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'VideoSource' target in the 'VideoSource' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
