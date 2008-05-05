@@ -1,14 +1,20 @@
 {
-    IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {typeChanged = id; usernameChanged = id; }; 
-            CLASS = IMStatusPageletDelegate; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {oLabelForm = NSForm; }; 
-            SUPERCLASS = KTAbstractPluginDelegate; 
-        }, 
-        {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
-    ); 
-    IBVersion = 1; 
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = IMStatusPageletDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        }
+    );
+    IBVersion = 1;
 }

@@ -1,53 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>IBDocumentLocation</key>
-	<string>171 508 572 304 0 0 1920 1178 </string>
-	<key>IBEditorPositions</key>
-	<dict>
-		<key>1225</key>
-		<string>809 753 270 64 0 0 1920 1178 </string>
-		<key>1265</key>
-		<string>809 753 270 64 0 0 1920 1178 </string>
-		<key>1270</key>
-		<string>680 622 320 128 0 0 1680 1028 </string>
-		<key>129</key>
-		<string>778 695 332 223 0 0 1920 1178 </string>
-		<key>1311</key>
-		<string>705 668 270 62 0 0 1680 1028 </string>
-		<key>165</key>
-		<string>808 763 272 43 0 0 1920 1178 </string>
-		<key>168</key>
-		<string>680 511 320 351 0 0 1680 1028 </string>
-		<key>169</key>
-		<string>784 755 320 59 0 0 1920 1178 </string>
-		<key>258</key>
-		<string>775 550 338 469 0 0 1920 1178 </string>
-		<key>356</key>
-		<string>809 754 270 62 0 0 1920 1178 </string>
-		<key>821</key>
-		<string>810 746 268 77 0 0 1920 1178 </string>
-		<key>913</key>
-		<string>809 607 320 324 0 0 1920 1178 </string>
-		<key>94</key>
-		<string>809 664 270 242 0 0 1920 1178 </string>
-	</dict>
 	<key>IBFramework Version</key>
-	<string>446.1</string>
-	<key>IBLockedTabItems</key>
-	<array>
-		<integer>270</integer>
-	</array>
+	<string>489.0</string>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
-	<integer>4</integer>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>168</integer>
-	</array>
+	<integer>5</integer>
 	<key>IBSystem Version</key>
-	<string>8P2137</string>
-	<key>IBUsesTextArchiving</key>
-	<true/>
+	<string>9C7010</string>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
 </dict>
 </plist>
