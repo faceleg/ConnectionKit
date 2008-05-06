@@ -874,12 +874,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		}
 		else
 		{
-			[self raiseExceptionWithName:kKareliaDocumentException reason:@"unable to create Pagelet"];
+			[NSException raise:kKareliaDocumentException format:@"unable to create Pagelet"];
 		}
 	}
 	else
     {
-		[self raiseExceptionWithName:kKareliaDocumentException
+		[NSException raise:kKareliaDocumentException
 							  reason:@"sender has no representedObject"
 							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
     }
@@ -1002,7 +1002,7 @@ from representedObject */
     }
     else
     {
-		[self raiseExceptionWithName:kKareliaDocumentException reason:@"Unable to instantiate collection"
+		[NSException raise:kKareliaDocumentException reason:@"Unable to instantiate collection"
 							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
     }
 }

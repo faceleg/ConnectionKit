@@ -674,7 +674,7 @@
 					
 					// Whinge if the page couldn't be created
 					if (!page) {
-						[self raiseExceptionWithName:kKareliaDocumentException reason:@"unable to create Page"];
+						[NSException raise:kKareliaDocumentException format:@"unable to create Page"];
 					}
 				}
 				

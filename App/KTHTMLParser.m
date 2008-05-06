@@ -813,8 +813,7 @@ static unsigned sLastParserID;
 		BOOL foundKeyword = [scanner scanUpToString:@":" intoString:&keyword];
 		if (!foundKeyword || ![scanner scanString:@":" intoString:nil])
 		{
-			[self raiseExceptionWithName:kKTTemplateParserException 
-								  reason:@"cannot scan keyword up to ':'"];
+			[NSException raise:kKTTemplateParserException format:@"cannot scan keyword up to ':'"];
 		}
 		keyword = [keyword lowercaseString];
 		
@@ -826,8 +825,7 @@ static unsigned sLastParserID;
 			foundQuote = [scanner scanString:@"\"" intoString:nil];
 			if (!foundQuote)
 			{
-				[self raiseExceptionWithName:kKTTemplateParserException 
-									  reason:@"cannot scan to closing \""];
+				[NSException raise:kKTTemplateParserException format:@"cannot scan to closing \""];
 			}
 		}
 		else	// not quote mark, just scan to next white space
