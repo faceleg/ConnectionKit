@@ -427,66 +427,6 @@
 }
 
 #pragma mark -
-#pragma mark Validation
-
-- (BOOL)validateForUpdate:(NSError **)outError
-{
-	NSError *error = nil;
-	BOOL superResult = [super validateForUpdate:&error];
-	BOOL result = superResult && [self validateForInsertOrUpdate:&error];
-	 
-	if (!result && error)
-	{
-		*outError = error; 
-	}
-	
-	return result;
-}
-
-- (BOOL)validateForInsert:(NSError **)outError
-{
-	NSError *error = nil;
-	BOOL superResult = [super validateForInsert:&error];
-	BOOL result = superResult && [self validateForInsertOrUpdate:&error];
-	 
-	if (!result && error)
-	{
-		*outError = error; 
-	}
-	
-	return result;
-}
-
-/*	Page entities should always have a parent. Only Root is permitted not to.
- */
-- (BOOL)validateForInsertOrUpdate:(NSError **)error
-{
-	BOOL result = YES;
-	if ([[[self entity] name] isEqualToString:@"Page"])
-	{
-		result = ([self parent] != nil);
-		if (!result)
-		{
-			// Something went wrong. We need to generate an error object
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				self, NSValidationObjectErrorKey,
-				@"parent", NSValidationKeyErrorKey,
-				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
-			
-			// Append other errors if needs be
-			if (*error)
-			{
-				[userInfo setObject:[NSArray arrayWithObject:*error] forKey:NSDetailedErrorsKey];
-			}
-			
-			*error = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
-		}
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Debugging
 
 // More human-readable description
