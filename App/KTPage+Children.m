@@ -21,9 +21,7 @@
 - (short)childIndex;
 - (void)setChildIndex:(short)index;
 
-- (NSMutableArray *)sortedChildrenCache;
 - (void)invalidateSortedChildrenCache;
-+ (void)invalidateSortedChildrenCacheOfPageWithID:(NSString *)uniqueID MOCPointer:(NSValue *)MOCValue;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
 - (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType;
 
@@ -203,16 +201,18 @@
 
 /*	Returns our child pages in the correct ordering.
  *	The result is cached since calculating it is expensive for large collections.
- *	-sortedChildren should (fingers crossed!) be KVO-compliant.
+ *	-sortedChildren is KVO-compliant.
  */
 - (NSArray *)sortedChildren
 {
-	if (!mySortedChildrenCache)
+	NSArray *result = [self wrappedValueForKey:@"sortedChildren"];
+	if (!result)
 	{
-		mySortedChildrenCache = [[self childrenWithSorting:KTCollectionSortUnspecified] copy];
+		result = [self childrenWithSorting:KTCollectionSortUnspecified];
+		[self setPrimitiveValue:result forKey:@"sortedChildren"];
 	}
 	
-	return mySortedChildrenCache;
+	return result;
 }
 
 
@@ -249,7 +249,7 @@
 	[[self children] makeObjectsPerformSelector:@selector(willChangeValuesForKeys:)
 									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	
-	[mySortedChildrenCache release];	mySortedChildrenCache = nil;
+	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
 	
 	[[self children] makeObjectsPerformSelector:@selector(didChangeValuesForKeys:)
 									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
@@ -258,53 +258,8 @@
 	
 	// It is assumed that if the cache is invalid, the site structure must have changed, so we post a notification
 	[self postSiteStructureDidChangeNotification];
-	
-	
-	// Register the operation as an undo.
-	[[[[self managedObjectContext] undoManager] prepareWithInvocationTarget:[KTPage class]]
-		invalidateSortedChildrenCacheOfPageWithID:[self uniqueID]
-									   MOCPointer:[NSValue valueWithNonretainedObject:[self managedObjectContext]]];
 }
 
-
-/*	Undo operations on the cache HAVE to go through this method. This is because we can guarantee that the
- *	page ID is valid, but the original managed object might not be.
- *
- *	The MOC is not retained since that would create a cycle. Not a problem though, as deallocating the MOC
- *	will deallocate the undo manager as well.
- *
- *	We cannot invalidate the cache until the MOC has finished updating the properties of all affected pages.
- *	Thus, this method signs the collection up to the appropriate MOC notification for when changes
- *	are complete and that then invaldiates the cache. You'd think calling -processPendingChanges would work
- *	but the MOC seems to ignore it during undo/redo.
- */
-+ (void)invalidateSortedChildrenCacheOfPageWithID:(NSString *)uniqueID MOCPointer:(NSValue *)MOCValue
-{
-	NSManagedObjectContext *MOC = [MOCValue nonretainedObjectValue];
-	KTPage *page = [KTPage pageWithUniqueID:uniqueID inManagedObjectContext:MOC];
-	OBASSERT(page);
-	
-	
-	[[NSNotificationCenter defaultCenter] addObserver:page
-											 selector:@selector(invalidateSortedChildrenCacheAfterUndoOrRedo:)
-												 name:NSManagedObjectContextObjectsDidChangeNotification
-											   object:MOC];
-	
-	[page retain];	// NSNotificationCenter won't retain page, so we do. It is released upon the notification.
-}
-
-- (void)invalidateSortedChildrenCacheAfterUndoOrRedo:(NSNotification *)notification
-{
-	// Clear the cache
-	[self invalidateSortedChildrenCache];
-	
-	// We're only interested in the notification the once, so stop observing it
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-												    name:[notification name]
-												  object:[notification object]];
-	
-	[self release];	// Balances the retain when signing up to the notification.
-}
 
 #pragma mark arbitrary sorting
 

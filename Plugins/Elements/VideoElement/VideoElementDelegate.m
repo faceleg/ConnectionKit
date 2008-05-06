@@ -231,9 +231,11 @@
 
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
-	// When setting the video also update poster image
+	// When setting the video load it to get dimensions etc. & update poster image
 	if ([key isEqualToString:@"video"])
 	{
+		[self loadMovie];
+		
 		KTMediaContainer *posterImage = [value imageWithScaleFactor:1.0];
 		[[self delegateOwner] setValue:posterImage forKey:@"posterImage"];
 	}
@@ -286,8 +288,6 @@
 	
 	KTMediaContainer *video = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
 	[[self delegateOwner] setValue:video forKey:@"video"];
-	
-	[self loadMovie];
 }
 
 - (BOOL)pathInfoField:(KSPathInfoField *)field
@@ -563,11 +563,11 @@ After deflating starting at byte 8, you get:
 	}
 	if ([[[self delegateOwner] valueForKey:@"controller"] boolValue])
 	{
-		if (![[[self delegateOwner] valueForKey:@"isFlash"] boolValue] && ![[[self delegateOwner] valueForKey:@"isWindowsMedia"] boolValue])
+		if (![[self delegateOwner] boolForKey:@"isFlash"] && ![[self delegateOwner] boolForKey:@"isWindowsMedia"])
 		{
 			result.height += 16;	// room for controller, 16 pixels with the quicktime controller
 		}
-		else if ([[[self delegateOwner] valueForKey:@"isWindowsMedia"] boolValue])
+		else if ([[self delegateOwner] boolForKey:@"isWindowsMedia"])
 		{
 			result.height += 46;	// room for controller, 46 pixels for the windows controller
 		}

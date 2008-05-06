@@ -317,9 +317,7 @@
 {
     // release ivars
 	[self setDocument:nil];
-    
-	[mySortedChildrenCache release];
-	
+    	
     [super dealloc];
 }
 

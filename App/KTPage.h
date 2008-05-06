@@ -34,8 +34,6 @@
 	// these ivars are only set if the page is root
     KTDocument			*myDocument;				// not archived
 	BOOL				myIsNewPage;
-	
-	NSArray	*mySortedChildrenCache;
 }
 
 
