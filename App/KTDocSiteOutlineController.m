@@ -97,14 +97,6 @@
 	return self;
 }
 
-- (void)awakeFromNib
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(pageIconSizeDidChange:)
-												 name:@"KTDisplaySmallPageIconsDidChange"
-											   object:[[self windowController] document]];
-}
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -135,12 +127,30 @@
 
 - (void)setWindowController:(KTDocWindowController *)controller
 {
+	// Stop observing the old controller
+	[[NSNotificationCenter defaultCenter] removeObserver:mySiteOutlineDataSource
+													name:@"KTDisplaySmallPageIconsDidChange"
+												  object:[self windowController]];
+	
+	// Store the controller
 	myWindowController = controller;
 	
+	
+	// Do stuff with the new controller
 	if (!controller)
 	{
 		[self setSiteOutline:nil];
 	}
+	
+	if (controller)
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:mySiteOutlineDataSource
+												 selector:@selector(pageIconSizeDidChange:)
+													 name:@"KTDisplaySmallPageIconsDidChange"
+												   object:[controller document]];
+	}
+	
+	
 	return;
 	// Connect tree controller stuff up to the controller/doc
 	KTDocument *document = [controller document];
