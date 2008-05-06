@@ -1,0 +1,24 @@
+<!-- Force simple HTML during previews -->
+<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
+		width="[[=delegate.width]]"
+		height="[[=delegate.height]]"
+		codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+	<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else]][[=&remoteURL]][[endif]]" />
+	<param name="autoplay" value="false" />		[[comment autoplay is disabled during previews]]
+	<param name="controller" value="[[if controller]]true[[else]]false[[endif]]" />	
+	<param name="kioskmode" value="[[if kioskmode]]true[[else]]false[[endif]]" />	
+	<param name="loop" value="[[if loop]]true[[else]]false[[endif]]" />	
+	<param name="scale" value="tofit" />	
+	<param name="type" value="video/quicktime" />
+	<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
+	<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else]][[=&remoteURL]][[endif]]"
+		width="[[=delegate.width]]"
+		height="[[=delegate.height]]"
+		scale="tofit"
+		autoplay="false"
+		controller="[[if controller]]true[[else]]false[[endif]]"
+		kioskmode="[[if kioskmode]]true[[else]]false[[endif]]"
+		loop="[[if loop]]true[[else]]false[[endif]]"
+		type="video/quicktime"
+		pluginspage="http://www.apple.com/quicktime/download/"></embed>
+</object>

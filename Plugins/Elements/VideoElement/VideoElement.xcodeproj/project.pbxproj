@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2727DF480D65A2C3002816FE /* Video.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2727DF470D65A2C3002816FE /* Video.icns */; };
+		27D6E0460DD0A78A00C8834F /* PreviewTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27D6E0450DD0A78A00C8834F /* PreviewTemplate.html */; };
 		3C42E5A70D65086D004F35FD /* QTMedia+VideoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5A40D65086D004F35FD /* QTMedia+VideoElement.m */; };
 		3C42E5A80D65086D004F35FD /* VideoElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5A60D65086D004F35FD /* VideoElementDelegate.m */; };
 		3C42E5AD0D650876004F35FD /* AC_QuickTime.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5AB0D650876004F35FD /* AC_QuickTime.js */; };
@@ -26,6 +27,7 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		2727DF470D65A2C3002816FE /* Video.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Video.icns; sourceTree = "<group>"; };
+		27D6E0450DD0A78A00C8834F /* PreviewTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PreviewTemplate.html; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* VideoElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42E5A30D65086D004F35FD /* QTMedia+VideoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QTMedia+VideoElement.h"; sourceTree = "<group>"; };
 		3C42E5A40D65086D004F35FD /* QTMedia+VideoElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QTMedia+VideoElement.m"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42E5B20D650888004F35FD /* VideoElement.nib */,
 				3C42E5AC0D650876004F35FD /* VideoElementTemplate.html */,
+				27D6E0450DD0A78A00C8834F /* PreviewTemplate.html */,
 				3C42E5AB0D650876004F35FD /* AC_QuickTime.js */,
 				3C42E5B00D650888004F35FD /* Localizable.strings */,
 				3C42E5C50D65091C004F35FD /* License.rtf */,
@@ -239,6 +242,7 @@
 				3C42E5C60D65091C004F35FD /* License.rtf in Resources */,
 				2727DF480D65A2C3002816FE /* Video.icns in Resources */,
 				CE0C33690DAEC95900637083 /* InfoPlist.strings in Resources */,
+				27D6E0460DD0A78A00C8834F /* PreviewTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

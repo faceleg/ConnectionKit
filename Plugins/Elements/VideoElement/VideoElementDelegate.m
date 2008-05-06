@@ -515,6 +515,23 @@ After deflating starting at byte 8, you get:
 #pragma mark -
 #pragma mark HTML template
 
++ (NSString *)videoPreviewTemplate
+{
+	static NSString *result;
+	if (!result)
+	{
+		NSString *templatePath = [[NSBundle bundleForClass:self] pathForResource:@"PreviewTemplate" ofType:@"html"];
+		OBASSERT(templatePath);
+		
+		result = [[NSString alloc] initWithContentsOfFile:templatePath];
+	}
+	
+	return result;
+}
+
+- (NSString *)videoPreviewTemplate { return [[self class] videoPreviewTemplate]; }
+
+
 - (NSSize)pageDimensions
 {
 	int minHeight = 128;

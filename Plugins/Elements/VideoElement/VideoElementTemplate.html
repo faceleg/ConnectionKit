@@ -2,30 +2,21 @@
 	<div class="video">
 
 [[if parser.HTMLGenerationPurpose==0]]
-		<!-- Force simple HTML during previews -->
-		<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-				width="[[=delegate.width]]"
-				height="[[=delegate.height]]"
-				codebase="http://www.apple.com/qtactivex/qtplugin.cab">
-			<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
-			<param name="autoplay" value="false" />		[[comment autoplay is disabled during previews]]
-			<param name="controller" value="[[if controller]]true[[else2]]false[[endif2]]" />	
-			<param name="kioskmode" value="[[if kioskmode]]true[[else2]]false[[endif2]]" />	
-			<param name="loop" value="[[if loop]]true[[else2]]false[[endif2]]" />	
-			<param name="scale" value="tofit" />	
-			<param name="type" value="video/quicktime" />
-			<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
-			<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
-				width="[[=delegate.width]]"
-				height="[[=delegate.height]]"
-				scale="tofit"
-				autoplay="false"
-				controller="[[if controller]]true[[else2]]false[[endif2]]"
-				kioskmode="[[if kioskmode]]true[[else2]]false[[endif2]]"
-				loop="[[if loop]]true[[else2]]false[[endif2]]"
-				type="video/quicktime"
-				pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
 
+[[if movieSource==1]]
+
+[[if remoteURL]]
+[[if parser.liveDataFeeds]]
+		[[parsecomponent self delegate.videoPreviewTemplate]]
+[[else4]]
+		<div class="svx-placeholder">[['This is a placeholder for a video. To see the video, please enable live data feeds in the preferences.]]</div>
+[[endif4]]
+[[else3]]
+		<div class="svx-placeholder">[['Please use the Inspector to enter the URL of a video.]]</div>
+[[endif3]]
+[[else2]]
+		[[parsecomponent self delegate.videoPreviewTemplate]]
+[[endif2]]
 [[else]]
 
 [[if isFlash]]

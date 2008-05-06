@@ -58,4 +58,7 @@
 - (int)height;
 - (int)width;
 
++ (NSString *)videoPreviewTemplate;
+- (NSString *)videoPreviewTemplate;
+
 @end
