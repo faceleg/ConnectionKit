@@ -11,8 +11,10 @@
 #import "KTMediaFile.h"
 #import "KTExternalMediaFile.h"
 #import "KTMediaManager+Internal.h"
+
 #import "NSArray+Karelia.h"
 #import "NSHelpManager+Karelia.h"
+#import "NSObject+Karelia.h"
 
 #import "BDAlias.h"
 
@@ -204,7 +206,7 @@
 - (IBAction)findSelectedMediaFile:(id)sender
 {
 	// The delay is to make sure the NSArrayController's selection is in sync
-	[self performSelector:@selector(findSelectedMediaFile) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(findSelectedMediaFile) withObject:nil afterDelay:0.0 reportExceptions:YES];
 }
 
 - (void)findSelectedMediaFile

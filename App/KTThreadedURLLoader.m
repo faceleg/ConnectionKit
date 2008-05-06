@@ -8,6 +8,7 @@
 
 #import "KTThreadedURLLoader.h"
 
+#import "NSObject+Karelia.h"
 #import "Debug.h"
 
 enum { CHECK_TASKS = 1 };
@@ -186,7 +187,7 @@ static KTThreadedURLLoader *_default = nil;
 	
 	if ( [NSThread currentThread] != myThread )
 	{
-		[self performSelector:@selector(delayedPostMessage) withObject:nil afterDelay:0.0];
+		[self performSelector:@selector(delayedPostMessage) withObject:nil afterDelay:0.0 reportExceptions:YES];
 	}
 	else
 	{
@@ -222,7 +223,7 @@ static KTThreadedURLLoader *_default = nil;
 	
 	[myLock unlock];
 	
-	[self performSelector:@selector(scheduleInvocation:) withObject:anInvocation afterDelay:0.0];
+	[self performSelector:@selector(scheduleInvocation:) withObject:anInvocation afterDelay:0.0 reportExceptions:YES];
 }
 
 @end

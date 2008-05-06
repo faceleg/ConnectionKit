@@ -8,6 +8,9 @@
 
 #import "KTDocument.h"
 
+#import "NSObject+Karelia.h"
+
+
 // this file exists to consolidate the alertDidEnd::: selector for KTDocument
 // beginSheetModalForWindow::: is messages from several KTDocument categories
 // it should be easier to track here, rather than end up with multiple
@@ -84,7 +87,7 @@
 			shouldClose = NO;
 			[self performSelector:@selector(saveDocumentAs:)
 			withObject:self
-			afterDelay:0.0];
+			afterDelay:0.0 reportExceptions:YES];
         }
 		
 		// finish out the delegate callback to the document controller to close the window
@@ -101,7 +104,7 @@
 	{	
 		if ( NSOKButton == returnCode )
 		{
-			[self performSelector:@selector(revertPersistentStoreToSnapshot:) withObject:nil afterDelay:0.0];
+			[self performSelector:@selector(revertPersistentStoreToSnapshot:) withObject:nil afterDelay:0.0 reportExceptions:YES];
 		}
 	}
 	

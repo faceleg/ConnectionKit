@@ -13,7 +13,9 @@
 #import "KTDocument.h"
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"
+
 #import "NSHelpManager+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 
 #ifdef APP_RELEASE
@@ -313,7 +315,7 @@
 		/// once we've created this "document" we don't want it hanging around
 		[document performSelector:@selector(close)
 					   withObject:nil 
-					   afterDelay:0.0];
+					   afterDelay:0.0 reportExceptions:YES];
 	}
 
 	
@@ -345,7 +347,7 @@
 		[document close];
 		
 		// Open the doc again at the end of the runloop
-		[[NSApp delegate] performSelector:@selector(openDocumentWithContentsOfURL:) withObject:docURL afterDelay:0.0];
+		[[NSApp delegate] performSelector:@selector(openDocumentWithContentsOfURL:) withObject:docURL afterDelay:0.0 reportExceptions:YES];
 	}
 	else if (error)
 	{

@@ -141,7 +141,7 @@
 	}
 	
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshWebViewIfNeeded) object:nil];
-	[self performSelector:@selector(refreshWebViewIfNeeded) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(refreshWebViewIfNeeded) withObject:nil afterDelay:0.0 reportExceptions:YES];
 }
 
 - (NSSet *)webViewComponentsNeedingRefresh

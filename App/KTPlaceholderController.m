@@ -7,8 +7,10 @@
 //
 
 #import "KTPlaceholderController.h"
-#import "NSThread+Karelia.h"
+
 #import "NSColor+Karelia.h"
+#import "NSObject+Karelia.h"
+#import "NSThread+Karelia.h"
 #import <QTKit/QTKit.h>
 #import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"
@@ -146,7 +148,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 						   withObject:nil
-						   afterDelay:0.0];
+						   afterDelay:0.0 reportExceptions:YES];
 }
 
 - (IBAction) doOpen:(id)sender
@@ -156,13 +158,13 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 			   withObject:nil
-			   afterDelay:0.0];
+			   afterDelay:0.0 reportExceptions:YES];
 	
 }
 
 - (IBAction) openLicensing:(id)sender
 {
-	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:nil afterDelay:0.0];
+	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:nil afterDelay:0.0 reportExceptions:YES];
 }
 
 - (IBAction) openHigh:(id)sender;

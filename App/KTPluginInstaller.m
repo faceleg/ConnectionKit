@@ -17,6 +17,9 @@
 #import "KSAppDelegate.h"
 #import "KSPlugin.h"
 
+#import "NSObject+Karelia.h"
+
+
 static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 @implementation KTPluginInstaller
@@ -53,7 +56,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 	
 	[myURLs addObject:aURL];
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(finishInstalling) object:nil];
-	[self performSelector:@selector(finishInstalling) withObject:nil afterDelay:1.5];
+	[self performSelector:@selector(finishInstalling) withObject:nil afterDelay:1.5 reportExceptions:YES];
 }
 
 - (void) finishInstalling	// finally called when they are all done opening

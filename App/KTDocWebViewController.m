@@ -397,7 +397,7 @@
 		// If the webview finishes loading before that, it will cancel this.
 		// First make sure it's not already queued up (in case of multiple clicks)
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startAnimation:) object:nil];
-		[self performSelector:@selector(startAnimation:) withObject:nil afterDelay:0.01];
+		[self performSelector:@selector(startAnimation:) withObject:nil afterDelay:0.01 reportExceptions:YES];
 	}
 	
 	// make sure we're seeing webview and styles
@@ -825,7 +825,7 @@
 	
 		// wait five seconds for sub-resources to load; otherwise give up
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(forceWebViewLoadingDone) object:nil];
-		[self performSelector:@selector(forceWebViewLoadingDone) withObject:nil afterDelay:5.0];
+		[self performSelector:@selector(forceWebViewLoadingDone) withObject:nil afterDelay:5.0 reportExceptions:YES];
 	}
 }
 

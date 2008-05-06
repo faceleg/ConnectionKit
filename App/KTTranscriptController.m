@@ -8,6 +8,8 @@
 
 #import "KTTranscriptController.h"
 
+#import "NSObject+Karelia.h"
+
 
 @implementation KTTranscriptController
 
@@ -35,7 +37,7 @@
 */
 - (void)textStorageDidProcessEditing:(NSNotification *)aNotification
 {
-	[self performSelector:@selector(scrollToVisible:) withObject:nil afterDelay:0.0];
+	[self performSelector:@selector(scrollToVisible:) withObject:nil afterDelay:0.0 reportExceptions:YES];
 	// Don't scroll now, do it in a moment. Doing it now causes error messgaes.
 }
 

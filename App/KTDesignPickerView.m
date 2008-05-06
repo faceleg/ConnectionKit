@@ -15,9 +15,11 @@
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTMaster.h"
+
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -226,7 +228,7 @@ static NSDictionary *sContributorLinkAttributes = nil;
 				if (reopening)
 				{
 					// animate to the new position, but only after all this is done.
-					[self performSelector:@selector(fastAnimateToNewPosition:) withObject:[NSNumber numberWithInt:newPosition] afterDelay:0.0];
+					[self performSelector:@selector(fastAnimateToNewPosition:) withObject:[NSNumber numberWithInt:newPosition] afterDelay:0.0 reportExceptions:YES];
 				}
 				else
 				{
