@@ -1,8 +1,8 @@
 //
-//  VideoSource.m
-//  KTPlugins
+//  YouTubeSource.m
+//  Sandvox Plugins
 //
-//  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2008, Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,26 +34,25 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "VideoSource.h"
-#import <QTKit/QTKit.h>
+#import "YouTubeSource.h"
 
 
-@implementation VideoSource
-
-/// QTMovie: + (id)movieWithPasteboard:(NSPasteboard *)pasteboard error:(NSError **)errorPtr
-// - (id)initWithPasteboard:(NSPasteboard *)pasteboard error:(NSError **)errorPtr
+@implementation YouTubeSource
 
 
-
+// YouTube URLs look like http://youtube.com/watch?v=UA7dEWKAT7Y
 
 /*!	Return an array of accepted drag types, with best/richest types first
 */
 - (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;
 {
 	return [NSArray arrayWithObjects:
-		NSFilenamesPboardType,
-		QTMoviePasteboardType,		
-		nil];
+			@"public.url",
+			NSURLPboardType,	// Apple URL pasteboard type
+			//@"WebURLsWithTitlesPboardType",
+			//@"BookmarkDictionaryListPboardType",
+			NSStringPboardType,
+			nil];
 }
 
 - (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
@@ -61,60 +60,17 @@
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     [pboard types];
     
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"public.url"]])
 	{
-		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
-		if (anIndex < [fileNames count])
-		{
-			NSString *fileName = [fileNames objectAtIndex:anIndex];
-			if ( nil != fileName )
-			{
-				// check to see if it's an image file
-				NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
-				
-				if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio] )
-				{
-					return KTSourcePriorityNone;	// disallow protected audio; don't try to play as audio
-				}
-				else if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeAudiovisualContent] )
-				{
-					return KTSourcePriorityIdeal;
-				}
-				else
-				{
-					return KTSourcePriorityNone;	// not an image
-				}
-			}
-		}
+		return KTSourcePriorityIdeal;
 	}
-	else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:QTMoviePasteboardType]])
+	else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSURLPboardType]])
 	{
 		return KTSourcePriorityIdeal;	// there is an image, so it's probably OK
 	}
     return KTSourcePriorityNone;	// doesn't actually have any image data
 }
 
-- (NSString *)pageBundleIdentifier
-{
-	return @"sandvox.VideoElement";
-}
-- (NSString *)pageletBundleIdentifier
-{
-	return @"sandvox.VideoElement";
-}
-
-
-/*
- What if pasteboard is:
- "Apple files promise pasteboard type", 
- "CorePasteboardFlavorType 0x70686673", 
- "CorePasteboardFlavorType 0x66737350", 
- NSPromiseContentsPboardType, 
- QTMoviePasteboardType, 
- "CorePasteboardFlavorType 0x6D6F6F76", 
- "NeXT TIFF v4.0 pasteboard type", 
- "Apple PICT pasteboard type"
-*/
 
 - (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
 				forPagelet:(BOOL)isAPagelet
@@ -129,30 +85,26 @@
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
 	
     NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
-    if ( [bestType isEqualToString:NSFilenamesPboardType] )
+    if ( [bestType isEqualToString:@"public.url"] )
     {
-		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
-		if (anIndex < [filePaths count])
-		{
-			filePath = [filePaths objectAtIndex:anIndex];
-			if ( nil != filePath )
-			{
-				[aDictionary setValue:
-							   [[NSFileManager defaultManager] resolvedAliasPath:filePath]
-							   forKey:kKTDataSourceFilePath];
-				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
-				result = YES;
-			}
-		}
+		;
     }
 	else
 	{
-		; // QT on pasteboard ... I think I can just leave the pasteboard alone?
+		; 
 	}
     
     return result;
 }
 
+- (NSString *)pageBundleIdentifier
+{
+	return @"sandvox.YouTubeElement";
+}
 
+- (NSString *)pageletBundleIdentifier
+{
+	return @"sandvox.YouTubeElement";
+}
 
 @end
