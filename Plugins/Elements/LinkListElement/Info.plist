@@ -26,9 +26,9 @@
 	<string>1.5</string>
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
-	<key>KTElementSupportsPageUsage</key>
-	<true/>
 	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTHelpAnchor</key>
 	<string>List_of_Links</string>
@@ -40,8 +40,6 @@
 	<dict>
 		<key>layout</key>
 		<integer>0</integer>
-		<key>linkList</key>
-		<array/>
 		<key>openInNewWindow</key>
 		<false/>
 	</dict>

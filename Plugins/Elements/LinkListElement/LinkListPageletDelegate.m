@@ -40,9 +40,30 @@
 
 @implementation LinkListPageletDelegate
 
+/*	When possible, create a starting link from the user's web browser
+ */
+- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
+{
+	if (isNewlyCreatedObject)
+	{
+		NSURL *URL = nil;	NSString *title;
+		[NSAppleScript getWebBrowserURL:&URL title:&title source:nil];
+		if (URL)
+		{
+			NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+				[title escapedEntities], @"titleHTML",
+				[URL absoluteString], @"url", nil];
+			
+			NSArray *links = [NSArray arrayWithObject:newLink];
+			[[self delegateOwner] setValue:links forKey:@"linkList"];
+		}
+	}
+}
+
+
+
 /*!	Create a single item with all the URLs listed.  This means we parse the pasteboard directly.
 */
-
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
 	[[self delegateOwner] lockPSCAndMOC];
