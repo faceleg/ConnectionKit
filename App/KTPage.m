@@ -16,26 +16,25 @@
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
+#import "KTIndexPlugin.h"
 #import "KTManagedObjectContext.h"
 #import "KTMaster.h"
+
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "KTIndexPlugin.h"
 
-@interface NSObject ( RichTextElementDelegateHack )
-- (NSString *)richTextHTML;
-@end
 
-@interface NSObject ( HTMLElementDelegateHack )
-- (NSString *)html;
+@interface KTPage (Private)
+- (BOOL)validateForInsertOrUpdate:(NSError **)error;
 @end
 
 
@@ -425,6 +424,66 @@
 - (BOOL)separateInspectorSegment
 {
 	return [[[self plugin] pluginPropertyForKey:@"KTPageSeparateInspectorSegment"] boolValue];
+}
+
+#pragma mark -
+#pragma mark Validation
+
+- (BOOL)validateForUpdate:(NSError **)outError
+{
+	NSError *error = nil;
+	BOOL superResult = [super validateForUpdate:&error];
+	BOOL result = superResult && [self validateForInsertOrUpdate:&error];
+	 
+	if (!result && error)
+	{
+		*outError = error; 
+	}
+	
+	return result;
+}
+
+- (BOOL)validateForInsert:(NSError **)outError
+{
+	NSError *error = nil;
+	BOOL superResult = [super validateForInsert:&error];
+	BOOL result = superResult && [self validateForInsertOrUpdate:&error];
+	 
+	if (!result && error)
+	{
+		*outError = error; 
+	}
+	
+	return result;
+}
+
+/*	Page entities should always have a parent. Only Root is permitted not to.
+ */
+- (BOOL)validateForInsertOrUpdate:(NSError **)error
+{
+	BOOL result = YES;
+	if ([[[self entity] name] isEqualToString:@"Page"])
+	{
+		result = ([self parent] != nil);
+		if (!result)
+		{
+			// Something went wrong. We need to generate an error object
+			NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+				self, NSValidationObjectErrorKey,
+				@"parent", NSValidationKeyErrorKey,
+				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
+			
+			// Append other errors if needs be
+			if (*error)
+			{
+				[userInfo setObject:[NSArray arrayWithObject:*error] forKey:NSDetailedErrorsKey];
+			}
+			
+			*error = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
+		}
+	}
+	
+	return result;
 }
 
 #pragma mark -
