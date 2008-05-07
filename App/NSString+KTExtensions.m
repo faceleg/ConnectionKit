@@ -196,10 +196,9 @@
  */
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath
 {
-	OBPRECONDITION(otherPath);
-	
-	
+	if(!otherPath) otherPath = @"";
 	otherPath = [@"/" stringByAppendingString:otherPath];
+	
 	if ([self isEqualToString:@""])
 	{
 		NSString *result = [@"/" pathRelativeTo:otherPath];

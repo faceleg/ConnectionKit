@@ -505,7 +505,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Bail early if the page is not for publishing
-	if ([page isKindOfClass:[KTPage class]] && [(KTPage *)page pageOrParentDraft])
+	if (![page uploadPath] || ([page isKindOfClass:[KTPage class]] && [(KTPage *)page pageOrParentDraft]))
 	{
 		return nil;
 	}
