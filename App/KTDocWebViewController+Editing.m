@@ -56,7 +56,7 @@
 
 /*! Make all editable style nodes be editable.	Fix all "kOptional" elements and replace empty ones with + button
 */
-- (void)processEditableElementsFromElement:(DOMElement *)aDOMElement;
+- (void)processEditableElementsFromElement:(DOMElement *)aDOMElement
 {
 	DOMDocument *doc = [aDOMElement ownerDocument];
 	BOOL isNew = [[[[self windowController] siteOutlineController] selectedPage] isNewPage];
@@ -196,7 +196,9 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 				}
 				else	// delete optional element
 				{
-					[[element parentNode] removeChild:element];
+					NSString *elementTagName = [[element tagName] uppercaseString];
+					DOMNode *realElement = ([elementTagName isEqualToString:@"SPAN"]) ? [element parentNode] : element;
+					[[realElement parentNode] removeChild:realElement];
 				}
 			}
 		}
