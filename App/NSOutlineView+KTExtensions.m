@@ -10,7 +10,22 @@
 #import "Debug.h"
 #import "KTPage.h"
 
-@implementation NSOutlineView ( KTExtensions )
+@implementation NSOutlineView (KTExtensions)
+
+- (int)numberOfChildrenOfItem:(id)item;
+{
+	int result = [[self dataSource] outlineView:self numberOfChildrenOfItem:item];
+	return result;
+}
+
+- (id)child:(int)index ofItem:(id)item
+{
+	id result = [[self dataSource] outlineView:self child:index ofItem:item];
+	return result;
+}
+
+#pragma mark -
+#pragma mark Selection
 
 - (void)expandSelectedRow
 {
@@ -130,7 +145,7 @@
 
 - (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
 {
-	// We can bail early in certain curcumstances
+	// We can bail early in certain circumstances
 	if (!rowIndexes || [rowIndexes count] <= 0)
 	{
 		return nil;
@@ -168,10 +183,45 @@
 	return result;
 }
 
-/*! returns outline cell via private name */
-- (id)_outlineCell
+#pragma mark -
+#pragma mark Drawing
+
+/*	Equivalent to -reloadItem:reloadChildren: but for handling -setNeedsDisplayInRect:
+ */
+- (void)setItemNeedsDisplay:(id)item childrenNeedDisplay:(BOOL)recursive
 {
-	return _outlineCell;
+	NSRect displayRect = [self rectOfRow:[self rowForItem:item]];
+	
+	// Basic tactic for recursive display is to union the item's rect and that of its last visible child
+	if (recursive && [self isItemExpanded:item])
+	{
+		id lastVisibleChild = [self lastVisibleChildOfItem:item];
+		NSRect lastChildRect = [self rectOfRow:[self rowForItem:lastVisibleChild]];
+		displayRect = NSUnionRect(displayRect, lastChildRect);
+	}
+	
+	[self setNeedsDisplayInRect:displayRect];
+}
+
+/*	If the item is expanded and has some children, searches down into the hierarchy to find the last visible
+ *	child. Otherwise, just returns the item.
+ */
+- (id)lastVisibleChildOfItem:(id)item
+{
+	id result = item;
+	
+	if ([self isItemExpanded:item])
+	{
+		int childCount = [self numberOfChildrenOfItem:item];
+		if (childCount > 0)
+		{
+			id lastChild = [self child:(childCount - 1) ofItem:item];
+			result = [self lastVisibleChildOfItem:lastChild];
+		}
+	}
+	
+	return result;
 }
 
 @end
+

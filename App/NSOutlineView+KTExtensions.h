@@ -20,8 +20,17 @@
 #import <AppKit/NSOutlineView.h>
 
 
-@interface NSOutlineView ( KTExtensions ) 
+@interface NSOutlineView (KTExtensions)
 
+#pragma mark Items
+- (int)numberOfChildrenOfItem:(id)item;
+- (id)child:(int)index ofItem:(id)item;
+
+- (NSArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
+- (NSIndexSet *)rowsForItems:(NSArray *)items;
+
+
+#pragma mark Selection
 - (void)expandSelectedRow;
 
 - (void)selectItem:(id)anItem;
@@ -35,10 +44,8 @@
 
 - (id)itemAboveFirstSelectedRow;
 
-- (NSArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
-- (NSIndexSet *)rowsForItems:(NSArray *)items;
-
-/*! returns outline cell via private name */
-- (id)_outlineCell;
+#pragma mark Drawing
+- (void)setItemNeedsDisplay:(id)item childrenNeedDisplay:(BOOL)recursive;
+- (id)lastVisibleChildOfItem:(id)item;
 
 @end
