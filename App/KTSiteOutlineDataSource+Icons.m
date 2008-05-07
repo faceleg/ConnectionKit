@@ -167,8 +167,7 @@
 
 - (NSImage *)customIconForPage:(KTPage *)page
 {
-	NSString *pageID = [page uniqueID];
-	NSImage *result = [myCachedCustomPageIcons objectForKey:pageID];
+	NSImage *result = [myCachedCustomPageIcons objectForKey:page];
 	
 	if (!result)
 	{
@@ -325,8 +324,8 @@
 	// Remove page from generating list
 	[myGeneratingCustomIcon release];	myGeneratingCustomIcon = nil;
 	
-	// Update the cache
-	[myCachedCustomPageIcons setValue:icon forKey:[page uniqueID]];
+	// Update the cache. Use CF to retain, not copy the key
+	CFDictionarySetValue((CFMutableDictionaryRef)myCachedCustomPageIcons, page, icon);
 	
 	// Refresh Site Outline for new icon
 	[self reloadPage:page reloadChildren:NO];

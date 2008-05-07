@@ -170,7 +170,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		}
 		
 		// Uncache custom icon to free memory
-		[myCachedCustomPageIcons removeObjectForKey:[aPage uniqueID]];
+		[myCachedCustomPageIcons removeObjectForKey:aPage];
 		
 		// Remove from the set
 		[myPages removeObject:aPage];
@@ -294,11 +294,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	else if ([keyPath isEqualToString:@"customSiteOutlineIcon"])
 	{
-		NSString *pageID = [page uniqueID];
-		if (pageID)
-		{
-			[myCachedCustomPageIcons removeObjectForKey:[page uniqueID]];
-		}
+		[myCachedCustomPageIcons removeObjectForKey:page];
 	}
 	
 	
