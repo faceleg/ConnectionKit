@@ -226,7 +226,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context
 {
 	// If the collection is not expanded in the Site Outline it can be happily ignored.
-	if (![[self siteOutline] isItemExpanded:page]) return;
+	if (![page isRoot] && ![[self siteOutline] isItemExpanded:page]) return;
 	
 	
 	// When pages are added or removed, adjust the page list to match
