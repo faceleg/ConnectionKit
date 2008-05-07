@@ -22,8 +22,6 @@
 #pragma mark -
 #pragma mark Selection Accessors
 
-- (NSArray *)selectedPages { return mySelectedPages; }
-
 /*	This is the public version of -setSelectedPages. It updates internal storage as well as the UI itself.
  */
 - (void)setSelectedPages:(NSSet *)selectedPages;
@@ -57,7 +55,7 @@
 {
     KTPage *result = nil;
 	
-	NSArray *selectedPages = [self selectedPages];
+	NSArray *selectedPages = [self selectedObjects];
 	if (selectedPages && [selectedPages count] == 1)
 	{
 		result = [selectedPages objectAtIndex:0];
@@ -89,7 +87,7 @@
 {
 	KTPage *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
 	BOOL shouldSelectCollapsingItem = YES;
-	NSEnumerator *selectionEnumerator = [[self selectedPages] objectEnumerator];
+	NSEnumerator *selectionEnumerator = [[self selectedObjects] objectEnumerator];
 	KTPage *aPage;
 	
 	while (aPage = [selectionEnumerator nextObject])

@@ -34,7 +34,6 @@
 
 @interface KTDocSiteOutlineController (Selection)
 
-- (NSArray *)selectedPages;
 - (void)setSelectedPages:(NSSet *)selectedPages;
 - (KTPage *)selectedPage;	// Always fast!
 

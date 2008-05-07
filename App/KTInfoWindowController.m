@@ -1061,7 +1061,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (IBAction)resetPageThumbnail:(id)sender
 {
-	NSArray *pages = [[self siteOutlineController] selectedPages];
+	NSArray *pages = [[self siteOutlineController] selectedObjects];
 	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
 	KTPage *aPage;
 	

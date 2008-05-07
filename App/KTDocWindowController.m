@@ -1076,7 +1076,7 @@ from representedObject */
 /*! group the selection in a new summary */
 - (void)group:(id)sender
 {
-	NSArray *selectedPages = [[[[self siteOutlineController] selectedPages] retain] autorelease];	// Hang onto it for length of method
+	NSArray *selectedPages = [[[[self siteOutlineController] selectedObjects] retain] autorelease];	// Hang onto it for length of method
 	
 	// This shouldn't happen
 	if ([selectedPages count] == 0)
@@ -1203,7 +1203,7 @@ from representedObject */
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	// here's the naive approach
-	NSArray *selectedPages = [[[self siteOutlineController] selectedPages] copy];
+	NSArray *selectedPages = [[[self siteOutlineController] selectedObjects] copy];
 	id itemAbove = [[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow];
 	
 	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
@@ -1305,7 +1305,7 @@ from representedObject */
 		}
 		else
 		{
-			NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+			NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 			if (1 != [selectedPages count])
 			{
 				return NO;	// can't paste if zero or >1 pages selected
@@ -1380,7 +1380,7 @@ from representedObject */
 		}
 
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 		
 		if ( (nil != selectedPage) && ![selectedPage isRoot] )
 		{
@@ -1501,11 +1501,11 @@ from representedObject */
     }	
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [[self siteOutlineController] selectedPages];
+		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
@@ -1522,7 +1522,7 @@ from representedObject */
 		else
 		{
 			// we're going to be duplicating a page or pages
-			return ( ![[[self siteOutlineController] selectedPages] containsObject:[[self document] root]] );
+			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[self document] root]] );
 		}
     }
 	
@@ -1660,15 +1660,15 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedPages] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [[self siteOutlineController] selectedPages];
+		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
@@ -1679,7 +1679,7 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(duplicate:) )
     {
-        return ( ![[[self siteOutlineController] selectedPages] containsObject:[[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[self document] root]] );
     }
 	else if ([toolbarItem action] == @selector(showLinkPanel:))
 	{
@@ -1717,7 +1717,7 @@ from representedObject */
 {
 	BOOL result = NO;
 	
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 	if (selectedPages && [selectedPages count] > 0)
 	{
 		result = YES;
@@ -1732,7 +1732,7 @@ from representedObject */
 {
 	BOOL result = NO;
 	
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 	if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[self document] root]])
 	{
 		result = YES;
@@ -1800,7 +1800,7 @@ from representedObject */
 
 - (void)updateCutMenuItem
 {
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 	if ([selectedPages count])
 	{
 		
@@ -1834,7 +1834,7 @@ from representedObject */
 
 - (void)updateCopyMenuItem
 {
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 	if ([selectedPages count])
 	{
 		NSResponder *firstResponder = [[self window] firstResponder];
@@ -1867,7 +1867,7 @@ from representedObject */
 
 - (void)updateDeletePagesMenuItem
 {
-	NSArray *selectedPages = [[self siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 	if ([selectedPages count])
 	{
 		if ( [selectedPages count] > 1 )
@@ -2179,7 +2179,7 @@ from representedObject */
 	// When ending the top level undo group, record the selected pages
 	if ([undoManager groupingLevel] == 1)
 	{
-		NSSet *pageIDs = [[[self siteOutlineController] selectedPages] valueForKey:@"uniqueID"];
+		NSSet *pageIDs = [[[self siteOutlineController] selectedObjects] valueForKey:@"uniqueID"];
 		
 		// Figuring out the scroll point is a little trickier
 		NSPoint scrollPoint = NSZeroPoint;

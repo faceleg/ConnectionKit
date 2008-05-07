@@ -1824,7 +1824,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// label duplicate: (order is selected text, selected pagelet, selected page(s))
 	KTPagelet *selectedPagelet = [[aDocument windowController] selectedPagelet];
 	KTPage *selectedPage = [[[aDocument windowController] siteOutlineController] selectedPage];
-	NSArray *selectedPages = [[[aDocument windowController] siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[[aDocument windowController] siteOutlineController] selectedObjects];
 	
 	if ( [[aDocument windowController] selectedDOMRangeIsEditable] )
 	{

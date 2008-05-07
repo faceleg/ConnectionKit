@@ -163,7 +163,7 @@
 	
 	
 	// How we load depends on the current selection
-	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedPages];
+	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedObjects];
 	if (!selectedPages || [selectedPages count] == 0)
 	{
 		[[[self webView] mainFrame] loadHTMLString:@"" baseURL:nil];

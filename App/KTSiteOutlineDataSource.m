@@ -34,6 +34,16 @@
 NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
+@interface KTSiteOutlineDataSource (Private)
+- (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context;
+
+- (void)observeValueForOtherKeyPath:(NSString *)keyPath
+							 ofPage:(KTPage *)page
+							 change:(NSDictionary *)change
+							context:(void *)context;
+@end
+
+
 @implementation KTSiteOutlineDataSource
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller
@@ -110,26 +120,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	return keyPaths;
 }
 
-+ (NSSet *)keyPathsRequiringChildrenReload
-{
-	static NSSet *keyPaths;
-	
-	if (!keyPaths)
-	{
-		keyPaths = [[NSSet alloc] initWithObjects:@"sortedChildren",
-					@"isDraft", nil];
-	}
-	
-	return keyPaths;
-}
-
 - (void)addPagesObject:(KTPage *)aPage
 {
 	if (![myPages containsObject:aPage] )
 	{
 		//	Begin observing the page if needed
 		[aPage addObserver:self
-				forKeyPath:@"sortedChildren"
+				forKeyPath:[[self siteOutlineController] childrenKeyPath]
 				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
 				   context:nil];
 		
@@ -149,7 +146,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
 		[self iconForPage:aPage];
-		NSEnumerator *pagesEnumerator = [[aPage valueForKey:@"children"] objectEnumerator];
+		NSEnumerator *pagesEnumerator = [[aPage children] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{
@@ -163,7 +160,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if ([myPages containsObject:aPage])
 	{
 		// Remove observers
-		[aPage removeObserver:self forKeyPath:@"sortedChildren"];
+		[aPage removeObserver:self forKeyPath:[[self siteOutlineController] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		if ([aPage isRoot])	// Observe home page's favicon
@@ -212,73 +209,67 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	
 	
+	// Having prescreened the parameters, pass them onto the right support methods for processing
+	OBASSERT([object isKindOfClass:[KTPage class]]);
+	if ([keyPath isEqualToString:[[self siteOutlineController] childrenKeyPath]])
+	{
+		[self observeValueForSortedChildrenOfPage:object change:change context:context];
+	}
+	else
+	{
+		[self observeValueForOtherKeyPath:keyPath ofPage:object change:change context:context];
+	}
+}
+
+/*	Oh noes, the sortedChildren property of a page has changed! We need to reload something.
+ */
+- (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context
+{
+	// If the collection is not expanded in the Site Outline it can be happily ignored.
+	if (![[self siteOutline] isItemExpanded:page]) return;
+	
+	
 	// When pages are added or removed, adjust the page list to match
 	// If a deleted page happens to be selected, we also need to update our -selectedPages set
-	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedPages]];
+	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
 	BOOL selectedPagesNeedsUpdating = NO;
 	
-	if ([keyPath isEqualToString:@"sortedChildren"])
+	int changeKind = [(NSNumber *)[change valueForKey:NSKeyValueChangeKindKey] intValue];
+	switch (changeKind)
 	{
-		int changeKind = [(NSNumber *)[change valueForKey:NSKeyValueChangeKindKey] intValue];
-		switch (changeKind)
+		case NSKeyValueChangeRemoval:
 		{
-			case NSKeyValueChangeRemoval:
-			{
-				NSSet *removedPages = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
-				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
-				
-				OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
-				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
-				
-				break;
-			}
-				
-			case NSKeyValueChangeSetting:
-			{
-				NSSet *newSortedChildren = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeNewKey]];
-				
-				NSMutableSet *removedPages = [NSMutableSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
-				[removedPages minusSet:newSortedChildren];
-				
-				[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
-				
-				OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
-				if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
-				
-				break;
-			}
-				
-			default:
-				break;
+			NSSet *removedPages = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
+			[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
+			
+			OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
+			if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
+			
+			break;
 		}
-	}
-	
-	
-	// When the favicon or custom icon changes, invalidate the associated cache
-	if ([keyPath isEqualToString:@"master.favicon"])
-	{
-		[self setCachedFavicon:nil];
-	}
-	else if ([keyPath isEqualToString:@"customSiteOutlineIcon"])
-	{
-		NSString *pageID = [(KTPage *)object uniqueID];
-		if (pageID)
+			
+		case NSKeyValueChangeSetting:
 		{
-			[myCachedCustomPageIcons removeObjectForKey:[(KTPage *)object uniqueID]];
+			NSSet *newSortedChildren = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeNewKey]];
+			
+			NSMutableSet *removedPages = [NSMutableSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
+			[removedPages minusSet:newSortedChildren];
+			
+			[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
+			
+			OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
+			if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
+			
+			break;
 		}
-	}
-	
-	
-	// Should children be reloaded?
-	BOOL reloadChildren = NO;
-	if ([[[self class] keyPathsRequiringChildrenReload] containsObject:keyPath])
-	{
-		reloadChildren = YES;
+			
+		default:
+			break;
 	}
 	
 	
 	// Do the reload
-	[self reloadPage:object reloadChildren:reloadChildren];
+	[self reloadPage:page reloadChildren:YES];
 	
 	
 	// Regenerate -selectedPages if required
@@ -287,6 +278,35 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
 															object:[self siteOutline]];
 	}
+}
+
+/*	There was a change that doesn't affect the tree itself, so we just need to mark the outline for display.
+ */
+- (void)observeValueForOtherKeyPath:(NSString *)keyPath
+							 ofPage:(KTPage *)page
+							 change:(NSDictionary *)change
+							context:(void *)context
+{
+	// When the favicon or custom icon changes, invalidate the associated cache
+	if ([keyPath isEqualToString:@"master.favicon"])
+	{
+		[self setCachedFavicon:nil];
+	}
+	else if ([keyPath isEqualToString:@"customSiteOutlineIcon"])
+	{
+		NSString *pageID = [page uniqueID];
+		if (pageID)
+		{
+			[myCachedCustomPageIcons removeObjectForKey:[page uniqueID]];
+		}
+	}
+	
+	
+	// Does the change also affect children?
+	BOOL childrenNeedDisplay = ([keyPath isEqualToString:@"isDraft"]);
+	
+	
+	[[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
 }
 
 #pragma mark -
@@ -318,20 +338,21 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
+	OBPRECONDITION(!item || [item isKindOfClass:[KTPage class]]);
 	int result = 0;
 	
-	if ( nil == item )
+	if (![item isRoot])
 	{
-		// add 1 at top level for "My Site"
-		KTPage *root = [[self document] root];
-		if (root)
-		{
-			result = 1 + [[root valueForKeyPath:@"children.@count"] intValue];
-		}
-	}
-	else if ( [(NSObject *)item isKindOfClass:[KTPage class]] && [(KTPage *)item isCollection] )
-	{
-		result = [[(KTPage *)item valueForKeyPath:@"children.@count"] intValue];
+		// Due to the slightly odd layout of the site outline, must figure the right page
+		KTPage *page = (item) ? item : [[self document] root];
+		OBASSERT(page);
+		
+		NSString *childrenKeyPath = [[self siteOutlineController] childrenKeyPath];	// Don't use -children as a shortcut as
+		OBASSERT(childrenKeyPath);													// it may be our of sync during an undo
+		result = [[page valueForKey:childrenKeyPath] count];						//  op.
+		
+		// Root is a special case where we have to add 1 to the total
+		if (!item) result += 1;
 	}
 	
 	return result;
@@ -447,7 +468,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
      forTableColumn:(NSTableColumn *)tableColumn
                item:(id)item
 {
-	if (![[tableColumn identifier] isEqualToString:@"displayName"]) {	// Ignore any uninteresting columns
+	// Ignore any uninteresting columns/rows
+	if (!item || ![[tableColumn identifier] isEqualToString:@"displayName"]) {
 		return;
 	}
 	
