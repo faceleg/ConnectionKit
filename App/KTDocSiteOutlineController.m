@@ -105,7 +105,6 @@
 	
 	
 	// Release remaining iVars
-	[mySelectedPages release];
 	
 	[mySiteOutlineDataSource release];
 	

@@ -831,7 +831,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		if ( nil != page )
 		{
 			[self insertPage:page parent:nearestParent];
-			[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:page]];
+			[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:page]];
 		}
 		else
 		{
@@ -1021,7 +1021,7 @@ from representedObject */
 	// add component to parent
 	[aCollection addPage:aPage];
 	
-	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:aPage]];
+	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:aPage]];
 	
 	// label undo and perserve the current selection
     if ( [aPage isCollection] )
@@ -1169,7 +1169,7 @@ from representedObject */
 		[collection addPage:page];
 	}            
 	
-	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:collection]];
+	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:collection]];
 	
 	// expand the new collection
 	[[[self siteOutlineController] siteOutline] expandItem:collection];
@@ -1237,7 +1237,7 @@ from representedObject */
 		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Pages", @"action name for removing selected pages")];
 	}
 	
-	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:itemAbove]];
+	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:itemAbove]];
 	
 	[itemAbove release];
 	[selectedPages release];
@@ -2164,7 +2164,7 @@ from representedObject */
 		[pages addObjectIgnoringNil:aPage];
 	}
 	
-	[[self siteOutlineController] setSelectedPages:pages];
+	[[self siteOutlineController] setSelectedObjects:pages];
 	
 	
 	// Record what to do when redoing/undoing the change again
@@ -2340,7 +2340,7 @@ from representedObject */
 	// if not dropping on an item, set the selection to the last page created
 	if ( latestPage != nil )
 	{
-		[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:latestPage]];
+		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:latestPage]];
 	}
 	
 	// Done

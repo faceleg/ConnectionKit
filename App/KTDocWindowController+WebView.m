@@ -352,7 +352,7 @@ Node was retained so that it lives to this invocation!
 - (void)selectOwnerPageAndPageletRetainedElement:(DOMHTMLElement *)anElement
 {
 	KTPagelet *pagelet = [self pageletEnclosing:anElement];
-	[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:[pagelet page]]];
+	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:[pagelet page]]];
 		
 // FIXME: - here I need to find the DOM element with the same ID as the given pagelet.
 		

@@ -234,39 +234,17 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
 	BOOL selectedPagesNeedsUpdating = NO;
 	
-	int changeKind = [(NSNumber *)[change valueForKey:NSKeyValueChangeKindKey] intValue];
-	switch (changeKind)
-	{
-		case NSKeyValueChangeRemoval:
-		{
-			NSSet *removedPages = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
-			[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
-			
-			OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
-			if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
-			
-			break;
-		}
-			
-		case NSKeyValueChangeSetting:
-		{
-			NSSet *newSortedChildren = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeNewKey]];
-			
-			NSMutableSet *removedPages = [NSMutableSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
-			[removedPages minusSet:newSortedChildren];
-			
-			[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
-			
-			OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
-			if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
-			
-			break;
-		}
-			
-		default:
-			break;
-	}
+	OBASSERT([change integerForKey:NSKeyValueChangeKindKey] == NSKeyValueChangeSetting);
 	
+	NSSet *newSortedChildren = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeNewKey]];
+	
+	NSMutableSet *removedPages = [NSMutableSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
+	[removedPages minusSet:newSortedChildren];
+	
+	[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
+	
+	OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
+	if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 	
 	// Do the reload
 	[self reloadPage:page reloadChildren:YES];

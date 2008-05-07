@@ -20,8 +20,6 @@
 	
 	KTDocWindowController	*myWindowController;
 	KTSiteOutlineDataSource	*mySiteOutlineDataSource;
-	
-	NSArray		*mySelectedPages;
 }
 
 - (NSOutlineView *)siteOutline;
@@ -34,7 +32,7 @@
 
 @interface KTDocSiteOutlineController (Selection)
 
-- (void)setSelectedPages:(NSSet *)selectedPages;
+- (void)setSelectedObjects:(NSSet *)selectedPages;
 - (KTPage *)selectedPage;	// Always fast!
 
 @end

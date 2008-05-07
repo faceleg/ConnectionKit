@@ -24,21 +24,17 @@
 
 /*	This is the public version of -setSelectedPages. It updates internal storage as well as the UI itself.
  */
-- (void)setSelectedPages:(NSSet *)selectedPages;
+- (void)setSelectedObjects:(NSSet *)selectedPages;
 {
 	[[self siteOutline] selectItems:[selectedPages allObjects]];
+	// By adjusting the site outline directly, the notification should feed through and update
+	// the selection proxy etc.
 }
 
 /*	This is the private version of -setSelectedPages. It updates just the internal storage
  */
 - (void)_setSelectedPages:(NSArray *)selectedPages;
 {
-	[self willChangeValueForKey:@"selectedPages"];
-	selectedPages = [selectedPages copy];
-	[mySelectedPages release];
-	mySelectedPages = selectedPages;
-	[self didChangeValueForKey:@"selectedPages"];
-	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
 														object:[selectedPages firstObjectOrNilIfEmpty]];

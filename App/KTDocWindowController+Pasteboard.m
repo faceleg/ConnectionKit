@@ -946,7 +946,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 		
 		// Select into the first available collection
 		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObject] parent];
-		[[self siteOutlineController] setSelectedPages:[NSSet setWithObject:parentOfFirstSelectedItem]];
+		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:parentOfFirstSelectedItem]];
 		
 		
 		// Do the duplication
@@ -955,7 +955,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 		
 		
 		// Select the new pages
-		[[self siteOutlineController] setSelectedPages:[NSSet setWithArray:newPages]];
+		[[self siteOutlineController] setSelectedObjects:[NSSet setWithArray:newPages]];
 		
 		
 		// Label the Undo menu item
