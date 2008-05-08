@@ -46,4 +46,36 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Deriving New Sets
+
+- (NSSet *)setByRemovingObjects:(NSSet *)objects
+{
+	NSMutableSet *buffer = [self mutableCopy];
+	[buffer minusSet:objects];
+	
+	NSSet *result = [[buffer copy] autorelease];
+	[buffer release];
+	return result;
+}
+
+- (NSSet *)setByIntersectingSet:(NSSet *)objects
+{
+	NSMutableSet *buffer = [self mutableCopy];
+	[buffer intersectSet:objects];
+	
+	NSSet *result = [[buffer copy] autorelease];
+	[buffer release];
+	return result;
+}
+
+- (NSSet *)setByIntersectingObjectsFromArray:(NSArray *)array
+{
+	NSSet *set = [[NSSet alloc] initWithArray:array];
+	NSSet *result = [self setByIntersectingSet:set];
+	[set release];
+	return result;
+}
+
 @end
+

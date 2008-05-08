@@ -28,4 +28,9 @@
 
 - (NSString *)shortDescription;
 
+
+- (NSSet *)setByRemovingObjects:(NSSet *)objects;
+
+- (NSSet *)setByIntersectingSet:(NSSet *)objects;
+- (NSSet *)setByIntersectingObjectsFromArray:(NSArray *)array;
 @end

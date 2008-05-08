@@ -348,7 +348,7 @@
 		}
 	}
 	
-	LOG((@"Refreshed Webview"));
+	OFF((@"Refreshed Webview"));
 }
 
 #pragma mark -

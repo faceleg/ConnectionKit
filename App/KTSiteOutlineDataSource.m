@@ -18,9 +18,12 @@
 #import "KSPlugin.h"
 #import "KTAbstractHTMLPlugin.h"
 
+#import "NSArray+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
+#import "NSSet+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
 
 #import "Debug.h"
 
@@ -229,33 +232,42 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if (![page isRoot] && ![[self siteOutline] isItemExpanded:page]) return;
 	
 	
-	// When pages are added or removed, adjust the page list to match
-	// If a deleted page happens to be selected, we also need to update our -selectedPages set
-	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
-	BOOL selectedPagesNeedsUpdating = NO;
+	NSArray *oldSortedChildren = [change valueForKey:NSKeyValueChangeOldKey];
+	NSSet *oldChildren  = [NSSet setWithArray:oldSortedChildren];
+	NSArray *newSortedChildren = [change valueForKey:NSKeyValueChangeNewKey];
+	NSSet *newChildren = [NSSet setWithArray:newSortedChildren];
 	
-	OBASSERT([change integerForKey:NSKeyValueChangeKindKey] == NSKeyValueChangeSetting);
 	
-	NSSet *newSortedChildren = [NSSet setWithArray:[change valueForKey:NSKeyValueChangeNewKey]];
-	
-	NSMutableSet *removedPages = [NSMutableSet setWithArray:[change valueForKey:NSKeyValueChangeOldKey]];
-	[removedPages minusSet:newSortedChildren];
-	
+	// Stop observing removed pages
+	NSSet *removedPages = [oldChildren setByRemovingObjects:newChildren];
 	[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 	
-	OBASSERT([selectedPages isKindOfClass:[NSSet class]]);
-	if ([selectedPages intersectsSet:removedPages]) selectedPagesNeedsUpdating = YES;
 	
 	// Do the reload
+	NSArray *oldSelection = [[self siteOutline] selectedItems];
 	[self reloadPage:page reloadChildren:YES];
 	
 	
-	// Regenerate -selectedPages if required
-	if (selectedPagesNeedsUpdating)
+	
+	// Correct the selection
+	NSMutableSet *correctedSelection = [NSMutableSet setWithArray:oldSelection];
+	[correctedSelection minusSet:removedPages];
+		
+	NSSet *removedSelectedPages = [removedPages setByIntersectingObjectsFromArray:oldSelection];
+	NSEnumerator *pagesEnumerator = [removedSelectedPages objectEnumerator];	KTPage *aRemovedPage;
+	while (aRemovedPage = [pagesEnumerator nextObject])
 	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
-															object:[self siteOutline]];
+		unsigned originalIndex = [oldSortedChildren indexOfObjectIdenticalTo:aRemovedPage];	// Where possible, select the
+		KTPage *replacementPage = [newSortedChildren objectClosestToIndex:originalIndex];	// next sibling, but fallback to
+		[correctedSelection addObjectIgnoringNil:replacementPage];							// the previous sibling.
 	}
+	
+	if ([correctedSelection count] == 0)	// If nothing remains to be selected, fallback to the parent
+	{
+		[correctedSelection addObject:page];
+	}
+	
+	[[self siteOutline] selectItems:[correctedSelection allObjects] forceDidChangeNotification:YES];
 }
 
 /*	There was a change that doesn't affect the tree itself, so we just need to mark the outline for display.
@@ -296,14 +308,27 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  */
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
 {
+	NSOutlineView *siteOutline = [self siteOutline];
+	NSArray *oldSelection = [siteOutline selectedItems];
+	
+	
 	// Do the approrpriate refresh. In the case of the home page, we must reload everything.
 	if ([anItem isRoot] && reloadChildren)
 	{
-		[[self siteOutline] reloadData];
+		[siteOutline reloadData];
 	}
 	else
 	{
-		[[self siteOutline] reloadItem:anItem reloadChildren:reloadChildren];
+		[siteOutline reloadItem:anItem reloadChildren:reloadChildren];
+	}
+	
+	return;
+	// Compare selections
+	NSArray *newSelection = [siteOutline selectedItems];
+	if (![newSelection isEqualToArray:oldSelection])
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
+															object:siteOutline];
 	}
 }
 

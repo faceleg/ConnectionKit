@@ -175,28 +175,4 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	}
 }
 
-/*	Reloading may well cause a different selection of pages to be selected. However, by default NSOutlineView will
- *	only issue a notification if the selection indexes change. This method adds in extra code to send the
- *	notification in such a situation.
- */
-- (void)reloadItem:(id)item reloadChildren:(BOOL)reloadChildren
-{
-	if (!reloadChildren)
-	{
-		[super reloadItem:item reloadChildren:reloadChildren];
-		return;
-	}
-	
-	
-	NSArray *oldSelection = [self selectedItems];
-	[super reloadItem:item reloadChildren:reloadChildren];
-	
-	NSArray *newSelection = [self selectedItems];
-	if (![newSelection isEqualToArray:oldSelection])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
-															object:self];
-	}
-}
-
 @end
