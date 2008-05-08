@@ -91,7 +91,6 @@
 - (IBAction)saveToHost:(id)sender;
 - (KTTransferController *)localTransferController;
 - (KTTransferController *)remoteTransferController;
-- (void)setExportTransferController:(KTTransferController *)anExportTransferController;
 
 - (NSArray *)bundleIdentifiersRequiredByPlugin:(id)aPlugin;
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation;
@@ -1259,14 +1258,14 @@
 /*!	Export. Only enabled if we have a remote setup.  Takes the site, published as if it were remote, and saves it somewhere.
  */
 
-- (IBAction) exportAgain:(id)sender
+- (IBAction)exportAgain:(id)sender
 {
 	[self cleanupBeforePublishing];
 	
 	[myExportTransferController uploadEverything];
 }
 
-- (void)doExport:sender
+- (void)doExport
 {
 	NSString *suggestedPath = nil;
 	if (nil == myExportTransferController)
@@ -1289,7 +1288,8 @@
 - (IBAction) export:(id)sender
 {
 	[self cleanupBeforePublishing];
-	[self doExport:sender];
+	[self setExportTransferController:nil];
+	[self doExport];
 	/*
 	 if (0 == [[[self hostProperties] objectForKey:@"remoteHosting"] intValue])
 	 {
