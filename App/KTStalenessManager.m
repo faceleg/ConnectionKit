@@ -18,7 +18,7 @@
  */
  
 /*	There is a rather interesting case that needs to be handled by the staleness manager. Consider a site with a number of pages,
- *	each dependent upon the key "uniqueID" of a particular page. So, the natural behavior would be to observer this key once
+ *	each dependent upon the key "titleHTML" of a particular page. So, the natural behavior would be to observer this key once
  *	for each dependent page and to set the KVO context to be the page the keypath originates from. However, when you then remove
  *	an observer, there is no control over which observer is removed; thereby messing up the KVO contexts.
  *	The solution: ignore context.
@@ -167,63 +167,50 @@
 	return myNonStalePages;
 }
 
-- (NSMutableSet *)observedKeyPathsOfNonStalePageWithID:(NSString *)pageID
+- (NSMutableSet *)observedKeyPathsOfNonStalePage:(KTAbstractPage *)page
 {
-	NSMutableSet *result = [[self nonStalePages] objectForKey:pageID];
+	NSMutableSet *result = [[self nonStalePages] objectForKey:page];
 	
 	if (!result)
 	{
 		result = [[NSMutableSet alloc] initWithCapacity:1];
-		[[self nonStalePages] setObject:result forKey:pageID];
+		CFDictionarySetValue((CFMutableDictionaryRef)[self nonStalePages], page, result);
 		[result release];
 	}
 	
 	return result;
 }
 
-- (NSMutableSet *)observedKeyPathsOfNonStalePage:(KTAbstractPage *)page
-{
-	return [self observedKeyPathsOfNonStalePageWithID:[page uniqueID]];
-}
-
 - (NSSet *)nonStalePagesDependentUponKeyPath:(NSString *)keyPath ofObject:(NSObject *)object
 {
 	// Run through all non-stale pages to see if they are dependent upon the key
 	KTParsedKeyPath *parsedKeyPath = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:object];
-	NSMutableSet *dependentPageIDs = [[NSMutableSet alloc] init];
+	NSMutableSet *buffer = [[NSMutableSet alloc] init];
 	
-	NSEnumerator *pageIDsEnumerator = [[self nonStalePages] keyEnumerator];
-	NSString *aPageID;
-	while (aPageID = [pageIDsEnumerator nextObject])
+	NSEnumerator *pagesEnumerator = [[self nonStalePages] keyEnumerator];
+	KTPage *aPage;
+	while (aPage = [pagesEnumerator nextObject])
 	{
-		NSSet *pageKeyPaths = [self observedKeyPathsOfNonStalePageWithID:aPageID];
+		NSSet *pageKeyPaths = [self observedKeyPathsOfNonStalePage:aPage];
 		if ([pageKeyPaths containsObject:parsedKeyPath])
 		{
-			[dependentPageIDs addObject:aPageID];
+			[buffer addObject:aPage];
 		}
 	}
 	
+	
+	// Tidy up
 	[parsedKeyPath release];
 	
-	
-	// The list we have thus far is of page IDs. Convert to actual pages and return
-	NSMutableSet *result = [NSMutableSet setWithCapacity:[dependentPageIDs count]];
-	NSEnumerator *pagesEnumerator = [dependentPageIDs objectEnumerator];
-	while (aPageID = [pagesEnumerator nextObject])
-	{
-		KTAbstractPage *page = [KTAbstractPage pageWithUniqueID:aPageID inManagedObjectContext:[[self document] managedObjectContext]];
-		[result addObject:page];
-	}
-	
-	
-	[dependentPageIDs release];
+	NSSet *result = [[buffer copy] autorelease];
+	[buffer release];
 	return result;
 }
 
 - (void)addNonStalePage:(KTAbstractPage *)page
 {
 	// Only begin observing the page if we're not already doing so
-	if (![[self nonStalePages] objectForKey:[page uniqueID]])
+	if (![[self nonStalePages] objectForKey:page])
 	{
 		// Parse the page as quickly as possible. The parser delegate (us) will pick up observation info.
 		KTHTMLParser *parser = [[KTStalenessHTMLParser alloc] initWithPage:page];
@@ -252,10 +239,11 @@
 
 - (void)removeNonStalePage:(KTAbstractPage *)page
 {
-	// Ignore pages without an ID
+	// Ignore pages without an ID. I think we don't have to do this now that pages, not IDs,  are used as keys - Mike.
+	/*
 	if (![page uniqueID]) {
 		return;
-	}
+	}*/
 	
 	
 	NSSet *observedKeyPaths = [self observedKeyPathsOfNonStalePage:page];
@@ -267,7 +255,7 @@
 		[[keyPath parsedObject] removeObserver:self forKeyPath:[keyPath keyPath]];
 	}
 	
-	[[self nonStalePages] removeObjectForKey:[page uniqueID]];
+	[[self nonStalePages] removeObjectForKey:page];
 }
 
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
