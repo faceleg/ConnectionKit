@@ -22,28 +22,6 @@
 #pragma mark -
 #pragma mark Selection Accessors
 
-/*	This is the public version of -setSelectedPages. It updates internal storage as well as the UI itself.
- */
-- (void)XsetSelectedObjects:(NSSet *)selectedPages;
-{
-	[[self siteOutline] selectItems:[selectedPages allObjects]];
-	// By adjusting the site outline directly, the notification should feed through and update
-	// the selection proxy etc.
-}
-
-/*	This is the private version of -setSelectedPages. It updates just the internal storage
- */
-- (void)_setSelectedPages:(NSArray *)selectedPages;
-{
-	// let interested parties know that selection changed
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-														object:[selectedPages firstObjectOrNilIfEmpty]];
-	
-	// Refresh webview
-	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];
-}
-
-
 /*	Convenience method for -selectedPages. If only a single page is selected, returns that.
  *	Otherwise, nil is the return value.
  */
@@ -71,10 +49,14 @@
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
 	NSArray *selectedPages = [[self siteOutline] selectedItems];
-	[self _setSelectedPages:selectedPages];
-	
-	//NSArray *selectionIndexPaths = [selectedPages valueForKey:@"indexPath"];
 	[self setSelectedObjects:selectedPages];
+	
+	// let interested parties know that selection changed
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
+														object:[selectedPages firstObjectOrNilIfEmpty]];
+	
+	// Refresh webview
+	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
