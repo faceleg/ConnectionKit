@@ -9,6 +9,8 @@
 #import "KTPage.h"
 #import "KTArchivePage.h"
 
+#import "KTDocumentInfo.h"
+
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableArray+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
@@ -258,6 +260,9 @@
 	
 	// It is assumed that if the cache is invalid, the site structure must have changed, so we post a notification
 	[self postSiteStructureDidChangeNotification];
+	
+	// Also, the site menu may well have been affected
+	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
 }
 
 

@@ -19,6 +19,7 @@
 
 
 @interface KTDocumentInfo (Private)
+- (NSArray *)_pagesInSiteMenu;
 + (NSArray *)_siteMenuSortDescriptors;
 @end
 
@@ -80,6 +81,19 @@
 
 - (NSArray *)pagesInSiteMenu
 {
+	NSArray *result = [self wrappedValueForKey:@"pagesInSiteMenu"];
+	if (!result)
+	{
+		result = [self _pagesInSiteMenu];
+		[self setPrimitiveValue:result forKey:@"pagesInSiteMenu"];
+	}
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (NSArray *)_pagesInSiteMenu
+{
 	// Fetch all the pages qualifying to fit in the Site Menu.
 	NSManagedObjectModel *model = [[[self managedObjectContext] persistentStoreCoordinator] managedObjectModel];
 	NSFetchRequest *request = [model fetchRequestTemplateForName:@"SiteOutlinePages"];
@@ -98,6 +112,11 @@
 	[result sortUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
 	
 	return result;
+}
+
+- (void)invalidatePagesInSiteMenuCache
+{
+	[self setWrappedValue:nil forKey:@"pagesInSiteMenu"];
 }
 
 + (NSArray *)_siteMenuSortDescriptors

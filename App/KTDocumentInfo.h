@@ -37,5 +37,6 @@
 
 // Site menu
 - (NSArray *)pagesInSiteMenu;
+- (void)invalidatePagesInSiteMenuCache;
 
 @end

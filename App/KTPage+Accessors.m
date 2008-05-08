@@ -12,6 +12,7 @@
 #import "KTMaster.h"
 #import "KTMediaManager.h"
 #import "KTDesign.h"
+#import "KTDocumentInfo.h"
 
 #import "Debug.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -125,6 +126,12 @@
 	
 	// By toggling draft status, the site structure must have changed
 	[self postSiteStructureDidChangeNotification];
+	
+	// This may also affect the site menu
+	if ([self includeInSiteMenu])
+	{
+		[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
+	}
 }
 
 - (BOOL)pageOrParentDraft
@@ -189,13 +196,12 @@
 
 - (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
 
-/*	In addition to a standard setter, we must also invoke KVO notifications on document.siteMenu
+/*	In addition to a standard setter, we must also invalidate old site menu
  */
 - (void)setIncludeInSiteMenu:(BOOL)include;
 {
-	[[self document] willChangeValueForKey:@"siteMenu"];
 	[self setWrappedBool:include forKey:@"includeInSiteMenu"];
-	[[self document] didChangeValueForKey:@"siteMenu"];
+	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
 }
 
 /*	Used when determining if a page should be highlighted in the Site Menu.
