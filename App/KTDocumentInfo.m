@@ -11,9 +11,17 @@
 #import "KT.h"
 #import "KTDocument.h"
 #import "KTManagedObjectContext.h"
+
+#import "NSArray+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
+
+
+@interface KTDocumentInfo (Private)
++ (NSArray *)_siteMenuSortDescriptors;
+@end
+
 
 @implementation KTDocumentInfo
 
@@ -65,6 +73,45 @@
 - (void)setMetadata:(NSDictionary *)metadata
 {
 	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
+}
+
+#pragma mark -
+#pragma mark Site Menu
+
+- (NSArray *)pagesInSiteMenu
+{
+	// Fetch all the pages qualifying to fit in the Site Menu.
+	NSManagedObjectModel *model = [[[self managedObjectContext] persistentStoreCoordinator] managedObjectModel];
+	NSFetchRequest *request = [model fetchRequestTemplateForName:@"SiteOutlinePages"];
+	
+	NSError *error = nil;
+	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
+	if (error) {
+		[[NSAlert alertWithError:error] runModal];
+		return nil;
+	}
+	
+	NSMutableArray *result = [NSMutableArray arrayWithArray:unsortedResult];
+	
+	
+	// Sort the pages according to their index path from root
+	[result sortUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
+	
+	return result;
+}
+
++ (NSArray *)_siteMenuSortDescriptors
+{
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"indexPath" ascending:YES];
+		result = [[NSArray alloc] initWithObject:sortDescriptor];
+		[sortDescriptor release];
+	}
+	
+	return result;
 }
 
 #pragma mark -

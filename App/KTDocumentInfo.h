@@ -35,4 +35,7 @@
 - (NSDictionary *)metadata;
 - (void)setMetadata:(NSDictionary *)metadata;
 
+// Site menu
+- (NSArray *)pagesInSiteMenu;
+
 @end

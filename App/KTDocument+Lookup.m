@@ -108,57 +108,6 @@
 	return [string stringByRemovingCharactersInSet:[[NSCharacterSet alphanumericASCIIUnderlineCharacterSet] invertedSet]];
 }
 
-+ (NSArray *)_siteMenuSortDescriptors
-{
-	static NSArray *result;
-	
-	if (!result)
-	{
-		NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"indexPath" ascending:YES];
-		result = [[NSArray alloc] initWithObject:sortDescriptor];
-		[sortDescriptor release];
-	}
-	
-	return result;
-}
-
-- (NSArray *)siteMenu
-{
-	// Fetch all the pages qualifying to fit in the Site Menu.
-	NSFetchRequest *request = [[self managedObjectModel] fetchRequestTemplateForName:@"SiteOutlinePages"];
-	
-	NSError *error = nil;
-	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
-	if (error) {
-		[[NSAlert alertWithError:error] runModal];
-		return nil;
-	}
-	
-	NSMutableArray *result = [NSMutableArray arrayWithArray:unsortedResult];
-	
-	
-	// Root has to be handled specially
-	BOOL includeRoot = [[self root] includeInSiteMenu];
-	if (includeRoot)
-	{
-		[result removeObjectIdenticalTo:[self root]];
-	}
-	
-	
-	// Sort the pages according to their index path from root
-	[result sortUsingDescriptors:[KTDocument _siteMenuSortDescriptors]];
-	
-	
-	// Add root back in if needs be
-	if (includeRoot)
-	{
-		[result insertObject:[self root] atIndex:0];
-	}
-	
-	
-	return result;
-}
-
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 {
 	NSMutableArray *RSSCollectionArray = [NSMutableArray array];

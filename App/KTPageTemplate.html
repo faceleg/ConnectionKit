@@ -101,12 +101,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						[[textblock property:master.siteSubtitleHTML flags:"line" tag:p]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
-[[if document.siteMenu]]
+[[if documentInfo.pagesInSiteMenu]]
 						<div id="sitemenu">
 							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
 							<div id="sitemenu-content">
 								<ul>
-[[forEach document.siteMenu toplink]]
+[[forEach documentInfo.pagesInSiteMenu toplink]]
 
 [[if firstParentOrSelfInSiteMenu==toplink]]
 [[if toplink==parser.currentPage]]
