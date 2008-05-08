@@ -240,7 +240,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Stop observing removed pages
 	NSSet *removedPages = [oldChildren setByRemovingObjects:newChildren];
-	[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
+	if ([removedPages count] > 1)
+	{
+		[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
+	}
 	
 	
 	// Do the reload

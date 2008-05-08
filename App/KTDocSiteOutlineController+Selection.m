@@ -38,6 +38,14 @@
 	return result;
 }
 
+/*	Override to change the outline view's selection. This will eventually call super.
+ */
+- (BOOL)setSelectedObjects:(NSArray *)objects
+{
+	[[self siteOutline] selectItems:objects forceDidChangeNotification:YES];
+	return YES;
+}
+
 #pragma mark -
 #pragma mark Outline View Delegate
 
@@ -49,7 +57,7 @@
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
 	NSArray *selectedPages = [[self siteOutline] selectedItems];
-	[self setSelectedObjects:selectedPages];
+	OBASSERT([super setSelectedObjects:selectedPages]);
 	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification

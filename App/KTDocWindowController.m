@@ -2150,26 +2150,15 @@ from representedObject */
 
 /*	Called whenever a change is undone. Ensure the correct page is highlighted in the Site Outline to show the change.
  */
-- (void)undo_selectPagesWithIDs:(NSSet *)pageIDs scrollPoint:(NSPoint)scrollPoint
+- (void)undo_selectPages:(NSArray *)pages scrollPoint:(NSPoint)scrollPoint
 {
 	// Select the pages in the Site Outline; the rest is taken care of for us
-	NSManagedObjectContext *moc = [[self document] managedObjectContext];
-	NSMutableSet *pages = [NSMutableSet setWithCapacity:[pageIDs count]];
-	
-	NSEnumerator *pagesEnumerator = [pageIDs objectEnumerator];
-	NSString *aPageID;
-	while (aPageID = [pagesEnumerator nextObject])
-	{
-		KTPage *aPage = [KTPage pageWithUniqueID:aPageID inManagedObjectContext:moc];
-		[pages addObjectIgnoringNil:aPage];
-	}
-	
-	[[self siteOutlineController] setSelectedObjects:[pages allObjects]];
+	[[self siteOutlineController] setSelectedObjects:pages];
 	
 	
 	// Record what to do when redoing/undoing the change again
 	NSUndoManager *undoManager = [[self document] undoManager];
-	[[undoManager prepareWithInvocationTarget:self] undo_selectPagesWithIDs:pageIDs scrollPoint:scrollPoint];
+	[[undoManager prepareWithInvocationTarget:self] undo_selectPages:pages scrollPoint:scrollPoint];
 }
 
 - (void)undoManagerWillCloseUndoGroup:(NSNotification *)notification
@@ -2179,7 +2168,7 @@ from representedObject */
 	// When ending the top level undo group, record the selected pages
 	if ([undoManager groupingLevel] == 1)
 	{
-		NSSet *pageIDs = [[[self siteOutlineController] selectedObjects] valueForKey:@"uniqueID"];
+		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 		
 		// Figuring out the scroll point is a little trickier
 		NSPoint scrollPoint = NSZeroPoint;
@@ -2191,7 +2180,7 @@ from representedObject */
 			scrollPoint = [clipView documentVisibleRect].origin;
 		}
 		
-		[[undoManager prepareWithInvocationTarget:self] undo_selectPagesWithIDs:pageIDs scrollPoint:scrollPoint];
+		[[undoManager prepareWithInvocationTarget:self] undo_selectPages:selectedPages scrollPoint:scrollPoint];
 	}
 }
 
