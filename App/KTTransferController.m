@@ -860,7 +860,8 @@ static NSArray *sReservedNames = nil;
 
 			if ([self where] != kGeneratingRemoteExport) // don't ping google if we are just exporting
 			{
-				NSString *siteMapURLString = [[[self associatedDocument] publishedSiteURL] stringByAppendingString:@"/sitemap.xml.gz"];
+				NSURL *siteURL = [[[self associatedDocument] hostProperties] siteURL];
+				NSString *siteMapURLString = [[NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL] absoluteString];
 				NSString *pingURLString = [NSString stringWithFormat:@"http://www.google.com/webmasters/tools/ping?sitemap=%@",
 					[siteMapURLString urlEncode]];
 				[self pingThisURLString:pingURLString];

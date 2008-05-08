@@ -12,6 +12,7 @@
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
+#import "KTHostProperties.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
@@ -228,7 +229,7 @@
 - (NSURL *)designDirectoryURL
 {
 	NSString *designDirectoryName = [[self design] remotePath];
-	NSURL *siteURL = [NSURL URLWithString:[[[[self valueForKey:@"pages"] anyObject] document] publishedSiteURL]];	// May be nil
+	NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil
 	NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
 	return result;

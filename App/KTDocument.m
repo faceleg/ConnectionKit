@@ -533,34 +533,10 @@
     return YES;
 }
 
-/*!	Returns the base of the url like http://mysite.mydomain.com/~user/thisSite/ 
- */
-- (NSString *)publishedSiteURL
-{
-	NSString *result = @"http://unpublished.example.com/";
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
-	
-	NSString *remoteSiteURL = [hostProperties remoteSiteURL];
-	if (nil != remoteSiteURL)
-	{
-		result = remoteSiteURL;
-	}
-	else
-	{
-		NSString *globalSiteURL = [hostProperties globalSiteURL];
-		if (nil != globalSiteURL)
-		{
-			result = globalSiteURL;
-		}
-	}
-	
-	return result;
-}
-
 /*! returns publishSiteURL/sitemap.xml */
 - (NSString *)publishedSitemapURL
 {
-	NSString *result = [self publishedSiteURL];
+	NSString *result = [[[self hostProperties] siteURL] absoluteString];
 	if ( (nil == result) || [result hasSuffix:@"example.com/"] )
 	{
 		result = @""; // show placeholder in UI
@@ -1053,9 +1029,9 @@
 	// "View Published Site" viewPublishedSite:
 	else if ( [menuItem action] == @selector(viewPublishedSite:) ) 
 	{
-		NSString *publishedSiteURL = [self publishedSiteURL];
-		return ( (nil != publishedSiteURL)
-				 && ![publishedSiteURL hasSuffix:@"example.com/"] );
+		NSURL *siteURL = [[self hostProperties] siteURL];
+		return ( (nil != siteURL)
+				 && ![[siteURL host] hasSuffix:@"example.com/"] );
 	}
 	
 	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
@@ -1421,10 +1397,10 @@
 
 - (IBAction)viewPublishedSite:(id)sender
 {
-	NSURL *publishedSiteURL = [[self root] publishedURL];
-	if (publishedSiteURL)
+	NSURL *siteURL = [[self root] absoluteURL];
+	if (siteURL)
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:publishedSiteURL];
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
 	}
 }
 

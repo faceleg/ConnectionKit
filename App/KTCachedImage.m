@@ -1026,7 +1026,7 @@
 - (NSString *)publishedURL
 {
 	KTMedia *media = [self media];
-	NSString *publishedSiteURL = [[media document] publishedSiteURL];
+	NSString *siteURL = [[[[media document] hostProperties] siteURL] absoluteString];
 	NSString *fileName = [media fileNameForImageName:[self name]];
 
 	NSString *mediaPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
@@ -1036,7 +1036,7 @@
 		mediaPath = @"/";
 	}
 	
-    NSString *result = [NSString stringWithFormat:@"%@%@/%@", publishedSiteURL, mediaPath, fileName];
+    NSString *result = [NSString stringWithFormat:@"%@%@/%@", siteURL, mediaPath, fileName];
 	return result;
 }
 

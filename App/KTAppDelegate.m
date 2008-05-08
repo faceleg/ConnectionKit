@@ -45,6 +45,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTDocument.h"
 #import "KTDocumentController.h"
 #import "KTElementPlugin.h"
+#import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
@@ -58,6 +59,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTTranscriptController.h"
 #import "KTUtilities.h"
 #import "KTWebView.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
@@ -181,7 +183,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
 	}
 		
-	NSString *urlString = [[self currentDocument] publishedSiteURL];
+	NSString *urlString = [[[[self currentDocument] hostProperties] siteURL] absoluteString];
 	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.example.com/"])
 	{
 		[result appendFormat:@"\nURL:\n%@\n", urlString];

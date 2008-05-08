@@ -330,21 +330,25 @@ to be verified.
 	return result;
 }
 
+- (void)setStemURL:(NSString *)someString
+{
+	[self setWrappedValue:someString forKey:@"stemURL"];
+}
+
 /*!	Returns the base of the url like http://mysite.mydomain.com/~user/thisSite/ 
  */
 - (NSURL *)siteURL
 {
 	NSString *result = @"http://unpublished.example.com/";
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
 	
-	NSString *remoteSiteURL = [hostProperties remoteSiteURL];
+	NSString *remoteSiteURL = [self remoteSiteURL];
 	if (nil != remoteSiteURL)
 	{
 		result = remoteSiteURL;
 	}
 	else
 	{
-		NSString *globalSiteURL = [hostProperties globalSiteURL];
+		NSString *globalSiteURL = [self globalSiteURL];
 		if (nil != globalSiteURL)
 		{
 			result = globalSiteURL;

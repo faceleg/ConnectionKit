@@ -107,7 +107,6 @@ typedef enum {
 - (IBAction)setupHost:(id)sender;
 
 - (KTDocWindowController *)windowController;
-- (NSString *)publishedSiteURL;
 
 // cache support
 - (BOOL)createImagesCacheIfNecessary;

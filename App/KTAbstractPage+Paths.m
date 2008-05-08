@@ -239,9 +239,9 @@
 {
 	NSURL *result = nil;
 	
-	if ( [self isRoot] )
+	if ([self isRoot])
 	{
-		result = [NSURL URLWithString:[[self document] publishedSiteURL]];
+		result = [self absoluteURL];
 	}
 	
 	if (!result)

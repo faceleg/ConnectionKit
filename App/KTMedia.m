@@ -1308,7 +1308,7 @@ NSString *kKTMediaException = @"KTMediaException";
 {
 	/// we now implement -publishedURL in KTMediaRef so that we can find appropriateScaledImage if isImage
 	/// this is here as a backstop
-	NSString *result = [NSString stringWithFormat:@"%@%@/%@", [[self document] publishedSiteURL],
+	NSString *result = [NSString stringWithFormat:@"%@%@/%@", [[[[self document] hostProperties] siteURL] absoluteString]],
 		[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"],
 		[self fileName]];
 	return result;
@@ -1316,7 +1316,7 @@ NSString *kKTMediaException = @"KTMediaException";
 
 - (NSString *)publishedURLForImageName:(NSString *)anImageName
 {
-	NSString *result = [NSString stringWithFormat:@"%@%@/%@", [[self document] publishedSiteURL],
+	NSString *result = [NSString stringWithFormat:@"%@%@/%@", [[[[self document] hostProperties] siteURL] absoluteString],
 		[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"],
 		[self fileNameForImageName:anImageName]];
 	return result;
