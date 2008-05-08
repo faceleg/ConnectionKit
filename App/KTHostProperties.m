@@ -339,22 +339,28 @@ to be verified.
  */
 - (NSURL *)siteURL
 {
-	NSString *result = @"http://unpublished.example.com/";
+	NSString *result = nil;
 	
-	NSString *remoteSiteURL = [self remoteSiteURL];
-	if (nil != remoteSiteURL)
+	NSNumber *useLocalHosting = [self valueForKey:@"localHosting"];
+	if (useLocalHosting)
 	{
-		result = remoteSiteURL;
-	}
-	else
-	{
-		NSString *globalSiteURL = [self globalSiteURL];
-		if (nil != globalSiteURL)
+		if ([useLocalHosting boolValue])
 		{
-			result = globalSiteURL;
+			result = [self globalSiteURL];
+		}
+		else
+		{
+			result = [self remoteSiteURL];
 		}
 	}
 	
+	// Bckup option
+	if (!result)
+	{
+		result = @"http://unpublished.example.com/";
+	}
+		
+	OBPOSTCONDITION(result);	
 	return [NSURL URLWithString:result];
 }
 
