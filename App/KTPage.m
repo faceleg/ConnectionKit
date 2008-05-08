@@ -52,24 +52,16 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	[self setKeys:[NSArray arrayWithObjects:@"root",nil]
-		triggerChangeNotificationsForDependentKey:@"isRoot"];
-	[self setKeys:[NSArray arrayWithObjects:@"isRoot",nil]
-		triggerChangeNotificationsForDependentKey:@"canEditTitle"];
+	[self setKey:@"root" triggersChangeNotificationsForDependentKey:@"isRoot"];
+	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
 
-	[self setKeys:[NSArray arrayWithObjects:@"titleHTML",nil]
-		triggerChangeNotificationsForDependentKey:@"titleText"];
-	[self setKeys:[NSArray arrayWithObjects:@"titleHTML",nil]
-		triggerChangeNotificationsForDependentKey:@"fileName"];
-//	[self setKeys:[NSArray arrayWithObjects: @"isStale", nil]
-//        triggerChangeNotificationsForDependentKey: @"staleness"];
-	[self setKeys:[NSArray arrayWithObjects: @"keywords", nil]
-        triggerChangeNotificationsForDependentKey: @"keywordsAsArray"];
+	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
+	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"fileName"];
 		
-	[self setKeys:[NSArray arrayWithObjects: @"collectionSummaryType", nil]
-        triggerChangeNotificationsForDependentKey: @"thumbnail"];
-	[self setKeys:[NSArray arrayWithObjects: @"collectionSummaryType", nil]
-        triggerChangeNotificationsForDependentKey: @"summaryHTML"];
+	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
+	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
+	
+	[self setKey:@"sortedChildren" triggersChangeNotificationsForDependentKey:@"sortedChildrenInIndex"];
 	
 	
 	// Site Outline
@@ -83,7 +75,7 @@
 	
 	
 	// this is so we get notification of updaates to any properties that affect index type.
-	// This is a fake attribute -- we don't actually have this accessor since it' more UI related
+	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
 	[self setKeys:[NSArray arrayWithObjects:
 		@"collectionShowPermanentLink",
 		@"collectionHyperlinkPageTitles",
@@ -97,8 +89,7 @@
 	
 	
 	// Paths
-	[self setKeys:[NSArray arrayWithObject:@"customFileExtension"]
-		triggerChangeNotificationsForDependentKey:@"fileExtension"];
+	[self setKey:@"customFileExtension" triggersChangeNotificationsForDependentKey:@"fileExtension"];
 	
 	
 	// Register transformers
