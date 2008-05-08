@@ -24,7 +24,7 @@
 
 /*	This is the public version of -setSelectedPages. It updates internal storage as well as the UI itself.
  */
-- (void)setSelectedObjects:(NSSet *)selectedPages;
+- (void)XsetSelectedObjects:(NSSet *)selectedPages;
 {
 	[[self siteOutline] selectItems:[selectedPages allObjects]];
 	// By adjusting the site outline directly, the notification should feed through and update
@@ -73,8 +73,8 @@
 	NSArray *selectedPages = [[self siteOutline] selectedItems];
 	[self _setSelectedPages:selectedPages];
 	
-	NSArray *selectionIndexPaths = [selectedPages valueForKey:@"indexPath"];
-	[self setSelectionIndexPaths:selectionIndexPaths];
+	//NSArray *selectionIndexPaths = [selectedPages valueForKey:@"indexPath"];
+	[self setSelectedObjects:selectedPages];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.

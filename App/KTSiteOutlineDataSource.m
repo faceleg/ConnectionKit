@@ -384,7 +384,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	
 	// keep a retain http://rentzsch.com/cocoa/foamingAtTheMouth
-	if ( nil != child )
+	if (child)
 	{
 		[self addPagesObject:child];
 	}

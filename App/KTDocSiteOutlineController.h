@@ -12,7 +12,7 @@
 @class KTPage, KTDocument, KTDocWindowController, KTSiteOutlineDataSource;
 
 
-@interface KTDocSiteOutlineController : NSTreeController
+@interface KTDocSiteOutlineController : NSArrayController
 {
 	IBOutlet NSOutlineView			*siteOutline;
 	
@@ -27,12 +27,13 @@
 - (KTDocWindowController *)windowController;
 - (void)setWindowController:(KTDocWindowController *)controller;
 
+- (NSString *)childrenKeyPath;	// A hangover from NSTreeController
+
 @end
 
 
 @interface KTDocSiteOutlineController (Selection)
 
-- (void)setSelectedObjects:(NSSet *)selectedPages;
-- (KTPage *)selectedPage;	// Always fast!
+- (KTPage *)selectedPage;
 
 @end

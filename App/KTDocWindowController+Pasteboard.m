@@ -60,7 +60,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self copyPagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
+	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
 	{
 		[self copyPages:sender];
 	}
@@ -176,7 +176,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self cutPagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
+	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
 	{
 		[self cutPages:sender];
 	}
@@ -901,7 +901,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	{
 		[self duplicatePagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexPaths] count] > 0)
+	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
 	{
 		[self duplicatePages:sender];
 	}

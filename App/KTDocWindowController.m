@@ -2164,7 +2164,7 @@ from representedObject */
 		[pages addObjectIgnoringNil:aPage];
 	}
 	
-	[[self siteOutlineController] setSelectedObjects:pages];
+	[[self siteOutlineController] setSelectedObjects:[pages allObjects]];
 	
 	
 	// Record what to do when redoing/undoing the change again

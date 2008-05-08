@@ -88,10 +88,13 @@
 		mySiteOutlineDataSource = [[KTSiteOutlineDataSource alloc] initWithSiteOutlineController:self];
 		
 		// Prepare tree controller parameters
-		[self setChildrenKeyPath:@"sortedChildren"];
+		[self setObjectClass:[KTPage class]];
+		
 		[self setAvoidsEmptySelection:NO];
-		[self setPreservesSelection:NO];
+		[self setPreservesSelection:YES];
 		[self setSelectsInsertedObjects:NO];
+		
+		[self bind:@"contentSet" toObject:mySiteOutlineDataSource withKeyPath:@"pages" options:nil];
 	}
 	
 	return self;
@@ -114,7 +117,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (void)setContent:(id)content
+- (void)XsetContent:(id)content
 {
 	[super setContent:content];
 	
@@ -148,13 +151,6 @@
 													 name:@"KTDisplaySmallPageIconsDidChange"
 												   object:[controller document]];
 	}
-	
-	
-	return;
-	// Connect tree controller stuff up to the controller/doc
-	KTDocument *document = [controller document];
-	[self setManagedObjectContext:[document managedObjectContext]];
-	[self setContent:[document root]];
 }
 
 - (NSOutlineView *)siteOutline { return siteOutline; }
@@ -222,6 +218,7 @@
 	}
 }
 
+- (NSString *)childrenKeyPath { return @"sortedChildren"; }
 
 @end
 
