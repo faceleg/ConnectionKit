@@ -387,7 +387,7 @@
 
 - (NSString *)timestamp
 {
-	NSDateFormatterStyle style = [[[self master] valueForKey:@"timestampFormat"] intValue];
+	NSDateFormatterStyle style = [[self master] timestampFormat];
 	return [self timestampWithStyle:style];
 }
 

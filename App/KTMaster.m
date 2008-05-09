@@ -40,9 +40,6 @@
 
 + (void)initialize
 {
-	[self setKeys:[NSArray arrayWithObjects:@"editableTimestamp", @"timestampType", @"timestampFormat", @"timestampShowTime", nil]
-		triggerChangeNotificationsForDependentKey:@"timestamp"];
-	
 	// Site Outline
 	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
 											@"codeInjectionBodyTag",
@@ -61,13 +58,19 @@
 {
 	[super awakeFromInsert];
 	
+	
 	// Prepare our continue reading link
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
 	[self setValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
 	
+	
 	// Enable/disable graphical text
 	[self setBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"] forKey:@"enableImageReplacement"];
+	
+	
+	// Timestamp
+	[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
 }
 
 - (void)awakeFromFetch
@@ -81,6 +84,12 @@
 		NSString *flattenedTitle = [html flattenHTML];
 		NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:flattenedTitle];
 		[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
+	}
+	
+	// Existing sites may not have their timestamp format set properly
+	if (![self timestampFormat])
+	{
+		[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
 	}
 }
 
@@ -424,6 +433,13 @@
 	// Update pages to the new style
 	NSSet *pages = [self valueForKey:@"pages"];
 	[pages makeObjectsPerformSelector:@selector(reloadEditableTimestamp)];
+}
+
+- (NSDateFormatterStyle)timestampFormat { return [self wrappedIntegerForKey:@"timestampFormat"]; }
+
+- (void)setTimestampFormat:(NSDateFormatterStyle)format
+{
+	[self setWrappedInteger:format forKey:@"timestampFormat"];
 }
 
 #pragma mark -

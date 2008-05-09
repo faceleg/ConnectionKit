@@ -39,9 +39,14 @@
 - (KTMediaContainer *)favicon;
 - (void)setFavicon:(KTMediaContainer *)favicon;
 
+#pragma mark Timestamp
 - (KTTimestampType)timestampType;
 - (void)setTimestampType:(KTTimestampType)timestampType;
 
+- (NSDateFormatterStyle)timestampFormat;
+- (void)setTimestampFormat:(NSDateFormatterStyle)format;
+
+#pragma mark CSS
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 - (NSString *)publishedMasterCSSPathRelativeToSite;
 
