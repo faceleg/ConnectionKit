@@ -28,7 +28,9 @@
 }
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller;
+
 - (KTDocSiteOutlineController *)siteOutlineController;
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
 
 - (NSOutlineView *)siteOutline;
 - (KTDocument *)document;

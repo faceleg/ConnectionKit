@@ -108,7 +108,7 @@
 	
 	
 	// Release remaining iVars
-	
+	[mySiteOutlineDataSource setSiteOutlineController:nil];
 	[mySiteOutlineDataSource release];
 	
 	[super dealloc];
@@ -116,14 +116,6 @@
 
 #pragma mark -
 #pragma mark Accessors
-
-- (void)XsetContent:(id)content
-{
-	[super setContent:content];
-	
-	// At the same time, clear out pages list
-	[mySiteOutlineDataSource resetPageObservation];
-}
 
 - (KTDocWindowController *)windowController { return myWindowController; }
 
@@ -168,6 +160,7 @@
 		[notificationCenter removeObserver:self name:NSOutlineViewSelectionDidChangeNotification object:oldSiteOutline];
 		[notificationCenter removeObserver:self name:NSOutlineViewItemWillCollapseNotification object:oldSiteOutline];
 	}
+	[mySiteOutlineDataSource resetPageObservation];
 	
 	
 	// Set up the appearance of the new view

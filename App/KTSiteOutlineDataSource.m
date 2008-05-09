@@ -77,6 +77,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[myCachedCustomPageIcons release];
 	[myCustomIconGenerationQueue release];
 	
+	// Dump the pages list
+	OBASSERT([myPages count] == 0);
 	[myPages release];
 	
 	[super dealloc];
@@ -85,7 +87,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 #pragma mark Accessors
 
-- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
+- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }		// Weak ref
+
+- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller { mySiteOutlineController = controller; }
 
 - (NSOutlineView *)siteOutline { return [[self siteOutlineController] siteOutline]; }
 
@@ -182,12 +186,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)resetPageObservation
 {
-	NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		[self removePagesObject:aPage];
-	}
+	[[self mutableSetValueForKey:@"pages"] removeAllObjects];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
