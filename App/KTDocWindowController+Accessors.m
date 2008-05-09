@@ -24,10 +24,6 @@
 - (id) selectedFrame;
 @end
 
-@interface NSObject (isa )
--(id)isa;
-@end
-
 @implementation KTDocWindowController ( Accessors )
 
 - (NSString *)HTMLSource
@@ -274,14 +270,3 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 @end
 
 
-#pragma mark -
-
-
-@implementation NSObject ( isa )
-
-- (id)isa
-{
-	return self->isa;
-}
-
-@end
