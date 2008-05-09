@@ -185,11 +185,6 @@
 	return result;
 }
 
-- (KTHostProperties *)hostProperties
-{
-	return [self wrappedValueForKey:@"hostProperties"];
-}
-
 - (NSDate *)lastSavedTime { return myLastSavedTime; }
 
 - (void)setLastSavedTime:(NSDate *)aLastSavedTime

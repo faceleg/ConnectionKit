@@ -43,6 +43,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTDocumentController.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
@@ -183,7 +184,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
 	}
 		
-	NSString *urlString = [[[[self currentDocument] hostProperties] siteURL] absoluteString];
+	NSString *urlString = [[[[[self currentDocument] documentInfo] hostProperties] siteURL] absoluteString];
 	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.example.com/"])
 	{
 		[result appendFormat:@"\nURL:\n%@\n", urlString];

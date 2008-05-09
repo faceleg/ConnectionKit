@@ -50,6 +50,8 @@
 
 - (KTPage *)root { return [self wrappedValueForKey:@"root"]; }
 
+- (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }
+
 - (KTCopyMediaType)copyMediaOriginals { return [self wrappedIntegerForKey:@"copyMediaOriginals"]; }
 
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy

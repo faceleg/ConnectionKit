@@ -244,8 +244,6 @@ typedef enum {
 - (BOOL)connectionsAreConnected;
 - (void)terminateConnections;
 
-- (KTHostProperties *)hostProperties;
-
 // support
 
 - (id)wrappedValueForKey:(NSString *)aKey;

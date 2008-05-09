@@ -51,6 +51,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
+#import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
 #import "KTHostProperties.h"
@@ -536,7 +537,7 @@
 /*! returns publishSiteURL/sitemap.xml */
 - (NSString *)publishedSitemapURL
 {
-	NSString *result = [[[self hostProperties] siteURL] absoluteString];
+	NSString *result = [[[[self documentInfo] hostProperties] siteURL] absoluteString];
 	if ( (nil == result) || [result hasSuffix:@"example.com/"] )
 	{
 		result = @""; // show placeholder in UI
@@ -1029,7 +1030,7 @@
 	// "View Published Site" viewPublishedSite:
 	else if ( [menuItem action] == @selector(viewPublishedSite:) ) 
 	{
-		NSURL *siteURL = [[self hostProperties] siteURL];
+		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
 		return ( (nil != siteURL)
 				 && ![[siteURL host] hasSuffix:@"example.com/"] );
 	}

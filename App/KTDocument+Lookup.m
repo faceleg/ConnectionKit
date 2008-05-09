@@ -24,6 +24,7 @@
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDesignURLProtocol.h"
+#import "KTDocumentInfo.h"
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 #import "KTInfoWindowController.h"
@@ -90,7 +91,7 @@
 
 - (NSString *)domainNameDashes
 {
-	NSMutableString *string = [NSMutableString stringWithString:[[[self hostProperties] siteURL] absoluteString]];
+	NSMutableString *string = [NSMutableString stringWithString:[[[[self documentInfo] hostProperties] siteURL] absoluteString]];
 	if ([string hasPrefix:@"http://"])
 	{
 		[string deleteCharactersInRange:NSMakeRange(0,7)];
@@ -257,7 +258,7 @@
 - (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
 {
 	NSString *url = [[aPage publishedURL] absoluteString];
-	if (![url hasPrefix:[[[self hostProperties] siteURL] absoluteString]])
+	if (![url hasPrefix:[[[[self documentInfo] hostProperties] siteURL] absoluteString]])
 	{
 		return;	// an external link not in this site
 	}
@@ -357,7 +358,7 @@
 	
 	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
 	
-	result = [[[[self hostProperties] siteURL] absoluteString] stringByAppendingString:
+	result = [[[[[self documentInfo] hostProperties] siteURL] absoluteString] stringByAppendingString:
 		[[design remotePath] stringByAppendingPathComponent:@"main.css"]];
 	
 	return result;

@@ -67,6 +67,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
 #import "KTInfoWindowController.h"
 #import "KTMaster.h"
@@ -860,7 +861,7 @@ static NSArray *sReservedNames = nil;
 
 			if ([self where] != kGeneratingRemoteExport) // don't ping google if we are just exporting
 			{
-				NSURL *siteURL = [[[self associatedDocument] hostProperties] siteURL];
+				NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
 				NSString *siteMapURLString = [[NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL] absoluteString];
 				NSString *pingURLString = [NSString stringWithFormat:@"http://www.google.com/webmasters/tools/ping?sitemap=%@",
 					[siteMapURLString urlEncode]];

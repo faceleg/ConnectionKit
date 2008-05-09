@@ -8,7 +8,7 @@
 
 #import "KTMediaFileUpload.h"
 
-#import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
 
@@ -23,7 +23,7 @@
  */
 - (NSURL *)absoluteURL;
 {
-	KTDocument *document = [[self managedObjectContext] document];
+	KTDocumentInfo *document = [[self managedObjectContext] documentInfo];
 	NSURL *siteURL = [[document hostProperties] siteURL];
 	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
 	return [result absoluteURL];

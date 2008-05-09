@@ -30,6 +30,7 @@
 }
 
 - (KTPage *)root;
+- (KTHostProperties *)hostProperties;
 
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
