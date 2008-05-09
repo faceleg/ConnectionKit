@@ -189,8 +189,8 @@ typedef enum {
 
 
 @interface KTDocument ( Lookup )
+
 // derived properties
-- (NSString *)domainNameDashes;
 - (NSString *)documentLastBuildDate;
 - (NSString *)hash;	// registration hash
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel

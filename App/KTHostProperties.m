@@ -11,9 +11,11 @@
 #import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
 
+#import "NSCharacterSet+Karelia.h"
 #import "NSEntityDescription+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 
 #import "debug.h"
@@ -67,6 +69,28 @@
 
 #pragma mark -
 #pragma mark Host Info
+
+- (NSString *)domainNameDashes
+{
+	NSMutableString *string = [NSMutableString stringWithString:[[self siteURL] absoluteString]];
+	if ([string hasPrefix:@"http://"])
+	{
+		[string deleteCharactersInRange:NSMakeRange(0,7)];
+	}
+	if ([string hasSuffix:@"/"])
+	{
+		[string deleteCharactersInRange:NSMakeRange([string length]-1, 1)];
+	}
+	[string replace:@"." with:@"_"];
+	[string replace:@"/" with:@"_"];
+	unichar firstChar = [string characterAtIndex:0];
+	if (   ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'A', 26)] characterIsMember:firstChar]
+		&& ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'a', 26)] characterIsMember:firstChar])
+	{
+		[string insertString:@"host_" atIndex:0];
+	}
+	return [string stringByRemovingCharactersInSet:[[NSCharacterSet alphanumericASCIIUnderlineCharacterSet] invertedSet]];
+}
 
 - (NSString *)localPublishingRoot
 {

@@ -87,30 +87,6 @@
 	return [[NSCalendarDate calendarDate] descriptionRFC822];		// NOW in the proper format
 }
 
-// TODO: get the domain name or identifier of the site
-
-- (NSString *)domainNameDashes
-{
-	NSMutableString *string = [NSMutableString stringWithString:[[[[self documentInfo] hostProperties] siteURL] absoluteString]];
-	if ([string hasPrefix:@"http://"])
-	{
-		[string deleteCharactersInRange:NSMakeRange(0,7)];
-	}
-	if ([string hasSuffix:@"/"])
-	{
-		[string deleteCharactersInRange:NSMakeRange([string length]-1, 1)];
-	}
-	[string replace:@"." with:@"_"];
-	[string replace:@"/" with:@"_"];
-	unichar firstChar = [string characterAtIndex:0];
-	if (   ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'A', 26)] characterIsMember:firstChar]
-		&& ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'a', 26)] characterIsMember:firstChar])
-	{
-		[string insertString:@"host_" atIndex:0];
-	}
-	return [string stringByRemovingCharactersInSet:[[NSCharacterSet alphanumericASCIIUnderlineCharacterSet] invertedSet]];
-}
-
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 {
 	NSMutableArray *RSSCollectionArray = [NSMutableArray array];
