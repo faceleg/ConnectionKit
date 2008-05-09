@@ -99,7 +99,7 @@
 	
 	if (!fieldEditor && !richText) [result setEditable:NO];
 	[result setFieldEditor:fieldEditor];
-	[result setRichText:richText];
+	[result setRichText:YES];	// Presumably there must be some cases where this is not desired.
 	[result setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [result setHTMLTag:tag];
 	[result setGraphicalTextCode:GTCode];
