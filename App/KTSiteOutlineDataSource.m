@@ -227,10 +227,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  */
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context
 {
-	// If the collection is not expanded in the Site Outline it can be happily ignored.
-	if (![page isRoot] && ![[self siteOutline] isItemExpanded:page]) return;
-	
-	
 	NSArray *oldSortedChildren = [change valueForKey:NSKeyValueChangeOldKey];
 	NSSet *oldChildren  = [NSSet setWithArray:oldSortedChildren];
 	NSArray *newSortedChildren = [change valueForKey:NSKeyValueChangeNewKey];
