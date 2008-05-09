@@ -50,21 +50,6 @@
 #pragma mark -
 #pragma mark Generated properties
 
-/*!	Invoked to fill in the web pages for the meta 'generator' value
-*/
-- (NSString *)appNameVersion
-{
-	NSString *version = [NSApplication appVersion];
-	
-	NSString *applicationName = [NSApplication applicationName];
-	if ([[NSApp delegate] isPro])
-	{
-		applicationName = [applicationName stringByAppendingString:@" Pro"];
-	}
-	
-	return [NSString stringWithFormat:@"%@ %@", applicationName, version];
-}
-
 /*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
 	Returns a nonsense value
 */

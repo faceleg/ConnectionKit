@@ -7,7 +7,7 @@
 		<language>[[=languageInherited]]</language>
 		<lastBuildDate>[[=document.documentLastBuildDate]]</lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
-		<generator>[[=&document.appNameVersion]]</generator>
+		<generator>[[=&documentInfo.appNameVersion]]</generator>
 [[if master.logoImage]]
 		<image>
 			<url>[[mediainfo info:path media:master.logoImage]]</url>

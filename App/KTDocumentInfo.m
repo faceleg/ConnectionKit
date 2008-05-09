@@ -9,9 +9,11 @@
 #import "KTDocumentInfo.h"
 
 #import "KT.h"
+#import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTManagedObjectContext.h"
 
+#import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -78,6 +80,24 @@
 - (void)setMetadata:(NSDictionary *)metadata
 {
 	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
+}
+
+#pragma mark -
+#pragma mark HTML
+
+/*!	Invoked to fill in the web pages for the meta 'generator' value
+ */
+- (NSString *)appNameVersion
+{
+	NSString *version = [NSApplication appVersion];
+	
+	NSString *applicationName = [NSApplication applicationName];
+	if ([[NSApp delegate] isPro])
+	{
+		applicationName = [applicationName stringByAppendingString:@" Pro"];
+	}
+	
+	return [NSString stringWithFormat:@"%@ %@", applicationName, version];
 }
 
 #pragma mark -
