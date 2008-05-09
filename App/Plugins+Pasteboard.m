@@ -185,6 +185,7 @@
 													 @"childIndex",
 													 @"plugins",
 													 @"documentInfo",
+													 @"thumbnailMediaIdentifier", @"customSiteOutlineIconIdentifier",
 													 @"isStale",
 													 @"publishedPath", nil];
 		[result unionSet:myIgnoredKeys];
