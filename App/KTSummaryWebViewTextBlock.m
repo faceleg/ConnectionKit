@@ -10,6 +10,8 @@
 
 #import "KTWebKitCompatibility.h"
 #import "KTPage.h"
+
+#import "NSString+Karelia.h"
 #import "DOMNode+KTExtensions.h"
 
 #import "Debug.h"
@@ -41,19 +43,23 @@
 		}
 		
 		
-		// Insert the new HTML
-		[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
-		
-		
-		// Recreate the selection
-		DOMNode *startContainer = [[self DOMNode] childNodeAtIndexPath:selectionStartIndexPath];
-		[selection setStart:startContainer offset:[selection startOffset]];
-		
-		DOMNode *endContainer = startContainer;
-		if (selectionEndIndexPath) startContainer = [[self DOMNode] childNodeAtIndexPath:selectionEndIndexPath];
-		[selection setEnd:endContainer offset:selectionEndOffset];
-		
-		[webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+		// Insert the new HTML but only if there's something to replace it with
+		NSString *editingHTML = [self innerEditingHTML];
+		if (![[editingHTML flattenHTML] isEqualToString:@""])
+		{
+			[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
+			
+			
+			// Recreate the selection
+			DOMNode *startContainer = [[self DOMNode] childNodeAtIndexPath:selectionStartIndexPath];
+			[selection setStart:startContainer offset:[selection startOffset]];
+			
+			DOMNode *endContainer = startContainer;
+			if (selectionEndIndexPath) startContainer = [[self DOMNode] childNodeAtIndexPath:selectionEndIndexPath];
+			[selection setEnd:endContainer offset:selectionEndOffset];
+			
+			[webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+		}
 	}
 	
 	return [super becomeFirstResponder];
