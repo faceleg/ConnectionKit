@@ -120,6 +120,8 @@
 
 - (KTMediaContainer *)mediaContainerWithPath:(NSString *)path
 {
+	OBPRECONDITION(path);
+	
 	KTMediaContainer *result = [self insertMediaContainer];
 	[result setSourceAlias:[BDAlias aliasWithPath:path]];
 	
