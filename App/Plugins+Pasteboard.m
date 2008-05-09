@@ -115,10 +115,11 @@
 	[buffer addEntriesFromDictionary:properties];
 	
 	
-	// Special case: pages need their thumbnail copied
+	// Special case: pages need their thumbnails copied
 	if ([self isKindOfClass:[KTPage class]])
 	{
-		[buffer setValue:[self valueForKey:@"thumbnail"] forKey:@"thumbnail"];
+		[buffer setValue:[(KTPage *)self thumbnail] forKey:@"thumbnail"];
+		[buffer setValue:[(KTPage *)self customSiteOutlineIcon] forKey:@"customSiteOutlineIcon"];
 	}
 	
 	

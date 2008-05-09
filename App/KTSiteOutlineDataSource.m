@@ -239,7 +239,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Stop observing removed pages
 	NSSet *removedPages = [oldChildren setByRemovingObjects:newChildren];
-	if ([removedPages count] > 1)
+	if ([removedPages count] > 0)
 	{
 		[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 	}
