@@ -29,8 +29,8 @@
 		<meta name="robots" content="[[=&document.metaRobots]]" />
 		<meta name="generator" content="[[=&document.appNameVersion]]" />
 		<meta name="viewport" content="width=[[=master.design.viewport]]" />
-[[if root.documentInfo.googleSiteVerification]]
-		[[=root.documentInfo.googleSiteVerification]]
+[[if documentInfo.googleSiteVerification]]
+		[[=documentInfo.googleSiteVerification]]
 [[endif]]
 [[if master.favicon.file]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.favicon]]" />
@@ -184,8 +184,8 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 		</div> <!-- specific body type -->
 [[endBody]]
 
-[[if root.documentInfo.googleAnalyticsCode]]
-[[=root.documentInfo.googleAnalyticsCode]]
+[[if documentInfo.googleAnalyticsCode]]
+[[=documentInfo.googleAnalyticsCode]]
 [[endif]]
 
 [[if master.codeInjectionBodyTagEnd]]
