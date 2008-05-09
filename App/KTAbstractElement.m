@@ -277,12 +277,6 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTPage *)root 
-{
-	[self subclassResponsibility:_cmd];
-	return nil;
-}
-
 - (KTPage *)page
 {
 	[self subclassResponsibility:_cmd];
@@ -298,31 +292,7 @@
 // if we're saving as, document will always be nil, even for root
 - (KTDocument *)document
 {
-	/// added a try/catch block to avoid grinding everything to a halt
-	KTDocument *result = nil;
-	@try
-	{
-		result = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:[self managedObjectContext]];
-		if ( nil == result )
-		{
-			KTDocument *lastSavedDocument = [[NSDocumentController sharedDocumentController] lastSavedDocument];
-			if ( nil != lastSavedDocument )
-			{
-				result = lastSavedDocument;
-			}
-			else if (self != [self root])	// don't do the below if it will recurse -- better to return nil!
-			{
-				result = [[self root] document];
-			}
-		}
-	}
-	@catch (NSException * e) 
-	{
-		NSLog(@"warning: unable to determine document for %@", [self description]); // according to NSManagedObject docs, -description does not fire a fault
-		result = nil;
-	}
-	
-	return result;
+	return [[self page] document];
 }
 
 - (NSUndoManager *)undoManager { return [[self managedObjectContext] undoManager]; }

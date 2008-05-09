@@ -48,6 +48,8 @@
 #pragma mark -
 #pragma mark Accessors
 
+- (KTPage *)root { return [self wrappedValueForKey:@"root"]; }
+
 - (KTCopyMediaType)copyMediaOriginals { return [self wrappedIntegerForKey:@"copyMediaOriginals"]; }
 
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy

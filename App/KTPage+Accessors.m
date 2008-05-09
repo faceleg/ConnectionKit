@@ -13,6 +13,7 @@
 #import "KTMediaManager.h"
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
+#import "KTDocumentController.h"
 
 #import "Debug.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -97,20 +98,38 @@
 */
 - (KTDocument *)document
 {
-	if ( nil != myDocument )		// for root
+	// For Root
+	if (myDocument)
 	{
 		return myDocument;
 	}
-//	else if ( (self != [self parent]) && (nil != [[self parent] document]) )	// first clause to prevent infinite recursion
-//	{
-//		return [[self parent] document];
-//	}
-//	else
-//	{
-//		return (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:[self managedObjectContext]];
-//	}
+
 	
-	return [super document];
+	/// added a try/catch block to avoid grinding everything to a halt
+	KTDocument *result = nil;
+	@try
+	{
+		result = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:[self managedObjectContext]];
+		if ( nil == result )
+		{
+			KTDocument *lastSavedDocument = [[NSDocumentController sharedDocumentController] lastSavedDocument];
+			if ( nil != lastSavedDocument )
+			{
+				result = lastSavedDocument;
+			}
+			else if (![self isRoot])	// don't do the below if it will recurse -- better to return nil!
+			{
+				result = [[self parent] document];
+			}
+		}
+	}
+	@catch (NSException * e) 
+	{
+		NSLog(@"warning: unable to determine document for %@", [self description]); // according to NSManagedObject docs, -description does not fire a fault
+		result = nil;
+	}
+	
+	return result;
 }
 
 /*	Weak ref to the document.

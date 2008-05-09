@@ -48,7 +48,6 @@
 - (NSString *)uniqueID; // for convenience
 - (KTDocument *)document;
 - (NSUndoManager *)undoManager;
-- (KTPage *)root;
 - (KTPage *)page;	// enclosing page (self if this is a page)
 - (BOOL)allowIntroduction;
 

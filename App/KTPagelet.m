@@ -11,11 +11,12 @@
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
-#import "KTStoredDictionary.h"
+
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -217,7 +218,7 @@
 
 - (KTPage *)root 
 {
-	return [[self page] root];
+	return [[[self page] documentInfo] root];
 }
 
 - (KTPage *)page { return [self wrappedValueForKey:@"page"]; }

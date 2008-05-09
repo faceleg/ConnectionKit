@@ -22,6 +22,9 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
+@class KTDocumentInfo;
+
+
 @interface KTAbstractPage : KTAbstractElement <KTWebPaths, KTWebViewComponent>
 {
 }
@@ -35,6 +38,8 @@ KTCollectionPathStyle;
 - (KTPage *)parent;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
+
+- (KTDocumentInfo *)documentInfo;
 
 - (BOOL)isStale;
 - (void)setIsStale:(BOOL)stale;

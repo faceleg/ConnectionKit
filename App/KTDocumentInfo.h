@@ -20,11 +20,16 @@
 #import "KTManagedObject.h"
 
 #import "KT.h"
-@class KTHostProperties;
+
+
+@class KTPage,KTHostProperties;
+
 
 @interface KTDocumentInfo : KTManagedObject 
 {
 }
+
+- (KTPage *)root;
 
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;

@@ -10,6 +10,7 @@
 
 #import "Debug.h"
 #import "KTDocument.h"	// for constants, methods
+#import "KTDocumentInfo.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTArchivePage.h"
@@ -937,7 +938,7 @@ static unsigned sLastParserID;
 	{
 		[[page managedObjectContext] makeAllPluginsPerformSelector:@selector(addSitewideTextToEndBody:forPage:)
 														withObject:string
-														  withPage:[page root]];
+														  withPage:[[page documentInfo] root]];
 		
 
 		[page makeComponentsPerformSelector:@selector(addLevelTextToEndBody:forPage:) withObject:string withPage:page recursive:NO];

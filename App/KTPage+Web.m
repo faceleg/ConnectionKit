@@ -215,7 +215,7 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *titleSeparator = [defaults objectForKey:@"TitleSeparator"];
 	
-	if ( [self isDeleted] || (nil == [self root]) )
+	if ( [self isDeleted] || (nil == [[self documentInfo] root]) )
 	{
 		return @"Bad Page!";
 	}

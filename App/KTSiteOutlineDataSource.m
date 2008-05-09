@@ -719,7 +719,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	if ( item == [(KTPage *)[self document] root] ) 
+	if ([item isRoot]) 
 	{
 		if ( [[self document] displaySmallPageIcons] )
 		{

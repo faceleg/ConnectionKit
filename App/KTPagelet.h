@@ -70,6 +70,7 @@ typedef enum {
 
 - (KTPage *)page;
 - (NSSet *)allPages;
+- (KTPage *)root;
 
 #pragma mark Location
 

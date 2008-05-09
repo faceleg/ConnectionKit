@@ -85,20 +85,17 @@
 
 - (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
 
-- (KTPage *)root 
-{
-	return [self valueForKeyPath:@"documentInfo.root"];
-}
-
 /*	Only KTPages can be collections
  */
 - (BOOL)isCollection { return NO; }
 
 - (BOOL)isRoot
 {
-	BOOL result = ((id)self == [self root]);
+	BOOL result = ((id)self == [[self documentInfo] root]);
 	return result;
 }
+
+- (KTDocumentInfo *)documentInfo { return [self wrappedValueForKey:@"documentInfo"]; }
 
 #pragma mark -
 #pragma mark Simple Accessors
@@ -262,6 +259,19 @@
 	NSString *result = [[self pathRelativeToSite] URLPathRelativeTo:[path2 pathRelativeToSite]];
 	// TODO:	Make sure the result has a trailing slash if necessary
 	return result;
+}
+
+#pragma mark -
+#pragma mark Debugging
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+	if ([key isEqualToString:@"root"])
+	{
+		OBASSERT_NOT_REACHED("You should never call -root on a page.");
+	}
+	
+	return [super valueForUndefinedKey:key];
 }
 
 @end

@@ -1095,7 +1095,7 @@ from representedObject */
 	
 	// our group's parent will be the original parent of firstSelectedPage
 	KTPage *parentCollection = [(KTPage *)firstSelectedPage parent];
-	if ( (nil == parentCollection) || (nil == [parentCollection root]) )
+	if ( (nil == parentCollection) || (nil == [[parentCollection documentInfo] root]) )
 	{
 		NSLog(@"Unable to create group: could not determine parent collection.");
 		return;
