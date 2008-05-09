@@ -50,13 +50,6 @@
 #pragma mark -
 #pragma mark Generated properties
 
-- (NSString *)metaRobots
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];	
-	return [defaults objectForKey:@"metaRobots"];
-}
-
-
 /*!	Invoked to fill in the web pages for the meta 'generator' value
 */
 - (NSString *)appNameVersion
