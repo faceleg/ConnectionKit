@@ -142,8 +142,6 @@
 			  row:(int)row
 	dropOperation:(NSTableViewDropOperation)operation
 {
-	NSLog(@"dragOp = %i", [info draggingSourceOperationMask]);
-	
 	// Insert a new media file for the replacement media
 	KTExternalMediaFile *mediaFile = [[self arrangedObjects] objectAtIndex:row];
 		NSDragOperation dragOperation = [self dragOperationForDrop:info  toRepairMediaFile:mediaFile];

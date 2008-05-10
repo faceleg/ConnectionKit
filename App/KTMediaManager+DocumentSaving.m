@@ -16,6 +16,8 @@
 #import "KTDocument.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import <Connection/KTLog.h>
+
 
 @interface KTMediaManager (DocumentSavingPrivate)
 // GC
@@ -68,7 +70,7 @@
  */
 - (void)garbageCollect
 {
-	LOG((@"Beginning media garbage collection..."));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Beginning media garbage collection...");
 	
 	#ifdef DEBUG
 	NSDate *startDate = [NSDate date];	// We're currently logging how long it takes since this is quite performance intensive
@@ -81,7 +83,8 @@
 	
 	// Garbage collect AbstractMediaFiles
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
-	LOG((@"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]]));
+	
 	NSEnumerator *mediaFilesEnumerator = [mediaFilesForDeletion objectEnumerator];
 	KTMediaFile *aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
@@ -93,13 +96,14 @@
 	#ifdef DEBUG
 	NSDate *finishDate = [NSDate date];
 	NSTimeInterval timeTaken = [finishDate timeIntervalSinceDate:startDate];
-	NSLog(@"Media garbage collection took %fs", timeTaken);
+	NSString *message = [NSString stringWithFormat:@"Media garbage collection took %fs", timeTaken];
+	KTLog(KTMediaLogDomain, KTLogInfo, message);
 	#endif
 }
 
 - (void)garbageCollectMediaContainers
 {
-	LOG((@"Collecting unneeded MediaContainers..."));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Collecting unneeded MediaContainers...");
 	
 	NSSet *pageMediaIDs = [self mediaIdentifiersRequiredByEntity:@"Page"];
 	NSSet *pageletMediaIDs = [self mediaIdentifiersRequiredByEntity:@"Pagelet"];
@@ -127,7 +131,7 @@
 	}
 	
 	// Delete those unrequired media IDs
-	LOG((@"Removing %u unneeded MediaContainer(s)", [unrequiredMedia count]));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Removing %u unneeded MediaContainer(s)", [unrequiredMedia count]]));
 	NSEnumerator *unrequiredMediaEnumerator = [unrequiredMedia objectEnumerator];
 	while (aMedia = [unrequiredMediaEnumerator nextObject])
 	{
@@ -145,7 +149,7 @@
 	NSError *error = nil;
 	NSArray *deadMediaFiles = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
 	
-	LOG((@"Found %u unwanted MediaFile(s) for deletion", [deadMediaFiles count]));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Found %u unwanted MediaFile(s) for deletion", [deadMediaFiles count]]));
 	return deadMediaFiles;
 }
 
@@ -189,7 +193,7 @@
  */
 - (void)deleteTemporaryMediaFiles
 {
-	LOG((@"Deleting the temporary media directory for the document at:\r%@", [[self document] fileURL]));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting the temporary media directory for the document at:\r%@", [[self document] fileURL]]));
 	NSString *tempMedia = [[self document] temporaryMediaPath];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:nil];
 }

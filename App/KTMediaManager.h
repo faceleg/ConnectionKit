@@ -9,6 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString *KTMediaLogDomain;
+
+
 @class KTDocument;
 @class KTMediaContainer;
 

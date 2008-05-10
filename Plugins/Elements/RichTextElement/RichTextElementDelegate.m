@@ -194,7 +194,7 @@
 	NSString *svxString = @"<img src=\"svxmedia://";
 
 	NSString *richTextHTML = [[self delegateOwner] valueForKey:@"richTextHTML"];
-	LOG((@"scanning block for identifiers: \n%@", richTextHTML));
+	TJT((@"scanning block for identifiers: \n%@", richTextHTML));
 	if ( [richTextHTML length] > [svxString length] )
 	{
 		NSScanner *scanner = [NSScanner scannerWithString:richTextHTML];

@@ -20,6 +20,8 @@
 
 #import "BDAlias.h"
 
+#import <Connection/KTLog.h>
+
 #import "Debug.h"
 
 
@@ -107,7 +109,7 @@
 		result = [self anyExternalMediaFileMatchingPath:path];
 		if (!result)
 		{
-			LOG((@"Creating external MediaFile from path:\r%@", path));
+			KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating external MediaFile for path:\r%@", path]));
 			result = [KTExternalMediaFile insertNewMediaFileWithPath:path inManagedObjectContext:[self managedObjectContext]];
 		}
 	}
@@ -149,7 +151,8 @@
 		NSString *filename = [self uniqueInDocumentFilename:preferredFilename];
 		NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
-		LOG((@"Creating temporary in-document MediaFile from data named '%@'", filename));
+		KTLog(KTMediaLogDomain, KTLogDebug,
+					([NSString stringWithFormat:@"Creating temporary in-document MediaFile from data named '%@'", filename]));
 		
 		NSError *error = nil;
 		[data writeToFile:destinationPath options:0 error:&error];
@@ -227,9 +230,6 @@
 	// If there is an existing file, try to delete it. Log the operation for debugging purposes
 	if (!result)
 	{
-		NSLog(@"Preparing to add new temporary media file at\n%@\nbut one already exists. Attempting to movie it to the trash...",
-			  proposedPath);
-		
 		int tag = 0;
 		result = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation
 															  source:[proposedPath stringByDeletingLastPathComponent]
@@ -237,7 +237,10 @@
 															   files:[NSArray arrayWithObject:filename]
 															     tag:&tag]; 
 		
-		NSLog(@"...move %@", (result) ? @"successful" : @"unsuccessful");
+		NSString *message = [NSString stringWithFormat:@"Preparing for temporary media file at\n%@\nbut one already exists. %@",
+								proposedPath,
+								(result) ? @"It was moved to the trash." : @"It could not be deleted."];
+		KTLog(KTMediaLogDomain, (result) ? KTLogWarn : KTLogError, message);
 	}
 	
 	return result;
@@ -248,7 +251,7 @@
  */
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
 {
-	LOG((@"Creating temporary in-document MediaFile from path:\r%@", path));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\r%@", path]));
 	
 	// Figure out the filename and copy the file there
 	NSString *sourceFilename = [path lastPathComponent];

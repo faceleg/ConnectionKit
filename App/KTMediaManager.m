@@ -27,6 +27,9 @@
 #import "BDAlias.h"
 
 
+NSString *KTMediaLogDomain = @"Media";
+
+
 @interface KTMediaManager ( Private )
 // MediaContainer Creation
 - (KTMediaContainer *)insertMediaContainer;

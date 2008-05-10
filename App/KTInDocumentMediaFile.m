@@ -18,6 +18,8 @@
 
 #import "BDAlias.h"
 
+#import <Connection/KTLog.h>
+
 
 @implementation KTInDocumentMediaFile
 
@@ -41,7 +43,9 @@
 			NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
 			NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
 			
-			LOG((@"Moving temporary MediaFile %@ into the document", filename));
+			NSString *message = [NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename];
+			KTLog(KTMediaLogDomain, KTLogDebug, message);
+			
 			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
 				[NSException raise:NSInternalInconsistencyException
 							format:@"Unable to move temporary MediaFile %@ into the document", filename];
@@ -57,7 +61,9 @@
 		NSString *sourcePath = [[[moc document] mediaPath] stringByAppendingPathComponent:filename];
 		NSString *destinationPath = [[[moc document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
-		LOG((@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename));
+		KTLog(KTMediaLogDomain, KTLogDebug,
+			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));
+		
 		if ([[NSFileManager defaultManager] fileExistsAtPath:sourcePath])
 		{
 			[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
@@ -68,8 +74,9 @@
 		}
 		else
 		{
-			NSLog(@"No file could be found at\r%@\rDeleting the MediaFile object it anyway",
-				  [sourcePath stringByAbbreviatingWithTildeInPath]);
+			NSString *message = [NSString stringWithFormat:@"No file could be found at\r%@\rDeleting the MediaFile object it anyway",
+				[sourcePath stringByAbbreviatingWithTildeInPath]];
+			KTLog(KTMediaLogDomain, KTLogWarn, message);
 		}
 	}
 }

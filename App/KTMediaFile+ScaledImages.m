@@ -20,6 +20,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <QTKit/QTKit.h>
+#import <Connection/KTLog.h>
+
 #import "Debug.h"
 
 
@@ -173,7 +175,9 @@
 	}
 	else
 	{
-		NSLog(@"%@\rThe image could not be read into memory for scaling", [imagePath stringByAbbreviatingWithTildeInPath]);
+		NSString *message = [NSString stringWithFormat:@"%@\rThe image could not be read into memory for scaling",
+													   [imagePath stringByAbbreviatingWithTildeInPath]];
+		KTLog(KTMediaLogDomain, KTLogError, message);
 	}
 	
 	// Tidy up
@@ -209,9 +213,10 @@
 	else
 	{
 		// log to console so bug reports pick it up
-		NSLog(@"error: unable to read movie for a thumbnail from %@: %@", 
-			  [self currentPath],
-			  [error localizedDescription]);
+		NSString *message = [NSString stringWithFormat:@"error: unable to read movie for a thumbnail from %@: %@", 
+													   [self currentPath],
+													   [error localizedDescription]];
+		KTLog(KTMediaLogDomain, KTLogError, message);
 	}
 	
 	// Handle a missing thumbnail, like when we have a .wmv file
