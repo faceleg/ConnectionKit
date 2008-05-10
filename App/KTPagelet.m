@@ -216,11 +216,6 @@
 #pragma mark -
 #pragma mark Page
 
-- (KTPage *)root 
-{
-	return [[[self page] documentInfo] root];
-}
-
 - (KTPage *)page { return [self wrappedValueForKey:@"page"]; }
 
 

@@ -23,8 +23,10 @@
  */
 - (NSURL *)absoluteURL;
 {
-	KTDocumentInfo *document = [[self managedObjectContext] documentInfo];
-	NSURL *siteURL = [[document hostProperties] siteURL];
+	KTDocument *document = [[self managedObjectContext] document];
+	KTHostProperties *hostProperties = [[document documentInfo] hostProperties];
+	NSURL *siteURL = [hostProperties siteURL];
+	
 	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
 	return [result absoluteURL];
 }

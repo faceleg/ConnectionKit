@@ -261,17 +261,4 @@
 	return result;
 }
 
-#pragma mark -
-#pragma mark Debugging
-
-- (id)valueForUndefinedKey:(NSString *)key
-{
-	if ([key isEqualToString:@"root"])
-	{
-		OBASSERT_NOT_REACHED("You should never call -root on a page.");
-	}
-	
-	return [super valueForUndefinedKey:key];
-}
-
 @end

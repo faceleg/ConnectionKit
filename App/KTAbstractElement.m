@@ -185,6 +185,17 @@
 
 - (void)setPlugin:(KTAbstractElement *)plugin { OBASSERT_NOT_REACHED("Please don't call -setPlugin:"); }
 
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+	if ([key isEqualToString:@"root"])
+	{
+		OBASSERT_NOT_REACHED("You should never call -root on an element.");
+	}
+	
+	return [super valueForUndefinedKey:key];
+}
+
 /*	Whenever setting a value in the extensible properties inform our delegate if they're interested
  */
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
