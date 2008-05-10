@@ -718,9 +718,7 @@
 
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex
 {
-	
-	
-	
+	// Should we display a progress indicator?
 	int i = 0;
 	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
 	BOOL displayProgressIndicator = NO;
@@ -735,7 +733,7 @@
 		for ( i=0; i<[archivedPages count]; i++)
 		{
 			NSDictionary *pageInfo = [archivedPages objectAtIndex:i];
-			if ( [[pageInfo valueForKey:@"isCollection"] boolValue] ) 
+			if ([pageInfo boolForKey:@"isCollection"]) 
 			{
 				displayProgressIndicator = YES;
 				break;
@@ -743,7 +741,7 @@
 		}
 	}
 	
-	if ( displayProgressIndicator )
+	if (displayProgressIndicator)
 	{
 		[[self windowController] beginSheetWithStatus:localizedStatus
 											 minValue:1 
@@ -752,29 +750,31 @@
 		didDisplayProgressIndicator = YES;
 	}
 	
-	// Copy pages
-	if ( didDisplayProgressIndicator )
+	
+	// Add the pages
+	if (didDisplayProgressIndicator)
 	{
 		i = 1;
 		[[self windowController] setSheetMinValue:1 maxValue:[archivedPages count]];
 	}				
+	
+	NSMutableArray *droppedPages = [NSMutableArray array];
 	NSEnumerator *e = [archivedPages objectEnumerator];
 	NSDictionary *rep;
-	while ( rep = [e nextObject] )
+	while (rep = [e nextObject])
 	{
-		if ( didDisplayProgressIndicator )
+		if (didDisplayProgressIndicator)
 		{
 			localizedStatus = NSLocalizedString(@"Copying pages...", "");
 			[[self windowController] updateSheetWithStatus:localizedStatus progressValue:i];
 			i++;
 		}
 		
-		KTPage *page = [KTPage pageWithPasteboardRepresentation:rep parent:page];
+		KTPage *aDroppedPage = [KTPage pageWithPasteboardRepresentation:rep parent:page];
+		[droppedPages addObject:aDroppedPage];
 		
 		// Whinge if the page couldn't be created
-		if (!page) {
-			[NSException raise:kKareliaDocumentException format:@"unable to create Page"];
-		}
+		OBASSERTSTRING(page, @"unable to create Page");
 	}
 	
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag",
@@ -784,6 +784,10 @@
 	{
 		[[self windowController] endSheet];
 	}
+	
+	
+	// Select the dropped pages
+	[[self siteOutlineController] setSelectedObjects:droppedPages];
 	
 	return YES;
 }
