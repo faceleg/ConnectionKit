@@ -36,41 +36,35 @@
 
 #import "YouTubeSource.h"
 
+#import "YouTubeCocoaExtensions.h"
+
 
 @implementation YouTubeSource
 
-
-// YouTube URLs look like http://youtube.com/watch?v=UA7dEWKAT7Y
-
-/*!	Return an array of accepted drag types, with best/richest types first
-*/
 - (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;
 {
 	return [NSArray arrayWithObjects:
-			@"public.url",
-			NSURLPboardType,	// Apple URL pasteboard type
 			//@"WebURLsWithTitlesPboardType",
 			//@"BookmarkDictionaryListPboardType",
-			NSStringPboardType,
+			NSURLPboardType,	// Apple URL pasteboard type
+			//@"public.url",
 			nil];
 }
 
 - (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
 {
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-    [pboard types];
-    
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"public.url"]])
+	(void)[pboard types];
+	
+	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
+	
+	if ( nil != [extractedURL youTubeVideoID] )
 	{
-		return KTSourcePriorityIdeal;
+		return KTSourcePrioritySpecialized;
 	}
-	else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSURLPboardType]])
-	{
-		return KTSourcePriorityIdeal;	// there is an image, so it's probably OK
-	}
-    return KTSourcePriorityNone;	// doesn't actually have any image data
+	
+	return KTSourcePriorityNone;
 }
-
 
 - (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
 				forPagelet:(BOOL)isAPagelet
@@ -78,21 +72,17 @@
 					 index:(unsigned int)anIndex;
 {
     BOOL result = NO;
-    NSString *filePath = nil;
-    
-    NSArray *orderedTypes = [self acceptedDragTypesCreatingPagelet:isAPagelet];
     
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+	(void)[pboard types];
 	
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
-    if ( [bestType isEqualToString:@"public.url"] )
+	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
+    
+    if ( nil != extractedURL )
     {
-		;
+        [aDictionary setValue:[extractedURL absoluteString] forKey:kKTDataSourceURLString];
+        result = YES;
     }
-	else
-	{
-		; 
-	}
     
     return result;
 }

@@ -100,6 +100,7 @@
 				3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06C90D5D67DA00782A95 /* PBXTargetDependency */,
 				3C8B329B0DC632A1001405AD /* PBXTargetDependency */,
+				3C66EA3E0DD4131100F56B04 /* PBXTargetDependency */,
 				3C1D06CB0D5D67DA00782A95 /* PBXTargetDependency */,
 				3C095C090D5D282F00DE6F62 /* PBXTargetDependency */,
 				3C095C0B0D5D283200DE6F62 /* PBXTargetDependency */,
@@ -1303,6 +1304,20 @@
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
 		};
+		3C66EA3B0DD4129200F56B04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = VideoSource;
+		};
+		3C66EA3D0DD4131100F56B04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = YouTubeSource;
+		};
 		3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
@@ -1914,6 +1929,7 @@
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C66E3E908A9781400EC7716 /* 16x16_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16x16_empty.png; sourceTree = "<group>"; };
+		3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeSource.xcodeproj; path = ../Plugins/DataSources/YouTubeSource/YouTubeSource.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ImageElement.xcodeproj; path = ../Plugins/Elements/ImageElement/ImageElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPlugin.h; sourceTree = "<group>"; };
 		3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = KTComponents.xcdatamodel; sourceTree = "<group>"; };
@@ -4045,6 +4061,14 @@
 			name = "Data Migration";
 			sourceTree = "<group>";
 		};
+		3C66EA380DD4129200F56B04 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C66EA3C0DD4129200F56B04 /* YouTube.svxDataSource */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -4127,6 +4151,7 @@
 				3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */,
 				3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */,
 				3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */,
+				3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */,
 			);
 			name = DataSources;
 			sourceTree = "<group>";
@@ -5167,6 +5192,10 @@
 					ProductGroup = CEF12E780D908EB400FCAC70 /* Products */;
 					ProjectRef = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
 				},
+				{
+					ProductGroup = 3C66EA380DD4129200F56B04 /* Products */;
+					ProjectRef = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5376,6 +5405,13 @@
 			fileType = wrapper.cfbundle;
 			path = Amazon.svxElement;
 			remoteRef = 3C4C6AAD0D64136C00398BDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C66EA3C0DD4129200F56B04 /* YouTube.svxDataSource */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = YouTube.svxDataSource;
+			remoteRef = 3C66EA3B0DD4129200F56B04 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C8344610DA98E160051A2A3 /* iMediaTesterSingle.app */ = {
@@ -6501,6 +6537,11 @@
 			isa = PBXTargetDependency;
 			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
 			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
+		};
+		3C66EA3E0DD4131100F56B04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YouTubeSource;
+			targetProxy = 3C66EA3D0DD4131100F56B04 /* PBXContainerItemProxy */;
 		};
 		3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
