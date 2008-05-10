@@ -595,108 +595,115 @@
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id<WebPolicyDecisionListener>)listener
 {
-	// get the url from the information dictionary:
-	NSURL *url = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
-	NSString *scheme = [url scheme];
-	
-	if([scheme isEqualToString:kKTDocumentEditorURLScheme]) {
-		// we clicked a link that has our application-specific scheme, do whatever we want:
-		
-		NSRunAlertPanel(@"internal link clicked", @"You clicked an internal link that I caught.\nThat link's path was %@.", nil,nil,nil, [url path]);
-		//NSPoint mouseLoc = [oWindow mouseLocationOutsideOfEventStream];
-		//NSLog(@"link clicked at point: %f, %f", mouseLoc.x, mouseLoc.y);
-		
-		// then stop further processing:
-		[listener ignore];
-	}
-	else if ([scheme isEqualToString:kKTPagePathURLScheme])
+	@try
 	{
+		// get the url from the information dictionary:
+		NSURL *url = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
+		NSString *scheme = [url scheme];
 		
-	}
-	else if([scheme isEqualToString:@"http"])
-	{
-		// Load extedrnally unless we loaded page by clicking on a sidebar -- not a link.
-		int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
-		switch (navigationType)
-		{
-			case WebNavigationTypeOther:
-			case WebNavigationTypeFormSubmitted:
-			case WebNavigationTypeBackForward:
-			case WebNavigationTypeReload:
-			case WebNavigationTypeFormResubmitted:
-				[listener use];
-				break;
-				
-			case WebNavigationTypeLinkClicked:
-			default:
-				// load with user's preferred browser:
-				[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
-				// don't continue loading this url in our view:
-				[listener ignore];
-		}
-	}
-	else if ([scheme isEqualToString:@"applewebdata"] && ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther) )
-	{
-		KTPage *thePage = [[[self windowController] document] pageForURLPath:[url path]];
-		if (nil == thePage)
-		{
-			[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window]
-										silencingKey:@"shutUpFakeURL"
-											   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
-											  format:NSLocalizedString
-				(@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
-				[url path]];
+		if([scheme isEqualToString:kKTDocumentEditorURLScheme]) {
+			// we clicked a link that has our application-specific scheme, do whatever we want:
+			
+			NSRunAlertPanel(@"internal link clicked", @"You clicked an internal link that I caught.\nThat link's path was %@.", nil,nil,nil, [url path]);
+			//NSPoint mouseLoc = [oWindow mouseLocationOutsideOfEventStream];
+			//NSLog(@"link clicked at point: %f, %f", mouseLoc.x, mouseLoc.y);
+			
+			// then stop further processing:
 			[listener ignore];
 		}
-		else
+		else if ([scheme isEqualToString:kKTPagePathURLScheme])
 		{
-			NSMutableArray *toExpandArray = [NSMutableArray array];
 			
-			KTPage *toExpand = thePage;
-			int row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
-			while (row < 0)
+		}
+		else if([scheme isEqualToString:@"http"])
+		{
+			// Load extedrnally unless we loaded page by clicking on a sidebar -- not a link.
+			int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+			switch (navigationType)
 			{
-				// couldn't find in site outline, add parent
-				toExpand = [toExpand parent];
-				[toExpandArray addObject:toExpand];
-				row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
+				case WebNavigationTypeOther:
+				case WebNavigationTypeFormSubmitted:
+				case WebNavigationTypeBackForward:
+				case WebNavigationTypeReload:
+				case WebNavigationTypeFormResubmitted:
+					[listener use];
+					break;
+					
+				case WebNavigationTypeLinkClicked:
+				default:
+					// load with user's preferred browser:
+					[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+					// don't continue loading this url in our view:
+					[listener ignore];
 			}
-			// Now we have list of items to expand.	Go backward through that list, expanding farthest ancestor first
-			NSEnumerator *theEnum = [toExpandArray reverseObjectEnumerator];
-			
-			while (nil != (toExpand = [theEnum nextObject]) )
+		}
+		else if ([scheme isEqualToString:@"applewebdata"] && ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther) )
+		{
+			KTPage *thePage = [[[self windowController] document] pageForURLPath:[url path]];
+			if (nil == thePage)
 			{
-				[[[[self windowController] siteOutlineController] siteOutline] expandItem:toExpand];
-			}
-			
-			// Now we should have our row
-			row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:thePage];
-			if (row >= 0)
-			{
-				[[[[self windowController] siteOutlineController] siteOutline] selectRow:row byExtendingSelection:NO];
-				[listener use];	// it's been loaded for us I think
+				[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window]
+											silencingKey:@"shutUpFakeURL"
+												   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
+												  format:NSLocalizedString
+					(@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
+					[url path]];
+				[listener ignore];
 			}
 			else
 			{
-				NSBeep();
+				NSMutableArray *toExpandArray = [NSMutableArray array];
+				
+				KTPage *toExpand = thePage;
+				int row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
+				while (row < 0)
+				{
+					// couldn't find in site outline, add parent
+					toExpand = [toExpand parent];
+					[toExpandArray addObject:toExpand];
+					row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
+				}
+				// Now we have list of items to expand.	Go backward through that list, expanding farthest ancestor first
+				NSEnumerator *theEnum = [toExpandArray reverseObjectEnumerator];
+				
+				while (nil != (toExpand = [theEnum nextObject]) )
+				{
+					[[[[self windowController] siteOutlineController] siteOutline] expandItem:toExpand];
+				}
+				
+				// Now we should have our row
+				row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:thePage];
+				if (row >= 0)
+				{
+					[[[[self windowController] siteOutlineController] siteOutline] selectRow:row byExtendingSelection:NO];
+					[listener use];	// it's been loaded for us I think
+				}
+				else
+				{
+					NSBeep();
+					[listener ignore];
+				}
+			}
+		}
+		else if([scheme isEqualToString:@"file"] )
+		{
+			if ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] == WebNavigationTypeOther)
+			{
+				[listener use];
+			}
+			else
+			{
 				[listener ignore];
 			}
 		}
-	}
-	else if([scheme isEqualToString:@"file"] )
-	{
-		if ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] == WebNavigationTypeOther)
-		{
+		else {
+			// do the default stuff for other schemes:
 			[listener use];
 		}
-		else
-		{
-			[listener ignore];
-		}
 	}
-	else {
-		// do the default stuff for other schemes:
-		[listener use];
+	@catch (NSException *exception)
+	{
+		[NSApp reportException:exception];
 	}
 }
 
