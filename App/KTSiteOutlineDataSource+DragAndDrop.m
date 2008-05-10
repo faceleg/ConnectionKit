@@ -34,7 +34,8 @@
 
 
 @interface KTSiteOutlineDataSource (DragAndDropPrivate)
-- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard page:(KTPage *)page childIndex:(int)anIndex;
+- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
+- (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
 - (KTDocWindowController *)windowController;
 - (NSArray *)itemsForRows:(NSArray *)anArray;
@@ -599,7 +600,7 @@
 			// drag is internal to document
 			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
 			{
-				BOOL result = [self acceptInternalDrop:pboard page:proposedParent childIndex:anIndex];
+				BOOL result = [self acceptInternalDrop:pboard ontoPage:proposedParent childIndex:anIndex];
 				return result;
 			}
 			else if ( NO )
@@ -608,85 +609,14 @@
 				;
 			}
 		}
-		else if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]] )
+		else if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]])
 		{
 			// we have some pages on the pasteboard that we want to add at the drop point
-			
 			NSData *pboardData = [pboard dataForType:kKTPagesPboardType];
-			if ( nil != pboardData )
+			if (pboardData)
 			{
-				//				[[self document] setSuspendSavesDuringPeerCreation:YES];
-				
-				
 				NSArray *archivedPages = [NSKeyedUnarchiver unarchiveObjectWithData:pboardData];
-				
-				
-				
-				int i = 0;
-				NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
-				BOOL displayProgressIndicator = NO;
-				BOOL didDisplayProgressIndicator = NO;
-				if ([archivedPages count] > 3)
-				{
-					displayProgressIndicator = YES;
-				}
-				else
-				{
-					int i;
-					for ( i=0; i<[archivedPages count]; i++)
-					{
-						NSDictionary *pageInfo = [archivedPages objectAtIndex:i];
-						if ( [[pageInfo valueForKey:@"isCollection"] boolValue] ) 
-						{
-							displayProgressIndicator = YES;
-							break;
-						}
-					}
-				}
-				
-				if ( displayProgressIndicator )
-				{
-					[[self windowController] beginSheetWithStatus:localizedStatus
-									  minValue:1 
-									  maxValue:[archivedPages count] 
-										 image:nil];
-					didDisplayProgressIndicator = YES;
-				}
-				
-				// Copy pages
-				if ( didDisplayProgressIndicator )
-				{
-					i = 1;
-					[[self windowController] setSheetMinValue:1 maxValue:[archivedPages count]];
-				}				
-				NSEnumerator *e = [archivedPages objectEnumerator];
-				NSDictionary *rep;
-				while ( rep = [e nextObject] )
-				{
-					if ( didDisplayProgressIndicator )
-					{
-						localizedStatus = NSLocalizedString(@"Copying pages...", "");
-						[[self windowController] updateSheetWithStatus:localizedStatus progressValue:i];
-						i++;
-					}
-					
-					KTPage *page = [KTPage pageWithPasteboardRepresentation:rep parent:proposedParent];
-					
-					// Whinge if the page couldn't be created
-					if (!page) {
-						[NSException raise:kKareliaDocumentException format:@"unable to create Page"];
-					}
-				}
-				
-				[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag",
-																			   @"action name for dragging source objects withing the outline")];
-				
-				if (didDisplayProgressIndicator)
-				{
-					[[self windowController] endSheet];
-				}
-				
-				return YES;				
+				return [self acceptArchivedPagesDrop:archivedPages ontoPage:proposedParent childIndex:anIndex];
 			}
 		}
 	}
@@ -716,7 +646,7 @@
 
 /*	Called when rearranging pages within the Site Outline
  */
-- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard page:(KTPage *)page childIndex:(int)anIndex
+- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex
 {
 	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 	
@@ -782,6 +712,78 @@
 	
 	// Record the Undo operation
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
+	
+	return YES;
+}
+
+- (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex
+{
+	
+	
+	
+	int i = 0;
+	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
+	BOOL displayProgressIndicator = NO;
+	BOOL didDisplayProgressIndicator = NO;
+	if ([archivedPages count] > 3)
+	{
+		displayProgressIndicator = YES;
+	}
+	else
+	{
+		int i;
+		for ( i=0; i<[archivedPages count]; i++)
+		{
+			NSDictionary *pageInfo = [archivedPages objectAtIndex:i];
+			if ( [[pageInfo valueForKey:@"isCollection"] boolValue] ) 
+			{
+				displayProgressIndicator = YES;
+				break;
+			}
+		}
+	}
+	
+	if ( displayProgressIndicator )
+	{
+		[[self windowController] beginSheetWithStatus:localizedStatus
+											 minValue:1 
+											 maxValue:[archivedPages count] 
+												image:nil];
+		didDisplayProgressIndicator = YES;
+	}
+	
+	// Copy pages
+	if ( didDisplayProgressIndicator )
+	{
+		i = 1;
+		[[self windowController] setSheetMinValue:1 maxValue:[archivedPages count]];
+	}				
+	NSEnumerator *e = [archivedPages objectEnumerator];
+	NSDictionary *rep;
+	while ( rep = [e nextObject] )
+	{
+		if ( didDisplayProgressIndicator )
+		{
+			localizedStatus = NSLocalizedString(@"Copying pages...", "");
+			[[self windowController] updateSheetWithStatus:localizedStatus progressValue:i];
+			i++;
+		}
+		
+		KTPage *page = [KTPage pageWithPasteboardRepresentation:rep parent:page];
+		
+		// Whinge if the page couldn't be created
+		if (!page) {
+			[NSException raise:kKareliaDocumentException format:@"unable to create Page"];
+		}
+	}
+	
+	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag",
+																   @"action name for dragging source objects withing the outline")];
+	
+	if (didDisplayProgressIndicator)
+	{
+		[[self windowController] endSheet];
+	}
 	
 	return YES;
 }
