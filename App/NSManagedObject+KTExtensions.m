@@ -169,6 +169,11 @@
 	return result;
 }
 
+- (NSUndoManager *)undoManager { return [[self managedObjectContext] undoManager]; }
+
+#pragma mark -
+#pragma mark KVC
+
 /*	We're overriding the default NSObject implementations here to use -wrapppedValues
  */
 - (BOOL)wrappedBoolForKey:(NSString *)aKey
@@ -393,6 +398,9 @@
 	NSDictionary *result = [self dictionaryWithValuesForKeys:propertyKeys];
     return result;
 }
+
+#pragma mark -
+#pragma mark Locking
 
 - (void)lockContext
 {

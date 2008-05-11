@@ -45,6 +45,9 @@
 
 - (BOOL)hasChanges;
 
+- (NSUndoManager *)undoManager;
+
+#pragma mark KVC
 - (id)committedValueForKey:(NSString *)aKey;
 - (id)persistentValueForKey:(NSString *)aKey;
 

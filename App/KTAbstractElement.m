@@ -306,8 +306,6 @@
 	return [[self page] document];
 }
 
-- (NSUndoManager *)undoManager { return [[self managedObjectContext] undoManager]; }
-
 /*	Simply pulls the value from the plugin's Info.plist
  */
 - (BOOL)allowIntroduction

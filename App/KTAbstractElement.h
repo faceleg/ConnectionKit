@@ -47,7 +47,6 @@
 // Accessors
 - (NSString *)uniqueID; // for convenience
 - (KTDocument *)document;
-- (NSUndoManager *)undoManager;
 - (KTPage *)page;	// enclosing page (self if this is a page)
 - (BOOL)allowIntroduction;
 
