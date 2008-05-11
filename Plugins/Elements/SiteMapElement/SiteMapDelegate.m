@@ -253,7 +253,7 @@
 	BOOL compact = [[self pluginProperties] boolForKey:@"compact"];
 	
 	KTPage *thisPage = [self delegateOwner];
-	KTPage *root = [thisPage root];
+	KTPage *root = [[thisPage documentInfo] root];
 	
 	if (showHome)
 	{

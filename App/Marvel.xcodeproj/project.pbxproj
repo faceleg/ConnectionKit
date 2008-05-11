@@ -422,7 +422,7 @@
 		3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */; };
 		3C682BB90D62348A00B4D485 /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */; };
 		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTDocumentInfo.h */; settings = {ATTRIBUTES = (); }; };
+		3C682BBD0D6234DB00B4D485 /* KTDocumentInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTDocumentInfo.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBF0D6234E600B4D485 /* KTAbstractElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC00D6234E800B4D485 /* KTPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B210D622F9F00B4D485 /* KTPagelet.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -481,7 +481,7 @@
 		3CEC877B0BF8DD2B00CC732B /* KTAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC877D0BF8DD3400CC732B /* KTDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D3307DFC0F000DE4994 /* KTDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1A07DFC0AA00DE4994 /* KTApplication.h */; settings = {ATTRIBUTES = (); }; };
-		3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */; settings = {ATTRIBUTES = (); }; };
+		3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CEC8B130BF9092E00CC732B /* KTDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B140BF9093000CC732B /* KTDocWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B150BF9093100CC732B /* KTDocWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };

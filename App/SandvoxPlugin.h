@@ -27,6 +27,7 @@
 #import "KT.h"
 
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 
 // debugging
 #import "Debug.h"

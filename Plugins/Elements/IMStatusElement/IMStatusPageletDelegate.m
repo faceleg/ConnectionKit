@@ -218,7 +218,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	{
 		// How we reference the path depends on publishing/previewing
 		if (isPublishing) {
-			onlineImagePath = [[[[self document] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
+			onlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
 		}
 		else {
 			NSURL *baseURL = [NSURL fileURLWithPath:onlineImagePath];
@@ -236,7 +236,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	{
 		// How we reference the path depends on publishing/previewing
 		if (isPublishing) {
-			onlineImagePath = [[[[self document] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
+			onlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
 		}
 		else {
 			NSURL *baseURL = [NSURL fileURLWithPath:offlineImagePath];
@@ -395,7 +395,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([self onlineImagePath])
 	{
 		[html replaceOccurrencesOfString:@"#ONLINE#" 
-							  withString:[[[[self document] hostProperties] URLForResourceFile:[self onlineImagePath]] absoluteString] 
+							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self onlineImagePath]] absoluteString] 
 								 options:NSLiteralSearch 
 								   range:NSMakeRange(0,[html length])];
 	}
@@ -403,7 +403,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([self offlineImagePath])
 	{
 		[html replaceOccurrencesOfString:@"#OFFLINE#" 
-							  withString:[[[[self document] hostProperties] URLForResourceFile:[self offlineImagePath]] absoluteString]
+							  withString:[[[[[self page] documentInfo] hostProperties] URLForResourceFile:[self offlineImagePath]] absoluteString]
 								 options:NSLiteralSearch 
 								   range:NSMakeRange(0,[html length])];
 	}
