@@ -259,7 +259,7 @@
 	NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
 	
 	[self prepareTemporaryMediaDirectoryForFileNamed:destinationFilename];
-	if (![[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:nil]) {
+	if (![[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:self]) {
 		[NSException raise:NSInternalInconsistencyException
 					format:@"Unable to copy file:\r%@\r to %@ in the temporary media folder", path, destinationFilename];
 	}	

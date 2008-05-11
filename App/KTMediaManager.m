@@ -25,6 +25,7 @@
 #import "NSString+Karelia.h"
 
 #import "BDAlias.h"
+#import <Connection/KTLog.h>
 
 
 NSString *KTMediaLogDomain = @"Media";
@@ -503,6 +504,15 @@ NSString *KTMediaLogDomain = @"Media";
 	}
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Errors
+
+- (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo
+{
+	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\r%@", errorInfo]));
+	return NO;
 }
 
 @end

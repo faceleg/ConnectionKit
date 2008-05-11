@@ -55,7 +55,7 @@
 	// The filename should be unique, so just copy the file and change the storage type
 	NSString *currentPath = [mediaFile currentPath];
 	NSString *newPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:[currentPath lastPathComponent]];
-	[[NSFileManager defaultManager] copyPath:currentPath toPath:newPath handler:nil];
+	[[NSFileManager defaultManager] copyPath:currentPath toPath:newPath handler:self];
 	
 	[mediaFile setAlias:nil];
 }
@@ -195,7 +195,7 @@
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting the temporary media directory for the document at:\r%@", [[self document] fileURL]]));
 	NSString *tempMedia = [[self document] temporaryMediaPath];
-	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:nil];
+	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
 
 @end
