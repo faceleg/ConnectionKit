@@ -60,7 +60,7 @@ static NSString *kKTPseudoElementException = @"KTPseudoElementException";
 {
 	if ([self automaticUndoIsEnabled])
 	{
-		[[[self container] undoManager] removeAllActionsWithTarget:self];
+		[[[[self container] managedObjectContext] undoManager] removeAllActionsWithTarget:self];
 	}
 	
 	[myDOMNode release];
@@ -87,7 +87,7 @@ static NSString *kKTPseudoElementException = @"KTPseudoElementException";
 	// Register an undo operation
 	if ([self automaticUndoIsEnabled])
 	{
-		NSUndoManager *undoManager = [[self container] undoManager];
+		NSUndoManager *undoManager = [[[self container] managedObjectContext] undoManager];
 		[[undoManager prepareWithInvocationTarget:self] undoSetValue:[self primitiveValueForKey:key] forKey:key];
 	}
 	

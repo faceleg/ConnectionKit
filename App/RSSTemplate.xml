@@ -5,7 +5,7 @@
 		<link>[[=&url]]</link>
 		<description></description>
 		<language>[[=languageInherited]]</language>
-		<lastBuildDate>[[=document.documentLastBuildDate]]</lastBuildDate>
+		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 		<generator>[[=&documentInfo.appNameVersion]]</generator>
 [[if master.logoImage]]

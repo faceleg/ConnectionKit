@@ -167,7 +167,7 @@
 
 - (NSString *)inspectorNibName { return @"InlineImageElement"; }
 
-- (KTDocument *)document { return [[self container] document]; }
+- (KTDocument *)document { return [[[self container] page] document]; }
 
 // this code is almost entirely lifted from ImageElementDelegate
 

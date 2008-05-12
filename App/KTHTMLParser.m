@@ -24,6 +24,7 @@
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
+#import "NSDate+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
@@ -325,6 +326,23 @@ static unsigned sLastParserID;
 - (void)removeOverrideForKey:(NSString *)key
 {
 	[[self _keyOverrides] removeObjectForKey:key];
+}
+
+#pragma mark handy keypaths
+
+/*!	For RSS generation
+ */
+- (NSString *)RFC822Date
+{
+	return [[NSDate date] descriptionRFC822];		// NOW in the proper format
+}
+
+/*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
+ *	Returns a nonsense value.
+ */
+- (NSString *)hash
+{
+	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
 }
 
 #pragma mark -

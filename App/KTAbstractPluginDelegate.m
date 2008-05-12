@@ -57,7 +57,7 @@
 
 - (KTDocument *)document
 {
-	return [myDelegateOwner document];
+	return [[self page] document];
 }
 
 - (KTManagedObjectContext *)managedObjectContext

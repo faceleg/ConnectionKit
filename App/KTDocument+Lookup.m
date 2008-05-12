@@ -50,21 +50,6 @@
 #pragma mark -
 #pragma mark Generated properties
 
-/*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
-	Returns a nonsense value
-*/
-- (NSString *) hash
-{
-	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
-}
-
-/*!	For RSS generation
-*/
-- (NSString *)documentLastBuildDate
-{
-	return [[NSCalendarDate calendarDate] descriptionRFC822];		// NOW in the proper format
-}
-
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 {
 	NSMutableArray *RSSCollectionArray = [NSMutableArray array];

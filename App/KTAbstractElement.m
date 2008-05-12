@@ -253,7 +253,7 @@
 		if ([anObject isKindOfClass:[KTExtensiblePluginPropertiesArchivedObject class]])
 		{
 			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
-			NSManagedObject *realObject = [archivedObject realObjectInDocument:[self document]];
+			NSManagedObject *realObject = [archivedObject realObjectInDocument:[[self page] document]];
 			[result setValue:realObject forKey:aKey];
 		}
 	}

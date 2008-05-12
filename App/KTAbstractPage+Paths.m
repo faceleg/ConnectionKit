@@ -17,6 +17,7 @@
 #import "Debug.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTMaster.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -163,7 +164,7 @@
 	
 	if ([self isCollection])
 	{
-		NSString *indexFileName = [self valueForKeyPath:@"document.documentInfo.hostProperties.htmlIndexBaseName"];
+		NSString *indexFileName = [[[self documentInfo] hostProperties] valueForKey:@"htmlIndexBaseName"];
 		OBASSERT([self fileExtension]);
 		result = [indexFileName stringByAppendingPathExtension:[self fileExtension]];
 	}
@@ -186,7 +187,7 @@
 
 - (NSString *)indexFileName
 {
-	NSString *result = [self valueForKeyPath:@"document.documentInfo.hostProperties.htmlIndexBaseName"];
+	NSString *result = [[[self documentInfo] hostProperties] valueForKey:@"htmlIndexBaseName"];
 	return result;
 }
 
@@ -196,7 +197,7 @@
 	
 	if ([self isCollection])
 	{
-		NSString *archivesFileName = [self valueForKeyPath:@"document.documentInfo.hostProperties.archivesBaseName"];
+		NSString *archivesFileName = [[[self documentInfo] hostProperties] valueForKey:@"archivesBaseName"];
 		OBASSERT([self fileExtension]);
 		result = [archivesFileName stringByAppendingPathExtension:[self fileExtension]];
 	}

@@ -191,8 +191,6 @@ typedef enum {
 @interface KTDocument ( Lookup )
 
 // derived properties
-- (NSString *)documentLastBuildDate;
-- (NSString *)hash;	// registration hash
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 
 - (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
