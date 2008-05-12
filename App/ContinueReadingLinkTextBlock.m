@@ -39,18 +39,18 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
+- (NSString *)outerHTML:(KTHTMLParser *)parser
 {
 	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\r%@\r</span>",
 												  [self DOMNodeID],
-												  [self innerHTML:purpose]];
+												  [self innerHTML:parser]];
 	
 	return result;
 }
 
 /*	Convert @@ to the page title
  */
-- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
+- (NSString *)innerHTML:(KTHTMLParser *)parser
 {
 	NSString *contentFormat = [self innerEditingHTML];
 	NSString *result = [contentFormat stringByReplacing:@"@@" with:[[self targetPage] titleText]];

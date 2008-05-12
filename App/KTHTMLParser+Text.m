@@ -74,7 +74,7 @@
 													    hyperlink:hyperlink];
 		
 		// Generate HTML
-		result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
+		result = [textBlock outerHTML:self];
 		if (!result) result = @"";
 	}
 	else
@@ -148,7 +148,7 @@
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
 		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
-		result = [textBlock outerHTML:[self HTMLGenerationPurpose]];
+		result = [textBlock outerHTML:self];
 		
 		[self didParseTextBlock:textBlock];
 		[textBlock release];

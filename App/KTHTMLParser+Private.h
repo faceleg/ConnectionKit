@@ -23,6 +23,7 @@
 // Delegate
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)didParseTextBlock:(KTWebViewTextBlock *)textBlock;
+- (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
 - (void)didEncounterResourceFile:(NSString *)resourcePath;
 
 @end

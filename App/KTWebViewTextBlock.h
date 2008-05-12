@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class KTDocWebViewController, KTMediaContainer, KTAbstractPage;
+@class KTDocWebViewController, KTMediaContainer, KTAbstractPage, KTHTMLParser;
 
 
 @interface KTWebViewTextBlock : NSObject
@@ -79,8 +79,8 @@
 - (KTMediaContainer *)graphicalTextMedia;
 
 #pragma mark HTML
-- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose;
-- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose;
+- (NSString *)innerHTML:(KTHTMLParser *)parser;
+- (NSString *)outerHTML:(KTHTMLParser *)parser;
 
 #pragma mark Editing
 

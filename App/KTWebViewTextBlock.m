@@ -20,6 +20,9 @@
 #import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
 
+#import "KTHTMLParser.h"
+#import "KTHTMLParser+Private.h"
+
 #import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
 #import "KTGraphicalTextMediaContainer.h"
@@ -320,7 +323,7 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
+- (NSString *)innerHTML:(KTHTMLParser *)parser
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
 	if (!result) result = @"";
@@ -328,7 +331,7 @@
 	
 	
 	// Perform additional processing of the text according to HTML generation purpose
-	if ([self importsGraphics] && purpose != kGeneratingPreview)
+	if ([self importsGraphics] && [parser HTMLGenerationPurpose] != kGeneratingPreview)
 	{
 		// Convert media source paths
 		NSScanner *scanner = [[NSScanner alloc] initWithString:result];
@@ -352,14 +355,18 @@
 			// Replace the path with one suitable for the specified purpose
 			if (mediaContainer)
 			{
-				if (purpose == kGeneratingQuickLookPreview)
+				if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 				{
 					aMediaPath = [[mediaContainer file] quickLookPseudoTag];
 				}
 				else
 				{
 					KTPage *page = [self page];		OBASSERT(page);
-					aMediaPath = [[[mediaContainer file] defaultUpload] pathRelativeTo:page];
+					KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
+					aMediaPath = [upload pathRelativeTo:page];
+					
+					// Tell the parser's delegate
+					[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
 				}
 			}
 			OBASSERT(aMediaPath);
@@ -377,11 +384,11 @@
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (NSString *)outerHTML:(KTHTMLGenerationPurpose)purpose
+- (NSString *)outerHTML:(KTHTMLParser *)parser
 {
 	// When publishing, generate an empty string (or maybe nil) for empty text blocks
-	NSString *innerHTML = [self innerHTML:purpose];
-	if (purpose != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
+	NSString *innerHTML = [self innerHTML:parser];
+	if ([parser HTMLGenerationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
 	{
 		return @"";
 	}
@@ -412,7 +419,7 @@
 	NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 	if (graphicalTextStyle)
 	{
-		if (purpose == kGeneratingPreview)
+		if ([parser HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 		}

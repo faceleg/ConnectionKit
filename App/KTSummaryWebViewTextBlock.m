@@ -103,7 +103,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (NSString *)innerHTML:(KTHTMLGenerationPurpose)purpose
+- (NSString *)innerHTML:(KTHTMLParser *)parser
 {
 	KTPage *page = [self HTMLSourceObject];
 	
