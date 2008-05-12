@@ -61,7 +61,7 @@
 				<key>collectionSummaryType</key>
 				<integer>2</integer>
 				<key>collectionSyndicate</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>KTPluginPriority</key>
 			<integer>2</integer>
