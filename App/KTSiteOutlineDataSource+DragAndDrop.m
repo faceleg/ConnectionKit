@@ -718,6 +718,9 @@
 
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex
 {
+	BOOL result = NO;
+	
+	
 	// Should we display a progress indicator?
 	int i = 0;
 	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
@@ -771,6 +774,14 @@
 		}
 		
 		KTPage *aDroppedPage = [KTPage pageWithPasteboardRepresentation:rep parent:page];
+		if (aDroppedPage)
+		{
+			result = YES;
+		}
+		else
+		{
+			break;
+		}
 		[droppedPages addObject:aDroppedPage];
 		
 		// Whinge if the page couldn't be created
@@ -789,7 +800,8 @@
 	// Select the dropped pages
 	[[self siteOutlineController] setSelectedObjects:droppedPages];
 	
-	return YES;
+	
+	return result;
 }
 			
 #pragma mark -

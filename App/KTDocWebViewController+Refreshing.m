@@ -365,7 +365,7 @@
 {
 	[mySuspendedKeyPaths removeObject:keyPath];
 	
-	// If that key path has been awaiting refresh, go ahead an do so.
+	// If that key path has been awaiting refresh, go ahead and do so.
 	if (![mySuspendedKeyPaths containsObject:keyPath] &&
 		[mySuspendedKeyPathsAwaitingRefresh containsObject:keyPath])
 	{
