@@ -1324,21 +1324,6 @@ static unsigned sLastParserID;
 
 */
 
-/*!	Like above, but returns the full URL
-*/
-- (NSString *)mediaurlWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
-	if ([params count] > 1)
-	{
-		NSLog(@"mediaurl: usage [[ mediapath media.keyPath]]");
-		return @"";
-	}
-	id media = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
-	
-	return [[media publishedURL] absoluteString];
-}
-
 // Following parameters:  (1) key-value path to media or mediaImage object  (2) k-v path to page [optional]
 // If (2) not specified, it's the page itself... but template better be a page
 // Should call resourcePathRelativeTo: on (1) with (2) as the parameter and return the result.

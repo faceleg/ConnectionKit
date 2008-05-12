@@ -9,6 +9,8 @@
 #import "KTAbstractPage.h"
 #import "KTPage.h"
 
+#import "KTDocumentInfo.h"
+#import "KTHostProperties.h"
 #import "KTHTMLParser.h"
 
 #import "NSAttributedString+Karelia.h"
@@ -236,7 +238,12 @@
  *	They just call through where appropriate to the real methods in the +Paths category.
  */
 
-- (NSURL *)absoluteURL { return [self publishedURL]; }
+- (NSURL *)absoluteURL
+{
+	NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
+	return result;
+}
 
 /*	The result of this method is cached until the path changes agan in some way from a -invalidatePathRelativeToSite
  *	method call. -_pathRelativeToSite will return the uncached path.

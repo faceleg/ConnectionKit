@@ -226,34 +226,6 @@
 #pragma mark -
 #pragma mark Publishing
 
-/*	Convenience method for -publishedURLAllowingIndexPage:
- */
-- (NSURL *)publishedURL
-{
-	return [self publishedURLAllowingIndexPage:YES];
-}
-
-/*	Returns an NSURL for accessing the page once published. Specify whether to inclue index.html as needed.
- */
-- (NSURL *)publishedURLAllowingIndexPage:(BOOL)aCanHaveIndexPage
-{
-	NSURL *result = nil;
-	
-	if ([self isRoot])
-	{
-		result = [self absoluteURL];
-	}
-	
-	if (!result)
-	{
-		NSURL *parentURL = [[self parent] publishedURLAllowingIndexPage:aCanHaveIndexPage];
-		NSString *myRelativePath = [self pathRelativeToParent];
-		result = [NSURL URLWithString:myRelativePath relativeToURL:parentURL];
-	}
-	
-	return result;
-}
-
 /*	Very similar to -uploadPathRelativeToParent
  *	However, the index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.

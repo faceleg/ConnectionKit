@@ -211,7 +211,7 @@
 
 - (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
 {
-	NSString *url = [[aPage publishedURL] absoluteString];
+	NSString *url = [[aPage absoluteURL] absoluteString];
 	if (![url hasPrefix:[[[[self documentInfo] hostProperties] siteURL] absoluteString]])
 	{
 		return;	// an external link not in this site
