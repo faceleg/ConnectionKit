@@ -321,7 +321,9 @@
 
 - (KTMediaManager *)mediaManager
 {
-	return [[[self managedObjectContext] document] mediaManager];
+	KTMediaManager *result = [[self document] mediaManager];
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 /*	By default we require no media so just ask delegate for anything

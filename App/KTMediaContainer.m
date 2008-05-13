@@ -15,6 +15,7 @@
 
 #import "KTMediaManager.h"
 #import "MediaFiles+Internal.h"
+#import "KTMediaPersistentStoreCoordinator.h"
 
 #import "KTImageScalingSettings.h"
 #import "BDAlias.h"
@@ -107,7 +108,12 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTMediaManager *)mediaManager { return [[[self managedObjectContext] document] mediaManager]; }
+- (KTMediaManager *)mediaManager
+{
+	KTMediaManager *result = [(KTMediaPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] mediaManager];
+	OBPOSTCONDITION(result);
+	return result;
+}
 
 - (NSString *)identifier { return [self wrappedValueForKey:@"identifier"]; }
 
@@ -132,7 +138,7 @@
  */
 - (NSURL *)URIRepresentation
 {
-	KTDocument *document = [[self managedObjectContext] document];
+	KTDocument *document = [[self mediaManager] document];
 	
 	NSString *URLString = [NSString stringWithFormat:@"svxmedia://%@/%@",	
 													 [document documentID],

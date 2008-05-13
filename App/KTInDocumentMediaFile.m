@@ -37,7 +37,7 @@
 	if ([[moc insertedObjects] containsObject:self])
 	{
 		NSString *filename = [self valueForKey:@"filename"];
-		KTDocument *doc = [moc document];
+		KTDocument *doc = [[self mediaManager] document];
 		if (doc)	// Safety check for handling store migration
 		{
 			NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
@@ -58,8 +58,8 @@
 	if ([self isDeleted])
 	{
 		NSString *filename = [self committedValueForKey:@"filename"];
-		NSString *sourcePath = [[[moc document] mediaPath] stringByAppendingPathComponent:filename];
-		NSString *destinationPath = [[[moc document] temporaryMediaPath] stringByAppendingPathComponent:filename];
+		NSString *sourcePath = [[[[self mediaManager] document] mediaPath] stringByAppendingPathComponent:filename];
+		NSString *destinationPath = [[[[self mediaManager] document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
 			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));
@@ -85,7 +85,7 @@
 {
 	NSString *result = nil;
 	
-	KTDocument *document = [[self managedObjectContext] document];
+	KTDocument *document = [[self mediaManager] document];
 	
 	// Figure out proper values for these two
 	if ([self isTemporaryObject])

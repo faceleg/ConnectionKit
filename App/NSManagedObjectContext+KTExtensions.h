@@ -61,7 +61,6 @@
 
 // returns corresponding KTDocument via sharedDocumentController
 // (document must be open and on-screen)
-- (KTDocument *)document;
 
 // return context's DocumentInfo
 - (KTDocumentInfo *)documentInfo;

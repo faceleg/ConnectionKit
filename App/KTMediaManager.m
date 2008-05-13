@@ -8,7 +8,6 @@
 
 #import "KTMediaManager+Internal.h"
 
-#import "Debug.h"
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
@@ -17,15 +16,18 @@
 #import "KTInDocumentMediaFile.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
+#import "KTMediaPersistentStoreCoordinator.h"
+
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObjectModel+KTExtensions.h"
-
 #import "NSArray+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "BDAlias.h"
 #import <Connection/KTLog.h>
+
+#import "Debug.h"
 
 
 NSString *KTMediaLogDomain = @"Media";
@@ -59,8 +61,9 @@ NSString *KTMediaLogDomain = @"Media";
 	NSString *mediaModelPath = [[NSBundle mainBundle] pathForResource:@"Media" ofType:@"mom"];
 	NSManagedObjectModel *mediaModel = [NSManagedObjectModel modelWithPath:mediaModelPath];
 	
-	NSPersistentStoreCoordinator *mediaPSC =
-		[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mediaModel];
+	KTMediaPersistentStoreCoordinator *mediaPSC =
+		[[KTMediaPersistentStoreCoordinator alloc] initWithManagedObjectModel:mediaModel];
+	[mediaPSC setMediaManager:self];
 	[myMOC setPersistentStoreCoordinator:mediaPSC];
 	[mediaPSC release];
 	

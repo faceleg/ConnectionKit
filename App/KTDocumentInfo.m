@@ -12,6 +12,7 @@
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTManagedObjectContext.h"
+#import "KTPersistentStoreCoordinator.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -59,7 +60,13 @@
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy
 {
 	[self setWrappedInteger:copy forKey:@"copyMediaOriginals"];
-	[[[self managedObjectContext] document] setUpdateMediaStorageAtNextSave:YES];
+	
+	// Mark the document
+	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+	OBASSERT(PSC);
+	OBASSERT([PSC isKindOfClass:[KTPersistentStoreCoordinator class]]);
+	
+	[[PSC document] setUpdateMediaStorageAtNextSave:YES];
 }
 
 - (NSSet *)requiredBundlesIdentifiers

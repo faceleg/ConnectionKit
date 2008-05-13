@@ -37,7 +37,7 @@
 
 - (NSDictionary *)latestProperties
 {
-	KTDocument *document = [[self managedObjectContext] document];
+	KTDocument *document = [[self mediaManager] document];
 	
 	// Find the plugin, and thereby its design.
 	NSString *pluginID = [self valueForKey:@"pluginID"];

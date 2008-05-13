@@ -10,14 +10,17 @@
 #import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 
-#import "Debug.h"
 #import "KTMediaManager.h"
+#import "KTMediaPersistentStoreCoordinator.h"
+
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
  
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>
+
+#import "Debug.h"
 
 
 @interface KTMediaFile ( Private )
@@ -45,7 +48,12 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTMediaManager *)mediaManager { return [[[self managedObjectContext] document] mediaManager]; }
+- (KTMediaManager *)mediaManager
+{
+	KTMediaManager *result = [(KTMediaPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] mediaManager];
+	OBPOSTCONDITION(result);
+	return result;
+}
 
 - (NSString *)fileType { return [self primitiveValueForKey:@"fileType"]; }
 

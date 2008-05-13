@@ -13,6 +13,7 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTHostProperties.h"
+#import "KTPersistentStoreCoordinator.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
@@ -476,7 +477,11 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [[[self managedObjectContext] document] mediaManager];
+	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+	OBASSERT(PSC);
+	OBASSERT([PSC isKindOfClass:[KTPersistentStoreCoordinator class]]);
+	
+	KTMediaManager *result = [[PSC document] mediaManager];
 	return result;
 }
 

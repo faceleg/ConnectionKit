@@ -11,6 +11,7 @@
 #import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
+#import "KTMediaPersistentStoreCoordinator.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -23,7 +24,11 @@
  */
 - (NSURL *)absoluteURL;
 {
-	KTDocument *document = [[self managedObjectContext] document];
+	KTMediaPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+	OBASSERT(PSC);
+	OBASSERT([PSC isKindOfClass:[KTMediaPersistentStoreCoordinator class]]);
+	
+	KTDocument *document = [[PSC mediaManager] document];
 	KTHostProperties *hostProperties = [[document documentInfo] hostProperties];
 	NSURL *siteURL = [hostProperties siteURL];
 	

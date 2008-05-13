@@ -331,7 +331,8 @@
 
 - (KTDocument *)document
 {
-	return (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:self];
+	OBASSERT_NOT_REACHED("-[NSManagedObjectContext document] is dead. Long live -[KTPSC document]");
+	return nil;
 }
 
 - (KTDocumentInfo *)documentInfo
@@ -394,6 +395,7 @@
 
 - (BOOL)isDocumentMOC
 {
+	return NO;	// Disabled for 1.5
 	return [self isEqual:[[self document] managedObjectContext]];
 }
 
