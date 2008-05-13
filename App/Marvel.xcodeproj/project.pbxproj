@@ -2922,6 +2922,26 @@
 			name = Scripts;
 			sourceTree = "<group>";
 		};
+		275E067A0DDA0F1A0072567F /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				275E067B0DDA0F560072567F /* Element */,
+				273864300D50A6A000A8A209 /* Page */,
+				3C5A73710BF7B69300776464 /* Pagelet */,
+			);
+			name = Elements;
+			sourceTree = "<group>";
+		};
+		275E067B0DDA0F560072567F /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */,
+				3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */,
+				3C682B1F0D622F9300B4D485 /* KTAbstractElement.m */,
+			);
+			name = Element;
+			sourceTree = "<group>";
+		};
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -3047,21 +3067,6 @@
 			name = "Code Injection";
 			sourceTree = "<group>";
 		};
-		27D064550C6A02830075C6BC /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
-				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
-				3C682B270D622FDA00B4D485 /* KTManagedObjectContext.h */,
-				3C682B280D622FF000B4D485 /* KTManagedObjectContext.m */,
-				3C682B2A0D622FF800B4D485 /* KTPersistentStoreCoordinator.h */,
-				3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */,
-				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
-				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
-			);
-			name = Other;
-			sourceTree = "<group>";
-		};
 		27DB80770C84658200E29C38 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -3135,7 +3140,7 @@
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				3C5A736E0BF7B67300776464 /* Core Data */,
-				273864300D50A6A000A8A209 /* Page */,
+				275E067A0DDA0F1A0072567F /* Elements */,
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CD0D85780100AEF4B5 /* Document UI */,
 				27DB80770C84658200E29C38 /* Inspector */,
@@ -3889,24 +3894,27 @@
 		3C5A736E0BF7B67300776464 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				3C5A73710BF7B69300776464 /* Plugin Foundation */,
-				3C5A737D0BF7B87D00776464 /* Storable Foundation Classes */,
-				3C5C0D9B0BF8201A003594F8 /* Data Migration */,
-				27D064550C6A02830075C6BC /* Other */,
+				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
+				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
+				3C682B270D622FDA00B4D485 /* KTManagedObjectContext.h */,
+				3C682B280D622FF000B4D485 /* KTManagedObjectContext.m */,
+				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
+				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
+				3C682B2A0D622FF800B4D485 /* KTPersistentStoreCoordinator.h */,
+				3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */,
+				27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */,
+				27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
 		};
-		3C5A73710BF7B69300776464 /* Plugin Foundation */ = {
+		3C5A73710BF7B69300776464 /* Pagelet */ = {
 			isa = PBXGroup;
 			children = (
-				3C682B1E0D622F7100B4D485 /* KTAbstractElement.h */,
-				3C682B1F0D622F9300B4D485 /* KTAbstractElement.m */,
 				3C682B210D622F9F00B4D485 /* KTPagelet.h */,
 				3C682B220D622FA600B4D485 /* KTPagelet.m */,
-				27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */,
 			);
-			name = "Plugin Foundation";
+			name = Pagelet;
 			sourceTree = "<group>";
 		};
 		3C5A73770BF7B82600776464 /* Debugging */ = {
@@ -3928,15 +3936,6 @@
 				27CAB4720D36E12400F90A1B /* Media.xcdatamodel */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		3C5A737D0BF7B87D00776464 /* Storable Foundation Classes */ = {
-			isa = PBXGroup;
-			children = (
-				27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */,
-				27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */,
-			);
-			name = "Storable Foundation Classes";
 			sourceTree = "<group>";
 		};
 		3C5A73800BF7B8DB00776464 /* DataSource */ = {
@@ -4052,13 +4051,6 @@
 			children = (
 			);
 			name = Feedback;
-			sourceTree = "<group>";
-		};
-		3C5C0D9B0BF8201A003594F8 /* Data Migration */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Data Migration";
 			sourceTree = "<group>";
 		};
 		3C66EA380DD4129200F56B04 /* Products */ = {
