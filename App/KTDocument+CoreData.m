@@ -62,9 +62,10 @@
 		//[myManagedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
 		
 		NSManagedObjectModel *model = [self managedObjectModel];
-		KTPersistentStoreCoordinator *psc = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-		[myManagedObjectContext setPersistentStoreCoordinator:psc];
-		[psc release];
+		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+		[PSC setDocument:self];
+		[myManagedObjectContext setPersistentStoreCoordinator:PSC];
+		[PSC release];
 	}
 	
 	OBASSERTSTRING((nil != myManagedObjectContext), @"myManagedObjectContext should not be nil");

@@ -8,13 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+
+@class KTDocument;
+
 // this class exists to facilitate (and debug) multi-threaded Core Data access
 
 @interface KTPersistentStoreCoordinator : NSPersistentStoreCoordinator 
 {
+	KTDocument *myDocument;
+
 #ifdef DEBUG
 	int myLockCount; // in RELEASE, we poseAsClass: which can't have any ivars
 #endif
 }
+
+- (KTDocument *)document;
+- (void)setDocument:(KTDocument *)document;
 
 @end

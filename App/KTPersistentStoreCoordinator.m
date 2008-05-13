@@ -12,6 +12,14 @@
 
 @implementation KTPersistentStoreCoordinator
 
+- (KTDocument *)document { return myDocument; }
+
+- (void)setDocument:(KTDocument *)document { myDocument = document; }
+
+
+#pragma mark -
+#pragma mark Debug
+/*
 // in RELEASE, we want KTPersistentStoreCoordinator to poseAsClass:
 // NSPersistentStoreCoordinator so that saveDocumentAs: works!
 #ifndef DEBUG
@@ -22,6 +30,7 @@
 	[pool release];
 }
 #endif
+*/
 
 // we can only use myLock if we are DEBUGging
 #ifdef DEBUG
