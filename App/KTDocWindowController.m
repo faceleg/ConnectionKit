@@ -926,8 +926,8 @@ from representedObject */
 		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
 		/// Case 17992, added assert to better detect source of exception
 		OBASSERTSTRING((nil != nearestParent), @"nearestParent should not be nil, root at worst");
-		KTPage *indexPage = [KTPage insertNewPageWithParent:nearestParent 
-											plugin:pagePlugin];
+		
+		KTPage *indexPage = [KTPage insertNewPageWithParent:nearestParent plugin:pagePlugin];
 		[indexPage setBool:YES forKey:@"isCollection"]; // Duh!
 		
 		// Now set the index on the page
@@ -976,16 +976,20 @@ from representedObject */
 		
 		
 		// Any collection with an RSS feed should have an RSS Badge.
-		if ([[pageSettings objectForKey:@"collectionSyndicate"] boolValue])
+		if ([pageSettings boolForKey:@"collectionSyndicate"])
 		{
-			// Make the initial RSS badge
-			NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultRSSBadgeBundleIdentifier"];
-			if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
+			NSNumber *includeRSSBadge = [presetDict objectForKey:@"KTIncludeRSSBadge"];
+			if (!includeRSSBadge || [includeRSSBadge boolValue])
 			{
-				KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-				if (badgePlugin)
+				// Make the initial RSS badge
+				NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultRSSBadgeBundleIdentifier"];
+				if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
 				{
-					[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
+					KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
+					if (badgePlugin)
+					{
+						[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
+					}
 				}
 			}
 		

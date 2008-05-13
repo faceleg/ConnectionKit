@@ -61,10 +61,12 @@
 				<key>collectionSummaryType</key>
 				<integer>2</integer>
 				<key>collectionSyndicate</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>KTPluginPriority</key>
 			<integer>2</integer>
+			<key>KTIncludeRSSBadge</key>
+			<false/>
 			<key>KTPresetTitle</key>
 			<string>Photo Album</string>
 			<key>KTPresetUntitled</key>
