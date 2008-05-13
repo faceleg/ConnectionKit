@@ -166,7 +166,7 @@
 				if ( (nil != root) && [root isKindOfClass:[KTPage class]] )
 				{
 					[self setRoot:root];
-					[root setDocument:self];
+					//[root setDocument:self];
 					result = YES;
 				}
 				else

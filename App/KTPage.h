@@ -32,7 +32,6 @@
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
 {
 	// these ivars are only set if the page is root
-    KTDocument			*myDocument;				// not archived
 	BOOL				myIsNewPage;
 }
 
@@ -64,9 +63,6 @@
 
 - (BOOL)disableComments;
 - (void)setDisableComments:(BOOL)disableComments;
-
-- (KTDocument *)document;
-- (void)setDocument:(KTDocument *)aDocument;
 
 // Draft
 - (void)setIsDraft:(BOOL)flag;

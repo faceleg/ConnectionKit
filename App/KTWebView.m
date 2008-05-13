@@ -35,8 +35,10 @@ TO DO:
 #import "KTAppDelegate.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWindowController.h"
+#import "KTAbstractElement.h"
 #import "KTElementPlugin.h"
 #import "KTPage.h"
+
 #import "NSString+Karelia.h"
 
 

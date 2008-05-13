@@ -15,6 +15,8 @@
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
+#import "KTPersistentStoreCoordinator.h"
+
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
@@ -300,10 +302,11 @@
 	return result;
 }
 
-// if we're saving as, document will always be nil, even for root
 - (KTDocument *)document
 {
-	return [[self page] document];
+	KTDocument *result = [(KTPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] document];
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 /*	Simply pulls the value from the plugin's Info.plist

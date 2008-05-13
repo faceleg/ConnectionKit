@@ -14,6 +14,7 @@
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
 #import "KTDocumentController.h"
+#import "KTPersistentStoreCoordinator.h"
 
 #import "Debug.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -93,48 +94,6 @@
 {
 	return self;			// the containing page of this object is the page itself
 }
-
-/*!	A root page needs a direct pointer to document
-*/
-- (KTDocument *)document
-{
-	// For Root
-	if (myDocument)
-	{
-		return myDocument;
-	}
-
-	
-	/// added a try/catch block to avoid grinding everything to a halt
-	KTDocument *result = nil;
-	@try
-	{
-		result = (KTDocument *)[[NSDocumentController sharedDocumentController] documentForManagedObjectContext:[self managedObjectContext]];
-		if ( nil == result )
-		{
-			KTDocument *lastSavedDocument = [[NSDocumentController sharedDocumentController] lastSavedDocument];
-			if ( nil != lastSavedDocument )
-			{
-				result = lastSavedDocument;
-			}
-			else if (![self isRoot])	// don't do the below if it will recurse -- better to return nil!
-			{
-				result = [[self parent] document];
-			}
-		}
-	}
-	@catch (NSException * e) 
-	{
-		NSLog(@"warning: unable to determine document for %@", [self description]); // according to NSManagedObject docs, -description does not fire a fault
-		result = nil;
-	}
-	
-	return result;
-}
-
-/*	Weak ref to the document.
- */
-- (void)setDocument:(KTDocument *)aDocument { myDocument = aDocument; }
 
 #pragma mark -
 #pragma mark Drafts

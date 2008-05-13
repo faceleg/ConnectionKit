@@ -121,7 +121,6 @@
 	
 	if ( nil != root )
 	{
-		[root setDocument:aDocument];
 		[root setValue:[aDocument documentInfo] forKey:@"documentInfo"];	// point to yourself
 		
 		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
@@ -298,17 +297,6 @@
 			[self setValue:date forKey:@"creationDate"];
 		}
 	}
-}
-
-#pragma mark -
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-    // release ivars
-	[self setDocument:nil];
-    	
-    [super dealloc];
 }
 
 #pragma mark -
