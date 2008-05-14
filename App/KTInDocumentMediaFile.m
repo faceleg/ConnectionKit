@@ -23,6 +23,11 @@
 #import "Debug.h"
 
 
+@interface KTInDocumentMediaFile (Private)
+- (void)moveIntoDocument;
+@end
+
+
 @implementation KTInDocumentMediaFile
 
 #pragma mark -
@@ -43,6 +48,9 @@
 
 + (NSString *)entityName { return @"InDocumentMediaFile"; }
 
+#pragma mark -
+#pragma mark File Management
+
 - (void)willSave
 {
 	NSManagedObjectContext *moc = [self managedObjectContext];
@@ -51,20 +59,7 @@
 	// If we have just been saved then move our underlying file into the document
 	if ([[moc insertedObjects] containsObject:self])
 	{
-		NSString *filename = [self valueForKey:@"filename"];
-		KTDocument *doc = [[self mediaManager] document];
-		if (doc)	// Safety check for handling store migration
-		{
-			NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
-			NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
-			
-			KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
-			
-			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
-				[NSException raise:NSInternalInconsistencyException
-							format:@"Unable to move temporary MediaFile %@ into the document", filename];
-			}
-		}
+		[self moveIntoDocument];
 	}
 	
 	
@@ -94,6 +89,57 @@
 		}
 	}
 }
+
+/*	Called when a MediaFile is saved for the first time. i.e. it becomes peristent and the underlying file needs to move into the doc.
+ */
+- (void)moveIntoDocument
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	KTDocument *doc = [[self mediaManager] document];
+	if (!doc) return;	// Safety check for handling store migration
+	
+	
+	// Simple debug log of what's about to go down		(see, I'm streetwise. No, really!)
+	NSString *filename = [self filename];
+	KTLog(KTMediaLogDomain,
+		  KTLogDebug,
+		  ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
+	
+	
+	// Only bother if there is actually a file to move
+	NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
+	if (![fileManager fileExistsAtPath:sourcePath])
+	{
+		KTLog(KTMediaLogDomain,
+			  KTLogError,
+			  ([NSString stringWithFormat:@"No file to move at:\r%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
+			   
+		return;
+	}
+	
+	
+	// Make sure the destination is available
+	NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
+	if ([fileManager fileExistsAtPath:destinationPath])
+	{
+		KTLog(KTMediaLogDomain,
+			  KTLogWarn,
+			  ([NSString stringWithFormat:@"%@\ralready exists; overwriting it.", [destinationPath stringByAbbreviatingWithTildeInPath]]));
+		
+		[fileManager removeFileAtPath:destinationPath handler:self];
+	}
+	
+			   
+	// Make the move
+	if (![fileManager movePath:sourcePath toPath:destinationPath handler:self])
+	{
+		[NSException raise:NSInternalInconsistencyException
+					format:@"Unable to move temporary MediaFile %@ into the document", filename];
+	}
+}
+
+#pragma mark -
+#pragma mark Accessors
 
 - (NSString *)currentPath
 {
