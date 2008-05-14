@@ -35,11 +35,12 @@ extern NSString *KTMediaLogDomain;
 - (KTMediaContainer *)mediaContainerWithDraggingInfo:(id <NSDraggingInfo>)dragInfo preferExternalFile:(BOOL)external;
 - (KTMediaContainer *)mediaContainerWithDataSourceDictionary:(NSDictionary *)dataSource;
 
-// Media file locations
+@end
+
+
+@interface KTMediaManager (MediaFiles)
 - (BOOL)mediaFileShouldBeExternal:(NSString *)path;
 + (BOOL)fileConstituesIMedia:(NSString *)path;
-
-
 @end
 
 

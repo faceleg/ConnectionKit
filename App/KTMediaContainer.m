@@ -14,7 +14,6 @@
 #import "KTGraphicalTextMediaContainer.h"
 
 #import "KTMediaManager.h"
-#import "MediaFiles+Internal.h"
 #import "KTMediaPersistentStoreCoordinator.h"
 
 #import "KTImageScalingSettings.h"

@@ -23,11 +23,3 @@
 - (NSString *)preferredFileName;
 
 @end
-
-
-@interface KTInDocumentMediaFile (MediaManager)
-
-+ (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
-						   inManagedObjectContext:(NSManagedObjectContext *)moc;
-
-@end

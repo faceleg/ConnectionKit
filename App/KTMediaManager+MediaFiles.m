@@ -7,15 +7,18 @@
 //
 
 #import "KTMediaManager+Internal.h"
-#import "MediaFiles+Internal.h"
+#import "KTMediaFile+Internal.h"
 
+#import "KT.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 
 #import "NSArray+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSManagedObjectModel+KTExtensions.h"
 #import "NSString+Karelia.h"
 
 #import "BDAlias.h"
@@ -74,6 +77,104 @@
 		[[NSAlert alertWithError:error] runModal];
 	}
 	
+	return result;
+}
+
+/*	NSManagedObjectContext gives us a nice list of inserted (temporary) objects. We just have to narrow it down to those of
+ *	the KTExternalMediaFile class.
+ */
+- (NSSet *)temporaryMediaFiles
+{
+	NSMutableSet *result = [NSMutableSet set];
+	
+	NSEnumerator *insertedObjectsEnumerator = [[[self managedObjectContext] insertedObjects] objectEnumerator];
+	id anInsertedObject;
+	while (anInsertedObject = [insertedObjectsEnumerator nextObject])
+	{
+		if ([anInsertedObject isKindOfClass:[KTInDocumentMediaFile class]])	// Ignore external media
+		{
+			[result addObject:anInsertedObject];
+		}
+	}
+	
+	return result;
+}
+
+- (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest
+{
+	// Search the DB for matching digests
+	NSFetchRequest *fetchRequest = [[self managedObjectModel]
+									fetchRequestFromTemplateWithName:@"MediaFilesWithDigest"
+									substitutionVariable:digest forKey:@"DIGEST"];
+	
+	NSError *error = nil;
+	NSArray *result = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+	if (error) {
+		[[NSAlert alertWithError:error] runModal];
+	}
+	
+	return result;
+}
+
+- (KTInDocumentMediaFile *)anyInDocumentMediaFileEqualToFile:(NSString *)path
+{
+	KTInDocumentMediaFile *result = nil;
+	
+	// Search the DB for matching digests
+	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[NSData partiallyDigestStringFromContentsOfFile:path]];
+	
+	if ([similarMedia count] > 0)
+	{
+		// Run through each possible match to see if it actually is identical
+		NSData *mediaData = [NSData dataWithContentsOfFile:path];
+		
+		NSEnumerator *similarMediaEnumerator = [similarMedia objectEnumerator];
+		KTInDocumentMediaFile *anInternalMediaFile;
+		while (anInternalMediaFile = [similarMediaEnumerator nextObject])
+		{
+			NSString *internalMediaPath = [anInternalMediaFile currentPath];
+			NSData *internalMediaData = [NSData dataWithContentsOfFile:internalMediaPath];
+			
+			if ([internalMediaData isEqualToData:mediaData])
+			{
+				result = anInternalMediaFile;
+				break;
+			}
+		}
+	}
+	
+	return result;
+}
+
+/*	Returns the first available unique filename
+ */
+- (NSString *)uniqueInDocumentFilename:(NSString *)preferredFilename;
+{
+	NSString *result = preferredFilename;
+	
+	NSString *fileName = [preferredFilename stringByDeletingPathExtension];
+	NSString *extension = [preferredFilename pathExtension];
+	unsigned count = 1;
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	[fetchRequest setEntity:[[self managedObjectModel] entityWithName:@"InDocumentMediaFile"]];
+	[fetchRequest setFetchLimit:1];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"filename LIKE[c] %@", result]];
+	
+	
+	// Loop through, only ending when the file doesn't exist
+	while ([[[self managedObjectContext] executeFetchRequest:fetchRequest error:NULL] count] > 0)
+	{
+		count++;
+		NSString *aFileName = [NSString stringWithFormat:@"%@-%u", fileName, count];
+		OBASSERT(extension);
+		result = [aFileName stringByAppendingPathExtension:extension];
+		[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"filename LIKE[c] %@", result]];
+	}
+	
+	
+	// Tidy up
+	[fetchRequest release];
 	return result;
 }
 
@@ -161,8 +262,8 @@
 		}
 		
 		// Then add the object to the DB
-		result = [KTInDocumentMediaFile insertTemporaryMediaFileWithPath:destinationPath
-													 inManagedObjectContext:[self managedObjectContext]];
+		result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
+											inManagedObjectContext:[self managedObjectContext]];
 		
 		[result setValue:preferredFilename forKey:@"sourceFilename"];
 	}
@@ -265,14 +366,104 @@
 	}	
 	
 	// Add the file to the DB.
-	KTInDocumentMediaFile *result = [KTInDocumentMediaFile insertTemporaryMediaFileWithPath:destinationPath
-												inManagedObjectContext:[self managedObjectContext]];
+	KTInDocumentMediaFile *result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
+															   inManagedObjectContext:[self managedObjectContext]];
 	
 	// Store the file's source filename
 	[result setValue:sourceFilename forKey:@"sourceFilename"];
 	
 	return result;
 
+}
+
+#pragma mark -
+#pragma mark Other
+
+/*	Look at where the media is currently located and decide (based on the user's preference) where it should be stored.
+ */
+- (BOOL)mediaFileShouldBeExternal:(NSString *)path
+{
+	BOOL result = NO;	// The safest option so we use it as a fall back
+	
+	// If the user has requested the "automatic" or "reference" option we must consider the matter further
+	KTCopyMediaType copyingSetting = [[[self document] documentInfo] copyMediaOriginals];
+	switch (copyingSetting)
+	{
+		case KTCopyMediaNone:
+			result = YES;
+			break;
+			
+		case KTCopyMediaAutomatic:
+			// If it's a piece of iMedia reference rather than copy it
+			if ([[self class] fileConstituesIMedia:path])
+			{
+				result = YES;
+			}
+			else
+			{
+				result = NO;
+			}
+			break;
+			
+		case KTCopyMediaAll:
+			result = NO;
+			break;
+	}
+	
+	return result;
+}
+
+/*	Determines if the file is considered to be "iMedia"
+ */
++ (BOOL)fileConstituesIMedia:(NSString *)path
+{
+	//  anything in ~/Movies, ~/Music, or ~/Pictures is considered iMedia.
+    //  NB: there appear to be no standard library functions for finding these
+	//  but supposedly these names are constant and .localized files
+	//  change what name appears in Finder
+	
+	// We resolve symbolic links so that the path of the arbitrary file added will match the actual path
+	// of the home directory
+	NSString *homeDirectory = NSHomeDirectory();
+    NSString *moviesDirectory	= [[homeDirectory stringByAppendingPathComponent:@"Movies"] stringByResolvingSymlinksInPath];
+    NSString *musicDirectory	= [[homeDirectory stringByAppendingPathComponent:@"Music"] stringByResolvingSymlinksInPath];
+    NSString *picturesDirectory	= [[homeDirectory stringByAppendingPathComponent:@"Pictures"] stringByResolvingSymlinksInPath];
+    
+    if ( [path hasPrefix:moviesDirectory] || [path hasPrefix:musicDirectory] || [path hasPrefix:picturesDirectory] )
+    {
+        return YES;
+    }
+	
+	
+	//  anything in iPhoto (using defaults) is iMedia
+	NSDictionary *iPhotoDefaults = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.iPhoto"];
+	NSString *iPhotoRoot = [iPhotoDefaults valueForKey:@"RootDirectory"];	
+	if (iPhotoRoot && [path hasPrefix:iPhotoRoot])
+	{
+		return YES;
+	}
+    
+    
+	//  anything in iTunes (using defaults) is iMedia
+    static NSString *sITunesRoot = nil;
+	if (!sITunesRoot)
+	{
+		// FIXME: the defaults key used here was determined empirically and could break!
+		// FIXME: This could be very slow to resolve if this points who-knows-where.  And it doesn't save the alias back if it's changed. 
+		NSDictionary *iTunesDefaults = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.iTunes"];
+		NSString *musicFolderLocationKey = @"alis:11345:Music Folder Location";
+		NSData *aliasData = [iTunesDefaults valueForKey:musicFolderLocationKey];
+		BDAlias *alias = [[[BDAlias alloc] initWithData:aliasData] autorelease];
+		sITunesRoot = [[alias fullPath] retain];
+		//			}
+	}
+	if (sITunesRoot && [path hasPrefix:sITunesRoot] )
+	{
+		return YES;
+	}
+	
+	
+	return NO;
 }
 
 @end

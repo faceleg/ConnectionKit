@@ -16,7 +16,8 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
- 
+#import "NSString+Karelia.h"
+
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>
 
@@ -34,10 +35,36 @@
 
 @implementation KTMediaFile
 
+#pragma mark -
+#pragma mark Init
+
 + (void)initialize
 {
 	[self setKeys:[NSArray arrayWithObjects:@"filename", @"storageType", nil]
 		triggerChangeNotificationsForDependentKey:@"currentPath"];
+}
+
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
+{
+	id result = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
+											  inManagedObjectContext:moc];
+	
+	[result setValue:[NSString GUIDString] forKey:@"uniqueID"];
+	[result setFileType:[NSString UTIForFileAtPath:path]];
+	
+	
+	// If the file is an image, also store the dimensions.
+	if ([NSString UTI:[result fileType] conformsToUTI:(NSString *)kUTTypeImage])
+	{
+		CIImage *image = [[CIImage alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+		CGSize imageSize = [image extent].size;
+		[result setInteger:imageSize.width forKey:@"width"];
+		[result setInteger:imageSize.height forKey:@"height"];
+		[image release];
+	}
+	
+	
+	return result;
 }
 
 #pragma mark -
@@ -69,8 +96,7 @@
  */
 - (NSString *)currentPath
 {
-	OBASSERT_NOT_REACHED("A KTMediaFile subclass is not overriding -currentPath as it should");
-	
+	SUBCLASSMUSTIMPLEMENT;
 	return nil;
 }
 
@@ -78,7 +104,13 @@
  */
 - (NSString *)quickLookPseudoTag
 {
-	[self subclassResponsibility:_cmd];
+	SUBCLASSMUSTIMPLEMENT;
+	return nil;
+}
+
+- (NSString *)preferredFileName
+{
+	SUBCLASSMUSTIMPLEMENT;
 	return nil;
 }
 

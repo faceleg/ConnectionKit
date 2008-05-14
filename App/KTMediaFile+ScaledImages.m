@@ -7,7 +7,7 @@
 //
 
 #import "KTMediaFile+ScaledImages.h"
-#import "MediaFiles+Internal.h"
+#import "KTMediaFile+Internal.h"
 
 #import "KTImageScalingSettings.h"
 #import "KTMediaManager+Internal.h"

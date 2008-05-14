@@ -7,21 +7,36 @@
 //
 
 #import "KTInDocumentMediaFile.h"
+#import "KTMediaFile+Internal.h"
 
-#import "Debug.h"
 #import "KTDocument.h"
 #import "KTMediaManager.h"
 #import "KTMediaManager+Internal.h"
-#import "MediaFiles+Internal.h"
+
+#import "NSData+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "BDAlias.h"
-
 #import <Connection/KTLog.h>
+
+#import "Debug.h"
 
 
 @implementation KTInDocumentMediaFile
+
+#pragma mark -
+#pragma mark Init
+
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc
+{
+	id result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
+	
+	[result setValue:[path lastPathComponent] forKey:@"filename"];
+	[result setValue:[NSData partiallyDigestStringFromContentsOfFile:path] forKey:@"digest"];
+	
+	return result;
+}
 
 #pragma mark -
 #pragma mark Core Data
@@ -122,6 +137,12 @@
 {
 	NSString *result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>",
 												  [self filename]];
+	return result;
+}
+
+- (NSString *)preferredFileName
+{
+	NSString *result = [[[self valueForKey:@"sourceFilename"] lastPathComponent] stringByDeletingPathExtension];
 	return result;
 }
 

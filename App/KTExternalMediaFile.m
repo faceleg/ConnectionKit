@@ -7,13 +7,30 @@
 //
 
 #import "KTExternalMediaFile.h"
+#import "KTMediaFile+Internal.h"
 
 #import "NSManagedObject+KTExtensions.h"
+
 #import "BDAlias.h"
 #import "BDAlias+QuickLook.h"
 
 
 @implementation KTExternalMediaFile
+
+#pragma mark -
+#pragma mark Init
+
++ (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc
+{
+	KTExternalMediaFile *result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
+	
+	[result setAlias:[BDAlias aliasWithPath:path]];
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Other
 
 + (NSString *)entityName { return @"ExternalMediaFile"; }
 
@@ -56,6 +73,12 @@
 - (NSString *)quickLookPseudoTag
 {
 	NSString *result = [[self alias] quickLookPseudoTag];
+	return result;
+}
+
+- (NSString *)preferredFileName
+{
+	NSString *result = [[[self valueForKeyPath:@"alias.lastKnownPath"] lastPathComponent] stringByDeletingPathExtension];
 	return result;
 }
 

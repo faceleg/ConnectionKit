@@ -23,14 +23,6 @@
 
 
 
-// Queries
-- (NSSet *)temporaryMediaFiles;
-- (NSString *)uniqueInDocumentFilename:(NSString *)preferredFilename;
-
-- (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest;
-- (KTInDocumentMediaFile *)anyInDocumentMediaFileEqualToFile:(NSString *)path;
-
-
 // Missing media
 - (NSSet *)missingMediaFiles;
 
@@ -61,7 +53,7 @@
  *	represent a single unique piece of media, internal or external to the document. Code outside the media
  *	system should never have to manage KTMediaFile objects directly; the higher-level APIs do that.
  */
-@interface KTMediaManager (MediaFiles)
+@interface KTMediaManager (MediaFilesInternal)
 
 // Queries
 - (NSArray *)externalMediaFiles;
