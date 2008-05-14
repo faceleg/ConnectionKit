@@ -26,6 +26,17 @@ extern NSString *KTMediaLogDomain;
 - (NSManagedObjectContext *)managedObjectContext;
 - (NSManagedObjectModel *)managedObjectModel;
 
+@end
+
+
+@interface KTMediaManager (MediaFiles)
+- (BOOL)mediaFileShouldBeExternal:(NSString *)path;
++ (BOOL)fileConstituesIMedia:(NSString *)path;
+@end
+
+
+@interface KTMediaManager (MediaContainers)
+
 // Media Container Creation
 - (KTMediaContainer *)mediaContainerWithIdentifier:(NSString *)identifier;
 - (KTMediaContainer *)mediaContainerWithPath:(NSString *)path;
@@ -35,12 +46,6 @@ extern NSString *KTMediaLogDomain;
 - (KTMediaContainer *)mediaContainerWithDraggingInfo:(id <NSDraggingInfo>)dragInfo preferExternalFile:(BOOL)external;
 - (KTMediaContainer *)mediaContainerWithDataSourceDictionary:(NSDictionary *)dataSource;
 
-@end
-
-
-@interface KTMediaManager (MediaFiles)
-- (BOOL)mediaFileShouldBeExternal:(NSString *)path;
-+ (BOOL)fileConstituesIMedia:(NSString *)path;
 @end
 
 

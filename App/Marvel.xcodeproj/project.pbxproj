@@ -208,6 +208,7 @@
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (); }; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
+		272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */; };
 		272FBCCA0D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */; };
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
@@ -1679,6 +1680,7 @@
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
+		272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaContainers.m"; sourceTree = "<group>"; };
 		272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTSiteOutlineDataSource+Icons.m"; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
@@ -2795,13 +2797,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		27168E5F0DAA456B00BBC2C6 /* Media Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Media Manager";
-			sourceTree = "<group>";
-		};
 		272321DB0D48B5A70075F31F /* Page Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -2857,6 +2852,17 @@
 		272EEA6D0DDA562C0012005E /* 3 - MediaContainers */ = {
 			isa = PBXGroup;
 			children = (
+				2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */,
+				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
+				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
+				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
+				278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */,
+				278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */,
+				2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */,
+				2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */,
+				278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */,
+				278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */,
+				272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */,
 			);
 			name = "3 - MediaContainers";
 			sourceTree = "<group>";
@@ -3025,28 +3031,9 @@
 				272EEA6B0DDA560C0012005E /* 1 - MediaFiles */,
 				272EEA6C0DDA561C0012005E /* 2 - Scaled Images */,
 				272EEA6D0DDA562C0012005E /* 3 - MediaContainers */,
-				27168E5F0DAA456B00BBC2C6 /* Media Manager */,
-				278B95A80D382A3400E5053A /* Media Containers */,
-				27969F4B0CF6146700C03F45 /* Missing Media Sheet */,
+				27969F4B0CF6146700C03F45 /* Missing Media */,
 			);
 			name = Media;
-			sourceTree = "<group>";
-		};
-		278B95A80D382A3400E5053A /* Media Containers */ = {
-			isa = PBXGroup;
-			children = (
-				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
-				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
-				2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */,
-				2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */,
-				278B95AD0D382AC700E5053A /* KTSimpleScaledImageContainer.h */,
-				278B95AE0D382AC700E5053A /* KTSimpleScaledImageContainer.m */,
-				278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */,
-				278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */,
-				2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */,
-				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
-			);
-			name = "Media Containers";
 			sourceTree = "<group>";
 		};
 		278ECE560D259F400012BA6B /* Pasteboard */ = {
@@ -3060,7 +3047,7 @@
 			name = Pasteboard;
 			sourceTree = "<group>";
 		};
-		27969F4B0CF6146700C03F45 /* Missing Media Sheet */ = {
+		27969F4B0CF6146700C03F45 /* Missing Media */ = {
 			isa = PBXGroup;
 			children = (
 				2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */,
@@ -3070,7 +3057,7 @@
 				27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */,
 				27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */,
 			);
-			name = "Missing Media Sheet";
+			name = "Missing Media";
 			sourceTree = "<group>";
 		};
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
@@ -6378,6 +6365,7 @@
 				27EF1BD00DC1F9BF00976C66 /* KTSiteOutlineDataSource.m in Sources */,
 				CEA2BA3C0DC79F2D00A8023F /* KSWebViewController.m in Sources */,
 				275E07240DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m in Sources */,
+				272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
