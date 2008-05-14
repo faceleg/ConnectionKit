@@ -32,6 +32,9 @@
 
 @interface KTMediaFile (ScaledImagesPrivate)
 
+- (void)getUTI:(NSString **)outUTI filenameExtension:(NSString **)outExtension
+	  forImage:(NSImage *)image scalingProperties:(NSDictionary *)properties;
+
 // Generation
 - (KTScaledImageProperties *)generateImageUsingCoreImageWithProperties:(NSDictionary *)properties;
 
@@ -133,17 +136,14 @@
 	
 	
 	// Figure out the UTI
-	NSString *UTI = [properties objectForKey:@"fileType"];
-	if (!UTI)
-	{
-		UTI = [finalImage preferredFormatUTI];
-	}
+	NSString *UTI;
+	NSString *extension;
+	[self getUTI:&UTI filenameExtension:&extension forImage:finalImage scalingProperties:properties];
+	OBASSERT(extension);
 	
 	
 	// Create the MediaFile
 	KTMediaManager *mediaManager = [self mediaManager];
-	NSString *extension = [NSString filenameExtensionForUTI:UTI];
-	OBASSERT(extension);
 	NSString *preferredFilename = [[self preferredFileName] stringByAppendingPathExtension:extension];
 	NSData *imageData = [finalImage representationForUTI:UTI];
 	KTInDocumentMediaFile *mediaFile = [mediaManager mediaFileWithData:imageData preferredFilename:preferredFilename];
@@ -156,6 +156,40 @@
 	
 	
 	return result;
+}
+
+/*	Assuming the image is a scaled verson of the receiver, what format and filename extension should it have?
+ */
+- (void)getUTI:(NSString **)outUTI filenameExtension:(NSString **)outExtension
+	  forImage:(NSImage *)image scalingProperties:(NSDictionary *)properties
+{
+	OBPRECONDITION(image);
+	OBPRECONDITION(properties);
+	
+	
+	// If the properties specify a UTI, use that. Otherwise, go by the user's prefs.
+	NSString *UTI = [properties objectForKey:@"fileType"];
+	if (!UTI)
+	{
+		UTI = [image preferredFormatUTI];
+	}
+	
+	OBASSERT(UTI);
+	if (outUTI) *outUTI = UTI;
+	
+	
+	// The file extension should match the source image if they're of the same type. Otherwise, use the UTI's default.
+	if (outExtension)
+	{
+		if ([UTI isEqualToUTI:[self fileType]])
+		{
+			*outExtension = [[self currentPath] pathExtension];
+		}
+		else
+		{
+			*outExtension = [NSString filenameExtensionForUTI:UTI];
+		}
+	}
 }
 
 
