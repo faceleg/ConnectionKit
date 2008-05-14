@@ -547,7 +547,7 @@
 	
 	// is the original media a JPEG?
 	NSString *mediaUTI = [[self media] mediaUTI];
-	if ( [NSString UTI:mediaUTI isEqualToUTI:(NSString *)kUTTypeJPEG] )
+	if ( [[mediaUTI isEqualToUTI:(NSString *)kUTTypeJPEG] )
 	{
 		// if we're JPEG, we can use either JPEG or PNG scaled images
 		// so just base choice on user preference

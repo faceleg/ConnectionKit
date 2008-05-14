@@ -785,10 +785,10 @@ NSString *kKTMediaException = @"KTMediaException";
 
 + (BOOL)shouldConvertOriginalWithUTI:(NSString *)aUTI
 {
-	if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeImage]
-		 && ![NSString UTI:aUTI isEqualToUTI:(NSString *)kUTTypeJPEG]
-		 && ![NSString UTI:aUTI isEqualToUTI:(NSString *)kUTTypePNG]
-		 && ![NSString UTI:aUTI isEqualToUTI:(NSString *)kUTTypeGIF] )
+	if ( [aUTI conformsToUTI:(NSString *)kUTTypeImage]
+		 && ![aUTI isEqualToUTI:(NSString *)kUTTypeJPEG]
+		 && ![aUTI isEqualToUTI:(NSString *)kUTTypePNG]
+		 && ![aUTI isEqualToUTI:(NSString *)kUTTypeGIF] )
 	{
 		return YES;
 	}
