@@ -24,7 +24,7 @@ extern NSString *KTMediaLogDomain;
 // Basic Accesors
 - (KTDocument *)document;
 - (NSManagedObjectContext *)managedObjectContext;
-- (NSManagedObjectModel *)managedObjectModel;
++ (NSManagedObjectModel *)managedObjectModel;
 
 @end
 

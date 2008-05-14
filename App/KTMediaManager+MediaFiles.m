@@ -103,7 +103,7 @@
 - (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest
 {
 	// Search the DB for matching digests
-	NSFetchRequest *fetchRequest = [[self managedObjectModel]
+	NSFetchRequest *fetchRequest = [[[self class] managedObjectModel]
 									fetchRequestFromTemplateWithName:@"MediaFilesWithDigest"
 									substitutionVariable:digest forKey:@"DIGEST"];
 	
@@ -157,7 +157,7 @@
 	unsigned count = 1;
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity:[[self managedObjectModel] entityWithName:@"InDocumentMediaFile"]];
+	[fetchRequest setEntity:[[[self class] managedObjectModel] entityWithName:@"InDocumentMediaFile"]];
 	[fetchRequest setFetchLimit:1];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"filename LIKE[c] %@", result]];
 	

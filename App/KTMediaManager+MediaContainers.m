@@ -42,7 +42,7 @@
 	{
 		// Fetch first possible match
 		NSFetchRequest *fetchRequest =
-		[[self managedObjectModel] fetchRequestFromTemplateWithName:@"MediaWithIdentifier"
+		[[[self class] managedObjectModel] fetchRequestFromTemplateWithName:@"MediaWithIdentifier"
 											   substitutionVariable:identifier forKey:@"IDENTIFIER"];
 		
 		[fetchRequest setFetchLimit:1];
