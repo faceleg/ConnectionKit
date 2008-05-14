@@ -58,8 +58,7 @@
 			NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
 			NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
 			
-			NSString *message = [NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename];
-			KTLog(KTMediaLogDomain, KTLogDebug, message);
+			KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
 			
 			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
 				[NSException raise:NSInternalInconsistencyException

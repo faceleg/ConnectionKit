@@ -32,8 +32,8 @@
 
 @interface KTMediaFile (ScaledImagesPrivate)
 
-- (void)getUTI:(NSString **)outUTI filenameExtension:(NSString **)outExtension
-	  forImage:(NSImage *)image scalingProperties:(NSDictionary *)properties;
+- (NSString *)UTIForImage:(NSImage *)image scalingProperties:(NSDictionary *)properties;
+- (NSString *)filenameExtensionForScaledImageOfType:(NSString *)UTI;
 
 // Generation
 - (KTScaledImageProperties *)generateImageUsingCoreImageWithProperties:(NSDictionary *)properties;
@@ -136,10 +136,8 @@
 	
 	
 	// Figure out the UTI
-	NSString *UTI;
-	NSString *extension;
-	[self getUTI:&UTI filenameExtension:&extension forImage:finalImage scalingProperties:properties];
-	OBASSERT(extension);
+	NSString *UTI = [self UTIForImage:finalImage scalingProperties:properties];
+	NSString *extension = [self filenameExtensionForScaledImageOfType:UTI];
 	
 	
 	// Create the MediaFile
@@ -158,38 +156,42 @@
 	return result;
 }
 
-/*	Assuming the image is a scaled verson of the receiver, what format and filename extension should it have?
- */
-- (void)getUTI:(NSString **)outUTI filenameExtension:(NSString **)outExtension
-	  forImage:(NSImage *)image scalingProperties:(NSDictionary *)properties
+- (NSString *)UTIForImage:(NSImage *)image scalingProperties:(NSDictionary *)properties
 {
 	OBPRECONDITION(image);
 	OBPRECONDITION(properties);
 	
 	
 	// If the properties specify a UTI, use that. Otherwise, go by the user's prefs.
-	NSString *UTI = [properties objectForKey:@"fileType"];
-	if (!UTI)
+	NSString *result = [properties objectForKey:@"fileType"];
+	if (!result)
 	{
-		UTI = [image preferredFormatUTI];
+		result = [image preferredFormatUTI];
 	}
 	
-	OBASSERT(UTI);
-	if (outUTI) *outUTI = UTI;
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+/*	For a scaled image of the specified type, what filename extension should be used?
+ *	When the original matches, use its extension, otherwise, use the default for the type.
+ */
+- (NSString *)filenameExtensionForScaledImageOfType:(NSString *)UTI
+{
+	OBPRECONDITION(UTI);
 	
-	
-	// The file extension should match the source image if they're of the same type. Otherwise, use the UTI's default.
-	if (outExtension)
+	NSString *result;
+	if ([UTI isEqualToUTI:[self fileType]])
 	{
-		if ([UTI isEqualToUTI:[self fileType]])
-		{
-			*outExtension = [[self currentPath] pathExtension];
-		}
-		else
-		{
-			*outExtension = [NSString filenameExtensionForUTI:UTI];
-		}
+		result = [[self currentPath] pathExtension];
 	}
+	else
+	{
+		result = [NSString filenameExtensionForUTI:UTI];
+	}
+	
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 
