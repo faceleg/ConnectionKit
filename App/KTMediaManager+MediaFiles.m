@@ -36,6 +36,9 @@
 - (KTInDocumentMediaFile *)temporaryMediaFileWithPath:(NSString *)path;
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
 
+// Conversion
+- (KTInDocumentMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTExternalMediaFile *)original;
+
 @end
 
 
@@ -179,7 +182,7 @@
 }
 
 #pragma mark -
-#pragma mark MediaFile creation/re-use
+#pragma mark Creating/Locating MediaFiles
 
 /*	Used to add new media files to the DB.
  *	The media manager will automatically decide whether to add the file as external or temporary media.
@@ -350,7 +353,7 @@
 /*	Creates a brand new entry in the DB for the media at the path.
  *	The path itself is copied to app support as a temporary store; it is moved internally at save-time.
  */
-- (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
+- (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\r%@", path]));
 	
@@ -376,8 +379,49 @@
 
 }
 
+
 #pragma mark -
-#pragma mark Other
+#pragma mark Conversion
+
+/*	Convert any external media files to internal if the document's settings recommend it.
+ */
+- (void)moveApplicableExternalMediaInDocument
+{
+	NSArray *externalMediaFiles = [self externalMediaFiles];
+	NSEnumerator *mediaFileEnumerator = [externalMediaFiles objectEnumerator];
+	KTExternalMediaFile *aMediaFile;
+	
+	while (aMediaFile = [mediaFileEnumerator nextObject])
+	{
+		if (![self mediaFileShouldBeExternal:[aMediaFile currentPath]])
+		{
+			[self inDocumentMediaFileToReplaceExternalMedia:aMediaFile];
+		}
+	}
+}
+
+- (KTInDocumentMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTExternalMediaFile *)original
+{
+	OBPRECONDITION(original);
+	
+	
+	// Get the replacement file.
+	KTInDocumentMediaFile *result = (KTInDocumentMediaFile *)[self mediaFileWithPath:[original currentPath] external:NO];
+	OBASSERT(result);
+	OBASSERT([result isKindOfClass:[KTInDocumentMediaFile class]]);
+	
+	
+	// Migrate relationships
+	[[result mutableSetValueForKey:@"uploads"] unionSet:[original valueForKey:@"uploads"]];
+	[[result mutableSetValueForKey:@"scaledImages"] unionSet:[original valueForKey:@"scaledImages"]];
+	[[result mutableSetValueForKey:@"containers"] unionSet:[original valueForKey:@"containers"]];
+	
+	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Support
 
 /*	Look at where the media is currently located and decide (based on the user's preference) where it should be stored.
  */

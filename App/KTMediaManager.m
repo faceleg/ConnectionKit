@@ -118,36 +118,6 @@ NSString *KTMediaLogDomain = @"Media";
 }
 
 #pragma mark -
-#pragma mark Moving external files into the doc
-
-/*	Runs through every external media file and makes it an internal one if the user has requested it
- */
-- (void)resetMediaFileStorage
-{
-	NSArray *externalMediaFiles = [self externalMediaFiles];
-	NSEnumerator *mediaFileEnumerator = [externalMediaFiles objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
-	
-	while (aMediaFile = [mediaFileEnumerator nextObject])
-	{
-		if (![self mediaFileShouldBeExternal:[[aMediaFile alias] lastKnownPath]])
-		{
-			[self moveExternalMediaFileIntoDocument:aMediaFile];
-		}
-	}
-}
-
-- (void)moveExternalMediaFileIntoDocument:(KTExternalMediaFile *)mediaFile
-{
-	// The filename should be unique, so just copy the file and change the storage type
-	NSString *currentPath = [mediaFile currentPath];
-	NSString *newPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:[currentPath lastPathComponent]];
-	[[NSFileManager defaultManager] copyPath:currentPath toPath:newPath handler:self];
-	
-	[mediaFile setAlias:nil];
-}
-
-#pragma mark -
 #pragma mark Garbage Collector
 
 /*	Does something along these lines:

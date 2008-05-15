@@ -12,6 +12,7 @@
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
+#import "KTDocumentInfo.h"
 #import "KTHTMLParser.h"
 #import "KTPage.h"
 #import "KTMaster.h"
@@ -413,6 +414,14 @@
 	[self copyDocumentDisplayPropertiesToModel];
 	[managedObjectContext processPendingChanges];
 	[[managedObjectContext undoManager] enableUndoRegistration];
+	
+	
+	// Move external media in-document if the user requests it
+	KTDocumentInfo *docInfo = [self documentInfo];
+	if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
+	{
+		[[self mediaManager] moveApplicableExternalMediaInDocument];
+	}
 	
 	
 	return YES;

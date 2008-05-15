@@ -833,10 +833,6 @@
 	
 	
 	// Garbage collect media
-	if ([self updateMediaStorageAtNextSave])
-	{
-		[[self mediaManager] resetMediaFileStorage];
-	}
 	[[self mediaManager] garbageCollect];
 	
 	

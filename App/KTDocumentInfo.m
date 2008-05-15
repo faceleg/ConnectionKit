@@ -60,13 +60,6 @@
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy
 {
 	[self setWrappedInteger:copy forKey:@"copyMediaOriginals"];
-	
-	// Mark the document
-	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
-	OBASSERT(PSC);
-	OBASSERT([PSC isKindOfClass:[KTPersistentStoreCoordinator class]]);
-	
-	[[PSC document] setUpdateMediaStorageAtNextSave:YES];
 }
 
 - (NSSet *)requiredBundlesIdentifiers

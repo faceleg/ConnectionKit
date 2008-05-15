@@ -27,27 +27,13 @@
 - (NSSet *)missingMediaFiles;
 
 
-// Graphical Text
-- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
-													design:(KTDesign *)design
-									  imageReplacementCode:(NSString *)imageReplacementCode
-													  size:(float)size;
-
-@end
-
-
-@interface KTMediaManager (DocumentSaving)
-
 // Tidying up
-- (void)resetMediaFileStorage;
-- (void)moveExternalMediaFileIntoDocument:(KTExternalMediaFile *)mediaFile;
+- (void)moveApplicableExternalMediaInDocument;
 
 - (void)garbageCollect;
-
 - (void)deleteTemporaryMediaFiles;	// ONLY call when closing the doc
 
 @end
-
 
 /*	At the lowest level of the system is raw KTMediaFile management. Media Files are simple objects that
  *	represent a single unique piece of media, internal or external to the document. Code outside the media
@@ -68,4 +54,15 @@
 - (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename;
 
 @end
+
+
+@interface KTMediaManager (MediaContainersInternal)
+// Graphical Text
+- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
+													design:(KTDesign *)design
+									  imageReplacementCode:(NSString *)imageReplacementCode
+													  size:(float)size;
+
+@end
+
 

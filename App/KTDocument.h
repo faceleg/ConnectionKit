@@ -58,7 +58,6 @@ typedef enum {
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	KTMediaManager				*myMediaManager;
-	BOOL						myShouldUpdateMediaStorageAtNextSave;
 	
 	KTStalenessManager			*myStalenessManager;
 	
@@ -291,8 +290,6 @@ typedef enum {
 @interface KTDocument (Media)
 - (KTMediaManager *)mediaManager;
 
-- (BOOL)updateMediaStorageAtNextSave;
-- (void)setUpdateMediaStorageAtNextSave:(BOOL)update;
 @end
 
 

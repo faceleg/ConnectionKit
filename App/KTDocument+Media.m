@@ -23,8 +23,4 @@
 	return myMediaManager;
 }
 
-- (BOOL)updateMediaStorageAtNextSave { return myShouldUpdateMediaStorageAtNextSave; }
-
-- (void)setUpdateMediaStorageAtNextSave:(BOOL)update { myShouldUpdateMediaStorageAtNextSave = update; }
-
 @end
