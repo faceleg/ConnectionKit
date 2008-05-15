@@ -355,7 +355,6 @@
 			// Replace the path with one suitable for the specified purpose
 			if (mediaContainer)
 			{
-				aMediaPath = @"";
 				if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 				{
 					aMediaPath = [[mediaContainer file] quickLookPseudoTag];
@@ -371,8 +370,7 @@
 				}
 			}
 			
-			OBASSERT(aMediaPath);
-			[buffer appendString:aMediaPath];
+			if (aMediaPath) [buffer appendString:aMediaPath];
 		}
 		
 		result = [NSString stringWithString:buffer];
