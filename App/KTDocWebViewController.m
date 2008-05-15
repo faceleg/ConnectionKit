@@ -60,7 +60,6 @@
 	[super init];
 	
 	myWebViewComponents = [[NSMutableDictionary alloc] initWithCapacity:1];
-	myComponentsNeedingRefresh = [[NSMutableSet alloc] init];
 	mySuspendedKeyPaths = [[NSCountedSet alloc] init];
 	mySuspendedKeyPathsAwaitingRefresh = [[NSMutableSet alloc] init];
 	
@@ -101,7 +100,6 @@
     
 	[self setMainWebViewComponent:nil];
 	[myWebViewComponents release];
-	[myComponentsNeedingRefresh release];
 	[mySuspendedKeyPaths release];
 	[mySuspendedKeyPathsAwaitingRefresh release];
 	

@@ -51,8 +51,7 @@ typedef enum {
 	KTParsedWebViewComponent	*myMainWebViewComponent;
 	NSMutableDictionary			*myWebViewComponents;
 	
-	NSMutableSet				*myComponentsNeedingRefresh;
-	BOOL						myWholeWebViewNeedsRefresh;
+	BOOL						myWebViewNeedsReload;
 	
 	NSCountedSet				*mySuspendedKeyPaths;
 	NSMutableSet				*mySuspendedKeyPathsAwaitingRefresh;
@@ -150,10 +149,8 @@ typedef enum {
 // Content loading
 - (BOOL)webViewNeedsRefresh;
 - (void)setWebViewNeedsRefresh:(BOOL)needsRefresh;
-- (void)setWebViewComponentNeedsRefresh:(KTParsedWebViewComponent *)component;
 
 - (void)refreshWebView;
-- (void)refreshWebViewComponent:(KTParsedWebViewComponent *)component;
 - (void)refreshWebViewIfNeeded;
 
 - (void)suspendWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject;

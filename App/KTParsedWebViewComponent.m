@@ -182,4 +182,26 @@
 	[mySubcomponents removeAllObjects];
 }
 
+#pragma mark -
+#pragma mark Needs Reload
+
+- (BOOL)needsReload { return myNeedsReload; }
+
+- (void)setNeedsReload:(BOOL)flag { myNeedsReload = flag; }
+
+- (void)setNeedsReload:(BOOL)flag recursive:(BOOL)recursive
+{
+	[self setNeedsReload:flag];
+	
+	if (recursive)
+	{
+		NSEnumerator *subcomponentsEnumerator = [[self subcomponents] objectEnumerator];
+		KTParsedWebViewComponent *aComponent;
+		while (aComponent = [subcomponentsEnumerator nextObject])
+		{
+			[aComponent setNeedsReload:flag recursive:YES];
+		}
+	}
+}
+
 @end

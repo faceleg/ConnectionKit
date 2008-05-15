@@ -28,6 +28,8 @@
 	
 	NSMutableSet				*mySubcomponents;
 	KTParsedWebViewComponent	*mySupercomponent;
+	
+	BOOL	myNeedsReload;
 }
 
 - (id)initWithParser:(KTHTMLParser *)parser;
@@ -54,5 +56,9 @@
 
 - (KTParsedWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
 											  templateHTML:(NSString *)templateHTML;
+
+- (BOOL)needsReload;
+- (void)setNeedsReload:(BOOL)flag;
+- (void)setNeedsReload:(BOOL)flag recursive:(BOOL)recursive;
 
 @end
