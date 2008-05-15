@@ -218,12 +218,18 @@
 	[self setWrappedValue:[NSNumber numberWithInt:value] forKey:aKey];
 }
 
+/*	Convenient wrapper for -committedValuesForKeys: when only a single key is required.
+ *	Automatically converts NSNull objects back into nil.
+ */
 - (id)committedValueForKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
 	NSDictionary *values = [self committedValuesForKeys:[NSArray arrayWithObject:aKey]];
+	
 	id result = [values valueForKey:aKey];
-	[self unlockPSCAndMOC];
+	if (result == [NSNull null])
+	{
+		result = nil;
+	}
 	
 	return result;
 }
