@@ -33,7 +33,7 @@
 // New media files
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path external:(BOOL)isExternal;
 
-- (KTInDocumentMediaFile *)temporaryMediaFileWithPath:(NSString *)path;
+- (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path;
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
 
 // Conversion
@@ -219,7 +219,7 @@
 	}
 	else
 	{
-		result = [self temporaryMediaFileWithPath:path];
+		result = [self inDocumentMediaFileForPath:path];
 	}
 	
 	OBPOSTCONDITION(result);
@@ -309,7 +309,7 @@
 
 /*	Look to see if there is an existing equivalent media file. If so, return that. Otherwise create a new one.
  */
-- (KTInDocumentMediaFile *)temporaryMediaFileWithPath:(NSString *)path
+- (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path
 {
 	KTInDocumentMediaFile *result = nil;
 	
@@ -406,9 +406,8 @@
 	
 	
 	// Get the replacement file.
-	KTInDocumentMediaFile *result = (KTInDocumentMediaFile *)[self mediaFileWithPath:[original currentPath] external:NO];
+	KTInDocumentMediaFile *result = [self inDocumentMediaFileForPath:[original currentPath]];
 	OBASSERT(result);
-	OBASSERT([result isKindOfClass:[KTInDocumentMediaFile class]]);
 	
 	
 	// Migrate relationships
