@@ -27,6 +27,7 @@
 #import "KTAsyncOffscreenWebViewController.h"
 #import "KTWebViewTextBlock.h"
 
+#import "NSMutableDictionary+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
@@ -502,26 +503,14 @@
 
 - (void)setMainWebViewComponent:(KTParsedWebViewComponent *)component
 {
-	// Stop observing every key path of the old component (and subComponents)
-	NSAutoreleasePool *tempPool = [[NSAutoreleasePool alloc] init];		// Lots of enumerating here so make a local pool
+	// Do the usual behavior for dumping a component. This empties the component out, including subcomponents, but keeps
+	// the component itself in the tree...
+	[self resetWebViewComponent:[self mainWebViewComponent]];
 	
-	NSEnumerator *componentsEnumerator = [myWebViewComponents objectEnumerator];
-	KTParsedWebViewComponent *aComponent;
 	
-	while (aComponent = [componentsEnumerator nextObject])
-	{
-		NSEnumerator *keyPathsEnumerator = [[aComponent parsedKeyPaths] objectEnumerator];
-		KTParsedKeyPath *aKeyPath;
-		while (aKeyPath = [keyPathsEnumerator nextObject])
-		{
-			[[aKeyPath parsedObject] removeObserver:self forKeyPath:[aKeyPath keyPath]];
-		}
-	}
-	
-	[tempPool release];	// Tidy up
+	// ...so we now get rid of the top level component too
 	[myWebViewComponents removeAllObjects];
 	
-	// Standard accessor
 	[component retain];
 	[myMainWebViewComponent release];
 	myMainWebViewComponent = component;
@@ -564,6 +553,19 @@
  */
 - (void)resetWebViewComponent:(KTParsedWebViewComponent *)component
 {
+	// Deal with subcomponents first
+	NSSet *subcomponents = [component subcomponents];
+	NSEnumerator *subcomponentsEnumerator = [subcomponents objectEnumerator];
+	KTParsedWebViewComponent *aSubcomponent;
+	while (aSubcomponent = [subcomponentsEnumerator nextObject])
+	{
+		[self resetWebViewComponent:aSubcomponent];
+	}
+	
+	[component removeAllSubcomponents];
+	[myWebViewComponents removeObjects:[subcomponents allObjects]];
+	
+	
 	// Stop observing keypaths of the component
 	NSEnumerator *keyPathsEnumerator = [[component parsedKeyPaths] objectEnumerator];
 	KTParsedKeyPath *aKeyPath;
@@ -572,24 +574,6 @@
 		[[aKeyPath parsedObject] removeObserver:self forKeyPath:[aKeyPath keyPath]];
 	}
 	[component removeAllParsedKeyPaths];
-	
-	// Stop observing keypaths of its subcomponents
-	NSEnumerator *subComponentsEnumerator = [[component allSubcomponents] objectEnumerator];
-	KTParsedWebViewComponent *aSubComponent;
-	while (aSubComponent = [subComponentsEnumerator nextObject])
-	{
-		keyPathsEnumerator = [[aSubComponent parsedKeyPaths] objectEnumerator];
-		while (aKeyPath = [keyPathsEnumerator nextObject])
-		{
-			[[aKeyPath parsedObject] removeObserver:self forKeyPath:[aKeyPath keyPath]];
-		}
-		
-		// While we're at it, remove the subComponent from our dictionary
-		[myWebViewComponents removeObjectsForKeys:[myWebViewComponents allKeysForObject:aSubComponent]];
-	}
-	
-	// Release the component from the hierarchy
-	[component removeAllSubcomponents];
 }
 
 #pragma mark -
