@@ -132,11 +132,11 @@
 		OBASSERT([myComponentsNeedingRefresh isKindOfClass:[NSSet class]]);
 
 		// There is no point refreshing a component AND its parent. So ensure we have the most efficient set of objects listed.
-		BOOL aSuperComponentAlreadyNeedsRefreshing = [myComponentsNeedingRefresh intersectsSet:[component allSuperComponents]];
+		BOOL aSuperComponentAlreadyNeedsRefreshing = [myComponentsNeedingRefresh intersectsSet:[component allSupercomponents]];
 		if (!aSuperComponentAlreadyNeedsRefreshing)
 		{
 			[myComponentsNeedingRefresh addObject:component];
-			[myComponentsNeedingRefresh minusSet:[component allSubComponents]];
+			[myComponentsNeedingRefresh minusSet:[component allSubcomponents]];
 		}
 	}
 	
@@ -216,7 +216,7 @@
 	// If a suitable element couldn't be found try the component's parent instead
 	if (!element || ![element isKindOfClass:[DOMHTMLDivElement class]])
 	{
-		[self refreshWebViewComponent:[component superComponent]];
+		[self refreshWebViewComponent:[component supercomponent]];
 		return;
 	}
 	
@@ -225,7 +225,7 @@
 	NSString *templateHTML = [component templateHTML];
 	
 	// Mark all the component + subcomponents as no longer needing a refresh
-	[myComponentsNeedingRefresh minusSet:[component allSubComponents]];
+	[myComponentsNeedingRefresh minusSet:[component allSubcomponents]];
 	[myComponentsNeedingRefresh removeObject:component];
 	
 	// Remove the old component from our hierarchy. This has the effect of killing all subComponents plus any KVO.
@@ -551,7 +551,7 @@
 		KTParsedWebViewComponent *parentComponent = [self webViewComponentForParser:[parser parentParser]];
 		
 		result = [[KTParsedWebViewComponent alloc] initWithParser:parser];
-		[parentComponent addSubComponent:result];
+		[parentComponent addSubcomponent:result];
 		[myWebViewComponents setObject:result forKey:[parser parserID]];
 		[result release];
 	}
@@ -574,7 +574,7 @@
 	[component removeAllParsedKeyPaths];
 	
 	// Stop observing keypaths of its subcomponents
-	NSEnumerator *subComponentsEnumerator = [[component allSubComponents] objectEnumerator];
+	NSEnumerator *subComponentsEnumerator = [[component allSubcomponents] objectEnumerator];
 	KTParsedWebViewComponent *aSubComponent;
 	while (aSubComponent = [subComponentsEnumerator nextObject])
 	{
@@ -589,7 +589,7 @@
 	}
 	
 	// Release the component from the hierarchy
-	[component removeAllSubComponents];
+	[component removeAllSubcomponents];
 }
 
 #pragma mark -

@@ -33,7 +33,7 @@
 
 - (void)dealloc
 {
-	[mySubComponents release];
+	[mySubcomponents release];
 	[myComponent release];
 	[myTemplateHTML release];
 	[myDivID release];
@@ -89,45 +89,45 @@
 #pragma mark -
 #pragma mark Sub & Super Components
 
-- (NSSet *)subComponents { return [NSSet setWithSet:mySubComponents]; }
+- (NSSet *)subcomponents { return [NSSet setWithSet:mySubcomponents]; }
 
 /*	Every single component that is in our chain of subComponents.
  */
-- (NSSet *)allSubComponents
+- (NSSet *)allSubcomponents
 {
 	// Start off with our list of subcomponents
-	NSMutableSet *result = [NSMutableSet setWithSet:[self subComponents]];
+	NSMutableSet *result = [NSMutableSet setWithSet:[self subcomponents]];
 	
 	// Them go through and add all their subcomponents
-	NSEnumerator *subComponentsEnumerator = [[self subComponents] objectEnumerator];
+	NSEnumerator *subComponentsEnumerator = [[self subcomponents] objectEnumerator];
 	KTParsedWebViewComponent *aComponent;
 	while (aComponent = [subComponentsEnumerator nextObject])
 	{
-		[result unionSet:[aComponent allSubComponents]];
+		[result unionSet:[aComponent allSubcomponents]];
 	}
 	
 	return result;
 }
 
-- (KTParsedWebViewComponent *)superComponent { return mySuperComponent; }
+- (KTParsedWebViewComponent *)supercomponent { return mySupercomponent; }
 
 /*	Returns our parent, plus their parent etc.
  */
-- (NSSet *)allSuperComponents
+- (NSSet *)allSupercomponents
 {
 	NSMutableSet *result = [NSMutableSet set];
 	
-	KTParsedWebViewComponent *aComponent = [self superComponent];
+	KTParsedWebViewComponent *aComponent = [self supercomponent];
 	while (aComponent)
 	{
 		[result addObject:aComponent];
-		aComponent = [aComponent superComponent];
+		aComponent = [aComponent supercomponent];
 	}
 	
 	return result;
 }
 
-- (void)setSuperComponent:(KTParsedWebViewComponent *)component { mySuperComponent = component; }
+- (void)setSuperComponent:(KTParsedWebViewComponent *)component { mySupercomponent = component; }
 
 /*	Searches all subComponents (and their subComponents etc.) for the parsed component with the 
  *	right properties. Returns nil if not found.
@@ -146,7 +146,7 @@
 	// No we're not, so search subComponents
 	else
 	{
-		NSSet *subComponents = mySubComponents;
+		NSSet *subComponents = mySubcomponents;
 		NSEnumerator *componentsEnumerator = [subComponents objectEnumerator];
 		KTParsedWebViewComponent *aParsedComponent;
 		
@@ -166,20 +166,20 @@
 	return result;
 }
 
-- (void)addSubComponent:(KTParsedWebViewComponent *)component
+- (void)addSubcomponent:(KTParsedWebViewComponent *)component
 {
-	if (!mySubComponents)
+	if (!mySubcomponents)
 	{
-		mySubComponents = [[NSMutableSet alloc] initWithCapacity:1];
+		mySubcomponents = [[NSMutableSet alloc] initWithCapacity:1];
 	}
 	
-	[mySubComponents addObject:component];
+	[mySubcomponents addObject:component];
 	[component setSuperComponent:self];
 }
 
-- (void)removeAllSubComponents
+- (void)removeAllSubcomponents
 {
-	[mySubComponents removeAllObjects];
+	[mySubcomponents removeAllObjects];
 }
 
 @end

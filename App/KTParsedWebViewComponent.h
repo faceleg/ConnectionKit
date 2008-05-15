@@ -26,8 +26,8 @@
 	NSMutableSet			*myKeyPaths;
 	NSMutableSet			*mySummaryTextBlocks;
 	
-	NSMutableSet				*mySubComponents;
-	KTParsedWebViewComponent	*mySuperComponent;
+	NSMutableSet				*mySubcomponents;
+	KTParsedWebViewComponent	*mySupercomponent;
 }
 
 - (id)initWithParser:(KTHTMLParser *)parser;
@@ -44,13 +44,13 @@
 - (void)addTextBlock:(KTWebViewTextBlock *)textBlock;
 - (void)removeAllTextBlocks;
 
-- (NSSet *)subComponents;
-- (NSSet *)allSubComponents;
-- (void)addSubComponent:(KTParsedWebViewComponent *)component;
-- (void)removeAllSubComponents;
+- (NSSet *)subcomponents;
+- (NSSet *)allSubcomponents;
+- (void)addSubcomponent:(KTParsedWebViewComponent *)component;
+- (void)removeAllSubcomponents;
 
-- (KTParsedWebViewComponent *)superComponent;
-- (NSSet *)allSuperComponents;
+- (KTParsedWebViewComponent *)supercomponent;
+- (NSSet *)allSupercomponents;
 
 - (KTParsedWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
 											  templateHTML:(NSString *)templateHTML;
