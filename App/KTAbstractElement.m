@@ -101,7 +101,7 @@
 	}
 	
 	// Ensure our delegate is setup
-	//[[[self document] pluginDelegatesManager] delegateForPlugin:self];
+	[self delegate];
 }
 
 - (void)awakeFromInsert

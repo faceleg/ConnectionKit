@@ -49,6 +49,9 @@
 		NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 		NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
 																	 object:self];
+		[[NSNotificationCenter defaultCenter] postNotification:notification];
+		return;
+		
 		[queue enqueueNotification:notification 
 					  postingStyle:NSPostASAP 
 					  coalesceMask:NSNotificationCoalescingOnSender 
@@ -84,6 +87,9 @@
 			NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 			NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
 																		 object:self];
+			[[NSNotificationCenter defaultCenter] postNotification:notification];
+			return;
+			
 			[queue enqueueNotification:notification 
 						  postingStyle:NSPostASAP 
 						  coalesceMask:NSNotificationCoalescingOnSender 

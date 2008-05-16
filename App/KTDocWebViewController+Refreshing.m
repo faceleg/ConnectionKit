@@ -129,6 +129,9 @@
 	// Mark the component
 	if (!component) component = [self mainWebViewComponent];
 	[component setNeedsReload:YES];
+	myWebViewNeedsReload = YES;
+	
+	[self resetWebViewComponent:component];
 	
 	
 	// Do the actual reload sometime if the future
@@ -215,9 +218,6 @@
 	// Mark the component as no longer needing a refresh
 	[component setNeedsReload:NO];
 	
-	
-	// Remove the old component from our hierarchy. This has the effect of killing all subComponents plus any KVO.
-	[self resetWebViewComponent:component];
 	
 	// Before generating the HTML, we need to change the key of the component to reflect the new parser that's going to be used
 	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:templateHTML component:parsedComponent];
@@ -323,7 +323,7 @@
 - (void)refreshWebViewIfNeeded;
 {
 	// Work through the hierarchy looking for components that need it
-	KTParsedWebViewComponent *mainComponent = [self mainWebViewComponent];
+		KTParsedWebViewComponent *mainComponent = [self mainWebViewComponent];
 	if (mainComponent)
 	{
 		[self refreshWebViewComponentIfNeeded:mainComponent];
