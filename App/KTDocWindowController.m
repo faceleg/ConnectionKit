@@ -694,7 +694,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// update UI
 	[[NSApp delegate] updateMenusForDocument:[self document]];
 	[self updateToolbar];
-	[[self webViewController] setWebViewNeedsRefresh:YES];
+	[[self webViewController] setWebViewNeedsReload:YES];
 }
 
 - (IBAction)toggleInfoShown:(id)sender

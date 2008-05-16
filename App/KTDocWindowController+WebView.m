@@ -119,7 +119,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 - (IBAction)updateWebView:(id)sender
 {
-	[[self webViewController] setWebViewNeedsRefresh:YES];
+	[[self webViewController] setWebViewNeedsReload:YES];
 }
 
 

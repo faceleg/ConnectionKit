@@ -147,11 +147,11 @@ typedef enum {
 @interface KTDocWebViewController (Refreshing)
 
 // Content loading
-- (BOOL)webViewNeedsRefresh;
-- (void)setWebViewNeedsRefresh:(BOOL)needsRefresh;
+- (BOOL)webViewNeedsReload;
+- (void)setWebViewNeedsReload:(BOOL)needsRefresh;
 
-- (void)refreshWebView;
-- (void)refreshWebViewIfNeeded;
+- (void)reloadWebView;
+- (void)reloadWebViewIfNeeded;
 
 - (void)suspendWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject;
 - (void)resumeWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject;

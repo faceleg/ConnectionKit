@@ -42,9 +42,9 @@
 
 @interface KTDocWebViewController (RefreshingPrivate)
 
-- (void)setWebViewComponentNeedsRefresh:(KTParsedWebViewComponent *)component;
-- (void)refreshWebViewComponent:(KTParsedWebViewComponent *)component;
-- (void)refreshWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component;
+- (void)setWebViewComponentNeedsReload:(KTParsedWebViewComponent *)component;
+- (void)reloadWebViewComponent:(KTParsedWebViewComponent *)component;
+- (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component;
 
 - (void)loadPageIntoWebView:(KTPage *)page;
 
@@ -89,7 +89,7 @@
 		KTParsedWebViewComponent *aComponent;
 		while (aComponent = [componentsEnumerator nextObject])
 		{
-			[self setWebViewComponentNeedsRefresh:aComponent];
+			[self setWebViewComponentNeedsReload:aComponent];
 		}
 	}
 }
@@ -97,22 +97,22 @@
 #pragma mark -
 #pragma mark Needs Refresh
 
-- (BOOL)webViewNeedsRefresh
+- (BOOL)webViewNeedsReload
 {
 	return myWebViewNeedsReload;
 }
 
 /*	Sets the main web view component as needing a refresh or clears out the list of components needing refreshing.
  */
-- (void)setWebViewNeedsRefresh:(BOOL)needsRefresh
+- (void)setWebViewNeedsReload:(BOOL)needsRefresh
 {
 	if (needsRefresh)
 	{
-		[self setWebViewComponentNeedsRefresh:nil];
+		[self setWebViewComponentNeedsReload:nil];
 	}
 	else
 	{
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshWebViewIfNeeded) object:nil];
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadWebViewIfNeededAndReportExceptions) object:nil];
 		
 		[[self mainWebViewComponent] setNeedsReload:NO recursive:YES];
 		myWebViewNeedsReload = NO;
@@ -124,7 +124,7 @@
  *
  *	If component is nil, we assume the whole webview needs a refresh
  */
-- (void)setWebViewComponentNeedsRefresh:(KTParsedWebViewComponent *)component
+- (void)setWebViewComponentNeedsReload:(KTParsedWebViewComponent *)component
 {
 	// Mark the component
 	if (!component) component = [self mainWebViewComponent];
@@ -135,14 +135,16 @@
 	
 	
 	// Do the actual reload sometime if the future
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(refreshWebViewIfNeeded) object:nil];
-	[self performSelector:@selector(refreshWebViewIfNeeded) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self
+											 selector:@selector(reloadWebViewIfNeededAndReportExceptions)
+											   object:nil];
+	[self performSelector:@selector(reloadWebViewIfNeededAndReportExceptions) withObject:nil afterDelay:0.0];
 }
 
 #pragma mark -
 #pragma mark Refresh
 
-- (void)refreshWebView
+- (void)reloadWebView
 {
 	// The notification to do this doesn't get called, so we have to manually set it before reloading
 	[self setCurrentTextEditingBlock:nil];
@@ -184,15 +186,15 @@
 	
 	
 	// Clearly the webview is no longer in need of refreshing
-	[self setWebViewNeedsRefresh:NO];
+	[self setWebViewNeedsReload:NO];
 }
 
-- (void)refreshWebViewComponent:(KTParsedWebViewComponent *)component
+- (void)reloadWebViewComponent:(KTParsedWebViewComponent *)component
 {
 	// If we're trying to redraw the main component cut straight to -refreshWebView
 	if ([component isEqual:[self mainWebViewComponent]])
 	{
-		[self refreshWebView];
+		[self reloadWebView];
 		return;
 	}
 	
@@ -206,7 +208,7 @@
 	// If a suitable element couldn't be found try the component's parent instead
 	if (!element || ![element isKindOfClass:[DOMHTMLDivElement class]])
 	{
-		[self refreshWebViewComponent:[component supercomponent]];
+		[self reloadWebViewComponent:[component supercomponent]];
 		return;
 	}
 	
@@ -320,17 +322,17 @@
 /*	This is the most important part of webview management. Called at the end of the runloop, it reloads the entire
  *	webview or just specific components, as needed.
  */
-- (void)refreshWebViewIfNeeded;
+- (void)reloadWebViewIfNeeded;
 {
 	// Work through the hierarchy looking for components that need it
 		KTParsedWebViewComponent *mainComponent = [self mainWebViewComponent];
 	if (mainComponent)
 	{
-		[self refreshWebViewComponentIfNeeded:mainComponent];
+		[self reloadWebViewComponentIfNeeded:mainComponent];
 	}
 	else
 	{
-		[self refreshWebView];
+		[self reloadWebView];
 	}
 	
 	
@@ -338,14 +340,14 @@
 	myWebViewNeedsReload = NO;
 }
 
-- (void)refreshWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component
+- (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component
 {
 	OBPRECONDITION(component);
 	
 	
 	if ([component needsReload])
 	{
-		[self refreshWebViewComponent:component];
+		[self reloadWebViewComponent:component];
 	}
 	else
 	{
@@ -353,8 +355,20 @@
 		KTParsedWebViewComponent *aSubcomponent;
 		while (aSubcomponent = [subcomponentsEnumerator nextObject])
 		{
-			[self refreshWebViewComponentIfNeeded:aSubcomponent];
+			[self reloadWebViewComponentIfNeeded:aSubcomponent];
 		}
+	}
+}
+
+- (void)reloadWebViewIfNeededAndReportExceptions
+{
+	@try
+	{
+		[self reloadWebViewIfNeeded];
+	}
+	@catch (NSException *exception)
+	{
+		[NSApp reportException:exception];
 	}
 }
 
@@ -628,7 +642,7 @@
 - (void)documentWillClose:(NSNotification *)notification
 {
 	[self setMainWebViewComponent:nil];
-	[self setWebViewNeedsRefresh:NO];
+	[self setWebViewNeedsReload:NO];
 }
 
 @end

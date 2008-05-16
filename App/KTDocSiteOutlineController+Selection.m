@@ -64,7 +64,7 @@
 														object:[selectedPages firstObjectOrNilIfEmpty]];
 	
 	// Refresh webview
-	[[[self windowController] webViewController] setWebViewNeedsRefresh:YES];
+	[[[self windowController] webViewController] setWebViewNeedsReload:YES];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
