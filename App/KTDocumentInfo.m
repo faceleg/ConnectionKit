@@ -46,6 +46,10 @@
 	NSManagedObject *hostProperties = [NSEntityDescription insertNewObjectForEntityForName:@"HostProperties"
 																	inManagedObjectContext:[self managedObjectContext]];
 	[self setValue:hostProperties forKey:@"hostProperties"];
+	
+	
+	// Copy media originals setting
+	[self setCopyMediaOriginals:[[NSUserDefaults standardUserDefaults] integerForKey:@"copyMediaOriginals"]];
 }
 
 #pragma mark -
@@ -60,6 +64,9 @@
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy
 {
 	[self setWrappedInteger:copy forKey:@"copyMediaOriginals"];
+	
+	// Record in the defaults
+	[[NSUserDefaults standardUserDefaults] setInteger:copy forKey:@"copyMediaOriginals"];
 }
 
 - (NSSet *)requiredBundlesIdentifiers

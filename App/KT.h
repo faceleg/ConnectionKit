@@ -71,12 +71,6 @@ typedef enum {
 } KTTimestampType;
 
 typedef enum {
-	KTCopyMediaAutomatic = 0,
-	KTCopyMediaAll,
-	KTCopyMediaNone
-} KTCopyMediaType;
-
-typedef enum {
 	KTHTML401DocType = 0,
 	KTXHTMLTransitionalDocType,
 	KTXHTMLStrictDocType,

@@ -19,8 +19,10 @@
 
 #import "KTManagedObject.h"
 
+#import "KT.h"
 
 #import "CIImage+Karelia.h"
+
 
 extern NSString *kKTMediaException;
 

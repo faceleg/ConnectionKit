@@ -19,7 +19,13 @@
 
 #import "KTManagedObject.h"
 
-#import "KT.h"
+
+typedef enum {
+	KTCopyMediaAutomatic = 0,
+	KTCopyMediaAll,
+	KTCopyMediaNone
+} KTCopyMediaType;
+
 
 
 @class KTPage,KTHostProperties;
