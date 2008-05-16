@@ -248,12 +248,14 @@
 			case KTTimestampModificationDate:
 				result = [self valueForKey:@"lastModificationDate"];
 				break;
+			default:
+				OBASSERT_NOT_REACHED("Page's master has an unknown timestamp type");
+				break;
 		}
 		
 		[self setPrimitiveValue:result forKey:@"editableTimestamp"];
 	}
 	
-	OBPOSTCONDITION(result);
 	return result;
 }
 
