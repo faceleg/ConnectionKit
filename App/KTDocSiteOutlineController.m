@@ -167,6 +167,7 @@
 	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
 	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
 	[imageTextCell setEditable:YES];
+	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
 	[tableColumn setDataCell:imageTextCell];
 	
 	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
