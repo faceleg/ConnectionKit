@@ -61,7 +61,7 @@
 	
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-														object:[selectedPages firstObjectOrNilIfEmpty]];
+														object:[selectedPages firstObject]];
 	
 	// Refresh webview
 	[[[self windowController] webViewController] setWebViewNeedsReload:YES];

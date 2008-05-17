@@ -16,12 +16,14 @@
 #import "KTDocumentController.h"
 #import "KTPersistentStoreCoordinator.h"
 
-#import "Debug.h"
+#import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+
+#import "Debug.h"
 
 
 @interface KTPage (ChildrenPrivate)
@@ -412,12 +414,65 @@
 	return result;
 }
 
-- (void)setThumbnail:(KTMediaContainer *)thumbnail
+- (void)_setThumbnail:(KTMediaContainer *)thumbnail
 {
 	[self willChangeValueForKey:@"thumbnail"];
 	[self setPrimitiveValue:thumbnail forKey:@"thumbnail"];
 	[self setValue:[thumbnail identifier] forKey:@"thumbnailMediaIdentifier"];
 	[self didChangeValueForKey:@"thumbnail"];
+	
+	
+	// Propogate the thumbnail to our parent if needed
+	if ([[self parent] pageToUseForCollectionThumbnail] == self)
+	{
+		[[self parent] _setThumbnail:thumbnail];
+	}
+}
+
+- (void)setThumbnail:(KTMediaContainer *)thumbnail
+{
+	[self setCollectionSummaryType:KTSummarizeAutomatic];
+	[self _setThumbnail:thumbnail];
+}
+
+
+/*	Called when a setting has been changed such that the collection's thumbnail needs updating.
+ */
+- (void)generateCollectionThumbnail
+{
+	KTCollectionSummaryType summaryType = [self collectionSummaryType];
+	if (summaryType == KTSummarizeFirstItem || summaryType == KTSummarizeMostRecent)
+	{
+		KTPage *thumbnailPage = [self pageToUseForCollectionThumbnail];
+		if (thumbnailPage)
+		{
+			[self _setThumbnail:[thumbnailPage thumbnail]];
+		}
+	}
+}
+
+
+/*	For collections, the thumbnail is often automatically generated from a child page.
+ *	This method tells you which page to use.
+ */
+- (KTPage *)pageToUseForCollectionThumbnail
+{
+	KTPage *result;
+	
+	switch ([self collectionSummaryType])
+	{
+		case KTSummarizeFirstItem:
+			result = [[self sortedChildren] firstObject];
+			break;
+		case KTSummarizeMostRecent:
+			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop] firstObject];
+			break;
+		default:
+			result = self;
+			break;
+	}
+	
+	return result;
 }
 
 - (NSSize)maxThumbnailSize { return NSMakeSize(64.0, 64.0); }

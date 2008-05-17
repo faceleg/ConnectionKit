@@ -53,7 +53,7 @@
 			[[NSAlert alertWithError:error] runModal];
 		}
 		
-		result = [matches firstObjectOrNilIfEmpty];
+		result = [matches firstObject];
 	}
 	
 	return result;
@@ -128,7 +128,7 @@
 	// If the drag was a file, store the source alias
 	if ([[[info draggingPasteboard] types] containsObject:NSFilenamesPboardType])
 	{
-		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObjectOrNilIfEmpty];
+		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObject];
 		if (path)
 		{
 			[result setSourceAlias:[BDAlias aliasWithPath:path]];
@@ -184,7 +184,7 @@
 							  size - 0.01, size + 0.01];
 	
 	NSArray *objects = [[self managedObjectContext] objectsWithEntityName:@"GraphicalText" predicate:predicate error:NULL];
-	KTGraphicalTextMediaContainer *result = [objects firstObjectOrNilIfEmpty];
+	KTGraphicalTextMediaContainer *result = [objects firstObject];
 	
 	if (!result)
 	{

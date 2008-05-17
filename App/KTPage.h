@@ -88,6 +88,8 @@
 // Thumbnail
 - (KTMediaContainer *)thumbnail;
 - (void)setThumbnail:(KTMediaContainer *)thumbnail;
+- (void)generateCollectionThumbnail;
+- (KTPage *)pageToUseForCollectionThumbnail;
 
 // Keywords
 - (NSArray *)keywords;

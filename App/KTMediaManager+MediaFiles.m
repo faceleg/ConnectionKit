@@ -294,7 +294,7 @@
 	
 	if ([[[info draggingPasteboard] types] containsObject:NSFilenamesPboardType])
 	{
-		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObjectOrNilIfEmpty];
+		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObject];
 		if (path)
 		{
 			result = [self mediaFileWithPath:path preferExternalFile:preferExternal];

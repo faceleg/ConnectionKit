@@ -658,7 +658,7 @@ through.  We seem to do OK by filtering later.
 - (NSString *)uniqueIDForInlineImageNode:(DOMHTMLImageElement *)node
 {
 	NSArray *matches = [myInlineImageNodes allKeysForObject:node];
-	NSString *result = [matches firstObjectOrNilIfEmpty];
+	NSString *result = [matches firstObject];
 	
 	if (!result)
 	{

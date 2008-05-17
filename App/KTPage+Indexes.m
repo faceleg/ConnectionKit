@@ -37,6 +37,12 @@
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type
 {
 	[self setWrappedInteger:type forKey:@"collectionSummaryType"];
+	
+	//  This setting affects the thumbnail, so update it
+	if ([self isCollection])
+	{
+		[self generateCollectionThumbnail];
+	}
 }
 
 #pragma mark -
@@ -493,7 +499,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	
 	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
-	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectOrNilIfEmpty];
+	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObject];
 	
 	if (!result && flag)
 	{

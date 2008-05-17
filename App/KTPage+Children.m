@@ -263,6 +263,9 @@
 	
 	// Also, the site menu may well have been affected
 	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
+	
+	// For some collections, this change will have affected their thumbnail
+	[self generateCollectionThumbnail];
 }
 
 
