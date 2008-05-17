@@ -288,25 +288,18 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
 		NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
 		
-		@try
-		{
-			myIgnoreCollectionStyleChanges = YES;
-			KTPage *collection = [[self siteOutlineController] selectedPage];
-			[collection setIndexFromPlugin:plugin];
-			[collection setValuesForKeysWithDictionary:pageSettings];
-			
-			// Update the index menu "manually" since there's no bindings
-			NSString *indexIdentifier = [collection valueForKey:@"collectionIndexBundleIdentifier"];
-			KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:indexIdentifier];
-			[oIndexPopup selectItemAtIndex:(nil == indexPlugin
-				? 0
-				: [oIndexPopup indexOfItemWithRepresentedObject:indexPlugin])];
-		}
-		@finally
-		{
-			myIgnoreCollectionStyleChanges = NO;
-		}
+		myIgnoreCollectionStyleChanges = YES;
+		KTPage *collection = [[self siteOutlineController] selectedPage];
+		[collection setIndexFromPlugin:plugin];
+		[collection setValuesForKeysWithDictionary:pageSettings];
 		
+		// Update the index menu "manually" since there's no bindings
+		NSString *indexIdentifier = [collection valueForKey:@"collectionIndexBundleIdentifier"];
+		int itemIndex = (indexIdentifier) ? [oIndexPopup indexOfItemWithRepresentedObject:indexIdentifier] : -1;
+		if (itemIndex == -1) itemIndex = 0;
+		[oIndexPopup selectItemAtIndex:itemIndex];
+		
+		myIgnoreCollectionStyleChanges = NO;
 	}
 	else
 	{
@@ -319,7 +312,9 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (IBAction)changeIndexType:(id)sender
 {
-	KTIndexPlugin *plugin = [sender representedObject];
+	NSString *pluginIdentifier = [sender representedObject];
+	KTIndexPlugin *plugin = [KSPlugin pluginWithIdentifier:pluginIdentifier];
+	
 	[[[self siteOutlineController] selectedPage] setIndexFromPlugin:plugin];
 }
 
@@ -612,10 +607,12 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			{
 				NSString *identifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
 				
+				// Select the right choice in the "Index" popup
 				KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
-				[oIndexPopup selectItemAtIndex:(nil == plugin
-												? 0 : 
-												[oIndexPopup indexOfItemWithRepresentedObject:plugin])];
+				NSString *pluginIdentifier = [[plugin bundle] bundleIdentifier];
+				int itemIndex = (pluginIdentifier) ? [oIndexPopup indexOfItemWithRepresentedObject:pluginIdentifier] : -1;
+				if (itemIndex == -1) itemIndex = 0;
+				[oIndexPopup selectItemAtIndex:itemIndex];
 				
 				[self updateCollectionStylePopup];
 			}

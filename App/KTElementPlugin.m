@@ -292,8 +292,17 @@
 			[menuItem setTitle:pluginName];
 		}
 		
+		
+		if ([plugin isKindOfClass:self])
+		{
+			[menuItem setRepresentedObject:plugin];
+		}
+		else
+		{
+			[menuItem setRepresentedObject:[[plugin bundle] bundleIdentifier]];
+		}
+		
 		// set target/action
-		[menuItem setRepresentedObject:plugin];
 		[menuItem setAction:anAction];
 		[menuItem setTarget:aTarget];
 		
