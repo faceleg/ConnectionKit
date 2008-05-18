@@ -9,18 +9,15 @@
 #import "KTManagedObject.h"
 
 #import "Debug.h"
+#import "KTDocument.h"
+#import "KTExtensiblePluginPropertiesArchivedObject.h"
+
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
-#import "KTDocument.h"
-
-
-@interface NSManagedObject ( PrivateHack )
-- (NSString *)shortDescription;
-@end
 
 
 @implementation KTManagedObject
@@ -128,34 +125,61 @@
     return result;
 }
 
-- (KTManagedObject *)objectCorrespondingToObject:(KTManagedObject *)anObject inManagedObjectContext:(KTManagedObjectContext *)aContext
-{
-	NSManagedObjectID *objectID = [anObject objectID];	
-	return (KTManagedObject *)[aContext objectWithID:objectID];
-}
+#pragma mark -
+#pragma mark Plugin Properties
 
-- (KTManagedObject *)pluginOwner
+/*	These 2 methods allow us to store and retrieve managed object even though they dont't conform to <NSCoding>
+ *	Instead though they must conform to the KTArchivableManagedObject protocol
+ */
+- (NSDictionary *)unarchiveExtensibleProperties:(NSData *)propertiesData
 {
-	KTManagedObject *result = nil;
+	NSDictionary *result = [super unarchiveExtensibleProperties:propertiesData];
 	
-	if ( [self hasRelationshipNamed:@"owner"] )
+	// Go through all dictionary entries and swap any KTArchivedManagedObjects for the real thing
+	NSEnumerator *keysEnumerator= [[NSDictionary dictionaryWithDictionary:result] keyEnumerator];
+	NSString *aKey;
+	while (aKey = [keysEnumerator nextObject])
 	{
-		result = [self wrappedValueForKey:@"owner"];
+		id anObject = [result objectForKey:aKey];
+		if ([anObject isKindOfClass:[KTExtensiblePluginPropertiesArchivedObject class]])
+		{
+			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
+			
+			KTDocument *document = [(id)[[self managedObjectContext] persistentStoreCoordinator] document];
+			OBASSERT(document);
+			OBASSERT([document isKindOfClass:[KTDocument class]]);
+			
+			NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
+			[result setValue:realObject forKey:aKey];
+		}
 	}
 	
 	return result;
 }
 
-- (KTManagedObject *)pluginContainer
+- (NSData *)archiveExtensibleProperties:(NSDictionary *)properties
 {
-	KTManagedObject *result = nil;
+	// Replace any managed objects conforming to KTArchivableManagedObject with KTArchivedManagedObject
+	NSMutableDictionary *correctedProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
+	NSEnumerator *keysEnumerator = [properties keyEnumerator];
+	NSString *aKey;
 	
-	if ( [self hasRelationshipNamed:@"container"] )
+	while (aKey = [keysEnumerator nextObject])
 	{
-		result = [self wrappedValueForKey:@"container"];
+		id anObject = [properties objectForKey:aKey];
+		if ([anObject isKindOfClass:[NSManagedObject class]] &&
+			[anObject conformsToProtocol:@protocol(KTExtensiblePluginPropertiesArchiving)])
+		{
+			KTExtensiblePluginPropertiesArchivedObject *archivedObject =
+			[[[KTExtensiblePluginPropertiesArchivedObject alloc] initWithObject:anObject] autorelease];
+			
+			[correctedProperties setValue:archivedObject forKey:aKey];
+		}
 	}
 	
+	NSData *result = [super archiveExtensibleProperties:correctedProperties];
 	return result;
 }
+
 
 @end

@@ -12,7 +12,6 @@
 #import "KTAbstractPluginDelegate.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
-#import "KTExtensiblePluginPropertiesArchivedObject.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
 #import "KTPersistentStoreCoordinator.h"
@@ -233,57 +232,6 @@
 		result = [super validateValue:ioValue forKeyPath:inKeyPath error:outError];
 	}
 	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Plugin Properties
-
-/*	These 2 methods allow us to store and retrieve managed object even though they dont't conform to <NSCoding>
- *	Instead though they must conform to the KTArchivableManagedObject protocol
- */
-- (NSDictionary *)unarchiveExtensibleProperties:(NSData *)propertiesData
-{
-	NSDictionary *result = [super unarchiveExtensibleProperties:propertiesData];
-	
-	// Go through all dictionary entries and swap any KTArchivedManagedObjects for the real thing
-	NSEnumerator *keysEnumerator= [[NSDictionary dictionaryWithDictionary:result] keyEnumerator];
-	NSString *aKey;
-	while (aKey = [keysEnumerator nextObject])
-	{
-		id anObject = [result objectForKey:aKey];
-		if ([anObject isKindOfClass:[KTExtensiblePluginPropertiesArchivedObject class]])
-		{
-			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
-			NSManagedObject *realObject = [archivedObject realObjectInDocument:[[self page] document]];
-			[result setValue:realObject forKey:aKey];
-		}
-	}
-	
-	return result;
-}
-
-- (NSData *)archiveExtensibleProperties:(NSDictionary *)properties
-{
-	// Replace any managed objects conforming to KTArchivableManagedObject with KTArchivedManagedObject
-	NSMutableDictionary *correctedProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
-	NSEnumerator *keysEnumerator = [properties keyEnumerator];
-	NSString *aKey;
-	
-	while (aKey = [keysEnumerator nextObject])
-	{
-		id anObject = [properties objectForKey:aKey];
-		if ([anObject isKindOfClass:[NSManagedObject class]] &&
-			[anObject conformsToProtocol:@protocol(KTExtensiblePluginPropertiesArchiving)])
-		{
-			KTExtensiblePluginPropertiesArchivedObject *archivedObject =
-			 [[[KTExtensiblePluginPropertiesArchivedObject alloc] initWithObject:anObject] autorelease];
-			
-			[correctedProperties setValue:archivedObject forKey:aKey];
-		}
-	}
-	
-	NSData *result = [super archiveExtensibleProperties:correctedProperties];
 	return result;
 }
 

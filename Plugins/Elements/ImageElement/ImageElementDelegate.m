@@ -49,7 +49,6 @@
 // LocalizedStringInThisBundle(@"magnify", "alt text of mag link");
 
 @interface ImageElementDelegate (Private)
-- (NSString *)placeholderImagePath;
 - (NSSize)boundingImageBox;
 @end
 
@@ -81,15 +80,7 @@
         
 		BOOL shouldUseExternalImage = [[NSUserDefaults standardUserDefaults] boolForKey:@"preferExternalImage"];
 		[element setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
-		
-		KTMediaContainer *image = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[self placeholderImagePath]];
-		[element setValue:image forKey:@"image"];
-		[element setBool:YES forKey:@"imageIsPlaceholder"];
 	}
-	
-	// Watch out for design changes
-	[[NSNotificationCenter defaultCenter]
-		addObserver:self selector:@selector(designDidChange:) name:kKTDesignChangedNotification object:[self document]];
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
@@ -149,8 +140,6 @@
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
 	[myImage release];
 	[myImagePath release];
 	
@@ -200,9 +189,6 @@
 {
 	if ([key isEqualToString:@"image"])
 	{
-		// The image is no longer a placeholder
-		[plugin setBool:NO forKey:@"imageIsPlaceholder"];
-		
 		// If being used in a Page plugin, update the page's thumbnail (if appropriate) and Site Outline icon
 		id container = [self delegateOwner];
 		if ([container isKindOfClass:[KTPage class]])
@@ -354,38 +340,6 @@
 	}
 	
 	return result;
-}
-
-#pragma mark -
-#pragma mark Placeholder Image
-
-/*	Use the design's placeholder if possible. If not, resort to general one.
- */
-- (NSString *)placeholderImagePath
-{
-	NSString *result = [[[[self page] master] design] placeholderImagePath];
-	if (!result || [result isEqualToString:@""])
-	{
-		result = [[self bundle] pathForImageResource:@"placeholder"];
-	}
-	
-	return result;
-}
-
-/*	The design has changed, so update the placeholder image if needed.
- */
-- (void)designDidChange:(NSNotification *)notification
-{
-	if ([[self delegateOwner] boolForKey:@"imageIsPlaceholder"])
-	{
-		NSUndoManager *undoManager = [self undoManager];
-		if (![undoManager isUndoing] && ![undoManager isRedoing])
-		{
-			KTMediaContainer *image = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[self placeholderImagePath]];
-			[[self delegateOwner] setValue:image forKey:@"image"];
-			[[self delegateOwner] setBool:YES forKey:@"imageIsPlaceholder"];	// Otherwise it gets set to NO
-		}
-	}
 }
 
 #pragma mark -

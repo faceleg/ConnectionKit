@@ -38,9 +38,4 @@
 /*! returns first matching object in aContext using predicateForSimilarObject */
 - (KTManagedObject *)similarObjectInContext:(KTManagedObjectContext *)context;
 
-- (KTManagedObject *)objectCorrespondingToObject:(KTManagedObject *)anObject inManagedObjectContext:(KTManagedObjectContext *)aContext;
-
-- (KTManagedObject *)pluginOwner;
-- (KTManagedObject *)pluginContainer;
-
 @end

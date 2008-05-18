@@ -22,6 +22,7 @@
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSImage+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
@@ -33,11 +34,17 @@
 
 @interface KTMaster (Private)
 - (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose;
+
 - (KTMediaManager *)mediaManager;
+
+- (void)generatePlaceholderImage;
 @end
 
 
 @implementation KTMaster
+
+#pragma mark -
+#pragma mark Initialization
 
 + (void)initialize
 {
@@ -72,6 +79,13 @@
 	
 	// Timestamp
 	[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
+	
+	
+	// Placeholder
+	if (![self placeholderImage])
+	{
+		[self generatePlaceholderImage];
+	}
 }
 
 - (void)awakeFromFetch
@@ -91,6 +105,13 @@
 	if (![self timestampFormat])
 	{
 		[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
+	}
+	
+	
+	// Placeholder
+	if (![self placeholderImage])
+	{
+		[self generatePlaceholderImage];
 	}
 }
 
@@ -234,6 +255,10 @@
 	[self didChangeValueForKey:@"design"];
 	
 	[self setValue:[self _designPublishInfoWithDesign:design] forKey:@"designPublishingInfo"];
+	
+	
+	// Changing design affects placeholder image
+	[self generatePlaceholderImage];
 }
 
 - (NSURL *)designDirectoryURL
@@ -487,12 +512,13 @@
 
 - (NSSet *)requiredMediaIdentifiers
 {
-	NSMutableSet *result = [NSMutableSet setWithCapacity:4];
+	NSMutableSet *result = [NSMutableSet set];
 	
 	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[[[self logoImage] imageToFitSize:NSMakeSize(200.0, 128.0)] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
+	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
 	
 	return result;
 }
@@ -523,6 +549,35 @@
 	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
 	
 	return NO;
+}
+
+#pragma mark -
+#pragma mark Placeholder Image
+
+- (KTMediaContainer *)placeholderImage
+{
+	return [self valueForUndefinedKey:@"placeholderImage"];
+}
+
+- (void)generatePlaceholderImage
+{
+	// What base image should we use?
+	NSString *imagePath = [[self design] placeholderImagePath];
+	if (!imagePath || [imagePath isEqualToString:@""])
+	{
+		imagePath = [[[KSPlugin pluginWithIdentifier:@"sandvox.ImageElement"] bundle]
+					 pathForImageResource:@"placeholder"];
+	}
+	
+	
+	// Emboss the image
+	NSImage *placeholderImage = [[NSImage alloc] initWithContentsOfFile:imagePath];
+	[placeholderImage embossPlaceholder];
+	
+	
+	// Create a media container and store it
+	KTMediaContainer *placeholderMedia = [[self mediaManager] mediaContainerWithImage:placeholderImage];
+	[self setValue:placeholderMedia forKey:@"placeholderImage"];
 }
 
 @end

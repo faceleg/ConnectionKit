@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTManagedObject.h"
 
 #import "KT.h"
 #import "KTDocument.h"
@@ -16,7 +17,7 @@
 @class KTMediaContainer;
 
 
-@interface KTMaster : NSManagedObject 
+@interface KTMaster : KTManagedObject 
 {
 }
 
@@ -51,5 +52,8 @@
 - (NSString *)publishedMasterCSSPathRelativeToSite;
 
 - (BOOL)hasCodeInjection;
+
+#pragma mark Placeholder
+- (KTMediaContainer *)placeholderImage;
 
 @end
