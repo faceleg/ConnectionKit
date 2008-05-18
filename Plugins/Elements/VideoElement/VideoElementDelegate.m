@@ -75,8 +75,6 @@
 
 @interface VideoElementDelegate (Private)
 
-- (void)updateDependentThumbnailsFrom:(KTMediaContainer *)oldFile to:(KTMediaContainer *)newFile;
-
 - (BOOL)attemptToGetSize:(NSSize *)outSize fromSWFData:(NSData *)data;
 
 - (QTMovie *)movie;

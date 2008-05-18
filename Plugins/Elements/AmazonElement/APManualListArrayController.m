@@ -70,7 +70,7 @@
 	NSArray *URLs = nil;
 	[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	return [URLs firstObjectOrNilIfEmpty];
+	return [URLs firstObject];
 }
 
 - (NSDragOperation)tableView:(NSTableView *)aTableView	
