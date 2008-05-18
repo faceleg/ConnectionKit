@@ -59,12 +59,10 @@
 {
 	[super init];
 	
-	myWebViewComponents = [[NSMutableDictionary alloc] initWithCapacity:1];
-	mySuspendedKeyPaths = [[NSCountedSet alloc] init];
-	mySuspendedKeyPathsAwaitingRefresh = [[NSMutableSet alloc] init];
-	
 	myInlineImageNodes = [[NSMutableDictionary alloc] init];
 	myInlineImageElements = [[NSMutableDictionary alloc] init];
+	
+	[self init_webViewLoading];
 	
 	return self;
 }
@@ -83,9 +81,7 @@
 
 - (void)dealloc
 {
-	[[self webView] stopLoading:nil];
-	[[self asyncOffscreenWebViewController] stopLoading];
-
+	[self dealloc_webViewLoading];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	

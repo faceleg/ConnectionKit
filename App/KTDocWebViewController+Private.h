@@ -18,3 +18,9 @@
 // Editing
 - (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
 @end
+
+
+@interface KTDocWebViewController (LoadingPrivate)
+- (void)init_webViewLoading;
+- (void)dealloc_webViewLoading;
+@end

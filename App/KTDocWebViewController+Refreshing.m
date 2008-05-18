@@ -42,7 +42,9 @@
 
 @interface KTDocWebViewController (RefreshingPrivate)
 
+- (void)setWebViewNeedsReload:(BOOL)needsRefresh;
 - (void)setWebViewComponentNeedsReload:(KTParsedWebViewComponent *)component;
+
 - (void)reloadWebViewComponent:(KTParsedWebViewComponent *)component;
 - (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component;
 
@@ -67,6 +69,23 @@
 
 
 @implementation KTDocWebViewController (Refreshing)
+
+#pragma mark -
+#pragma mark Initialization & Deallocation
+
+- (void)init_webViewLoading
+{
+	myWebViewComponents = [[NSMutableDictionary alloc] initWithCapacity:1];
+	mySuspendedKeyPaths = [[NSCountedSet alloc] init];
+	mySuspendedKeyPathsAwaitingRefresh = [[NSMutableSet alloc] init];
+}
+
+- (void)dealloc_webViewLoading
+{
+	[[self webView] stopLoading:nil];
+	[[self asyncOffscreenWebViewController] stopLoading];
+	[self setWebViewNeedsReload:NO];
+}
 
 #pragma mark -
 #pragma mark KVO
@@ -95,29 +114,21 @@
 }
 
 #pragma mark -
-#pragma mark Needs Refresh
+#pragma mark Needs Reload
 
 - (BOOL)webViewNeedsReload
 {
-	return myWebViewNeedsReload;
+	return (myRunLoopObserver != nil);
 }
 
-/*	Sets the main web view component as needing a refresh or clears out the list of components needing refreshing.
+
+/*	Convenience (and public) method for marking the entire webview for a reload.
  */
-- (void)setWebViewNeedsReload:(BOOL)needsRefresh
+- (void)setWebViewNeedsReload
 {
-	if (needsRefresh)
-	{
-		[self setWebViewComponentNeedsReload:nil];
-	}
-	else
-	{
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadWebViewIfNeededAndReportExceptions) object:nil];
-		
-		[[self mainWebViewComponent] setNeedsReload:NO recursive:YES];
-		myWebViewNeedsReload = NO;
-	}
+	[self setWebViewComponentNeedsReload:[self mainWebViewComponent]];
 }
+
 
 /*	Private method for marking an individual component as needing a refresh.
  *	DO NOT use -[KTParsedWebViewComponent setNeedsReload:] instead as it will not be detected by the webview controller.
@@ -128,21 +139,47 @@
 {
 	// Mark the component
 	if (!component) component = [self mainWebViewComponent];
-	[component setNeedsReload:YES];
-	myWebViewNeedsReload = YES;
 	
+	[component setNeedsReload:YES];
 	[self resetWebViewComponent:component];
 	
 	
-	// Do the actual reload sometime if the future
-	[NSObject cancelPreviousPerformRequestsWithTarget:self
-											 selector:@selector(reloadWebViewIfNeededAndReportExceptions)
-											   object:nil];
-	[self performSelector:@selector(reloadWebViewIfNeededAndReportExceptions) withObject:nil afterDelay:0.0];
+	// Schedule the actual reload
+	[self setWebViewNeedsReload:YES];
 }
 
+
+/*	Private callback function for scheduled webview loading
+ */
+void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info)
+{
+	KTDocWebViewController *webViewController = info;
+	[webViewController reloadWebViewIfNeeded];
+}
+
+/*	Private method. Called whenever some portion of the webview needs reloading.
+ *	Schedules a CFRunLoopObserver to perform the actual reload at the end of the run loop.
+ */
+- (void)setWebViewNeedsReload:(BOOL)needsRefresh
+{ 
+	if (needsRefresh && !myRunLoopObserver)
+	{
+		// Install a fresh observer for the end of the run loop
+		CFRunLoopObserverContext context = { 0, self, NULL, NULL, NULL };
+		myRunLoopObserver = CFRunLoopObserverCreate(NULL, kCFRunLoopExit, NO, 0, &ReloadWebViewIfNeeded, &context);
+		CFRunLoopAddObserver([[NSRunLoop currentRunLoop] getCFRunLoop], myRunLoopObserver, kCFRunLoopCommonModes);
+	}
+	else if (!needsRefresh && myRunLoopObserver)
+	{
+		// Unschedule the existing observer and throw it away
+		CFRunLoopRemoveObserver([[NSRunLoop currentRunLoop] getCFRunLoop], myRunLoopObserver, kCFRunLoopCommonModes);
+		CFRelease(myRunLoopObserver);	myRunLoopObserver = NULL;
+	}
+}
+
+
 #pragma mark -
-#pragma mark Refresh
+#pragma mark Loading
 
 - (void)reloadWebView
 {
@@ -337,7 +374,7 @@
 	
 	
 	OFF((@"Refreshed Webview"));
-	myWebViewNeedsReload = NO;
+	[self setWebViewNeedsReload:NO];
 }
 
 - (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component
@@ -357,18 +394,6 @@
 		{
 			[self reloadWebViewComponentIfNeeded:aSubcomponent];
 		}
-	}
-}
-
-- (void)reloadWebViewIfNeededAndReportExceptions
-{
-	@try
-	{
-		[self reloadWebViewIfNeeded];
-	}
-	@catch (NSException *exception)
-	{
-		[NSApp reportException:exception];
 	}
 }
 

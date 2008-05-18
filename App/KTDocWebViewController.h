@@ -47,11 +47,12 @@ typedef enum {
 	DOMHTMLElement			*myElementWaitingForFragmentLoad;
 	KTAsyncOffscreenWebViewController				*myAsyncOffscreenWebViewController;
 	
+	
 	// Refreshing
 	KTParsedWebViewComponent	*myMainWebViewComponent;
 	NSMutableDictionary			*myWebViewComponents;
 	
-	BOOL						myWebViewNeedsReload;
+	CFRunLoopObserverRef		myRunLoopObserver;
 	
 	NSCountedSet				*mySuspendedKeyPaths;
 	NSMutableSet				*mySuspendedKeyPathsAwaitingRefresh;
@@ -148,7 +149,7 @@ typedef enum {
 
 // Content loading
 - (BOOL)webViewNeedsReload;
-- (void)setWebViewNeedsReload:(BOOL)needsRefresh;
+- (void)setWebViewNeedsReload;
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;
