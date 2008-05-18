@@ -303,6 +303,8 @@
 		27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27DEC7910DDC3EB500D795F3 /* Media System.graffle in Resources */ = {isa = PBXBuildFile; fileRef = 27DEC7900DDC3EB500D795F3 /* Media System.graffle */; };
+		27DECBAA0DE03F0800D795F3 /* KTMediaFileEqualityTester.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */; };
+		27DECBAB0DE03F0800D795F3 /* KTMediaFileEqualityTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1779,6 +1781,8 @@
 		27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInspectorViewsManager.h; sourceTree = "<group>"; };
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
+		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
+		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractHTMLPlugin.h; sourceTree = "<group>"; };
@@ -2834,6 +2838,8 @@
 				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
 				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
 				27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */,
+				27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */,
+				27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */,
 			);
 			name = "1 - MediaFiles";
 			sourceTree = "<group>";
@@ -4936,6 +4942,7 @@
 				CEA2BA3B0DC79F2D00A8023F /* KSWebViewController.h in Headers */,
 				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
 				275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */,
+				27DECBAA0DE03F0800D795F3 /* KTMediaFileEqualityTester.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6366,6 +6373,7 @@
 				CEA2BA3C0DC79F2D00A8023F /* KSWebViewController.m in Sources */,
 				275E07240DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m in Sources */,
 				272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */,
+				27DECBAB0DE03F0800D795F3 /* KTMediaFileEqualityTester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

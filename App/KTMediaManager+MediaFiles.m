@@ -8,6 +8,7 @@
 
 #import "KTMediaManager+Internal.h"
 #import "KTMediaFile+Internal.h"
+#import "KTMediaFileEqualityTester.h"
 
 #import "KT.h"
 #import "KTDocument.h"
@@ -33,6 +34,7 @@
 // New media files
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path external:(BOOL)isExternal;
 
+- (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest;
 - (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path;
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
 
@@ -84,7 +86,7 @@
 }
 
 /*	NSManagedObjectContext gives us a nice list of inserted (temporary) objects. We just have to narrow it down to those of
- *	the KTExternalMediaFile class.
+ *	the KTInDocumentMediaFile class.
  */
 - (NSSet *)temporaryMediaFiles
 {
@@ -97,52 +99,6 @@
 		if ([anInsertedObject isKindOfClass:[KTInDocumentMediaFile class]])	// Ignore external media
 		{
 			[result addObject:anInsertedObject];
-		}
-	}
-	
-	return result;
-}
-
-- (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest
-{
-	// Search the DB for matching digests
-	NSFetchRequest *fetchRequest = [[[self class] managedObjectModel]
-									fetchRequestFromTemplateWithName:@"MediaFilesWithDigest"
-									substitutionVariable:digest forKey:@"DIGEST"];
-	
-	NSError *error = nil;
-	NSArray *result = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-	if (error) {
-		[[NSAlert alertWithError:error] runModal];
-	}
-	
-	return result;
-}
-
-- (KTInDocumentMediaFile *)anyInDocumentMediaFileEqualToFile:(NSString *)path
-{
-	KTInDocumentMediaFile *result = nil;
-	
-	// Search the DB for matching digests
-	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[NSData partiallyDigestStringFromContentsOfFile:path]];
-	
-	if ([similarMedia count] > 0)
-	{
-		// Run through each possible match to see if it actually is identical
-		NSData *mediaData = [NSData dataWithContentsOfFile:path];
-		
-		NSEnumerator *similarMediaEnumerator = [similarMedia objectEnumerator];
-		KTInDocumentMediaFile *anInternalMediaFile;
-		while (anInternalMediaFile = [similarMediaEnumerator nextObject])
-		{
-			NSString *internalMediaPath = [anInternalMediaFile currentPath];
-			NSData *internalMediaData = [NSData dataWithContentsOfFile:internalMediaPath];
-			
-			if ([internalMediaData isEqualToData:mediaData])
-			{
-				result = anInternalMediaFile;
-				break;
-			}
 		}
 	}
 	
@@ -305,7 +261,24 @@
 	return result;
 }
 
-#pragma mark support
+#pragma mark -
+#pragma mark In-document Media Files
+
+- (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest
+{
+	// Search the DB for matching digests
+	NSFetchRequest *fetchRequest = [[[self class] managedObjectModel]
+									fetchRequestFromTemplateWithName:@"MediaFilesWithDigest"
+									substitutionVariable:digest forKey:@"DIGEST"];
+	
+	NSError *error = nil;
+	NSArray *result = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+	if (error) {
+		[[NSAlert alertWithError:error] runModal];
+	}
+	
+	return result;
+}
 
 /*	Look to see if there is an existing equivalent media file. If so, return that. Otherwise create a new one.
  */
@@ -313,8 +286,20 @@
 {
 	KTInDocumentMediaFile *result = nil;
 	
-	result = [self anyInDocumentMediaFileEqualToFile:path];
 	
+	// Search the DB for matching digests. This gives us a rough set of results.
+	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[NSData partiallyDigestStringFromContentsOfFile:path]];
+	if ([similarMedia count] > 0)
+	{
+		KTMediaFileEqualityTester *equalityTester =
+			[[KTMediaFileEqualityTester alloc] initWithPossibleMatches:[NSSet setWithArray:similarMedia] forPath:path];
+		
+		result = [equalityTester firstMatch];
+		[equalityTester release];
+	}
+	
+	
+	// No match was found so create a new MediaFile
 	if (!result)
 	{
 		result = [self insertTemporaryMediaFileWithPath:path];
