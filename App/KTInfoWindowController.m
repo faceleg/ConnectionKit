@@ -929,7 +929,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (IBAction)clearLogoImage:(id)sender;
 {
-	[[[[self selectedLevel] master] logoImage] setValue:nil forKey:@"file"];
+	[[[self selectedLevel] master] setLogoImage:nil];
 }
 
 /*	Only allow images to be dropped

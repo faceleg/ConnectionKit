@@ -160,6 +160,7 @@
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
 - (NSURL *)feedURL;
+- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;
 
 // Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
@@ -240,7 +241,6 @@
 - (BOOL)shouldPublishHTMLTemplate;
 
 - (NSString *)javascriptURLPath;
-- (NSString *)RSSRepresentation;
 - (BOOL)isNewPage;
 - (void)setNewPage:(BOOL)flag;
 - (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(KTManagedObjectContext *)context;

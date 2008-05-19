@@ -6,13 +6,16 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
+#import "KTPage.h"
 
 #import "KTAbstractIndex.h"
 #import "KTArchivePage.h"
+#import "KTHTMLParser.h"
 #import "KTIndexPlugin.h"
-#import "KTPage.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
@@ -117,6 +120,36 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	NSArray *result = [self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
 	return result;
 }
+
+/*!	Return the HTML.
+ */
+- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate
+{
+	// Find the template
+	NSString *template = [[[self plugin] bundle] templateRSSAsString];
+	if (!template)
+	{
+		// No special template for this bundle, so look for the generic one in the app
+		template = [[NSBundle mainBundle] templateRSSAsString];
+	}
+	OBASSERT(template);
+	
+	
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:self];
+	[parser setDelegate:parserDelegate];
+	[parser setHTMLGenerationPurpose:kGeneratingRemote];
+	
+	NSString *result = [parser parseTemplate];
+	[parser release];
+		
+	// We won't do any "escapeCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
+	// don't want to introduce any entities into the XML anyhow.
+	
+	OBPOSTCONDITION(result);
+    return result;
+}
+
+- (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
 #pragma mark -
 #pragma mark Standard Summary

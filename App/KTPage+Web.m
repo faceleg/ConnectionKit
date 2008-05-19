@@ -145,36 +145,6 @@
 }
 
 #pragma mark -
-#pragma mark RSS
-
-/*!	Return the HTML.
-*/
-- (NSString *)RSSRepresentation
-{
-	NSString *result = @"[PAGE, UNABLE TO GET RSS]";
-	
-	// Find the template
-	NSString *template = [[[self plugin] bundle] templateRSSAsString];
-	if (nil == template)
-	{
-		// No special template for this bundle, so look for the generic one in the app
-		template = [[NSBundle mainBundle] templateRSSAsString];
-	}
-	
-	
-	if (nil != template)
-	{
-		result = [KTHTMLParser parseTemplate:template component:self];
-
-		// We won't do any "escapeCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
-		// don't want to introduce any entities into the XML anyhow.
-	}
-    return result;
-}
-
-- (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
-
-#pragma mark -
 #pragma mark CSS
 
 - (NSString *)cssClassName { return [[self plugin] pageCSSClassName]; }

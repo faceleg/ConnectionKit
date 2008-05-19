@@ -555,7 +555,7 @@ static NSArray *sReservedNames = nil;
 	// RSS feed
 	if ([page isKindOfClass:[KTPage class]] && [page boolForKey:@"collectionSyndicate"] && [(KTPage *)page collectionCanSyndicate])
 	{
-		NSString *RSSString = [(KTPage *)page RSSRepresentation];
+		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
 		if (RSSString)
 		{
 			RSSString = [(KTPage *)page fixPageLinksFromString:RSSString managedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]];

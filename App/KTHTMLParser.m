@@ -49,20 +49,6 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-/*	Supplement the default behaviour to store current page.
- */
-- (id)initWithTemplate:(NSString *)HTMLTemplate component:(id)parsedComponent
-{
-	[super initWithTemplate:HTMLTemplate component:parsedComponent];
-	
-	if ([parsedComponent isKindOfClass:[KTPage class]])
-	{
-		[self setCurrentPage:(KTPage *)parsedComponent];
-	}
-	
-	return self;
-}
-
 - (id)initWithPage:(KTAbstractPage *)page
 {
 	// Archive pages are specially parsed so that the component is the parent page.
@@ -811,7 +797,7 @@
 			result= @"javascript:void(0)";
 			break;
 		default:
-			result = [page pathRelativeTo:[self currentPage]];
+			result = [[page absoluteURL] stringRelativeToURL:[[self currentPage] absoluteURL]];
 			break;
 	}
 	

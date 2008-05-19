@@ -512,7 +512,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 		}
 		
 		case KTRSSSourceView:
-			sourceCode = [page RSSRepresentation];
+			sourceCode = [page RSSFeedWithParserDelegate:nil];
 			break;
 		
 		default:
