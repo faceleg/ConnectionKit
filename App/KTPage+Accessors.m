@@ -465,7 +465,7 @@
 			result = [[self sortedChildren] firstObject];
 			break;
 		case KTSummarizeMostRecent:
-			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop] firstObject];
+			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO] firstObject];
 			break;
 		default:
 			result = self;

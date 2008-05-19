@@ -123,7 +123,7 @@
 
 // Sorted Children
 - (NSArray *)sortedChildren;
-- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType;
+- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts;
 
 // Hierarchy Queries
 - (KTPage *)parentOrRoot;

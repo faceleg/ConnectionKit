@@ -77,26 +77,7 @@
  */
 - (NSArray *)sortedChildrenInIndex
 {
-	NSArray *allChildren = [self sortedChildren];
-	
-	unsigned maxPages = [self integerForKey:@"collectionMaxIndexItems"];
-	if (maxPages == 0) maxPages = [allChildren count];
-	
-	NSMutableArray *buffer = [[NSMutableArray alloc] initWithCapacity:maxPages];
-	NSEnumerator *childrenEnumerator = [allChildren objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [childrenEnumerator nextObject])
-	{
-		if ([aPage includeInIndexAndPublish])
-		{
-			[buffer addObject:aPage];
-			
-			if ([buffer count] >= maxPages) break;
-		}
-	}
-	
-	NSArray *result = [NSArray arrayWithArray:buffer];
-	[buffer release];
+	NSArray *result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
 	return result;
 }
 
@@ -128,6 +109,12 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 		result = [NSURL URLWithString:feedFileName relativeToURL:pageURL];
 	}
 	
+	return result;
+}
+
+- (NSArray *)sortedReverseChronoChildrenInIndex
+{
+	NSArray *result = [self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
 	return result;
 }
 
@@ -404,7 +391,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
 	
-	NSArray *allSortedChildren = [self childrenWithSorting:sortType];
+	NSArray *allSortedChildren = [self childrenWithSorting:sortType inIndex:NO];
 	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
 	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
 	

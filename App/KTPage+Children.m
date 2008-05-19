@@ -25,6 +25,8 @@
 
 - (void)invalidateSortedChildrenCache;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
+
++ (NSPredicate *)includeInIndexAndPublishPredicate;
 - (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType;
 
 @end
@@ -210,7 +212,7 @@
 	NSArray *result = [self wrappedValueForKey:@"sortedChildren"];
 	if (!result)
 	{
-		result = [self childrenWithSorting:KTCollectionSortUnspecified];
+		result = [self childrenWithSorting:KTCollectionSortUnspecified inIndex:NO];
 		[self setPrimitiveValue:result forKey:@"sortedChildren"];
 	}
 	
@@ -272,20 +274,40 @@
 #pragma mark arbitrary sorting
 
 /*	Public support method that will return the receiver's children with the specified sorting.
+ *	If ignoreDrafts==YES then UNPUBLISHED drafts are filtered out.
  *	Not cached like -sortedChildren.
 */
-- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType
+- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts
 {
-	NSSet *children = [self children];
+	NSArray *result = [[self children] allObjects];
 	
-	// Sometimes there's no point in sorting
-	if ([children count] <= 1) {		
-		return [children allObjects];
+	
+	// Filter out drafts if requested
+	if (ignoreDrafts)
+	{
+		result = [result filteredArrayUsingPredicate:[[self class] includeInIndexAndPublishPredicate]];
 	}
 	
-	// Do the sort
-	NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType];
-	NSArray *result = [[children allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+	
+	// Sometimes there's no point in sorting
+	if ([result count] > 1)
+	{		
+		// Do the sort
+		NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType];
+		result = [result sortedArrayUsingDescriptors:sortDescriptors];
+	}	
+	
+	
+	return result;
+}
+		
++ (NSPredicate *)includeInIndexAndPublishPredicate
+{
+	static NSPredicate *result;
+	if (!result)
+	{
+		result = [[NSPredicate predicateWithFormat:@"includeInIndexAndPublish == 1"] retain];
+	}
 	
 	return result;
 }

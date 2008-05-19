@@ -168,7 +168,7 @@
 	
 	// Load properties from parent/sibling
 	KTPage *previousPage = aParent;
-	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop];
+	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
 	if ([children count] > 0)
 	{
 		previousPage = [children firstObject];

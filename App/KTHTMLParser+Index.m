@@ -116,7 +116,7 @@
 		case KTSummarizeMostRecent:
 		{
 			result = @"";
-			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop];
+			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
 			KTPage *recentChild = [children firstObject];
 			if (recentChild) result = [self summaryForContentOfPage:recentChild];
 			break;

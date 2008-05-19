@@ -38,8 +38,8 @@
 [[if item.enclosure]]
 			<enclosure url="[[=&item.enclosure.enclosureURL]]" length="[[=&item.enclosure.enclosureDataLength]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
 [[if item.thumbnail]]
-        <media:thumbnail url="[[enclosurepath item.thumbnail]]" />
-        <media:content url="[[enclosurepath item.enclosure]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
+        	<media:thumbnail url="[[enclosurepath item.thumbnail]]" />
+        	<media:content url="[[enclosurepath item.enclosure]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
 [[endif2]]			
 [[endif]]
 [[forEach item.keywords aCategory]]
