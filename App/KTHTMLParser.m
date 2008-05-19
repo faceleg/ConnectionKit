@@ -18,6 +18,7 @@
 #import "BDAlias+QuickLook.h"
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
 #import "Debug.h"
 
@@ -260,6 +261,7 @@
 	NSString *result = [super parseTemplate];
 	
 	if (result &&
+		[self parentParser] &&
 		[self HTMLGenerationPurpose] == kGeneratingPreview &&
 		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
 	{
@@ -794,9 +796,11 @@
 		return @"";
 	}
 	
-	id sourcePage = [[self cache] valueForKey:@"CurrentPage"];	
+	NSURL *sourceURL = [[self currentPage] absoluteURL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
-	return [targetPage feedURLPathRelativeToPage: sourcePage];
+	
+	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
+	return result;
 }
 
 // Following parameters:  (1) key-value path to another page
