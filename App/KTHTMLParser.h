@@ -34,12 +34,7 @@
 	KTAbstractPage			*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
 	NSNumber				*myLiveDataFeeds;
-	BOOL					myUseAbsoluteMediaPaths;
 }
-
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate
-						   component:(id <KTWebViewComponent>)component
-			   useAbsoluteMediaPaths:(BOOL)useAbsoluteMediaPaths;
 
 - (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
 
@@ -52,9 +47,6 @@
 
 - (BOOL)liveDataFeeds;
 - (void)setLiveDataFeeds:(BOOL)flag;
-
-- (BOOL)useAbsoluteMediaPaths;
-- (void)setUseAbsoluteMediaPaths:(BOOL)flag;
 
 // Fucntions
 - (NSString *)pathToPage:(KTAbstractPage *)page;

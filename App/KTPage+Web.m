@@ -164,7 +164,7 @@
 	
 	if (nil != template)
 	{
-		result = [KTHTMLParser HTMLStringWithTemplate:template component:self useAbsoluteMediaPaths:YES];
+		result = [KTHTMLParser parseTemplate:template component:self];
 
 		// We won't do any "escapeCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
 		// don't want to introduce any entities into the XML anyhow.

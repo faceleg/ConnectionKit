@@ -282,16 +282,6 @@
 	[myRemoteTransferController terminateConnection];
 }
 
-- (BOOL)useAbsoluteMediaPaths
-{
-    return myUseAbsoluteMediaPaths;
-}
-
-- (void)setUseAbsoluteMediaPaths:(BOOL)flag
-{
-    myUseAbsoluteMediaPaths = flag;
-}
-
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)anHTMLInspectorController
 {
     [anHTMLInspectorController retain];

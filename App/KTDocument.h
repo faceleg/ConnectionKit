@@ -66,7 +66,6 @@ typedef enum {
 	KTTransferController		*myExportTransferController;
 	
 	KTPage						*myRoot;
-	BOOL						myUseAbsoluteMediaPaths;
 
 	NSTimer						*myAutosaveTimer;
 	NSDate						*myLastSavedTime;	
@@ -259,9 +258,6 @@ typedef enum {
 
 - (NSTimer *)autosaveTimer;
 - (void)setAutosaveTimer:(NSTimer *)aTimer;
-
-- (BOOL)useAbsoluteMediaPaths;
-- (void)setUseAbsoluteMediaPaths:(BOOL)flag;
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;

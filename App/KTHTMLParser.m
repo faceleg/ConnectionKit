@@ -46,21 +46,6 @@
 
 - (NSString *)calloutContainerTemplateHTML { return [[self class] calloutContainerTemplateHTML]; }
 
-/*	A convenience method for simple parsing tasks
- */
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate
-						   component:(id <KTWebViewComponent>)component
-			   useAbsoluteMediaPaths:(BOOL)useAbsoluteMediaPaths
-{
-	KTHTMLParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
-	[parser setUseAbsoluteMediaPaths:useAbsoluteMediaPaths];
-	
-	NSString *result = [parser parseTemplate];
-	
-	[parser release];
-	return result;
-}
-
 #pragma mark -
 #pragma mark Init & Dealloc
 
@@ -167,10 +152,6 @@
 	myLiveDataFeeds = [[NSNumber alloc] initWithBool:flag];
 }
 
-- (BOOL)useAbsoluteMediaPaths { return myUseAbsoluteMediaPaths; }
-
-- (void)setUseAbsoluteMediaPaths:(BOOL)flag { myUseAbsoluteMediaPaths = flag; }
-
 #pragma mark -
 #pragma mark Handy Keypaths
 
@@ -201,7 +182,6 @@
 	[result setCurrentPage:[self currentPage]];
 	[result setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
 	if (myLiveDataFeeds) [result setLiveDataFeeds:[self liveDataFeeds]];
-	[result setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
 	
 	return result;
 }
