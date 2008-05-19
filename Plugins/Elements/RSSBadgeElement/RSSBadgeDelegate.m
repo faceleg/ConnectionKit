@@ -57,9 +57,8 @@
 		
 		// Try and connect to our parent collection
 		KTPage *parent = (KTPage *)[[self delegateOwner] page];
-		NSString *pageFeedURL = [parent feedURLPath];
-		
-		if (pageFeedURL && ![pageFeedURL isEqualToString:@""]) {
+		if ([parent feedURL])
+		{
 			[[self delegateOwner] setValue:parent forKey:@"collection"];
 		}
 	}

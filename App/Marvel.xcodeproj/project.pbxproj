@@ -210,7 +210,7 @@
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
 		272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */; };
 		272FBCCA0D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */; };
-		2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */; };
+		2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2730D66E0DE18ACA004858F5 /* KTTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */; };
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
