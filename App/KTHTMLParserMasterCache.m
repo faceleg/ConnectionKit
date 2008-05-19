@@ -8,7 +8,7 @@
 
 #import "KTHTMLParserMasterCache.h"
 
-#import "KTHTMLParser.h"
+#import "KTTemplateParser.h"
 
 
 @interface KTHTMLParserMasterCache (Private)
@@ -22,7 +22,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTHTMLParser *)parser
+- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser
 {
 	OBASSERTSTRING(proxyObject, @"-[KTHTMLParserMasterCahce initWithProxyObject:parser:] Attempt with nil proxy object");
 	
@@ -44,7 +44,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTHTMLParser *)parser { return myParser; }
+- (KTTemplateParser *)parser { return myParser; }
 
 #pragma mark -
 #pragma mark KVC

@@ -16,8 +16,6 @@
 
 - (KTHTMLParserMasterCache *)cache;
 
-- (KTHTMLParser *)newChildParserWithTemplate:(NSString *)templateHTML component:(id <KTWebViewComponent>)component;
-
 - (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile;
 
 // Delegate

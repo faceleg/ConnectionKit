@@ -8,90 +8,24 @@
 #import "KTHTMLParser+Private.h"
 #import "KTHTMLParserMasterCache.h"
 
-#import "Debug.h"
-#import "KTDocument.h"	// for constants, methods
 #import "KTDocumentInfo.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTArchivePage.h"
-
-#import "KTMediaManager.h"
-#import "KTInDocumentMediaFile.h"
-#import "KTExternalMediaFile.h"
-
-#import "KTSummaryWebViewTextBlock.h"
+#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
 
 #import "BDAlias+QuickLook.h"
-#import "NSBundle+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
 #import "NSDate+Karelia.h"
-#import "NSIndexPath+Karelia.h"
-#import "NSString+Karelia.h"
-#import "NSString+KTExtensions.h"
-
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "KTMediaContainer.h"
 
-@interface KTHTMLParser ( ExtraPrivate )
-
-- (void)setParentParser:(KTHTMLParser *)parser;
-
-- (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner;
-- (NSString *)HTMLStringByScanning:(NSScanner *)inScanner;
-
-- (KTHTMLParserMasterCache *)cache;
-- (void)setCache:(KTHTMLParserMasterCache *)cache;
-
-- (BOOL)prepareToParse;
-- (void)finishParsing;
-
-- (NSString *)componentLocalizedString:(NSString *)tag;
-- (NSString *)componentTargetLocalizedString:(NSString *)tag;
-- (NSString *)mainBundleLocalizedString:(NSString *)tag;
-
-- (BOOL)isNotEmpty:(id)aValue;
-- (KTDocument *)document;
-- (void)setDocument:(KTDocument *)aDocument;
-
-// Support
-- (id)parseValue:(NSString *)inString;
-
-@end
-
-
+#import "Debug.h"
 
 
 @implementation KTHTMLParser
 
-static NSString *kComponentTagStartDelim = @"[[";
-static NSString *kComponentTagEndDelim = @"]]";
-
-static NSString *kKeyPathIndicator = @"=";
-static NSString *kEscapeHTMLIndicator = @"&";
-static NSString *kSpacesToUnderscoreIndicator = @"_";
-
-static NSString *kEncodeURLIndicator = @"%";
-static NSString *kTargetStringIndicator = @"\"";			// [[" String to localized in TARGET language Doesn't want a closing delimeter.
-static NSString *kTargetMainBundleStringIndicator = @"`";	// [[` String to localized in TARGET language -- but stored in Main Bundle ...  Doesn't want a closing delimeter.
-static NSString *kStringIndicator = @"'";					// [[' String to localize in current language. Doesn't want a closing delimeter.
-
-static unsigned sLastParserID;
-
-
 #pragma mark -
 #pragma mark Class Methods
-
-+ (NSCharacterSet *)indicatorCharacters
-{
-	static NSCharacterSet *sIndicatorCharacterSet = nil;
-	
-	if (!sIndicatorCharacterSet)
-	{
-		sIndicatorCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"=&%_"] retain];
-	}
-	
-	return sIndicatorCharacterSet;
-}
 
 + (NSString *)calloutContainerTemplateHTML
 {
@@ -111,12 +45,6 @@ static unsigned sLastParserID;
 
 - (NSString *)calloutContainerTemplateHTML { return [[self class] calloutContainerTemplateHTML]; }
 
-// Usual case, no absolute media paths
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id)component
-{
-	return [self HTMLStringWithTemplate:aTemplate component:component useAbsoluteMediaPaths:NO];
-}
-
 /*	A convenience method for simple parsing tasks
  */
 + (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate
@@ -135,25 +63,14 @@ static unsigned sLastParserID;
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithTemplate:(NSString *)HTMLTemplate component:(id <KTWebViewComponent>)parsedComponent
+/*	Supplement the default behaviour to store current page.
+ */
+- (id)initWithTemplate:(NSString *)HTMLTemplate component:(id)parsedComponent
 {
-	[super init];
+	[super initWithTemplate:HTMLTemplate component:parsedComponent];
 	
-	if (!HTMLTemplate)
+	if ([parsedComponent isKindOfClass:[KTPage class]])
 	{
-		NSLog(@"-[KTHTMLParser initWithTemplate:component:]  -- Nil template");
-		// how can we continue from here?
-		[self release];
-		return nil;
-	}
-	
-	sLastParserID++;
-	myID = [[NSString alloc] initWithFormat:@"%u", sLastParserID];
-	
-	myTemplate = [HTMLTemplate copy];
-	
-	myComponent = [parsedComponent retain];
-	if ([parsedComponent isKindOfClass:[KTPage class]]) {
 		[self setCurrentPage:(KTPage *)parsedComponent];
 	}
 	
@@ -187,52 +104,14 @@ static unsigned sLastParserID;
 
 - (void)dealloc
 {
-	[myTemplate release];
-	[myComponent release];
-	[myCache release];
 	[myCurrentPage release];
 	[myLiveDataFeeds release];
-	[myOverriddenKeys release];
-	
-	[myForEachIndexes release];
-	[myForEachCounts release];
-	
-	[myID release];
 	
 	[super dealloc];
 }
 
 #pragma mark -
 #pragma mark Accessors
-
-- (NSString *)parserID { return myID; }
-
-- (NSString *)templateHTML { return myTemplate; }
-
-- (id <KTWebViewComponent>)component { return myComponent; }
-
-- (KTHTMLParserMasterCache *)cache { return myCache; }
-
-- (void)setCache:(KTHTMLParserMasterCache *)cache
-{
-	[cache retain];
-	[myCache release];
-	myCache = cache;
-}
-
-- (KTDocument *)document
-{
-    return myDocument; 
-}
-
-// Made a weak reference
-
-- (void)setDocument:(KTDocument *)aDocument
-{
-//    [aDocument retain];
-//    [myDocument release];
-    myDocument = aDocument;
-}
 
 /*	Whenever parsing, it must be within the context of a particular page.
  *	e.g. A single pagelet may be parsed be 50 times, each on a different page.
@@ -292,43 +171,7 @@ static unsigned sLastParserID;
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag { myUseAbsoluteMediaPaths = flag; }
 
 #pragma mark -
-#pragma mark KVC Overriding
-
-/*	These methods provide access to the cache's override method. However, these overrides are set in place before any
- *	parsing begins and are retained if several parses are made.
- */
-
-- (NSMutableDictionary *)_keyOverrides
-{
-	if (!myOverriddenKeys)
-	{
-		myOverriddenKeys = [[NSMutableDictionary alloc] init];
-	}
-	
-	return myOverriddenKeys;
-}
-
-- (NSSet *)overriddenKeys
-{
-	return [NSSet setWithArray:[[self _keyOverrides] allKeys]];
-}
-
-- (void)overrideKey:(NSString *)key withValue:(id)override
-{
-	OBASSERTSTRING(key, @"Attempt to override a nil key");
-	OBASSERTSTRING(override, @"Attempt to override parser key with nil value");
-	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser override key", key);
-	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key \"%@\" is already overidden", key);
-	
-	[[self _keyOverrides] setObject:override forKey:key];
-}
-
-- (void)removeOverrideForKey:(NSString *)key
-{
-	[[self _keyOverrides] removeObjectForKey:key];
-}
-
-#pragma mark handy keypaths
+#pragma mark Handy Keypaths
 
 /*!	For RSS generation
  */
@@ -348,84 +191,22 @@ static unsigned sLastParserID;
 #pragma mark -
 #pragma mark Child Parsers
 
-/*	Creates a new parser with the same basic properties as ourself, and the specifed template/componet
- *	IMPORTANT:	Follows the standard "new rule" so, the return object is NOT autoreleased.
+/*	Supplement the default behaviour by copying over HTML-specific properties.
  */
-- (KTHTMLParser *)newChildParserWithTemplate:(NSString *)templateHTML component:(id <KTWebViewComponent>)component
+- (id)newChildParserWithTemplate:(NSString *)templateHTML component:(id)component
 {
-	KTHTMLParser *parser = [[[self class] alloc] initWithTemplate:templateHTML component:component];
+	KTHTMLParser *result = [super newChildParserWithTemplate:templateHTML component:component];
 	
-	[parser setParentParser:self];
-	[parser setCurrentPage:[self currentPage]];
-	[parser setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
-	if (myLiveDataFeeds) [parser setLiveDataFeeds:[self liveDataFeeds]];
-	[parser setDelegate:[self delegate]];
-	[parser setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
-	
-	return parser;
-}
-
-/*	[[parseComponent keypath.to.component keypath.to.templateHTML]]
- *
- *	Branches off a new HTML parser for the specified component.
- *	The new parser has the same basic properties as us.
- */
-- (NSString *)parsecomponentWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
-	
-	if (!parameters || [parameters count] != 2)
-	{
-		NSLog(@"parsecomponent: usage [[parseComponent keypath.to.component keypath.to.templateHTML]]");
-	}
-	else
-	{
-		id component = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
-		NSString *template = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
-		
-		if (component)
-		{
-			KTHTMLParser *parser = [self newChildParserWithTemplate:template component:component];
-			result = [parser parseTemplate];
-			
-			// If possible, wrap the result inside a uniqueID <div> to allow the WebViewController to identify it later.
-			if ([self HTMLGenerationPurpose] == kGeneratingPreview && [component conformsToProtocol:@protocol(KTWebViewComponent)])
-			{
-				result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
-													[component uniqueWebViewID],
-													[parser parserID],
-													result];
-			}
-			
-			// Tidy up
-			[parser release];
-		}
-	}
+	[result setCurrentPage:[self currentPage]];
+	[result setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
+	if (myLiveDataFeeds) [result setLiveDataFeeds:[self liveDataFeeds]];
+	[result setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];
 	
 	return result;
 }
 
-- (KTHTMLParser *)parentParser { return myParentParser; }
-
-- (void)setParentParser:(KTHTMLParser *)parser { myParentParser = parser; }
-
 #pragma mark -
 #pragma mark Delegate
-
-- (id)delegate { return myDelegate; }
-
-- (void)setDelegate:(id)delegate { myDelegate = delegate; }		// It's a weak ref
-
-- (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
-{
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterKeyPath:ofObject:)])
-	{
-		[delegate HTMLParser:self didEncounterKeyPath:keyPath ofObject:object];
-	}
-}
 
 - (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
 {
@@ -457,308 +238,60 @@ static unsigned sLastParserID;
 #pragma mark -
 #pragma mark Parsing
 
-- (NSString *)parseTemplate
-{
-	NSString *result = nil;
-	@try
-	{
-		BOOL readyToParse = [self prepareToParse];
-		if (!readyToParse) {
-			return nil;
-		}
-		
-		NSScanner *scanner = [NSScanner scannerWithString:[self templateHTML]];
-		[scanner setCharactersToBeSkipped:nil];
-		result = [self startHTMLStringByScanning:scanner];
-		result = [result removeMultipleNewlines];
-	}
-	@finally
-	{
-		[self finishParsing];
-	}
-	
-	return result;
-}
-
+/*	We make a couple of extra tweakes for HTML parsing
+ */
 - (BOOL)prepareToParse
 {
-	BOOL result = YES;
+	BOOL result = [super prepareToParse];
 	
-	// parsing page, aka outer context
-	id parsedComponent = [self component];
-	
-	
-	// Create a new cache for the parsing
-	KTHTMLParserMasterCache *cache = [[KTHTMLParserMasterCache alloc] initWithProxyObject:parsedComponent parser:self];
-	[self setCache:cache];
-	[cache release];
-	
-	
-	// Cache overrides
-	[cache overrideKey:@"parser" withValue:self];
-	if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
-	[cache overrideKey:@"HTMLGenerationPurpose" withValue:[NSNumber numberWithInt:[self HTMLGenerationPurpose]]];
-	[cache overrideKey:@"userDefaults" withValue:[NSUserDefaults standardUserDefaults]];
-	
-	NSEnumerator *overridesEnumerator = [myOverriddenKeys keyEnumerator];
-	NSString *aKey;
-	while (aKey = [overridesEnumerator nextObject])
+	if (result)
 	{
-		[cache overrideKey:aKey withValue:[[self _keyOverrides] objectForKey:aKey]];
+		if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
+		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
 	}
-
-	
-	if ([parsedComponent  isKindOfClass:[KTPage class]])
-	{
-		KTPage *page = (KTPage *)parsedComponent;
-		KTDocument *document = [page document];
-		[document setUseAbsoluteMediaPaths:[self useAbsoluteMediaPaths]];	// set this value when we set the outer context
-	}
-	
-	/*	This doesn't seem to be actually used.
-	// Hack -- don't do this for news controller
-	Class contextClass = NSClassFromString([parsedComponent className]);
-	
-	if (![contextClass isSubclassOfClass:[NSXMLElement class]]) {
-		[self setDocument:[parsedComponent valueForKey:@"document"]];
-	}*/	
-	
-	
 	
 	return result;
 }
 
-- (void)finishParsing
-{
-	[self setCache:nil];
-}
-
-- (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner
-{
-	[inScanner setScanLocation:0];		// start at the front
-	myIfCount = 0;
-	return [self HTMLStringByScanning:inScanner];
-}
-
-- (NSString *)HTMLStringByScanning:(NSScanner *)inScanner
-{
-	NSMutableString *htmlString = [NSMutableString string];
-	while ( ![inScanner isAtEnd] ) {
-        NSString *tag;
-        NSString *beforeText;
-        
-		// find [[ ... keep what was before it.
-        if ( [inScanner scanUpToString:kComponentTagStartDelim intoString:&beforeText] ) {
-            [htmlString appendString:beforeText];
-        }
-        
-		// Get the [[
-        if ( [inScanner scanString:kComponentTagStartDelim intoString:nil] ) {
-            if ( [inScanner scanString:kComponentTagEndDelim intoString: nil] ) {
-                // empty tag ... [[ immediately followed by ]]
-                continue;
-            }
-            else if ( [inScanner scanUpToString:kComponentTagEndDelim intoString:&tag] && 
-                      [inScanner scanString:kComponentTagEndDelim intoString:nil] ) {
-                
-				// LOG((@"scanner found tag: %@", tag));
-                
-                if ( [tag hasPrefix:kKeyPathIndicator] )
-				{
-                    NSScanner *tagScanner = [NSScanner scannerWithString:tag];
-					[tagScanner setCharactersToBeSkipped:nil];
-
-                    NSString *keyPath;
-
-					// switch to key path
-					NSString *indicatorChars;
-                    [tagScanner scanCharactersFromSet:[[self class] indicatorCharacters]
-										   intoString:&indicatorChars];
-					int htmlEscapeLocation = [indicatorChars rangeOfString:kEscapeHTMLIndicator].location;
-					int urlEncodeLocation  = [indicatorChars rangeOfString:kEncodeURLIndicator].location;
-					int spacesToUnderscoreLocation  = [indicatorChars rangeOfString:kSpacesToUnderscoreIndicator].location;
-					
-                    // grab the class name to instantiate
-                    // grab the key path
-                    keyPath = [[tag substringFromIndex:[tagScanner scanLocation]] condenseWhiteSpace];
-                    
-//                    LOG((@"keyPath = %@", keyPath));
-                    
-                    // do we already have an instance in the page's cache?
-                    id element = nil;
-					
-					// Wrap this in an exception handler so we are more forgiving of errors
-					@try {
-						element = [[self cache] valueForKeyPath:keyPath];
-
-					}
-					@catch (NSException *exception) {
-						NSLog(@"HTMLStringByScanning:... %@ %@", keyPath, [exception reason]);
-					}
-                    
-                    if ( nil == element ) {
-						//LOG((@"%@ [[=%@]] element not found", inContext, keyPath));
-						LOG((@"[[=%@]] element not found", keyPath));
-						continue;
-					}
-					else
-					{
-						NSString *toAppend = [[self class] stringValueOfObject:element];
-						
-						// first replace spaces with an underscore
-						if (NSNotFound != spacesToUnderscoreLocation)
-						{
-							toAppend = [toAppend legalizeURLNameWithFallbackID:@"_"];	// doesn't really matter if we lose everything
-						}
-						
-						// now deal with url encoding and/or html escaping
-						
-						if ((NSNotFound != urlEncodeLocation) && (NSNotFound != htmlEscapeLocation))	// both?
-						{
-							if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
-							{
-								toAppend = [toAppend urlEncode];
-								toAppend = [toAppend escapedEntities];
-							}
-							else	// HTML escape first
-							{
-								toAppend = [toAppend escapedEntities];
-								toAppend = [toAppend urlEncode];
-							}
-							
-						}
-						else
-						{
-							if (NSNotFound != urlEncodeLocation)
-							{
-								toAppend = [toAppend urlEncode];
-							}
-							if (NSNotFound != htmlEscapeLocation)
-							{
-								toAppend = [toAppend escapedEntities];
-							}
-						}
-						[htmlString appendString:toAppend];
-					}
-                }
-                else if ([tag hasPrefix:kStringIndicator])
-                {
-					[htmlString appendString:[self componentLocalizedString:tag]];
-                }
-				else if ([tag hasPrefix:kTargetStringIndicator])
-				{
-					[htmlString appendString:[self componentTargetLocalizedString:tag]];
-                }
-				else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
-				{
-					[htmlString appendString:[self mainBundleLocalizedString:tag]];
-                }
-				else	// not for echoing.  Do something.
-				{
-                    NSScanner *tagScanner = [NSScanner scannerWithString:tag];
-					[tagScanner setCharactersToBeSkipped:nil];
-
-					NSString *keyword;
-                    // grab the method keyword
-                    [tagScanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:&keyword];
-                    // throw away whitespace after
-                    [tagScanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:nil];
-					
-					NSString *inRestOfTag = @"";
-					if (![tagScanner isAtEnd])
-					{
-						inRestOfTag = [tag substringFromIndex:[tagScanner scanLocation]];
-					}
-					
-					/// Now using performSelector: here instead of NSInvocation as it should be quicker
-					NSString *methodName = [NSString stringWithFormat:@"%@WithParameters:scanner:", [keyword lowercaseString]];
-					SEL firstWordSel = NSSelectorFromString(methodName);
-					
-					if ([self respondsToSelector:firstWordSel])
-					{
-						NSString *htmlFragment = [self performSelector:firstWordSel withObject:inRestOfTag withObject:inScanner];
-						
-						/*
-						NSMethodSignature *sig = [[self class] instanceMethodSignatureForSelector:firstWordSel];
-						NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sig];
-						[inv setSelector: firstWordSel];
-						[inv setTarget: self];
-						[inv setArgument:(void *)&inRestOfTag atIndex: 2];
-						[inv setArgument:(void *)&inScanner atIndex: 3];
-						//[inv setArgument:(void *)&inContext atIndex: 4];
-						
-						[inv invoke];
-						NSString *invokeResultString;
-						[inv getReturnValue:&invokeResultString];
-						*/
-						if ( nil != htmlFragment )
-						{
-							[htmlString appendString:htmlFragment];
-						}
-						else
-						{
-							LOG((@"[[%@ %@]] Invocation unexpectedly returned nil string!", keyword, inRestOfTag));
-						}
-					}
-					else
-					{
-						LOG((@"Can't process %@: no method %@", tag, methodName));
-					}
-
-				}
-				
-            }
-        }
-    }
-    return [NSString stringWithString:htmlString];    
-}
-
-/*	These 3 methods are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
+/*	We wrap child parsers in a special <div> so the webview controller can later identify them.
  */
-- (NSString *)componentLocalizedString:(NSString *)tag
+- (NSString *)parseTemplate
 {
-	NSString *theString = [tag substringFromIndex:1];			// String to localize in user's language
-
-	NSBundle *theBundle = [[self cache] valueForKeyPath:@"plugin.bundle"];
-	NSString *theNewString = [theBundle localizedStringForKey:theString value:@"" table:nil];
-	//LOG((@"USER %@ -> %@", theString, theNewString));
-
-	return [theNewString escapedEntities];
+	NSString *result = [super parseTemplate];
+	
+	if (result &&
+		[self HTMLGenerationPurpose] == kGeneratingPreview &&
+		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
+	{
+		result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
+				  [[self component] uniqueWebViewID],
+				  [self parserID],
+				  result];
+	}
+	
+	return result;
 }
 
-- (NSString *)componentTargetLocalizedString:(NSString *)tag
+/*	We have to implement kCompareNotEmptyOrEditing as KTTemplateParser has no concept of editing.
+ */
+- (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue
 {
-	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
-
-	NSBundle *theBundle = [[self cache] valueForKeyPath:@"plugin.bundle"];
-	NSString *language = [[self cache] valueForKeyPath:@"CurrentPage.master.language"];
-	if (!language) language = @"en";	// fallback just in case
-	NSString *theNewString = [theBundle localizedStringForString:theString language:language];
+	BOOL result;
 	
-	// LOG((@"TARGET %@ -> %@", theString, theNewString));
-
-	return [theNewString escapedEntities];
-}
-
-- (NSString *)mainBundleLocalizedString:(NSString *)tag
-{
-	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
+	if (comparisonType == kCompareNotEmptyOrEditing)	// mostly same test; we will "OR" with editing mode
+	{
+		result = ([self HTMLGenerationPurpose] == kGeneratingPreview || [self isNotEmpty:leftValue]);
+	}
+	else
+	{
+		result = [super compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
+	}
 	
-	NSString *language = [[self cache] valueForKeyPath:@"CurrentPage.master.language"];
-	NSString *theNewString = [[NSBundle mainBundle] localizedStringForString:theString language:language];
-	
-	//LOG((@"MAINBUNDLE TARGET %@ -> %@", theString, theNewString));
-	
-	return [theNewString escapedEntities];
+	return result;
 }
 
 #pragma mark -
 #pragma mark Functions
-
-- (NSString *)commentWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	return @"";
-}
 
 - (NSString *)targetWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
@@ -1018,145 +551,6 @@ static unsigned sLastParserID;
 	[self didEncounterResourceFile:resourceFile];
 
 	return result;
-}
-
-#pragma mark if
-
-- (NSString *)ifWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	myIfCount++;
-	NSString *elseDelim = @"[[else]]";
-	NSString *endifDelim = @"[[endif]]";
-	if (myIfCount > 1)
-	{
-		elseDelim = [NSString stringWithFormat:@"[[else%d]]", myIfCount];
-		endifDelim = [NSString stringWithFormat:@"[[endif%d]]", myIfCount];
-	}
-	
-	int beforeScanLocation = [inScanner scanLocation];
-	NSString *stuffUntilEndIf;
-	if ( ![inScanner scanUpToString:endifDelim intoString:&stuffUntilEndIf] ||
-		 ![inScanner scanString:endifDelim intoString:nil] )
-	{
-		NSLog(@"if: missing %@ tag, looking starting at %@", endifDelim, [[inScanner string] substringFromIndex:beforeScanLocation]);
-		return @"";
-	}
-	// Look for the optional else tag; split into the 'true' and 'false' parts.
-	NSString *stuffIfTrue = @"";
-	NSString *stuffIfFalse = @"";
-	
-	NSScanner *elseScanner = [NSScanner scannerWithString:stuffUntilEndIf];
-	[elseScanner setCharactersToBeSkipped:nil];
-
-	// Try to scan up to the else to get the "true" branch
-	[elseScanner scanUpToString:elseDelim intoString:&stuffIfTrue];
-	
-	// If we find an else, then get the "false" branch
-	if ( [elseScanner scanString:elseDelim intoString:nil] )
-	{
-		// Found an else; put the rest of it into the false part
-		stuffIfFalse = [stuffUntilEndIf substringFromIndex:[elseScanner scanLocation]];
-	}
-	else
-	{
-		// no else, so it's all the true part; the else is effectively empty.
-		stuffIfTrue = stuffUntilEndIf;
-	}
-		
-	// Parse rest of tag, and try to separate into three pieces: LHS, comparator, and RHS
-	NSString *left = nil;
-	NSString *right = nil;
-	ComparisonType comparisonType = [inRestOfTag parseComparisonintoLeft:&left right:&right];
-	if (kCompareUnknown == comparisonType || nil == left || (nil == right && (comparisonType != kCompareNotEmpty && comparisonType != kCompareNotEmptyOrEditing)) )
-	{
-		NSLog(@"if: unable to find valid comparison '%@'", inRestOfTag);
-		return @"";
-	}
-	id leftValue = [self parseValue:left];
-	id rightValue = [self parseValue:right];
-
-	// Now do the comparison.  If greater/less operations, we convert to numbers.
-	BOOL compareResult = NO;
-	switch (comparisonType)
-	{
-		case kCompareNotEmptyOrEditing:	// mostly same test; we will "OR" with editing mode
-			compareResult = ([self HTMLGenerationPurpose] == kGeneratingPreview)
-				|| [self isNotEmpty:leftValue];
-			break;
-			
-		case kCompareNotEmpty:	// return true if item is nil, or collection is empty, or string is empty, or number is non-zero
-			compareResult = [self isNotEmpty:leftValue];
-			break;
-		case kCompareOr:
-			compareResult = [self isNotEmpty:leftValue] || [self isNotEmpty:rightValue];
-			break;
-		case kCompareAnd:
-			compareResult = [self isNotEmpty:leftValue] && [self isNotEmpty:rightValue];
-			break;
-		case kCompareEquals:
-			compareResult = [leftValue isEqual:rightValue];
-			break;
-		case kCompareNotEquals:
-			compareResult = ![leftValue isEqual:rightValue];
-			break;
-		case kCompareLess:
-			compareResult = ( [leftValue intValue] < [rightValue intValue] );
-			break;
-		case kCompareLessEquals:
-			compareResult = ( [leftValue intValue] <= [rightValue intValue] );
-			break;
-		case kCompareMore:
-			compareResult = ( [leftValue intValue] > [rightValue intValue] );
-			break;
-		case kCompareMoreEquals:
-			compareResult = ( [leftValue intValue] >= [rightValue intValue] );
-			break;
-		case kCompareUnknown:
-			break;
-	}
-	
-	// Now parse whatever piece we are supposed to use
-	NSScanner *ifScanner = [NSScanner scannerWithString:compareResult ? stuffIfTrue : stuffIfFalse];
-	[ifScanner setCharactersToBeSkipped:nil];
-
-	NSString *result = [self HTMLStringByScanning:ifScanner];
-		
-	myIfCount--;
-	return result;
-}
-
-- (BOOL)isNotEmpty:(id)aValue
-{
-	BOOL result = NO;
-	if (nil == aValue) {
-		result = NO;		// It's nil, so it's empty.  All done.
-	} else if ([aValue respondsToSelector: @selector(count)]) {
-		// handles NSArray, NSDictionary, NSIndexSet, NSSet, etc.
-		result = (0 !=[((NSArray *)aValue) count]); 
-	} else if ([aValue respondsToSelector: @selector(length)]) {
-		// handles NSAttributedString, NSString, NSData, etc.
-		result = (0 != [((NSString *)aValue) length]); 
-	} else if ([aValue respondsToSelector: @selector(intValue)]) {
-		// handles NSAttributedString, NSString, NSData, etc.
-		result = (0 != [((NSString *)aValue) intValue]); 
-	} else {
-		// handle everything else -- return true if not nil, like for media
-		result = (nil != aValue); 
-	}
-	return result;
-}
-
-
-- (NSString *)endifWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSLog(@"[[endif...] tag found not balanced with previous [[if...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
-	return @"";
-}
-
-- (NSString *)elseWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSLog(@"[[else...] tag found not balanced with previous [[if...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
-	return @"";
 }
 
 /*!	Claim ownership to the particular representation.  Use like this: [[media image.originalSize uniqueID]]
@@ -1437,328 +831,6 @@ static unsigned sLastParserID;
 			break;
 	}
 	
-	return result;
-}
-
-#pragma mark foreach loops
-
-- (unsigned int)currentForeachLoopIndex
-{
-	unsigned int result = NSNotFound;
-	if (myForEachIndexes)
-	{
-		result = [myForEachIndexes indexAtEndPosition];
-	}
-	return result;
-}
-
-/*	The number of items in the current foreach loop.
- */
-- (unsigned int)currentForeachLoopCount
-{
-	unsigned int result = NSNotFound;
-	if (myForEachCounts)
-	{
-		result = [myForEachCounts indexAtEndPosition];
-	}
-	return result;
-}
-
-- (unsigned int)currentForeachLoopDepth
-{
-	unsigned int result = 0;
-	
-	if (myForEachIndexes)
-	{
-		result = [myForEachIndexes length];
-	}
-	
-	return result;
-}
-
-- (void)incrementCurrentForeachLoop
-{
-	NSIndexPath *newIndexPath = [myForEachIndexes indexPathByIncrementingLastIndex];
-	[myForEachIndexes release];
-	myForEachIndexes = [newIndexPath retain];
-}
-
-- (void)enterNewForeachLoopWithCount:(unsigned int)count
-{
-	if (myForEachIndexes)
-	{
-		NSIndexPath *newIndexPath = [myForEachIndexes indexPathByAddingIndex:1];
-		[myForEachIndexes release];
-		myForEachIndexes = [newIndexPath retain];
-		
-		NSIndexPath *newCountPath = [myForEachCounts indexPathByAddingIndex:count];
-		[myForEachCounts release];
-		myForEachCounts = [newCountPath retain];
-	}
-	else
-	{
-		myForEachIndexes = [[NSIndexPath alloc] initWithIndex:1];
-		myForEachCounts = [[NSIndexPath alloc] initWithIndex:count];
-	}
-}
-
-- (void)exitCurrentForeachLoop
-{
-	NSIndexPath *newIndexPath = [myForEachIndexes indexPathByRemovingLastIndex];
-	[myForEachIndexes release];
-	myForEachIndexes = [newIndexPath retain];
-	
-	NSIndexPath *newCountPath = [myForEachCounts indexPathByRemovingLastIndex];
-	[myForEachCounts release];
-	myForEachCounts = [newCountPath retain];
-}
-
-- (NSString *)foreachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	// Put together the parameters and complain if they are incorrect
-	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
-	if ([params count] < 2 || [params count] > 3)
-	{
-		NSLog(@"forEach: usage [[ forEach array.keyPath newElement (max.keyPath) ]]");
-		return @"";
-	}
-	
-	
-	// Load the array to loop over
-	NSArray *arrayToRepeat = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
-	
-	unsigned int numberIterations = [arrayToRepeat count];
-	if ([params count] > 2)
-	{
-		unsigned int specifiedNumberIterations = [[self parseValue:[params objectAtIndex:2]] unsignedIntValue];
-		if (specifiedNumberIterations > 0) {
-			numberIterations = specifiedNumberIterations;
-		}
-	}
-	
-					
-	// Begin the new loop
-	[self enterNewForeachLoopWithCount:numberIterations];
-	
-	
-	// Get the HTML within the loop to scan
-	NSString *endForEachDelim = @"[[endForEach]]";
-	if ([self currentForeachLoopDepth] > 1)
-	{
-		endForEachDelim = [NSString stringWithFormat:@"[[endForEach%d]]", [self currentForeachLoopDepth]];
-	}
-	
-	
-	
-	NSMutableString *result = [NSMutableString string];
-	NSString *stuffToRepeat;
-	if ( [inScanner scanUpToString:endForEachDelim intoString:&stuffToRepeat] && 
-			  [inScanner scanString:endForEachDelim intoString:nil] )
-	{
-		@try
-		{	// Wrap this in an exception handler so we are more forgiving of errors
-		
-			NSString *keyForNewElement = [params objectAtIndex:1];
-			NSEnumerator *theEnum = [arrayToRepeat objectEnumerator];
-			id object;
-			
-			while (nil != (object = [theEnum nextObject]) )
-			{
-				NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-				
-				// We override the specified key in the cache so that KVC calls are directed to the right object
-				[[self cache] overrideKey:keyForNewElement withValue:object];
-				
-				// need a scanner up to next endForEach
-				NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
-				[eachScanner setCharactersToBeSkipped:nil];
-
-				NSString *eachResult = [self HTMLStringByScanning:eachScanner];
-				[result appendString:eachResult];
-				
-				// And then remove the override
-				[[self cache] removeOverrideForKey:keyForNewElement];
-				
-				[innerPool release];
-				
-				[self incrementCurrentForeachLoop];
-				
-				if ([self currentForeachLoopIndex] > [self currentForeachLoopCount])	// break if we've hit the max
-				{
-					break;
-				}
-			}
-		}
-		@catch (NSException *exception) {
-			NSLog(@"foreachWithParameters:... Caught %@: %@", [exception name], [exception reason]);
-		}
-	}
-	else
-	{
-		NSLog(@"forEach: missing %@ tag", endForEachDelim);
-		result = @"";
-	}
-	
-	[self exitCurrentForeachLoop];
-	
-	return [NSString stringWithString:result];
-}
-
-/*!	return index of forEach loop (prefixed with "i"), or empty string if out of a loop
-*/
-- (NSString *)iWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		result = [NSString stringWithFormat:@"i%i", index];
-	}
-	
-	return result;
-}
-
-/*!	Return "e" or "o" for index in forEach loop being even or odd ... or empty string if out of a loop
-*/
-- (NSString *)eoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		result = (0 == (index % 2)) ? @"e" : @"o";
-	}
-	
-	return result;
-}
-
-/*!	Return " last-item" if this is the last item in the loop; an empty string otherwise
- */
-- (NSString *)lastWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		int count = [self currentForeachLoopCount];
-		if (index == count)
-		{
-			result = @" last-item";
-		}
-	}
-	
-	return result;
-}
-
-- (NSString *)endforeachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSLog(@"[[endforeach...] tag found not balanced with previous [[forEach...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
-	return @"";
-}
-
-#pragma mark -
-#pragma mark Support
-
-- (id)parseValue:(NSString *)inString
-{
-	int parsedInt = 0;
-	id result = @"";	// always have at least an empty string.
-	
-	if (nil != inString && ![inString isEqualToString:@""])
-	{
-		// Try to parse inString value -- as a constant integer, an literal string, or a key path value.
-		if ([[NSScanner scannerWithString:inString] scanInt:&parsedInt])
-		{
-			result = [NSNumber numberWithInt:parsedInt];
-		}
-		else if ([inString hasPrefix:@"\""] && [inString hasSuffix:@"\""])
-		{
-			result = [inString substringWithRange:NSMakeRange(1, [inString length] - 2)];
-		}
-		else if ([inString hasPrefix:@"'"] && [inString hasSuffix:@"'"])
-		{
-			result = [inString substringWithRange:NSMakeRange(1, [inString length] - 2)];
-		}
-		else	// not a literal number or string; interpret as a keypath
-		{
-			result = [[self cache] valueForKeyPath:inString];
-			if (nil == result)
-			{
-				result = @"";		
-			}
-		}
-	}
-	return result;
-}
-
-
-/*	When adding a keypath [[=key.path]] we want a decent description of non-string objects. Normally -description suffices,
- *	but in some cases we want special behaviour.
- */
-+ (NSString *)stringValueOfObject:(id)object
-{
-	NSString *result;
-	
-	if ([object isKindOfClass:[NSURL class]])
-	{
-		result = [object absoluteString];
-	}
-	else
-	{
-		result = [object description];	// Good general fallback
-	}
-	
-	return result;
-}
-
-
-/*	Builds up a dictionary from a string of parameters like this:
- *
- *		key1:object1 key2:object2
- */
-+ (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString
-{
-	NSMutableDictionary *result = [NSMutableDictionary dictionary];
-	
-	NSScanner *scanner = [[NSScanner alloc] initWithString:parametersString];
-	while (![scanner isAtEnd])
-	{
-		// Scan the key
-		NSString *aKey = nil;
-		[scanner scanUpToString:@":" intoString:&aKey];
-		[scanner scanString:@":" intoString:NULL];
-		
-		// Scan up to the value (the template might leave a space between key & value)
-		[scanner scanUpToCharactersFromSet:[NSCharacterSet nonWhitespaceAndNewlineCharacterSet] intoString:NULL];
-		
-		// Scan the value. Handle quote marks a single long value containing spaces.
-		NSString *aValue = nil;
-		if ([parametersString characterAtIndex:[scanner scanLocation]] == '"')
-		{
-			[scanner setScanLocation:([scanner scanLocation] + 1)];
-			[scanner scanUpToString:@"\"" intoString:&aValue];
-			[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
-		}
-		else
-		{
-			[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:&aValue];
-		}
-		
-		// Store the key-value pair
-		if (aKey && aValue)
-		{
-			[result setObject:aValue forKey:aKey];
-		}
-		
-		// Scan up to the next key
-		[scanner scanCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
-	}
-	
-	// Tidy up
-	[scanner release];
 	return result;
 }
 

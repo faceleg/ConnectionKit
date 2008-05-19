@@ -18,6 +18,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KTTemplateParser.h"
 
 #import "KTDocument.h"
 #import "KTWebViewComponent.h"
@@ -27,46 +28,22 @@
 @class KTAbstractPage;
 @class KTMediaFile;
 
-@interface KTHTMLParser : NSObject
+
+@interface KTHTMLParser : KTTemplateParser
 {
-	NSString				*myID;
-	NSString				*myTemplate;
-	id <KTWebViewComponent>	myComponent;
-	KTHTMLParserMasterCache	*myCache;
-	id						myDelegate;
 	KTAbstractPage			*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
 	NSNumber				*myLiveDataFeeds;
 	BOOL					myUseAbsoluteMediaPaths;
-	KTHTMLParser			*myParentParser;	// Weak ref
-	
-	NSMutableDictionary	*myOverriddenKeys;
-	
-	int myIfCount;
-	
-	NSIndexPath	*myForEachIndexes;
-	NSIndexPath *myForEachCounts;
-	
-	KTDocument *myDocument;
 }
-
-+ (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate component:(id)component;
 
 + (NSString *)HTMLStringWithTemplate:(NSString *)aTemplate
 						   component:(id <KTWebViewComponent>)component
 			   useAbsoluteMediaPaths:(BOOL)useAbsoluteMediaPaths;
 
-- (id)initWithTemplate:(NSString *)HTMLTemplate component:(id <KTWebViewComponent>)parsedComponent;
 - (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
 
 // Accessors
-- (NSString *)parserID;
-- (NSString *)templateHTML;
-- (id <KTWebViewComponent>)component;
-
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
-
 - (KTAbstractPage *)currentPage;
 - (void)setCurrentPage:(KTAbstractPage *)page;
 
@@ -79,21 +56,8 @@
 - (BOOL)useAbsoluteMediaPaths;
 - (void)setUseAbsoluteMediaPaths:(BOOL)flag;
 
-- (KTHTMLParser *)parentParser;
-
-// KVC Overrides
-- (NSSet *)overriddenKeys;
-- (void)overrideKey:(NSString *)key withValue:(id)override;
-- (void)removeOverrideForKey:(NSString *)key;
-
-// parsing
-- (NSString *)parseTemplate;
-
 // Fucntions
 - (NSString *)pathToPage:(KTAbstractPage *)page;
-
-// Support
-+ (NSString *)stringValueOfObject:(id)object;
 
 // Prebuilt templates
 + (NSString *)calloutContainerTemplateHTML;
@@ -112,7 +76,6 @@
 
 
 @interface NSObject (KTHTMLParserDelegate)
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath;
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock;

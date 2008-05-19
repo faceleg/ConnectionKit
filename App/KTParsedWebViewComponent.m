@@ -21,7 +21,7 @@
 	[super init];
 	
 	myComponent = [[parser component] retain];
-	myTemplateHTML = [[parser templateHTML] copy];
+	myTemplateHTML = [[parser template] copy];
 	myKeyPaths = [[NSMutableSet alloc] initWithCapacity:10];
 	
 	myDivID = [[NSString alloc] initWithFormat:@"%@-%@",

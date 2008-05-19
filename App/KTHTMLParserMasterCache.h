@@ -10,18 +10,18 @@
 #import "KTHTMLParserCache.h"
 
 
-@class KTHTMLParser;
+@class KTTemplateParser;
 
 
 @interface KTHTMLParserMasterCache : KTHTMLParserCache
 {
 	NSMutableDictionary	*myOverrides;
-	KTHTMLParser		*myParser;		// Weak ref
+	KTTemplateParser		*myParser;		// Weak ref
 }
 
 // Init
-- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTHTMLParser *)parser;
-- (KTHTMLParser *)parser;
+- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser;
+- (KTTemplateParser *)parser;
 
 // KVC
 - (id)valueForKey:(NSString *)key;
