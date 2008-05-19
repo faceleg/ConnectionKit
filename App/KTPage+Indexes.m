@@ -117,25 +117,18 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	// && ([self boolForKey:@"collectionGenerateAtom"] || [self boolForKey:@"collectionGenerateRSS"]) ;
 }
 
-- (NSString *)feedURLPathRelativeToPage:(KTAbstractPage *)aPage
+- (NSURL *)feedURL
 {
-	NSString *result = nil;
+	NSURL *result = nil;
 	
 	if ([self boolForKey:@"collectionSyndicate"] && [self collectionCanSyndicate])
 	{
 		NSString *feedFileName = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-		NSString *collectionPath = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
-		NSString *feedPath = [collectionPath stringByAppendingPathComponent:feedFileName];
-		
-		result = [feedPath URLPathRelativeTo:collectionPath];
+		NSURL *pageURL = [self absoluteURL];
+		result = [NSURL URLWithString:feedFileName relativeToURL:pageURL];
 	}
 	
 	return result;
-}
-
-- (NSString *)feedURLPath
-{
-	return [self feedURLPathRelativeToPage:self];
 }
 
 #pragma mark -

@@ -159,8 +159,7 @@
 
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
-- (NSString *)feedURLPathRelativeToPage:(KTAbstractPage *)aPage;
-- (NSString *)feedURLPath;
+- (NSURL *)feedURL;
 
 // Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
