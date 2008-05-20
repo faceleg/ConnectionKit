@@ -610,7 +610,7 @@
 			default:
 			{
 				upload = [mediaFile defaultUpload];
-				result = [upload pathRelativeTo:[self currentPage]];
+				result = [[upload absoluteURL] stringRelativeToURL:[[self currentPage] absoluteURL]];
 				break;
 			}
 		}

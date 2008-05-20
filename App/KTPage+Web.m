@@ -22,6 +22,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+#import "NSURL+Karelia.h"
 
 #import <WebKit/WebKit.h>
 
@@ -77,7 +78,7 @@
 					NSString *newPath = nil;
 					if (thePage)
 					{
-						newPath = [thePage pathRelativeTo:self];
+						newPath = [[thePage absoluteURL] stringRelativeToURL:[self absoluteURL]];
 					}
 					else
 					{

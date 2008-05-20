@@ -136,7 +136,9 @@
 //			}
 //			else
 //			{
-				[string appendFormat:@"<a href=\"%@\">%@</a>", [aPage pathRelativeTo:thisPage], [[aPage titleText] escapedEntities]];
+				[string appendFormat:@"<a href=\"%@\">%@</a>",
+									 [[aPage absoluteURL] stringRelativeToURL:[thisPage absoluteURL]],
+									 [[aPage titleText] escapedEntities]];
 //			}
 		}
 		
@@ -203,7 +205,7 @@
 						}
 						else
 						{
-							[string appendFormat:@"<a href=\"%@\">%@</a>\n", [aChildPage pathRelativeTo:thisPage], [[aChildPage titleText] escapedEntities]];
+							[string appendFormat:@"<a href=\"%@\">%@</a>\n", [[aChildPage absoluteURL] stringRelativeToURL:[thisPage absoluteURL]], [[aChildPage titleText] escapedEntities]];
 						}
 						// need separator?	
 					}
@@ -266,7 +268,7 @@
 		else
 		{
 			[string appendFormat:@"<a href=\"%@\">%@</a>",
-				[root pathRelativeTo:thisPage], [[root titleText] escapedEntities]];
+				[[root absoluteURL] stringRelativeToURL:[thisPage absoluteURL]], [[root titleText] escapedEntities]];
 		}
 		[string appendString:(sections ? @"</h3>\n" : @"</p>\n")];
 	}

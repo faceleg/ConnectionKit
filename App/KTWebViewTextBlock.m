@@ -31,6 +31,7 @@
 
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+#import "NSURL+Karelia.h"
 
 
 @interface KTWebViewTextBlock (Private)
@@ -363,7 +364,7 @@
 				{
 					KTPage *page = [self page];		OBASSERT(page);
 					KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-					aMediaPath = [upload pathRelativeTo:page];
+					aMediaPath = [[upload absoluteURL] stringRelativeToURL:[page absoluteURL]];
 					
 					// Tell the parser's delegate
 					[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];

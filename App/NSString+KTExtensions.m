@@ -128,7 +128,7 @@
 
 
 /*	A specialised version of -pathRelativeToPath: that handles URL-like strings. For example, -pathRelativeToSite returns an empty
- *	string for the home page which -pathRelativeTo: cannot handle. This method can.
+ *	string for the home page which -pathRelativeToPath: cannot handle. This method can.
  */
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath
 {

@@ -18,6 +18,5 @@
 }
 
 - (NSString *)pathRelativeToSite;
-- (NSString *)pathRelativeTo:(id <KTWebPaths>)path2;
 
 @end
