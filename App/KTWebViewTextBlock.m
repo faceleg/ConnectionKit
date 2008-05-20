@@ -417,16 +417,19 @@
 	
 	
 	// Add in graphical text styling if there is any
-	NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
-	if (graphicalTextStyle)
+	if ([parser includeStyling])
 	{
-		if ([parser HTMLGenerationPurpose] == kGeneratingPreview)
+		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
+		if (graphicalTextStyle)
 		{
-			[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
-		}
-		else
-		{
-			[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[self graphicalTextMedia] identifier]];
+			if ([parser HTMLGenerationPurpose] == kGeneratingPreview)
+			{
+				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
+			}
+			else
+			{
+				[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[self graphicalTextMedia] identifier]];
+			}
 		}
 	}
 	
