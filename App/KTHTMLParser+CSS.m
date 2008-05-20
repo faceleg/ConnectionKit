@@ -19,6 +19,7 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
 #import "assertions.h"
 
@@ -141,8 +142,12 @@
 				break;
 				
 			default:
-				result = [[[self currentPage] designDirectoryPath] stringByAppendingPathComponent:filename];
+			{
+				KTMaster *master = [(KTPage *)[self currentPage] master];
+				NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
+				result = [designFileURL stringRelativeToURL:[[self currentPage] absoluteURL]];
 				break;
+			}
 		}
 	}
 	

@@ -101,7 +101,5 @@ KTCollectionPathStyle;
 // Preview
 - (NSString *)previewPath;
 
-- (NSString *)designDirectoryPath;
-
 @end
 

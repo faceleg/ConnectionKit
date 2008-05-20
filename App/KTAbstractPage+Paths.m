@@ -336,15 +336,6 @@
 }
 
 #pragma mark -
-#pragma mark Other Paths
-
-- (NSString *)designDirectoryPath
-{
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
-}
-
-#pragma mark -
 #pragma mark Support
 
 /*	Does the hard graft for -publishedPathRelativeToParent and -uploadPathRelativeToParent.

@@ -49,7 +49,6 @@
 
 // Master
 - (KTMaster *)master;
-- (NSString *)designDirectoryPath;
 
 // Inspector
 - (BOOL)separateInspectorSegment;

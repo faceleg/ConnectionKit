@@ -162,7 +162,8 @@
 	BOOL scriptExists = ([designBundle pathForResource:@"javascript" ofType:@"js"] != nil);
 	if (scriptExists)
 	{
-		result = [[self designDirectoryPath] stringByAppendingPathComponent:@"javascript.js"];
+		NSURL *javascriptURL = [NSURL URLWithString:@"javascript.js" relativeToURL:[[self master] designDirectoryURL]];
+		result = [javascriptURL stringRelativeToURL:[self absoluteURL]];
 	}
 	
 	return result;

@@ -333,16 +333,6 @@
 	}
 }
 
-/*	The published path to the design directory relative to the receiver.
- */
-- (NSString *)designDirectoryPath
-{
-	KTDesign *design = [[self master] design];
-	NSString *designPath = [design remotePath];
-	NSString *result = [designPath URLPathRelativeTo:[self pathRelativeToSite]];
-	return result;
-}
-
 #pragma mark -
 #pragma mark contextual menu validation
 

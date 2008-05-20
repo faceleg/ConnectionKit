@@ -79,10 +79,4 @@
 	return sPageTemplateString;
 }
 
-- (NSString *)designDirectoryPath
-{
-	return [[self parent] designDirectoryPath];
-}
-
-
 @end
