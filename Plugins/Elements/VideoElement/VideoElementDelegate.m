@@ -897,4 +897,20 @@ After deflating starting at byte 8, you get:
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
+#pragma mark -
+#pragma mark RSS Feed
+
+- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page
+{
+	NSArray *result = nil;
+	
+	KTMediaContainer *video = [[self delegateOwner] valueForKey:@"video"];
+	if (video)
+	{
+		result = [NSArray arrayWithObject:video];
+	}
+	
+	return result;
+}
+
 @end
