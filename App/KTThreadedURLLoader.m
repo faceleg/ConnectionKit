@@ -187,7 +187,7 @@ static KTThreadedURLLoader *_default = nil;
 	
 	if ( [NSThread currentThread] != myThread )
 	{
-		[self performSelector:@selector(delayedPostMessage) withObject:nil afterDelay:0.0 reportExceptions:YES];
+		[self performSelector:@selector(delayedPostMessage) withObject:nil afterDelay:0.0];
 	}
 	else
 	{
@@ -223,7 +223,7 @@ static KTThreadedURLLoader *_default = nil;
 	
 	[myLock unlock];
 	
-	[self performSelector:@selector(scheduleInvocation:) withObject:anInvocation afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(scheduleInvocation:) withObject:anInvocation afterDelay:0.0];
 }
 
 @end

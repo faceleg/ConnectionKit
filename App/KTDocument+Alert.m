@@ -87,7 +87,7 @@
 			shouldClose = NO;
 			[self performSelector:@selector(saveDocumentAs:)
 			withObject:self
-			afterDelay:0.0 reportExceptions:YES];
+			afterDelay:0.0];
         }
 		
 		// finish out the delegate callback to the document controller to close the window
@@ -104,7 +104,7 @@
 	{	
 		if ( NSOKButton == returnCode )
 		{
-			[self performSelector:@selector(revertPersistentStoreToSnapshot:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+			[self performSelector:@selector(revertPersistentStoreToSnapshot:) withObject:nil afterDelay:0.0];
 		}
 	}
 	

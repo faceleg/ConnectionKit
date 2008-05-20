@@ -56,7 +56,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 	
 	[myURLs addObject:aURL];
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(finishInstalling) object:nil];
-	[self performSelector:@selector(finishInstalling) withObject:nil afterDelay:1.5 reportExceptions:YES];
+	[self performSelector:@selector(finishInstalling) withObject:nil afterDelay:1.5];
 }
 
 - (void) finishInstalling	// finally called when they are all done opening

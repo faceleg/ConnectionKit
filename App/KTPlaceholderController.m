@@ -148,7 +148,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 						   withObject:nil
-						   afterDelay:0.0 reportExceptions:YES];
+						   afterDelay:0.0];
 }
 
 - (IBAction) doOpen:(id)sender
@@ -158,13 +158,13 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 			   withObject:nil
-			   afterDelay:0.0 reportExceptions:YES];
+			   afterDelay:0.0];
 	
 }
 
 - (IBAction) openLicensing:(id)sender
 {
-	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:nil afterDelay:0.0];
 }
 
 - (IBAction) openHigh:(id)sender;

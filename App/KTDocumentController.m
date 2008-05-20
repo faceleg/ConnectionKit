@@ -315,7 +315,7 @@
 		/// once we've created this "document" we don't want it hanging around
 		[document performSelector:@selector(close)
 					   withObject:nil 
-					   afterDelay:0.0 reportExceptions:YES];
+					   afterDelay:0.0];
 	}
 
 	
@@ -347,7 +347,7 @@
 		[document close];
 		
 		// Open the doc again at the end of the runloop
-		[[NSApp delegate] performSelector:@selector(openDocumentWithContentsOfURL:) withObject:docURL afterDelay:0.0 reportExceptions:YES];
+		[[NSApp delegate] performSelector:@selector(openDocumentWithContentsOfURL:) withObject:docURL afterDelay:0.0];
 	}
 	else if (error)
 	{

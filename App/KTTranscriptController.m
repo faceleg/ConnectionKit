@@ -37,7 +37,7 @@
 */
 - (void)textStorageDidProcessEditing:(NSNotification *)aNotification
 {
-	[self performSelector:@selector(scrollToVisible:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(scrollToVisible:) withObject:nil afterDelay:0.0];
 	// Don't scroll now, do it in a moment. Doing it now causes error messgaes.
 }
 

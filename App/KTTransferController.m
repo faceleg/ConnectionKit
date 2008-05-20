@@ -595,7 +595,7 @@ static NSArray *sReservedNames = nil;
 		
 		[self performSelector:@selector(uploadEverythingToSuggestedPath:) 
 				   withObject:[sheet filename] 
-				   afterDelay:0.0 reportExceptions:YES];	// try again, now with a path
+				   afterDelay:0.0];	// try again, now with a path
 	}
 	else
 	{
@@ -617,7 +617,7 @@ static NSArray *sReservedNames = nil;
 		
 		[self performSelector:@selector(uploadStaleAssetsToSuggestedPath:) 
 				   withObject:[sheet filename] 
-				   afterDelay:0.0 reportExceptions:YES];	// try again, now with a path
+				   afterDelay:0.0];	// try again, now with a path
 	}
 	else
 	{
@@ -673,7 +673,7 @@ static NSArray *sReservedNames = nil;
 	{
 		/// defend against nil
 		if (nil == stemURL) stemURL = @"";
-		[oExportURL performSelector:@selector(setStringValue:) withObject:stemURL afterDelay:0.0 reportExceptions:YES];
+		[oExportURL performSelector:@selector(setStringValue:) withObject:stemURL afterDelay:0.0];
 		return NO;		// only way to replace and stop it .. though now we are OK!
 	}
 	

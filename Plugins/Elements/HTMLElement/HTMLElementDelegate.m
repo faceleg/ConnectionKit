@@ -123,7 +123,7 @@
 	
 	// Then set up a set of the real HTML key after a delay
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setHTMLPropertyFromDelayedHTML) object:nil];
-	[self performSelector:@selector(setHTMLPropertyFromDelayedHTML) withObject:nil afterDelay:1.5 reportExceptions:YES];
+	[self performSelector:@selector(setHTMLPropertyFromDelayedHTML) withObject:nil afterDelay:1.5];
 }
 
 - (void)setHTMLPropertyFromDelayedHTML

@@ -228,7 +228,7 @@ static NSDictionary *sContributorLinkAttributes = nil;
 				if (reopening)
 				{
 					// animate to the new position, but only after all this is done.
-					[self performSelector:@selector(fastAnimateToNewPosition:) withObject:[NSNumber numberWithInt:newPosition] afterDelay:0.0 reportExceptions:YES];
+					[self performSelector:@selector(fastAnimateToNewPosition:) withObject:[NSNumber numberWithInt:newPosition] afterDelay:0.0];
 				}
 				else
 				{

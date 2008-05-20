@@ -391,7 +391,7 @@
 		{
 			[[NSFileManager defaultManager] performSelector:@selector(setExtensionHiddenAtPath:)
 												 withObject:[saveURL path]
-												 afterDelay:1.0 reportExceptions:YES];
+												 afterDelay:1.0];
 		}
 	}
 	@finally
@@ -439,12 +439,12 @@
 		// establish autosave notifications
 		[self observeNotificationsForContext:(KTManagedObjectContext *)[self managedObjectContext]];
 		
-		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0 reportExceptions:YES];
+		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
 		// remember this as an open document
 		[[NSApp delegate] performSelector:@selector(updateLastOpened)
 											 withObject:nil
-											 afterDelay:0.0 reportExceptions:YES];
+											 afterDelay:0.0];
 		
 		// A little bit of repair; we need to have language stored in the root if it's not there
 		if (![[[self root] master] valueForKey:@"language"])
@@ -781,7 +781,7 @@
 	// try to forget this was an open document
 	[[NSApp delegate] performSelector:@selector(updateLastOpened) 
 	withObject:nil
-	afterDelay:0.0 reportExceptions:YES];
+	afterDelay:0.0];
 	
 	
 
@@ -1444,7 +1444,7 @@
 			NSString *rootCharset = [[[self root] master] valueForKey:@"charset"];
 			if (![[hostCharset lowercaseString] isEqualToString:[rootCharset lowercaseString]])
 			{
-				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0 reportExceptions:YES];
+				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0];
 			}
 		}
 	}

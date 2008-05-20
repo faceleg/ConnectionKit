@@ -965,7 +965,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@... ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
 
 	// Delay calling this so that we see the above message before the actual connect method is called, since this takes a moment in the foreground.
-	[self performSelector:@selector(actuallyConnect:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(actuallyConnect:) withObject:nil afterDelay:0.0];
 }
 
 - (void) actuallyConnect:(id)bogus
@@ -974,7 +974,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
-	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue] reportExceptions:YES];
+	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 	[myTestConnection setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 	[myTestConnection connect];
 }
@@ -1006,7 +1006,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	LOG((remoteFile));
 	
 	//		NSLog(@"Queuing timeout test before upload, from didChangeToDir");
-	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue] reportExceptions:YES];
+	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 }
 
 /*!	We've connected.  Now try to create and upload a test file.
@@ -1034,7 +1034,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				||	(subFolder  && ![subFolder isEqualToString:@""]) )
 		{
 			[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Creating Directories... ", "status message for test connection")];
-			[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue] reportExceptions:YES];
+			[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 
 			NSArray *pathComponents = [path pathComponents];	///[path componentsSeparatedByString:@"/"];
 			NSString *builtupPath = @"";
@@ -1136,7 +1136,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to delete the test file... ", @"status message for test connection")];
 
 //	NSLog(@"Queuing timeout test from testConnectionDidFinishLoading");
-	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue] reportExceptions:YES];
+	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 	NSString *file = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
 	[myTestConnection deleteFile:file];
 }
@@ -1734,7 +1734,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
 			if (!isSFTPWithPublicKey)
 			{
-				[self performSelector:@selector(loadPasswordFromKeychain:) withObject:nil afterDelay:0.05 reportExceptions:YES];
+				[self performSelector:@selector(loadPasswordFromKeychain:) withObject:nil afterDelay:0.05];
 			}
 		}
 	}
@@ -1793,7 +1793,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 		if ([self remoteSiteURLIsValid])
 		{
-			[self performSelector:@selector(startTestConnection:) withObject:nil afterDelay:0.1 reportExceptions:YES];
+			[self performSelector:@selector(startTestConnection:) withObject:nil afterDelay:0.1];
 		}
 		else
 		{
@@ -2016,7 +2016,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(setValue:forKey:)
 																	 target:self
 																  arguments:[NSArray arrayWithObjects:newValue, key, nil]];
-			[invocation performSelector:@selector(invokeWithTarget:) withObject:self afterDelay:0.0 reportExceptions:YES];
+			[invocation performSelector:@selector(invokeWithTarget:) withObject:self afterDelay:0.0];
 		}
 		*ioValue = newValue;	// update the real value immediately, I guess
 	}
@@ -2979,7 +2979,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		if ([myCurrentState isEqualToString:@"host"])
 		{
 			// new info here, so possibly new password
-			[self performSelector:@selector(loadPasswordFromKeychain:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+			[self performSelector:@selector(loadPasswordFromKeychain:) withObject:nil afterDelay:0.0];
 		}
 	}
 	else if ([keyPath isEqualToString:@"protocol"])

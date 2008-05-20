@@ -305,7 +305,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
 				   withObject:nil
-				   afterDelay:0.0 reportExceptions:YES];
+				   afterDelay:0.0];
 	}
 	@catch (NSException *exception)
 	{
@@ -339,13 +339,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
 	// Check for missing media
-	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 	
 	
 	// LAST: clear the undo stack
 	[[self document] performSelector:@selector(processPendingChangesAndClearChangeCount)
 						  withObject:nil
-						  afterDelay:0.0 reportExceptions:YES];
+						  afterDelay:0.0];
 }
 
 #pragma mark -
@@ -618,7 +618,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			[[oWebView mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
 								  MIMEType:@"text/html"
 						  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
-			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0 reportExceptions:YES];
+			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0];
 		}
 	}
 	else

@@ -356,7 +356,7 @@ Node was retained so that it lives to this invocation!
 		
 // FIXME: - here I need to find the DOM element with the same ID as the given pagelet.
 		
-	[[self webViewController] performSelector:@selector(selectPagelet:) withObject:pagelet afterDelay:0.4 reportExceptions:YES];	// long delay to accomdate refresh we seem to get 
+	[[self webViewController] performSelector:@selector(selectPagelet:) withObject:pagelet afterDelay:0.4];	// long delay to accomdate refresh we seem to get 
 	
 	[anElement autorelease];		// go ahead and let it go now
 }
@@ -1108,7 +1108,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (IBAction)performShowLinkPanel:(id)sender
 {
-	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0];
 }
 
 - (IBAction)showLinkPanel:(id)sender

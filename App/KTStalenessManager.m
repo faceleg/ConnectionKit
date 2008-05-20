@@ -320,11 +320,11 @@
 		KTAbstractPage *page = (KTAbstractPage *)object;
 		if ([page boolForKey:@"isStale"])	// The delay ensures the rest of the system has caught up first. Otherwise we get
 		{									// strange KVO exceptions or the page immediately being set stale again.
-			[self performSelector:@selector(removeNonStalePage:) withObject:page afterDelay:0.0 reportExceptions:YES];
+			[self performSelector:@selector(removeNonStalePage:) withObject:page afterDelay:0.0];
 		}
 		else
 		{
-			[self performSelector:@selector(addNonStalePage:) withObject:page afterDelay:0.0 reportExceptions:YES];
+			[self performSelector:@selector(addNonStalePage:) withObject:page afterDelay:0.0];
 		}
 	}
 }

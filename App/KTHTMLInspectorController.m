@@ -388,7 +388,7 @@ initial syntax coloring.
 	
 	// Save this back to the source, after a delay
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self performSelector:@selector(saveBackToSource) withObject:nil afterDelay:1.0 reportExceptions:YES];
+	[self performSelector:@selector(saveBackToSource) withObject:nil afterDelay:1.0];
 }
 
 
@@ -409,7 +409,7 @@ initial syntax coloring.
 		}
 		replacementString = [rps retain];
 		
-		[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0 reportExceptions:YES];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
+		[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
 	}
 	
 	return YES;

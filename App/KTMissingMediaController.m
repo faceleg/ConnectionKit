@@ -206,7 +206,7 @@
 - (IBAction)findSelectedMediaFile:(id)sender
 {
 	// The delay is to make sure the NSArrayController's selection is in sync
-	[self performSelector:@selector(findSelectedMediaFile) withObject:nil afterDelay:0.0 reportExceptions:YES];
+	[self performSelector:@selector(findSelectedMediaFile) withObject:nil afterDelay:0.0];
 }
 
 - (void)findSelectedMediaFile

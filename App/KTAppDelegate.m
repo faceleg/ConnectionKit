@@ -1050,7 +1050,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		}
 		
 #ifdef EXPIRY_TIMESTAMP
-		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0 reportExceptions:YES];
+		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
         
 // log SQL statements
@@ -1112,7 +1112,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
         {
 			[self performSelector:@selector(checkPlaceholderWindow:) 
 					   withObject:nil
-					   afterDelay:0.0 reportExceptions:YES];
+					   afterDelay:0.0];
         }
         else
         {
@@ -1256,13 +1256,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[self hideGenericProgressPanel];
 			[self performSelector:@selector(checkPlaceholderWindow:) 
 					   withObject:nil
-					   afterDelay:0.0 reportExceptions:YES];
+					   afterDelay:0.0];
 
 			
         }
 		
 		// QE check AFTER the welcome message
-		[self performSelector:@selector(checkQuartzExtreme:) withObject:nil afterDelay:0.0 reportExceptions:YES];
+		[self performSelector:@selector(checkQuartzExtreme:) withObject:nil afterDelay:0.0];
 
 	}
 	@finally
@@ -1353,7 +1353,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
 		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
-		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:300.0 reportExceptions:YES];	// give user enough time to download and install
+		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:300.0];	// give user enough time to download and install
 	}
 	
 	// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.

@@ -171,7 +171,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 	}
 	else
 	{
-		[self performSelector:@selector(reloadData) withObject:nil afterDelay:0.0 reportExceptions:YES];
+		[self performSelector:@selector(reloadData) withObject:nil afterDelay:0.0];
 	}
 }
 

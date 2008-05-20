@@ -661,7 +661,7 @@
 	[self cancelAndInvalidateAutosaveTimers];
 	[self performSelector:@selector(autosaveDocument:)
 			   withObject:nil
-			   afterDelay:0.0 reportExceptions:YES];
+			   afterDelay:0.0];
 }
 
 - (void)fireAutosaveViaTimer:(NSTimer *)aTimer
@@ -675,7 +675,7 @@
 		[self cancelAndInvalidateAutosaveTimers];
 		[self performSelector:@selector(autosaveDocument:)
 				   withObject:nil
-				   afterDelay:0.0 reportExceptions:YES];
+				   afterDelay:0.0];
     }
 }
 
@@ -690,7 +690,7 @@
 		// timer A, save in 3 seconds, cancelled by change to context
 		//LOG((@"cancelling previous and starting new 3 second timer"));
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
-		[self performSelector:@selector(fireAutosave:) withObject:nil afterDelay:FIRST_AUTOSAVE_DELAY reportExceptions:YES];
+		[self performSelector:@selector(fireAutosave:) withObject:nil afterDelay:FIRST_AUTOSAVE_DELAY];
 		
 		// timer B, save in 60 seconds, if not saved within last 60 seconds
 		if ( nil == myAutosaveTimer )
