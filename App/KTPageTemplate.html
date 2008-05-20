@@ -38,7 +38,7 @@
 [[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
 [[endif]]
-[[stylesheet]]
+[[if parser.includeStyling]][[stylesheet]][[endif]]
 <!--
 Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>
 Licensing for this website's design:     <[[=&master.designDirectoryURL]]License.rtf>

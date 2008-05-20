@@ -33,6 +33,7 @@
 {
 	KTAbstractPage			*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
+	BOOL					myIncludeStyling;
 	NSNumber				*myLiveDataFeeds;
 }
 
@@ -44,6 +45,8 @@
 
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
+- (BOOL)includeStyling;
+- (void)setIncludeStyling:(BOOL)includeStyling;
 
 - (BOOL)liveDataFeeds;
 - (void)setLiveDataFeeds:(BOOL)flag;

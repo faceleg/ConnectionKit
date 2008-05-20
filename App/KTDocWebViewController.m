@@ -257,7 +257,7 @@
 {
 	// When switching away from standard view, make sure any pending changes are comitted
 	KTWebViewViewType oldView = [self viewType];
-	if (oldView == KTStandardWebView)
+	if (oldView == KTStandardWebView || oldView == KTWithoutStylesView)
 	{
 		[self commitEditing];
 	}
@@ -270,6 +270,10 @@
 	if ([self hideWebView])
 	{
 		[self loadPageIntoSourceCodeTextView:[[[self windowController] siteOutlineController] selectedPage]];
+	}
+	else
+	{
+		[self setWebViewNeedsReload];
 	}
 }
 

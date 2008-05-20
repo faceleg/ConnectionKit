@@ -446,7 +446,13 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)loadPageIntoWebView:(KTPage *)page
 {
 	// Build the HTML
-	NSString *pageHTML = [page contentHTMLWithParserDelegate:self isPreview:YES];
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:page];
+	[parser setDelegate:self];
+	[parser setHTMLGenerationPurpose:kGeneratingPreview];
+	[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
+	
+	NSString *pageHTML = [parser parseTemplate];
+	[parser release];
 	
 	// There's a few keypaths that the parser will not pick up. We have to explicitly observe them here.
 	[self addParsedKeyPath:@"pluginHTMLIsFullPage" ofObject:page forParsedComponent:[self mainWebViewComponent]];

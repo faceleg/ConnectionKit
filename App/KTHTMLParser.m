@@ -50,6 +50,13 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
+- (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent
+{
+	[super initWithTemplate:templateString component:parsedComponent];
+	[self setIncludeStyling:YES];
+	return self;
+}
+
 - (id)initWithPage:(KTAbstractPage *)page
 {
 	// Archive pages are specially parsed so that the component is the parent page.
@@ -106,6 +113,10 @@
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose { return myHTMLGenerationPurpose; }
 
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose { myHTMLGenerationPurpose = purpose; }
+
+- (BOOL)includeStyling { return myIncludeStyling; }
+
+- (void)setIncludeStyling:(BOOL)includeStyling { myIncludeStyling = includeStyling; }
 
 /*	Used by templates to know if they're allowed external images etc.
  */
