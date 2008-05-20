@@ -151,6 +151,19 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
+- (NSArray *)feedEnclosures
+{
+	NSArray *result = nil;
+	
+	id delegate = [self delegate];
+	if (delegate && [delegate respondsToSelector:@selector(pageWillReturnFeedEnclosures:)])
+	{
+		result = [delegate pageWillReturnFeedEnclosures:self];
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Standard Summary
 

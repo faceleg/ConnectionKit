@@ -10,11 +10,11 @@
 		<generator>[[=&documentInfo.appNameVersion]]</generator>
 [[if master.logoImage.file.currentPath]]
 		<image>
-			<url>[[mediainfo info:path media:master.logoImage]]</url>
+			<url>[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]</url>
 			<title>[[=&master.headerImageDescription]]</title>
 			<link>[[=&url]]</link>
-			<width>[[mediainfo info:width media:master.logoImage]]</width>
-			<height>[[mediainfo info:height media:master.logoImage]]</height>
+			<width>[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]</width>
+			<height>[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]</height>
 		</image>
 [[endif]]
 [[foreach sortedReverseChronoChildrenInIndex item]]
@@ -24,27 +24,25 @@
 			<description>
 [[if item.thumbnail.file.currentPath]]
 				&lt;div class="article-thumbnail"&gt;
-					&lt;img[[idClass entity:Page property:thumbnail flags:"anchor" id:item.uniqueID]]
-						src="[[mediainfo info:path media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
+					&lt;img
+						src="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]"
 						alt="[[=&item.titleText]]"
-						width="[[mediainfo info:width media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]"
-						height="[[mediainfo info:height media:item.thumbnail sizeToFit:RSSFeedThumbnailsSize]]" /&gt;
+						width="[[mediainfo info:width media:item.thumbnail sizeToFit:master.thumbnailImageSize]]"
+						height="[[mediainfo info:height media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" /&gt;
 				&lt;/div&gt;
 [[endif]]
 [[summary item collectionTruncateCharacters]]
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
 			<guid>[[=&item.absoluteURL]]</guid>
-[[if item.enclosure]]
-			<enclosure url="[[=&item.enclosure.enclosureURL]]" length="[[=&item.enclosure.enclosureDataLength]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
-[[if item.thumbnail]]
-        	<media:thumbnail url="[[enclosurepath item.thumbnail]]" />
-        	<media:content url="[[enclosurepath item.enclosure]]" type="[[=&item.enclosure.enclosureMIMEType]]" />
-[[endif2]]			
+[[foreach item.feedEnclosures anEnclosure]]
+			<enclosure url="[[mediainfo media:anEnclosure info:path]]" length="[[mediainfo media:anEnclosure info:dataLength]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
+[[if item.thumbnail.file.currentPath]]
+        	<media:thumbnail url="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" />
+        	<media:content url="[[mediainfo media:anEnclosure info:path]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
 [[endif]]
-[[forEach item.keywords aCategory]]
-			<category>[[=&aCategory]]</category>
 [[endForEach2]]
+			[[forEach item.keywords aCategory]]<category>[[=&aCategory]]</category>[[endForEach2]]
 		</item>
 [[endForEach]]
  	</channel>

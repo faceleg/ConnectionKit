@@ -253,10 +253,9 @@
 
 
 @interface NSObject (KTPageDelegate)
-- (NSString *)absolutePathAllowingIndexPage:(BOOL)aFlag;
-- (NSString *)urlAllowingIndexPage:(BOOL)aCanHaveIndexPage;
 - (BOOL)pageShouldClearThumbnail:(KTPage *)page;
 - (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page;
+- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page;
 
 - (BOOL)pageShouldPublishHTMLTemplate:(KTPage *)page;
 

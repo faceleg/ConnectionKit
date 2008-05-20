@@ -155,20 +155,10 @@
 	[self setTitleHTML:[value escapedEntities]];
 }
 
-// For bindings.  We can edit title if we aren't root; and if there is a delegate to override absolutePathAllowingIndexPage:,
-// and it doesn't return nil.
+// For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle
 {
 	BOOL result = ![self isRoot];
-	if (result)
-	{
-		id del = [self delegate];
-		result = ![del respondsToSelector:@selector(absolutePathAllowingIndexPage:)];
-		if (!result)	// if overridden, give it a chance to redeem itself by returning nil.  Ask delegate directly so it doesn't convert to page ID
-		{
-			result = (nil == [del absolutePathAllowingIndexPage:YES]);	// if this returns nil, then we CAN edit.
-		}
-	}
 	return result;
 }
 

@@ -632,47 +632,6 @@
 	return result;
 }
 
-/*	Produces a link to the specified media file. Handles anything of the KTMediaFile class.
- *	Does NOT inform the delegate that the keypath was parsed.
- *
- *	Usage:	[[mediafile keypath.to.file]]
- */
-- (NSString *)mediafileWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)scanner
-{
-	NSString *result = @"";
-	
-	// Check the right parameters were supplied.
-	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
-	if ([parameters count] != 1)
-	{
-		NSLog(@"mediafile: usage [[mediafile keypath.to.file]]");
-	}
-	else
-	{
-		KTMediaFile *mediaFile = [[self cache] valueForKeyPath:[parameters objectAtIndex:0] informDelegate:YES];
-		KTMediaFileUpload *upload = nil;
-		
-		// The link we provide depends on the HTML generation mode
-		if ([self HTMLGenerationPurpose] == kGeneratingPreview)
-		{
-			NSString *path = [mediaFile currentPath];
-			if (path) {
-				result = [[[NSURL fileURLWithPath:path] absoluteString] escapedEntities];
-			}
-		}
-		else
-		{
-			upload = [mediaFile defaultUpload];
-			result = [upload pathRelativeTo:[self currentPage]];
-		}
-		
-		// The delegate may want to know
-		[self didEncounterMediaFile:mediaFile upload:upload];
-	}
-	
-	return result;
-}
-
 /*
 /// Mike:	The media function above should have replaced this.
 

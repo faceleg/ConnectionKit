@@ -13,6 +13,7 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTHostProperties.h"
+#import "KTImageScalingSettings.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "KTMediaManager.h"
@@ -267,6 +268,13 @@
 	NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil
 	NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
+	return result;
+}
+
+- (NSSize)thumbnailImageSize
+{
+	KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"thumbnailImage"];
+	NSSize result = [settings size];
 	return result;
 }
 

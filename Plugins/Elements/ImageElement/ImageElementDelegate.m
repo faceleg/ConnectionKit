@@ -376,6 +376,21 @@
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
+#pragma mark -
+#pragma mark RSS Feed
 
+- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page
+{
+	NSArray *result = nil;
+	
+	KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
+	KTMediaContainer *enclosure = [image imageToFitSize:[self boundingImageBox]];
+	if (enclosure)
+	{
+		result = [NSArray arrayWithObject:enclosure];
+	}
+	
+	return result;
+}
 
 @end
