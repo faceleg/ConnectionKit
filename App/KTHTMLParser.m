@@ -12,6 +12,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTArchivePage.h"
+#import "KTHostProperties.h"
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
 
@@ -511,8 +512,12 @@
 			break;
 			
 		default:
-			result = [[self currentPage] pathToResourceFile:resourceFile];
+		{
+			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
+			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceFile lastPathComponent]];
+			result = [resourceFileURL stringRelativeToURL:[[self currentPage] absoluteURL]];
 			break;
+		}
 	}
 		
 	// Tell the delegate
@@ -699,29 +704,7 @@
     
     // Where is the resource file on disk?
 	NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
-	
-	NSString *result = nil;
-    if (page && resourceFilePath)
-    {
-        // The generated link depends on its use
-		switch ([self HTMLGenerationPurpose])
-		{
-			case kGeneratingPreview:
-				result = [[NSURL fileURLWithPath:resourceFilePath] absoluteString];
-				break;
-			
-			case kGeneratingQuickLookPreview:
-				result = [[BDAlias aliasWithPath:resourceFilePath] quickLookPseudoTag];
-				break;
-				
-			default:
-				result = [page pathToResourceFile:resourceFilePath];
-				break;
-		}
-		
-		// The delegate may want to know
-		[self didEncounterResourceFile:resourceFilePath];
-    }
+	NSString *result = [self resourceFilePathRelativeToCurrentPage:resourceFilePath];
 	
 	return result;
 }

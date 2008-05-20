@@ -336,27 +336,6 @@
 }
 
 #pragma mark -
-#pragma mark Resources
-
-/*	Provides the path of the _Resources directory relative to the reciever.
- */
-- (NSString *)pathToResourcesDirectory
-{
-	NSString *resourcesDirectory = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSString *result = [resourcesDirectory URLPathRelativeTo:[self pathRelativeToSite]];
-	
-	return result;
-}
-
-/*	As above, but takes the resource's filename into account.
- */
-- (NSString *)pathToResourceFile:(NSString *)onDiskResourcePath
-{
-	NSString *result = [[self pathToResourcesDirectory] stringByAppendingPathComponent:[onDiskResourcePath lastPathComponent]];
-	return result;
-}
-
-#pragma mark -
 #pragma mark Other Paths
 
 - (NSString *)designDirectoryPath
