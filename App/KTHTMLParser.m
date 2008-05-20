@@ -623,6 +623,19 @@
 	{
 		result = [[mediaFile valueForKey:@"height"] stringValue];
 	}
+	else if ([infoRequested isEqualToString:@"MIMEType"])
+	{
+		result = [[NSString MIMETypeForUTI:[mediaFile fileType]] escapedEntities];
+	}
+	else if ([infoRequested isEqualToString:@"dataLength"])
+	{
+		NSString *path = [mediaFile currentPath];
+		if (path)
+		{
+			NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO];
+			result = [[fileAttributes objectForKey:NSFileSize] stringValue];
+		}
+	}
 	
 	
 	// The delegate may want to know
