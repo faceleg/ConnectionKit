@@ -185,7 +185,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 		
 	NSString *urlString = [[[[[self currentDocument] documentInfo] hostProperties] siteURL] absoluteString];
-	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.example.com/"])
+	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.karelia.com/"])
 	{
 		[result appendFormat:@"\nURL:\n%@\n", urlString];
 	}

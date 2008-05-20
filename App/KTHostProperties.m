@@ -123,7 +123,7 @@
 	NSString *stemURLString = [self valueForKey:@"stemURL"];
 	if (nil == stemURLString)
 	{
-		stemURLString = @"http://unpublished.example.com";		// placeholder
+		stemURLString = @"http://unpublished.karelia.com";		// placeholder
 	}
 	NSMutableString *stem = [NSMutableString stringWithString:stemURLString];
 	NSString *userID = [self valueForKey:@"userName"];
@@ -381,7 +381,7 @@ to be verified.
 	// Bckup option
 	if (!result)
 	{
-		result = @"http://unpublished.example.com/";
+		result = @"http://unpublished.karelia.com/";
 	}
 		
 	OBPOSTCONDITION(result);	
