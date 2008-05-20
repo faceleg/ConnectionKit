@@ -127,71 +127,7 @@
 }
 
 
-
-
-/*!	Figures out relative path, from otherPath to this
- */
-- (NSString *)pathRelativeTo:(NSString *)otherPath
-{
-	// SANDVOX ONLY -- if we have a special page ID, then don't try to make relative
-	if (NSNotFound != [otherPath rangeOfString:kKTPageIDDesignator].location)
-	{
-		return self;
-	}	
-	
-	// General Purpose
-	
-	NSString *commonPrefix = [self commonPrefixWithString:otherPath options:NSLiteralSearch];
-	// Make sure common prefix ends with a / ... if not, back up to the previous /
-	if ([commonPrefix isEqualToString:@""])
-	{
-		return self;
-	}
-	if (![commonPrefix hasSuffix:@"/"])
-	{
-		NSRange whereSlash = [commonPrefix rangeOfString:@"/" options:NSLiteralSearch|NSBackwardsSearch];
-		if (NSNotFound == whereSlash.location)
-		{
-			return self;	// nothing in common, return
-		}
-		
-		// Fix commonPrefix so it ends in /
-		commonPrefix = [commonPrefix substringToIndex:NSMaxRange(whereSlash)];
-	}
-	
-	NSString *myDifferingPath = [self substringFromIndex:[commonPrefix length]];
-	NSString *otherDifferingPath = [otherPath substringFromIndex:[commonPrefix length]];
-	
-	NSMutableString *buf = [NSMutableString string];
-	unsigned int i;
-	
-	// generate hops up from other to the common place
-	NSArray *hopsUpArray = [otherDifferingPath pathComponents];
-	unsigned int hopsUp = MAX(0,(int)[hopsUpArray count] - 1);
-	for (i = 0 ; i < hopsUp ; i++ )
-	{
-		[buf appendString:@"../"];
-	}
-	
-	// the rest is the relative path to me
-	[buf appendString:myDifferingPath];
-	
-	if ([buf isEqualToString:@""])	
-	{
-		if ([self hasSuffix:@"/"])
-		{
-			[buf appendString:@"./"];	// if our relative link is to the top, then replace with ./
-		}
-		else	// link to yourself; give us just the file name
-		{
-			[buf appendString:[self lastPathComponent]];
-		}
-	}
-	NSString *result = [NSString stringWithString:buf];
-	return result;
-}
-
-/*	A specialised version of the above that handles URL-like strings. For example, -pathRelativeToSite returns an empty
+/*	A specialised version of -pathRelativeToPath: that handles URL-like strings. For example, -pathRelativeToSite returns an empty
  *	string for the home page which -pathRelativeTo: cannot handle. This method can.
  */
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath
@@ -201,12 +137,12 @@
 	
 	if ([self isEqualToString:@""])
 	{
-		NSString *result = [@"/" pathRelativeTo:otherPath];
+		NSString *result = [@"/" pathRelativeToPath:otherPath];
 		return result;
 	}
 	else
 	{
-		return [[@"/" stringByAppendingString:self] pathRelativeTo:otherPath];
+		return [[@"/" stringByAppendingString:self] pathRelativeToPath:otherPath];
 	}
 }
 

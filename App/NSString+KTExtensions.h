@@ -20,14 +20,13 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSString ( KTExtensions )
+@interface NSString (KTExtensions)
 
 
-- (NSString *)pathRelativeTo:(NSString *)otherPath;
 - (NSString *)URLPathRelativeTo:(NSString *)otherPath;
 
 - (NSString *)domainName;
-- (BOOL) looksLikeValidHost;
+- (BOOL)looksLikeValidHost;
 
 @end
 
