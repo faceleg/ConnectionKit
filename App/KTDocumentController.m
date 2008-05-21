@@ -327,7 +327,7 @@
 
 - (KTDocument *)lastSavedDocument
 {
-	NSLog(@"!!WARNING!! -lastSavedDocument called; please re-enable -setLastSavedDocument calss elsewhere in the app.");
+	NSLog(@"!!WARNING!! -lastSavedDocument called; please re-enable -setLastSavedDocument calls elsewhere in the app.");
 	return myLastSavedDocumentWeakRef;
 }
 

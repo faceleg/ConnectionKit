@@ -25,15 +25,18 @@
  
  Note: We have these fields in the current data model, which we might want to update:
  
-	addBool1 -- exclude from site map
-	addString1	-- currently used to hold the FLOAT of the image replacement font adjustment
-	addString2 -- encoded dictionary with lots of other parameters
+ addBool1 -- exclude from site map
+ addString1	-- currently used to hold the FLOAT of the image replacement font adjustment
+ addString2 -- encoded dictionary with lots of other parameters
  
-Note: "isStale" does not seem to be used.  See staleness.
-*/
- 
+ Note: "isStale" does not seem to be used.  See staleness.
+ */
 
-@interface KTDataMigrator ( Private )
+
+@interface KTDataMigrator (Private)
+
++ (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath;
+
 - (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject;
 
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA 
@@ -66,24 +69,24 @@ Note: "isStale" does not seem to be used.  See staleness.
 
 
 /*! model changes, by version:
+ 
+ 10000: shipped w/ public betas b11, b12
+ base version
+ 
+ 10001: shipped w/ public beta b13
+ Media added isPublished, a boolean attribute, with a default of NO
+ 
+ 10002: shipped w/ beta b15
+ DocumentInfo added siteID, a string, meant to store a GUID
+ Page added useAbsoluteLinks, an optional boolean with no default
+ Page added shortenedTitleHTML, an optional string with no default
+ Page added pageTitleFormat, an optional string with no default
+ Page changed shortTitle to fileName, still an optional string with no default
+ Media added cachedImages, an optional to-many relationship to CachedImage
+ added CachedImage, a new entity for storing info about ~/Library/Caches/Sandvox/<Images>
+ 
+ */
 
-	10000: shipped w/ public betas b11, b12
-	       base version
-
-	10001: shipped w/ public beta b13
-	       Media added isPublished, a boolean attribute, with a default of NO
-
-    10002: shipped w/ beta b15
-           DocumentInfo added siteID, a string, meant to store a GUID
-           Page added useAbsoluteLinks, an optional boolean with no default
-           Page added shortenedTitleHTML, an optional string with no default
-           Page added pageTitleFormat, an optional string with no default
-           Page changed shortTitle to fileName, still an optional string with no default
-           Media added cachedImages, an optional to-many relationship to CachedImage
-           added CachedImage, a new entity for storing info about ~/Library/Caches/Sandvox/<Images>
-
-*/
-	
 
 @implementation KTDataMigrator
 
@@ -100,12 +103,12 @@ Note: "isStale" does not seem to be used.  See staleness.
 	NSString *destinationPath = [KTDataMigrator renamedFileName:originalPath modelVersion:aVersion];
 	
 	BOOL originalMoved = [[NSFileManager defaultManager] movePath:originalPath toPath:destinationPath handler:nil];
-	if ( !originalMoved )
+	if (!originalMoved)
 	{
 		// we cannot proceed, pass back an error and return NO
 		NSString *errorDescription = [NSString stringWithFormat:
-			NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
-			originalPath, destinationPath];
+                                      NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
+                                      originalPath, destinationPath];
 		
 		NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
 		*outError = error;
@@ -113,58 +116,88 @@ Note: "isStale" does not seem to be used.  See staleness.
 		return NO;
 	}
 	
-	// use the original URL as our newStoreURL
-	NSURL *newStoreURL = [aStoreURL copy];
-	if ( (nil == newStoreURL) || ![newStoreURL isFileURL] )
-	{
-		NSString *errorDescription = [NSString stringWithFormat:
-			NSLocalizedString(@"Unable to upgrade document at path %@. Path does not appear to be a file.","Alert: Unable to upgrade document at path %@. Path does not appear to be a file."), [newStoreURL path]];
-				
-		NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
-		*outError = error;
-		
-		return NO;
-	}
-		
-	// check that we have a good path and we can write to it
-	if ( ![KTDataMigrator validatePathForNewStore:[newStoreURL path] error:outError] )
-	{
-		return NO;
-	}
-		
-	// make a migrator instance
-	KTDataMigrator *migrator = [[KTDataMigrator alloc] init];
-	
-	// set old and new store URLs
-	[migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
-	[migrator setNewStoreURL:newStoreURL];
-	
-	// migrate!
-	NSError *localError = nil;
-	BOOL result = [migrator genericallyMigrateDataFromOldModelVersion:aVersion error:&localError];
-	
-	if ( NO == result )
-	{
-		if ( nil != localError )
-		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-				[NSString stringWithFormat:
-					NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
-					[[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
-		}
-		else
-		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-				[NSString stringWithFormat:
-					NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
-					[[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
-		}
-	}
-	
-	[migrator release];
-	[newStoreURL release];
+    
+	// Use the original URL as our newStoreURL
+	BOOL result = NO;
+    
+    NSURL *newStoreURL = [aStoreURL copy];
+	@try
+    {
+        if (!newStoreURL || ![newStoreURL isFileURL])
+        {
+            NSString *errorDescription = [NSString stringWithFormat:
+                                          NSLocalizedString(@"Unable to upgrade document at path %@. Path does not appear to be a file.","Alert: Unable to upgrade document at path %@. Path does not appear to be a file."), [newStoreURL path]];
+            
+            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
+            *outError = error;
+            result = NO;
+        }
+        else
+        {
+            // Check that we have a good path and we can write to it
+            if (![KTDataMigrator validatePathForNewStore:[newStoreURL path] error:outError])
+            {
+                result = NO;
+            }
+            else
+            {
+                // make a migrator instance
+                KTDataMigrator *migrator = [[KTDataMigrator alloc] init];
+                
+                // set old and new store URLs
+                [migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
+                [migrator setNewStoreURL:newStoreURL];
+                
+                // migrate!
+                NSError *localError = nil;
+                result = [migrator genericallyMigrateDataFromOldModelVersion:aVersion error:&localError];
+                
+                if (!result)
+                {
+                    if (localError)
+                    {
+                        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                                     [NSString stringWithFormat:
+                                      NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
+                                      [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
+                    }
+                    else
+                    {
+                        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                                     [NSString stringWithFormat:
+                                      NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
+                                      [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
+                    }
+                }
+                
+                [migrator release];
+            }
+        }
+    }
+    @catch (NSException *exception)
+    {
+        result = NO;
+        [exception raise];
+    }
+    @finally
+    {
+        // Failed migrations should revert the old file
+        if (!result)
+        {
+            [self recoverFailedUpgradeWithPath:originalPath backupPath:destinationPath];
+        }
+        
+        // Tidy up
+        [newStoreURL release];
+    }
+    
+    
+    return result;
+}
 
-	return result;
++ (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath
+{
+    [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
 }
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
@@ -256,7 +289,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
 		TJT((@"error: %@", *error));
 	}
-
+    
 	return NO;
 }
 
@@ -304,7 +337,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	if ( nil == storageObjectB )
 	{
 		//NSLog(@"migrating %@ for %@", aRelationshipName, [managedObjectA managedObjectDescription]);
-
+        
 		storageObjectB = [NSEntityDescription insertNewObjectForEntityForName:[[storageObjectA entity] name]
 													   inManagedObjectContext:[managedObjectB managedObjectContext]];
 		OBASSERTSTRING((nil != storageObjectB), @"storageObjectB cannot be nil!");
@@ -316,7 +349,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
 		//NSLog(@"    again %@ for %@", aRelationshipName, [managedObjectA managedObjectDescription]);
 	}
-
+    
 	if ( [[storageObjectB class] isEqual:[KTStoredDictionary class]] )
 	{
 		[storageObjectB addEntriesFromDictionary:storageObjectA];
@@ -428,7 +461,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 - (BOOL)migratePages:(NSError **)error
 {
 	TJT((@"migrating Pages..."));
-
+    
 	BOOL result = YES;
 	
 	// first, find our root
@@ -444,7 +477,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	[[self objectIDCache] setValue:[newRoot URIRepresentationString] forKey:[oldRoot URIRepresentationString]];
 	// cache it under the name "newRoot"
 	[[self objectIDCache] setValue:[newRoot URIRepresentationString] forKey:@"newRoot"];
-
+    
 	// fetch all Pages
 	NSArray *fetchedObjects = [[self oldManagedObjectContext] allObjectsWithEntityName:@"Page"
 																				 error:error];
@@ -452,7 +485,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
 		return NO;
 	}
-		
+    
 	NSEnumerator *e = [fetchedObjects objectEnumerator];
 	NSManagedObject *oldPage = nil;
 	while ( oldPage = [e nextObject] )
@@ -470,7 +503,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 		
 		result = result && [self migrateFromPage:oldPage toPage:newPage];
 	}
-
+    
 	return result;
 }
 
@@ -758,7 +791,7 @@ Note: "isStale" does not seem to be used.  See staleness.
     {
         [newDocumentInfo setValue:[NSString shortGUIDString] forKey:@"siteID"];
     }
-    	
+    
 	// migrate relationships
 	//  hostProperties
 	[self migrateStorageRelationshipNamed:@"hostProperties"
@@ -774,7 +807,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	[self migrateStorageRelationshipNamed:@"requiredBundles"
 							   fromObject:oldDocumentInfo
 								 toObject:newDocumentInfo];	
-    	
+    
 	//  root
 	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
 	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
@@ -941,7 +974,7 @@ Note: "isStale" does not seem to be used.  See staleness.
             if ( ![fileManager removeFileAtPath:aStorePath handler:nil] ) 
 			{
 				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotRemove localizedDescription:[NSString stringWithFormat:
-					NSLocalizedString(@"Can\\U2019t remove pre-existing file at path (%@)","Error: Can't remove pre-existing file at path (%@)"), aStorePath]];      
+                                                                                                                           NSLocalizedString(@"Can\\U2019t remove pre-existing file at path (%@)","Error: Can't remove pre-existing file at path (%@)"), aStorePath]];      
                 return NO;
             }
         }
@@ -953,14 +986,14 @@ Note: "isStale" does not seem to be used.  See staleness.
             if ( ![fileManager isWritableFileAtPath:storeDirectory] ) 
 			{
 				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSDirNotWritable localizedDescription:[NSString stringWithFormat:
-					NSLocalizedString(@"Can\\U2019t write file to path - directory is not writable (%@)","Error: Can't write file to path - directory is not writable (%@)"), storeDirectory]];       
+                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - directory is not writable (%@)","Error: Can't write file to path - directory is not writable (%@)"), storeDirectory]];       
                 return NO;
             }
         }
 		else
 		{
 			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSParentNotDirectory localizedDescription:[NSString stringWithFormat:
-				NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]]; 
+                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]]; 
             return NO;
         }
     }
@@ -989,9 +1022,9 @@ Note: "isStale" does not seem to be used.  See staleness.
 }
 
 /*! attempts an attribute fetch (uniqueID) which causes a fault to fire,
-	if an exception is thrown because the fault can't be fulfilled,
-	this catches it (instead of crapping out) and returns NO
-*/
+ if an exception is thrown because the fault can't be fulfilled,
+ this catches it (instead of crapping out) and returns NO
+ */
 - (BOOL)isValidManagedObject:(NSManagedObject *)aManagedObject
 {
 	BOOL result = NO;
