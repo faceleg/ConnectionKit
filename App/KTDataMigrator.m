@@ -147,14 +147,14 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
 		if ( nil != localError )
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTCannotUpgrade localizedDescription:
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
 				[NSString stringWithFormat:
 					NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
 					[[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
 		}
 		else
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTCannotUpgrade localizedDescription:
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
 				[NSString stringWithFormat:
 					NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
 					[[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
@@ -921,7 +921,7 @@ Note: "isStale" does not seem to be used.  See staleness.
 	// check that we at least have aStorePath
     if (nil == aStorePath || [@"" isEqualToString:aStorePath])
 	{
-		*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTNoDocPathSpecified localizedDescription:NSLocalizedString(@"No document path specified.","No document path specified.")];
+		*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSNoDocPathSpecified localizedDescription:NSLocalizedString(@"No document path specified.","No document path specified.")];
         return NO;
     }
     
@@ -933,14 +933,14 @@ Note: "isStale" does not seem to be used.  See staleness.
 	{
         if ( isDirectory ) 
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTPathIsDirectory localizedDescription:NSLocalizedString(@"Specified document path is a directory.","Specified document path is a directory.")];
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSPathIsDirectory localizedDescription:NSLocalizedString(@"Specified document path is a directory.","Specified document path is a directory.")];
             return NO;
         } 
 		else 
 		{
             if ( ![fileManager removeFileAtPath:aStorePath handler:nil] ) 
 			{
-				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTCannotRemove localizedDescription:[NSString stringWithFormat:
+				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotRemove localizedDescription:[NSString stringWithFormat:
 					NSLocalizedString(@"Can\\U2019t remove pre-existing file at path (%@)","Error: Can't remove pre-existing file at path (%@)"), aStorePath]];      
                 return NO;
             }
@@ -952,14 +952,14 @@ Note: "isStale" does not seem to be used.  See staleness.
 		{
             if ( ![fileManager isWritableFileAtPath:storeDirectory] ) 
 			{
-				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTDirNotWritable localizedDescription:[NSString stringWithFormat:
+				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSDirNotWritable localizedDescription:[NSString stringWithFormat:
 					NSLocalizedString(@"Can\\U2019t write file to path - directory is not writable (%@)","Error: Can't write file to path - directory is not writable (%@)"), storeDirectory]];       
                 return NO;
             }
         }
 		else
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KTParentNotDirectory localizedDescription:[NSString stringWithFormat:
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSParentNotDirectory localizedDescription:[NSString stringWithFormat:
 				NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]]; 
             return NO;
         }
