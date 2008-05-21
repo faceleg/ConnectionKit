@@ -8,8 +8,8 @@
 
 #import "KTDocumentController.h"
 
-#import "Debug.h"
 #import "KT.h"
+#import "KTDataMigrator.h"
 #import "KTDocument.h"
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"
@@ -18,9 +18,16 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 
+#import "Debug.h"
+
 #ifdef APP_RELEASE
 #import "Registration.h"
 #endif
+
+
+@interface KTDocumentController (Private)
+- (id)migrateDocumentAtURL:(NSURL *)absoluteURL modelVersion:(NSString *)modelVersion error:(NSError **)outError;
+@end
 
 
 @implementation KTDocumentController
@@ -104,7 +111,7 @@
 			metadata = nil;
 		}
 		
-		if ( nil == metadata )
+		if (!metadata)
 		{
 			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
@@ -126,7 +133,7 @@
 		}
 		
 		NSString *modelVersion = [metadata valueForKey:kKTMetadataModelVersionKey];
-		if ( (nil == modelVersion) || [modelVersion isEqualToString:@""] )
+		if (!modelVersion || [modelVersion isEqualToString:@""])
 		{
 			NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
 			
@@ -150,27 +157,11 @@
 
 		
 //		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppLastSavedVersionKey];
-		if ( ![modelVersion isEqualToString:kKTModelVersion] )
+		if (![modelVersion isEqualToString:kKTModelVersion])
 		{
-			NSLog(@"error: only documents with model %@ are supported in 1.5 until KTDataMigrator is re-examined.", kKTModelVersion);
+			// Attempt to migrate an existing, old doc
+			return [self migrateDocumentAtURL:absoluteURL modelVersion:modelVersion error:outError];
 			
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			
-			NSString *description = NSLocalizedString(@"This document is not compatible with this version of Sandvox.",
-													  "error description: document is not compatible");
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
-			
-			NSString *reason = NSLocalizedString(@"\n\nSandvox was not able to read the document. Its datamodel is not compatible. \n\nPlease contact Karelia Software by sending feedback from the 'Help' menu.",
-												 "error reason: document model is not compatible");
-			[userInfo setObject:reason forKey:NSLocalizedFailureReasonErrorKey];
-			
-			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
-			
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-											code:NSPersistentStoreInvalidTypeError 
-										userInfo:userInfo];
-			
-			return nil;
 //			NSString *fileNameWithExtension = [requestedPath lastPathComponent];
 //			if ( ([modelVersion intValue] >= [kKTModelMinimumVersion intValue])
 //				 && ([modelVersion intValue] <= [kKTModelMaximumVersion intValue]) )
@@ -287,7 +278,7 @@
 												 error:outError];
 	
 	// Set documents, such as sample sites, which live inside the application, as read-only.
-	if ( [document isKindOfClass:[KTDocument class]] )
+	if ([document isKindOfClass:[KTDocument class]])
 	{		
 		// restore window position, if available
 		NSRect contentRect = [document documentWindowContentRect];
@@ -310,7 +301,7 @@
 			[window setFrame:frameRect display:YES];
 		}		
 	}
-	else if ( [document isKindOfClass:[KTPluginInstaller class]] )
+	else if ([document isKindOfClass:[KTPluginInstaller class]])
 	{
 		/// once we've created this "document" we don't want it hanging around
 		[document performSelector:@selector(close)
@@ -320,6 +311,18 @@
 
 	
 	return document;
+}
+
+
+/*	Private method that is called when opening a document in an old data format.
+ */
+- (id)migrateDocumentAtURL:(NSURL *)absoluteURL modelVersion:(NSString *)modelVersion error:(NSError **)outError
+{
+	id result = nil;
+	
+	[KTDataMigrator upgradeDocumentWithURL:absoluteURL modelVersion:modelVersion error:outError];
+	
+	return result;
 }
 
 - (KTDocument *)lastSavedDocument
