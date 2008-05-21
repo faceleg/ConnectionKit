@@ -35,7 +35,9 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSError+Karelia.h"
 #import "NSException+Karelia.h"
+#import "NSManagedObjectModel+KTExtensions.h"
 #import "NSString+Karelia.h"
+
 #import <Carbon/Carbon.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <IOKit/IOKitLib.h>
@@ -86,41 +88,41 @@
 	return [result autorelease];	
 }
 
-/*! returns an autoreleaed model from KTComponents_aVersion.mom */
+/*! Returns an autoreleaed model from KTComponents_aVersion.mom.
+ *  Passing in nil for aVersion will return the standard KTComponents model.
+ */
 + (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion
 {
-	// passing in nil for aVersion will return the standard KTComponents model
+	NSManagedObjectModel *result = nil;
 	
-	NSString *resourceName = @"KTComponents";
-	if ( nil != aVersion )
+    
+    // Figure out the name of the model.
+	NSString *modelName = nil;
+	if (!aVersion || [aVersion isEqualToString:kKTModelVersion])
 	{
-		resourceName = [resourceName stringByAppendingString:[NSString stringWithFormat:@"_%@", aVersion]];
+		modelName = @"Sandvox";
 	}
-	NSString *resourceNameWithExtension = [resourceName stringByAppendingPathExtension:@"mom"];
-	
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *path = [bundle pathForResource:resourceName
-									  ofType:@"mom"];
-								 //inDirectory:@"Models"];
-	NSURL *modelURL = [NSURL fileURLWithPath:path];
-	
-	if ( nil == modelURL )
-	{
-		[NSException raise:kKareliaDocumentException 
-					format:@"Unable to locate %@", resourceNameWithExtension];
-		return nil;
-	}
-	
-	NSManagedObjectModel *result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-	
-	if ( nil == result )
-	{
-		[NSException raise:kKareliaDocumentException 
-					format:@"Unable create model from %@", resourceNameWithExtension];
-		return nil;
+    else if ([aVersion isEqualToString:kKTModelVersion_ORIGINAL])
+    {
+        modelName = @"KTComponents";
+    }
+    
+    
+    // Try to locate the model
+    if (modelName)
+    {
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+        NSString *path = [bundle pathForResource:modelName
+                                          ofType:@"mom"];
+                                     //inDirectory:@"Models"];
+        
+        if (path)
+        {
+            result = [NSManagedObjectModel modelWithPath:path];
+        }
 	}
 	
-	return [result autorelease];
+	return result;
 }
 
 /*! returns an autoreleaed model from KTComponents_aVersion.mom with all

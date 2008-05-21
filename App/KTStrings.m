@@ -23,7 +23,8 @@ NSString *kKTMetadataSiteTitleKey = @"com_karelia_Sandvox_SiteTitle";
 
 // Core Data
 NSString *kKTModelVersion = @"15001";
-NSString *kKTModelMinimumVersion = @"15001"; // we'll support models >= this
+NSString *kKTModelVersion_ORIGINAL = @"10002";
+NSString *kKTModelMinimumVersion = @"10002"; // we'll support models >= this
 NSString *kKTModelMaximumVersion = @"15001"; // we'll support models <= this
 
 // DataSources

@@ -80,9 +80,12 @@ typedef enum {
 // strings
 extern NSString *kKTAppName;
 extern NSString *kKTAppVersion;
+
 extern NSString *kKTModelVersion;
+extern NSString *kKTModelVersion_ORIGINAL;
 extern NSString *kKTModelMaximumVersion;
 extern NSString *kKTModelMinimumVersion;
+
 extern NSString *kKTComponentsVersion;
 
 extern NSString *kKTDocumentType;

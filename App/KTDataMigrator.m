@@ -98,7 +98,11 @@
 /*! upgrades the document, in-place, returning whether procedure was successful */
 + (BOOL)upgradeDocumentWithURL:(NSURL *)aStoreURL modelVersion:(NSString *)aVersion error:(NSError **)outError
 {
-	// move the original to a new location
+	OBPRECONDITION(aStoreURL);
+    OBPRECONDITION([aStoreURL isFileURL]);
+    
+    
+    // move the original to a new location
 	NSString *originalPath = [aStoreURL path];
 	NSString *destinationPath = [KTDataMigrator renamedFileName:originalPath modelVersion:aVersion];
 	
@@ -119,9 +123,9 @@
     
 	// Use the original URL as our newStoreURL
 	BOOL result = NO;
-    
     NSURL *newStoreURL = [aStoreURL copy];
-	@try
+	
+    @try        // This means that you can call return and @finally code will still be called. Just make sure result is set.
     {
         if (!newStoreURL || ![newStoreURL isFileURL])
         {
@@ -130,49 +134,48 @@
             
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
             *outError = error;
-            result = NO;
+            
+            result = NO;    return result;
         }
-        else
+        
+        
+        // Check that we have a good path and we can write to it
+        if (![KTDataMigrator validatePathForNewStore:[newStoreURL path] error:outError])
         {
-            // Check that we have a good path and we can write to it
-            if (![KTDataMigrator validatePathForNewStore:[newStoreURL path] error:outError])
+            result = NO;    return result;
+        }
+        
+        
+        // make a migrator instance
+        KTDataMigrator *migrator = [[KTDataMigrator alloc] init];
+        
+        // set old and new store URLs
+        [migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
+        [migrator setNewStoreURL:newStoreURL];
+        
+        // migrate!
+        NSError *localError = nil;
+        result = [migrator genericallyMigrateDataFromOldModelVersion:aVersion error:&localError];
+        
+        if (!result)
+        {
+            if (localError)
             {
-                result = NO;
+                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                             [NSString stringWithFormat:
+                              NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
+                              [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
             }
             else
             {
-                // make a migrator instance
-                KTDataMigrator *migrator = [[KTDataMigrator alloc] init];
-                
-                // set old and new store URLs
-                [migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
-                [migrator setNewStoreURL:newStoreURL];
-                
-                // migrate!
-                NSError *localError = nil;
-                result = [migrator genericallyMigrateDataFromOldModelVersion:aVersion error:&localError];
-                
-                if (!result)
-                {
-                    if (localError)
-                    {
-                        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-                                     [NSString stringWithFormat:
-                                      NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
-                                      [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
-                    }
-                    else
-                    {
-                        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-                                     [NSString stringWithFormat:
-                                      NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
-                                      [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
-                    }
-                }
-                
-                [migrator release];
+                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                             [NSString stringWithFormat:
+                              NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
+                              [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
             }
         }
+        
+        [migrator release];
     }
     @catch (NSException *exception)
     {
