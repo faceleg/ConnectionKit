@@ -233,6 +233,9 @@
 
 - (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image
 {
+	OBPRECONDITION(image);
+	OBPRECONDITION([[image representations] count] > 0);
+	
 	// Figure out the filename to use
 	NSString *imageUTI = [image preferredFormatUTI];
 	NSString *extension = [NSString filenameExtensionForUTI:imageUTI];
