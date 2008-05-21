@@ -23,8 +23,6 @@
 @interface NSString (KTExtensions)
 
 
-- (NSString *)URLPathRelativeTo:(NSString *)otherPath;
-
 - (NSString *)domainName;
 - (BOOL)looksLikeValidHost;
 

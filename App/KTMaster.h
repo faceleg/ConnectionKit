@@ -49,7 +49,6 @@
 
 #pragma mark CSS
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
-- (NSString *)publishedMasterCSSPathRelativeToSite;
 
 - (BOOL)hasCodeInjection;
 

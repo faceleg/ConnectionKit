@@ -74,7 +74,7 @@
 	}
 	
 	
-	// If we're in preview mode include additional edting CSS
+	// If we're in preview mode include additional editing CSS
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
@@ -94,9 +94,8 @@
 	}
 	else
 	{
-		NSString *masterCSSPath = [[page master] publishedMasterCSSPathRelativeToSite];
-		NSString *pagePath = [[self currentPage] pathRelativeToSite];
-		NSString *relativeMasterCSSPath = [masterCSSPath URLPathRelativeTo:pagePath];
+		NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[[page master] designDirectoryURL]];
+		NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] absoluteURL]];
 		
 		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
 	}

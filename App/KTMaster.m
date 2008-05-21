@@ -341,9 +341,9 @@
 			}
 			else
 			{
-				NSString *CSSPath = [self publishedMasterCSSPathRelativeToSite];
-				NSString *mediaPath = [[[banner file] defaultUpload] valueForKey:@"pathRelativeToSite"];
-				bannerPath = [mediaPath URLPathRelativeTo:CSSPath];
+				NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
+				NSURL *mediaURL = [[[banner file] defaultUpload] absoluteURL];
+				bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
 			}
 			
 			NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
@@ -496,12 +496,6 @@
 		result = [NSString stringWithString:buffer];
 		[buffer release];
 	}
-	return result;
-}
-
-- (NSString *)publishedMasterCSSPathRelativeToSite
-{
-	NSString *result = [[[self design] remotePath] stringByAppendingPathComponent:@"master.css"];
 	return result;
 }
 
