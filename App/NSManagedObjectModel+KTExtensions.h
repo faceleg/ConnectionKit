@@ -27,6 +27,8 @@
 + (id)modelWithPath:(NSString *)aPath;
 + (id)modelWithURL:(NSURL *)aFileURL;
 
+- (void)makeGeneric;
+
 - (NSEntityDescription *)entityWithName:(NSString *)aName;
 - (void)addEntity:(NSEntityDescription *)anEntity;
 - (void)removeEntity:(NSEntityDescription *)anEntity;

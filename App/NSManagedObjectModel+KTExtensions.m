@@ -15,7 +15,10 @@
 
 static NSManagedObjectModel *sKTComponentsModel;
 
-@implementation NSManagedObjectModel ( KTExtensions )
+@implementation NSManagedObjectModel (KTExtensions)
+
+#pragma mark -
+#pragma mark Creating a model
 
 + (id)modelWithPath:(NSString *)aPath
 {
@@ -40,6 +43,30 @@ static NSManagedObjectModel *sKTComponentsModel;
 	}
 	
 	return nil;
+}
+
+#pragma mark -
+#pragma mark Modifying models
+
+/*  Convert all but storage classes to NSManagedObject.
+ */
+- (void)makeGeneric
+{
+	static NSSet *storageClassNames;
+    if (!storageClassNames)
+    {
+        storageClassNames = [[NSSet alloc] initWithObjects:@"KTStoredDictionary", @"KTStoredArray", @"KTStoredSet", nil];
+    }
+    
+    NSEnumerator *e = [[self entities] objectEnumerator];
+    NSEntityDescription *entity = nil;
+    while (entity = [e nextObject])
+    {
+        if (![storageClassNames containsObject:[entity managedObjectClassName]])
+        {
+            [entity setManagedObjectClassName:[NSManagedObject className]];
+        }
+    }
 }
 
 - (void)addEntity:(NSEntityDescription *)anEntity

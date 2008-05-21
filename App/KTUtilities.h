@@ -36,12 +36,6 @@
 */
 + (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion;
 
-/*! returns an autoreleased model from "KTComponents<_aVersion>.mom"
-	setting managedObjectClassName for all entities to NSManagedObject
-	passing in nil for aVersion yields default model
-*/
-+ (NSManagedObjectModel *)genericModelWithVersion:(NSString *)aVersion;
-
 #pragma mark File Manager
 
 #ifndef DEPRECATED_IN_MAC_OS_X_VERSION_10_5_AND_LATER

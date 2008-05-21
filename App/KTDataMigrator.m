@@ -8,18 +8,22 @@
 
 #import "KTDataMigrator.h"
 
-#import "Debug.h"
 #import "KT.h"
 #import "KTDocument.h"
 #import "KTStoredArray.h"
 #import "KTStoredDictionary.h"
 #import "KTStoredSet.h"
 #import "KTUtilities.h"
+
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSManagedObjectModel+KTExtensions.h"
 #import "NSString+Karelia.h"
+
+#import "Debug.h"
+
 
 /*
  
@@ -200,15 +204,23 @@
 
 + (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath
 {
+    // It doesn't matter if either of these methods fail, we're just doing our best to recover.
+    [[NSFileManager defaultManager] removeFileAtPath:upgradePath handler:nil];
     [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
 }
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
 {
-	// set up old and new models
-	[self setOldManagedObjectModel:[KTUtilities genericModelWithVersion:aVersion]];
-	[self setNewManagedObjectModel:[KTUtilities genericModelWithVersion:nil]];
+	// Set up old and new models
+	NSManagedObjectModel *model = [KTUtilities modelWithVersion:aVersion];
+    [model makeGeneric];
+    [self setOldManagedObjectModel:model];
+    
+    model = [KTUtilities modelWithVersion:nil];
+    [model makeGeneric];
+	[self setNewManagedObjectModel:model];
 	
+    
 	// set up old and new core data stacks
 	[self setOldManagedObjectContext:[KTUtilities contextWithURL:[self oldStoreURL] 
 														   model:[self oldManagedObjectModel]]];

@@ -125,32 +125,6 @@
 	return result;
 }
 
-/*! returns an autoreleaed model from KTComponents_aVersion.mom with all
-	Class references set to NSManagedObject, except Storage classes
-*/
-+ (NSManagedObjectModel *)genericModelWithVersion:(NSString *)aVersion
-{
-	NSManagedObjectModel *model = [self modelWithVersion:aVersion];
-	[model retain];
-	
-	if ( nil != model )
-	{
-		NSEnumerator *e = [[model entities] objectEnumerator];
-		NSEntityDescription *entity = nil;
-		while ( entity = [e nextObject] )
-		{
-			//FIXME: these classes no longer exist, is this method still required?
-			if ( ![[entity managedObjectClassName] isEqualToString:@"KTStoredDictionary"] 
-				 && ![[entity managedObjectClassName] isEqualToString:@"KTStoredArray"]
-				 && ![[entity managedObjectClassName] isEqualToString:@"KTStoredSet"] )
-			[entity setManagedObjectClassName:[NSManagedObject className]];
-		}
-	}
-	
-	return [model autorelease];
-}
-
-
 #pragma mark File Management
 
 // NOTE: For Leopard, we can use:  - (BOOL)createDirectoryAtPath:(NSString *)pathwithIntermediateDirectories:(BOOL)createIntermediatesattributes:(NSDictionary *)attributeserror:(NSError **)error
