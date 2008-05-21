@@ -354,7 +354,7 @@
 	// Make sure we have a persistent store coordinator properly set up
 	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
-	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL];
+	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL UTI:nil];
 	
 	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
 	{
@@ -452,7 +452,7 @@
 		}
 		else
 		{
-			result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL]
+			result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
 											  error:&error];
 		}
 	}
@@ -517,7 +517,7 @@
 	
 	
 	// Migrate the main document store
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL];
+	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
 	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
 	
 	if (![storeCoordinator migratePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]

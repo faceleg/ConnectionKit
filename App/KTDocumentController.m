@@ -87,14 +87,14 @@
 	NSString *UTI = [NSString UTIForFileAtPath:requestedPath];
 	
 	// are we opening a KTDocument (and not a sample site)?
-	if ( ([NSString UTI:UTI conformsToUTI:kKTDocumentUTI] || [NSString UTI:UTI conformsToUTI:kKTDocumentUTI_ORIGINAL])
+	if ( ([UTI conformsToUTI:kKTDocumentUTI] || [UTI conformsToUTI:kKTDocumentUTI_ORIGINAL])
 		 && ![requestedPath hasPrefix:[[NSBundle mainBundle] bundlePath]] )
 	{		
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
 		{
-			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL];
+			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL UTI:UTI];
 			metadata = [KTPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL error:outError];
 		}
 		@catch (NSException *exception)

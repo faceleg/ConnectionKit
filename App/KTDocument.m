@@ -567,35 +567,52 @@
 #pragma mark -
 #pragma mark Document paths
 
-/*! returns /path/to/document/datastore.sqlite3 */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL
+/*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
+ *	You can pass in nil to use the default UTI for new documents.
+ */
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI
 {
 	OBPRECONDITION(inURL);
 	
+	NSURL *result = nil;
 	
-	// Figure the filename
-	NSString *filename = @"datastore";
-	NSString *defaultStoreType = [KTDocument defaultStoreType];
-	if ([defaultStoreType isEqualToString:NSSQLiteStoreType])
+	
+	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
 	{
-		filename = [filename stringByAppendingPathExtension:@"sqlite3"];
+		// Figure the filename
+		NSString *filename = @"datastore";
+		NSString *defaultStoreType = [KTDocument defaultStoreType];
+		if ([defaultStoreType isEqualToString:NSSQLiteStoreType])
+		{
+			filename = [filename stringByAppendingPathExtension:@"sqlite3"];
+		}
+		else if ([defaultStoreType isEqualToString:NSXMLStoreType])
+		{
+			filename = [filename stringByAppendingPathExtension:@"xml"];
+		}
+		else if ([defaultStoreType isEqualToString:NSBinaryStoreType])
+		{
+			filename = [filename stringByAppendingPathExtension:@"bplist"];
+		}
+		else
+		{
+			filename = [filename stringByAppendingPathExtension:@"unknownType"];
+		}
+		
+		
+		// Build the URL
+		result = [inURL URLByAppendingPathComponent:filename isDirectory:NO];
 	}
-	else if ([defaultStoreType isEqualToString:NSXMLStoreType])
+	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
-		filename = [filename stringByAppendingPathExtension:@"xml"];
-	}
-	else if ([defaultStoreType isEqualToString:NSBinaryStoreType])
-	{
-		filename = [filename stringByAppendingPathExtension:@"bplist"];
+		result = inURL;
 	}
 	else
 	{
-		filename = [filename stringByAppendingPathExtension:@"unknownType"];
+		OBASSERT_NOT_REACHED("Unknown document UTI");
 	}
 	
 	
-	// Build the URL
-	NSURL *result = [inURL URLByAppendingPathComponent:filename isDirectory:NO];
 	return result;
 }
 

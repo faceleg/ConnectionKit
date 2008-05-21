@@ -93,7 +93,8 @@ typedef enum {
 
 + (NSString *)defaultStoreType;
 + (NSString *)defaultMediaStoreType;
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL;
+
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI;
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
