@@ -76,13 +76,14 @@
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
+#import "NSURL+Karelia.h"
+
 #import <iMediaBrowser/iMediaBrowser.h>
 
 #ifdef APP_RELEASE
 #import "Registration.h"
 #endif
 
-//#import "KTUndoManager.h"
 
 @interface KTDocument ( Private )
 + (void)initialize;
@@ -569,19 +570,21 @@
 /*! returns /path/to/document/datastore.sqlite3 */
 + (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL
 {
-	OBASSERT([inURL isFileURL]);
+	OBPRECONDITION(inURL);
 	
+	
+	// Figure the filename
 	NSString *filename = @"datastore";
 	NSString *defaultStoreType = [KTDocument defaultStoreType];
-	if ( [defaultStoreType isEqualToString:NSSQLiteStoreType] )
+	if ([defaultStoreType isEqualToString:NSSQLiteStoreType])
 	{
 		filename = [filename stringByAppendingPathExtension:@"sqlite3"];
 	}
-	else if ( [defaultStoreType isEqualToString:NSXMLStoreType] )
+	else if ([defaultStoreType isEqualToString:NSXMLStoreType])
 	{
 		filename = [filename stringByAppendingPathExtension:@"xml"];
 	}
-	else if ( [defaultStoreType isEqualToString:NSBinaryStoreType] )
+	else if ([defaultStoreType isEqualToString:NSBinaryStoreType])
 	{
 		filename = [filename stringByAppendingPathExtension:@"bplist"];
 	}
@@ -590,8 +593,9 @@
 		filename = [filename stringByAppendingPathExtension:@"unknownType"];
 	}
 	
-	NSString *path = [[inURL path] stringByAppendingPathComponent:filename];
-	NSURL *result = [NSURL fileURLWithPath:path];
+	
+	// Build the URL
+	NSURL *result = [inURL URLByAppendingPathComponent:filename isDirectory:NO];
 	return result;
 }
 
@@ -599,26 +603,31 @@
  */
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL
 {
-	OBASSERT([inURL isFileURL]);
-	NSString *path = [[inURL path] stringByAppendingPathComponent:@"Site"];
-	NSURL *result = [NSURL fileURLWithPath:path];
+	OBPRECONDITION(inURL);
+	
+	NSURL *result = [inURL URLByAppendingPathComponent:@"Site" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
 {
-	OBASSERT([inURL isFileURL]);
-	NSString *docPath = [inURL path];
-	NSString *qlPath = [docPath stringByAppendingPathComponent:@"QuickLook"];
-	NSURL *result = [NSURL fileURLWithPath:qlPath];
+	OBASSERT(inURL);
+	
+	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
 + (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)docURL
 {
-	NSString *mediaStorePath = [[docURL path] stringByAppendingPathComponent:@"media.xml"];
-	NSURL *result = [[NSURL alloc] initWithScheme:[docURL scheme] host:[docURL host] path:mediaStorePath];
+	OBASSERT(docURL);
 	
+	NSURL *result = [docURL URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -626,10 +635,11 @@
  */
 + (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL
 {
-	OBASSERT([inURL isFileURL]);
-	NSString *sitePath = [[self siteURLForDocumentURL:inURL] path];
-	NSString *mediaPath = [sitePath stringByAppendingPathComponent:@"_Media"];
-	NSURL *result = [NSURL fileURLWithPath:mediaPath];
+	OBASSERT(inURL);
+	
+	NSURL *result = [inURL URLByAppendingPathComponent:@"_Media" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
 	return result;
 }
 
