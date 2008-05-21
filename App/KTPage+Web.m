@@ -78,7 +78,7 @@
 					NSString *newPath = nil;
 					if (thePage)
 					{
-						newPath = [[thePage absoluteURL] stringRelativeToURL:[self absoluteURL]];
+						newPath = [[thePage URL] stringRelativeToURL:[self URL]];
 					}
 					else
 					{
@@ -163,7 +163,7 @@
 	if (scriptExists)
 	{
 		NSURL *javascriptURL = [NSURL URLWithString:@"javascript.js" relativeToURL:[[self master] designDirectoryURL]];
-		result = [javascriptURL stringRelativeToURL:[self absoluteURL]];
+		result = [javascriptURL stringRelativeToURL:[self URL]];
 	}
 	
 	return result;

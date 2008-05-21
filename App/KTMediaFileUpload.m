@@ -22,7 +22,7 @@
 
 /*	Combines the site URL and our path relative to it to build the full URL
  */
-- (NSURL *)absoluteURL;
+- (NSURL *)URL;
 {
 	KTMediaPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
 	OBASSERT(PSC);
@@ -33,7 +33,7 @@
 	NSURL *siteURL = [hostProperties siteURL];
 	
 	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
-	return [result absoluteURL];
+	return result;
 }
 
 - (NSString *)pathRelativeToSite;

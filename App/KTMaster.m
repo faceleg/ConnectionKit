@@ -342,7 +342,7 @@
 			else
 			{
 				NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
-				NSURL *mediaURL = [[[banner file] defaultUpload] absoluteURL];
+				NSURL *mediaURL = [[[banner file] defaultUpload] URL];
 				bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
 			}
 			

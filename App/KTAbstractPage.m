@@ -228,7 +228,7 @@
  *	They just call through where appropriate to the real methods in the +Paths category.
  */
 
-- (NSURL *)absoluteURL
+- (NSURL *)URL
 {
 	NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
 	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];

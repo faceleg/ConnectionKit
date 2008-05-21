@@ -526,7 +526,7 @@
 		{
 			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
 			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceFile lastPathComponent]];
-			result = [resourceFileURL stringRelativeToURL:[[self currentPage] absoluteURL]];
+			result = [resourceFileURL stringRelativeToURL:[[self currentPage] URL]];
 			break;
 		}
 	}
@@ -626,7 +626,7 @@
 			default:
 			{
 				upload = [mediaFile defaultUpload];
-				result = [[upload absoluteURL] stringRelativeToURL:[[self currentPage] absoluteURL]];
+				result = [[upload URL] stringRelativeToURL:[[self currentPage] URL]];
 				break;
 			}
 		}
@@ -728,7 +728,7 @@
 		return @"";
 	}
 	
-	NSURL *sourceURL = [[self currentPage] absoluteURL];
+	NSURL *sourceURL = [[self currentPage] URL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
@@ -763,7 +763,7 @@
 			result= @"javascript:void(0)";
 			break;
 		default:
-			result = [[page absoluteURL] stringRelativeToURL:[[self currentPage] absoluteURL]];
+			result = [[page URL] stringRelativeToURL:[[self currentPage] URL]];
 			break;
 	}
 	

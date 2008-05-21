@@ -11,7 +11,7 @@
 
 @protocol KTWebPaths
 
-- (NSURL *)absoluteURL;
+- (NSURL *)URL;
 - (NSString *)pathRelativeToSite;
 
 @end

@@ -1394,7 +1394,7 @@
 
 - (IBAction)viewPublishedSite:(id)sender
 {
-	NSURL *siteURL = [[self root] absoluteURL];
+	NSURL *siteURL = [[self root] URL];
 	if (siteURL)
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];

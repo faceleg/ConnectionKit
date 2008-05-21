@@ -108,7 +108,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	if ([self boolForKey:@"collectionSyndicate"] && [self collectionCanSyndicate])
 	{
 		NSString *feedFileName = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-		NSURL *pageURL = [self absoluteURL];
+		NSURL *pageURL = [self URL];
 		result = [NSURL URLWithString:feedFileName relativeToURL:pageURL];
 	}
 	

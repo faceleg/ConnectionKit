@@ -95,7 +95,7 @@
 	else
 	{
 		NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[[page master] designDirectoryURL]];
-		NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] absoluteURL]];
+		NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] URL]];
 		
 		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
 	}
@@ -144,7 +144,7 @@
 			{
 				KTMaster *master = [(KTPage *)[self currentPage] master];
 				NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
-				result = [designFileURL stringRelativeToURL:[[self currentPage] absoluteURL]];
+				result = [designFileURL stringRelativeToURL:[[self currentPage] URL]];
 				break;
 			}
 		}

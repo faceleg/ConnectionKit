@@ -364,7 +364,7 @@
 				{
 					KTPage *page = [self page];		OBASSERT(page);
 					KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-					aMediaPath = [[upload absoluteURL] stringRelativeToURL:[page absoluteURL]];
+					aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
 					
 					// Tell the parser's delegate
 					[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
