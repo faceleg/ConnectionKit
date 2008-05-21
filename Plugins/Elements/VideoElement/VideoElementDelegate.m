@@ -162,15 +162,19 @@
 - (void)addPageTextToHead:(NSMutableString *)ioString forPage:(KTPage *)aPage
 {
 	NSString *bundleResourcePath = [[self bundle] pathForResource:@"AC_QuickTime" ofType:@"js"];
-	NSString *relativePath = [aPage pathToResourceFile:bundleResourcePath];
-	
-	NSString *jsString = [NSString stringWithFormat:
-		@"<script src=\"%@\" type=\"text/javascript\"></script>\n", relativePath];
-	
-	// Only append string if it's not already there (e.g. if there's > 1 element)
-	if (NSNotFound == [ioString rangeOfString:jsString].location)
+	if (bundleResourcePath)
 	{
-		[ioString appendString:jsString];
+		NSURL *resourceURL = [[[[self page] documentInfo] hostProperties] URLForResourceFile:[bundleResourcePath lastPathComponent]];
+		NSString *relativePath = [resourceURL stringRelativeToURL:[aPage URL]];
+		
+		NSString *jsString = [NSString stringWithFormat:
+			@"<script src=\"%@\" type=\"text/javascript\"></script>\n", relativePath];
+		
+		// Only append string if it's not already there (e.g. if there's > 1 element)
+		if (NSNotFound == [ioString rangeOfString:jsString].location)
+		{
+			[ioString appendString:jsString];
+		}
 	}
 }
 
