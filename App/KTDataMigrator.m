@@ -26,6 +26,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObjectModel+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "Debug.h"
@@ -59,6 +60,7 @@
 
 
 // Page migration
+- (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
 
 - (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
@@ -431,13 +433,38 @@
     // Need to deal with code injection
     
     
-    // Need to handle children
-    
-    
     // Need to handle pagelets
     
     
+    // Create new KTPage objects for each child page and then recursively migrate them too
+    NSSet *oldChildPages = [oldPage valueForKey:@"children"];
+    NSArray *sortedOldChildren = [[oldChildPages allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+    
+    NSEnumerator *childrenEnumerator = [sortedOldChildren objectEnumerator];
+    NSManagedObject *aChildPage;
+    while (aChildPage = [childrenEnumerator nextObject])
+    {
+        [self migratePage:aChildPage asNextChildOfPage:newPage error:error];
+    }
+    
+    
     return YES;
+}
+
+/*  Support method when recursing through pages.
+ */
+- (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error
+{
+    // Insert a new child page of the right type.
+    NSString *pluginIdentifier = [oldPage valueForKey:@"pluginIdentifier"];
+    pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
+    KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
+    OBASSERT(plugin);
+    
+    KTPage *newPage = [KTPage insertNewPageWithParent:newParent plugin:plugin];
+    
+    BOOL result = [self migratePage:oldPage toPage:newPage error:error];
+    return result;
 }
 
 /*  Root is special because it contains a bunch of properties which now belong on KTMaster.
@@ -915,7 +942,10 @@
         }
         else
         {
-            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@", anAttributeKey, oldObject, newObject);
+            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@",
+                  anAttributeKey,
+                  [oldObject objectID],
+                  [newObject objectID]);
         }
     }
 }
