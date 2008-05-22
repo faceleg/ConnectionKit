@@ -38,7 +38,7 @@
  */
 
 
-@interface KTDataMigrator (Private)
+@interface KTDataMigrator ()
 
 + (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath;
 
@@ -63,10 +63,13 @@
 
 - (BOOL)migrateFromPage:(NSManagedObject *)pageA toPage:(NSManagedObject *)pageB;
 - (BOOL)migrateFromPagelet:(NSManagedObject *)pageletA toPagelet:(NSManagedObject *)pageletB;
-- (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB;
 
+- (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB;
 - (BOOL)migrateMedia:(NSError **)error;
+
+- (BOOL)migrateSiteProperties:(NSError **)error;
 - (BOOL)migrateDocmentInfo:(NSError **)error;
+
 
 + (BOOL)validatePathForNewStore:(NSString *)aStorePath error:(NSError **)outError;
 - (BOOL)isValidManagedObject:(NSManagedObject *)aManagedObject;
@@ -90,7 +93,12 @@
  Media added cachedImages, an optional to-many relationship to CachedImage
  added CachedImage, a new entity for storing info about ~/Library/Caches/Sandvox/<Images>
  
+ 15001: Brand new model for 1.5. Too many changes to list here.
+ 
  */
+
+
+#pragma mark -
 
 
 @implementation KTDataMigrator
@@ -222,9 +230,115 @@
     return result;
 }
 
+#pragma mark -
+#pragma mark Init & Dealloc
+
+- (id)init
+{
+	if ( nil == [super init] )
+	{
+		return nil;
+	}
+	
+	[self setObjectIDCache:[NSMutableDictionary dictionary]];
+	
+	return self;
+}
+
+- (void)dealloc
+{
+	[self setNewDocument:nil];
+    [self setNewDocumentURL:nil];
+    
+	[self setOldStoreURL:nil];
+	[self setOldManagedObjectContext:nil];
+	[self setOldManagedObjectModel:nil];
+	[self setObjectIDCache:nil];
+	[super dealloc];
+}
 
 #pragma mark -
-#pragma mark Instance Methods
+#pragma mark Accessors
+
+- (NSManagedObjectModel *)oldManagedObjectModel
+{
+    return myOldManagedObjectModel; 
+}
+
+- (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel
+{
+    [anOldManagedObjectModel retain];
+    [myOldManagedObjectModel release];
+    myOldManagedObjectModel = anOldManagedObjectModel;
+}
+
+- (NSManagedObjectContext *)oldManagedObjectContext
+{
+    return myOldManagedObjectContext; 
+}
+
+- (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext
+{
+    [anOldManagedObjectContext retain];
+    [myOldManagedObjectContext release];
+    myOldManagedObjectContext = anOldManagedObjectContext;
+}
+
+- (NSURL *)oldStoreURL
+{
+	return myOldStoreURL;
+}
+
+- (void)setOldStoreURL:(NSURL *)aStoreURL
+{
+	[aStoreURL retain];
+	[myOldStoreURL release];
+	myOldStoreURL = aStoreURL;
+}
+
+- (NSMutableDictionary *)objectIDCache 
+{ 
+	return myObjectIDCache;
+}
+
+- (NSURL *)newDocumentURL { return myNewDocumentURL; }
+
+- (void)setNewDocumentURL:(NSURL *)URL
+{
+    URL = [URL copy];
+    [myNewDocumentURL release];
+    myNewDocumentURL = URL;
+}
+
+- (KTDocument *)newDocument { return myNewDocument; }
+
+- (void)setNewDocument:(KTDocument *)document
+{
+    [document retain];
+    [myNewDocument release];
+    myNewDocument = document;
+}
+
+- (NSManagedObjectModel *)newManagedObjectModel
+{
+    return [[self newDocument] managedObjectModel];
+}
+
+- (NSManagedObjectContext *)newManagedObjectContext
+{
+    return [[self newDocument] managedObjectContext];
+}
+
+- (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache
+{
+    [anObjectIDCache retain];
+    [myObjectIDCache release];
+    myObjectIDCache = anObjectIDCache;
+}
+
+
+#pragma mark -
+#pragma mark Migration
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
 {
@@ -258,6 +372,12 @@
 	
     
 	// Migrate
+    if (![self migrateSiteProperties:error])
+    {
+        return NO;
+    }
+    
+    
 	if ([self migrateMedia:error])
     {
         // after saving the migrated media, we need to fix up the objectIDCache
@@ -316,7 +436,8 @@
     return NO;
 }
 
-#pragma mark attribute migration
+#pragma mark -
+#pragma mark Attributes & Relationships Migration
 
 /*! copies attribute values from managedObjectA to managedObjectB that exist in both entities */
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA 
@@ -343,8 +464,6 @@
 		}
     }	
 }
-
-#pragma mark abstract relationship migration
 
 - (void)migrateStorageRelationshipNamed:(NSString *)aRelationshipName
 							 fromObject:(NSManagedObject *)managedObjectA
@@ -435,7 +554,8 @@
 	}
 }
 
-#pragma mark Element Container migration
+#pragma mark -
+#pragma mark Element Migration
 
 - (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											  toObject:(NSManagedObject *)managedObjectB
@@ -449,8 +569,6 @@
 		[[managedObjectB mutableSetValueForKey:@"elements"] addObject:elementB];
 	}
 }
-
-#pragma mark Element migration
 
 - (NSManagedObject *)migrateElement:(NSManagedObject *)elementA toContainer:(NSManagedObject *)containerB
 {
@@ -478,8 +596,6 @@
 	
 	return elementB;
 }
-
-#pragma mark Page migration
 
 - (BOOL)migratePages:(NSError **)error
 {
@@ -659,8 +775,6 @@
 	return YES; // could later beef this up with error checking
 }
 
-#pragma mark Pagelet migration
-
 - (BOOL)migrateFromPagelet:(NSManagedObject *)pageletA toPagelet:(NSManagedObject *)pageletB
 {
 	// migrate attributes
@@ -681,7 +795,8 @@
 	return YES; // could later beef this up with error checking
 }	
 
-#pragma mark MediaRef migration
+#pragma mark -
+#pragma mark Media Migration
 
 - (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB
 {
@@ -702,8 +817,6 @@
 	
 	return YES; // could later beef this up with error checking
 }
-
-#pragma mark Media migration
 
 - (BOOL)migrateMedia:(NSError **)error
 {
@@ -786,7 +899,22 @@
 	return YES; // could later beef this up with error checking
 }
 
-#pragma mark DocumentInfo migration
+#pragma mark -
+#pragma mark Site-Level Migration
+
+
+/*  Performs migration of all the site-level properties:
+ *      * DocumentInfo
+ *      * Master
+ *      * Host Properties
+ *
+ *  None of these objects need to be created in the new store as KTDocument will have done that.
+ *  We just need to migrate their properties.
+ */
+- (BOOL)migrateSiteProperties:(NSError **)error
+{
+    return YES;
+}
 
 - (BOOL)migrateDocmentInfo:(NSError **)error
 {
@@ -841,113 +969,8 @@
 	return YES; // could later beef this up with error checking
 }
 
-#pragma mark init
-
-- (id)init
-{
-	if ( nil == [super init] )
-	{
-		return nil;
-	}
-	
-	[self setObjectIDCache:[NSMutableDictionary dictionary]];
-	
-	return self;
-}
-
-#pragma mark dealloc
-
-- (void)dealloc
-{
-	[self setNewDocument:nil];
-    [self setNewDocumentURL:nil];
-    
-	[self setOldStoreURL:nil];
-	[self setOldManagedObjectContext:nil];
-	[self setOldManagedObjectModel:nil];
-	[self setObjectIDCache:nil];
-	[super dealloc];
-}
-
-#pragma mark accessors
-
-- (NSManagedObjectModel *)oldManagedObjectModel
-{
-    return myOldManagedObjectModel; 
-}
-
-- (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel
-{
-    [anOldManagedObjectModel retain];
-    [myOldManagedObjectModel release];
-    myOldManagedObjectModel = anOldManagedObjectModel;
-}
-
-- (NSManagedObjectContext *)oldManagedObjectContext
-{
-    return myOldManagedObjectContext; 
-}
-
-- (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext
-{
-    [anOldManagedObjectContext retain];
-    [myOldManagedObjectContext release];
-    myOldManagedObjectContext = anOldManagedObjectContext;
-}
-
-- (NSURL *)oldStoreURL
-{
-	return myOldStoreURL;
-}
-
-- (void)setOldStoreURL:(NSURL *)aStoreURL
-{
-	[aStoreURL retain];
-	[myOldStoreURL release];
-	myOldStoreURL = aStoreURL;
-}
-
-- (NSMutableDictionary *)objectIDCache 
-{ 
-	return myObjectIDCache;
-}
-
-- (NSURL *)newDocumentURL { return myNewDocumentURL; }
-
-- (void)setNewDocumentURL:(NSURL *)URL
-{
-    URL = [URL copy];
-    [myNewDocumentURL release];
-    myNewDocumentURL = URL;
-}
-
-- (KTDocument *)newDocument { return myNewDocument; }
-
-- (void)setNewDocument:(KTDocument *)document
-{
-    [document retain];
-    [myNewDocument release];
-    myNewDocument = document;
-}
-
-- (NSManagedObjectModel *)newManagedObjectModel
-{
-    return [[self newDocument] managedObjectModel];
-}
-
-- (NSManagedObjectContext *)newManagedObjectContext
-{
-    return [[self newDocument] managedObjectContext];
-}
-
-- (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache
-{
-    [anObjectIDCache retain];
-    [myObjectIDCache release];
-    myObjectIDCache = anObjectIDCache;
-}
-
-#pragma mark support
+#pragma mark -
+#pragma mark Support
 
 + (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion
 {

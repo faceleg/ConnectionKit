@@ -44,10 +44,7 @@
 + (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
 
 
-// this is the workhorse
-- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
-
-// accessors
+// Accessors
 - (NSManagedObjectModel *)oldManagedObjectModel;
 - (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;
 
@@ -68,5 +65,9 @@
 
 - (NSMutableDictionary *)objectIDCache;
 - (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache;
+
+
+// This is the workhorse
+- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
 
 @end
