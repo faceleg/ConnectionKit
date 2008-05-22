@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTStoredArray.h"
 #import "KTStoredDictionary.h"
@@ -68,7 +69,7 @@
 - (BOOL)migrateMedia:(NSError **)error;
 
 - (BOOL)migrateSiteProperties:(NSError **)error;
-- (BOOL)migrateDocmentInfo:(NSError **)error;
+- (BOOL)migrateDocumentInfo:(NSError **)error;
 
 
 + (BOOL)validatePathForNewStore:(NSString *)aStorePath error:(NSError **)outError;
@@ -913,60 +914,46 @@
  */
 - (BOOL)migrateSiteProperties:(NSError **)error
 {
+    if (![self migrateDocumentInfo:error])
+    {
+        return NO;
+    }
+    
     return YES;
 }
 
-- (BOOL)migrateDocmentInfo:(NSError **)error
+/*  Takes the old document info object and copies out all properties that still apply.
+ */
+- (BOOL)migrateDocumentInfo:(NSError **)error
 {
-	TJT((@"migrating DocumentInfo..."));
-	// fetch old DocumentInfo
-	NSArray *fetchedObjects = [[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo"
-																				 error:error];
-	if ( nil != *error )
-	{
-		return NO;
-	}	
-	OBASSERTSTRING(([fetchedObjects count] == 1), @"should only be 1 DocumentInfo per document");
-	NSManagedObject *oldDocumentInfo = [fetchedObjects objectAtIndex:0];
-	
-	NSManagedObject *newDocumentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo"
-																	 inManagedObjectContext:[self newManagedObjectContext]];
-	OBASSERTSTRING((nil != newDocumentInfo), @"newDocumentInfo is nil!");
-	
-	// migrate attributes
-	[self migrateMatchingAttributesFromObject:oldDocumentInfo 
-									 toObject:newDocumentInfo];
+	// Retrieve document infos
+    KTDocumentInfo *oldDocInfo = [[[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:error] firstObject];
+    if (!oldDocInfo) return NO;
     
-    // 10002: add siteID
-    if ( nil == [newDocumentInfo valueForKey:@"siteID"] )
+    KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
+    OBASSERT(newDocInfo);
+    NSDictionary *newDocInfoAttributes = [[newDocInfo entity] attributesByName];
+    
+    
+    // Run through attributes, copying those that still remain.
+    NSEnumerator *oldAttributesEnumerator = [[[oldDocInfo entity] attributesByName] keyEnumerator];
+    NSString *aKey;
+    while (aKey = [oldAttributesEnumerator nextObject])
     {
-        [newDocumentInfo setValue:[NSString shortGUIDString] forKey:@"siteID"];
+        if ([newDocInfoAttributes objectForKey:aKey])
+        {
+            [newDocInfo setValue:[oldDocInfo valueForKey:aKey] forKey:aKey];
+        }
     }
     
-	// migrate relationships
-	//  hostProperties
-	[self migrateStorageRelationshipNamed:@"hostProperties"
-							   fromObject:oldDocumentInfo
-								 toObject:newDocumentInfo];
-	
-    // publishedDesigns	
-	[self migrateStorageRelationshipNamed:@"publishedDesigns"
-							   fromObject:oldDocumentInfo
-								 toObject:newDocumentInfo];	
-	
-	//  requiredBundles
-	[self migrateStorageRelationshipNamed:@"requiredBundles"
-							   fromObject:oldDocumentInfo
-								 toObject:newDocumentInfo];	
     
-	//  root
-	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
-	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
-	NSManagedObject *newRoot = [[self newManagedObjectContext] objectWithURIRepresentationString:newRootURIString];
-	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
-	[newDocumentInfo setValue:newRoot forKey:@"root"];
-	
-	return YES; // could later beef this up with error checking
+    // Migrate host properties
+    KTStoredDictionary *oldHostProperties = [oldDocInfo valueForKey:@"hostProperties"];
+    KTHostProperties *newHostProperties = [[[self newDocument] documentInfo] hostProperties];
+    [newHostProperties setValuesForKeysWithDictionary:[oldHostProperties dictionary]];
+    
+    
+    return YES;
 }
 
 #pragma mark -
