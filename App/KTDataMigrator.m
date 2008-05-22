@@ -155,7 +155,7 @@
         
         // set old and new store URLs
         [migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
-        [migrator setNewStoreURL:newStoreURL];
+        [migrator setNewDocumentURL:newStoreURL];
         
         // migrate!
         NSError *localError = nil;
@@ -211,23 +211,29 @@
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
 {
-	// Set up old and new models
+	// Set up old model and Core Data stack
 	NSManagedObjectModel *model = [KTUtilities modelWithVersion:aVersion];
     [model makeGeneric];
     [self setOldManagedObjectModel:model];
     
-    model = [KTUtilities modelWithVersion:nil];
-    [model makeGeneric];
-	[self setNewManagedObjectModel:model];
+    [self setOldManagedObjectContext:[KTUtilities contextWithURL:[self oldStoreURL] 
+														   model:[self oldManagedObjectModel]]];
 	
     
-	// set up old and new core data stacks
-	[self setOldManagedObjectContext:[KTUtilities contextWithURL:[self oldStoreURL] 
-														   model:[self oldManagedObjectModel]]];
-	[self setNewManagedObjectContext:[KTUtilities contextWithURL:[self newStoreURL] 
-														   model:[self newManagedObjectModel]]];
+    // Set up new document
+    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:nil error:error];
+    if (newDoc)
+    {
+        [self setNewDocument:newDoc];
+        [newDoc release];
+    }
+    else
+    {
+        return NO;
+    }
 	
-	// migrate
+    
+	// Migrate
 	TJT((@"saving new context..."));
 	if ( [[self newManagedObjectContext] save:error] )
 	{
@@ -851,11 +857,11 @@
 
 - (void)dealloc
 {
-	[self setNewStoreURL:nil];
+	[self setNewDocument:nil];
+    [self setNewDocumentURL:nil];
+    
 	[self setOldStoreURL:nil];
-	[self setNewManagedObjectContext:nil];
 	[self setOldManagedObjectContext:nil];
-	[self setNewManagedObjectModel:nil];
 	[self setOldManagedObjectModel:nil];
 	[self setObjectIDCache:nil];
 	[super dealloc];
@@ -875,18 +881,6 @@
     myOldManagedObjectModel = anOldManagedObjectModel;
 }
 
-- (NSManagedObjectModel *)newManagedObjectModel
-{
-    return myNewManagedObjectModel; 
-}
-
-- (void)setNewManagedObjectModel:(NSManagedObjectModel *)aNewManagedObjectModel
-{
-    [aNewManagedObjectModel retain];
-    [myNewManagedObjectModel release];
-    myNewManagedObjectModel = aNewManagedObjectModel;
-}
-
 - (NSManagedObjectContext *)oldManagedObjectContext
 {
     return myOldManagedObjectContext; 
@@ -897,18 +891,6 @@
     [anOldManagedObjectContext retain];
     [myOldManagedObjectContext release];
     myOldManagedObjectContext = anOldManagedObjectContext;
-}
-
-- (NSManagedObjectContext *)newManagedObjectContext
-{
-    return myNewManagedObjectContext; 
-}
-
-- (void)setNewManagedObjectContext:(NSManagedObjectContext *)aNewManagedObjectContext
-{
-    [aNewManagedObjectContext retain];
-    [myNewManagedObjectContext release];
-    myNewManagedObjectContext = aNewManagedObjectContext;
 }
 
 - (NSURL *)oldStoreURL
@@ -923,21 +905,37 @@
 	myOldStoreURL = aStoreURL;
 }
 
-- (NSURL *)newStoreURL
-{
-	return myNewStoreURL;
-}
-
-- (void)setNewStoreURL:(NSURL *)aStoreURL
-{
-	[aStoreURL retain];
-	[myNewStoreURL release];
-	myNewStoreURL = aStoreURL;
-}
-
 - (NSMutableDictionary *)objectIDCache 
 { 
 	return myObjectIDCache;
+}
+
+- (NSURL *)newDocumentURL { return myNewDocumentURL; }
+
+- (void)setNewDocumentURL:(NSURL *)URL
+{
+    URL = [URL copy];
+    [myNewDocumentURL release];
+    myNewDocumentURL = URL;
+}
+
+- (KTDocument *)newDocument { return myNewDocument; }
+
+- (void)setNewDocument:(KTDocument *)document
+{
+    [document retain];
+    [myNewDocument release];
+    myNewDocument = document;
+}
+
+- (NSManagedObjectModel *)newManagedObjectModel
+{
+    return [[self newDocument] managedObjectModel];
+}
+
+- (NSManagedObjectContext *)newManagedObjectContext
+{
+    return [[self newDocument] managedObjectContext];
 }
 
 - (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache

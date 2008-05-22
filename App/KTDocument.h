@@ -39,7 +39,8 @@ typedef enum {
 
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTHostProperties, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController;
-@class KTAbstractElement, KTMediaContainer, KTPage;
+@class KTAbstractElement, KTMediaContainer, KTPage, KTElementPlugin;
+
 
 @interface KTDocument : NSPersistentDocument
 {
@@ -102,6 +103,11 @@ typedef enum {
 - (NSString *)mediaPath;
 - (NSString *)temporaryMediaPath;
 - (NSString *)siteDirectoryPath;
+
+
+- (id)initWithType:(NSString *)typeName error:(NSError **)outError;
+- (id)initWithURL:(NSURL *)saveURL ofType:(NSString *)type homePagePlugIn:(KTElementPlugin *)plugin error:(NSError **)outError;
+
 
 - (IBAction)setupHost:(id)sender;
 

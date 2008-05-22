@@ -20,16 +20,17 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class KTDocument;
+
+
 @interface KTDataMigrator : NSObject 
 {
 	NSManagedObjectModel	*myOldManagedObjectModel;
-	NSManagedObjectModel	*myNewManagedObjectModel;
-	
 	NSManagedObjectContext	*myOldManagedObjectContext;
-	NSManagedObjectContext	*myNewManagedObjectContext;
-	
 	NSURL					*myOldStoreURL;
-	NSURL					*myNewStoreURL;
+    
+    NSURL       *myNewDocumentURL;
+    KTDocument  *myNewDocument;
 	
 	NSMutableDictionary		*myObjectIDCache; // key = old objectID, value = new objectID
 }
@@ -47,20 +48,20 @@
 - (NSManagedObjectModel *)oldManagedObjectModel;
 - (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;
 
-- (NSManagedObjectModel *)newManagedObjectModel;
-- (void)setNewManagedObjectModel:(NSManagedObjectModel *)aNewManagedObjectModel;
-
 - (NSManagedObjectContext *)oldManagedObjectContext;
 - (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext;
-
-- (NSManagedObjectContext *)newManagedObjectContext;
-- (void)setNewManagedObjectContext:(NSManagedObjectContext *)aNewManagedObjectContext;
 
 - (NSURL *)oldStoreURL;
 - (void)setOldStoreURL:(NSURL *)aStoreURL;
 
-- (NSURL *)newStoreURL;
-- (void)setNewStoreURL:(NSURL *)aStoreURL;
+- (NSURL *)newDocumentURL;
+- (void)setNewDocumentURL:(NSURL *)URL;
+
+- (KTDocument *)newDocument;
+- (void)setNewDocument:(KTDocument *)document;
+
+- (NSManagedObjectModel *)newManagedObjectModel;
+- (NSManagedObjectContext *)newManagedObjectContext;
 
 - (NSMutableDictionary *)objectIDCache;
 - (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache;
