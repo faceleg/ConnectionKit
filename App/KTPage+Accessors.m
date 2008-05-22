@@ -586,4 +586,19 @@
 	return NO;
 }
 
+#pragma mark -
+#pragma mark KVC
+
+- (void)setNilValueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"includeSidebar"])
+    {
+        [self setIncludeSidebar:NO];
+    }
+    else
+    {
+        [super setNilValueForKey:key];
+    }
+}
+
 @end

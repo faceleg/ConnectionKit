@@ -444,7 +444,10 @@
     NSManagedObject *aChildPage;
     while (aChildPage = [childrenEnumerator nextObject])
     {
-        [self migratePage:aChildPage asNextChildOfPage:newPage error:error];
+        if (![self migratePage:aChildPage asNextChildOfPage:newPage error:error])
+        {
+            return NO;
+        }
     }
     
     
@@ -459,7 +462,15 @@
     NSString *pluginIdentifier = [oldPage valueForKey:@"pluginIdentifier"];
     pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
     KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
-    OBASSERT(plugin);
+    
+    if (!plugin)
+    {
+        *error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+                                     code:KareliaError
+                     localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
+        
+        return NO;
+    }
     
     KTPage *newPage = [KTPage insertNewPageWithParent:newParent plugin:plugin];
     
