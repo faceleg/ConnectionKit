@@ -41,6 +41,9 @@
 // this returns the fileName that the original file will be renamed to
 + (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
 
++ (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
+
+
 // this is the workhorse
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
 

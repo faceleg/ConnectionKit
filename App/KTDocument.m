@@ -671,7 +671,7 @@
 {
 	OBASSERT(inURL);
 	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"_Media" isDirectory:YES];
+	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;

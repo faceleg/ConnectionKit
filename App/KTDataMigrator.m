@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTDocument.h"
+#import "KTElementPlugin.h"
 #import "KTStoredArray.h"
 #import "KTStoredDictionary.h"
 #import "KTStoredSet.h"
@@ -209,6 +210,22 @@
     [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
 }
 
++ (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier
+{
+    NSString *result = oldIdentifier;
+    
+    if ([oldIdentifier isEqualToString:@"sandvox.TextPage"])
+    {
+        result = @"sandvox.RichTextElement";
+    }
+    
+    return result;
+}
+
+
+#pragma mark -
+#pragma mark Instance Methods
+
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
 {
 	// Set up old model and Core Data stack
@@ -220,8 +237,15 @@
 														   model:[self oldManagedObjectModel]]];
 	
     
-    // Set up new document
-    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:nil error:error];
+    // Set up the new document
+    NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:error] firstObject];
+    if (!oldRoot) return NO;
+    
+    NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
+    NSString *newRootPluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
+    KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
+    
+    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:newRootPlugin error:error];
     if (newDoc)
     {
         [self setNewDocument:newDoc];
