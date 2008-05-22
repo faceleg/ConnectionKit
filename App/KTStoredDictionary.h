@@ -26,13 +26,6 @@
 	// storage type is determined by asking if value isKindOfClass:NSString
 }
 
-+ (id)dictionaryInManagedObjectContext:(KTManagedObjectContext *)aContext 
-							entityName:(NSString *)anEntityName;
-
-+ (id)dictionaryWithDictionary:(id)aDictionary 
-		inManagedObjectContext:(KTManagedObjectContext *)aContext 
-					entityName:(NSString *)anEntityName;
-
 /*! returns NSDictionary of entries */
 - (NSDictionary *)dictionary;
 
@@ -49,24 +42,12 @@
 - (NSArray *)allValues;
 
 
-#pragma mark NSMutableDictionary-like primitives
-
-- (void)setObject:(id)anObject forKey:(id)aKey;
-- (void)removeObjectForKey:(id)aKey;
-- (void)removeObjectsForKeys:(NSArray *)aKeyArray;
-
-- (void)removeAllObjects;
-
-- (void)addEntriesFromDictionary:(id)otherDictionary;
-- (void)replaceAllObjectsWithEntriesFromDictionary:(id)otherDictionary;
-
 #pragma mark key-value trickery
 
 // these should allow valueForKey: and setValueForKey: to work 
 // for entries in the "dictionary" as long as neither key nor entry
 // is used as aKey
 - (id)valueForUndefinedKey:(NSString *)aKey;
-- (void)setValue:(id)aValue forUndefinedKey:(NSString *)aKey;
 
 #pragma mark support
 
