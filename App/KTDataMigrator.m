@@ -258,84 +258,62 @@
 	
     
 	// Migrate
-	TJT((@"saving new context..."));
-	if ( [[self newManagedObjectContext] save:error] )
-	{
-        // copy metadata and update the new context to the new model version
-        TJT((@"migrating metadata..."));
-        NSDictionary *oldMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:[self oldStoreURL]
-                                                                                              error:nil];
-        NSMutableDictionary *newMetadata = [[NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:[self newStoreURL]
-                                                                                                      error:nil] mutableCopy];
-        [newMetadata addEntriesFromDictionary:oldMetadata];
+	if ([self migrateMedia:error])
+    {
+        // after saving the migrated media, we need to fix up the objectIDCache
+        // since the act of saving invalidates the "newObjectID" by turning the
+        // URIRepresentation from a temporary store ID to a permanent store ID
+        NSMutableArray *mediaArray = [NSMutableArray array];
         
-        NSPersistentStoreCoordinator *coordinator = [[self newManagedObjectContext] persistentStoreCoordinator];
-        id store = [coordinator persistentStoreForURL:[self newStoreURL]];
-        [newMetadata setValue:kKTModelVersion forKey:kKTMetadataModelVersionKey];
-        [coordinator setMetadata:newMetadata forPersistentStore:store];
-		[newMetadata release];
-        TJT((@"saving migrated metadata..."));
-		
+        NSEnumerator *e = [[self objectIDCache] keyEnumerator];
+        NSString *oldObjectID;
+        while ( oldObjectID = [e nextObject] )
+        {
+            NSString *newObjectID = [[self objectIDCache] valueForKey:oldObjectID];
+            
+            KTMedia *newMedia = (KTMedia *)[[self newManagedObjectContext] objectWithURIRepresentationString:newObjectID];
+            OBASSERTSTRING((nil != newMedia), @"did not find newMedia in context!");
+            
+            NSMutableDictionary *mediaMap = [NSMutableDictionary dictionary];
+            [mediaMap setValue:newMedia forKey:@"newMedia"];
+            [mediaMap setValue:oldObjectID forKey:@"oldObjectID"];
+            [mediaArray addObject:mediaMap];
+        }
+        
+        TJT((@"saving migrated Media..."));
+        
         if ( [[self newManagedObjectContext] save:error] )
         {
-            if ( [self migrateMedia:error] )
+            e = [mediaArray objectEnumerator];
+            NSDictionary *mediaMap;
+            while ( mediaMap = [e nextObject] )
             {
-				// after saving the migrated media, we need to fix up the objectIDCache
-				// since the act of saving invalidates the "newObjectID" by turning the
-				// URIRepresentation from a temporary store ID to a permanent store ID
-				NSMutableArray *mediaArray = [NSMutableArray array];
-				
-				NSEnumerator *e = [[self objectIDCache] keyEnumerator];
-				NSString *oldObjectID;
-				while ( oldObjectID = [e nextObject] )
-				{
-					NSString *newObjectID = [[self objectIDCache] valueForKey:oldObjectID];
-					
-					KTMedia *newMedia = (KTMedia *)[[self newManagedObjectContext] objectWithURIRepresentationString:newObjectID];
-					OBASSERTSTRING((nil != newMedia), @"did not find newMedia in context!");
-					
-					NSMutableDictionary *mediaMap = [NSMutableDictionary dictionary];
-					[mediaMap setValue:newMedia forKey:@"newMedia"];
-					[mediaMap setValue:oldObjectID forKey:@"oldObjectID"];
-					[mediaArray addObject:mediaMap];
-				}
-				
-                TJT((@"saving migrated Media..."));
-				
-                if ( [[self newManagedObjectContext] save:error] )
+                KTMedia *newMedia = [mediaMap objectForKey:@"newMedia"];
+                NSString *oldObjectID2 = [mediaMap objectForKey:@"oldObjectID"];
+                
+                [[self objectIDCache] setValue:[newMedia URIRepresentationString] 
+                                        forKey:oldObjectID2];		
+            }
+            if ( [self migratePages:error] )
+            {
+                if ( [self migrateDocmentInfo:error] )
                 {
-					e = [mediaArray objectEnumerator];
-					NSDictionary *mediaMap;
-					while ( mediaMap = [e nextObject] )
-					{
-						KTMedia *newMedia = [mediaMap objectForKey:@"newMedia"];
-						NSString *oldObjectID2 = [mediaMap objectForKey:@"oldObjectID"];
-						
-						[[self objectIDCache] setValue:[newMedia URIRepresentationString] 
-												forKey:oldObjectID2];		
-					}
-					if ( [self migratePages:error] )
-					{
-						if ( [self migrateDocmentInfo:error] )
-						{
-							TJT((@"saving migrated objects..."));
-							if ( [[self newManagedObjectContext] save:error] )
-							{
-								return YES;
-							}
-						}
-					}
-                }	
-            }	
-        }
-    }
-	
-	if ( nil != *error )
-	{
-		TJT((@"error: %@", *error));
-	}
+                    TJT((@"saving migrated objects..."));
+                    if ( [[self newManagedObjectContext] save:error] )
+                    {
+                        return YES;
+                    }
+                }
+            }
+        }	
+    }	
     
-	return NO;
+    if ( nil != *error )
+    {
+        TJT((@"error: %@", *error));
+    }
+    
+    return NO;
 }
 
 #pragma mark attribute migration
