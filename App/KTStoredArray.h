@@ -27,29 +27,10 @@
 	// storage type is determined by asking if value isKindOfClass:NSString
 }
 
-+ (id)arrayInManagedObjectContext:(KTManagedObjectContext *)aContext 
-					   entityName:(NSString *)anEntityName;
-
-+ (id)arrayWithArray:(id)anArray inManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName;
-
 #pragma mark NSArray primitives
 
 - (unsigned)count;
 - (id)objectAtIndex:(unsigned)index;
-
-#pragma mark NSMutableArray primitives
-
-- (void)addObject:(id)anObject;
-- (void)copyObject:(NSManagedObject *)anObject;
-- (void)insertObject:(id)anObject atIndex:(unsigned)index;
-- (void)removeLastObject;
-- (void)removeObjectAtIndex:(unsigned)index;
-- (void)replaceObjectAtIndex:(unsigned)index withObject:(id)anObject;
-
-- (void)removeAllObjects;
-
-- (void)addObjectsFromArray:(NSArray *)anArray;  // adds to end of array
-- (void)copyObjectsFromArray:(NSArray *)anArray; // maintains same ordering
 
 /*! returns the underlying values of the stored array, according to ordering */
 - (NSArray *)allValues;

@@ -14,45 +14,11 @@
 
 @implementation KTStoredSet
 
-#pragma mark constructors
-
-+ (id)setInManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName
-{
-	[aContext lockPSCAndSelf];
-	id set = [NSEntityDescription insertNewObjectForEntityForName:anEntityName inManagedObjectContext:aContext];
-	[aContext unlockPSCAndSelf];
-	return set;
-}
-
-+ (id)setWithArray:(NSArray *)anArray inManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName
-{
-	[aContext lockPSCAndSelf];
-	id set = [self setInManagedObjectContext:aContext entityName:anEntityName];
-	[set copyObjectsFromArray:anArray];
-	[aContext unlockPSCAndSelf];
-	return set;
-}
-
-+ (id)setWithSet:(id)aSet inManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName
-{
-	[aContext lockPSCAndSelf];
-	id set = [self setInManagedObjectContext:aContext entityName:anEntityName];
-	[set copyObjectsFromArray:[aSet allObjects]];
-	[aContext unlockPSCAndSelf];
-	return set;
-}
-
 #pragma mark value accessors
 
 - (NSMutableSet *)set
 {
 	return [NSMutableSet setWithArray:[self allObjects]];
-}
-
-- (void)setSet:(id)aSet
-{
-	[self removeAllObjects];
-	[self copyObjectsFromArray:[aSet allObjects]];
 }
 
 #pragma mark NSSet primitives
@@ -102,16 +68,6 @@
 - (BOOL)containsObject:(id)anObject
 {
 	return (nil != [self member:anObject]) ? YES : NO;
-}
-
-#pragma mark KTStoredArray overrides
-
-- (void)addObject:(id)anObject
-{
-	if ( ![self member:anObject] )
-	{
-		[super addObject:anObject];
-	}
 }
 
 @end

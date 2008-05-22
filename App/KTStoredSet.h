@@ -24,15 +24,10 @@
     // a gloss on managing "items" in a KTStoredArray
 }
 
-+ (id)setInManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName;
-+ (id)setWithArray:(NSArray *)anArray inManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName;
-+ (id)setWithSet:(id)aSet inManagedObjectContext:(KTManagedObjectContext *)aContext entityName:(NSString *)anEntityName;
-
 #pragma mark value accessors
 
 /*! returns an NSMutableSet of the internal array contents */
 - (NSMutableSet *)set;
-- (void)setSet:(id)aSet;
 
 #pragma mark NSSet primitives
 

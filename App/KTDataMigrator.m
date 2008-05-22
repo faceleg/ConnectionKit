@@ -49,6 +49,8 @@
 
 - (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject;
 
+// Generic migration methods
+- (NSSet *)matchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
 - (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 
@@ -56,6 +58,7 @@
 											toObject:(NSManagedObject *)managedObjectB;
 
 
+// Page migration
 - (BOOL)migrateRoot:(NSError **)error;
 
 - (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
@@ -462,98 +465,40 @@
 }
 
 #pragma mark -
-#pragma mark Attributes & Relationships Migration
-
-/*! copies attribute values from managedObjectA to managedObjectB that exist in both entities */
-- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)oldObject 
-								   toObject:(NSManagedObject *)newObject
-{
-    // get the array of attribute keys and set the items accordingly
-	NSSet *oldAttributeKeys = [[NSSet alloc] initWithArray:[[oldObject entity] attributeKeys]];
-	NSSet *newAttributeKeys = [[NSSet alloc] initWithArray:[[newObject entity] attributeKeys]];
-	
-    NSMutableSet *matchingKeys = [oldAttributeKeys mutableCopy];
-    [matchingKeys intersectSet:newAttributeKeys];
-    
-    [self migrateAttributes:matchingKeys fromObject:oldObject toObject:newObject];
-    
-    [matchingKeys release];
-    [oldAttributeKeys release];
-    [newAttributeKeys release];
-}
-
-/*  Migrates the specified attributes from one object to another.
- *  The migration is clever enough to key-value validation; invalid values are ignored.
- */
-- (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
-{
-    // Loop through the attributes
-    NSEnumerator *keysEnumerator = [attributeKeys objectEnumerator];
-    NSString *anAttributeKey;
-    while (anAttributeKey = [keysEnumerator nextObject])
-	{
-        id aValue = [oldObject valueForKey:anAttributeKey];
-        
-        // Only store the value if it's valid
-        if ([newObject validateValue:&aValue forKey:anAttributeKey error:NULL])
-        {
-            [newObject setValue:aValue forKey:anAttributeKey];
-        }
-        else
-        {
-            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@", anAttributeKey, oldObject, newObject);
-        }
-    }
-}
-
-
-- (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
-											toObject:(NSManagedObject *)managedObjectB
-{
-	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
-	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
-	
-	// root
-	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
-	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
-	NSManagedObject *newRoot = [[managedObjectB managedObjectContext] objectWithURIRepresentationString:newRootURIString];
-	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
-	[managedObjectB setValue:newRoot forKey:@"root"];
-	
-	// pluginProperties	
-	[self migrateStorageRelationshipNamed:@"pluginProperties"
-							   fromObject:managedObjectA
-								 toObject:managedObjectB];
-	
-	// mediaRefs
-	NSSet *mediaRefsA = [managedObjectA valueForKey:@"mediaRefs"];
-	if ( [mediaRefsA count] > 0 )
-	{
-		NSMutableSet *mediaRefsB = [managedObjectB mutableSetValueForKey:@"mediaRefs"];
-		NSEnumerator *e = [mediaRefsA objectEnumerator];
-		NSManagedObject *mediaRefA = nil;
-		while ( mediaRefA = [e nextObject] )
-		{
-			NSManagedObject *mediaRefB = [self correspondingObjectForObject:mediaRefA];
-			if ( nil == mediaRefB )
-			{
-				mediaRefB = [NSEntityDescription insertNewObjectForEntityForName:@"MediaRef"
-														  inManagedObjectContext:[managedObjectB managedObjectContext]];
-				OBASSERTSTRING((nil != mediaRefB), @"mediaRefB cannot be nil!");
-				[[self objectIDCache] setValue:[mediaRefB URIRepresentationString] forKey:[mediaRefA URIRepresentationString]];
-			}
-			[self migrateFromMediaRef:mediaRefA toMediaRef:mediaRefB];
-			[mediaRefsB addObject:mediaRefB];
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark Page Migration
 
+/*  Imports an old page and converts it to a new page. The new page must already have been created.
+ *  This method operates recursively, importing the children of the old page and so on.
+ */
 - (BOOL)migratePage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
 {
-    return NO;
+    // Migrate the matching keys. However, there's a couple of special cases we should NOT import.
+    NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPage toObject:newPage] mutableCopy];
+    [matchingKeys removeObject:@"pluginIdentifier"];
+    [matchingKeys removeObject:@"pluginVersion"];
+    [matchingKeys removeObject:@"uniqueID"];
+    [matchingKeys removeObject:@"isStale"];
+    
+    [self migrateAttributes:matchingKeys fromObject:oldPage toObject:newPage];
+    
+    [matchingKeys release];
+    
+    
+    // Keywords
+    KTStoredArray *keywords = [oldPage valueForKey:@"keywords"];
+    [newPage setKeywords:[keywords allValues]];
+    
+    
+    // Need to deal with code injection
+    
+    
+    // Need to handle children
+    
+    
+    // Need to handle pagelets
+    
+    
+    return YES;
 }
 
 /*  Root is special because it contains a bunch of properties which now belong on KTMaster.
@@ -981,6 +926,101 @@
     
     
     return YES;
+}
+
+#pragma mark -
+#pragma mark Generic Migration methods
+
+/*  Compares two objects to find their common attributes.
+ */
+- (NSSet *)matchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
+{
+    NSSet *oldAttributeKeys = [[NSSet alloc] initWithArray:[[oldObject entity] attributeKeys]];
+	NSSet *newAttributeKeys = [[NSSet alloc] initWithArray:[[newObject entity] attributeKeys]];
+	
+    NSMutableSet *buffer = [oldAttributeKeys mutableCopy];
+    [buffer intersectSet:newAttributeKeys];
+    
+    // Tidy up
+    [oldAttributeKeys release];
+    [newAttributeKeys release];
+    
+    NSSet *result = [[buffer copy] autorelease];
+    [buffer release];
+    return result;
+}
+
+/*  Copies attribute values from managedObjectA to managedObjectB that exist in both entities */
+- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
+{
+    NSSet *matchingKeys = [self matchingAttributesFromObject:oldObject toObject:newObject];
+    [self migrateAttributes:matchingKeys fromObject:oldObject toObject:newObject];
+}
+
+/*  Migrates the specified attributes from one object to another.
+ *  The migration is clever enough to key-value validation; invalid values are ignored.
+ */
+- (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
+{
+    // Loop through the attributes
+    NSEnumerator *keysEnumerator = [attributeKeys objectEnumerator];
+    NSString *anAttributeKey;
+    while (anAttributeKey = [keysEnumerator nextObject])
+	{
+        id aValue = [oldObject valueForKey:anAttributeKey];
+        
+        // Only store the value if it's valid
+        if ([newObject validateValue:&aValue forKey:anAttributeKey error:NULL])
+        {
+            [newObject setValue:aValue forKey:anAttributeKey];
+        }
+        else
+        {
+            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@", anAttributeKey, oldObject, newObject);
+        }
+    }
+}
+
+
+- (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
+											toObject:(NSManagedObject *)managedObjectB
+{
+	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
+	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
+	
+	// root
+	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
+	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
+	NSManagedObject *newRoot = [[managedObjectB managedObjectContext] objectWithURIRepresentationString:newRootURIString];
+	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
+	[managedObjectB setValue:newRoot forKey:@"root"];
+	
+	// pluginProperties	
+	[self migrateStorageRelationshipNamed:@"pluginProperties"
+							   fromObject:managedObjectA
+								 toObject:managedObjectB];
+	
+	// mediaRefs
+	NSSet *mediaRefsA = [managedObjectA valueForKey:@"mediaRefs"];
+	if ( [mediaRefsA count] > 0 )
+	{
+		NSMutableSet *mediaRefsB = [managedObjectB mutableSetValueForKey:@"mediaRefs"];
+		NSEnumerator *e = [mediaRefsA objectEnumerator];
+		NSManagedObject *mediaRefA = nil;
+		while ( mediaRefA = [e nextObject] )
+		{
+			NSManagedObject *mediaRefB = [self correspondingObjectForObject:mediaRefA];
+			if ( nil == mediaRefB )
+			{
+				mediaRefB = [NSEntityDescription insertNewObjectForEntityForName:@"MediaRef"
+														  inManagedObjectContext:[managedObjectB managedObjectContext]];
+				OBASSERTSTRING((nil != mediaRefB), @"mediaRefB cannot be nil!");
+				[[self objectIDCache] setValue:[mediaRefB URIRepresentationString] forKey:[mediaRefA URIRepresentationString]];
+			}
+			[self migrateFromMediaRef:mediaRefA toMediaRef:mediaRefB];
+			[mediaRefsB addObject:mediaRefB];
+		}
+	}
 }
 
 #pragma mark -
