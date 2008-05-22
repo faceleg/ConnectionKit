@@ -12,10 +12,13 @@
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
+#import "KTMaster.h"
+#import "KTPage.h"
+#import "KTUtilities.h"
+
 #import "KTStoredArray.h"
 #import "KTStoredDictionary.h"
 #import "KTStoredSet.h"
-#import "KTUtilities.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -45,8 +48,8 @@
 
 - (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject;
 
-- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA 
-								   toObject:(NSManagedObject *)managedObjectB;
+- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
+- (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 
 - (void)migrateStorageRelationshipNamed:(NSString *)aRelationshipName
 							 fromObject:(NSManagedObject *)managedObjectA
@@ -297,6 +300,12 @@
 	myOldStoreURL = aStoreURL;
 }
 
+- (NSManagedObject *)oldDocumentInfo
+{
+    KTDocumentInfo *result = [[[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:nil] firstObject];
+    return result;
+}
+
 - (NSMutableDictionary *)objectIDCache 
 { 
 	return myObjectIDCache;
@@ -378,6 +387,21 @@
         return NO;
     }
     
+    if (![self migrateRoot:error])
+    {
+        return NO;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 	if ([self migrateMedia:error])
     {
@@ -441,30 +465,35 @@
 #pragma mark Attributes & Relationships Migration
 
 /*! copies attribute values from managedObjectA to managedObjectB that exist in both entities */
-- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA 
-								   toObject:(NSManagedObject *)managedObjectB
+- (void)migrateMatchingAttributesFromObject:(NSManagedObject *)oldObject 
+								   toObject:(NSManagedObject *)newObject
 {
     // get the array of attribute keys and set the items accordingly
-	NSArray *attributeKeysA = [[managedObjectA entity] attributeKeys];
-	NSArray *attributeKeysB = [[managedObjectB entity] attributeKeys];
+	NSSet *oldAttributeKeys = [[NSSet alloc] initWithArray:[[oldObject entity] attributeKeys]];
+	NSSet *newAttributeKeys = [[NSSet alloc] initWithArray:[[newObject entity] attributeKeys]];
 	
-	// loop through the keys
-    int i, count = [attributeKeysB count];
-    NSString *attributeName;
-    for ( i=0; i<count; i++ ) 
-	{
-        // Get the attribute name, then copy the value
-        attributeName = [attributeKeysB objectAtIndex:i];
-		if ( [attributeKeysA containsObjectEqualToString:attributeName] )
-		{
-			id value = [managedObjectA valueForKey:attributeName];
-			if ( nil != value )
-			{
-				[managedObjectB setValue:value forKey:attributeName];
-			}
-		}
-    }	
+    NSMutableSet *matchingKeys = [oldAttributeKeys mutableCopy];
+    [matchingKeys intersectSet:newAttributeKeys];
+    
+    [self migrateAttributes:matchingKeys fromObject:oldObject toObject:newObject];
+    
+    [matchingKeys release];
+    [oldAttributeKeys release];
+    [newAttributeKeys release];
 }
+
+- (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
+{
+    // loop through the keys
+    NSEnumerator *keysEnumerator = [attributeKeys objectEnumerator];
+    NSString *anAttributeKey;
+    while (anAttributeKey = [keysEnumerator nextObject])
+	{
+        id aValue = [oldObject valueForKey:anAttributeKey];
+        [newObject setValue:aValue forKey:anAttributeKey];
+    }
+}
+
 
 - (void)migrateStorageRelationshipNamed:(NSString *)aRelationshipName
 							 fromObject:(NSManagedObject *)managedObjectA
@@ -556,7 +585,59 @@
 }
 
 #pragma mark -
-#pragma mark Element Migration
+#pragma mark Page Migration
+
+- (BOOL)migratePage:(KTPage *)page error:(NSError **)error
+{
+    return NO;
+}
+
+/*  Root is special because it contains a bunch of properties which now belong on KTMaster.
+ *  Otherwise, we can do normal page migration.
+ */
+- (BOOL)migrateRoot:(NSError **)error
+{
+    // Migrate simple properties from Root to the Master
+    static NSArray *sMasterProperties;
+    if (!sMasterProperties)
+    {
+        sMasterProperties = [[NSArray alloc] initWithObjects:
+                             @"author",
+                             @"charset",
+                             @"copyrightHTML",
+                             @"enableImageReplacement",
+                             @"haloscanUserName",
+                             @"headerImageDescription",
+                             @"headerImageHidesH1",
+                             @"language",
+                             @"siteSubtitleHTML",
+                             @"siteTitleHTML",
+                             @"supportTrackbacks",
+                             @"timestampFormat",
+                             @"timestampShowTime",
+                             @"timestampType",
+                             nil];
+    }
+    
+    NSManagedObject *oldRoot = [[self oldDocumentInfo] valueForKey:@"root"];
+    OBASSERT(oldRoot);
+    KTMaster *newMaster = [[[[self newDocument] documentInfo] root] master];
+    
+    [self migrateMatchingAttributesFromObject:oldRoot toObject:newMaster];
+    
+    
+    
+    // Special cases
+    @"designBundleIdentifier";
+    @"copyMediaOriginals";
+    @"Code Injection";
+    
+    *error = nil;
+    return NO;
+}
+
+#pragma mark -
+#pragma mark Other Element Migration
 
 - (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											  toObject:(NSManagedObject *)managedObjectB
@@ -927,24 +1008,15 @@
 - (BOOL)migrateDocumentInfo:(NSError **)error
 {
 	// Retrieve document infos
-    KTDocumentInfo *oldDocInfo = [[[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:error] firstObject];
+    NSManagedObject *oldDocInfo = [self oldDocumentInfo];
     if (!oldDocInfo) return NO;
     
     KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
     OBASSERT(newDocInfo);
-    NSDictionary *newDocInfoAttributes = [[newDocInfo entity] attributesByName];
     
     
     // Run through attributes, copying those that still remain.
-    NSEnumerator *oldAttributesEnumerator = [[[oldDocInfo entity] attributesByName] keyEnumerator];
-    NSString *aKey;
-    while (aKey = [oldAttributesEnumerator nextObject])
-    {
-        if ([newDocInfoAttributes objectForKey:aKey])
-        {
-            [newDocInfo setValue:[oldDocInfo valueForKey:aKey] forKey:aKey];
-        }
-    }
+    [self migrateMatchingAttributesFromObject:oldDocInfo toObject:newDocInfo];
     
     
     // Migrate host properties
