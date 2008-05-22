@@ -58,6 +58,9 @@
 - (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											toObject:(NSManagedObject *)managedObjectB;
 
+
+- (BOOL)migrateRoot:(NSError **)error;
+
 - (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											  toObject:(NSManagedObject *)managedObjectB;
 - (NSManagedObject *)migrateElement:(NSManagedObject *)elementA toContainer:(NSManagedObject *)containerB;
@@ -482,15 +485,27 @@
     [newAttributeKeys release];
 }
 
+/*  Migrates the specified attributes from one object to another.
+ *  The migration is clever enough to key-value validation; invalid values are ignored.
+ */
 - (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject
 {
-    // loop through the keys
+    // Loop through the attributes
     NSEnumerator *keysEnumerator = [attributeKeys objectEnumerator];
     NSString *anAttributeKey;
     while (anAttributeKey = [keysEnumerator nextObject])
 	{
         id aValue = [oldObject valueForKey:anAttributeKey];
-        [newObject setValue:aValue forKey:anAttributeKey];
+        
+        // Only store the value if it's valid
+        if ([newObject validateValue:&aValue forKey:anAttributeKey error:NULL])
+        {
+            [newObject setValue:aValue forKey:anAttributeKey];
+        }
+        else
+        {
+            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@", anAttributeKey, oldObject, newObject);
+        }
     }
 }
 
