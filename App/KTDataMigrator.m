@@ -9,6 +9,7 @@
 #import "KTDataMigrator.h"
 
 #import "KT.h"
+#import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
@@ -50,10 +51,6 @@
 
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
 - (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
-
-- (void)migrateStorageRelationshipNamed:(NSString *)aRelationshipName
-							 fromObject:(NSManagedObject *)managedObjectA
-							   toObject:(NSManagedObject *)managedObjectB;
 
 - (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											toObject:(NSManagedObject *)managedObjectB;
@@ -510,54 +507,6 @@
 }
 
 
-- (void)migrateStorageRelationshipNamed:(NSString *)aRelationshipName
-							 fromObject:(NSManagedObject *)managedObjectA
-							   toObject:(NSManagedObject *)managedObjectB
-{
-	OBASSERTSTRING((nil != aRelationshipName), @"aRelationshipName cannot be nil!");
-	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
-	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
-	
-	
-	id storageObjectA = [managedObjectA valueForKey:aRelationshipName];
-	id storageObjectB = [self correspondingObjectForObject:storageObjectA];
-	if ( nil == storageObjectB )
-	{
-		//NSLog(@"migrating %@ for %@", aRelationshipName, [managedObjectA managedObjectDescription]);
-        
-		storageObjectB = [NSEntityDescription insertNewObjectForEntityForName:[[storageObjectA entity] name]
-													   inManagedObjectContext:[managedObjectB managedObjectContext]];
-		OBASSERTSTRING((nil != storageObjectB), @"storageObjectB cannot be nil!");
-		
-		[[self objectIDCache] setValue:[storageObjectB URIRepresentationString] 
-								forKey:[storageObjectA URIRepresentationString]];		
-	}
-	else
-	{
-		//NSLog(@"    again %@ for %@", aRelationshipName, [managedObjectA managedObjectDescription]);
-	}
-    
-	if ( [[storageObjectB class] isEqual:[KTStoredDictionary class]] )
-	{
-		[storageObjectB addEntriesFromDictionary:storageObjectA];
-	}
-	else if ( [[storageObjectB class] isEqual:[KTStoredArray class]] )
-	{
-		[storageObjectB copyObjectsFromArray:storageObjectA];
-	}
-	else if ( [[storageObjectB class] isEqual:[KTStoredSet class]] )
-	{
-		[storageObjectB copyObjectsFromArray:storageObjectA];
-	}
-	else
-	{
-		NSLog(@"Unknown storage class!");
-	}
-	
-	[managedObjectB setValue:storageObjectB forKey:aRelationshipName];
-	OBASSERTSTRING([[storageObjectB valueForKey:@"owner"] isEqual:managedObjectB], @"owner is not set correctly!");
-}
-
 - (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
 											toObject:(NSManagedObject *)managedObjectB
 {
@@ -602,7 +551,7 @@
 #pragma mark -
 #pragma mark Page Migration
 
-- (BOOL)migratePage:(KTPage *)page error:(NSError **)error
+- (BOOL)migratePage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
 {
     return NO;
 }
@@ -613,42 +562,33 @@
 - (BOOL)migrateRoot:(NSError **)error
 {
     // Migrate simple properties from Root to the Master
-    static NSArray *sMasterProperties;
-    if (!sMasterProperties)
-    {
-        sMasterProperties = [[NSArray alloc] initWithObjects:
-                             @"author",
-                             @"charset",
-                             @"copyrightHTML",
-                             @"enableImageReplacement",
-                             @"haloscanUserName",
-                             @"headerImageDescription",
-                             @"headerImageHidesH1",
-                             @"language",
-                             @"siteSubtitleHTML",
-                             @"siteTitleHTML",
-                             @"supportTrackbacks",
-                             @"timestampFormat",
-                             @"timestampShowTime",
-                             @"timestampType",
-                             nil];
-    }
-    
     NSManagedObject *oldRoot = [[self oldDocumentInfo] valueForKey:@"root"];
     OBASSERT(oldRoot);
-    KTMaster *newMaster = [[[[self newDocument] documentInfo] root] master];
+    
+    KTPage *newRoot = [[[self newDocument] documentInfo] root];
+    KTMaster *newMaster = [newRoot master];
     
     [self migrateMatchingAttributesFromObject:oldRoot toObject:newMaster];
     
     
+    // Import the design separately
+    KTDesign *design = [KTDesign pluginWithIdentifier:[oldRoot valueForKey:@"designBundleIdentifier"]];
+    [newMaster setDesign:design];
+    
+    
+    // Media copying is a document setting
+    [[[self newDocument] documentInfo] setCopyMediaOriginals:[oldRoot integerForKey:@"copyMediaOriginals"]];
+    
     
     // Special cases
-    @"designBundleIdentifier";
-    @"copyMediaOriginals";
     @"Code Injection";
     
-    *error = nil;
-    return NO;
+    
+    // Continue with normal page migration
+    BOOL result = [self migratePage:oldRoot toPage:newRoot error:error];
+    
+ 
+    return result;
 }
 
 #pragma mark -
