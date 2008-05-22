@@ -320,7 +320,10 @@
 {
 	id result = nil;
 	
-	[KTDataMigrator upgradeDocumentWithURL:absoluteURL modelVersion:modelVersion error:outError];
+	if ([KTDataMigrator upgradeDocumentWithURL:absoluteURL modelVersion:modelVersion error:outError])
+    {
+        result = [self openDocumentWithContentsOfURL:absoluteURL display:YES error:outError];
+    }
 	
 	return result;
 }

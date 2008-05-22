@@ -396,72 +396,11 @@
     }
     
     
+    // Save the doc and finish up
+    KTDocument *document = [self newDocument];
+    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	if ([self migrateMedia:error])
-    {
-        // after saving the migrated media, we need to fix up the objectIDCache
-        // since the act of saving invalidates the "newObjectID" by turning the
-        // URIRepresentation from a temporary store ID to a permanent store ID
-        NSMutableArray *mediaArray = [NSMutableArray array];
-        
-        NSEnumerator *e = [[self objectIDCache] keyEnumerator];
-        NSString *oldObjectID;
-        while ( oldObjectID = [e nextObject] )
-        {
-            NSString *newObjectID = [[self objectIDCache] valueForKey:oldObjectID];
-            
-            KTMedia *newMedia = (KTMedia *)[[self newManagedObjectContext] objectWithURIRepresentationString:newObjectID];
-            OBASSERTSTRING((nil != newMedia), @"did not find newMedia in context!");
-            
-            NSMutableDictionary *mediaMap = [NSMutableDictionary dictionary];
-            [mediaMap setValue:newMedia forKey:@"newMedia"];
-            [mediaMap setValue:oldObjectID forKey:@"oldObjectID"];
-            [mediaArray addObject:mediaMap];
-        }
-        
-        TJT((@"saving migrated Media..."));
-        
-        if ( [[self newManagedObjectContext] save:error] )
-        {
-            e = [mediaArray objectEnumerator];
-            NSDictionary *mediaMap;
-            while ( mediaMap = [e nextObject] )
-            {
-                KTMedia *newMedia = [mediaMap objectForKey:@"newMedia"];
-                NSString *oldObjectID2 = [mediaMap objectForKey:@"oldObjectID"];
-                
-                [[self objectIDCache] setValue:[newMedia URIRepresentationString] 
-                                        forKey:oldObjectID2];		
-            }
-            if ( [self migratePages:error] )
-            {
-                if ( [self migrateDocmentInfo:error] )
-                {
-                    TJT((@"saving migrated objects..."));
-                    if ( [[self newManagedObjectContext] save:error] )
-                    {
-                        return YES;
-                    }
-                }
-            }
-        }	
-    }	
-    
-    if ( nil != *error )
-    {
-        TJT((@"error: %@", *error));
-    }
-    
-    return NO;
+    return result;
 }
 
 #pragma mark -

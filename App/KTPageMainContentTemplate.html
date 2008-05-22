@@ -43,7 +43,7 @@
 									<div class="comments">
 										<p>
 											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=uniqueID]]'); </script></a>[[else4]][[`Comment]][[endif4]]
-[[if root.supportTrackbacks]]
+[[if master.supportTrackbacks]]
 											<script type="text/javascript">document.write(' | ');</script>
 											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=uniqueID]]'); </script></a>[[else5]][[`Trackback]][[endif5]]
 	<!-- Begin trackback -->
