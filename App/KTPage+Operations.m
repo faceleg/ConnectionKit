@@ -26,6 +26,21 @@
 
 @implementation KTPage ( Operations )
 
+- (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive
+{
+    [self setValue:value forKey:key];
+    
+    if (recursive)
+    {
+        NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
+        KTPage *aChildPage;
+        while (aChildPage = [childrenEnumerator nextObject])
+        {
+            [aChildPage setValue:value forKey:key recursive:YES];
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark Perform Selector
 

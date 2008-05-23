@@ -179,6 +179,8 @@
 
 @interface KTPage (Operations)
 
+- (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive;
+
 // Perform selector
 - (void)makeComponentsPerformSelector:(SEL)selector
 						   withObject:(void *)anObject

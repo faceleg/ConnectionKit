@@ -22,6 +22,7 @@
 #import "KTStoredSet.h"
 
 #import "NSArray+Karelia.h"
+#import "NSData+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -62,8 +63,12 @@
 
 
 // Element migration
+- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(BOOL)propogate
+                    fromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
+
 - (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
+
 - (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
 
 + (NSSet *)elementAttributesToIgnore;
@@ -271,7 +276,7 @@
     
     NSString *result = [sPluginIdentifiers objectForKey:oldIdentifier];
     if (!result) result = oldIdentifier;
-        
+    
     OBPOSTCONDITION(result);
     return result;
 }
@@ -465,15 +470,53 @@
     [newPage setKeywords:[keywords allValues]];
     
     
-    // Need to deal with code injection
-    
-    
+    // Migrate Code Injection from the weird old addString2 hack.
+    NSString *addString2 = [oldPage valueForKey:@"addString2"];
+    if (addString2)
+    {
+        NSDictionary *addString2Dictionary = [NSData foundationObjectFromEncodedString:addString2];
+        
+        if (![self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertBody"]
+                                  toKey:@"codeInjectionBodyTag"
+                              propogate:[addString2Dictionary boolForKey:@"propagateInsertBody"]
+                               fromPage:oldPage
+                                 toPage:newPage
+                                  error:error]) return NO;
+        
+        if (![self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertEndBody"]
+                                  toKey:@"codeInjectionBodyTagEnd"
+                              propogate:[addString2Dictionary boolForKey:@"propagateInsertEndBody"]
+                               fromPage:oldPage
+                                 toPage:newPage
+                                  error:error]) return NO;
+        
+        if (![self migrateCodeInjection:[oldPage valueForKey:@"insertPrelude"]
+                                  toKey:@"codeInjectionBeforeHTML"
+                              propogate:[addString2Dictionary boolForKey:@"propagateInsertPrelude"]
+                               fromPage:oldPage
+                                 toPage:newPage
+                                  error:error]) return NO;
+        
+        if (![self migrateCodeInjection:[oldPage valueForKey:@"insertHead"]
+                                  toKey:@"codeInjectionHeadArea"
+                              propogate:[addString2Dictionary boolForKey:@"propagateInsertHead"]
+                               fromPage:oldPage
+                                 toPage:newPage
+                                  error:error]) return NO;
+    }
+        
+        
     // Migrate custom summary if it exists
     NSString *customSummary = [oldPage valueForKey:@"summaryHTML"];
     if (customSummary && [customSummary isEqualToString:@""])
     {
         [newPage setCustomSummaryHTML:customSummary];
     }
+    
+    
+    // Migrate the special addX properties
+    BOOL excludeFromSitemap = [oldPage boolForKey:@"addBool1"];
+    [newPage setBool:!excludeFromSitemap forKey:@"includeInSitemap"];
     
     
     // Import plugin-specific properties
@@ -493,6 +536,31 @@
     // Create new KTPage objects for each child page and then recursively migrate them too
     BOOL result = [self migrateChildrenFromPage:oldPage toPage:newPage error:error];
     return result;
+}
+
+- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(BOOL)propogate
+                    fromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
+{
+    if (code && ![code isEqualToString:@""])
+    {
+        if (propogate)
+        {
+            if ([newPage isRoot])
+            {
+                [[newPage master] setValue:code forKey:newKey];
+            }
+            else
+            {
+                [newPage setValue:code forKey:newKey recursive:YES];
+            }
+        }
+        else
+        {
+            [newPage setValue:code forKey:newKey];
+        }
+    }
+    
+    return YES;
 }
 
 /*  Migrate the children of one page to another
@@ -541,7 +609,8 @@
     NSManagedObject *oldRoot = [[self oldDocumentInfo] valueForKey:@"root"];
     OBASSERT(oldRoot);
     
-    KTPage *newRoot = [[[self newDocument] documentInfo] root];
+    KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
+    KTPage *newRoot = [newDocInfo root];
     KTMaster *newMaster = [newRoot master];
     
     [self migrateMatchingAttributesFromObject:oldRoot toObject:newMaster];
@@ -552,14 +621,29 @@
     [newMaster setDesign:design];
     
     
-    // Media copying is a document setting
-    [[[self newDocument] documentInfo] setCopyMediaOriginals:[oldRoot integerForKey:@"copyMediaOriginals"]];
+    // Media copying and google stuff are document settings
+    [newDocInfo setCopyMediaOriginals:[oldRoot integerForKey:@"copyMediaOriginals"]];
+    
+    BOOL generateGoogleSitemap = [oldRoot boolForKey:@"addBool2"];
+    [newDocInfo setBool:generateGoogleSitemap forKey:@"generateGoogleSitemap"];
+    
+    
+    // Migrate the weird old addString2 hack.
+    NSString *addString2 = [oldRoot valueForKey:@"addString2"];
+    if (addString2)
+    {
+        NSDictionary *addString2Dictionary = [NSData foundationObjectFromEncodedString:addString2];
+		
+        [newDocInfo setValue:[addString2Dictionary valueForKey:@"googleAnalytics"] forKey:@"googleAnalyticsCode"];
+        [newDocInfo setValue:[addString2Dictionary valueForKey:@"googleSiteVerification"] forKey:@"googleSiteVerification"];
+        // TODO: IMPORT BANNER ID.
+	}
     
     
     // Continue with normal page migration
     BOOL result = [self migratePage:oldRoot toPage:newRoot error:error];
     
- 
+    
     return result;
 }
 
