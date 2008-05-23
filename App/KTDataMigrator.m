@@ -227,15 +227,54 @@
     [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
 }
 
+
+/*  Provides a lookup table for converting old plugin identifiers to new.
+ */
 + (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier
 {
-    NSString *result = oldIdentifier;
+    OBPRECONDITION(oldIdentifier);
     
-    if ([oldIdentifier isEqualToString:@"sandvox.TextPage"])
+    static NSDictionary *sPluginIdentifiers;
+    if (!sPluginIdentifiers)
     {
-        result = @"sandvox.RichTextElement";
+        sPluginIdentifiers = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              @"sandvox.RichTextElement", @"sandvox.TextPage",
+                              @"sandvox.RichTextElement", @"sandvox.TextPagelet",
+                              @"sandvox.RichTextElement", @"sandvox.TextElement",
+                              @"sandvox.ImageElement", @"sandvox.ImageElement",
+                              @"sandvox.ImageElement", @"sandvox.PhotoPagelet",
+                              @"sandvox.ImageElement", @"sandvox.PhotoPage",
+                              @"sandvox.AmazonElement", @"sandvox.AmazonList",
+                              @"sandvox.BadgeElement", @"sandvox.BadgePagelet",
+                              @"sandvox.ContactElement", @"sandvox.ContactElement",
+                              @"sandvox.ContactElement", @"sandvox.ContactPage",
+                              @"sandvox.ContactElement", @"sandvox.ContactPagelet",
+                              @"sandvox.DeliciousElement", @"sandvox.DeliciousPagelet",
+                              @"sandvox.DiggElement", @"sandvox.DiggPagelet",
+                              @"sandvox.DownloadElement", @"sandvox.FileDownload",
+                              @"sandvox.FeedElement", @"sandvox.FeedPagelet",
+                              @"sandvox.FlickrElement", @"sandvox.FlickrPagelet",
+                              @"sandvox.HTMLElement", @"sandvox.HTMLElement",
+                              @"sandvox.HTMLElement", @"sandvox.HTMLPage",
+                              @"sandvox.HTMLElement", @"sandvox.HTMLPagelet",
+                              @"sandvox.IFrameElement", @"sandvox.IFramePagelet",
+                              @"sandvox.IMStatusElement", @"sandvox.IMPagelet",
+                              @"sandvox.IndexElement", @"sandvox.IndexPagelet",
+                              @"sandvox.LinkElement", @"sandvox.LinkPage",
+                              @"sandvox.LinkListElement", @"sandvox.LinkListPagelet",
+                              @"sandvox.PageCounterElement", @"com.karelia.pagelet.PageCounter",
+                              @"sandvox.RSSBadgeElement", @"sandvox.RSSBadgePagelet",
+                              @"sandvox.SiteMapElement", @"sandvox.SiteMapPage",
+                              @"sandvox.VideoElement", @"sandvox.VideoElement",
+                              @"sandvox.VideoElement", @"sandvox.MoviePage",
+                              @"sandvox.VideoElement", @"sandvox.MoviePagelet",
+                              nil];
     }
     
+    NSString *result = [sPluginIdentifiers objectForKey:oldIdentifier];
+    if (!result) result = oldIdentifier;
+        
+    OBPOSTCONDITION(result);
     return result;
 }
 
@@ -431,6 +470,9 @@
     
     
     // Need to deal with code injection
+    
+    
+    // Need to handle plugin properties
     
     
     // Need to handle pagelets
