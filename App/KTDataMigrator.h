@@ -71,3 +71,9 @@
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
 
 @end
+
+
+#import "KTAbstractElement.h"
+@interface KTAbstractElement (KTDataMigratorAdditions)
+- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties;
+@end

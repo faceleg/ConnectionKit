@@ -59,19 +59,13 @@
 											toObject:(NSManagedObject *)managedObjectB;
 
 
-// Page migration
+// Element migration
 - (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
-
-- (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
-											  toObject:(NSManagedObject *)managedObjectB;
-- (NSManagedObject *)migrateElement:(NSManagedObject *)elementA toContainer:(NSManagedObject *)containerB;
+- (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error;
+- (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error;
 
 
-- (BOOL)migratePages:(NSError **)error;
-
-- (BOOL)migrateFromPage:(NSManagedObject *)pageA toPage:(NSManagedObject *)pageB;
-- (BOOL)migrateFromPagelet:(NSManagedObject *)pageletA toPagelet:(NSManagedObject *)pageletB;
 
 - (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB;
 - (BOOL)migrateMedia:(NSError **)error;
@@ -441,7 +435,8 @@
     KTDocument *document = [self newDocument];
     BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
     
-    return result;
+    *error = nil;
+    return NO;
 }
 
 #pragma mark -
@@ -472,7 +467,8 @@
     // Need to deal with code injection
     
     
-    // Need to handle plugin properties
+    // Import plugin-specific properties
+    [self migrateElementContainer:oldPage toElement:newPage error:error];
     
     
     // Need to handle pagelets
@@ -556,245 +552,34 @@
 }
 
 #pragma mark -
-#pragma mark Other Element Migration
+#pragma mark Pagelet Migration
 
-- (void)migrateElementContainerRelationshipsFromObject:(NSManagedObject *)managedObjectA
-											  toObject:(NSManagedObject *)managedObjectB
-{
-	// elements
-	NSEnumerator *e = [[[managedObjectA valueForKey:@"elements"] allObjects] objectEnumerator];
-	NSManagedObject *elementA = nil;
-	while ( elementA = [e nextObject] )
-	{
-		NSManagedObject *elementB = [self migrateElement:elementA toContainer:managedObjectB];
-		[[managedObjectB mutableSetValueForKey:@"elements"] addObject:elementB];
-	}
-}
+#pragma mark -
+#pragma mark Element Migration
 
-- (NSManagedObject *)migrateElement:(NSManagedObject *)elementA toContainer:(NSManagedObject *)containerB
+- (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
-	// does elementB already exist?
-	NSManagedObject *elementB = [self correspondingObjectForObject:elementA];
-	if ( nil == elementB )
-	{
-		// no elementB, make one
-		elementB = [NSEntityDescription insertNewObjectForEntityForName:@"Element"
-												 inManagedObjectContext:[containerB managedObjectContext]];
-		OBASSERTSTRING((nil != elementB), @"elementB cannot be nil!");
-		[[self objectIDCache] setValue:[elementB URIRepresentationString] forKey:[elementA URIRepresentationString]];
-	}
-	
-	// migrate attributes
-	[self migrateMatchingAttributesFromObject:elementA
-									 toObject:elementB];
-	
-	// migrate AbstractPlugin relationships
-	[self migrateAbstractPluginRelationshipsFromObject:elementA 
-											  toObject:elementB];
-	
-	// set elementB's container relationship
-	[elementB setValue:containerB forKey:@"container"];
-	
-	return elementB;
-}
-
-- (BOOL)migratePages:(NSError **)error
-{
-	TJT((@"migrating Pages..."));
-    
-	BOOL result = YES;
-	
-	// first, find our root
-	NSManagedObject *oldRoot = (NSManagedObject *)[[self oldManagedObjectContext] root];
-	OBASSERTSTRING((nil != oldRoot), @"oldRoot is nil!");
-	// cache it under the name "oldRoot"
-	[[self objectIDCache] setValue:[oldRoot URIRepresentationString] forKey:@"oldRoot"];
-	
-	// second, make a new root
-	NSManagedObject *newRoot = [NSEntityDescription insertNewObjectForEntityForName:@"Root"
-															 inManagedObjectContext:[self newManagedObjectContext]];
-	// cache it for later
-	[[self objectIDCache] setValue:[newRoot URIRepresentationString] forKey:[oldRoot URIRepresentationString]];
-	// cache it under the name "newRoot"
-	[[self objectIDCache] setValue:[newRoot URIRepresentationString] forKey:@"newRoot"];
-    
-	// fetch all Pages
-	NSArray *fetchedObjects = [[self oldManagedObjectContext] allObjectsWithEntityName:@"Page"
-																				 error:error];
-	if ( nil != *error )
-	{
-		return NO;
-	}
-    
-	NSEnumerator *e = [fetchedObjects objectEnumerator];
-	NSManagedObject *oldPage = nil;
-	while ( oldPage = [e nextObject] )
-	{
-		// is newPage already in the cache?
-		NSManagedObject *newPage = [self correspondingObjectForObject:oldPage];
-		if ( nil == newPage )
-		{
-			// no, insert a new Page in newManagedObjectContext
-			newPage = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
-													inManagedObjectContext:[self newManagedObjectContext]];
-			// cache it for later
-			[[self objectIDCache] setValue:[newPage URIRepresentationString] forKey:[oldPage URIRepresentationString]];
-		}
-		
-		result = result && [self migrateFromPage:oldPage toPage:newPage];
-	}
-    
-	return result;
-}
-
-- (BOOL)migrateFromPage:(NSManagedObject *)pageA toPage:(NSManagedObject *)pageB
-{
-	// migrate attributes
-	[self migrateMatchingAttributesFromObject:pageA
-									 toObject:pageB];
-    
-    // 10002: changed shortTitle to fileName
-    NSString *shortTitle = [pageA valueForKey:@"shortTitle"];
-    if ( nil != shortTitle )
+    // 1.5 doesn't support the old nested element hierarchy. Instead we do the import from the subelement
+    NSManagedObject *oldElement = oldElementContainer;
+    NSSet *subelements = [oldElementContainer valueForKey:@"elements"];
+    if ([subelements count] > 0)
     {
-        [pageB setValue:shortTitle forKey:@"fileName"];
+        oldElement = [subelements anyObject];
     }
     
-    // request from Dan, 4/2/06, wrap copyrightHTML in <p>...</p>
-    NSString *copyrightHTML = [pageB valueForKey:@"copyrightHTML"];
-    if ( nil != copyrightHTML )
-    {
-        if ( ![copyrightHTML hasPrefix:@"<p>"] )
-        {
-            copyrightHTML = [NSString stringWithFormat:@"<p>%@", copyrightHTML];
-        }
-        if ( ![copyrightHTML hasSuffix:@"</p>"] )
-        {
-            copyrightHTML = [NSString stringWithFormat:@"%@</p>", copyrightHTML];
-        }
-        [pageB setValue:copyrightHTML forKey:@"copyrightHTML"];
-    }
-	
-	// migrate relationships
-	//  AbstractPlugin
-	[self migrateAbstractPluginRelationshipsFromObject:pageA
-											  toObject:pageB];
-	
-	//  ElementContainer
-	[self migrateElementContainerRelationshipsFromObject:pageA
-												toObject:pageB];
-	
-	//  parent
-	NSManagedObject *parentA = [pageA valueForKey:@"parent"];
-	if ( nil != parentA )
-	{
-		NSManagedObject *parentB = [self correspondingObjectForObject:parentA];
-		if ( nil == parentB )
-		{
-			// create a placeholder and cache it for later population
-			parentB = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
-													inManagedObjectContext:[pageB managedObjectContext]];
-			OBASSERTSTRING((nil != parentB), @"parentB cannot be nil!");
-			[[self objectIDCache] setValue:[parentB URIRepresentationString] forKey:[parentA URIRepresentationString]];
-		}
-		[pageB setValue:parentB forKey:@"parent"];
-		[[parentB mutableSetValueForKey:@"children"] addObject:pageB];
-	}
-	
-	//  children
-	NSEnumerator *e = [[[pageA valueForKey:@"children"] allObjects] objectEnumerator];
-	NSManagedObject *childA = nil;
-	while ( childA = [e nextObject] )
-	{
-		NSManagedObject *childB = [self correspondingObjectForObject:childA];
-		if ( nil == childB )
-		{
-			// create a placeholder and cache it for later population
-			childB = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
-												   inManagedObjectContext:[pageB managedObjectContext]];
-			OBASSERTSTRING((nil != childB), @"childB cannot be nil!");
-			[[self objectIDCache] setValue:[childB URIRepresentationString] forKey:[childA URIRepresentationString]];
-		}
-		[[pageB mutableSetValueForKey:@"children"] addObject:childB];
-		[childB setValue:pageB forKey:@"parent"];
-	}
-	
-	// callouts
-	NSSet *calloutsA = [pageA valueForKey:@"callouts"];
-	if ( [calloutsA count] > 0 )
-	{
-		NSMutableSet *calloutsB = [pageB mutableSetValueForKey:@"callouts"];
-		NSEnumerator *e2 = [calloutsA objectEnumerator];
-		NSManagedObject *calloutA = nil;
-		while ( calloutA = [e2 nextObject] )
-		{
-			NSManagedObject *calloutB = [self correspondingObjectForObject:calloutA];
-			if ( nil == calloutB )
-			{
-				calloutB = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
-														 inManagedObjectContext:[pageB managedObjectContext]];
-				OBASSERTSTRING((nil != calloutB), @"calloutB cannot be nil!");
-				[[self objectIDCache] setValue:[calloutB URIRepresentationString] forKey:[calloutA URIRepresentationString]];
-			}
-			[self migrateFromPagelet:calloutA toPagelet:calloutB];
-			[calloutsB addObject:calloutB];
-		}
-	}
-	
-	// sidebars
-	NSSet *sidebarsA = [pageA valueForKey:@"sidebars"];
-	if ( [sidebarsA count] > 0 )
-	{
-		NSMutableSet *sidebarsB = [pageB mutableSetValueForKey:@"sidebars"];
-		NSEnumerator *e2 = [sidebarsA objectEnumerator];
-		NSManagedObject *sidebarA = nil;
-		while ( sidebarA = [e2 nextObject] )
-		{
-			NSManagedObject *sidebarB = [self correspondingObjectForObject:sidebarA];
-			if ( nil == sidebarB )
-			{
-				sidebarB = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
-														 inManagedObjectContext:[pageB managedObjectContext]];
-				OBASSERTSTRING((nil != sidebarB), @"sidebarB cannot be nil!");
-				[[self objectIDCache] setValue:[sidebarB URIRepresentationString] forKey:[sidebarA URIRepresentationString]];
-			}
-			[self migrateFromPagelet:sidebarA toPagelet:sidebarB];
-			[sidebarsB addObject:sidebarB];
-		}
-	}
-	
-	//  keywords	
-	[self migrateStorageRelationshipNamed:@"keywords"
-							   fromObject:pageA
-								 toObject:pageB];
-	
-	//  pendingDeletions (does it make sense to migrate these?)
-	[self migrateStorageRelationshipNamed:@"pendingDeletions"
-							   fromObject:pageA
-								 toObject:pageB];
-	
-	return YES; // could later beef this up with error checking
+    BOOL result = [self migrateElement:oldElement toElement:newElement error:error];
+    return result;
 }
 
-- (BOOL)migrateFromPagelet:(NSManagedObject *)pageletA toPagelet:(NSManagedObject *)pageletB
+/*  Handles generic migration of elements. Mostly this comprises moving over plugin properties.
+ */
+- (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
-	// migrate attributes
-	[self migrateMatchingAttributesFromObject:pageletA
-									 toObject:pageletB];
-	
-	// migrate relationships
-	//  AbstractPlugin
-	[self migrateAbstractPluginRelationshipsFromObject:pageletA
-											  toObject:pageletB];
-	
-	//  ElementContainer
-	[self migrateElementContainerRelationshipsFromObject:pageletA
-												toObject:pageletB];
-	
-	//  owner relationship (is set during Page migration, after this method is called)
-	
-	return YES; // could later beef this up with error checking
-}	
+    KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
+    [newElement importOldPluginProperties:[oldPluginProperties dictionary]];
+    
+    return YES;
+}
 
 #pragma mark -
 #pragma mark Media Migration
@@ -1164,3 +949,25 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation KTAbstractElement (KTDataMigratorAdditions)
+
+- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties
+{
+    id delegate = [self delegate];
+    if (delegate && [delegate respondsToSelector:@selector(importOldPluginProperties:)])
+    {
+        [delegate importOldPluginProperties:oldPluginProperties];
+    }
+    else
+    {
+        [self setValuesForKeysWithDictionary:oldPluginProperties];
+    }
+}
+
+@end
+
