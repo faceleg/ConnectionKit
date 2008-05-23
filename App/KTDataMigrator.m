@@ -63,7 +63,7 @@
 // Element migration
 - (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
-- (BOOL)migratePagelet:(NSManagedObject *)oldPagelet toPagelet:(KTPagelet *)newPagelet error:(NSError **)error;
+- (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
 
 + (NSSet *)elementAttributesToIgnore;
 - (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error;
@@ -467,6 +467,9 @@
     // Need to deal with code injection
     
     
+    // Need to deal with custom summaries
+    
+    
     // Import plugin-specific properties
     if (![self migrateElementContainer:oldPage toElement:newPage error:error])
     {
@@ -475,25 +478,9 @@
     
     
     // Import pagelets
-    NSSet *oldCallouts = [oldPage valueForKey:@"callouts"];
-    NSSet *oldSidebars = [oldPage valueForKey:@"sidebars"];
-    
-    NSMutableSet *oldPagelets = [oldCallouts mutableCopy];  [oldPagelets unionSet:oldSidebars];
-    NSArray *sortedOldPagelets = [[oldPagelets allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-    [oldPagelets release];
-    
-    NSEnumerator *oldPageletsEnumerator = [sortedOldPagelets objectEnumerator];
-    NSManagedObject *anOldPagelet;
-    while (anOldPagelet = [oldPageletsEnumerator nextObject])
+    if (![self migratePageletsFromPage:oldPage toPage:newPage error:error])
     {
-        NSString *pageletIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
-        KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
-        KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
-        
-        if (![self migratePagelet:anOldPagelet toPagelet:newPagelet error:error])
-        {
-            return NO;
-        }
+        return NO;
     }
     
     
@@ -589,6 +576,32 @@
     return result;
 }
 
+- (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
+{
+    NSSet *oldCallouts = [oldPage valueForKey:@"callouts"];
+    NSSet *oldSidebars = [oldPage valueForKey:@"sidebars"];
+    
+    NSMutableSet *oldPagelets = [oldCallouts mutableCopy];  [oldPagelets unionSet:oldSidebars];
+    NSArray *sortedOldPagelets = [[oldPagelets allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+    [oldPagelets release];
+    
+    NSEnumerator *oldPageletsEnumerator = [sortedOldPagelets objectEnumerator];
+    NSManagedObject *anOldPagelet;
+    while (anOldPagelet = [oldPageletsEnumerator nextObject])
+    {
+        NSString *pageletIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
+        KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
+        KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
+        
+        if (![self migratePagelet:anOldPagelet toPagelet:newPagelet error:error])
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark -
 #pragma mark Element Migration
 
@@ -597,7 +610,7 @@
     static NSSet *result;
     if (!result)
     {
-        result = [[NSSet alloc] initWithObjects:@"pluginIdentifier", @"pluginVersion", @"uniqueID", @"ordering", nil];
+        result = [[NSSet alloc] initWithObjects:@"pluginIdentifier", @"pluginVersion", @"ordering", nil];
     }
     
     return result;
@@ -622,7 +635,7 @@
 - (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
     KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
-    [newElement importOldPluginProperties:[oldPluginProperties dictionary]];
+    [newElement importOldPluginProperties:[oldPluginProperties dictionary] dataMigrator:self];
     
     // Save after each element to detect errors
     KTDocument *document = [self newDocument];
@@ -986,12 +999,12 @@
 
 @implementation KTAbstractElement (KTDataMigratorAdditions)
 
-- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties
+- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties dataMigrator:(KTDataMigrator *)dataMigrator
 {
     id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(importOldPluginProperties:)])
+    if (delegate && [delegate respondsToSelector:@selector(importOldPluginProperties:dataMigrator:)])
     {
-        [delegate importOldPluginProperties:oldPluginProperties];
+        [delegate importOldPluginProperties:oldPluginProperties dataMigrator:dataMigrator];
     }
     else
     {
