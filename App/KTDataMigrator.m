@@ -404,7 +404,7 @@
     
     // Set up the new document
     NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:error] firstObject];
-    if (!oldRoot) return NO;
+    OBASSERT(oldRoot);
     
     NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
     NSString *newRootPluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
