@@ -51,6 +51,7 @@
 
 - (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject;
 
+
 // Generic migration methods
 - (NSSet *)matchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
@@ -61,7 +62,7 @@
 
 
 // Element migration
-- (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error;
+- (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
 - (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
 
@@ -467,7 +468,12 @@
     // Need to deal with code injection
     
     
-    // Need to deal with custom summaries
+    // Migrate custom summary if it exists
+    NSString *customSummary = [oldPage valueForKey:@"summaryHTML"];
+    if (customSummary && [customSummary isEqualToString:@""])
+    {
+        [newPage setCustomSummaryHTML:customSummary];
+    }
     
     
     // Import plugin-specific properties
@@ -485,14 +491,38 @@
     
     
     // Create new KTPage objects for each child page and then recursively migrate them too
-    NSSet *oldChildPages = [oldPage valueForKey:@"children"];
+    BOOL result = [self migrateChildrenFromPage:oldPage toPage:newPage error:error];
+    return result;
+}
+
+/*  Migrate the children of one page to another
+ */
+- (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error
+{
+    NSSet *oldChildPages = [oldParentPage valueForKey:@"children"];
     NSArray *sortedOldChildren = [[oldChildPages allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
     
     NSEnumerator *childrenEnumerator = [sortedOldChildren objectEnumerator];
     NSManagedObject *aChildPage;
     while (aChildPage = [childrenEnumerator nextObject])
     {
-        if (![self migratePage:aChildPage asNextChildOfPage:newPage error:error])
+        // Insert a new child page of the right type.
+        NSString *pluginIdentifier = [aChildPage valueForKey:@"pluginIdentifier"];
+        pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
+        KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
+        
+        if (!plugin)
+        {
+            *error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+                                         code:KareliaError
+                         localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
+            
+            return NO;
+        }
+        
+        KTPage *aNewPage = [KTPage insertNewPageWithParent:newParentPage plugin:plugin];
+        
+        if (![self migratePage:aChildPage toPage:aNewPage error:error])
         {
             return NO;
         }
@@ -500,30 +530,6 @@
     
     
     return YES;
-}
-
-/*  Support method when recursing through pages.
- */
-- (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error
-{
-    // Insert a new child page of the right type.
-    NSString *pluginIdentifier = [oldPage valueForKey:@"pluginIdentifier"];
-    pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
-    KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
-    
-    if (!plugin)
-    {
-        *error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
-                                     code:KareliaError
-                     localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
-        
-        return NO;
-    }
-    
-    KTPage *newPage = [KTPage insertNewPageWithParent:newParent plugin:plugin];
-    
-    BOOL result = [self migratePage:oldPage toPage:newPage error:error];
-    return result;
 }
 
 /*  Root is special because it contains a bunch of properties which now belong on KTMaster.
