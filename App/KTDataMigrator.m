@@ -63,7 +63,7 @@
 
 
 // Element migration
-- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(BOOL)propogate
+- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(NSNumber *)propogate
                     fromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
 
 - (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error;
@@ -478,28 +478,28 @@
         
         if (![self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertBody"]
                                   toKey:@"codeInjectionBodyTag"
-                              propogate:[addString2Dictionary boolForKey:@"propagateInsertBody"]
+                              propogate:[addString2Dictionary valueForKey:@"propagateInsertBody"]
                                fromPage:oldPage
                                  toPage:newPage
                                   error:error]) return NO;
         
         if (![self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertEndBody"]
                                   toKey:@"codeInjectionBodyTagEnd"
-                              propogate:[addString2Dictionary boolForKey:@"propagateInsertEndBody"]
+                              propogate:[addString2Dictionary valueForKey:@"propagateInsertEndBody"]
                                fromPage:oldPage
                                  toPage:newPage
                                   error:error]) return NO;
         
         if (![self migrateCodeInjection:[oldPage valueForKey:@"insertPrelude"]
                                   toKey:@"codeInjectionBeforeHTML"
-                              propogate:[addString2Dictionary boolForKey:@"propagateInsertPrelude"]
+                              propogate:[addString2Dictionary valueForKey:@"propagateInsertPrelude"]
                                fromPage:oldPage
                                  toPage:newPage
                                   error:error]) return NO;
         
         if (![self migrateCodeInjection:[oldPage valueForKey:@"insertHead"]
                                   toKey:@"codeInjectionHeadArea"
-                              propogate:[addString2Dictionary boolForKey:@"propagateInsertHead"]
+                              propogate:[addString2Dictionary valueForKey:@"propagateInsertHead"]
                                fromPage:oldPage
                                  toPage:newPage
                                   error:error]) return NO;
@@ -538,12 +538,12 @@
     return result;
 }
 
-- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(BOOL)propogate
+- (BOOL)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(NSNumber *)propogate
                     fromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
 {
     if (code && ![code isEqualToString:@""])
     {
-        if (propogate)
+        if (!propogate || [propogate boolValue])
         {
             if ([newPage isRoot])
             {
