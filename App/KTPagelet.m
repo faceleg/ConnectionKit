@@ -74,17 +74,26 @@
 		}
 	}
 	
-	
-	// Create the pagelet
+	KTPagelet *result = [self insertNewPageletWithPage:page pluginIdentifier:[[plugin bundle] bundleIdentifier] location:location];
+	return result;
+}
+
++ (KTPagelet *)insertNewPageletWithPage:(KTPage *)page
+                       pluginIdentifier:(NSString *)pluginIdentifier
+                               location:(KTPageletLocation)location;
+{
+    OBPRECONDITION(page);
+    OBPRECONDITION(pluginIdentifier);
+    
+    // Create the pagelet
 	KTPagelet *result = [self _insertNewPageletWithPage:page
-									   pluginIdentifier:[[plugin bundle] bundleIdentifier]
+									   pluginIdentifier:pluginIdentifier
 											   location:location];
 	
 	// Tell the pagelet to awake
 	[result awakeFromBundleAsNewlyCreatedObject:YES];
-	
-	
-	return result;
+    
+    return result;
 }
 
 /*	Private support method that creates a basic pagelet.

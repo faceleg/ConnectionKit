@@ -698,26 +698,32 @@
 
 - (NSString *)resourcepathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	// Check suitable parameters were supplied
+	NSString *result = @"";
+    
+    // Check suitable parameters were supplied
 	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
 	if ([params count] > 2)
 	{
 		NSLog(@"resourcepath: usage [[ resourcepath resource.keyPath page.keyPath (OPTIONAL) ]]");
-		return @"";
 	}
-	
-	// Figure out the correct page
-	KTAbstractPage *page = [self currentPage];
-	if ([params count] > 1)
-	{
-		page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
-	}
+	else
+    {
+        // Figure out the correct page
+        KTAbstractPage *page = [self currentPage];
+        if ([params count] > 1)
+        {
+            page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
+        }
+        
+        // Where is the resource file on disk?
+        NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
+        if (resourceFilePath)
+        {
+            result = [self resourceFilePathRelativeToCurrentPage:resourceFilePath];
+        }
+    }
     
-    // Where is the resource file on disk?
-	NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
-	NSString *result = [self resourceFilePathRelativeToCurrentPage:resourceFilePath];
-	
-	return result;
+    return result;
 }
 
 - (NSString *)rsspathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner

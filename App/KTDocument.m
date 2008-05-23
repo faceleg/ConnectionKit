@@ -267,7 +267,25 @@
         [self initWithURL:saveURL ofType:type homePagePlugIn:defaultRootPlugin error:error];
 		
 		
-		
+		// Make the initial Sandvox badge
+        NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
+        if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
+        {
+            KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
+            if (badgePlugin)
+            {
+                KTPagelet *pagelet = [KTPagelet pageletWithPage:[[self documentInfo] root] plugin:badgePlugin];
+                [pagelet setPrefersBottom:YES];
+            }
+        }
+        
+        if (![self saveToURL:saveURL ofType:type forSaveOperation:NSSaveOperation error:error])
+        {
+            [self release];
+            return nil;
+        }
+        
+        
 		// Is this path a currently open document? if yes, close it!
 		NSDocument *openDocument = [[NSDocumentController sharedDocumentController] documentForURL:saveURL];
 		if (openDocument)
@@ -362,17 +380,6 @@
     [root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		
     [root setTitleText:[self defaultRootPageTitleText]];
     
-    // Make the initial Sandvox badge
-    NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
-    if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-    {
-        KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-        if (badgePlugin)
-        {
-            KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
-            [pagelet setPrefersBottom:YES];
-        }
-    }
     
     NSString *defaultRootIndexIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultRootIndexBundleIdentifier"];
     if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])

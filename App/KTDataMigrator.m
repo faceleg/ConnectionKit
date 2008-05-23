@@ -32,6 +32,7 @@
 #import "Debug.h"
 
 
+
 /*
  
  Note: We have these fields in the current data model, which we might want to update:
@@ -62,6 +63,9 @@
 // Element migration
 - (BOOL)migratePage:(NSManagedObject *)oldPage asNextChildOfPage:(KTPage *)newParent error:(NSError **)error;
 - (BOOL)migrateRoot:(NSError **)error;
+- (BOOL)migratePagelet:(NSManagedObject *)oldPagelet toPagelet:(KTPagelet *)newPagelet error:(NSError **)error;
+
++ (NSSet *)elementAttributesToIgnore;
 - (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error;
 - (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error;
 
@@ -70,7 +74,6 @@
 - (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB;
 - (BOOL)migrateMedia:(NSError **)error;
 
-- (BOOL)migrateSiteProperties:(NSError **)error;
 - (BOOL)migrateDocumentInfo:(NSError **)error;
 
 
@@ -420,7 +423,7 @@
 	
     
 	// Migrate
-    if (![self migrateSiteProperties:error])
+    if (![self migrateDocumentInfo:error])
     {
         return NO;
     }
@@ -435,8 +438,7 @@
     KTDocument *document = [self newDocument];
     BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
     
-    *error = nil;
-    return NO;
+    return result;
 }
 
 #pragma mark -
@@ -449,9 +451,7 @@
 {
     // Migrate the matching keys. However, there's a couple of special cases we should NOT import.
     NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPage toObject:newPage] mutableCopy];
-    [matchingKeys removeObject:@"pluginIdentifier"];
-    [matchingKeys removeObject:@"pluginVersion"];
-    [matchingKeys removeObject:@"uniqueID"];
+    [matchingKeys minusSet:[[self class] elementAttributesToIgnore]];
     [matchingKeys removeObject:@"isStale"];
     
     [self migrateAttributes:matchingKeys fromObject:oldPage toObject:newPage];
@@ -468,10 +468,33 @@
     
     
     // Import plugin-specific properties
-    [self migrateElementContainer:oldPage toElement:newPage error:error];
+    if (![self migrateElementContainer:oldPage toElement:newPage error:error])
+    {
+        return NO;
+    }
     
     
-    // Need to handle pagelets
+    // Import pagelets
+    NSSet *oldCallouts = [oldPage valueForKey:@"callouts"];
+    NSSet *oldSidebars = [oldPage valueForKey:@"sidebars"];
+    
+    NSMutableSet *oldPagelets = [oldCallouts mutableCopy];  [oldPagelets unionSet:oldSidebars];
+    NSArray *sortedOldPagelets = [[oldPagelets allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+    [oldPagelets release];
+    
+    NSEnumerator *oldPageletsEnumerator = [sortedOldPagelets objectEnumerator];
+    NSManagedObject *anOldPagelet;
+    while (anOldPagelet = [oldPageletsEnumerator nextObject])
+    {
+        NSString *pageletIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
+        KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
+        KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
+        
+        if (![self migratePagelet:anOldPagelet toPagelet:newPagelet error:error])
+        {
+            return NO;
+        }
+    }
     
     
     // Create new KTPage objects for each child page and then recursively migrate them too
@@ -540,10 +563,6 @@
     [[[self newDocument] documentInfo] setCopyMediaOriginals:[oldRoot integerForKey:@"copyMediaOriginals"]];
     
     
-    // Special cases
-    @"Code Injection";
-    
-    
     // Continue with normal page migration
     BOOL result = [self migratePage:oldRoot toPage:newRoot error:error];
     
@@ -554,8 +573,35 @@
 #pragma mark -
 #pragma mark Pagelet Migration
 
+- (BOOL)migratePagelet:(NSManagedObject *)oldPagelet toPagelet:(KTPagelet *)newPagelet error:(NSError **)error
+{
+    // Migrate the matching keys. However, there's a couple of special cases we should NOT import.
+    NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPagelet toObject:newPagelet] mutableCopy];
+    [matchingKeys minusSet:[[self class] elementAttributesToIgnore]];
+    
+    [self migrateAttributes:matchingKeys fromObject:oldPagelet toObject:newPagelet];
+    
+    [matchingKeys release];
+    
+    
+    // Do normal element migration
+    BOOL result = [self migrateElementContainer:oldPagelet toElement:newPagelet error:error];
+    return result;
+}
+
 #pragma mark -
 #pragma mark Element Migration
+
++ (NSSet *)elementAttributesToIgnore
+{
+    static NSSet *result;
+    if (!result)
+    {
+        result = [[NSSet alloc] initWithObjects:@"pluginIdentifier", @"pluginVersion", @"uniqueID", @"ordering", nil];
+    }
+    
+    return result;
+}
 
 - (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
@@ -578,7 +624,10 @@
     KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
     [newElement importOldPluginProperties:[oldPluginProperties dictionary]];
     
-    return YES;
+    // Save after each element to detect errors
+    KTDocument *document = [self newDocument];
+    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
+    return result;
 }
 
 #pragma mark -
@@ -687,25 +736,6 @@
 
 #pragma mark -
 #pragma mark Site-Level Migration
-
-
-/*  Performs migration of all the site-level properties:
- *      * DocumentInfo
- *      * Master
- *      * Host Properties
- *
- *  None of these objects need to be created in the new store as KTDocument will have done that.
- *  We just need to migrate their properties.
- */
-- (BOOL)migrateSiteProperties:(NSError **)error
-{
-    if (![self migrateDocumentInfo:error])
-    {
-        return NO;
-    }
-    
-    return YES;
-}
 
 /*  Takes the old document info object and copies out all properties that still apply.
  */

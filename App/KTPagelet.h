@@ -43,6 +43,10 @@ typedef enum {
 // general constructor
 + (KTPagelet *)pageletWithPage:(KTPage *)aPage plugin:(KTElementPlugin *)plugin;
 
++ (KTPagelet *)insertNewPageletWithPage:(KTPage *)page
+                       pluginIdentifier:(NSString *)pluginIdentifier
+                               location:(KTPageletLocation)location;
+
 // drag-and-drop constructor
 + (KTPagelet *)pageletWithPage:(KTPage *)aPage dataSourceDictionary:(NSDictionary *)aDictionary;
 
