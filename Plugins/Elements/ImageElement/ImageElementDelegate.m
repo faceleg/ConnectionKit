@@ -393,4 +393,21 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    KTMediaContainer *image = [[self mediaManager] mediaContainerWithMediaRefNamed:@"ImageElement" element:oldPlugin];
+    [[self delegateOwner] setValue:image forKey:@"image"];
+    
+    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    *error = nil;
+    return YES;
+}
+
 @end
+

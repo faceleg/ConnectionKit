@@ -47,6 +47,7 @@ extern NSString *KTMediaLogDomain;
 - (KTMediaContainer *)mediaContainerWithDraggingInfo:(id <NSDraggingInfo>)dragInfo preferExternalFile:(BOOL)external;
 - (KTMediaContainer *)mediaContainerWithDataSourceDictionary:(NSDictionary *)dataSource;
 
+- (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement;
 @end
 
 

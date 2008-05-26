@@ -75,5 +75,9 @@
 
 #import "KTAbstractElement.h"
 @interface KTAbstractElement (KTDataMigratorAdditions)
-- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties dataMigrator:(KTDataMigrator *)dataMigrator;
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error;
+
 @end

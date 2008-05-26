@@ -82,7 +82,6 @@
 
 
 + (BOOL)validatePathForNewStore:(NSString *)aStorePath error:(NSError **)outError;
-- (BOOL)isValidManagedObject:(NSManagedObject *)aManagedObject;
 @end
 
 
@@ -480,22 +479,22 @@
                             toPage:newPage];
         
         [self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertEndBody"]
-                                  toKey:@"codeInjectionBodyTagEnd"
-                              propogate:[addString2Dictionary valueForKey:@"propagateInsertEndBody"]
+                             toKey:@"codeInjectionBodyTagEnd"
+                         propogate:[addString2Dictionary valueForKey:@"propagateInsertEndBody"]
                             toPage:newPage];
         
         [self migrateCodeInjection:[oldPage valueForKey:@"insertPrelude"]
-                                  toKey:@"codeInjectionBeforeHTML"
-                              propogate:[addString2Dictionary valueForKey:@"propagateInsertPrelude"]
+                             toKey:@"codeInjectionBeforeHTML"
+                         propogate:[addString2Dictionary valueForKey:@"propagateInsertPrelude"]
                             toPage:newPage];
         
         [self migrateCodeInjection:[oldPage valueForKey:@"insertHead"]
-                                  toKey:@"codeInjectionHeadArea"
-                              propogate:[addString2Dictionary valueForKey:@"propagateInsertHead"]
+                             toKey:@"codeInjectionHeadArea"
+                         propogate:[addString2Dictionary valueForKey:@"propagateInsertHead"]
                             toPage:newPage];
     }
-        
-        
+    
+    
     // Migrate custom summary if it exists
     NSString *customSummary = [oldPage valueForKey:@"summaryHTML"];
     if (customSummary && [customSummary isEqualToString:@""])
@@ -719,11 +718,12 @@
 - (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
     KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
-    [newElement importOldPluginProperties:[oldPluginProperties dictionary] dataMigrator:self];
+    BOOL result = [newElement importPluginProperties:[oldPluginProperties dictionary] fromPlugin:oldElement error:error];
+    if (!result) return result;
     
     // Save after each element to detect errors
     KTDocument *document = [self newDocument];
-    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
+    result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
     return result;
 }
 
@@ -1047,34 +1047,6 @@
 	return result;	
 }
 
-/*! attempts an attribute fetch (uniqueID) which causes a fault to fire,
- if an exception is thrown because the fault can't be fulfilled,
- this catches it (instead of crapping out) and returns NO
- */
-- (BOOL)isValidManagedObject:(NSManagedObject *)aManagedObject
-{
-	BOOL result = NO;
-	@try
-	{
-		NSString *uniqueID = [aManagedObject valueForKey:@"uniqueID"];
-		if ( nil != uniqueID )
-		{
-			result = YES;
-		}
-	}
-	@catch (NSException *fetchException)
-	{
-		// if anything goes wrong, assume it's a bad object
-		result = NO;
-		if ( [[fetchException name] isEqualToString:@"NSObjectInaccessibleException"] )
-		{
-			TJT((@"%@ is not/no longer a valid managed object.", [aManagedObject managedObjectDescription]));
-		}
-	}
-	
-	return result;
-}
-
 @end
 
 
@@ -1083,16 +1055,19 @@
 
 @implementation KTAbstractElement (KTDataMigratorAdditions)
 
-- (void)importOldPluginProperties:(NSDictionary *)oldPluginProperties dataMigrator:(KTDataMigrator *)dataMigrator
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
 {
     id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(importOldPluginProperties:dataMigrator:)])
+    if (delegate && [delegate respondsToSelector:@selector(importPluginProperties:fromPlugin:error:)])
     {
-        [delegate importOldPluginProperties:oldPluginProperties dataMigrator:dataMigrator];
+        return [delegate importPluginProperties:oldPluginProperties fromPlugin:oldPlugin error:error];
     }
     else
     {
         [self setValuesForKeysWithDictionary:oldPluginProperties];
+        return YES;
     }
 }
 
