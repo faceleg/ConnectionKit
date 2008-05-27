@@ -127,15 +127,15 @@
 					[page setTitleText:title];
 				}
 				
-// TODO: re-enable keyword support once model stabilizes				
-//				NSArray *keywords = [docAttributes objectForKey:NSKeywordsDocumentAttribute];
-//				if (keywords)
-//				{
-//					KTStoredArray *saKeywords = [KTStoredArray arrayWithArray:keywords
-//													 inManagedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]
-//																   entityName:@"KeywordsArray"];
-//                    [page setKeywords:saKeywords];
-//				}
+                // TODO: re-enable keyword support once model stabilizes				
+                //				NSArray *keywords = [docAttributes objectForKey:NSKeywordsDocumentAttribute];
+                //				if (keywords)
+                //				{
+                //					KTStoredArray *saKeywords = [KTStoredArray arrayWithArray:keywords
+                //													 inManagedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]
+                //																   entityName:@"KeywordsArray"];
+                //                    [page setKeywords:saKeywords];
+                //				}
 			}
 		}
 	}
@@ -192,7 +192,7 @@
 	
 	// scan for svxmedia:// URLs, returning set of media identifiers
 	NSString *svxString = @"<img src=\"svxmedia://";
-
+    
 	NSString *richTextHTML = [[self delegateOwner] valueForKey:@"richTextHTML"];
 	TJT((@"scanning block for identifiers: \n%@", richTextHTML));
 	if ( [richTextHTML length] > [svxString length] )
@@ -263,9 +263,9 @@
  *		<p><img src="webkit-fake-url://123456-1234-123456-1234/image.tiff /></p>
  */
 - (BOOL)plugin:(KTAbstractElement *)plugin
-	shouldInsertNode:(DOMNode *)node
-  intoTextForKeyPath:(NSString *)keyPath
-		 givenAction:(WebViewInsertAction)action
+shouldInsertNode:(DOMNode *)node
+intoTextForKeyPath:(NSString *)keyPath
+   givenAction:(WebViewInsertAction)action
 {
 	// TODO: improve on this by looking at UTI and creating OBJECT elements for .mov files, etc.
 	
@@ -310,7 +310,7 @@
 {
 	// TODO: what happens when the default design size changes?
 	DOMNode *node = [div parentNode];
-		
+    
 	// Create a media container for the file
 	NSString *path = [[NSURL URLWithString:[(DOMText *)[div firstChild] data]] path];
 	KTMediaContainer *mediaContainer = [[self mediaManager] mediaContainerWithPath:path];
@@ -331,7 +331,7 @@
 	{
 		// Other files are converted to their thumbnail and made a download link
 		KTMediaContainer *icon =
-			[mediaContainer imageWithScalingSettingsNamed:@"thumbnailImage" forPlugin:[self delegateOwner]];
+        [mediaContainer imageWithScalingSettingsNamed:@"thumbnailImage" forPlugin:[self delegateOwner]];
 		
 		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
 		[imageElement setSrc:[[icon URIRepresentation] absoluteString]];
@@ -364,5 +364,81 @@
 
 // TODO: 1.2 -> 1.5 file conversion will need to find all ?ref=<refname> and change them into ?id=<uuid>
 // look at -repairMediaReferencesWithinHTMLString: in 1.2.1 branch
+
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    *error = nil;
     
+    // Figure out the maximum image size we'll allow
+	KTAbstractElement *container = [self delegateOwner];
+	NSString *settings = nil;
+	if ([container isKindOfClass:[KTPagelet class]])
+	{
+		settings = @"sidebarImage";
+	}
+	else if ([container isKindOfClass:[KTPage class]])
+	{
+		// TODO: could we vary the size based on whether the page is showing a sidebar?
+		settings = @"inTextMediumImage";
+	}
+	
+	
+	// Update media refs to the new system.
+    NSString *oldText = [oldPluginProperties objectForKey:@"richTextHTML"];
+    NSMutableString *newText = [[NSMutableString alloc] init];
+    
+    NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
+    while (![imageScanner isAtEnd])
+    {
+        // Look for an image tag
+        NSString *someText = nil;
+        [imageScanner scanUpToString:@"<img" intoString:&someText];
+        [newText appendString:someText];
+        if ([imageScanner isAtEnd]) break;
+        
+        
+        // Locate the image's source attribute
+        [imageScanner scanUpToString:@"src=\"" intoString:&someText];
+        [newText appendString:someText];
+        [imageScanner scanString:@"src=\"" intoString:&someText];
+        [newText appendString:someText];
+        
+        NSString *anImageURI = nil;
+        [imageScanner scanUpToString:@"\"" intoString:&anImageURI];
+        
+        
+        // Look for a media ref within the URI
+        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
+        [mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
+        if (![mediaRefScanner isAtEnd])
+        {
+            NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
+            KTMediaContainer *anImage = [[self mediaManager] mediaContainerWithMediaRefNamed:oldMediaID element:oldPlugin];
+            anImage = [anImage imageWithScalingSettingsNamed:settings forPlugin:[self delegateOwner]];
+            anImageURI = [[anImage URIRepresentation] absoluteString];     
+        }
+        [mediaRefScanner release];
+        
+        if (anImageURI)
+        {
+            [newText appendString:anImageURI];
+        }
+    }    
+    
+    [imageScanner release];
+    
+    
+    [[self delegateOwner] setValue:[[newText copy] autorelease] forKey:@"richTextHTML"];
+    [newText release];
+    
+    return YES;
+    return NO;
+}
+
+
 @end
