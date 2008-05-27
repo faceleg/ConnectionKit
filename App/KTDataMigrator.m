@@ -448,6 +448,14 @@
     [newPage setKeywords:[keywords allValues]];
     
     
+    // Thumbnail
+    KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
+    if (thumbnail)
+    {
+        [newPage setThumbnail:thumbnail];
+    }
+    
+    
     // Migrate Code Injection from the weird old addString2 hack.
     NSString *addString2 = [oldPage valueForKey:@"addString2"];
     if (addString2)
