@@ -917,4 +917,19 @@ After deflating starting at byte 8, you get:
 	return result;
 }
 
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    KTMediaContainer *video = [[self mediaManager] mediaContainerWithMediaRefNamed:@"VideoElement" element:oldPlugin];
+    [[self delegateOwner] setValue:video forKey:@"video"];
+    
+    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    return YES;
+}
+
 @end
