@@ -14,6 +14,7 @@
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTMaster.h"
+#import "KTMediaManager.h"
 #import "KTPage.h"
 #import "KTUtilities.h"
 
@@ -34,18 +35,6 @@
 
 
 
-/*
- 
- Note: We have these fields in the current data model, which we might want to update:
- 
- addBool1 -- exclude from site map
- addString1	-- currently used to hold the FLOAT of the image replacement font adjustment
- addString2 -- encoded dictionary with lots of other parameters
- 
- Note: "isStale" does not seem to be used.  See staleness.
- */
-
-
 @interface KTDataMigrator ()
 
 + (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath;
@@ -58,9 +47,6 @@
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
 - (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 
-- (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
-											toObject:(NSManagedObject *)managedObjectB;
-
 
 // Element migration
 - (void)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(NSNumber *)propogate toPage:(KTPage *)newPage;
@@ -72,11 +58,6 @@
 + (NSSet *)elementAttributesToIgnore;
 - (BOOL)migrateElementContainer:(NSManagedObject *)oldElementContainer toElement:(KTAbstractElement *)newElement error:(NSError **)error;
 - (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error;
-
-
-
-- (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB;
-- (BOOL)migrateMedia:(NSError **)error;
 
 - (BOOL)migrateDocumentInfo:(NSError **)error;
 
@@ -621,6 +602,18 @@
     [newDocInfo setBool:generateGoogleSitemap forKey:@"generateGoogleSitemap"];
     
     
+    // Migrate master media - logo, banner & favicon
+    KTMediaContainer *favicon = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"favicon" element:oldRoot];
+    [newMaster setFavicon:favicon];
+    
+    // TODO: migrate logo
+    KTMediaContainer *logo = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"headerImage" element:oldRoot];
+    [newMaster setLogoImage:logo];
+    
+    KTMediaContainer *banner = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"bannerImage" element:oldRoot];
+    [newMaster setBannerImage:banner];
+    
+    
     // Migrate the weird old addString2 hack.
     NSString *addString2 = [oldRoot valueForKey:@"addString2"];
     if (addString2)
@@ -629,7 +622,6 @@
 		
         [newDocInfo setValue:[addString2Dictionary valueForKey:@"googleAnalytics"] forKey:@"googleAnalyticsCode"];
         [newDocInfo setValue:[addString2Dictionary valueForKey:@"googleSiteVerification"] forKey:@"googleSiteVerification"];
-        // TODO: IMPORT BANNER ID.
 	}
     
     
@@ -728,110 +720,6 @@
 }
 
 #pragma mark -
-#pragma mark Media Migration
-
-- (BOOL)migrateFromMediaRef:(NSManagedObject *)mediaRefA toMediaRef:(NSManagedObject *)mediaRefB
-{
-	// migrate attributes
-	[self migrateMatchingAttributesFromObject:mediaRefA 
-									 toObject:mediaRefB];
-	
-	// migrate media relationship
-	//  media should already have been copied to the new context
-	//  all we need to do is find the corresponding object
-	NSManagedObject *mediaA = [mediaRefA valueForKey:@"media"];
-	NSManagedObject *mediaB = [self correspondingObjectForObject:mediaA];
-	OBASSERTSTRING((nil != mediaB), @"mediaB cannot be nil! should have been copied by now");
-	[mediaRefB setValue:mediaB forKey:@"media"];
-	
-	// migrate owner relationship
-	//  should be later set by migrateAbstractPluginRelationshipsFromObject:toObject:
-	
-	return YES; // could later beef this up with error checking
-}
-
-- (BOOL)migrateMedia:(NSError **)error
-{
-	TJT((@"migrating Media..."));
-	// fetch all Media
-	NSArray *fetchedObjects = [[self oldManagedObjectContext] allObjectsWithEntityName:@"Media"
-																				 error:error];
-	if ( nil != *error )
-	{
-		return NO;
-	}
-	
-	NSEnumerator *e = [fetchedObjects objectEnumerator];
-	NSManagedObject *oldMedia = nil;
-	while ( oldMedia = [e nextObject] )
-	{
-		// create a new media object
-		NSManagedObject *newMedia = [NSEntityDescription insertNewObjectForEntityForName:@"Media"
-																  inManagedObjectContext:[self newManagedObjectContext]];
-		OBASSERTSTRING(nil != newMedia, @"newMedia is nil!");
-		
-		// cache URI for matching
-		[[self objectIDCache] setValue:[newMedia URIRepresentationString] forKey:[oldMedia URIRepresentationString]];
-		
-		NSManagedObjectContext *newContext = [newMedia managedObjectContext];
-		
-		// copy attributes
-		[self migrateMatchingAttributesFromObject:oldMedia 
-										 toObject:newMedia];
-		
-		// (10001) add attribute isPublished
-		NSNumber *defaultIsPublished = [[[[[[self newManagedObjectModel] entitiesByName] valueForKey:@"Media"] attributesByName] valueForKey:@"isPublished"] defaultValue];
-		[newMedia setValue:defaultIsPublished forKey:@"isPublished"];
-		
-		// copy mediaData (a special relationship, required in all cases)
-		NSManagedObject *newMediaData = [NSEntityDescription insertNewObjectForEntityForName:@"MediaData"
-																	  inManagedObjectContext:newContext];
-		[newMedia setValue:newMediaData forKey:@"mediaData"];
-		[newMedia setValue:[oldMedia valueForKeyPath:@"mediaData.contents"]
-				forKeyPath:@"mediaData.contents"];
-		[newMedia setValue:[oldMedia valueForKeyPath:@"mediaData.digest"]
-				forKeyPath:@"mediaData.digest"];
-		
-		// copy relationships
-		//  copy thumbnailData, if present
-		if ( nil != [oldMedia valueForKey:@"thumbnailData"] )
-		{
-			NSManagedObject *newThumbnailData = [NSEntityDescription insertNewObjectForEntityForName:@"ThumbnailData"
-																			  inManagedObjectContext:newContext];
-			[newMedia setValue:newThumbnailData forKey:@"thumbnailData"];
-			[newMedia setValue:[oldMedia valueForKeyPath:@"thumbnailData.contents"]
-					forKeyPath:@"thumbnailData.contents"];
-			[newMedia setValue:[oldMedia valueForKeyPath:@"thumbnailData.digest"]
-					forKeyPath:@"thumbnailData.digest"];
-		}
-		
-		//  copy fileAttributes, if present
-		KTStoredDictionary *fileAttributes = [oldMedia valueForKey:@"fileAttributes"];
-		if ( nil != fileAttributes )
-		{
-			[self migrateStorageRelationshipNamed:@"fileAttributes"
-									   fromObject:oldMedia
-										 toObject:newMedia];
-			
-		}
-		
-		//  copy metadata, if present
-		KTStoredDictionary *metadata = [oldMedia valueForKey:@"metadata"];
-		if ( nil != metadata )
-		{
-			[self migrateStorageRelationshipNamed:@"metadata"
-									   fromObject:oldMedia
-										 toObject:newMedia];			
-		}
-		
-		// note: mediaRefs is also a relationship, but that will be set as an inverse
-		// when the actual mediaRef itself is copied to the new context
-	}
-	
-	return YES; // could later beef this up with error checking
-}
-
-#pragma mark -
 #pragma mark Site-Level Migration
 
 /*  Takes the old document info object and copies out all properties that still apply.
@@ -915,47 +803,6 @@
     }
 }
 
-
-- (void)migrateAbstractPluginRelationshipsFromObject:(NSManagedObject *)managedObjectA
-											toObject:(NSManagedObject *)managedObjectB
-{
-	OBASSERTSTRING((nil != managedObjectA), @"managedObjectA cannot be nil!");
-	OBASSERTSTRING((nil != managedObjectB), @"managedObjectB cannot be nil!");
-	
-	// root
-	NSString *newRootURIString = [[self objectIDCache] valueForKey:@"newRoot"];
-	OBASSERTSTRING((nil != newRootURIString), @"newRootURIString cannot be nil!");
-	NSManagedObject *newRoot = [[managedObjectB managedObjectContext] objectWithURIRepresentationString:newRootURIString];
-	OBASSERTSTRING((nil != newRoot), @"newRoot cannot be nil!");
-	[managedObjectB setValue:newRoot forKey:@"root"];
-	
-	// pluginProperties	
-	[self migrateStorageRelationshipNamed:@"pluginProperties"
-							   fromObject:managedObjectA
-								 toObject:managedObjectB];
-	
-	// mediaRefs
-	NSSet *mediaRefsA = [managedObjectA valueForKey:@"mediaRefs"];
-	if ( [mediaRefsA count] > 0 )
-	{
-		NSMutableSet *mediaRefsB = [managedObjectB mutableSetValueForKey:@"mediaRefs"];
-		NSEnumerator *e = [mediaRefsA objectEnumerator];
-		NSManagedObject *mediaRefA = nil;
-		while ( mediaRefA = [e nextObject] )
-		{
-			NSManagedObject *mediaRefB = [self correspondingObjectForObject:mediaRefA];
-			if ( nil == mediaRefB )
-			{
-				mediaRefB = [NSEntityDescription insertNewObjectForEntityForName:@"MediaRef"
-														  inManagedObjectContext:[managedObjectB managedObjectContext]];
-				OBASSERTSTRING((nil != mediaRefB), @"mediaRefB cannot be nil!");
-				[[self objectIDCache] setValue:[mediaRefB URIRepresentationString] forKey:[mediaRefA URIRepresentationString]];
-			}
-			[self migrateFromMediaRef:mediaRefA toMediaRef:mediaRefB];
-			[mediaRefsB addObject:mediaRefB];
-		}
-	}
-}
 
 #pragma mark -
 #pragma mark Support
