@@ -88,7 +88,7 @@
 		
 		
 		// Set page's file extension (and if needed path) to match media
-		NSString *fileExtension = [[[(KTMediaContainer *)value file] valueForKey:@"filename"] pathExtension];
+		NSString *fileExtension = [[[(KTMediaContainer *)value file] currentPath] pathExtension];
 		[(KTPage *)plugin setCustomFileExtension:fileExtension];
 		
 		NSString *mediaPath = nil;
@@ -246,6 +246,22 @@
 	{
 		return YES;
 	}
+}
+
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    KTMediaContainer *downloadMedia = [[self mediaManager] mediaContainerWithMediaRefNamed:@"DownloadPage" element:oldPlugin];
+    [[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
+    
+    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    *error = nil;
+    return YES;
 }
 
 @end
