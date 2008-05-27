@@ -924,10 +924,15 @@ After deflating starting at byte 8, you get:
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    KTMediaContainer *video = [[self mediaManager] mediaContainerWithMediaRefNamed:@"VideoElement" element:oldPlugin];
-    [[self delegateOwner] setValue:video forKey:@"video"];
+    KTAbstractElement *element = [self delegateOwner];
     
-    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    // Import the video
+    KTMediaContainer *video = [[self mediaManager] mediaContainerWithMediaRefNamed:@"VideoElement" element:oldPlugin];
+    [element setValue:video forKey:@"video"];
+    [element setInteger:(video) ? 0 : 1 forKey:@"movieSource"];
+    
+    // Import other properties
+    [element setValuesForKeysWithDictionary:oldPluginProperties];
     
     return YES;
 }
