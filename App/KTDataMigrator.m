@@ -476,10 +476,15 @@
     }
     
     
-    // Migrate custom summary if it exists
+    // Migrate custom summary if it exists, including media refs
     NSString *customSummary = [oldPage valueForKey:@"summaryHTML"];
-    if (customSummary && [customSummary isEqualToString:@""])
+    if (customSummary && ![customSummary isEqualToString:@""])
     {
+        customSummary = [[[self newDocument] mediaManager] importLegacyMediaFromString:customSummary
+                                                                   scalingSettingsName:@"inTextMediumImage"
+                                                                            oldElement:oldPage
+                                                                            newElement:newPage];
+        
         [newPage setCustomSummaryHTML:customSummary];
     }
     

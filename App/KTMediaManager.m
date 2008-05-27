@@ -9,11 +9,14 @@
 #import "KTMediaManager.h"
 #import "KTMediaManager+Internal.h"
 
+#import "KT.h"
 #import "KTDocument.h"
 #import "KTExternalMediaFile.h"
+#import "KTMediaContainer.h"
 #import "KTMediaPersistentStoreCoordinator.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 
 #import <Connection/KTLog.h>
 #import "BDAlias.h"
@@ -262,6 +265,114 @@ NSString *KTMediaLogDomain = @"Media";
 {
 	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\r%@", errorInfo]));
 	return NO;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation KTMediaManager (LegacySupport)
+
+- (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement
+{
+    KTMediaContainer *result = nil;
+    
+    // Locate the media ref for the name
+    NSSet *mediaRefs = [oldElement valueForKey:@"mediaRefs"];
+    NSEnumerator *mediaRefsEnumerator = [mediaRefs objectEnumerator];
+    NSManagedObject *mediaRef;
+    
+    while (mediaRef = [mediaRefsEnumerator nextObject])
+    {
+        if ([NSObject object:[mediaRef valueForKey:@"name"] isEqual:oldMediaRefName])
+        {
+            break;
+        }
+    }
+    
+    
+    // Look up the media object
+    if (mediaRef)
+    {
+        NSManagedObject *oldMedia = [mediaRef valueForKey:@"media"];
+        
+        // Import either data or a path
+        NSData *oldMediaData = [oldMedia valueForKeyPath:@"mediaData.contents"];
+        
+        if ([oldMedia integerForKey:@"storageType"] == KTMediaCopyAliasStorage)
+        {
+            BDAlias *alias = [BDAlias aliasWithData:oldMediaData];
+            if (alias)
+            {
+                result = [self mediaContainerWithPath:[alias fullPath]];
+            }
+        }
+        else
+        {
+            result = [self mediaContainerWithData:oldMediaData
+                                         filename:[oldMedia valueForKey:@"name"] 
+                                              UTI:[oldMedia valueForKey:@"mediaUTI"]];
+        }
+    }
+    
+    
+    return result;
+}
+
+- (NSString *)importLegacyMediaFromString:(NSString *)oldText
+                      scalingSettingsName:(NSString *)scalingSettings
+                               oldElement:(NSManagedObject *)oldElement
+                               newElement:(KTAbstractElement *)newElement
+{
+    NSMutableString *buffer = [[NSMutableString alloc] init];
+    
+    
+    NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
+    while (![imageScanner isAtEnd])
+    {
+        // Look for an image tag
+        NSString *someText = nil;
+        [imageScanner scanUpToString:@"<img" intoString:&someText];
+        [buffer appendString:someText];
+        if ([imageScanner isAtEnd]) break;
+        
+        
+        // Locate the image's source attribute
+        [imageScanner scanUpToString:@"src=\"" intoString:&someText];
+        [buffer appendString:someText];
+        [imageScanner scanString:@"src=\"" intoString:&someText];
+        [buffer appendString:someText];
+        
+        NSString *anImageURI = nil;
+        [imageScanner scanUpToString:@"\"" intoString:&anImageURI];
+        
+        
+        // Look for a media ref within the URI
+        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
+        [mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
+        if (![mediaRefScanner isAtEnd])
+        {
+            NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
+            KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:oldMediaID element:oldElement];
+            anImage = [anImage imageWithScalingSettingsNamed:scalingSettings forPlugin:newElement];
+            anImageURI = [[anImage URIRepresentation] absoluteString];
+        }
+        [mediaRefScanner release];
+        
+        if (anImageURI)
+        {
+            [buffer appendString:anImageURI];
+        }
+    }    
+    
+    [imageScanner release];
+    
+    
+    NSString *result = [[buffer copy] autorelease];
+    [buffer release];
+    return result;
 }
 
 @end

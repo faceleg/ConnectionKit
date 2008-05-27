@@ -12,7 +12,7 @@
 extern NSString *KTMediaLogDomain;
 
 
-@class KTDocument;
+@class KTDocument, KTAbstractElement;
 @class KTMediaContainer;
 
 @interface KTMediaManager : NSObject
@@ -47,7 +47,18 @@ extern NSString *KTMediaLogDomain;
 - (KTMediaContainer *)mediaContainerWithDraggingInfo:(id <NSDraggingInfo>)dragInfo preferExternalFile:(BOOL)external;
 - (KTMediaContainer *)mediaContainerWithDataSourceDictionary:(NSDictionary *)dataSource;
 
+@end
+
+
+@interface KTMediaManager (LegacySupport)
+
 - (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement;
+
+- (NSString *)importLegacyMediaFromString:(NSString *)oldText
+                      scalingSettingsName:(NSString *)scalingSettings
+                               oldElement:(NSManagedObject *)oldElement
+                               newElement:(KTAbstractElement *)newElement;
+
 @end
 
 

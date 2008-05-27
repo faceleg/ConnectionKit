@@ -372,8 +372,6 @@ intoTextForKeyPath:(NSString *)keyPath
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    *error = nil;
-    
     // Figure out the maximum image size we'll allow
 	KTAbstractElement *container = [self delegateOwner];
 	NSString *settings = nil;
@@ -390,54 +388,16 @@ intoTextForKeyPath:(NSString *)keyPath
 	
 	// Update media refs to the new system.
     NSString *oldText = [oldPluginProperties objectForKey:@"richTextHTML"];
-    NSMutableString *newText = [[NSMutableString alloc] init];
     
-    NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
-    while (![imageScanner isAtEnd])
-    {
-        // Look for an image tag
-        NSString *someText = nil;
-        [imageScanner scanUpToString:@"<img" intoString:&someText];
-        [newText appendString:someText];
-        if ([imageScanner isAtEnd]) break;
-        
-        
-        // Locate the image's source attribute
-        [imageScanner scanUpToString:@"src=\"" intoString:&someText];
-        [newText appendString:someText];
-        [imageScanner scanString:@"src=\"" intoString:&someText];
-        [newText appendString:someText];
-        
-        NSString *anImageURI = nil;
-        [imageScanner scanUpToString:@"\"" intoString:&anImageURI];
-        
-        
-        // Look for a media ref within the URI
-        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
-        [mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
-        if (![mediaRefScanner isAtEnd])
-        {
-            NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
-            KTMediaContainer *anImage = [[self mediaManager] mediaContainerWithMediaRefNamed:oldMediaID element:oldPlugin];
-            anImage = [anImage imageWithScalingSettingsNamed:settings forPlugin:[self delegateOwner]];
-            anImageURI = [[anImage URIRepresentation] absoluteString];     
-        }
-        [mediaRefScanner release];
-        
-        if (anImageURI)
-        {
-            [newText appendString:anImageURI];
-        }
-    }    
-    
-    [imageScanner release];
+    NSString *newText = [[self mediaManager] importLegacyMediaFromString:oldText
+                                                     scalingSettingsName:settings
+                                                              oldElement:oldPlugin
+                                                              newElement:[self delegateOwner]];
     
     
-    [[self delegateOwner] setValue:[[newText copy] autorelease] forKey:@"richTextHTML"];
-    [newText release];
+    [[self delegateOwner] setValue:newText forKey:@"richTextHTML"];
     
     return YES;
-    return NO;
 }
 
 

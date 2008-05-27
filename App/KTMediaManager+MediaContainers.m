@@ -169,52 +169,6 @@
 	return result;
 }
 
-- (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement
-{
-    KTMediaContainer *result = nil;
-    
-    // Locate the media ref for the name
-    NSSet *mediaRefs = [oldElement valueForKey:@"mediaRefs"];
-    NSEnumerator *mediaRefsEnumerator = [mediaRefs objectEnumerator];
-    NSManagedObject *mediaRef;
-    
-    while (mediaRef = [mediaRefsEnumerator nextObject])
-    {
-        if ([NSObject object:[mediaRef valueForKey:@"name"] isEqual:oldMediaRefName])
-        {
-            break;
-        }
-    }
-    
-    
-    // Look up the media object
-    if (mediaRef)
-    {
-        NSManagedObject *oldMedia = [mediaRef valueForKey:@"media"];
-        
-        // Import either data or a path
-        NSData *oldMediaData = [oldMedia valueForKeyPath:@"mediaData.contents"];
-        
-        if ([oldMedia integerForKey:@"storageType"] == KTMediaCopyAliasStorage)
-        {
-            BDAlias *alias = [BDAlias aliasWithData:oldMediaData];
-            if (alias)
-            {
-                result = [self mediaContainerWithPath:[alias fullPath]];
-            }
-        }
-        else
-        {
-            result = [self mediaContainerWithData:oldMediaData
-                                         filename:[oldMedia valueForKey:@"name"] 
-                                              UTI:[oldMedia valueForKey:@"mediaUTI"]];
-        }
-    }
-    
-    
-    return result;
-}
-
 #pragma mark -
 #pragma mark Graphical Text
 
