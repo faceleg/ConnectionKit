@@ -15,6 +15,7 @@
 #import "KTMediaContainer.h"
 #import "KTMediaPersistentStoreCoordinator.h"
 
+#import "NSArray+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 
@@ -280,18 +281,9 @@ NSString *KTMediaLogDomain = @"Media";
     KTMediaContainer *result = nil;
     
     // Locate the media ref for the name
-    NSSet *mediaRefs = [oldElement valueForKey:@"mediaRefs"];
-    NSEnumerator *mediaRefsEnumerator = [mediaRefs objectEnumerator];
-    NSManagedObject *mediaRef;
-    
-    while (mediaRef = [mediaRefsEnumerator nextObject])
-    {
-        if ([NSObject object:[mediaRef valueForKey:@"name"] isEqual:oldMediaRefName])
-        {
-            break;
-        }
-    }
-    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND owner == %@", oldMediaRefName, oldElement];
+    NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObject];
+        
     
     // Look up the media object
     if (mediaRef)
