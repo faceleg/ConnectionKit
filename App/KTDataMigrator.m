@@ -553,6 +553,10 @@
     NSManagedObject *aChildPage;
     while (aChildPage = [childrenEnumerator nextObject])
     {
+        // Use a local autorelease pool to keep memory down
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
+        
         // Insert a new child page of the right type.
         NSString *pluginIdentifier = [aChildPage valueForKey:@"pluginIdentifier"];
         pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
@@ -573,6 +577,10 @@
         {
             return NO;
         }
+        
+        
+        // Tidy up
+        [pool release];
     }
     
     
@@ -716,11 +724,6 @@
 {
     KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
     BOOL result = [newElement importPluginProperties:[oldPluginProperties dictionary] fromPlugin:oldElement error:error];
-    if (!result) return result;
-    
-    // Save after each element to detect errors
-    KTDocument *document = [self newDocument];
-    result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
     return result;
 }
 
