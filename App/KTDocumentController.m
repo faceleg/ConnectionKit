@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTDataMigrator.h"
+#import "KTDataMigrationDocument.h"
 #import "KTDocument.h"
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"
@@ -23,11 +24,6 @@
 #ifdef APP_RELEASE
 #import "Registration.h"
 #endif
-
-
-@interface KTDocumentController (Private)
-- (id)migrateDocumentAtURL:(NSURL *)absoluteURL modelVersion:(NSString *)modelVersion error:(NSError **)outError;
-@end
 
 
 @implementation KTDocumentController
@@ -79,6 +75,38 @@
 {
 	NSString *helpString = @"Document";		// HELPSTRING
 	return [NSHelpManager gotoHelpAnchor:helpString];
+}
+
+#pragma mark -
+
+- (Class)documentClassForType:(NSString *)documentTypeName
+{
+    if ([kKTDocumentUTI_ORIGINAL isEqualToString:documentTypeName])
+    {
+        return [KTDataMigrationDocument class];
+    }
+    else
+    {
+        return [super documentClassForType:documentTypeName];
+    }
+}
+
+/*  We're overriding this method so that 1.2.x documents are differentiated from the newer ones
+ */
+- (NSString *)typeForContentsOfURL:(NSURL *)inAbsoluteURL error:(NSError **)outError
+{
+    NSString *result;
+    
+    if ([inAbsoluteURL isFileURL] && [[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL])
+    {
+        result = kKTDocumentUTI_ORIGINAL;
+    }
+    else
+    {
+        result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
+    }
+    
+    return result;
 }
 
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
@@ -157,7 +185,7 @@
 
 		
 //		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppLastSavedVersionKey];
-		if (![modelVersion isEqualToString:kKTModelVersion])
+		if (![modelVersion isEqualToString:kKTModelVersion] && NO)
 		{
 			// Attempt to migrate an existing, old doc
 			return [self migrateDocumentAtURL:absoluteURL modelVersion:modelVersion error:outError];
@@ -314,19 +342,7 @@
 }
 
 
-/*	Private method that is called when opening a document in an old data format.
- */
-- (id)migrateDocumentAtURL:(NSURL *)absoluteURL modelVersion:(NSString *)modelVersion error:(NSError **)outError
-{
-	id result = nil;
-	
-	if ([KTDataMigrator upgradeDocumentWithURL:absoluteURL modelVersion:modelVersion error:outError])
-    {
-        result = [self openDocumentWithContentsOfURL:absoluteURL display:YES error:outError];
-    }
-	
-	return result;
-}
+#pragma mark -
 
 - (KTDocument *)lastSavedDocument
 {

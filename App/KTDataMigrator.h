@@ -31,44 +31,32 @@
     
     NSURL       *myNewDocumentURL;
     KTDocument  *myNewDocument;
-	
-	NSMutableDictionary		*myObjectIDCache; // key = old objectID, value = new objectID
+    
+    BOOL    myIsCancelled;
 }
-
-// this is the main entry point to migrate a file
-+ (BOOL)upgradeDocumentWithURL:(NSURL *)aStoreURL modelVersion:(NSString *)aVersion error:(NSError **)outError;
-
-// this returns the fileName that the original file will be renamed to
-+ (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
 
 + (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
 
+// Init
+- (id)initWithDocumentURL:(NSURL *)docURL;
 
 // Accessors
-- (NSManagedObjectModel *)oldManagedObjectModel;
-- (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;
-
-- (NSManagedObjectContext *)oldManagedObjectContext;
-- (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext;
-
 - (NSURL *)oldStoreURL;
-- (void)setOldStoreURL:(NSURL *)aStoreURL;
+- (NSManagedObjectModel *)oldManagedObjectModel;
+- (NSManagedObjectContext *)oldManagedObjectContext;
 
 - (NSURL *)newDocumentURL;
-- (void)setNewDocumentURL:(NSURL *)URL;
-
 - (KTDocument *)newDocument;
-- (void)setNewDocument:(KTDocument *)document;
 
-- (NSManagedObjectModel *)newManagedObjectModel;
-- (NSManagedObjectContext *)newManagedObjectContext;
+// Migration
+- (BOOL)migrate:(NSError **)error;
 
-- (NSMutableDictionary *)objectIDCache;
-- (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache;
+- (void)migrateWithDelegate:(id)delegate            // Asynchronous version
+         didMigrateSelector:(SEL)didMigrateSelector
+                contextInfo:(void *)contextInfo;
 
-
-// This is the workhorse
-- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
+- (void)cancel;
+- (BOOL)isCancelled;
 
 @end
 

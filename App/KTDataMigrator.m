@@ -30,6 +30,8 @@
 #import "NSManagedObjectModel+KTExtensions.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSThread+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "Debug.h"
 
@@ -37,12 +39,19 @@
 
 @interface KTDataMigrator ()
 
-+ (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath;
-
-- (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject;
-
+// Accessors
+- (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;
+- (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext;
+- (void)setOldStoreURL:(NSURL *)aStoreURL;
+- (void)setNewDocumentURL:(NSURL *)URL;
+- (void)setNewDocument:(KTDocument *)document;
 
 // Generic migration methods
+- (BOOL)_migrate:(NSError **)outError;
+- (BOOL)backupDocumentBeforeMigration:(NSError **)outError;
+- (void)recoverFailedMigration;
+- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
+
 - (NSSet *)matchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
 - (void)migrateMatchingAttributesFromObject:(NSManagedObject *)managedObjectA toObject:(NSManagedObject *)managedObjectB;
 - (void)migrateAttributes:(NSSet *)attributeKeys fromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
@@ -51,7 +60,6 @@
 // Element migration
 - (void)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(NSNumber *)propogate toPage:(KTPage *)newPage;
 - (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error;
-- (BOOL)migrateRoot:(NSError **)error;
 
 - (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error;
 
@@ -61,8 +69,9 @@
 
 - (BOOL)migrateDocumentInfo:(NSError **)error;
 
-
++ (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
 + (BOOL)validatePathForNewStore:(NSString *)aStorePath error:(NSError **)outError;
+
 @end
 
 
@@ -92,122 +101,6 @@
 
 
 @implementation KTDataMigrator
-
-+ (void)crashKTDataMigrator
-{
-	*((int*)(-1)) = 0;
-}
-
-/*! upgrades the document, in-place, returning whether procedure was successful */
-+ (BOOL)upgradeDocumentWithURL:(NSURL *)aStoreURL modelVersion:(NSString *)aVersion error:(NSError **)outError
-{
-	OBPRECONDITION(aStoreURL);
-    OBPRECONDITION([aStoreURL isFileURL]);
-    
-    
-    // move the original to a new location
-	NSString *originalPath = [aStoreURL path];
-	NSString *destinationPath = [KTDataMigrator renamedFileName:originalPath modelVersion:aVersion];
-	
-	BOOL originalMoved = [[NSFileManager defaultManager] movePath:originalPath toPath:destinationPath handler:nil];
-	if (!originalMoved)
-	{
-		// we cannot proceed, pass back an error and return NO
-		NSString *errorDescription = [NSString stringWithFormat:
-                                      NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
-                                      originalPath, destinationPath];
-		
-		NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
-		*outError = error;
-		
-		return NO;
-	}
-	
-    
-	// Use the original URL as our newStoreURL
-	BOOL result = NO;
-    NSURL *newStoreURL = [aStoreURL copy];
-	
-    @try        // This means that you can call return and @finally code will still be called. Just make sure result is set.
-    {
-        if (!newStoreURL || ![newStoreURL isFileURL])
-        {
-            NSString *errorDescription = [NSString stringWithFormat:
-                                          NSLocalizedString(@"Unable to upgrade document at path %@. Path does not appear to be a file.","Alert: Unable to upgrade document at path %@. Path does not appear to be a file."), [newStoreURL path]];
-            
-            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
-            *outError = error;
-            
-            result = NO;    return result;
-        }
-        
-        
-        // Check that we have a good path and we can write to it
-        if (![KTDataMigrator validatePathForNewStore:[newStoreURL path] error:outError])
-        {
-            result = NO;    return result;
-        }
-        
-        
-        // make a migrator instance
-        KTDataMigrator *migrator = [[KTDataMigrator alloc] init];
-        
-        // set old and new store URLs
-        [migrator setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
-        [migrator setNewDocumentURL:newStoreURL];
-        
-        // migrate!
-        NSError *localError = nil;
-        result = [migrator genericallyMigrateDataFromOldModelVersion:aVersion error:&localError];
-        
-        if (!result)
-        {
-            if (localError)
-            {
-                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-                             [NSString stringWithFormat:
-                              NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
-                              [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent], localError]];
-            }
-            else
-            {
-                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
-                             [NSString stringWithFormat:
-                              NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
-                              [[aStoreURL path] lastPathComponent], [[newStoreURL path] lastPathComponent]]];
-            }
-        }
-        
-        [migrator release];
-    }
-    @catch (NSException *exception)
-    {
-        result = NO;
-        [exception raise];
-    }
-    @finally
-    {
-        // Failed migrations should revert the old file
-        if (!result)
-        {
-            [self recoverFailedUpgradeWithPath:originalPath backupPath:destinationPath];
-        }
-        
-        // Tidy up
-        [newStoreURL release];
-    }
-    
-    
-    return result;
-}
-
-+ (void)recoverFailedUpgradeWithPath:(NSString *)upgradePath backupPath:(NSString *)backupPath
-{
-    // It doesn't matter if either of these methods fail, we're just doing our best to recover.
-    [[NSFileManager defaultManager] removeFileAtPath:upgradePath handler:nil];
-    [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
-}
-
 
 /*  Provides a lookup table for converting old plugin identifiers to new.
  */
@@ -262,16 +155,18 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)init
+/*! upgrades the document, in-place, returning whether procedure was successful */
+- (id)initWithDocumentURL:(NSURL *)docURL
 {
-	if ( nil == [super init] )
-	{
-		return nil;
-	}
-	
-	[self setObjectIDCache:[NSMutableDictionary dictionary]];
-	
-	return self;
+	[super init];
+    
+    OBPRECONDITION(docURL);
+    OBPRECONDITION([docURL isFileURL]);
+    
+    [self setOldStoreURL:docURL];
+    [self setNewDocumentURL:docURL];
+    
+    return self;
 }
 
 - (void)dealloc
@@ -282,8 +177,8 @@
 	[self setOldStoreURL:nil];
 	[self setOldManagedObjectContext:nil];
 	[self setOldManagedObjectModel:nil];
-	[self setObjectIDCache:nil];
-	[super dealloc];
+	
+    [super dealloc];
 }
 
 #pragma mark -
@@ -325,17 +220,6 @@
 	myOldStoreURL = aStoreURL;
 }
 
-- (NSManagedObject *)oldDocumentInfo
-{
-    KTDocumentInfo *result = [[[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:nil] firstObject];
-    return result;
-}
-
-- (NSMutableDictionary *)objectIDCache 
-{ 
-	return myObjectIDCache;
-}
-
 - (NSURL *)newDocumentURL { return myNewDocumentURL; }
 
 - (void)setNewDocumentURL:(NSURL *)URL
@@ -354,26 +238,198 @@
     myNewDocument = document;
 }
 
-- (NSManagedObjectModel *)newManagedObjectModel
-{
-    return [[self newDocument] managedObjectModel];
-}
-
-- (NSManagedObjectContext *)newManagedObjectContext
-{
-    return [[self newDocument] managedObjectContext];
-}
-
-- (void)setObjectIDCache:(NSMutableDictionary *)anObjectIDCache
-{
-    [anObjectIDCache retain];
-    [myObjectIDCache release];
-    myObjectIDCache = anObjectIDCache;
-}
-
-
 #pragma mark -
 #pragma mark Migration
+
+- (BOOL)migrate:(NSError **)outError
+{
+    // Make a backup before the migration
+    BOOL result = [self backupDocumentBeforeMigration:outError];
+    if (result)
+    {
+        result = [self _migrate:outError];
+    }
+    
+    return result;
+}
+
+/*  Handles all migration apart from pre-flight backup
+ */
+- (BOOL)_migrate:(NSError **)outError
+{
+    // Use the original URL as our newStoreURL
+	BOOL result = NO;
+	
+    @try        // This means that you can call return and @finally code will still be called. Just make sure result is set.
+    {
+        if (![self newDocumentURL] || ![[self newDocumentURL] isFileURL])
+        {
+            NSString *errorDescription = [NSString stringWithFormat:
+                                          NSLocalizedString(@"Unable to upgrade document at path %@. Path does not appear to be a file.","Alert: Unable to upgrade document at path %@. Path does not appear to be a file."),
+                                          [[self newDocumentURL] absoluteString]];
+            
+            NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
+            *outError = error;
+            
+            result = NO;    return result;
+        }
+        
+        
+        // Check that we have a good path and we can write to it
+        if (![KTDataMigrator validatePathForNewStore:[[self newDocumentURL] path] error:outError])
+        {
+            result = NO;    return result;
+        }
+        
+        
+        // Migrate!
+        NSError *localError = nil;
+        result = [self genericallyMigrateDataFromOldModelVersion:kKTModelVersion_ORIGINAL error:&localError];
+        
+        if (!result)
+        {
+            if (localError)
+            {
+                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                             [NSString stringWithFormat:
+                              NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
+                              [[self oldStoreURL] lastPathComponent], [[self newDocumentURL] lastPathComponent], localError]];
+            }
+            else
+            {
+                *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
+                             [NSString stringWithFormat:
+                              NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
+                              [[self oldStoreURL] lastPathComponent], [[self newDocumentURL] lastPathComponent]]];
+            }
+        }
+    }
+    @catch (NSException *exception)
+    {
+        result = NO;
+        [exception raise];
+    }
+    @finally
+    {
+        // Failed migrations should revert the old file
+        if (!result)
+        {
+            [self recoverFailedMigration];
+        }
+    }
+    
+    
+    return result;
+}
+
+/*  Performs the migration on a background thread. -oldStoreURL is guaranteed to be set before this method returns though.
+ */
+- (void)migrateWithDelegate:(id)delegate
+         didMigrateSelector:(SEL)didMigrateSelector
+                contextInfo:(void *)contextInfo
+{
+    OBPRECONDITION([NSThread isMainThread]);
+    
+    
+    // Build the callback invocation
+    SEL callbackSelector = @selector(dataMigrator:didMigrate:error:contextInfo:);
+    NSInvocation *callback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:callbackSelector]];
+    [callback setTarget:delegate];
+    [callback setSelector:callbackSelector];
+    [callback setArgument:&self atIndex:2];
+    [callback setArgument:&contextInfo atIndex:5];  // Arguments 3 & 4 will be filled in after migration
+    [callback retainArguments];
+    
+    
+    // Make a backup before the migration. This is done on the main thread as it's fast and ensures doc UI has a backup filename to display.
+    NSError *error = nil;
+    BOOL result = [self backupDocumentBeforeMigration:&error];
+    if (result)
+    {
+        // We're ready to kick off threaded migration
+        [NSThread detachNewThreadSelector:@selector(threadedMigrateWithCallback:) toTarget:self withObject:callback];
+    }
+    else
+    {
+        [callback setArgument:&result atIndex:3];
+        [callback setArgument:&error atIndex:4];
+        [callback retainArguments];
+        
+        [callback invoke];
+    }
+}
+
+- (void)threadedMigrateWithCallback:(NSInvocation *)callback
+{
+    OBPRECONDITION([self oldStoreURL]);
+    
+    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    
+    // Do the migration
+    NSError *error = nil;
+    BOOL result = [self _migrate:&error];
+    
+    // Let our delegate know the result
+    [callback setArgument:&result atIndex:3];
+    [callback setArgument:&error atIndex:4];
+    [callback retainArguments];
+    
+    [callback performSelectorOnMainThread:@selector(invoke) withObject:nil waitUntilDone:NO];
+    
+    
+    [pool release];
+}
+
+- (BOOL)backupDocumentBeforeMigration:(NSError **)outError
+{
+    OBPRECONDITION([NSThread isMainThread]);
+    
+    
+    // TODO: Figure out the model version
+    NSString *modelVersion = kKTModelVersion_ORIGINAL;
+    
+    
+    // move the original to a new location
+    NSString *originalPath = [[self newDocumentURL] path];
+	NSString *destinationPath = [KTDataMigrator renamedFileName:originalPath modelVersion:modelVersion];
+	
+	BOOL result = [[NSFileManager defaultManager] movePath:originalPath toPath:destinationPath handler:nil];
+	if (result)
+    {
+        // Set old store URL
+        [self setOldStoreURL:[NSURL fileURLWithPath:destinationPath]];
+    }
+    else
+	{
+		// we cannot proceed, pass back an error and return NO
+		NSString *errorDescription = [NSString stringWithFormat:
+                                      NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
+                                      originalPath, destinationPath];
+		
+		NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
+		*outError = error;
+	}
+    
+    return result;
+}
+
+- (void)recoverFailedMigration
+{
+    OBPRECONDITION([self newDocumentURL]);
+    OBPRECONDITION([[self newDocumentURL] isFileURL]);
+    NSString *upgradePath = [[self newDocumentURL] path];
+    
+    OBPRECONDITION([self oldStoreURL]);
+    OBPRECONDITION([[self oldStoreURL] isFileURL]);
+    NSString *backupPath = [[self oldStoreURL] path];
+    
+    
+    // It doesn't matter if either of these methods fail, we're just doing our best to recover.
+    [[NSFileManager defaultManager] removeFileAtPath:upgradePath handler:nil];
+    [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
+}
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
 {
@@ -406,13 +462,8 @@
     }
 	
     
-	// Migrate
+	// Migrate (this recurses into pages and so on)
     if (![self migrateDocumentInfo:error])
-    {
-        return NO;
-    }
-    
-    if (![self migrateRoot:error])
     {
         return NO;
     }
@@ -424,6 +475,13 @@
     
     return result;
 }
+
+- (void)cancel
+{
+    myIsCancelled = YES;
+}
+
+- (BOOL)isCancelled { return myIsCancelled; }
 
 #pragma mark -
 #pragma mark Page Migration
@@ -598,12 +656,11 @@
 /*  Root is special because it contains a bunch of properties which now belong on KTMaster.
  *  Otherwise, we can do normal page migration.
  */
-- (BOOL)migrateRoot:(NSError **)error
+- (BOOL)migrateRootPage:(NSManagedObject *)oldRoot error:(NSError **)error
 {
-    // Migrate simple properties from Root to the Master
-    NSManagedObject *oldRoot = [[self oldDocumentInfo] valueForKey:@"root"];
     OBASSERT(oldRoot);
     
+    // Migrate simple properties from Root to the Master
     KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
     KTPage *newRoot = [newDocInfo root];
     KTMaster *newMaster = [newRoot master];
@@ -730,6 +787,13 @@
  */
 - (BOOL)migrateElement:(NSManagedObject *)oldElement toElement:(KTAbstractElement *)newElement error:(NSError **)error
 {
+    // Exit if the user cancelled
+    if ([self isCancelled])
+    {
+        *error = nil;
+        return NO;
+    }
+    
     KTStoredDictionary *oldPluginProperties = [oldElement valueForKey:@"pluginProperties"];
     BOOL result = [newElement importPluginProperties:[oldPluginProperties dictionary] fromPlugin:oldElement error:error];
     return result;
@@ -743,8 +807,11 @@
 - (BOOL)migrateDocumentInfo:(NSError **)error
 {
 	// Retrieve document infos
-    NSManagedObject *oldDocInfo = [self oldDocumentInfo];
-    if (!oldDocInfo) return NO;
+    NSArray *docInfos = [[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:error];
+    if (!docInfos) return NO;
+    
+    NSManagedObject *oldDocInfo = [docInfos firstObject];
+    OBASSERT(oldDocInfo);
     
     KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
     OBASSERT(newDocInfo);
@@ -760,7 +827,9 @@
     [newHostProperties setValuesForKeysWithDictionary:[oldHostProperties dictionary]];
     
     
-    return YES;
+    // Move onto individual pages
+    BOOL result = [self migrateRootPage:[oldDocInfo valueForKey:@"root"] error:error];
+    return result;
 }
 
 #pragma mark -
@@ -892,22 +961,6 @@
     }
 	
     return YES;
-}
-
-/*! returns object in newManagedObjectContext matching anObject in oldManagedObjectContext */
-- (NSManagedObject *)correspondingObjectForObject:(NSManagedObject *)anObject
-{
-	NSManagedObject *result = nil;
-	
-	NSString *URIStringA = [anObject URIRepresentationString];
-	NSString *URIStringB = [[self objectIDCache] valueForKey:URIStringA];
-	
-	if ( nil != URIStringB )
-	{
-		result = [[self newManagedObjectContext] objectWithURIRepresentationString:URIStringB];
-	}
-	
-	return result;	
 }
 
 @end

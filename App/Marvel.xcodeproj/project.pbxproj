@@ -318,8 +318,8 @@
 		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */; };
 		27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */; };
-		27E3F8330D9C34B000A64154 /* KTDocumentMigrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E3F8310D9C34B000A64154 /* KTDocumentMigrationController.h */; };
-		27E3F8340D9C34B000A64154 /* KTDocumentMigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F8320D9C34B000A64154 /* KTDocumentMigrationController.m */; };
+		27E3F8330D9C34B000A64154 /* KTDataMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */; };
+		27E3F8340D9C34B000A64154 /* KTDataMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */; };
 		27EF1BCF0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */; };
 		27EF1BD00DC1F9BF00976C66 /* KTSiteOutlineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1798,8 +1798,8 @@
 		27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugin.h; sourceTree = "<group>"; };
 		27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugin.m; sourceTree = "<group>"; };
 		27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DocumentMigration.nib; sourceTree = "<group>"; };
-		27E3F8310D9C34B000A64154 /* KTDocumentMigrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentMigrationController.h; sourceTree = "<group>"; };
-		27E3F8320D9C34B000A64154 /* KTDocumentMigrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentMigrationController.m; sourceTree = "<group>"; };
+		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
+		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
 		27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineDataSource.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineDataSource.m; sourceTree = "<group>"; };
 		27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+QuickLook.h"; path = "../Code/QuickLook/NSBundle+QuickLook.h"; sourceTree = SOURCE_ROOT; };
@@ -2968,6 +2968,17 @@
 			name = Page;
 			sourceTree = "<group>";
 		};
+		27409DFC0DEC685300C2387E /* Data Migration */ = {
+			isa = PBXGroup;
+			children = (
+				27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */,
+				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
+				3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */,
+				3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */,
+			);
+			name = "Data Migration";
+			sourceTree = "<group>";
+		};
 		274339EA0D77339B00164FA5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3149,6 +3160,7 @@
 				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
+				27409DFC0DEC685300C2387E /* Data Migration */,
 				3C5A736E0BF7B67300776464 /* Core Data */,
 				275E067A0DDA0F1A0072567F /* Elements */,
 				2786BE970CAD10530086F9E0 /* Media */,
@@ -3372,8 +3384,6 @@
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
-				27E3F8310D9C34B000A64154 /* KTDocumentMigrationController.h */,
-				27E3F8320D9C34B000A64154 /* KTDocumentMigrationController.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -3941,8 +3951,6 @@
 		3C5A737A0BF7B83A00776464 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */,
-				3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */,
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */,
 				27CAB4720D36E12400F90A1B /* Media.xcdatamodel */,
@@ -4934,7 +4942,7 @@
 				CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */,
 				CE0321230D98640F00EC55FC /* KSJoinListController.h in Headers */,
 				CE1BB2740D9892D7003F0F4A /* KSNetworkNotifier.h in Headers */,
-				27E3F8330D9C34B000A64154 /* KTDocumentMigrationController.h in Headers */,
+				27E3F8330D9C34B000A64154 /* KTDataMigrationDocument.h in Headers */,
 				CE6907230DA2B063003FE259 /* KSSavedFeedbackSender.h in Headers */,
 				CE50F5130DAC18CE000A0943 /* KSPlaceholderTableView.h in Headers */,
 				270460810DAD7ED100D74480 /* KSRoundingValueTransformer.h in Headers */,
@@ -6365,7 +6373,7 @@
 				27AA4B520D959BDF00B871A9 /* KSPlaceholderTextView.m in Sources */,
 				CE0321240D98640F00EC55FC /* KSJoinListController.m in Sources */,
 				CE1BB2750D9892D7003F0F4A /* KSNetworkNotifier.m in Sources */,
-				27E3F8340D9C34B000A64154 /* KTDocumentMigrationController.m in Sources */,
+				27E3F8340D9C34B000A64154 /* KTDataMigrationDocument.m in Sources */,
 				CE6907240DA2B063003FE259 /* KSSavedFeedbackSender.m in Sources */,
 				27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */,
 				CE50F5120DAC18CE000A0943 /* KSPlaceholderTableView.m in Sources */,
