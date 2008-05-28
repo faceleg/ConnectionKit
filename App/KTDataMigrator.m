@@ -259,7 +259,9 @@
 {
     // Use the original URL as our newStoreURL
 	BOOL result = NO;
-	
+	NSError *localError = nil;
+        
+    
     @try        // This means that you can call return and @finally code will still be called. Just make sure result is set.
     {
         if (![self newDocumentURL] || ![[self newDocumentURL] isFileURL])
@@ -283,11 +285,24 @@
         
         
         // Migrate!
-        NSError *localError = nil;
         result = [self genericallyMigrateDataFromOldModelVersion:kKTModelVersion_ORIGINAL error:&localError];
         
+        
+        // After migration we can dispose of the new doc. This ensures it done on the right thread
+        [self setNewDocument:nil];
+    }
+    @catch (NSException *exception)
+    {
+        result = NO;
+    }
+    @finally
+    {
+        // Recover failed migrations and pass out an error
         if (!result)
         {
+            
+            [self recoverFailedMigration];
+            
             if (localError)
             {
                 *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
@@ -304,20 +319,6 @@
             }
         }
     }
-    @catch (NSException *exception)
-    {
-        result = NO;
-        [exception raise];
-    }
-    @finally
-    {
-        // Failed migrations should revert the old file
-        if (!result)
-        {
-            [self recoverFailedMigration];
-        }
-    }
-    
     
     return result;
 }

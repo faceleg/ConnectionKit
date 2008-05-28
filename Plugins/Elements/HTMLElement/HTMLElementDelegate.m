@@ -84,7 +84,7 @@
 	NSString *svxString = @"<img src=\"svxmedia://";
 	
 	NSString *html = [[self delegateOwner] valueForKey:@"html"];
-	LOG((@"scanning block for identifiers: \n%@", html));
+	OFF((@"scanning block for identifiers: \n%@", html));
 	if ( [html length] > [svxString length] )
 	{
 		NSScanner *scanner = [NSScanner scannerWithString:html];

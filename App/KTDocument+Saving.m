@@ -137,7 +137,7 @@
 	{
 		// Recover from an exception as best as possible and then rethrow the exception so it goes the exception reporter mechanism
 		[self recoverBackupFile:backupPath toURL:absoluteURL];
-		[exception raise];
+		@throw;
 	}
 	
 	
@@ -217,7 +217,6 @@
 			ofType:(NSString *)inType 
   forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
 {
-	OBASSERTSTRING([NSThread isMainThread], @"should be called only from the main thread");
 	BOOL result = NO;
 	
 	
@@ -432,8 +431,6 @@
 	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
 				error:(NSError **)outError
 {
-	OBASSERTSTRING([NSThread isMainThread], @"should be called only from the main thread");
-	
 	BOOL result = NO;
 	NSError *error = nil;
 	
@@ -597,14 +594,25 @@
 	
 	NSWindow *window = [[NSWindow alloc]
 		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when termintating?
+	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
 	WebView *result = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
 	[window setContentView:result];
 	
 	
-	// Go ahead and begin building the thumbnail
-	[[result mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+	// Go ahead and begin building the thumbnail. This MUST be done on the main thread
+    if ([NSThread isMainThread])
+    {
+        [[result mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+    }
+    else
+    {
+        [[result mainFrame] performSelectorOnMainThreadAndReturnResult:@selector(loadHTMLString:baseURL:)
+                                                            withObject:thumbnailHTML
+                                                            withObject:nil];
+    }
+   
+    
 	return result;
 }
 

@@ -1482,13 +1482,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender	// called from dock-quitting very early; need to updateLastOpened first and then don't save it again!
 {
-	[[KTDocumentController sharedDocumentController] closeAllDocumentsWithDelegate:nil
-															   didCloseAllSelector:NULL
-																	   contextInfo:NULL];
-		
-
-	return NSTerminateNow;
+	[[NSDocumentController sharedDocumentController] closeAllDocumentsWithDelegate:self
+                                                               didCloseAllSelector:@selector(documentController:didCloseAll:contextInfo:)
+                                                                       contextInfo:NULL];
+    
+    return NSTerminateLater;
 }
+
+- (void)documentController:(NSDocumentController *)docController didCloseAll:(BOOL)didCloseAll contextInfo:(void *)contextInfo
+{
+    [NSApp replyToApplicationShouldTerminate:didCloseAll];
+}
+
 
 // Font Panel capabilities -- restrict what effects we can do.
 /// put back in effects that people might want.

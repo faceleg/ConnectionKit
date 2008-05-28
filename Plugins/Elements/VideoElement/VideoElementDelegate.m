@@ -694,7 +694,11 @@ After deflating starting at byte 8, you get:
 
 - (void)loadMovieFromAttributes:(NSDictionary *)anAttributes
 {
-	[self setMovie:nil];	// will clear out any old movie, exit movies on thread
+	// Ignore for background threads as there is no need to do this during a doc import
+    if (![NSThread isMainThread]) return;
+    
+    
+    [self setMovie:nil];	// will clear out any old movie, exit movies on thread
 	BOOL isFlash = NO;
 	BOOL isWindowsMedia = NO;
 	NSError *error = nil;

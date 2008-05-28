@@ -492,11 +492,6 @@
 
 - (void)dealloc
 {
-	if ( ![NSThread isMainThread] )
-	{
-		LOG((@"dealloc'ing documenet via background thread? why? will this result in a pool problem? draino!"));
-	}
-	
 	// no more notifications
 	// TODO: FIXME: Chris Hanson indicates that we should be removing each specific observation
 	// rather than doing blanket removal
@@ -525,9 +520,6 @@
 	
 	// release context
 	[myManagedObjectContext release]; myManagedObjectContext = nil;
-	
-	// release model last
-	[myManagedObjectModel release]; myManagedObjectModel = nil;
 	
 	[super dealloc];
 }

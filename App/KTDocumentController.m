@@ -187,8 +187,6 @@
 //		NSString *mainBundleVersion = [metadata valueForKey:kKTMetadataAppLastSavedVersionKey];
 		if (![modelVersion isEqualToString:kKTModelVersion] && NO)
 		{
-			// Attempt to migrate an existing, old doc
-			return [self migrateDocumentAtURL:absoluteURL modelVersion:modelVersion error:outError];
 			
 //			NSString *fileNameWithExtension = [requestedPath lastPathComponent];
 //			if ( ([modelVersion intValue] >= [kKTModelMinimumVersion intValue])

@@ -51,7 +51,6 @@ typedef enum {
 	@private
 	
 	KTManagedObjectContext		*myManagedObjectContext;
-	NSManagedObjectModel		*myManagedObjectModel;
 	KTDocumentInfo				*myDocumentInfo;
 	
 	KTDocWindowController		*myDocWindowController;
