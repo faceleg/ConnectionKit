@@ -316,9 +316,11 @@
 	[self didChangeValueForKey:@"bannerImage"];
 }
 
-- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose
+/*  Provides the banner image already scaled correctly.
+ */
+- (KTMediaContainer *)scaledBanner
 {
-	NSString *result = nil;
+    KTMediaContainer *result = nil;
 	
 	// If the user has specified a custom banner and the design supports it, load it in
 	KTMediaContainer *banner = [self bannerImage];
@@ -329,26 +331,38 @@
 			// Scale the banner
 			KTImageScalingSettings *scalingSettings = [[self design] imageScalingSettingsForUse:@"bannerImage"];
 			NSDictionary *scalingProperties =
-				[NSDictionary dictionaryWithObject:scalingSettings forKey:@"scalingBehavior"];
-			KTMediaContainer *scaledBanner = [banner scaledImageWithProperties:scalingProperties];
-			
-			
-			// Find the right path
-			NSString *bannerPath = nil;
-			if (generationPurpose == kGeneratingPreview)
-			{
-				bannerPath = [[NSURL fileURLWithPath:[[scaledBanner file] currentPath]] absoluteString];
-			}
-			else
-			{
-				NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
-				NSURL *mediaURL = [[[scaledBanner file] defaultUpload] URL];
-				bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
-			}
-			
-			NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-			result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerPath];
+            [NSDictionary dictionaryWithObject:scalingSettings forKey:@"scalingBehavior"];
+			result = [banner scaledImageWithProperties:scalingProperties];
 		}
+	}
+	
+	
+	return result;
+}
+
+- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose
+{
+	NSString *result = nil;
+	
+	// If the user has specified a custom banner and the design supports it, load it in
+	KTMediaContainer *banner = [self scaledBanner];
+	if (banner)
+	{
+		// Find the right path
+        NSString *bannerPath = nil;
+        if (generationPurpose == kGeneratingPreview)
+        {
+            bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
+        }
+        else
+        {
+            NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
+            NSURL *mediaURL = [[[banner file] defaultUpload] URL];
+            bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
+        }
+        
+        NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
+        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerPath];
 	}
 	
 	
@@ -517,6 +531,7 @@
 	NSMutableSet *result = [NSMutableSet set];
 	
 	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
+    [result addObjectIgnoringNil:[[self scaledBanner] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[[[self logoImage] imageToFitSize:NSMakeSize(200.0, 128.0)] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
