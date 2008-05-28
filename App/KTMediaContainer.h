@@ -27,6 +27,8 @@ typedef enum {
 }
 
 + (KTMediaContainer *)mediaContainerForURI:(NSURL *)mediaURI;
++ (NSSet *)mediaContainerIdentifiersInHTML:(NSString *)HTML;
++ (NSString *)mediaContainerIdentifierForURI:(NSURL *)mediaURI;
 
 // Accessors
 - (KTMediaManager *)mediaManager;

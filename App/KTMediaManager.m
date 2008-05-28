@@ -178,9 +178,11 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	
 	// Get the list of all MediaContainer entities and narrow it down to those that aren't required.
-	NSError *error = nil;
-	NSArray *allMedia = [[self managedObjectContext] allObjectsWithEntityName:@"MediaContainer" error:&error];
-	NSEnumerator *mediaEnumerator = [allMedia objectEnumerator];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scaledImages.@count == 0"];
+    NSError *error = nil;
+	NSArray *allMedia = [[self managedObjectContext] objectsWithEntityName:@"MediaContainer" predicate:predicate error:&error];
+	
+    NSEnumerator *mediaEnumerator = [allMedia objectEnumerator];
 	NSManagedObject *aMedia;
 	NSMutableSet *unrequiredMedia = [[NSMutableSet alloc] init];
 	while (aMedia = [mediaEnumerator nextObject])

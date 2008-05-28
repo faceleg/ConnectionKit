@@ -188,32 +188,9 @@
 
 - (NSSet *)requiredMediaIdentifiers
 {
-	NSMutableSet *result = [NSMutableSet set];
-	
-	// scan for svxmedia:// URLs, returning set of media identifiers
-	NSString *svxString = @"<img src=\"svxmedia://";
-    
 	NSString *richTextHTML = [[self delegateOwner] valueForKey:@"richTextHTML"];
 	TJT((@"scanning block for identifiers: \n%@", richTextHTML));
-	if ( [richTextHTML length] > [svxString length] )
-	{
-		NSScanner *scanner = [NSScanner scannerWithString:richTextHTML];
-		while ( ![scanner isAtEnd] )
-		{
-			if ( [scanner scanUpToString:svxString intoString:NULL] )
-			{
-				if ( [scanner scanString:svxString intoString:NULL] )
-				{
-					NSString *mediaPath = nil;
-					if ( [scanner scanUpToString:@"\"" intoString:&mediaPath] )
-					{
-						NSString *mediaIdentifier = [mediaPath lastPathComponent];
-						[result addObject:mediaIdentifier];
-					}
-				}
-			}
-		}
-	}
+	NSSet *result = [KTMediaContainer mediaContainerIdentifiersInHTML:richTextHTML];
 	
 	return result;
 }

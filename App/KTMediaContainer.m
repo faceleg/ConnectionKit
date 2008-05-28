@@ -19,9 +19,12 @@
 #import "KTImageScalingSettings.h"
 #import "BDAlias.h"
 #import "KTDocument.h"
+
 #import "NSString+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
+
 
 @interface KTMediaContainer (Private)
 
@@ -35,7 +38,13 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation KTMediaContainer
+
+#pragma mark -
+#pragma mark Class Methods
 
 + (KTMediaContainer *)mediaContainerForURI:(NSURL *)mediaURI
 {
@@ -53,14 +62,57 @@
 			if ([aDoc isKindOfClass:[KTDocument class]] && [[aDoc documentID] isEqualToString:docID])
 			{
 				KTMediaManager *mediaManager = [aDoc mediaManager];
-				NSArray *pathComponents = [[mediaURI path] pathComponents];
-				result = [mediaManager mediaContainerWithIdentifier:[pathComponents objectAtIndex:1]];
+				result = [mediaManager mediaContainerWithIdentifier:[self mediaContainerIdentifierForURI:mediaURI]];
 				break;
 			}
 		}
 	}
 	
 	return result;
+}
+
++ (NSSet *)mediaContainerIdentifiersInHTML:(NSString *)HTML
+{
+    NSMutableSet *buffer = [[NSMutableSet alloc] init];
+    
+    NSScanner *imageScanner = [[NSScanner alloc] initWithString:HTML];
+    while (![imageScanner isAtEnd])
+    {
+        // Look for an image tag
+        [imageScanner scanUpToString:@"<img" intoString:NULL];
+        if ([imageScanner isAtEnd]) break;
+        
+        
+        // Locate the image's source attribute
+        [imageScanner scanUpToString:@"src=\"" intoString:NULL];
+        [imageScanner scanString:@"src=\"" intoString:NULL];
+        
+        NSString *aMediaURIString = nil;
+        if ([imageScanner scanUpToString:@"\"" intoString:&aMediaURIString])
+        {
+            NSURL *aMediaURI = [[NSURL alloc] initWithString:aMediaURIString];
+            [buffer addObjectIgnoringNil:[self mediaContainerIdentifierForURI:aMediaURI]];
+            [aMediaURI release];
+        }
+    }    
+    
+    [imageScanner release];
+    
+    NSSet *result = [[buffer copy] autorelease];
+    [buffer release];
+    return result;
+}
+
++ (NSString *)mediaContainerIdentifierForURI:(NSURL *)mediaURI
+{
+    NSString *result = nil;
+    
+    if ([[mediaURI scheme] isEqualToString:@"svxmedia"])
+	{
+        result = [[[mediaURI path] pathComponents] objectAtIndex:1];
+    }
+    
+    return result;
 }
 
 #pragma mark -
@@ -173,7 +225,10 @@
 		result = [self _imageWithProperties:properties];
 	}
 	
-	
+    
+	OBPOSTCONDITION(result);
+    OBPOSTCONDITION([result managedObjectContext]);
+    
 	return result;
 }
 

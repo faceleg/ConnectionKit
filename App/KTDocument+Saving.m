@@ -719,7 +719,7 @@
 {
 	//LOGMETHOD;
 	
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
+	//OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
 	//LOG((@"cancelling autosave timers"));
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];

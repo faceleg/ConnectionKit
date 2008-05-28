@@ -330,19 +330,19 @@
 			KTImageScalingSettings *scalingSettings = [[self design] imageScalingSettingsForUse:@"bannerImage"];
 			NSDictionary *scalingProperties =
 				[NSDictionary dictionaryWithObject:scalingSettings forKey:@"scalingBehavior"];
-			banner = [banner scaledImageWithProperties:scalingProperties];
+			KTMediaContainer *scaledBanner = [banner scaledImageWithProperties:scalingProperties];
 			
 			
 			// Find the right path
 			NSString *bannerPath = nil;
 			if (generationPurpose == kGeneratingPreview)
 			{
-				bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
+				bannerPath = [[NSURL fileURLWithPath:[[scaledBanner file] currentPath]] absoluteString];
 			}
 			else
 			{
 				NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
-				NSURL *mediaURL = [[[banner file] defaultUpload] URL];
+				NSURL *mediaURL = [[[scaledBanner file] defaultUpload] URL];
 				bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
 			}
 			

@@ -9,12 +9,24 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface KTDocumentMigrationController : NSWindowController
+@class KTDataMigrator;
+
+
+@interface KTDataMigrationDocument : NSDocument
 {
 	IBOutlet NSTextField			*messageTextField;
 	IBOutlet NSTextField			*informativeTextField;
 	IBOutlet NSProgressIndicator	*progressIndicator;
 	IBOutlet NSButton				*cancelButton;
+    
+@private
+    
+    KTDataMigrator  *myDataMigrator;
+    NSMutableArray  *myCanCloseDocumentCallbacks;
 }
+
+- (IBAction)cancelMigration:(id)sender;
+
+- (KTDataMigrator *)dataMigrator;
 
 @end
