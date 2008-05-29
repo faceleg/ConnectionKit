@@ -248,8 +248,8 @@
 
 - (void)setDesign:(KTDesign *)design
 {
-	// We can't currently handle designs with no identifier. Otherwise, how would we refer to it in the model?
-	NSAssert1([design identifier], @"Design %@ has no identifier", [design description]);
+	OBASSERT(design);
+    OBASSERT([design identifier]);  // We can't currently handle designs with no identifier. Otherwise, how would we refer to it in the model?
 	
 	[self willChangeValueForKey:@"design"];
 	[self setPrimitiveValue:design forKey:@"design"];

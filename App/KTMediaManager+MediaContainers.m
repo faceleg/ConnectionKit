@@ -67,7 +67,11 @@
 
 - (KTMediaContainer *)mediaContainerWithPath:(NSString *)path
 {
-	OBPRECONDITION(path);
+	if(!path)
+    {
+        [NSException raise:NSInvalidArgumentException format:@"attempt to use nil path"];
+    }
+    
 	
 	KTMediaContainer *result = [self insertNewMediaContainer];
 	[result setSourceAlias:[BDAlias aliasWithPath:path]];
