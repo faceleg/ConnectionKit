@@ -98,8 +98,9 @@
 {
 	// Figure out a full filename
 	NSString *fileExtension = [NSString filenameExtensionForUTI:UTI];
-	NSAssert1(fileExtension && ![fileExtension isEqualToString:@""], @"UTI %@ has no corresponding file extension", UTI);
 	OBASSERT(fileExtension);
+    OBASSERT(![fileExtension isEqualToString:@""]);
+    
 	NSString *preferredFilename = [filename stringByAppendingPathExtension:fileExtension];
 	
 	// Create media container & file

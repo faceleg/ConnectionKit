@@ -18,6 +18,7 @@
 #import "NSArray+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import <Connection/KTLog.h>
 #import "BDAlias.h"
@@ -305,9 +306,17 @@ NSString *KTMediaLogDomain = @"Media";
         }
         else
         {
+            // Some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr). If so, go back to the original path
+            NSString *UTI = [oldMedia valueForKey:@"mediaUTI"];
+            if (![NSString filenameExtensionForUTI:UTI])
+            {
+                NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
+                UTI = [NSString UTIForFilenameExtension:fileExtension];
+            }
+            
             result = [self mediaContainerWithData:oldMediaData
                                          filename:[oldMedia valueForKey:@"name"] 
-                                              UTI:[oldMedia valueForKey:@"mediaUTI"]];
+                                              UTI:UTI];
         }
     }
     
