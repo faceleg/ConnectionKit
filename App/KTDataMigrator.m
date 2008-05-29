@@ -671,7 +671,7 @@
     
     // Import the design separately
     KTDesign *designIdentifier = [oldRoot valueForKey:@"designBundleIdentifier"];
-    [newMaster setDesignBundleIdentifier:designIdentifier];
+    if (designIdentifier) [newMaster setDesignBundleIdentifier:designIdentifier];   // Fallback to Sandvox default
     
     
     // Media copying and google stuff are document settings

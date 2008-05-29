@@ -691,4 +691,81 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    KTAbstractElement *element = [self delegateOwner];
+    
+    // Import basic properties
+    [element setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    
+    // Setup the subject field
+    ContactElementField *subjectField = [[self fields] objectAtIndex:2];
+    
+    NSString *oldSubjectText = [oldPluginProperties valueForKey:@"subjectText"];
+    switch ([oldPluginProperties integerForKey:@"subjectType"])
+    {
+        case 0:     // kKTContactSubjectHidden
+            [subjectField setType:ContactElementHiddenField];
+            [subjectField setDefaultString:oldSubjectText];
+            break;
+        
+        case 1:     // kKTContactSubjectField
+            [subjectField setType:ContactElementTextFieldField];
+            [subjectField setDefaultString:oldSubjectText];
+            break;
+            
+        case 2:     // kKTContactSubjectSelection
+        {
+            [subjectField setType:ContactElementPopupButtonField];
+            
+            NSMutableArray *options = [NSMutableArray array];
+            NSEnumerator *lines = [[oldSubjectText componentsSeparatedByLineSeparators] objectEnumerator];
+            NSString *aLine;
+            while (aLine = [lines nextObject])
+            {
+                NSEnumerator *components = [[aLine componentsSeparatedByCommas] objectEnumerator];
+                NSString *aComponent;
+                while (aComponent = [components nextObject])
+                {
+                    [options addObject:aComponent];
+                }
+            }
+            [subjectField setVisitorChoices:options];
+            
+            break;
+        }
+    }
+    
+    
+    // Setup labels
+    NSString *aLabel = [oldPluginProperties valueForKey:@"subjectLabel"];
+    if (aLabel) [[[self fields] objectAtIndex:2] setLabel:aLabel];
+    
+    aLabel = [oldPluginProperties valueForKey:@"emailLabel"];
+    if (aLabel) [[[self fields] objectAtIndex:1] setLabel:aLabel];
+    
+    aLabel = [oldPluginProperties valueForKey:@"nameLabel"];
+    if (aLabel) [[[self fields] objectAtIndex:0] setLabel:aLabel];
+    
+    aLabel = [oldPluginProperties valueForKey:@"messageLabel"];
+    if (aLabel) [[[self fields] objectAtIndex:3] setLabel:aLabel];
+    
+    aLabel = [oldPluginProperties valueForKey:@"sendButtonTitle"];
+    if (aLabel) [[[self fields] objectAtIndex:4] setLabel:aLabel];
+    
+    
+    
+    // We have to force the fields to be updated persistently as there's no array controller involved
+    [self setFields:[self fields] archiveToPluginProperties:YES];
+    
+    
+    return YES;
+}
+
 @end
