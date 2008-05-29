@@ -221,12 +221,12 @@
 	return result;
 }
 
-- (NSManagedObject *)_designPublishInfoWithDesign:(KTDesign *)design
+- (NSManagedObject *)_designPublishInfoWithIdentifier:(NSString *)identifier
 {
 	NSManagedObjectContext *moc = [self managedObjectContext];
 	
 	// Look to see if there is an existing DesignPublishingInfo object
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", [design identifier]];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
 	NSError *error = nil;
 	NSArray *existingDesigns = [moc objectsWithEntityName:@"DesignPublishingInfo" predicate:predicate error:&error];
 	if (error) {
@@ -239,27 +239,59 @@
 	if (!result)
 	{
 		result = [NSEntityDescription insertNewObjectForEntityForName:@"DesignPublishingInfo" inManagedObjectContext:moc];
-		[result setValue:[design identifier] forKey:@"identifier"];
+		[result setValue:identifier forKey:@"identifier"];
 	}
 	
 	
 	return result;
 }
 
-- (void)setDesign:(KTDesign *)design
+/*  Special private method where you supply ONE of the parameters
+ */
+- (void)_setDesignBundleIdentifier:(NSString *)identifier xorDesign:(KTDesign *)design
 {
-	OBASSERT(design);
-    OBASSERT([design identifier]);  // We can't currently handle designs with no identifier. Otherwise, how would we refer to it in the model?
-	
-	[self willChangeValueForKey:@"design"];
+    if (!identifier)
+    {
+        identifier = [design identifier];
+        OBASSERT(identifier);
+    }
+    else if (!design)
+    {
+        design = [KTDesign pluginWithIdentifier:identifier];
+    }
+    else
+    {
+        OBASSERT_NOT_REACHED("You should specify a design OR an identifier");
+    }
+    
+    
+    // OK, we have an identifier (and hopefully a design), let's do this thing!
+    [self willChangeValueForKey:@"design"];
 	[self setPrimitiveValue:design forKey:@"design"];
 	[self didChangeValueForKey:@"design"];
 	
-	[self setValue:[self _designPublishInfoWithDesign:design] forKey:@"designPublishingInfo"];
+	[self setValue:[self _designPublishInfoWithIdentifier:identifier] forKey:@"designPublishingInfo"];
 	
 	
 	// Changing design affects placeholder image
 	[self generatePlaceholderImage];
+}
+
+- (void)setDesign:(KTDesign *)design
+{
+	OBASSERT(design);
+    
+    // Currently, we operate this as a neat cover 
+	[self _setDesignBundleIdentifier:nil xorDesign:design];
+}
+
+/*  This method is used when a design's identifier is known, but the design itself is unavailable. (e.g. importing old docs)
+ */
+- (void)setDesignBundleIdentifier:(NSString *)identifier
+{
+    OBPRECONDITION(identifier); 
+    
+    [self _setDesignBundleIdentifier:identifier xorDesign:nil];
 }
 
 - (NSURL *)designDirectoryURL

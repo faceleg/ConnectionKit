@@ -670,8 +670,8 @@
     
     
     // Import the design separately
-    KTDesign *design = [KTDesign pluginWithIdentifier:[oldRoot valueForKey:@"designBundleIdentifier"]];
-    [newMaster setDesign:design];
+    KTDesign *designIdentifier = [oldRoot valueForKey:@"designBundleIdentifier"];
+    [newMaster setDesignBundleIdentifier:designIdentifier];
     
     
     // Media copying and google stuff are document settings

@@ -29,6 +29,7 @@
 
 - (KTDesign *)design;
 - (void)setDesign:(KTDesign *)design;
+- (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
 
 - (KTMediaContainer *)bannerImage;
