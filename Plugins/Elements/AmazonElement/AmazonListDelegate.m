@@ -247,10 +247,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 	else if ([keyPath isEqualToString:@"store"])
 	{
-		AmazonStoreCountry oldStore = [changeOldObject intValue];
-		AmazonStoreCountry newStore = [changeNewObject intValue];
-		if (oldStore != newStore) {
-			[self storeDidChangeTo:newStore];
+		if (![changeNewObject isEqual:changeOldObject])
+        {
+			[self storeDidChangeTo:[changeNewObject intValue]];
 		}
 	}
 	else if ([keyPath isEqualToString:@"layout"])
