@@ -23,3 +23,8 @@
 - (NSString *)preferredFileName;
 
 @end
+
+
+@interface KTExternalMediaFile (Internal)
++ (id)insertNewMediaFileWithAlias:(BDAlias *)alias inManagedObjectContext:(NSManagedObjectContext *)moc;
+@end

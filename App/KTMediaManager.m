@@ -277,6 +277,12 @@ NSString *KTMediaLogDomain = @"Media";
 #pragma mark -
 
 
+#import "KTMediaFile+Internal.h"
+@interface KTMediaManager (MediaContainerSecretsIKnow)
+- (KTMediaContainer *)insertNewMediaContainer;
+@end
+
+
 @implementation KTMediaManager (LegacySupport)
 
 - (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement
@@ -295,28 +301,39 @@ NSString *KTMediaLogDomain = @"Media";
         
         // Import either data or a path
         NSData *oldMediaData = [oldMedia valueForKeyPath:@"mediaData.contents"];
-        
+        NSString *oldMediaUTI = [oldMedia valueForKey:@"mediaUTI"];
+            
         if ([oldMedia integerForKey:@"storageType"] == KTMediaCopyAliasStorage)
         {
             BDAlias *alias = [BDAlias aliasWithData:oldMediaData];
-            if (alias)
+            NSString *path = [alias fullPath];
+            if (path)
             {
-                result = [self mediaContainerWithPath:[alias fullPath]];
+                result = [self mediaContainerWithPath:path];
+            }
+            else
+            {
+                // We'll construct the MediaFile ourself to account for missing media
+                result = [self insertNewMediaContainer];
+                [result setSourceAlias:alias];
+                
+                KTMediaFile *mediaFile = [KTExternalMediaFile insertNewMediaFileWithAlias:alias
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+                [result setValue:mediaFile forKey:@"file"];
             }
         }
         else
         {
             // Some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr). If so, go back to the original path
-            NSString *UTI = [oldMedia valueForKey:@"mediaUTI"];
-            if (![NSString filenameExtensionForUTI:UTI])
+            if (![NSString filenameExtensionForUTI:oldMediaUTI])
             {
                 NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
-                UTI = [NSString UTIForFilenameExtension:fileExtension];
+                oldMediaUTI = [NSString UTIForFilenameExtension:fileExtension];
             }
             
             result = [self mediaContainerWithData:oldMediaData
                                          filename:[oldMedia valueForKey:@"name"] 
-                                              UTI:UTI];
+                                              UTI:oldMediaUTI];
         }
     }
     

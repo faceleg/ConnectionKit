@@ -10,6 +10,7 @@
 #import "KTMediaFile+Internal.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 #import "BDAlias.h"
 #import "BDAlias+QuickLook.h"
@@ -22,9 +23,20 @@
 
 + (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc
 {
-	KTExternalMediaFile *result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
+	return [self insertNewMediaFileWithAlias:[BDAlias aliasWithPath:path] inManagedObjectContext:moc];
+}
+
++ (id)insertNewMediaFileWithAlias:(BDAlias *)alias inManagedObjectContext:(NSManagedObjectContext *)moc;
+{
+    KTExternalMediaFile *result = [super insertNewMediaFileWithPath:[alias fullPath] inManagedObjectContext:moc];
 	
-	[result setAlias:[BDAlias aliasWithPath:path]];
+	[result setAlias:alias];
+    
+    // As a last resort, try to set the UTI from the last known path
+    if (![result fileType])
+    {
+        [result setValue:[NSString UTIForFileAtPath:[alias lastKnownPath]] forKey:@"fileType"];
+    }
 	
 	return result;
 }
