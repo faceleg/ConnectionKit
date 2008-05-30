@@ -1,7 +1,7 @@
 [[foreach pages aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
 [[if aPage.thumbnail.file]]
-	<a class="imageLink" [[target aPage]]href="[[path aPage]]"><img[[idClass entity:Page property:thumbnail flags:"anchor" id:aPage.uniqueID]]
+	<a class="imageLink" [[target aPage]]href="[[path aPage]]"><img[[idClass entity:Page property:aPage.thumbnail flags:"anchor" id:aPage.uniqueID]]
 		src="[[mediainfo info:path media:aPage.thumbnail sizeToFit:thumbnailImageSize]]"
 		alt="[[=&aPage.titleText]]"
 		width="[[mediainfo info:width media:aPage.thumbnail sizeToFit:thumbnailImageSize]]"

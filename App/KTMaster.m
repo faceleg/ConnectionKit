@@ -80,13 +80,6 @@
 	
 	// Timestamp
 	[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
-	
-	
-	// Placeholder
-	if (![self placeholderImage])
-	{
-		[self generatePlaceholderImage];
-	}
 }
 
 - (void)awakeFromFetch
@@ -214,12 +207,15 @@
 	if (!result)
 	{
 		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
-		result = [KTDesign pluginWithIdentifier:identifier];
-        
-        // In the event that the design cannot be found, we create a placeholder object
-        if (!result)    
+        if (identifier)
         {
-            result = [[[KTDesignPlaceholder alloc] initWithBundleIdentifier:identifier] autorelease];
+            result = [KTDesign pluginWithIdentifier:identifier];
+            
+            // In the event that the design cannot be found, we create a placeholder object
+            if (!result)    
+            {
+                result = [[[KTDesignPlaceholder alloc] initWithBundleIdentifier:identifier] autorelease];
+            }
         }
 		
         [self setPrimitiveValue:result forKey:@"design"];
