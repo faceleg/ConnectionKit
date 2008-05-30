@@ -376,11 +376,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)absoluteCSSURL
 {
-	KTPage *thisPage = [self page];
-	KTDocument *thisDocument = [self document];
+	KTMaster *master = [[self page] master];
+    NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[master designDirectoryURL]];
+	NSString *result = [masterCSSURL absoluteString];
 	
-	NSString *result = [thisDocument URLForDesignBundleIdentifier:[thisPage valueForKeyPath:@"master.design.identifier"]];
-	return result;
+    return result;
 }
 
 - (NSString *)subjectPrompt

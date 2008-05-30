@@ -289,20 +289,6 @@
 	return result;
 }
 
-// used by contact element
-
-- (NSString *)URLForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier
-{
-	NSString *result = nil;
-	
-	KTDesign *design = [KTDesign pluginWithIdentifier:aDesignBundleIdentifier];
-	
-	result = [[[[[self documentInfo] hostProperties] siteURL] absoluteString] stringByAppendingString:
-		[[design remotePath] stringByAppendingPathComponent:@"main.css"]];
-	
-	return result;
-}
-
 /*!	Gets path to design's placeholder image, or nil
 */
 - (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier

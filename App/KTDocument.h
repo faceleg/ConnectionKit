@@ -199,7 +199,6 @@ typedef enum {
 
 - (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
 
-- (NSString *)URLForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;
 - (NSString *)pathForReplacementImageName:(NSString *)anImageName designBundleIdentifier:(NSString *)aDesignBundleIdentifier;
 - (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;
 

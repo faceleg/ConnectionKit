@@ -670,7 +670,7 @@
     
     
     // Import the design separately
-    KTDesign *designIdentifier = [oldRoot valueForKey:@"designBundleIdentifier"];
+    NSString *designIdentifier = [oldRoot valueForKey:@"designBundleIdentifier"];
     if (designIdentifier) [newMaster setDesignBundleIdentifier:designIdentifier];   // Fallback to Sandvox default
     
     
