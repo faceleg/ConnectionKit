@@ -53,7 +53,7 @@
 {
 	KTImageScalingSettings *result = [self settingsWithBehavior:KTCropToSize size:size sharpening:nil];
 	[result setAlignment:alignment];
-	[result setScaleFactor:0.0];	// By default -cropToFit items are infinitely scalable
+	//[result setScaleFactor:0.0];	// By default -cropToFit items are infinitely scalable
 	return result;
 }
 
