@@ -22,7 +22,9 @@
 - (int)numberOfSubDesigns;
 - (NSArray *)subDesigns;
 
++ (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier;
 - (NSString *)remotePath;
+
 - (NSString *)contributor;		// externally visible author's name, shows up in design chooser
 - (NSURL *)URL;
 - (int)textWidth;

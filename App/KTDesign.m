@@ -86,16 +86,6 @@
 	return nil;
 }
 
-/*!	Generate a path to this design.  Remove white space, and append version string.
-	so Foo Bar Baz will look like FooBarBaz.1
-*/
-- (NSString *)remotePath;
-{
-	NSString *result = [[self identifier] removeWhiteSpace];
-	result = [result stringByReplacing:@"." with:@"_"];		// some ISPs don't like "."
-	return result;
-}
-
 - (NSString *)contributor
 {
 	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
@@ -208,6 +198,27 @@
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@", [super description], [[self bundle] bundleIdentifier]];
+}
+
+#pragma mark -
+#pragma mark Publishing
+
+/*!	Generate a path based on the identifier.  Remove white space, and append version string.
+	so Foo Bar Baz will look like FooBarBaz.1
+*/
++ (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier
+{
+    NSString *result = [identifier removeWhiteSpace];
+	result = [result stringByReplacing:@"." with:@"_"];		// some ISPs don't like "."
+	return result;
+}
+
+/*  Convenience method to get the remote path of a design
+ */
+- (NSString *)remotePath
+{
+	NSString *result = [[self class] remotePathForDesignWithIdentifier:[[self bundle] bundleIdentifier]];
+	return result;
 }
 
 #pragma mark -

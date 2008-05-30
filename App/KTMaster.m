@@ -296,10 +296,19 @@
 
 - (NSURL *)designDirectoryURL
 {
-	NSString *designDirectoryName = [[self design] remotePath];
-	NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil
-	NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
+    NSString *designDirectoryName = [[self design] remotePath];
+    if (!designDirectoryName)
+    {
+        NSString *designBundleIdentifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
+        designDirectoryName = [KTDesign remotePathForDesignWithIdentifier:designBundleIdentifier];
+    }
+    OBASSERT(designDirectoryName);
+    
+    NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil
+    NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
+	
+    OBPOSTCONDITION(result);
 	return result;
 }
 
