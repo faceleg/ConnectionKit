@@ -10,7 +10,7 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTDesign.h"
+#import "KTDesignPlaceholder.h"
 #import "KTDocument.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
@@ -215,7 +215,14 @@
 	{
 		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
 		result = [KTDesign pluginWithIdentifier:identifier];
-		[self setPrimitiveValue:result forKey:@"design"];
+        
+        // In the event that the design cannot be found, we create a placeholder object
+        if (!result)    
+        {
+            result = [[[KTDesignPlaceholder alloc] initWithBundleIdentifier:identifier] autorelease];
+        }
+		
+        [self setPrimitiveValue:result forKey:@"design"];
 	}
 	
 	return result;
@@ -298,11 +305,6 @@
 {
 	
     NSString *designDirectoryName = [[self design] remotePath];
-    if (!designDirectoryName)
-    {
-        NSString *designBundleIdentifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
-        designDirectoryName = [KTDesign remotePathForDesignWithIdentifier:designBundleIdentifier];
-    }
     OBASSERT(designDirectoryName);
     
     NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil

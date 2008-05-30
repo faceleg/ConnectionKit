@@ -69,13 +69,13 @@
 	if ([[CIImage imageTypes] containsObject:sourceUTI] && ![sourceUTI isEqualToString:(NSString *)kUTTypePDF])
 	{
 		// Build the canonical version of the settings
-		properties = [self canonicalImagePropertiesForProperties:properties];
+		NSDictionary *canonicalProperties = [self canonicalImagePropertiesForProperties:properties];
 		
 		// Search for an existing match
-		result = [self anyScaledImageWithProperties:properties];
+		result = [self anyScaledImageWithProperties:canonicalProperties];
 		if (!result)
 		{
-			result = [self generateImageUsingCoreImageWithProperties:properties];
+			result = [self generateImageUsingCoreImageWithProperties:canonicalProperties];
 		}
 	}
 	else
