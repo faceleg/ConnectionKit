@@ -11,10 +11,12 @@
 #import "KTDesign.h"
 #import "KTImageScalingSettings.h"
 #import "KTStringRenderer.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
+#import "NSMutableSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "Debug.h"
@@ -319,6 +321,10 @@
 				[resourceFiles addObject:filePath];
 			}
 		}
+		
+		
+		// Ignore the thumbnail
+		[resourceFiles removeObjectIgnoringNil:[[self bundle] pathForImageResource:@"thumbnail"]];
 		
 		
 		// Tidy up

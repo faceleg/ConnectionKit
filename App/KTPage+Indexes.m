@@ -80,7 +80,8 @@
  */
 - (NSArray *)sortedChildrenInIndex
 {
-	NSArray *result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+	NSArray *allPages = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+	NSArray *result = [allPages subarrayToIndex:[self integerForKey:@"collectionMaxIndexItems"]];
 	return result;
 }
 
