@@ -294,6 +294,9 @@
     @catch (NSException *exception)
     {
         result = NO;
+		
+		// We want to receive any exceptions back through the feedback reporter
+		[NSApp performSelectorOnMainThread:@selector(reportException:) withObject:exception waitUntilDone:NO];
     }
     @finally
     {
