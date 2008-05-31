@@ -48,6 +48,29 @@
 	}
 }
 
+- (unsigned)collectionMaxIndexItems
+{
+	return [self wrappedIntegerForKey:@"collectionMaxIndexItems"];
+}
+
+- (void)setCollectionMaxIndexItems:(unsigned)max
+{
+	[self setWrappedInteger:max forKey:@"collectionMaxIndexItems"];
+	
+	// Clearly this operation affects the list
+	[self invalidatePagesInIndexCache];
+}
+
+- (BOOL)includeInIndex { return [self wrappedBoolForKey:@"includeInIndex"]; }
+
+- (void)setIncludeInIndex:(BOOL)flag
+{
+	[self setWrappedBool:flag forKey:@"includeInIndex"];
+	
+	// We must update the parent's list of pages
+	[[self parent] invalidatePagesInIndexCache];
+}
+
 #pragma mark -
 #pragma mark Index
 
@@ -78,11 +101,23 @@
  *		* Unpublished draft pages
  *		* Pages outside the maxPages limit
  */
-- (NSArray *)sortedChildrenInIndex
+- (NSArray *)pagesInIndex
 {
-	NSArray *allPages = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
-	NSArray *result = [allPages subarrayToIndex:[self integerForKey:@"collectionMaxIndexItems"]];
+	NSArray *result = [self wrappedValueForKey:@"pagesInIndex"];
+	
+	if (!result)
+	{
+		NSArray *allPages = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+		result = [allPages subarrayToIndex:[self integerForKey:@"collectionMaxIndexItems"]];
+		[self setPrimitiveValue:result forKey:@"pagesInIndex"];
+	}
+	
 	return result;
+}
+
+- (void)invalidatePagesInIndexCache
+{
+	[self setValue:nil forKey:@"pagesInIndex"];
 }
 
 #pragma mark -

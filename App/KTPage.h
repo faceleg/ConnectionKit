@@ -79,6 +79,10 @@
 - (void)setMenuTitle:(NSString *)newTitle;
 - (NSString *)menuTitleOrTitle;
 
+// Publishing
+- (NSString *)publishedPath;
+- (void)setPublishedPath:(NSString *)path;
+
 // Timestamps
 - (NSDate *)editableTimestamp;
 - (void)setEditableTimestamp:(NSDate *)aDate;
@@ -149,12 +153,19 @@
 - (KTCollectionSummaryType)collectionSummaryType;
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
 
+- (unsigned)collectionMaxIndexItems;
+- (void)setCollectionMaxIndexItems:(unsigned)max;
+
+- (BOOL)includeInIndex;
+- (void)setIncludeInIndex:(BOOL)flag;
+
 // Index
 - (KTAbstractIndex *)index;
 - (void)setIndex:(KTAbstractIndex *)anIndex;
 - (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
 
-- (NSArray *)sortedChildrenInIndex;
+- (NSArray *)pagesInIndex;
+- (void)invalidatePagesInIndexCache;
 
 // RSS Feed
 - (BOOL)collectionCanSyndicate;

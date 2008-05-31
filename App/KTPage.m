@@ -60,9 +60,7 @@
 		
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
-	
-	[self setKey:@"sortedChildren" triggersChangeNotificationsForDependentKey:@"sortedChildrenInIndex"];
-	
+		
 	
 	// Site Outline
 	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",

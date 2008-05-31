@@ -112,6 +112,9 @@
 	{
 		[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
 	}
+	
+	// And the index
+	[[self parent] invalidatePagesInIndexCache];
 }
 
 - (BOOL)pageOrParentDraft
@@ -139,11 +142,11 @@
 
 - (BOOL)includeInIndexAndPublish
 {
-	BOOL result = [self boolForKey:@"includeInIndex"];
+	BOOL result = [self includeInIndex];
 	if (result)
 	{
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		NSString *serverPath = [self wrappedValueForKey:@"publishedPath"];
+		NSString *serverPath = [self valueForKey:@"publishedPath"];
 		if (nil == serverPath && [self boolForKey:@"isDraft"])		// Ask if page ITSELF is a draft.  Do not inherit here.
 		{
 			result = NO;	// DON'T include if if hasn't been published before, and if it's draft
@@ -160,7 +163,7 @@
 	if (!result)
 	{
 		// Not excluded by the flag, see if we should exclude it becuase it's an unpublished draft.
-		NSString *serverPath = [self wrappedValueForKey:@"publishedPath"];
+		NSString *serverPath = [self valueForKey:@"publishedPath"];
 		
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
 		if (nil == serverPath && [self pageOrParentDraft])
@@ -231,6 +234,19 @@
 	}
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Publishing
+
+- (NSString *)publishedPath { return [self wrappedValueForKey:@"publishedPath"]; }
+
+- (void)setPublishedPath:(NSString *)path
+{
+	[self setWrappedValue:path forKey:@"publishedPath"];
+	
+	// Our status in the index could depend on this key
+	[[self parent] invalidatePagesInIndexCache];
 }
 
 #pragma mark -

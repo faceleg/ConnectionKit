@@ -260,6 +260,9 @@
 	[self didChangeValueForKey:@"sortedChildren"];
 	
 	
+	// Logically this change must have affected the index
+	[self invalidatePagesInIndexCache];
+	
 	// It is assumed that if the cache is invalid, the site structure must have changed, so we post a notification
 	[self postSiteStructureDidChangeNotification];
 	
