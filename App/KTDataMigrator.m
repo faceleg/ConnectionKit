@@ -520,30 +520,31 @@
     
     // Migrate Code Injection from the weird old addString2 hack.
     NSString *addString2 = [oldPage valueForKey:@"addString2"];
-    if (addString2)
+    NSDictionary *addString2Dictionary = nil;
+	if (addString2)
     {
-        NSDictionary *addString2Dictionary = [NSData foundationObjectFromEncodedString:addString2];
-        
-        [self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertBody"]
-                             toKey:@"codeInjectionBodyTag"
-                         propogate:[addString2Dictionary valueForKey:@"propagateInsertBody"]
-                            toPage:newPage];
-        
-        [self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertEndBody"]
-                             toKey:@"codeInjectionBodyTagEnd"
-                         propogate:[addString2Dictionary valueForKey:@"propagateInsertEndBody"]
-                            toPage:newPage];
-        
-        [self migrateCodeInjection:[oldPage valueForKey:@"insertPrelude"]
-                             toKey:@"codeInjectionBeforeHTML"
-                         propogate:[addString2Dictionary valueForKey:@"propagateInsertPrelude"]
-                            toPage:newPage];
-        
-        [self migrateCodeInjection:[oldPage valueForKey:@"insertHead"]
-                             toKey:@"codeInjectionHeadArea"
-                         propogate:[addString2Dictionary valueForKey:@"propagateInsertHead"]
-                            toPage:newPage];
+        addString2Dictionary = [NSData foundationObjectFromEncodedString:addString2];
     }
+	
+	[self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertBody"]
+						 toKey:@"codeInjectionBodyTag"
+					 propogate:[addString2Dictionary valueForKey:@"propagateInsertBody"]
+						toPage:newPage];
+	
+	[self migrateCodeInjection:[addString2Dictionary valueForKey:@"insertEndBody"]
+						 toKey:@"codeInjectionBodyTagEnd"
+					 propogate:[addString2Dictionary valueForKey:@"propagateInsertEndBody"]
+						toPage:newPage];
+	
+	[self migrateCodeInjection:[oldPage valueForKey:@"insertPrelude"]
+						 toKey:@"codeInjectionBeforeHTML"
+					 propogate:[addString2Dictionary valueForKey:@"propagateInsertPrelude"]
+						toPage:newPage];
+	
+	[self migrateCodeInjection:[oldPage valueForKey:@"insertHead"]
+						 toKey:@"codeInjectionHeadArea"
+					 propogate:[addString2Dictionary valueForKey:@"propagateInsertHead"]
+						toPage:newPage];
     
     
     // Migrate custom summary if it exists, including media refs
