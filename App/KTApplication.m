@@ -16,9 +16,6 @@ TAXONOMY AND RELATIONSHIP TO OTHER CLASSES:
 IMPLEMENTATION NOTES & CAUTIONS:
 	x
 
-TO DO:
-	Catch exceptions and report them better
-
  */
 
 #import "KTApplication.h"
