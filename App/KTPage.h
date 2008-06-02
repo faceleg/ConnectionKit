@@ -153,9 +153,6 @@
 - (KTCollectionSummaryType)collectionSummaryType;
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
 
-- (unsigned)collectionMaxIndexItems;
-- (void)setCollectionMaxIndexItems:(unsigned)max;
-
 - (BOOL)includeInIndex;
 - (void)setIncludeInIndex:(BOOL)flag;
 

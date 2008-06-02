@@ -48,14 +48,9 @@
 	}
 }
 
-- (unsigned)collectionMaxIndexItems
+- (void)setCollectionMaxIndexItems:(NSNumber *)max
 {
-	return [self wrappedIntegerForKey:@"collectionMaxIndexItems"];
-}
-
-- (void)setCollectionMaxIndexItems:(unsigned)max
-{
-	[self setWrappedInteger:max forKey:@"collectionMaxIndexItems"];
+	[self setWrappedValue:max forKey:@"collectionMaxIndexItems"];
 	
 	// Clearly this operation affects the list
 	[self invalidatePagesInIndexCache];

@@ -19,7 +19,7 @@
 - (NSSet *)requiredMediaIdentifiers
 {
 	// We must hang onto the scaled images required for each page
-	NSArray *pagesInIndex = [[self page] sortedChildrenInIndex];
+	NSArray *pagesInIndex = [[self page] pagesInIndex];
 	
 	unsigned count = [[self valueForKeyPath:@"page.collectionMaxIndexItems"] unsignedIntValue];
 	if (count > 0 && ([pagesInIndex count] > count) )
