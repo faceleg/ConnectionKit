@@ -102,8 +102,14 @@
 	
 	if (!result)
 	{
-		NSArray *allPages = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
-		result = [allPages subarrayToIndex:[self integerForKey:@"collectionMaxIndexItems"]];
+		result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+        
+        NSNumber *maxPages = [self valueForKey:@"collectionMaxIndexItems"];
+        if (maxPages && [maxPages intValue] > 0)
+        {
+            result = [result subarrayToIndex:[maxPages intValue]];
+        }
+        
 		[self setPrimitiveValue:result forKey:@"pagesInIndex"];
 	}
 	
