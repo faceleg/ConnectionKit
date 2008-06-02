@@ -124,6 +124,11 @@
     [self addCanCloseDocumentCallback:callback];
 }
 
+- (BOOL)isDocumentEdited
+{
+	return YES;
+}
+
 /*  After migration we either open the new document or alert the user to the error
  */
 - (void)dataMigrator:(KTDataMigrator *)dataMigrator

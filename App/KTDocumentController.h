@@ -14,7 +14,4 @@
 	KTDocument *myLastSavedDocumentWeakRef;
 }
 
-- (KTDocument *)lastSavedDocument;
-- (void)setLastSavedDocument:(KTDocument *)aDocument;
-
 @end

@@ -139,8 +139,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)warnExpiring:(id)bogus;
 
-- (void)setAppIsTerminating:(BOOL)aFlag;
-
 - (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL;
 
 @end
@@ -313,7 +311,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
-		[NSArray array],						@"LastOpened",
+		[NSArray array],						@"KSOpenDocuments",
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 		[NSNumber numberWithBool:YES],			@"ContinuousSpellChecking",
 						
@@ -983,12 +981,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[KTLogger configure:self];
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification
-{
-	[self setAppIsTerminating:YES];
-	[super applicationWillTerminate:aNotification];
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
@@ -1122,7 +1114,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
             // figure out if we should create or open document(s)
             BOOL openLastOpened = [defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"];
             
-            NSArray *lastOpenedPaths = [defaults arrayForKey:@"LastOpened"];
+            NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
             
             NSMutableArray *filesFound = [NSMutableArray array];
             NSMutableArray *filesNotFound = [NSMutableArray array];
@@ -1480,20 +1472,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
     return NO;
 }
 
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender	// called from dock-quitting very early; need to updateLastOpened first and then don't save it again!
-{
-	[[NSDocumentController sharedDocumentController] closeAllDocumentsWithDelegate:self
-                                                               didCloseAllSelector:@selector(documentController:didCloseAll:contextInfo:)
-                                                                       contextInfo:NULL];
-    
-    return NSTerminateLater;
-}
-
-- (void)documentController:(NSDocumentController *)docController didCloseAll:(BOOL)didCloseAll contextInfo:(void *)contextInfo
-{
-    [NSApp replyToApplicationShouldTerminate:didCloseAll];
-}
-
 
 // Font Panel capabilities -- restrict what effects we can do.
 /// put back in effects that people might want.
@@ -1559,41 +1537,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[self updateDuplicateMenuItemForDocument:aDocument];
 }
 
-- (void)updateLastOpened
-{
-    NSMutableArray *aliases = [NSMutableArray array];
-    NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
-    KTDocument *document;
-    while ( ( document = [enumerator nextObject] ) )
-    {
-		if ([document isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
-		{
-			if ( [[[document fileName] pathExtension] isEqualToString:kKTDocumentExtension] 
-				 && ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
-			{
-				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
-				if (nil == alias)
-				{
-					// couldn't find relative to home directory, so just do absolute
-					alias = [BDAlias aliasWithPath:[document fileName]];
-				}
-				if ( nil != alias )
-				{
-					NSData *aliasData = [[[alias aliasData] copy] autorelease];
-					[aliases addObject:aliasData];
-				}
-			}
-		}
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:aliases]
-                                              forKey:@"LastOpened"];
-	BOOL synchronized = [[NSUserDefaults standardUserDefaults] synchronize];
-	if (!synchronized)
-	{
-		NSLog(@"Unable to synchronize defaults");
-	}
-}
-
 #pragma mark -
 #pragma mark Accessors
 
@@ -1601,16 +1544,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
     return [[NSDocumentController sharedDocumentController] currentDocument];
-}
-
-- (BOOL)appIsTerminating
-{
-	return myAppIsTerminating;
-}
-
-- (void)setAppIsTerminating:(BOOL)aFlag
-{
-	myAppIsTerminating = aFlag;
 }
 
 #pragma mark -

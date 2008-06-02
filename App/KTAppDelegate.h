@@ -198,8 +198,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)toggleLogAllContextChanges:(id)sender;
 - (BOOL)logAllContextChanges;
 
-- (BOOL)appIsTerminating;
-
 //- (NSDictionary *)compositeDocumentModel;
 
 
@@ -239,8 +237,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
 - (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType;
-
-- (void)updateLastOpened;
 
 - (void)updateDuplicateMenuItemForDocument:(KTDocument *)aDocument;
 

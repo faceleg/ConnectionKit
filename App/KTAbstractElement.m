@@ -35,11 +35,6 @@
 @end
 
 
-@interface NSDocumentController ( MarvelHack )
-- (KTDocument *)lastSavedDocument;
-@end
-
-
 #pragma mark -
 
 

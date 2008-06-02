@@ -2043,7 +2043,7 @@ from representedObject */
 {
 //	[[NSApp delegate] setCurrentDocument:nil];
 
-	if ( ![[NSApp delegate] appIsTerminating] )
+	if (![NSApp isTerminating])
 	{
 		// Empty out the windowScriptObject, remove the pointer to self to kill reference loop
 		// NOT WORKING THOUGH

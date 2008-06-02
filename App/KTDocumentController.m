@@ -19,6 +19,9 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 
+#import "BDAlias.h"
+#import "KSApplication.h"
+
 #import "Debug.h"
 
 #ifdef APP_RELEASE
@@ -372,6 +375,64 @@
 	else if (error)
 	{
 		[NSApp presentError:error];
+	}
+}
+
+#pragma mark -
+#pragma mark Document List
+
+- (void)synchronizeOpenDocumentsUserDefault
+{
+    NSMutableArray *aliases = [NSMutableArray array];
+    NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
+    KTDocument *document;
+    while ( ( document = [enumerator nextObject] ) )
+    {
+		if ([document isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
+		{
+			if ( [[[document fileName] pathExtension] isEqualToString:kKTDocumentExtension] 
+				&& ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
+			{
+				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
+				if (nil == alias)
+				{
+					// couldn't find relative to home directory, so just do absolute
+					alias = [BDAlias aliasWithPath:[document fileName]];
+				}
+				if ( nil != alias )
+				{
+					NSData *aliasData = [[[alias aliasData] copy] autorelease];
+					[aliases addObject:aliasData];
+				}
+			}
+		}
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:aliases]
+                                              forKey:@"KSOpenDocuments"];
+	BOOL synchronized = [[NSUserDefaults standardUserDefaults] synchronize];
+	if (!synchronized)
+	{
+		NSLog(@"Unable to synchronize defaults");
+	}
+}
+
+/*	Remember any docs we open
+ */
+- (void)addDocument:(NSDocument *)document
+{
+	[super addDocument:document];
+	[self synchronizeOpenDocumentsUserDefault];
+}
+
+/*	When a document is removed we don't want to reopen on launch, unless the close was part of the app quitting
+ */
+- (void)removeDocument:(NSDocument *)document
+{
+	[super removeDocument:document];
+	
+	if (![NSApp isTerminating])
+	{
+		[self synchronizeOpenDocumentsUserDefault];
 	}
 }
 

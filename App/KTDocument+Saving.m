@@ -465,15 +465,8 @@
 	[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
 	
 	
-	// we very temporarily keep a weak pointer to ourselves as lastSavedDocument
-	// so that saveDocumentAs: can find us again until the new context is fully ready
-	/// These are disabled since in theory they're not needed any more, but we want to be sure. MA & TT.
-	//[[KTDocumentController sharedDocumentController] setLastSavedDocument:self];
-	
 	result = [managedObjectContext save:&error];
 	if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
-	
-	//[[KTDocumentController sharedDocumentController] setLastSavedDocument:nil];
 	
 	if (result)
 	{

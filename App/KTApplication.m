@@ -34,17 +34,5 @@ TO DO:
 	return @"com.karelia.Sandvox";
 }
 
-- (void)terminate:(id)sender
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	// remember our open documents
-	[(KTAppDelegate *)[self delegate] updateLastOpened];
-	
-	[pool release];	// let the above really clean up before we pop that last pool.
-	
-    // terminate
-    [super terminate:sender];
-}
-
 @end
 

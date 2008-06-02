@@ -466,11 +466,6 @@
 		
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
-		// remember this as an open document
-		[[NSApp delegate] performSelector:@selector(updateLastOpened)
-											 withObject:nil
-											 afterDelay:0.0];
-		
 		// A little bit of repair; we need to have language stored in the root if it's not there
 		if (![[[self root] master] valueForKey:@"language"])
 		{
@@ -821,17 +816,14 @@
         }
     }
 	
-	// try to forget this was an open document
-	[[NSApp delegate] performSelector:@selector(updateLastOpened) 
-	withObject:nil
-	afterDelay:0.0];
-	
 	
 
 	// Remove temporary media files
 	[[self mediaManager] deleteTemporaryMediaFiles];
 	
 	[super close];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];
 }
 
 
