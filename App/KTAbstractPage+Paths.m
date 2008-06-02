@@ -366,7 +366,6 @@
 		result = [result stringByAppendingPathExtension:[self fileExtension]];
 	}
 	
-	OBPOSTCONDITION(result);
 	return result;
 }
 
