@@ -220,9 +220,17 @@
 	BOOL result = NO;
 	
 	
-	// Prepare to save the context
+    // Begin loading the thumbnail if on the main thread
 	NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
-	WebView *quickLookThumbnailWebView = [self newQuickLookThumbnailWebView];
+	
+    WebView *quickLookThumbnailWebView = nil;
+    if ([NSThread isMainThread])
+    {
+        quickLookThumbnailWebView = [self newQuickLookThumbnailWebView];
+	}
+    
+    
+    // Prepare to save the context
 	result = [self prepareToWriteToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
 	
 	
@@ -232,7 +240,7 @@
 		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
 		
 		
-		if (result)
+		if (result && quickLookThumbnailWebView)
 		{
 			// Wait a second before putting up a progress sheet
 			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 8.0)
@@ -594,19 +602,11 @@
 	
 	
 	// Go ahead and begin building the thumbnail. This MUST be done on the main thread
-    if ([NSThread isMainThread])
-    {
-        [[result mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
-    }
-    else
-    {
-        [[result mainFrame] performSelectorOnMainThreadAndReturnResult:@selector(loadHTMLString:baseURL:)
-                                                            withObject:thumbnailHTML
-                                                            withObject:nil];
-    }
-   
+    [[result mainFrame] performSelectorOnMainThreadAndReturnResult:@selector(loadHTMLString:baseURL:)
+                                                        withObject:thumbnailHTML
+                                                        withObject:nil];
     
-	return result;
+    return result;
 }
 
 #pragma mark -
