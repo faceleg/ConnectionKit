@@ -72,7 +72,8 @@
 			result = [self iconForPlugin:[[self class] defaultIconPluginForPage:page]];
 		}
 	}
-	OBPOSTCONDITION(result);
+	
+    OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -139,6 +140,7 @@
 		[myCachedPluginIcons setObject:result forKey:bundleIdentifier];
 	}
 	
+    OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -180,6 +182,7 @@
 		}
 	}
 	
+    OBPOSTCONDITION(result);
 	return result;
 }
 
