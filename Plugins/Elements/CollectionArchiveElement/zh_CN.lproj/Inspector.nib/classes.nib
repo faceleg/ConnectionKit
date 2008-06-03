@@ -1,105 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>IBClasses</key>
-	<array>
-		<dict>
-			<key>CLASS</key>
-			<string>NSManagedObjectContext</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTLinkSourceView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSLabel</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSApplication</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>MAImagePopUpButton</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSPopUpButton</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>didAdjustSubviews</key>
-				<string>id</string>
-				<key>willAdjustSubviews</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>clearCollectionLink</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>CollectionArchiveDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>collectionLinkSourceView</key>
-				<string>KTLinkSourceView</string>
-				<key>iconTypePopupButton</key>
-				<string>MAImagePopUpButton</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-		</dict>
-	</array>
-	<key>IBVersion</key>
-	<string>1</string>
-</dict>
-</plist>
+{
+    IBClasses = (
+        {
+            ACTIONS = {clearCollectionLink = id; }; 
+            CLASS = CollectionArchiveDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                collectionLinkSourceView = KTLinkSourceView; 
+                iconTypePopupButton = MAImagePopUpButton; 
+            }; 
+            SUPERCLASS = KTAbstractPluginDelegate; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSTrimFirstLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = KTLinkSourceView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = MAImagePopUpButton; LANGUAGE = ObjC; SUPERCLASS = NSPopUpButton; }, 
+        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSManagedObjectContext; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {didAdjustSubviews = id; willAdjustSubviews = id; }; 
+            CLASS = NSObject; 
+            LANGUAGE = ObjC; 
+        }
+    ); 
+    IBVersion = 1; 
+}

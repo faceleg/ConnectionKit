@@ -1,9 +1,11 @@
 {
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KSPathInfoField; LANGUAGE = ObjC; OUTLETS = {delegate = id; }; }, 
         {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSTextFieldCell; LANGUAGE = ObjC; SUPERCLASS = NSActionCell; }, 
         {
-            ACTIONS = {chooseFile = id; }; 
+            ACTIONS = {chooseMovieFile = id; }; 
             CLASS = VideoElementDelegate; 
             LANGUAGE = ObjC; 
             SUPERCLASS = KTAbstractPluginDelegate; 

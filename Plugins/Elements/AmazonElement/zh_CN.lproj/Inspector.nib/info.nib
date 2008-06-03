@@ -3,29 +3,27 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>146 102 466 319 0 0 1440 878 </string>
+	<string>205 265 356 240 0 0 1152 746 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>227</key>
-		<string>515 956 199 99 0 0 1920 1178 </string>
+		<string>205 510 162 99 0 0 1152 746 </string>
 		<key>356</key>
-		<string>434 817 193 99 0 0 1920 1178 </string>
+		<string>205 510 193 99 0 0 1152 746 </string>
 		<key>7</key>
-		<string>705 497 270 379 0 0 1680 1028 </string>
+		<string>441 309 270 379 0 0 1152 746 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>446.1</string>
-	<key>IBLockedObjects</key>
-	<array/>
-	<key>IBLockedTabItems</key>
-	<array>
-		<integer>250</integer>
-	</array>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../AmazonElement.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBSystem Version</key>
-	<string>8R218</string>
+	<string>8S165</string>
 	<key>IBUsesTextArchiving</key>
 	<true/>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
 </dict>
 </plist>

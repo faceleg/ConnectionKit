@@ -13,13 +13,13 @@
             OUTLETS = {oLinkView = KTLinkSourceView; }; 
             SUPERCLASS = KTAbstractPluginDelegate; 
         }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             CLASS = KTAbstractPluginDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {myDelegateOwner = id; }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             CLASS = KTLinkSourceView; 
             LANGUAGE = ObjC; 

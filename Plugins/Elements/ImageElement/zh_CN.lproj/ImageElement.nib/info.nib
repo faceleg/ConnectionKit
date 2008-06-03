@@ -3,23 +3,27 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>1144 69 356 240 0 0 1920 1178 </string>
+	<string>264 216 356 240 0 0 1152 746 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>5</key>
-		<string>808 599 270 372 0 0 1920 1178 </string>
+		<string>441 335 270 327 0 0 1152 746 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>446.1</string>
-	<key>IBLockedTabItems</key>
-	<array>
-		<integer>259</integer>
-	</array>
+	<key>IBLastKnownRelativeProjectPath</key>
+	<string>../../../../KTPlugins.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>5</integer>
+	</array>
 	<key>IBSystem Version</key>
-	<string>8P135</string>
+	<string>8S165</string>
 	<key>IBUsesTextArchiving</key>
 	<true/>
+	<key>targetFramework</key>
+	<string>IBCocoaFramework</string>
 </dict>
 </plist>

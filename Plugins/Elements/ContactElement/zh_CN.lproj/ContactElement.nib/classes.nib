@@ -1,16 +1,42 @@
 {
     IBClasses = (
         {
-            ACTIONS = {labelChosen = id; setLabel = id; }; 
             CLASS = ContactElementDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                oEmailAddressComboBox = KSEmailAddressComboBox; 
-                oLabelPopup = NSPopUpButton; 
-                oLabelValue = NSTextField; 
+                oArrayController = ContactElementFieldsArrayController; 
+                oCustomLabelsForm = NSForm; 
+                oLabel = NSTextField; 
                 oSubjects = NSTextField; 
             }; 
             SUPERCLASS = KTAbstractPluginDelegate; 
+        }, 
+        {
+            CLASS = ContactElementFieldCell; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSTextFieldCell; 
+        }, 
+        {
+            CLASS = ContactElementFieldsArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {pluginDelegate = KTAbstractPluginDelegate; }; 
+            SUPERCLASS = DNDArrayController; 
+        }, 
+        {
+            CLASS = ContactElementInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oAddLinkButton = NSButton; 
+                oFieldsTableButtonsBox = NTBoxView; 
+                oRemoveLinkButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = DNDArrayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tableView = NSTableView; }; 
+            SUPERCLASS = NSArrayController; 
         }, 
         {
             ACTIONS = {"" = id; }; 
@@ -18,13 +44,15 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
+        {CLASS = KSUnifiedTableButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
             CLASS = KTAbstractPluginDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {myDelegateOwner = id; }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }
+        {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
     ); 
     IBVersion = 1; 
 }

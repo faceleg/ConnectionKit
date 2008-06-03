@@ -1,33 +1,24 @@
 {
     IBClasses = (
         {
-            CLASS = APAutomaticListController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                listArrayController = NSArrayController; 
-                listTableView = KTPlaceholderTableView; 
-                pluginController = NSObjectController; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
             ACTIONS = {
                 openListURL = id; 
                 reloadAllProducts = id; 
                 reloadList = id; 
                 reloadSelectedProduct = id; 
-                update = id; 
             }; 
             CLASS = APInspectorController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                automaticListTableView = KTPlaceholderTableView; 
+                automaticListTableView = KSPlaceholderTableView; 
                 automaticTableButtonsBox = NTBoxView; 
                 listLayoutSegmentedControl = NSSegmentedControl; 
                 listTabViewItem = NSTabViewItem; 
                 manualProductsArrayController = NSArrayController; 
                 manualProductsTableView = NSTableView; 
                 manualTableViewButtonsBox = NTBoxView; 
+                oManualListAddProductButton = NSButton; 
+                oManualListRemoveProductButton = NSButton; 
                 pluginController = NSObjectController; 
                 productsTabViewItem = NSTabViewItem; 
                 storeSelectionPopupButton = NSPopUpButton; 
@@ -42,18 +33,6 @@
             SUPERCLASS = APProductsArrayController; 
         }, 
         {
-            CLASS = APManualListController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                pageletController = NSObjectController; 
-                productsController = NSArrayController; 
-                productsTableView = NSTableView; 
-                storeSelectionPopup = NSPopUpButton; 
-                viewTypePopup = NSPopUpButton; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
             CLASS = APProductAttributesCell; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSTextFieldCell; 
@@ -65,34 +44,14 @@
             SUPERCLASS = DNDArrayController; 
         }, 
         {
-            CLASS = AccessibilityIgnoredTabView; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSTabView; 
-        }, 
-        {
             CLASS = AmazonIDFormatter; 
             LANGUAGE = ObjC; 
-            SUPERCLASS = TrimmedStringFormatter; 
-        }, 
-        {
-            CLASS = AmazonListController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSArrayController; 
+            SUPERCLASS = KSTrimFirstLineFormatter; 
         }, 
         {
             CLASS = AmazonListDelegate; 
             LANGUAGE = ObjC; 
             SUPERCLASS = KTAbstractPluginDelegate; 
-        }, 
-        {
-            CLASS = AmazonManualProductsListController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                buttonsBox = NTBoxView; 
-                pageletController = NSObjectController; 
-                productsTable = PlaceholderTableView; 
-            }; 
-            SUPERCLASS = NSArrayController; 
         }, 
         {
             CLASS = DNDArrayController; 
@@ -107,14 +66,16 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
-        {CLASS = KTPlaceholderTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = KSPlaceholderTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {CLASS = KSTrimFirstLineFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
+        {CLASS = KSUnifiedTableButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
+        {CLASS = KTAbstractPluginDelegate; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = NSTabView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = NarrowPopUpButton; LANGUAGE = ObjC; SUPERCLASS = NSPopUpButton; }, 
-        {CLASS = TrimmedStringFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }, 
         {CLASS = UnifiedTableButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }
     ); 
     IBVersion = 1; 

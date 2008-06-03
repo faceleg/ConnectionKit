@@ -7,13 +7,13 @@
             SUPERCLASS = KTAbstractPluginDelegate; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KSPathInfoField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             CLASS = KTAbstractPluginDelegate; 
             LANGUAGE = ObjC; 
             OUTLETS = {myDelegateOwner = id; }; 
             SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = NSManagedObject; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        }
     ); 
     IBVersion = 1; 
 }

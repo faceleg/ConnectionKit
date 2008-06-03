@@ -7,6 +7,8 @@
             SUPERCLASS = NSArrayController; 
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSUnifiedTableButton; LANGUAGE = ObjC; SUPERCLASS = NSButton; }, 
         {
             CLASS = KTAbstractPlugin; 
             LANGUAGE = ObjC; 
@@ -20,7 +22,18 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = DNDArrayController; 
         }, 
-        {CLASS = NSManagedObject; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        {
+            CLASS = LinkListInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addLinkButton = NSButton; 
+                removeLinkButton = NSButton; 
+                tableButtonsBox = NTBoxView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = NSManagedObject; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NTBoxView; LANGUAGE = ObjC; SUPERCLASS = NSView; }
     ); 
     IBVersion = 1; 
 }
