@@ -450,22 +450,37 @@
  */
 - (NSIndexPath *)indexPath;
 {
-	NSIndexPath *result;
+	NSIndexPath *result = nil;
 	
 	KTPage *parent = [self parent];
 	if (parent)
 	{
 		unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:self];
-		OBASSERT(index != NSNotFound);
 		
-		NSIndexPath *parentPath = [parent indexPath];
-		result = [parentPath indexPathByAddingIndex:index];
+        // BUGSID: 30402. NSNotFound really shouldn't happen, but if so we need to track it down.
+        if (index == NSNotFound)
+        {
+            if ([[parent children] containsObject:self])
+            {
+                OBASSERT_NOT_REACHED("parent's -sortedChildren must be out of date");
+            }
+            else
+            {
+                OBASSERT_NOT_REACHED("parent-child relationship is not valid in both directions");
+            }
+        }
+		else
+        {
+            NSIndexPath *parentPath = [parent indexPath];
+            result = [parentPath indexPathByAddingIndex:index];
+        }
 	}
 	else
 	{
 		result = [NSIndexPath indexPathWithIndex:0];
 	}
 	
+    OBPOSTCONDITION(result);
 	return result;
 }
 
