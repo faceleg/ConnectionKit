@@ -287,7 +287,9 @@
  */
 - (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path
 {
-	KTInDocumentMediaFile *result = nil;
+	OBPRECONDITION(path);
+    
+    KTInDocumentMediaFile *result = nil;
 	
 	
 	// Search the DB for matching digests. This gives us a rough set of results.
@@ -388,21 +390,28 @@
 	}
 }
 
+/*  Attempts to move a given file into the document. Returns nil if this fails (e.g. the file can't be located).
+ */
 - (KTInDocumentMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTExternalMediaFile *)original
 {
 	OBPRECONDITION(original);
 	
-	
+	KTInDocumentMediaFile *result = nil;
+    
+    
 	// Get the replacement file.
-	KTInDocumentMediaFile *result = [self inDocumentMediaFileForPath:[original currentPath]];
-	OBASSERT(result);
-	
-	
-	// Migrate relationships
-	[[result mutableSetValueForKey:@"uploads"] unionSet:[original valueForKey:@"uploads"]];
-	[[result mutableSetValueForKey:@"scaledImages"] unionSet:[original valueForKey:@"scaledImages"]];
-	[[result mutableSetValueForKey:@"containers"] unionSet:[original valueForKey:@"containers"]];
-	
+	NSString *path = [original currentPath];
+    if (path)
+    {
+        result = [self inDocumentMediaFileForPath:path];
+        OBASSERT(result);
+        
+        
+        // Migrate relationships
+        [[result mutableSetValueForKey:@"uploads"] unionSet:[original valueForKey:@"uploads"]];
+        [[result mutableSetValueForKey:@"scaledImages"] unionSet:[original valueForKey:@"scaledImages"]];
+        [[result mutableSetValueForKey:@"containers"] unionSet:[original valueForKey:@"containers"]];
+	}
 	
 	return result;
 }
