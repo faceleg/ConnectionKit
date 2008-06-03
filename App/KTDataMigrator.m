@@ -499,10 +499,20 @@
     NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPage toObject:newPage] mutableCopy];
     [matchingKeys minusSet:[[self class] elementAttributesToIgnore]];
     [matchingKeys removeObject:@"isStale"];
+    [matchingKeys removeObject:@"allowComments"];
     
     [self migrateAttributes:matchingKeys fromObject:oldPage toObject:newPage];
     
     [matchingKeys release];
+    
+    
+    // Comments work slightly differently in 1.5, so migrate them manually.
+    BOOL allowComments = NO;
+    if ([[newPage master] valueForKey:@"haloscanUserName"])
+    {
+        allowComments = [oldPage boolForKey:@"allowComments"];
+    }
+    [newPage setBool:allowComments forKey:@"allowComments"];
     
     
     // Keywords
