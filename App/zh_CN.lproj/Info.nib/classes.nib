@@ -6,7 +6,15 @@
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = KSEdgeSnapWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
+        {CLASS = KSEdgeSnapWindow; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {CLASS = KSPathInfoField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {
+            CLASS = KSSingletonWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = KSSmallDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSDatePicker; }, 
         {
             ACTIONS = {pickSomeone = id; removeImage = id; }; 
             CLASS = KTImageView; 
@@ -16,17 +24,25 @@
         }, 
         {
             ACTIONS = {
+                chooseBannerImagePath = id; 
+                chooseFaviconPath = id; 
+                chooseLogoImagePath = id; 
+                choosePageThumbnail = id; 
+                clearBannerImage = id; 
+                clearFavicon = id; 
+                clearLogoImage = id; 
                 languageChosen = id; 
                 movePageletDown = id; 
                 movePageletUp = id; 
                 openHaloscan = id; 
+                resetPageThumbnail = id; 
                 windowHelp = id; 
             }; 
             CLASS = KTInfoWindowController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 myCurrentSelection = id; 
-                oBannerImageView = KTImageView; 
+                oBannerPathInfoField = KSPathInfoField; 
                 oCollectionStylePopup = NSPopUpButton; 
                 oCollectionView = NSView; 
                 oCustomIndexView = NSView; 
@@ -35,14 +51,16 @@
                 oFillerView = NSView; 
                 oGoogleAnalyticsExplanationTextView = NSTextView; 
                 oGoogleVerificationExplanationTextView = NSTextView; 
-                oHeaderImageView = KTImageView; 
                 oHelpBottomView = NSView; 
                 oIndexPopup = NSPopUpButton; 
                 oInfoWindowController = NSObjectController; 
                 oLanguageCodeField = NSTextField; 
                 oLanguagePopup = NSPopUpButton; 
+                oLogoPathInfoField = KSPathInfoField; 
                 oNothingView = NSView; 
+                oPageController = NSController; 
                 oPageDetailsHeaderView = NSView; 
+                oPageMenuTitleField = NSTextField; 
                 oPageView = NSView; 
                 oPageletDetailsHeaderView = NSView; 
                 oPageletGeneralView = NSView; 
@@ -51,24 +69,35 @@
                 oSegmentsView = NSView; 
                 oSiteTabView = NSTabView; 
                 oSiteView = NSView; 
-                oSmallDatePickerPlaceholderView = NSView; 
                 oSortPopup = NSPopUpButton; 
                 oStackView = KTStackView; 
                 oTabSegmentedControl = NSSegmentedControl; 
                 oThumbImageView = KTImageView; 
             }; 
-            SUPERCLASS = NSWindowController; 
+            SUPERCLASS = KSSingletonWindowController; 
         }, 
-        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {
+            CLASS = KTPlaceholderBindingTextField; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSTextField; 
+        }, 
         {
             CLASS = KTStackView; 
             LANGUAGE = ObjC; 
             OUTLETS = {dataSource = id; }; 
             SUPERCLASS = NSView; 
         }, 
-        {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
-        {CLASS = NSObject; LANGUAGE = ObjC; }, 
-        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
+        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSCell; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSManagedObjectContext; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {imagePickerCancelled = id; imagePickerSet = id; }; 
+            CLASS = NSObject; 
+            LANGUAGE = ObjC; 
+        }, 
+        {CLASS = NSTextView; LANGUAGE = ObjC; SUPERCLASS = NSText; }, 
+        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
     ); 
     IBVersion = 1; 
 }

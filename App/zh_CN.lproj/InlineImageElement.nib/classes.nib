@@ -1,20 +1,23 @@
 {
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = KSPathInfoField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
-            ACTIONS = {pickSomeone = id; }; 
-            CLASS = KTImageView; 
+            ACTIONS = {chooseImage = id; }; 
+            CLASS = KTInlineImageElement; 
             LANGUAGE = ObjC; 
-            OUTLETS = {delegate = id; oDelegateController = NSObjectController; }; 
-            SUPERCLASS = NSImageView; 
+            SUPERCLASS = KTPseudoElement; 
         }, 
-        {CLASS = KTInlineImageElement; LANGUAGE = ObjC; SUPERCLASS = KTPseudoElement; }, 
+        {CLASS = KTPseudoElement; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSButton; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {CLASS = NSManagedObjectContext; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            CLASS = KTPseudoElement; 
+            ACTIONS = {imagePickerCancelled = id; imagePickerSet = id; }; 
+            CLASS = NSObject; 
             LANGUAGE = ObjC; 
-            OUTLETS = {oInspectorView = NSView; oObjectController = NSObjectController; }; 
-            SUPERCLASS = NSObject; 
-        }
+        }, 
+        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
     ); 
     IBVersion = 1; 
 }

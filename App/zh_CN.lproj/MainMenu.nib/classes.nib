@@ -29,17 +29,21 @@
                 openPageWithDefaultBrowser = id; 
                 openWithDefaultBrowser = id; 
                 orderFrontPageInspector = id; 
+                pasteLink = id; 
                 pasteTextAsMarkup = id; 
                 reloadOutline = id; 
                 revertDocumentToSnapshot = id; 
                 saveAllToHost = id; 
                 saveDocumentSnapshot = id; 
                 saveToHost = id; 
+                selectWebViewViewType = id; 
                 setupHost = id; 
                 showAvailableDesigns = id; 
                 showAvailableThemes = id; 
                 showFeedbackReporter = id; 
                 showLinkPanel = id; 
+                showPageCodeInjection = id; 
+                showSiteCodeInjection = id; 
                 showiMediaBrowser = id; 
                 strikeout = id; 
                 toggleDesignsShown = id; 
@@ -65,6 +69,34 @@
         }, 
         {
             ACTIONS = {
+                checkForUpdates = id; 
+                reportLatestCrash = id; 
+                showEmailListWindow = id; 
+                showFeedbackReporter = id; 
+                showPluginWindow = id; 
+                showRegistrationWindow = id; 
+            }; 
+            CLASS = KSAppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                oDebugMenu = NSMenu; 
+                oGenericProgressImageView = NSImageView; 
+                oGenericProgressIndicator = NSProgressIndicator; 
+                oGenericProgressTextField = NSTextField; 
+                oGenericProgressView = NSView; 
+                oSparkleUpdater = SUUpdater; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = KSApplication; LANGUAGE = ObjC; SUPERCLASS = NSApplication; }, 
+        {
+            ACTIONS = {showRegistrationWindow = id; }; 
+            CLASS = KSLicensedAppDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = KSAppDelegate; 
+        }, 
+        {
+            ACTIONS = {
                 crash = id; 
                 editRawHTMLInSelectedBlock = id; 
                 generateException = id; 
@@ -86,7 +118,7 @@
                 showCodeInjectionPanelForSelectedLevel = id; 
                 showDiscussionGroup = id; 
                 showNewsWindow = id; 
-                showPendingDeletions = id; 
+                showPluginWindow = id; 
                 showProductPage = id; 
                 showRegistrationWindow = id; 
                 showReleaseNotes = id; 
@@ -104,6 +136,7 @@
                 oAddPageletMenu = NSMenu; 
                 oAdvancedMenu = NSMenuItem; 
                 oBuyRegisterSandvoxMenuItem = NSMenuItem; 
+                oCheckForUpdatesMenuItem = NSMenuItem; 
                 oCodeInjectionLevelMenuItem = NSMenuItem; 
                 oCodeInjectionMenuItem = NSMenuItem; 
                 oCodeInjectionSeparator = NSMenuItem; 
@@ -128,6 +161,8 @@
                 oGenericProgressIndicator = NSProgressIndicator; 
                 oGenericProgressTextField = NSTextField; 
                 oGenericProgressView = NSView; 
+                oInstallPluginsMenuItem = NSMenuItem; 
+                oJoinListMenuItem = NSMenuItem; 
                 oLatestNewsMenuItem = NSMenuItem; 
                 oMakeTextLargerMenuItem = NSMenuItem; 
                 oMakeTextNormalMenuItem = NSMenuItem; 
@@ -145,6 +180,7 @@
                 oSendFeedbackMenuItem = NSMenuItem; 
                 oSetupHostMenuItem = NSMenuItem; 
                 oSourceViewMenuItem = NSMenuItem; 
+                oSparkleUpdater = SUUpdater; 
                 oStandardViewMenuItem = NSMenuItem; 
                 oStandardViewWithoutStylesMenuItem = NSMenuItem; 
                 oToggleAddressBarMenuItem = NSMenuItem; 
@@ -158,58 +194,29 @@
                 oVideoIntroductionMenuItem = NSMenuItem; 
                 oViewPublishedSiteMenuItem = NSMenuItem; 
             }; 
-            SUPERCLASS = NSObject; 
+            SUPERCLASS = KSLicensedAppDelegate; 
         }, 
-        {CLASS = KTApplication; LANGUAGE = ObjC; SUPERCLASS = NSApplication; }, 
+        {CLASS = KTApplication; LANGUAGE = ObjC; SUPERCLASS = KSApplication; }, 
+        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
         {
-            ACTIONS = {
-                addPage = id; 
-                addSection = id; 
-                delete = id; 
-                editPage = id; 
-                group = id; 
-                groupAsSection = id; 
-                makeCurrentPageTheSummary = id; 
-                summaryPopupChosen = id; 
-                ungroup = id; 
-                updateNavigationBarShown = id; 
-                updateStatusBarShown = id; 
-            }; 
-            CLASS = KTDocument; 
+            ACTIONS = {imagePickerCancelled = id; imagePickerSet = id; }; 
+            CLASS = NSObject; 
+            LANGUAGE = ObjC; 
+        }, 
+        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {
+            ACTIONS = {checkForUpdates = id; closeProfileInfoSheet = id; }; 
+            CLASS = SUUpdater; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                myCurrentSelection = id; 
-                oBackButton = NSButton; 
-                oCustomInspectorDummyView = NSView; 
-                oCustomInspectorView = NSView; 
-                oExtrasTable = NSTableView; 
-                oFolderSummaryPopup = NSPopUpButton; 
-                oFolderSummaryView = NSView; 
-                oForwardButton = NSButton; 
-                oInspectorOutlineView = NSOutlineView; 
-                oMainBox = NTBoxView; 
-                oMainSplitterView = NSSplitView; 
-                oNavigationBar = NSBox; 
-                oPageSummaryView = NSView; 
-                oReloadButton = NSButton; 
-                oSearchField = NSTextField; 
-                oSharedDefaultsController = NSUserDefaultsController; 
-                oSourceOutline = NSOutlineView; 
-                oSourceOutlineBox = NTBoxView; 
-                oSourceSplitterView = NSSplitView; 
-                oSourceView = NSTextView; 
-                oStatusBar = NSBox; 
-                oStatusBarField = NSTextField; 
-                oStatusField = NSTextField; 
-                oStatusIndicator = NSProgressIndicator; 
-                oStopButton = NSButton; 
-                oSummaryPageConfigDummyView = NSView; 
-                oSummaryPageConfigView = NSView; 
-                oURLField = NSTextField; 
-                oWebView = WebView; 
-                oWebViewBox = NTBoxView; 
+                checkForUpdatesText = NSTextField; 
+                delegate = id; 
+                profileMoreInfoButton = NSButton; 
+                profileMoreInfoView = NSView; 
+                profileMoreInfoWindow = NSWindow; 
             }; 
-            SUPERCLASS = NSDocument; 
+            SUPERCLASS = NSObject; 
         }
     ); 
     IBVersion = 1; 
