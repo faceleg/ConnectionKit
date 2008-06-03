@@ -138,7 +138,8 @@
 	
 	if (controller)
 	{
-		[[NSNotificationCenter defaultCenter] addObserver:mySiteOutlineDataSource
+		OBASSERT([controller document]);
+        [[NSNotificationCenter defaultCenter] addObserver:mySiteOutlineDataSource
 												 selector:@selector(pageIconSizeDidChange:)
 													 name:@"KTDisplaySmallPageIconsDidChange"
 												   object:[controller document]];
