@@ -48,6 +48,8 @@
 			{
 				object = [self component];
 			}
+            
+            [[self cache] valueForKeyPath:textKeyPath]; // Keeps the delegate informed
 		}
 		
 		
