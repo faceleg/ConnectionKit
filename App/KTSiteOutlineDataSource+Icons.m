@@ -12,13 +12,17 @@
 #import "KTMaster.h"
 #import "KTMediaContainer.h"
 #import "KTPage.h"
-#import "NSObject+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "KTMediaFile.h"
-#import "NSImage+Karelia.h"
 #import "KTDocument.h"
+
 #import "NSArray+Karelia.h"
+#import "NSImage+Karelia.h"
+#import "NSObject+Karelia.h"
+#import "NSOutlineView+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "assertions.h"
+
 
 @interface KTSiteOutlineDataSource (IconsPrivate)
 
@@ -331,7 +335,7 @@
 	CFDictionarySetValue((CFMutableDictionaryRef)myCachedCustomPageIcons, page, icon);
 	
 	// Refresh Site Outline for new icon
-	[self reloadPage:page reloadChildren:NO];
+	[[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:NO];
 	
 	// Generate the first icon in queue
 	if ([myCustomIconGenerationQueue count] > 0)
