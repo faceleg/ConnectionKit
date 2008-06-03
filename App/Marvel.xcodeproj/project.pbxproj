@@ -6096,7 +6096,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\..|/it\\.|/zh_CN\\.|/zh_TW\\.|/ja\\.|/fr\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/da\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\..|/it\\.|/zh_CN\\.|/zh_TW\\.|/ja\\.|/fr\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/zh_CN\\.|/da\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
