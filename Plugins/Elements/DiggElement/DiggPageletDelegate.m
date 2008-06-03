@@ -161,27 +161,31 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 
 + (NSString *)diggCategoryString:(NSString *)basis
 {
-	basis = [basis lowercaseString];
-	
-	// There are a few special cases to handle
-	if ([basis isEqualToString:@"political news"]) basis = @"politics";
-	
-	NSMutableString *buffer = [NSMutableString stringWithString:basis];
-	
-	[buffer replace:@"." with:@""];
-	[buffer replace:@" & " with:@"_"];	// Convert " & " with a simple underscore
-	[buffer replace:@" " with:@"_"];
-	[buffer replace:@"/" with:@"_"];
-	
-	if ([buffer hasPrefix:@"all"])
-	{
-		 buffer = nil;	/// New Digg API does not accept "all" as a parameter
-	}
-	
 	NSString *result = nil;
-	if (buffer) result = [NSString stringWithString:buffer];
-	
-	//[buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIICharacterSet]];
+    
+    if (basis)
+    {
+        // Sanitize the string
+        basis = [basis lowercaseString];
+        if ([basis isEqualToString:@"political news"]) basis = @"politics";
+        
+        NSMutableString *buffer = [NSMutableString stringWithString:basis];
+        
+        [buffer replace:@"." with:@""];
+        [buffer replace:@" & " with:@"_"];	// Convert " & " with a simple underscore
+        [buffer replace:@" " with:@"_"];
+        [buffer replace:@"/" with:@"_"];
+        
+        if ([buffer hasPrefix:@"all"])
+        {
+            buffer = nil;	/// New Digg API does not accept "all" as a parameter
+        }
+        
+        result = [[buffer copy] autorelease];
+        
+        //[buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIICharacterSet]];
+    }
+    
 	return result;
 }
 
