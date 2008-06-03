@@ -2041,8 +2041,13 @@ from representedObject */
 
 - (void)windowWillClose:(NSNotification *)notification;
 {
-//	[[NSApp delegate] setCurrentDocument:nil];
-
+    // Ignore windows not our own
+    if ([notification object] != [self window])
+    {
+        return;
+    }
+    
+    
 	if (![NSApp isTerminating])
 	{
 		// Empty out the windowScriptObject, remove the pointer to self to kill reference loop
