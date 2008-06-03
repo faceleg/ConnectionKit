@@ -54,13 +54,15 @@
 
 	[self setKey:@"root" triggersChangeNotificationsForDependentKey:@"isRoot"];
 	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
-
+    
 	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
 	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"fileName"];
-		
+    [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
+triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
+    
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
-		
+    
 	
 	// Site Outline
 	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
