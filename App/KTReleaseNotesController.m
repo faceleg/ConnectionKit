@@ -14,9 +14,8 @@
 
 @implementation KTReleaseNotesController
 
-- (void)windowDidLoad
+- (NSURL *)URLToLoad;
 {
-
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *feedURLString = [defaults objectForKey:SUFeedURLKey];
 	NSURL *feedURL = [NSURL URLWithString:[feedURLString encodeLegally]];
@@ -27,17 +26,21 @@
 	
 	NSMutableDictionary *newParams = [NSMutableDictionary dictionaryWithDictionary:params];
 	[newParams setObject:@"1" forKey:@"rn"];
-
+	
 	NSURL *newURL = [NSURL URLWithBaseURL:
 					 [NSURL URLWithString:
 					  [NSString stringWithFormat:@"%@changelog.php",
 					   [[NSUserDefaults standardUserDefaults] objectForKey:@"HomeBaseURL"]
 					   ]]
-					 parameters:newParams];
-	
+							   parameters:newParams];
 	DJW((@"release notes URL = %@", newURL));
+	return newURL;
+}
+
+- (void)windowDidLoad
+{
 	[[oWebView mainFrame] loadRequest:
-	 [NSURLRequest requestWithURL:newURL
+	 [NSURLRequest requestWithURL:[self URLToLoad]
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
 				  timeoutInterval:10.0]];
     

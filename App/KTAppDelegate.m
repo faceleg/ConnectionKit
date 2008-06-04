@@ -1753,7 +1753,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showReleaseNotes:(id)sender
 {
-    [[KTReleaseNotesController sharedController] showWindow:nil];
+	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - open in browser
+	{
+		NSURL *urlToOpen = [[KTReleaseNotesController sharedController] URLToLoad];
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:urlToOpen];
+	}
+	else
+	{
+		[[KTReleaseNotesController sharedController] showWindow:nil];
+	}
 }
 
 #pragma mark -
