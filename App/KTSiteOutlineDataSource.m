@@ -476,6 +476,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Set the cell's appearance
 	if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{
+		// Size
+		NSControlSize controlSize = ([[self document] displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
+		[cell setControlSize:controlSize];
+	
 		// Icon
 		NSImage *pageIcon = [self iconForPage:item];
 		[cell setImage:pageIcon];
@@ -763,11 +767,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)pageIconSizeDidChange:(NSNotification *)notification
 {
 	[self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
-	
-	// Set cellsize to match page size
-	NSControlSize controlSize = ([[self document] displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
-	NSTableColumn *tableColumn = [[[self siteOutline] tableColumns] objectAtIndex:0];
-	[[tableColumn dataCell] setControlSize:controlSize];
 	
 	// Setup is complete, reload outline
 	[self reloadSiteOutline];

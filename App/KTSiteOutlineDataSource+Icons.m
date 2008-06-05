@@ -73,9 +73,21 @@
 		// Fallback to the plugin's bundle icon
 		else
 		{
-			result = [self iconForPlugin:[[self class] defaultIconPluginForPage:page]];
+			KTAbstractHTMLPlugin *plugin = [[self class] defaultIconPluginForPage:page];
+			if (plugin)
+			{
+				result = [self iconForPlugin:plugin];
+			}
 		}
 	}
+	
+	
+	// As a final resort, we fallback to the broken icon
+	if (!result)
+	{
+		result = [NSImage brokenImage];
+	}
+	
 	
     OBPOSTCONDITION(result);
 	return result;
@@ -164,8 +176,9 @@
 	{
 		result = [page plugin];
 	}
-	OBPOSTCONDITION(result);
-	return result;
+	
+	
+	return result;	/// There was a post-condition, but it's possible the plugin can't be found
 }
 
 #pragma mark -
