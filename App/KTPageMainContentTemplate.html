@@ -18,13 +18,15 @@
 [[endif2]]
 [[endif]]
 
-							<div class="article [[if callouts]]has-callout[[else]]no-callout[[endif]]">
+[[if includeCallout]]
+							<div class="article [[if callouts]]has-callout[[else2]]no-callout[[endif2]]">
 [[if callouts]]
 [[parseComponent self parser.calloutContainerTemplateHTML]]
-[[endif]]
+[[endif2]]
 								<div class="article-content">
-[[parsecomponent self elementTemplate]]
-								</div>
+[[endif]]
+									[[parsecomponent self elementTemplate]]
+								[[if includeCallout]]</div>[[endif]]
 
 								<div class="article-info">
 
@@ -61,7 +63,7 @@
 	<!-- End trackback -->
 [[endif4]]
 										</p>
-									</div>
+									</div> <!-- /comments -->
 [[else3]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
@@ -74,7 +76,7 @@
 [[endif]]
 
 								</div> <!-- /article-info -->
-							</div> <!-- /article -->
+							[[if includeCallout]]</div>[[endif]] <!-- /article -->
 [[if index]]
 							<div id="index" class="[[=&index.cssClassName]]">
 [[index index pagesInIndex]]
