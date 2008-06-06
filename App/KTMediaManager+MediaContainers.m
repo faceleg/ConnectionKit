@@ -211,8 +211,11 @@
 												  string:string
 													size:[NSNumber numberWithFloat:size]];
 		
-		KTMediaFile *mediaFile = [self mediaFileWithImage:image];
-		[result setValue:mediaFile forKey:@"file"];
+		if (image)
+		{
+			KTMediaFile *mediaFile = [self mediaFileWithImage:image];
+			[result setValue:mediaFile forKey:@"file"];
+		}
 	}
 	
 	return result;
