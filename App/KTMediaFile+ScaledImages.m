@@ -116,6 +116,7 @@
 {
 	// Scale the image
 	KTImageScalingSettings *scalingBehavior = [properties objectForKey:@"scalingBehavior"];
+	[image normalizeSize];
 	NSBitmapImageRep *scaledImage = [image bitmapByScalingWithBehavior:scalingBehavior];
 	NSImage *finalImage = nil;
 	

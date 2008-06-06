@@ -116,6 +116,14 @@
     return result;
 }
 
+/*	Rather sneaky hack to ensure DPIs are NOT respected.
+ */
+- (void)drawRect:(NSRect)aRect
+{
+	[[self image] normalizeSize];
+	[super drawRect:aRect];
+}
+
 #pragma mark delegate utilities
 
 /*! searches delegate, then controller's content, then controller's content's delegate */
