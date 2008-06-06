@@ -18,6 +18,7 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
+#import "KTHostProperties.h"
 #import "KTMaster.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -48,7 +49,7 @@
 - (void)setFileName:(NSString *)fileName
 {
 	[self setWrappedValue:fileName forKey:@"fileName"];
-	[self invalidatePathRelativeToSiteRecursive:YES];	// For collections this affects all children
+	[self recursivelyInvalidateURL:YES];	// For collections this affects all children
 }
 
 /*	Looks at sibling pages and the page title to determine the best possible filename.
@@ -117,7 +118,7 @@
 - (void)setCustomFileExtension:(NSString *)extension
 {
 	[self setWrappedValue:extension forKey:@"customFileExtension"];
-	[self invalidatePathRelativeToSiteRecursive:NO];
+	[self recursivelyInvalidateURL:NO];
 }
 
 
@@ -242,47 +243,53 @@
 	return result;
 }
 
-/*	Returns out path relative to the site as a whole.
- *	Unlike the -pathRelativeToSite method the result is never cached.
- *	Some typical examples:
- *
- *		text.html			-	A top-level text page
- *		photos				-	A photo album
- *		photos/index.html	-	A photo album (with index.html turned on in user defaults)
- *		photos/photo1.html	-	A photo page
- *							-	The home page
- *		index.html			-	The home page (with index.html turned on in user defaults)
- */
-- (NSString *)_pathRelativeToSite
+- (NSURL *)URL_uncached
 {
-	NSString *result = [self customPathRelativeToSite];	// A plugin may have specified a custom path
+	NSURL *result = nil;
 	
-	if (!result)
+	// A plugin may have specified a custom path. If so, resolve it against the site URL
+	NSString *customPath = [self customPathRelativeToSite];
+	if (customPath)
 	{
-		int collectionPathStyle = KTCollectionHTMLDirectoryPath;
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
-			collectionPathStyle = KTCollectionIndexFilePath;
+		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+		result = [NSURL URLWithString:customPath relativeToURL:siteURL];
+	}
+	else
+	{
+		if ([self isRoot])
+		{
+			// Root is a sepcial case where we just supply the site URL
+			result = [[[self documentInfo] hostProperties] siteURL];
 		}
-		
-		result = [self pathRelativeToSiteWithCollectionPathStyle:collectionPathStyle];
+		else
+		{
+			// For normal pages, figure out the path relative to parent and resolve it
+			NSString *path = [self pathRelativeToParent];
+			if (path)
+			{
+				result = [NSURL URLWithString:path relativeToURL:[[self parent] URL]];
+			}
+		}
 	}
 	
 	return result;
 }
 
-/*	Sends out a KVO notification that the page's path has changed. Upon the next request for the path it will be
+
+/*	Sends out a KVO notification that the page's URL has changed. Upon the next request for the URL it will be
  *	regenerated and cached.
  *	KTAbstractPage does not support children, so it is up to KTPage to implement the recursive portion.
  *
  *	If the path is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
  */
-- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive
+- (void)recursivelyInvalidateURL:(BOOL)recursive
 {
-	[self willChangeValueForKey:@"pathRelativeToSite"];
-	[self setPrimitiveValue:nil forKey:@"pathRelativeToSite"];
-	[self didChangeValueForKey:@"pathRelativeToSite"];
+	[self willChangeValueForKey:@"URL"];
+	[self setPrimitiveValue:nil forKey:@"URL"];
 	
 	[self postSiteStructureDidChangeNotification];
+	
+	[self didChangeValueForKey:@"URL"];
 }
 
 
@@ -294,7 +301,7 @@
 - (void)setCustomPathRelativeToSite:(NSString *)path
 {
 	[self setWrappedValue:path forKey:@"customPathRelativeToSite"];
-	[self invalidatePathRelativeToSiteRecursive:YES];
+	[self recursivelyInvalidateURL:YES];
 }
 
 #pragma mark -
@@ -312,17 +319,13 @@
  */
 - (NSString *)uploadPath
 {
-	NSString *result = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionIndexFilePath];
-	return result;
-}
-
-/*	The path relative to our parent which we will be uploaded to.
- *	For plain pages this is dead simple: @"filename.ext"
- *	But for collections, also takes into account the index page: @"filename/index.html"
- */
-- (NSString *)uploadPathRelativeToParent
-{
-	NSString *result = [self pathRelativeToParentWithCollectionPathStyle:KTCollectionIndexFilePath];
+	NSString *result = nil;
+	
+	if (![self customPathRelativeToSite])
+	{
+		result = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionIndexFilePath];
+	}
+	
 	return result;
 }
 
@@ -381,12 +384,17 @@
 	}
 	
 	NSString *relativePath = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
-	NSString *result = [parentPath stringByAppendingPathComponent:relativePath];
+	NSString *result = nil;
 	
-	// NSString doesn't handle KTCollectionHTMLDirectoryPath-style strings; we must fix them manually
-	if (collectionPathStyle == KTCollectionHTMLDirectoryPath && [self isCollection])
+	if (relativePath)
 	{
-		result = [result HTMLdirectoryPath];
+		result = [parentPath stringByAppendingPathComponent:relativePath];
+		
+		// NSString doesn't handle KTCollectionHTMLDirectoryPath-style strings; we must fix them manually
+		if (collectionPathStyle == KTCollectionHTMLDirectoryPath && [self isCollection])
+		{
+			result = [result HTMLdirectoryPath];
+		}
 	}
 	
 	return result;

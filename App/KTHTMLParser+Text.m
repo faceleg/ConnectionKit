@@ -49,7 +49,7 @@
 				object = [self component];
 			}
             
-            [[self cache] valueForKeyPath:textKeyPath]; // Keeps the delegate informed
+            [[self cache] valueForKeyPath:[parameters objectForKey:@"property"]]; // Keeps the delegate informed
 		}
 		
 		

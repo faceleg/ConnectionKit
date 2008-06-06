@@ -89,14 +89,12 @@ KTCollectionPathStyle;
 
 // Publishing
 - (NSString *)pathRelativeToParent;
-- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive;
+- (void)recursivelyInvalidateURL:(BOOL)recursive;
 
 - (NSString *)customPathRelativeToSite;
 - (void)setCustomPathRelativeToSite:(NSString *)path;
 
-// Uploading
 - (NSString *)uploadPath;
-- (NSString *)uploadPathRelativeToParent;
 
 // Preview
 - (NSString *)previewPath;

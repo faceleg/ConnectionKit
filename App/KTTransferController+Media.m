@@ -7,7 +7,9 @@
 //
 
 #import "KTTransferController+Internal.h"
+#import "KTMediaFileUpload.h"
 
+#import "NSObject+Karelia.h"
 #import "NSThread+Karelia.h"
 
 @implementation KTTransferController (Media)
@@ -30,7 +32,7 @@
 	}
 	
 	// Create the directory for the file
-	NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[mediaFileUpload valueForKey:@"pathRelativeToSite"]];
+	NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[mediaFileUpload pathRelativeToSite]];
 	[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
 	
 	// Upload the file

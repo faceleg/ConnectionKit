@@ -12,6 +12,7 @@
 
 #import "KTMediaManager.h"
 #import "KTMediaPersistentStoreCoordinator.h"
+#import "KTMediaFileUpload.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -156,7 +157,7 @@
 	
 	while (anUpload = [uploadsEnumerator nextObject])
 	{
-		if ([[anUpload valueForKey:@"pathRelativeToSite"] isEqualToString:path])
+		if ([[anUpload pathRelativeToSite] isEqualToString:path])
 		{
 			result = anUpload;
 			break;

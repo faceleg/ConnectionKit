@@ -57,7 +57,7 @@
 			KTPage *page = [[[self currentPage] document] pageForURLPath:aPagePreviewPath];
 			if (page)
 			{
-				[self didEncounterKeyPath:@"pathRelativeToSite" ofObject:page];
+				[self didEncounterKeyPath:@"URL" ofObject:page];
 			}
 		}
 	}

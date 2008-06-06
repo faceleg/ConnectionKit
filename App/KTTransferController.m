@@ -77,6 +77,7 @@
 
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
+#import "KTMediaFileUpload.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -479,15 +480,19 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Upload the page itself
-	NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[publishingInfo objectForKey:@"uploadPath"]];
-	
-	NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
-	if (pageData)
+	NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
+	if (uploadPath)
 	{
-		[myUploadedPathsMap setObject:page forKey:uploadPath];
-		[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-		[self uploadFromData:pageData toFile:uploadPath];
-		[myController setPermissions:myPagePermissions forFile:uploadPath];
+		uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+		
+		NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
+		if (pageData)
+		{
+			[myUploadedPathsMap setObject:page forKey:uploadPath];
+			[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
+			[self uploadFromData:pageData toFile:uploadPath];
+			[myController setPermissions:myPagePermissions forFile:uploadPath];
+		}
 	}
 	
 	
@@ -522,7 +527,8 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Bail early if the page is not for publishing
-	if (![page uploadPath] || ([page isKindOfClass:[KTPage class]] && [(KTPage *)page pageOrParentDraft]))
+	NSString *uploadPath = [page uploadPath];
+	if (!uploadPath || ([page isKindOfClass:[KTPage class]] && [(KTPage *)page pageOrParentDraft]))
 	{
 		return nil;
 	}
@@ -565,7 +571,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Upload path
-	[info setObject:[page uploadPath] forKey:@"uploadPath"];
+	[info setObject:uploadPath forKey:@"uploadPath"];
 	
 	
 	// RSS feed
@@ -1188,7 +1194,7 @@ static NSArray *sReservedNames = nil;
 			[CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
 			[CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
 			
-			NSString *baseMediaPath = [[aGraphicalText defaultUpload] valueForKey:@"pathRelativeToSite"];
+			NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
 			NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
 			[CSS replace:@"_URL_" with:mediaPath];
 			
@@ -1538,7 +1544,26 @@ static NSArray *sReservedNames = nil;
 
 - (void)clearUploadedDesigns { [myUploadedDesigns removeAllObjects]; }
 
-#pragma mark paths
+#pragma mark graphical text
+
+- (NSDictionary *)graphicalTextBlocks
+{
+	return myParsedGraphicalTextBlocks;
+}
+
+- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock
+{
+	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[textBlock graphicalTextMedia] identifier]];
+	[myParsedGraphicalTextBlocks setObject:textBlock forKey:ID];
+}
+
+- (void)removeAllGraphicalTextBlocks
+{
+	[myParsedGraphicalTextBlocks removeAllObjects];
+}
+
+#pragma mark -
+#pragma mark Paths
 
 - (NSString *)documentRoot { return myDocumentRoot; }
 
@@ -1570,23 +1595,6 @@ static NSArray *sReservedNames = nil;
 	return result;
 }
 
-#pragma mark graphical text
-
-- (NSDictionary *)graphicalTextBlocks
-{
-	return myParsedGraphicalTextBlocks;
-}
-
-- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock
-{
-	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[textBlock graphicalTextMedia] identifier]];
-	[myParsedGraphicalTextBlocks setObject:textBlock forKey:ID];
-}
-
-- (void)removeAllGraphicalTextBlocks
-{
-	[myParsedGraphicalTextBlocks removeAllObjects];
-}
 
 #pragma mark -
 #pragma mark Progress Panel

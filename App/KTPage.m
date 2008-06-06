@@ -309,9 +309,9 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 
 /*	KTAbstractPage doesn't support recursive operations, so we do instead
  */
-- (void)invalidatePathRelativeToSiteRecursive:(BOOL)recursive
+- (void)recursivelyInvalidateURL:(BOOL)recursive
 {
-	[super invalidatePathRelativeToSiteRecursive:recursive];
+	[super recursivelyInvalidateURL:recursive];
 	
 	// Children should be affected last since they depend on parents' path
 	if (recursive)
@@ -321,14 +321,14 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 		KTAbstractPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
-			[aPage invalidatePathRelativeToSiteRecursive:YES];
+			[aPage recursivelyInvalidateURL:YES];
 		}
 		
 		NSSet *archives = [self valueForKey:@"archivePages"];
 		pageEnumerator = [archives objectEnumerator];
 		while (aPage = [pageEnumerator nextObject])
 		{
-			[aPage invalidatePathRelativeToSiteRecursive:YES];
+			[aPage recursivelyInvalidateURL:YES];
 		}
 	}
 }

@@ -94,7 +94,7 @@
 		NSString *mediaPath = nil;
 		if ([plugin boolForKey:@"uploadMediaInPlaceOfPage"])
 		{
-			mediaPath = [[[(KTMediaContainer *)value file] defaultUpload] valueForKey:@"pathRelativeToSite"];
+			mediaPath = [[[(KTMediaContainer *)value file] defaultUpload] pathRelativeToSite];
 		}
 		[(KTPage *)plugin setCustomPathRelativeToSite:mediaPath];
 		

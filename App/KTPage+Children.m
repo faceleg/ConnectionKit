@@ -136,7 +136,7 @@
 	
 	
 	// As it has a new parent, the page's path must have changed.
-	[page invalidatePathRelativeToSiteRecursive:YES];
+	[page recursivelyInvalidateURL:YES];
 	
 	
 	// Create an archive to conatain the page if needed

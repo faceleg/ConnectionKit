@@ -24,7 +24,7 @@
 
 
 @interface KTAbstractPage (PathsPrivate)
-- (NSString *)_pathRelativeToSite;
+- (NSURL *)URL_uncached;
 @end
 
 
@@ -230,22 +230,12 @@
 
 - (NSURL *)URL
 {
-	NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];
-	return result;
-}
-
-/*	The result of this method is cached until the path changes agan in some way from a -invalidatePathRelativeToSite
- *	method call. -_pathRelativeToSite will return the uncached path.
- */
-- (NSString *)pathRelativeToSite
-{
-	NSString *result = [self wrappedValueForKey:@"pathRelativeToSite"];
+	NSURL *result = [self wrappedValueForKey:@"URL"];
 	
 	if (!result)
 	{
-		result = [self _pathRelativeToSite];
-		[self setPrimitiveValue:result forKey:@"pathRelativeToSite"];
+		result = [self URL_uncached];
+		[self setPrimitiveValue:result forKey:@"URL"];
 	}
 	
 	return result;
