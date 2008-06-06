@@ -1692,7 +1692,19 @@
 
 - (NSString *)uploadCachePath	// returns path without resolving symbolic links
 {
-	return [[self siteCachePath] stringByAppendingPathComponent:@"Upload"];
+//	return [[self siteCachePath] stringByAppendingPathComponent:@"Upload"];
+	
+	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
+	NSString *result = NSTemporaryDirectory();
+	
+	result = [result stringByAppendingPathComponent:[NSApplication applicationName]];
+	result = [result stringByAppendingPathComponent:@"Sites"];
+	result = [result stringByAppendingPathExtension:@"noindex"];
+	result = [result stringByAppendingPathComponent:[self documentID]];
+	
+	result = [result stringByAppendingPathComponent:@"Upload"];
+	
+	return result;
 }
 
 - (NSString *)siteCachePath		// returns path without resolving symbolic links
