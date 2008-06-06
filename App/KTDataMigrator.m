@@ -520,14 +520,6 @@
     [newPage setKeywords:[keywords allValues]];
     
     
-    // Thumbnail
-    KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
-    if (thumbnail)
-    {
-        [newPage setThumbnail:thumbnail];
-    }
-    
-    
     // Migrate Code Injection from the weird old addString2 hack.
     NSString *addString2 = [oldPage valueForKey:@"addString2"];
     NSDictionary *addString2Dictionary = nil;
@@ -586,6 +578,14 @@
     if (![self migrateElementContainer:oldPage toElement:newPage error:error])
     {
         return NO;
+    }
+    
+    
+    // Thumbnail - do this after plugin properties to keep it up-to-date.
+    KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
+    if (thumbnail)
+    {
+        [newPage setThumbnail:thumbnail];
     }
     
     
