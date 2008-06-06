@@ -12,7 +12,7 @@
 		<image>
 			<url>[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]</url>
 			<title>[[=&master.headerImageDescription]]</title>
-			<link>[[=&url]]</link>
+			<link>[[=&URL]]</link>
 			<width>[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]</width>
 			<height>[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]</height>
 		</image>
