@@ -115,6 +115,9 @@ typedef enum {
 // cache support
 - (BOOL)createImagesCacheIfNecessary;
 - (NSString *)imagesCachePath;
+- (BOOL)createUploadCacheIfNecessary;
+- (BOOL)clearUploadCache;
+- (NSString *)uploadCachePath;
 - (NSString *)siteCachePath;
 
 // snapshot support

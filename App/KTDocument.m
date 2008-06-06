@@ -1652,6 +1652,49 @@
     return [[self siteCachePath] stringByAppendingPathComponent:@"Images"];
 }
 
+/*! creates, if necessary, ~/Library/Caches/Sandvox/Sites.noindex/<siteID>/Upload */
+- (BOOL)createUploadCacheIfNecessary
+{
+    NSError *localError = nil;
+    BOOL result = [KTUtilities createPathIfNecessary:[self uploadCachePath] error:&localError];
+    
+    if ( nil != localError )
+	{
+		// put up an error alert
+    }
+    
+    return result;
+}
+
+- (BOOL)clearUploadCache
+{
+	BOOL result = YES;
+	
+	// just delete the upload cache directory and recreate it
+	NSFileManager *fm = [NSFileManager defaultManager];
+	
+	if ( [fm fileExistsAtPath:[self uploadCachePath]] )
+	{
+		result = [fm removeFileAtPath:[self uploadCachePath] handler:nil];
+		if ( result )
+		{
+			result = [self createUploadCacheIfNecessary];
+		}
+	}
+	
+	if ( !result )
+	{
+		NSLog(@"error: unable to clear upload cache");
+	}
+	
+	return result;
+}
+
+- (NSString *)uploadCachePath	// returns path without resolving symbolic links
+{
+	return [[self siteCachePath] stringByAppendingPathComponent:@"Upload"];
+}
+
 - (NSString *)siteCachePath		// returns path without resolving symbolic links
 {
     if ( nil == mySiteCachePath )
