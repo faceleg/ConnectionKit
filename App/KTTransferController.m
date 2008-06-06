@@ -395,13 +395,23 @@ static NSArray *sReservedNames = nil;
  */
 - (void)uploadFromData:(NSData *)data toFile:(NSString *)remotePath;
 {
-	LOG((@"uploadFromData:toFile: %@", remotePath));
-	if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
-	{
-		[myController deleteFile:remotePath];
-	}
+	OFF((@"uploadFromData:toFile: %@", remotePath));
+//	if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
+//	{
+//		[myController deleteFile:remotePath];
+//	}
+//	
+//	[myController uploadFromData:data toFile:remotePath];
 	
-	[myController uploadFromData:data toFile:remotePath];
+	NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
+	if ( [data writeToFile:tmpPath atomically:NO] )
+	{
+		[self uploadFile:tmpPath toFile:remotePath];
+	}
+	else
+	{
+		NSLog(@"error: could not write data for %@ to %@", remotePath, tmpPath);
+	}
 }
 
 #pragma mark -
@@ -469,15 +479,9 @@ static NSArray *sReservedNames = nil;
 	NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
 	if (pageData)
 	{
-		NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
-		NSURL *pathURL = [NSURL fileURLWithPath:tmpPath];
-		[pageData writeToURL:pathURL atomically:NO];
-		NSLog(@"wrote data to %@", pathURL);
-		
 		[myUploadedPathsMap setObject:page forKey:uploadPath];
 		[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-		//[self uploadFromData:pageData toFile:uploadPath];
-		[self uploadFile:tmpPath toFile:uploadPath];
+		[self uploadFromData:pageData toFile:uploadPath];
 		[myController setPermissions:myPagePermissions forFile:uploadPath];
 	}
 	
@@ -488,16 +492,7 @@ static NSArray *sReservedNames = nil;
 	{
 		NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
 		NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-		
-		NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
-		NSURL *pathURL = [NSURL fileURLWithPath:tmpPath];
-		[RSSData writeToURL:pathURL atomically:NO];
-		LOG((@"wrote data to %@", pathURL));
-		
-		
-		//[self uploadFromData:RSSData toFile:RSSUploadPath];
-		[self uploadFile:tmpPath toFile:RSSUploadPath];
-
+		[self uploadFromData:RSSData toFile:RSSUploadPath];
 		[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
 	}
 }
@@ -817,15 +812,7 @@ static NSArray *sReservedNames = nil;
 			NSString *designUploadPath = [[self storagePath] stringByAppendingPathComponent:[design remotePath]];
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
-			NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
-			NSURL *pathURL = [NSURL fileURLWithPath:tmpPath];
-			[masterCSSData writeToURL:pathURL atomically:NO];
-			NSLog(@"wrote data to %@", pathURL);
-			
-			
-			//[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
-			[self uploadFile:tmpPath toFile:masterCSSUploadPath];
-
+			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
 		}
 				
 		
@@ -882,15 +869,7 @@ static NSArray *sReservedNames = nil;
 			NSData *gzipped = [siteMapData compressGzip];
 			NSString *siteMapPath = [[self storagePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
 			
-			NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
-			NSURL *pathURL = [NSURL fileURLWithPath:tmpPath];
-			[gzipped writeToURL:pathURL atomically:NO];
-			NSLog(@"wrote data to %@", pathURL);
-			
-			
-			//[self uploadFromData:gzipped toFile:siteMapPath];
-			[self uploadFile:tmpPath toFile:siteMapPath];
-
+			[self uploadFromData:gzipped toFile:siteMapPath];
 			
 			if ([self where] != kGeneratingRemoteExport) // don't ping google if we are just exporting
 			{
@@ -1064,15 +1043,7 @@ static NSArray *sReservedNames = nil;
 			NSString *designUploadPath = [[self storagePath] stringByAppendingPathComponent:[design remotePath]];
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
-			NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
-			NSURL *pathURL = [NSURL fileURLWithPath:tmpPath];
-			[masterCSSData writeToURL:pathURL atomically:NO];
-			NSLog(@"wrote data to %@", pathURL);
-			
-			
-			//[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
-			[self uploadFile:tmpPath toFile:masterCSSUploadPath];
-
+			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
 		}
 				
 		
