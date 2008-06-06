@@ -220,6 +220,9 @@ static NSArray *sReservedNames = nil;
 		[self setDocumentRoot:docRoot];
 		[self setSubfolder:subfolder];
 		
+		// make sure we have an upload cache directory, if needed
+		(void)[aDocument createUploadCacheIfNecessary];
+		
 		[self window]; // this forces the nib to be loaded so when we do an export the accessory view is not nil.
 	}
 	
@@ -381,7 +384,7 @@ static NSArray *sReservedNames = nil;
  */
 - (void)uploadFile:(NSString *)localPath toFile:(NSString *)remotePath
 {
-	LOG((@"uploadFromFile: %@ toFile: %@", localPath, remotePath));
+	OFF((@"uploadFromFile: %@ toFile: %@", localPath, remotePath));
 
 	if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
 	{
@@ -403,13 +406,15 @@ static NSArray *sReservedNames = nil;
 //	
 //	[myController uploadFromData:data toFile:remotePath];
 	
-	NSString *tmpPath = [@"/tmp" stringByAppendingPathComponent:[NSString shortGUIDString]];
+	// in 1.5, we're going to write everything to a path first so we're just uploading files on disk
+	NSString *tmpPath = [[[self document] uploadCachePath] stringByAppendingPathComponent:[NSString shortGUIDString]];
 	if ( [data writeToFile:tmpPath atomically:NO] )
 	{
 		[self uploadFile:tmpPath toFile:remotePath];
 	}
 	else
 	{
+		// this is a pretty bad error, how should we alert the user?
 		NSLog(@"error: could not write data for %@ to %@", remotePath, tmpPath);
 	}
 }
@@ -1476,6 +1481,9 @@ static NSArray *sReservedNames = nil;
 		[myController setDefaultButtonTitle:NSLocalizedString(@"OK", @"change cancel button to ok")];
 		[myController setAlternateButtonTitle:nil];
 	}
+	
+	// clear upload cache
+	(void)[[self document] clearUploadCache];
 }
 
 #pragma mark -
