@@ -29,8 +29,7 @@
 - (NSImage *)favicon;
 - (NSImage *)cachedFavicon;
 
-- (NSImage *)iconForPlugin:(KTAbstractHTMLPlugin *)bundle;
-+ (KTAbstractHTMLPlugin *)defaultIconPluginForPage:(KTPage *)page;
+- (NSImage *)bundleIconForPage:(KTPage *)page;
 
 - (NSImage *)customIconForPage:(KTPage *)page;
 + (NSImage *)maskedIconOfFile:(NSString *)path size:(float)iconSize;
@@ -73,11 +72,7 @@
 		// Fallback to the plugin's bundle icon
 		else
 		{
-			KTAbstractHTMLPlugin *plugin = [[self class] defaultIconPluginForPage:page];
-			if (plugin)
-			{
-				result = [self iconForPlugin:plugin];
-			}
+			result = [self bundleIconForPage:page];
 		}
 	}
 	
@@ -160,25 +155,31 @@
 	return result;
 }
 
-/*	Support method for finding the right bundle's icon to display for a page.
+/*	Support method for displaying the default bundle's icon for a page.
  *	If the page has an index, returns the index icon. Otherwise, the page plugin's icon.
  */
-+ (KTAbstractHTMLPlugin *)defaultIconPluginForPage:(KTPage *)page
+- (NSImage *)bundleIconForPage:(KTPage *)page
 {
 	OBPRECONDITION(page);
-	KTAbstractHTMLPlugin *result;
 	
+	KTAbstractHTMLPlugin *plugin;
 	if ([page isCollection] && [page index])
 	{
-		result = [[page index] plugin];
+		plugin = [[page index] plugin];
 	}
 	else
 	{
-		result = [page plugin];
+		plugin = [page plugin];
 	}
 	
 	
-	return result;	/// There was a post-condition, but it's possible the plugin can't be found
+	NSImage *result = nil;
+	if (plugin)
+	{
+		result = [self iconForPlugin:plugin];
+	}
+	
+	return result;	// Can be nil if no plugin is found
 }
 
 #pragma mark -
@@ -195,7 +196,7 @@
 		{
 			// Begin generating the thumbnail in the background. In the meantime, display the default icon.
 			[self addPageToCustomIconGenerationQueue:page];
-			result = [self iconForPlugin:[[self class] defaultIconPluginForPage:page]];
+			result = [self bundleIconForPage:page];
 		}
 	}
 	
