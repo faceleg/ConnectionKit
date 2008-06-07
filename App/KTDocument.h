@@ -73,7 +73,6 @@ typedef enum {
 	BOOL myIsSuspendingAutosave;
 	BOOL myIsClosing;
 	
-	NSString *myDocumentID;
     NSString *mySiteCachePath;
 	NSString *mySnapshotPath;
 	
@@ -260,9 +259,6 @@ typedef enum {
 
 - (KTDocumentInfo *)documentInfo;
 - (void)setDocumentInfo:(KTDocumentInfo *)anObject;
-
-- (NSString *)documentID;		// same as siteID property, always in-memory
-- (void)setDocumentID:(NSString *)anID;
 
 - (NSTimer *)autosaveTimer;
 - (void)setAutosaveTimer:(NSTimer *)aTimer;

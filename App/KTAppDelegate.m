@@ -1833,7 +1833,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // FIXME: it would be better to not have KTPluginInstallers added to sharedDocumentController
 		if ( [document isKindOfClass:[KTDocument class]] )
 		{
-			if ( [anID isEqualToString:[document documentID]] )
+			if ([anID isEqualToString:[[document documentInfo] siteID]])
 			{
 				return document;
 			}

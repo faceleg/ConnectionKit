@@ -129,18 +129,6 @@
     myDocumentInfo = aDocumentInfo;
 }
 
-- (NSString *)documentID
-{
-	return myDocumentID;
-}
-
-- (void)setDocumentID:(NSString *)anID
-{
-	[anID retain];
-	[myDocumentID release];
-	myDocumentID = anID;
-}
-
 #pragma mark -
 #pragma mark Publishing
 

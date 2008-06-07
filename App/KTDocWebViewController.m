@@ -17,16 +17,16 @@
 #import "KTDocSiteOutlineController.h"
 #import "KTHelper.h"
 #import "KTMaster.h"
+#import "KTPage.h"
 #import "KTParsedWebViewComponent.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
-#import "NSURL+Karelia.h"
+#import "KTDocumentInfo.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
 
-#import "KTPage.h"
 #import "NSImage+Karelia.h"
 #import "CIImage+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
@@ -35,8 +35,8 @@
 #import "NSTextView+KTExtensions.h"
 #import "WebView+Karelia.h"
 #import "NSView+Karelia.h"
-
 #import "NSWorkspace+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -869,7 +869,7 @@
 
 					 NSMutableString *substituted = [NSMutableString stringWithString:[requestURL absoluteString]];
 					 [substituted replaceOccurrencesOfString:@"applewebdata://" 
-												  withString:[NSString stringWithFormat:@"media:/%@/", [[self document] documentID]]
+												  withString:[NSString stringWithFormat:@"media:/%@/", [[[self document] documentInfo] siteID]]
 													 options:NSLiteralSearch 
 													   range:NSMakeRange(0,[substituted length])];
 					 

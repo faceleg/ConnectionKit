@@ -35,6 +35,7 @@ typedef enum {
 {
 }
 
+- (NSString *)siteID;
 - (KTPage *)root;
 - (KTHostProperties *)hostProperties;
 

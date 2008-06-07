@@ -55,6 +55,8 @@
 #pragma mark -
 #pragma mark Accessors
 
+- (NSString *)siteID { return [self wrappedValueForKey:@"siteID"]; }
+
 - (KTPage *)root { return [self wrappedValueForKey:@"root"]; }
 
 - (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }

@@ -328,7 +328,6 @@
     KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
     KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
     [self setDocumentInfo:documentInfo];
-    [self setDocumentID:[documentInfo valueForKey:@"siteID"]];
     
     NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
     if (docProperties)
@@ -456,11 +455,6 @@
 		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
 		
 		
-		// cache documentID, we use it often, we don't want to fetch it every time
-		/// Is this actually backed up by any benchmarking? Mike.
-		NSString *siteID = [[self documentInfo] valueForKey:@"siteID"];
-		[self setDocumentID:siteID];
-		
 		// establish autosave notifications
 		[self observeNotificationsForContext:(KTManagedObjectContext *)[self managedObjectContext]];
 		
@@ -499,7 +493,6 @@
 	[oNewDocAccessoryView release];
 		
     [self setDocumentInfo:nil];
-	[self setDocumentID:nil];
     [self setRoot:nil];
 
 	[myMediaManager release];
@@ -696,7 +689,7 @@
 	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
 
 	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
-	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[self documentID]];
+	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self documentInfo] siteID]];
 	
 	// Create the directory if needs be
 	if (![fileManager fileExistsAtPath:result])
@@ -1602,13 +1595,13 @@
 	return fileName;
 }
 
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<documentID> */
+/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
 - (NSString *)snapshotDirectory
 {
 	return [[self snapshotPath] stringByDeletingLastPathComponent];
 }
 
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<documentID>/<fileName>.svxSite */
+/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
 - (NSString *)snapshotPath
 {
     if ( nil == mySnapshotPath )
@@ -1616,7 +1609,7 @@
 		// construct path
 		NSString *snapshotPath = [NSApplication applicationSupportPath];
 		snapshotPath = [snapshotPath stringByAppendingPathComponent:@"Snapshots"];
-		snapshotPath = [snapshotPath stringByAppendingPathComponent:[self documentID]];
+		snapshotPath = [snapshotPath stringByAppendingPathComponent:[[self documentInfo] siteID]];
 		snapshotPath = [snapshotPath stringByAppendingPathComponent:[self snapshotName]];
 		[self setSnapshotPath:snapshotPath];
     }
@@ -1697,7 +1690,7 @@
 	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
 	NSString *result = NSTemporaryDirectory();
 	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
-	result = [result stringByAppendingPathComponent:[self documentID]];
+	result = [result stringByAppendingPathComponent:[[self documentInfo] siteID]];
 	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
 	return result;
 }
@@ -1716,7 +1709,7 @@
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:@"Sites"];
 			siteCachePath = [siteCachePath stringByAppendingPathExtension:@"noindex"];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:[self documentID]];
+			siteCachePath = [siteCachePath stringByAppendingPathComponent:[[self documentInfo] siteID]];
 			[self setSiteCachePath:siteCachePath];
 		}
     }
