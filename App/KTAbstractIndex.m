@@ -57,7 +57,7 @@
 */
 - (id)valueForUndefinedKey:(NSString *)aKey
 {
-	NSLog(@"Attempt to access page property %@ from index", aKey);
+	NSLog(@"Attempt to access page property '%@' from index", aKey);
 	
 	id result = [myPage valueForKey:aKey];
 	return result;

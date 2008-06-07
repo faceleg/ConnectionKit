@@ -17,15 +17,16 @@
 #import "KTDocWebViewController+Private.h"
 
 #import "Debug.h"
+#import "KTAbstractIndex.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWindowController.h"
 #import "KTHTMLParser.h"
 #import "KTPage.h"
 #import "KTParsedKeyPath.h"
 #import "KTParsedWebViewComponent.h"
-#import "WebViewEditingHelperClasses.h"
 #import "KTAsyncOffscreenWebViewController.h"
 #import "KTWebViewTextBlock.h"
+#import "WebViewEditingHelperClasses.h"
 
 #import "NSMutableDictionary+Karelia.h"
 #import "NSString-Utilities.h"
@@ -272,6 +273,11 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[parser setDelegate:self];
 	KTPage *page = (KTPage *)[[self mainWebViewComponent] parsedComponent];
 	[parser setCurrentPage:page];
+	if ([parsedComponent isKindOfClass:[KTAbstractIndex class]])	// A hack to handle indexes in 1.5
+	{
+		[parser overrideKey:@"pages" withValue:[page pagesInIndex]];
+	}
+	
 	NSString *replacementHTML = [parser parseTemplate];
 	[parser release];
 
