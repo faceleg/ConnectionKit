@@ -34,6 +34,7 @@
 
 - (KTMediaContainer *)bannerImage;
 - (void)setBannerImage:(KTMediaContainer *)banner;
+- (KTMediaContainer *)scaledBanner;
 
 - (KTMediaContainer *)logoImage;
 - (void)setLogoImage:(KTMediaContainer *)logo;

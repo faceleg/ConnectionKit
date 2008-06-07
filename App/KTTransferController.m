@@ -1168,7 +1168,7 @@ static NSArray *sReservedNames = nil;
 	// Master CSS. Inform of the banner image (if there is one) & graphical text.
 	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
 	
-	KTMediaFile *bannerImage = [[master bannerImage] file];
+	KTMediaFile *bannerImage = [[master scaledBanner] file];
 	if (bannerImage)
 	{
 		[self addParsedMediaFileUpload:[bannerImage defaultUpload]];
