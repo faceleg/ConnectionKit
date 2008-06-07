@@ -55,7 +55,7 @@
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
 */
-- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(KTManagedObjectContext *)context
+- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context
 {
 	NSMutableString *buffer = [NSMutableString string];
 	NSScanner *scanner = [NSScanner scannerWithString:originalString];

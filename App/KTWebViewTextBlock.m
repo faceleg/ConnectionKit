@@ -332,53 +332,61 @@
 	
 	
 	// Perform additional processing of the text according to HTML generation purpose
-	if ([self importsGraphics] && [parser HTMLGenerationPurpose] != kGeneratingPreview)
+	if ([parser HTMLGenerationPurpose] != kGeneratingPreview)
 	{
-		// Convert media source paths
-		NSScanner *scanner = [[NSScanner alloc] initWithString:result];
-		NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
-		NSString *aString;	NSString *aMediaPath;
+		// Fix page links
+		result = [[self page] fixPageLinksFromString:result managedObjectContext:[[self page] managedObjectContext]];
 		
-		while (![scanner isAtEnd])
+		
+		
+		if ([self importsGraphics])
 		{
-			[scanner scanUpToString:@" src=\"" intoString:&aString];
-			OBASSERT(aString);
-			[buffer appendString:aString];
-			if ([scanner isAtEnd]) break;
+			// Convert media source paths
+			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
+			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
+			NSString *aString;	NSString *aMediaPath;
 			
-			[buffer appendString:@" src=\""];
-			[scanner setScanLocation:([scanner scanLocation] + 6)];
-			
-			if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
+			while (![scanner isAtEnd])
 			{
-				NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
-				KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+				[scanner scanUpToString:@" src=\"" intoString:&aString];
+				OBASSERT(aString);
+				[buffer appendString:aString];
+				if ([scanner isAtEnd]) break;
 				
-				// Replace the path with one suitable for the specified purpose
-				if (mediaContainer)
+				[buffer appendString:@" src=\""];
+				[scanner setScanLocation:([scanner scanLocation] + 6)];
+				
+				if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
 				{
-					if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+					NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
+					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+					
+					// Replace the path with one suitable for the specified purpose
+					if (mediaContainer)
 					{
-						aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+						if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+						{
+							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+						}
+						else
+						{
+							KTPage *page = [self page];		OBASSERT(page);
+							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
+							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
+							
+							// Tell the parser's delegate
+							[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
+						}
 					}
-					else
-					{
-						KTPage *page = [self page];		OBASSERT(page);
-						KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-						aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
-						
-						// Tell the parser's delegate
-						[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
-					}
+					
+					if (aMediaPath) [buffer appendString:aMediaPath];
 				}
-				
-				if (aMediaPath) [buffer appendString:aMediaPath];
 			}
+			
+			result = [NSString stringWithString:buffer];
+			[buffer release];
+			[scanner release];
 		}
-		
-		result = [NSString stringWithString:buffer];
-		[buffer release];
-		[scanner release];
 	}
 	
 	

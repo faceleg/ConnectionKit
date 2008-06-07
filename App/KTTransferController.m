@@ -580,7 +580,7 @@ static NSArray *sReservedNames = nil;
 		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
 		if (RSSString)
 		{
-			RSSString = [(KTPage *)page fixPageLinksFromString:RSSString managedObjectContext:(KTManagedObjectContext *)[page managedObjectContext]];
+			RSSString = [(KTPage *)page fixPageLinksFromString:RSSString managedObjectContext:[page managedObjectContext]];
 			
 			// Now that we have page contents in unicode, clean up to the desired character encoding.
 			// MAYBE DO THIS TOO IF WE USE SOMETHING OTHER THAN UTF8
