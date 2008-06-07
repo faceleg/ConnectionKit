@@ -26,6 +26,8 @@
 
 @interface KTHTMLParser (CSSPrivate)
 - (NSString *)pathToDesignFile:(NSString *)filename;
+- (KTDesign *)design;
+
 - (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media;
 @end
 
@@ -53,7 +55,9 @@
 			
 	// Then the base design's CSS file.
 	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
-	[stylesheetLines addObject:[self stylesheetLink:mainCSS title:[[[self cache] valueForKey:@"cssTitle"] escapedEntities] media:nil]];
+	[stylesheetLines addObject:[self stylesheetLink:mainCSS
+											  title:[[self design] title]
+											  media:nil]];
 	
 	
 	// Ask the page and its components for extra CSS files required
@@ -122,11 +126,8 @@
 	NSString *result = nil;
 	
 	// Return nil if the file doesn't actually exist
-	KTAbstractPage *page = [self currentPage];
-	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
-	OBASSERT([page isKindOfClass:[KTPage class]]);
-	KTDesign *design = [[(KTPage *)page master] design];
 	
+	KTDesign *design = [self design];
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
@@ -153,6 +154,16 @@
 	return result;
 }
 
+- (KTDesign *)design
+{
+	KTAbstractPage *page = [self currentPage];
+	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
+	OBASSERT([page isKindOfClass:[KTPage class]]);
+	KTDesign *result = [[(KTPage *)page master] design];
+	
+	return result;
+}
+
 /*	Generates a <link> tag to the specified stylesheet. Include a title attribute when possible.
  */
 - (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media
@@ -162,7 +173,7 @@
 	
 	if (title)
 	{
-		[buffer appendFormat:@" title=\"%@\"", title];
+		[buffer appendFormat:@" title=\"%@\"", [title escapedEntities]];
 	}
 	
 	if (media)
