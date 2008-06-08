@@ -168,9 +168,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		[self setProperties:hostProperties];
 		
-		// there are 2 keys by default in the dict
-		[self setValue:[NSNumber numberWithBool:[[[hostProperties currentValues] allKeys] count] > 2]
+//		// there are 2 keys by default in the dict
+//		[self setValue:[NSNumber numberWithBool:[[[hostProperties currentValues] allKeys] count] > 2]
+//				forKey:@"isEditing"];
+		
+		BOOL isNewSetup = ( (NO == [hostProperties boolForKey:@"localHosting"]) && (NO == [hostProperties boolForKey:@"remoteHosting"]) );
+		[self setValue:[NSNumber numberWithBool:!isNewSetup]
 				forKey:@"isEditing"];
+
 		
 		if ([[self valueForKey:@"localHosting"] intValue] == 1 && 
 			[[self valueForKey:@"remoteHosting"] intValue] == 1)
