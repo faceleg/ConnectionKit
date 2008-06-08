@@ -56,6 +56,8 @@
 // Debugging
 - (NSString *)shortDescription;
 
++ (NSCharacterSet *)uniqueIDCharacters;
+
 @end
 
 @interface KTPage (Accessors)

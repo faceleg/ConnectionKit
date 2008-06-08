@@ -405,4 +405,19 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 		[self fileName], [self wrappedValueForKey:@"uniqueID"], [self wrappedValueForKey:@"pluginIdentifier"]];
 }
 
+#pragma mark -
+#pragma mark Unique ID
+
++ (NSCharacterSet *)uniqueIDCharacters
+{
+	static NSCharacterSet *result;
+	
+	if (!result)
+	{
+		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
+	}
+	
+	return result;
+}
+
 @end

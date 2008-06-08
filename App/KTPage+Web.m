@@ -70,7 +70,7 @@
 			{
 				[scanner scanString:kKTPageIDDesignator intoString:nil];
 				NSString *idString = nil;
-				BOOL foundNumber = [scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet]
+				BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
 													   intoString:&idString];
 				if (foundNumber)
 				{
