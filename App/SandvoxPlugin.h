@@ -54,6 +54,7 @@
 
 //  media
 #import "KTMediaFile.h"
+#import "KTMediaFileUpload.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 
