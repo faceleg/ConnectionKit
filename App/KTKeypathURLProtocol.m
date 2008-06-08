@@ -11,9 +11,10 @@
 #import "KTAppDelegate.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "NSString+Karelia.h"
-#import "NSImage+Karelia.h"
+#import "KTDocumentInfo.h"
 #import "NSImage+KTExtensions.h"
+#import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 
 @implementation KTKeypathURLProtocol
 
@@ -35,7 +36,7 @@
 {
 	NSURL *result = [NSURL URLWithString:[[NSString stringWithFormat:
 		@"keypath:/%@/z%ld/%@",
-		[aDocument documentID],					// document ID
+		[[aDocument documentInfo] siteID],					// document ID
 		[KTURLProtocol cacheConfusingNumber],	// unique junk to confuse cache
 		aKeyPath] encodeLegally]];								// key to get to the item
 	return result;
