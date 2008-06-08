@@ -536,6 +536,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"])
 				{
 					nextState = @"mac";
+					
+					// set a domain style so we get a stemURL
+					[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
 				}
 				else
 				{
@@ -2462,7 +2465,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
 	*account = [[iToolsMember copy] autorelease];	// a guess, but really we should get it from keychain
-
 	if (*account)		// only continue if we actually have an account!
 	{
 		OSStatus theStatus = noErr;
