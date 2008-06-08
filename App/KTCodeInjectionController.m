@@ -247,32 +247,6 @@
 }
 
 #pragma mark -
-#pragma mark Split View Delegate
-
-// Intercept a drag early on so we can set the class method for the desired cursor type
-
-- (BOOL)splitView:(RBSplitView*)sender shouldHandleEvent:(NSEvent*)theEvent inDivider:(unsigned int)divider betweenView:(RBSplitSubview*)leading andView:(RBSplitSubview*)trailing;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-	return YES;
-}	
-
-- (BOOL)splitView:(RBSplitView*) sender
-shouldResizeWindowForDivider:(unsigned int)divider
-	  betweenView:(RBSplitSubview*)leading
-		  andView:(RBSplitSubview*)trailing
-		 willGrow:(BOOL)grow
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-	return YES;
-}
-
-- (void)willAdjustSubviews:(RBSplitView*)sender;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeLeftRightCursor]];
-}
-
-#pragma mark -
 #pragma mark Editing Timer
 
 /*	The user has made an edit. Reset our internal time so that if this is the last edit they make, the
