@@ -8,9 +8,9 @@
 
 #import "KTManagedObject.h"
 
-#import "Debug.h"
 #import "KTDocument.h"
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
+#import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -18,6 +18,8 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
+
+#import "Debug.h"
 
 
 @implementation KTManagedObject
@@ -145,12 +147,13 @@
 		{
 			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
 			
-			KTDocument *document = [(id)[[self managedObjectContext] persistentStoreCoordinator] document];
-			OBASSERT(document);
-			OBASSERT([document isKindOfClass:[KTDocument class]]);
-			
-			NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
-			[result setValue:realObject forKey:aKey];
+			KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+			if([PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
+			{
+				KTDocument *document = [PSC document];
+				NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
+				[result setValue:realObject forKey:aKey];
+			}
 		}
 	}
 	
