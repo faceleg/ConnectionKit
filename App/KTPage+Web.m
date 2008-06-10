@@ -80,10 +80,8 @@
 					{
 						newPath = [[thePage URL] stringRelativeToURL:[self URL]];
 					}
-					else
-					{
-						newPath = @"#";
-					}
+					
+					if (!newPath) newPath = @"#";	// Fallback
 					[buffer appendString:newPath];
 				}
 			}
