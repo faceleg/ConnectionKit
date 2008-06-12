@@ -215,7 +215,9 @@
 #pragma mark -
 #pragma mark Summary
 
-+ (NSString *)iFrameTemplateHTML
+/*	Should be a class method really, but Tiger doesn't support that for KVC.
+ */
+- (NSString *)iFrameTemplateHTML
 {
 	static NSString *result;
 	
@@ -231,7 +233,7 @@
 
 - (NSString *)summary
 {
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:[[self class] iFrameTemplateHTML]
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:[self iFrameTemplateHTML]
 														component:[self delegateOwner]];
 	
 	[parser setHTMLGenerationPurpose:kGeneratingRemote];
