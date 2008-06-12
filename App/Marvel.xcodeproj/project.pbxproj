@@ -192,6 +192,7 @@
 		270A41F80D46B6F9002E998A /* KTScaledImageProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */; };
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
+		270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 270FB8FB0E01C2AC0076FCA0 /* Foundation+KSAdditions.h */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -1673,6 +1674,7 @@
 		270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageProperties.m; sourceTree = "<group>"; };
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
+		270FB8FB0E01C2AC0076FCA0 /* Foundation+KSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Foundation+KSAdditions.h"; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
 		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
@@ -2868,6 +2870,7 @@
 				CEC11AB50D78BE3C00513E70 /* NSXMLElement+Karelia.m */,
 				CEC11B690D78BE5300513E70 /* NSArray+Karelia.h */,
 				CEC11A910D78BE3C00513E70 /* NSArray+Karelia.m */,
+				270FB8FB0E01C2AC0076FCA0 /* Foundation+KSAdditions.h */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -5017,6 +5020,7 @@
 				27DECBAA0DE03F0800D795F3 /* KTMediaFileEqualityTester.h in Headers */,
 				2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
+				270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

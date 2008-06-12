@@ -36,12 +36,6 @@
 
 #import "LinkListArrayController.h"
 
-#import "KT.h"
-#import "NSAppleScript+Karelia.h"
-#import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
-#import "NSURL+KTExtensions.h"
-
 
 @implementation LinkListArrayController
 

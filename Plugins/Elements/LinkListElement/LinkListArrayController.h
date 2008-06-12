@@ -35,7 +35,7 @@
 //
 
 
-#import "DNDArrayController.h"
+#import "SandvoxPlugin.h"
 
 @interface LinkListArrayController : DNDArrayController 
 {
