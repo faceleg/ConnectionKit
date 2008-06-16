@@ -57,15 +57,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (id)initWithTemplate:(NSString *)HTMLTemplate component:(id)parsedComponent
 {
-	[super init];
+	OBPRECONDITION(HTMLTemplate);
 	
-	if (!HTMLTemplate)
-	{
-		NSLog(@"-[KTHTMLParser initWithTemplate:component:]  -- Nil template");
-		// how can we continue from here?
-		[self release];
-		return nil;
-	}
+	[super init];
 	
 	static unsigned sLastParserID = 0;
 	sLastParserID++;
