@@ -660,13 +660,17 @@ After deflating starting at byte 8, you get:
 	if ([[[self delegateOwner] valueForKey:@"movieSource"] intValue] == 1)
 	{
 		// Load from a URL
-		NSURL *movieURL = [NSURL URLWithString:[[[self delegateOwner] valueForKey:@"remoteURL"] encodeLegally]];
-		if (movieURL)
+		NSString *movieURLString = [[self delegateOwner] valueForKey:@"remoteURL"];
+		if (movieURLString && ![movieURLString isEmptyString])
 		{
-			movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
-				movieURL, QTMovieURLAttribute,
-				[NSNumber numberWithBool:YES], QTMovieOpenAsyncOKAttribute,
-				nil];
+			NSURL *movieURL = [NSURL URLWithString:[movieURLString encodeLegally]];
+			if (movieURL)
+			{
+				movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 
+					movieURL, QTMovieURLAttribute,
+					[NSNumber numberWithBool:YES], QTMovieOpenAsyncOKAttribute,
+					nil];
+			}
 		}
 	}
 	else
