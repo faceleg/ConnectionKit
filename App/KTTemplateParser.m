@@ -153,6 +153,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
  */
 - (id)newChildParserWithTemplate:(NSString *)templateHTML component:(id)component
 {
+	OBPRECONDITION(templateHTML);
+	
 	KTTemplateParser *result = [[[self class] alloc] initWithTemplate:templateHTML component:component];
 	
 	[result setParentParser:self];
@@ -181,7 +183,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		id component = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
 		NSString *template = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
 		
-		if (component)
+		if (component && template)
 		{
 			KTTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
 			result = [parser parseTemplate];
