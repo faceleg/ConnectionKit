@@ -19,6 +19,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
 #import "Debug.h"
 
@@ -209,6 +210,44 @@
 	
 	return result;
 }
+
+/*!	Given the page text, scan for all page ID references and convert to the proper relative links.
+ */
+- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context
+{
+	NSMutableString *buffer = [NSMutableString string];
+	NSScanner *scanner = [NSScanner scannerWithString:originalString];
+	while ( ![scanner isAtEnd] )
+	{
+		NSString *beforeLink = nil;
+		BOOL found = [scanner scanUpToString:kKTPageIDDesignator intoString:&beforeLink];
+		if (found)
+		{
+			[buffer appendString:beforeLink];
+			if (![scanner isAtEnd])
+			{
+				[scanner scanString:kKTPageIDDesignator intoString:nil];
+				NSString *idString = nil;
+				BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
+													   intoString:&idString];
+				if (foundNumber)
+				{
+					KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
+					NSString *newPath = nil;
+					if (thePage)
+					{
+						newPath = [[thePage URL] stringRelativeToURL:[self URL]];
+					}
+					
+					if (!newPath) newPath = @"#";	// Fallback
+					[buffer appendString:newPath];
+				}
+			}
+		}
+	}
+	return [NSString stringWithString:buffer];
+}
+
 
 #pragma mark -
 #pragma mark Notifications

@@ -254,7 +254,6 @@
 - (NSString *)javascriptURLPath;
 - (BOOL)isNewPage;
 - (void)setNewPage:(BOOL)flag;
-- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context;
 - (NSString *)comboTitleText;
 
 - (BOOL)isXHTML;
