@@ -40,6 +40,7 @@
 			KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
 			
 			NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
+			OBASSERT(newProperties);
 			NSDictionary *oldProperties = [oldPropertiesObject dictionaryWithValuesForKeys:[newProperties allKeys]];
 			
 			if ([newProperties isEqualToDictionary:oldProperties]) {
