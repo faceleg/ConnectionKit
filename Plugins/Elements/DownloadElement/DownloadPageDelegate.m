@@ -205,7 +205,8 @@
 	
 	if ([[self delegateOwner] boolForKey:@"uploadMediaInPlaceOfPage"])
 	{
-		NSString *path = [[self page] pathRelativeToSite];
+		NSURL *siteURL = [[[[self page] documentInfo] hostProperties] siteURL];
+		NSString *path = [[[self page] URL] stringRelativeToURL:siteURL];
 		result = [media uploadForPath:path];
 	}
 	else
