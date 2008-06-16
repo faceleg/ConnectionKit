@@ -191,12 +191,13 @@
 	
 	if (!result)
 	{
+		result = [self bundleIconForPage:page];
+		
 		NSString *iconSourcePath = [[[page customSiteOutlineIcon] file] currentPath];
 		if (iconSourcePath)
 		{
 			// Begin generating the thumbnail in the background. In the meantime, display the default icon.
 			[self addPageToCustomIconGenerationQueue:page];
-			result = [self bundleIconForPage:page];
 		}
 	}
 	
