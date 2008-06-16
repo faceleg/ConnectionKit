@@ -269,6 +269,8 @@
 
 - (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID
 {
+	OBASSERT(pluginID);		OBASSERT([pluginID length] > 0);
+	
 	static NSArray *entityNames;
 	if (!entityNames)
 	{
