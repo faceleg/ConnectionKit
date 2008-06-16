@@ -188,7 +188,11 @@
 
 - (NSString *)indexFileName
 {
-	NSString *result = [[[self documentInfo] hostProperties] valueForKey:@"htmlIndexBaseName"];
+	KTDocumentInfo *site = [self documentInfo];
+	OBASSERT(site);
+	
+	NSString *result = [[site hostProperties] valueForKey:@"htmlIndexBaseName"];
+	OBPOSTCONDITION(result);
 	return result;
 }
 
