@@ -121,6 +121,8 @@ static unsigned long sCacheConfusingNumber = 0;
 	(void) [scanner scanString:@"/" intoString:nil];
 	(void) [scanner scanUpToString:@"/" intoString:&documentID];
 	(void) [scanner scanString:@"/" intoString:nil];
+	
+	OBASSERT_NOT_REACHED("KTURLProtocol is supposed to be dead.");
 	KTDocument *document = [[NSApp delegate] documentWithID:documentID];
 	
 	//[[document mediaLoadingLock] lock];

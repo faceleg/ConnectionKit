@@ -1824,7 +1824,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (KTDocument *)documentWithID:(NSString *)anID
 {
-	OBPRECONDITION([anID length]);
+	OBPRECONDITION(anID);	OBPRECONDITION(![anID isEmptyString]);
+	
     NSEnumerator *e = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
     KTDocument *document;
 
