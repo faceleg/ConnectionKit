@@ -296,11 +296,16 @@
 	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[NSData partiallyDigestStringFromContentsOfFile:path]];
 	if ([similarMedia count] > 0)
 	{
-		KTMediaFileEqualityTester *equalityTester =
-			[[KTMediaFileEqualityTester alloc] initWithPossibleMatches:[NSSet setWithArray:similarMedia] forPath:path];
-		
-		result = [equalityTester firstMatch];
-		[equalityTester release];
+		NSEnumerator *matchEnumerator = [similarMedia objectEnumerator];
+		KTInDocumentMediaFile *aMediaFile;
+		while (aMediaFile = [matchEnumerator nextObject])
+		{
+			if ([[NSFileManager defaultManager] contentsEqualAtPath:path andPath:[aMediaFile currentPath]])
+			{
+				result = aMediaFile;
+				break;
+			}
+		}
 	}
 	
 	
