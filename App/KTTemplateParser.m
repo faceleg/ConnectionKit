@@ -516,6 +516,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
 	
 	NSString *language = [[self cache] valueForKeyPath:@"CurrentPage.master.language"];
+	OBASSERT(nil != language);
 	NSString *theNewString = [[NSBundle mainBundle] localizedStringForString:theString language:language];
 	
 	//LOG((@"MAINBUNDLE TARGET %@ -> %@", theString, theNewString));

@@ -18,3 +18,9 @@
 [[else]]
 	[[parsecomponent self delegate.videoPublishingTemplate]]
 [[endif]]
+	</div>
+
+[[if captionHTML|editing]]
+	<div[[idClass entity:Element property:captionHTML flags:"block optional" id:uniqueID class:caption]]>[[=captionHTML]]</div>
+[[endif]]
+</div>
