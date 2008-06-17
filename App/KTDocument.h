@@ -37,7 +37,7 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTHostProperties, KTStalenessManager, CIFilter;
+@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
 @class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController;
 @class KTAbstractElement, KTMediaContainer, KTPage, KTElementPlugin;
 

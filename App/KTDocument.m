@@ -1452,11 +1452,14 @@
 		[self setRemoteTransferController:nil];
 		[self setExportTransferController:nil];
 		
-		// mark the document as completely stale
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because host setup ended", NSStringFromSelector(_cmd)));
 		
+		// Mark designs and media as stale (pages are handled automatically)
+		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
+		[designs setValue:nil forKey:@"versionLastPublished"];
 		
-// TODO: Make this work again	//[[self stalenessManager] setAllPagesStale:YES];
+		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
+		[media setBool:YES forKey:@"isStale"];
+		
 		
 		
 		[undoManager setActionName:NSLocalizedString(@"Host Settings", @"Undo name")];
