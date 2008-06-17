@@ -594,7 +594,10 @@
 	
 	
 	// Which MediaContainer is requested?
-	KTMediaContainer *media = [[self cache] valueForKeyPath:[parameters objectForKey:@"media"]];
+	NSString *mediaKeyPath = [parameters objectForKey:@"media"];
+	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath informDelegate:NO];
+	[[self cache] valueForKeyPath:[mediaKeyPath stringByAppendingString:@".file.currentPath"]];	// A HACK to pass right KVO to delegate
+	
 	
 	if ([parameters objectForKey:@"sizeToFit"])
 	{

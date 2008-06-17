@@ -32,7 +32,7 @@
 [[if documentInfo.googleSiteVerification]]
 		[[=documentInfo.googleSiteVerification]]
 [[endif]]
-[[if master.favicon.file]]
+[[if master.favicon.file.currentPath]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.favicon]]" />
 [[endif]]
 [[if feedURL]]
@@ -69,10 +69,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif]]
 		<div id="page-container" class="[[=&cssClassName]]">
 			<div id="page">
-				<div id="page-top" class="[[if master.logoImage.file]]has-logo[[else]]no-logo[[endif]]">
+				<div id="page-top" class="[[if master.logoImage.file.currentPath]]has-logo[[else]]no-logo[[endif]]">
 					<div id="title">
 [[if isRoot]]
-[[if master.logoImage.file]]
+[[if master.logoImage.file.currentPath]]
 						<span id="logo-container"><img id="logo"
 							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
 							alt="[[=&master.headerImageDescription]]"
@@ -85,7 +85,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1h]]
 [[endif2]]
 [[else]]
-[[if master.logoImage.file]]
+[[if master.logoImage.file.currentPath]]
 						<a class="imageLink" href="[[path documentInfo.root]]"><span id="logo-container"><img id="logo"
 							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
 							alt="[[=&master.headerImageDescription]]"
