@@ -517,12 +517,12 @@ After deflating starting at byte 8, you get:
 #pragma mark -
 #pragma mark HTML template
 
-+ (NSString *)videoPreviewTemplate
+- (NSString *)videoPreviewTemplate
 {
 	static NSString *result;
 	if (!result)
 	{
-		NSString *templatePath = [[NSBundle bundleForClass:self] pathForResource:@"PreviewTemplate" ofType:@"html"];
+		NSString *templatePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"PreviewTemplate" ofType:@"html"];
 		OBASSERT(templatePath);
 		
 		result = [[NSString alloc] initWithContentsOfFile:templatePath];
@@ -531,8 +531,19 @@ After deflating starting at byte 8, you get:
 	return result;
 }
 
-- (NSString *)videoPreviewTemplate { return [[self class] videoPreviewTemplate]; }
-
+- (NSString *)videoPublishingTemplate
+{
+	static NSString *result;
+	if (!result)
+	{
+		NSString *templatePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"PublishingTemplate" ofType:@"html"];
+		OBASSERT(templatePath);
+		
+		result = [[NSString alloc] initWithContentsOfFile:templatePath];
+	}
+	
+	return result;
+}
 
 - (NSSize)pageDimensions
 {
