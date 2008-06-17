@@ -1764,6 +1764,26 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 }
 
+
+- (IBAction)openSupportForum:(id)sender
+{
+	
+#ifdef EXPIRY_TIMESTAMP
+	NSString *urlString = @"http://fogbugz.karelia.com/sandvox-beta";
+#else
+	NSString *urlString = @"http://fogbugz.karelia.com/sandvox";
+#endif
+	NSURL *url = [NSURL URLWithString:urlString];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
+}
+
+/* This is really not the feedback reporter ... it's the sandvox support forum.  We're using the old connection to the feedback reporter though. */
+
+- (IBAction)showFeedbackReporter:(id)sender
+{
+	[self openSupportForum:sender];
+}
+
 #pragma mark -
 #pragma mark Utility Methods
 

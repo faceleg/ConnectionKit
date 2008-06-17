@@ -6,6 +6,100 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
+			<string>NTBoxView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>autosaveDocument</key>
+				<string>id</string>
+				<key>clearStaleness</key>
+				<string>id</string>
+				<key>editRawHTMLInSelectedBlock</key>
+				<string>id</string>
+				<key>markAllStale</key>
+				<string>id</string>
+				<key>revertDocumentToSnapshot</key>
+				<string>id</string>
+				<key>saveDocumentSnapshot</key>
+				<string>id</string>
+				<key>setupHost</key>
+				<string>id</string>
+				<key>viewPublishedSite</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTDocument</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oNewDocAccessoryView</key>
+				<string>NSView</string>
+				<key>oNewDocHomePageTypePopup</key>
+				<string>NSPopUpButton</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSPersistentDocument</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSArrayController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObjectController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSOutlineView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTDocWebViewController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oSourceTextView</key>
+				<string>NSTextView</string>
+				<key>webView</key>
+				<string>WebView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTLinkSourceView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSDocumentController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>NSApplication</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -16,6 +110,14 @@
 			<key>ACTIONS</key>
 			<dict>
 				<key>checkForUpdates</key>
+				<string>id</string>
+				<key>crash</key>
+				<string>id</string>
+				<key>failOBASSERT</key>
+				<string>id</string>
+				<key>generateException</key>
+				<string>id</string>
+				<key>hang</key>
 				<string>id</string>
 				<key>reportLatestCrash</key>
 				<string>id</string>
@@ -53,6 +155,150 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>addCollection</key>
+				<string>id</string>
+				<key>addPage</key>
+				<string>id</string>
+				<key>addPagelet</key>
+				<string>id</string>
+				<key>clearLinkDestination</key>
+				<string>id</string>
+				<key>copy</key>
+				<string>id</string>
+				<key>copyPagelets</key>
+				<string>id</string>
+				<key>copyPages</key>
+				<string>id</string>
+				<key>copyViaContextualMenu</key>
+				<string>id</string>
+				<key>cut</key>
+				<string>id</string>
+				<key>cutPagelets</key>
+				<string>id</string>
+				<key>cutPages</key>
+				<string>id</string>
+				<key>cutViaContextualMenu</key>
+				<string>id</string>
+				<key>deletePagelets</key>
+				<string>id</string>
+				<key>deletePages</key>
+				<string>id</string>
+				<key>deleteViaContextualMenu</key>
+				<string>id</string>
+				<key>duplicate</key>
+				<string>id</string>
+				<key>duplicatePagelets</key>
+				<string>id</string>
+				<key>duplicatePages</key>
+				<string>id</string>
+				<key>duplicateViaContextualMenu</key>
+				<string>id</string>
+				<key>finishLinkPanel</key>
+				<string>id</string>
+				<key>group</key>
+				<string>id</string>
+				<key>paste</key>
+				<string>id</string>
+				<key>pasteLink</key>
+				<string>id</string>
+				<key>pastePagelets</key>
+				<string>id</string>
+				<key>pastePages</key>
+				<string>id</string>
+				<key>pasteViaContextualMenu</key>
+				<string>id</string>
+				<key>reloadOutline</key>
+				<string>id</string>
+				<key>remove</key>
+				<string>id</string>
+				<key>selectWebViewViewType</key>
+				<string>id</string>
+				<key>showLinkPanel</key>
+				<string>id</string>
+				<key>toggleDesignsShown</key>
+				<string>id</string>
+				<key>updateWebView</key>
+				<string>id</string>
+				<key>validateSource</key>
+				<string>id</string>
+				<key>windowHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTDocWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oCollectionIndexExtensionButton</key>
+				<string>KSPopUpButton</string>
+				<key>oDesignBackButton</key>
+				<string>NSButton</string>
+				<key>oDesignCloseButton</key>
+				<string>NSButton</string>
+				<key>oDesignForwardButton</key>
+				<string>NSButton</string>
+				<key>oDesignsSplitPane</key>
+				<string>RBSplitSubview</string>
+				<key>oDesignsSplitView</key>
+				<string>RBSplitView</string>
+				<key>oDesignsView</key>
+				<string>KTDesignPickerView</string>
+				<key>oDetailPanel</key>
+				<string>NTBoxView</string>
+				<key>oDocumentController</key>
+				<string>NSObjectController</string>
+				<key>oFileExtensionPopup</key>
+				<string>KSPopUpButton</string>
+				<key>oKeywordsField</key>
+				<string>NSTokenField</string>
+				<key>oLinkControlsBox</key>
+				<string>RoundedBox</string>
+				<key>oLinkDestinationField</key>
+				<string>NSTextField</string>
+				<key>oLinkLocalPageField</key>
+				<string>NSTextField</string>
+				<key>oLinkOpenInNewWindowSwitch</key>
+				<string>NSButton</string>
+				<key>oLinkPanel</key>
+				<string>KSBorderlessWindow</string>
+				<key>oLinkView</key>
+				<string>KTLinkSourceView</string>
+				<key>oMessageTextField</key>
+				<string>NSTextField</string>
+				<key>oMessageWindow</key>
+				<string>KSBorderlessWindow</string>
+				<key>oModalImage</key>
+				<string>NSImageView</string>
+				<key>oModalPanel</key>
+				<string>NSPanel</string>
+				<key>oModalProgress</key>
+				<string>NSProgressIndicator</string>
+				<key>oModalStatus</key>
+				<string>NSTextField</string>
+				<key>oPageNameField</key>
+				<string>NSTextField</string>
+				<key>oSidebarSplitView</key>
+				<string>RBSplitView</string>
+				<key>oSplitDragView</key>
+				<string>NSImageView</string>
+				<key>oStatusBar</key>
+				<string>NTBoxView</string>
+				<key>oStatusBarField</key>
+				<string>NSTextField</string>
+				<key>oWebView</key>
+				<string>WebView</string>
+				<key>siteOutlineController</key>
+				<string>KTDocSiteOutlineController</string>
+				<key>webViewController</key>
+				<string>KTDocWebViewController</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
 				<key>imagePickerCancelled</key>
 				<string>id</string>
 				<key>imagePickerSet</key>
@@ -62,6 +308,19 @@
 			<string>NSObject</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSPopUpButton</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>mySelectedObject</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSPopUpButton</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -98,6 +357,150 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>RoundedBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSBox</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTCodeInjectionSplitView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>RBSplitView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>doCancel</key>
+				<string>id</string>
+				<key>doOK</key>
+				<string>id</string>
+				<key>goPrivacyStatement</key>
+				<string>id</string>
+				<key>showDialog</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KSJoinListController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oEmailComboBox</key>
+				<string>KSEmailAddressComboBox</string>
+				<key>oPrivacyButton</key>
+				<string>NSButton</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KSSingletonWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSBorderlessWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTCodeInjectionController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oBodyEndTextView</key>
+				<string>KSPlaceholderTextView</string>
+				<key>oBodySplitView</key>
+				<string>KTCodeInjectionSplitView</string>
+				<key>oBodyStartTextView</key>
+				<string>KSPlaceholderTextView</string>
+				<key>oBodyTagTextField</key>
+				<string>NSTextField</string>
+				<key>oCodeInjectionDescriptionLabel</key>
+				<string>NSTextField</string>
+				<key>oEarlyHeadTextView</key>
+				<string>KSPlaceholderTextView</string>
+				<key>oHeadSplitView</key>
+				<string>KTCodeInjectionSplitView</string>
+				<key>oHeadTextView</key>
+				<string>KSPlaceholderTextView</string>
+				<key>oPreludeTextView</key>
+				<string>KSPlaceholderTextView</string>
+				<key>oTabView</key>
+				<string>NSTabView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KSSingletonWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSEmailAddressComboBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSComboBox</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancel</key>
+				<string>id</string>
+				<key>continueOpening</key>
+				<string>id</string>
+				<key>findSelectedMediaFile</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTMissingMediaController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oMediaArrayController</key>
+				<string>NSArrayController</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSApplication</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>WebView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSManagedObjectContext</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -299,11 +702,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KSApplication</string>
+			<string>KSPlaceholderTextView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSApplication</string>
+			<string>NSTextView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSSingletonWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -320,6 +731,36 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSTextView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSText</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>nextPage</key>
+				<string>id</string>
+				<key>prevPage</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTDesignPickerView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oNextButton</key>
+				<string>NSButton</string>
+				<key>oPrevButton</key>
+				<string>NSButton</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -451,6 +892,19 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTDocSiteOutlineController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>siteOutline</key>
+				<string>NSOutlineView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSArrayController</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
