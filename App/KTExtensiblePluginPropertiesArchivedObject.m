@@ -11,13 +11,22 @@
 
 @implementation KTExtensiblePluginPropertiesArchivedObject
 
+- (id)initWithClassName:(NSString *)className entityName:(NSString *)entityName ID:(NSString *)ID
+{
+    [super init];
+    
+    myClassName = [className copy];
+	myEntityName = [entityName copy];
+	myObjectIdentifier = [ID copy];
+	
+	return self;
+}
+
 - (id)initWithObject:(NSManagedObject <KTExtensiblePluginPropertiesArchiving> *)anObject
 {
-	[super init];
-	
-	myClassName = [NSStringFromClass([anObject class]) copy];
-	myEntityName = [[[anObject entity] name] copy];
-	myObjectIdentifier = [[anObject archiveIdentifier] copy];
+	[self initWithClassName:NSStringFromClass([anObject class])
+                 entityName:[[anObject entity] name]
+                         ID:[anObject archiveIdentifier]];
 	
 	return self;
 }

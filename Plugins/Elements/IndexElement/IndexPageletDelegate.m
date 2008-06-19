@@ -87,7 +87,7 @@
 // When changing the collection, change pagelet title HTML to match
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
-	if ([key isEqualToString:@"indexedPage"])
+	if ([key isEqualToString:@"indexedPage"] && [value isKindOfClass:[KTPage class]])   // Sanity check for imports
 	{
 		if (!value)
 		{
@@ -147,6 +147,43 @@
 			[[self delegateOwner] setValue:target forKey:@"indexedPage"];
 		}
 	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark Data Migrator
+
+@interface NSObject (IndexPageletDataMigrator)
+- (id)initWithClassName:(NSString *)className entityName:(NSString *)entityName ID:(NSString *)ID;
+@end
+
+
+@implementation IndexPageletDelegate (DataMigration)
+
+/*  We need to manually import collection IDs to the new format. This is a little hacky using (Sandvox's) private API
+ */
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    
+    NSString *collectionID = [oldPluginProperties objectForKey:@"collectionID"];
+    id archivedObject = nil;
+    if (collectionID)
+    {
+        Class archiveClass = NSClassFromString(@"KTExtensiblePluginPropertiesArchivedObject");
+        archivedObject = [[archiveClass alloc] initWithClassName:@"KTPage" entityName:@"Page" ID:collectionID];
+    }
+    
+    [[self delegateOwner] setValue:archivedObject forKey:@"indexedPage"];
+    [archivedObject release];
+         
+    
+    *error = nil;
+    return YES;
 }
 
 @end
