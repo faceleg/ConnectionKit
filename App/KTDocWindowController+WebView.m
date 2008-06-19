@@ -1219,12 +1219,11 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange
 {
-	// find the common ancestor
+	// Find all the links in the selection
 	DOMNode *ancestor = [selectedRange commonAncestorContainer];
-	// examine its children for anchor elements
 	NSMutableArray *anchors = [NSMutableArray arrayWithArray:[ancestor anchorElements]];
-	// if the ancestor has no anchors, see if its parent is an anchor
-	if ( (nil != anchors) && ([anchors count] == 0) )
+	
+	if ([anchors count] == 0)     // For small selections, fallback to see if the parent is an anchor
 	{
 		DOMNode *ancestorParent = [ancestor parentNode];
 		if ( [ancestorParent isKindOfClass:[DOMHTMLAnchorElement class]] )
@@ -1232,8 +1231,10 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			[anchors addObject:ancestorParent];
 		}
 	}
-	// if more than 1, you have a contextual menu problem, there should never be more than 1
-	if ( (nil != anchors) && ([anchors count] == 1) )
+    
+    
+	// If more than 1 link is selected, you have a contextual menu problem, there should never be more than 1
+	if ([anchors count] == 1)
 	{
 		// have the anchor's parent replace the anchor with the anchor's child
 		DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
@@ -1401,7 +1402,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 }
 
-- (IBAction) clearLinkDestination:(id)sender;
+- (IBAction)clearLinkDestination:(id)sender;
 {
 	[oLinkLocalPageField setStringValue:@""];
 	[oLinkDestinationField setStringValue:@""];
@@ -1461,10 +1462,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				 || [value isEqualToString:@"mailto:"] )
 			{
 				// empty field, remove the link
-				if ( nil != [info objectForKey:WebElementLinkURLKey] )
-				{
-					undoActionName = [self removeLinkWithDOMRange:[info objectForKey:KTSelectedDOMRangeKey]];
-				}
+                undoActionName = [self removeLinkWithDOMRange:[info objectForKey:KTSelectedDOMRangeKey]];
 			}
 			else
 			{
