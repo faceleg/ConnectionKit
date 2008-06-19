@@ -1121,17 +1121,23 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	
 	// populate with context information
 	NSDictionary *info = [[self contextElementInformation] retain];
-	if ( nil != info )
+	if (info)
 	{
 		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
 		DOMRange *selectedRange = [oWebView selectedDOMRange];
 		
-		// set oLinkDestinationField
-		NSURL *URL = [info objectForKey:WebElementLinkURLKey];
+        
+		// Hunt down the anchor to edit
+		DOMNode *possibleAnchor = [selectedRange commonAncestorContainer];
+        if (![possibleAnchor isKindOfClass:[DOMHTMLAnchorElement class]])
+        {
+            possibleAnchor = [possibleAnchor parentNode];
+        }
+        
 		
-		if ( nil != URL )
+		if ([possibleAnchor isKindOfClass:[DOMHTMLAnchorElement class]] && [(DOMHTMLAnchorElement *)possibleAnchor href])
 		{
-			theLinkString = [URL absoluteString];
+			theLinkString = [(DOMHTMLAnchorElement *)possibleAnchor href];
 			if ([theLinkString hasPrefix:@"applewebdata:"])
 			{
 				theLinkString = [theLinkString lastPathComponent];
