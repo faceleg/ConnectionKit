@@ -36,14 +36,15 @@
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
 #import "NSURL+KTExtensions.h"
 
 #import "DOMNode+KTExtensions.h"
-
 #import "DOM+KTWebViewController.h"
-#import "NSString-Utilities.h"
+#import "WebView+Karelia.h"
+
 
 #import "RoundedBox.h"
 
@@ -1242,8 +1243,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		if ( [anchor hasChildNodes] )
 		{
 			DOMNode *child = [anchor firstChild];
-			
-			[[DOMNode class] node:anchorParent replaceChild:child :anchor];
+			[[[self webViewController] webView] replaceNode:anchor withNode:child];
 		}
 		else
 		{
@@ -1292,7 +1292,8 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow
 {
-	NSUndoManager *undoManager = [[[self webViewController] webView] undoManager];
+	WebView *webView = [[self webViewController] webView];
+    NSUndoManager *undoManager = [webView undoManager];
 	
 	// we seem to need retains here to prevent zombies after manipulating the DOM
 	// pull out the selection and its nodes
@@ -1339,7 +1340,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	
 	// how do we implement -surroundContents so that it is undoable?
 	// here's what surroundContents does in C++
-	//  extactContents into a fragment
+	//  extractContents into a fragment
 	//  inserts new parent
 	//  appends fragment to new parent
 	//  selects new parent
@@ -1362,9 +1363,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	
 	// our undo strategy: ancestorParentsParent will swap the clonedParent for the ancestorParent
 	// (the underlying NSInvocation this creates should retain the nodes passed in)
-	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:[ancestorParent parentNode] 
-													   replaceChild:clonedParent 
-																   :ancestorParent];
+	[[undoManager prepareWithInvocationTarget:webView] replaceNode:ancestorParent withNode:clonedParent];
 	
 	[anchor release];
 	[clonedParent release];

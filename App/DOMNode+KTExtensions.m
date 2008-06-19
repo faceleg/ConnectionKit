@@ -18,6 +18,7 @@
 
 #import <WebKit/WebKit.h>
 #import "DOMNodeList+KTExtensions.h"
+#import "WebView+Karelia.h"
 
 
 static NSSet *sTagsWithNewlineOnOpen  = nil;
@@ -646,9 +647,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		[element appendChild:p];
 	}
 		
-	[[DOMNode class] node:[self parentNode] replaceChild:element :self];
+    WebView *webView = [[doc webFrame] webView];
+	[webView replaceNode:self withNode:element];
 
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
+	NSUndoManager *undoManager = [webView undoManager];
 	[undoManager setActionName:NSLocalizedString(@"Insert Text","ActionName: Insert Text")];
 	return element;	// new node
 }
@@ -779,17 +781,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	}
 	
 	return [parent removeChild:child];
-}
-
-+ (DOMNode *)node:(DOMNode *)parent replaceChild:(DOMNode *)newChild :(DOMNode *)oldChild
-{
-	DOMDocument *doc = [parent ownerDocument];
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
-	
-	// to undo replaceChild::, we swap the oldChild with the newChild
-	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent replaceChild:oldChild :newChild];
-	
-	return [parent replaceChild:newChild :oldChild];
 }
 
 @end

@@ -9,6 +9,8 @@
 #import "DOM+KTWebViewController.h"
 
 #import "DOMNode+KTExtensions.h"
+#import "WebView+Karelia.h"
+
 #import "NSString+Karelia.h"
 
 
@@ -54,9 +56,10 @@ To find out of it's editable, try
 	DOMDocument *doc = [self ownerDocument];
 	DOMText *text = [doc createTextNode:aText];
 	
-	[[DOMNode class] node:[self parentNode] replaceChild:text :self];
+    WebView *webView = [[doc webFrame] webView];
+    [webView replaceNode:self withNode:text];
 	
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
+	NSUndoManager *undoManager = [webView undoManager];
 	[undoManager setActionName:NSLocalizedString(@"Insert Text","ActionName: Insert Text")];
 }
 

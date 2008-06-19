@@ -99,7 +99,6 @@
 
 @interface DOMNode ( KTUndo )
 + (DOMNode *)node:(DOMNode *)parent insertBefore:(DOMNode *)newChild :(DOMNode *)refChild;
-+ (DOMNode *)node:(DOMNode *)parent replaceChild:(DOMNode *)newChild :(DOMNode *)oldChild;
 + (DOMNode *)node:(DOMNode *)parent appendChild:(DOMNode *)child;
 + (DOMNode *)node:(DOMNode *)parent removeChild:(DOMNode *)child;
 @end
