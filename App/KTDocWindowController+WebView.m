@@ -19,7 +19,6 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
-#import "KTKeyPathURLProtocol.h"
 #import "KTLinkSourceView.h"
 #import "KTManagedObjectContext.h"
 #import "KTMaster.h"

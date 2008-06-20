@@ -28,7 +28,6 @@
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 #import "KTInfoWindowController.h"
-#import "KTKeypathURLProtocol.h"
 #import "KTPage.h"
 
 #import "NSApplication+Karelia.h"
@@ -262,31 +261,6 @@
 	}
 	[buf appendString:@"</urlset>\n"];
 	return buf;
-}
-
-/*!	Return path appropriate for inclusion in page; changes whether published or previewing
-
-	This is the path RELATIVE TO THE DESIGN'S MAIN.CSS FILE!
-*/
-- (NSString *)pathForReplacementImageName:(NSString *)anImageName designBundleIdentifier:(NSString *)aDesignBundleIdentifier
-{
-	NSString *result = nil;
-	
-	//switch ((int)[self publishingMode])
-	switch ((int)[[self windowController] publishingMode])
-	{
-		case kGeneratingPreview:
-		{
-			result = [[KTKeypathURLProtocol URLForDocument:self keyPath:anImageName] absoluteString];
-			break;
-		}
-		default:
-		{
-			result = [kKTImageReplacementFolder stringByAppendingPathComponent:anImageName];
-			break;
-		}
-	}
-	return result;
 }
 
 /*!	Gets path to design's placeholder image, or nil

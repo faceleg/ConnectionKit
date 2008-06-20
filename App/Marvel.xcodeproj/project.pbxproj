@@ -456,7 +456,6 @@
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
 		3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2707DFC0AA00DE4994 /* KTWebView.m */; };
-		3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
@@ -477,7 +476,6 @@
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
 		3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */; };
 		3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD6B0EE0BFA380600B9287E /* ThirdParty.h */; settings = {ATTRIBUTES = (); }; };
-		3CDECA8F08413B42008CA93F /* KTURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */; };
 		3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
@@ -3210,12 +3208,6 @@
 			children = (
 				7947986F0A7DAE0900425FB8 /* KTThreadedURLLoader.h */,
 				794798700A7DAE0900425FB8 /* KTThreadedURLLoader.m */,
-				3C202DAA07DFC4DD00DE4994 /* KTURLProtocol.h */,
-				3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */,
-				CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */,
-				CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */,
-				3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */,
-				3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */,
 				CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */,
 				CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */,
 			);
@@ -3297,6 +3289,12 @@
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3C202DAA07DFC4DD00DE4994 /* KTURLProtocol.h */,
+				3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */,
+				CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */,
+				CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */,
+				3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */,
+				3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */,
 				27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */,
 				3CF941D00D623BEA00B1C83D /* KTCachedImage.h */,
 				3CF941D20D623BEE00B1C83D /* KTCachedImage.m */,
@@ -6191,8 +6189,6 @@
 				CEB3510D08298A1D0073A7A4 /* KTDocument+Lookup.m in Sources */,
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */,
-				3C6FB8F70831364000774785 /* KTKeypathURLProtocol.m in Sources */,
-				3CDECA8F08413B42008CA93F /* KTURLProtocol.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,
 				CE16A3D9087319720006F80B /* KTStackView.m in Sources */,
 				CE6FFB92088EF02500AD0154 /* KTDesignPickerView.m in Sources */,
