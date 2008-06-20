@@ -521,6 +521,18 @@
 #pragma mark -
 #pragma mark Public Functions
 
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    BOOL result = [super automaticallyNotifiesObserversForKey:key];
+    
+    if ([key isEqualToString:@"windowController"])
+    {
+        result = NO;
+    }
+    
+    return result;
+}
+
 /*! return the single KTDocWindowController associated with this document */
 - (KTDocWindowController *)windowController
 {
