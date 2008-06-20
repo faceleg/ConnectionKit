@@ -37,15 +37,18 @@
 		if (result)
 		{
 			KTScaledImageProperties *oldPropertiesObject = [self valueForKey:@"generatedProperties"];
-			KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
-			
-			NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
-			OBASSERT(newProperties);
-			NSDictionary *oldProperties = [oldPropertiesObject dictionaryWithValuesForKeys:[newProperties allKeys]];
-			
-			if ([newProperties isEqualToDictionary:oldProperties]) {
-				fileNeedsGenerating = NO;
-			}
+            if (oldPropertiesObject)
+            {
+                KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
+                
+                NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
+                OBASSERT(newProperties);
+                NSDictionary *oldProperties = [oldPropertiesObject dictionaryWithValuesForKeys:[newProperties allKeys]];
+                
+                if ([newProperties isEqualToDictionary:oldProperties]) {
+                    fileNeedsGenerating = NO;
+                }
+            }
 		}
 		
 		
