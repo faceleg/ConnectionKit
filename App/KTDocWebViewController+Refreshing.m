@@ -109,7 +109,7 @@
 		KTParsedWebViewComponent *aComponent;
 		while (aComponent = [componentsEnumerator nextObject])
 		{
-			[self setWebViewComponentNeedsReload:aComponent];
+			[self performSelector:@selector(setWebViewComponentNeedsReload:) withObject:aComponent afterDelay:0.0];
 		}
 	}
 }
