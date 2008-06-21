@@ -697,7 +697,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	unsigned int result = NSNotFound;
 	if (myForEachIndexes)
 	{
-		result = [myForEachIndexes indexAtEndPosition];
+		result = [myForEachIndexes lastIndex];
 	}
 	return result;
 }
@@ -709,7 +709,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	unsigned int result = NSNotFound;
 	if (myForEachCounts)
 	{
-		result = [myForEachCounts indexAtEndPosition];
+		result = [myForEachCounts lastIndex];
 	}
 	return result;
 }
