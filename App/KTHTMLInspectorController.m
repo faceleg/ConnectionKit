@@ -45,15 +45,6 @@
 @implementation KTHTMLInspectorController
 
 
-// TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
-- (NSString *)intersectsSet:(id)aSet
-{
-	[NSException raise:NSInternalInconsistencyException format:@"calling intersectsSet:%@ on %@", aSet, self];
-	return @"";
-}
-
-
-
 /* -----------------------------------------------------------------------------
 	init:
 		Constructor that inits mySourceCode member variable as a flag. It's
