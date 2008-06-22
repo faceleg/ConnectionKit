@@ -279,9 +279,11 @@ NSString *PCSampleImageKey = @"sampleImage";
 			}
 			else
 			{
-				[aSet addObject:[b pathForResource:[format stringByDeletingPathExtension]
-											ofType:[format pathExtension] 
-									   inDirectory:@"digits"]];
+				NSString *resource = [b pathForResource:[format stringByDeletingPathExtension]
+                                                 ofType:[format pathExtension] 
+                                            inDirectory:@"digits"];
+                OBASSERT(resource);
+                [aSet addObject:resource];
 			}
 		}
 	}

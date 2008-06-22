@@ -351,7 +351,7 @@
 - (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
 {
 	NSBundle *bundle = [[self plugin] bundle];
-	NSString *resourcePath = [bundle resourcePath];
+	NSString *resourcePath = [bundle resourcePath];     OBASSERT(resourcePath);
 	NSArray *resourcesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginResourcesNeeded"];
 	NSEnumerator *theEnum = [resourcesNeeded objectEnumerator];
 	NSString *fileName;
@@ -359,7 +359,6 @@
 	while (nil != (fileName = [theEnum nextObject]) )
 	{
 		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-		OFF((@"%@ adding resource:%@", [self class], path));
 		[aSet addObject:path];
 	}
 }

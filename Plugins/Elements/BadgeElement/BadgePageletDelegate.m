@@ -178,6 +178,7 @@ static NSArray *sAltStrings = nil;
 	if (nil != badgeName)
 	{
 		NSString *path = [[self bundle] pathForImageResource:badgeName];
+        OBASSERT(path);
 		[aSet addObject:path];
 	}
 }
