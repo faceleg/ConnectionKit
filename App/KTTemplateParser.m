@@ -151,11 +151,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 /*	Creates a new parser with the same basic properties as ourself, and the specifed template/componet
  *	IMPORTANT:	Follows the standard "new rule" so, the return object is NOT autoreleased.
  */
-- (id)newChildParserWithTemplate:(NSString *)templateHTML component:(id)component
+- (id)newChildParserWithTemplate:(NSString *)template component:(id)component
 {
-	OBPRECONDITION(templateHTML);
+	OBPRECONDITION(template);
+    OBPRECONDITION(component);
+    
 	
-	KTTemplateParser *result = [[[self class] alloc] initWithTemplate:templateHTML component:component];
+	KTTemplateParser *result = [[[self class] alloc] initWithTemplate:template component:component];
 	
 	[result setParentParser:self];
 	[result setDelegate:[self delegate]];

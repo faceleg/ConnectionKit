@@ -40,12 +40,18 @@
 	if (parameters && [parameters count] == 2)
 	{
 		KTAbstractIndex *index = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
-		NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
-		
-		KTHTMLParser *parser = [self newChildParserWithTemplate:[index templateHTML] component:(id)index];
-		[parser overrideKey:@"pages" withValue:indexPages];
-		result = [parser parseTemplate];
-		[parser release];
+		NSString *indexTemplate = [index templateHTML];
+        
+        if (indexTemplate)
+        {
+            KTHTMLParser *parser = [self newChildParserWithTemplate:indexTemplate component:index];
+            
+            NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
+            [parser overrideKey:@"pages" withValue:indexPages];
+            
+            result = [parser parseTemplate];
+            [parser release];
+        }
 	}
 	else
 	{
