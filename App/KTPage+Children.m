@@ -466,7 +466,11 @@
             }
             else
             {
-                OBASSERT_NOT_REACHED("parent-child relationship is not valid in both directions");
+                OBASSERT_NOT_REACHED(([[NSString stringWithFormat:
+										@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d",
+										self,
+										[self isDeleted]]
+									   UTF8String]));
             }
         }
 		else
