@@ -167,11 +167,6 @@
 
 - (int)ordering { return [self wrappedIntegerForKey:@"ordering"]; }
 
-- (void)setOrdering:(int)ordering
-{
-	[self setWrappedInteger:ordering forKey:@"ordering"];
-}
-
 - (BOOL)shouldPropagate { return [self wrappedBoolForKey:@"shouldPropagate"]; }
 
 - (void)setShouldPropagate:(BOOL)propagate

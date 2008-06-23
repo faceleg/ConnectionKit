@@ -54,7 +54,6 @@ typedef enum {
 #pragma mark Basic accessors
 
 - (int)ordering;
-- (void)setOrdering:(int)ordering;
 
 - (BOOL)shouldPropagate;
 - (void)setShouldPropagate:(BOOL)propagate;

@@ -422,21 +422,18 @@
  */
 + (void)updatePageletOrderingsFromArray:(NSArray *)pagelets
 {
+	[pagelets makeObjectsPerformSelector:@selector(willChangeValueForKey:) withObject:@"ordering"];
+	
 	unsigned i;
 	for (i = 0; i < [pagelets count]; i++)
 	{
 		KTPagelet *pagelet = [pagelets objectAtIndex:i];
 		if ([pagelet ordering] != i) {
-			[pagelet setInteger:i forKey:@"ordering"];
+			[pagelet setPrimitiveValue:[NSNumber numberWithUnsignedInt:i] forKey:@"ordering"];
 		}
 	}
 	
-	// It's messy and complicated but we're doing the process twice in order to make sure -canMoveUp etc. are correct
-	for (i = 0; i < [pagelets count]; i++)
-	{
-		KTPagelet *pagelet = [pagelets objectAtIndex:i];
-		[pagelet setOrdering:i];
-	}
+	[pagelets makeObjectsPerformSelector:@selector(didChangeValueForKey:) withObject:@"ordering"];
 }
 
 @end
