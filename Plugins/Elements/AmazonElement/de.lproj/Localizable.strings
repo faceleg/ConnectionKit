@@ -1,68 +1,68 @@
 ﻿/* alert message */
-"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found." = "Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found.";
+"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found." = "Amazon Listen sind normalerweise landesspezifisch. Sollten Sie den Shop wechseln, kann ihre Liste nicht länger gefunden werden.";
 
 /* button text */
 "Cancel" = "Abbrechen";
 
 /* button text */
-"Change Store" = "Change Store";
+"Change Store" = "Shop wechseln";
 
 /* alert title */
-"Change to the %@ Amazon store?" = "Change to the %@ Amazon store?";
+"Change to the %@ Amazon store?" = "Zum %@ Amazon Shop wechseln?";
 
 /* button */
 "Close" = "Schließen";
 
 /* Appears in an empty tableview */
-"Drag Amazon products here from your web browser" = "Drag Amazon products here from your web browser";
+"Drag Amazon products here from your web browser" = "Bewegen Sie Amazon Produkte aus ihrem Webbrowser hierher";
 
 /* table cell */
-"Loading product data\\U2026" = "Loading product data…";
+"Loading product data\\U2026" = "Lade Produktdaten...";
 
 /* table cell */
-"No Internet connection" = "No Internet connection";
+"No Internet connection" = "Keine Internet-Verbindung";
 
 /* error message in tableview */
-"No list with that ID was found" = "No list with that ID was found";
+"No list with that ID was found" = "Eine Liste mit dieser ID wurde nicht gefunden";
 
 /* table cell */
-"No matching Amazon product found" = "No matching Amazon product found";
+"No matching Amazon product found" = "Kein passendes Amazon Produkt gefunden";
 
 /* alert message */
-"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found." = "Not all products are available in every country. By changing the store, some of the products in your list may no longer be found.";
+"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found." = "Nicht alle Produkte sind in jedem Land verfügbar. Mit dem Wechsel des Shops können einige der Produkte auf ihrer Liste nicht mehr gefunden werden.";
 
 /* String_On_Page_Template */
-"Please add Amazon products to this list using the Inspector." = "Please add Amazon products to this list using the Inspector.";
+"Please add Amazon products to this list using the Inspector." = "Bitte fügen Sie in den Informationen Amazon Produkte zu dieser Liste hinzu.";
 
 /* alert text */
-"Please click the purple help button to view instructions on how to find the public URL of an Amazon list." = "Please click the purple help button to view instructions on how to find the public URL of an Amazon list.";
+"Please click the purple help button to view instructions on how to find the public URL of an Amazon list." = "Bitte klicken Sie auf den violetten Hilfe Knopf, um zu erfahren, wie man die öffentliche URL zu einer Amazon Liste findet.";
 
 /* Table placeholder text */
-"Please enter the ID or public URL of an Amazon list above" = "Please enter the ID or public URL of an Amazon list above";
+"Please enter the ID or public URL of an Amazon list above" = "Bitte geben Sie die ID oder öffentliche URL einer Amazon Liste oben ein";
 
 /* String_On_Page_Template */
-"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector." = "Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector.";
+"Please specify an Amazon list (e.g. a wish list or listmania) to display using the Inspector." = "Bitte geben Sie die anzuzeigende Amazon Liste (z.B. Wunschzettel oder Listmania) in den Informationen ein.";
 
 /* table cell */
-"Please specify an Amazon product to display" = "Please specify an Amazon product to display";
+"Please specify an Amazon product to display" = "Bitte geben Sie ein Amazon Produkt zum Anzeigen ein";
 
 /* Tooltip text */
-"The desired quantity of this product has been received." = "The desired quantity of this product has been received.";
+"The desired quantity of this product has been received." = "Die gewünschte Anzahl dieses Produktes ist erreicht.";
 
 /* error message in tableview */
-"The URL entered does not appear to be a public Amazon list URL" = "The URL entered does not appear to be a public Amazon list URL";
+"The URL entered does not appear to be a public Amazon list URL" = "Die eingegeben URL scheint keine öffentliche Amazon Listen URL zu sein";
 
 /* alert title */
-"The URL entered is not the public URL of an Amazon list." = "The URL entered is not the public URL of an Amazon list.";
+"The URL entered is not the public URL of an Amazon list." = "Die eingegeben URL ist keine öffentliche URL einer Amazon Liste.";
 
 /* error message in tableview */
-"There was an error loading the list." = "There was an error loading the list.";
+"There was an error loading the list." = "Es ist ein Fehler beim Laden der Liste aufgetreten.";
 
 /* table cell */
-"There was an error loading the product" = "There was an error loading the product";
+"There was an error loading the product" = "Es ist ein Fehler beim Laden dieses Produktes aufgetreten.";
 
 /* Placeholder text */
-"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences." = "This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.";
+"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences." = "Dies ist ein Platzhalter für ein Amazon Produkt. Es wird angezeigt, sobald Sie veröffentlicht haben oder falls Sie „Live“ Datenanzeige in den Einstellungen aktiviert haben.";
 
 /* Placeholder text */
-"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences." = "This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.";
+"This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences." = "Dies ist ein Platzhalter; ihre Amazon Liste wird hier angezeigt, sobald Sie veröffentlicht haben oder falls Sie „Live“ Datenanzeige in den Einstellungen aktiviert haben.";

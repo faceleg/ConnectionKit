@@ -2,14 +2,52 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>IBDocumentLocation</key>
+	<string>587 58 475 284 0 0 1920 1178 </string>
+	<key>IBEditorPositions</key>
+	<dict>
+		<key>1265</key>
+		<string>850 835 270 64 0 0 1920 1178 </string>
+		<key>1270</key>
+		<string>850 787 320 128 0 0 1920 1178 </string>
+		<key>129</key>
+		<string>999 719 320 212 0 0 1920 1178 </string>
+		<key>165</key>
+		<string>849 851 272 43 0 0 1920 1178 </string>
+		<key>168</key>
+		<string>850 637 370 328 0 0 1920 1178 </string>
+		<key>169</key>
+		<string>850 840 320 58 0 0 1920 1178 </string>
+		<key>258</key>
+		<string>850 555 320 437 0 0 1920 1178 </string>
+		<key>356</key>
+		<string>850 837 270 62 0 0 1920 1178 </string>
+		<key>821</key>
+		<string>851 825 268 77 0 0 1920 1178 </string>
+		<key>913</key>
+		<string>850 638 328 321 0 0 1920 1178 </string>
+		<key>94</key>
+		<string>850 702 270 242 0 0 1920 1178 </string>
+	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>356</integer>
+		<integer>165</integer>
+		<integer>94</integer>
+		<integer>171</integer>
+		<integer>129</integer>
+		<integer>913</integer>
+		<integer>168</integer>
+		<integer>821</integer>
+	</array>
 	<key>IBSystem Version</key>
-	<string>9C7010</string>
+	<string>9D34</string>
 	<key>targetFramework</key>
 	<string>IBCocoaFramework</string>
 </dict>

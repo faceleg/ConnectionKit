@@ -217,22 +217,22 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>70</integer>
+				<integer>68</integer>
 			</dict>
 			<key>NSClassName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>68</integer>
+				<integer>66</integer>
 			</dict>
 			<key>NSExtension</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>69</integer>
+				<integer>67</integer>
 			</dict>
 			<key>NSFrameSize</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>67</integer>
+				<integer>65</integer>
 			</dict>
 			<key>NSNextResponder</key>
 			<dict>
@@ -242,12 +242,12 @@
 			<key>NSSubviews</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>66</integer>
+				<integer>64</integer>
 			</dict>
 			<key>NSvFlags</key>
 			<integer>2</integer>
 		</dict>
-		<string>{{165, 5}, {80, 28}}</string>
+		<string>{{201, 6}, {94, 28}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -297,7 +297,7 @@
 				<integer>15</integer>
 			</dict>
 		</dict>
-		<string>Auswählen…</string>
+		<string>Auswählen...</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -338,7 +338,7 @@
 			<key>NSSize</key>
 			<real>11</real>
 			<key>NSfFlags</key>
-			<integer>16</integer>
+			<integer>3100</integer>
 		</dict>
 		<string></string>
 		<dict>
@@ -364,6 +364,7 @@
 			<key>$classes</key>
 			<array>
 				<string>NSButtonCell</string>
+				<string>%NSButtonCell</string>
 				<string>NSActionCell</string>
 				<string>NSCell</string>
 				<string>NSObject</string>
@@ -459,7 +460,7 @@
 		</dict>
 		<string>KSPathInfoField</string>
 		<string>NSTextField</string>
-		<string>{{10, 10}, {152, 21}}</string>
+		<string>{{10, 10}, {188, 21}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -498,7 +499,7 @@
 				<integer>40</integer>
 			</dict>
 		</dict>
-		<string>Some file</string>
+		<string>Eine Datei</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -766,11 +767,11 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>27</integer>
+					<integer>11</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>64</integer>
+					<integer>27</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -778,7 +779,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>69</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -786,19 +787,6 @@
 				</dict>
 			</array>
 		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>4</integer>
-			</dict>
-			<key>NSClassName</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>65</integer>
-			</dict>
-		</dict>
-		<string>NSApplication</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -817,7 +805,7 @@
 				</dict>
 			</array>
 		</dict>
-		<string>{250, 39}</string>
+		<string>{300, 39}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -840,6 +828,19 @@
 			<string>NSCustomView</string>
 		</dict>
 		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>4</integer>
+			</dict>
+			<key>NSClassName</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>70</integer>
+			</dict>
+		</dict>
+		<string>NSApplication</string>
+		<dict>
 			<key>$classes</key>
 			<array>
 				<string>NSArray</string>
@@ -858,11 +859,11 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
+					<integer>11</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -888,15 +889,15 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
+					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>10</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>64</integer>
+					<integer>27</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -904,11 +905,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>69</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>27</integer>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -946,12 +947,12 @@
 				</dict>
 			</array>
 		</dict>
-		<string>Push Button (Choose...)</string>
-		<string>File's Owner</string>
-		<string>Application</string>
-		<string>Page Controller</string>
 		<string>View</string>
+		<string>Push Button (Choose...)</string>
 		<string>Path Info Field (Some file)</string>
+		<string>Page Controller</string>
+		<string>Application</string>
+		<string>File's Owner</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -990,15 +991,11 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>27</integer>
+					<integer>11</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
+					<integer>45</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1006,7 +1003,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>26</integer>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>27</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1014,15 +1015,15 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>69</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>64</integer>
+					<integer>26</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>45</integer>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1072,15 +1073,15 @@
 				</dict>
 			</array>
 		</dict>
-		<integer>106</integer>
-		<integer>90</integer>
-		<integer>113</integer>
-		<integer>93</integer>
-		<integer>112</integer>
-		<integer>65</integer>
 		<integer>5</integer>
-		<integer>-3</integer>
 		<integer>117</integer>
+		<integer>93</integer>
+		<integer>90</integer>
+		<integer>106</integer>
+		<integer>65</integer>
+		<integer>-3</integer>
+		<integer>112</integer>
+		<integer>113</integer>
 		<dict>
 			<key>$class</key>
 			<dict>

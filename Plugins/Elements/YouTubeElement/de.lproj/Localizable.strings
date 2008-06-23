@@ -1,11 +1,11 @@
 ﻿/* No video code has been entered yet */
-"Please use the Inspector to specify a YouTube video." = "Please use the Inspector to specify a YouTube video.";
+"Please use the Inspector to specify a YouTube video." = "Bitte benutzen Sie die Informationen, um ein YouTube Film anzugeben.";
 
 /* User entered an invalid YouTube code */
-"Sorry, but no YouTube video was found for the code you entered." = "Sorry, but no YouTube video was found for the code you entered.";
+"Sorry, but no YouTube video was found for the code you entered." = "Entschuldigung, für den eingegebenen Code konnte kein YouTube Film gefunden werden.";
 
 /* Live data feeds are disabled */
-"This is a placeholder for the YouTube video at:" = "This is a placeholder for the YouTube video at:";
+"This is a placeholder for the YouTube video at:" = "Dies ist ein Platzhalter für den YouTube Film bei:";
 
 /* Live data feeds are disabled */
-"To see the video in Sandvox, please enable live data feeds in the Preferences." = "To see the video in Sandvox, please enable live data feeds in the Preferences.";
+"To see the video in Sandvox, please enable live data feeds in the Preferences." = "Um den Film in Sandvox zu sehen, aktivieren Sie bitte die „Live“ Datenanzeige in den Einstellungen.";

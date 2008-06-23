@@ -1,8 +1,8 @@
 ﻿/* Invisible style of page counter; outputs no number */
-"Invisible" = "Invisible";
+"Invisible" = "Unsichtbar";
 
 /*  preceeded by a number to show how many times a page has been viewed over the web */
-"page views" = "page views";
+"page views" = "Seitenzugriffe";
 
 /* Text style of page counter */
 "Text" = "Text";

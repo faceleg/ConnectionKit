@@ -1,29 +1,29 @@
 ﻿/* Sandvox link-back blurb */
-"Build simple websites on the Mac and host it anywhere" = "Build simple websites on the Mac and host it anywhere";
+"Build simple websites on the Mac and host it anywhere" = "Erstellen Sie einfache Webseiten auf dem Mac und hosten Sie, wo Sie wollen";
 
 /* Sandvox link-back blurb */
-"Create and publish a web site with your Mac - for individuals, small business, and education" = "Create and publish a web site with your Mac - for individuals, small business, and education";
+"Create and publish a web site with your Mac - for individuals, small business, and education" = "Websites auf ihrem Mac erstellen und veröffentlichen - für Einzelpersonen, Kleinunternehmen und Bildungsstätten.";
 
 /* Sandvox link-back blurb */
-"Create websites, photo albums, and weblogs on the Mac" = "Create websites, photo albums, and weblogs on the Mac";
+"Create websites, photo albums, and weblogs on the Mac" = "Erstellen Sie Webseiten, Photoalben und Weblogs auf dem Mac";
 
 /* Alt string for sandvox badge */
-"Created by Sandvox - %@" = "Created by Sandvox - %@";
+"Created by Sandvox - %@" = "Erstellt mit Sandvox - %@";
 
 /* string that goes before badgeLinkString, for badge */
-"Created with" = "Erstellt mit";
+"Created with" = "Erstellt von";
 
 /* title string for sandvox badge link */
-"Learn about Sandvox - %@" = "Learn about Sandvox - %@";
+"Learn about Sandvox - %@" = "Mehr über Sandvox - %@";
 
 /* linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created by' regardless of language. */
 "Sandvox" = "Sandvox";
 
 /* Sandvox link-back blurb */
-"The easy mac web site Builder - for school, business, family" = "The easy mac web site Builder - for school, business, family";
+"The easy mac web site Builder - for school, business, family" = "Der einfach Mac-typisch Website-Ersteller - Für die Schule, den Beruf, die Familie";
 
 /* Sandvox link-back blurb */
-"The Mac Website Creator - publish weblogs and photos on any host" = "The Mac Website Creator - publish weblogs and photos on any host";
+"The Mac Website Creator - publish weblogs and photos on any host" = "Der Mac Website Ersteller - Weblogs und Photos bei beliebigen Hosts veröffentlichen";
 
 /* Sandvox link-back blurb */
-"Using your Macintosh, publish your blog / photo album / web site on any ISP" = "Using your Macintosh, publish your blog / photo album / web site on any ISP";
+"Using your Macintosh, publish your blog / photo album / web site on any ISP" = "Mit ihrem Macintosh Blogs / Photo Alben / Websites bei beliebigen Anbietern veröffentlichen";
