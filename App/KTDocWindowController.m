@@ -49,6 +49,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
@@ -428,7 +429,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		[missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
 		
-		NSArray *sortDescriptors = [NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:@"filename" ascending:YES] autorelease]];
+		NSArray *sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"filename" ascending:YES];
 		NSArray *sortedMissingMedia = [[missingMedia allObjects] sortedArrayUsingDescriptors:sortDescriptors];
 		[missingMediaController setMissingMedia:sortedMissingMedia];
 		

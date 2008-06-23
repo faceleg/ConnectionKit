@@ -17,6 +17,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "BDAlias.h"
@@ -296,8 +297,7 @@
 - (NSString *)bestExistingThumbnail
 {
 	// Get the list of our scaled images by scale factor
-	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"scaleFactor" ascending:YES] autorelease];
-	NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+	NSArray *sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"scaleFactor" ascending:YES];
 	NSArray *scaledImages = [[[self valueForKey:@"scaledImages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
 	
 	if ([scaledImages count] == 0) {
