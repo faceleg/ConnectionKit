@@ -515,15 +515,15 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (NSString *)mainBundleLocalizedString:(NSString *)tag
 {
-	NSString *theString = [tag substringFromIndex:1];			// String to localize in TARGET language
+	NSString *result = [tag substringFromIndex:1];			// String to localize in TARGET language
 	
-	NSString *language = [[self cache] valueForKeyPath:@"CurrentPage.master.language"];
-	OBASSERT(nil != language);
-	NSString *theNewString = [[NSBundle mainBundle] localizedStringForString:theString language:language];
+	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
+	if (language)
+	{
+		result = [[NSBundle mainBundle] localizedStringForString:result language:language];
+	}
 	
-	//LOG((@"MAINBUNDLE TARGET %@ -> %@", theString, theNewString));
-	
-	return [theNewString escapedEntities];
+	return [result escapedEntities];
 }
 
 + (NSCharacterSet *)keyPathIndicatorCharacters
