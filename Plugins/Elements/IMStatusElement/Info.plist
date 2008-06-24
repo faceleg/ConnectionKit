@@ -67,7 +67,7 @@
 	</array>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>IM_Status</string>
 	<key>KTMainElement</key>
 	<string></string>

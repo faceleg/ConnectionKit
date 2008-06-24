@@ -32,7 +32,7 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Photo</string>
 	<key>KTPageName</key>
 	<string>Photo</string>

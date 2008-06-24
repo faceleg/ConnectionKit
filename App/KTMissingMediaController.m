@@ -240,7 +240,7 @@
 
 - (IBAction)showHelp:(id)sender
 {
-	[NSHelpManager gotoHelpAnchor:@"Media"];
+	[NSHelpManager gotoHelpAnchor:@"Locating Missing Media Files"];	// HELPSTRING
 }
 
 #pragma mark -

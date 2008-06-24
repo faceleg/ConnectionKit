@@ -30,7 +30,7 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<false/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Site_Map</string>
 	<key>KTIncludeSidebar</key>
 	<true/>

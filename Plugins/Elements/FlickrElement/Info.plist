@@ -24,7 +24,7 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Flickr_Badge</string>
 	<key>KTMainElement</key>
 	<string></string>

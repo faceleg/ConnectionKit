@@ -30,7 +30,7 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Raw_HTML</string>
 	<key>KTPageAllowsCallouts</key>
 	<true/>

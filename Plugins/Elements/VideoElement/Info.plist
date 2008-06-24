@@ -32,7 +32,7 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Movie</string>
 	<key>KTPageShowSidebar</key>
 	<false/>

@@ -32,8 +32,8 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
-	<string>Movie</string>
+	<key>KSHelpAnchor</key>
+	<string>YouTube</string>
 	<key>KTPageName</key>
 	<string>YouTube Page</string>
 	<key>KTPageShowSidebar</key>

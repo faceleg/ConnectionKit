@@ -1442,27 +1442,27 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	{
 		case SEGMENT_SITE:
 		{
-			pageName = @"Site_Inspector";		// fallback
+			pageName = @"Site_Inspector";		// fallback 	// HELPSTRING
 			id whichSiteTab = [[oSiteTabView selectedTabViewItem] identifier];
 			if ([whichSiteTab isEqual:@"properties"])
 			{
-				pageName = @"Site_Properties";
+				pageName = @"Site_Properties";	// HELPSTRING
 			}
 			else if ([whichSiteTab isEqual:@"properties"])
 			{
-				pageName = @"Site_Media";				
+				pageName = @"Site_Media";				// HELPSTRING	
 			}
 			else if ([whichSiteTab isEqual:@"google"])
 			{
-				pageName = @"Google_Integration";
+				pageName = @"Google_Integration";	// HELPSTRING
 			}
 			break;
 		}
 		case SEGMENT_PAGE:
-			pageName = @"General_Page_Attributes";
+			pageName = @"General_Page_Attributes";	// HELPSTRING
 			if ([[[self siteOutlineController] selectedPage] isCollection])
 			{
-				pageName = @"Collection";
+				pageName = @"Collection";	// HELPSTRING
 			}
 			if (nil != myPageInspectorView)	// special inspector IF there is a specialized inspector below.
 			{	
@@ -1477,7 +1477,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		{
 			if ([myCurrentSelection isKindOfClass:[KTPagelet class]])
 			{
-				pageName = @"General_Pagelet_Attributes";	// fallback
+				pageName = @"General_Pagelet_Attributes";	// fallback 	// HELPSTRING
 				NSString *helpAnchor = [[myCurrentSelection bundle] helpAnchor];
 				if (nil != helpAnchor)
 				{
@@ -1489,20 +1489,20 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 				// djw
 				if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 				{
-					pageName = @"Embedded_Image";
+					pageName = @"Embedded_Image";	// HELPSTRING
 				}
 				else if (nil != myPageInspectorView && [[[self siteOutlineController] selectedPage] separateInspectorSegment])
 				{
 					if (oProRequiredView == myPageInspectorView)
 					{
-						pageName = @"Sandvox_Pro";
+						pageName = @"Sandvox_Pro";	// HELPSTRING
 					}
 					else
 					{
 						NSString *identifier = [myCurrentSelection wrappedValueForKey:@"pluginIdentifier"];
 						if ([identifier isEqualToString:@"sandvox.ImageElement"])
 						{
-							pageName = @"Photo";
+							pageName = @"Photo";	// HELPSTRING
 						}
 					}
 				}
@@ -1514,7 +1514,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			break;
 		}
 	}
-	[[NSApp delegate] showHelpPage:pageName];		// HELPSTRING .... ABOVE
+	[[NSApp delegate] showHelpPage:pageName];	
 }
 
 #pragma mark -

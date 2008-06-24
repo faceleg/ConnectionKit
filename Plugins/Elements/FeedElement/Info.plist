@@ -30,8 +30,8 @@
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
-	<string>RSS_Feed_Pagelet</string>
+	<key>KSHelpAnchor</key>
+	<string>RSS_Feed</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>

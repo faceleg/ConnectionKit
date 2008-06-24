@@ -24,8 +24,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
-	<key>KTHelpAnchor</key>
-	<string>Index</string>
+	<key>KSHelpAnchor</key>
+	<string>Index_Pagelet</string>
 	<key>KTMainElement</key>
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>

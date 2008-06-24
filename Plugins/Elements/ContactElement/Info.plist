@@ -30,7 +30,7 @@
 	<true/>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>Contact_Form</string>
 	<key>KTPageDisableComments</key>
 	<true/>

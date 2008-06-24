@@ -30,7 +30,7 @@
 	<true/>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
-	<key>KTHelpAnchor</key>
+	<key>KSHelpAnchor</key>
 	<string>List_of_Links</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>

@@ -26,6 +26,8 @@
 	<string>1.5</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
+	<key>KSHelpAnchor</key>
+	<string>Collection_Archive</string>
 	<key>KTPluginDescription</key>
 	<string>Links to the RSS feed for a collection</string>
 	<key>KTPluginIconName</key>
