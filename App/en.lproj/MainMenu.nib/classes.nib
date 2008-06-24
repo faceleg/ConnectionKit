@@ -161,7 +161,6 @@
                 showAvailableComponents = id;
                 showAvailableDesigns = id;
                 showAvailableMedia = id;
-                showDiscussionGroup = id;
                 showProductPage = id;
                 showReleaseNotes = id;
                 showTranscriptWindow = id;
