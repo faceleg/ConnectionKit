@@ -1777,13 +1777,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
 }
 
-/* This is really not the feedback reporter ... it's the sandvox support forum.  We're using the old connection to the feedback reporter though. */
-
-- (IBAction)showFeedbackReporter:(id)sender
-{
-	[self openSupportForum:sender];
-}
-
 #pragma mark -
 #pragma mark Utility Methods
 
