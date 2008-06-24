@@ -92,7 +92,7 @@
 		[(KTPage *)plugin setCustomFileExtension:fileExtension];
 		
 		NSString *mediaPath = nil;
-		if ([plugin boolForKey:@"uploadMediaInPlaceOfPage"])
+		if (![plugin boolForKey:@"uploadMediaInPlaceOfPage"])
 		{
 			mediaPath = [[[(KTMediaContainer *)value file] defaultUpload] pathRelativeToSite];
 		}
