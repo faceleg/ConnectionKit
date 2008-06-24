@@ -216,7 +216,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)showAvailableMedia:(id)sender;
 - (IBAction)showAvailableDesigns:(id)sender;
 
-- (IBAction)showDiscussionGroup:(id)sender;
 - (IBAction)showProductPage:(id)sender;
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;

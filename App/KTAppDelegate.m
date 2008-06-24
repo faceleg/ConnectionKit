@@ -1666,11 +1666,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
     [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.sandvox.com/"]];
 }
 
-- (IBAction)showDiscussionGroup:(id)sender
-{
-    //[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"https://secure.karelia.com/fogbugz/?beta"]];
-}
-
 - (IBAction)toggleMediaBrowserShown:(id)sender
 {
 	
@@ -1769,9 +1764,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	
 #ifdef EXPIRY_TIMESTAMP
-	NSString *urlString = @"http://fogbugz.karelia.com/sandvox-beta";
+	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
 #else
-	NSString *urlString = @"http://fogbugz.karelia.com/sandvox";
+	NSString *urlString = @"http://support.karelia.com/?sandvox";
 #endif
 	NSURL *url = [NSURL URLWithString:urlString];
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
