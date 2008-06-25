@@ -127,7 +127,10 @@
 
 - (NSArray *)_pagesInSiteMenu
 {
-	// Fetch all the pages qualifying to fit in the Site Menu.
+	NSArray *result;
+    
+    
+    // Fetch all the pages qualifying to fit in the Site Menu.
 	NSManagedObjectModel *model = [[[self managedObjectContext] persistentStoreCoordinator] managedObjectModel];
 	NSFetchRequest *request = [model fetchRequestTemplateForName:@"SiteOutlinePages"];
 	
@@ -138,13 +141,28 @@
 		return nil;
 	}
 	
-	NSMutableArray *result = [NSMutableArray arrayWithArray:unsortedResult];
-	
-	
-	// Sort the pages according to their index path from root
-	[result sortUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
-	
-	return result;
+    
+    // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child.
+    // To fix, we need to delete such pages.
+    static NSPredicate *orphansPredicate;
+    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == NIL"] retain];
+    
+    NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
+    if ([orphanedPages count] > 0)
+    {
+        NSLog(@"Deleting orphaned pages:\r%@", orphanedPages);
+        [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
+        
+        result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
+    }
+    else
+    {
+        // Sort the pages according to their index path from root
+        result = [unsortedResult sortedArrayUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
+    }
+    
+    
+    return result;
 }
 
 - (void)invalidatePagesInSiteMenuCache

@@ -29,7 +29,7 @@
 /*! returns set of all updated, inserted, and deleted objects in context */
 - (NSSet *)changedObjects;
 
-- (void)deleteObjects:(NSSet *)objects;
+- (void)deleteObjectsInCollection:(id)collection;   // e.g. NSArray or NSSet
 
 - (void)lockPSCAndSelf;
 - (void)unlockPSCAndSelf;

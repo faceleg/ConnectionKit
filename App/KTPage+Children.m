@@ -466,11 +466,9 @@
             }
             else
             {
-                OBASSERT_NOT_REACHED(([[NSString stringWithFormat:
-										@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d\r",
-										self,
-										[self isDeleted]]
-									   UTF8String]));
+                NSLog(@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d\r",
+                      self,                     // Used to be an assertion. Now, we return nil and expect the
+                      [self isDeleted]);       // original caller to tidy up.
             }
         }
 		else

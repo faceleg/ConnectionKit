@@ -802,7 +802,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 		}
 		
 		// Delete the pages
-		[[[self document] managedObjectContext] deleteObjects:selectedPages];
+		[[[self document] managedObjectContext] deleteObjectsInCollection:selectedPages];
 		
 		
 		// label undo last

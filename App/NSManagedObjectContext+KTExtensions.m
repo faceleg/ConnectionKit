@@ -25,11 +25,11 @@
 @end
 
 
-@implementation NSManagedObjectContext ( KTExtensions )
+@implementation NSManagedObjectContext (KTExtensions)
 
-- (void)deleteObjects:(NSSet *)objects
+- (void)deleteObjectsInCollection:(id)collection   // Assume objects conform to -objectEnumerator
 {
-	NSEnumerator *enumerator = [objects objectEnumerator];
+	NSEnumerator *enumerator = [collection objectEnumerator];
 	NSManagedObject *anObject;
 	while (anObject = [enumerator nextObject])
 	{

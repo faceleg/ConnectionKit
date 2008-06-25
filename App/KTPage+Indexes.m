@@ -546,7 +546,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	else
 	{
 		NSSet *archivePages = [self valueForKey:@"archivePages"];
-		[[self managedObjectContext] deleteObjects:archivePages];
+		[[self managedObjectContext] deleteObjectsInCollection:archivePages];
 	}
 }
 
