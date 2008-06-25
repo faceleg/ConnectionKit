@@ -467,7 +467,7 @@
             else
             {
                 OBASSERT_NOT_REACHED(([[NSString stringWithFormat:
-										@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d",
+										@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d\r",
 										self,
 										[self isDeleted]]
 									   UTF8String]));
