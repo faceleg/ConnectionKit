@@ -1488,13 +1488,6 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = AmazonSupport;
 		};
-		3CE79D6A0D625E3D00FCEE6D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Sparkle;
-		};
 		3CE79D6C0D625E4400FCEE6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
@@ -1599,20 +1592,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
-		};
-		CE99894F0D614EB200F2DD12 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = Sparkle;
-		};
-		CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
-			remoteInfo = "Sparkle Test App";
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1912,7 +1891,7 @@
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../ThirdParty/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54900D625952004885E7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2107,7 +2086,6 @@
 		3CF942100D62439000B1C83D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/InlineImageElement.nib; sourceTree = "<group>"; };
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
-		3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../../../sparkleplus/Sparkle.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKeypathURLProtocol.h; sourceTree = "<group>"; };
 		3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTKeypathURLProtocol.m; sourceTree = "<group>"; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -4498,7 +4476,6 @@
 				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
 				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
 				3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */,
-				3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4674,15 +4651,6 @@
 			isa = PBXGroup;
 			children = (
 				CE99831A0D614DD700F2DD12 /* MetaSandvox.mdimporter */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		CE99894B0D614EB200F2DD12 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE9989500D614EB200F2DD12 /* Sparkle.framework */,
-				CE9989520D614EB200F2DD12 /* Sparkle Test App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5042,7 +5010,6 @@
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				CE9510B60D63B0A3008D163A /* PBXTargetDependency */,
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
-				3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
@@ -5250,10 +5217,6 @@
 				{
 					ProductGroup = 3C42DDA70D64C8B3004F35FD /* Products */;
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
-				},
-				{
-					ProductGroup = CE99894B0D614EB200F2DD12 /* Products */;
-					ProjectRef = 3CFBCFFA0D36C3200083CAD2 /* Sparkle.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C1D06AA0D5D66E700782A95 /* Products */;
@@ -5638,20 +5601,6 @@
 			fileType = wrapper.cfbundle;
 			path = MetaSandvox.mdimporter;
 			remoteRef = CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE9989500D614EB200F2DD12 /* Sparkle.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Sparkle.framework;
-			remoteRef = CE99894F0D614EB200F2DD12 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE9989520D614EB200F2DD12 /* Sparkle Test App.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Sparkle Test App.app";
-			remoteRef = CE9989510D614EB200F2DD12 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
@@ -6696,11 +6645,6 @@
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
 			targetProxy = 3CE79D680D625E3600FCEE6D /* PBXContainerItemProxy */;
-		};
-		3CE79D6B0D625E3D00FCEE6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Sparkle;
-			targetProxy = 3CE79D6A0D625E3D00FCEE6D /* PBXContainerItemProxy */;
 		};
 		3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
