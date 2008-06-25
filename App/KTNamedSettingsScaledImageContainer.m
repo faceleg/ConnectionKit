@@ -39,12 +39,21 @@
 	KTDocument *document = [[self mediaManager] document];
 	
 	// Find the plugin, and thereby its design.
+    KTAbstractElement *plugin = nil;
+    
 	NSString *pluginID = [self valueForKey:@"pluginID"];
-	KTAbstractElement *plugin = [[document managedObjectContext] pluginWithUniqueID:pluginID];
+    if (pluginID)
+    {
+        plugin = [[document managedObjectContext] pluginWithUniqueID:pluginID];
+    }
+    
+    if (!plugin) return nil;
+    
+    
+    // Locate the settings
 	KTPage *page = [plugin page];
 	KTDesign *design = [[page master] design];
 	
-	// Locate the settings
 	NSString *settingsName = [self valueForKey:@"scalingSettingsName"];
 	KTImageScalingSettings *settings = [design imageScalingSettingsForUse:settingsName];
 	
