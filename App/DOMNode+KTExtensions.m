@@ -638,7 +638,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		[span appendChild:text];
 		[element appendChild:span];
 	}
-	else
+	else if ([anElement isEqualToString:@"SPAN"])
+    {
+        [element appendChild:text];
+    }
+    else
 	{
 // OLD BEHAVIOR -- JUST THE TEXT.  INSTEAD, WE WILL PUT THAT INTO A <P>		[element appendChild:text];
 		
