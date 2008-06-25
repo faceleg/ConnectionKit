@@ -118,7 +118,7 @@
 - (void)addDesignsToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
 {
 	NSString *pageDesign = [self wrappedValueForKey:@"designBundleIdentifier"];		// NOT inherited
-	if (nil != pageDesign)
+	if (pageDesign)
 	{
 		//LOG((@"%@ adding design:%@", [self class], pageDesign));
 		[aSet addObject:pageDesign];

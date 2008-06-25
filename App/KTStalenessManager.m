@@ -90,7 +90,9 @@
 
 - (void)beginObservingPage:(KTAbstractPage *)page
 {
-	// We observe the staleness of all pages
+	OBPRECONDITION(page);
+    
+    // We observe the staleness of all pages
 	if (![myObservedPages containsObject:page])
 	{
 		[page addObserver:self forKeyPath:@"isStale" options:0 context:NULL];
@@ -230,7 +232,8 @@
 	
 	if (![observedKeyPaths containsObject:parsedKeyPath])
 	{
-		[observedKeyPaths addObject:parsedKeyPath];
+		OBASSERT(parsedKeyPath);
+        [observedKeyPaths addObject:parsedKeyPath];
 		[object addObserver:self forKeyPath:keyPath options:0 context:NULL];
 	}
 	

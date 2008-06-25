@@ -40,6 +40,7 @@
 	[self uploadFile:sourcePath toFile:uploadPath];
 	
 	// Add the file to the upload list
+    OBASSERT(mediaFileUpload);
 	[myMediaFileUploads addObject:mediaFileUpload];
 }
 
@@ -86,7 +87,11 @@
 	return result;
 }
 
-- (void)addParsedMediaFileUpload:(KTMediaFileUpload *)mediaFileUpload { [myParsedMediaFileUploads addObject:mediaFileUpload]; }
+- (void)addParsedMediaFileUpload:(KTMediaFileUpload *)mediaFileUpload
+{
+    OBPRECONDITION(mediaFileUpload);
+    [myParsedMediaFileUploads addObject:mediaFileUpload];
+}
 
 - (void)removeAllParsedMediaFileUploads { [myParsedMediaFileUploads removeAllObjects]; }
 

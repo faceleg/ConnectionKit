@@ -152,7 +152,7 @@
         while ( instance  = [e nextObject] )
         {
 			id object = [instance valueForKey:aColumnName];
-			if ( nil != object )
+			if (object)
 			{
 				[objects addObject:object];
 			}

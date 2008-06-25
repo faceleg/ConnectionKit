@@ -518,7 +518,7 @@ static NSArray *sReservedNames = nil;
  *	
  *	If the page will not be published because it or a parent is a draft, returns nil.
  */
-- (NSDictionary *)publishingInfoForPage:(KTAbstractPage *)page;
+- (NSDictionary *)publishingInfoForPage:(KTAbstractPage *)page
 {
 	// This MUST be called from the main thread
 	if (![NSThread isMainThread]) {
@@ -1139,6 +1139,7 @@ static NSArray *sReservedNames = nil;
 	}
 	
 	// Mark the design as being uploaded
+    OBASSERT(design);
 	[myUploadedDesigns addObject:design];
 }
 
@@ -1497,7 +1498,8 @@ static NSArray *sReservedNames = nil;
 
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath
 {
-	[myParsedResources addObject:resourcePath];
+	OBPRECONDITION(resourcePath);
+    [myParsedResources addObject:resourcePath];
 }
 
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	

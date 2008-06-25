@@ -149,6 +149,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		}
 		
 		// Add to the set
+        OBASSERT(aPage);
 		[myPages addObject:aPage];
 		
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
@@ -262,7 +263,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	if ([correctedSelection count] == 0)	// If nothing remains to be selected, fallback to the parent
 	{
-		[correctedSelection addObject:page];
+		OBASSERT(page);
+        [correctedSelection addObject:page];
 	}
 	
 	[[self siteOutline] selectItems:[correctedSelection allObjects] forceDidChangeNotification:YES];

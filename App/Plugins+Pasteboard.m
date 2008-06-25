@@ -216,6 +216,7 @@
 	while (anArchivedPagelet = [pageletsEnumerator nextObject])
 	{
 		KTPagelet *pagelet = [KTPagelet pageletWithPasteboardRepresentation:anArchivedPagelet page:result];
+        OBASSERT(pagelet);
 		[pagelets addObject:pagelet];
 	}
 	
@@ -227,6 +228,7 @@
 	while (anArchivedPage = [pagesEnumerator nextObject])
 	{
 		KTPage *page = [KTPage pageWithPasteboardRepresentation:anArchivedPage parent:result];
+        OBASSERT(page);
 		[children addObject:page];
 	}
 	

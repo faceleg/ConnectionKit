@@ -318,7 +318,8 @@
 				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypePlainText] ||
 				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeRTF])
 			{
-				[resourceFiles addObject:filePath];
+				OBASSERT(filePath);
+                [resourceFiles addObject:filePath];
 			}
 		}
 		

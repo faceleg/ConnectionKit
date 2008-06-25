@@ -282,7 +282,9 @@
 	if ( [aPlugin isKindOfClass:[KTPage class]] && [(KTPage *)aPlugin index])
     {
         // add Collection's bundle
-        [requiredBundles addObject:[NSBundle bundleForClass:[aPlugin class]]];
+        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
+        OBASSERT(bundle);
+        [requiredBundles addObject:bundle];
 
         // add Collection's pages' bundles
         NSEnumerator *enumerator = [[(KTPage *)aPlugin children] objectEnumerator];
@@ -302,7 +304,9 @@
     else if ( [aPlugin isKindOfClass:[KTPage class]] )
     {
         // add Page's bundle
-        [requiredBundles addObject:[NSBundle bundleForClass:[aPlugin class]]];
+        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
+        OBASSERT(bundle);
+        [requiredBundles addObject:bundle];
 
         // add Page's elements
         NSEnumerator *enumerator = [[(KTPage *)aPlugin wrappedValueForKey:@"elements"] objectEnumerator];
@@ -322,7 +326,9 @@
     else
     {
         // just add aComponent's bundle
-        [requiredBundles addObject:[NSBundle bundleForClass:[aPlugin class]]];
+        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
+        OBASSERT(bundle);
+        [requiredBundles addObject:bundle];
     }
 
     return requiredBundles;
@@ -338,6 +344,7 @@
     {
         if ( bundle != [NSBundle mainBundle] )
         {
+            OBASSERT([bundle bundleIdentifier]);
             [bundles addObject:[bundle bundleIdentifier]];
         }
     }

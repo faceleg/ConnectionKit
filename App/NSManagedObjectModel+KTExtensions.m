@@ -71,7 +71,9 @@ static NSManagedObjectModel *sKTComponentsModel;
 
 - (void)addEntity:(NSEntityDescription *)anEntity
 {
-	NSMutableArray *entities = [NSMutableArray arrayWithArray:[self entities]];
+	OBPRECONDITION(anEntity);
+    
+    NSMutableArray *entities = [NSMutableArray arrayWithArray:[self entities]];
 	[entities addObject:anEntity];
 	[self setEntities:entities];
 }

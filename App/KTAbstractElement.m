@@ -359,6 +359,7 @@
 	while (nil != (fileName = [theEnum nextObject]) )
 	{
 		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
+        OBASSERT(path);
 		[aSet addObject:path];
 	}
 }
@@ -378,6 +379,7 @@
 	{
 		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
 //		LOG((@"%@ adding css file:%@", [self class], path));
+        OBASSERT(path);
 		[aSet addObject:path];
 	}
 }
