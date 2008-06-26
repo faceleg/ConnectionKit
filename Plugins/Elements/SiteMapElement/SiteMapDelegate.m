@@ -136,9 +136,12 @@
 //			}
 //			else
 //			{
-				[string appendFormat:@"<a href=\"%@\">%@</a>",
-									 [[aPage URL] stringRelativeToURL:[thisPage URL]],
-									 [[aPage titleText] escapedEntities]];
+			NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
+            OBASSERT([href lowercaseString]);               // The lowercase string will help us track down zombies etc.
+            NSString *title = [[aPage titleText] escapedEntities];
+            OBASSERT([title lowercaseString]);
+            
+            [string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
 //			}
 		}
 		
@@ -201,11 +204,17 @@
 						}
 						if (aChildPage == thisPage)	// not likely but maybe possible
 						{
-							[string appendFormat:@"%@\n", [[aChildPage titleText] escapedEntities]];
+							NSString *title = [[aChildPage titleText] escapedEntities];
+                            OBASSERT([title lowercaseString]);
+                            [string appendFormat:@"%@\n", title];
 						}
 						else
 						{
-							[string appendFormat:@"<a href=\"%@\">%@</a>\n", [[aChildPage URL] stringRelativeToURL:[thisPage URL]], [[aChildPage titleText] escapedEntities]];
+							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
+                            OBASSERT([path lowercaseString]);
+                            NSString *title = [[aChildPage titleText] escapedEntities];
+                            OBASSERT([title lowercaseString]);
+                            [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
 						}
 						// need separator?	
 					}
@@ -267,8 +276,11 @@
 		}
 		else
 		{
-			[string appendFormat:@"<a href=\"%@\">%@</a>",
-				[[root URL] stringRelativeToURL:[thisPage URL]], [[root titleText] escapedEntities]];
+			NSString *path = [[root URL] stringRelativeToURL:[thisPage URL]];
+            OBASSERT([path lowercaseString]);
+            NSString *title = [[root titleText] escapedEntities];
+            OBASSERT([title lowercaseString]);
+            [string appendFormat:@"<a href=\"%@\">%@</a>", path, title];
 		}
 		[string appendString:(sections ? @"</h3>\n" : @"</p>\n")];
 	}
