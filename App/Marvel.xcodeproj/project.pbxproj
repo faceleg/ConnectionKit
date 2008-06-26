@@ -1872,7 +1872,7 @@
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../ThirdParty/Sparkle.framework; sourceTree = SOURCE_ROOT; };
+		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54900D625952004885E7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
