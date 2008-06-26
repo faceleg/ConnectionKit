@@ -1189,8 +1189,11 @@ static NSArray *sReservedNames = nil;
 			KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
 			
 			NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
-			
+			OBASSERT(path);
+            
 			NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+            OBASSERT(CSS);
+            
 			[CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
 			[CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
 			[CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
