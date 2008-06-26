@@ -49,7 +49,6 @@
 			dependencies = (
 				3C5A9A9A0D11E7440054058C /* PBXTargetDependency */,
 				3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */,
-				3C9B605B0D383044003A8351 /* PBXTargetDependency */,
 				3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */,
 			);
 			name = BuildAndPackageRelease;
@@ -65,17 +64,6 @@
 			);
 			name = UpdateVersion;
 			productName = "Update Version";
-		};
-		3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C9B60550D382E71003A8351 /* Build configuration list for PBXAggregateTarget "SparklePlus-UpdateRevision" */;
-			buildPhases = (
-				3C9B60220D382E5C003A8351 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "SparklePlus-UpdateRevision";
-			productName = "SparklePlus - Use Specific Revision";
 		};
 		3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */ = {
 			isa = PBXAggregateTarget;
@@ -1368,13 +1356,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
 			remoteInfo = "Update Version";
-		};
-		3C9B605A0D383044003A8351 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C9B60230D382E5C003A8351;
-			remoteInfo = "SparklePlus - Use Specific Revision";
 		};
 		3C9B65930BFA7F7F007A4871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5251,7 +5232,6 @@
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
-				3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3CD5B7840DCA668D006EE4D9 /* BuildAndDeploySymbols */,
@@ -5919,20 +5899,6 @@
 			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../../Shared/trunk/App/*.[hm]\n\n";
 			showEnvVarsInLog = 0;
 		};
-		3C9B60220D382E5C003A8351 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SP_REVISION FOR RELEASE BUILDS\n###\n\nSP_PATH=${SRCROOT}/../../../sparkleplus\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Sparkle+ with revision ${SP_REVISION}\"\ncd ${SP_PATH}\n${SVN_PATH} update -r${SP_REVISION}\necho \"finished syncing Sparkle+\"\n\npopd\n\nexit 0\n";
-			showEnvVarsInLog = 0;
-		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -6591,11 +6557,6 @@
 			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
 			targetProxy = 3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */;
 		};
-		3C9B605B0D383044003A8351 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C9B60230D382E5C003A8351 /* SparklePlus-UpdateRevision */;
-			targetProxy = 3C9B605A0D383044003A8351 /* PBXContainerItemProxy */;
-		};
 		3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */;
@@ -7177,23 +7138,6 @@
 			};
 			name = Debug;
 		};
-		3C9B604F0D382E5C003A8351 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = SparklePlus;
-			};
-			name = Release;
-		};
-		3C9B60500D382E5C003A8351 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = SparklePlus;
-			};
-			name = Debug;
-		};
 		3C9B65960BFA7F9E007A4871 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -7418,15 +7362,6 @@
 			buildConfigurations = (
 				3C96ADE20CA06FB900C5249F /* Release */,
 				3C96ADE30CA06FB900C5249F /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C9B60550D382E71003A8351 /* Build configuration list for PBXAggregateTarget "SparklePlus-UpdateRevision" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C9B604F0D382E5C003A8351 /* Release */,
-				3C9B60500D382E5C003A8351 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

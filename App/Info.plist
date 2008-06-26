@@ -188,8 +188,6 @@
 	<string>${CK_REVISION}</string>
 	<key>KTiMediaVersion</key>
 	<string>${IMEDIA_REVISION}</string>
-	<key>KTSparklePlusVersion</key>
-	<string>${SP_REVISION}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
