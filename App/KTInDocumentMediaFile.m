@@ -12,6 +12,7 @@
 #import "KTDocument.h"
 #import "KTMediaManager.h"
 #import "KTMediaManager+Internal.h"
+#import "KTMediaPersistentStoreCoordinator.h"
 
 #import "NSData+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -59,7 +60,11 @@
 	// If we have just been saved then move our underlying file into the document
 	if ([[moc insertedObjects] containsObject:self])
 	{
-		[self moveIntoDocument];
+		// During Save As operations, the files on disk are handled for us, so don't do this
+        if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
+        {
+            [self moveIntoDocument];
+        }
 	}
 	
 	
