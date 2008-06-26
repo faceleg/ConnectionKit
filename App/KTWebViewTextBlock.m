@@ -329,67 +329,7 @@
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
 	if (!result) result = @"";
 
-	
-	
-	// Perform additional processing of the text according to HTML generation purpose
-	if ([parser HTMLGenerationPurpose] != kGeneratingPreview)
-	{
-		// Fix page links
-		result = [[self page] fixPageLinksFromString:result managedObjectContext:[[self page] managedObjectContext]];
-		
-		
-		
-		if ([self importsGraphics])
-		{
-			// Convert media source paths
-			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
-			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
-			NSString *aString;	NSString *aMediaPath;
-			
-			while (![scanner isAtEnd])
-			{
-				[scanner scanUpToString:@" src=\"" intoString:&aString];
-				OBASSERT(aString);
-				[buffer appendString:aString];
-				if ([scanner isAtEnd]) break;
-				
-				[buffer appendString:@" src=\""];
-				[scanner setScanLocation:([scanner scanLocation] + 6)];
-				
-				if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
-				{
-					NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
-					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
-					
-					// Replace the path with one suitable for the specified purpose
-					if (mediaContainer)
-					{
-						if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
-						{
-							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
-						}
-						else
-						{
-							KTPage *page = [self page];		OBASSERT(page);
-							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
-							
-							// Tell the parser's delegate
-							[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
-						}
-					}
-					
-					if (aMediaPath) [buffer appendString:aMediaPath];
-				}
-			}
-			
-			result = [NSString stringWithString:buffer];
-			[buffer release];
-			[scanner release];
-		}
-	}
-	
-	
+	result = [self processHTML:result withParser:parser];
 	return result;
 }
 
@@ -484,6 +424,74 @@
 	// Tidy up
 	NSString *result = [NSString stringWithString:buffer];
 	return result;
+}
+
+
+/*  Support method that takes a block of HTML and applies to it anything special the receiver and the parser require
+ */
+- (NSString *)processHTML:(NSString *)result withParser:(KTHTMLParser *)parser
+{
+    // Perform additional processing of the text according to HTML generation purpose
+	if ([parser HTMLGenerationPurpose] != kGeneratingPreview)
+	{
+		// Fix page links
+		result = [[self page] fixPageLinksFromString:result managedObjectContext:[[self page] managedObjectContext]];
+		
+		
+		
+		if ([self importsGraphics])
+		{
+			// Convert media source paths
+			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
+			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
+			NSString *aString;	NSString *aMediaPath;
+			
+			while (![scanner isAtEnd])
+			{
+				[scanner scanUpToString:@" src=\"" intoString:&aString];
+				OBASSERT(aString);
+				[buffer appendString:aString];
+				if ([scanner isAtEnd]) break;
+				
+				[buffer appendString:@" src=\""];
+				[scanner setScanLocation:([scanner scanLocation] + 6)];
+				
+				if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
+				{
+					NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
+					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
+					
+					// Replace the path with one suitable for the specified purpose
+					if (mediaContainer)
+					{
+						if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+						{
+							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+						}
+						else
+						{
+							KTPage *page = [self page];		OBASSERT(page);
+							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
+							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
+							
+							// Tell the parser's delegate
+							[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
+						}
+					}
+					
+					if (aMediaPath) [buffer appendString:aMediaPath];
+				}
+			}
+			
+			result = [NSString stringWithString:buffer];
+			[buffer release];
+			[scanner release];
+		}
+	}
+    
+    
+    
+    return result;
 }
 
 #pragma mark -

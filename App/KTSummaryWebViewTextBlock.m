@@ -19,6 +19,18 @@
 
 @implementation KTSummaryWebViewTextBlock
 
+#pragma mark -
+#pragma mark Accessors
+
+/*  We override some stuff to match the standard text block behaviour to our own.
+ */
+
+- (BOOL)importsGraphics { return YES; }
+
+- (KTPage *)page { return [self HTMLSourceObject]; }
+
+#pragma mark -
+
 /*	When the user starts editing a truncated piece of text, we need to, um, untruncate it
  */
 - (BOOL)becomeFirstResponder
@@ -119,6 +131,7 @@
 	
 	if (!result) result = @"";
 	
+    result = [self processHTML:result withParser:parser];
 	OBPOSTCONDITION(result);
 	return result;
 }

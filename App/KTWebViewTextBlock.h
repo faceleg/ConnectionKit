@@ -82,6 +82,8 @@
 - (NSString *)innerHTML:(KTHTMLParser *)parser;
 - (NSString *)outerHTML:(KTHTMLParser *)parser;
 
+- (NSString *)processHTML:(NSString *)originalHTML withParser:(KTHTMLParser *)parser;
+
 #pragma mark Editing
 
 - (BOOL)becomeFirstResponder;
