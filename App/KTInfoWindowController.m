@@ -19,6 +19,7 @@
 #import "KTDocWindow.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
@@ -558,7 +559,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	
 	
-	[self setSelectedLevel:[myAssociatedDocument root]];
+	[self setSelectedLevel:[[myAssociatedDocument documentInfo] root]];
 	
 	// Manually synchronize the language popup and field
 	NSString *languageCode = [[[self selectedLevel] master] valueForKey:@"language"];
@@ -597,8 +598,15 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			[self setPageInspectorView:nil];
 			[self setSelectionInspectorView:nil];
 			
+            [oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_PAGE];
 			[oTabSegmentedControl setLabel:NSLocalizedString(@"Selection",@"Segment Label") forSegment:SEGMENT_SELECTION];
 			[oTabSegmentedControl setEnabled:NO forSegment:SEGMENT_SELECTION];
+			
+			// Select page if we didn't have anything selected before
+			if (SEGMENT_NONE == mySelectedSegmentIndex)
+			{
+				[self setSelectedSegmentIndex:SEGMENT_PAGE];	// switch to page if we were on selection
+			}
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPage class]])	// was the selected item the page?
 		{

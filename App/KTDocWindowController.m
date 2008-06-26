@@ -41,6 +41,7 @@
 #import "KTTransferController.h"
 #import "KTWebViewTextBlock.h"
 
+#import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -71,7 +72,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 @interface KTDocWindowController ( Private )
 
 - (void)showDesigns:(BOOL)inShow;
-- (void)showInfo:(BOOL)inShow;
 - (void)showStatusBar:(BOOL)inShow;
 
 - (BOOL)validateCopyPagesItem:(id <NSValidatedUserInterfaceItem>)item;
@@ -2485,9 +2485,10 @@ from representedObject */
 		{
 			[sharedController setupViewStackFor:mySelectedPagelet selectLevel:NO];
 		}
-		else if ([[self siteOutlineController] selectedPage])
+		else if ([[[self siteOutlineController] selectedObjects] count] > 0)
 		{
-			[sharedController setupViewStackFor:[[self siteOutlineController] selectedPage] selectLevel:NO];
+			[sharedController setupViewStackFor:[[[self siteOutlineController] selectedObjects] firstObject]
+                                    selectLevel:NO];
 		}
 		
 		[sharedController putContentInWindow];
