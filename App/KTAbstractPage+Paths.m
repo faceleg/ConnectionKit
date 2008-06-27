@@ -61,6 +61,15 @@
 	if ([self isRoot]) return nil;
 	
 	
+	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
+    NSString *title = [self titleText];
+    if (!title) title = @"";
+    
+	NSString *result = [title legalizeFileNameWithFallbackID:[self uniqueID]];
+	NSString *baseFileName = result;
+	int suffixCount = 2;
+	
+    
 	// Build a list of the file names already taken
 	NSSet *siblingFileNames = [[[self parent] children] valueForKey:@"fileName"];
 	NSSet *archiveFileNames = [[self parent] valueForKeyPath:@"archivePages.fileName"];
@@ -69,11 +78,7 @@
 	[unavailableFileNames unionSet:archiveFileNames];
 	[unavailableFileNames removeObjectIgnoringNil:[self fileName]];
 	
-	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-	NSString *result = [[self titleText] legalizeFileNameWithFallbackID:[self uniqueID]];
-	NSString *baseFileName = result;
-	int suffixCount = 2;
-	
+    
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
 	while ([unavailableFileNames containsObject:result])
 	{
