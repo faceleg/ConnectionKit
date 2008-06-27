@@ -595,4 +595,19 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	return result;
 }
 
+- (NSArray *)sortedArchivePages
+{
+    static NSArray *sortDescriptors;
+    if (!sortDescriptors)
+    {
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"archiveStartDate" ascending:NO];
+        sortDescriptors = [[NSArray alloc] initWithObject:sortDescriptor];
+        [sortDescriptor release];
+    }
+    
+    
+    NSArray *result = [[[self valueForKey:@"archivePages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+    return result;
+}
+
 @end
