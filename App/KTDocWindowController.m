@@ -418,26 +418,36 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Missing Media
 
+/*  Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
+ */
 - (void)checkForMissingMedia
 {
-	// Check for missing media files. If any are missing alert the user
-	NSSet *missingMedia = [[(KTDocument *)[self document] mediaManager] missingMediaFiles];
-	if (missingMedia && [missingMedia count] > 0)
-	{
-		KTMissingMediaController *missingMediaController =
+	@try
+    {
+        // Check for missing media files. If any are missing alert the user
+        NSSet *missingMedia = [[(KTDocument *)[self document] mediaManager] missingMediaFiles];
+        if (missingMedia && [missingMedia count] > 0)
+        {
+            KTMissingMediaController *missingMediaController =
 			[[KTMissingMediaController alloc] initWithWindowNibName:@"MissingMedia"];	// We'll release it after closing the sheet
-		
-		[missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
-		
-		NSArray *sortedMissingMedia = [missingMedia allObjects];    // Not actually performing any sorting
-		[missingMediaController setMissingMedia:sortedMissingMedia];
-		
-		[NSApp beginSheet:[missingMediaController window]
-		   modalForWindow:[self window]
-			modalDelegate:self
-		   didEndSelector:@selector(missingMediaSheetDidEnd:returnCode:contextInfo:)
-			  contextInfo:NULL];
-	}
+            
+            [missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
+            
+            NSArray *sortedMissingMedia = [missingMedia allObjects];    // Not actually performing any sorting
+            [missingMediaController setMissingMedia:sortedMissingMedia];
+            
+            [NSApp beginSheet:[missingMediaController window]
+               modalForWindow:[self window]
+                modalDelegate:self
+               didEndSelector:@selector(missingMediaSheetDidEnd:returnCode:contextInfo:)
+                  contextInfo:NULL];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        [NSApp reportException:exception];
+        @throw;
+    }
 }
 
 - (void)missingMediaSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
