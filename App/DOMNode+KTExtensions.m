@@ -1312,23 +1312,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	}
 	[result normalize];		// coalesce stuff, like two contiguous #text nodes
 	
-	// Now, if result is just an empty span, remove this node and put my children into parent.
-	
-	if ([[((DOMElement *)result) tagName] isEqualToString:@"SPAN"])	// span (not div -- don't remove div since it forces a block)
-	{
-		// No attributes or ONLY span="in" -- remove completely
-		if (![self hasAttributes] || 
-			(1 == [[result attributes] length] && [[((DOMHTMLElement *)result) className] isEqualToString:@"in"])
-			)	// with no attributes, or just class="in"
-		{
-			result = [result unlink];	// now result is set to first replaced child
-		}
-		// Span with "in" but other stuff -- just remove the class name.
-		else if ([[((DOMHTMLElement *)result) className] isEqualToString:@"in"])
-		{
-			[((DOMHTMLElement *)result) setClassName:nil];		
-		}
-	}
 	return result;
 // TODO: here I should coalesce PRE elements (with a \n #text node between) into a single PRE
 }
