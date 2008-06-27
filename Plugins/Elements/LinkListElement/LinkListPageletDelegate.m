@@ -46,11 +46,13 @@
 {
 	if (isNewlyCreatedObject)
 	{
-		NSURL *URL = nil;	NSString *title;
-		[NSAppleScript getWebBrowserURL:&URL title:&title source:nil];
+		NSURL *URL = nil;	NSString *title = nil;
+		[NSAppleScript getWebBrowserURL:&URL title:&title source:NULL];
 		if (URL)
 		{
-			NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+			if (!title) title = @"";
+            
+            NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 				[title escapedEntities], @"titleHTML",
 				[URL absoluteString], @"url", nil];
 			
