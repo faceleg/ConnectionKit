@@ -293,3 +293,22 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@interface BDAlias (MissingMedia)
+- (NSString *)filename;
+@end
+
+
+@implementation BDAlias (MissingMedia)
+
+- (NSString *)filename
+{
+    NSString *result = [[self lastKnownPath] lastPathComponent];
+    return result;
+}
+
+@end

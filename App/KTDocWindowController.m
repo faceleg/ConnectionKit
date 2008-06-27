@@ -429,8 +429,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		[missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
 		
-		NSArray *sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"filename" ascending:YES];
-		NSArray *sortedMissingMedia = [[missingMedia allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+		NSArray *sortedMissingMedia = [missingMedia allObjects];    // Not actually performing any sorting
 		[missingMediaController setMissingMedia:sortedMissingMedia];
 		
 		[NSApp beginSheet:[missingMediaController window]
