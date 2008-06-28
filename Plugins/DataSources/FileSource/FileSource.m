@@ -122,9 +122,7 @@
 
 - (NSString *)pageBundleIdentifier
 {
-	return @"sandvox.FileDownload";
+	return @"sandvox.DownloadElement";
 }
-
-
 
 @end
