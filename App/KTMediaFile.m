@@ -296,7 +296,9 @@
  */
 - (NSString *)bestExistingThumbnail
 {
-	// Get the list of our scaled images by scale factor
+	return nil;     // Cheating for the moment and assuming no thumbnails
+    
+    // Get the list of our scaled images by scale factor
 	NSArray *sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"scaleFactor" ascending:YES];
 	NSArray *scaledImages = [[[self valueForKey:@"scaledImages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
 	

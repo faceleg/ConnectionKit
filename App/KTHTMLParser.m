@@ -595,105 +595,93 @@
 	
 	// Which MediaContainer is requested?
 	NSString *mediaKeyPath = [parameters objectForKey:@"media"];
-	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath informDelegate:NO];
-	[[self cache] valueForKeyPath:[mediaKeyPath stringByAppendingString:@".file.currentPath"]];	// A HACK to pass right KVO to delegate
+	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath];
+    if (!media)
+    {
+        NSLog(@"Unable to find media for [[mediainfo %@]]", inRestOfTag);
+    }
 	
 	
 	if ([parameters objectForKey:@"sizeToFit"])
 	{
 		NSSize imageSize = [[[self cache] valueForKeyPath:[parameters objectForKey:@"sizeToFit"]] sizeValue];
 		media = [media imageToFitSize:imageSize];
+        if (!media)
+        {
+            NSLog(@"Unable to scale media for [[mediainfo %@]]", inRestOfTag);
+        }
 	}
 	
 	
-	// What information is desired?
-	KTMediaFile *mediaFile = [media file];
-	KTMediaFileUpload *upload = nil;
+    if (media)
+    {
+        // What information is desired?
+        KTMediaFile *mediaFile = [media file];
+        if (mediaFile)
+        {
+            KTMediaFileUpload *upload = nil;
+            
+            NSString *infoRequested = [parameters objectForKey:@"info"];
+            if ([infoRequested isEqualToString:@"path"])
+            {
+                switch ([self HTMLGenerationPurpose])
+                {
+                    case kGeneratingPreview:
+                    {
+                        NSString *path = [mediaFile currentPath];
+                        if (path) result = [[NSURL fileURLWithPath:path] absoluteString];
+                        break;
+                    }
+                        
+                    case kGeneratingQuickLookPreview:
+                        result = [mediaFile quickLookPseudoTag];
+                        break;
+                        
+                    default:
+                    {
+                        upload = [mediaFile defaultUpload];
+                        result = [[upload URL] stringRelativeToURL:[[self currentPage] URL]];
+                        break;
+                    }
+                }
+            }
+            else if ([infoRequested isEqualToString:@"width"])
+            {
+                result = [[mediaFile valueForKey:@"width"] stringValue];
+            }
+            else if ([infoRequested isEqualToString:@"height"])
+            {
+                result = [[mediaFile valueForKey:@"height"] stringValue];
+            }
+            else if ([infoRequested isEqualToString:@"MIMEType"])
+            {
+                result = [[NSString MIMETypeForUTI:[mediaFile fileType]] escapedEntities];
+            }
+            else if ([infoRequested isEqualToString:@"dataLength"])
+            {
+                NSString *path = [mediaFile currentPath];
+                if (path)
+                {
+                    NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO];
+                    result = [[fileAttributes objectForKey:NSFileSize] stringValue];
+                }
+            }
+            
+            
+            // The delegate may want to know
+            [self didEncounterMediaFile:mediaFile upload:upload];
+        }
+        else
+        {
+            NSLog(@"Unable to fetch MediaFile for [[mediainfo %@]]\r%@", inRestOfTag, media);
+        }
+    }
 	
-	NSString *infoRequested = [parameters objectForKey:@"info"];
-	if ([infoRequested isEqualToString:@"path"])
-	{
-		switch ([self HTMLGenerationPurpose])
-		{
-			case kGeneratingPreview:
-			{
-				NSString *path = [mediaFile currentPath];
-				if (path) result = [[NSURL fileURLWithPath:path] absoluteString];
-				break;
-			}
-			
-			case kGeneratingQuickLookPreview:
-				result = [mediaFile quickLookPseudoTag];
-				break;
-			
-			default:
-			{
-				upload = [mediaFile defaultUpload];
-				result = [[upload URL] stringRelativeToURL:[[self currentPage] URL]];
-				break;
-			}
-		}
-	}
-	else if ([infoRequested isEqualToString:@"width"])
-	{
-		result = [[mediaFile valueForKey:@"width"] stringValue];
-	}
-	else if ([infoRequested isEqualToString:@"height"])
-	{
-		result = [[mediaFile valueForKey:@"height"] stringValue];
-	}
-	else if ([infoRequested isEqualToString:@"MIMEType"])
-	{
-		result = [[NSString MIMETypeForUTI:[mediaFile fileType]] escapedEntities];
-	}
-	else if ([infoRequested isEqualToString:@"dataLength"])
-	{
-		NSString *path = [mediaFile currentPath];
-		if (path)
-		{
-			NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO];
-			result = [[fileAttributes objectForKey:NSFileSize] stringValue];
-		}
-	}
 	
-	
-	// The delegate may want to know
-	[self didEncounterMediaFile:mediaFile upload:upload];
-	
-	
+    OBPOSTCONDITION(result);    // In the worst case, an empty string should be returned.
 	return result;
 }
 
-/*
-/// Mike:	The media function above should have replaced this.
-
-// Following parameters:  (1) key-value path to media or mediaImage object  (2) k-v path to page [optional]
-// If (2) not specified, it's the page itself... but template better be a page
-// Should call mediaPathRelativeTo: on (1) with (2) as the parameter and return the result.
-
-- (NSString *)mediapathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
-	if ([params count] > 2)
-	{
-		NSLog(@"mediapath: usage [[ mediapath media.keyPath page.keyPath (OPTIONAL) ]]");
-		return @"";
-	}
-	id media = [[self cache] valueForKeyPath:[params objectAtIndex:0] informDelegate:NO];
-	
-	id page = nil;
-	if ([params count] > 1)
-	{
-		page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
-	}
-	else	// try to get page from context.  Better be there!
-	{
-		page = [[self cache] valueForKey:@"CurrentPage"];
-	}
-	return [media mediaPathRelativeTo:page];
-}
-
-*/
 
 // Following parameters:  (1) key-value path to media or mediaImage object  (2) k-v path to page [optional]
 // If (2) not specified, it's the page itself... but template better be a page
