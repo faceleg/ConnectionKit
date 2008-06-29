@@ -200,16 +200,20 @@
  */
 - (KTMediaFileUpload *)mediaFileUpload
 {
-	KTMediaFileUpload *result;
+	KTMediaFileUpload *result = nil;
 	KTMediaFile *media = [[[self delegateOwner] valueForKey:@"downloadMedia"] file];
 	
 	if ([[self delegateOwner] boolForKey:@"uploadMediaInPlaceOfPage"])
 	{
 		NSURL *siteURL = [[[[self page] documentInfo] hostProperties] siteURL];
 		NSString *path = [[[self page] URL] stringRelativeToURL:siteURL];
-		result = [media uploadForPath:path];
+        if (path)
+        {
+            result = [media uploadForPath:path];
+        }
 	}
-	else
+	
+    if (!result)
 	{
 		result = [media defaultUpload]; 
 	}

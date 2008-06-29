@@ -358,7 +358,7 @@
 	NSString *result = @"";
 	if (![self isRoot])
 	{
-		result = [self valueForKey:@"fileName"];
+		result = [self fileName];
 	}
 	
 	if ([self isCollection])

@@ -149,7 +149,9 @@
  */
 - (KTMediaFileUpload *)uploadForPath:(NSString *)path
 {
-	KTMediaFileUpload *result = nil;
+	OBPRECONDITION(path);
+    
+    KTMediaFileUpload *result = nil;
 	
 	// Search for an existing upload
 	NSSet *uploads = [self valueForKey:@"uploads"];
