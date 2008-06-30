@@ -81,7 +81,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMediaBrowser/iMediaBrowser.h>
-
+#import <Sparkle/Sparkle.h>
 
 // Triggers to localize for the Comment/trackback stuff
 
@@ -266,6 +266,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+	id oldContactHomeBase = [defaults  objectForKey:@"contactHomeBase"];
+	if (oldContactHomeBase)
+	{
+		[defaults setObject:oldContactHomeBase forKey:SUEnableAutomaticChecksKey];	// move old contactHomeBase key to our new Sparkle one.
+	}
 	
 	// If we have already tested this CPU, just get value from the defaults.
 

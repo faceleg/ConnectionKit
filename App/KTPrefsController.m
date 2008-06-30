@@ -166,7 +166,7 @@
 
 
 	// setup sparkeOption
-	if ([defaults boolForKey:@"contactHomeBase"])
+	if ([defaults boolForKey:SUEnableAutomaticChecksKey])
 	{
 		if ([[[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey]
 			 isEqualToString:[defaults objectForKey:SUFeedURLKey]])
@@ -234,15 +234,14 @@
 		switch (sparkleOption)
 		{
 			case kSparkleNone:
-				[defaults setBool:NO forKey:@"contactHomeBase"];
-				[[[NSApp delegate] sparkleUpdater] scheduleCheckWithInterval:0.0];	// cancel it now
+				[defaults setBool:NO forKey:SUEnableAutomaticChecksKey];
 				break;
 			case kSparkleRelease:
-				[defaults setBool:YES forKey:@"contactHomeBase"];
+				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
 				[defaults removeObjectForKey:SUFeedURLKey];	// revert to regular
 				break;
 			case kSparkleBeta:
-				[defaults setBool:YES forKey:@"contactHomeBase"];
+				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
 				NSString *newString = [SUFeedURL stringByAppendingString:@"&type=beta"];
 				[defaults setObject:newString forKey:SUFeedURLKey];	// revert to regular
 				break;
@@ -262,7 +261,12 @@
 
 - (IBAction) checkForUpdates:(id)sender
 {
-	[[[NSApp delegate] sparkleUpdater] checkForUpdates:sender];
+	static SUProbingUpdateDriver* sProbingUpdateDriver = nil;
+	if (nil == sProbingUpdateDriver)
+	{
+		sProbingUpdateDriver = [[SUProbingUpdateDriver alloc] init];
+	}
+	[[[NSApp delegate] sparkleUpdater] checkForUpdatesWithDriver:sProbingUpdateDriver];
 }
 
 

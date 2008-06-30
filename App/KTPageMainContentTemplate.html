@@ -25,8 +25,9 @@
 [[endif2]]
 								<div class="article-content">
 [[endif]]
+								[[if includeCallout]][[else]]<div class="no-callouts">[[endif]]
 									[[parsecomponent self elementTemplate]]
-								[[if includeCallout]]</div>[[endif]]
+								</div>[[comment END OF NO-CALLOUTS OR ARTICLE-CONTENT]]
 
 								<div class="article-info">
 
