@@ -186,6 +186,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 {
 	// The notification to do this doesn't get called, so we have to manually set it before reloading
 	[self setCurrentTextEditingBlock:nil];
+    [[[self webView] undoManager] performSelector:@selector(removeAllWebViewTargettedActions)];
 	
 	
 	// Throw away the old component tree
