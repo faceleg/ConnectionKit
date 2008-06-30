@@ -8,7 +8,8 @@
 
 #import "KTMediaContainer+Pasteboard.h"
 
-#import "KTMediaFile.h"
+#import "KTInDocumentMediaFile.h"
+#import "KTExternalMediaFile.h"
 #import "KTPasteboardArchiving.h"
 
 #import "BDAlias.h"
@@ -18,8 +19,8 @@
 
 - (id <NSCoding>)pasteboardRepresentation
 {
-	BDAlias *alias = [BDAlias aliasWithPath:[[self file] currentPath]];
-	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
+	id result = [[self file] pasteboardRepresentation];
+    return result;
 }
 
 - (id <NSCoding>)IDOnlyPasteboardRepresentation
@@ -28,6 +29,33 @@
 }
 
 @end
+
+
+@implementation KTInDocumentMediaFile (Pasteboard)
+
+- (id <NSCoding>)pasteboardRepresentation
+{
+	NSString *path = [self currentPath];
+    OBASSERT(path);
+    BDAlias *alias = [BDAlias aliasWithPath:path];
+	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
+}
+
+@end
+
+
+@implementation KTExternalMediaFile (Pasteboard)
+
+- (id <NSCoding>)pasteboardRepresentation
+{
+	BDAlias *alias = [self alias];
+	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
+}
+
+@end
+
+
+#pragma mark -
 
 
 @implementation KTMediaContainerPasteboardRepresentation

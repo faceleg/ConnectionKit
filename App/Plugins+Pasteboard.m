@@ -38,7 +38,7 @@
 	[super init];
 	
 	myPluginID = [[plugin uniqueID] copy];
-	myPluginEntity = [[plugin entity] name];
+	myPluginEntity = [[[plugin entity] name] copy];
 	
 	return self;
 }
