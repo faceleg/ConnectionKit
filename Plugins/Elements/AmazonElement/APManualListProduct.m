@@ -40,8 +40,10 @@
 	if ([lookupOp dataIsLoading])
 		[lookupOp cancel];
 	
+    [myItemLookupOp setDelegate:nil];
 	[myItemLookupOp release];
-	[myProductCode release];
+	
+    [myProductCode release];
 	[myLastLoadError release];
 	
 	[super dealloc];
