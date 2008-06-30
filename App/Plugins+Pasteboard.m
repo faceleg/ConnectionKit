@@ -143,6 +143,7 @@
 		if (!objectIsNSCodingCompliant)
 		{
 			id <NSCoding> pasteboardRepObject = [anObject valueForKey:@"pasteboardRepresentation"];
+            OBASSERTSTRING(pasteboardRepObject, aKey);
 			[buffer setObject:pasteboardRepObject forKey:aKey];
 		}
 	}
@@ -180,15 +181,18 @@
 	{
 		NSMutableSet *result = [NSMutableSet setWithSet:[super keysToIgnoreForPasteboardRepresentation]];
 		
-		NSSet *myIgnoredKeys = [NSSet setWithObjects:@"master",
-													 @"parent",
-													 @"childIndex",
-													 @"plugins",
-													 @"documentInfo",
-													 @"thumbnailMediaIdentifier", @"customSiteOutlineIconIdentifier",
-													 @"isStale",
-													 @"publishedPath", nil];
-		[result unionSet:myIgnoredKeys];
+		NSSet *myIgnoredKeys = [NSSet setWithObjects:
+                                @"master",
+                                @"rootDocumentInfo",
+                                @"parent",
+                                @"childIndex",
+                                @"plugins",
+                                @"documentInfo",
+                                @"thumbnailMediaIdentifier", @"customSiteOutlineIconIdentifier",
+                                @"isStale",
+                                @"publishedPath", nil];
+		
+        [result unionSet:myIgnoredKeys];
 		sIgnoredKeys = [result copy];
 	}
 	
