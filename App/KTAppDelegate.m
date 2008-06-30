@@ -292,9 +292,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 		@"Testing Reports",						@"AssignSubmission",	// Virtual user for testing reports, DON'T go to normal support person when testing
 										 
-		[NSNumber numberWithBool:NO],			SUDelayAlertUntilSystemIdle,	// don't delay alert til idle time if debugging; we want to be notified right away so that we will know before we expire a beta
-										 
-										 
 #else
 		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",
 #endif
