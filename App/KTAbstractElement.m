@@ -351,17 +351,20 @@
 - (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
 {
 	NSBundle *bundle = [[self plugin] bundle];
-	NSString *resourcePath = [bundle resourcePath];     OBASSERT(resourcePath);
-	NSArray *resourcesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginResourcesNeeded"];
-	NSEnumerator *theEnum = [resourcesNeeded objectEnumerator];
-	NSString *fileName;
-	
-	while (nil != (fileName = [theEnum nextObject]) )
-	{
-		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-        OBASSERT(path);
-		[aSet addObject:path];
-	}
+	NSString *resourcePath = [bundle resourcePath];
+    if (resourcePath)
+    {
+        NSArray *resourcesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginResourcesNeeded"];
+        NSEnumerator *theEnum = [resourcesNeeded objectEnumerator];
+        NSString *fileName;
+        
+        while (nil != (fileName = [theEnum nextObject]) )
+        {
+            NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
+            OBASSERT(path);
+            [aSet addObject:path];
+        }
+    }
 }
 
 - (void)addCSSFilePathToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
