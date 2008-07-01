@@ -383,39 +383,16 @@ initial syntax coloring.
 }
 
 
-/* -----------------------------------------------------------------------------
-	textView:shouldChangeTextinRange:replacementString:
-		Perform indentation-maintaining if we're supposed to.
-   -------------------------------------------------------------------------- */
-
--(BOOL) textView:(NSTextView *)tv shouldChangeTextInRange:(NSRange)afcr replacementString:(NSString *)rps
-{
-	if( maintainIndentation )
-	{
-		affectedCharRange = afcr;
-		if( replacementString )
-		{
-			[replacementString release];
-			replacementString = nil;
-		}
-		replacementString = [rps retain];
-		
-		[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
-	}
-	
-	return YES;
-}
-
-
 -(void)	didChangeText	// This actually does what we want to do in textView:shouldChangeTextInRange:
 {
+	NSLog(@"didChangeText");
 	if( maintainIndentation && replacementString && ([replacementString isEqualToString:@"\n"]
-		|| [replacementString isEqualToString:@"\r"]) )
+													 || [replacementString isEqualToString:@"\r"]) )
 	{
 		NSMutableAttributedString*  textStore = [textView textStorage];
 		BOOL						hadSpaces = NO;
 		unsigned int				lastSpace = affectedCharRange.location,
-									prevLineBreak = 0;
+		prevLineBreak = 0;
 		NSRange						spacesRange = { 0, 0 };
 		unichar						theChar = 0;
 		unsigned int				x = (affectedCharRange.location == 0) ? 0 : affectedCharRange.location -1;
@@ -435,7 +412,7 @@ initial syntax coloring.
 					prevLineBreak = x +1;
 					x = 0;  // Terminate the loop.
 					break;
-				
+					
 				case ' ':
 				case '\t':
 					if( !hadSpaces )
@@ -444,7 +421,7 @@ initial syntax coloring.
 						hadSpaces = YES;
 					}
 					break;
-				
+					
 				default:
 					hadSpaces = NO;
 					break;
@@ -465,6 +442,32 @@ initial syntax coloring.
 		}
 	}
 }
+
+
+/* -----------------------------------------------------------------------------
+	textView:shouldChangeTextinRange:replacementString:
+		Perform indentation-maintaining if we're supposed to.
+   -------------------------------------------------------------------------- */
+
+-(BOOL) textView:(NSTextView *)tv shouldChangeTextInRdfange:(NSRange)afcr replacementString:(NSString *)rps
+{
+	if( maintainIndentation )
+	{
+		affectedCharRange = afcr;
+		if( replacementString )
+		{
+			[replacementString release];
+			replacementString = nil;
+		}
+		replacementString = [rps retain];
+		
+		// Took this out -- it never seemed to be actually invoked, and it would make us lose Japanese characters.
+		//[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
+	}
+	
+	return YES;
+}
+
 
 #pragma mark -
 #pragma mark Deferring recoloring
