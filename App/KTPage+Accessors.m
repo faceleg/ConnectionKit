@@ -187,25 +187,6 @@
 	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
 }
 
-/*	Used when determining if a page should be highlighted in the Site Menu.
- *	Searches up our list of parents to find the first one that appears in the menu.
- */
-- (KTPage *)firstParentOrSelfInSiteMenu;
-{
-	KTPage *result = nil;
-	
-	if ([self includeInSiteMenu])
-	{
-		result = self;
-	}
-	else
-	{
-		result = [[self parent] firstParentOrSelfInSiteMenu];
-	}
-	
-	return result;
-}
-
 - (NSString *)menuTitle { return [self wrappedValueForKey:@"menuTitle"]; }
 
 - (void)setMenuTitle:(NSString *)newTitle

@@ -75,7 +75,6 @@
 // Site menu
 - (BOOL)includeInSiteMenu;
 - (void)setIncludeInSiteMenu:(BOOL)include;
-- (KTPage *)firstParentOrSelfInSiteMenu;
 
 - (NSString *)menuTitle;
 - (void)setMenuTitle:(NSString *)newTitle;
