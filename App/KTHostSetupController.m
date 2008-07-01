@@ -24,6 +24,7 @@ TO DO:
 
 #import "Debug.h"
 #import "NSError+Karelia.h"
+#import "NSBundle+Karelia.h"
 
 #import "KT.h"
 #import "KTAppDelegate.h"
@@ -2195,7 +2196,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			}
 			return;	// no point in proceeding.
 		}
-		NSString *homeBaseURL = [defaults objectForKey:@"HomeBaseURL"];
+		NSString *homeBaseURL = [[[NSBundle mainBundle] homeBaseURL] absoluteString];
 		NSURLConnection *theConnection = nil;
 		if (nil != homeBaseURL)
 		{

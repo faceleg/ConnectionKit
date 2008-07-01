@@ -204,7 +204,7 @@
 	<key>SUDelayAlertUntilSystemIdle</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>http://launch.karelia.com/appcast.php?appname=${PRODUCT_NAME}&amp;version=${SVN_VERSION}</string>
+	<string>http://launch.karelia.com/appcast.php</string>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT}</string>
 	<key>SUIncludeProfile</key>

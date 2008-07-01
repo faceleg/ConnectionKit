@@ -10,31 +10,22 @@
 #import <Sparkle/Sparkle.h>
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSBundle+Karelia.h"
 #import "Debug.h"
+#import "KSAppDelegate.h"
 
 @implementation KTReleaseNotesController
 
 - (NSURL *)URLToLoad;
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *feedURLString = [defaults objectForKey:SUFeedURLKey];
-	NSURL *feedURL = [NSURL URLWithString:[feedURLString encodeLegally]];
-	NSDictionary *params = [feedURL queryDictionary];
+	NSArray *feedParams = [[NSApp delegate] feedParametersForHostBundle:[NSBundle mainBundle] sendingSystemProfile:NO];
+	NSMutableArray *rnParams = [NSMutableArray arrayWithArray:feedParams];
+	[rnParams addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"rn", @"key", @"1", @"value", nil]];
 	
-	// this gives us appname and version, but not product, which we need!
-	// We need the service to look up the product from the appname.
-	
-	NSMutableDictionary *newParams = [NSMutableDictionary dictionaryWithDictionary:params];
-	[newParams setObject:@"1" forKey:@"rn"];
-	
-	NSURL *newURL = [NSURL URLWithBaseURL:
-					 [NSURL URLWithString:
-					  [NSString stringWithFormat:@"%@changelog.php",
-					   [[NSUserDefaults standardUserDefaults] objectForKey:@"HomeBaseURL"]
-					   ]]
-							   parameters:newParams];
-	DJW((@"release notes URL = %@", newURL));
-	return newURL;
+	NSURL *newURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSBundle mainBundle] homeBaseURL]];
+	NSURL *feedURL = [newURL URLWithParameters:rnParams];
+	DJW((@"release notes URL = %@", feedURL));
+	return feedURL;
 }
 
 - (void)windowDidLoad

@@ -168,8 +168,9 @@
 	// setup sparkeOption
 	if ([defaults boolForKey:SUEnableAutomaticChecksKey])
 	{
-		if ([[[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey]
-			 isEqualToString:[defaults objectForKey:SUFeedURLKey]])
+		NSString *feedType = [defaults objectForKey:@"KSFeedType"];
+
+		if (nil == feedType || [feedType isEqualToString:@""] || [feedType isEqualToString:@"release"])
 		{
 			[self setSparkleOption:kSparkleRelease];
 		}
@@ -229,8 +230,7 @@
 		
 		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 		NSUserDefaults *defaults = [controller defaults];
-		NSString *SUFeedURL = [[NSBundle mainBundle] objectForInfoDictionaryKey:SUFeedURLKey];	// default feed.
-		
+
 		switch (sparkleOption)
 		{
 			case kSparkleNone:
@@ -238,12 +238,11 @@
 				break;
 			case kSparkleRelease:
 				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
-				[defaults removeObjectForKey:SUFeedURLKey];	// revert to regular
+				[defaults removeObjectForKey:@"KSFeedType"];
 				break;
 			case kSparkleBeta:
 				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
-				NSString *newString = [SUFeedURL stringByAppendingString:@"&type=beta"];
-				[defaults setObject:newString forKey:SUFeedURLKey];	// revert to regular
+				[defaults setObject:@"beta" forKey:@"KSFeedType"];
 				break;
 		}
 		[defaults synchronize];

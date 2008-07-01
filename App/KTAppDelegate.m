@@ -266,10 +266,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
+// TODO: Remove this later (v2.0) once the old contactHomeBase hasn't been around for a while
 	id oldContactHomeBase = [defaults  objectForKey:@"contactHomeBase"];
 	if (oldContactHomeBase)
 	{
 		[defaults setObject:oldContactHomeBase forKey:SUEnableAutomaticChecksKey];	// move old contactHomeBase key to our new Sparkle one.
+		[defaults removeObjectForKey:@"contactHomeBase"];
 	}
 	
 	// If we have already tested this CPU, just get value from the defaults.
@@ -381,7 +383,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[NSNumber numberWithFloat: 30.0],@"inputScale",nil], 
 		@"CIFilterParameters",
 		
-        @"http://launch.karelia.com/",		@"HomeBaseURL",	// must end in slash
 		[NSNumber numberWithInt:5],				@"LocalHostVerifyTimeout",
 		@"/Library/WebServer/Documents",		@"ApacheDocRoot",
 		[NSNumber numberWithBool:NO],			@"SetDateFromSourceMaterial",
@@ -537,17 +538,22 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
 	
+// TODO: remove this for release.  I just don't want to have this old key around in the user defaults.
+	// However, later on, somebody might want to actually override things.
+#ifndef DEBUG
+	[defaults removeObjectForKey:SUFeedURLKey];	// NOT storing a feed URL now in defaults, generally
+#endif
 	
 	// If we don't have a feed type in user defaults, get it explicitly from the Info.plist.
 	// This allows us to start out with a beta/release type, and keep that type even after we have
 	// made a release and somebody was originally getting betas.
 	
-	if (nil == [defaults objectForKey:@"KSFeedType"])		// 'beta' or 'release' or '' (empty string) for none
+	NSString *feedType = [defaults objectForKey:@"KSFeedType"];
+	if (nil == feedType || [feedType isEqualToString:@""])		// 'beta' or 'release' or '' (empty string) for none
 	{
 		NSString *feedType = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"];	// default feed type
 		[defaults setObject:feedType forKey:@"KSFeedType"];
 	}
-	[KSAppDelegate setSparkleURLFromDefaults];		// make the sparkle URL real
 	
 	[defaults synchronize];
 	OBSetupFromDefaults();
@@ -1345,7 +1351,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 								nil
 								);
 		
-		[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
+		// OLD WAY, MAY NOT BE SUPPORTED IN 1.5 ... [[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
+		[[SUUpdater sharedUpdater] checkForUpdatesWithDriver:[[[SUScheduledUpdateDriver alloc] init] autorelease]];
+		
+		
 		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
 		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:300.0];	// give user enough time to download and install
 	}
