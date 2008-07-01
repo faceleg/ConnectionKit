@@ -28,11 +28,11 @@
 {
 	NSMutableArray *array = [NSMutableArray array];
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	[array addObjectsFromArray:[[self valueForKey:@"dataItems"] allObjects]];
 	[array addObjectsFromArray:[[self valueForKey:@"stringsItems"] allObjects]];
 	NSArray *result = [array sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
@@ -56,7 +56,7 @@
 
 - (NSArray *)allValues
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	NSMutableArray *array = [NSMutableArray array];
 	
@@ -73,7 +73,7 @@
 		[array addObject:value];
 	}
 	
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return [NSArray arrayWithArray:array];
 }
@@ -88,9 +88,9 @@
 
 - (NSString *)verboseDescription
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	NSString *result =  [[self allValues] description];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	return result;
 }
 

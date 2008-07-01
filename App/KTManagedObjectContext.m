@@ -147,9 +147,9 @@ static NSString *sMainThreadID = nil;
 
 - (void)threadSafeDeleteObject:(NSManagedObject *)object
 {
-	[self lockPSCAndSelf];
+	//[self lockPSCAndSelf];
 	[self deleteObject:object];
-	[self unlockPSCAndSelf];
+	//[self unlockPSCAndSelf];
 }
 
 #pragma mark -

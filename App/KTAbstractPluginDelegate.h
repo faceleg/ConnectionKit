@@ -54,6 +54,7 @@
 - (NSUndoManager *)undoManager;
 
 // covers that handle context locking for multi-threaded use
+// deprecated
 - (BOOL)lockContextIfNeeded;
 - (void)unlockContextIfNeeded:(BOOL)didLock;
 

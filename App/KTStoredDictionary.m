@@ -26,7 +26,7 @@
 
 - (NSDictionary *)dictionary
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 	
@@ -37,7 +37,7 @@
 		[result setObject:[self objectForKey:key] forKey:key];
 	}
 	
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return [NSDictionary dictionaryWithDictionary:result];
 }
@@ -60,9 +60,9 @@
 {
 	unsigned int result = 0;
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	result = [[self valueForKey:@"dataEntries"] count] + [[self valueForKey:@"stringsEntries"] count];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 
 	return result;
 }
@@ -71,7 +71,7 @@
 {
 	id result = nil;
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	[self willAccessValueForKey:aKey];
 
 	NSEnumerator *e = [[self entries] objectEnumerator];
@@ -96,7 +96,7 @@
 	}
 	
 	[self didAccessValueForKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 
 	return result;
 }
@@ -176,7 +176,7 @@
 {
 	NSString *desc = @"";
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	NSEnumerator *e = [[self allKeys] objectEnumerator];
 	NSString *key;
@@ -186,7 +186,7 @@
 		desc = [desc stringByAppendingFormat:@"\nkey = %@, value = %@", key, [object description]];
 	}
 	
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return desc;
 }

@@ -2224,7 +2224,7 @@ from representedObject */
 	
 	@synchronized ( [self addingPagesViaDragPseudoLock] )
 	{
-		[[[self document] managedObjectContext] lockPSCAndSelf];
+		//[[[self document] managedObjectContext] lockPSCAndSelf];
 // TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
 		
 		NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
@@ -2342,7 +2342,7 @@ from representedObject */
 			[self endSheet];
 		}
 		
-		[[[self document] managedObjectContext] unlockPSCAndSelf];
+		//[[[self document] managedObjectContext] unlockPSCAndSelf];
 	}
 	
 	// if not dropping on an item, set the selection to the last page created

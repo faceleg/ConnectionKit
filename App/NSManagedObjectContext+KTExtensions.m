@@ -53,7 +53,7 @@
 		// a "statement is still active" error. if we only lockIfNecessary, it's possible
 		// that this method could be called on the main thread while another thread is
 		// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-		[self lockPSCAndSelf];
+		//[self lockPSCAndSelf];
 		NSManagedObjectModel *model= [[self persistentStoreCoordinator] managedObjectModel];
 		fetchRequest = [model fetchRequestFromTemplateWithName:aTemplateName
 										 substitutionVariables:aDictionary];
@@ -66,7 +66,7 @@
 	}	
 	@finally
 	{
-		[self unlockPSCAndSelf];
+		//[self unlockPSCAndSelf];
 		
 		if ( (nil == fetchedObjects) && (nil != anError) )
 		{
@@ -104,7 +104,7 @@
 		// a "statement is still active" error. if we only lockIfNecessary, it's possible
 		// that this method could be called on the main thread while another thread is
 		// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-		[self lockPSCAndSelf];
+		//[self lockPSCAndSelf];
 		fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
 	}
 	@catch (NSException *exception)
@@ -114,7 +114,7 @@
 	}	
 	@finally
 	{
-		[self unlockPSCAndSelf];
+		//[self unlockPSCAndSelf];
 
 		if ( nil == fetchedObjects && nil != anError )
 		{

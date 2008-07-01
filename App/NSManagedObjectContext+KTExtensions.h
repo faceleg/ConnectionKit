@@ -31,6 +31,7 @@
 
 - (void)deleteObjectsInCollection:(id)collection;   // e.g. NSArray or NSSet
 
+// deprecated
 - (void)lockPSCAndSelf;
 - (void)unlockPSCAndSelf;
 

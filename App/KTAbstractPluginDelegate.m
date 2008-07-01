@@ -8,6 +8,7 @@
 
 #import "KTAbstractPluginDelegate.h"
 
+#import "Debug.h"
 #import "KTDocument.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
@@ -78,11 +79,13 @@
 
 - (BOOL)lockContextIfNeeded
 {
+	LOG((@"lockContextIfNeeded is deprecated -- who's calling me?"));
 	return [myDelegateOwner lockContextIfNeeded];
 }
 
 - (void)unlockContextIfNeeded:(BOOL)didLock
 {
+	LOG((@"unlockContextIfNeeded is deprecated -- who's calling me?"));
 	[myDelegateOwner unlockContextIfNeeded:didLock];
 }
 

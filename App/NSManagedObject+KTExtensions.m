@@ -238,7 +238,7 @@
 {
 	id result = nil;
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	// first check changedValues, then comittedValues
 	NSDictionary *values = [self changedValues];
@@ -251,7 +251,7 @@
 		result = [self committedValueForKey:aKey];
 	}
 	
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
@@ -261,7 +261,7 @@
 {
 	id result = nil;
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	@try
 	{
 		[self willAccessValueForKey:aKey];
@@ -279,7 +279,7 @@
 	}
 	@finally
 	{
-		[self unlockPSCAndMOC];
+		//[self unlockPSCAndMOC];
 	}
 	
     return result;
@@ -289,11 +289,11 @@
 // setWrappedValue:forKey: ALSO WILL NOT SET BOTH SIDES OF A RELATIONSHIP
 - (void)setWrappedValue:(id)aValue forKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
     [self willChangeValueForKey:aKey];
     [self setPrimitiveValue:aValue forKey:aKey];
     [self didChangeValueForKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 }
 
 - (id)delegableWrappedValueForKey:(NSString *)aKey
@@ -347,55 +347,55 @@
 
 - (id)threadSafeWrappedValueForKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
     [self willAccessValueForKey:aKey];
     id result = [self primitiveValueForKey:aKey];
     [self didAccessValueForKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
     return result;
 }
 
 - (void)threadSafeSetWrappedValue:(id)aValue forKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
     [self willChangeValueForKey:aKey];
     [self setPrimitiveValue:aValue forKey:aKey];
     [self didChangeValueForKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 }
 
 - (id)threadSafeValueForKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	id result = [self valueForKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
 
 - (void)threadSafeSetValue:(id)aValue forKey:(NSString *)aKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	[self setValue:aValue forKey:aKey];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 }
 
 - (id)threadSafeValueForKeyPath:(NSString *)aKeyPath
 {
 	id result = nil;
 	
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	result = [self valueForKeyPath:aKeyPath];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
 
 - (void)threadSafeSetValue:(id)aValue forKeyPath:(NSString *)aKeyPath
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	[self setValue:aValue forKeyPath:aKeyPath];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 }
 
 - (NSDictionary *)currentValues
@@ -420,18 +420,19 @@
 
 - (BOOL)lockContextIfNeeded
 {
-	[(KTManagedObjectContext *)[self managedObjectContext] lock];
+	//[(KTManagedObjectContext *)[self managedObjectContext] lock];
 	return YES;
 }
 
 - (void)unlockContextIfNeeded:(BOOL)didLock
 {
-	[(KTManagedObjectContext *)[self managedObjectContext] unlock];
+	//[(KTManagedObjectContext *)[self managedObjectContext] unlock];
 }
 
 // these two methods should be paired
 - (void)lockPSCAndMOC
 {
+	LOG((@"lockPSCAndMOC is deprecated -- who's calling me?"));
 	//[[self managedObjectContext] checkPublishingModeAndThread];
 	
 	// lock PSC first
@@ -441,6 +442,7 @@
 
 - (void)unlockPSCAndMOC
 {
+	LOG((@"unlockPSCAndMOC is deprecated -- who's calling me?"));
 	//[[self managedObjectContext] checkPublishingModeAndThread];
 
 	// unlock MOC first
@@ -455,7 +457,7 @@
  */
 - (id)transientValueForKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	[self willAccessValueForKey:key];
 	id result = [self primitiveValueForKey:key];
@@ -482,7 +484,7 @@
         }
 	}
     
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
@@ -513,7 +515,7 @@
  */
 - (id)transientValueForKey:(NSString *)key persistentArchivedDataKey:(NSString *)dataKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	[self willAccessValueForKey:key];
 	id result = [self primitiveValueForKey:key];
@@ -530,7 +532,7 @@
         }
 	}
     
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	return result;
 }
@@ -545,7 +547,7 @@
  */
 - (void)setTransientValue:(id)value forKey:(NSString *)key andPersistentData:(NSData *)data forKey:(NSString *)dataKey
 {
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	
 	[self willChangeValueForKey:key];
     [self setPrimitiveValue:value forKey:key];
@@ -553,7 +555,7 @@
     
 	[self setValue:data forKey:dataKey];
 	
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 }
 
 @end

@@ -313,7 +313,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 - (void)removePagelets:(NSArray *)pagelets fromContext:(KTManagedObjectContext *)aContext
 {
 	[[self document] suspendAutosave];
-	[aContext lockPSCAndSelf];
+	//[aContext lockPSCAndSelf];
 	
 	NSEnumerator *e = [pagelets objectEnumerator];
 	KTPagelet *pagelet = nil;
@@ -326,7 +326,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	LOG((@"removed a save here, is it still needed?"));
 //	[[self document] saveContext:aContext onlyIfNecessary:NO];
 	
-	[aContext unlockPSCAndSelf];
+	//[aContext unlockPSCAndSelf];
 	[[self document] resumeAutosave];
 }
 

@@ -128,9 +128,9 @@
 	
 	
 	// Add the pagelet to our set
-	[self lockPSCAndMOC];
+	//[self lockPSCAndMOC];
 	[[self mutableSetValueForKey:@"pagelets"] addObject:pagelet];
-	[self unlockPSCAndMOC];
+	//[self unlockPSCAndMOC];
 	
 	
 	// Insert the pagelet into the array and update the ordering of all pagelets

@@ -87,9 +87,9 @@
                     value = [[value mutableCopyWithZone:[value zone]] autorelease];
                 }
 				/// we can't use setWrappedValue:forKey: here as key is likely not a modeled property of self
-				[self lockPSCAndMOC];
+				//[self lockPSCAndMOC];
 				[self setValue:value forKey:key];
-				[self unlockPSCAndMOC];
+				//[self unlockPSCAndMOC];
             }
         }        
 	}

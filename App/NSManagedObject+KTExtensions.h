@@ -63,6 +63,7 @@
 - (id)delegableWrappedValueForKey:(NSString *)aKey;
 - (void)setDelegableWrappedValue:(id)aValue forKey:(NSString *)aKey;
 
+// deprecated as of Sandvox 1.5
 - (id)threadSafeWrappedValueForKey:(NSString *)aKey;
 - (void)threadSafeSetWrappedValue:(id)aValue forKey:(NSString *)aKey;
 
@@ -72,6 +73,7 @@
 - (id)threadSafeValueForKeyPath:(NSString *)aKeyPath;
 - (void)threadSafeSetValue:(id)aValue forKeyPath:(NSString *)aKeyPath;
 
+// deprecated as of Sandvox 1.5
 - (void)lockContext;
 - (void)unlockContext;
 
