@@ -258,8 +258,10 @@
 - (NSArray *)sortedPageletsWithPredicate:(NSPredicate *)predicate
 {
 	// Filter and sort the array
-	NSArray *unsortedCallouts = [[[self pagelets] allObjects] filteredArrayUsingPredicate:predicate];
-	NSArray *result = [unsortedCallouts sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
+	NSSet *allPagelets = [self pagelets];                                                   OBASSERT(allPagelets);
+    NSArray *allPageletsArray = [allPagelets allObjects];                                   OBASSERT(allPageletsArray);
+    NSArray *unsortedPagelets = [allPageletsArray filteredArrayUsingPredicate:predicate];   OBASSERT(unsortedPagelets);
+	NSArray *result = [unsortedPagelets sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
 	
 	OBPOSTCONDITION(result);
 	return result;
