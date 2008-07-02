@@ -6,7 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSPrefsController.h"
+#import "KSSingletonWindowController.h"
 
 @class KSEmailAddressComboBox;
 
