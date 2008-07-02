@@ -6,10 +6,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSSingletonWindowController.h"
+#import "KSPrefsController.h"
 
 @class KSEmailAddressComboBox;
 
+// TODO: Descend from KSPrefsController (after we are ready to do another round of localization and nib-rebuilding)
 @interface KTPrefsController : KSSingletonWindowController
 {
 	IBOutlet NSImageView *oCompressionSample;
