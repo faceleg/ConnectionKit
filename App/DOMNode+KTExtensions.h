@@ -128,3 +128,11 @@
 @interface DOMHTMLImageElement (KTExtensions)
 - (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 @end
+
+
+#pragma mark -
+
+@interface DOMDocumentFragment (KTExtensions)
+- (NSString *)innerHTML;
+@end
+

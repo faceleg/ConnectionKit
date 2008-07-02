@@ -1419,3 +1419,30 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 @end
 
 
+#pragma mark -
+#pragma mark DOMDocumentFragment
+
+@implementation DOMDocumentFragment (KTExtensions)
+
+/*  Normally this method is only available to DOMHTMLElement. However, I'm defining it here so that there's a nice easy
+ *  way to get debugging output from DOMDocumentFragments (which we are passed by WebKit sometimes).
+ *
+ *  Returns nil if one or more childNodes is not an HTML element.
+ */
+- (NSString *)innerHTML
+{
+    NSString *result = nil;
+    
+    NSArray *HTMLChildren = [self childrenOfClass:[DOMHTMLElement class]];
+    if ([HTMLChildren count] == [[self childNodes] length])
+    {
+        NSArray *HTMLFragments = [HTMLChildren valueForKey:@"outerHTML"];
+        result = [HTMLFragments componentsJoinedByString:@"\r"];
+    }
+    
+    return result;
+}
+
+@end
+
+
