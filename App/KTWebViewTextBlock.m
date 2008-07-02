@@ -41,6 +41,9 @@
 - (id)initWithHTMLElement:(DOMHTMLElement *)DOMNode webViewController:(KTDocWebViewController *)webViewController;
 
 - (void)setDOMNode:(DOMHTMLElement *)node;
+
++ (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)element;
+
 @end
 
 
@@ -639,29 +642,59 @@
 /*!	We validate any DOMNode insertions, passing them to the edited object if appropriate.
  *	The insertion can be pasted, dropped or typed, but the last case doesn't seem to happen normally.
  */
+// TODO: improve on this by looking at UTI and creating OBJECT elements for .mov files, etc.
 - (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 // node is DOMDocumentFragment
 {
 	BOOL result = YES;    
     
+    // Work out the right plugin to use
+    KTAbstractElement *plugin = [self HTMLSourceObject];
+    if (![plugin isKindOfClass:[KTAbstractElement class]])
+    {
+        plugin = [self page];
+    }
     
     
-	// If there is an appropriate delegate object, ask it to validate the insert.
-	id sourceObject = [self HTMLSourceObject];
-	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractElement class]])
+    // Figure out the maximum image size we'll allow
+	NSString *settings;
+	if ([plugin isKindOfClass:[KTPagelet class]])
 	{
-		id delegate = [sourceObject delegate];
-		if (delegate && [delegate respondsToSelector:@selector(plugin:shouldInsertNode:intoTextForKeyPath:givenAction:)])
-		{
-			result = [delegate plugin:sourceObject
-					 shouldInsertNode:node
-				   intoTextForKeyPath:[self HTMLSourceKeyPath]
-						  givenAction:action];
-		}
+		settings = @"sidebarImage";
+	}
+	else if ([plugin isKindOfClass:[KTPage class]])
+	{
+		// TODO: could we vary the size based on whether the page is showing a sidebar?
+		settings = @"inTextMediumImage";
+	}
+	else
+	{
+		return NO;
 	}
 	
 	
-	if (result)
+	// Import graphics into the media system
+    if ([self importsGraphics])
+    {
+        if ([node isFileList])
+        {
+            DOMNodeList *divs = [node childNodes];
+            unsigned i;
+            for (i=0; i<[divs length]; i++)
+            {
+                [[self class] convertFileListElement:(DOMHTMLDivElement *)[divs item:i]
+                            toImageWithSettingsNamed:settings
+                                           forPlugin:plugin];
+            }
+        }	
+        else
+        {
+            [node convertImageSourcesToUseSettingsNamed:settings forPlugin:plugin];
+        }
+    }
+    
+    
+    if (result)
 	{
 		// Tidy up the node to match the insertion destination
 		if ([self isRichText] && [self isFieldEditor])
@@ -694,5 +727,47 @@
 	
 	return result;
 }
+
++ (void)convertFileListElement:(DOMHTMLDivElement *)div
+      toImageWithSettingsNamed:(NSString *)settingsName
+                     forPlugin:(KTAbstractElement *)element
+{
+	// TODO: what happens when the default design size changes?
+	DOMNode *node = [div parentNode];
+    
+	// Create a media container for the file
+	NSString *path = [[NSURL URLWithString:[(DOMText *)[div firstChild] data]] path];
+	KTMediaContainer *mediaContainer = [[element mediaManager] mediaContainerWithPath:path];
+	
+	
+	if ([NSString UTI:[NSString UTIForFileAtPath:path] conformsToUTI:(NSString *)kUTTypeImage])
+	{
+		// Convert image files to a simple <img> tag
+		mediaContainer = [mediaContainer imageWithScalingSettingsNamed:settingsName forPlugin:element];
+		
+		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
+		[imageElement setSrc:[[mediaContainer URIRepresentation] absoluteString]];
+		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
+		
+		[node replaceChild:imageElement :div];
+	}
+	else
+	{
+		// Other files are converted to their thumbnail and made a download link
+		KTMediaContainer *icon =
+        [mediaContainer imageWithScalingSettingsNamed:@"thumbnailImage" forPlugin:element];
+		
+		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
+		[imageElement setSrc:[[icon URIRepresentation] absoluteString]];
+		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
+		
+		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[node ownerDocument] createElement:@"a"];
+		[anchor setHref:[[mediaContainer URIRepresentation] absoluteString]];
+		[anchor appendChild:imageElement];
+		
+		[node replaceChild:anchor :div];	
+	}
+}
+
 
 @end

@@ -73,7 +73,11 @@
 /*! returns all child DOMHTMLObjectElement (object tags) */
 - (NSArray *)objectElements;
 
+
+// Media
+- (BOOL)isFileList;
 - (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
+
 
 - (DOMNode *)removeJunkRecursiveRestrictive:(BOOL)aRestricted allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs;
 
