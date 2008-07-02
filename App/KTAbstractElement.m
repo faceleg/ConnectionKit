@@ -13,6 +13,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTMediaManager.h"
+#import "KTMediaContainer.h"
 #import "KTPage.h"
 #import "KTPersistentStoreCoordinator.h"
 
@@ -273,11 +274,14 @@
  */
 - (NSSet *)requiredMediaIdentifiers
 {
-	NSSet *result = nil;
+	NSMutableSet *result = [NSMutableSet set];
+    
+    [result unionSet:[KTMediaContainer mediaContainerIdentifiersInHTML:[self valueForKey:@"introductionHTML"]]];
 	
 	if ([[self delegate] respondsToSelector:@selector(requiredMediaIdentifiers)])
 	{
-		result = [[self delegate] performSelector:@selector(requiredMediaIdentifiers)];
+		NSSet *delegateMedia = [[self delegate] performSelector:@selector(requiredMediaIdentifiers)];
+        if (delegateMedia) [result unionSet:delegateMedia];
 	}
 	
 	return result;
