@@ -145,12 +145,22 @@
 
 - (void)setWebView:(WebView *)aWebView
 {
-	[[self webView] setEditingDelegate:nil];
+	// Clear old delegates to avoid memory bugs
+    WebView *oldWebView = [self webView];
+    [oldWebView setEditingDelegate:nil];
+    [oldWebView setFrameLoadDelegate:nil];
+    [oldWebView setPolicyDelegate:nil];
+    [oldWebView setResourceLoadDelegate:nil];
+    [oldWebView setUIDelegate:nil];
+    
 	
+    // Store new webview
 	[aWebView retain];
 	[myWebView release];
 	myWebView = aWebView;
 	
+    
+    // Setup new delegation
 	[[self webView] setEditingDelegate:self];
 }
 
