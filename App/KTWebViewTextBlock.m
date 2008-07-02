@@ -633,4 +633,66 @@
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Drag and Drop
+
+/*!	We validate any DOMNode insertions, passing them to the edited object if appropriate.
+ *	The insertion can be pasted, dropped or typed, but the last case doesn't seem to happen normally.
+ */
+- (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+// node is DOMDocumentFragment
+{
+	BOOL result = YES;    
+    
+    
+    
+	// If there is an appropriate delegate object, ask it to validate the insert.
+	id sourceObject = [self HTMLSourceObject];
+	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractElement class]])
+	{
+		id delegate = [sourceObject delegate];
+		if (delegate && [delegate respondsToSelector:@selector(plugin:shouldInsertNode:intoTextForKeyPath:givenAction:)])
+		{
+			result = [delegate plugin:sourceObject
+					 shouldInsertNode:node
+				   intoTextForKeyPath:[self HTMLSourceKeyPath]
+						  givenAction:action];
+		}
+	}
+	
+	
+	if (result)
+	{
+		// Tidy up the node to match the insertion destination
+		if ([self isRichText] && [self isFieldEditor])
+		{
+			[node makeSingleLine];
+		}
+		else if (![self isRichText])
+		{
+			[node makePlainTextWithSingleLine:[self isFieldEditor]];	// Could perhaps use -innerText method instead
+		}
+		
+		
+		// Ban inserts of <img> elements into non-importsGraphics text.
+		if (![self importsGraphics])
+		{
+			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node :DOM_SHOW_ELEMENT :nil :NO];
+			DOMNode *aNode = [it nextNode];
+			while (nil != aNode)
+			{
+				if ([[aNode nodeName] isEqualToString:@"IMG"])
+				{
+					result = NO;
+					break;
+				}
+				aNode = [it nextNode];
+			}
+		}
+	}
+	
+	
+	return result;
+}
+
 @end

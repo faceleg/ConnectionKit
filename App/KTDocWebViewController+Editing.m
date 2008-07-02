@@ -462,66 +462,18 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Change Management
 
-/*!	We validate any DOMNode insertions, passing them to the edited object if appropriate.
- *	The insertion can be pasted, dropped or typed, but the last case doesn't seem to happen normally.
+/*	Control is passed onto the current text block to handle.
  */
 - (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 	// node is DOMDocumentFragment
 {
-	BOOL result = YES;
+	BOOL result = NO;
 	
-	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:[range startContainer]
-																		 webViewController:self];
-	if (!textBlock) {
-		return NO;
+	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:[range startContainer] webViewController:self];
+	if (textBlock)
+    {
+		result = [textBlock webView:aWebView shouldInsertNode:node replacingDOMRange:range givenAction:action];
 	}
-	
-	
-	// If there is an appropriate delegate object, ask it to validate the insert.
-	id sourceObject = [textBlock HTMLSourceObject];
-	if (sourceObject && [sourceObject isKindOfClass:[KTAbstractElement class]])
-	{
-		id delegate = [sourceObject delegate];
-		if (delegate && [delegate respondsToSelector:@selector(plugin:shouldInsertNode:intoTextForKeyPath:givenAction:)])
-		{
-			result = [delegate plugin:sourceObject
-					 shouldInsertNode:node
-				   intoTextForKeyPath:[textBlock HTMLSourceKeyPath]
-						  givenAction:action];
-		}
-	}
-	
-	
-	if (result)
-	{
-		// Tidy up the node to match the insertion destination
-		if ([textBlock isRichText] && [textBlock isFieldEditor])
-		{
-			[node makeSingleLine];
-		}
-		else if (![textBlock isRichText])
-		{
-			[node makePlainTextWithSingleLine:[textBlock isFieldEditor]];	// Could perhaps use -innerText method instead
-		}
-		
-		
-		// Ban inserts of <img> elements into non-importsGraphics text.
-		if (![textBlock importsGraphics])
-		{
-			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node :DOM_SHOW_ELEMENT :nil :NO];
-			DOMNode *aNode = [it nextNode];
-			while (nil != aNode)
-			{
-				if ([[aNode nodeName] isEqualToString:@"IMG"])
-				{
-					result = NO;
-					break;
-				}
-				aNode = [it nextNode];
-			}
-		}
-	}
-	
 	
 	return result;
 }
