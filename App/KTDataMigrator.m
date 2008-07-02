@@ -990,16 +990,45 @@
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
+    BOOL result = NO;
+    
     id delegate = [self delegate];
     if (delegate && [delegate respondsToSelector:@selector(importPluginProperties:fromPlugin:error:)])
     {
-        return [delegate importPluginProperties:oldPluginProperties fromPlugin:oldPlugin error:error];
+        result = [delegate importPluginProperties:oldPluginProperties fromPlugin:oldPlugin error:error];
     }
     else
     {
         [self setValuesForKeysWithDictionary:oldPluginProperties];
-        return YES;
+        result = YES;
     }
+    
+    
+    // We then specially handle importing introductionHTML
+    if (result)
+    {
+        // Figure out the maximum image size we'll allow
+        NSString *settings = @"inTextMediumImage";
+        if ([self isKindOfClass:[KTPagelet class]])
+        {
+            settings = @"sidebarImage";
+        }
+         
+        
+        // Update media refs to the new system.
+        NSString *oldText = [oldPluginProperties objectForKey:@"introductionHTML"];
+        
+        NSString *newText = [[self mediaManager] importLegacyMediaFromString:oldText
+                                                         scalingSettingsName:settings
+                                                                  oldElement:oldPlugin
+                                                                  newElement:self];
+        
+        
+        [self setValue:newText forKey:@"introductionHTML"];
+    }
+    
+    
+    return result;
 }
 
 @end
