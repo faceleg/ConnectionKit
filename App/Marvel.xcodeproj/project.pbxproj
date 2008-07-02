@@ -468,7 +468,6 @@
 		3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
 		3CE2CA970D6D54D400B2D56B /* iMediaBrowser.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54900D625952004885E7 /* iMediaBrowser.framework */; };
-		3CE2CA9D0D6D54D900B2D56B /* Sparkle.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C3F54530D6258AA004885E7 /* Sparkle.framework */; };
 		3CE686D40B531F9B0097451B /* movie.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE686D30B531F9B0097451B /* movie.png */; };
 		3CE79D890D6260D000FCEE6D /* NSArray+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CE79D8A0D6260D000FCEE6D /* NSArray+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */; };
@@ -1610,7 +1609,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3CE2CA9D0D6D54D900B2D56B /* Sparkle.framework in Copy Frameworks ALWAYS */,
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
 			);
 			name = "Copy Frameworks ALWAYS";
@@ -4981,6 +4979,7 @@
 				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
+				CEC65E5D0E1AFD170065C3D0 /* Copy sparkle special */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 			);
@@ -6075,6 +6074,20 @@
 			shellPath = "#!/bin/sh -";
 			shellScript = "exit\n\n\n/usr/bin/osascript <<-EOF\ntell application \"Xcode\"\n set AppleScript's text item delimiters to \" \"\n set argz to (full path of file reference of every build file of compile sources phase of active target of project of active project document) as string\nend tell\ndo shell script \"genstrings -littleEndian -q -u -o ${SRCROOT}/en.lproj \" & argz\nEOF\n";
 			showEnvVarsInLog = 0;
+		};
+		CEC65E5D0E1AFD170065C3D0 /* Copy sparkle special */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy sparkle special";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../../Shared/trunk/Tools/pbxcp\nSPARKLE=$(SRCROOT)/../../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"$(SPARKLE)\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
