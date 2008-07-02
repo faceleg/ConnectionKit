@@ -11,7 +11,6 @@
 		3C5FA5260D4FB4540046CF3D /* loremipsum2.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA5240D4FB4540046CF3D /* loremipsum2.html */; };
 		3C5FA52D0D4FB4C00046CF3D /* RichTextElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5FA52C0D4FB4C00046CF3D /* RichTextElementDelegate.m */; };
 		3C5FA5310D4FB4CB0046CF3D /* RichTextElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA5300D4FB4CB0046CF3D /* RichTextElementTemplate.html */; };
-		3C5FA5BE0D4FB7E00046CF3D /* DOM+RichTextElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5FA5BD0D4FB7E00046CF3D /* DOM+RichTextElement.m */; };
 		3C5FA5C30D4FB80A0046CF3D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5FA5C20D4FB80A0046CF3D /* WebKit.framework */; };
 		3C5FA6320D4FD15B0046CF3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C5FA6300D4FD15B0046CF3D /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -29,8 +28,6 @@
 		3C5FA52B0D4FB4C00046CF3D /* RichTextElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextElementDelegate.h; sourceTree = "<group>"; };
 		3C5FA52C0D4FB4C00046CF3D /* RichTextElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextElementDelegate.m; sourceTree = "<group>"; };
 		3C5FA5300D4FB4CB0046CF3D /* RichTextElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RichTextElementTemplate.html; sourceTree = "<group>"; };
-		3C5FA5BC0D4FB7E00046CF3D /* DOM+RichTextElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+RichTextElement.h"; sourceTree = "<group>"; };
-		3C5FA5BD0D4FB7E00046CF3D /* DOM+RichTextElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+RichTextElement.m"; sourceTree = "<group>"; };
 		3C5FA5C20D4FB80A0046CF3D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		3C5FA6310D4FD15B0046CF3D /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C5FA6370D4FD17D0046CF3D /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -97,8 +94,6 @@
 			children = (
 				3C5FA52B0D4FB4C00046CF3D /* RichTextElementDelegate.h */,
 				3C5FA52C0D4FB4C00046CF3D /* RichTextElementDelegate.m */,
-				3C5FA5BC0D4FB7E00046CF3D /* DOM+RichTextElement.h */,
-				3C5FA5BD0D4FB7E00046CF3D /* DOM+RichTextElement.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -219,7 +214,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C5FA52D0D4FB4C00046CF3D /* RichTextElementDelegate.m in Sources */,
-				3C5FA5BE0D4FB7E00046CF3D /* DOM+RichTextElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

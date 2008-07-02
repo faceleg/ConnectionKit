@@ -38,25 +38,7 @@
 
 #import "RichTextElementDelegate.h"
 
-#import "DOM+RichTextElement.h"
-
 #import <SandvoxPlugin.h>
-#import <SandvoxPlugin.h>
-
-// TODO: seems like we should be folding all of these imports into something easy for plugins to grab (KTPlugins.h?)
-#import <KTDesign.h>
-#import <KTMaster.h>
-#import <KTMediaContainer.h>
-#import <KTMediaFile.h>
-#import <KSPathInfoField.h>
-
-#import <WebKit/WebKit.h>
-
-
-@interface RichTextElementDelegate (Private)
-- (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName;
-//- (NSString *)repairMediaReferencesWithinHTMLString:(NSString *)anHTMLString;
-@end
 
 
 @implementation RichTextElementDelegate
@@ -227,101 +209,6 @@
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
-#pragma mark live DOM manipulation
-
-/*	Called when the user tries to paste or drop something into our text.
- *	We want to convert <img> tags and file:// URLs to media containers.
- *
- *	There's 2 types of HTML we can be given. If the user dragged a file, it's a series of divs with the URL text:
- *		<div>file:///somefile.png</div><div>file:///otherfile.png</div>
- *
- *	Anything more complicated and WebKit will provide proper <img> tags. However, they use a custom URL scheme that we
- *	have to manually retrieve the data from. It could look like this:
- *		<p><img src="webkit-fake-url://123456-1234-123456-1234/image.tiff /></p>
- */
-- (BOOL)plugin:(KTAbstractElement *)plugin
-shouldInsertNode:(DOMNode *)node
-intoTextForKeyPath:(NSString *)keyPath
-   givenAction:(WebViewInsertAction)action
-{
-	// TODO: improve on this by looking at UTI and creating OBJECT elements for .mov files, etc.
-	
-	
-	// Figure out the maximum image size we'll allow
-	KTAbstractElement *container = [self delegateOwner];
-	NSString *settings = nil;
-	if ([container isKindOfClass:[KTPagelet class]])
-	{
-		settings = @"sidebarImage";
-	}
-	else if ([container isKindOfClass:[KTPage class]])
-	{
-		// TODO: could we vary the size based on whether the page is showing a sidebar?
-		settings = @"inTextMediumImage";
-	}
-	else
-	{
-		return NO;
-	}
-	
-	
-	// Adjust the node according to which of the above schema it follows
-	if ([node isFileList])
-	{
-		DOMNodeList *divs = [node childNodes];
-		unsigned i;
-		for (i=0; i<[divs length]; i++)
-		{
-			[self convertFileListElement:(DOMHTMLDivElement *)[divs item:i] toImageWithSettingsNamed:settings];
-		}
-	}	
-	else
-	{
-		[node convertImageSourcesToUseSettingsNamed:settings forPlugin:[self delegateOwner]];
-	}
-	
-	return YES;
-}
-
-- (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName;
-{
-	// TODO: what happens when the default design size changes?
-	DOMNode *node = [div parentNode];
-    
-	// Create a media container for the file
-	NSString *path = [[NSURL URLWithString:[(DOMText *)[div firstChild] data]] path];
-	KTMediaContainer *mediaContainer = [[self mediaManager] mediaContainerWithPath:path];
-	
-	
-	if ([NSString UTI:[NSString UTIForFileAtPath:path] conformsToUTI:(NSString *)kUTTypeImage])
-	{
-		// Convert image files to a simple <img> tag
-		mediaContainer = [mediaContainer imageWithScalingSettingsNamed:settingsName forPlugin:[self delegateOwner]];
-		
-		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-		[imageElement setSrc:[[mediaContainer URIRepresentation] absoluteString]];
-		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
-		
-		[node replaceChild:imageElement :div];
-	}
-	else
-	{
-		// Other files are converted to their thumbnail and made a download link
-		KTMediaContainer *icon =
-        [mediaContainer imageWithScalingSettingsNamed:@"thumbnailImage" forPlugin:[self delegateOwner]];
-		
-		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-		[imageElement setSrc:[[icon URIRepresentation] absoluteString]];
-		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
-		
-		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[node ownerDocument] createElement:@"a"];
-		[anchor setHref:[[mediaContainer URIRepresentation] absoluteString]];
-		[anchor appendChild:imageElement];
-		
-		[node replaceChild:anchor :div];	
-	}
-}
-
 #pragma mark spotlight support
 
 - (NSString *)spotlightHTML
@@ -336,11 +223,6 @@ intoTextForKeyPath:(NSString *)keyPath
 	
 	return result;
 }
-
-#pragma mark 1.2.* media reference support
-
-// TODO: 1.2 -> 1.5 file conversion will need to find all ?ref=<refname> and change them into ?id=<uuid>
-// look at -repairMediaReferencesWithinHTMLString: in 1.2.1 branch
 
 #pragma mark -
 #pragma mark Data Migrator
