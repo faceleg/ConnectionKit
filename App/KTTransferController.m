@@ -97,6 +97,8 @@
 #import <Connection/FileConnection.h>
 #import <Growl/Growl.h>
 
+#import "EMKeychainItem.h"
+#import "EMKeychainProxy.h"
 
 static NSArray *sReservedNames = nil;
 
@@ -298,7 +300,13 @@ static NSArray *sReservedNames = nil;
 				NSString *hostName = [hostProperties valueForKey:@"hostName"];
 				NSString *userName = [hostProperties valueForKey:@"userName"];
 				NSString *protocol = [hostProperties valueForKey:@"protocol"];
+				
 				NSString *port = [[hostProperties valueForKey:@"port"] description];
+				if ( nil == port )
+				{
+					port = [KSUtilities standardPortForProtocol:protocol];
+				}
+				
 				NSError *err = nil;
 				
 				if (nil != hostName
@@ -308,12 +316,25 @@ static NSArray *sReservedNames = nil;
 					&& !([hostName hasSuffix:@"idisk.mac.com"]) 
 					&& !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
 				{
-					password = [KSUtilities keychainPasswordForServer:hostName account:userName];
+//					password = [KSUtilities keychainPasswordForServer:hostName account:userName];
+					
+					[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+					EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
+																										   withUsername:userName 
+																												   path:nil 
+																												   port:[port intValue] 
+																											   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+					if ( nil == keychainItem )
+					{
+						NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);
+					}
+					
+					password = [keychainItem password];
 				}
+				
 				if (nil == password && !([hostName hasSuffix:@"idisk.mac.com"] || [protocol isEqualToString:@"SFTP"]))	// complain if it's not mac.com
 				{
-					reason = [NSString stringWithFormat:NSLocalizedString(
-																		  @"Sandvox could not retrieve a password for %@ for server: %@",@"additional error message"), userName, hostName];
+					reason = [NSString stringWithFormat:NSLocalizedString(@"Sandvox could not retrieve a password for %@ for server: %@",@"additional error message"), userName, hostName];
 				}
 				else
 				{
@@ -324,6 +345,7 @@ static NSArray *sReservedNames = nil;
 																  password:password
 																	 error:&err] retain];
 				}
+				
 				if (nil == myConnection)
 				{
 					[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];	// why?

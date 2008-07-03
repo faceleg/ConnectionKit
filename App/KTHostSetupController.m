@@ -52,7 +52,8 @@ TO DO:
 #import "KTHost.h"
 #import "NTSUTaskController.h"
 
-
+#import "EMKeychainItem.h"
+#import "EMKeychainProxy.h"
 
 NSString *KTHostConnectionTimeoutValueKey = @"connectionTimeoutValue";
 
@@ -2415,24 +2416,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (void) updatePortPlaceholder
 {
-	NSString *newProtocol = [[[self properties] valueForKey:@"protocol"] lowercaseString];
-	NSString *placeholderString = @"";
-	if ([newProtocol isEqualToString:@"ftp"])
-	{
-		placeholderString = @"21";
-	}
-	if ([newProtocol isEqualToString:@"sftp"])
-	{
-		placeholderString = @"22";
-	}
-	else if ([newProtocol isEqualToString:@"webdav"])
-	{
-		placeholderString = @"80";
-	}
-	else if ([newProtocol isEqualToString:@"webdav"])
-	{
-		placeholderString = @"";
-	}
+	NSString *placeholderString = [KSUtilities standardPortForProtocol:[[self properties] valueForKey:@"protocol"]];
 	[[oPortField cell] setPlaceholderString:placeholderString];
 	[oPortField setNeedsDisplay:YES];
 }
@@ -2625,15 +2609,39 @@ static NSCharacterSet *sIllegalSubfolderSet;
 - (NSString *)passwordFromKeychain
 {
 	NSString *result = nil;
+	
 	NSString *hostName = [[self properties] valueForKey:@"hostName"];
 	NSString *userName = [[self properties] valueForKey:@"userName"];
+	NSString *protocol = [[self properties] valueForKey:@"protocol"];
+
+	NSString *port = [[[self properties] valueForKey:@"port"] description];
+	if ( nil == port )
+	{
+		port = [KSUtilities standardPortForProtocol:protocol];
+	}
+	
 	if (nil != hostName
 		&& nil != userName
 		&& ![userName isEqualToString:@""]
 		&& ![hostName isEqualToString:@""])
 	{
-		result = [KSUtilities keychainPasswordForServer:hostName account:userName];
+//		result = [KSUtilities keychainPasswordForServer:hostName account:userName];
+		
+		[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+		EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
+																							   withUsername:userName 
+																									   path:nil 
+																									   port:[port intValue] 
+																								   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+		
+		if ( nil == keychainItem )
+		{
+			NSLog(@"warning: host setup did not find keychain item for server %@, user %@", hostName, userName);
+		}
+		
+		result = [keychainItem password];
 	}
+	
 	return result;
 }
 
@@ -2641,22 +2649,55 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	NSString *hostName = [myProperties valueForKey:@"hostName"];
 	NSString *userName = [myProperties valueForKey:@"userName"];
-	if (   nil != aPassword
+	NSString *protocol = [myProperties valueForKey:@"protocol"];
+	
+	NSString *port = [[myProperties valueForKey:@"port"] description];
+	if ( nil == port )
+	{
+		port = [KSUtilities standardPortForProtocol:protocol];
+	}
+
+	if (nil != aPassword
 		&& nil != hostName
 		&& nil != userName
 		&& ![userName isEqualToString:@""]
 		&& ![hostName isEqualToString:@""])
 	{
-		OSStatus result = [KSUtilities keychainSetPassword:aPassword
-												 forServer:hostName
-												   account:userName];
-		if (noErr != result)
+//		OSStatus result = [KSUtilities keychainSetPassword:aPassword
+//												 forServer:hostName
+//												   account:userName];
+//		if (noErr != result)
+//		{
+//			NSRunAlertPanel(
+//							NSLocalizedString(@"Could not store password in keychain",@"Title of alert"),
+//							[NSString stringWithFormat:NSLocalizedString(@"The keychain manager returned error %d, so your password was not stored in the keychain.  You may need to run the \\U201CKeychain Access\\U201D utility and repair your keychain, and then set up your host again.",@"Message in alert"), result],
+//							nil, nil, nil);
+//			NSLog(@"Could not set password -- status = %d", result);
+//		}
+		
+		[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+		EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
+																							   withUsername:userName 
+																									   path:nil 
+																									   port:[port intValue] 
+																								   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+		if ( nil != keychainItem )
 		{
-			NSRunAlertPanel(
-							NSLocalizedString(@"Could not store password in keychain",@"Title of alert"),
-							[NSString stringWithFormat:NSLocalizedString(@"The keychain manager returned error %d, so your password was not stored in the keychain.  You may need to run the \\U201CKeychain Access\\U201D utility and repair your keychain, and then set up your host again.",@"Message in alert"), result],
-							nil, nil, nil);
-			NSLog(@"Could not set password -- status = %d", result);
+			[keychainItem setPassword:aPassword];
+		}
+		else
+		{
+			keychainItem = [[EMKeychainProxy sharedProxy] addInternetKeychainItemForServer:hostName 
+																			  withUsername:userName 
+																				  password:aPassword 
+																					  path:nil
+																					  port:[port intValue] 
+																				  protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+		}
+		
+		if ( nil == keychainItem )
+		{
+			NSLog(@"error: unable create keychain item for server %@, user %@", hostName, userName);
 		}
 	}
 }
