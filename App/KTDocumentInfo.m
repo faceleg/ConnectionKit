@@ -98,7 +98,7 @@
  */
 - (NSString *)appNameVersion
 {
-	NSString *version = [NSApplication appVersion];
+	NSString *version = [NSApplication marketingVersion];
 	
 	NSString *applicationName = [NSApplication applicationName];
 	if ([[NSApp delegate] isPro])
@@ -106,7 +106,7 @@
 		applicationName = [applicationName stringByAppendingString:@" Pro"];
 	}
 	
-	return [NSString stringWithFormat:@"%@ %@", applicationName, version];
+	return [NSString stringWithFormat:@"%@ %@", applicationName, marketingVersion];
 }
 
 #pragma mark -

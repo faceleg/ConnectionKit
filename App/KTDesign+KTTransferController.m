@@ -27,7 +27,7 @@
 													 predicate:predicate
 														 error:NULL];
 															
-	[designPublishingInfo setValue:[self version] forKey:@"versionLastPublished"];
+	[designPublishingInfo setValue:[self marketingVersion] forKey:@"versionLastPublished"];
 }
 
 @end

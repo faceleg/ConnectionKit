@@ -1044,7 +1044,7 @@ static NSArray *sReservedNames = nil;
 		// Upload the design if its published version is different to the current one
 		NSDictionary *designPublishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(siteDesignPublishingInfo)];
 		KTDesign *design = [designPublishingInfo objectForKey:@"design"];
-		if (![[design version] isEqualToString:[designPublishingInfo objectForKey:@"versionLastPublished"]])
+		if (![[design marketingVersion] isEqualToString:[designPublishingInfo objectForKey:@"versionLastPublished"]])
 		{
 			[self threadedUploadDesign:design];
 		}
@@ -1468,7 +1468,7 @@ static NSArray *sReservedNames = nil;
 			
 			// Record the app version published with
 			NSManagedObject *hostProperties = [[[self associatedDocument] documentInfo] valueForKey:@"hostProperties"];
-			[hostProperties setValue:[[NSBundle mainBundle] version] forKey:@"publishedAppVersion"];
+			[hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
 			[hostProperties setValue:[NSString stringWithFormat:@"%d", [[NSBundle mainBundle] buildVersion]] forKey:@"publishedAppBuildVersion"];
 			
 			// Record the version of the designs that were published

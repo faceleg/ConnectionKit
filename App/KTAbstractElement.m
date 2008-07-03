@@ -55,7 +55,7 @@
 		NSString *version = @"";
 		if ([plugin bundle])
 		{
-			version = [plugin version];
+			version = [plugin marketingVersion];
 		}
 		if (nil == version)
 		{
