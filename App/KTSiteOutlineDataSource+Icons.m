@@ -343,11 +343,11 @@
 
 - (void)didGenerateCustomIcon:(NSImage *)icon forPage:(KTPage *)page
 {
-	// Remove page from generating list
-	[myGeneratingCustomIcon release];	myGeneratingCustomIcon = nil;
-	
 	// Update the cache. Use CF to retain, not copy the key
 	CFDictionarySetValue((CFMutableDictionaryRef)myCachedCustomPageIcons, page, icon);
+	
+	// Remove page from generating list
+	[myGeneratingCustomIcon release];	myGeneratingCustomIcon = nil;
 	
 	// Refresh Site Outline for new icon
 	[[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:NO];
