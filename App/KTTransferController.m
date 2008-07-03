@@ -470,7 +470,10 @@ static NSArray *sReservedNames = nil;
  */
 - (void)threadedUploadPage:(KTAbstractPage *)page onlyUploadStalePages:(BOOL)staleOnly
 {
-	// Fetch the publishing info for the page. Bail if it is not for publishing.
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    
+    // Fetch the publishing info for the page. Bail if it is not for publishing.
 	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForPage:)
 																		 withObject:page];
 	if (!publishingInfo || (staleOnly && ![publishingInfo boolForKey:@"isStale"]))
@@ -505,6 +508,9 @@ static NSArray *sReservedNames = nil;
 		[self uploadFromData:RSSData toFile:RSSUploadPath];
 		[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
 	}
+    
+    
+    [pool release];
 }
 
 
