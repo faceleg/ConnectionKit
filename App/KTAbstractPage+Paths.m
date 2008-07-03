@@ -62,10 +62,12 @@
 	
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-    NSString *title = [self titleText];
-    if (!title) title = @"";
+    NSString *result = [[self titleText] legalizedWebPublishingFilename];
+    if (!result || [result isEqualToString:@""])
+    {
+        result = [self uniqueID];
+    }
     
-	NSString *result = [title legalizeFileNameWithFallbackID:[self uniqueID]];
 	NSString *baseFileName = result;
 	int suffixCount = 2;
 	
