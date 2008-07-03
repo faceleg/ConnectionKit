@@ -181,7 +181,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 /*	Traces through the index path to find the node it corresponds to. Returns nil if nothing is found.
  *	Used mainly for resetting the selection after replacing a truncated summary.
  */
-- (DOMNode *)childNodeAtIndexPath:(NSIndexPath *)indexPath
+- (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath
 {
 	DOMNode *result = nil;
 	

@@ -47,7 +47,7 @@
 - (BOOL)containsNode:(DOMNode *)aDOMNode;
 
 #pragma mark index paths
-- (DOMNode *)childNodeAtIndexPath:(NSIndexPath *)indexPath;
+- (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathFromNode:(DOMNode *)node;
 
 #pragma mark child elements

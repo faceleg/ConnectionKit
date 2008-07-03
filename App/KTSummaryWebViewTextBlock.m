@@ -63,14 +63,17 @@
 			
 			
 			// Recreate the selection
-			DOMNode *startContainer = [[self DOMNode] childNodeAtIndexPath:selectionStartIndexPath];
-			[selection setStart:startContainer offset:[selection startOffset]];
-			
-			DOMNode *endContainer = startContainer;
-			if (selectionEndIndexPath) startContainer = [[self DOMNode] childNodeAtIndexPath:selectionEndIndexPath];
-			[selection setEnd:endContainer offset:selectionEndOffset];
-			
-			[webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+			DOMNode *startContainer = [[self DOMNode] descendantNodeAtIndexPath:selectionStartIndexPath];
+			if (startContainer)
+            {
+                [selection setStart:startContainer offset:[selection startOffset]];
+                
+                DOMNode *endContainer = startContainer;
+                if (selectionEndIndexPath) startContainer = [[self DOMNode] descendantNodeAtIndexPath:selectionEndIndexPath];
+                [selection setEnd:endContainer offset:selectionEndOffset];
+                
+                [webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+            }
 		}
 	}
 	
