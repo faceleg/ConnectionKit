@@ -19,6 +19,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSApplication+Karelia.h"
 
 
 @interface KTDocumentInfo (Private)
@@ -98,7 +99,7 @@
  */
 - (NSString *)appNameVersion
 {
-	NSString *version = [NSApplication marketingVersion];
+	NSString *marketingVersion = [NSApplication marketingVersion];
 	
 	NSString *applicationName = [NSApplication applicationName];
 	if ([[NSApp delegate] isPro])

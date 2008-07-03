@@ -13,7 +13,7 @@
 
 + (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier;
 
-- (NSString *)version;				// specified as CFBundleShortVersionString
+- (NSString *)marketingVersion;				// specified as CFBundleShortVersionString
 - (NSString *)minimumAppVersion;
 
 - (NSString *)quicklookDataForFile:(NSString *)file;

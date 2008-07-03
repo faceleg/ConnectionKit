@@ -30,7 +30,7 @@
 }
 
 
-- (NSString *)version;				// specified as CFBundleShortVersionString
+- (NSString *)marketingVersion;				// specified as CFBundleShortVersionString
 {
     id retVal = [self objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     return retVal;

@@ -52,16 +52,16 @@
 	
 	if ( isNewlyCreatedObject )
 	{
-		NSString *version = @"";
+		NSString *marketingVersion = @"";
 		if ([plugin bundle])
 		{
-			version = [plugin marketingVersion];
+			marketingVersion = [plugin marketingVersion];
 		}
-		if (nil == version)
+		if (nil == marketingVersion)
 		{
-			version = @"0";		// fallback for unspecified
+			marketingVersion = @"0";		// fallback for unspecified
 		}
-		[self setWrappedValue:version forKey:@"pluginVersion"];
+		[self setWrappedValue:marketingVersion forKey:@"pluginVersion"];
 		
 		NSDictionary *localizedInfoDictionary = [[plugin bundle] localizedInfoDictionary];
         NSDictionary *initialProperties = [plugin pluginPropertyForKey:@"KTPluginInitialProperties"];
