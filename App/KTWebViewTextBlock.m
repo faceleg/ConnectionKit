@@ -293,7 +293,7 @@
 			{
 				// Generate the image
 				KTMediaManager *mediaManager = [page mediaManager];
-				result = [mediaManager graphicalTextWithString:[self innerHTML:kGeneratingPreview]
+				result = [mediaManager graphicalTextWithString:[[self innerHTML:kGeneratingPreview] flattenHTML]
 														design:design
 										  imageReplacementCode:graphicalTextCode
 														  size:[master floatForKey:@"graphicalTitleSize"]];
