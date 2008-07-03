@@ -324,6 +324,7 @@ static NSArray *sReservedNames = nil;
 																												   path:nil 
 																												   port:[port intValue] 
 																											   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+					[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
 					if ( nil == keychainItem )
 					{
 						NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);

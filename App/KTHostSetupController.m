@@ -2627,7 +2627,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 //		result = [KSUtilities keychainPasswordForServer:hostName account:userName];
 		
-		[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+		[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
 		EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
 																							   withUsername:userName 
 																									   path:nil 
@@ -2675,7 +2675,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //			NSLog(@"Could not set password -- status = %d", result);
 //		}
 		
-		[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+		[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
 		EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
 																							   withUsername:userName 
 																									   path:nil 
@@ -2687,12 +2687,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		}
 		else
 		{
+			[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
 			keychainItem = [[EMKeychainProxy sharedProxy] addInternetKeychainItemForServer:hostName 
 																			  withUsername:userName 
 																				  password:aPassword 
 																					  path:nil
 																					  port:[port intValue] 
 																				  protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+			[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
 		}
 		
 		if ( nil == keychainItem )
