@@ -13,8 +13,10 @@
 #import "KTPage.h"
 #import "KTMediaPersistentStoreCoordinator.h"
 
+#import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 
@@ -55,6 +57,30 @@
 	{
 		[self setWrappedValue:path forKey:@"pathRelativeToSite"];
 	}
+}
+
+- (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
+{
+    BOOL result = [super validateValue:value forKey:key error:error];
+    
+    if (result && [key isEqualToString:@"pathRelativeToSite"])
+    {
+        NSString *path = *value;
+        NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
+        
+        if (![fileName isEqualToString:[fileName legalizedWebPublishingFilename]])
+        {
+            result = NO;
+            if (error)
+            {
+                *error = [NSError errorWithLocalizedDescription:
+                          NSLocalizedString(@"Invalid filename for web publishing",
+                                            "error when validating an upload path")];
+            }
+        }
+    }
+    
+    return result;
 }
 
 @end

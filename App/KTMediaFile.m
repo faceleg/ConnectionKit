@@ -124,11 +124,9 @@
 	// Create a MediaFileUpload object if needed
 	KTMediaFileUpload *result = [[self valueForKey:@"uploads"] anyObject];
 	
-	if (!result)
+	if (!result || [result isDeleted])
 	{
 		// Find a unique path to upload to
-		NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
-		
 		NSString *sourceFilename = nil;
 		if ([self isKindOfClass:[KTInDocumentMediaFile class]]) {
 			sourceFilename = [self valueForKey:@"sourceFilename"];
@@ -137,10 +135,28 @@
 			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
 		}
 		
-		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:sourceFilename];
-		NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
+		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFilename];
+        NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[sourceFilename pathExtension]];
+        
+        NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
+		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
+		
+        NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
 		result = [self insertUploadToPath:uploadPath];
 	}
+    
+    
+    OBASSERT(result);
+    
+    
+    // Make sure the result is a valid upload. If not, delete it and try again. This is because prior to 1.5b4,
+    // we could sometimes mistakenly create an invalid path object.
+    NSString *path = [result pathRelativeToSite];
+    if (![result validateValue:&path forKey:@"pathRelativeToSite" error:NULL])
+    {
+        [[result managedObjectContext] deleteObject:result];        
+        result = [self defaultUpload];
+    }
 	
 	return result;
 }
