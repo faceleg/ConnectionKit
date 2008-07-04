@@ -87,23 +87,23 @@
 	}
 	
 	
-	// For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
-	if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
-	{
-		NSString *masterCSS = [[page master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
-		if (masterCSS)
-		{
-			[stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\r%@\r</style>", masterCSS]];
-		}
+	NSString *masterCSS = [[page master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
+    if (masterCSS)
+    {
+        // For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
+        if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+        {
+            [stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\r%@\r</style>", masterCSS]];
+        }
+        else
+        {
+            NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[[page master] designDirectoryURL]];
+            NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] URL]];
+            
+            [stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
+        }
 	}
-	else
-	{
-		NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[[page master] designDirectoryURL]];
-		NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] URL]];
-		
-		[stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
-	}
-	
+    
 	
 	// Don't bother to include print.css for Quick Look
 	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
