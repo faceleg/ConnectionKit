@@ -374,18 +374,14 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 #pragma mark -
 #pragma mark Derived Accessors
 
-- (NSURL *)mainCSSURL
+- (NSString *)CSSURLs
 {
 	NSURL *designURL = [[[self page] master] designDirectoryURL];
-    NSURL *result = [designURL URLByAppendingPathComponent:@"main.css" isDirectory:NO];
-	return result;
-}
-
-- (NSURL *)masterCSSURL
-{
-	NSURL *designURL = [[[self page] master] designDirectoryURL];
-    NSURL *result = [designURL URLByAppendingPathComponent:@"master.css" isDirectory:NO];
-	return result;
+    NSURL *mainCSSURL = [designURL URLByAppendingPathComponent:@"main.css" isDirectory:NO];
+	NSURL *masterCSSURL = [designURL URLByAppendingPathComponent:@"master.css" isDirectory:NO];
+	
+    NSString *result = [NSString stringWithFormat:@"%@ %@", [mainCSSURL absoluteString], [masterCSSURL absoluteString]];
+    return result;
 }
 
 - (NSString *)subjectPrompt
