@@ -25,7 +25,8 @@
 				[[if parser.HTMLGenerationPurpose]]<a href="[[path item]]">[[endif2]][[continueReadingLink item]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
 			</div>
 [[endif]]
-[[if item.shouldShowTimestamp]]
+
+[[if item.includeTimestamp]]
 			<div class="timestamp">
 [[if item.collectionShowPermanentLink]]
 				<a [[target item]]href="[[path item]]">[[=&item.timestamp]]</a>
