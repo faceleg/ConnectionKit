@@ -97,8 +97,8 @@
 #import <Connection/FileConnection.h>
 #import <Growl/Growl.h>
 
-#import "EMKeychainItem.h"
-#import "EMKeychainProxy.h"
+//#import "EMKeychainItem.h"
+//#import "EMKeychainProxy.h"
 
 static NSArray *sReservedNames = nil;
 
@@ -316,21 +316,21 @@ static NSArray *sReservedNames = nil;
 					&& !([hostName hasSuffix:@"idisk.mac.com"]) 
 					&& !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
 				{
-//					password = [KSUtilities keychainPasswordForServer:hostName account:userName];
+					password = [KSUtilities keychainPasswordForServer:hostName account:userName];
 					
-					[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
-					EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
-																										   withUsername:userName 
-																												   path:nil 
-																												   port:[port intValue] 
-																											   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
-					[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
-					if ( nil == keychainItem )
-					{
-						NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);
-					}
-					
-					password = [keychainItem password];
+//					[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+//					EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
+//																										   withUsername:userName 
+//																												   path:nil 
+//																												   port:[port intValue] 
+//																											   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+//					[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
+//					if ( nil == keychainItem )
+//					{
+//						NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);
+//					}
+//					
+//					password = [keychainItem password];
 				}
 				
 				if (nil == password && !([hostName hasSuffix:@"idisk.mac.com"] || [protocol isEqualToString:@"SFTP"]))	// complain if it's not mac.com
