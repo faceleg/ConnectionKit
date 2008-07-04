@@ -68,8 +68,6 @@
 */
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
-	[[self delegateOwner] lockPSCAndMOC];
-	
 	NSString *oldTitle = [[self delegateOwner] valueForKey:@"titleHTML"];
 	[super awakeFromDragWithDictionary:aDictionary];
 	// Above sets the title ... Restore it to the generic.
@@ -135,8 +133,6 @@
 	}
 	
 	[[self delegateOwner] setValue:array forKey:@"linkList"];
-	
-	[[self delegateOwner] unlockPSCAndMOC];
 }
 
 @end

@@ -105,9 +105,7 @@
 			 wantCompact:(BOOL)aWantCompact
 			  topSection:(BOOL)isTopSection
 				  indent:(int)anIndent
-{
-	[[self delegateOwner] lockPSCAndMOC];
-	
+{	
 	if (![aPage excludedFromSiteMap])
 	{
 		NSArray *children = [aPage sortedChildren];
@@ -248,16 +246,12 @@
 			[string appendString:@"</li>\n"];
 		}
 	}
-	
-	[[self delegateOwner] unlockPSCAndMOC];
 }
 
 
 
 - (NSString *)siteMap
-{
-	[[self delegateOwner] lockPSCAndMOC];
-	
+{	
 	NSMutableString *string = [NSMutableString string];	
 	BOOL sections = [[self pluginProperties] boolForKey:@"sections"];	// top level items as H3
 	BOOL showHome = [[self pluginProperties] boolForKey:@"showHome"];
@@ -301,7 +295,6 @@
 		[string appendString:@"</ul>\n"];
 	}
 	
-	[[self delegateOwner] unlockPSCAndMOC];
 	return string;
 }
 

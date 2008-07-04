@@ -80,9 +80,6 @@
 - (BOOL)lockContextIfNeeded;
 - (void)unlockContextIfNeeded:(BOOL)didLock;
 
-- (void)lockPSCAndMOC;
-- (void)unlockPSCAndMOC;
-
 /* Non-standard, transient attributes */
 - (id)transientValueForKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey;
 - (void)setTransientValue:(id)value forKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey;

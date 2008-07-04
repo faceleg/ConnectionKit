@@ -396,11 +396,9 @@
 
 - (void)setMediaWithDataSourceDictionary:(NSDictionary *)aDataSourceDictionary
 {	
-	[[self delegateOwner] lockPSCAndMOC];
 	KTMedia *media = [KTMedia mediaWithDataSourceDictionary:aDataSourceDictionary
 							 insertIntoManagedObjectContext:(KTManagedObjectContext *)[self managedObjectContext]];
 	[self setMedia:media];
-	[[self delegateOwner] unlockPSCAndMOC];
 }
 */
 

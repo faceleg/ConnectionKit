@@ -412,8 +412,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)subjectInputHTML
 {
-	[[self delegateOwner] lockPSCAndMOC];
-	
 	NSString *result = nil;
 	NSString *subjectText = [self subjectText];
 	if (nil == subjectText)
@@ -463,7 +461,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			break;
 	}
 	
-	[[self delegateOwner] unlockPSCAndMOC];
 	return result;
 }
 

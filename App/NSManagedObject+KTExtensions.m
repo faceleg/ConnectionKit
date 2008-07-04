@@ -237,9 +237,7 @@
 - (id)persistentValueForKey:(NSString *)aKey
 {
 	id result = nil;
-	
-	//[self lockPSCAndMOC];
-	
+		
 	// first check changedValues, then comittedValues
 	NSDictionary *values = [self changedValues];
 	if ( nil != [values valueForKey:aKey] )
@@ -251,7 +249,6 @@
 		result = [self committedValueForKey:aKey];
 	}
 	
-	//[self unlockPSCAndMOC];
 	
 	return result;
 }
@@ -260,9 +257,7 @@
 - (id)wrappedValueForKey:(NSString *)aKey
 {
 	id result = nil;
-	
-	//[self lockPSCAndMOC];
-	@try
+		@try
 	{
 		[self willAccessValueForKey:aKey];
 		result = [self primitiveValueForKey:aKey];
