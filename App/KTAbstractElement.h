@@ -72,6 +72,7 @@
 
 // HTML
 - (NSString *)elementTemplate;	// instance method too for key paths to work in tiger
+- (NSString *)commentsTemplate;
 
 - (NSString *)templateHTML;
 - (NSString *)cssClassName;

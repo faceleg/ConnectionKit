@@ -426,6 +426,19 @@
 	return result;
 }
 
+- (NSString *)commentsTemplate	// instance method too for key paths to work in tiger
+{
+	static NSString *result;
+	
+	if (!result)
+	{
+		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCommentsTemplate" ofType:@"html"];
+		result = [[NSString alloc] initWithContentsOfFile:templatePath];
+	}
+	
+	return result;
+}
+
 /*	If we have a template use that. If not, fallback to our element's.
  */
 - (NSString *)templateHTML

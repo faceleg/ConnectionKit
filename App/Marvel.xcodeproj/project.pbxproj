@@ -231,6 +231,7 @@
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugin.m */; };
+		277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 277026730E1E645200407CD1 /* KTCommentsTemplate.html */; };
 		2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
 		2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */; };
 		277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KTParsedKeyPath.h */; settings = {ATTRIBUTES = (); }; };
@@ -1680,6 +1681,7 @@
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		27668FC20D63D3070019686C /* KTIndexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugin.h; sourceTree = "<group>"; };
 		27668FC30D63D3070019686C /* KTIndexPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugin.m; sourceTree = "<group>"; };
+		277026730E1E645200407CD1 /* KTCommentsTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCommentsTemplate.html; sourceTree = "<group>"; };
 		2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageContainer.h; sourceTree = "<group>"; };
 		2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageContainer.m; sourceTree = "<group>"; };
 		277560340CA5228B00D8A412 /* KTParsedKeyPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTParsedKeyPath.h; sourceTree = "<group>"; };
@@ -3791,6 +3793,7 @@
 				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
 				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
 				2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */,
+				277026730E1E645200407CD1 /* KTCommentsTemplate.html */,
 			);
 			name = "HTML,text,js";
 			sourceTree = "<group>";
@@ -5787,6 +5790,7 @@
 				CEA2BA370DC79F0C00A8023F /* KSWebViewWindow.nib in Resources */,
 				27DEC7910DDC3EB500D795F3 /* Media System.graffle in Resources */,
 				279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */,
+				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
