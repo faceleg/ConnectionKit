@@ -260,12 +260,7 @@
 
 - (IBAction) checkForUpdates:(id)sender
 {
-	static SUProbingUpdateDriver* sProbingUpdateDriver = nil;
-	if (nil == sProbingUpdateDriver)
-	{
-		sProbingUpdateDriver = [[SUProbingUpdateDriver alloc] init];
-	}
-	[[[NSApp delegate] sparkleUpdater] checkForUpdatesWithDriver:sProbingUpdateDriver];
+	[[[NSApp delegate] sparkleUpdater] checkForUpdates:sender];
 }
 
 
