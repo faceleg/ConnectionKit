@@ -309,7 +309,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
 {
 	NSOutlineView *siteOutline = [self siteOutline];
-	NSArray *oldSelection = [siteOutline selectedItems];
 	
 	
 	// Do the approrpriate refresh. In the case of the home page, we must reload everything.
@@ -322,9 +321,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[siteOutline reloadItem:anItem reloadChildren:reloadChildren];
 	}
 
-// BELOW CODE IS NEVER EXECUTED -- WHY IS IT THERE?
-//	return;
+// OLD CODE I WAS TESTING - Mike.
 //	// Compare selections
+//	NSArray *oldSelection = [siteOutline selectedItems];
 //	NSArray *newSelection = [siteOutline selectedItems];
 //	if (![newSelection isEqualToArray:oldSelection])
 //	{

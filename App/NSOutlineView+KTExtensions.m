@@ -46,14 +46,14 @@
     [self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 	if ( aFlag )
 	{
-//		NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 		NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
 																	 object:self];
 		[[NSNotificationCenter defaultCenter] postNotification:notification];
 		
-// THE BELOW WAS NEVER CALLED -- WHY?  I COMMENTED IT OUT.
+
+// THE OLD CODE WAS USING A QUEUE TO COALESCE THE NOTIFICATIONS, BUT THIS MEANS DELAYING BY ONE RUNLOOP ITERATION. Mike.
 		
-//		return;
+//		NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 //		
 //		[queue enqueueNotification:notification 
 //					  postingStyle:NSPostASAP 
