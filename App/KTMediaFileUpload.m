@@ -67,16 +67,15 @@
     {
         NSString *path = *value;
         NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
+        NSString *legalizedFileName = [fileName legalizedWebPublishingFilename];
         
-        if (![fileName isEqualToString:[fileName legalizedWebPublishingFilename]])
+        if (![fileName isEqualToString:legalizedFileName])
         {
-            result = NO;
-            if (error)
-            {
-                *error = [NSError errorWithLocalizedDescription:
-                          NSLocalizedString(@"Invalid filename for web publishing",
-                                            "error when validating an upload path")];
-            }
+            NSString *legalizedPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:
+                                       [legalizedFileName stringByAppendingPathExtension:
+                                        [path pathExtension]]];
+            
+            *value = legalizedPath;
         }
     }
     

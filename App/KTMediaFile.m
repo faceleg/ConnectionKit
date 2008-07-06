@@ -149,13 +149,19 @@
     OBASSERT(result);
     
     
-    // Make sure the result is a valid upload. If not, delete it and try again. This is because prior to 1.5b4,
-    // we could sometimes mistakenly create an invalid path object.
+    // Make sure the result is a valid upload. If not, correct the path, or delete the upload and try again.
+    // This is because prior to 1.5b4, we could sometimes mistakenly create an invalid path object.
     NSString *path = [result pathRelativeToSite];
-    if (![result validateValue:&path forKey:@"pathRelativeToSite" error:NULL])
+    
+    NSString *validatedPath = path;
+    if (![result validateValue:&validatedPath forKey:@"pathRelativeToSite" error:NULL])
     {
         [[result managedObjectContext] deleteObject:result];        
         result = [self defaultUpload];
+    }
+    else if (path != validatedPath)
+    {
+        [result setWrappedValue:validatedPath forKey:@"pathRelativeToSite"];    // Want to bypass usual checks
     }
 	
 	return result;
