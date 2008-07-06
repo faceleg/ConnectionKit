@@ -69,11 +69,10 @@
                 [selection setStart:startContainer offset:[selection startOffset]];
                 
                 DOMNode *endContainer = startContainer;
-                if (selectionEndIndexPath) 
-				{
-#warning ???? Although the value stored to 'startContainer' is used in the enclosing expression, the value is never actually read from 'startContainer'
-					startContainer = [[self DOMNode] descendantNodeAtIndexPath:selectionEndIndexPath];
-				}
+                if (selectionEndIndexPath)
+                {
+                    endContainer = [[self DOMNode] descendantNodeAtIndexPath:selectionEndIndexPath];
+                }
                 [selection setEnd:endContainer offset:selectionEndOffset];
                 
                 [webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
