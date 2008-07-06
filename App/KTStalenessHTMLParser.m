@@ -39,7 +39,7 @@
 	{
 		// Scan through the preview text for page paths
 		NSString *HTML = [result innerHTML:kGeneratingPreview];
-		NSScanner *scanner = [[NSScanner alloc] initWithString:HTML];
+		NSScanner *scanner = [[[NSScanner alloc] initWithString:HTML] autorelease];
 		NSString *searchString = @"<a href=\"";
 		NSString *aPagePreviewPath;
 		

@@ -501,38 +501,37 @@ static NSArray *sReservedNames = nil;
 																		 withObject:page];
 	if (!publishingInfo || (staleOnly && ![publishingInfo boolForKey:@"isStale"]))
 	{
-		return;
+		// LOG((@"BAILING OUT"));
 	}
-	
-	
-	// Upload the page itself
-	NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
-	if (uploadPath)
+	else
 	{
-		uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
-		
-		NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
-		if (pageData)
+		// Upload the page itself
+		NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
+		if (uploadPath)
 		{
-			[myUploadedPathsMap setObject:page forKey:uploadPath];
-			[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-			[self uploadFromData:pageData toFile:uploadPath];
-			[myController setPermissions:myPagePermissions forFile:uploadPath];
+			uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+			
+			NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
+			if (pageData)
+			{
+				[myUploadedPathsMap setObject:page forKey:uploadPath];
+				[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
+				[self uploadFromData:pageData toFile:uploadPath];
+				[myController setPermissions:myPagePermissions forFile:uploadPath];
+			}
 		}
-	}
-	
-	
-	// Publish the RSS feed if there is one
-	NSData *RSSData = [publishingInfo objectForKey:@"RSSData"];
-	if (RSSData)
-	{
-		NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-		NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-		[self uploadFromData:RSSData toFile:RSSUploadPath];
-		[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
-	}
-    
-    
+		
+		
+		// Publish the RSS feed if there is one
+		NSData *RSSData = [publishingInfo objectForKey:@"RSSData"];
+		if (RSSData)
+		{
+			NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+			NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+			[self uploadFromData:RSSData toFile:RSSUploadPath];
+			[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
+		}
+    }
     [pool release];
 }
 

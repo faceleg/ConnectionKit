@@ -176,16 +176,12 @@ TO DO:
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
 	if ([[self window] attachedSheet]) return NSDragOperationNone;		// disallow drop when there's a sheet
-   
-	NSPasteboard *pboard;
-    NSDragOperation sourceDragMask;
-    sourceDragMask = [sender draggingSourceOperationMask];
-    pboard = [sender draggingPasteboard];
-	
+   	
 	NSDragOperation result = [super draggingEntered:sender];
 
 	// seems to return None no matter what?
 	/*
+	 NSPasteboard *pboard = [sender draggingPasteboard];
 	if (result == NSDragOperationNone)
 	{
 		NSLog(@"KTWebView draggingEntered NSDragOperationNone pboard types = %@",
@@ -205,6 +201,7 @@ TO DO:
 }
 
 /*
+ NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
  if ( [[pboard types] containsObject:NSColorPboardType] ) {
 	 if (sourceDragMask & NSDragOperationGeneric) {
 		 return NSDragOperationGeneric;
@@ -281,7 +278,10 @@ TO DO:
 				// Can't drag onto the selection being dragged.
 				draggingIntoEditableBlock = NO;
 			}
-			draggingIntoEditableBlock = YES;
+			else	/// added else here; NO was being overwritten
+			{
+				draggingIntoEditableBlock = YES;
+			}
 		}
 	}
 	if (draggingIntoEditableBlock)

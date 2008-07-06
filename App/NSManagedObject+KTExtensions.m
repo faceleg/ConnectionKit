@@ -56,7 +56,7 @@
 		[attributeNames release];
 	}
 	
-	return NO;	
+	return result;		// this had been just returning NO, no matter what
 }
 
 - (BOOL)hasRelationshipNamed:(NSString *)aRelationshipName

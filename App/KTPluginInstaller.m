@@ -96,8 +96,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			NSFileManager *fm = [NSFileManager defaultManager];
 			if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
 			{
-				BOOL success = [fm removeFileAtPath:destPath handler:nil];
-				LOG((@"success of removing:%d", success));
+				(void) [fm removeFileAtPath:destPath handler:nil];
 			}
 			BOOL copied = [fm copyPath:sourcePath toPath:destPath handler:nil];
 			if (copied)

@@ -46,16 +46,19 @@
     [self selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 	if ( aFlag )
 	{
-		NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
+//		NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 		NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
 																	 object:self];
 		[[NSNotificationCenter defaultCenter] postNotification:notification];
-		return;
 		
-		[queue enqueueNotification:notification 
-					  postingStyle:NSPostASAP 
-					  coalesceMask:NSNotificationCoalescingOnSender 
-						  forModes:nil];
+// THE BELOW WAS NEVER CALLED -- WHY?  I COMMENTED IT OUT.
+		
+//		return;
+//		
+//		[queue enqueueNotification:notification 
+//					  postingStyle:NSPostASAP 
+//					  coalesceMask:NSNotificationCoalescingOnSender 
+//						  forModes:nil];
 	}
 }
 

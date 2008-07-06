@@ -193,16 +193,13 @@
 	KTInDocumentMediaFile *aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
-		NSData *possibleMatch = [[NSData alloc] initWithContentsOfFile:[aMediaFile currentPath]];
+		NSData *possibleMatch = [[[NSData alloc] initWithContentsOfFile:[aMediaFile currentPath]]];
 		if ([possibleMatch isEqualToData:data])
 		{
 			result = aMediaFile;
 			break;
 		}
-		
-		[possibleMatch release];
 	}
-	
 	
 	// No existing match was found so create a new MediaFile
 	if (!result)

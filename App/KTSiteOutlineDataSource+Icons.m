@@ -225,6 +225,7 @@
 	float width = [properties floatForKey:(NSString *)kCGImagePropertyPixelWidth];
 	float height = [properties floatForKey:(NSString *)kCGImagePropertyPixelHeight];
 	CFRelease(iconSource);
+	[properties release];
 	
 	
 	// Figure out the max size for the thumbnail that gives a cropToFit behavior

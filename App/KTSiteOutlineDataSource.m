@@ -321,15 +321,16 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		[siteOutline reloadItem:anItem reloadChildren:reloadChildren];
 	}
-	
-	return;
-	// Compare selections
-	NSArray *newSelection = [siteOutline selectedItems];
-	if (![newSelection isEqualToArray:oldSelection])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
-															object:siteOutline];
-	}
+
+// BELOW CODE IS NEVER EXECUTED -- WHY IS IT THERE?
+//	return;
+//	// Compare selections
+//	NSArray *newSelection = [siteOutline selectedItems];
+//	if (![newSelection isEqualToArray:oldSelection])
+//	{
+//		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
+//															object:siteOutline];
+//	}
 }
 
 #pragma mark -
