@@ -67,7 +67,7 @@
     {
         NSString *path = *value;
         NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
-        NSString *legalizedFileName = [fileName legalizedWebPublishingFilename];
+        NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
         
         if (![fileName isEqualToString:legalizedFileName])
         {

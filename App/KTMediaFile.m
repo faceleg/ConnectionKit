@@ -135,7 +135,7 @@
 			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
 		}
 		
-		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFilename];
+		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
         NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[sourceFilename pathExtension]];
         
         NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
