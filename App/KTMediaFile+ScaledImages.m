@@ -114,10 +114,15 @@
 
 - (KTScaledImageProperties *)scaleImage:(NSImage *)image withProperties:(NSDictionary *)properties
 {
-	// Scale the image
+	OBPRECONDITION(image);
+    OBPRECONDITION(properties);
+    
+    
+    // Scale the image
 	KTImageScalingSettings *scalingBehavior = [properties objectForKey:@"scalingBehavior"];
 	[image normalizeSize];
 	NSBitmapImageRep *scaledImage = [image bitmapByScalingWithBehavior:scalingBehavior];
+    OBASSERT(scaledImage);
 	NSImage *finalImage = nil;
 	
 	
@@ -134,6 +139,7 @@
 	{
 		finalImage = [NSImage imageWithBitmap:scaledImage];
 	}
+    OBASSERT(finalImage);
 	
 	
 	// Figure out the UTI
