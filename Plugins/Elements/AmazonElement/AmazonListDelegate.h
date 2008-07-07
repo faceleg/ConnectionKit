@@ -59,7 +59,7 @@ typedef enum {
 }
 
 // For both list types
-- (NSString *)layoutString;
++ (NSString *)CSSClassNameForLayout:(APListLayout)layout;
 
 @end
 

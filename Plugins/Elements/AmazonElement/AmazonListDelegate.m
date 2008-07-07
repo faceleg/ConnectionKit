@@ -84,18 +84,21 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
-	if (isNewlyCreatedObject)
+	KTAbstractElement *element = [self delegateOwner];
+    
+    
+    if (isNewlyCreatedObject)
 	{
 		// When creating a new pagelet, try to use the most recent Amazon store
 		NSNumber *lastSelectedStore = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLatestStore"];
 		if (lastSelectedStore)
-			[[self delegateOwner] setValue:lastSelectedStore forKey:@"store"];
+			[element setValue:lastSelectedStore forKey:@"store"];
 		
 		
 		// And also most recent layout
 		NSNumber *lastLayout = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLastLayout"];
 		if (lastLayout) {
-			[[self delegateOwner] setValue:lastLayout forKey:@"layout"];
+			[element setValue:lastLayout forKey:@"layout"];
 		}
 		
 		
@@ -117,22 +120,29 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		[browserURL getAmazonListType:NULL andID:&listID];
 		if (listID && ![listID isEqualToString:@""])
 		{
-			[[self delegateOwner] setInteger:AmazonPageletLoadFromList forKey:@"listSource"];
-			[[self delegateOwner] setValue:[browserURL absoluteString] forKey:@"automaticListCode"];
+			[element setInteger:AmazonPageletLoadFromList forKey:@"listSource"];
+			[element setValue:[browserURL absoluteString] forKey:@"automaticListCode"];
 		}
 		
 		
 		// If there is a predefined list ID, go with it
 		NSString *defaultListCode = [[[self bundle] objectForInfoDictionaryKey:@"DefaultListIDs"]
-			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[[self delegateOwner] integerForKey:@"store"]]];
+			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[element integerForKey:@"store"]]];
 		
-		[[self delegateOwner] setValue:defaultListCode forKey:@"automaticListCode"];
+		[element setValue:defaultListCode forKey:@"automaticListCode"];
 	}
 	else
 	{
 		// Load manual list products
 		[self unarchiveManualListProductsFromPluginProperties];
 	}
+    
+    
+    // Make sure we have a valid layout CSS class
+    if (![element valueForKey:@"layoutCSSClassName"])
+    {
+        [self plugin:element didSetValue:[element valueForKey:@"layout"] forPluginKey:@"layout" oldValue:nil];
+    }
 }
 
 - (void)awakeFromNib
@@ -286,6 +296,15 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 }
 
+- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+{
+    if ([key isEqualToString:@"layout"])
+    {
+        [plugin setValue:[[self class] CSSClassNameForLayout:[value intValue]]
+                  forKey:@"layoutCSSClassName"];
+    }
+}
+
 #pragma mark -
 #pragma mark Store
 
@@ -359,11 +378,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)layoutString
++ (NSString *)CSSClassNameForLayout:(APListLayout)layout;
 {
 	NSString *result = nil;
 	
-	switch ([[self delegateOwner] integerForKey:@"layout"])
+	switch (layout)
 	{
 		case APLayoutLeft:
 			result = @"amazonListLayoutLeft";
@@ -386,10 +405,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		case APLayoutRandom:
 			result = @"amazonListLayoutRandom";
 			break;
-	}
-	
-	if ([[self delegateOwner] integerForKey:@"frame"] == APFrameEntirePagelet) {
-		result = [result stringByAppendingString:@" amazonListWhiteBackground"];
+        default:
+            result = @"";
+            break;
 	}
 	
 	return result;
