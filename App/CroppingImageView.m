@@ -129,11 +129,8 @@ NSString *selectionChangedNotification = @"ImageSelectionChanged";
 		NSAffineTransform 
 			*pathAdjustment = [NSAffineTransform transform];
 		
-		NSBezierPath 
-			*croppingPath = [selectionMarker selectedPath];	
-		
 		[pathAdjustment translateXBy: -NSMinX(sourceImageRect) yBy: -NSMinY(sourceImageRect)];
-		croppingPath = [pathAdjustment transformBezierPath:[selectionMarker selectedPath]];
+		NSBezierPath *croppingPath = [pathAdjustment transformBezierPath:[selectionMarker selectedPath]];
 		
 		[newImage lockFocus];
 		if (!shouldAntiAlias) 

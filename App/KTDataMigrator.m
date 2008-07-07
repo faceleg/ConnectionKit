@@ -661,13 +661,15 @@
                                          code:KareliaError
                          localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
             
-            return NO;
+            [pool release];
+			return NO;
         }
         
         KTPage *aNewPage = [KTPage insertNewPageWithParent:newParentPage plugin:plugin];
         
         if (![self migratePage:aChildPage toPage:aNewPage error:error])
         {
+            [pool release];
             return NO;
         }
         

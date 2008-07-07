@@ -535,7 +535,7 @@
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 {
 	NSString *result = nil;
-	NSMutableString *buffer = [[NSMutableString alloc] init];
+	NSMutableString *buffer = [[[NSMutableString alloc] init] autorelease];
 	
 	
 	// If the user has specified a custom banner and the design supports it, load it in
@@ -547,7 +547,6 @@
 	if (![buffer isEqualToString:@""])
 	{
 		result = [NSString stringWithString:buffer];
-		[buffer release];
 	}
 	return result;
 }
@@ -627,7 +626,7 @@
 	
 	
 	// Emboss the image
-	NSImage *placeholderImage = [[NSImage alloc] initWithContentsOfFile:imagePath];
+	NSImage *placeholderImage = [[[NSImage alloc] initWithContentsOfFile:imagePath] autorelease];
 	[placeholderImage embossPlaceholder];
 	
 	

@@ -87,16 +87,9 @@
         [self selectRowIndexes:indexSet byExtendingSelection:NO];
 		if ( aFlag )
 		{
-			NSNotificationQueue *queue = [NSNotificationQueue defaultQueue];
 			NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
 																		 object:self];
 			[[NSNotificationCenter defaultCenter] postNotification:notification];
-			return;
-			
-			[queue enqueueNotification:notification 
-						  postingStyle:NSPostASAP 
-						  coalesceMask:NSNotificationCoalescingOnSender 
-							  forModes:nil];			
 		}
     }
 }

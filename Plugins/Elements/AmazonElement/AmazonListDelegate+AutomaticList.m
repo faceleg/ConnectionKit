@@ -69,7 +69,7 @@
 					if (!listID)
 					{
 						// If that didn't work, alert the user
-						NSAlert *alert = [[NSAlert alloc] init];
+						NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 						[alert setMessageText:LocalizedStringInThisBundle(@"The URL entered is not the public URL of an Amazon list.", "alert title")];
 						[alert setInformativeText:LocalizedStringInThisBundle(@"Please click the purple help button to view instructions on how to find the public URL of an Amazon list.", "alert text")];
 						[alert addButtonWithTitle:LocalizedStringInThisBundle(@"Close", "button")];

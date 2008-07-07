@@ -236,7 +236,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	{
 		// How we reference the path depends on publishing/previewing
 		if (isPublishing) {
-			onlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
+			offlineImagePath = [[[[[self page] documentInfo] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
 		}
 		else {
 			NSURL *baseURL = [NSURL fileURLWithPath:offlineImagePath];

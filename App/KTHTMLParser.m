@@ -376,6 +376,7 @@
 		{
 			property = value;
 			propertyValue = [[self cache] valueForKeyPath:value];
+#warning we never do anything with propertyValue, should we?
 		}
 		else if ([keyword isEqualToString:@"flags"])
 		{
@@ -410,6 +411,7 @@
 		else if ([keyword isEqualToString:@"replacement"])	// key path to property to replace, flattened version of property
 		{
 			flatProperty = value;
+#warning we never do anything with flatproperty, should we?
 			flatPropertyValue = [[self cache] valueForKeyPath:value];
 			NSAssert1(flatPropertyValue, @"flatPropertyValue for keypath %@ cannot be null", value);
 
@@ -706,6 +708,7 @@
         {
             page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
         }
+#warning We never do anything with page, should we be?
         
         // Where is the resource file on disk?
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];

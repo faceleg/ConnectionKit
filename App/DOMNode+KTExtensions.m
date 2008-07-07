@@ -1102,20 +1102,15 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		[output appendFormat:@" "];
 		DOMNamedNodeMap *attrMap = [self attributes];
 		int i;
-		BOOL hasOutput = NO;
 		int length = [attrMap length];
 		for ( i = 0 ; i < length ; i++ )
 		{
 			DOMNode *oneAttr = [attrMap item:i];
 			[output appendString:[oneAttr cleanedOuterHTML] ];
 			[output appendString:@" "];
-			hasOutput = YES;
 		}
 		// delete last space
-		// if (hasOutput)			always, we have a space there anyhow
-		{
-			[output deleteCharactersInRange:NSMakeRange([output length] - 1, 1)];
-		}
+		[output deleteCharactersInRange:NSMakeRange([output length] - 1, 1)];
 	}
 	
 	if (nil == sTagsThatCanBeSelfClosed)

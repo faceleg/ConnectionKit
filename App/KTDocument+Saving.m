@@ -495,8 +495,8 @@
 	// Build a list of the media files that will require copying/moving to the new doc
 	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
 	NSArray *mediaFiles = [mediaMOC allObjectsWithEntityName:@"AbstractMediaFile" error:NULL];
-	NSMutableSet *pathsToCopy = [[NSMutableSet alloc] initWithCapacity:[mediaFiles count]];
-	NSMutableSet *pathsToMove = [[NSMutableSet alloc] initWithCapacity:[mediaFiles count]];
+	NSMutableSet *pathsToCopy = [[[NSMutableSet alloc] initWithCapacity:[mediaFiles count]] autorelease];
+	NSMutableSet *pathsToMove = [[[NSMutableSet alloc] initWithCapacity:[mediaFiles count]] autorelease];
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
 	KTMediaFile *aMediaFile;
@@ -565,12 +565,6 @@
 		destinationPath = [newDocMediaPath stringByAppendingPathComponent:[aPath lastPathComponent]];
 		[fileManager movePath:aPath toPath:destinationPath handler:nil];
 	}
-	
-	
-	// Tidy up
-	[pathsToCopy release];
-	[pathsToMove release];
-	
 	return YES;
 }
 
@@ -623,7 +617,7 @@
 		OBASSERT([NSThread isMainThread]);
 		
 		// remember the current status
-		NSString *status = [[[self windowController] status] copy];
+		NSString *status = [[[[self windowController] status] copy] autorelease];
 		
 		// update status 
 		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", "Status: Autosaving...")];

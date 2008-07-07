@@ -202,11 +202,8 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 		return nil;
 	}
 	
-	//	NSString *q			= [dashComponents objectAtIndex:0];
 	NSString *entityName= [dashComponents objectAtIndex:1];
-	//	NSString *property	= [dashComponents objectAtIndex:2];
 	NSString *uniqueID	= [dashComponents objectAtIndex:3];
-	//	NSString *code	= [dashComponents objectAtIndex:4];
 	
 	if ([entityName isEqualToString:@"Document"])
 	{
@@ -215,13 +212,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	else if ([entityName isEqualToString:@"Root"])
 	{
 		return [[self document] root];	// don't need to look up object; it's the root
-	}
-	
-	// Strip off any "_" suffix to get the real entity name.  We allow _ suffix to make things unique
-	int indexOfDash = [entityName rangeOfString:@"_"].location;
-	if (NSNotFound != indexOfDash)
-	{
-		entityName = [entityName substringToIndex:indexOfDash];
 	}
 	
 	// peform fetch

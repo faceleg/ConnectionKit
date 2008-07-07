@@ -142,12 +142,11 @@ static KTLinkConnector *_sharedConnector = nil;
 			{
 				continue;
 			}
-			NSDragOperation op = NSDragOperationNone;
 		
 			if (lastViewOver == nil)
 			{
 				//begin the drag operation call
-				op = [overView draggingEntered:self];
+				(void) [overView draggingEntered:self];
 			}
 			if (lastViewOver != overView && lastViewOver != nil)
 			{
@@ -156,7 +155,6 @@ static KTLinkConnector *_sharedConnector = nil;
 				{
 					[lastViewOver draggingExited:self];
 				}
-				// ????? op = [overView draggingEntered:self];
 			}
 			
 			if ([overView respondsToSelector:@selector(draggingUpdated:)])

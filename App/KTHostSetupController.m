@@ -2525,13 +2525,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				
 				SecKeychainAttributeList *attrList = NULL;
 				
-				theStatus = SecKeychainItemCopyAttributesAndData(kcItem,
-																 &attrInfo,
-																 NULL,
-																 &attrList,
-																 NULL,
-																 NULL);
-
+				(void) SecKeychainItemCopyAttributesAndData(kcItem,
+															&attrInfo,
+															NULL,
+															&attrList,
+															NULL,
+															NULL);
+				
 				
 				if (attrList && attrList->count)
 				{			

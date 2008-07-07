@@ -114,11 +114,11 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	}
 	
 	[scanner release];	// Tidy up after scanning
-	if (QLPreviewRequestIsCancelled(preview)) return noErr;
-	
-	
-	
-	
+	if (QLPreviewRequestIsCancelled(preview))
+	{
+		[pool release];
+		return noErr;
+	}
 	
 	NSMutableDictionary *props=[[[NSMutableDictionary alloc] init] autorelease]; 
 	[props setObject:@"UTF-8" forKey:(NSString 
