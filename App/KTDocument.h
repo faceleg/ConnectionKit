@@ -199,10 +199,6 @@ typedef enum {
 // derived properties
 - (BOOL)hasRSSFeeds;	// determine if we need to show export panel
 
-- (NSString *)generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)aManagedObjectContext;
-
-- (NSString *)placeholderImagePathForDesignBundleIdentifier:(NSString *)aDesignBundleIdentifier;
-
 - (NSString *)titleHTML;
 - (NSString *)siteSubtitleHTML;
 - (NSString *)defaultRootPageTitleText;
