@@ -435,7 +435,8 @@
     [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
 }
 
-- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error
+
+- (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)outError
 {
 	// Set up old model and Core Data stack
 	NSManagedObjectModel *model = [KTUtilities modelWithVersion:aVersion];
@@ -447,14 +448,25 @@
 	
     
     // Set up the new document
-    NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:error] firstObject];
-    OBASSERT(oldRoot);
+    NSError *error = nil;
+    NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:&error] firstObject];
+    if (!oldRoot)
+    {
+        NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObject:@"Root page could not be found."
+                                                                           forKey:NSLocalizedDescriptionKey];
+        if (error) [errorInfo setObject:error forKey:NSUnderlyingErrorKey];
+        
+        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+                                        code:KareliaError
+                                    userInfo:errorInfo];
+        return NO;
+    }
     
     NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
     NSString *newRootPluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
     KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
     
-    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:newRootPlugin error:error];
+    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:newRootPlugin error:outError];
     if (newDoc)
     {
         [self setNewDocument:newDoc];
@@ -467,7 +479,7 @@
 	
     
 	// Migrate (this recurses into pages and so on)
-    if (![self migrateDocumentInfo:error])
+    if (![self migrateDocumentInfo:outError])
     {
         return NO;
     }
@@ -475,7 +487,7 @@
     
     // Save the doc and finish up
     KTDocument *document = [self newDocument];
-    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error];
+    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:outError];
     
     return result;
 }
@@ -699,7 +711,7 @@
     KTMediaContainer *favicon = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"favicon" element:oldRoot];
     [newMaster setFavicon:favicon];
     
-    // TODO: migrate logo
+    // Migrate logo
     KTMediaContainer *logo = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"headerImage" element:oldRoot];
     [newMaster setLogoImage:logo];
     
