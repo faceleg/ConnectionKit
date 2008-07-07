@@ -678,7 +678,8 @@
     }
 	
 	
-    OBPOSTCONDITION(result);    // In the worst case, an empty string should be returned.
+    // In the worst case, an empty string should be returned.
+    OBASSERTSTRING(result, ([NSString stringWithFormat:@"[[mediainfo %@]] is returning nil", inRestOfTag]));    
 	return result;
 }
 
