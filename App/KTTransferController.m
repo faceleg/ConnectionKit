@@ -1220,17 +1220,22 @@ static NSArray *sReservedNames = nil;
 			OBASSERT(path);
             
 			NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
-            OBASSERT(CSS);
-            
-			[CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
-			[CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
-			[CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-			
-			NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
-			NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
-			[CSS replace:@"_URL_" with:mediaPath];
-			
-			masterCSS = [masterCSS stringByAppendingString:CSS];
+            if (CSS)
+            {
+                [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
+                [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
+                [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
+                
+                NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
+                NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
+                [CSS replace:@"_URL_" with:mediaPath];
+                
+                masterCSS = [masterCSS stringByAppendingString:CSS];
+            }
+            else
+            {
+                NSLog(@"Unable to read in image replacement CSS from %@", path);
+            }
 		}
 	}
 	
