@@ -103,7 +103,7 @@
 static NSArray *sReservedNames = nil;
 
 
-@interface KTTransferController ( Private )
+@interface KTTransferController (Private)
 
 - (void)threadedPrepareHostForUpload;
 
@@ -853,15 +853,18 @@ static NSArray *sReservedNames = nil;
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
 		}
-				
-		
-		// Upload the resources
-		[self threadedUploadResources:[self parsedResources]];
 		
 		
 		// Upload media
 		[self threadedUploadMediaFiles:[self parsedMediaFileUploads]];
+				
 		
+		// Upload the resources
+		[self threadedUploadResources:[self parsedResources]];
+        
+        
+        // Upload sitemap if needed
+		[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
 	}
 	@finally
 	{
@@ -872,62 +875,9 @@ static NSArray *sReservedNames = nil;
 	return result;
 	
 	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-			
-	@try
-	{
-		myHadFilesToUpload = YES;	// uploading everything so clearly there were things to upload
-						
-		[[[self associatedDocument] windowController] setPublishingMode:[self where]];
-		
-		NSManagedObjectContext *moc = [[self associatedDocument] managedObjectContext];
-		KTPage *root = [moc root];
-		
-		if ( !myKeepPublishing )
-		{
-			// cleanup!
-			return NO; // @finally will still be executed
-		}
-		
-		if ( kGeneratingRemoteExport != [self where] )
-		{
-			[self recursivelyCreateDirectoriesFromPath:[self storagePath] setPermissionsOnAllFolders:NO];
-		}
-		if ( !myKeepPublishing )
-		{
-			// cleanup!
-			return NO; // @finally will still be executed
-		}
-//	TODO:	Need to heed sitemap flag
-		// Upload the Google Site Map
-		if ([root boolForKey:@"addBool2"])	// Should be using @"generateGoogleSiteMap"
-		{
-			NSString *googleSiteMap = [[self associatedDocument] generatedGoogleSiteMapWithManagedObjectContext:(KTManagedObjectContext *)moc];
-			NSData *siteMapData = [googleSiteMap dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-			NSData *gzipped = [siteMapData compressGzip];
-			NSString *siteMapPath = [[self storagePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-			
-			[self uploadFromData:gzipped toFile:siteMapPath];
-			
-			if ([self where] != kGeneratingRemoteExport) // don't ping google if we are just exporting
-			{
-				NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
-				NSString *siteMapURLString = [[NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL] absoluteString];
-				NSString *pingURLString = [NSString stringWithFormat:@"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-					[siteMapURLString urlEncode]];
-				[self pingThisURLString:pingURLString];
-			}
-		}
-		if ( !myKeepPublishing )
-		{
-			// cleanup!
-			return NO; // @finally will still be executed
-		}
-		
-		
-		
-		if ([self where] == kGeneratingRemoteExport) {
+/*			
+if ([self where] == kGeneratingRemoteExport) {
 			// Put the warning file in there.  This will actually happen first....
 			NSString *infoFileName = NSLocalizedString(@"_EXPORT INFORMATION_.txt", @"obvious warning string for file name, starts with _ for alphabetical sorting");
 			
@@ -972,6 +922,8 @@ static NSArray *sReservedNames = nil;
 		[pool release];
 	}
 	return result;
+ 
+ */
 }
 
 - (void)uploadStaleAssets
@@ -1084,16 +1036,19 @@ static NSArray *sReservedNames = nil;
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
 		}
-				
-		
-		
-		// Upload the resources
-		[self threadedUploadResources:[self parsedResources]];
 		
 		
 		// Upload media
 		NSSet *staleMedia = [self performSelectorOnMainThreadAndReturnResult:@selector(staleParsedMediaFileUploads)];
 		[self threadedUploadMediaFiles:staleMedia];
+				
+		
+		// Upload the resources
+		[self threadedUploadResources:[self parsedResources]];
+        
+        
+        // Upload sitemap if needed
+		[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
 		
 	}
 	@finally
@@ -1141,6 +1096,29 @@ static NSArray *sReservedNames = nil;
 	
 	OBPOSTCONDITION(result);
 	return result;
+}
+
+- (void)uploadGoogleSiteMapIfNeeded
+{
+    if ([[[self associatedDocument] documentInfo] boolForKey:@"generateGoogleSitemap"])
+    {
+        NSString *sitemapXML = [[[self associatedDocument] documentInfo] googleSiteMapXMLString];
+        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSData *gzipped = [siteMapData compressGzip];
+        
+        NSString *siteMapPath = [[self storagePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
+        [self uploadFromData:gzipped toFile:siteMapPath];
+        
+        // Don't ping google if we are just exporting
+        if ([self where] != kGeneratingRemoteExport)
+        {
+            NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
+            NSString *siteMapURLString = [[NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL] absoluteString];
+            NSString *pingURLString = [NSString stringWithFormat:@"http://www.google.com/webmasters/tools/ping?sitemap=%@",
+                                       [siteMapURLString urlEncode]];
+            [self pingThisURLString:pingURLString];
+        }
+    }
 }
 
 #pragma mark -
@@ -1298,7 +1276,7 @@ static NSArray *sReservedNames = nil;
 	}
 	else
 	{
-		return myConnection;	// don't create, just return connection that may exists
+		return myConnection;	// don't create, just return connection that may exist
 	}
 }
 

@@ -10,8 +10,8 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
-#import "KTDocument.h"
-#import "KTManagedObjectContext.h"
+#import "KTHostProperties.h"
+#import "KTPage.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "NSApplication+Karelia.h"
@@ -19,7 +19,6 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSApplication+Karelia.h"
 
 
 @interface KTDocumentInfo (Private)
@@ -182,6 +181,87 @@
 		[sortDescriptor release];
 	}
 	
+	return result;
+}
+
+#pragma mark -
+#pragma mark Google Sitemap
+
+/*  Recursively build map.  Home page gets priority 1.0; second level pages 0.5, third 0.33, etc.
+ *  Items in the site map (besides home page) get 0.95, 0.90, 0.85, ... 0.55 in order that they appear
+ *  This should make the site map be prioritized nicely.
+ */
+- (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
+{
+	NSString *url = [[aPage URL] absoluteString];
+	if (![url hasPrefix:[[[self hostProperties] siteURL] absoluteString]])
+	{
+		return;	// an external link not in this site
+	}
+	
+	if ([aPage excludedFromSiteMap])	// excluded checkbox checked, or it's an unpublished draft
+	{
+		return;	// addBool1 is indicator to EXCLUDE from a sitemap.
+	}
+	
+	OBPRECONDITION(aLevel >= 1);
+	NSMutableDictionary *entry = [NSMutableDictionary dictionary];
+	[entry setObject:url forKey:@"loc"];
+	float levelFraction = 1.0 / aLevel;
+	if ([aPage boolForKey:@"includeInSiteMenu"] && aLevel > 1)	// boost items in site menu?
+	{
+		(*ioSiteMenuCounter)++;	// we have one more site menu item
+		levelFraction = 0.95 - (0.05 * (*ioSiteMenuCounter));	// .90, .85, 0.80, 0.75 etc.
+		if (levelFraction < 0.55) levelFraction = .55;	// keep site menu above .5
+	}
+	OBASSERT(levelFraction <= 1.0 && levelFraction > 0.0);
+	[entry setObject:[NSNumber numberWithFloat:levelFraction] forKey:@"priority"];
+    
+	NSDate *lastModificationDate = [aPage wrappedValueForKey:@"lastModificationDate"];
+	NSString *timestamp = [lastModificationDate descriptionWithCalendarFormat:@"%Y-%m-%dT%H:%M:%SZ" timeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"] locale:nil];
+	[entry setObject:timestamp forKey:@"lastmod"];
+	
+	// Note: we are not trying to support the "changefreq" parameter
+	
+	[ioArray addObject:entry];
+	
+    
+	NSArray *children = [aPage sortedChildren];
+	if ([children count])
+	{
+		NSEnumerator *theEnum = [children objectEnumerator];
+		KTPage *aChildPage;
+		
+		while (nil != (aChildPage = [theEnum nextObject]) )
+		{
+			[self appendGoogleMapOfPage:aChildPage toArray:ioArray siteMenuCounter:ioSiteMenuCounter level:aLevel+1];
+		}
+	}
+}
+
+
+- (NSString *)googleSiteMapXMLString
+{
+	NSMutableArray *array = [NSMutableArray array];
+	int siteMenuCounter = 0;
+	[self appendGoogleMapOfPage:[self root] toArray:array siteMenuCounter:&siteMenuCounter level:1];
+    
+	NSMutableString *result = [NSMutableString string];
+	[result appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"];
+	
+    NSEnumerator *enumerator = [array objectEnumerator];
+	NSDictionary *dict;
+    while ((dict = [enumerator nextObject]) != nil)
+	{
+		[result appendFormat:
+         @"<url><loc>%@</loc><lastmod>%@</lastmod><priority>%.02f</priority></url>\n",
+         [[dict objectForKey:@"loc"] escapedEntities],
+         [dict objectForKey:@"lastmod"],
+         [[dict objectForKey:@"priority"] floatValue] ];
+	}
+	
+    [result appendString:@"</urlset>\n"];
+    
 	return result;
 }
 

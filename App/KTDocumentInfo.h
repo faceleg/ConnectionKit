@@ -52,4 +52,7 @@ typedef enum {
 - (NSArray *)pagesInSiteMenu;
 - (void)invalidatePagesInSiteMenuCache;
 
+// Google sitemap
+- (NSString *)googleSiteMapXMLString;
+
 @end
