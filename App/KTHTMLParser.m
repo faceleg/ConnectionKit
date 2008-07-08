@@ -332,10 +332,8 @@
 	NSString *code = nil;
 
 	NSString *uniqueID = nil;
-	NSString *flatProperty = nil;
 	NSString *flatPropertyValue = nil;
 	NSString *property = nil;
-	NSString *propertyValue = nil;
 	NSMutableArray *classes = [NSMutableArray array];
 
 	NSScanner *scanner = [NSScanner scannerWithString:inRestOfTag];
@@ -375,8 +373,6 @@
 		else if ([keyword isEqualToString:@"property"])
 		{
 			property = value;
-			propertyValue = [[self cache] valueForKeyPath:value];
-#warning we never do anything with propertyValue, should we?
 		}
 		else if ([keyword isEqualToString:@"flags"])
 		{
@@ -410,8 +406,6 @@
 		}
 		else if ([keyword isEqualToString:@"replacement"])	// key path to property to replace, flattened version of property
 		{
-			flatProperty = value;
-#warning we never do anything with flatproperty, should we?
 			flatPropertyValue = [[self cache] valueForKeyPath:value];
 			NSAssert1(flatPropertyValue, @"flatPropertyValue for keypath %@ cannot be null", value);
 
@@ -708,7 +702,7 @@
         {
             page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
         }
-#warning We never do anything with page, should we be?
+// FIXME: We should either find the resource path relative to this page, or remove the option to do so.
         
         // Where is the resource file on disk?
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];

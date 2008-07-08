@@ -495,8 +495,8 @@
 	// Build a list of the media files that will require copying/moving to the new doc
 	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
 	NSArray *mediaFiles = [mediaMOC allObjectsWithEntityName:@"AbstractMediaFile" error:NULL];
-	NSMutableSet *pathsToCopy = [[[NSMutableSet alloc] initWithCapacity:[mediaFiles count]] autorelease];
-	NSMutableSet *pathsToMove = [[[NSMutableSet alloc] initWithCapacity:[mediaFiles count]] autorelease];
+	NSMutableSet *pathsToCopy = [NSMutableSet setWithCapacity:[mediaFiles count]];
+	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
 	KTMediaFile *aMediaFile;
