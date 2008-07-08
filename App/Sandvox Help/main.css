@@ -274,6 +274,6 @@ th
 a[href ^="http://"],
 a[href ^="https://"] {
     background: url(g/globe.png) center right no-repeat;
-    padding-right: 18px;
+    padding:3px 18px 3px 3px;
 }
 
