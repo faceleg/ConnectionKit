@@ -364,6 +364,7 @@
 	// Tidy up
 	NSDictionary *result = [[buffer copy] autorelease];
     [buffer release];
+    OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -412,6 +413,20 @@
 	
     OBPOSTCONDITION(settings);
 	return settings;
+}
+
+/*  No scaling is required if the scale factor is 1.0 and the file format is the same.
+ */
+- (BOOL)propertiesRequireScaling:(NSDictionary *)properties;
+{
+    OBPRECONDITION(properties);
+    
+    KTImageScalingSettings *scalingSettings = [properties objectForKey:@"scalingBehavior"];
+    BOOL result = !([scalingSettings behavior] == KTScaleByFactor &&
+                    [scalingSettings scaleFactor] == 1.0 &&
+                    [[self fileType] conformsToUTI:[properties objectForKey:@"fileType"]]);
+    
+    return result;
 }
 
 #pragma mark -

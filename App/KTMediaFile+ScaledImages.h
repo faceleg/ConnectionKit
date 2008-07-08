@@ -18,5 +18,5 @@
 - (KTScaledImageProperties *)scaledImageWithProperties:(NSDictionary *)properties;
 
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties;
-
+- (BOOL)propertiesRequireScaling:(NSDictionary *)properties;
 @end

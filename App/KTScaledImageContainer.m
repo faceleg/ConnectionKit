@@ -72,12 +72,18 @@
 
 - (void)generateMediaFile
 {
-	NSDictionary *properties = [self latestProperties];
 	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
+    NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
 	
-	KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:properties];
-	[self setValue:generatedProperties forKey:@"generatedProperties"];
-	[self setValue:[generatedProperties valueForKey:@"destinationFile"] forKey:@"file"];
+    KTMediaFile *scaledMediaFile = sourceFile;
+    if ([sourceFile propertiesRequireScaling:canonicalProperties])
+    {
+        KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
+        [self setValue:generatedProperties forKey:@"generatedProperties"];
+        scaledMediaFile = [generatedProperties valueForKey:@"destinationFile"];
+    }
+    
+    [self setValue:scaledMediaFile forKey:@"file"];
 }
 
 @end
