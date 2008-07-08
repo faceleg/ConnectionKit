@@ -318,8 +318,11 @@
     // Unless the requested scaling will result in no change, figure out what to apply for the other settings
     if ([canonicalScalingSettings behavior] == KTScaleByFactor && [canonicalScalingSettings scaleFactor] == 1.0)
     {
-        
-        // TODO: Handle fileType here
+        // For GIF images, when no scaling is required, we logically want to maintain the file format
+        if ([[self fileType] conformsToUTI:(NSString *)kUTTypeGIF])
+        {
+            [buffer setObject:(NSString *)kUTTypeGIF forKey:@"fileType"];
+        }
     }
     else
     {
