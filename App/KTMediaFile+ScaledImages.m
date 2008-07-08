@@ -219,7 +219,14 @@
 	
 	if (image && [[image representations] count] > 0)
 	{
-		result = [self scaleImage:image withProperties:properties];
+		// Now that we actually have an NSImage object, it's possible to check its alpha content
+        if (![self valueForKey:@"hasAlphaComponent"])
+        {
+            BOOL hasAlpha = [image hasAlphaComponent];
+            [self setBool:hasAlpha forKey:@"hasAlphaComponent"];
+        }
+        
+        result = [self scaleImage:image withProperties:properties];
 	}
 	else
 	{
