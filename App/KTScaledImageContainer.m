@@ -72,7 +72,12 @@
 
 - (void)generateMediaFile
 {
-	[self subclassResponsibility:_cmd];
+	NSDictionary *properties = [self latestProperties];
+	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
+	
+	KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:properties];
+	[self setValue:generatedProperties forKey:@"generatedProperties"];
+	[self setValue:[generatedProperties valueForKey:@"destinationFile"] forKey:@"file"];
 }
 
 @end
