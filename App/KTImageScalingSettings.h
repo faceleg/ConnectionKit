@@ -18,9 +18,6 @@
 	NSSize					_size;
 	float					myScaleFactor;
 	NSImageAlignment		myImageAlignment;
-	NSNumber				*mySharpeningFactor;
-	NSNumber				*myCompression;
-	NSString				*myUTI;
 }
 
 // Init
@@ -39,9 +36,6 @@
 - (NSSize)size;
 - (float)scaleFactor;
 - (NSImageAlignment)alignment;
-- (NSNumber *)sharpeningFactor;
-- (NSString *)UTI;
-- (NSNumber *)compression;
 
 // Equality
 - (BOOL)isEqual:(id)anObject;

@@ -14,9 +14,6 @@
 - (void)setSize:(NSSize)size;
 - (void)setScaleFactor:(float)scale;
 - (void)setAlignment:(NSImageAlignment)alignment;
-- (void)setSharpeningFactor:(NSNumber *)sharpening;
-- (void)setUTI:(NSString *)UTI;
-- (void)setCompression:(NSNumber *)compression;
 @end
 
 
@@ -31,7 +28,6 @@
 	
 	[result setBehavior:KTScaleByFactor];
 	[result setScaleFactor:scaleFactor];
-	[result setSharpeningFactor:sharpening];
 	
 	return result;
 }
@@ -44,7 +40,6 @@
 	
 	[result setBehavior:behavior];
 	[result setSize:size];
-	[result setSharpeningFactor:sharpening];
 	
 	return result;
 }
@@ -142,20 +137,8 @@
 	_size = NSZeroSize;
 	myScaleFactor = 1.0;
 	myImageAlignment = NSImageAlignCenter;
-	mySharpeningFactor = nil;
-	myCompression = nil;
-	myUTI = nil;
 	
 	return self;
-}
-
-- (void)dealloc
-{
-	[mySharpeningFactor release];
-	[myCompression release];
-	[myUTI release];
-	
-	[super dealloc];
 }
 
 #pragma mark -
@@ -169,9 +152,6 @@
 	[self setSize:[decoder decodeSizeForKey:@"size"]];
 	[self setScaleFactor:[decoder decodeFloatForKey:@"scale"]];
 	[self setAlignment:[decoder decodeIntForKey:@"alignment"]];
-	[self setSharpeningFactor:[decoder decodeObjectForKey:@"sharpening"]];
-	[self setUTI:[decoder decodeObjectForKey:@"UTI"]];
-	[self setCompression:[decoder decodeObjectForKey:@"compression"]];
 	
 	return self;
 }
@@ -182,9 +162,6 @@
 	[encoder encodeSize:[self size] forKey:@"size"];
 	[encoder encodeFloat:[self scaleFactor] forKey:@"scale"];
 	[encoder encodeInt:[self alignment] forKey:@"alignment"];
-	[encoder encodeObject:[self sharpeningFactor] forKey:@"sharpening"];
-	[encoder encodeObject:[self UTI] forKey:@"UTI"];
-	[encoder encodeObject:[self compression] forKey:@"compression"];
 }
 
 #pragma mark -
@@ -239,33 +216,6 @@
 
 - (void)setAlignment:(NSImageAlignment)alignment { myImageAlignment = alignment; }
 
-- (NSNumber *)sharpeningFactor { return mySharpeningFactor; }
-
-- (void)setSharpeningFactor:(NSNumber *)sharpening
-{
-	[sharpening retain];
-	[mySharpeningFactor release];
-	mySharpeningFactor = sharpening;
-}
-
-- (NSString *)UTI { return myUTI; }
-
-- (void)setUTI:(NSString *)UTI
-{
-	UTI = [UTI copy];
-	[myUTI release];
-	myUTI = UTI;
-}
-
-- (NSNumber *)compression { return myCompression; }
-
-- (void)setCompression:(NSNumber *)compression
-{
-	[compression retain];
-	[myCompression release];
-	myCompression = compression;
-}
-
 #pragma mark -
 #pragma mark Equality
 
@@ -286,7 +236,6 @@
 	BOOL result =
 		(NSEqualSizes([settings size], [self size]) &&
 		 [settings behavior] == [self behavior] &&
-		 [settings sharpeningFactor] == [self sharpeningFactor] &&
 		 [settings alignment] == [self alignment]);
 	
 	return result;
