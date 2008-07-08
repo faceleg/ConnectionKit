@@ -313,7 +313,7 @@
  */ 
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties
 {
-	NSMutableDictionary *buffer = [[NSMutableDictionary alloc] initWithDictionary:properties];
+	NSMutableDictionary *buffer = [properties mutableCopy];
 	
 	
 	// Figure the canonical scaling specification
@@ -333,9 +333,6 @@
     }
     else
     {
-        // It's OK to leave fileType as nil
-        
-        
         // Ensure there is a compression setting
         NSNumber *compression = [properties objectForKey:@"compression"];
         if (!compression || (id)compression == [NSNull null])
@@ -351,6 +348,21 @@
         {
             sharpening = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTSharpeningFactor"];
             [buffer setObject:sharpening forKey:@"sharpeningFactor"];
+        }
+    }
+    
+    
+    // If there is still no set file type, we can oftentimes know it by looking at if the image has an alpha component
+    if (![buffer objectForKey:@"fileType"])
+    {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"KTPrefersPNGFormat"] ||
+            ([self valueForKey:@"hasAlphaComponent"] && [self boolForKey:@"hasAlphaComponent"]))
+        {
+            [buffer setObject:(NSString *)kUTTypePNG forKey:@"fileType"];
+        }
+        else
+        {
+            [buffer setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
         }
     }
     
