@@ -16,6 +16,7 @@
 @interface KTMediaFile (ScaledImages)
 
 - (KTScaledImageProperties *)scaledImageWithProperties:(NSDictionary *)properties;
+
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties;
 
 @end

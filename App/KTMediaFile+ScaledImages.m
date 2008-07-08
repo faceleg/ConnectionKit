@@ -43,6 +43,11 @@
 
 - (KTScaledImageProperties *)generateImageFromFileIconWithProperties:(NSDictionary *)properties;
 
+
+// Canonical
+- (KTImageScalingSettings *)canonicalScalingSettingsForSettings:(KTImageScalingSettings *)settings;
+
+
 // Queries
 - (KTScaledImageProperties *)anyScaledImageWithProperties:(NSDictionary *)properties;
 
@@ -292,65 +297,109 @@
 	return result;
 }
 
+
 #pragma mark -
-#pragma mark Queries
+#pragma mark Canonical Scaling Properties
 
 /*	Takes some properties and makes them suitable for the media system to search and generate images with.
+ *  Returns scaleFactor = 1.0 if the settings will result in no change to the image.
  */ 
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties
 {
-	NSMutableDictionary *buffer = [NSMutableDictionary dictionaryWithDictionary:properties];
+	NSMutableDictionary *buffer = [[NSMutableDictionary alloc] initWithDictionary:properties];
 	
 	
-	// Ensure there is a compression setting
-	id aValue = [properties objectForKey:@"compression"];
-	if (!aValue || aValue == [NSNull null])
-	{
-		NSNumber *compression = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTPreferredJPEGQuality"];
-		[buffer setObject:compression forKey:@"compression"];
-	}
-	
-	
-	// Ensure there is a sharpening factor
-	aValue = [properties objectForKey:@"sharpeningFactor"];
-	if (!aValue || aValue == [NSNull null])
-	{
-		NSNumber *sharpening = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTSharpeningFactor"];
-		[buffer setObject:sharpening forKey:@"sharpeningFactor"];
-	}
-	
-	
-	// It's OK to leave fileType as nil
-	
-	
-	// Make sure scaling behavior is stretchToSize or cropToSize
-	KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
-	switch ([settings behavior])
-	{
-		case KTScaleToSize:
-		case KTScaleByFactor:
-		{
-			// Convert these wishy washy behaviours to a definite stretch operation
-			NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
-			NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
-			
-			KTImageScalingSettings *canonicalBehavior = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize
-																								size:roundedSize
-																						  sharpening:nil];
-			
-			[buffer setObject:canonicalBehavior forKey:@"scalingBehavior"];
-			break;
-		}
-			
-		default:
-			break;
-	}
+	// Figure the canonical scaling specification
+	KTImageScalingSettings *specifiedScalingSettings = [properties objectForKey:@"scalingBehavior"];
+    KTImageScalingSettings *canonicalScalingSettings = [self canonicalScalingSettingsForSettings:specifiedScalingSettings];
+    [buffer setObject:canonicalScalingSettings forKey:@"scalingBehavior"];
+    
+    
+    // Unless the requested scaling will result in no change, figure out what to apply for the other settings
+    if ([canonicalScalingSettings behavior] == KTScaleByFactor && [canonicalScalingSettings scaleFactor] == 1.0)
+    {
+        
+        // TODO: Handle fileType here
+    }
+    else
+    {
+        // It's OK to leave fileType as nil
+        
+        
+        // Ensure there is a compression setting
+        NSNumber *compression = [properties objectForKey:@"compression"];
+        if (!compression || (id)compression == [NSNull null])
+        {
+            compression = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTPreferredJPEGQuality"];
+            [buffer setObject:compression forKey:@"compression"];
+        }
+        
+        
+        // Ensure there is a sharpening factor
+        NSNumber *sharpening = [properties objectForKey:@"sharpeningFactor"];
+        if (!sharpening || (id)sharpening == [NSNull null])
+        {
+            sharpening = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTSharpeningFactor"];
+            [buffer setObject:sharpening forKey:@"sharpeningFactor"];
+        }
+    }
 	
 	
 	// Tidy up
-	NSDictionary *result = [NSDictionary dictionaryWithDictionary:buffer];
+	NSDictionary *result = [[buffer copy] autorelease];
+    [buffer release];
 	return result;
 }
+
+/*  Support method to handle the scaling aspect of the previous method.
+ */
+- (KTImageScalingSettings *)canonicalScalingSettingsForSettings:(KTImageScalingSettings *)settings
+{
+    OBPRECONDITION(settings);
+    
+    
+    // CropToSize operations are already sorted
+    KTMediaScalingOperation behavior = [settings behavior];
+    if (behavior == KTCropToSize)
+    {
+        return settings;
+    }
+    
+    
+    // Scale by a factor of 1.0 is already sorted
+    if (behavior == KTScaleByFactor && [settings scaleFactor] == 1.0)
+    {
+        return settings;
+    }
+    
+    
+    // Convert wishy washy behaviours (scaleByFactor, scaleToSize) to a definite stretch operation
+    if (behavior != KTStretchToSize)
+    {
+        NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
+        NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
+        
+        settings = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize
+                                                           size:roundedSize
+                                                     sharpening:nil];
+    }
+	
+    
+    // We should now have a simple stretchToFit operation.
+    // Double-check that it is not equivalent to a scale by 1.0 operation
+    OBASSERT([settings behavior] == KTStretchToSize);
+    if (NSEqualSizes([settings size], [self dimensions]))
+    {
+        settings = [KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil];
+    }
+    
+	
+    OBPOSTCONDITION(settings);
+	return settings;
+}
+
+#pragma mark -
+#pragma mark Queries
 
 /*	Searches through our existing ScaledImageMediaFiles for one with the specified properties.
  *	The properties are interpreted EXACTLY. i.e. nil values are completely ignored. Use NSNull if you wish to search for a
