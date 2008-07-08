@@ -346,6 +346,19 @@
             [buffer setObject:sharpening forKey:@"sharpeningFactor"];
         }
     }
+    
+    
+    // Double-check there are compression and sharpening settings
+    NSNumber *compression = [buffer objectForKey:@"compression"];
+    if (!compression || (id)compression == [NSNull null])
+    {
+        [buffer setObject:[NSNumber numberWithInt:0] forKey:@"compression"];
+    }
+    NSNumber *sharpening = [buffer objectForKey:@"sharpeningFactor"];
+    if (!sharpening || (id)sharpening == [NSNull null])
+    {
+        [buffer setObject:[NSNumber numberWithInt:0] forKey:@"sharpeningFactor"];
+    }
 	
 	
 	// Tidy up
@@ -420,7 +433,7 @@
 	
 	while (aPropertiesObject = [imagesEnumerator nextObject])
 	{
-		NSDictionary *anImageProperties = [aPropertiesObject dictionaryWithValuesForKeys:propertyKeys];
+		NSDictionary *anImageProperties = [[aPropertiesObject scalingProperties] dictionaryWithValuesForKeys:propertyKeys];
 		if ([properties isEqualToDictionary:anImageProperties])
 		{
 			result = aPropertiesObject;

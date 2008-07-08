@@ -43,7 +43,7 @@
                 
                 NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
                 OBASSERT(newProperties);
-                NSDictionary *oldProperties = [oldPropertiesObject dictionaryWithValuesForKeys:[newProperties allKeys]];
+                NSDictionary *oldProperties = [oldPropertiesObject scalingProperties];
                 
                 if ([newProperties isEqualToDictionary:oldProperties]) {
                     fileNeedsGenerating = NO;

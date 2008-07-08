@@ -20,4 +20,6 @@
 - (KTImageScalingSettings *)scalingBehavior;
 - (void)setScalingBehavior:(KTImageScalingSettings *)scalingBehavior;
 
+- (NSDictionary *)scalingProperties;
+
 @end
