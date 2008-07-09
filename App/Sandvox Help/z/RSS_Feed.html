@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-    <meta name="keywords" content="rss, atom, feed, feeds, subscribe, subscribing, syndicate, syndication, xml, new, news, item, items, netnewswire, newsfire, shrook, vienna, integrate, integrates, integrating, integration" />
+    <meta name="keywords" content="rss, feed, feeds, pagelet, find, locate, atom, refresh, refreshes, refresher, refreshing, refreshed, rate, rates, xml, update, updates, updated, updating, cache, caches, cached, caching" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>RSS Feed</title>
@@ -25,143 +25,63 @@
     <div id="mainbox">
         <h1 class="firstHeading">RSS Feed</h1>
 
-        <p>RSS feeds are becoming an increasingly popular method for delivering content over the Internet today. You'll pleased to know then, that Sandvox has great RSS support built right in.</p><a name="What_is_an_RSS_Feed.3F" id="What_is_an_RSS_Feed.3F"></a>
+        <p>Many websites provide an <a href="RSS.html" title="RSS">RSS</a> feed allowing people to subscribe to it. An RSS Feed <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a> takes such a <a href="RSS.html" title="RSS">feed</a> and displays the headlines inside a page or pagelet on your site. Visitors can click on an item in the <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a> to read the full article.</p>
 
-        <h2><span class="mw-headline">What is an RSS Feed?</span></h2>
-
-        <p>Typically, when browsing the Internet, you visit a website and have a look at its content to see if anything interests you. But let's say you like this site a lot and tend to visit it regularly to see if anything new has appeared. And what if there are several sites like this?</p>
-
-        <p>The end result is that you find yourself regularly visiting a sizeable quantity of sites, quickly scanning them for anything new, and then closing them again. RSS feeds offer an alternative to this.</p>
-
-        <p>An RSS feed is basically a simple, easy-to-read list of the most recent items from a website. However, on its own, this is still fairly unhelpful! What you need in addition is an RSS feed reader. Some of the more popular applications available for the Mac are:</p>
-
-        <ul>
-            <li><a href="http://www.newsgator.com/NGOLProduct.aspx?ProdID=NetNewsWire" class="external text" title="http://www.newsgator.com/NGOLProduct.aspx?ProdID=NetNewsWire">NetNewsWire</a></li>
-
-            <li><a href="http://www.newsfirerss.com/" class="external text" title="http://www.newsfirerss.com/">NewsFire</a></li>
-
-            <li><a href="http://www.utsire.com/shrook/" class="external text" title="http://www.utsire.com/shrook/">Shrook</a></li>
-
-            <li><a href="http://vienna-rss.sourceforge.net/vienna21.php" class="external text" title="http://vienna-rss.sourceforge.net/vienna21.php">Vienna</a></li>
-
-            <li>Safari 2.0 and higher also features basic RSS support</li>
-        </ul>
-
-        <p>An RSS feed reader regularly downloads the RSS feeds for all the websites you provide it with, and looks to see if there is anything new. When it does find something new, the application notes the address of this new item, and alerts you to its presence. You are then free to look through these new items at your leisure and visit those that interest you.</p>
-
-        <p>For more in depth information on RSS feeds, you may be interested in <a href="http://en.wikipedia.org/wiki/RSS_%28file_format%29" class="external text" title="http://en.wikipedia.org/wiki/RSS_%28file_format%29">this article</a>.</p><a name="Sandvox.27s_Support_of_RSS_Feeds" id="Sandvox.27s_Support_of_RSS_Feeds"></a>
-
-        <h2><span class="mw-headline">Sandvox's Support of RSS Feeds</span></h2>
-
-        <p>Sandvox supports RSS feeds in two different ways. You can use an existing RSS feed from another site to provide the data for an <a href="RSS_Feed_Pagelet.html" title="RSS Feed Pagelet">RSS Feed Pagelet</a>:</p>
-
-        <p><img alt="RSS feed to pagelet process" src="img/e/e3/RSS_feed_to_pagelet_process.jp2" width="480" height="138" /></p>
-
-        <p><br />
-        Or, Sandvox can generate an RSS feed from a <a href="Collection.html" title="Collection">Collection</a> in your site, which visitors can then subscribe to:</p>
-
-        <p><img alt="Collection to RSS feed process" src="img/d/dd/Collection_to_RSS_feed_process.jp2" width="480" height="149" /></p>
-
-        <p><br />
-        The rest of this article deals solely with the process of generating an RSS feed from a <a href="Collection.html" title="Collection">Collection</a>.</p><a name="Creating_a_Feed_with_Sandvox" id="Creating_a_Feed_with_Sandvox"></a>
-
-        <h2><span class="mw-headline">Creating a Feed with Sandvox</span></h2>
-
-        <p>Setting Sandvox to create an RSS feed is very easy. Indeed if the <a href="Collection.html" title="Collection">Collection</a> you want to generate the feed from is a <a href="Blogging_with_Sandvox.html" title="Blog">Blog</a> or <a href="Working_with_Photo_Albums_in_Sandvox.html" title="Photo Album">Photo Album</a>, it is already set up!</p>
+        <p><img alt="RSSFeedPagelet" src="img/3/35/RSSFeedPagelet.jp2" width="237" height="319" /></p>
 
         <div class="instructions">
-            <p><b>To generate an RSS feed from a Collection:</b></p>
+            <p><b>Ways to add an RSS Feed to a site:</b></p>
+
+            <ul>
+                <li>Use the "Pages" or "Pagelets" items in the <a href="Toolbar.html" title="Toolbar">toolbar</a>.</li>
+
+                <li>Choose "Add Page" or "Add Pagelet" from the <a href="Sandvox_Menu_Guide.html#Site" title="Sandvox Menu Guide">Site menu</a>.</li>
+            </ul>
+        </div>
+
+        <p>Note: Although you <i>can</i> drag the URL of the RSS feed from a web browser or another application to the <a href="Site_Outline.html" title="Site Outline">Site Outline</a>, doing so will not create an RSS Feed; rather it will create an <a href="External_Page.html" title="External Page">External Page</a>, and you will not have the same ability to control the way the RSS Feed appears on your site. So although this is a possible way to incorporate an RSS Feed, it's not generally recommended.</p><a name="Editing" id="Editing"></a>
+
+        <h2><span class="mw-headline">Editing</span></h2>
+
+        <div class="instructions">
+            <p><b>To edit an RSS Feed page or pagelet:</b></p>
 
             <ol>
-                <li>Select the <a href="Collection.html" title="Collection">Collection</a> in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a>. (Don't forget that the <a href="Home_Page.html" title="Home Page">Home Page</a> is a <a href="Collection.html" title="Collection">Collection</a> as well!)</li>
+                <li>Click the page or pagelet in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a> to select it.</li>
 
-                <li>Open the <a href="The_Inspector.html" title="Page Inspector">Page Inspector</a>.</li>
-
-                <li>Expand the "Collection" settings at the bottom of the <a href="The_Inspector.html" title="Inspector">Inspector</a>.</li>
-
-                <li>
-                    <p>Check the "<a href="Collection.html#Generate_RSS_feed" title="Collection">Generate RSS feed</a>" box.</p>
-
-                    <div class="bordimg">
-                        <img alt="Generate RSS feed box" src="img/0/08/Generate_RSS_feed_box.png" width="272" height="214" />
-                    </div>
-                </li>
+                <li>Open the <a href="The_Inspector.html" title="Page Inspector">Page Inspector</a>. The top half contains <a href="General_Page_Attributes.html" title="General Page Attributes">general page attributes</a>; the bottom holds settings specific to the RSS feed as shown below.</li>
             </ol>
         </div>
 
-        <p>Sandvox will generate a standard RSS feed for the <a href="Collection.html" title="Collection">Collection</a>. The feed lists all the <a href="Page.html" title="Page">pages</a> which appear in the <a href="Collection.html" title="Collection">Collection</a>'s <a href="Index_.html" title="Index">Index</a>. You can adjust how many <a href="Page.html" title="Page">pages</a> this is using the "<a href="Collection.html#Maximum_items" title="Collection">Items</a>" setting in the <a href="The_Inspector.html" title="Page Inspector">Page Inspector</a>:</p>
-
-        <p><img alt="Maximum Collection items" src="img/8/86/Maximum_Collection_items.png" width="272" height="137" /></p>
-
-        <p>Also contained in the feed is the content of each <a href="Page.html" title="Page">page</a>. The order of the <a href="Page.html" title="Page">pages</a> in the RSS feed is always chronological, with the most recent <a href="Page.html" title="Page">pages</a> first.</p><a name="Subscribing_to_a_Sandvox_RSS_Feed" id="Subscribing_to_a_Sandvox_RSS_Feed"></a>
-
-        <h2><span class="mw-headline">Subscribing to a Sandvox RSS Feed</span></h2>
-
-        <p>Of course it's no good having an RSS feed for your site if visitors don't know where to find it!</p><a name="RSS_Badge" id="RSS_Badge"></a>
-
-        <h3><span class="mw-headline">RSS Badge</span></h3>
-
         <div class="center">
-            <div class="thumb tnone">
-                <div class="thumbinner" style="width:230px;">
-                    <img alt="An RSS Badge." class="thumbimage" src="img/b/b3/RSS_Badge.png" width="228" height="109" />
-
-                    <div class="thumbcaption">
-                        An RSS Badge.
-                    </div>
-                </div>
+            <div class="floatnone">
+                <span><img alt="" src="img/4/4f/RSSFeedPageletInspector.jp2" width="216" height="173" /></span>
             </div>
         </div>
 
-        <p>An <a href="RSS_Badge.html" title="RSS Badge">RSS Badge</a> is a small pagelet that links to the RSS feed of a <a href="Collection.html" title="Collection">collection</a>. By using an <a href="RSS_Badge.html" title="RSS Badge">RSS Badge</a> you give visitors a simple, convenient method for discovering the RSS feed or feeds for your site.</p>
+        <p>Remember that you can insert additional text into the <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a> by clicking the <a href="Editing_Marker.html" title="Editing Marker">Editing Marker</a>. (<img alt="TinyAdd" src="img/8/8d/TinyAdd.png" width="13" height="14" />).</p><a name="Full_URL_of_Feed" id="Full_URL_of_Feed"></a>
 
-        <div class="instructions">
-            <p><b>To find the RSS feed for a page using an RSS Badge:</b></p>
+        <h4><span class="mw-headline">Full URL of Feed</span></h4>
 
-            <ol>
-                <li>As described in the "<a href="RSS_Badge.html" title="RSS Badge">RSS Badge</a>" article, connect a badge to a <a href="Collection.html" title="Collection">collection</a> with an RSS feed.</li>
+        <p>The full URL of the <a href="RSS.html" title="RSS">RSS feed</a>. For information on how to find the URL of a <a href="RSS.html" title="RSS">feed</a>, please see the "<a href="RSS.html#Subscribing_to_a_Sandvox_RSS_Feed" title="RSS">RSS</a>" article.</p><a name="Maximum_number_of_entries" id="Maximum_number_of_entries"></a>
 
-                <li><a href="Publishing_Your_Site.html" title="Publish">Publish</a> the site.</li>
+        <h4><span class="mw-headline">Maximum number of entries</span></h4>
 
-                <li>On the <a href="Publishing_Your_Site.html" title="Publish">published</a> site, click the <a href="RSS_Badge.html" title="RSS Badge">RSS Badge</a> and copy the URL it takes you to.</li>
-            </ol>
-        </div><a name="Web_Browser" id="Web_Browser"></a>
+        <p>Limits the number of items displayed in the <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a>. If you're incorporating a busy feed and don't want it to take up a lot of space in your site, set a limit here to control how long the page or pagelet will be. If you enter "0" there will be no limit.</p><a name="Character_limit_for_summaries" id="Character_limit_for_summaries"></a>
 
-        <h3><span class="mw-headline">Web Browser</span></h3>
+        <h4><span class="mw-headline">Character limit for summaries</span></h4>
 
-        <p>Some web browsers feature automatic detection of the RSS feed associated with a webpage. Some of the more popular web browsers that support this feature are:</p>
+        <p>Entering a number here will add summaries under each headline, up to the number of characters specified. Leaving this field blank or entering a 0 will eliminate the summaries.</p><a name="Open_links_in_new_window" id="Open_links_in_new_window"></a>
 
-        <ul>
-            <li><a href="http://www.apple.com/macosx/features/safari/" class="external text" title="http://www.apple.com/macosx/features/safari/">Safari 2.0</a></li>
+        <h4><span class="mw-headline">Open links in new window</span></h4>
 
-            <li><a href="http://www.mozilla.com/firefox/" class="external text" title="http://www.mozilla.com/firefox/">Firefox</a></li>
+        <p>Checking this box will open a new browser window for each link in the RSS feed.<br style="clear:both" /></p><a name="Implementation_Details" id="Implementation_Details"></a>
 
-            <li><a href="http://www.opera.com/" class="external text" title="http://www.opera.com/">Opera</a> 8.0 and higher</li>
-        </ul>
+        <h2><span class="mw-headline">Implementation Details</span></h2>
 
-        <div class="instructions">
-            <p><b>To find the RSS feed for a page using Safari 2.0:</b></p>
+        <p>RSS Feed <a href="Page.html" title="Page">pages</a> and <a href="Pagelet.html" title="Pagelet">pagelets</a> use <a href="Karelia_Services.html" title="Karelia Services">Karelia Services</a> to handle <a href="RSS.html" title="RSS">RSS feeds</a>. The server takes a feed and transforms it into HTML code that is displayed on your site. Karelia uses <a href="http://magpierss.sourceforge.net/" class="external text" title="http://magpierss.sourceforge.net/">MagpieRSS</a> to power this service.</p>
 
-            <ol>
-                <li>
-                    <p>Open the webpage in Safari. A small "RSS" symbol should appear in the Address Bar to signify the presence of an RSS feed:</p>
-
-                    <div class="bordimg">
-                        <img alt="Podcast page address" src="img/8/8f/Podcast_page_address.png" width="480" height="63" />
-                    </div>
-                </li>
-
-                <li>Click the "RSS" symbol to view the feed. It will open within Safari or your preferred RSS reader.</li>
-            </ol>
-
-            <p>You can now copy and paste the address of the feed.</p>
-        </div>
-
-        <p>Although these instructions apply only to Safari, they are pretty similar for all RSS-enabled web browsers.</p><a name="RSS_Reader_Application" id="RSS_Reader_Application"></a>
-
-        <h3><span class="mw-headline">RSS Reader Application</span></h3>
-
-        <p>Most RSS feed reader applications offer the ability to automatically discover the RSS feed associated with a particular webpage. Please refer to the users' guide of your RSS reader application for details on how to do this.</p>
+        <p>To ease the load on the sites whose <a href="RSS.html" title="RSS">RSS</a> feed is to be displayed, each <a href="RSS.html" title="RSS">RSS</a> feed is cached and updated once an hour.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -169,11 +89,9 @@
             <h2><span class="mw-headline">Related Articles</span></h2>
 
             <ul>
-                <li><a href="Collection.html" title="Collection">Collection</a></li>
+                <li><a href="RSS.html" title="RSS">RSS</a></li>
 
-                <li><a href="RSS_Feed_Pagelet.html" title="RSS Feed Pagelet">RSS Feed Pagelet</a></li>
-
-                <li><a href="RSS_Badge.html" title="RSS Badge">RSS Badge</a></li>
+                <li><a href="Karelia_Services.html" title="Karelia Services">Karelia Services</a></li>
             </ul>
         </div>
     </div>

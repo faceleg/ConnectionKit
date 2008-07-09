@@ -25,7 +25,7 @@
     <div id="mainbox">
         <h1 class="firstHeading">Contact Form</h1>
 
-        <p>A contact form can be either a <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a>. It lets site visitors contact you easily and securely by filling in a few details.</p>
+        <p>A contact form can be either a <a href="Page.html" title="Page">page</a> or <a href="Pagelet.html" title="Pagelet">pagelet</a>. It lets site visitors contact you easily and securely by filling in a few details. Best of all, it lets your visitors contact you without requiring you to display your email address.</p>
 
         <div class="center">
             <div class="thumb tnone">
@@ -54,7 +54,125 @@
         <p><br />
         After clicking the "Send" button, visitors are redirected to a special page on Karelia's website that informs them whether their message has been successfully sent. This page should match the <a href="Design.html" title="Design">design</a> of your site as closely as possible, however there may be some small differences for things like <a href="Graphical_text.html" title="Graphical text">graphical text</a> or if you have customized the <a href="Design.html" title="Design">design</a>. Visitors are then able to return to your site.</p>
 
-        <p>In some rare cases, Karelia may not be able to determine the site from which a visitor came originally. In which case, no link is offered back to your site. Visitors will have to use the back button to return.</p><a name="Testing" id="Testing"></a>
+        <p>In some rare cases, Karelia may not be able to determine the site from which a visitor came originally. In that case, no link back to your site is provided. Visitors will have to use the back button to return.</p>
+
+        <div class="instructions">
+            <p><b>Ways to add a Contact Form to a site:</b></p>
+
+            <ul>
+                <li>Use the "Pages" or "Pagelets" items in the <a href="Toolbar.html" title="Toolbar">toolbar</a>.</li>
+
+                <li>Choose "Add Page" or "Add Pagelet" from the <a href="Sandvox_Menu_Guide.html#Site" title="Sandvox Menu Guide">Site menu</a>.</li>
+            </ul>
+        </div><a name="Security" id="Security"></a>
+
+        <h2><span class="mw-headline">Security</span></h2><a name="Encryption" id="Encryption"></a>
+
+        <h3><span class="mw-headline">Encryption</span></h3>
+
+        <p>In order to protect your e-mail address from spammers, the Contact Forms in Sandvox encrypt it. When a visitor clicks the "Send" button, their message is actually sent to Karelia's servers. The server then decrypts your address and relays the message to you. (Karelia does not log or monitor the contents of the messages being sent; however, we may monitor other information such as referring pages, to check for abuse of the service. If you are concerned about your messages being passed through a Karelia server, you are welcome to <a href="Hidden_Preferences.html#Contact_Form" title="Hidden Preferences">install the form processor script on your own server</a>.)</p>
+
+        <p>It is not a good idea for your web site's visitors to send you highly confidential messages using a Contact Form. Messages are sent "in the clear" from your website to Karelia's servers, and are then sent out as unencrypted e-mails.</p><a name="Identifying_the_Sender.27s_IP_Address" id="Identifying_the_Sender.27s_IP_Address"></a>
+
+        <h3><span class="mw-headline">Identifying the Sender's IP Address</span></h3>
+
+        <p>When you receive messages sent through your contact form, you can determine the IP address of the person who filled out the form by looking at the hidden message header "X-Remote-Addr." You would see this in Apple Mail, for example, by choosing View &gt; Message &gt; Long Headers. If you need to set up your mail filters to handle particular senders in special ways, the sender's IP address can be a useful piece of information.</p><a name="Settings" id="Settings"></a>
+
+        <h2><span class="mw-headline">Settings</span></h2>
+
+        <div class="instructions">
+            <p><b>To edit a Contact Form page:</b></p>
+
+            <ol>
+                <li>Click the Contact Form in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a> to select it.</li>
+
+                <li>Open the <a href="The_Inspector.html" title="Page Inspector">Page Inspector</a>. The top half contains <a href="General_Page_Attributes.html" title="General Page Attributes">general page attributes</a>; the bottom holds settings specific to the Contact Form as shown below.</li>
+            </ol>
+
+            <p><b>To edit a Contact Form pagelet:</b></p>
+
+            <ol>
+                <li>Select the Contact Form by clicking it.</li>
+
+                <li>Open the <a href="The_Inspector.html" title="Selection Inspector">Selection Inspector</a>. The top half contains <a href="General_Pagelet_Attributes.html" title="General Pagelet Attributes">general pagelet attributes</a>; the bottom holds settings specific to the Contact Form as shown below.</li>
+            </ol>
+        </div>
+
+        <div class="center">
+            <div class="floatnone">
+                <span><img alt="" src="img/c/cd/ContactFormInspector.jp2" width="216" height="257" /></span>
+            </div>
+        </div><a name="Label_Position" id="Label_Position"></a>
+
+        <h3><span class="mw-headline">Label Position</span></h3>
+
+        <p>These buttons control the location of the labels for each field on the Contact Form, either above the field or on the left side of each field.</p><a name="E-mail_Address" id="E-mail_Address"></a>
+
+        <h3><span class="mw-headline">E-mail Address</span></h3>
+
+        <p>Enter your e-mail address into the "Send to" box. You can have e-mails sent to multiple addresses at the same time by entering them separated by commas like so:</p>
+        <pre>
+me@example.com, someoneelse@example.com
+</pre>
+
+        <p>To keep your address secure, Sandvox encrypts it. To find out how and why, please see the <a href="Contact_Form.html#Security" title="Contact Form">security</a> section of this article.</p><a name="Customizing_Fields" id="Customizing_Fields"></a>
+
+        <h3><span class="mw-headline">Customizing Fields</span></h3>
+
+        <p>When you create a Contact Form, Sandvox supplies a typical set of fields and a Send button. You can customize any of the fields and the Send button, and you can add more fields.</p>
+
+        <p>Click on the "Fields" tab to see menus that will let you customize each field.</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <span><img alt="" src="img/d/d5/ContactFormInspectorFields.jp2" width="216" height="258" /></span>
+            </div>
+        </div>
+
+        <p>The five default fields are already listed for you. You can change the order of the fields by dragging them within the list.</p>
+
+        <p>The lock icon to the right of each default field indicates that these fields can not be deleted (although they can be hidden).</p>
+
+        <dl>
+            <dt>Name</dt>
+
+            <dd>The "Name" field can be hidden using the pull-down menu under "Type." The label on the "Name" field can be changed by typing a different label in the box marked "Label."</dd>
+        </dl>
+
+        <dl>
+            <dt>Email</dt>
+
+            <dd>To change the label on the "Email" field, click "Email" on the left and then type a new label in the "Label" box.</dd>
+        </dl>
+
+        <dl>
+            <dt>Message Subject</dt>
+
+            <dd>
+                The default text field allows visitors to enter any subject they want. If you would like to give visitors a set list of subjects to choose from, select "Subject" on the left and then "Type" to Radio Buttons or Popup. Then list the choices you want visitors to see in the box marked "Choices." Separate the subjects with commas like this:
+                <pre>
+cheddar, stilton, edam
+</pre>You can also change the label for the field. If you choose to hide the subject field, you can enter text that will appear as the subject line for any message a visitor sends.
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Message</dt>
+
+            <dd>Select "Message" on the left and then use the pull-down menu to hide the "Message" field or change it into a Send button. Type new text in the box marked "Label" to change the label of the "Message" field.</dd>
+        </dl>
+
+        <dl>
+            <dt>Send</dt>
+
+            <dd>Select "Send" on the left and then type new text in the box marked "Label" if you'd like to change the words on the Send button.</dd>
+        </dl>
+
+        <dl>
+            <dt>Add a Field</dt>
+
+            <dd>Click the + button in the lower left to add a new field. This can be useful if you'd like to ask visitors for different kinds of information.</dd>
+        </dl><a name="Testing" id="Testing"></a>
 
         <h2><span class="mw-headline">Testing</span></h2>
 
@@ -80,77 +198,7 @@
             <li>You have entered the "<a href="Contact_Form.html#E-mail_Address" title="Contact Form">send to</a>" e-mail address incorrectly. Correct it using the <a href="The_Inspector.html" title="Inspector">Inspector</a>.</li>
 
             <li>The incoming e-mail is being marked as spam. Check your junk mail filter and adjust it if required.</li>
-        </ul><a name="Security" id="Security"></a>
-
-        <h2><span class="mw-headline">Security</span></h2>
-
-        <p>In order to protect your e-mail address from spammers, Contact Forms encrypt it. When a visitor clicks the "Send" button, their message is actually sent to Karelia's servers. The server then decrypts your address and relays the message to you. (Karelia do not log or monitor the contents of the messages being sent; however, we may monitor other information such as referring pages, to check for abuse of the service. If you are concerned about your messages being passed through a Karelia server, you are welcome to <a href="Hidden_Preferences.html#Contact_Form" title="Hidden Preferences">install the form processor script on your own server</a>.)</p>
-
-        <p>It is not a good idea for your website's visitors to send you highly confidential messages using a Contact Form. Messages are sent "in the clear" from your website to Karelia's servers, and are then sent out as unencrypted e-mails.</p><a name="Settings" id="Settings"></a>
-
-        <h2><span class="mw-headline">Settings</span></h2>
-
-        <div class="instructions">
-            <p><b>To edit a Contact Form page:</b></p>
-
-            <ol>
-                <li>Click the Contact Form in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a> to select it.</li>
-
-                <li>Open the <a href="The_Inspector.html" title="Page Inspector">Page Inspector</a>. The top half contains <a href="General_Page_Attributes.html" title="General Page Attributes">general page attributes</a>; the bottom holds settings specific to the Contact Form as listed below.</li>
-            </ol>
-
-            <p><b>To edit a Contact Form pagelet:</b></p>
-
-            <ol>
-                <li>Select the Contact Form by clicking it.</li>
-
-                <li>Open the <a href="The_Inspector.html" title="Selection Inspector">Selection Inspector</a>. The top half contains <a href="General_Pagelet_Attributes.html" title="General Pagelet Attributes">general pagelet attributes</a>; the bottom holds settings specific to the Contact Form as listed below.</li>
-            </ol>
-        </div>
-
-        <div class="center">
-            <div class="floatnone">
-                <span><img alt="" src="img/c/cd/ContactFormInspector.jp2" width="193" height="225" /></span>
-            </div>
-        </div><a name="Form_Labels" id="Form_Labels"></a>
-
-        <h3><span class="mw-headline">Form Labels</span></h3>
-
-        <p>Form labels can be positioned above or to the side of each field of the Contact Form.</p>
-
-        <p>The labels and the title of the "Send" button can be customized if required. Use the "Customize Form Labels" popup button to select a label and then enter a new name for it. When you first create a Contact Form, Sandvox attempts to give the labels appropriately localized titles.</p><a name="E-mail_Address" id="E-mail_Address"></a>
-
-        <h3><span class="mw-headline">E-mail Address</span></h3>
-
-        <p>Enter your e-mail address into the "Send to" box. You can have e-mails sent to multiple addresses at the same time by entering them separated by commas like so:</p>
-        <pre>
-me@example.com, someoneelse@example.com
-</pre>
-
-        <p>To keep your address secure, Sandvox encrypts it. To find out how and why, please see the <a href="Contact_Form.html#Security" title="Contact Form">security</a> section of this article.</p><a name="Message_Subject" id="Message_Subject"></a>
-
-        <h3><span class="mw-headline">Message Subject</span></h3>
-
-        <p>Use the "Subject Type" popup button to choose how site visitors can select their message subject.</p>
-
-        <dl>
-            <dt>Text Field</dt>
-
-            <dd>Visitors can enter any subject.</dd>
-
-            <dt>Selection List</dt>
-
-            <dd>
-                A restricted list of possible subjects which are entered in the <a href="The_Inspector.html" title="Inspector">Inspector</a>. Separate the subjects with commas. e.g.
-                <pre>
-cheddar, stilton, edam
-</pre>
-            </dd>
-
-            <dt>Hidden</dt>
-
-            <dd>Hides the subject field from view, giving all messages a fixed subject as entered in the <a href="The_Inspector.html" title="Inspector">Inspector</a>.</dd>
-        </dl>
+        </ul>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
