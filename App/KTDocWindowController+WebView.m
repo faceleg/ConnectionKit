@@ -604,7 +604,7 @@ but the only trick is -- how to display a highlight?
 	NSString *altText = [elementInformation valueForKey:WebElementImageAltStringKey];
 	NSURL *URL = [elementInformation valueForKey:WebElementLinkURLKey];
 
-	if ( (nil != title) && ![title isEqualToString:@""] )
+	if ( (nil != title) && [title isKindOfClass:[NSString class]] && ![title isEqualToString:@""] )
 	{
 		[self setStatusField:title];
 	}

@@ -620,7 +620,7 @@
 		NSString *status = [[[[self windowController] status] copy] autorelease];
 		
 		// update status 
-		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", "Status: Autosaving...")];
+		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
 		
 		// turn off timers before doing save
 		[self suspendAutosave];
