@@ -580,7 +580,10 @@ static NSArray *sReservedNames = nil;
 		// This is currently a special case to make sure Download Page media is published
 		// TODO: Generalise this code if any other plugins actually need it
 		KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
-		[self addParsedMediaFileUpload:upload];
+		if (upload)
+        {
+            [self addParsedMediaFileUpload:upload];
+        }
 	}
 	
 	
@@ -1175,10 +1178,10 @@ if ([self where] == kGeneratingRemoteExport) {
 	// Master CSS. Inform of the banner image (if there is one) & graphical text.
 	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
 	
-	KTMediaFile *bannerImage = [[master scaledBanner] file];
+	KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
 	if (bannerImage)
 	{
-		[self addParsedMediaFileUpload:[bannerImage defaultUpload]];
+		[self addParsedMediaFileUpload:bannerImage];
 	}
 	
 	NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
