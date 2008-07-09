@@ -23,6 +23,7 @@
 #import <Connection/KTLog.h>
 
 #import "Debug.h"
+#import "OmniCompatibility.h"
 
 
 @interface QTMovie (iMediaHack)
@@ -335,7 +336,7 @@
     {
         // Ensure there is a compression setting
         NSNumber *compression = [properties objectForKey:@"compression"];
-        if (!compression || (id)compression == [NSNull null])
+        if (KSISNULL(compression))
         {
             compression = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTPreferredJPEGQuality"];
             [buffer setObject:compression forKey:@"compression"];
@@ -344,7 +345,7 @@
         
         // Ensure there is a sharpening factor
         NSNumber *sharpening = [properties objectForKey:@"sharpeningFactor"];
-        if (!sharpening || (id)sharpening == [NSNull null])
+        if (KSISNULL(sharpening))
         {
             sharpening = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTSharpeningFactor"];
             [buffer setObject:sharpening forKey:@"sharpeningFactor"];
@@ -369,12 +370,12 @@
     
     // Double-check there are compression and sharpening settings
     NSNumber *compression = [buffer objectForKey:@"compression"];
-    if (!compression || (id)compression == [NSNull null])
+    if (KSISNULL(compression))
     {
         [buffer setObject:[NSNumber numberWithInt:0] forKey:@"compression"];
     }
     NSNumber *sharpening = [buffer objectForKey:@"sharpeningFactor"];
-    if (!sharpening || (id)sharpening == [NSNull null])
+    if (KSISNULL(sharpening))
     {
         [buffer setObject:[NSNumber numberWithInt:0] forKey:@"sharpeningFactor"];
     }

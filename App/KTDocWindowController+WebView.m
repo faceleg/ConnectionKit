@@ -8,7 +8,6 @@
 
 #import "KTDocWindowController.h"
 
-#import "Debug.h"
 #import "KT.h"
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
@@ -53,6 +52,10 @@
 #ifdef APP_RELEASE
 #import "Registration.h"
 #endif
+
+#import "Debug.h"
+#import "OmniCompatibility.h"
+
 
 typedef enum {
     WebKitEditableLinkDefaultBehavior = 0,
@@ -1384,7 +1387,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		NSURL *URL = [urls objectAtIndex:0];
 		
 		NSString *title = [titles firstObject];
-		if (!title || (id)title == [NSNull null] || [title isEmptyString]) {
+		if (KSISNULL(title) || [title isEmptyString]) {
 			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
 		}
 		

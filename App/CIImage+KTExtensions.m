@@ -74,14 +74,6 @@
 	}
 	
 	
-	// Sharpen if requested
-	NSNumber *sharpeningFactor = [settings sharpeningFactor];
-	if (sharpeningFactor)
-	{
-		result = [result sharpenLuminanceWithFactor:(2.0 * [sharpeningFactor floatValue])];
-	}
-	
-	
 	return result;
 }
 
