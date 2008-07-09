@@ -482,7 +482,7 @@
 		result = [NSIndexPath indexPathWithIndex:0];
 	}
 	
-    OBPOSTCONDITION(result);
+    
 	return result;
 }
 
