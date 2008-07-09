@@ -2,6 +2,13 @@
 
 [[if username]]
 
+[[comment Hacks to register dependent keypaths]]
+[[if selectedIMService==0]]
+    [[if headlineText]] [[endif3]]
+    [[if onlineText]] [[endif3]]
+    [[if offlineText]] [[endif3]]
+[[endif2]]
+
 [[if parser.HTMLGenerationPurpose]]
 		[[=delegate.publishingHTML]]
 [[else2]]
