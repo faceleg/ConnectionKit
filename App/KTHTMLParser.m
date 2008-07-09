@@ -238,9 +238,17 @@
 {
 	NSString *result = [super parseTemplate];
 	
-	if (result &&
+    // We only need neat formatting when publishing
+    KTHTMLGenerationPurpose HTMLPurpose = [self HTMLGenerationPurpose];
+    if (HTMLPurpose != kGeneratingPreview && HTMLPurpose != kGeneratingQuickLookPreview)
+    {
+        result = [result removeMultipleNewlines];
+    }
+    
+    // Preview HTML should be wrapped in an identiying div for the webview
+	if (HTMLPurpose == kGeneratingPreview &&
+		result &&
 		[self parentParser] &&
-		[self HTMLGenerationPurpose] == kGeneratingPreview &&
 		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
 	{
 		result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",

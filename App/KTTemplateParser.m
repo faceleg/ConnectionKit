@@ -243,7 +243,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		NSScanner *scanner = [NSScanner scannerWithString:[self template]];
 		[scanner setCharactersToBeSkipped:nil];
 		result = [self startHTMLStringByScanning:scanner];
-		result = [result removeMultipleNewlines];
 	}
 	@finally
 	{
