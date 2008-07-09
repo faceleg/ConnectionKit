@@ -17,8 +17,10 @@ extern NSString *KTMediaLogDomain;
 
 @interface KTMediaManager : NSObject
 {
-	KTDocument				*myDocument;
+	KTDocument				*myDocument;    // Weak ref
 	NSManagedObjectContext	*myMOC;
+    
+    NSMutableDictionary *myMediaContainerIdentifiersCache;
 }
 
 // Basic Accesors

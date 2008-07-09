@@ -71,7 +71,8 @@ NSString *KTMediaLogDomain = @"Media";
 
 - (void)dealloc
 {
-	[myMOC release];
+	[myMediaContainerIdentifiersCache release];
+    [myMOC release];
 	
 	[super dealloc];
 }

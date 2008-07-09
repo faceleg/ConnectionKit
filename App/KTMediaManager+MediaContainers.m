@@ -23,6 +23,7 @@
 
 
 @interface KTMediaManager (MediaContainersPrivate)
+- (KTMediaContainer *)fetchMediaContainerWithIdentifier:(NSString *)identifier;
 - (KTMediaContainer *)insertNewMediaContainer;
 @end
 
@@ -39,27 +40,53 @@
  */
 - (KTMediaContainer *)mediaContainerWithIdentifier:(NSString *)identifier
 {
-	KTMediaContainer *result = nil;
+	OBPRECONDITION(identifier);
+    
+    
+    // Load in the cache if needed
+    if (!myMediaContainerIdentifiersCache)
+    {
+        NSArray *mediaContainers = [[self managedObjectContext] allObjectsWithEntityName:@"MediaContainer"
+                                                                                   error:NULL];
+        
+        NSArray *mediaContainerIdentifiers = [mediaContainers valueForKey:@"identifier"];
+        myMediaContainerIdentifiersCache = [[NSMutableDictionary alloc] initWithObjects:mediaContainers
+                                                                                forKeys:mediaContainerIdentifiers];
+    }
+    
+    
+    // Search the cache for the identifier
+    KTMediaContainer *result = [myMediaContainerIdentifiersCache objectForKey:identifier];
+    
+    
+    // If the cache does not contain the object, fall back to fetching it, and cache the result
+	if (!result)
+    {
+        result = [self fetchMediaContainerWithIdentifier:identifier];
+        if (result) [myMediaContainerIdentifiersCache setObject:result forKey:identifier];
+    }
 	
-	if (identifier)
-	{
-		// Fetch first possible match
-		NSFetchRequest *fetchRequest =
-		[[[self class] managedObjectModel] fetchRequestFromTemplateWithName:@"MediaWithIdentifier"
-											   substitutionVariable:identifier forKey:@"IDENTIFIER"];
-		
-		[fetchRequest setFetchLimit:1];
-		
-		NSError *error = nil;
-		NSArray *matches = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-		if (error) {
-			[[NSAlert alertWithError:error] runModal];
-		}
-		
-		result = [matches firstObject];
-	}
 	
 	return result;
+}
+
+- (KTMediaContainer *)fetchMediaContainerWithIdentifier:(NSString *)identifier
+{
+	OBPRECONDITION(identifier);
+    	
+	// Fetch first possible match
+    NSFetchRequest *fetchRequest =
+    [[[self class] managedObjectModel] fetchRequestFromTemplateWithName:@"MediaWithIdentifier"
+                                                   substitutionVariable:identifier forKey:@"IDENTIFIER"];
+    [fetchRequest setFetchLimit:1];
+    
+    NSError *error = nil;
+    NSArray *matches = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    if (!matches) {
+        [[self document] presentError:error];
+    }
+    
+    return [matches firstObject];
 }
 
 #pragma mark -
