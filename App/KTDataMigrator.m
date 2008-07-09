@@ -808,7 +808,41 @@
         oldElement = [subelements anyObject];
     }
     
+    
     BOOL result = [self migrateElement:oldElement toElement:newElement error:error];
+    
+    
+    // We then specially handle importing introductionHTML as it is a container-level property
+    if (result)
+    {
+        // Figure out the maximum image size we'll allow
+        NSString *settings = @"inTextMediumImage";
+        if ([newElement isKindOfClass:[KTPagelet class]])
+        {
+            settings = @"sidebarImage";
+        }
+        
+        
+        // Update media refs to the new system.
+        NSString *oldText;
+        if ([[[oldElementContainer entity] attributesByName] objectForKey:@"introductionHTML"])
+        {
+            oldText = [oldElementContainer valueForKey:@"introductionHTML"];
+        }
+        else
+        {
+            oldText = [oldElementContainer valueForKeyPath:@"pluginProperties.introductionHTML"];
+        }
+        
+        NSString *newText = [[newElement mediaManager] importLegacyMediaFromString:oldText
+                                                         scalingSettingsName:settings
+                                                                  oldElement:oldElementContainer
+                                                                  newElement:newElement];
+        
+        [newElement setValue:newText forKey:@"introductionHTML"];
+    }
+    
+    
     return result;
 }
 
@@ -1015,30 +1049,6 @@
     {
         [self setValuesForKeysWithDictionary:oldPluginProperties];
         result = YES;
-    }
-    
-    
-    // We then specially handle importing introductionHTML
-    if (result)
-    {
-        // Figure out the maximum image size we'll allow
-        NSString *settings = @"inTextMediumImage";
-        if ([self isKindOfClass:[KTPagelet class]])
-        {
-            settings = @"sidebarImage";
-        }
-         
-        
-        // Update media refs to the new system.
-        NSString *oldText = [oldPluginProperties objectForKey:@"introductionHTML"];
-        
-        NSString *newText = [[self mediaManager] importLegacyMediaFromString:oldText
-                                                         scalingSettingsName:settings
-                                                                  oldElement:oldPlugin
-                                                                  newElement:self];
-        
-        
-        [self setValue:newText forKey:@"introductionHTML"];
     }
     
     
