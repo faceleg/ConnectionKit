@@ -172,4 +172,25 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Data Migrator
+
+- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
+                    fromPlugin:(NSManagedObject *)oldPlugin
+                         error:(NSError **)error
+{
+    KTAbstractElement *element = [self delegateOwner];
+    
+    // Import normal properties
+    [element setValuesForKeysWithDictionary:oldPluginProperties];
+    
+    // Import full-pageness
+    if ([element isKindOfClass:[KTPage class]])
+    {
+        [(KTPage *)element setPluginHTMLIsFullPage:[oldPluginProperties boolForKey:@"fillEntirePage"]];
+    }
+    
+    return YES;
+}
+
 @end
