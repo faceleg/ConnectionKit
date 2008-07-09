@@ -129,7 +129,9 @@
 	KTAbstractPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
-		[self beginObservingPage:aPage];
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Autorelease pool is needed for large sites
+        [self beginObservingPage:aPage];
+        [pool release];
 	}
 	
 	
