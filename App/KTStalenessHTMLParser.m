@@ -65,4 +65,11 @@
 	return result;
 }
 
+/*  There's no point working out the URLs involved etc. when this is for staleness.
+ */
+- (NSString *)pathToPage:(KTAbstractPage *)page
+{
+    return @"";
+}
+
 @end
