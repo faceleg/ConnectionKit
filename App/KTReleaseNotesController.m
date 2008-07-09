@@ -5,7 +5,7 @@
 //  Created by Terrence Talbot on 1/6/06.
 //  Copyright 2006 Biophony LLC. All rights reserved.
 //
-
+#import <Cocoa/Cocoa.h>
 #import "KTReleaseNotesController.h"
 #import <Sparkle/Sparkle.h>
 #import "NSString+Karelia.h"
@@ -19,13 +19,24 @@
 - (NSURL *)URLToLoad;
 {
 	NSArray *feedParams = [[NSApp delegate] feedParametersForHostBundle:[NSBundle mainBundle] sendingSystemProfile:NO];
-	NSMutableArray *rnParams = [NSMutableArray arrayWithArray:feedParams];
-	[rnParams addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"rn", @"key", @"1", @"value", nil]];
+		// above is an array of dictionaries with keys of "key" and "value"
+		// we want to convert this into a simple dicationary.
 	
-	NSURL *newURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSBundle mainBundle] homeBaseURL]];
-	NSURL *feedURL = [newURL URLWithParameters:rnParams];
-	DJW((@"release notes URL = %@", feedURL));
-	return feedURL;
+	NSMutableDictionary *simpleParameters = [NSMutableDictionary dictionary];
+	NSEnumerator *theEnum = [feedParams objectEnumerator];
+	NSDictionary *oneParamDict;
+	while ((oneParamDict = [theEnum nextObject]))
+	{
+		[simpleParameters setObject:[oneParamDict objectForKey:@"value"] forKey:[oneParamDict objectForKey:@"key"]];
+	}	
+	// Add our key  that makes this into release notes
+	[simpleParameters setObject:@"1" forKey:@"rn"];
+
+	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSBundle mainBundle] homeBaseURL]];
+	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:simpleParameters];
+	
+	DJW((@"release notes URL = %@", result));
+	return result;
 }
 
 - (void)windowDidLoad
