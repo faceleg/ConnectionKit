@@ -229,13 +229,15 @@
 
 - (void)beginObservingKeyPath:(NSString *)keyPath ofObject:(id)object onNonStalePage:(KTAbstractPage *)page;
 {
-	NSMutableSet *observedKeyPaths = [self observedKeyPathsOfNonStalePage:page];
 	KTParsedKeyPath *parsedKeyPath = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:object];
-	
-	if (![observedKeyPaths containsObject:parsedKeyPath])
-	{
-		OBASSERT(parsedKeyPath);
-        [observedKeyPaths addObject:parsedKeyPath];
+	OBASSERT(parsedKeyPath);
+    
+    NSMutableSet *observedKeyPaths = [self observedKeyPathsOfNonStalePage:page];
+	unsigned oldCount = [observedKeyPaths count];
+    [observedKeyPaths addObject:parsedKeyPath];
+    
+    if ([observedKeyPaths count] != oldCount)   // Rather than doing -containsObject: followed by -addObject:, we compare
+    {                                           // the counts for performance.
 		[object addObserver:self forKeyPath:keyPath options:0 context:NULL];
 	}
 	
