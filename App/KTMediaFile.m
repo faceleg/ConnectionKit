@@ -55,14 +55,30 @@
 	[result setFileType:[NSString UTIForFileAtPath:path]];
 	
 	
-	// If the file is an image, also store the dimensions.
+	// If the file is an image, also store the dimensions when possible
 	if ([NSString UTI:[result fileType] conformsToUTI:(NSString *)kUTTypeImage])
 	{
-		CIImage *image = [[CIImage alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
-		CGSize imageSize = [image extent].size;
-		[result setInteger:imageSize.width forKey:@"width"];
-		[result setInteger:imageSize.height forKey:@"height"];
-		[image release];
+		NSURL *imageURL = [NSURL fileURLWithPath:path];
+        
+        CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
+		if (image)
+        {
+            CGSize imageSize = [image extent].size;
+            [result setInteger:imageSize.width forKey:@"width"];
+            [result setInteger:imageSize.height forKey:@"height"];
+            [image release];
+        }
+        else
+        {
+            NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+            if (image)
+            {
+                NSSize imageSize = [image size];
+                [result setInteger:imageSize.width forKey:@"width"];
+                [result setInteger:imageSize.height forKey:@"height"];
+                [image release];
+            }
+        }
 	}
 	
 	
