@@ -813,13 +813,6 @@
     BOOL result = [self migrateElement:oldElement toElement:newElement error:error];
     
     
-    // Migrate any additional container properties
-    if (result)
-    {
-        result = [self migrateElement:oldElementContainer toElement:newElement error:error];
-    }
-    
-    
     // We then specially handle importing introductionHTML as it is a container-level property
     if (result)
     {

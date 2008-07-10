@@ -187,7 +187,8 @@
     // Import full-pageness
     if ([element isKindOfClass:[KTPage class]])
     {
-        [(KTPage *)element setPluginHTMLIsFullPage:[oldPluginProperties boolForKey:@"fillEntirePage"]];
+        [(KTPage *)element setPluginHTMLIsFullPage:
+         [[oldPlugin valueForKeyPath:@"container.pluginProperties.fillEntirePage"] boolValue]];
     }
     
     return YES;
