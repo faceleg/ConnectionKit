@@ -58,27 +58,7 @@
 	// If the file is an image, also store the dimensions when possible
 	if ([NSString UTI:[result fileType] conformsToUTI:(NSString *)kUTTypeImage])
 	{
-		NSURL *imageURL = [NSURL fileURLWithPath:path];
-        
-        CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
-		if (image)
-        {
-            CGSize imageSize = [image extent].size;
-            [result setInteger:imageSize.width forKey:@"width"];
-            [result setInteger:imageSize.height forKey:@"height"];
-            [image release];
-        }
-        else
-        {
-            NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
-            if (image)
-            {
-                NSSize imageSize = [image size];
-                [result setInteger:imageSize.width forKey:@"width"];
-                [result setInteger:imageSize.height forKey:@"height"];
-                [image release];
-            }
-        }
+		[result cacheImageDimensions];
 	}
 	
 	
@@ -302,6 +282,39 @@
 	}
 	
 	return result;
+}
+
+/*  Attempts to read image dimensions in from disk and store them.
+ */
+- (void)cacheImageDimensions
+{
+    NSNumber *imageWidth = nil;
+    NSNumber *imageHeight = nil;
+    
+    NSURL *imageURL = [NSURL fileURLWithPath:[self currentPath]];
+    CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
+    if (image)
+    {
+        CGSize imageSize = [image extent].size;
+        imageWidth = [NSNumber numberWithFloat:imageSize.width];
+        imageHeight = [NSNumber numberWithFloat:imageSize.height];
+        [image release];
+    }
+    else
+    {
+        // BUGSID:31429. Fallback to NSImage which can sometimes handle awkward PICT images etc.
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+        if (image)
+        {
+            NSSize imageSize = [image size];
+            imageWidth = [NSNumber numberWithFloat:imageSize.width];
+            imageHeight = [NSNumber numberWithFloat:imageSize.height];
+            [image release];
+        }
+    }
+    
+    [self setValue:imageWidth forKey:@"width"];
+    [self setValue:imageHeight forKey:@"height"];
 }
 
 - (float)imageScaleFactorToFitSize:(NSSize)desiredSize;

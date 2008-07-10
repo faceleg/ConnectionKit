@@ -35,6 +35,8 @@
 
 // all return NSZeroSize if not an image
 - (NSSize)dimensions;
+- (void)cacheImageDimensions;
+
 - (float)imageScaleFactorToFitSize:(NSSize)desiredSize;
 - (NSSize)imageSizeToFitSize:(NSSize)desiredSize;
 - (float)imageScaleFactorToFitWidth:(float)width;

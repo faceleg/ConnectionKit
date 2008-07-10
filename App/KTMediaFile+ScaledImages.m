@@ -413,6 +413,13 @@
     // Convert wishy washy behaviours (scaleByFactor, scaleToSize) to a definite stretch operation
     if (behavior != KTStretchToSize)
     {
+        // But first make sure that we have valid image dimension informatiom
+        if (![self validateValueForKey:@"width" error:NULL] || ![self validateValueForKey:@"height" error:NULL])
+        {
+            [self cacheImageDimensions];
+        }
+        
+        
         NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
         NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
         
