@@ -651,11 +651,13 @@
             }
             else if ([infoRequested isEqualToString:@"width"])
             {
-                result = [[mediaFile valueForKey:@"width"] stringValue];
+                NSNumber *width = [mediaFile valueForKey:@"width"];
+                if (width) result = [width stringValue];
             }
             else if ([infoRequested isEqualToString:@"height"])
             {
-                result = [[mediaFile valueForKey:@"height"] stringValue];
+                NSNumber *height = [mediaFile valueForKey:@"height"];
+                if (height) result = [height stringValue];
             }
             else if ([infoRequested isEqualToString:@"MIMEType"])
             {
