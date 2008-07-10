@@ -219,7 +219,7 @@
 	[panel setTreatsFilePackagesAsDirectories:YES];
 
 	
-	NSString *fileExtension = [[mediaFile valueForKey:@"filename"] pathExtension];
+	NSString *fileExtension = [[[mediaFile alias] lastKnownPath] pathExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];
 	
 	if (returnCode == NSOKButton)
