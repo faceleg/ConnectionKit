@@ -208,6 +208,10 @@
 						}
 						else
 						{
+							if ([[aChildPage pluginIdentifier] isEqualToString:@"sandvox.DownloadElement"])
+							{
+								NSLog(@"sandvox.DownloadElement %@", [aChildPage titleHTML]);
+							}
 							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
                             OBASSERT([path lowercaseString]);
                             NSString *title = [[aChildPage titleText] escapedEntities];
