@@ -114,9 +114,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSProgressIndicator	*oModalProgress;
 	IBOutlet NSTextField			*oModalStatus;
 	IBOutlet NSImageView			*oModalImage;
-	
-	NSString						*myHTMLSource;	// source of page last loaded
-	
+		
 	NSLock							*myUpdateLock;
 	BOOL myIsSuspendingUIUpdates;	// flag to see whether myUpdateLock isLocked
 	
@@ -270,9 +268,6 @@ extern NSString *kKTLocalLinkPboardType;
 extern NSString *KTSelectedDOMRangeKey;
 
 @interface KTDocWindowController ( Accessors )
-
-- (NSString *)HTMLSource;
-- (void)setHTMLSource:(NSString *)aHTMLSource;
 
 - (KTInlineImageElement *)selectedInlineImageElement;
 - (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement;

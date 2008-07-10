@@ -26,18 +26,6 @@
 
 @implementation KTDocWindowController ( Accessors )
 
-- (NSString *)HTMLSource
-{
-    return myHTMLSource; 
-}
-
-- (void)setHTMLSource:(NSString *)aHTMLSource
-{
-    [aHTMLSource retain];
-    [myHTMLSource release];
-    myHTMLSource = aHTMLSource;
-}
-
 - (KTInlineImageElement *)selectedInlineImageElement
 {
 	return mySelectedInlineImageElement;

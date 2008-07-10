@@ -281,7 +281,7 @@
 	{
 		[self loadPageIntoSourceCodeTextView:[[[self windowController] siteOutlineController] selectedPage]];
 	}
-	else
+	else if (aViewType != KTHTMLValidationView)
 	{
 		[self setWebViewNeedsReload];
 	}
@@ -812,7 +812,6 @@
 			{
 				source =  NSLocalizedString(@"No Source Available", @"Warning when we cannot load HTML source of a web page");
 			}
-			[[self windowController] setHTMLSource:source];
 		}
 		
 		[self processEditableElementsFromElement:[[frame DOMDocument] documentElement]];

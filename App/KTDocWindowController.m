@@ -162,7 +162,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setAddCollectionPopUpButton:nil];
     [self setAddPagePopUpButton:nil];
     [self setAddPageletPopUpButton:nil];
-    [self setHTMLSource:nil];
     [self setSelectedDOMRange:nil];
     [self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];
@@ -571,8 +570,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction) validateSource:(id)sender
 {
-	NSString *pageSource = [self HTMLSource];
-	NSString *charset = [[[[self siteOutlineController] selectedPage] master] valueForKey:@"charset"];
+	KTPage *page = [[self siteOutlineController] selectedPage];
+    NSString *pageSource = [page contentHTMLWithParserDelegate:nil isPreview:NO];
+	
+    NSString *charset = [[page master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];
 	NSData *pageData = [pageSource dataUsingEncoding:encoding allowLossyConversion:YES];
 	
@@ -624,8 +625,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		if (!isValid)		// not valid -- load the page, give them a way out!
 		{
-			[[self webViewController] setViewType: KTHTMLValidationView];
-			[[oWebView mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
+			[[self webViewController] setViewType:KTHTMLValidationView];
+			[[[[self webViewController] webView] mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
 								  MIMEType:@"text/html"
 						  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0];
