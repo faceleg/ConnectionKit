@@ -600,15 +600,16 @@ but the only trick is -- how to display a highlight?
 	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
 	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
 
-	NSString *title = [elementInformation valueForKey:WebElementLinkTitleKey];
-	NSString *altText = [elementInformation valueForKey:WebElementImageAltStringKey];
-	NSURL *URL = [elementInformation valueForKey:WebElementLinkURLKey];
+	NSString *title = [elementInformation objectForKey:WebElementLinkTitleKey];
+	NSString *altText = [elementInformation objectForKey:WebElementImageAltStringKey];
+	NSURL *URL = [elementInformation objectForKey:WebElementLinkURLKey];
 
-	if ( (nil != title) && [title isKindOfClass:[NSString class]] && ![title isEqualToString:@""] )
+	if (!KSISNULL(title) && ![title isEqualToString:@""])
 	{
-		[self setStatusField:title];
+		OBASSERT([title isKindOfClass:[NSString class]]);   /// The previous code did this check, I assume it was to
+        [self setStatusField:title];                        /// test for NSNull. Mike.
 	}
-	else if ( nil != URL )
+	else if (URL)
 	{
 		NSString *urlString = @"";
 		if ([[URL scheme] isEqualToString:@"applewebdata"])
@@ -616,7 +617,7 @@ but the only trick is -- how to display a highlight?
 			KTPage *linkedPage = [[self document] pageForURLPath:[URL path]];
 			if (nil != linkedPage)
 			{
-				if ( [linkedPage isRoot] )
+				if ([linkedPage isRoot])
 				{
 					urlString = NSLocalizedString(@"Home", "Home Page");
 				}
@@ -627,18 +628,18 @@ but the only trick is -- how to display a highlight?
 			}
 			else
 			{
-				urlString = [[URL path] lastPathComponent];
+				urlString = [URL lastPathComponent];
 			}
 		}
 		else
 		{
 			urlString = [URL absoluteString];
 		}
-		if ( [[URL scheme] isEqualToString:@"mailto"] )
+		if ([[URL scheme] isEqualToString:@"mailto"])
 		{
 			[self setStatusField:urlString];
 		}
-		else if ( [[URL scheme] isEqualToString:@"media"] )
+		else if ([[URL scheme] isEqualToString:@"media"])
 		{
 			[self setStatusField:NSLocalizedString(@"On published site, clicking on image will view full-size image",@"")];
 		}
@@ -647,7 +648,7 @@ but the only trick is -- how to display a highlight?
 			[self setStatusField:[NSString stringWithFormat:@"%@ %@%@%@", NSLocalizedString(@"Go to", "Go to (followed by URL)"), leftDoubleQuote, urlString, rightDoubleQuote]];
 		}
 	}
-	else if ( (nil != altText) && ![altText isEqualToString:@""] )
+	else if (altText && ![altText isEqualToString:@""])
 	{
 		[self setStatusField:[NSString stringWithFormat:@"%@ %@%@%@", NSLocalizedString(@"Image ", "Image "), leftDoubleQuote, altText, rightDoubleQuote]];
 	}
