@@ -213,10 +213,8 @@
 								NSLog(@"sandvox.DownloadElement %@", [aChildPage titleHTML]);
 							}
 							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
-                            OBASSERT([path lowercaseString]);
                             NSString *title = [[aChildPage titleText] escapedEntities];
-                            OBASSERT([title lowercaseString]);
-                            [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
+                            if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
 						}
 						// need separator?	
 					}

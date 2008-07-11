@@ -507,14 +507,26 @@
  */
 - (BOOL)migratePage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
 {
-    // Migrate the matching keys. However, there's a couple of special cases we should NOT import.
+    // Figure out which keys are common between 1.2 and 1.5
     NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPage toObject:newPage] mutableCopy];
     [matchingKeys minusSet:[[self class] elementAttributesToIgnore]];
     [matchingKeys removeObject:@"isStale"];
     [matchingKeys removeObject:@"allowComments"];
     
-    [self migrateAttributes:matchingKeys fromObject:oldPage toObject:newPage];
     
+    // It is essential that "publishedPath" is migrated before anything involving other paths/titles
+    [matchingKeys removeObject:@"publishedPath"];
+    [newPage setValue:[oldPage valueForKey:@"publishedPath"] forKey:@"publishedPath"];
+    
+    
+    // Migrate filenames manually, since the acceessor behavior is different for 1.2
+    [matchingKeys removeObject:@"fileName"];
+    NSString *filename = [oldPage valueForKey:@"fileName"];
+    if (filename) [newPage setFileName:filename];
+    
+    
+    // Do automated migration of remaining keys. However, there's a couple of special cases we should NOT import.
+    [self migrateAttributes:matchingKeys fromObject:oldPage toObject:newPage];
     [matchingKeys release];
     
     
