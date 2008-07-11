@@ -65,10 +65,9 @@
 {
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
     
+	KTAbstractElement *element = [self delegateOwner];
 	if (isNewObject)
 	{
-		KTAbstractElement *element = [self delegateOwner];
-		
 		// set default properties
 		[element setValue:[NSNumber numberWithInt:AutomaticSize] forKey:@"imageSize"];
 		
@@ -81,6 +80,12 @@
 		BOOL shouldUseExternalImage = [[NSUserDefaults standardUserDefaults] boolForKey:@"preferExternalImage"];
 		[element setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
 	}
+    
+    
+    if ([element isKindOfClass:[KTPage class]] && ![element valueForKey:@"image"])
+    {
+        [(KTPage *)element setThumbnail:[[(KTPage *)element master] placeholderImage]];
+    }
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
