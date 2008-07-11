@@ -1471,6 +1471,10 @@
 		
 		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
 		[media setBool:YES forKey:@"isStale"];
+        
+        
+        // All page URLs are now invalid
+        [[[self documentInfo] root] recursivelyInvalidateURL:YES];
 		
 		
 		
