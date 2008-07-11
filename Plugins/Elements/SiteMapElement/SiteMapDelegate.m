@@ -208,10 +208,6 @@
 						}
 						else
 						{
-							if ([[aChildPage pluginIdentifier] isEqualToString:@"sandvox.DownloadElement"])
-							{
-								NSLog(@"sandvox.DownloadElement %@", [aChildPage titleHTML]);
-							}
 							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
                             NSString *title = [[aChildPage titleText] escapedEntities];
                             if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
