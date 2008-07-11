@@ -385,7 +385,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"remoteHosting"];	// choose NEITHER
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"hostTypeMatrix"];
-	[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];	// initially homepage.mac.com
+	[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];	// initially homepage.mac.com
 	[self doNext:sender];
 }
 
@@ -539,8 +539,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				{
 					nextState = @"mac";
 					
-					// set a domain style so we get a stemURL
-					[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+					if (nil == [self valueForKey:@"dotMacDomainStyle"])
+					{
+						// It was not set, so assume it's a legacy document, which is homepage.mac.com
+						[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+					}
 				}
 				else
 				{
@@ -1413,7 +1416,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 - (NSString *) iDiskImagePath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iDiskGenericIcon.icns";
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes MobileMe
 }
 - (NSString *) iMacImagePath
 {
@@ -3051,6 +3054,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
 				[self setValue:[NSString stringWithFormat:@"http://www.%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
 				[self setValue:[self valueForKey:@"dotMacPersonalDomain"] forKey:@"domainName"];
+				break;
+			case WEB_ME_COM:
+				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
+				[self setValue:@"http://web.me.com/?/" forKey:@"stemURL"];
+				[self setValue:@"me.com" forKey:@"domainName"];
 				break;
 			case WEB_MAC_COM:
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
