@@ -52,6 +52,9 @@
 - (void)setLiveDataFeeds:(BOOL)flag;
 
 // Fucntions
+- (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile;
+- (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile;
+
 - (NSString *)pathToPage:(KTAbstractPage *)page;
 
 // Prebuilt templates

@@ -651,13 +651,11 @@
             }
             else if ([infoRequested isEqualToString:@"width"])
             {
-                NSNumber *width = [mediaFile valueForKey:@"width"];
-                if (width) result = [width stringValue];
+                result = [self widthStringOfMediaFile:mediaFile];
             }
             else if ([infoRequested isEqualToString:@"height"])
             {
-                NSNumber *height = [mediaFile valueForKey:@"height"];
-                if (height) result = [height stringValue];
+                result = [self heightStringOfMediaFile:mediaFile];
             }
             else if ([infoRequested isEqualToString:@"MIMEType"])
             {
@@ -689,6 +687,31 @@
 	return result;
 }
 
+- (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile
+{
+    NSNumber *width = [mediaFile valueForKey:@"width"];
+    if (!width)
+    {
+        [mediaFile cacheImageDimensions];
+        width = [mediaFile valueForKey:@"width"];
+    }
+    
+    NSString *result = (width) ? [width stringValue] : @"";
+    return result;
+}
+
+- (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile
+{
+    NSNumber *height = [mediaFile valueForKey:@"height"];
+    if (!height)
+    {
+        [mediaFile cacheImageDimensions];
+        height = [mediaFile valueForKey:@"height"];
+    }
+    
+    NSString *result = (height) ? [height stringValue] : @"";
+    return result;
+}
 
 // Following parameters:  (1) key-value path to media or mediaImage object  (2) k-v path to page [optional]
 // If (2) not specified, it's the page itself... but template better be a page
