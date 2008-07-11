@@ -202,7 +202,9 @@
 		id container = [self delegateOwner];
 		if ([container isKindOfClass:[KTPage class]])
 		{
-			if ([container thumbnail] == oldValue) {
+			KTMediaContainer *thumbnail = [container thumbnail];
+            if (thumbnail == oldValue || thumbnail == [[container master] placeholderImage])
+            {
 				[container setThumbnail:value];
 			}
 			
