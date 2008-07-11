@@ -371,6 +371,7 @@ to be verified.
 		if ([useLocalHosting boolValue])
 		{
 			result = [self globalSiteURL];
+            if (!result) result = [self localURL];
 		}
 		else
 		{
