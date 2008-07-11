@@ -2558,7 +2558,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	
 	if (![self getDotMacAccountName:&iToolsMember password:&iToolsPassword])
 	{
-		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your .Mac account.", @"")]];
+		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")]];
 		[self setValue:nil forKey:@"userName"];
 		[oGetDotMacButton setHidden:NO];
 	}
@@ -2826,13 +2826,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 				NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
 
-				[theText appendAttributedString:[NSAttributedString stringWithString:[NSString stringWithFormat:NSLocalizedString(@"This website will be published on your \\U201C%@\\U201D .Mac account.", @"introduction of remote hosting for .Mac account"), iToolsMember] attributes:textAttr]];
+				[theText appendAttributedString:[NSAttributedString stringWithString:[NSString stringWithFormat:NSLocalizedString(@"This website will be published on your \\U201C%@\\U201D MobileMe account.", @"introduction of remote hosting for MobileMe account"), iToolsMember] attributes:textAttr]];
 
 
 			}
 			else
 			{
-				[theText appendAttributedString:[NSAttributedString stringWithString:NSLocalizedString(@"This website will be published on an external host.", @"introduction of remote hosting for non-.Mac account") attributes:textAttr]];
+				[theText appendAttributedString:[NSAttributedString stringWithString:NSLocalizedString(@"This website will be published on an external host.", @"introduction of remote hosting for non-MobileMe account") attributes:textAttr]];
 
 				[theText appendAttributedString:newlines];
 				[theText appendAttributedString:[NSAttributedString stringWithString:
