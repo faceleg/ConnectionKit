@@ -291,25 +291,31 @@
     NSNumber *imageWidth = nil;
     NSNumber *imageHeight = nil;
     
-    NSURL *imageURL = [NSURL fileURLWithPath:[self currentPath]];
-    CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
-    if (image)
+    NSString *imagePath = [self currentPath];
+    if (imagePath)
     {
-        CGSize imageSize = [image extent].size;
-        imageWidth = [NSNumber numberWithFloat:imageSize.width];
-        imageHeight = [NSNumber numberWithFloat:imageSize.height];
-        [image release];
-    }
-    else
-    {
-        // BUGSID:31429. Fallback to NSImage which can sometimes handle awkward PICT images etc.
-        NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+        NSURL *imageURL = [NSURL fileURLWithPath:imagePath];
+        OBASSERT(imageURL);
+        
+        CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
         if (image)
         {
-            NSSize imageSize = [image size];
+            CGSize imageSize = [image extent].size;
             imageWidth = [NSNumber numberWithFloat:imageSize.width];
             imageHeight = [NSNumber numberWithFloat:imageSize.height];
             [image release];
+        }
+        else
+        {
+            // BUGSID:31429. Fallback to NSImage which can sometimes handle awkward PICT images etc.
+            NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
+            if (image)
+            {
+                NSSize imageSize = [image size];
+                imageWidth = [NSNumber numberWithFloat:imageSize.width];
+                imageHeight = [NSNumber numberWithFloat:imageSize.height];
+                [image release];
+            }
         }
     }
     
