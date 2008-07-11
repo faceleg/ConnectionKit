@@ -168,7 +168,13 @@
  */
 - (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media
 {
-	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",
+	// HACK: Preview paths need a fake query to fool webkit's caching.
+    if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+    {
+        stylesheetPath = [stylesheetPath stringByAppendingFormat:@"?%@", [self parserID]];
+    }
+    
+    NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",
 																stylesheetPath];
 	
 	if (title)
