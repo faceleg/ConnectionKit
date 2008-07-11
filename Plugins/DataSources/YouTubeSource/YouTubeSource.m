@@ -43,27 +43,32 @@
 
 - (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;
 {
-	return [NSArray arrayWithObjects:
-			//@"WebURLsWithTitlesPboardType",
-			//@"BookmarkDictionaryListPboardType",
-			NSURLPboardType,	// Apple URL pasteboard type
-			//@"public.url",
-			nil];
+	return [NSURL KTComponentsSupportedURLPasteboardTypes];
 }
 
 - (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-	(void)[pboard types];
+	int result = KTSourcePriorityNone;
+    
+	NSArray *URLs = nil;
 	
-	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
+	[NSURL getURLs:&URLs
+		 andTitles:NULL
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
 	
-	if ( nil != [extractedURL youTubeVideoID] )
+	if (URLs && [URLs count] > 0)
 	{
-		return KTSourcePrioritySpecialized;
+		NSURL *URL = [URLs firstObject];
+		if ( nil != [URL youTubeVideoID] )
+		{
+			result = KTSourcePrioritySpecialized;
+		}
 	}
 	
-	return KTSourcePriorityNone;
+	return result;
+	
 }
 
 - (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
@@ -71,18 +76,30 @@
 		  fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 					 index:(unsigned int)anIndex;
 {
-    BOOL result = NO;
+	BOOL result = NO;
     
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-	(void)[pboard types];
+    NSArray *URLs = nil;
+	NSArray *titles = nil;
 	
-	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
-    
-    if ( nil != extractedURL )
-    {
-        [aDictionary setValue:[extractedURL absoluteString] forKey:kKTDataSourceURLString];
-        result = YES;
-    }
+	[NSURL getURLs:&URLs
+		 andTitles:&titles
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > 0)
+	{
+		NSURL *URL = [URLs firstObject];
+		NSString *title = [titles firstObject];
+		
+		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+        if (title && (id)title != [NSNull null])
+		{
+			[aDictionary setValue:title forKey:kKTDataSourceTitle];
+		}
+		
+		result = YES;
+	}
     
     return result;
 }
