@@ -48,6 +48,10 @@
 // LocalizedStringInThisBundle(@"View this image full-size", "Title of mag link");
 // LocalizedStringInThisBundle(@"magnify", "alt text of mag link");
 
+// LocalizedStringInThisBundle(@"This is a placeholder for the image at:", "followed by URL of externally loaded image, for when we are not loading in external resources.");
+
+
+
 @interface ImageElementDelegate (Private)
 - (NSSize)boundingImageBox;
 @end

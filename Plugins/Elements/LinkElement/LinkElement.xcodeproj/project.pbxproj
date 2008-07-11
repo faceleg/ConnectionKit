@@ -14,6 +14,7 @@
 		3CA9019C0D63D38800815310 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9019B0D63D38800815310 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE26CFDD0E27DB5400827221 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE26CFDB0E27DB5400827221 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,14 @@
 		3CA9019E0D63D39800815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Link.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Link.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE26CFDC0E27DB5400827221 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFE20E27DBD600827221 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFE50E27DBDC00827221 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFE90E27DC0400827221 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFEC0E27DC0A00827221 /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFED0E27DC1000827221 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFEE0E27DC1F00827221 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE26CFEF0E27DC2300827221 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +95,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE26CFDB0E27DB5400827221 /* Localizable.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CA901890D63D32400815310 /* LinkPage.nib */,
 				3CA901840D63D31900815310 /* LinkPageTemplate.html */,
@@ -157,6 +167,7 @@
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
+				CE26CFB90E27D6BF00827221 /* Localizable.strings */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
 			);
 			buildRules = (
@@ -210,10 +221,28 @@
 				3CA9018B0D63D32400815310 /* LinkPage.nib in Resources */,
 				3CA9019C0D63D38800815310 /* License.rtf in Resources */,
 				27AD51450D69FDC000883550 /* IFrameTemplate.html in Resources */,
+				CE26CFDD0E27DB5400827221 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CE26CFB90E27D6BF00827221 /* Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Localizable.strings;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -littleEndian -q -u -s LocalizedStringInThisBundle -o en.lproj *.m\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
@@ -255,6 +284,21 @@
 				3CA901990D63D37600815310 /* zh_TW */,
 			);
 			name = LinkPage.nib;
+			sourceTree = "<group>";
+		};
+		CE26CFDB0E27DB5400827221 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE26CFDC0E27DB5400827221 /* en */,
+				CE26CFE20E27DBD600827221 /* zh_TW */,
+				CE26CFE50E27DBDC00827221 /* zh_CN */,
+				CE26CFE90E27DC0400827221 /* ja */,
+				CE26CFEC0E27DC0A00827221 /* it */,
+				CE26CFED0E27DC1000827221 /* fr */,
+				CE26CFEE0E27DC1F00827221 /* de */,
+				CE26CFEF0E27DC2300827221 /* da */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
