@@ -10,8 +10,8 @@ PRODUCT_VARIANT = beta
 
 // Release builds checkout and use these specific revisions
 
-// ConnectionKit
-CK_REVISION = 749
+// ConnectionKit (749 is standard revision, 937 is currently ToT)
+CK_REVISION = 937
 
 // iMedia
 IMEDIA_REVISION = 618
