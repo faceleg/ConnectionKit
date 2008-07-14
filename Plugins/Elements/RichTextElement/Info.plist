@@ -50,8 +50,6 @@
 	<string>Text</string>
 	<key>KTTemplateName</key>
 	<string>RichTextElementTemplate</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© Karelia Software, 2008</string>
 	<key>NSPrincipalClass</key>
 	<string>RichTextElementDelegate</string>
 </dict>

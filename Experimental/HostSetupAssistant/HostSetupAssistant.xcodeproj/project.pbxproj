@@ -55,7 +55,7 @@
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* HostSetupAssistant_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostSetupAssistant_Prefix.pch; sourceTree = "<group>"; };
 		7916696D09B7FF6A003FC862 /* Sample HSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample HSA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7916696F09B7FF6A003FC862 /* Sample HSA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Sample HSA-Info.plist"; sourceTree = "<group>"; };
+		7916696F09B7FF6A003FC862 /* Sample HSA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sample HSA-Info.plist"; sourceTree = "<group>"; };
 		7916698409B8007A003FC862 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/HSA.nib; sourceTree = "<group>"; };
 		79166AB509B801B1003FC862 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		79166AB609B801B1003FC862 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
