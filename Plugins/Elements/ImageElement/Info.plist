@@ -34,8 +34,6 @@
 	<true/>
 	<key>KSHelpAnchor</key>
 	<string>Photo</string>
-	<key>KTPageName</key>
-	<string>Photo</string>
 	<key>KTPageSeparateInspectorSegment</key>
 	<true/>
 	<key>KTPageShowSidebar</key>
@@ -44,10 +42,8 @@
 	<string>Untitled Photo</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPageletName</key>
-	<string>Photo</string>
 	<key>KTPageletUntitledName</key>
-	<string>Photo Pagelet</string>
+	<string>Photo</string>
 	<key>KTPluginIconName</key>
 	<string>photopage.icns</string>
 	<key>KTPluginInitialProperties</key>

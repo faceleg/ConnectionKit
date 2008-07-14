@@ -204,12 +204,16 @@
 		if (priority > 0	// don't add zero-priority items to menu!
 			&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
 		{
-			NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
+			NSString *pluginName = nil;
 			if (anAction == @selector(addPage:) || anAction == nil) {
 				pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
 			}
 			else if (anAction == @selector(addPagelet:)) {
 				pluginName = [plugin pluginPropertyForKey:@"KTPageletName"];
+			}
+			if (!pluginName)
+			{
+				pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
 			}
 			
 			[dictOfPlugins setObject:plugin
@@ -233,12 +237,16 @@
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
 		
-		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
+		NSString *pluginName = nil;
 		if (anAction == @selector(addPage:) || anAction == nil) {
 			pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
 		}
 		else if (anAction == @selector(addPagelet:)) {
 			pluginName = [plugin pluginPropertyForKey:@"KTPageletName"];
+		}
+		if (!pluginName)
+		{
+			pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
 		}
 		
 		

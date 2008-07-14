@@ -26,7 +26,7 @@
 		3CE09AEF0B3A4FF90064DC89 /* delicious.32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delicious.32.png; sourceTree = "<group>"; };
 		3CE09B210B3A56270064DC89 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Tagometer.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Tagometer.svxPagelet */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tagometer.svxPagelet; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE04C2660BC58D6700EE0B72 /* Bundle Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Debug.xcconfig"; path = "../../Xcode Configurations/Bundle Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		CE04C2670BC58D6700EE0B72 /* Bundle Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Bundle Release.xcconfig"; path = "../../Xcode Configurations/Bundle Release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };

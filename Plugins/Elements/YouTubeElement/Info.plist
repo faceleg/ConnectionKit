@@ -34,12 +34,8 @@
 	<true/>
 	<key>KSHelpAnchor</key>
 	<string>YouTube</string>
-	<key>KTPageName</key>
-	<string>YouTube Page</string>
 	<key>KTPageShowSidebar</key>
 	<true/>
-	<key>KTPageletName</key>
-	<string>YouTube Pagelet</string>
 	<key>KTPluginDescription</key>
 	<string>Play videos from YouTube</string>
 	<key>KTPluginIconName</key>
