@@ -470,9 +470,14 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)setStatusField:(NSString *)string
 {
-	if (nil == string) string = @"";	/// defense against nil
-    [oStatusBarField setStringValue:string];
-	[oStatusBarField displayIfNeeded];  // Why are we doing this? Mike.
+	//if (nil == string) string = @"";	/// defense against nil
+	NSString *newStatus = @"";
+	if ( nil != string )
+	{
+		newStatus = [newStatus stringByAppendingString:string];
+	}
+    [oStatusBarField setStringValue:newStatus];
+	//[oStatusBarField displayIfNeeded];  // Why are we doing this? Mike.
 }
 
 - (NSString *)status
