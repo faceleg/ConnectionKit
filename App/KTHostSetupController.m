@@ -348,7 +348,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) settingUpDotMacPersnalDomains:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=Dotmac/Member/en/gen367.html"]];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=MobileMe/Account/en/acct17114.html"]];
 }
 
 - (IBAction) windowHelp:(id)sender
