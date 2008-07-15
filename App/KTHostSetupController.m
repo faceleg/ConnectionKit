@@ -898,7 +898,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) doGetDotMacAccount:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://click.linksynergy.com/fs-bin/click?id=4/6p2eyr4HE&offerid=80901.10000001&type=3&subid=0"]];		// this is our link URL
+#warning THIS IS NOT THE FINAL URL, WE NEED AN AFFILIATE LINK
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.apple.com/mobileme/"]];		// this is our link URL
 }
 
 
