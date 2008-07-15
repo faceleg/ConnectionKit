@@ -39,16 +39,6 @@
 	<string>../../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>1270</integer>
-		<integer>165</integer>
-		<integer>171</integer>
-		<integer>94</integer>
-		<integer>1225</integer>
-		<integer>258</integer>
-		<integer>1265</integer>
-	</array>
 	<key>IBSystem Version</key>
 	<string>8S165</string>
 	<key>targetFramework</key>

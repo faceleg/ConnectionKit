@@ -526,7 +526,7 @@
 			</dict>
 		</dict>
 		<string></string>
-		<string>有效 RSS feed 及网站地图的必要项目</string>
+		<string>有效 RSS Feed 及网站地图的必要项目</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -970,6 +970,10 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
+					<integer>44</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>10</integer>
 				</dict>
 				<dict>
@@ -978,15 +982,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>29</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>44</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>39</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>29</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1009,11 +1009,11 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
+					<integer>10</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1047,7 +1047,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>29</integer>
+					<integer>39</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1055,7 +1055,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>39</integer>
+					<integer>29</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1091,9 +1091,9 @@
 		</dict>
 		<string>Export Accessory view</string>
 		<string>NSTextField2</string>
-		<string>NSTextField</string>
-		<string>File's Owner</string>
 		<string>NSTextField1</string>
+		<string>File's Owner</string>
+		<string>NSTextField</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1122,19 +1122,11 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>9</integer>
+					<integer>44</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
 					<integer>12</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>70</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>44</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1159,6 +1151,14 @@
 				<dict>
 					<key>CF$UID</key>
 					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>70</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>9</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1212,16 +1212,16 @@
 				</dict>
 			</array>
 		</dict>
-		<integer>49</integer>
-		<integer>47</integer>
-		<integer>54</integer>
 		<integer>53</integer>
+		<integer>47</integer>
 		<integer>51</integer>
 		<integer>55</integer>
 		<integer>46</integer>
 		<integer>50</integer>
 		<integer>48</integer>
 		<integer>1</integer>
+		<integer>54</integer>
+		<integer>49</integer>
 		<dict>
 			<key>$class</key>
 			<dict>
