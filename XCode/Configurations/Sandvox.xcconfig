@@ -11,7 +11,7 @@ PRODUCT_VARIANT = beta
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 944
+CK_REVISION = 953
 
 // iMedia
 IMEDIA_REVISION = 618
