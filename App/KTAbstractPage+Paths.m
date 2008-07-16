@@ -29,6 +29,9 @@
 
 @interface KTAbstractPage (PathsPrivate)
 - (NSString *)indexFilename;
+
+- (NSURL *)URL_uncached;
+
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 @end
@@ -251,6 +254,19 @@
 	}
 	
 	NSString *result = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
+	return result;
+}
+
+- (NSURL *)URL
+{
+	NSURL *result = [self wrappedValueForKey:@"URL"];
+	
+	if (!result)
+	{
+		result = [self URL_uncached];
+		[self setPrimitiveValue:result forKey:@"URL"];
+	}
+	
 	return result;
 }
 

@@ -24,11 +24,6 @@
 #import "Debug.h"
 
 
-@interface KTAbstractPage (PathsPrivate)
-- (NSURL *)URL_uncached;
-@end
-
-
 @interface KTPage (ChildrenPrivate)
 - (void)invalidateSortedChildrenCache;
 @end
@@ -258,26 +253,6 @@
 {
 	KTDocumentInfo *site = [self valueForKey:@"documentInfo"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTSiteStructureDidChangeNotification object:site];
-}
-
-#pragma mark -
-#pragma mark KTWebPathsProtocol
-
-/*	These methods are in KTAbstractPage.m to keep the compiler happy.
- *	They just call through where appropriate to the real methods in the +Paths category.
- */
-
-- (NSURL *)URL
-{
-	NSURL *result = [self wrappedValueForKey:@"URL"];
-	
-	if (!result)
-	{
-		result = [self URL_uncached];
-		[self setPrimitiveValue:result forKey:@"URL"];
-	}
-	
-	return result;
 }
 
 @end

@@ -25,7 +25,7 @@ KTCollectionPathStyle;
 @class KTDocumentInfo;
 
 
-@interface KTAbstractPage : KTAbstractElement <KTWebPaths, KTWebViewComponent>
+@interface KTAbstractPage : KTAbstractElement <KTWebViewComponent>
 {
 }
 
@@ -62,7 +62,7 @@ KTCollectionPathStyle;
 @end
 
 
-@interface KTAbstractPage (Paths)
+@interface KTAbstractPage (Paths) <KTWebPaths>
 
 // File Name
 - (NSString *)fileName;
@@ -91,6 +91,8 @@ KTCollectionPathStyle;
 
 // Publishing
 - (NSString *)pathRelativeToParent;
+
+- (NSURL *)URL;
 - (void)recursivelyInvalidateURL:(BOOL)recursive;
 
 - (NSString *)customPathRelativeToSite;
