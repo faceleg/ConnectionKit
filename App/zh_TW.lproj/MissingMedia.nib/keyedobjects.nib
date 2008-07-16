@@ -352,7 +352,8 @@
 			<string>NSFont</string>
 		</dict>
 		<string></string>
-		<string></string>
+		<string>
+</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -1458,7 +1459,7 @@
 				<integer>46</integer>
 			</dict>
 		</dict>
-		<string>KTVerticallyAlignedTextCell</string>
+		<string>KSVerticallyAlignedTextCell</string>
 		<string>NSTextFieldCell</string>
 		<dict>
 			<key>$class</key>

@@ -30,7 +30,7 @@
             SUPERCLASS = NSImageCell;
         },
                 {
-            CLASS = KTVerticallyAlignedTextCell;
+            CLASS = KSVerticallyAlignedTextCell;
             LANGUAGE = ObjC;
             SUPERCLASS = NSTextFieldCell;
         },
