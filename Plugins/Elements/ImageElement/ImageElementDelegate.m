@@ -36,7 +36,7 @@
 
 #import "ImageElementDelegate.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 #import <QuartzCore/QuartzCore.h>

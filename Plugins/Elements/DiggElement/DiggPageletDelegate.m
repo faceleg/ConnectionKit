@@ -35,7 +35,7 @@
 //
 
 #import "DiggPageletDelegate.h"
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 #import <ContainsValueTransformer.h>
 
 

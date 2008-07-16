@@ -8,7 +8,7 @@
 
 #import "NSURL+AmazonPagelet.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @interface NSURL (AmazonPageletPrivate)

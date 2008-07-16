@@ -38,7 +38,7 @@
 
 #import "ContactElementField.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 // defines CONTACT_PASSWORD, not supplied
 #import <ContactPassword.h>
 

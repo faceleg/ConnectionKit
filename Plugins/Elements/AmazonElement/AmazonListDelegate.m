@@ -12,7 +12,7 @@
 #import "APAmazonList.h"
 
 #import <AmazonSupport/AmazonSupport.h>
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 #import <ContainsValueTransformer.h>
 
 

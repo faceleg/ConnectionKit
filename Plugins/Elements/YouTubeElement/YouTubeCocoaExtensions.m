@@ -7,7 +7,7 @@
 //
 
 #import "YouTubeCocoaExtensions.h"
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @implementation NSString (YouTubeExtensions)

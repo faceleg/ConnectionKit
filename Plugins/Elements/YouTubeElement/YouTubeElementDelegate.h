@@ -36,7 +36,7 @@
 //
 //	Plugin keys used:
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 typedef enum {

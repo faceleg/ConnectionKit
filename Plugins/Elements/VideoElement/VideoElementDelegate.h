@@ -37,7 +37,7 @@
 //	Plugin keys used:
 //		remoteURL, autoplay, isWindowsMedia, kiskmode, isFlash, video, controller, movieSize
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @class KTMediaContainer, KTMediaRef, QTMovie;

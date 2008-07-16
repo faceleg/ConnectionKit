@@ -38,7 +38,7 @@
 
 #import "RichTextElementDelegate.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @implementation RichTextElementDelegate

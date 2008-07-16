@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @interface DownloadIndex : KTAbstractIndex

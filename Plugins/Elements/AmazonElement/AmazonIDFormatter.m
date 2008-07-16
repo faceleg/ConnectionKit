@@ -8,7 +8,7 @@
 
 #import "AmazonIDFormatter.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @implementation AmazonIDFormatter

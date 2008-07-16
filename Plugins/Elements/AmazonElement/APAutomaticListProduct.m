@@ -8,7 +8,7 @@
 
 #import "APAutomaticListProduct.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 #import <AmazonSupport/AmazonSupport.h>
 
 

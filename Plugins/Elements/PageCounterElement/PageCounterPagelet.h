@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 @class WebView;
 

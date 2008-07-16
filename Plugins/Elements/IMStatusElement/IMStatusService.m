@@ -8,7 +8,7 @@
 
 #import "IMStatusService.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 
 @interface IMStatusService (Private)

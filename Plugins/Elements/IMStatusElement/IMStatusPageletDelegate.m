@@ -10,7 +10,7 @@
 
 #import "IMStatusService.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 
 #import <ValuesAreEqualTransformer.h>
 

@@ -41,7 +41,7 @@
 
 #import "LinkPageDelegate.h"
 
-#import <SandvoxPlugin.h>
+#import "SandvoxPlugin.h"
 //#import <ThirdParty.h>
 
 
