@@ -616,10 +616,8 @@
 		//LOGMETHOD;
 		OBASSERT([NSThread isMainThread]);
 		
-		// remember the current status
-		NSString *status = [[[[self windowController] status] copy] autorelease];
-		
-		// update status 
+		// remember the current status. PURPOSELY LEAKED AS WE RELEASE IT IN THE CALLBACK
+		NSString *status = [[[self windowController] status] copy];
 		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
 		
 		// turn off timers before doing save
