@@ -418,7 +418,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			nil],								@"defaultHostProperties",
 		
 		[NSNumber numberWithShort:0],		@"truncateCharacters",
-		[NSNumber numberWithShort:KTCopyMediaAutomatic], @"copyMediaOriginals",
+		[NSNumber numberWithShort:KTCopyMediaAll], @"copyMediaOriginals",
 		[NSNumber numberWithShort:KTSummarizeAutomatic], @"collectionSummaryType",
 		[NSNumber numberWithShort:NSDateFormatterMediumStyle], @"timestampFormat",
 		[NSNumber numberWithBool:YES], @"timestampShowTime",
