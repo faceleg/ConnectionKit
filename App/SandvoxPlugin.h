@@ -162,16 +162,16 @@
 #import "KTPasteboardArchiving.h"
 
 #import "DNDArrayController.h"
-#import <NTBoxView.h>
-#import <KSPathInfoField.h>
-#import <KSPathInfoFieldCell.h>
-#import <KTDesign.h>
-#import <KTMaster.h>
-#import <KTMediaContainer.h>
-#import <KTMediaFile.h>
-#import <KSPathInfoField.h>
-#import <NSMutableSet+Karelia.h>
-#import <KTHTMLParser.h>
+#import "NTBoxView.h"
+#import "KSPathInfoField.h"
+#import "KSPathInfoFieldCell.h"
+#import "KTDesign.h"
+#import "KTMaster.h"
+#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
+#import "KSPathInfoField.h"
+#import "NSMutableSet+Karelia.h"
+#import "KTHTMLParser.h"
 #import "KTDocWindowController.h"
 #import "NSString+KTExtensions.h"
 
