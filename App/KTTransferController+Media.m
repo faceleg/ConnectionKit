@@ -37,7 +37,14 @@
 	
 	// Upload the file
 	NSString *sourcePath = [mediaFileUpload valueForKeyPath:@"file.currentPath"];
-	[self uploadFile:sourcePath toFile:uploadPath];
+	if ( (nil != sourcePath) && ![sourcePath isEqualToString:@""] )
+	{
+		[self uploadFile:sourcePath toFile:uploadPath];
+	}
+	else
+	{
+		NSLog(@"upload error: no local path for %@, skipping...", [mediaFileUpload valueForKeyPath:@"file.uniqueID"]);
+	}
 	
 	// Add the file to the upload list
     OBASSERT(mediaFileUpload);
