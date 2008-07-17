@@ -12,14 +12,6 @@
 #import "NSObject+Karelia.h"
 
 
-/*	Strings for localization. As this code progresses, we should be able to move the
- *	strings into the right place.
- */
-//	NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\"","document upgrade informative text");
-//	NSLocalizedString(@"Cancel","Button title");
-//	NSLocalizedString(@"Upgrading document \"%@.\" failed","document upgrade failure message");
-
-
 @implementation KTDataMigrationDocument
 
 #pragma mark -
@@ -76,6 +68,9 @@
                filename];
     [informativeTextField setStringValue:message];
     
+	[cancelButton setTitle:NSLocalizedString(@"Cancel","Button title")];
+
+	
     [progressIndicator startAnimation:self];
     
 }
