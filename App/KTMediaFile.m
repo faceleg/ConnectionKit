@@ -51,7 +51,7 @@
 	id result = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
 											  inManagedObjectContext:moc];
 	
-	[result setValue:[NSString GUIDString] forKey:@"uniqueID"];
+	[result setValue:[NSString UUIDString] forKey:@"uniqueID"];
 	[result setFileType:[NSString UTIForFileAtPath:path]];
 	
 	

@@ -38,7 +38,7 @@
 	
 	
 	// Give ourself a unique ID
-	NSString *siteID = [NSString shortGUIDString];
+	NSString *siteID = [NSString shortUUIDString];
     [self setValue:siteID forKey:@"siteID"];
 	
 	

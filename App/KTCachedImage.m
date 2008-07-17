@@ -252,7 +252,7 @@
         [result setValue:[NSNumber numberWithBool:NO] forKey:@"substituteOriginal"];
         
         // set cacheName
-        [result setValue:[NSString shortGUIDString] forKey:@"cacheName"];
+        [result setValue:[NSString shortUUIDString] forKey:@"cacheName"];
         
 		// set UTI
         [result setValue:(NSString *)kUTTypeICO forKey:@"imageFormatUTI"];
@@ -365,7 +365,7 @@
         [result setValue:[NSNumber numberWithBool:NO] forKey:@"substituteOriginal"];
         
         // set cacheName
-        [result setValue:[NSString shortGUIDString] forKey:@"cacheName"];
+        [result setValue:[NSString shortUUIDString] forKey:@"cacheName"];
         
         // set size (don't defer)
         [result setValue:[NSNumber numberWithUnsignedInt:aWidth] forKey:@"imageWidth"];

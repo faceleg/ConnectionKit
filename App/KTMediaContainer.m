@@ -123,7 +123,7 @@
 {
 	[super awakeFromInsert];
 	
-	[self setValue:[NSString GUIDString] forKey:@"identifier"];
+	[self setValue:[NSString UUIDString] forKey:@"identifier"];
 }
 
 - (void)awakeFromFetch

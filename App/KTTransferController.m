@@ -431,7 +431,7 @@ static NSArray *sReservedNames = nil;
 //	[myController uploadFromData:data toFile:remotePath];
 	
 	// in 1.5, we're going to write everything to a path first so we're just uploading files on disk
-	NSString *tmpPath = [[[self document] uploadCachePath] stringByAppendingPathComponent:[NSString shortGUIDString]];
+	NSString *tmpPath = [[[self document] uploadCachePath] stringByAppendingPathComponent:[NSString shortUUIDString]];
 	if ( [data writeToFile:tmpPath atomically:NO] )
 	{
 		[self uploadFile:tmpPath toFile:remotePath];

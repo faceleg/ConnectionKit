@@ -242,7 +242,7 @@
     KTHTMLGenerationPurpose HTMLPurpose = [self HTMLGenerationPurpose];
     if (HTMLPurpose != kGeneratingPreview && HTMLPurpose != kGeneratingQuickLookPreview)
     {
-        result = [result removeMultipleNewlines];
+        result = [result stringByRemovingMultipleNewlines];
     }
     
     // Preview HTML should be wrapped in an identiying div for the webview

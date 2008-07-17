@@ -614,7 +614,7 @@ through.  We seem to do OK by filtering later.
 	
 	if (!result)
 	{
-		result = [NSString shortGUIDString];
+		result = [NSString shortUUIDString];
 		[myInlineImageNodes setObject:node forKey:result];
 	}
 	

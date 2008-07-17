@@ -210,7 +210,7 @@
 */
 + (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier
 {
-    NSString *result = [identifier removeWhiteSpace];
+    NSString *result = [identifier stringByRemovingWhiteSpace];
 	result = [result stringByReplacing:@"." with:@"_"];		// some ISPs don't like "."
 	return result;
 }

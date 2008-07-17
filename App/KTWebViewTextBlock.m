@@ -119,7 +119,7 @@
 
 - (id)init
 {
-	NSString *DOMID = [NSString stringWithFormat:@"k-svxTextBlock-%@", [NSString shortGUIDString]];
+	NSString *DOMID = [NSString stringWithFormat:@"k-svxTextBlock-%@", [NSString shortUUIDString]];
 	[self initWithDOMNodeID:DOMID];
 	
 	return self;
