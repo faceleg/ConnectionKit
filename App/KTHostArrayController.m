@@ -96,7 +96,7 @@ TO DO:
 {
     // set the search string by getting the stringValue
     // from the sender
-    [self setSearchString:[[sender stringValue] trimFirstLine]];
+    [self setSearchString:[[sender stringValue] stringByTrimmingFirstLine]];
     [self rearrangeObjects];
 }
 

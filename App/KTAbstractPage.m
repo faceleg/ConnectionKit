@@ -140,7 +140,7 @@
 - (NSString *)titleText	// get title, but without attributes
 {
 	NSString *html = [self valueForKey:@"titleHTML"];
-	NSString *result = [html flattenHTML];
+	NSString *result = [html flattenedHTML];
 	return result;
 }
 

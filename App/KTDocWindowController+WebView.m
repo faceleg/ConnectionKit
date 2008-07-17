@@ -460,7 +460,7 @@ clickedOnPagelet:
 				if (nil != titleHTML && ![titleHTML isEqualToString:@""] && ![titleHTML isEqualToString:[[pagelet plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
 				{
 					desc = [NSString stringWithFormat:NSLocalizedString(@"%@ %@%@%@", @"format to show type of pagelet and its title, e.g. RSS Feed 'Cat Daily Digest'"),
-						desc, leftDoubleQuote, [titleHTML flattenHTML], rightDoubleQuote];
+						desc, leftDoubleQuote, [titleHTML flattenedHTML], rightDoubleQuote];
 				}
 				KTPage *owningPage = [pagelet page];
 				
@@ -1450,8 +1450,8 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		}
 		else
 		{
-			NSString *value = [[oLinkDestinationField stringValue] trimFirstLine];
-			value = [[value stringWithValidURLScheme]  trimFirstLine];
+			NSString *value = [[oLinkDestinationField stringValue] stringByTrimmingFirstLine];
+			value = [[value stringWithValidURLScheme]  stringByTrimmingFirstLine];
 			
 			if ( [value isEqualToString:@""]
 				 || [value isEqualToString:@"http://"]

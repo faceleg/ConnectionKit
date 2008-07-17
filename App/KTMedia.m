@@ -719,7 +719,7 @@ NSString *kKTMediaException = @"KTMediaException";
 		if ( nil != uniqueName )
 		{
 			// remove any spaces or other bad guys in the name
-			uniqueName = [uniqueName legalizeURLNameWithFallbackID:[media uniqueID]];
+			uniqueName = [uniqueName legalizedURLNameWithFallbackID:[media uniqueID]];
 			
 			// make sure uniqueName is actually unique
 			// Only do this call if we *have* a media manager; it may not have been created yet.

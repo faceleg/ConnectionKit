@@ -57,7 +57,7 @@
 		
 		// Insert the new HTML but only if there's something to replace it with
 		NSString *editingHTML = [self innerEditingHTML];
-		if (![[editingHTML flattenHTML] isEqualToString:@""])
+		if (![[editingHTML flattenedHTML] isEqualToString:@""])
 		{
 			[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 			

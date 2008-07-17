@@ -90,7 +90,7 @@
 	NSString *html = [self valueForKey:@"siteTitleHTML"];	// just in case there is a site title set here
 	if (nil != html)
 	{
-		NSString *flattenedTitle = [html flattenHTML];
+		NSString *flattenedTitle = [html flattenedHTML];
 		NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:flattenedTitle];
 		[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
 	}
@@ -148,7 +148,7 @@
 
 - (NSString *)siteSubtitleText	// get subtitle, but without attributes ... by flattening the HTML
 {
-	NSString *result = [[self valueForKey:@"siteSubtitleHTML"] flattenHTML];
+	NSString *result = [[self valueForKey:@"siteSubtitleHTML"] flattenedHTML];
 	if (!result)
 	{
 		result = @"";
@@ -163,7 +163,7 @@
 {
 	[self setWrappedValue:value forKey:@"siteTitleHTML"];
 	// set siteTitleAttributed LAST
-	NSString *siteTitleText = [value flattenHTML];
+	NSString *siteTitleText = [value flattenedHTML];
 	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:siteTitleText];
 	
 	[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];

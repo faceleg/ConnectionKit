@@ -1931,7 +1931,7 @@ from representedObject */
 	if ( [object isEqual:oLinkDestinationField] )
 	{
 		/// defend against nil
-		NSString *string = [[[object stringValue] stringWithValidURLScheme] trimFirstLine];
+		NSString *string = [[[object stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
 		if (nil == string) string = @"";
 		[object setStringValue:string];
 	}
@@ -1943,7 +1943,7 @@ from representedObject */
 	id object = [aNotification object];
 	if ( [object isEqual:oLinkDestinationField] )
 	{
-		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] trimFirstLine];
+		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
 		
 		BOOL empty = ( [value isEqualToString:@""] 
 			 || [value isEqualToString:@"http://"] 
@@ -1960,7 +1960,7 @@ from representedObject */
 {
 	if ( [control isEqual:oLinkDestinationField] )
 	{
-		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] trimFirstLine];
+		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
 		
 		if ( [value isEqualToString:@""] 
 			 || [value isEqualToString:@"http://"] 

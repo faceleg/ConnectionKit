@@ -633,7 +633,7 @@ static NSArray *sReservedNames = nil;
 {
 	if ( NSOKButton == returnCode )
 	{
-		NSString *stemURL = [[oExportURL stringValue] trimFirstLine];
+		NSString *stemURL = [[oExportURL stringValue] stringByTrimmingFirstLine];
 		if ( (nil != stemURL) && ![stemURL isEqualToString:@""] )
 		{
 			KTHostProperties *hostProperties = [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties"];
@@ -685,7 +685,7 @@ static NSArray *sReservedNames = nil;
 	if ( nil == [sender accessoryView] ) return YES;
 		
 	// We only use this method to make sure the Site URL is okay.
-	NSString *initialStemURL = [[oExportURL stringValue] trimFirstLine];
+	NSString *initialStemURL = [[oExportURL stringValue] stringByTrimmingFirstLine];
 	NSMutableString *stemURL = [NSMutableString stringWithString:initialStemURL];
 	NSString *username = [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.userName"];
 	
@@ -848,7 +848,7 @@ static NSArray *sReservedNames = nil;
 		NSString *masterCSS = [designPublishingInfo objectForKey:@"masterCSS"];
 		if (masterCSS)
 		{
-			NSData *masterCSSData = [[masterCSS normalizeUnicode] dataUsingEncoding:NSUTF8StringEncoding
+			NSData *masterCSSData = [[masterCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
 															   allowLossyConversion:YES];
 			
 			NSString *designUploadPath = [[self storagePath] stringByAppendingPathComponent:[design remotePath]];
@@ -1031,7 +1031,7 @@ if ([self where] == kGeneratingRemoteExport) {
 		NSString *masterCSS = [designPublishingInfo objectForKey:@"masterCSS"];
 		if (masterCSS)
 		{
-			NSData *masterCSSData = [[masterCSS normalizeUnicode] dataUsingEncoding:NSUTF8StringEncoding
+			NSData *masterCSSData = [[masterCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
 															   allowLossyConversion:YES];
 			
 			NSString *designUploadPath = [[self storagePath] stringByAppendingPathComponent:[design remotePath]];

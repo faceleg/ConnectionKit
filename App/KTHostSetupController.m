@@ -1969,7 +1969,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// Hostname
 	else if ([sHostNameSet containsObject:key])
 	{
-		newValue = [newValue trimFirstLine];
+		newValue = [newValue stringByTrimmingFirstLine];
 
 		// Now for a more vigorous check
 		result = ([newValue looksLikeValidHost]);
@@ -1990,7 +1990,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	else if ([key isEqualToString:@"docRoot"])
 	{
-		newValue = [newValue trimFirstLine];
+		newValue = [newValue stringByTrimmingFirstLine];
 
 /// take this out to see if we can type in the equivalent of a file chooser
 //		// Fix docRoot to have suffix / if it's missing
@@ -2007,7 +2007,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 	else if ([key isEqualToString:@"userName"])
 	{
-		newValue = [newValue trimFirstLine];
+		newValue = [newValue stringByTrimmingFirstLine];
 
 		NSRange whereBad
 			= [newValue rangeOfCharacterFromSet:sIllegalUserNameSet];
@@ -2057,7 +2057,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	id object = [aNotification object];
 	if (object == oPasswordField)
 	{
-		[self setValue:[[object stringValue] trimFirstLine] forKey:@"password"];
+		[self setValue:[[object stringValue] stringByTrimmingFirstLine] forKey:@"password"];
 	}
 }
 

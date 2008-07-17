@@ -22,7 +22,7 @@
 */
 - (NSString *)stringByAdjustingHTMLForPublishing
 {
-	NSString *result = [self normalizeUnicode];
+	NSString *result = [self unicodeNormalizedString];
 	if ((nil == gRegistrationString) || gLicenseIsBlacklisted)
 	{
 		NSString *sandvoxTrialFormat = NSLocalizedString(@"This page was created by a trial version of %@. (Sandvox must be purchased to publish multiple pages.)",@"Warning for a published home page; the placeholder is replaced with 'Sandvox' as a hyperlink.");

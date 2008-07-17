@@ -593,7 +593,7 @@
 			}
 			else
 			{
-				[metadata setObject:[siteTitle flattenHTML] forKey:kKTMetadataSiteTitleKey];
+				[metadata setObject:[siteTitle flattenedHTML] forKey:kKTMetadataSiteTitleKey];
 			}
 			
 			//  kKTMetadataModelVersionKey
@@ -644,7 +644,7 @@
 			{
 				subtitle = @"";
 			}
-			subtitle = [subtitle flattenHTML];
+			subtitle = [subtitle flattenedHTML];
 			
 			// add unique page titles
 			NSMutableString *itemDescription = [NSMutableString stringWithString:subtitle];
@@ -653,7 +653,7 @@
 			for ( i=0; i<[pageTitles count]; i++ )
 			{
 				NSString *pageTitle = [pageTitles objectAtIndex:i];
-				pageTitle = [pageTitle flattenHTML];
+				pageTitle = [pageTitle flattenedHTML];
 				if ( nil != pageTitle )
 				{
 					[itemDescription appendFormat:@" %@", pageTitle];
@@ -667,7 +667,7 @@
 				NSString *spotlightText = [page spotlightHTML];
 				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
 				{
-					spotlightText = [spotlightText flattenHTML];
+					spotlightText = [spotlightText flattenedHTML];
 					[itemDescription appendFormat:@" %@", spotlightText];
 				}
 			}
