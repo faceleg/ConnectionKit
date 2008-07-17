@@ -505,7 +505,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			return NO;
 		}
 		
-		NSURL *URL = [NSURL URLWithString:[(DOMText *)[aDiv firstChild] data]];
+		NSString *URLString = [(DOMText *)[aDiv firstChild] data];     // The URL string WebKit hands us MUST be encoded
+        NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];   // again in order for NSURL to accept it
 		if (!URL || ![URL isFileURL])
 		{
 			return NO;

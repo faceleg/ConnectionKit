@@ -745,7 +745,9 @@
 	DOMNode *node = [div parentNode];
     
 	// Create a media container for the file
-	NSString *path = [[NSURL URLWithString:[(DOMText *)[div firstChild] data]] path];
+    NSString *URLString = [(DOMText *)[div firstChild] data];
+    NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];   // MUST encode legally to handle accented characters
+	NSString *path = [URL path];
 	KTMediaContainer *mediaContainer = [[element mediaManager] mediaContainerWithPath:path];
 	
 	
