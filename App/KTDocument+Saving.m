@@ -623,9 +623,18 @@
 		// turn off timers before doing save
 		[self suspendAutosave];
 
-		// save the document through normal channels (ultimately calls writeToURL:::)
-		[self saveDocumentWithDelegate:self
-					   didSaveSelector:@selector(document:didAutosave:contextInfo:) contextInfo:status];
+		// Save the document through normal channels (ultimately calls writeToURL:::). Because it's on a timer, we have to catch any
+        // exceptions ourself.
+		@try
+        {
+            [self saveDocumentWithDelegate:self
+                           didSaveSelector:@selector(document:didAutosave:contextInfo:)
+                               contextInfo:status];
+        }
+        @catch (NSException *exception)
+        {
+            [NSApp reportException:exception];
+        }
 	}
 }
 
