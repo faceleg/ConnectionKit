@@ -251,7 +251,7 @@
 		[self parentParser] &&
 		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
 	{
-		result = [NSString stringWithFormat:@"<div id=\"%@-%@\">\r%@\r</div>",
+		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\r%@\r</div>",
 				  [[self component] uniqueWebViewID],
 				  [self parserID],
 				  result];
