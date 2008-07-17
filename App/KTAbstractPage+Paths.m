@@ -387,7 +387,7 @@
 		}
 		else if (collectionPathStyle == KTCollectionHTMLDirectoryPath)
 		{
-			result = [result HTMLdirectoryPath];
+			result = [result HTMLDirectoryPath];
 		}
 	}
 	else
@@ -420,7 +420,7 @@
 		// NSString doesn't handle KTCollectionHTMLDirectoryPath-style strings; we must fix them manually
 		if (collectionPathStyle == KTCollectionHTMLDirectoryPath && [self isCollection])
 		{
-			result = [result HTMLdirectoryPath];
+			result = [result HTMLDirectoryPath];
 		}
 	}
 	
