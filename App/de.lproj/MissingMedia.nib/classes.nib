@@ -1,6 +1,11 @@
 {
     IBClasses =     (
                 {
+            CLASS = KSVerticallyAlignedTextCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextFieldCell;
+        },
+                {
             CLASS = KTMissingMediaArrayController;
             LANGUAGE = ObjC;
             OUTLETS =             {
@@ -28,11 +33,6 @@
             CLASS = KTMissingMediaThumbnailCell;
             LANGUAGE = ObjC;
             SUPERCLASS = NSImageCell;
-        },
-                {
-            CLASS = KSVerticallyAlignedTextCell;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTextFieldCell;
         },
                 {
             CLASS = NSApplication;
