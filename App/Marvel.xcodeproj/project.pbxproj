@@ -1890,10 +1890,6 @@
 		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../Plugins/Elements/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Pasteboard.m"; sourceTree = "<group>"; };
-		3C51E1290E1D546E0077CCC7 /* EMKeychainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeychainItem.h; sourceTree = "<group>"; };
-		3C51E12A0E1D546E0077CCC7 /* EMKeychainItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKeychainItem.m; sourceTree = "<group>"; };
-		3C51E12B0E1D546E0077CCC7 /* EMKeychainProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeychainProxy.h; sourceTree = "<group>"; };
-		3C51E12C0E1D546E0077CCC7 /* EMKeychainProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMKeychainProxy.m; sourceTree = "<group>"; };
 		3C59B05908A9B8E70076C6DC /* 13x13_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 13x13_empty.png; sourceTree = "<group>"; };
 		3C5A712C0BF7ADE100776464 /* NSEntityDescription+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEntityDescription+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEntityDescription+KTExtensions.m"; sourceTree = "<group>"; };
@@ -3652,10 +3648,6 @@
 				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
 				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
 				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
-				3C51E1290E1D546E0077CCC7 /* EMKeychainItem.h */,
-				3C51E12A0E1D546E0077CCC7 /* EMKeychainItem.m */,
-				3C51E12B0E1D546E0077CCC7 /* EMKeychainProxy.h */,
-				3C51E12C0E1D546E0077CCC7 /* EMKeychainProxy.m */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
