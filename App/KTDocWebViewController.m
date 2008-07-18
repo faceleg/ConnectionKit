@@ -899,7 +899,7 @@
 					
 					
 					//NSLog(@"intercepted URL: %@", [requestURL absoluteString]);
-					NSURL *substituteURL = [NSURL URLWithString:[substituted encodeLegally]];
+					NSURL *substituteURL = [NSURL URLWithUnescapedString:substituted];
 					//NSLog(@"substituting URL: %@", [substituteURL absoluteString]);
 					return [NSURLRequest requestWithURL:substituteURL];
 				}

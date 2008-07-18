@@ -15,6 +15,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+#import "NSURL+Karelia.h"
 
 #import <WebKit/WebKit.h>
 #import "DOMNodeList+KTExtensions.h"
@@ -506,7 +507,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		}
 		
 		NSString *URLString = [(DOMText *)[aDiv firstChild] data];     // The URL string WebKit hands us MUST be encoded
-        NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];   // again in order for NSURL to accept it
+        NSURL *URL = [NSURL URLWithUnescapedString:URLString];   // again in order for NSURL to accept it
 		if (!URL || ![URL isFileURL])
 		{
 			return NO;

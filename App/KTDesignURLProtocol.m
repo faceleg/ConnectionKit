@@ -54,7 +54,7 @@
 	
 	// Get the path of the resource, being sure to remove leading and trailing slashes
 	NSArray *pathComponents = [[aSpecifier stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]] pathComponents];
-	NSString *designBundleIdentifier = [[pathComponents objectAtIndex:0] urlDecode];
+	NSString *designBundleIdentifier = [[pathComponents objectAtIndex:0] URLQueryDecodedString];
 	
 	if ([pathComponents count] <= 1)	// No design resource has been specified, assume it's the main CSS
 	{

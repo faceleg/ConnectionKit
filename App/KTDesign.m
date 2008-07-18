@@ -19,7 +19,10 @@
 #import "NSMutableSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+#import "NSURL+Karelia.h"
+
 #import "Debug.h"
+
 
 @implementation KTDesign
 
@@ -119,7 +122,7 @@
 - (NSURL *)URL		// the URL where this design comes from
 {
 	NSString *urlString = [[self bundle] objectForInfoDictionaryKey:@"url"];
-	return (nil != urlString) ? [NSURL URLWithString:[urlString encodeLegally]] : nil;
+	return (nil != urlString) ? [NSURL URLWithUnescapedString:urlString] : nil;
 }
 
 /*!	Return path for placeholder image, if it exists

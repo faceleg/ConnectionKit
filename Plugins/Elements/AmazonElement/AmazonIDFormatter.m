@@ -23,7 +23,7 @@
 	if (result)
 	{
 		// If a URL was entered, leave it intact
-		NSURL *URL = [NSURL URLWithString:[*anObject encodeLegally]];
+		NSURL *URL = [NSURL URLWithUnescapedString:*anObject];
 		if (!(URL && [URL hasNetworkLocation]))
 		{
 			// Convert to uppercase and remove unwanted characters

@@ -126,7 +126,7 @@
 - (NSString *)host		// server wants URL in http:// format
 {
 	NSString *urlString = [[self delegateOwner] valueForKey:@"url"];
-	NSURL *asURL = [NSURL URLWithString:[urlString encodeLegally]];
+	NSURL *asURL = [NSURL URLWithUnescapedString:urlString];
 	NSString *host = [asURL host];
 	if (nil == host)
 	{

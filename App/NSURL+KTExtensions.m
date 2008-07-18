@@ -146,7 +146,7 @@ readWeblocFiles:(BOOL)convertWeblocs
 	
 	if (URLs != NULL) {
 		NSString *URLString = [objectInfo valueForKey:@"URLString"];
-		NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];	/// encodeLegally to handle accented characters
+		NSURL *URL = [NSURL URLWithUnescapedString:URLString];	/// encodeLegally to handle accented characters
 		*URLs = [NSArray arrayWithObject:URL];
 	}
 	
@@ -183,7 +183,7 @@ readWeblocFiles:(BOOL)convertWeblocs
 	{
 		// Convert the string to a proper URL. If actually valid, add it & title to the results
 		NSString *URLString = [URLStrings objectAtIndex:i];
-		NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];	/// encodeLegally to handle accented characters
+		NSURL *URL = [NSURL URLWithUnescapedString:URLString];	/// encodeLegally to handle accented characters
 		if (URL) {
 			[intermediateURLs addObject:URL];
 			[intermediateTitles addObject:[URLTitles objectAtIndex:i]];
@@ -233,7 +233,7 @@ readWeblocFiles:(BOOL)convertWeblocs
 		return;
 	}
 	
-	NSURL *URL = [NSURL URLWithString:[string encodeLegally]];	/// encodeLegally to handle accented characters
+	NSURL *URL = [NSURL URLWithUnescapedString:string];	/// encodeLegally to handle accented characters
 	if (URL && [URL hasNetworkLocation])
 	{
 		if (URLs != NULL) {

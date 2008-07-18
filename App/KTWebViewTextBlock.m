@@ -746,7 +746,7 @@
     
 	// Create a media container for the file
     NSString *URLString = [(DOMText *)[div firstChild] data];
-    NSURL *URL = [NSURL URLWithString:[URLString encodeLegally]];   // MUST encode legally to handle accented characters
+    NSURL *URL = [NSURL URLWithUnescapedString:URLString];   // MUST encode legally to handle accented characters
 	NSString *path = [URL path];
 	KTMediaContainer *mediaContainer = [[element mediaManager] mediaContainerWithPath:path];
 	

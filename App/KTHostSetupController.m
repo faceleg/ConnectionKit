@@ -42,6 +42,7 @@ TO DO:
 #import "NSWorkspace+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "NSAttributedString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import <AddressBook/AddressBook.h>
 #import <Connection/AbstractConnection.h>
@@ -696,7 +697,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *account = [[self properties] valueForKey:@"userName"];
 			
 			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
+				NSURL *url = [NSURL URLWithUnescapedString:urlString];
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
@@ -750,7 +751,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *account = [[self properties] valueForKey:@"userName"];
 			
 			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithString:[urlString encodeLegally]];
+				NSURL *url = [NSURL URLWithUnescapedString:urlString];
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
@@ -910,7 +911,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 		NSURL *url = nil;
 		@try {
-			url = [NSURL URLWithString:[[[self properties] valueForKey:@"homePageURL"] encodeLegally]];
+			url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"homePageURL"]];
 		} @catch (NSException *ex) {
 			
 		}
@@ -926,7 +927,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 		NSURL *url = nil;
 		@try {
-			url = [NSURL URLWithString:[[[self properties] valueForKey:@"setupURL"] encodeLegally]];
+			url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"setupURL"]];
 		} @catch (NSException *ex) {
 			
 		}
@@ -1115,7 +1116,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *fullURLString = [self testFileRemoteURL];
 	NSLog(@"remote URL = %@", fullURLString);
 	NSURLRequest *theRequest
-		=	[NSURLRequest requestWithURL:[NSURL URLWithString:[fullURLString encodeLegally]]
+		=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:fullURLString]
 							 cachePolicy:NSURLRequestReloadIgnoringCacheData
 						 timeoutInterval:10.0];
 	// create the connection with the request and start loading the data
@@ -1929,7 +1930,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			[newString replaceOccurrencesOfString:@"?" withString:@"userID" options:0 range:NSMakeRange(0, [newString length])];
 			testURL = newString;		// use this instead for the test
 		}
-		NSURL *url = [NSURL URLWithString:[testURL encodeLegally]];
+		NSURL *url = [NSURL URLWithUnescapedString:testURL];
 
 		errorString
 			= NSLocalizedString(@"Illegal characters found in URL. A URL must look something like http://www.domain.com/path/", @"validation error message for illegal URL");
@@ -2211,7 +2212,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL URLQueryEncodedString:YES]];
 
 				NSURLRequest *theRequest
-				=	[NSURLRequest requestWithURL:[NSURL URLWithString:[urlString encodeLegally]]
+				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
 									 cachePolicy:NSURLRequestReloadIgnoringCacheData
 								 timeoutInterval:10.0];
 				// create the connection with the request and start loading the data

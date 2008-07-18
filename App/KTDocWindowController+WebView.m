@@ -1616,7 +1616,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		return NO;
 	}
 	
-	NSURL *theURL = [NSURL URLWithString:[URLAsString encodeLegally]];
+	NSURL *theURL = [NSURL URLWithUnescapedString:URLAsString];
 	// filter out file:// URLs ... let webview handle it and insert any images
 	if ( [[theURL scheme] isEqualToString:@"file"] )
 	{

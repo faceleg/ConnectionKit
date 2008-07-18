@@ -132,7 +132,7 @@
 		[stem replaceOccurrencesOfString:@"?" withString:userID options:0 range:NSMakeRange(0, [stem length])];
 	}
 	// Now get just the path part
-	NSURL *stemURL = [NSURL URLWithString:[stem encodeLegally]];
+	NSURL *stemURL = [NSURL URLWithUnescapedString:stem];
 	result = [stemURL path];	// won't end in slash
 	
 	NSString *subFolder = [self valueForKey:@"subFolder"];
