@@ -18,6 +18,4 @@
 	
 }
 
-- (NSString *)filename;
-
 @end

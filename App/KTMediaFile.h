@@ -21,6 +21,8 @@
 // Accessors
 - (KTMediaManager *)mediaManager;
 - (NSString *)fileType;
+- (NSString *)filename;
+- (NSString *)filenameExtension;
 
 // Paths
 - (NSString *)currentPath;	// Where the file is currently being stored.

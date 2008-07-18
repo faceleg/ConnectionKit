@@ -128,23 +128,26 @@
 	KTExternalMediaFile *aMediaFile;
 	while (aMediaFile = [missingMediaEnumerator nextObject])
 	{
-		NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
-		NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
-		
-		if (aMediaFile != originalMediaFile &&
-			[lastKnownPathComponents hasPrefix:sourceDirComponents] &&
-			![aMediaFile currentPath])
-		{
-			unsigned relPathRangeLen = MIN(sharedSuffixComponentCount, [lastKnownPathComponents count] - [sourceDirComponents count]);
-			NSRange relativePathRange = NSMakeRange([sourceDirComponents count], relPathRangeLen);
-			NSArray *relativePathComponents = [lastKnownPathComponents subarrayWithRange:relativePathRange];
-			NSArray *destPathComponents = [destDirComponents arrayByAddingObjectsFromArray:relativePathComponents];
-			NSString *possibleNewPath = [NSString pathWithComponents:destPathComponents];
-			
-			if ([[NSFileManager defaultManager] fileExistsAtPath:possibleNewPath]) {
-				[similarMissingMedia addObject:aMediaFile];
-			}
-		}
+		if ([aMediaFile isKindOfClass:[KTExternalMediaFile class]])
+        {
+            NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
+            NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
+            
+            if (aMediaFile != originalMediaFile &&
+                [lastKnownPathComponents hasPrefix:sourceDirComponents] &&
+                ![aMediaFile currentPath])
+            {
+                unsigned relPathRangeLen = MIN(sharedSuffixComponentCount, [lastKnownPathComponents count] - [sourceDirComponents count]);
+                NSRange relativePathRange = NSMakeRange([sourceDirComponents count], relPathRangeLen);
+                NSArray *relativePathComponents = [lastKnownPathComponents subarrayWithRange:relativePathRange];
+                NSArray *destPathComponents = [destDirComponents arrayByAddingObjectsFromArray:relativePathComponents];
+                NSString *possibleNewPath = [NSString pathWithComponents:destPathComponents];
+                
+                if ([[NSFileManager defaultManager] fileExistsAtPath:possibleNewPath]) {
+                    [similarMissingMedia addObject:aMediaFile];
+                }
+            }
+        }
 	}
 	
 	
@@ -211,7 +214,7 @@
 
 - (void)findSelectedMediaFile
 {
-	KTExternalMediaFile *mediaFile = [[oMediaArrayController selectedObjects] objectAtIndex:0];
+	KTMediaFile *mediaFile = [[oMediaArrayController selectedObjects] objectAtIndex:0];
 	
 	// Display the open panel allowing the user to find the replacement file
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
@@ -219,12 +222,12 @@
 	[panel setTreatsFilePackagesAsDirectories:YES];
 
 	
-	NSString *fileExtension = [[[mediaFile alias] lastKnownPath] pathExtension];
+	NSString *fileExtension = [mediaFile filenameExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];
 	
-	if (returnCode == NSOKButton)
+	if (returnCode == NSOKButton && [mediaFile isKindOfClass:[KTExternalMediaFile class]])
 	{
-		[self offerToLocateSimilarMissingMedia:mediaFile newPath:[panel filename]];
+		[self offerToLocateSimilarMissingMedia:(KTExternalMediaFile *)mediaFile newPath:[panel filename]];
 	}
 }
 

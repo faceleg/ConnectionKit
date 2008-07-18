@@ -189,6 +189,11 @@
 	}
 }
 
+- (NSString *)filenameExtension
+{
+    return [[self filename] pathExtension];
+}
+
 - (NSString *)quickLookPseudoTag
 {
 	NSString *result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>",
@@ -201,6 +206,10 @@
 	NSString *result = [[[self valueForKey:@"sourceFilename"] lastPathComponent] stringByDeletingPathExtension];
 	return result;
 }
+
+/*  Little hack to make missing media sheet work
+ */
+- (id)alias { return nil; }
 
 #pragma mark -
 #pragma mark Errors

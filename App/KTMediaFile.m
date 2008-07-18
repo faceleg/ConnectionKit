@@ -87,6 +87,18 @@
 	[self setPrimitiveValue:UTI forKey:@"fileType"];
 }
 
+- (NSString *)filename
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
+
+- (NSString *)filenameExtension
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
+
 #pragma mark -
 #pragma mark Paths
 
