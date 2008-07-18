@@ -79,6 +79,12 @@
 		result = nil;
 	}
 	
+    
+	if (!result)
+    {
+        result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
+    }
+    
 	return result;
 }
 

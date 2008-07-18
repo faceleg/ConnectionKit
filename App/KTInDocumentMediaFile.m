@@ -162,6 +162,12 @@
 		result = [[document mediaPath] stringByAppendingPathComponent:[self filename]];
 	}
 	
+    
+    if (!result)
+    {
+        result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
+    }
+    
 	return result;
 }
 
