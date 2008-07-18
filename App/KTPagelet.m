@@ -202,7 +202,7 @@
 - (NSString *)titleHTML { return [self wrappedValueForKey:@"titleHTML"]; }
 
 /*	used in bindings from page templates...		*/
-- (NSString *)titleText { return [[self titleHTML] flattenedHTML]; }
+- (NSString *)titleText { return [[self titleHTML] stringByConvertingHTMLToPlainText]; }
 
 - (void)setTitleHTML:(NSString *)value { [self setWrappedValue:value forKey:@"titleHTML"]; }
 

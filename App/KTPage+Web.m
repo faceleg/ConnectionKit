@@ -164,7 +164,7 @@
 	}
 	
 	
-	NSString *siteTitleText = [[[self master] valueForKey:@"siteTitleHTML"] flattenedHTML];
+	NSString *siteTitleText = [[[self master] valueForKey:@"siteTitleHTML"] stringByConvertingHTMLToPlainText];
 	if ( (nil != siteTitleText) && ![siteTitleText isEqualToString:@""] && ![siteTitleText isEqualToString:titleText] )
 	{
 		if (needsSeparator)

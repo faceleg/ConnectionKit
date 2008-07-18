@@ -293,7 +293,7 @@
 			{
 				// Generate the image
 				KTMediaManager *mediaManager = [page mediaManager];
-				result = [mediaManager graphicalTextWithString:[[self innerHTML:kGeneratingPreview] flattenedHTML]
+				result = [mediaManager graphicalTextWithString:[[self innerHTML:kGeneratingPreview] stringByConvertingHTMLToPlainText]
 														design:design
 										  imageReplacementCode:graphicalTextCode
 														  size:[master floatForKey:@"graphicalTitleSize"]];
@@ -554,7 +554,7 @@
 	else
 	{
 		//   <p><br />  [newline] </p>		... BUT DON'T EMPTY OUT IF A SCRIPT
-		NSString *textContents = [[self DOMNode] textContent]; /// WAS [[((DOMHTMLElement *)outerNode) outerHTML] flattenedHTML];
+		NSString *textContents = [[self DOMNode] textContent]; /// WAS [[((DOMHTMLElement *)outerNode) outerHTML] stringByConvertingHTMLToPlainText];
 		NSString *outerHTML = [[self DOMNode] outerHTML];
 
 		if ([textContents isEqualToString:@""]
@@ -629,7 +629,7 @@
 	NSString *innerHTML = [[self DOMNode] cleanedInnerHTML];
 	if ([self isFieldEditor])
 	{
-		NSString *flattenedHTML = [innerHTML flattenedHTML];
+		NSString *flattenedHTML = [innerHTML stringByConvertingHTMLToPlainText];
 		if ([flattenedHTML isEmptyString]) innerHTML = nil;
 	}
 	

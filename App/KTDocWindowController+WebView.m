@@ -460,7 +460,7 @@ clickedOnPagelet:
 				if (nil != titleHTML && ![titleHTML isEqualToString:@""] && ![titleHTML isEqualToString:[[pagelet plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
 				{
 					desc = [NSString stringWithFormat:NSLocalizedString(@"%@ %@%@%@", @"format to show type of pagelet and its title, e.g. RSS Feed 'Cat Daily Digest'"),
-						desc, leftDoubleQuote, [titleHTML flattenedHTML], rightDoubleQuote];
+						desc, leftDoubleQuote, [titleHTML stringByConvertingHTMLToPlainText], rightDoubleQuote];
 				}
 				KTPage *owningPage = [pagelet page];
 				

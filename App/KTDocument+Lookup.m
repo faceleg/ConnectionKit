@@ -135,7 +135,7 @@
 	NSString *result = [self siteSubtitleHTML];
 	if (![result isEqualToString:@""])
 	{
-		result = [result flattenedHTML];
+		result = [result stringByConvertingHTMLToPlainText];
 	}
 	return result;
 }
