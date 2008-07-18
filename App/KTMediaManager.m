@@ -114,7 +114,10 @@ NSString *KTMediaLogDomain = @"Media";
 	while (aMediaFile = [mediaFileEnumerator nextObject])
 	{
 		NSString *path = [aMediaFile currentPath];
-		if (!path || [path isEqualToString:@""] || ![[NSFileManager defaultManager] fileExistsAtPath:path])
+		if (!path ||
+            [path isEqualToString:@""] ||
+            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"qmark"]] ||
+            ![[NSFileManager defaultManager] fileExistsAtPath:path])
 		{
 			[result addObject:aMediaFile];
 		}

@@ -279,16 +279,15 @@
 {
 	NSImage *result = nil;
 	
-	if (value)
+	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"qmark"]])
+	{
+		result = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
+	}
+	else
 	{
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"upload_complete" ofType:@"png"];
 		result = [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
 	}
-	else
-	{
-		result = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
-	}
-	
 	return result;
 }
 
