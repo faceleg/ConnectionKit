@@ -367,7 +367,7 @@
 	if (!generateSpanIn)
 	{
 		[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
-		if ([self isEditable])
+		if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:@" class=\"%@\"", ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
@@ -412,7 +412,7 @@
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
 		[buffer appendFormat:@"<span id=\"%@\" class=\"in", [self DOMNodeID]];
-		if ([self isEditable])
+		if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:@" %@", ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
