@@ -31,6 +31,7 @@
 - (NSString *)indexFilename;
 
 - (NSURL *)URL_uncached;
+- (NSString *)pathRelativeToParent;
 
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
@@ -240,22 +241,7 @@
 }
 
 #pragma mark -
-#pragma mark Publishing
-
-/*	Very similar to -uploadPathRelativeToParent
- *	However, the index.html file is not included in collection paths unless the user defaults say to.
- *	If you ask this of the home page, will either return an empty string or index.html.
- */
-- (NSString *)pathRelativeToParent
-{
-	int collectionPathStyle = KTCollectionHTMLDirectoryPath;
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
-		collectionPathStyle = KTCollectionIndexFilePath;
-	}
-	
-	NSString *result = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
-	return result;
-}
+#pragma mark URL
 
 - (NSURL *)URL
 {
@@ -307,7 +293,7 @@
  *	regenerated and cached.
  *	KTAbstractPage does not support children, so it is up to KTPage to implement the recursive portion.
  *
- *	If the path is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
+ *	If the URL is invalid, it can be assumed that the site structure must have changed, so we also post a notification.
  */
 - (void)recursivelyInvalidateURL:(BOOL)recursive
 {
@@ -329,6 +315,21 @@
 {
 	[self setWrappedValue:path forKey:@"customPathRelativeToSite"];
 	[self recursivelyInvalidateURL:YES];
+}
+
+/*	Very similar to -uploadPathRelativeToParent
+ *	However, the index.html file is not included in collection paths unless the user defaults say to.
+ *	If you ask this of the home page, will either return an empty string or index.html.
+ */
+- (NSString *)pathRelativeToParent
+{
+	int collectionPathStyle = KTCollectionHTMLDirectoryPath;
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"]) {
+		collectionPathStyle = KTCollectionIndexFilePath;
+	}
+	
+	NSString *result = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];
+	return result;
 }
 
 #pragma mark -

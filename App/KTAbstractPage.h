@@ -90,8 +90,6 @@ KTCollectionPathStyle;
 
 
 // Publishing
-- (NSString *)pathRelativeToParent;
-
 - (NSURL *)URL;
 - (void)recursivelyInvalidateURL:(BOOL)recursive;
 
