@@ -208,8 +208,7 @@
 	}
 	
 	// Search the query
-	NSString *queryString = [self query];
-	NSDictionary *query = [queryString queryParameters];
+	NSDictionary *query = [self queryDictionary];
 	
 	NSString *possibleListID = [query objectForKey: @"id"];
 	NSString *possibleListType = [query objectForKey: @"type"];

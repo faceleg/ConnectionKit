@@ -179,7 +179,7 @@
 	
 	if (title)
 	{
-		[buffer appendFormat:@" title=\"%@\"", [title escapedEntities]];
+		[buffer appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntities]];
 	}
 	
 	if (media)

@@ -108,9 +108,9 @@
 			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 			NSString *linkURLString = [NSString stringWithFormat:@"http://www.amazon.com/exec/obidos/ASIN/%@/ref=nosim/%@", ASIN, [defaults objectForKey:@"AmazonAssociatesToken"]];
 //			[aDictionary setValue:[NSString stringWithFormat:@"<a href=\"%@\"><img src=\"%@\" alt=\"%@\" /></a>",
-//				[linkURLString escapedEntities],
-//				[imageURLString escapedEntities],
-//				[title escapedEntities]] forKey:kKTDataSourceString];
+//				[linkURLString stringByEscapingHTMLEntities],
+//				[imageURLString stringByEscapingHTMLEntities],
+//				[title stringByEscapingHTMLEntities]] forKey:kKTDataSourceString];
 			[aDictionary setValue:imageURLString forKey:kKTDataSourceImageURLString];		// image @ amazon
 			[aDictionary setValue:linkURLString forKey:kKTDataSourceURLString];		// link to amazon, rebuilt for sandvox
 			[aDictionary setValue:[NSNumber numberWithBool:YES] forKey:@"kKTDataSourcePreferExternalImageFlag"];

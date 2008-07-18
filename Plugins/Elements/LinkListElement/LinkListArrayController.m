@@ -50,7 +50,7 @@
 	if (theURL)	theURLString = [theURL absoluteString];
 	
 	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-		[theTitle escapedEntities], @"titleHTML",
+		[theTitle stringByEscapingHTMLEntities], @"titleHTML",
 		theURLString, @"url",
 		nil];
 	return result;
@@ -105,7 +105,7 @@
 		
 		NSMutableDictionary *newObject = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 			[URL absoluteString], @"url",
-			[title escapedEntities], @"titleHTML",
+			[title stringByEscapingHTMLEntities], @"titleHTML",
 			nil];
 		
 		[self insertObject:newObject atArrangedObjectIndex:row];

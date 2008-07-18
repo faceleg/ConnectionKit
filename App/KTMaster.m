@@ -138,7 +138,7 @@
 
 - (void)setSiteTitleText:(NSString *)value
 {
-	NSString *escaped = [value escapedEntities];
+	NSString *escaped = [value stringByEscapingHTMLEntities];
 	[self setWrappedValue:escaped forKey:@"siteTitleHTML"];
 	
 	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:value];

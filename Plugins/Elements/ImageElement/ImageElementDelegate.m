@@ -127,7 +127,7 @@
     
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceCaption])
 	{
-		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] escapedEntities] forKey:@"captionHTML"];
+		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] stringByEscapingHTMLEntities] forKey:@"captionHTML"];
 	}
 	
 	// override defaults if set in aDragSourceDictionary

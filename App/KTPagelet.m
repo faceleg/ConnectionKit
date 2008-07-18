@@ -158,7 +158,7 @@
 	}
 	if (nil != title)
 	{
-		[self setValue:[title escapedEntities] forKey:@"titleHTML"];
+		[self setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
 	}
 }
 

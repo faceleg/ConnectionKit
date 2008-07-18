@@ -51,7 +51,7 @@
 		NSString *theTitle = nil;
 		[NSAppleScript getWebBrowserURL:&theURL title:&theTitle source:nil];
 		if (nil != theURL)		[[self delegateOwner] setValue:[theURL absoluteString] forKey:@"linkURL"];
-		if (nil != theTitle)	[[self delegateOwner] setTitleHTML:[theTitle escapedEntities]];
+		if (nil != theTitle)	[[self delegateOwner] setTitleHTML:[theTitle stringByEscapingHTMLEntities]];
 		
 		// Set our "show border" checkbox from the defaults
 		[[self delegateOwner] setBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"iFramePageletIsBordered"]

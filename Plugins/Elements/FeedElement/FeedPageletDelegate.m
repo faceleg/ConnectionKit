@@ -61,7 +61,7 @@
 				[[self delegateOwner] setObject:[theURL absoluteString] forKey:@"url"];
 				if (nil != theTitle)
 				{
-					[[self delegateOwner] setTitleHTML:[theTitle escapedEntities]];
+					[[self delegateOwner] setTitleHTML:[theTitle stringByEscapingHTMLEntities]];
 				}
 			}
 		}
@@ -81,7 +81,7 @@
 	
 	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
 	if ( nil != title ) {
-		[[self delegateOwner] setValue:[title escapedEntities] forKey:@"titleHTML"];
+		[[self delegateOwner] setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
 	}
 }
 

@@ -255,7 +255,7 @@
 	{
 		[result appendFormat:
          @"<url><loc>%@</loc><lastmod>%@</lastmod><priority>%.02f</priority></url>\n",
-         [[dict objectForKey:@"loc"] escapedEntities],
+         [[dict objectForKey:@"loc"] stringByEscapingHTMLEntities],
          [dict objectForKey:@"lastmod"],
          [[dict objectForKey:@"priority"] floatValue] ];
 	}

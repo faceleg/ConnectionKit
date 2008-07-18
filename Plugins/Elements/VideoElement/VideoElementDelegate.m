@@ -143,7 +143,7 @@
 	// set caption
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceCaption])
 	{
-		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] escapedEntities]
+		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] stringByEscapingHTMLEntities]
 									forKey:@"captionHTML"];
 	}
 }

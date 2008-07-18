@@ -122,7 +122,7 @@
 		
 		if (aPage == thisPage)	// not likely but maybe possible
 		{
-			[string appendString:[[aPage titleText] escapedEntities]];	/// HTML was leaving extra formatting; we want it less dramatic
+			[string appendString:[[aPage titleText] stringByEscapingHTMLEntities]];	/// HTML was leaving extra formatting; we want it less dramatic
 		}
 		else
 		{
@@ -130,13 +130,13 @@
 //			if ( [[[aPage delegate] class] isEqual:[NSClassFromString(@"LinkPageDelegate") class]]
 //				 && (1 == [(NSNumber *)[aPage valueForKey:@"linkType"] intValue]) ) // 1 is newWindowLink
 //			{
-//				[string appendFormat:@"<a target=\"_blank\" href=\"%@\">%@</a>", [aPage pathRelativeTo:thisPage], [[aPage titleText] escapedEntities]];
+//				[string appendFormat:@"<a target=\"_blank\" href=\"%@\">%@</a>", [aPage pathRelativeTo:thisPage], [[aPage titleText] stringByEscapingHTMLEntities]];
 //			}
 //			else
 //			{
 			NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
             OBASSERT([href lowercaseString]);               // The lowercase string will help us track down zombies etc.
-            NSString *title = [[aPage titleText] escapedEntities];
+            NSString *title = [[aPage titleText] stringByEscapingHTMLEntities];
             OBASSERT([title lowercaseString]);
             
             [string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
@@ -202,14 +202,14 @@
 						}
 						if (aChildPage == thisPage)	// not likely but maybe possible
 						{
-							NSString *title = [[aChildPage titleText] escapedEntities];
+							NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
                             OBASSERT([title lowercaseString]);
                             [string appendFormat:@"%@\n", title];
 						}
 						else
 						{
 							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
-                            NSString *title = [[aChildPage titleText] escapedEntities];
+                            NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
                             if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
 						}
 						// need separator?	
@@ -264,13 +264,13 @@
 		[string appendString:(sections ? @"<h3>" : @"<p>")];
 		if (root == thisPage)	// not likely but maybe possible
 		{
-			[string appendString:[[root titleText] escapedEntities]];
+			[string appendString:[[root titleText] stringByEscapingHTMLEntities]];
 		}
 		else
 		{
 			NSString *path = [[root URL] stringRelativeToURL:[thisPage URL]];
             OBASSERT([path lowercaseString]);
-            NSString *title = [[root titleText] escapedEntities];
+            NSString *title = [[root titleText] stringByEscapingHTMLEntities];
             OBASSERT([title lowercaseString]);
             [string appendFormat:@"<a href=\"%@\">%@</a>", path, title];
 		}

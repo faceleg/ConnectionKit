@@ -53,7 +53,7 @@
 			if (!title) title = @"";
             
             NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				[title escapedEntities], @"titleHTML",
+				[title stringByEscapingHTMLEntities], @"titleHTML",
 				[URL absoluteString], @"url", nil];
 			
 			NSArray *links = [NSArray arrayWithObject:newLink];
@@ -94,7 +94,7 @@
 		{
 			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
 				[objectInfo valueForKey:@"URLString"], @"url",
-				[[[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"] escapedEntities], @"titleHTML",
+				[[[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"] stringByEscapingHTMLEntities], @"titleHTML",
 				nil];
 			[array addObject:oneEntry];
 		}
@@ -109,7 +109,7 @@
 		{
  			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
 				[urlStringArray objectAtIndex:i], @"url",
-				[[urlTitleArray objectAtIndex:i] escapedEntities], @"titleHTML",
+				[[urlTitleArray objectAtIndex:i] stringByEscapingHTMLEntities], @"titleHTML",
 				nil];
 			[array addObject:oneEntry];
 		}
@@ -126,7 +126,7 @@
 			}
 			NSDictionary *singleEntry = [NSDictionary dictionaryWithObjectsAndKeys:
 				urlString, @"url",
-				[title escapedEntities], @"titleHTML",
+				[title stringByEscapingHTMLEntities], @"titleHTML",
 				nil];
 			[array addObject:singleEntry];
 		}

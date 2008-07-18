@@ -851,7 +851,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (NSString *)cleanedOuterHTML
 {
-	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] escapedEntities] ];	// escape entities properly
+	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] stringByEscapingHTMLEntities] ];	// escape entities properly
 	return result;
 }
 @end
@@ -1236,7 +1236,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		{
 			NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
 			NSString *before = [text substringWithRange:beforeRange];
-			[buf appendString:[before escapedEntities]];
+			[buf appendString:[before stringByEscapingHTMLEntities]];
 		}
 			// Now, figure out what was between those two strings
 			{
@@ -1251,7 +1251,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		else
 		{
 			NSString *after = [text substringWithRange:range];
-			[buf appendString:[after escapedEntities]];
+			[buf appendString:[after stringByEscapingHTMLEntities]];
 			// Now, update to be past the range, to finish up.
 			range.location = NSMaxRange(range);
 			range.length = 0;

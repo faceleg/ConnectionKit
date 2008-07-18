@@ -179,7 +179,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	NSString *result = [parser parseTemplate];
 	[parser release];
 		
-	// We won't do any "escapeCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
+	// We won't do any "stringByEscapingCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
 	// don't want to introduce any entities into the XML anyhow.
 	
 	OBPOSTCONDITION(result);

@@ -615,7 +615,7 @@ static NSArray *sReservedNames = nil;
 			
 			// Now that we have page contents in unicode, clean up to the desired character encoding.
 			// MAYBE DO THIS TOO IF WE USE SOMETHING OTHER THAN UTF8
-			// rssString = [rssString escapeCharactersOutOfCharset:[aPage valueForKeyPath:@"master.charset"]];		
+			// rssString = [rssString stringByEscapingCharactersOutOfCharset:[aPage valueForKeyPath:@"master.charset"]];		
 // FIXME: If we specify UTF8 here, won't that get us in trouble?  Should we use other encodings, like of site?
 			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 			[info setObject:RSSData forKey:@"RSSData"];

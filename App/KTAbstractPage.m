@@ -148,7 +148,7 @@
 
 - (void)setTitleText:(NSString *)value
 {
-	[self setTitleHTML:[value escapedEntities]];
+	[self setTitleHTML:[value stringByEscapingHTMLEntities]];
 }
 
 // For bindings.  We can edit title if we aren't root;

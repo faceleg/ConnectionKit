@@ -371,11 +371,11 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
 							{
 								toAppend = [toAppend URLQueryEncodedString:YES];
-								toAppend = [toAppend escapedEntities];
+								toAppend = [toAppend stringByEscapingHTMLEntities];
 							}
 							else	// HTML escape first
 							{
-								toAppend = [toAppend escapedEntities];
+								toAppend = [toAppend stringByEscapingHTMLEntities];
 								toAppend = [toAppend URLQueryEncodedString:YES];
 							}
 							
@@ -388,7 +388,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							}
 							if (NSNotFound != htmlEscapeLocation)
 							{
-								toAppend = [toAppend escapedEntities];
+								toAppend = [toAppend stringByEscapingHTMLEntities];
 							}
 						}
 						[htmlString appendString:toAppend];
@@ -495,7 +495,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *theNewString = [theBundle localizedStringForKey:theString value:@"" table:nil];
 	//LOG((@"USER %@ -> %@", theString, theNewString));
 	
-	return [theNewString escapedEntities];
+	return [theNewString stringByEscapingHTMLEntities];
 }
 
 - (NSString *)componentTargetLocalizedString:(NSString *)tag
@@ -509,7 +509,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	// LOG((@"TARGET %@ -> %@", theString, theNewString));
 	
-	return [theNewString escapedEntities];
+	return [theNewString stringByEscapingHTMLEntities];
 }
 
 - (NSString *)mainBundleLocalizedString:(NSString *)tag
@@ -522,7 +522,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		result = [[NSBundle mainBundle] localizedStringForString:result language:language];
 	}
 	
-	return [result escapedEntities];
+	return [result stringByEscapingHTMLEntities];
 }
 
 + (NSCharacterSet *)keyPathIndicatorCharacters

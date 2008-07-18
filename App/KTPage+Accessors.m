@@ -206,7 +206,7 @@
 		result = [self titleText];
 	}
 	
-	result = [result escapedEntities];
+	result = [result stringByEscapingHTMLEntities];
 	
 	// Then convert spaces to be non-breaking since we don't want a fragmented menu
 	if ([[[self master] design] menusUseNonBreakingSpaces])

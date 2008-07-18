@@ -249,7 +249,7 @@ initial syntax coloring.
 //			if (NSNotFound != whereCDATA.location)
 //			{
 //				NSString *segment = [ms substringWithRange:NSMakeRange(whereCDATA.location+9, whereCDATA.length-12)];	// string inside
-//				NSString *fakeTag = [NSString stringWithFormat:@"<fakecdata>%@</fakecdata>", [segment escapedEntities]];
+//				NSString *fakeTag = [NSString stringWithFormat:@"<fakecdata>%@</fakecdata>", [segment stringByEscapingHTMLEntities]];
 //				[ms replaceCharactersInRange:whereCDATA withString:fakeTag];
 //			}
 //			else

@@ -422,7 +422,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
+				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -446,7 +446,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 					if (![trimmedItem isEqualToString:@""])
 					{
 						[buf appendFormat:[NSString stringWithFormat:@"<option>%@</option>",
-							[trimmedItem escapedEntities]]];
+							[trimmedItem stringByEscapingHTMLEntities]]];
 					}
 				}
 				
@@ -457,7 +457,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText escapedEntities]];
+				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	

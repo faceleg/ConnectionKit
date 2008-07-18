@@ -659,7 +659,7 @@
             }
             else if ([infoRequested isEqualToString:@"MIMEType"])
             {
-                result = [[NSString MIMETypeForUTI:[mediaFile fileType]] escapedEntities];
+                result = [[NSString MIMETypeForUTI:[mediaFile fileType]] stringByEscapingHTMLEntities];
             }
             else if ([infoRequested isEqualToString:@"dataLength"])
             {

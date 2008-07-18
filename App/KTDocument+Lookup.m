@@ -66,7 +66,7 @@
 
 - (NSString *)siteTitleHTML
 {
-	return [[[self displayName] stringByDeletingPathExtension] escapedEntities];		// get the default title from the document name
+	return [[[self displayName] stringByDeletingPathExtension] stringByEscapingHTMLEntities];		// get the default title from the document name
 }
 
 - (NSAttributedString *)siteTitleAttributed		// same as above, but don't escape entities
