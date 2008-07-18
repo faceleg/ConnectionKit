@@ -25,7 +25,7 @@
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTCSSClassName</key>
-	<string>sitemap-page</string>
+	<string>sitemap</string>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
