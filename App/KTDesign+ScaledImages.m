@@ -12,6 +12,7 @@
 
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 #import "Debug.h"
 
@@ -59,7 +60,12 @@
  */
 - (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse
 {
-	KTImageScalingSettings *result = nil;
+    return [[self imageScalingPropertiesForUse:mediaUse] objectForKey:@"scalingBehavior"];
+}
+
+- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse
+{
+	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:2];
 	
 	
 	// Where possible, we use the values from the design itself
@@ -67,12 +73,13 @@
 	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
 	
 	
-	if (!mediaInfo)
+	KTImageScalingSettings *scalingSettings = nil;
+    if (!mediaInfo)
 	{
 		// Banners are a special case as we want to fallback to the -bannerSize method
 		if ([mediaUse isEqualToString:@"bannerImage"])
 		{
-			result = [KTImageScalingSettings cropToSize:[self bannerSize] alignment:NSImageAlignTop];
+			scalingSettings = [KTImageScalingSettings cropToSize:[self bannerSize] alignment:NSImageAlignTop];
 		}
 		else
 		{
@@ -81,7 +88,26 @@
 	}
 	
 	
-	if (!result) result = [KTImageScalingSettings scalingSettingsWithDictionaryRepresentation:mediaInfo];
+	if (!scalingSettings)
+    {
+        scalingSettings = [KTImageScalingSettings scalingSettingsWithDictionaryRepresentation:mediaInfo];
+    }
+    OBASSERT(scalingSettings);
+    [result setObject:scalingSettings forKey:@"scalingBehavior"];
+    
+    
+    
+    // Now deal with UTI if available
+    NSString *fileType = [mediaInfo objectForKey:@"fileType"];
+    if (!fileType)
+    {
+        NSString *fileExtension = [mediaInfo objectForKey:@"fileExtension"];
+        if (fileExtension) fileType = [NSString UTIForFilenameExtension:fileExtension];
+    }
+    [result setValue:fileType forKey:@"fileType"];
+    
+    
+    
 	return result;
 }
 

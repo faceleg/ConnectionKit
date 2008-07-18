@@ -61,6 +61,7 @@
 // Media uses. e.g. KTSidebarPageMedia which covers photo pages which have a sidebar
 + (NSDictionary *)infoForMediaUse:(NSString *)anImageName;
 
+- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse;
 - (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse;
 - (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse;	// e.g. how big a Photo page should be
 

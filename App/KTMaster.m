@@ -488,6 +488,15 @@
 	[self didChangeValueForKey:@"favicon"];
 }
 
+- (KTMediaContainer *)scaledFavicon
+{
+    KTMediaContainer *unscaledFavicon = [self favicon];
+    NSDictionary *properties = [[self design] imageScalingPropertiesForUse:@"faviconImage"];
+    
+    KTMediaContainer *result = [unscaledFavicon scaledImageWithProperties:properties];
+    return result;
+}
+
 /*	If anyone tries to clear the favicon, actually reset it to the default instead
  */
 - (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
