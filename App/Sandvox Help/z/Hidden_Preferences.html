@@ -35,7 +35,7 @@
 
                 <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (found in the "Applications → Utilities" folder).</li>
 
-                <li>Type or copy &amp; paste the command given for the hidden preference.</li>
+                <li>Type or copy and paste the command given for the hidden preference.</li>
 
                 <li>If necessary, replace the <span class="prefValue">highlighted</span> text with your desired value.</li>
 
@@ -58,12 +58,13 @@
 
                 <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (found in the "Applications → Utilities" folder).</li>
 
-                <li>Type <tt>defaults delete com.karelia.Sandvox</tt> followed by the name of the hidden preference. e.g.
-                    <pre>
+                <li>Type <tt>defaults delete com.karelia.Sandvox</tt> followed by the name of the hidden preference, as shown below.</li>
+            </ol>
+            <pre>
 defaults delete com.karelia.Sandvox KTSharpeningFactor
 </pre>
-                </li>
 
+            <ol>
                 <li>Hit the Return key and relaunch Sandvox.</li>
             </ol>
 
@@ -149,7 +150,7 @@ defaults delete com.karelia.Sandvox KTSharpeningFactor
         </dl>
 
         <p><br />
-        You can also use a hidden preference to set Sandvox for <a href="Personal_.Mac_Domains.html" title="Personal .Mac Domains">publishing to a .Mac personal domain</a>.</p><a name="Connections" id="Connections"></a>
+        You can also use a hidden preference to set Sandvox for <a href="Personal_MobileMe_Domains.html" title="Personal MobileMe Domains">publishing to a MobileMe personal domain</a>.</p><a name="Connections" id="Connections"></a>
 
         <h2><span class="mw-headline">Connections</span></h2>
 
@@ -275,7 +276,7 @@ defaults delete com.karelia.Sandvox KTSharpeningFactor
 
         <h2><span class="mw-headline">Alerts</span></h2>
 
-        <p>Sandvox contains a number of alerts that you can dismiss with the option to not be told again in the future. These hidden preferences can be used to re-enable such alerts. Entering <span class="prefValue">NO</span> will enable an alert, and <span class="prefValue">YES</span> will silence it.</p>
+        <p>Sandvox contains a number of alerts that you can dismiss with the option not to be told again in the future. These hidden preferences can be used to re-enable such alerts. Entering <span class="prefValue">NO</span> will enable an alert, and <span class="prefValue">YES</span> will silence it.</p>
 
         <dl>
             <dt>Quartz Extreme not available</dt>
@@ -375,14 +376,6 @@ defaults delete com.karelia.Sandvox KTSharpeningFactor
             <dd><code>defaults write com.karelia.Sandvox DefaultIndexBundleIdentifier "<span class="prefValue">sandvox.GeneralIndex</span>"</code></dd>
 
             <dd>The kind of <a href="Index_.html" title="Index">index</a> the new <a href="Home_Page.html" title="Home Page">Home Page</a> should use. You can see the list of available <a href="Index_.html" title="Index">index</a> types using the "Available Components" item in the Debug menu.</dd>
-        </dl>
-
-        <dl>
-            <dt>Home page type</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox DefaultRootPageBundleIdentifier "<span class="prefValue">sandvox.TextPage</span>"</code></dd>
-
-            <dd>Sets the type of <a href="Page.html" title="Page">page</a> the <a href="Home_Page.html" title="Home Page">Home Page</a> should be for a new site. See "<a href="Replacing_the_Home_Page_with_an_alternative_page_type.html" title="Replacing the Home Page with an alternative page type">Replacing the Home Page with an alternative page type</a>" for further details.</dd>
         </dl>
 
         <dl>
@@ -734,6 +727,8 @@ defaults delete com.karelia.Sandvox KTSharpeningFactor
                 <li><a href="Overriding_Sandvox_Application_Files.html" title="Overriding Sandvox Application Files">Overriding Sandvox Application Files</a></li>
 
                 <li><a href="Image_Sharpening.html" title="Image Sharpening">Image Sharpening</a></li>
+
+                <li><a href="Launching.html" title="Launching">Launching</a></li>
             </ul>
         </div>
     </div>

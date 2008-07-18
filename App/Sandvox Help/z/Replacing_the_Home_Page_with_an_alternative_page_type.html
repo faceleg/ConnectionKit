@@ -25,66 +25,17 @@
     <div id="mainbox">
         <h1 class="firstHeading">Replacing the Home Page with an alternative page type</h1>
 
-        <div class="warning">
-            This article is aimed at advanced users of Sandvox only. As such, any modifications to Sandvox using the techniques described below cannot be supported by Karelia.
-        </div>
+        <p>Usually, Sandvox uses a plain <a href="Text.html" title="Text">Text</a> page for the <a href="Home_Page.html" title="Home Page">Home Page</a>. If you want the home page of your site to be a different type, you can make that choice <b>when you first create the site.</b> Once a site is created, you can no longer change the page type of the home page.</p>
 
-        <p>Usually, Sandvox uses a plain <a href="Text.html" title="Text">Text</a> page for the <a href="Home_Page.html" title="Home Page">Home Page</a>. However, in some circumstances, you may wish to change this. This can be achieved using Sandvox's <a href="Hidden_Preferences.html" title="Hidden Preferences">Hidden Preferences</a>, but <b>only</b> for a new site, not an existing one.</p>
+        <p>Setting the page type of the home page when creating a new site is simple.</p>
 
         <div class="instructions">
-            <p><b>To create a site with a different Home Page type:</b></p>
+            <p><b>To set the page type of the home page for a new site:</b></p>
 
             <ol>
-                <li>Quit Sandvox and open the Terminal.</li>
+                <li>From the File menu, select "New Site..."</li>
 
-                <li>
-                    <p>Type the following command:</p>
-                    <pre>
-defaults write com.karelia.Sandvox DefaultRootPageBundleIdentifier "sandvox.PhotoPage"
-</pre>
-
-                    <p>Replace "sandvox.PhotoPage" with the bundle identifier of the <a href="Page.html" title="Page">page</a> type you wish to use. The page bundles built into Sandvox are:</p>
-
-                    <ul>
-                        <li>sandvox.ContactPage</li>
-
-                        <li>sandvox.FileDownload</li>
-
-                        <li>sandvox.GeneralIndex</li>
-
-                        <li>sandvox.HTMLPage</li>
-
-                        <li>sandvox.LinkPage</li>
-
-                        <li>sandvox.MoviePage</li>
-
-                        <li>sandvox.PhotoPage</li>
-
-                        <li>sandvox.SiteMapPage</li>
-
-                        <li>sandvox.TextPage</li>
-                    </ul>
-                </li>
-
-                <li>Hit <i>Enter</i> and relaunch Sandvox.</li>
-
-                <li>Create a new site. It should have your new <a href="Page.html" title="Page">page</a> type choice as the <a href="Home_Page.html" title="Home Page">Home Page</a>.</li>
-            </ol>
-        </div>
-
-        <p>This setting will now affect all new sites you create. If you only want to make the change for just this one site, you need to reset Sandvox back to its default.</p>
-
-        <div class="instructions">
-            <p><b>To reset the Home Page type:</b></p>
-
-            <ol>
-                <li>Quit Sandvox and open the Terminal.</li>
-
-                <li>Enter the following command:
-                    <pre>
-defaults delete com.karelia.Sandvox DefaultRootPageBundleIdentifier
-</pre>
-                </li>
+                <li>Under "Home page type," select the page type you prefer for the home page.</li>
             </ol>
         </div>
 
@@ -95,8 +46,6 @@ defaults delete com.karelia.Sandvox DefaultRootPageBundleIdentifier
 
             <ul>
                 <li><a href="Home_Page.html" title="Home Page">Home Page</a></li>
-
-                <li><a href="Hidden_Preferences.html" title="Hidden Preferences">Hidden Preferences</a></li>
             </ul>
         </div>
     </div>
