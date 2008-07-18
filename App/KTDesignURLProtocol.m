@@ -37,7 +37,7 @@
 		@"design:/%@/z%ld/%@/",
 		[aDocument documentID],					// document identifier
 		[KTURLProtocol cacheConfusingNumber],	// unique junk to confuse cache
-		[aDesignBundleIdentifier urlEncode]];
+		[aDesignBundleIdentifier URLQueryEncodedString:YES]];
 	NSURL *result = [NSURL URLWithString:[string encodeLegally]];						// design
 	return result;
 }

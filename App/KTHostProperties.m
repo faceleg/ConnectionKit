@@ -161,7 +161,7 @@
 	NSString *subFolder = [self valueForKey:@"localSubFolder"];
 	if (nil != subFolder && ![subFolder isEqualToString:@""])
 	{
-		[result appendString:[subFolder urlEncode]];
+		[result appendString:[subFolder URLQueryEncodedString:YES]];
 		if (![result hasSuffix:@"/"])		// make sure it ends with /
 		{
 			[result appendString:@"/"];
@@ -216,7 +216,7 @@
 		NSString *subFolder = [self valueForKey:@"localSubFolder"];
 		if (nil != subFolder && ![subFolder isEqualToString:@""])
 		{
-			[result appendString:[subFolder urlEncode]];
+			[result appendString:[subFolder URLQueryEncodedString:YES]];
 			if (![result hasSuffix:@"/"])		// make sure it ends with /
 			{
 				[result appendString:@"/"];

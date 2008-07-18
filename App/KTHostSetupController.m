@@ -2208,7 +2208,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
 			if (nil != testURL)
 			{
-				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL urlEncode]];
+				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL URLQueryEncodedString:YES]];
 
 				NSURLRequest *theRequest
 				=	[NSURLRequest requestWithURL:[NSURL URLWithString:[urlString encodeLegally]]

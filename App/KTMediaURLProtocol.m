@@ -52,7 +52,7 @@
 		NSLog(@"error: media protocol returning bad URL %@", urlString);
 	}
 	
-	return [NSURL URLWithString:[[urlString urlEncode] encodeLegally]];
+	return [NSURL URLWithString:[[urlString URLQueryEncodedString:YES] encodeLegally]];
 }
 
 - (void)startLoading

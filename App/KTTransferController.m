@@ -1118,7 +1118,7 @@ if ([self where] == kGeneratingRemoteExport) {
             NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
             NSString *siteMapURLString = [[NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL] absoluteString];
             NSString *pingURLString = [NSString stringWithFormat:@"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                       [siteMapURLString urlEncode]];
+                                       [siteMapURLString URLQueryEncodedString:YES]];
             [self pingThisURLString:pingURLString];
         }
     }
