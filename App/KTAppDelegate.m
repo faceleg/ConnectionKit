@@ -94,7 +94,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 // Comment this out if we are not building an expiring demo
-#define EXPIRY_TIMESTAMP @"2008-07-22 11:59:59 -0800"
+#define EXPIRY_TIMESTAMP @"2008-08-05 11:59:59 -0800"
 
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!
 // (this is a non-expiring, worldwide, pro license)
