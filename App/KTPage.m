@@ -162,18 +162,20 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 
 + (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin
 {
-	// Create the page
-	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
-	
-	
-	// Load properties from parent/sibling
-	KTPage *previousPage = aParent;
+	// Figure out nearest sibling/parent
+    KTPage *previousPage = aParent;
 	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
 	if ([children count] > 0)
 	{
 		previousPage = [children firstObject];
 	}
 	
+	
+    // Create the page
+	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
+	
+	
+	// Load properties from parent/sibling
 	[page setBool:[previousPage boolForKey:@"allowComments"] forKey:@"allowComments"];
 	[page setBool:[previousPage boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
 	
