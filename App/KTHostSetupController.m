@@ -186,8 +186,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 		}
 		
-		if ([[aDictionary objectForKey:@"protocol"] isEqualToString:@".Mac"] 
-			&& nil == [aDictionary objectForKey:@"dotMacDomainStyle"])
+		if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
+			&& nil == [self valueForKey:@"dotMacDomainStyle"])
 		{
 			// It was not set, so assume it's a legacy document, which is homepage.mac.com
 			[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
