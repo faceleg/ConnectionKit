@@ -185,6 +185,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 		}
+		
+		if ([[aDictionary objectForKey:@"protocol"] isEqualToString:@".Mac"] 
+			&& nil == [aDictionary objectForKey:@"dotMacDomainStyle"])
+		{
+			// It was not set, so assume it's a legacy document, which is homepage.mac.com
+			[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+		}
 
 		// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
 		[self tryToReachLocalHost:[hostProperties integerForKey:@"localHosting"]];	// start or stop the reaching process
@@ -539,12 +546,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"])
 				{
 					nextState = @"mac";
-					
-					if (nil == [self valueForKey:@"dotMacDomainStyle"])
-					{
-						// It was not set, so assume it's a legacy document, which is homepage.mac.com
-						[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
-					}
 				}
 				else
 				{
@@ -784,6 +785,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			
 	}
 
+	// If not yet set, initialize .mac style to Mobile Me for new sites
+	if ([nextState isEqualToString:@"mac"] && nil == [self valueForKey:@"dotMacDomainStyle"])
+	{
+		// It was not set, so assume it's a legacy document, which is homepage.mac.com
+		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
+	}
+	
 	if (nil == nextState)
 	{
 		[NSException raise:@"KTInconsistentStateMachineException" format:@"Host setup cannot find next step from state '%@'", myCurrentState];
@@ -1590,7 +1598,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
     myLocalHostVerifiedStatus = aLocalHostVerifiedStatus;
 }
-
 
 - (NSString *)defaultISP
 {
@@ -2455,7 +2462,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
 	*account = [[iToolsMember copy] autorelease];	// a guess, but really we should get it from keychain
-	if (*account)		// only continue if we actually have an account!
+	if (*account && nil != password)		// only continue if we actually have an account, and if we have a place to store the password.
 	{
 		OSStatus theStatus = noErr;
 		
