@@ -844,10 +844,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		KTPage *page = [KTPage insertNewPageWithParent:nearestParent 
 									   plugin:plugin];
 		
-		if ( nil != page )
+		if (page)
 		{
-			[self insertPage:page parent:nearestParent];
-			[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:page]];
+			// Insert the page
+            [self insertPage:page parent:nearestParent];
+            
+            // Make the Site Outline display the new item nicely
+			[[self siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:page]];
 		}
 		else
 		{
@@ -1019,6 +1022,10 @@ from representedObject */
 				[indexPage setValue:intro forKey:@"richTextHTML"];
 			}
 		}
+        
+        
+        // Expand the item in the Site Outline
+        [[[self siteOutlineController] siteOutline] expandItem:indexPage];
     }
     else
     {
