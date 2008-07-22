@@ -135,7 +135,7 @@
             
             if (aMediaFile != originalMediaFile &&
                 [lastKnownPathComponents hasPrefix:sourceDirComponents] &&
-                ![aMediaFile currentPath])
+                ![[aMediaFile alias] fullPath])
             {
                 unsigned relPathRangeLen = MIN(sharedSuffixComponentCount, [lastKnownPathComponents count] - [sourceDirComponents count]);
                 NSRange relativePathRange = NSMakeRange([sourceDirComponents count], relPathRangeLen);
