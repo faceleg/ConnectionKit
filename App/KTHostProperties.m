@@ -72,24 +72,29 @@
 
 - (NSString *)domainNameDashes
 {
-	NSMutableString *string = [NSMutableString stringWithString:[[self siteURL] absoluteString]];
-	if ([string hasPrefix:@"http://"])
-	{
-		[string deleteCharactersInRange:NSMakeRange(0,7)];
-	}
-	if ([string hasSuffix:@"/"])
-	{
-		[string deleteCharactersInRange:NSMakeRange([string length]-1, 1)];
-	}
-	[string replace:@"." with:@"_"];
-	[string replace:@"/" with:@"_"];
-	unichar firstChar = [string characterAtIndex:0];
-	if (   ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'A', 26)] characterIsMember:firstChar]
-		&& ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'a', 26)] characterIsMember:firstChar])
-	{
-		[string insertString:@"host_" atIndex:0];
-	}
-	return [string stringByRemovingCharactersInSet:[[NSCharacterSet alphanumericASCIIUnderlineCharacterSet] invertedSet]];
+	NSString *result = @"";
+    
+    NSURL *siteURL = [self siteURL];
+    if (siteURL)
+    {
+        // We compose the result out of just the host and path
+        
+        NSMutableString *buffer = [[[siteURL host] mutableCopy] autorelease];
+        [buffer appendString:[siteURL path]];   // -path strips the trailing slash for us
+        
+        [buffer replace:@"." with:@"_"];
+        [buffer replace:@"/" with:@"_"];
+        unichar firstChar = [buffer characterAtIndex:0];
+        if (   ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'A', 26)] characterIsMember:firstChar]
+            && ![[NSCharacterSet characterSetWithRange:NSMakeRange((unsigned int)'a', 26)] characterIsMember:firstChar])
+        {
+            [buffer insertString:@"host_" atIndex:0];
+        }
+        
+        result = [buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIIUnderlineCharacterSet]];
+    }
+    
+    return result;
 }
 
 - (NSString *)localPublishingRoot
@@ -363,30 +368,37 @@ to be verified.
  */
 - (NSURL *)siteURL
 {
-	NSString *result = nil;
+	NSString *URLString = nil;
 	
 	NSNumber *useLocalHosting = [self valueForKey:@"localHosting"];
 	if (useLocalHosting)
 	{
 		if ([useLocalHosting boolValue])
 		{
-			result = [self globalSiteURL];
-            if (!result) result = [self localURL];
+			URLString = [self globalSiteURL];
+            if (!URLString) URLString = [self localURL];
 		}
 		else
 		{
-			result = [self remoteSiteURL];
+			URLString = [self remoteSiteURL];
 		}
 	}
 	
-	// Bckup option
-	if (!result)
+	// Backup option
+	if (!URLString)
 	{
-		result = @"http://unpublished.karelia.com/";
+		URLString = @"http://unpublished.karelia.com/";
 	}
-		
-	OBPOSTCONDITION(result);	
-	return [NSURL URLWithString:result];
+	OBPOSTCONDITION(URLString);
+    
+    
+    // Create the URL
+    NSURL *result = nil;
+    if (URLString)
+    {
+        result = [NSURL URLWithString:URLString];
+    }
+    return result;
 }
 
 #pragma mark -
