@@ -344,15 +344,31 @@
 
 - (void)didGenerateCustomIcon:(NSImage *)icon forPage:(KTPage *)page
 {
-	// Update the cache. Use CF to retain, not copy the key
-	CFDictionarySetValue((CFMutableDictionaryRef)myCachedCustomPageIcons, page, icon);
+	OBPRECONDITION(page);
+    
+    
+    // Update the cache. We want to retain, not copy the key
+    if (icon)
+    {
+        [myCachedCustomPageIcons setObject:icon forKey:page copyKeyFirst:NO];
+    }
+    else
+    {
+        [myCachedCustomPageIcons removeObjectForKey:page];
+    }
 	
+    
 	// Remove page from generating list
 	[myGeneratingCustomIcon release];	myGeneratingCustomIcon = nil;
 	
+    
 	// Refresh Site Outline for new icon
-	[[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:NO];
+	if (icon)
+    {
+        [[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:NO];
+    }
 	
+    
 	// Generate the first icon in queue
 	if ([myCustomIconGenerationQueue count] > 0)
 	{

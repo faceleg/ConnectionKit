@@ -388,20 +388,24 @@
 	if (banner)
 	{
 		// Find the right path
-        NSString *bannerPath = nil;
+        NSString *bannerURLString = nil;
         if (generationPurpose == kGeneratingPreview)
         {
-            bannerPath = [[NSURL fileURLWithPath:[[banner file] currentPath]] absoluteString];
+            NSString *bannerPath = [[banner file] currentPath];
+            if (bannerPath)
+            {
+                bannerURLString = [NSURL fileURLStringWithPath:bannerPath];
+            }
         }
         else
         {
             NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
             NSURL *mediaURL = [[[banner file] defaultUpload] URL];
-            bannerPath = [mediaURL stringRelativeToURL:masterCSSURL];
+            bannerURLString = [mediaURL stringRelativeToURL:masterCSSURL];
         }
         
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerPath];
+        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerURLString];
 	}
 	
 	
