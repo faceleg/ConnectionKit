@@ -8,7 +8,7 @@
 		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 		<generator>[[=&documentInfo.appNameVersion]]</generator>
-[[if master.logoImage.file.currentPath]]
+[[if master.logoImage]]
 		<image>
 			<url>[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]</url>
 			<title>[[=&master.headerImageDescription]]</title>
@@ -22,7 +22,7 @@
 			<title>[[=&item.titleText]]</title>
 			<link>[[path item]]</link>
 			<description>
-[[if item.thumbnail.file.currentPath]]
+[[if item.thumbnail]]
 				&lt;div class="article-thumbnail"&gt;
 					&lt;img
 						src="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]"
@@ -37,7 +37,7 @@
 			<guid>[[=&item.URL]]</guid>
 [[foreach item.feedEnclosures anEnclosure]]
 			<enclosure url="[[mediainfo media:anEnclosure info:path]]" length="[[mediainfo media:anEnclosure info:dataLength]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
-[[if item.thumbnail.file.currentPath]]
+[[if item.thumbnail]]
         	<media:thumbnail url="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" />
         	<media:content url="[[mediainfo media:anEnclosure info:path]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
 [[endif]]
