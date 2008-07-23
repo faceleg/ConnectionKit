@@ -994,6 +994,11 @@
 			}
 		}
 	}
+    
+    
+    // Log the error to the console for debugging
+    NSLog(@"KTDocument will present error:\r%@", [inError description]);
+    
 	
 	return inError;
 }
