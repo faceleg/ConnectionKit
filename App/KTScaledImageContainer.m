@@ -34,9 +34,9 @@
 {
 	KTMediaFile *result = [super file];
 	
-	if ([self managedObjectContext] && [self checkIfFileNeedsGenerating])   // Considering this as an edge case during object deletion
-	{
-		if (result)
+	if (![self isDeleted] && [self managedObjectContext] && [self checkIfFileNeedsGenerating])  // One or more of these
+	{                                                                                           // should fail during
+		if (result)                                                                             // object deletion
 		{
 			if ([self fileNeedsRegenerating])
             {

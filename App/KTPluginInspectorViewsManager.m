@@ -58,9 +58,8 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	// Disconnect each plugin's controller from its content to ensure nothing tries to access the MOC later.
-	[[myPluginControllers allValues] makeObjectsPerformSelector:@selector(setContent:) withObject:nil];
-	
+	[self removeAllPluginInspectorViews];
+    
 	[myPluginControllers release];
 	[myPluginInspectorViews release];
 	[myPluginTopLevelObjects release];
@@ -134,6 +133,16 @@
 	
 	[myPluginTopLevelObjects removeObjectForKey:pluginID];
 	[myPluginInspectorViews removeObjectForKey:pluginID];
+}
+
+- (void)removeAllPluginInspectorViews
+{
+    // Disconnect each plugin's controller from its content to ensure nothing tries to access the MOC later.
+	[[myPluginControllers allValues] makeObjectsPerformSelector:@selector(setContent:) withObject:nil];
+	
+    [myPluginControllers removeAllObjects];
+    [myPluginInspectorViews removeAllObjects];
+    [myPluginTopLevelObjects removeAllObjects];
 }
 
 #pragma mark -

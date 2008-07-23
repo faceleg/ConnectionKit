@@ -822,7 +822,8 @@
 		// Restore scroll position
 		
 		NSScrollView *scrollView = [[self webView] mainScrollView];
-		if (scrollView && ([self windowController]->myHasSavedVisibleRect)) {
+		if (scrollView && [self windowController] && ([self windowController]->myHasSavedVisibleRect))
+        {
 			[(NSView *)[scrollView documentView] scrollRectToVisible:([self windowController]->myDocumentVisibleRect)];
 			([self windowController]->myHasSavedVisibleRect) = NO;
 		}

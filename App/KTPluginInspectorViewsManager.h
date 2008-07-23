@@ -29,5 +29,6 @@
 
 - (NSView *)inspectorViewForPlugin:(id <KTInspectorPlugin>)plugin;
 - (void)removeInspectorViewForPlugin:(id <KTInspectorPlugin>)plugin;
+- (void)removeAllPluginInspectorViews;
 
 @end

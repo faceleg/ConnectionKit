@@ -872,7 +872,9 @@
 	}
 	
 	
-	// Garbage collect media
+	// Garbage collect media. Killing plugin inspector views early is a bit of a hack to stop it accessing
+    // any garbage collected media.
+    [[[self windowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
 	[[self mediaManager] garbageCollect];
 	
 	

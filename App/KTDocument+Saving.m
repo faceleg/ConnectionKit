@@ -481,10 +481,12 @@
 		// if we've saved, we don't need to autosave until after the next context change
 		[self cancelAndInvalidateAutosaveTimers];
 	}
-	
-	
-	// Return, making sure to supply appropriate error info
-	if (!result) *outError = error;
+	else
+	{
+        // Return, making sure to supply appropriate error info
+        if (!result) *outError = error;
+    }
+    
 	return result;
 }
 
