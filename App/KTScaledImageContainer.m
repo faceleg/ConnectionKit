@@ -11,6 +11,8 @@
 #import "KTMediaFile+ScaledImages.h"
 #import "KTScaledImageProperties.h"
 
+#import "Debug.h"
+
 
 @interface KTScaledImageContainer (Private)
 + (BOOL)_fileNeedsGenerating:(NSDictionary *)newProperties :(NSDictionary *)oldProperties;
@@ -112,7 +114,7 @@
 
 - (NSDictionary *)latestProperties
 {
-	[self subclassResponsibility:_cmd];
+	SUBCLASSMUSTIMPLEMENT;
 	return nil;
 }
 

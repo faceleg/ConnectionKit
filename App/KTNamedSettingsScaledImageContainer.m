@@ -55,9 +55,8 @@
 	KTDesign *design = [[page master] design];
 	
 	NSString *settingsName = [self valueForKey:@"scalingSettingsName"];
-	KTImageScalingSettings *settings = [design imageScalingSettingsForUse:settingsName];
+	NSDictionary *result = [design imageScalingPropertiesForUse:settingsName];
 	
-	NSDictionary *result = [NSDictionary dictionaryWithObject:settings forKey:@"scalingBehavior"];
 	return result;
 }
 

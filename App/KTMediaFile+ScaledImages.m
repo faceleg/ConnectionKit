@@ -356,12 +356,14 @@
     // If there is still no set file type, we can oftentimes know it by looking at if the image has an alpha component
     if (![buffer objectForKey:@"fileType"])
     {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"KTPrefersPNGFormat"] ||
-            ([self valueForKey:@"hasAlphaComponent"] && [self boolForKey:@"hasAlphaComponent"]))
+        BOOL preferPNGFormat = [[NSUserDefaults standardUserDefaults] boolForKey:@"KTPrefersPNGFormat"];
+        NSNumber *hasAlphaComponent = [self valueForKey:@"hasAlphaComponent"];
+        
+        if (preferPNGFormat || (hasAlphaComponent && [hasAlphaComponent boolValue]))
         {
             [buffer setObject:(NSString *)kUTTypePNG forKey:@"fileType"];
         }
-        else
+        else if (hasAlphaComponent)
         {
             [buffer setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
         }
