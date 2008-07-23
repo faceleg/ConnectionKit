@@ -69,7 +69,7 @@
 	[self setValue:[alias aliasData] forKey:@"aliasData"];
 }
 
-- (NSString *)currentPath;
+- (NSString *)_currentPath;
 {
 	NSString *result = [[self alias] fullPath];
 	
@@ -78,14 +78,8 @@
 	{
 		result = nil;
 	}
-	
     
-	if (!result)
-    {
-        result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
-    }
-    
-	return result;
+    return result;
 }
 
 - (NSString *)filename

@@ -138,15 +138,11 @@ NSString *KTMediaLogDomain = @"Media";
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Beginning media garbage collection...");
 	
-#ifdef DEBUG
-	NSDate *startDate = [NSDate date];	// We're currently logging how long it takes since this is quite performance intensive
-#endif
-	
-	
+
 	// Collect MediaContainers
 	[self garbageCollectMediaContainers];
-	
-	
+	    
+    
 	// Garbage collect AbstractMediaFiles
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
 	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]]));
@@ -157,14 +153,6 @@ NSString *KTMediaLogDomain = @"Media";
 	{
 		[[self managedObjectContext] deleteObject:aMediaFile];
 	}
-	
-	
-#ifdef DEBUG
-	NSDate *finishDate = [NSDate date];
-	NSTimeInterval timeTaken = [finishDate timeIntervalSinceDate:startDate];
-	NSString *message = [NSString stringWithFormat:@"Media garbage collection took %fs", timeTaken];
-	KTLog(KTMediaLogDomain, KTLogInfo, message);
-#endif
 }
 
 - (void)garbageCollectMediaContainers

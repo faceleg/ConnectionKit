@@ -106,6 +106,17 @@
  */
 - (NSString *)currentPath
 {
+	NSString *result = [self _currentPath];
+    if (!result)
+    {
+        result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
+    }
+    
+	return result;
+}
+
+- (NSString *)_currentPath
+{
 	SUBCLASSMUSTIMPLEMENT;
 	return nil;
 }
@@ -303,7 +314,7 @@
     NSNumber *imageWidth = nil;
     NSNumber *imageHeight = nil;
     
-    NSString *imagePath = [self currentPath];
+    NSString *imagePath = [self _currentPath];
     if (imagePath)
     {
         NSURL *imageURL = [NSURL fileURLWithPath:imagePath];

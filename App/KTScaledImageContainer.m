@@ -11,6 +11,8 @@
 #import "KTMediaFile+ScaledImages.h"
 #import "KTScaledImageProperties.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 #import "Debug.h"
 
 
@@ -26,56 +28,103 @@
 #pragma mark Scaling Settings
 
 /*	When a ScaledImageContainer is first created it has no MediaFile attached. When this method is called
- *	for the first time we create a MediaFile. After that, we regularly check to see if the MediaFile nees updating.
+ *	for the first time we create a MediaFile. After that, we regularly check to see if the MediaFile needs updating.
  */
 - (KTMediaFile *)file
 {
 	KTMediaFile *result = [super file];
 	
-	if (!mediaFileIsGenerating)
+	if ([self managedObjectContext] && [self checkIfFileNeedsGenerating])   // Considering this as an edge case during object deletion
 	{
-		// If the settings have changed, or we have no media file, generate one.
-		BOOL fileNeedsGenerating = YES;
-		
 		if (result)
 		{
-			KTScaledImageProperties *oldPropertiesObject = [self valueForKey:@"generatedProperties"];
-            
-            
-            // Where did the media come from?
-            KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
-            if (!sourceFile) sourceFile = [[self valueForKey:@"sourceMedia"] file];
-            
-            
-            if (sourceFile)
+			if ([self fileNeedsRegenerating])
             {
-                NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
-                OBASSERT(newProperties);
-                
-                NSDictionary *oldProperties = [oldPropertiesObject scalingProperties];
-                if (oldProperties)
-                {
-                    // So are the new properties different enough from the old to necessitate regeneration?
-                    fileNeedsGenerating = [[self class] _fileNeedsGenerating:newProperties :oldProperties];
-                }
-                else
-                {
-                    fileNeedsGenerating = [sourceFile propertiesRequireScaling:newProperties];
-                }
+                // If the file needs re-generating, we just set it to nil so that the next access will do the work
+                [self setCheckIfFileNeedsGenerating:NO];
+                [self setValue:nil forKey:@"file"];
+                [self setCheckIfFileNeedsGenerating:YES];
             }
-		}
-		
-		
-		if (fileNeedsGenerating)
-		{
-			mediaFileIsGenerating = YES;
-			[self generateMediaFile];
-			mediaFileIsGenerating = NO;
-			result = [super file];
-		}
-	}
+        }
+        else
+        {
+            // Quite simply, we have no media file so it must be generated.
+            result = [self generateMediaFile];
+            if (result)
+            {
+                [self setCheckIfFileNeedsGenerating:NO];
+                [self setValue:result forKey:@"file"];
+                [self setCheckIfFileNeedsGenerating:YES];
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSDictionary *)latestProperties
+{
+	SUBCLASSMUSTIMPLEMENT;
+	return nil;
+}
+
+- (KTMediaFile *)generateMediaFile
+{
+	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
+    NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
 	
-	return result;
+    KTMediaFile *scaledMediaFile = sourceFile;
+    if ([sourceFile propertiesRequireScaling:canonicalProperties])
+    {
+        KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
+        [self setValue:generatedProperties forKey:@"generatedProperties"];
+        scaledMediaFile = [generatedProperties valueForKey:@"destinationFile"];
+    }
+    
+    return scaledMediaFile;
+}
+
+#pragma mark -
+#pragma mark Needs Regenerating
+
+- (BOOL)checkIfFileNeedsGenerating { return !myDontCheckIfFileNeedsRegenerating; }
+
+- (void)setCheckIfFileNeedsGenerating:(BOOL)flag { myDontCheckIfFileNeedsRegenerating = !flag; }
+
+/*  Assumes we already have a file
+ */
+- (BOOL)fileNeedsRegenerating
+{
+    // If the settings have changed, or we have no media file, generate one.
+    BOOL result = YES;
+    
+    KTScaledImageProperties *oldPropertiesObject = [self valueForKey:@"generatedProperties"];
+    
+    
+    // Where did the media come from?
+    KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
+    if (!sourceFile) sourceFile = [[self valueForKey:@"sourceMedia"] file];
+    
+    
+    if (sourceFile)
+    {
+        NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
+        OBASSERT(newProperties);
+        
+        NSDictionary *oldProperties = [oldPropertiesObject scalingProperties];
+        if (oldProperties)
+        {
+            // So are the new properties different enough from the old to necessitate regeneration?
+            result = [[self class] _fileNeedsGenerating:newProperties :oldProperties];
+        }
+        else
+        {
+            result = [sourceFile propertiesRequireScaling:newProperties];
+        }
+    }
+    
+    
+    return result;
 }
 
 + (BOOL)_fileNeedsGenerating:(NSDictionary *)newProperties :(NSDictionary *)oldProperties
@@ -110,28 +159,6 @@
     
     
     return NO;
-}
-
-- (NSDictionary *)latestProperties
-{
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
-}
-
-- (void)generateMediaFile
-{
-	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
-    NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
-	
-    KTMediaFile *scaledMediaFile = sourceFile;
-    if ([sourceFile propertiesRequireScaling:canonicalProperties])
-    {
-        KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
-        [self setValue:generatedProperties forKey:@"generatedProperties"];
-        scaledMediaFile = [generatedProperties valueForKey:@"destinationFile"];
-    }
-    
-    [self setValue:scaledMediaFile forKey:@"file"];
 }
 
 @end

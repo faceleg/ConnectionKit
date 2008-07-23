@@ -12,10 +12,14 @@
 
 @interface KTScaledImageContainer : KTMediaContainer
 {
-	@private
-	BOOL	mediaFileIsGenerating;
+    @private
+    BOOL    myDontCheckIfFileNeedsRegenerating;
 }
 
 - (NSDictionary *)latestProperties;
-- (void)generateMediaFile;
+- (KTMediaFile *)generateMediaFile;
+
+- (BOOL)checkIfFileNeedsGenerating;
+- (void)setCheckIfFileNeedsGenerating:(BOOL)flag;
+- (BOOL)fileNeedsRegenerating;
 @end

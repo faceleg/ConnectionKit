@@ -146,7 +146,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (NSString *)currentPath
+- (NSString *)_currentPath
 {
 	NSString *result = nil;
 	
@@ -162,13 +162,7 @@
 		result = [[document mediaPath] stringByAppendingPathComponent:[self filename]];
 	}
 	
-    
-    if (!result)
-    {
-        result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
-    }
-    
-	return result;
+    return result;
 }
 
 - (NSString *)filename

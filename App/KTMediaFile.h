@@ -26,6 +26,7 @@
 
 // Paths
 - (NSString *)currentPath;	// Where the file is currently being stored.
+- (NSString *)_currentPath;
 - (NSString *)quickLookPseudoTag;
 
 - (KTMediaFileUpload *)defaultUpload;
