@@ -209,7 +209,7 @@
 		NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
-					([NSString stringWithFormat:@"Creating temporary in-document MediaFile from data named '%@'", filename]));
+              ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from data named '%@'", filename]));
 		
 		NSError *error = nil;
 		[data writeToFile:destinationPath options:0 error:&error];
@@ -334,8 +334,8 @@
 															     tag:&tag]; 
 		
 		NSString *message = [NSString stringWithFormat:@"Preparing for temporary media file at\n%@\nbut one already exists. %@",
-								proposedPath,
-								(result) ? @"It was moved to the trash." : @"It could not be deleted."];
+                             proposedPath,
+                             (result) ? @"It was moved to the trash." : @"It could not be deleted."];
 		KTLog(KTMediaLogDomain, (result) ? KTLogWarn : KTLogError, message);
 	}
 	
@@ -347,7 +347,10 @@
  */
 - (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\r%@", path]));
+	KTInDocumentMediaFile *result = nil;
+    
+    
+    KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\r%@", path]));
 	
 	// Figure out the filename and copy the file there
 	NSString *sourceFilename = [path lastPathComponent];
@@ -355,20 +358,24 @@
 	NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
 	
 	[self prepareTemporaryMediaDirectoryForFileNamed:destinationFilename];
-	if (![[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:self]) {
-		[NSException raise:NSInternalInconsistencyException
-					format:@"Unable to copy file:\r%@\r to %@ in the temporary media folder", path, destinationFilename];
-	}	
-	
-	// Add the file to the DB.
-	KTInDocumentMediaFile *result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
-															   inManagedObjectContext:[self managedObjectContext]];
-	
-	// Store the file's source filename
-	[result setValue:sourceFilename forKey:@"sourceFilename"];
-	
+	if ([[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:self])
+    {
+        // Add the file to the DB.
+        result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
+                                            inManagedObjectContext:[self managedObjectContext]];
+		
+        // Store the file's source filename
+        [result setValue:sourceFilename forKey:@"sourceFilename"];
+    }
+    else
+    {
+        KTLog(KTMediaLogDomain,
+              KTLogError,
+              ([NSString stringWithFormat:@"Unable to create in-document MediaFile. The path may not exist:\r%@", path]));
+    }
+    
 	return result;
-
+    
 }
 
 
