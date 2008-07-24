@@ -218,8 +218,11 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 	[self setValue:now forKey:@"creationDate"];
 	[self setValue:now forKey:@"lastModificationDate"];
 	
-	[self setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"]
-			forKey:@"collectionSummaryMaxPages"];
+	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
+    if ([maxTitles isKindOfClass:[NSNumber class]])
+    {
+        [self setValue:maxTitles forKey:@"collectionSummaryMaxPages"];
+    }
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert
