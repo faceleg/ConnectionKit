@@ -1437,6 +1437,7 @@ if ([self where] == kGeneratingRemoteExport) {
 			}
 			else
 			{
+// TODO: Properly internationalize this sentence; it will require re-localization.  See case 32158.
 				NSString *message = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"The site has been published to", "Transfer Controller"), [[self connection] host]];
 				[myController setStatusMessage:message];
 			}
