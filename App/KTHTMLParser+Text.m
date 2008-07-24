@@ -123,9 +123,9 @@
 	
 	// Inform delegate
 	[self didParseTextBlock:result];
-	
-	
-	return result;
+    
+    
+    return result;
 }
 
 #pragma mark -

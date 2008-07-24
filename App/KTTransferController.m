@@ -107,7 +107,7 @@ static NSArray *sReservedNames = nil;
 
 - (void)threadedPrepareHostForUpload;
 
-- (void)threadedUploadDesign:(KTDesign *)design;
+- (void)uploadDesign:(KTDesign *)design;
 - (void)clearUploadedDesigns;
 
 - (void)threadedUploadResources:(NSSet *)resources;
@@ -843,7 +843,7 @@ static NSArray *sReservedNames = nil;
 		// Upload the design - in the future there may be more than one - and master.css
 		NSDictionary *designPublishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(siteDesignPublishingInfo)];
 		KTDesign *design = [designPublishingInfo objectForKey:@"design"];
-		[self threadedUploadDesign:design];
+		[self performSelectorOnMainThread:@selector(uploadDesign:) withObject:design waitUntilDone:YES];
 		
 		NSString *masterCSS = [designPublishingInfo objectForKey:@"masterCSS"];
 		if (masterCSS)
@@ -1023,7 +1023,7 @@ if ([self where] == kGeneratingRemoteExport) {
 		KTDesign *design = [designPublishingInfo objectForKey:@"design"];
 		if (![[design marketingVersion] isEqualToString:[designPublishingInfo objectForKey:@"versionLastPublished"]])
 		{
-			[self threadedUploadDesign:design];
+			[self uploadDesign:design];
 		}
 		
 				
@@ -1130,7 +1130,7 @@ if ([self where] == kGeneratingRemoteExport) {
 /*	Uploads the specified design.
  *	The design is added to the list of designs published, accessible via [self uploadedDesigns]
  */
-- (void)threadedUploadDesign:(KTDesign *)design
+- (void)uploadDesign:(KTDesign *)design
 {
 	NSString *uploadDirectory = [[self storagePath] stringByAppendingPathComponent:[design remotePath]];
 	[myController createDirectory:uploadDirectory permissions:myDirectoryPermissions];
@@ -1142,9 +1142,57 @@ if ([self where] == kGeneratingRemoteExport) {
 	NSString *aResource;
 	while ( (aResource = [resourcesEnumerator nextObject]) && myKeepPublishing )
 	{
-		NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:[aResource lastPathComponent]];
-		[self uploadFile:aResource toFile:uploadPath];
-		[myController setPermissions:myPagePermissions forFile:uploadPath];
+		NSString *filename = [aResource lastPathComponent];
+        
+        // If there's any graphical text we have to append it to the main CSS ourself
+        if ([filename isEqualToString:@"main.css"] && [[self graphicalTextBlocks] count] > 0)
+        {
+            NSMutableString *mainCSS = [NSMutableString stringWithContentsOfFile:aResource];
+            
+            // Add on CSS for each block
+            NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
+            NSEnumerator *textBlocksEnumerator = [graphicalTextBlocks keyEnumerator];
+            NSString *aGraphicalTextID;
+            while (aGraphicalTextID = [textBlocksEnumerator nextObject])
+            {
+                KTWebViewTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
+                KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
+                
+                NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
+                OBASSERT(path);
+                
+                NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+                if (CSS)
+                {
+                    [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
+                    [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
+                    [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
+                    
+                    NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
+                    NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
+                    [CSS replace:@"_URL_" with:mediaPath];
+                    
+                    [mainCSS appendString:CSS];
+                }
+                else
+                {
+                    NSLog(@"Unable to read in image replacement CSS from %@", path);
+                }
+            }
+            
+            
+            // Upload the CSS
+            NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
+                                                                      allowLossyConversion:YES];
+			NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:filename];
+            [self uploadFromData:mainCSSData toFile:uploadPath];
+        }
+        else
+        {
+            NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:filename];
+            [self uploadFile:aResource toFile:uploadPath];
+            [myController setPermissions:myPagePermissions forFile:uploadPath];
+        }
 	}
 	
 	// Mark the design as being uploaded
@@ -1182,42 +1230,6 @@ if ([self where] == kGeneratingRemoteExport) {
 	if (bannerImage)
 	{
 		[self addParsedMediaFileUpload:bannerImage];
-	}
-	
-	NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
-	if (graphicalTextBlocks && [graphicalTextBlocks count] > 0)
-	{
-		if (!masterCSS) masterCSS = @"";
-		
-		// Add on CSS for each block
-		NSEnumerator *textBlocksEnumerator = [graphicalTextBlocks keyEnumerator];
-		NSString *aGraphicalTextID;
-		while (aGraphicalTextID = [textBlocksEnumerator nextObject])
-		{
-			KTWebViewTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
-			KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
-			
-			NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
-			OBASSERT(path);
-            
-			NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
-            if (CSS)
-            {
-                [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
-                [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
-                [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-                
-                NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
-                NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
-                [CSS replace:@"_URL_" with:mediaPath];
-                
-                masterCSS = [masterCSS stringByAppendingString:CSS];
-            }
-            else
-            {
-                NSLog(@"Unable to read in image replacement CSS from %@", path);
-            }
-		}
 	}
 	
 	[info setValue:masterCSS forKey:@"masterCSS"];
