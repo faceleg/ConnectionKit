@@ -101,7 +101,8 @@
 	}
 	
 	// At this point we should have a page
-	OBASSERTSTRING([container isKindOfClass:[KTPage class]], @"unable to get page from a KTAbstractPluginDelegate");
+	OBPOSTCONDITION(container);
+    OBPOSTCONDITION([container isKindOfClass:[KTPage class]]);
 	return container;
 }
 
