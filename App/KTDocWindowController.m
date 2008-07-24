@@ -54,6 +54,7 @@
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
+#import "NSURL+Karelia.h"
 #import "NSURL+KTExtensions.h"
 #import "NSWindow+Karelia.h"
 
@@ -1989,7 +1990,8 @@ from representedObject */
 		else
 		{
 			// Check how URL looks.  If it's bad, beep and exit -- don't let them close.
-			NSURL *checkURL = [NSURL URLWithString:[value encodeLegally]];
+			NSURL *checkURL = [NSURL URLWithUnescapedString:value];
+
 			NSString *host = [checkURL host];
 			NSString *path = [checkURL path];
 			if (NULL == checkURL

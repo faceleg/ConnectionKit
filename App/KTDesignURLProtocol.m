@@ -35,10 +35,10 @@
 {
 	NSString *string = [NSString stringWithFormat:
 		@"design:/%@/z%ld/%@/",
-		[aDocument documentID],					// document identifier
-		[KTURLProtocol cacheConfusingNumber],	// unique junk to confuse cache
-		[aDesignBundleIdentifier URLQueryEncodedString:YES]];
-	NSURL *result = [NSURL URLWithString:[string encodeLegally]];						// design
+		[aDocument documentID],									// document identifier
+		[KTURLProtocol cacheConfusingNumber],					// unique junk to confuse cache
+		[aDesignBundleIdentifier URLQueryEncodedString:YES]];	// design
+	NSURL *result = [NSURL URLWithUnescapedString:string];
 	return result;
 }
 

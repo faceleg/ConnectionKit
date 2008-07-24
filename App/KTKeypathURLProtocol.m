@@ -34,11 +34,11 @@
 
 + (NSURL *)URLForDocument:(KTDocument *)aDocument keyPath:(NSString *)aKeyPath
 {
-	NSURL *result = [NSURL URLWithString:[[NSString stringWithFormat:
-		@"keypath:/%@/z%ld/%@",
-		[[aDocument documentInfo] siteID],					// document ID
-		[KTURLProtocol cacheConfusingNumber],	// unique junk to confuse cache
-		aKeyPath] encodeLegally]];								// key to get to the item
+	NSURL *result = [NSURL URLWithUnescapedString:[NSString stringWithFormat:
+												   @"keypath:/%@/z%ld/%@",
+												   [[aDocument documentInfo] siteID],		// document ID
+												   [KTURLProtocol cacheConfusingNumber],	// unique junk to confuse cache
+												   aKeyPath]];								// key to get to the item
 	return result;
 }
 

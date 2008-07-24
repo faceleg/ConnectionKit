@@ -92,6 +92,7 @@
 #import "NSWorkspace+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
@@ -705,7 +706,7 @@ static NSArray *sReservedNames = nil;
 									options:NSLiteralSearch
 									  range:NSMakeRange(0, [stemURL length])];
 	}
-	NSURL *testURL = [NSURL URLWithString:[stemURL encodeLegally]];
+	NSURL *testURL = [NSURL URLWithUnescapedString:stemURL];
 	NSString *urlHost = [testURL host];
 	
 	//test to see if we have the username in the host somewhere
@@ -1339,8 +1340,8 @@ if ([self where] == kGeneratingRemoteExport) {
 - (BOOL)transferControllerAlternateButtonAction:(CKTransferController *)controller
 {
 	if (myPublishedURL != nil) {
-		NSURL *url = [NSURL URLWithString:[myPublishedURL encodeLegally]];
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+		NSURL *URL = [NSURL URLWithUnescapedString:myPublishedURL];
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
 	}
 	return NO;
 }

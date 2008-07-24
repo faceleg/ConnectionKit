@@ -52,7 +52,7 @@
 		NSLog(@"error: media protocol returning bad URL %@", urlString);
 	}
 	
-	return [NSURL URLWithString:[[urlString URLQueryEncodedString:YES] encodeLegally]];
+	return [NSURL URLWithString:[urlString URLQueryEncodedString:YES]];
 }
 
 - (void)startLoading
@@ -145,8 +145,8 @@ NEWER WEBKIT: (Jan 2007):
 	[substitute deleteCharactersInRange:NSMakeRange(0,idx+1)];
 	[substitute insertString:@"applewebdata://" atIndex:0];
 	
-	NSURL *url = [NSURL URLWithString:[substitute encodeLegally]];
-	
+	NSURL *URL = [NSURL URLWithUnescapedString:substitute];
+
 	// I really don't need anthing more than just the relative path, which is like this:  /_Media/placeholder_large.jpeg
 	
 	NSURL *result = nil;
@@ -154,7 +154,7 @@ NEWER WEBKIT: (Jan 2007):
 	{
 		KTManagedObjectContext *context = [[self document] createPeerContext];
 		[context lockPSCAndSelf];
-		result = [[[self document] oldMediaManager] URLForMediaPath:[url relativePath] managedObjectContext:context];
+		result = [[[self document] oldMediaManager] URLForMediaPath:[URL relativePath] managedObjectContext:context];
 		[context unlockPSCAndSelf];
 		[[self document] releasePeerContext:context];
 	}
