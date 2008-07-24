@@ -228,15 +228,18 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  */
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context
 {
-	NSArray *oldSortedChildren = [change valueForKey:NSKeyValueChangeOldKey];
-	NSSet *oldChildren  = [NSSet setWithArray:oldSortedChildren];
-	NSArray *newSortedChildren = [change valueForKey:NSKeyValueChangeNewKey];
+	id changeOld = [change objectForKey:NSKeyValueChangeOldKey];
+    NSArray *oldSortedChildren = ([changeOld isKindOfClass:[NSArray class]]) ? changeOld : [NSArray array];
+    NSSet *oldChildren  = [NSSet setWithArray:oldSortedChildren];
+    
+    id changeNew = [change objectForKey:NSKeyValueChangeNewKey];
+	NSArray *newSortedChildren = ([changeNew isKindOfClass:[NSArray class]]) ? changeNew : [NSArray array];
 	NSSet *newChildren = [NSSet setWithArray:newSortedChildren];
 	
 	
 	// Stop observing removed pages
 	NSSet *removedPages = [oldChildren setByRemovingObjects:newChildren];
-	if ((id)removedPages != [NSNull null] && [removedPages count] > 0)
+	if (removedPages && [removedPages count] > 0)
 	{
 		[[self mutableSetValueForKey:@"pages"] minusSet:removedPages];
 	}

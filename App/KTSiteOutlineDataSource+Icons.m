@@ -20,6 +20,7 @@
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSMutableDictionary+Karelia.h"
 
 #import "assertions.h"
 
