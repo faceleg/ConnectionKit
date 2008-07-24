@@ -543,6 +543,11 @@
 }
 
 #pragma mark -
+#pragma mark Language
+
+- (NSString *)language { return [self wrappedValueForKey:@"language"]; }
+
+#pragma mark -
 #pragma mark CSS
 
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;

@@ -49,6 +49,9 @@
 - (NSDateFormatterStyle)timestampFormat;
 - (void)setTimestampFormat:(NSDateFormatterStyle)format;
 
+#pragma mark Language
+- (NSString *)language;
+
 #pragma mark CSS
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 

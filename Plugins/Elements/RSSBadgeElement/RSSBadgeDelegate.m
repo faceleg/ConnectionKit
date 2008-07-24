@@ -47,8 +47,10 @@
 		// Make the string we want get generated, but we are forcing the string to be in target language.
 		//
 		NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
-		NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
-														 language:[[[self page] master] valueForKey:@"language"]
+		NSString *language = [[[self page] master] language];   OBASSERT(language);
+        
+        NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
+														 language:language
 														 fallback:LocalizedStringInThisBundle(@"Subscribe to RSS feed", 
 																							  @"Prompt to subscribe to the given collection via RSS")];
 		
