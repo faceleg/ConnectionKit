@@ -875,12 +875,20 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (IBAction) movePageletUp:(id)sender;
 {
-	[[self selectedPagelet] moveUp];
+	KTPagelet *pagelet = [self selectedPagelet];
+    if ([pagelet canMoveUp])
+    {
+        [pagelet moveUp];
+    }
 }
 
 - (IBAction) movePageletDown:(id)sender;
 {
-	[[self selectedPagelet] moveDown];
+	KTPagelet *pagelet = [self selectedPagelet];
+    if ([pagelet canMoveDown])
+    {
+        [pagelet moveDown];
+    }
 }
 
 #pragma mark -
