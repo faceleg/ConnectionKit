@@ -50,13 +50,12 @@
 {
 	if ([self valueForKey:@"pathRelativeToSite"])
 	{
-		[NSException raise:NSInvalidArgumentException
-					format:@"-[KTMediaFileUpload pathRelativeToSite] is immutable"];
+		NSLog(@"Changing -pathRelativeToSite from %@ to %@. You should ONLY do this as a result of validation.",
+        [self pathRelativeToSite],
+              path);
 	}
-	else
-	{
-		[self setWrappedValue:path forKey:@"pathRelativeToSite"];
-	}
+	
+    [self setWrappedValue:path forKey:@"pathRelativeToSite"];
 }
 
 - (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error

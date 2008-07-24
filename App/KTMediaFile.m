@@ -147,10 +147,12 @@
 	{
 		// Find a unique path to upload to
 		NSString *sourceFilename = nil;
-		if ([self isKindOfClass:[KTInDocumentMediaFile class]]) {
+		if ([self isKindOfClass:[KTInDocumentMediaFile class]])
+        {
 			sourceFilename = [self valueForKey:@"sourceFilename"];
 		}
-		else {
+		else
+        {
 			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
 		}
 		
@@ -180,7 +182,7 @@
     }
     else if (path != validatedPath)
     {
-        [result setWrappedValue:validatedPath forKey:@"pathRelativeToSite"];    // Want to bypass usual checks
+        [result setValue:validatedPath forKey:@"pathRelativeToSite"];
     }
 	
 	return result;
