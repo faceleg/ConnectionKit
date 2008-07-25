@@ -17,13 +17,13 @@
 [[endif2]]
 [[else]]
 		
-[[if delegate.linkURL]]
-		<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif2]]<img class="imgelement"
+[[if shouldIncludeLink]]
+		<a class="imageLink" href="[[if linkImageToOriginal]][[if preferExternalImage]][[=&externalImageURL]][[else4]][[mediainfo info:path media:image]][[endif4]][[else3]][[=&externalURL]][[endif3]]">[[endif2]]<img class="imgelement"
 			src="[[if image]][[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:path media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
 			alt="[[=&altText]]"
 			width="[[if image]][[mediainfo info:width media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:width media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
 			height="[[if image]][[mediainfo info:height media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:height media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
-		/>[[if delegate.linkURL]]</a>[[endif2]]
+		/>[[if shouldIncludeLink]]</a>[[endif2]]
 		
 [[if shouldIncludeLink]][[if linkImageToOriginal]]
 		<div class="image-controls">

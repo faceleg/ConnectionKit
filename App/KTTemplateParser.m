@@ -356,7 +356,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 					}
 					else
 					{
-						NSString *toAppend = [[self class] stringValueOfObject:element];
+						NSString *toAppend = [element templateParserStringValue];
 						
 						// first replace spaces with an underscore
 						if (NSNotFound != spacesToUnderscoreLocation)
@@ -464,25 +464,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         }
     }
     return [NSString stringWithString:htmlString];    
-}
-
-/*	When adding a keypath [[=key.path]] we want a decent description of non-string objects. Normally -description suffices,
- *	but in some cases we want special behaviour.
- */
-+ (NSString *)stringValueOfObject:(id)object
-{
-	NSString *result;
-	
-	if ([object isKindOfClass:[NSURL class]])
-	{
-		result = [object absoluteString];
-	}
-	else
-	{
-		result = [object description];	// Good general fallback
-	}
-	
-	return result;
 }
 
 /*	These 3 methods are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
@@ -994,3 +975,32 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 }
 
 @end
+
+
+#pragma mark -
+
+
+/*  This little bunch of categories will get us the string value of an object. The default is
+ *  to use -description but there's a few special cases.
+ */
+
+
+@implementation NSObject (KTTemplateParserAdditions)
+
+- (NSString *)templateParserStringValue
+{
+    return [self description];
+}
+
+@end
+
+
+@implementation NSURL (KTTemplateParserAdditions)
+
+- (NSString *)templateParserStringValue
+{
+    return [self absoluteString];
+}
+
+@end
+

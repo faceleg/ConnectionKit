@@ -310,6 +310,8 @@
 {
 	return @"";
 }
+
+
 /*!	ID/Class generator.  The IDs of clickable items are pretty complex, so this builds them and creates
 	the id="foo" class="bar" HTML (with leading space), so put this right after the tag type.
 
@@ -540,52 +542,6 @@
 
 	return result;
 }
-
-/*!	Claim ownership to the particular representation.  Use like this: [[media image.originalSize uniqueID]]
-*/
-
-// 
-///  TO FIX someday maybe.  This is possibly obsolete, but I'm leaving it here in case we decide
-// to go back and require you to call addRepresentationType on a media representation before using
-// it.  In order to get this to work -- it didn't before -- I'd change it from taking 2 args
-// to taking 3, the third being the string constant representing the media type.  Then we could
-// use representationTypeForKey to convert the string to a KTMediaRepresentation, and then call
-// addRepresentationType
-
-/*
-- (NSString *)mediaWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-//	NSArray *rawWords = [inRestOfTag componentsSeparatedByWhitespace];
-//	NSMutableArray *words = [NSMutableArray arrayWithArray:rawWords];
-//	[words removeObject:@""];		// get rid of empty spaces.
-//	int count = [words count];
-//	if (count != 2)
-//	{
-//		NSLog(@"Unable to parse [[media %@]]", inRestOfTag);
-//		return @"";
-//	}
-//	KTMediaRepresentation *mediaRepresentation = nil;
-//	NSString *ownerID = nil;
-//	// Wrap this in an exception handler so we are more forgiving of errors
-//	@try {
-//		mediaRepresentation = [inContext valueForKeyPath:[words objectAtIndex:0]];
-//		ownerID = [inContext valueForKeyPath:[words objectAtIndex:1]];
-//	}
-//	@catch (NSException *exception) {
-//		NSLog(@"mediaWithParameters:... %@", [exception reason]);
-//	}
-//
-//	if ( nil != mediaRepresentation )
-//	{
-//		[[self mediaManager] retainRepresentation:mediaRepresentation];
-//	}
-//	else
-//	{
-//		LOG((@"mediaWithParameters returned nil representation!"));
-//	}
-	return @"";
-}
-*/
 
 #pragma mark media & resources
 

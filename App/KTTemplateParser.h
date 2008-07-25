@@ -57,8 +57,6 @@
 - (NSString *)parseTemplate;
 - (BOOL)prepareToParse;
 
-+ (NSString *)stringValueOfObject:(id)object;
-
 - (NSString *)componentLocalizedString:(NSString *)tag;
 - (NSString *)componentTargetLocalizedString:(NSString *)tag;
 - (NSString *)mainBundleLocalizedString:(NSString *)tag;
@@ -70,6 +68,12 @@
 @end
 
 
-@interface KTTemplateParser (Delegate)
+@interface NSObject (Delegate)
 - (void)HTMLParser:(KTTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 @end
+
+
+@interface NSObject (KTTemplateParserAdditions)
+- (NSString *)templateParserStringValue;
+@end
+
