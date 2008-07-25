@@ -2489,7 +2489,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		theStatus = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
 		
 		if (theStatus != noErr) {
-			NSLog (@"status %d from SecKeychainSearchCreateFromAttributes\n", theStatus);
+			NSLog(@"%@ - SecKeychainSearchCreateFromAttributes - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
 		}
 		
 		OSStatus copyErr = SecKeychainSearchCopyNext (search, &kcItem);
@@ -2510,6 +2510,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			
 			char *pwString = NULL;
 			theStatus = SecKeychainItemCopyContent (kcItem, NULL, &list, &length, (void **)&pwString);		// ASKS FOR UNLOCK
+			
+			if (theStatus != noErr) {
+				NSLog(@"%@ - SecKeychainItemCopyContent - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
+			}
 			
 			if (theStatus == noErr)
 			{
