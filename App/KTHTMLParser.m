@@ -729,28 +729,44 @@
 		return @"";
 	}
 	
-	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
-	NSString *result = [self pathToPage:targetPage];
+	id target = [[self cache] valueForKeyPath:inRestOfTag];
+	NSString *result = [self pathToObject:target];
 	return result;
 }
 
-- (NSString *)pathToPage:(KTAbstractPage *)page
+- (NSString *)pathToObject:(id)anObject
 {
-	NSString *result;
-	
-	switch ([self HTMLGenerationPurpose])
-	{
-		case kGeneratingPreview:
-			result = [page previewPath];
-			break;
-		case kGeneratingQuickLookPreview:
-			result= @"javascript:void(0)";
-			break;
-		default:
-			result = [[page URL] stringRelativeToURL:[[self currentPage] URL]];
-			break;
-	}
-	
+	NSString *result = nil;
+    
+    if ([anObject isKindOfClass:[KTAbstractPage class]])
+    {
+        switch ([self HTMLGenerationPurpose])
+        {
+            case kGeneratingPreview:
+                result = [(KTAbstractPage *)anObject previewPath];
+                break;
+            case kGeneratingQuickLookPreview:
+                result= @"javascript:void(0)";
+                break;
+            default:
+                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[self currentPage] URL]];
+                break;
+        }
+    }
+    else if ([anObject isKindOfClass:[NSURL class]])
+    {
+        switch ([self HTMLGenerationPurpose])
+        {
+            case kGeneratingPreview:
+            case kGeneratingQuickLookPreview:
+                result = [(NSURL *)anObject absoluteString];
+                break;
+            default:
+                result = [(NSURL *)anObject stringRelativeToURL:[[self currentPage] URL]];
+                break;
+        }
+    }
+        
 	return result;
 }
 

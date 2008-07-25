@@ -55,7 +55,7 @@
 - (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile;
 - (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile;
 
-- (NSString *)pathToPage:(KTAbstractPage *)page;
+- (NSString *)pathToObject:(id)anObject;
 
 // Prebuilt templates
 + (NSString *)calloutContainerTemplateHTML;

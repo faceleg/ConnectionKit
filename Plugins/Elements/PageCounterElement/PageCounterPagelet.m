@@ -253,10 +253,10 @@ NSString *PCSampleImageKey = @"sampleImage";
 #pragma mark -
 #pragma mark Resources
 
-- (NSString *)previewResourceDirectory
+- (NSURL *)previewResourceDirectory
 {
 	NSString *path = [[[self bundle] resourcePath] stringByAppendingPathComponent:@"digits"];
-	return [[NSURL fileURLWithPath:path] absoluteString];
+	return [NSURL fileURLWithPath:path];
 }
 
 // called via recursiveComponentPerformSelector
