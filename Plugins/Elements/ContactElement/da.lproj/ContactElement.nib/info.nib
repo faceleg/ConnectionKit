@@ -3,7 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>69 10 356 240 0 0 1920 1178 </string>
+	<string>69 10 356 240 0 0 1680 1028 </string>
+	<key>IBEditorPositions</key>
+	<dict>
+		<key>5</key>
+		<string>707 561 270 279 0 0 1680 1028 </string>
+	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
 	<key>IBLastKnownRelativeProjectPath</key>
@@ -11,7 +16,7 @@
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBSystem Version</key>
-	<string>9D34</string>
+	<string>9E17</string>
 	<key>targetFramework</key>
 	<string>IBCocoaFramework</string>
 </dict>
