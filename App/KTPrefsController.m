@@ -166,10 +166,11 @@
 
 
 	// setup sparkeOption
-	if ([defaults boolForKey:SUEnableAutomaticChecksKey])
+	if ([[[NSApp delegate] sparkleUpdater] automaticallyChecksForUpdates])
 	{
+		
 		NSString *feedType = [defaults objectForKey:@"KSFeedType"];
-
+		
 		if (nil == feedType || [feedType isEqualToString:@""] || [feedType isEqualToString:@"release"])
 		{
 			[self setSparkleOption:kSparkleRelease];
@@ -183,7 +184,7 @@
 	{
 		[self setSparkleOption:kSparkleNone];
 	}
-
+	
 	// Now start observing
 	
 	[self addObserver:self forKeyPath:@"sparkleOption" options:(NSKeyValueObservingOptionNew) context:nil];
@@ -227,25 +228,23 @@
 	else if ([aKeyPath isEqualToString:@"sparkleOption"])
 	{
 		int sparkleOption = [self sparkleOption];
-		
 		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 		NSUserDefaults *defaults = [controller defaults];
-
+		
 		switch (sparkleOption)
 		{
 			case kSparkleNone:
-				[defaults setBool:NO forKey:SUEnableAutomaticChecksKey];
+				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
 				break;
 			case kSparkleRelease:
-				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
+				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
 				[defaults removeObjectForKey:@"KSFeedType"];
 				break;
 			case kSparkleBeta:
-				[defaults setBool:YES forKey:SUEnableAutomaticChecksKey];
+				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
 				[defaults setObject:@"beta" forKey:@"KSFeedType"];
 				break;
 		}
-		[defaults synchronize];
 	}
 	else
 	{

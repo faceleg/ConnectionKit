@@ -270,6 +270,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	id oldContactHomeBase = [defaults  objectForKey:@"contactHomeBase"];
 	if (oldContactHomeBase)
 	{
+		// Copy from Sparkle since he doesn't make this key public; we want to know if has even been set
+		NSString *SUEnableAutomaticChecksKey = @"SUEnableAutomaticChecks";
 		[defaults setObject:oldContactHomeBase forKey:SUEnableAutomaticChecksKey];	// move old contactHomeBase key to our new Sparkle one.
 		[defaults removeObjectForKey:@"contactHomeBase"];
 	}
@@ -541,6 +543,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // TODO: remove this for release.  I just don't want to have this old key around in the user defaults.
 	// However, later on, somebody might want to actually override things.
 #ifndef DEBUG
+	// Copy from Sparkle since he doesn't make this key public; we want to know if has even been set
+	NSString *SUFeedURLKey = @"SUFeedURL";
 	[defaults removeObjectForKey:SUFeedURLKey];	// NOT storing a feed URL now in defaults, generally
 #endif
 	
@@ -1351,8 +1355,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 								nil
 								);
 		
-		// OLD WAY, MAY NOT BE SUPPORTED IN 1.5 ... [[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
-		[[SUUpdater sharedUpdater] checkForUpdatesWithDriver:[[[SUScheduledUpdateDriver alloc] init] autorelease]];
+		[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
 		
 		
 		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
