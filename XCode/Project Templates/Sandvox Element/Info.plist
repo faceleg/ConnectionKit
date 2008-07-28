@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), (c) 2008 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KSHelpAnchor</key>
+	<string>«PROJECTNAMEASXML»</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.5</string>
+	<key>KTMainElement</key>
+	<string></string>
+	<key>KTPageletCanHaveTitle</key>
+	<true/>
+	<key>KTPluginCSSFilesNeeded</key>
+	<array/>
+	<key>KTPluginIconName</key>
+	<string>«PROJECTNAMEASIDENTIFIER»</string>
+	<key>KTPluginInitialProperties</key>
+	<dict/>
+	<key>KTPluginName</key>
+	<string>«PROJECTNAMEASXML»</string>
+	<key>KTPluginNibFile</key>
+	<string>«PROJECTNAMEASIDENTIFIER»</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string>My Google Map</string>
+	<key>KTTemplateName</key>
+	<string>«PROJECTNAMEASIDENTIFIER»Template</string>
+	<key>NSPrincipalClass</key>
+	<string>«PROJECTNAMEASIDENTIFIER»Delegate</string>
+</dict>
+</plist>

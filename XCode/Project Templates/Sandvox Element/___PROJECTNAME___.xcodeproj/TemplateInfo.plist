@@ -1,0 +1,13 @@
+{
+	FilesToMacroExpand = (
+		"«PROJECTNAMEASIDENTIFIER»_Prefix.pch",
+		"en.lproj/InfoPlist.strings",
+		"«PROJECTNAMEASIDENTIFIER»_Prefix.pch",
+		"«PROJECTNAMEASIDENTIFIER».icns",
+		"«PROJECTNAMEASIDENTIFIER»Delegate.h",
+		"«PROJECTNAMEASIDENTIFIER»Delegate.m",
+		"«PROJECTNAMEASIDENTIFIER»Template.html",
+		"Info.plist"
+	);
+	Description = "This project builds a cocoa-based \"element\" plugin for Sandvox.";
+}
