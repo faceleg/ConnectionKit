@@ -136,9 +136,6 @@
 
 - (NSIndexPath *)indexPath;
 
-- (KTPage *)previousPage;
-- (KTPage *)nextPage;
-
 
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(KTCollectionSortType)aSortType;
@@ -165,6 +162,11 @@
 - (NSArray *)pagesInIndex;
 - (void)invalidatePagesInIndexCache;
 
+// Navigation Arrows
+- (NSArray *)navigablePages;
+- (KTPage *)previousPage;
+- (KTPage *)nextPage;
+
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
 - (NSURL *)feedURL;
@@ -182,6 +184,7 @@
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
+
 
 @end
 

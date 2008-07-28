@@ -102,7 +102,7 @@
 	
 	if (!result)
 	{
-		result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+		result = [self navigablePages];
         
         NSNumber *maxPages = [self valueForKey:@"collectionMaxIndexItems"];
         if (maxPages && [maxPages intValue] > 0)
@@ -119,6 +119,48 @@
 - (void)invalidatePagesInIndexCache
 {
 	[self setValue:nil forKey:@"pagesInIndex"];
+}
+
+#pragma mark -
+#pragma mark Navigation Arrows
+
+/*	All those pages which are suitable for linking to with navigation arrows.
+ */
+- (NSArray *)navigablePages;
+{
+	NSArray *result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+	return result;
+}
+
+/*	Both return nil if there isn't a suitable sibling.
+ *	-sortedChildren caching takes care of KVO for these properties.
+ */
+- (KTPage *)previousPage
+{
+	KTPage *result = nil;
+	
+	NSArray *siblings = [[self parent] navigablePages];
+	unsigned index = [siblings indexOfObjectIdenticalTo:self];
+	if (index > 0)
+	{
+		result = [siblings objectAtIndex:index - 1];
+	}
+	
+	return result;
+}
+
+- (KTPage *)nextPage
+{
+	KTPage *result = nil;
+	
+	NSArray *siblings = [[self parent] navigablePages];
+	unsigned index = [siblings indexOfObjectIdenticalTo:self];
+	if (index < ([siblings count] - 1))
+	{
+		result = [siblings objectAtIndex:index + 1];
+	}
+	
+	return result;
 }
 
 #pragma mark -

@@ -486,37 +486,6 @@
 	return result;
 }
 
-/*	Both return nil if there isn't a suitable sibling.
- *	-sortedChildren caching takes care of KVO for these properties.
- */
-- (KTPage *)previousPage
-{
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parent] sortedChildren];
-	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index >= 1)
-	{
-		result = [siblings objectAtIndex:index - 1];
-	}
-	
-	return result;
-}
-
-- (KTPage *)nextPage
-{
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parent] sortedChildren];
-	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index < ([siblings count] - 1))
-	{
-		result = [siblings objectAtIndex:index + 1];
-	}
-	
-	return result;
-}
-
 #pragma mark -
 #pragma mark Should probably be deprecated
 
