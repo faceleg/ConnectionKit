@@ -70,10 +70,16 @@
 	NSString *result = @"";
 	
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
-	if (parameters && [parameters count] == 2)
+	if (parameters && ([parameters count] == 2 || [parameters count] == 3))
 	{
 		KTPage *page = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
 		result = [self summaryForPage:page];
+		
+		// The template can specify that the HTML should be escaped suitably for an RSS feed
+		if ([parameters count] == 3)
+		{
+			result = [result stringByEscapingHTMLEntities];
+		}
 	}
 	
 	return result;
