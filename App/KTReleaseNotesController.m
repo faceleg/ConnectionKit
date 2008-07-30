@@ -18,7 +18,7 @@
 
 - (NSURL *)URLToLoad;
 {
-	NSArray *feedParams = [[NSApp delegate] feedParametersForHostBundle:[NSBundle mainBundle] sendingSystemProfile:NO];
+	NSArray *feedParams = [[NSApp delegate] feedParametersForUpdater:nil sendingSystemProfile:NO];
 		// above is an array of dictionaries with keys of "key" and "value"
 		// we want to convert this into a simple dicationary.
 	
