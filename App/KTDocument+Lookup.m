@@ -282,7 +282,7 @@
 			NSManagedObjectContext *context = [self managedObjectContext];
 			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
 		}
-		else if ([path isEqualToString:@""] || [path hasSuffix:@"/"])
+		else if ([path hasSuffix:@"/"])
 		{
 			result = (KTPage *)[self root];
 		}
