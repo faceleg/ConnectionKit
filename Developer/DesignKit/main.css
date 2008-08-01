@@ -1,0 +1,123 @@
+/* 
+   css Copyright (c) 2005-2006 by Karelia Software. All rights reserved.
+   css released under Creative Commons License 
+        - http://creativecommons.org/licenses/by-sa/2.5/ 
+   All associated graphics belong to their respective owners 
+        and are licensed separately. 
+*/
+
+/* The Basics - see "Minimal Standards" in the CSS Spec */
+
+body {
+	font: 76% serif;
+}
+
+#main {
+	min-height:200px;	/* make sure an empty page looks OK in safari/webkit */
+}
+
+p {
+	max-width:50em;
+}
+
+.clear {
+	clear: both;
+}
+
+.hidden {
+    display:none;
+}
+
+.article-thumbnail img {
+    float:right;
+    margin-left:10px;
+}
+
+img.narrow {
+	display:block;
+    float:right;
+    clear:right;
+    margin-left:10px;
+}
+
+img.wide {
+	display:block;
+	clear:both;
+}
+
+.pagelet {
+	word-wrap: break-word;
+	overflow:hidden;
+}
+
+.photogrid-index h3, .listing-index h3 {
+	font-size:1em;
+	font-weight:normal;
+}
+
+
+/* Sample Minimal Container Setup to accomplish the following basic goals:
+	* Position Sidebar (here, we float it right)
+	* Position each callout (here, we float it left)
+	* Position title, log, and site menu side-by-side
+	* Float the photo grid items to "flow" them
+*/
+	
+/* Body & sidebars:
+	For this test, we use the absolute max of 771 pixels wide.
+	This means a body of 751 + 10*2 Margins.
+	Sidebar is 200  + 10  margin, leaving 541 for main. */
+
+body {
+	width:751px;
+	margin:10px;
+	}
+
+#sidebar {
+	float: right;
+	width: 200px;
+	margin-left:10px;
+	}
+
+.allow-sidebar #main {
+	float: left;
+	width: 541px;
+	}
+
+.no-sidebar #main {
+	width: 751px;
+	}
+
+
+.callout {
+	float: left;
+	width: 200px;
+	margin-right:10px;
+	}
+
+/* "Header" elements side-by-side */
+
+#title {
+	width:541px;
+	float: left;
+	}
+
+#logo {
+	float:right;
+}
+
+#sitemenu-container {
+	width:200px;
+	margin-left:10px;
+	float:right;
+}
+
+/* Photo Grid Flow */
+
+.gridItem {
+	float:left;
+	width:135px;
+	height:170px;
+	overflow:visible;
+}
+
