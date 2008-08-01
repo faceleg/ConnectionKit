@@ -314,7 +314,7 @@ static NSArray *sReservedNames = nil;
 					&& nil != userName
 					&& ![userName isEqualToString:@""]
 					&& ![hostName isEqualToString:@""] 
-					&& !([hostName hasSuffix:@"idisk.mac.com"]) 
+					&& !([hostName hasSuffix:@"idisk.mac.com"] && [protocol isEqualToString:@".Mac"]) // WebDAV to idisk should take this branch and get password
 					&& !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
 				{
 //					password = [KSUtilities keychainPasswordForServer:hostName account:userName];

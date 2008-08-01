@@ -881,7 +881,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		// set the password AFTER the window closes; we may have an error message
 		NSString *pass = [self password];
-		if (remoteHosting && pass && ![pass isEqualToString:@""] && ![[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"])
+		if (remoteHosting && pass && ![pass isEqualToString:@""] 
+			&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"] 
+				 && [[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"]) )
 		{
 			[self setKeychainPassword:pass];		// finally, store the password in the keychain
 		}
