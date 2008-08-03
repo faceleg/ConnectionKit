@@ -30,6 +30,7 @@
 #import "KTPage.h"
 #import "KTParsedKeyPath.h"
 #import "KTStalenessHTMLParser.h"
+#import "KTWebViewTextBlock.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
@@ -265,9 +266,19 @@
 	[[self nonStalePages] removeObjectForKey:page];
 }
 
+#pragma mark -
+#pragma mark Parser Delegate
+
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	[self beginObservingKeyPath:keyPath ofObject:object onNonStalePage:[parser currentPage]];
+}
+
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
+{
+    [self beginObservingKeyPath:[textBlock HTMLSourceKeyPath]
+                       ofObject:[textBlock HTMLSourceObject]
+                 onNonStalePage:[parser currentPage]];
 }
 
 #pragma mark -
