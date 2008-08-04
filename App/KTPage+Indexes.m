@@ -141,7 +141,7 @@
 	
 	NSArray *siblings = [[self parent] navigablePages];
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index > 0)
+	if (index > 0 && index < ([siblings count] - 1))
 	{
 		result = [siblings objectAtIndex:index - 1];
 	}
