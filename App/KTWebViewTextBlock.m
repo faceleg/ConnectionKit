@@ -22,6 +22,7 @@
 
 #import "KTHTMLParser.h"
 #import "KTHTMLParser+Private.h"
+#import "KTStalenessHTMLParser.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
@@ -444,7 +445,7 @@
 - (NSString *)processHTML:(NSString *)result withParser:(KTHTMLParser *)parser
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if ([parser HTMLGenerationPurpose] != kGeneratingPreview)
+	if ([parser HTMLGenerationPurpose] != kGeneratingPreview && ![parser isKindOfClass:[KTStalenessHTMLParser class]])
 	{
 		// Fix page links
 		result = [[self page] fixPageLinksFromString:result managedObjectContext:[[self page] managedObjectContext]];
