@@ -496,6 +496,7 @@
 {
     KTMediaContainer *unscaledFavicon = [self favicon];
     NSDictionary *properties = [[self design] imageScalingPropertiesForUse:@"faviconImage"];
+    OBASSERT(properties);
     
     KTMediaContainer *result = [unscaledFavicon scaledImageWithProperties:properties];
     return result;
