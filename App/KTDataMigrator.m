@@ -37,7 +37,7 @@
 
 
 
-@interface KTDataMigrator ()
+@interface KTDataMigrator ( Private )
 
 // Accessors
 - (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;

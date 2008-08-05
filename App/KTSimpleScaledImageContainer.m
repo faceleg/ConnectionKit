@@ -26,7 +26,9 @@
 
 - (NSDictionary *)latestProperties
 {
-	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObject:[self scalingBehavior] forKey:@"scalingBehavior"];
+	KTImageScalingSettings *scalingBehavior = [self scalingBehavior];
+	OBASSERT(nil != scalingBehavior);
+	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObject:scalingBehavior forKey:@"scalingBehavior"];
 	
 	id aValue = [self valueForKey:@"compression"];
 	if (aValue) {
