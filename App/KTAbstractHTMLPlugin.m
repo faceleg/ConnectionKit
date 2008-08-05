@@ -45,7 +45,7 @@
 			filename = [[self bundle] pathForImageResource:filename];
 		}
 		
-#TODO: We should not be referncing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
+// TODO: We should not be referncing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
 		
 		// Create the icon, falling back to the broken image if necessary
 		myIcon = [[NSImage alloc] initByReferencingFile:filename];
