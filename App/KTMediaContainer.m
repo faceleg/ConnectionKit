@@ -307,7 +307,11 @@
  */
 - (KTSimpleScaledImageContainer *)_imageWithProperties:(NSDictionary *)properties
 {
-	// Create the media container first
+	OBPRECONDITION(properties);
+    OBPRECONDITION([properties objectForKey:@"scalingBehavior"]);
+    
+    
+    // Create the media container first
 	KTSimpleScaledImageContainer *result =
 		[NSEntityDescription insertNewObjectForEntityForName:@"SimpleScaledImageContainer"
 									  inManagedObjectContext:[self managedObjectContext]];

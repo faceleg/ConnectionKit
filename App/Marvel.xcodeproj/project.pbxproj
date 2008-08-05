@@ -3053,6 +3053,7 @@
 		272EEA6A0DDA56030012005E /* General */ = {
 			isa = PBXGroup;
 			children = (
+				27CAB4720D36E12400F90A1B /* Media.xcdatamodel */,
 				27DEC7900DDC3EB500D795F3 /* Media System.graffle */,
 				27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */,
 				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
@@ -4197,7 +4198,6 @@
 			children = (
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */,
-				27CAB4720D36E12400F90A1B /* Media.xcdatamodel */,
 			);
 			name = Models;
 			sourceTree = "<group>";
