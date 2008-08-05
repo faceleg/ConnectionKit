@@ -18,7 +18,16 @@
 [[else]]
 		
 [[if shouldIncludeLink]]
-		<a class="imageLink" href="[[if linkImageToOriginal]][[if preferExternalImage]][[if externalImageURL]][[=&externalImageURL]][[endif5]][[else4]][[mediainfo info:path media:image]][[endif4]][[else3]][[=&externalURL]][[endif3]]">[[endif2]]<img class="imgelement"
+[[if linkImageToOriginal]]
+[[if preferExternalImage]]
+		[[if externalImageURL]]<a class="imageLink" href="[[=&externalImageURL]]">[[endif5]]
+[[else4]]
+		<a class="imageLink" href="[[mediainfo info:path media:image]]">
+[[endif4]]
+[[else3]]
+		[[if externalURL]]<a class="imageLink" href="[[=&externalURL]]">[[endif4]]
+[[endif3]]
+[[endif2]]<img class="imgelement"
 			src="[[if image]][[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:path media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
 			alt="[[=&altText]]"
 			width="[[if image]][[mediainfo info:width media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:width media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
