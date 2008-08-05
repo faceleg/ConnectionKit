@@ -2474,111 +2474,159 @@ static NSCharacterSet *sIllegalSubfolderSet;
 - (BOOL)getDotMacAccountName:(NSString **)account password:(NSString **)password
 {
 	BOOL result = NO;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
-	*account = [[iToolsMember copy] autorelease];	// a guess, but really we should get it from keychain
-	if (*account && nil != password)		// only continue if we actually have an account, and if we have a place to store the password.
+	
+	NSString *accountName = [[NSUserDefaults standardUserDefaults] objectForKey:@"iToolsMember"];
+	if (accountName)
 	{
+		SecKeychainItemRef item = nil;
 		OSStatus theStatus = noErr;
+		char *buffer;
+		UInt32 passwordLen;
 		
-		SecKeychainSearchRef search;
-		SecKeychainItemRef kcItem;
-		SecKeychainAttributeList list;
-		SecKeychainAttribute attributes[4];
-		int i = 0;
+		char *utf8 = (char *)[accountName UTF8String];
+		theStatus = SecKeychainFindGenericPassword(NULL,
+												   6,
+												   "iTools",
+												   strlen(utf8),
+												   utf8,
+												   &passwordLen,
+												   (void *)&buffer,
+												   &item);
 		
-		attributes[i].tag = kSecAccountItemAttr;
-		attributes[i].data = (void *)[iToolsMember UTF8String];
-		attributes[i].length = [iToolsMember length];
-		i++;
-		
-		NSString *service = @"iTools";
-		attributes[i].tag = kSecServiceItemAttr;
-		attributes[i].data = (void *)[service UTF8String];
-		attributes[i].length = [service length];
-		i++;
-		
-		list.count = i;
-		list.attr = attributes;
-		
-		theStatus = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
-		
-		if (theStatus != noErr) {
-			NSLog(@"%@ - SecKeychainSearchCreateFromAttributes - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
-		}
-		
-		OSStatus copyErr = SecKeychainSearchCopyNext (search, &kcItem);
-		if (copyErr == noErr)
+		if (noErr == theStatus)
 		{
-			CFRelease (search);
-
-			
-			UInt32 length;
-			
-			attributes[0].tag = kSecAccountItemAttr;
-			attributes[1].tag = kSecDescriptionItemAttr;
-			attributes[2].tag = kSecLabelItemAttr;
-			attributes[3].tag = kSecModDateItemAttr;
-			
-			list.count = 4;
-			list.attr = attributes;
-			
-			char *pwString = NULL;
-			theStatus = SecKeychainItemCopyContent (kcItem, NULL, &list, &length, (void **)&pwString);		// ASKS FOR UNLOCK
-			
-			if (theStatus != noErr) {
-				NSLog(@"%@ - SecKeychainItemCopyContent - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
-			}
-			
-			if (theStatus == noErr)
+			if (passwordLen > 0)
 			{
-				if (pwString != NULL) {
-					
-					//printf ("passwordBuffer = %s\n", passwordBuffer);
-					*password = [[[NSString alloc] initWithBytes:pwString
-													 length:length
-												   encoding:NSUTF8StringEncoding] autorelease];
-				}
-				
-				SecKeychainItemFreeContent (&list, pwString);
+				*password = [[[NSString alloc] initWithBytes:buffer length:passwordLen encoding:[NSString defaultCStringEncoding]] autorelease];
+			}
+			else
+			{
+				*password = @""; // if we have noErr but also no length, password is empty
 			}
 			
-			// Get the actual account name now
-			if (nil != *password)
-			{
-				SecItemAttr itemAttr = kSecAccountItemAttr;
-				UInt32 attrFormat = kSecFormatUnknown;
-			  
-				SecKeychainAttributeInfo attrInfo;
-				attrInfo.count = 1;
-				attrInfo.tag = &itemAttr;
-				attrInfo.format = &attrFormat;
-				
-				SecKeychainAttributeList *attrList = NULL;
-				
-				(void) SecKeychainItemCopyAttributesAndData(kcItem,
-															&attrInfo,
-															NULL,
-															&attrList,
-															NULL,
-															NULL);
-				
-				
-				if (attrList && attrList->count)
-				{			
-					*account = [[[NSString alloc] initWithBytes:attrList->attr[0].data
-														 length:attrList->attr[0].length
-													   encoding:NSUTF8StringEncoding] autorelease];
-					result = (nil != *account);
-				}
-				
-				SecKeychainItemFreeAttributesAndData(attrList, NULL);
-			}
-			CFRelease(kcItem);
+			// release buffer allocated by SecKeychainFindGenericPassword
+			theStatus = SecKeychainItemFreeContent(NULL, buffer);
+			
+			*account = accountName;
+			result = YES;
+		}
+		else
+		{
+			NSLog(@"%@ - SecKeychainFindGenericPassword - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
 		}
 	}
+	
 	return result;
 }
+
+//- (BOOL)getDotMacAccountName:(NSString **)account password:(NSString **)password
+//{
+//	BOOL result = NO;
+//	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//	NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
+//	*account = [[iToolsMember copy] autorelease];	// a guess, but really we should get it from keychain
+//	if (*account && nil != password)		// only continue if we actually have an account, and if we have a place to store the password.
+//	{
+//		OSStatus theStatus = noErr;
+//		
+//		SecKeychainSearchRef search;
+//		SecKeychainItemRef kcItem;
+//		SecKeychainAttributeList list;
+//		SecKeychainAttribute attributes[4];
+//		int i = 0;
+//		
+//		attributes[i].tag = kSecAccountItemAttr;
+//		attributes[i].data = (void *)[iToolsMember UTF8String];
+//		attributes[i].length = [iToolsMember length];
+//		i++;
+//		
+//		NSString *service = @"iTools";
+//		attributes[i].tag = kSecServiceItemAttr;
+//		attributes[i].data = (void *)[service UTF8String];
+//		attributes[i].length = [service length];
+//		i++;
+//		
+//		list.count = i;
+//		list.attr = attributes;
+//		
+//		theStatus = SecKeychainSearchCreateFromAttributes(NULL, kSecGenericPasswordItemClass, &list, &search);
+//		
+//		if (theStatus != noErr) {
+//			NSLog(@"%@ - SecKeychainSearchCreateFromAttributes - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
+//		}
+//		
+//		OSStatus copyErr = SecKeychainSearchCopyNext (search, &kcItem);
+//		if (copyErr == noErr)
+//		{
+//			CFRelease (search);
+//
+//			
+//			UInt32 length;
+//			
+//			attributes[0].tag = kSecAccountItemAttr;
+//			attributes[1].tag = kSecDescriptionItemAttr;
+//			attributes[2].tag = kSecLabelItemAttr;
+//			attributes[3].tag = kSecModDateItemAttr;
+//			
+//			list.count = 4;
+//			list.attr = attributes;
+//			
+//			char *pwString = NULL;
+//			theStatus = SecKeychainItemCopyContent (kcItem, NULL, &list, &length, (void **)&pwString);		// ASKS FOR UNLOCK
+//			
+//			if (theStatus != noErr) {
+//				NSLog(@"%@ - SecKeychainItemCopyContent - %s", NSStringFromSelector(_cmd), GetMacOSStatusErrorString(theStatus));
+//			}
+//			
+//			if (theStatus == noErr)
+//			{
+//				if (pwString != NULL) {
+//					
+//					//printf ("passwordBuffer = %s\n", passwordBuffer);
+//					*password = [[[NSString alloc] initWithBytes:pwString
+//													 length:length
+//												   encoding:NSUTF8StringEncoding] autorelease];
+//				}
+//				
+//				SecKeychainItemFreeContent (&list, pwString);
+//			}
+//			
+//			// Get the actual account name now
+//			if (nil != *password)
+//			{
+//				SecItemAttr itemAttr = kSecAccountItemAttr;
+//				UInt32 attrFormat = kSecFormatUnknown;
+//			  
+//				SecKeychainAttributeInfo attrInfo;
+//				attrInfo.count = 1;
+//				attrInfo.tag = &itemAttr;
+//				attrInfo.format = &attrFormat;
+//				
+//				SecKeychainAttributeList *attrList = NULL;
+//				
+//				(void) SecKeychainItemCopyAttributesAndData(kcItem,
+//															&attrInfo,
+//															NULL,
+//															&attrList,
+//															NULL,
+//															NULL);
+//				
+//				
+//				if (attrList && attrList->count)
+//				{			
+//					*account = [[[NSString alloc] initWithBytes:attrList->attr[0].data
+//														 length:attrList->attr[0].length
+//													   encoding:NSUTF8StringEncoding] autorelease];
+//					result = (nil != *account);
+//				}
+//				
+//				SecKeychainItemFreeAttributesAndData(attrList, NULL);
+//			}
+//			CFRelease(kcItem);
+//		}
+//	}
+//	return result;
+//}
 
 /*!	Update the UI to get current value for dot mac member.  Sets username variable.  Only called periodically when we're viewing the dot-mac panel.
 */
