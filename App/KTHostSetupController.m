@@ -2471,6 +2471,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	return successCreating;
 }
 
+#pragma mark TODO getDotMacAccountName:password: should be a factory method in ConnectionKit
+
 - (BOOL)getDotMacAccountName:(NSString **)account password:(NSString **)password
 {
 	BOOL result = NO;
