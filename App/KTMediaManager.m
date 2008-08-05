@@ -82,7 +82,7 @@ NSString *KTMediaLogDomain = @"Media";
 
 - (KTDocument *)document { return myDocument; }
 
-/*	The Media Manager has its own prviate managed object context
+/*	The Media Manager has its own private managed object context
  */
 - (NSManagedObjectContext *)managedObjectContext { return myMOC; }
 

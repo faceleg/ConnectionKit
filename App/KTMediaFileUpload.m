@@ -74,7 +74,8 @@
                                        [legalizedFileName stringByAppendingPathExtension:
                                         [path pathExtension]]];
             
-            *value = legalizedPath;
+            NSString *uniquePath = [[self valueForKey:@"file"] uniqueUploadPath:legalizedPath];
+            *value = uniquePath;
         }
     }
     

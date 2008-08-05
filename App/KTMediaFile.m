@@ -238,7 +238,8 @@
 {
 	NSString *result = preferredPath;
 	
-	NSString *basePath = [preferredPath stringByDeletingPathExtension];
+    NSString *parentDirectory = [preferredPath stringByDeletingLastPathComponent];
+	NSString *baseFileName = [[preferredPath lastPathComponent] stringByDeletingPathExtension];
 	NSString *extension = [preferredPath pathExtension];
 	unsigned count = 1;
 	
@@ -252,10 +253,16 @@
 	while ([[moc executeFetchRequest:fetchRequest error:NULL] count] > 0)
 	{
 		count++;
-		NSString *aPath = [NSString stringWithFormat:@"%@-%u", basePath, count];
-		OBASSERT(extension);
+        NSString *countString = [NSString stringWithFormat:@"-%u", count];
+		
+        unsigned maxFileNameLength = 27 - [countString length]; // Some servers can't handle long filenames
+        NSString *truncatedFileName = [baseFileName stringByTrimmingToLength:maxFileNameLength];
+        NSString *aPath = [parentDirectory stringByAppendingPathComponent:[truncatedFileName stringByAppendingString:countString]];
+		
+        OBASSERT(extension);
 		result = [aPath stringByAppendingPathExtension:extension];
-		[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"pathRelativeToSite == %@", result]];
+		
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"pathRelativeToSite == %@", result]];
 	}
 	
 	// Tidy up

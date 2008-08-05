@@ -24,6 +24,7 @@
 - (NSString *)filename;
 - (NSString *)filenameExtension;
 
+
 // Paths
 - (NSString *)currentPath;	// Where the file is currently being stored.
 - (NSString *)_currentPath;
@@ -31,6 +32,8 @@
 
 - (KTMediaFileUpload *)defaultUpload;
 - (KTMediaFileUpload *)uploadForPath:(NSString *)path;
+- (NSString *)uniqueUploadPath:(NSString *)preferredPath;
+
 
 // Should be deprecated
 + (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize;
@@ -44,6 +47,7 @@
 - (NSSize)imageSizeToFitSize:(NSSize)desiredSize;
 - (float)imageScaleFactorToFitWidth:(float)width;
 - (float)imageScaleFactorToFitHeight:(float)height;
+
 
 // Error Recovery
 - (NSString *)bestExistingThumbnail;
