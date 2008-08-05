@@ -411,12 +411,20 @@ static NSArray *sReservedNames = nil;
 {
 	OFF((@"uploadFromFile: %@ toFile: %@", localPath, remotePath));
 
-	if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
+	if ( [[NSFileManager defaultManager] fileExistsAtPath:localPath] )
 	{
-		[myController deleteFile:remotePath];
+		if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
+		{
+			[myController deleteFile:remotePath];
+		}
+		
+		[myController uploadFile:localPath toFile:remotePath];
 	}
-	
-	[myController uploadFile:localPath toFile:remotePath];
+	else
+	{
+#pragma mark TODO ConnectionKit, or delegate, should present an NSError rather than throwing an exception if the path doesn't exist
+		NSLog(@"error: could not upload %@ -- file doesn't exist!", localPath);
+	}
 }
 
 /*	Basically does the same as asking CK to upload the data, but also deletes existing files first if the Host Setup says to.
@@ -424,6 +432,7 @@ static NSArray *sReservedNames = nil;
 - (void)uploadFromData:(NSData *)data toFile:(NSString *)remotePath;
 {
 	OFF((@"uploadFromData:toFile: %@", remotePath));
+//  commenting this out, since uploadFile:toFile: will now handle it
 //	if ([[[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.deletePagesWhenPublishing"] boolValue])
 //	{
 //		[myController deleteFile:remotePath];
