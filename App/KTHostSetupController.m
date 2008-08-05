@@ -1417,36 +1417,49 @@ static NSCharacterSet *sIllegalSubfolderSet;
 #pragma mark -
 #pragma mark Constant Accessors
 
+//
+//
+// TODO: when we reorganize the HSA -- right now we are binding to these to get the images.  Instead, we should
+// have some methods to return the NSImage, and bind to that.  That way, we can get the proper
+// icon images (see our -[NSImage imageFromOSType:] and not be returning paths, which is not really
+// the supported way to do this.
+//
+
+
 - (NSString *) serverImagePath
 {
-	return [[NSBundle mainBundle] pathForImageResource:@"GenericFileServerIcon.icns"];
+	// We have our own copy of the "globe in a cube" becuase this changed to a hard disk kind of icon in Leopard.  Not what we wanted.
+	// I think we just have to have our own copy of this.
+	
+	return [[NSBundle mainBundle] pathForImageResource:@"GenericFileServerIcon.icns"];	// kGenericFileServerIcon
 }
 
 - (NSString *) sharingImagePath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/PublicFolderIcon.icns";
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/PublicFolderIcon.icns";	// kPublicFolderIcon
 }
 - (NSString *) iDiskImagePath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes MobileMe
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes MobileMe === ????
 }
 - (NSString *) iMacImagePath
 {
+	// INSTEAD, WE SHOULD BE USING SOME OF THE NEW SERVICES IN LEOPARD (AND A FALLBACK IN TIGER) FOR *THIS* COMPUTER.
 	return @"/System/Library/PrivateFrameworks/SyncServicesUI.framework/Versions/A/Resources/Computer.tif";
 }
 - (NSString *) homeImagePath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/HomeFolderIcon.icns";
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/HomeFolderIcon.icns";	// kToolbarHomeIcon
 }
 
 - (NSString *) folderPath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns";
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns";	// kGenericFolderIcon
 }
 
 - (NSString *) cautionPath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns";
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns";	// kAlertCautionIcon
 }
 
 #pragma mark -
@@ -3057,7 +3070,17 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 	else if ([keyPath isEqualToString:@"dotMacPersonalDomain"])
 	{
-		[self setValue:[NSString stringWithFormat:@"http://www.%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
+		NSString *dotMacPersonalDomain = [self valueForKey:@"dotMacPersonalDomain"];
+		NSString *domain = nil;
+		if (dotMacPersonalDomain)
+		{
+			domain = [NSString stringWithFormat:@"http://www.%@/",dotMacPersonalDomain];
+		}
+		else
+		{
+			domain = @"http://";
+		}
+		[self setValue:domain forKey:@"stemURL"];		// to show that nothing has been entered yet
 	}
 	else if ([keyPath isEqualToString:@"dotMacDomainStyle"])
 	{
@@ -3067,8 +3090,19 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			case PERSONAL_DOTMAC_DOMAIN:
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
-				[self setValue:[NSString stringWithFormat:@"http://www.%@/",[self valueForKey:@"dotMacPersonalDomain"]]  forKey:@"stemURL"];
-				[self setValue:[self valueForKey:@"dotMacPersonalDomain"] forKey:@"domainName"];
+
+				NSString *dotMacPersonalDomain = [self valueForKey:@"dotMacPersonalDomain"];
+				NSString *domain = nil;
+				if (dotMacPersonalDomain)
+				{
+					domain = [NSString stringWithFormat:@"http://www.%@/",dotMacPersonalDomain];
+				}
+				else
+				{
+					domain = @"http://";
+				}
+				[self setValue:domain forKey:@"stemURL"];
+				[self setValue:dotMacPersonalDomain forKey:@"domainName"];
 				break;
 			case WEB_ME_COM:
 				[self setValue:@"/Web/Sites/" forKey:@"docRoot"];
