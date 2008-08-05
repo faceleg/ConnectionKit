@@ -72,4 +72,11 @@
     return @"";
 }
 
+/*  This information has no bearing on staleness and can be very slow to gather
+ */
+- (NSString *)endbodyWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+   return @""; 
+}
+
 @end
