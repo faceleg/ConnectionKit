@@ -1376,6 +1376,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	BOOL result = YES;
 	
 	if ([parserClassname isEqualToString:@"iMBGarageBandParser"]) result = NO;		// can't process garage band files
+	if ([parserClassname isEqualToString:@"LHDeliciosParser"]) result = NO;	// old code; causes crashes!
 	
 	LOG((@"iMediaBrowser: willUseMediaParser:%@ forMediaType:%@ -> %d", parserClassname, media, result));
 	return result;
