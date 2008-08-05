@@ -210,56 +210,65 @@
  */
 + (NSImage *)maskedIconOfFile:(NSString *)path size:(float)iconSize
 {
-	NSRect iconRect = NSMakeRect(0.0, 0.0, iconSize, iconSize);
-	NSImage *result = [[NSImage alloc] initWithSize:iconRect.size];
-	[result setCachedSeparately:YES];
-	[result lockFocus];
-	
-	// Draw the mask
-	[[self customPageIconMaskImage] drawInRect:iconRect fromRect:NSZeroRect
-									 operation:NSCompositeSourceOver fraction:1.0];
-	
-	
-	// Fetch the thumbnail dimensions
+	NSImage *result = nil;
+    
+    
+    // Fetch the thumbnail dimensions. If this fails, there's no point trying to make an icon
 	CGImageSourceRef iconSource = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:path], NULL);
-	NSDictionary *properties = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(iconSource, 0, NULL);
-	float width = [properties floatForKey:(NSString *)kCGImagePropertyPixelWidth];
-	float height = [properties floatForKey:(NSString *)kCGImagePropertyPixelHeight];
-	CFRelease(iconSource);
-	[properties release];
-	
-	
-	// Figure out the max size for the thumbnail that gives a cropToFit behavior
-	float largeDimension;	float smallDimension;
-	if (height > width)
-	{
-		largeDimension = height;	smallDimension = width;
-	}
-	else
-	{
-		largeDimension = width;		smallDimension = height;
-	}
-	float maxSize = ceilf(largeDimension * (iconSize / smallDimension));
-	
-	
-	// Draw the thumbnail
-	NSImage *thumbnail = [[NSImage alloc] initWithContentsOfFile:path ofMaximumSize:maxSize];
-	float thumbOriginX = 0.5 * ([thumbnail size].width - iconSize);
-	float thumbOriginY = 0.5 * ([thumbnail size].height - iconSize);
-	NSRect thumbSourceRect = NSMakeRect(thumbOriginX, thumbOriginY, iconSize, iconSize);
-	[thumbnail drawInRect:iconRect fromRect:thumbSourceRect operation:NSCompositeSourceAtop fraction:1.0];
-	[thumbnail release];
-	
-	
-	
-	// Draw the cover image
-	[[self customPageIconCoverImage] drawInRect:iconRect fromRect:NSZeroRect
-									  operation:NSCompositeSourceOver fraction:1.0];
-	
-	
-	// Tidy up
-	[result unlockFocus];
-	return [result autorelease];
+    if (iconSource)
+    {
+        NSDictionary *properties = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(iconSource, 0, NULL);
+        float width = [properties floatForKey:(NSString *)kCGImagePropertyPixelWidth];
+        float height = [properties floatForKey:(NSString *)kCGImagePropertyPixelHeight];
+        CFRelease(iconSource);
+        [properties release];
+        
+        
+        // Create the "canvas"
+        NSRect iconRect = NSMakeRect(0.0, 0.0, iconSize, iconSize);
+        result = [[[NSImage alloc] initWithSize:iconRect.size] autorelease];
+        [result setCachedSeparately:YES];
+        [result lockFocus];
+        
+        
+        // Draw the mask
+        [[self customPageIconMaskImage] drawInRect:iconRect fromRect:NSZeroRect
+                                         operation:NSCompositeSourceOver fraction:1.0];
+        
+        
+        // Figure out the max size for the thumbnail that gives a cropToFit behavior
+        float largeDimension;	float smallDimension;
+        if (height > width)
+        {
+            largeDimension = height;	smallDimension = width;
+        }
+        else
+        {
+            largeDimension = width;		smallDimension = height;
+        }
+        float maxSize = ceilf(largeDimension * (iconSize / smallDimension));
+        
+        
+        // Draw the thumbnail
+        NSImage *thumbnail = [[NSImage alloc] initWithContentsOfFile:path ofMaximumSize:maxSize];
+        float thumbOriginX = 0.5 * ([thumbnail size].width - iconSize);
+        float thumbOriginY = 0.5 * ([thumbnail size].height - iconSize);
+        NSRect thumbSourceRect = NSMakeRect(thumbOriginX, thumbOriginY, iconSize, iconSize);
+        [thumbnail drawInRect:iconRect fromRect:thumbSourceRect operation:NSCompositeSourceAtop fraction:1.0];
+        [thumbnail release];
+        
+        
+        
+        // Draw the cover image
+        [[self customPageIconCoverImage] drawInRect:iconRect fromRect:NSZeroRect
+                                          operation:NSCompositeSourceOver fraction:1.0];
+        
+        
+        // Tidy up
+        [result unlockFocus];
+    }
+    
+    return result;
 }
 
 + (NSImage *)customPageIconMaskImage
