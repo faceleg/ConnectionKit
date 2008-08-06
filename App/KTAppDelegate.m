@@ -519,6 +519,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		}
 	}
 
+	// For beta testers, throw an exception.
+#ifdef OMNI_FORCE_ASSERTIONS
+	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
+	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
+	
+#else
+	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
+	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
+#endif
+	
 		// Set these for the next run -- it's probably too late now; the assertion thing may have already been set
 #ifdef DEBUG
 	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
@@ -530,15 +540,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif
 	
-	// For beta testers, throw an exception.
-#ifdef OMNI_FORCE_ASSERTIONS
-	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
-
-#else
-	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
-#endif
 	
 // TODO: remove this for release.  I just don't want to have this old key around in the user defaults.
 	// However, later on, somebody might want to actually override things.
@@ -1407,6 +1408,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	// apparently pool may not be in place yet?
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
+
+
+	#warning DEBUG
+	NSLog(@"NSApp = %@", [NSApp class]);
 	
 	// Force imedia browser to load just so we can get RBSplitView loaded
 	[iMediaBrowser class];
