@@ -315,14 +315,7 @@
 	KTMediaFile *mediaFile = [image file];
 	if (mediaFile)
 	{			
-		NSNumber *width = [mediaFile valueForKey:@"width"];
-        NSNumber *height = [mediaFile valueForKey:@"height"];
-        if (!width || !height ||
-            ![mediaFile validateValue:&width forKey:@"width" error:NULL] ||
-            ![mediaFile validateValue:&height forKey:@"height" error:NULL])
-        {
-            [mediaFile cacheImageDimensions];
-        }
+		[mediaFile cacheImageDimensionsIfNeeded];
         
         result = [NSString stringWithFormat:
 			@"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",

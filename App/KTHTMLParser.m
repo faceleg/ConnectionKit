@@ -645,26 +645,18 @@
 
 - (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile
 {
-    NSNumber *width = [mediaFile valueForKey:@"width"];
-    if (!width)
-    {
-        [mediaFile cacheImageDimensions];
-        width = [mediaFile valueForKey:@"width"];
-    }
+    [mediaFile cacheImageDimensionsIfNeeded];
     
+    NSNumber *width = [mediaFile valueForKey:@"width"];
     NSString *result = (width) ? [width stringValue] : @"";
     return result;
 }
 
 - (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile
 {
-    NSNumber *height = [mediaFile valueForKey:@"height"];
-    if (!height)
-    {
-        [mediaFile cacheImageDimensions];
-        height = [mediaFile valueForKey:@"height"];
-    }
+    [mediaFile cacheImageDimensionsIfNeeded];
     
+    NSNumber *height = [mediaFile valueForKey:@"height"];
     NSString *result = (height) ? [height stringValue] : @"";
     return result;
 }

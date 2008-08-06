@@ -355,6 +355,22 @@
     [self setValue:imageHeight forKey:@"height"];
 }
 
+- (void)cacheImageDimensionsIfNeeded
+{
+    NSNumber *width = [self valueForKey:@"width"];
+    NSNumber *height = [self valueForKey:@"height"];
+    
+    if (!width ||
+        !height ||
+        ![self validateValue:&width forKey:@"width" error:NULL] ||
+        ![self validateValue:&height forKey:@"height" error:NULL] ||
+        ([width intValue] == 128 && [height intValue] == 128))
+    {
+        // TODO: The last of these conditions is to catch a earlier beta error. Remove it before final release.
+        [self cacheImageDimensions];
+    }
+}
+
 - (float)imageScaleFactorToFitSize:(NSSize)desiredSize;
 {
 	return [KTInDocumentMediaFile scaleFactorOfSize:[self dimensions] toFitSize:desiredSize];

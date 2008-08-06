@@ -64,9 +64,9 @@ NSString *KTMediaLogDomain = @"Media";
 	[mediaPSC setMediaManager:self];
 	[myMOC setPersistentStoreCoordinator:mediaPSC];
 	[mediaPSC release];
-	
-	
-	return self;
+    
+    
+    return self;
 }
 
 - (void)dealloc

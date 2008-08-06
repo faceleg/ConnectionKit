@@ -416,12 +416,8 @@
     if (behavior != KTStretchToSize)
     {
         // But first make sure that we have valid image dimension informatiom
-        NSNumber *width = [self valueForKey:@"width"];
-        NSNumber *height = [self valueForKey:@"height"];
-        if (!width || !height || ![self validateValue:&width forKey:@"width" error:NULL] || ![self validateValue:&height forKey:@"height" error:NULL])
-        {
-            [self cacheImageDimensions];
-        }
+        [self cacheImageDimensionsIfNeeded];
+
         
         
         NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];

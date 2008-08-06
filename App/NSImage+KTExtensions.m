@@ -76,7 +76,7 @@
 	
 	NSRect sourceRect = [settings sourceRectForImageOfSize:[self size]];
 	
-	[self drawInRect:scaledRect fromRect:sourceRect operation:NSCompositeSourceOver fraction:1.0];
+	[self drawInRect:scaledRect fromRect:sourceRect operation:NSCompositeCopy fraction:1.0];
 	
 	
 	// Tidy up
