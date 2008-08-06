@@ -1410,8 +1410,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
 
 
-	#warning DEBUG
-	NSLog(@"NSApp = %@", [NSApp class]);
+	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
 	
 	// Force imedia browser to load just so we can get RBSplitView loaded
 	[iMediaBrowser class];
