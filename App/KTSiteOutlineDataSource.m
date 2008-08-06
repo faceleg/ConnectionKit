@@ -490,9 +490,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[cell setImage:pageIcon];
 		[cell setMaxImageSize:([[self document] displaySmallPageIcons] ? 16.0 : 32.0)];
 		
-		// Staleness
-		BOOL isPageStale = [item boolForKey:@"isStale"];
-		[cell setStaleness:isPageStale ? kStalenessPage : kNotStale];
+		// Staleness    /// 1.5 is now ignoring this key and using digest-based staleness
+		//BOOL isPageStale = [item boolForKey:@"isStale"];
+		//[cell setStaleness:isPageStale ? kStalenessPage : kNotStale];
 		
 		// Draft
 		BOOL isDraft = [item pageOrParentDraft];
