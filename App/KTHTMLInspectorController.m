@@ -140,7 +140,7 @@ initial syntax coloring.
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-	NSString *result = displayName;
+	NSString *result = nil;
 	if (nil == myTitle || [myTitle isEqualToString:@""])
 	{
 		result =[displayName stringByAppendingFormat:@" %C HTML", 0x2014];

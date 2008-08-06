@@ -678,10 +678,14 @@
 	else
     {
         // Figure out the correct page
+		
+#warning (clang): Value stored to 'page' during its initialization is never read
         KTAbstractPage *page = [self currentPage];
         if ([params count] > 1)
         {
+#warning (clang) Value stored to 'page' is never read
             page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
+			
         }
 // FIXME: We should either find the resource path relative to this page, or remove the option to do so.
         

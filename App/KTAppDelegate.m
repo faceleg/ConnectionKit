@@ -159,7 +159,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (NSString *)licenseFileName
 {
-	return [[NSString stringWithFormat:@".%@.%@", @"WebKit", @"UTF-16"] retain];
+	return [NSString stringWithFormat:@".%@.%@", @"WebKit", @"UTF-16"];
 
 }
 

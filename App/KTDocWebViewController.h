@@ -49,10 +49,10 @@ typedef enum {
 	
 	
 	// Refreshing
-	KTParsedWebViewComponent	*myMainWebViewComponent;
+// UNUSED:	KTParsedWebViewComponent	*myMainWebViewComponent;
 	NSMutableDictionary			*myWebViewComponents;
 	
-	CFRunLoopObserverRef		myRunLoopObserver;
+// UNUSED:		CFRunLoopObserverRef		myRunLoopObserver;
 	
 	NSCountedSet				*mySuspendedKeyPaths;
 	NSMutableSet				*mySuspendedKeyPathsAwaitingRefresh;
