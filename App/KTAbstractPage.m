@@ -31,8 +31,6 @@
 
 @implementation KTAbstractPage
 
-+ (NSString *)extensiblePropertiesDataKey { return nil; }
-
 + (NSString *)entityName { return @"AbstractPage"; }
 
 /*	Picks out all the pages correspoding to self's entity
@@ -94,21 +92,6 @@
 }
 
 - (KTDocumentInfo *)documentInfo { return [self wrappedValueForKey:@"documentInfo"]; }
-
-#pragma mark -
-#pragma mark Simple Accessors
-
-- (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
-
-- (void)setIsStale:(BOOL)stale
-{
-	BOOL valueWillChange = (stale != [self boolForKey:@"isStale"]);
-	
-	if (valueWillChange)
-	{
-		[self setWrappedBool:stale forKey:@"isStale"];
-	}
-}
 
 #pragma mark -
 #pragma mark Title
@@ -243,6 +226,32 @@
 	return [NSString stringWithString:buffer];
 }
 
+#pragma mark -
+#pragma mark Staleness
+
+- (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
+
+- (void)setIsStale:(BOOL)stale
+{
+	BOOL valueWillChange = (stale != [self boolForKey:@"isStale"]);
+	
+	if (valueWillChange)
+	{
+		[self setWrappedBool:stale forKey:@"isStale"];
+	}
+}
+
+/*  For 1.5 we are having to fake these methods using extensible properties
+ */
+- (NSData *)publishedDataDigest
+{
+    return [self valueForUndefinedKey:@"publishedDataDigest"]; 
+}
+
+- (void)setPublishedDataDigest:(NSData *)digest
+{
+    [self setValue:digest forUndefinedKey:@"publishedDataDigest"];
+}
 
 #pragma mark -
 #pragma mark Notifications

@@ -52,8 +52,7 @@
 
 #import "KTTransferController.h"
 #import "KTTransferController+Internal.h"
-
-#import "Debug.h"
+#import "NSString+Publishing.h"
 
 #import "KT.h"
 #import "KTAppDelegate.h"
@@ -79,6 +78,7 @@
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 
+#import "NSHelpManager+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -86,20 +86,24 @@
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSData+Karelia.h"
-#import "NSHelpManager+KTExtensions.h"
-#import "NSString+Publishing.h"
+#import "NSMutableDictionary+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "OmniCompatibility.h"
+
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
-#import <Growl/Growl.h>
-
 #import <Connection/EMKeychainItem.h>
 #import <Connection/EMKeychainProxy.h>
+
+#import <Growl/Growl.h>
+
+#import "Debug.h"
+
 
 static NSArray *sReservedNames = nil;
 
@@ -156,7 +160,7 @@ static NSArray *sReservedNames = nil;
 		(void) [myController window];	// get window loaded
 		
 		myPathsCreated = [[NSMutableArray array] retain];
-		myUploadedPathsMap = [[NSMutableDictionary alloc] init];
+		myUploadedPageDataDigests = [[NSMutableDictionary alloc] init];
 		myUploadedDesigns = [[NSMutableSet alloc] init];
 		myParsedResources = [[NSMutableSet alloc] init];
 		myParsedGraphicalTextBlocks = [[NSMutableDictionary alloc] init];
@@ -247,7 +251,7 @@ static NSArray *sReservedNames = nil;
 
 	[myPathsCreated release];
 	[myFilesTransferred release];
-	[myUploadedPathsMap release];
+	[myUploadedPageDataDigests release];
 	[myUploadedDesigns release];
 	[myParsedResources release];
 	[myParsedGraphicalTextBlocks release];
@@ -499,50 +503,57 @@ static NSArray *sReservedNames = nil;
 	[myController setPermissions:myDirectoryPermissions forFile:builtupPath];
 }
 
-/*	Uploads the specified page and returns by reference the media & resources that it requires
+/*	Uploads the specified page
  */
 - (void)threadedUploadPage:(KTAbstractPage *)page onlyUploadStalePages:(BOOL)staleOnly
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    
-    // Fetch the publishing info for the page. Bail if it is not for publishing.
+	// Fetch the publishing info for the page. Bail if it is not for publishing.
 	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForPage:)
 																		 withObject:page];
-	if (!publishingInfo || (staleOnly && ![publishingInfo boolForKey:@"isStale"]))
+	if (!publishingInfo)
 	{
 		// LOG((@"BAILING OUT"));
+        return;
 	}
-	else
-	{
-		// Upload the page itself
-		NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
-		if (uploadPath)
-		{
-			uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
-			
-			NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
-			if (pageData)
-			{
-				[myUploadedPathsMap setObject:page forKey:uploadPath];
-				[self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-				[self uploadFromData:pageData toFile:uploadPath];
-				[myController setPermissions:myPagePermissions forFile:uploadPath];
-			}
-		}
-		
-		
-		// Publish the RSS feed if there is one
-		NSData *RSSData = [publishingInfo objectForKey:@"RSSData"];
-		if (RSSData)
-		{
-			NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-			NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[self uploadFromData:RSSData toFile:RSSUploadPath];
-			[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
-		}
+    
+    
+    NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
+    NSData *digest = [pageData sha1Digest];
+    
+	
+    if (staleOnly)
+    {
+        // Compare digests to see if we should publish
+        NSData *publishedDataDigest = [publishingInfo objectForKey:@"publishedDataDigest"];
+        if (KSISEQUAL(digest, publishedDataDigest)) return;
     }
-    [pool release];
+    
+    
+    // Upload the page itself
+    NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
+    if (uploadPath)
+    {
+        uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+        
+        if (pageData)
+        {
+            [myUploadedPageDataDigests setObject:digest forKey:page copyKeyFirst:NO];
+            [self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
+            [self uploadFromData:pageData toFile:uploadPath];
+            [myController setPermissions:myPagePermissions forFile:uploadPath];
+        }
+    }
+    
+    
+    // Publish the RSS feed if there is one
+    NSData *RSSData = [publishingInfo objectForKey:@"RSSData"];
+    if (RSSData)
+    {
+        NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+        NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+        [self uploadFromData:RSSData toFile:RSSUploadPath];
+        [myController setPermissions:myPagePermissions forFile:RSSUploadPath];
+    }
 }
 
 
@@ -552,7 +563,7 @@ static NSArray *sReservedNames = nil;
  *		sourceData			-	NSData representation of the page's HTML. nil if not for publishing (e.g. Download page)
  *		uploadPath			-	The page's path relative to   docRoot/subFolder/
  *		RSSData				-	If the collection has an RSS feed, its NSData representation
- *		isStale				-	NSNumber copy of the page's isStale attribute
+ *      publishedDataDigest -   Copy of the accessor by the same name
  *	
  *	If the page will not be published because it or a parent is a draft, returns nil.
  */
@@ -608,7 +619,12 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Staleness
-	[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];
+	//[info setObject:[page valueForKey:@"isStale"] forKey:@"isStale"];
+    NSData *publishedDataDigest = [page publishedDataDigest];
+    if (publishedDataDigest)
+    {
+        [info setObject:publishedDataDigest forKey:@"publishedDataDigest"];
+    }
 	
 	
 	// Upload path
@@ -751,7 +767,7 @@ static NSArray *sReservedNames = nil;
 
 - (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath
 {
-	[myUploadedPathsMap removeAllObjects];
+	[myUploadedPageDataDigests removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	[self removeAllGraphicalTextBlocks];
@@ -846,7 +862,10 @@ static NSArray *sReservedNames = nil;
 		while (aPage = [pagesEnumerator nextObject])
 		{
 			myHadFilesToUpload = YES;
-			[self threadedUploadPage:aPage onlyUploadStalePages:NO];
+			
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+            [self threadedUploadPage:aPage onlyUploadStalePages:NO];
+            [pool release];
 		}
 			
 	
@@ -946,7 +965,7 @@ if ([self where] == kGeneratingRemoteExport) {
 
 - (void)uploadStaleAssetsToSuggestedPath:(NSString *)aSuggestedPath
 {
-	[myUploadedPathsMap removeAllObjects];
+	[myUploadedPageDataDigests removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	
@@ -1024,7 +1043,10 @@ if ([self where] == kGeneratingRemoteExport) {
 		while (aPage = [pagesEnumerator nextObject])
 		{
 			myHadFilesToUpload = YES;
-			[self threadedUploadPage:aPage onlyUploadStalePages:YES];
+			
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+            [self threadedUploadPage:aPage onlyUploadStalePages:YES];
+            [pool release];
 		}
 			
 	
@@ -1493,10 +1515,16 @@ if ([self where] == kGeneratingRemoteExport) {
 		// Unless this was an export, update staleness etc. to reflect that
 		if ( [self where] != kGeneratingRemoteExport )
 		{
-			// Mark published pages as non-stale (Safe since this should be the main thread)
-			NSArray *publishedPages = [myUploadedPathsMap allValues];
-			[publishedPages setBool:NO forKey:@"isStale"];
+			// Update the publishedDataDigest of each page
+			NSEnumerator *pagesEnumerator = [myUploadedPageDataDigests keyEnumerator];
+            KTPage *aPublishedPage;
+            while (aPublishedPage = [pagesEnumerator nextObject])
+            {
+                NSData *aPublishedDataDigest = [myUploadedPageDataDigests objectForKey:aPublishedPage];
+                [aPublishedPage setPublishedDataDigest:aPublishedDataDigest];
+            }
 			
+                
 			// Record the app version published with
 			NSManagedObject *hostProperties = [[[self associatedDocument] documentInfo] valueForKey:@"hostProperties"];
 			[hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
@@ -1595,7 +1623,7 @@ if ([self where] == kGeneratingRemoteExport) {
 
 - (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock
 {
-	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[textBlock graphicalTextMedia] identifier]];
+	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[[textBlock graphicalTextMedia] file] valueForKey:@"uniqueID"]];
 	[myParsedGraphicalTextBlocks setObject:textBlock forKey:ID];
 }
 
@@ -1655,7 +1683,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	
 	[myFilesTransferred removeAllObjects];
 	[myPathsCreated removeAllObjects];
-	[myUploadedPathsMap removeAllObjects];
+	[myUploadedPageDataDigests removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	[self removeAllGraphicalTextBlocks];

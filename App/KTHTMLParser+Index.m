@@ -162,10 +162,13 @@
 		[textBlock setImportsGraphics:YES];
 		[textBlock setHasSpanIn:NO];
 		
-		result = [NSString stringWithFormat:
-			@"<div id=\"%@\" class=\"kBlock kSummary kOptional kImageable\">%@</div>",
-			[textBlock DOMNodeID],
-			result];
+		NSMutableString *buffer = [NSMutableString stringWithString:@"<div"];
+        if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+        {
+            [buffer appendFormat:@" id=\"%@\" class=\"kBlock kSummary kOptional kImageable\"", [textBlock DOMNodeID]];
+        }
+        [buffer appendFormat:@">%@</div>", result];
+        result = [[buffer copy] autorelease];
 		
 		
 		// Inform the delegate 

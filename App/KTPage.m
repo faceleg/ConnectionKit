@@ -110,8 +110,6 @@ triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
 
 + (NSString *)entityName { return @"Page"; }
 
-+ (NSString *)extensiblePropertiesDataKey { return @"extensiblePropertiesData"; }
-
 + (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
 {
 	OBPRECONDITION([aBundle bundleIdentifier]);

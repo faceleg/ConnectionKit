@@ -367,10 +367,12 @@
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
 		if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
 		{
-			[buffer appendFormat:@" class=\"%@\"", ([self isRichText]) ? @"kBlock" : @"kLine"];
+			[buffer appendFormat:
+             @" id=\"%@\" class=\"%@\"",
+             [self DOMNodeID],
+             ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
 		else if (![self isEditable])
 		{
@@ -391,7 +393,7 @@
 			}
 			else
 			{
-				[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[self graphicalTextMedia] identifier]];
+				[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[[self graphicalTextMedia] file] valueForKey:@"uniqueID"]];
 			}
 		}
 	}
@@ -412,12 +414,16 @@
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
-		[buffer appendFormat:@"<span id=\"%@\" class=\"in", [self DOMNodeID]];
-		if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
+		[buffer appendString:@"<span"];
+        
+        NSString *CSSClassName = @"in";
+        if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
 		{
-			[buffer appendFormat:@" %@", ([self isRichText]) ? @"kBlock" : @"kLine"];
+			[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
+            CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
-		[buffer appendString:@"\">"];
+		
+        [buffer appendFormat:@" class=\"%@\">", CSSClassName];
 	}
 	
 	

@@ -106,10 +106,10 @@
 
 - (KTStalenessManager *)stalenessManager
 {
-	if (!myStalenessManager)
+	/*if (!myStalenessManager)
 	{
 		myStalenessManager = [[KTStalenessManager alloc] initWithDocument:self];
-	}
+	}*/
 	
 	return myStalenessManager;
 }

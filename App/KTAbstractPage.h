@@ -41,9 +41,6 @@ KTCollectionPathStyle;
 
 - (KTDocumentInfo *)documentInfo;
 
-- (BOOL)isStale;
-- (void)setIsStale:(BOOL)stale;
-
 // Title
 - (void)setTitleHTML:(NSString *)value;
 - (NSString *)titleText;
@@ -55,6 +52,15 @@ KTCollectionPathStyle;
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 
 - (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context;
+
+
+// Staleness
+- (BOOL)isStale;
+- (void)setIsStale:(BOOL)stale;
+
+- (NSData *)publishedDataDigest;
+- (void)setPublishedDataDigest:(NSData *)digest;
+
 
 // Notifications
 - (void)postSiteStructureDidChangeNotification;

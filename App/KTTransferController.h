@@ -40,7 +40,7 @@
 
 	NSInvocation *myContentAction;
 	
-	NSMutableDictionary *myUploadedPathsMap;
+	NSMutableDictionary *myUploadedPageDataDigests;
 	NSMutableSet		*myUploadedDesigns;
 	NSMutableArray		*myPathsCreated;	
 	
