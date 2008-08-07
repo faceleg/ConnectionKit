@@ -2,47 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>IBDocumentLocation</key>
-	<string>620 359 475 284 0 0 1920 1178 </string>
-	<key>IBEditorPositions</key>
-	<dict>
-		<key>1225</key>
-		<string>824 835 320 64 0 0 1920 1178 </string>
-		<key>1265</key>
-		<string>824 835 320 64 0 0 1920 1178 </string>
-		<key>1270</key>
-		<string>824 787 320 128 0 0 1920 1178 </string>
-		<key>129</key>
-		<string>824 724 320 212 0 0 1920 1178 </string>
-		<key>1311</key>
-		<string>824 837 320 62 0 0 1920 1178 </string>
-		<key>165</key>
-		<string>824 851 320 43 0 0 1920 1178 </string>
-		<key>168</key>
-		<string>824 637 320 328 0 0 1920 1178 </string>
-		<key>169</key>
-		<string>680 744 320 58 0 0 1680 1028 </string>
-		<key>258</key>
-		<string>824 555 320 437 0 0 1920 1178 </string>
-		<key>356</key>
-		<string>824 837 320 62 0 0 1920 1178 </string>
-		<key>821</key>
-		<string>824 825 320 77 0 0 1920 1178 </string>
-		<key>913</key>
-		<string>824 642 320 321 0 0 1920 1178 </string>
-		<key>94</key>
-		<string>824 702 320 242 0 0 1920 1178 </string>
-	</dict>
 	<key>IBFramework Version</key>
-	<string>489.0</string>
+	<string>667</string>
 	<key>IBLastKnownRelativeProjectPath</key>
 	<string>../../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
 	<key>IBOpenObjects</key>
 	<array>
-		<integer>258</integer>
-		<integer>94</integer>
+		<integer>269</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>9E17</string>
