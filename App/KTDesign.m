@@ -51,7 +51,7 @@
 - (id)initWithBundle:(NSBundle *)bundle;
 {
 	if ((self = [super initWithBundle:bundle]) != nil) {
-		[bundle loadLocalFonts];			// load in the fonts
+//		[bundle loadLocalFonts];			// load in the fonts
 	}
 	return self;
 }
