@@ -1941,7 +1941,7 @@
 		3C682B4B0D6231DA00B4D485 /* KTStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStrings.m; sourceTree = "<group>"; };
 		3C682B4D0D6231E100B4D485 /* KTUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUtilities.h; sourceTree = "<group>"; };
 		3C682B4E0D6231E700B4D485 /* KTUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUtilities.m; sourceTree = "<group>"; };
-		3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = KTScaledImageTypes.plist; sourceTree = "<group>"; };
+		3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KTScaledImageTypes.plist; sourceTree = "<group>"; };
 		3C682B550D62321500B4D485 /* CropMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropMarker.h; sourceTree = "<group>"; };
 		3C682B560D62321900B4D485 /* CropMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropMarker.m; sourceTree = "<group>"; };
 		3C682B580D62322000B4D485 /* CroppingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CroppingImageView.h; sourceTree = "<group>"; };
@@ -2193,7 +2193,7 @@
 		CE02AE450843EAD000D8A9F9 /* Sample Sites */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sample Sites"; path = "../Sample Sites"; sourceTree = SOURCE_ROOT; };
 		CE0321210D98640F00EC55FC /* KSJoinListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSJoinListController.h; path = ../../../Shared/trunk/App/KSJoinListController.h; sourceTree = SOURCE_ROOT; };
 		CE0321220D98640F00EC55FC /* KSJoinListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSJoinListController.m; path = ../../../Shared/trunk/App/KSJoinListController.m; sourceTree = SOURCE_ROOT; };
-		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
+		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE04723B0DC6D18B00FF39C0 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../../Designs; sourceTree = SOURCE_ROOT; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		CE0F67BE0A39F53F0092DC43 /* trans16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trans16.png; sourceTree = "<group>"; };
@@ -2214,7 +2214,7 @@
 		CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMovieViewPlugin.h; sourceTree = "<group>"; };
 		CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMovieViewPlugin.m; sourceTree = "<group>"; };
 		CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE16DC5A0D8711790077C779 /* MovieWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "MovieWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
+		CE16DC5A0D8711790077C779 /* MovieWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MovieWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
 		CE1AD3520A7E83C90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = it; path = it.lproj/Credits.html; sourceTree = "<group>"; };
 		CE1AD3550A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		CE1AD3560A7E83C90083C01E /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Info.nib; sourceTree = "<group>"; };
@@ -2621,7 +2621,7 @@
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
-		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
+		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED850770BD33EAE00FED416 /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
 		CED85A6A0BD35D5600FED416 /* draftPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draftPattern.png; sourceTree = "<group>"; };
@@ -2666,7 +2666,7 @@
 		CEF6E40D0BD7280E0006417A /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF6E40E0BD728190006417A /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/CodeInjection.nib; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
+		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
 		CEF9D0C10D862C4A00BD9895 /* KTImageWebKitViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageWebKitViewFactory.h; sourceTree = "<group>"; };
 		CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageWebKitViewFactory.m; sourceTree = "<group>"; };
 		CEF9D1F00D86446600BD9895 /* rounded.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rounded.pdf; sourceTree = "<group>"; };
@@ -5033,6 +5033,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,

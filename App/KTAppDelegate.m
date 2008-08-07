@@ -1017,36 +1017,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 								   withBinding: NSValueBinding];
 		
 		
-
-		NSString *sysVersion = [NSApplication systemVersion];
-//TODO: use Sparkle version check
-		BOOL sufficient = NO;
-		// Check system version 
-		NSArray *versionPieces = [sysVersion componentsSeparatedByString:@"."];
-		if ([versionPieces count] >= 1 && [[versionPieces objectAtIndex:0] intValue] == 10)
-		{
-			if ([versionPieces count] >= 2)
-			{
-				if ([[versionPieces objectAtIndex:1] intValue] == 4)
-				{
-					sufficient = ([[versionPieces objectAtIndex:2] intValue] >= 11);	// Need 10.4.11 +
-				}
-				else if ([[versionPieces objectAtIndex:1] intValue] >= 5)
-				{
-					sufficient = YES;	// Need 10.5.x
-				}
-			}
-		}
-		else
-		{
-			sufficient = YES;	// major version not 10 ... so 11 ?  Assume OK I guess
-		}
+		BOOL sufficient = (NSFoundationVersionNumber >= 567.36 /* NSFoundationVersionNumber10_4_11 */);
 		
 		if (!sufficient)
 		{
 			NSRunCriticalAlertPanel(
 									@"",
-									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \\U201CLeopard\\U201D for this new version of Sandvox to function.", @""), 
+									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \\U201CLeopard\\U201D for this version of Sandvox to function.", @""), 
 									NSLocalizedString(@"Quit", @"Quit button"),
 									nil,
 									nil

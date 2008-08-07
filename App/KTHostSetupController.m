@@ -1439,7 +1439,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 - (NSString *) iDiskImagePath
 {
-	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes MobileMe === ????
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes 'macn' or 'mymc' -- not sure which 
 }
 - (NSString *) iMacImagePath
 {
