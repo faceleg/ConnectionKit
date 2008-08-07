@@ -75,7 +75,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if master.logoImage]]
 						<span id="logo-container"><img id="logo"
 							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
-							alt="[[=&master.headerImageDescription]]"
+							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
 							width="[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
 							height="[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]" /></span>
 [[endif2]]
