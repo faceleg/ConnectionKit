@@ -1439,7 +1439,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 - (NSString *) iDiskImagePath
 {
-	if if (floor(NSAppKitVersionNumber) <= 824)		// Tiger
+	if (floor(NSAppKitVersionNumber) <= 824)		// Tiger
 	{
 		return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iDiskGenericIcon.icns";
 	}
@@ -1451,6 +1451,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 - (NSString *) iMacImagePath
 {
 	// INSTEAD, WE SHOULD BE USING SOME OF THE NEW SERVICES IN LEOPARD (AND A FALLBACK IN TIGER) FOR *THIS* COMPUTER.
+	// Leopoard method is -[NSImage imageNamed:NSImageNameComputer]
 	return @"/System/Library/PrivateFrameworks/SyncServicesUI.framework/Versions/A/Resources/Computer.tif";
 }
 - (NSString *) homeImagePath
