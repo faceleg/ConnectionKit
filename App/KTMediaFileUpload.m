@@ -12,6 +12,7 @@
 #import "KTHostProperties.h"
 #import "KTPage.h"
 #import "KTMediaPersistentStoreCoordinator.h"
+#import "KTMediaFile.h"
 
 #import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
