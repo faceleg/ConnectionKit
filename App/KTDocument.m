@@ -554,18 +554,17 @@
 /*! returns publishSiteURL/sitemap.xml */
 - (NSString *)publishedSitemapURL
 {
-	NSString *result = [[[[self documentInfo] hostProperties] siteURL] absoluteString];
-	if ( (nil == result) || [result hasSuffix:@"example.com/"] )
+	NSString *result;
+    
+    NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+	if (!siteURL || [[siteURL host] isEqualToString:@"example.com"])
 	{
 		result = @""; // show placeholder in UI
 	}
 	else
 	{
-		if (![result hasSuffix:@"/"])
-		{
-			result = [result stringByAppendingString:@"/"];
-		}
-		result = [result stringByAppendingString:@"sitemap.xml.gz"];	/// can't use stringByAppendingPathComponent
+		NSURL *sitemapURL = [NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL];
+        result = [sitemapURL absoluteString];
 	}
 	
 	return result;
