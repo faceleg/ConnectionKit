@@ -19,6 +19,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 
 @interface KTDocumentInfo (Private)
@@ -193,8 +194,14 @@
  */
 - (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
 {
-	NSString *url = [[aPage URL] absoluteString];
-	if (![url hasPrefix:[[[self hostProperties] siteURL] absoluteString]])
+	NSURL *siteURL = [[self hostProperties] siteURL];
+    if (![siteURL hasDirectoryPath])
+    {
+        siteURL = [siteURL URLByDeletingLastPathComponent];
+    }
+    
+    NSString *url = [[aPage URL] absoluteString];
+	if (![url hasPrefix:[siteURL absoluteString]])
 	{
 		return;	// an external link not in this site
 	}
