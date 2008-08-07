@@ -77,8 +77,13 @@
     NSURL *siteURL = [self siteURL];
     if (siteURL)
     {
-        // We compose the result out of just the host and path
+        // If the user's entered a non-directory URL, trim it down
+        if (![siteURL hasDirectoryPath])
+        {
+            siteURL = [siteURL URLByDeletingLastPathComponent];
+        }
         
+        // We compose the result out of just the host and path
         NSMutableString *buffer = [[[siteURL host] mutableCopy] autorelease];
         [buffer appendString:[siteURL path]];   // -path strips the trailing slash for us
         
