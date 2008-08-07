@@ -277,6 +277,12 @@
 		{
 			// Root is a sepcial case where we just supply the site URL
 			result = [[[self documentInfo] hostProperties] siteURL];
+            
+            // The siteURL may not include index.html, so we have to guarantee it here
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
+            {
+                result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
+            }
 		}
 		else
 		{
@@ -321,8 +327,7 @@
 	[self recursivelyInvalidateURL:YES];
 }
 
-/*	Very similar to -uploadPathRelativeToParent
- *	However, the index.html file is not included in collection paths unless the user defaults say to.
+/*	The index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
  */
 - (NSString *)pathRelativeToParent
@@ -373,9 +378,10 @@
 #pragma mark -
 #pragma mark Support
 
-/*	Does the hard graft for -publishedPathRelativeToParent and -uploadPathRelativeToParent.
+/*	Does the hard graft for -publishedPathRelativeToParent.
  *	Should NOT be called externally, PRIVATE method only.
  */
+// FIXME: This method should return nil for pages without a parent. e.g. the home page. However, at the moment this would screw up -uploadPath.
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle
 {
 	NSString *result = @"";

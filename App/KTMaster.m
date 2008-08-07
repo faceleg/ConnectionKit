@@ -12,6 +12,7 @@
 #import "KTAppDelegate.h"
 #import "KTDesignPlaceholder.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
 #import "KTPersistentStoreCoordinator.h"
@@ -303,7 +304,7 @@
     NSString *designDirectoryName = [[self design] remotePath];
     OBASSERT(designDirectoryName);
     
-    NSURL *siteURL = [[[(NSSet *)[self valueForKey:@"pages"] anyObject] valueForKeyPath:@"documentInfo.hostProperties"] siteURL];	// May be nil
+    NSURL *siteURL = [[[[(NSSet *)[self valueForKey:@"pages"] anyObject] documentInfo] hostProperties] siteURL];	// May be nil
     NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
     OBPOSTCONDITION(result);
