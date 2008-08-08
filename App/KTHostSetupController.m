@@ -2458,7 +2458,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 - (BOOL) createTestFileInDirectory:(NSString *)aDirectory
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *fileName = [NSString stringWithFormat:@"Temp_%@.txt", [NSString shortUUIDString]];	// DO NOT LOCALIZE
+	NSString *fileName = [NSString stringWithFormat:@"Temp_%@.html", [NSString shortUUIDString]];	// DO NOT LOCALIZE
 	NSString *filePath = [aDirectory stringByAppendingPathComponent:fileName];
 	// Put a UTF-8 marker (will this help?) into file to ensure it's parse as UTF8.
 	NSString *fileContents = [NSString stringWithFormat:NSLocalizedString(
