@@ -248,8 +248,15 @@
 
 - (KTDocument *)document
 {
-	KTDocument *result = [(KTPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] document];
-	OBPOSTCONDITION(result);
+	KTDocument *result = nil;
+    
+    KTPersistentStoreCoordinator *PSC =
+        (KTPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator];
+    if (PSC && [PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
+    {
+        result = [PSC document];
+    }
+    
 	return result;
 }
 
@@ -266,7 +273,6 @@
 - (KTMediaManager *)mediaManager
 {
 	KTMediaManager *result = [[self document] mediaManager];
-	OBPOSTCONDITION(result);
 	return result;
 }
 
