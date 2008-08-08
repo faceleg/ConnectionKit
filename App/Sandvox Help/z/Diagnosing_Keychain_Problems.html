@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="publishing, keychain, Keychain Access, password, Bad Password, Publishing Forgets My Password" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Diagnosing Keychain Problems</title>
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Diagnosing Keychain Problems</h1>
+
+        <p>When <a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">publishing</a>, some users have reported issues with publishing where the password required for publishing cannot be retrieved from the keychain.</p>
+
+        <p>Here are some techniques which might help.</p>
+
+        <ul>
+            <li>Launch your "Keychain Access" utility. Then lock your keychain by clicking the lock icon in the upper left corner of the Keychain Access window. This forces the system to request authentication, which can often unstick the problem and allow Sandvox to find the requested password for publishing.</li>
+
+            <li>Delete or move your preferences file. The file is found at <i>home folder</i> → Library → Preferences → com.karelia.Sandvox.plist. Drag this file to your Desktop (or the Trash, if you don't mind permanently resetting your Sandvox <a href="Preferences.html" title="Preferences">Preferences</a>). Starting with empty Sandvox Preferences, rather than reinstalling, has also been reported to help unstick the problem and allow Sandvox to find the proper keychain entry.</li>
+
+            <li>As a last resort, it may also be worth using Keychain Access's "Keychain First Aid" command to verify and repair the integrity of the default keychain.</li>
+        </ul>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">Publishing to a Remote Host</a></li>
+
+                <li><a href="Uploading_using_SFTP.html" title="Uploading using SFTP">Uploading using SFTP</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href='http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=Diagnosing_Keychain_Problems.html'>Let us know.</a>
+    </div>
+</body>
+</html>
