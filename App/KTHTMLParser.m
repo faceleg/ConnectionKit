@@ -515,7 +515,7 @@
 
 /*	Support method that returns the path to the resource dependent of our HTML generation purpose.
  */
-- (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile
+- (NSString *)resourceFilePath:(NSString *)resourceFile relativeToPage:(KTAbstractPage *)page
 {
 	NSString *result;
 	switch ([self HTMLGenerationPurpose])
@@ -532,7 +532,7 @@
 		{
 			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
 			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceFile lastPathComponent]];
-			result = [resourceFileURL stringRelativeToURL:[[self currentPage] URL]];
+			result = [resourceFileURL stringRelativeToURL:[page URL]];
 			break;
 		}
 	}
@@ -678,12 +678,9 @@
 	else
     {
         // Figure out the correct page
-		
-#warning (clang): Value stored to 'page' during its initialization is never read
-        KTAbstractPage *page = [self currentPage];
+		KTAbstractPage *page = [self currentPage];
         if ([params count] > 1)
         {
-#warning (clang) Value stored to 'page' is never read
             page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
 			
         }
@@ -693,7 +690,7 @@
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
         if (resourceFilePath)
         {
-            result = [self resourceFilePathRelativeToCurrentPage:resourceFilePath];
+            result = [self resourceFilePath:resourceFilePath relativeToPage:page];
         }
     }
     

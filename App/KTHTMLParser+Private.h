@@ -16,7 +16,7 @@
 
 - (KTHTMLParserMasterCache *)cache;
 
-- (NSString *)resourceFilePathRelativeToCurrentPage:(NSString *)resourceFile;
+- (NSString *)resourceFilePath:(NSString *)resourceFile relativeToPage:(KTAbstractPage *)page;
 
 // Delegate
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
