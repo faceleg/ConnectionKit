@@ -24,6 +24,7 @@
 
 - (NSString *)entityName;
 
+- (void)loadLocalFonts;
 
 - (NSString *)templateRSSAsString;
 

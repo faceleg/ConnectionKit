@@ -15,6 +15,61 @@
 
 @implementation NSBundle ( KTExtensions )
 
+/*	Designs can contain their own specialised fonts. This method loads any found fonts ready for application use.
+ 
+	If we are *running* 10.4 then use the old-fashioned way.  But if we are running 10.5, the 
+	bundle key ATSApplicationFontsPath should be used instead.
+ 
+	We were having hellish keychain issues when using the 10.4 legacy method, and we need that since
+	the new 10.5 method doesn't exist if you are targetting 10.4 or 10.5.
+ 
+	This is NOT generic Karelia code (any more) and when we start targetting 10.5+ then we should
+	get rid of this method altogether.
+ 
+ */
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4
+
+#warning It is time to retire this method completely.  Use ATSApplicationFontsPath instead.
+
+#endif
+
+- (void)loadLocalFonts
+{
+	if (floor(NSAppKitVersionNumber) <= 824)		// only do stuff on Tiger, not Leopard
+	{
+		NSString *fontsFolder = [self resourcePath];
+		if (fontsFolder)
+		{
+			NSURL *fontsURL = [NSURL fileURLWithPath:fontsFolder];
+			if (fontsURL)
+			{
+				FSRef fsRef;
+				(void)CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
+				
+				OSStatus error = -8675309;	// seed with a bogus error, in case we can't get it really filled
+
+// 10.5 version if we weren't using ATSApplicationFontsPath
+//				error = ATSFontActivateFromFileReference(&fsRef, kATSFontContextLocal, kATSFontFormatUnspecified, 
+//													 NULL, kATSOptionFlagsProcessSubdirectories, NULL);
+
+				FSSpec fsSpec;
+				if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) == noErr)
+				{
+					error = ATSFontActivateFromFileSpecification(&fsSpec,
+																 kATSFontContextLocal,
+																 kATSFontFormatUnspecified,
+																 NULL,
+																 kATSOptionFlagsProcessSubdirectories,
+																 NULL);
+				}
+				
+				if (error) NSLog(@"Error %i activating fonts in %@", error, self);
+			}
+		}
+	}
+}
+
 
 #pragma mark -
 #pragma mark HTML Template files
