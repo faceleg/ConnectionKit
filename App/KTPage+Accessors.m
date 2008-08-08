@@ -14,6 +14,7 @@
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
 #import "KTDocumentController.h"
+#import "KTMediaContainer.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
@@ -413,7 +414,7 @@
 
 - (void)_setThumbnail:(KTMediaContainer *)thumbnail
 {
-	OBPRECONDITION([thumbnail isKindOfClass:[KTMediaContainer class]]);
+	OBPRECONDITION(!thumbnail || [thumbnail isKindOfClass:[KTMediaContainer class]]);
     
     [self willChangeValueForKey:@"thumbnail"];
 	[self setPrimitiveValue:thumbnail forKey:@"thumbnail"];
@@ -430,7 +431,7 @@
 
 - (void)setThumbnail:(KTMediaContainer *)thumbnail
 {
-	OBPRECONDITION([thumbnail isKindOfClass:[KTMediaContainer class]]);
+	OBPRECONDITION(!thumbnail || [thumbnail isKindOfClass:[KTMediaContainer class]]);
     
     [self setCollectionSummaryType:KTSummarizeAutomatic];
 	[self _setThumbnail:thumbnail];
