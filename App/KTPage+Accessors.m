@@ -413,7 +413,9 @@
 
 - (void)_setThumbnail:(KTMediaContainer *)thumbnail
 {
-	[self willChangeValueForKey:@"thumbnail"];
+	OBPRECONDITION([thumbnail isKindOfClass:[KTMediaContainer class]]);
+    
+    [self willChangeValueForKey:@"thumbnail"];
 	[self setPrimitiveValue:thumbnail forKey:@"thumbnail"];
 	[self setValue:[thumbnail identifier] forKey:@"thumbnailMediaIdentifier"];
 	[self didChangeValueForKey:@"thumbnail"];
@@ -428,7 +430,9 @@
 
 - (void)setThumbnail:(KTMediaContainer *)thumbnail
 {
-	[self setCollectionSummaryType:KTSummarizeAutomatic];
+	OBPRECONDITION([thumbnail isKindOfClass:[KTMediaContainer class]]);
+    
+    [self setCollectionSummaryType:KTSummarizeAutomatic];
 	[self _setThumbnail:thumbnail];
 }
 
