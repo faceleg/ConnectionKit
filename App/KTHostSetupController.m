@@ -2466,9 +2466,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		@"explanation going inside temporary file"),
 		@"// !$*UTF8*$!\n\n",
 		[NSApplication applicationName]];
+	
+	// wrapping this in html separately so we don't change any localized strings
+	NSString *htmlWrapper = [NSString stringWithFormat:@"<html><body><p>%@</p></body></html>", fileContents];
 
 	BOOL successCreating = [fm createFileAtPath:filePath
-									   contents:[fileContents dataUsingEncoding:NSUTF8StringEncoding]
+									   contents:[htmlWrapper dataUsingEncoding:NSUTF8StringEncoding]
 									 attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 										 [NSNumber numberWithUnsignedLong:0644],
 										 NSFilePosixPermissions,
