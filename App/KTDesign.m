@@ -14,6 +14,7 @@
 
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSBundle+KTExtensions.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
