@@ -11,8 +11,29 @@
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
+
 
 @implementation KTAbstractHTMLPlugin
+
+/*	We only want to load 1.5 and later plugins
+ */
++ (BOOL)validateBundle:(NSBundle *)aCandidateBundle
+{
+	BOOL result = NO;
+	
+	NSString *minVersion = [aCandidateBundle minimumAppVersion];
+	if (minVersion)
+	{
+		float floatMinVersion = [minVersion floatVersion];
+		if (floatMinVersion >= 1.5)
+		{
+			result = YES;
+		}
+	}
+	
+	return result;
+}
 
 #pragma mark -
 #pragma mark Init & Dealloc

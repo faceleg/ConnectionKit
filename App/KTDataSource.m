@@ -10,6 +10,8 @@
 #import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
+
+#import "NSBundle+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 #import "NSString+Karelia.h"
@@ -30,6 +32,25 @@
 }
 
 + (BOOL)supportPluginSubclasses { return YES; }
+
+/*	We only want to load 1.5 and later plugins
+ */
++ (BOOL)validateBundle:(NSBundle *)aCandidateBundle
+{
+	BOOL result = NO;
+	
+	NSString *minVersion = [aCandidateBundle minimumAppVersion];
+	if (minVersion)
+	{
+		float floatMinVersion = [minVersion floatVersion];
+		if (floatMinVersion >= 1.5)
+		{
+			result = YES;
+		}
+	}
+	
+	return result;
+}
 
 #pragma mark -
 #pragma mark Other
