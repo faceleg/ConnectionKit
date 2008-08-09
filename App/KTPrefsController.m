@@ -53,7 +53,6 @@
 
 	[controller removeObserver:self forKeyPath:@"values.KTPreferredJPEGQuality"];
 	[controller removeObserver:self forKeyPath:@"values.KTPrefersPNGFormat"];
-	[controller removeObserver:self forKeyPath:@"values.LiveDataFeeds"];
 
 	[self removeObserver:self forKeyPath:@"sparkleOption"];
 
@@ -162,7 +161,6 @@
 
 	[controller addObserver:self forKeyPath:@"values.KTPreferredJPEGQuality" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTPrefersPNGFormat" options:(NSKeyValueObservingOptionNew) context:nil];
-	[controller addObserver:self forKeyPath:@"values.LiveDataFeeds" options:(NSKeyValueObservingOptionNew) context:nil];
 
 
 	// setup sparkeOption
@@ -219,13 +217,7 @@
 //	NSLog(@"                object: %@", anObject);
 //	NSLog(@"                change: %@", [aChange description]);
 
-	if ([aKeyPath isEqualToString:@"values.LiveDataFeeds"])
-	{
-		// FIXME: Need a replacement for this
-//		[[NSNotificationCenter defaultCenter] postNotificationName:kKTWebViewMayNeedRefreshingNotification
-//															object:nil];
-	}
-	else if ([aKeyPath isEqualToString:@"sparkleOption"])
+	if ([aKeyPath isEqualToString:@"sparkleOption"])
 	{
 		int sparkleOption = [self sparkleOption];
 		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];

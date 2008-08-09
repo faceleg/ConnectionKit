@@ -465,6 +465,10 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[self addParsedKeyPath:@"pluginHTMLIsFullPage" ofObject:page forParsedComponent:[self mainWebViewComponent]];
 	[self addParsedKeyPath:@"master.bannerImage.file" ofObject:page forParsedComponent:[self mainWebViewComponent]];
 	
+	[self addParsedKeyPath:@"values.LiveDataFeeds"
+				  ofObject:[NSUserDefaultsController sharedUserDefaultsController]
+		forParsedComponent:[self mainWebViewComponent]];
+	
 	// Load the HTML into the webview
 	[[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:nil];
 }

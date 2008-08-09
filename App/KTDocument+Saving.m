@@ -215,7 +215,8 @@
  */
 - (BOOL)writeToURL:(NSURL *)inURL 
 			ofType:(NSString *)inType 
-  forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL error:(NSError **)outError 
+  forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
+			 error:(NSError **)outError 
 {
 	BOOL result = NO;
 	
