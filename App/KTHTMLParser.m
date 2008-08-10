@@ -330,7 +330,7 @@
 			summary - this is a summary of existing content and is not editable (without override?)
 		id - the keypath to the uniqueID of this object
 		replacement - keypath of flat text to replace when using image replacement
-		code - code (h1,h1h,h2,h3,h4s,h4c,m,mc,st) for matching to image replacement.
+		code - code (h1,h1h,h2,h3,h4s,h4c,m,mc,st) for matching to image replacement. (graphicalTextCode:)
 		class - additional class (or classes separated by space) to apply to this element.
 			(dynamic, special classes will be appended to this list for editing purposes)
 */
