@@ -95,6 +95,7 @@ static NSMutableDictionary *sRendererDictionary = nil;
 		}
 		@catch (NSException *e)
 		{
+			// don't throw; we don't want a problem with an older Quartz Composer file bringing down Sandvox!
 		}
 		if (!success)
 		{
