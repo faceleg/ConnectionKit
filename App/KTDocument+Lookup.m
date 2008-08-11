@@ -40,9 +40,7 @@
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 @implementation KTDocument ( Lookup )
 

@@ -26,9 +26,7 @@
 
 #import <WebKit/WebKit.h>
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 
 @implementation KTPage ( Web )

@@ -28,6 +28,7 @@
 #import "NSThread+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "Registration.h"
 
 #import "KTWebKitCompatibility.h"
 

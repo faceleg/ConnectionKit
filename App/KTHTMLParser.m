@@ -20,6 +20,7 @@
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
+#import "Registration.h"
 
 #import "Debug.h"
 

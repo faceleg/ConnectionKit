@@ -16,9 +16,7 @@
 #import "NSObject+KTExtensions.h"
 #import "NSString+Karelia.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 
 @implementation KTDataSource

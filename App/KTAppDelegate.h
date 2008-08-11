@@ -17,10 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#ifdef APP_RELEASE
-    #import "Registration.h"
-#endif
-
+#import "Registration.h"
 #import <Cocoa/Cocoa.h>
 #import "KSLicensedAppDelegate.h"
 

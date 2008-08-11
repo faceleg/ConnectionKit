@@ -11,9 +11,7 @@
 #import "NSBundle+Karelia.h"
 #import "KTAppDelegate.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 @implementation KTIndexPlugin
 

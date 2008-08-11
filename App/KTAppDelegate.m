@@ -92,10 +92,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 
-
-// Comment this out if we are not building an expiring demo
-#define EXPIRY_TIMESTAMP @"2008-08-19 11:59:59 -0800"
-
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!
 // (this is a non-expiring, worldwide, pro license)
 // #define APPLE_DESIGN_AWARDS_KEY [@"Nccyr Qrfvta Njneqf Tnyvyrr Pnqv Ubc" rot13]
@@ -297,10 +293,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithBool:NO],			@"KTLogAllContextChanges",
 
-#ifdef EXPIRY_TIMESTAMP
+#ifdef VARIANT_beta
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
-										 
 #else
 		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",
 #endif
@@ -840,16 +835,17 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		|| ( [name isEqualToString:NSGenericException]
 			&& NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
-		
-		/*|| ( [name isEqualToString:NSRangeException]
+#ifndef VARIANT_beta
+		|| ( [name isEqualToString:NSRangeException]
 			&& NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
-		*/
+#endif
 		)
 	{
 		return NO;
 	}
 	
-	/*if ( [name isEqualToString:NSInternalInconsistencyException] )
+#ifndef VARIANT_beta
+	if ( [name isEqualToString:NSInternalInconsistencyException] )
 	{
 		// catch all Undo exceptions and simply reset
 		if ( [reason hasPrefix:@"_registerUndoObject"] )
@@ -868,9 +864,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[document resetUndoManager];
 			return NO;
 		}
-	}*/
+	}
 	
-	/*if ( [name isEqualToString:NSObjectInaccessibleException] )
+	if ( [name isEqualToString:NSObjectInaccessibleException] )
 	{
 		if ( [reason isEqualToString:@"CoreData could not fulfill a fault."] )
 		{
@@ -878,7 +874,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			// should change the selection to the root
 			return NO;
 		}
-	}*/
+	}
+#endif
+
 	
 	if ( [name isEqualToString:NSRangeException] )
 	{
@@ -1031,7 +1029,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[NSApp terminate:nil];
 		}
 		
-#ifdef EXPIRY_TIMESTAMP
+#ifdef VARIANT_beta
 		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
         
@@ -1300,7 +1298,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
     applicationIsLaunching = NO; // we're done
 }
 
-#ifdef EXPIRY_TIMESTAMP
+#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
 
 - (void) alertAndQuit
 {
@@ -1315,11 +1313,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 }
 - (void) warnOrQuitIfExpiring
-{
-#ifndef DEBUG
-#warning ------- This build has been set to expire, see EXPIRY_TIMESTAMP in KTAppDelegate
-#endif
-	
+{	
 	unsigned char km[16];
 	GetKeys((void *)km);
 	BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
@@ -1761,7 +1755,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (IBAction)openSupportForum:(id)sender
 {
 	
-#ifdef EXPIRY_TIMESTAMP
+#ifdef VARIANT_beta
 	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
 #else
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
@@ -1810,7 +1804,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}	
 }
 
-#ifdef EXPIRY_TIMESTAMP
+#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus
 {
 #ifndef DEBUG

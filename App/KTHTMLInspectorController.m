@@ -26,9 +26,7 @@
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 @interface KTHTMLInspectorController ( Private )
 

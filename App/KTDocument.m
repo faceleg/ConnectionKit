@@ -82,9 +82,7 @@
 
 #import "Debug.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 
 @interface KTDocument ( Private )

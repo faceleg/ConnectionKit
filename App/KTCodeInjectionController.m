@@ -17,9 +17,7 @@
 
 #import "KSAppDelegate.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 @interface KTCodeInjectionController (Private)
 @end

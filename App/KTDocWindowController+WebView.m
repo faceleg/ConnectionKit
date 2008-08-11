@@ -49,9 +49,7 @@
 #import <CoreServices/CoreServices.h>
 #import <QuartzCore/QuartzCore.h>
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 #import "Debug.h"
 #import "OmniCompatibility.h"

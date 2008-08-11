@@ -6,7 +6,14 @@
 SANDVOX_VERSION = 1.5b10
 
 // the SLA variant to wrap around the .dmg [beta,release]
+// Also determines if VARIANT_beta or VARIANT_release is defined.
 PRODUCT_VARIANT = beta
+
+
+
+// expiry for beta
+EXPIRY_TIMESTAMP = '@\"2008-08-19 11:59:59 -0800\"'
+
 
 // Release builds checkout and use these specific revisions
 
@@ -19,3 +26,5 @@ IMEDIA_REVISION = 641
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS for release
 
 OMNI_DEBUG_CURRENT_SETTING = OMNI_FORCE_ASSERTIONS
+
+

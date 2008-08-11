@@ -19,13 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-
-
-
-#ifdef APP_RELEASE
-	#import "Registration.h"
-#endif
-
+//	#import "Registration.h"
 
 // publishing mode
 typedef enum {

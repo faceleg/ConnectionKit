@@ -16,12 +16,13 @@
 
 
 // TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
+#ifdef VARIANT_beta
 - (NSString *)identifier
 {
 	[NSException raise:NSInternalInconsistencyException format:@"calling identifier on %@", self];
 	return self;
 }
-
+#endif
 
 
 

@@ -23,9 +23,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 
-#ifdef APP_RELEASE
 #import "Registration.h"
-#endif
 
 
 @interface KTPagelet (Private)

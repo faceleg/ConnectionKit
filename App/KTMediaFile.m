@@ -362,11 +362,16 @@
     
     if (!width ||
         !height ||
-        ![self validateValue:&width forKey:@"width" error:NULL] ||
-        ![self validateValue:&height forKey:@"height" error:NULL] ||
-        ([width intValue] == 128 && [height intValue] == 128))
-    {
+        ![self validateValue:&width forKey:@"width" error:NULL]
+		||
+        ![self validateValue:&height forKey:@"height" error:NULL]
+#ifdef VARIANT_beta
         // TODO: The last of these conditions is to catch a earlier beta error. Remove it before final release.
+		||
+        ([width intValue] == 128 && [height intValue] == 128)
+#endif		
+		)
+    {
         [self cacheImageDimensions];
     }
 }
