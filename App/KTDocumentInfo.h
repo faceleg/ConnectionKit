@@ -48,6 +48,8 @@ typedef enum {
 - (NSDictionary *)metadata;
 - (void)setMetadata:(NSDictionary *)metadata;
 
+- (NSString *)appNameVersion;
+
 // Site menu
 - (NSArray *)pagesInSiteMenu;
 - (void)invalidatePagesInSiteMenuCache;

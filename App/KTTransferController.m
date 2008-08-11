@@ -517,11 +517,21 @@ static NSArray *sReservedNames = nil;
 	}
     
     
-    NSData *pageData = [publishingInfo objectForKey:@"sourceData"];
-    NSData *digest = [pageData sha1Digest];
+	NSString *pageString = [publishingInfo objectForKey:@"HTML"];
+	NSString *charset = [publishingInfo objectForKey:@"charset"];
+    NSStringEncoding encoding = [charset encodingFromCharset];
+	NSData *pageData = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
+	
+	
+	// The digest has to ignore the app version string
+	NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
+							   [[[self associatedDocument] documentInfo] appNameVersion]];
+	NSString *versionFreeHTML = [pageString stringByReplacing:versionString
+														 with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
+	NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
     
 	
-    if (staleOnly)
+	if (staleOnly)
     {
         // Compare digests to see if we should publish
         NSData *publishedDataDigest = [publishingInfo objectForKey:@"publishedDataDigest"];
@@ -563,16 +573,15 @@ static NSArray *sReservedNames = nil;
  *		sourceData			-	NSData representation of the page's HTML. nil if not for publishing (e.g. Download page)
  *		uploadPath			-	The page's path relative to   docRoot/subFolder/
  *		RSSData				-	If the collection has an RSS feed, its NSData representation
- *      publishedDataDigest -   Copy of the accessor by the same name
+ *      HTML				-   Page's source code
+ *		charset				-	Character set string
  *	
  *	If the page will not be published because it or a parent is a draft, returns nil.
  */
 - (NSDictionary *)publishingInfoForPage:(KTAbstractPage *)page
 {
 	// This MUST be called from the main thread
-	if (![NSThread isMainThread]) {
-		[NSException raise:NSObjectInaccessibleException format:@"-[KTTransferController publishingInfoForPage:] is not thread-safe"];
-	}
+	OBASSERTSTRING([NSThread isMainThread], @"-[KTTransferController publishingInfoForPage:] is not thread-safe");
 	
 	
 	// Bail early if the page is not for publishing
@@ -590,11 +599,11 @@ static NSArray *sReservedNames = nil;
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	if (![page isKindOfClass:[KTPage class]] || [(KTPage *)page shouldPublishHTMLTemplate])
 	{
-		NSString *pageString = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
+		NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
+		[info setObject:HTML forKey:@"HTML"];
+		
 		NSString *charset = [[masterPage master] valueForKey:@"charset"];
-		NSStringEncoding encoding = [charset encodingFromCharset];
-		NSData *data = [pageString dataUsingEncoding:encoding allowLossyConversion:YES];
-		[info setObject:data forKey:@"sourceData"];
+		[info setObject:charset forKey:@"charset"];
 	}
 	else if ([[[[page plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.DownloadElement"])
 	{
