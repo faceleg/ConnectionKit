@@ -810,7 +810,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 // Exceptions specific to Sandvox
-
+// BETA: I've commented some of those out that we want to hear about. Mike.
 - (BOOL)exceptionHandler:(NSExceptionHandler *)sender
    shouldHandleException:(NSException *)exception 
 					mask:(unsigned int)aMask
@@ -841,15 +841,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		|| ( [name isEqualToString:NSGenericException]
 			&& NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
 		
-		|| ( [name isEqualToString:NSRangeException]
+		/*|| ( [name isEqualToString:NSRangeException]
 			&& NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
-		
+		*/
 		)
 	{
 		return NO;
 	}
 	
-	if ( [name isEqualToString:NSInternalInconsistencyException] )
+	/*if ( [name isEqualToString:NSInternalInconsistencyException] )
 	{
 		// catch all Undo exceptions and simply reset
 		if ( [reason hasPrefix:@"_registerUndoObject"] )
@@ -868,9 +868,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[document resetUndoManager];
 			return NO;
 		}
-	}
+	}*/
 	
-	if ( [name isEqualToString:NSObjectInaccessibleException] )
+	/*if ( [name isEqualToString:NSObjectInaccessibleException] )
 	{
 		if ( [reason isEqualToString:@"CoreData could not fulfill a fault."] )
 		{
@@ -878,7 +878,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			// should change the selection to the root
 			return NO;
 		}
-	}
+	}*/
 	
 	if ( [name isEqualToString:NSRangeException] )
 	{
