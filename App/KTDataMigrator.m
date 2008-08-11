@@ -595,7 +595,7 @@
     
     // Migrate the special addX properties
     BOOL excludeFromSitemap = [oldPage boolForKey:@"addBool1"];
-    [newPage setBool:!excludeFromSitemap forKey:@"includeInSitemap"];
+    [newPage setBool:!excludeFromSitemap forKey:@"includeInSiteMap"];
     
     
     // Import plugin-specific properties
