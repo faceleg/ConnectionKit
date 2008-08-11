@@ -12,7 +12,6 @@
 #import "KTDocumentInfo.h"
 #import "KTManagedObject.h"
 #import "KTManagedObjectContext.h"
-#import "KTMedia.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
 #import "NSDocumentController+KTExtensions.h"
