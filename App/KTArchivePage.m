@@ -51,7 +51,12 @@
 	// Filter to only pages in our date range
 	NSDate *startDate = [self valueForKey:@"archiveStartDate"];
 	NSDate *endDate = [self valueForKey:@"archiveEndDate"];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"editableTimestamp BETWEEN { %@, %@ }", startDate, endDate];
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:
+							  @"editableTimestamp BETWEEN { %@, %@ } AND includeInIndex == 1",
+							  startDate,
+							  endDate];
+	
 	[result filterUsingPredicate:predicate];
 	
 	// Sort by date, newest first
