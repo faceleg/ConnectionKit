@@ -194,126 +194,119 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
-	@try
+	// Setup binding
+	[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
+	
+	// Now let the webview and the site outline initialize themselves.
+	[self webViewDidLoad];
+	[self linkPanelDidLoad];
+	
+	// Early on, window-related stuff
+	NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];
+	if ( nil != sizeString )
 	{
-		// Setup binding
-		[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
-
-		// Now let the webview and the site outline initialize themselves.
-		[self webViewDidLoad];
-		[self linkPanelDidLoad];
-		
-		// Early on, window-related stuff
-		NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];
-		if ( nil != sizeString )
-        {
-			NSSize size = NSSizeFromString(sizeString);
-			size.height = MAX(size.height, 200.0);
-			size.width = MAX(size.width,800.0);
-			[[self window] setContentSize:size];
-		}
-		
-		// Toolbar
-		[self setToolbars:[NSMutableDictionary dictionary]];
-		[self makeDocumentToolbar];
-		[self updatePopupButtonSizesSmall:[[self document] displaySmallPageIcons]];
-		
-		
-		// Design Chooser bindings
-		[oDesignsView bind:@"selectedDesign"
-				  toObject:[self siteOutlineController]
-			   withKeyPath:@"selection.master.design"
-				   options:nil];
-				   
-		
-		// Split View
-		// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
-		short sourceOutlineSize = [[[self document] documentInfo] integerForKey:@"sourceOutlineSize"];
-		if ( sourceOutlineSize > 0)
-        {
-			[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
-			[oSidebarSplitView adjustSubviews];
-		}
-		
-		// UI setup of box views
-		[oStatusBar setDrawsFrame:YES];
-		[oStatusBar setBorderMask:NTBoxTop];
-		
-		[oDetailPanel setDrawsFrame:YES];
-		[oDetailPanel setBorderMask:(NTBoxRight | NTBoxBottom)];
-		
-		NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
-		NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
-			initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
-		[oPageNameField setFormatter:formatter];
-		
-		
-		// Prepare the collection index.html popup
-		[oCollectionIndexExtensionButton bind:@"defaultValue"
-									 toObject:[self siteOutlineController]
-								  withKeyPath:@"selection.defaultIndexFileName"
-								      options:nil];
-		
-		[oCollectionIndexExtensionButton setMenuTitle:NSLocalizedString(@"Index file name",
-			"Popup menu title for setting the index.html file's extensions")];
-		
-		[oFileExtensionPopup bind:@"defaultValue"
-						 toObject:[self siteOutlineController]
-					  withKeyPath:@"selection.defaultFileExtension"
-						  options:nil];
-		
-		
-		
-		// Link Popup in address bar
-		//		[[oLinkPopup cell] setUsesItemFromMenu:NO];
-		//		[oLinkPopup setIconImage:[NSImage imageNamed:@"links"]];
-		//		[oLinkPopup setShowsMenuWhenIconClicked:YES];
-		//		[oLinkPopup setArrowImage:nil];	// we have our own arrow, thank you
-		
-		
-		
-		// Hide address bar if it's hidden (it's showing to begin with, in the nib)
-		if (![[self document] showDesigns])
-		{
-			[oDesignsSplitPane collapse];	// collapse the split pane -- without animation.
-		}
-		else	// initialize the view
-		{
-			[self splitView:oDesignsSplitView didExpand:oDesignsSplitPane];
-		}
-		
-		// Same with status bar
-		if (![[self document] displayStatusBar])
-		{
-			[self showStatusBar:NO];
-		}
-				
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(anyWindowWillClose:)
-													 name:NSWindowWillCloseNotification
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(updateBuyNow:)
-													 name:kKSLicenseStatusChangeNotification
-												   object:nil];
-		[self updateBuyNow:nil];	// update them now
-		
-		/// turn off undo within the cell to avoid exception
-		/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
-		/// this still leaves the setting of keywords for the page undo'able, it's
-		/// just now that typing inside the field is now not undoable
-		[[oKeywordsField cell] setAllowsUndo:NO];
-		
-		[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
-				   withObject:nil
-				   afterDelay:0.0];
+		NSSize size = NSSizeFromString(sizeString);
+		size.height = MAX(size.height, 200.0);
+		size.width = MAX(size.width,800.0);
+		[[self window] setContentSize:size];
 	}
-	@catch (NSException *exception)
+	
+	// Toolbar
+	[self setToolbars:[NSMutableDictionary dictionary]];
+	[self makeDocumentToolbar];
+	[self updatePopupButtonSizesSmall:[[self document] displaySmallPageIcons]];
+	
+	
+	// Design Chooser bindings
+	[oDesignsView bind:@"selectedDesign"
+			  toObject:[self siteOutlineController]
+		   withKeyPath:@"selection.master.design"
+			   options:nil];
+	
+	
+	// Split View
+	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
+	short sourceOutlineSize = [[[self document] documentInfo] integerForKey:@"sourceOutlineSize"];
+	if ( sourceOutlineSize > 0)
 	{
-		LOG((@"%@ -- Caught %@: %@", NSStringFromSelector(_cmd), [exception name], [exception reason]));
-		[exception raise];		// re-raise, this is a bad error
+		[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
+		[oSidebarSplitView adjustSubviews];
 	}
-    
+	
+	// UI setup of box views
+	[oStatusBar setDrawsFrame:YES];
+	[oStatusBar setBorderMask:NTBoxTop];
+	
+	[oDetailPanel setDrawsFrame:YES];
+	[oDetailPanel setBorderMask:(NTBoxRight | NTBoxBottom)];
+	
+	NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
+	NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
+							   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
+	[oPageNameField setFormatter:formatter];
+	
+	
+	// Prepare the collection index.html popup
+	[oCollectionIndexExtensionButton bind:@"defaultValue"
+								 toObject:[self siteOutlineController]
+							  withKeyPath:@"selection.defaultIndexFileName"
+								  options:nil];
+	
+	[oCollectionIndexExtensionButton setMenuTitle:NSLocalizedString(@"Index file name",
+																	"Popup menu title for setting the index.html file's extensions")];
+	
+	[oFileExtensionPopup bind:@"defaultValue"
+					 toObject:[self siteOutlineController]
+				  withKeyPath:@"selection.defaultFileExtension"
+					  options:nil];
+	
+	
+	
+	// Link Popup in address bar
+	//		[[oLinkPopup cell] setUsesItemFromMenu:NO];
+	//		[oLinkPopup setIconImage:[NSImage imageNamed:@"links"]];
+	//		[oLinkPopup setShowsMenuWhenIconClicked:YES];
+	//		[oLinkPopup setArrowImage:nil];	// we have our own arrow, thank you
+	
+	
+	
+	// Hide address bar if it's hidden (it's showing to begin with, in the nib)
+	if (![[self document] showDesigns])
+	{
+		[oDesignsSplitPane collapse];	// collapse the split pane -- without animation.
+	}
+	else	// initialize the view
+	{
+		[self splitView:oDesignsSplitView didExpand:oDesignsSplitPane];
+	}
+	
+	// Same with status bar
+	if (![[self document] displayStatusBar])
+	{
+		[self showStatusBar:NO];
+	}
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(anyWindowWillClose:)
+												 name:NSWindowWillCloseNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(updateBuyNow:)
+												 name:kKSLicenseStatusChangeNotification
+											   object:nil];
+	[self updateBuyNow:nil];	// update them now
+	
+	/// turn off undo within the cell to avoid exception
+	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
+	/// this still leaves the setting of keywords for the page undo'able, it's
+	/// just now that typing inside the field is now not undoable
+	[[oKeywordsField cell] setAllowsUndo:NO];
+	
+	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
+						   withObject:nil
+						   afterDelay:0.0];
+	
+	
     // Media Manager
     //[[self document] setOldMediaManager:[KTOldMediaManager mediaManagerWithDocument:[self document]]];
 	
@@ -321,17 +314,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self showInfo:[[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayInfo"]];
 	
 	myLastClickedPoint = NSZeroPoint;
-		
+	
 	// register for updates
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateSelectedItemForDocWindow:)
 												 name:kKTItemSelectedNotification
 											   object:nil];
 	
-//	[[NSNotificationCenter defaultCenter] addObserver:self
-//											 selector:@selector(infoWindowMayNeedRefreshing:)
-//												 name:kKTInfoWindowMayNeedRefreshingNotification
-//											   object:nil];	
+	//	[[NSNotificationCenter defaultCenter] addObserver:self
+	//											 selector:@selector(infoWindowMayNeedRefreshing:)
+	//												 name:kKTInfoWindowMayNeedRefreshingNotification
+	//											   object:nil];	
 	
 	if ( ![[self document] isReadOnly] )
 	{
@@ -418,11 +411,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Missing Media
 
-/*  Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
- */
 - (void)checkForMissingMedia
 {
-	@try
+	@try	// Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
     {
         // Check for missing media files. If any are missing alert the user
         NSSet *missingMedia = [[(KTDocument *)[self document] mediaManager] missingMediaFiles];
@@ -446,7 +437,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     @catch (NSException *exception)
     {
         [NSApp reportException:exception];
-        @throw;
     }
 }
 

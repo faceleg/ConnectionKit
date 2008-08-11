@@ -603,7 +603,7 @@
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id<WebPolicyDecisionListener>)listener
 {
-	@try
+	@try	// To stop WebKit swallowing any exceptions which occur in this method.
 	{
 		// get the url from the information dictionary:
 		NSURL *url = [actionInformation objectForKey:@"WebActionOriginalURLKey"];

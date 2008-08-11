@@ -612,32 +612,31 @@
 // main entry point for saving the document programmatically
 - (IBAction)autosaveDocument:(id)sender
 {
-	// the timer will fire whether there are changes to save or not
-	// but we only want to save if hasChanges
-	if ( [[self managedObjectContext] hasChanges] && (nil != [self fileURL]) )
+	@try	 // Because it's on a timer, we have to catch any exceptions ourself.
 	{
-		//LOGMETHOD;
-		OBASSERT([NSThread isMainThread]);
-		
-		// remember the current status. PURPOSELY LEAKED AS WE RELEASE IT IN THE CALLBACK
-		NSString *status = [[[self windowController] status] copy];
-		[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
-		
-		// turn off timers before doing save
-		[self suspendAutosave];
-
-		// Save the document through normal channels (ultimately calls writeToURL:::). Because it's on a timer, we have to catch any
-        // exceptions ourself.
-		@try
-        {
-            [self saveDocumentWithDelegate:self
+        // the timer will fire whether there are changes to save or not
+		// but we only want to save if hasChanges
+		if ( [[self managedObjectContext] hasChanges] && (nil != [self fileURL]) )
+		{
+			//LOGMETHOD;
+			OBASSERT([NSThread isMainThread]);
+			
+			// remember the current status. PURPOSELY LEAKED AS WE RELEASE IT IN THE CALLBACK
+			NSString *status = [[[self windowController] status] copy];
+			[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
+			
+			// turn off timers before doing save
+			[self suspendAutosave];
+			
+			// Save the document through normal channels (ultimately calls writeToURL:::).
+		    [self saveDocumentWithDelegate:self
                            didSaveSelector:@selector(document:didAutosave:contextInfo:)
                                contextInfo:status];
         }
-        @catch (NSException *exception)
-        {
-            [NSApp reportException:exception];
-        }
+	}
+	@catch (NSException *exception)
+	{
+		[NSApp reportException:exception];
 	}
 }
 

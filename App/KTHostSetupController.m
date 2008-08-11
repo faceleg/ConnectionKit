@@ -165,110 +165,69 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (id)initWithHostProperties:(KTHostProperties *)hostProperties
 {
-	@try
+	[super initWithWindowNibName:@"HostSetup" owner:self];
+	
+	[self setProperties:hostProperties];
+	
+	//		// there are 2 keys by default in the dict
+	//		[self setValue:[NSNumber numberWithBool:[[[hostProperties currentValues] allKeys] count] > 2]
+	//				forKey:@"isEditing"];
+	
+	BOOL isNewSetup = ( (NO == [hostProperties boolForKey:@"localHosting"]) && (NO == [hostProperties boolForKey:@"remoteHosting"]) );
+	[self setValue:[NSNumber numberWithBool:!isNewSetup]
+			forKey:@"isEditing"];
+	
+	
+	if ([[self valueForKey:@"localHosting"] intValue] == 1 && 
+		[[self valueForKey:@"remoteHosting"] intValue] == 1)
 	{
-		[super initWithWindowNibName:@"HostSetup" owner:self];
-		
-		[self setProperties:hostProperties];
-		
-//		// there are 2 keys by default in the dict
-//		[self setValue:[NSNumber numberWithBool:[[[hostProperties currentValues] allKeys] count] > 2]
-//				forKey:@"isEditing"];
-		
-		BOOL isNewSetup = ( (NO == [hostProperties boolForKey:@"localHosting"]) && (NO == [hostProperties boolForKey:@"remoteHosting"]) );
-		[self setValue:[NSNumber numberWithBool:!isNewSetup]
-				forKey:@"isEditing"];
-
-		
-		if ([[self valueForKey:@"localHosting"] intValue] == 1 && 
-			[[self valueForKey:@"remoteHosting"] intValue] == 1)
+		[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
+	}
+	
+	if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
+		&& nil == [self valueForKey:@"dotMacDomainStyle"])
+	{
+		// It was not set, so assume it's a legacy document, which is homepage.mac.com
+		[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+	}
+	
+	// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
+	[self tryToReachLocalHost:[hostProperties integerForKey:@"localHosting"]];	// start or stop the reaching process
+	[self addObserver:self forKeyPath:@"localHosting" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"localHostName" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"localSharedMatrix" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"protocol" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"userName" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"hostName" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"dotMacDomainStyle" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"dotMacPersonalDomain" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self setTrail:[NSMutableArray array]];
+	
+	if (nil == [[self properties] valueForKey:@"localHostName"])
+	{
+	}
+	
+	if (nil == [[self properties] valueForKey:@"hostTypeMatrix"])
+	{
+		// Default to my ISP if there is no .mac name set up for this account right now.
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
+		int matrixSelection =  (nil == iToolsMember || [iToolsMember isEqualToString:@""]) ? OTHER_ISP : DOT_MAC;
 		{
-			[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
-		}
-		
-		if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
-			&& nil == [self valueForKey:@"dotMacDomainStyle"])
-		{
-			// It was not set, so assume it's a legacy document, which is homepage.mac.com
-			[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
-		}
-
-		// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
-		[self tryToReachLocalHost:[hostProperties integerForKey:@"localHosting"]];	// start or stop the reaching process
-		[self addObserver:self forKeyPath:@"localHosting" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"localHostName" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"localSharedMatrix" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"protocol" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"userName" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"hostName" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"dotMacDomainStyle" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self addObserver:self forKeyPath:@"dotMacPersonalDomain" options:(NSKeyValueObservingOptionNew) context:nil];
-		[self setTrail:[NSMutableArray array]];
-		
-		if (nil == [[self properties] valueForKey:@"localHostName"])
-		{
-/* Not doing this branch any more ... no more homebasedict.
-			// Try to figure out host name based on external IP address.
-			NSString *hostIP = [[[NSApp delegate] homeBaseDict] objectForKey:@"REMOTE_ADDR"];
-			if (nil != hostIP)
-			{
-				LOG((@"Calling [NSHost hostWithAddress:%@]", hostIP));
-				[[NSApp delegate] showGenericProgressPanelWithMessage:NSLocalizedString(@"Initializing host setup assistant...", "message shown when we are about to show host setup sheet") image:nil];
-
-				// This may block ...
-				NSString *resolver = [[NSUserDefaults standardUserDefaults] objectForKey:@"hostResolver"];
-				NSHost *host = [NSClassFromString(resolver) hostWithAddress:hostIP];
-				
-				[[NSApp delegate] hideGenericProgressPanel];
-				
-				if (nil != host)	// only do all this if we got a host back ... maybe not if not online
-				{
-					NSString *hostName = [host name];
-					if (hostName != nil && ![hostName isEqualToString:@""])
-					{
-						// Do a quick test to see if the IP address is part of the host name,
-						// which is a good reason NOT to use the name
-						NSArray *dotComponents = [hostIP componentsSeparatedByString:@"."];
-						if (	([dotComponents count] >= 4)
-							&&	(NSNotFound == [hostName rangeOfString:[dotComponents objectAtIndex:0]].location)
-							&&	(NSNotFound == [hostName rangeOfString:[dotComponents objectAtIndex:1]].location)
-							&&	(NSNotFound == [hostName rangeOfString:[dotComponents objectAtIndex:2]].location)
-							&&	(NSNotFound == [hostName rangeOfString:[dotComponents objectAtIndex:3]].location) )
-						{
-							[self setValue:hostName forKey:@"localHostName"];
-						}
-					}
-				}
-			}
-*/
-		}
-
-		if (nil == [[self properties] valueForKey:@"hostTypeMatrix"])
-		{
-			// Default to my ISP if there is no .mac name set up for this account right now.
-			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			NSString *iToolsMember = [defaults objectForKey:@"iToolsMember"];
-			int matrixSelection =  (nil == iToolsMember || [iToolsMember isEqualToString:@""]) ? OTHER_ISP : DOT_MAC;
-			{
-				[self setValue:[NSNumber numberWithInt:matrixSelection] forKey:@"hostTypeMatrix"];
-			}
-		}
-		if (nil == [[self properties] valueForKey:@"localSharedMatrix"])
-		{
-			[self setValue:[NSNumber numberWithInt:HOMEDIR] forKey:@"localSharedMatrix"];
-		}
-		if (nil == [[self properties] valueForKey:@"protocol"])
-		{
-			[self setValue:@"FTP" forKey:@"protocol"];
-		}
-		if (nil == [[self properties] valueForKey:@"createNewHost"] && ![[self valueForKey:@"isEditing"] boolValue] )
-		{
-			[self setValue:[NSNumber numberWithBool:YES] forKey:@"createNewHost"];
+			[self setValue:[NSNumber numberWithInt:matrixSelection] forKey:@"hostTypeMatrix"];
 		}
 	}
-	@finally		// don't leave without closing this!
+	if (nil == [[self properties] valueForKey:@"localSharedMatrix"])
 	{
-		[[NSApp delegate] hideGenericProgressPanel];
+		[self setValue:[NSNumber numberWithInt:HOMEDIR] forKey:@"localSharedMatrix"];
+	}
+	if (nil == [[self properties] valueForKey:@"protocol"])
+	{
+		[self setValue:@"FTP" forKey:@"protocol"];
+	}
+	if (nil == [[self properties] valueForKey:@"createNewHost"] && ![[self valueForKey:@"isEditing"] boolValue] )
+	{
+		[self setValue:[NSNumber numberWithBool:YES] forKey:@"createNewHost"];
 	}
 	return self;
 }
@@ -918,14 +877,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"homePageURL"] != nil)
 	{
-		NSURL *url = nil;
-		@try {
-			url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"homePageURL"]];
-		} @catch (NSException *ex) {
-			
-		}
-		if (url != nil) {
+		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
+		
+		if (url) {
 			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+		}
+		else
+		{
+			NSBeep();
 		}
 	}
 }
@@ -934,14 +893,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"setupURL"] != nil)
 	{
-		NSURL *url = nil;
-		@try {
-			url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"setupURL"]];
-		} @catch (NSException *ex) {
-			
-		}
+		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
+		
 		if (url != nil) {
 			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+		}
+		else
+		{
+			NSBeep();
 		}
 	}
 }

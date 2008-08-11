@@ -471,8 +471,6 @@
 	KTPage *page = (KTPage *)[self component];
 	NSMutableString *string = [NSMutableString string];
 	
-	@try
-	{
 		[[page managedObjectContext] makeAllPluginsPerformSelector:@selector(addSitewideTextToEndBody:forPage:)
 														withObject:string
 														  withPage:[[page documentInfo] root]];
@@ -482,11 +480,6 @@
 		
 		//[page recursiveComponentPerformSelector:@selector(addPageTextToEndBody:forPage:) withObject:string];
 		/// Wasn't actually being used by any plugins and is identical to -addLevelTextToEndBody:
-	}
-	@finally
-	{
-	}
-	
 	return string;
 }
 
@@ -495,8 +488,6 @@
 	KTPage *page = (KTPage *)[self component];
 	NSMutableString *string = [NSMutableString string];
 	
-	@try
-	{
 		//[[page root] recursiveComponentPerformSelector:@selector(addSitewideTextToHead:forPage:) withObject:string];
 		/// Disabled this for 1.2.1 since it currently slows down a lot on a large site.
 		
@@ -505,11 +496,6 @@
 		/// Unusued in any plugins so disabled for performance.
 		
 		[page makeComponentsPerformSelector:@selector(addPageTextToHead:forPage:) withObject:string withPage:page recursive:NO];
-	}
-	@finally
-	{
-	}
-	
 	return string;
 }
 

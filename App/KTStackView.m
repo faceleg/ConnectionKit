@@ -123,7 +123,8 @@ static int compareBasedOnArray(id object1, id object2, void *orderedObjects)
     [_window setAutodisplay: NO];
     [_window disableFlushWindow];
     
-    @try {
+    @try
+	{
         subviews = [dataSource subviewsForStackView: self];
         
         // Remove any current subviews that aren't in the new list.  We assume that the number of views is small so an O(N*M) loop is OK

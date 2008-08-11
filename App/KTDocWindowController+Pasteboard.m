@@ -155,11 +155,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         NSArray *pasteboardReps = [thePagelets valueForKey:@"pasteboardRepresentation"];
 		[aPboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPageletsPboardType];
 	}
-    @catch (NSException *exception)
-    {
-        LOG((@"copyPagelets:toPasteboard: caught exception! name:%@ reason:%@", [exception name], [exception reason]));
-    }
-	@finally
+    @finally
 	{
 		[[self document] resumeAutosave];
 	}
@@ -426,7 +422,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     if ( [type length] > 0 )
     {
-        @try
+        @try	// Just in case there's any reall screwy data on the pasteboard
         {
             NSData *data = [aPboard dataForType:kKTPagesPboardType];
             if ([data length] > 0)
@@ -441,7 +437,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         }
         @catch (NSException *exception)
         {
-            LOG((@"pastePagesFromPasteboard:toParent: caught exception name:%@ reason:%@", [exception name], [exception reason]));
+            [NSApp reportException:exception];
         }
     }
     else
@@ -554,7 +550,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     if ([type length] > 0)
     {
-        @try
+        @try	// Just in case there's any reall screwy data on the pasteboard
         {
 			NSData *data = [aPboard dataForType:kKTPageletsPboardType];
 			NSArray *pasteboardReps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -584,7 +580,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         }
         @catch (NSException *exception)
         {
-            LOG((@"pastePageletsFromPasteboard:toPage: caught exception name:%@ reason:%@", [exception name], [exception reason]));
+            [NSApp reportException:exception];
         }
     }
     else

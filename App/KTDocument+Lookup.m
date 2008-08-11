@@ -53,14 +53,8 @@
 {
 	NSMutableArray *RSSCollectionArray = [NSMutableArray array];
 	
-	@try
-	{
-		KTPage *root = [self root];
-		[root makeSelfOrDelegatePerformSelector:@selector(addRSSCollectionsToArray:forPage:) withObject:RSSCollectionArray withPage:root recursive:YES];
-	}
-	@finally
-	{
-	}
+	KTPage *root = [self root];
+	[root makeSelfOrDelegatePerformSelector:@selector(addRSSCollectionsToArray:forPage:) withObject:RSSCollectionArray withPage:root recursive:YES];
 	return [RSSCollectionArray count] > 0;
 }
 

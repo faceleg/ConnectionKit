@@ -1192,6 +1192,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
                                 [previouslyOpenDocument close];
                                 previouslyOpenDocument = nil;
                             }
+							
+							[NSApp reportException:exception];
                         }
                         
                         if ( nil != localError )

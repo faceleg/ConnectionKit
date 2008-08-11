@@ -203,14 +203,7 @@
 {
 	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
 
-	@try
-	{
-		[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
-	}
-	@finally
-	{
-	}
-	
+	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
 	BOOL result = (KTHTML401DocType != defaultDocType);
 	return result;
 }
@@ -219,14 +212,8 @@
 {
 	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
 
-	@try
-	{
-		[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
-	}
-	@finally
-	{
-	}
-
+	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
+	
 	NSString *result = nil;
 	switch (defaultDocType)
 	{

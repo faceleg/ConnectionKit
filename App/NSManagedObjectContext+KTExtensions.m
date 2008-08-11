@@ -41,38 +41,21 @@
 
 - (NSArray *)objectsWithFetchRequestTemplateWithName:(NSString *)aTemplateName
 							   substitutionVariables:(NSDictionary *)aDictionary
-									error:(NSError **)anError
+											   error:(NSError **)anError
 {
 	NSArray *fetchedObjects = nil;
 	NSFetchRequest *fetchRequest = nil;
 	NSError *localError = nil;
-
-	@try
-	{
-		// note to future debuggers: we ALWAYS need to lock the context here to prevent
-		// a "statement is still active" error. if we only lockIfNecessary, it's possible
-		// that this method could be called on the main thread while another thread is
-		// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-		//[self lockPSCAndSelf];
-		NSManagedObjectModel *model= [[self persistentStoreCoordinator] managedObjectModel];
-		fetchRequest = [model fetchRequestFromTemplateWithName:aTemplateName
-										 substitutionVariables:aDictionary];
-		fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
-	}
-	@catch (NSException *exception)
-	{
-		NSLog(@"error: %@ threw exception, name:%@ reason:%@", 
-			  [fetchRequest shortDescription], [exception name], [exception reason]);
-	}	
-	@finally
-	{
-		//[self unlockPSCAndSelf];
-		
-		if ( (nil == fetchedObjects) && (nil != anError) )
-		{
-			*anError = localError;
-		}		
-	}
+	
+	// note to future debuggers: we ALWAYS need to lock the context here to prevent
+	// a "statement is still active" error. if we only lockIfNecessary, it's possible
+	// that this method could be called on the main thread while another thread is
+	// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
+	//[self lockPSCAndSelf];
+	NSManagedObjectModel *model= [[self persistentStoreCoordinator] managedObjectModel];
+	fetchRequest = [model fetchRequestFromTemplateWithName:aTemplateName
+									 substitutionVariables:aDictionary];
+	fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
 	
 	return fetchedObjects;
 }
@@ -98,31 +81,12 @@
 		[fetchRequest setPredicate:aPredicate];
 	}
 	
-	@try
-	{
-		// note to future debuggers: we ALWAYS need to lock the context here to prevent
-		// a "statement is still active" error. if we only lockIfNecessary, it's possible
-		// that this method could be called on the main thread while another thread is
-		// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-		//[self lockPSCAndSelf];
-		fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
-	}
-	@catch (NSException *exception)
-	{
-		NSLog(@"error: %@ threw exception, name:%@ reason:%@", 
-			  [fetchRequest shortDescription], [exception name], [exception reason]);
-	}	
-	@finally
-	{
-		//[self unlockPSCAndSelf];
-
-		if ( nil == fetchedObjects && nil != anError )
-		{
-			*anError = localError;
-		}
-		
-		[fetchRequest release];
-	}
+	// note to future debuggers: we ALWAYS need to lock the context here to prevent
+	// a "statement is still active" error. if we only lockIfNecessary, it's possible
+	// that this method could be called on the main thread while another thread is
+	// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
+	//[self lockPSCAndSelf];
+	fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
 	
 	return fetchedObjects;
 }

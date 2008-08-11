@@ -253,42 +253,23 @@
 	return result;
 }
 
-// NOTE: getters always lockPSCAndMOC, setters only conditionally lockContext
+/*	Convenience method for doing the -willAccess -primitiveValue -didAccess set of methods.
+ */
 - (id)wrappedValueForKey:(NSString *)aKey
 {
-	id result = nil;
-		@try
-	{
-		[self willAccessValueForKey:aKey];
-		result = [self primitiveValueForKey:aKey];
-		[self didAccessValueForKey:aKey];
-	}
-	@catch ( NSException *e ) 
-	{
-		NSLog(@"error: wrappedValueforKey: %@ threw exception %@ \"%@\"", aKey, [e name], [e reason]);
-		if ( [[e name] isEqualToString:@"NSObjectInaccessibleException"] )
-		{
-			result = nil;
-		}
-		else @throw e;
-	}
-	@finally
-	{
-		//[self unlockPSCAndMOC];
-	}
-	
-    return result;
+	[self willAccessValueForKey:aKey];
+	id result = [self primitiveValueForKey:aKey];
+	[self didAccessValueForKey:aKey];
+	return result;
 }
 
 // setWrappedValue:forKey: SHOULD NOT BE USED TO SET A RELATIONSHIP (IT WILL DIE DOWNSTREAM)
 // setWrappedValue:forKey: ALSO WILL NOT SET BOTH SIDES OF A RELATIONSHIP
 - (void)setWrappedValue:(id)aValue forKey:(NSString *)aKey
 {
-	//[self lockPSCAndMOC];
-    [self willChangeValueForKey:aKey];
+	[self willChangeValueForKey:aKey];
     [self setPrimitiveValue:aValue forKey:aKey];
     [self didChangeValueForKey:aKey];
-	//[self unlockPSCAndMOC];
 }
 
 - (id)delegableWrappedValueForKey:(NSString *)aKey

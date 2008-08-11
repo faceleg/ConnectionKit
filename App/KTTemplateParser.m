@@ -338,18 +338,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 					//                    LOG((@"keyPath = %@", keyPath));
                     
                     // do we already have an instance in the page's cache?
-                    id element = nil;
-					
-					// Wrap this in an exception handler so we are more forgiving of errors
-					@try {
-						element = [[self cache] valueForKeyPath:keyPath];
-						
-					}
-					@catch (NSException *exception) {
-						NSLog(@"HTMLStringByScanning:... %@ %@", keyPath, [exception reason]);
-					}
-                    
-                    if ( nil == element ) {
+                    id element = [[self cache] valueForKeyPath:keyPath];
+					                    if ( nil == element ) {
 						//LOG((@"%@ [[=%@]] element not found", inContext, keyPath));
 						LOG((@"[[=%@]] element not found", keyPath));
 						continue;
@@ -787,42 +777,35 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	if ( [inScanner scanUpToString:endForEachDelim intoString:&stuffToRepeat] && 
 		[inScanner scanString:endForEachDelim intoString:nil] )
 	{
-		@try
-		{	// Wrap this in an exception handler so we are more forgiving of errors
+		NSString *keyForNewElement = [params objectAtIndex:1];
+		NSEnumerator *theEnum = [arrayToRepeat objectEnumerator];
+		id object;
+		
+		while (nil != (object = [theEnum nextObject]) )
+		{
+			NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
 			
-			NSString *keyForNewElement = [params objectAtIndex:1];
-			NSEnumerator *theEnum = [arrayToRepeat objectEnumerator];
-			id object;
+			// We override the specified key in the cache so that KVC calls are directed to the right object
+			[[self cache] overrideKey:keyForNewElement withValue:object];
 			
-			while (nil != (object = [theEnum nextObject]) )
+			// need a scanner up to next endForEach
+			NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
+			[eachScanner setCharactersToBeSkipped:nil];
+			
+			NSString *eachResult = [self HTMLStringByScanning:eachScanner];
+			[result appendString:eachResult];
+			
+			// And then remove the override
+			[[self cache] removeOverrideForKey:keyForNewElement];
+			
+			[innerPool release];
+			
+			[self incrementCurrentForeachLoop];
+			
+			if ([self currentForeachLoopIndex] > [self currentForeachLoopCount])	// break if we've hit the max
 			{
-				NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-				
-				// We override the specified key in the cache so that KVC calls are directed to the right object
-				[[self cache] overrideKey:keyForNewElement withValue:object];
-				
-				// need a scanner up to next endForEach
-				NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
-				[eachScanner setCharactersToBeSkipped:nil];
-				
-				NSString *eachResult = [self HTMLStringByScanning:eachScanner];
-				[result appendString:eachResult];
-				
-				// And then remove the override
-				[[self cache] removeOverrideForKey:keyForNewElement];
-				
-				[innerPool release];
-				
-				[self incrementCurrentForeachLoop];
-				
-				if ([self currentForeachLoopIndex] > [self currentForeachLoopCount])	// break if we've hit the max
-				{
-					break;
-				}
+				break;
 			}
-		}
-		@catch (NSException *exception) {
-			NSLog(@"foreachWithParameters:... Caught %@: %@", [exception name], [exception reason]);
 		}
 	}
 	else
