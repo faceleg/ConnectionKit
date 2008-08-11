@@ -1029,7 +1029,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[NSApp terminate:nil];
 		}
 		
-#ifdef VARIANT_beta
+#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
 		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
         
