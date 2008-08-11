@@ -2005,15 +2005,10 @@
 		3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KTExtensions.m"; sourceTree = "<group>"; };
 		3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView+KTExtensions.h"; sourceTree = "<group>"; };
 		3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+KTExtensions.m"; sourceTree = "<group>"; };
-		3CEC4EE20874A9C000ADFE7A /* KTMediaURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaURLProtocol.h; sourceTree = "<group>"; };
-		3CEC4EE30874A9C000ADFE7A /* KTMediaURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaURLProtocol.m; sourceTree = "<group>"; };
 		3CEC86140BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.h; sourceTree = "<group>"; };
 		3CEC86150BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.m; sourceTree = "<group>"; };
 		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
 		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
-		3CF941B60D623B8D00B1C83D /* KTMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMedia.h; sourceTree = "<group>"; };
-		3CF941B80D623B9E00B1C83D /* KTMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMedia.m; sourceTree = "<group>"; };
-		3CF941BA0D623BA400B1C83D /* KTMedia+ScaledImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMedia+ScaledImages.m"; sourceTree = "<group>"; };
 		3CF941BC0D623BAB00B1C83D /* KTMediaRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaRef.h; sourceTree = "<group>"; };
 		3CF941BE0D623BB000B1C83D /* KTMediaRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaRef.m; sourceTree = "<group>"; };
 		3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStoredDictionary.h; sourceTree = "<group>"; };
@@ -2058,8 +2053,6 @@
 		3CF942100D62439000B1C83D /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/InlineImageElement.nib; sourceTree = "<group>"; };
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
-		3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTKeypathURLProtocol.h; sourceTree = "<group>"; };
-		3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTKeypathURLProtocol.m; sourceTree = "<group>"; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+ModalOperation.m"; sourceTree = "<group>"; };
 		7947986F0A7DAE0900425FB8 /* KTThreadedURLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTThreadedURLLoader.h; sourceTree = "<group>"; };
@@ -3245,22 +3238,15 @@
 				3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */,
 				CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */,
 				CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */,
-				3CFD9B6C082FE89F0041ACAF /* KTKeypathURLProtocol.h */,
-				3CFD9B6D082FE89F0041ACAF /* KTKeypathURLProtocol.m */,
 				27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */,
 				3CF941D00D623BEA00B1C83D /* KTCachedImage.h */,
 				3CF941D20D623BEE00B1C83D /* KTCachedImage.m */,
 				3C202D2207DFC0AA00DE4994 /* KTOldMediaManager.h */,
 				3C202D2307DFC0AA00DE4994 /* KTOldMediaManager.m */,
-				3CF941B60D623B8D00B1C83D /* KTMedia.h */,
-				3CF941B80D623B9E00B1C83D /* KTMedia.m */,
-				3CF941BA0D623BA400B1C83D /* KTMedia+ScaledImages.m */,
 				79C982BF09E34EDF0026A7B7 /* KTMediaDataProxy.h */,
 				79C982C009E34EDF0026A7B7 /* KTMediaDataProxy.m */,
 				3CF941BC0D623BAB00B1C83D /* KTMediaRef.h */,
 				3CF941BE0D623BB000B1C83D /* KTMediaRef.m */,
-				3CEC4EE20874A9C000ADFE7A /* KTMediaURLProtocol.h */,
-				3CEC4EE30874A9C000ADFE7A /* KTMediaURLProtocol.m */,
 				3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */,
 				3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */,
 				3CF941C40D623BC600B1C83D /* KTStoredArray.h */,
