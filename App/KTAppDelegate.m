@@ -293,7 +293,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithBool:NO],			@"KTLogAllContextChanges",
 
-#ifdef VARIANT_beta
+#ifdef VARIANT_BETA
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
 #else
@@ -835,7 +835,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		|| ( [name isEqualToString:NSGenericException]
 			&& NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
-#ifndef VARIANT_beta
+#ifndef VARIANT_BETA
 		|| ( [name isEqualToString:NSRangeException]
 			&& NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
 #endif
@@ -844,7 +844,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		return NO;
 	}
 	
-#ifndef VARIANT_beta
+#ifndef VARIANT_BETA
 	if ( [name isEqualToString:NSInternalInconsistencyException] )
 	{
 		// catch all Undo exceptions and simply reset
@@ -1029,7 +1029,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[NSApp terminate:nil];
 		}
 		
-#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
         
@@ -1298,7 +1298,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
     applicationIsLaunching = NO; // we're done
 }
 
-#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 
 - (void) alertAndQuit
 {
@@ -1755,7 +1755,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (IBAction)openSupportForum:(id)sender
 {
 	
-#ifdef VARIANT_beta
+#ifdef VARIANT_BETA
 	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
 #else
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
@@ -1804,7 +1804,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}	
 }
 
-#if defined(VARIANT_beta) && defined(EXPIRY_TIMESTAMP)
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus
 {
 #ifndef DEBUG
