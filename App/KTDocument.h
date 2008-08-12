@@ -168,8 +168,8 @@ typedef enum {
 - (NSString *)backupPathForOriginalPath:(NSString *)aPath;
 
 // snapshots
-- (void)snapshotPersistentStore:(id)notUsedButRequiredParameter;
-- (void)revertPersistentStoreToSnapshot:(id)notUsedButRequiredParameter;
+- (void)snapshotPersistentStore;
+- (void)revertPersistentStoreToSnapshot;
 
 // spotlight
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;

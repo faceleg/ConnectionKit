@@ -597,7 +597,7 @@
 				}
 				if (KTSnapshotOnOpening == mySnapshotOrBackupUponFirstSave)
 				{
-					[self snapshotPersistentStore:nil];
+					[self snapshotPersistentStore];
 				}
 			}
 						

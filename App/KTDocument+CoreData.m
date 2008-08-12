@@ -30,6 +30,7 @@
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "Registration.h"
 
@@ -440,7 +441,7 @@
 
 #pragma mark snapshot
 
-- (void)snapshotPersistentStore:(id)notUsedButRequiredParameter
+- (void)snapshotPersistentStore
 {	
 	// perform file operations using Workspace
 	NSArray *files = nil;
@@ -460,7 +461,7 @@
 		if ( !didMoveOldSnapshotToTrash )
 		{
 			NSString *snapshotPathAsDisplayPath = [[snapshotPath stringByAbbreviatingWithTildeInPath] stringBySubstitutingRightArrowForPathSeparator];
-			NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Snaphot Failed", "alert: snapshot failed")
+			NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed")
 											 defaultButton:NSLocalizedString(@"OK", "OK Button")
 										   alternateButton:nil 
 											   otherButton:nil 
@@ -482,33 +483,17 @@
 		[self createSnapshotDirectoryIfNecessary];
 	}
 	
-	// save all contexts
-	//if ( [self hasUnsavedChanges] )
-	if ( [[self managedObjectContext] hasChanges] )
-	{
-		[self autosaveDocument:nil];
-	}
 	
-	// suspend saving
-	[self suspendAutosave];	
+	NSString *destPath = [[self snapshotDirectory] stringByAppendingPathComponent:[[self fileURL] lastPathComponent]];
 	
-	// copy file to snapshotPath
-	NSString *filePath = [[self fileURL] path];
-	NSString *destPath = [[self snapshotDirectory] stringByAppendingPathComponent:[filePath lastPathComponent]];
-	BOOL didSnapshot = [[NSFileManager defaultManager] copyPath:filePath toPath:destPath handler:self];
-
+	NSError *error;
+	BOOL didSnapshot = [self saveToURL:[NSURL fileURLWithPath:destPath]
+								ofType:kKTDocumentType
+					  forSaveOperation:NSSaveToOperation
+								 error:&error];
 	
-	// OLD WAY -- PROBLEMATIC
-//	files = [NSArray arrayWithObject:[filePath lastPathComponent]];
-//	BOOL didSnapshot = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceCopyOperation 
-//																	source:[filePath stringByDeletingLastPathComponent]
-//															   destination:[self snapshotDirectory]
-//																	 files:files 
-//																	   tag:&tag];
-	// resume saving
-	[self resumeAutosave];
-
-	if ( !didSnapshot )
+	
+	if (!didSnapshot)
 	{
 		NSString *snapshotsDirectory = [[self snapshotDirectory] stringByDeletingLastPathComponent];
 		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Snaphot Failed", "alert: snapshot failed")
@@ -528,7 +513,7 @@
 	}
 }
 
-- (void)revertPersistentStoreToSnapshot:(id)notUsedButRequiredParameter
+- (void)revertPersistentStoreToSnapshot
 {
 	if ( [[NSFileManager defaultManager] fileExistsAtPath:[self snapshotPath]] )
 	{

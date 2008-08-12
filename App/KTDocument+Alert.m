@@ -104,7 +104,7 @@
 	{	
 		if ( NSOKButton == returnCode )
 		{
-			[self performSelector:@selector(revertPersistentStoreToSnapshot:) withObject:nil afterDelay:0.0];
+			[self performSelector:@selector(revertPersistentStoreToSnapshot) withObject:nil afterDelay:0.0];
 		}
 	}
 	

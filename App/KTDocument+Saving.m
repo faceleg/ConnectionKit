@@ -84,7 +84,36 @@
 
 @implementation KTDocument (Saving)
 
+#pragma mark -
+#pragma mark Save to URL
+
 // TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m. Should be in one of the -saveToURL methods.
+
+/*	-writeToURL: only supports the Save and SaveAs operations. Instead, we fake SaveTo operations by doing a standard
+ *  Save operation and then copying the resultant file to the destination.
+ */
+- (BOOL)saveToURL:(NSURL *)absoluteURL
+		   ofType:(NSString *)typeName
+ forSaveOperation:(NSSaveOperationType)saveOperation
+			error:(NSError **)outError
+{
+	BOOL result = NO;
+	
+	if (saveOperation == NSSaveToOperation)
+	{
+		result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+		if (result)
+		{
+			result = [[NSFileManager defaultManager] copyPath:[[self fileURL] path] toPath:[absoluteURL path] handler:nil];
+		}
+	}
+	else
+	{
+		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+	}
+	
+	return result;
+}
 
 #pragma mark -
 #pragma mark Write Safely
@@ -219,6 +248,10 @@
   forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
 			 error:(NSError **)outError 
 {
+	// We don't support any of the other save ops here.
+	OBPRECONDITION(inSaveOperation == NSSaveOperation || inSaveOperation == NSSaveAsOperation);
+	
+	
 	BOOL result = NO;
 	
 	

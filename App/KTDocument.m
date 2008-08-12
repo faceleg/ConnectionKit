@@ -1104,62 +1104,6 @@
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)saveDocumentSnapshot:(id)sender
-{
-	if ( [self hasValidSnapshot] )
-	{
-		NSDate *snapshotDate = [self lastSnapshotDate];
-		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-
-		NSString *title = NSLocalizedString(
-					@"Do you want to replace the last snapshot?", @"alert: replace snapshot title");		
-		NSString *message = [NSString stringWithFormat: NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
-		
-		// confirm with silencing confirm sheet
-		[[self confirmWithWindow:[[self windowController] window]
-					silencingKey:@"SilenceSaveDocumentSnapshot"
-					   canCancel:YES 
-						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")
-						 silence:nil 
-						   title:title
-						  format:message] snapshotPersistentStore:nil];
-	}
-	else
-	{
-		// nothing to replace, just create the snapshot
-		[self snapshotPersistentStore:nil];
-	}
-}
-
-- (IBAction)revertDocumentToSnapshot:(id)sender
-{
-	if ( [self hasValidSnapshot] )
-	{
-		NSDate *snapshotDate = [self lastSnapshotDate];
-		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-		
-		NSString *titleFormatString = NSLocalizedString(@"Do you want to revert to the most recently saved snapshot?", 
-														"alert: revert to snapshot.");
-		NSString *title = [NSString stringWithFormat:titleFormatString, dateString];
-		
-		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The previous snapshot was saved %@. Your current changes will be lost.", "alert: changes will be lost. %@ is replaced by a date or day+time"), dateString];
-		
-		NSAlert *alert = [NSAlert alertWithMessageText:title 
-		defaultButton:NSLocalizedString(@"Revert", "Revert Button") 
-		alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
-		otherButton:nil
-		informativeTextWithFormat:message];
-		
-		[alert beginSheetModalForWindow:[[self windowController] window] modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:[[NSDictionary dictionaryWithObject:@"revertDocumentToSnapshot:" forKey:@"context"] retain]];
-	}
-	else
-	{
-		// might want to change this to an alert, though the code
-		// should never reach here if menu validation is working
-		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
-	}
-}
-
 - (IBAction)saveDocumentAs:(id)sender
 {
 	LOG((@"========= beginning Save As... ========="));
@@ -1563,7 +1507,64 @@
 	[pages setBool:YES forKey:@"isStale"];
 }
 
-#pragma mark snapshot support
+#pragma mark -
+#pragma mark Snapshots
+
+- (IBAction)saveDocumentSnapshot:(id)sender
+{
+	if ([self hasValidSnapshot])
+	{
+		NSDate *snapshotDate = [self lastSnapshotDate];
+		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
+		
+		NSString *title = NSLocalizedString(
+											@"Do you want to replace the last snapshot?", @"alert: replace snapshot title");		
+		NSString *message = [NSString stringWithFormat: NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
+		
+		// confirm with silencing confirm sheet
+		[[self confirmWithWindow:[[self windowController] window]
+					silencingKey:@"SilenceSaveDocumentSnapshot"
+					   canCancel:YES 
+						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")
+						 silence:nil 
+						   title:title
+						  format:message] snapshotPersistentStore];
+	}
+	else
+	{
+		// nothing to replace, just create the snapshot
+		[self snapshotPersistentStore];
+	}
+}
+
+- (IBAction)revertDocumentToSnapshot:(id)sender
+{
+	if ( [self hasValidSnapshot] )
+	{
+		NSDate *snapshotDate = [self lastSnapshotDate];
+		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
+		
+		NSString *titleFormatString = NSLocalizedString(@"Do you want to revert to the most recently saved snapshot?", 
+														"alert: revert to snapshot.");
+		NSString *title = [NSString stringWithFormat:titleFormatString, dateString];
+		
+		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The previous snapshot was saved %@. Your current changes will be lost.", "alert: changes will be lost. %@ is replaced by a date or day+time"), dateString];
+		
+		NSAlert *alert = [NSAlert alertWithMessageText:title 
+										 defaultButton:NSLocalizedString(@"Revert", "Revert Button") 
+									   alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
+										   otherButton:nil
+							 informativeTextWithFormat:message];
+		
+		[alert beginSheetModalForWindow:[[self windowController] window] modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:[[NSDictionary dictionaryWithObject:@"revertDocumentToSnapshot:" forKey:@"context"] retain]];
+	}
+	else
+	{
+		// might want to change this to an alert, though the code
+		// should never reach here if menu validation is working
+		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
+	}
+}
 
 - (NSDate *)lastSnapshotDate
 {
@@ -1627,7 +1628,7 @@
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
 - (NSString *)snapshotPath
 {
-    if ( nil == mySnapshotPath )
+    if (!mySnapshotPath)
 	{
 		// construct path
 		NSString *snapshotPath = [NSApplication applicationSupportPath];
