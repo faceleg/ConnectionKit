@@ -24,12 +24,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 @implementation KTApplication
 
-// iMedia Browser Requirement
-
-+ (NSString *)applicationIdentifier
-{
-	return @"com.karelia.Sandvox";
-}
 
 @end
 

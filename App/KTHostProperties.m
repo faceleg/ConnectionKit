@@ -306,7 +306,7 @@ to be verified.
 	NSString *userName = [self valueForKey:@"userName"];
 	NSString *docRoot = [self valueForKey:@"docRoot"];
 	NSString *protocol = [[self valueForKey:@"protocol"] lowercaseString];
-	if ([protocol isEqualToString:@"webdav"] || [protocol isEqualToString:@".mac"])
+	if ([protocol isEqualToString:@"webdav"] || [protocol isEqualToString:@".mac"] || [protocol isEqualToString:@"mobileme"])
 	{
 		protocol = @"http";
 	}

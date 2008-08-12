@@ -1712,7 +1712,7 @@
 	
 	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
 	NSString *result = NSTemporaryDirectory();
-	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
+	result = [result stringByAppendingPathComponent:[NSApp applicationIdentifier]];
 	result = [result stringByAppendingPathComponent:[[self documentInfo] siteID]];
 	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
 	return result;
@@ -1729,7 +1729,7 @@
 		if ( [libraryPaths count] == 1 )
         {
 			siteCachePath = [libraryPaths objectAtIndex:0];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
+			siteCachePath = [siteCachePath stringByAppendingPathComponent:[NSApp applicationIdentifier]];
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:@"Sites"];
 			siteCachePath = [siteCachePath stringByAppendingPathExtension:@"noindex"];
 			siteCachePath = [siteCachePath stringByAppendingPathComponent:[[self documentInfo] siteID]];
