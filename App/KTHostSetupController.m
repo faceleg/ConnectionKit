@@ -953,7 +953,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (void) actuallyConnect:(id)bogus
 {
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection... ", "status message for test connection"), [[self properties] valueForKey:@"protocol"]];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection... ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
 
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -2727,7 +2727,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 				[theText appendAttributedString:newlines];
 				[theText appendAttributedString:[NSAttributedString stringWithString:
-				[NSString stringWithFormat:NSLocalizedString(@"It will be transmitted via %@ to your '%@' account at %@.", @"format to summarize how URL will be published on a remote host"), [[self properties] valueForKey:@"protocol"], [[self properties] valueForKey:@"userName"], [[self properties] valueForKey:@"hostName"]] attributes:textAttr]];
+												 [NSString stringWithFormat:NSLocalizedString(@"It will be transmitted via %@ to your '%@' account at %@.", @"format to summarize how URL will be published on a remote host"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]], [[self properties] valueForKey:@"userName"], [[self properties] valueForKey:@"hostName"]] attributes:textAttr]];
 
 			}
 			[theText appendAttributedString:newlines];
