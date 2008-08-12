@@ -10,4 +10,7 @@
 
 	#import "assertions.h"
 
+#define NSMakeCollectable(x) (id)(x)
+
+
 #endif
