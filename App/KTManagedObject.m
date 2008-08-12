@@ -130,6 +130,19 @@
 #pragma mark -
 #pragma mark Plugin Properties
 
+/*	During a Save As operation, KTExtensiblePluginPropertiesArchivedObject cannot be unarchived. We want to hang
+ *	on to them, but not present them to the user.
+ */
+- (id)valueForUndefinedKey:(NSString *)key
+{
+	id result = [super valueForUndefinedKey:key];
+	if ([result isKindOfClass:[KTExtensiblePluginPropertiesArchivedObject class]])
+	{
+		result = nil;
+	}
+	return result;
+}
+
 /*	These 2 methods allow us to store and retrieve managed object even though they dont't conform to <NSCoding>
  *	Instead though they must conform to the KTArchivableManagedObject protocol
  */

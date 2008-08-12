@@ -578,9 +578,12 @@
 {
 	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
 	OBASSERT(PSC);
-	OBASSERT([PSC isKindOfClass:[KTPersistentStoreCoordinator class]]);
 	
-	KTMediaManager *result = [[PSC document] mediaManager];
+	KTMediaManager *result = nil;
+	if ([PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
+	{
+		result = [[PSC document] mediaManager];
+	}
 	return result;
 }
 
