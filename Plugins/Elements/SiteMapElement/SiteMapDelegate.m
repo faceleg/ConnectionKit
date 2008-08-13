@@ -135,12 +135,13 @@
 //			else
 //			{
 			NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
-            OBASSERT([href lowercaseString]);               // The lowercase string will help us track down zombies etc.
+            OBASSERT(href);
             NSString *title = [[aPage titleText] stringByEscapingHTMLEntities];
-            OBASSERT([title lowercaseString]);
             
-            [string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
-//			}
+			if (title)
+			{
+				[string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
+			}
 		}
 		
 		if (isTopSection)
