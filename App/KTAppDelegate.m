@@ -599,6 +599,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void)dealloc
 {
 	[myDocumentController release]; myDocumentController = nil;
+	[myLeopardStuff release]; myLeopardStuff = nil;
 
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -1001,14 +1002,17 @@ IMPLEMENTATION NOTES & CAUTIONS:
     //LOG((@"Sandvox: applicationDidFinishLaunching: %@", aNotification));
 	@try
 	{
-		
+		if (floor(NSAppKitVersionNumber) > 824)		// If we are in Leopard, load up our special bundle
+		{
+			NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"LeopardStuff" ofType:@"bundle"];
+			NSBundle *leopardStuffBundle = [NSBundle bundleWithPath:path];
+			myLeopardStuff = [[[leopardStuffBundle principalClass] alloc] init];
+			
+			// We could decide if we want to do a LeopardStuff thing if this is non-nil!
+		}
 		// just to be sure, make sure that webview is loaded
 		(void) [KTWebView class];
-		
-		
-		
-		
-		
+
 		// Make an empty string for "No Selection" so that empty/0 numeric text fields are empty!
 		[NSTextFieldCell setDefaultPlaceholder: @""
 									 forMarker: NSNoSelectionMarker
@@ -1536,6 +1540,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
     return [[NSDocumentController sharedDocumentController] currentDocument];
+}
+
+- (LeopardStuff *)leopardStuff;
+{
+	return myLeopardStuff;		// if nil, we must not be running in Leopard!
 }
 
 #pragma mark -

@@ -77,7 +77,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 #define CREATE_LINK_TOOLBARITEM_TITLE		NSLocalizedString(@"Create Link...", "Create Link... ToolbarItem")
 #define EDIT_LINK_TOOLBARITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... ToolbarItem")
 
-@class KTDocument, KTDocumentController, KTPrefsController, KTFeedbackReporter;
+@class KTDocument, KTDocumentController, KTPrefsController, KTFeedbackReporter, LeopardStuff;
 
 @interface KTAppDelegate : KSLicensedAppDelegate
 {
@@ -167,6 +167,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	
 	KTDocumentController	*myDocumentController;
 	
+	LeopardStuff			*myLeopardStuff;		// interface to Leopard-only shim object
 
     BOOL applicationIsLaunching;
 	
@@ -242,6 +243,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 
 - (void)checkPlaceholderWindow:(id)bogus;
+
+- (LeopardStuff *)leopardStuff;
 
 
 @end

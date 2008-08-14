@@ -11,7 +11,8 @@
 #import "NSImage+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "KTAbstractElement.h"		// just for class reference for bundle
-
+#import "KTAppDelegate.h"
+#import "LeopardStuff.h"
 
 @implementation NSBundle ( KTExtensions )
 
@@ -67,6 +68,11 @@
 				if (error) NSLog(@"Error %i activating fonts in %@", error, self);
 			}
 		}
+	}
+	else
+	{
+		// Use the Leopard-only technique; we need it from a bundle.
+		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
 	}
 }
 
