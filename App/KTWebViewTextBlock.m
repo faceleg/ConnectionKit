@@ -474,21 +474,18 @@
 					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
 					
 					// Replace the path with one suitable for the specified purpose
-					if (mediaContainer)
+					if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 					{
-						if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
-						{
-							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
-						}
-						else
-						{
-							KTPage *page = [self page];		OBASSERT(page);
-							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
-							
-							// Tell the parser's delegate
-							[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
-						}
+						aMediaPath = [[mediaContainer file] quickLookPseudoTag];
+					}
+					else
+					{
+						KTPage *page = [self page];		OBASSERT(page);
+						KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
+						aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
+						
+						// Tell the parser's delegate
+						[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
 					}
 					
 					if (aMediaPath) [buffer appendString:aMediaPath];

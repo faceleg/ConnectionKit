@@ -54,18 +54,38 @@
 	if ([[mediaURI scheme] isEqualToString:@"svxmedia"])
 	{
 		NSString *docID = [mediaURI host];
+		NSString *mediaIdentifier = [self mediaContainerIdentifierForURI:mediaURI];
 		
-		NSArray *docs = [[NSDocumentController sharedDocumentController] documents];
-		NSEnumerator *docsEnumerator = [docs objectEnumerator];
+		
+		// Search for suitable documents
+		NSArray *openDocuments = [[NSDocumentController sharedDocumentController] documents];
+		NSMutableArray *matchingDocs = [NSMutableArray array];
+		
+		NSEnumerator *docsEnumerator = [openDocuments objectEnumerator];
 		KTDocument *aDoc;
 		while (aDoc = [docsEnumerator nextObject])
 		{
 			if ([aDoc isKindOfClass:[KTDocument class]] && [[[aDoc documentInfo] siteID] isEqualToString:docID])
 			{
-				KTMediaManager *mediaManager = [aDoc mediaManager];
-				result = [mediaManager mediaContainerWithIdentifier:[self mediaContainerIdentifierForURI:mediaURI]];
-				break;
+				[matchingDocs addObject:aDoc];
 			}
+		}
+		
+		
+		// In the event that no docs with that ID were found, fallback to searching all of them
+		if ([matchingDocs count] == 0)
+		{
+			[matchingDocs setArray:openDocuments];
+		}
+		
+		
+		// Search each matching doc for the media
+		docsEnumerator = [matchingDocs objectEnumerator];
+		while (aDoc = [docsEnumerator nextObject])
+		{
+			KTMediaManager *mediaManager = [aDoc mediaManager];
+			result = [mediaManager mediaContainerWithIdentifier:mediaIdentifier];
+			if (result) break;
 		}
 	}
 	
