@@ -186,6 +186,7 @@
 
 - (void)setCopyrightHTML:(NSString *)copyrightHTML
 {
+	if (!copyrightHTML) copyrightHTML = @"";
 	[self setWrappedValue:copyrightHTML forKey:@"copyrightHTML"];
 }
 
