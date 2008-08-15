@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		CECFBF0B0E54F2CD0080FB3D /* Sandvox.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF0A0E54F2CD0080FB3D /* Sandvox.xcconfig */; };
 		CECFBF170E54F37E0080FB3D /* LeopardStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = CECFBF160E54F37E0080FB3D /* LeopardStuff.m */; };
 /* End PBXBuildFile section */
 
@@ -129,7 +128,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CECFBF0B0E54F2CD0080FB3D /* Sandvox.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

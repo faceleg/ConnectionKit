@@ -119,6 +119,7 @@
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
 				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
+				CECFC8370E5501FF0080FB3D /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -1575,11 +1576,18 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		CECFC0120E54F8380080FB3D /* PBXContainerItemProxy */ = {
+		CECFC8340E5501F30080FB3D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* LeopardStuff.bundle */;
+			remoteInfo = LeopardStuff;
+		};
+		CECFC8360E5501FF0080FB3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LeopardStuff */;
 			remoteInfo = LeopardStuff;
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
@@ -2630,7 +2638,7 @@
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
-		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../../../../Desktop/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../Code/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CECFC6480E54FABC0080FB3D /* LeopardStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeopardStuff.h; path = ../Code/LeopardStuff/LeopardStuff.h; sourceTree = SOURCE_ROOT; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
@@ -4708,10 +4716,10 @@
 			name = "Shared Classes";
 			sourceTree = "<group>";
 		};
-		CECFC00F0E54F8380080FB3D /* Products */ = {
+		CECFC8310E5501F30080FB3D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CECFC0130E54F8380080FB3D /* LeopardStuff.bundle */,
+				CECFC8350E5501F30080FB3D /* LeopardStuff.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5167,7 +5175,7 @@
 					ProjectRef = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CECFC00F0E54F8380080FB3D /* Products */;
+					ProductGroup = CECFC8310E5501F30080FB3D /* Products */;
 					ProjectRef = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 				},
 				{
@@ -5598,11 +5606,11 @@
 			remoteRef = CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CECFC0130E54F8380080FB3D /* LeopardStuff.bundle */ = {
+		CECFC8350E5501F30080FB3D /* LeopardStuff.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = LeopardStuff.bundle;
-			remoteRef = CECFC0120E54F8380080FB3D /* PBXContainerItemProxy */;
+			remoteRef = CECFC8340E5501F30080FB3D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
@@ -6672,6 +6680,11 @@
 			isa = PBXTargetDependency;
 			name = Framework;
 			targetProxy = CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */;
+		};
+		CECFC8370E5501FF0080FB3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LeopardStuff;
+			targetProxy = CECFC8360E5501FF0080FB3D /* PBXContainerItemProxy */;
 		};
 		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
