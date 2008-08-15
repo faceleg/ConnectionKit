@@ -1580,14 +1580,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* LeopardStuff.bundle */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = LeopardStuff;
 		};
 		CECFC8360E5501FF0080FB3D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LeopardStuff */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = LeopardStuff;
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {

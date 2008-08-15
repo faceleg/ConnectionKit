@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# COPYRIGHT 2008 KARELIA SOFTWARE.  MAY NOT BE REDISTRIBUTED WITHOUT PERMISSION.  THIS SCRIPT IS UNSUPPORTED.
+
 # This is for processing the raw downloaded wiki help files.
 # It can run either on the mac (for generating app's help) 
 # or on the karelia dreamhost account.

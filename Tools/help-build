@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# COPYRIGHT 2008 KARELIA SOFTWARE.  MAY NOT BE REDISTRIBUTED WITHOUT PERMISSION.  THIS SCRIPT IS UNSUPPORTED.
 
 echo "assembling help out of the cleaned up help in ~/wiki.working"
 

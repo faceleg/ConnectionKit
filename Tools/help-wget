@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# COPYRIGHT 2008 KARELIA SOFTWARE.  MAY NOT BE REDISTRIBUTED WITHOUT PERMISSION.  THIS SCRIPT IS UNSUPPORTED.
 
 
 echo "for now, just fetch the wiki2.karelia.com from the server.  For some reason, this is getting links differently than on the server"

@@ -31,7 +31,7 @@
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4
 
-#warning It is time to retire this method completely.  Use ATSApplicationFontsPath instead.
+#warning It is time to completel overhaul this to use the Leopard version, not do this hack.
 
 #endif
 
