@@ -353,6 +353,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		@"index.xml", @"RSSFileName",
 		@"index", @"htmlIndexBaseName",
 		@"archives", @"archivesBaseName",
+										 
+		@"email@domain.com", @"emailPlaceholder",
 
 		@" | ", @"TitleSeparator",
 		

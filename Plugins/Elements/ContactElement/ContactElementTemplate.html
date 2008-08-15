@@ -6,7 +6,7 @@ function verifyAndSubmit[[=uniqueID]](form) {
 	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
 
 	checkEmail = form.e.value;
-	if (checkEmail=='email@domain.com' || checkEmail.indexOf('@') < 0)
+	if (checkEmail=='[[=&delegate.contactField.defaultString]]' || checkEmail.indexOf('@') < 0)
 	{
 		var message = "[["Email address is missing.  Message cannot be sent.]]";
 		theResults.className = 'contactError';
@@ -24,11 +24,11 @@ function verifyAndSubmit[[=uniqueID]](form) {
 }
 
 function doblur[[=uniqueID]](anInput) {
-	if (anInput.value == '') { anInput.value = anInput.title; }
+	if (anInput.value == '') { anInput.value = anInput.title; anInput.style.color = '#999'; }
 }
 
 function dofocus[[=uniqueID]](anInput) {
-	if (anInput.value == anInput.title) { anInput.value = ''; }
+	if (anInput.value == anInput.title) { anInput.value = ''; anInput.removeAttribute('style'); }
 }
 
 //--></script>
@@ -99,6 +99,7 @@ function dofocus[[=uniqueID]](anInput) {
 			<!-- text field -->
 			<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
 				type="text"
+				[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
 				class="fullWidth"
 				name="[[=&aField.inputName]]"
 				[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
@@ -172,6 +173,7 @@ function dofocus[[=uniqueID]](anInput) {
 	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
 		type="text"
 		class="fullWidth"
+		[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
 		name="[[=&aField.inputName]]"
 		[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
 		[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]

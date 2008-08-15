@@ -20,7 +20,8 @@
 	// Register value transformers
 	ValuesAreEqualTransformer *transformer = nil;
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:@"email"];
+// TODO: when we can mess with the nib, just take out this transformer binding.
+	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:             @"email___"];	// HACK -- "DISABLE" THIS SO EMAIL PLACEHOLDER IS ALWAYS ENABLED.  COMPARISON WILL NEVER SUCCEED.
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotEmail"];
 	[transformer setNegatesResult:YES];
 	[transformer release];

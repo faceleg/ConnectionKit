@@ -36,7 +36,7 @@
 
 #import "SandvoxPlugin.h"
 
-@class KSEmailAddressComboBox, ContactElementFieldsArrayController;
+@class KSEmailAddressComboBox, ContactElementFieldsArrayController, ContactElementField;
 
 @interface ContactElementDelegate : KTAbstractPluginDelegate
 {
@@ -47,6 +47,8 @@
 	IBOutlet ContactElementFieldsArrayController *oArrayController;
 	
 	@private
+	
+	ContactElementField *myEmailField;
 	
 	NSManagedObject *myPluginProperties;
 	NSArray	*myFields;

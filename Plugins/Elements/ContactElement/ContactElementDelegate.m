@@ -139,8 +139,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		[element setValue:address forKey:@"address"];
 		
-		
-		
 		// Set up default bunch of fields
 		NSString *language = [[[element page] master] language];    OBASSERT(language);
 		NSMutableArray *fields = [NSMutableArray array];
@@ -154,7 +152,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
 		[aField setLabel:[[self bundle] localizedStringForString:@"Email" language:language]];
 		[aField setType:ContactElementTextFieldField];
-		[aField setDefaultString:@"email@domain.com"];
+		
+		[aField setDefaultString:[defaults objectForKey:@"emailPlaceholder"]];
 		[fields addObject:aField];
 		[aField release];
 		
@@ -188,7 +187,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[myPluginProperties removeObserver:self forKeyPath:@"fields"];
 	[myPluginProperties release];
-	
+	[myEmailField release];
 	[myFields release];
 	
 	[super dealloc];
@@ -370,6 +369,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 {
 	[[self delegateOwner] setObject:anAddress forKey:@"subjectText"];
 }
+
+
 
 #pragma mark -
 #pragma mark Derived Accessors
@@ -620,6 +621,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	}
 }
 
+- (ContactElementField *)contactField
+{
+	(void) [self fields];	// make sure loaded
+	return myEmailField;
+}
+
+
 - (NSArray *)fields
 {
 	// If there currently is no array, pull it out of the delegateOwner
@@ -684,6 +692,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		ContactElementField *field = [[ContactElementField alloc] initWithDictionary:dictionary];
 		[result addObject:field];
 		[field release];
+		
+		// Get the email field
+		if ([[field identifier] isEqualToString:@"email"])
+		{
+			[myEmailField release];
+			myEmailField = [field retain];
+		}
 	}
 	
 	return result;
