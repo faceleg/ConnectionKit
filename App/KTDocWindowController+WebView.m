@@ -784,7 +784,7 @@ but the only trick is -- how to display a highlight?
 			}
 			if ( [copyOfDefaultMenuItems count] > 0 )
 			{
-				if ( [array count] > 0 )
+				if ( [array count] > 0 && ![(NSMenuItem *)[array lastObject] isSeparatorItem] )
 				{
 					[array addObject:[NSMenuItem separatorItem]];
 				}
@@ -796,7 +796,7 @@ but the only trick is -- how to display a highlight?
 		KTPagelet *pagelet = [self pageletEnclosing:node];
 		if ( nil != pagelet )
 		{
-			if ( [array count] > 0 )
+			if ( [array count] > 0 && ![(NSMenuItem *)[array lastObject] isSeparatorItem] )
 			{
 				[array addObject:[NSMenuItem separatorItem]];
 			}
@@ -871,7 +871,7 @@ but the only trick is -- how to display a highlight?
 			
 			if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])
 			{
-				if ( [array count] > 0 )
+				if ( [array count] > 0 && ![(NSMenuItem *)[array lastObject] isSeparatorItem] )
 				{
 					[array addObject:[NSMenuItem separatorItem]];
 				}
@@ -905,6 +905,13 @@ but the only trick is -- how to display a highlight?
 	{
 		return nil;	// NO element so just return nil -- prevent exception case 9144
 	}
+	
+	// don't end menu with separator
+	if ( [(NSMenuItem *)[array lastObject] isSeparatorItem] )
+	{
+		[array removeLastObject];
+	}
+	
 	return [NSArray arrayWithArray:array];
 }
 
