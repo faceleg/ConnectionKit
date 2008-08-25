@@ -26,7 +26,7 @@
 			OSStatus error = ATSFontActivateFromFileReference(&fsRef, kATSFontContextLocal, kATSFontFormatUnspecified, 
 													 NULL, kATSOptionFlagsProcessSubdirectories, NULL);
 			
-			if (error) NSLog(@"Error %i activating fonts in %@", error, aBundle);
+			if (noErr != error) NSLog(@"Error %s activating fonts in %@", GetMacOSStatusErrorString(error), aBundle);
 		}
 	}
 }
