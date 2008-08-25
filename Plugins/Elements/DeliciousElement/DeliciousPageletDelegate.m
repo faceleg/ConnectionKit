@@ -37,9 +37,9 @@
 #import "DeliciousPageletDelegate.h"
 
 
-// LocalizedStringInThisBundle(@"My del.icio.us Links", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"del.icious example no.", "String_On_Page_Template -- followed by a number")
-// LocalizedStringInThisBundle(@"(Please set your del.icio.us ID using the Pagelet Inspector)", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
+// LocalizedStringInThisBundle(@"delicious.com example no.", "String_On_Page_Template -- followed by a number")
+// LocalizedStringInThisBundle(@"(Please set your delicious.com ID using the Pagelet Inspector)", "String_On_Page_Template")
 
 
 
@@ -56,13 +56,13 @@
 	showExtended
 	listStyle
  
- See: http://del.icio.us/help/json
+ See: http://delicious.com/help/json
  
  */
 
 - (IBAction) openDelicious:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://del.icio.us/"]];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://delicious.com/"]];
 }
 
 

@@ -3,7 +3,7 @@
 [[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
 
 <div id="delicious-container-[[=uniqueID]]">
-<script type="text/javascript" src="http://del.icio.us/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
+<script type="text/javascript" src="http://delicious.com/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
 <script type="text/javascript">
 [[if sortAlphabetically]]
 Delicious.posts.sort(function(a,b){return (a.d.toLowerCase()>b.d.toLowerCase()?1:a.d.toLowerCase()<b.d.toLowerCase()?-1:0)})
@@ -34,7 +34,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 		for (var t=0, tag; tag=post.t[t]; t++) {
 			var tagA = document.createElement('a')
 			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
-			tagA.setAttribute('href', 'http://del.icio.us/[[=&deliciousID]]/'+tag)
+			tagA.setAttribute('href', 'http://delicious.com/[[=&deliciousID]]/'+tag)
 			tagA.appendChild(document.createTextNode(tag))
 			tagSpan.appendChild(tagA)
 			tagSpan.appendChild(document.createTextNode(' '))
@@ -67,7 +67,7 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 		tagSpan.appendChild(document.createTextNode(' : '))
 		for (var t=0, tag; tag=post.t[t]; t++) {
 			var tagA = document.createElement('a')
-			tagA.setAttribute('href', 'http://del.icio.us/[[=&deliciousID]]/'+tag)
+			tagA.setAttribute('href', 'http://delicious.com/[[=&deliciousID]]/'+tag)
 			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
 			tagA.appendChild(document.createTextNode(tag))
 			tagSpan.appendChild(tagA)
@@ -82,16 +82,16 @@ for (var i=0, post; post = Delicious.posts[i]; i++) {
 document.getElementById('delicious-container-[[=uniqueID]]').appendChild(dl)
 [[endif3]]
 </script>
-<noscript><p><a href="http://del.icio.us/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]]">[["My del.icio.us Links]]</a></p></noscript>
+<noscript><p><a href="http://delicious.com/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]]">[["My Delicious Links]]</a></p></noscript>
 </div>
 
 [[else2]]
 <ul>
-	<li>[['del.icious example no.]] 1</li>
-	<li>[['del.icious example no.]] 2</li>
-	<li>[['del.icious example no.]] 3</li>
+	<li>[['delicious.com example no.]] 1</li>
+	<li>[['delicious.com example no.]] 2</li>
+	<li>[['delicious.com example no.]] 3</li>
 </ul>
 [[endif2]]
 [[else]]
-[[if parser.HTMLGenerationPurpose]][[else2]]<p style="text-align:center;">[['(Please set your del.icio.us ID using the Pagelet Inspector)]]</p>[[endif2]]
+[[if parser.HTMLGenerationPurpose]][[else2]]<p style="text-align:center;">[['(Please set your delicious.com ID using the Pagelet Inspector)]]</p>[[endif2]]
 [[endif]]

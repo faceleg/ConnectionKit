@@ -25,7 +25,7 @@
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KSHelpAnchor</key>
-	<string>Del.icio.us_List</string>
+	<string>Delicious_List</string>
 	<key>KTMainElement</key>
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>
@@ -40,13 +40,13 @@
 		<integer>15</integer>
 	</dict>
 	<key>KTPluginName</key>
-	<string>del.icio.us List</string>
+	<string>Delicious List</string>
 	<key>KTPluginNibFile</key>
 	<string>DeliciousPagelet</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
-	<string>My del.icio.us Links</string>
+	<string>My Delicious Links</string>
 	<key>KTTemplateName</key>
 	<string>DeliciousPageletTemplate</string>
 	<key>NSPrincipalClass</key>
