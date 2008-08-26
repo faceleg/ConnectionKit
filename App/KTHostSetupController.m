@@ -839,12 +839,15 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[[self window] orderOut:sender];
 		
 		// set the password AFTER the window closes; we may have an error message
-		NSString *pass = [self password];
-		if (remoteHosting && pass && ![pass isEqualToString:@""] 
-			&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"] 
-				 && [[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"]) )
+		if ( remoteHosting )
 		{
-			[self setKeychainPassword:pass];		// finally, store the password in the keychain
+			NSString *pass = [self password];
+			if (pass && ![pass isEqualToString:@""] 
+				&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"] 
+					 && [[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"]) )  // TODO - excise .Mac by name from this code
+			{
+				[self setKeychainPassword:pass];		// finally, store the password in the keychain
+			}
 		}
 	}
 }
