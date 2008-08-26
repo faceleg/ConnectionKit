@@ -601,7 +601,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void)dealloc
 {
 	[myDocumentController release]; myDocumentController = nil;
-	[myLeopardStuff release]; myLeopardStuff = nil;
 
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -822,7 +821,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		&& NSNotFound != [reason rangeOfString:@"passed DOMRange"].location  )
 		
 	{
-		NSLog(@"PLEASE REPORT THIS TO KARELIA SOFTWARE - support@karelia.com -- %@", [[[exception userInfo] objectForKey:NSStackTraceKey] condenseWhiteSpace]);
+		NSLog(@"PLEASE REPORT THIS TO KARELIA SOFTWARE - support@karelia.com -- %@", [[exception stacktrace] condenseWhiteSpace]);
 		
 		return NO;
 	}
@@ -1004,14 +1003,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
     //LOG((@"Sandvox: applicationDidFinishLaunching: %@", aNotification));
 	@try
 	{
-		if (floor(NSAppKitVersionNumber) > 824)		// If we are in Leopard, load up our special bundle
-		{
-			NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"LeopardStuff" ofType:@"bundle"];
-			NSBundle *leopardStuffBundle = [NSBundle bundleWithPath:path];
-			myLeopardStuff = [[[leopardStuffBundle principalClass] alloc] init];
-			
-			// We could decide if we want to do a LeopardStuff thing if this is non-nil!
-		}
 		// just to be sure, make sure that webview is loaded
 		(void) [KTWebView class];
 
@@ -1542,11 +1533,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
     return [[NSDocumentController sharedDocumentController] currentDocument];
-}
-
-- (LeopardStuff *)leopardStuff;
-{
-	return myLeopardStuff;		// if nil, we must not be running in Leopard!
 }
 
 #pragma mark -

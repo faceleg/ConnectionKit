@@ -882,6 +882,7 @@
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
+		CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = CECCED1C0E64643A00BE9016 /* Symbolicator.h */; };
 		CECDC3E208287E920090F560 /* Info.nib in Resources */ = {isa = PBXBuildFile; fileRef = CECDC3E008287E920090F560 /* Info.nib */; };
 		CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = CECFC6480E54FABC0080FB3D /* LeopardStuff.h */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
@@ -2637,6 +2638,8 @@
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
+		CECCED1C0E64643A00BE9016 /* Symbolicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Symbolicator.h; path = ../../../Shared/trunk/App/Symbolicator.h; sourceTree = SOURCE_ROOT; };
+		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../Code/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CECFC6480E54FABC0080FB3D /* LeopardStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeopardStuff.h; path = ../Code/LeopardStuff/LeopardStuff.h; sourceTree = SOURCE_ROOT; };
@@ -2751,6 +2754,7 @@
 		1058C7A6FEA54F5311CA2CBB /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CECCED7C0E646B6800BE9016 /* Symbolication.framework */,
 				3C202DAF07E00B9300DE4994 /* AddressBook.framework */,
 				3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */,
 				3C72D3C5094A23880061A876 /* Carbon.framework */,
@@ -4698,6 +4702,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CECCED1C0E64643A00BE9016 /* Symbolicator.h */,
 				270FB8F90E01BFD70076FCA0 /* Core Image */,
 				270FB8F80E01BFCE0076FCA0 /* WebKit */,
 				270FB8F70E01BFC00076FCA0 /* QTKit */,
@@ -4975,6 +4980,7 @@
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */,
 				CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */,
+				CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7085,6 +7091,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
@@ -7103,6 +7114,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;

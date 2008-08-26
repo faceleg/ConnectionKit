@@ -13,5 +13,6 @@
 
 - (void)loadLocalFontsInBundle:(NSBundle *)aBundle;
 
+- (NSString *)symbolizeBacktrace:(NSException *)exception;
 
 @end

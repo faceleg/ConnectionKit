@@ -11,7 +11,7 @@
 #import "NSImage+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "KTAbstractElement.h"		// just for class reference for bundle
-#import "KTAppDelegate.h"
+#import "KSAppDelegate.h"
 #import "LeopardStuff.h"
 
 @implementation NSBundle ( KTExtensions )
