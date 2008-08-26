@@ -271,14 +271,14 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	else if ([keyPath isEqualToString:@"showThumbnails"])
 	{
 		// When setting showThumbnails to false, ensure showing titles is true
-		if (![changeNewObject boolValue]) {
+		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
 			[[self delegateOwner] setBool:YES forKey:@"showTitles"];
 		}
 	}
 	else if ([keyPath isEqualToString:@"showTitles"])
 	{
 		// When setting showThumbnails to false, ensure showing titles is true
-		if (![changeNewObject boolValue]) {
+		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
 			[[self delegateOwner] setBool:YES forKey:@"showThumbnails"];
 		}
 	}
