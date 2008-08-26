@@ -3210,6 +3210,7 @@
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
 			children = (
+				3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */,
 				27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */,
 				27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */,
 				3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */,
@@ -3404,7 +3405,6 @@
 			children = (
 				3C951FF70D762D9C009FCAC9 /* Release Configuration */,
 				3C951FF20D762D87009FCAC9 /* Common Headers */,
-				3C5A737A0BF7B83A00776464 /* Models */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				27409DFC0DEC685300C2387E /* Data Migration */,
@@ -4164,6 +4164,7 @@
 		3C5A736E0BF7B67300776464 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
 				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
 				3C682B270D622FDA00B4D485 /* KTManagedObjectContext.h */,
@@ -4196,15 +4197,6 @@
 				3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */,
 			);
 			name = Debugging;
-			sourceTree = "<group>";
-		};
-		3C5A737A0BF7B83A00776464 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
-				3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		3C5A73800BF7B8DB00776464 /* DataSource */ = {

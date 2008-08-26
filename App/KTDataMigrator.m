@@ -599,30 +599,32 @@
     
     
     // Import plugin-specific properties
-    if (![self migrateElementContainer:oldPage toElement:newPage error:error])
-    {
-        return NO;
-    }
+    BOOL result = [self migrateElementContainer:oldPage toElement:newPage error:error];
     
-    
-    // Thumbnail - do this after plugin properties to keep it up-to-date.
-    KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
-    if (thumbnail)
-    {
-        [newPage setThumbnail:thumbnail];
-    }
-    
-    
-    // Import pagelets
-    if (![self migratePageletsFromPage:oldPage toPage:newPage error:error])
-    {
-        return NO;
-    }
-    
-    
-    // Create new KTPage objects for each child page and then recursively migrate them too
-    BOOL result = [self migrateChildrenFromPage:oldPage toPage:newPage error:error];
-    return result;
+	
+	if (result)
+	{
+		// Thumbnail - do this after plugin properties to keep it up-to-date.
+		KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
+		if (thumbnail)
+		{
+			[newPage setThumbnail:thumbnail];
+		}
+		
+		
+		// Import pagelets
+		result = [self migratePageletsFromPage:oldPage toPage:newPage error:error];
+		
+		
+		if (result)
+		{
+			// Create new KTPage objects for each child page and then recursively migrate them too
+			result = [self migrateChildrenFromPage:oldPage toPage:newPage error:error];
+		}
+	}
+	
+	
+	return result;
 }
 
 - (void)migrateCodeInjection:(NSString *)code toKey:(NSString *)newKey propogate:(NSNumber *)propogate toPage:(KTPage *)newPage
@@ -685,9 +687,10 @@
             return NO;
         }
         
-        
-        // Tidy up
-        [pool release];
+		
+		// Tidy up.The old page is finished with, it can be turned back into a fault to conserve memory
+		[[aChildPage managedObjectContext] refreshObject:aChildPage mergeChanges:NO];
+		[pool release];
     }
     
     
@@ -791,6 +794,9 @@
         {
             return NO;
         }
+		
+		// The pagelet is finished with, so it can be turned back into a fault to conserve memory
+		[[anOldPagelet managedObjectContext] refreshObject:anOldPagelet mergeChanges:NO];
     }
     
     return YES;
@@ -823,7 +829,7 @@
     
     // Migrate element properties
     BOOL result = [self migrateElement:oldElement toElement:newElement error:error];
-    
+	
     
     // We then specially handle importing introductionHTML as it is a container-level property
     if (result)
@@ -855,6 +861,13 @@
         [newElement setValue:newText forKey:@"introductionHTML"];
     }
     
+	
+	// If the element is finished with, it can be turned back into a fault to conserve memory
+    if (oldElement != oldElementContainer)
+	{
+		[[oldElement managedObjectContext] refreshObject:oldElement mergeChanges:NO];
+	}
+	
     
     return result;
 }

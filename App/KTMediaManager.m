@@ -327,6 +327,11 @@ NSString *KTMediaLogDomain = @"Media";
                                          filename:[oldMedia valueForKey:@"name"] 
                                               UTI:oldMediaUTI];
         }
+		
+		
+		// There is potentially some rather large chunks of memory tied up by the old media, so turn into a fault
+		[[mediaRef managedObjectContext] refreshObject:oldMedia mergeChanges:NO];
+		[[mediaRef managedObjectContext] refreshObject:mediaRef mergeChanges:NO];
     }
     
     
