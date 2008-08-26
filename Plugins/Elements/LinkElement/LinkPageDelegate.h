@@ -36,7 +36,7 @@
 
 #import "SandvoxPlugin.h"
 
-enum { plainLink, newWindowLink, iframeLink, framesetLink };
+typedef enum { plainLink, newWindowLink, iframeLink, framesetLink } LinkPageType;
 
 @class WebView;
 @interface LinkPageDelegate : KTAbstractPluginDelegate 

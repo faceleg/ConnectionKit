@@ -144,7 +144,7 @@
 {
 	if ([key isEqualToString:@"linkType"])
 	{
-		int linkType = [value intValue];
+		LinkPageType linkType = [value intValue];
 		BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
 		
 		[[self delegateOwner] setPluginHTMLIsFullPage:!linkTypeIsPageWithinPage];
@@ -158,9 +158,8 @@
 	}
 	else if ([key isEqualToString:@"linkURL"])
 	{
-		int linkType = [value intValue];
-		BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
-		if (!linkTypeIsPageWithinPage)
+		LinkPageType linkType = [plugin integerForKey:@"linkType"];
+		if (linkType == plainLink || linkType == newWindowLink)
 		{
 			[(KTPage *)plugin setCustomPathRelativeToSite:value];
 		}
