@@ -83,9 +83,12 @@
 		docsEnumerator = [matchingDocs objectEnumerator];
 		while (aDoc = [docsEnumerator nextObject])
 		{
-			KTMediaManager *mediaManager = [aDoc mediaManager];
-			result = [mediaManager mediaContainerWithIdentifier:mediaIdentifier];
-			if (result) break;
+			if ([aDoc isKindOfClass:[KTDocument class]])
+			{
+				KTMediaManager *mediaManager = [aDoc mediaManager];
+				result = [mediaManager mediaContainerWithIdentifier:mediaIdentifier];
+				if (result) break;
+			}
 		}
 	}
 	
