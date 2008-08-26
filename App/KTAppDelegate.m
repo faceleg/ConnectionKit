@@ -522,6 +522,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
 	
 #else
+	NSLog(@"Running build %@", [NSApplication buildVersion]);
 	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
 	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
 #endif

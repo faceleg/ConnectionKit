@@ -12,7 +12,7 @@ PRODUCT_VARIANT = BETA
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2008-08-29 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2008-09-10 11:59:59 -0800\"'
 
 
 // Release builds checkout and use these specific revisions

@@ -790,7 +790,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			}
 			else	// page or pseudo element
 			{
-				// djw
 				if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 				{
 					[result addObject:mySelectionInspectorView];
@@ -1500,7 +1499,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			}
 			else	// page or pseudo element
 			{
-				// djw
 				if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 				{
 					pageName = @"Embedded_Image";	// HELPSTRING
