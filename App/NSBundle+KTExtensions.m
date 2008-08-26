@@ -65,14 +65,14 @@
 																 NULL);
 				}
 				
-				if (error) NSLog(@"Error %i activating fonts in %@", error, self);
+				if (noErr != error) NSLog(@"Error %s activating fonts in bundle %@", GetMacOSStatusErrorString(error), [[self bundlePath] lastPathComponent]);
 			}
 		}
 	}
 	else
 	{
 		// Use the Leopard-only technique; we need it from a bundle.
-//		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
+		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
 	}
 }
 
