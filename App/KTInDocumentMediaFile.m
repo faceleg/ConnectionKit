@@ -54,6 +54,10 @@
 
 - (void)willSave
 {
+	// Both -insertedObjects and KTLog seems to be pretty memory intensive during data migration, so give them a local pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	
 	NSManagedObjectContext *moc = [self managedObjectContext];
 	
 	
@@ -93,6 +97,9 @@
 			KTLog(KTMediaLogDomain, KTLogWarn, message);
 		}
 	}
+	
+	
+	[pool release];
 }
 
 /*	Called when a MediaFile is saved for the first time. i.e. it becomes peristent and the underlying file needs to move into the doc.
