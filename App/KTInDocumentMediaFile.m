@@ -123,7 +123,7 @@
 	if (![fileManager fileExistsAtPath:sourcePath])
 	{
 		KTLog(KTMediaLogDomain,
-			  KTLogError,
+			  KTLogWarn,
 			  ([NSString stringWithFormat:@"No file to move at:\r%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
 			   
 		return;
