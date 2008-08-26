@@ -53,7 +53,12 @@
 - (NSString *)innerHTML:(KTHTMLParser *)parser
 {
 	NSString *contentFormat = [self innerEditingHTML];
-	NSString *result = [contentFormat stringByReplacing:@"@@" with:[[self targetPage] titleText]];
+	NSString *titleText = [[self targetPage] titleText];
+	if (nil == titleText)
+	{
+		titleText = @"";		// better than nil, which crashes!
+	}
+	NSString *result = [contentFormat stringByReplacing:@"@@" with:titleText];
 	return result;
 }
 
