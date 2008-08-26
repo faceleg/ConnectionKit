@@ -47,6 +47,9 @@ KTCollectionPathStyle;
 - (void)setTitleText:(NSString *)value;
 - (BOOL)canEditTitle;
 
+- (BOOL)shouldUpdateFileNameWhenTitleChanges;
+- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate;
+
 // Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
@@ -103,6 +106,9 @@ KTCollectionPathStyle;
 - (void)setCustomPathRelativeToSite:(NSString *)path;
 
 - (NSString *)uploadPath;
+
+- (NSString *)publishedPath;
+- (void)setPublishedPath:(NSString *)path;
 
 // Preview
 - (NSString *)previewPath;

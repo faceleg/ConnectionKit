@@ -106,7 +106,7 @@
 	
 	
 	// If the page hasn't been published yet, update the filename to match
-	if (![self valueForKey:@"publishedPath"])
+	if ([self shouldUpdateFileNameWhenTitleChanges])
 	{
 		[self setValue:[self suggestedFileName] forKey:@"fileName"];
 	}
@@ -139,6 +139,31 @@
 {
 	BOOL result = ![self isRoot];
 	return result;
+}
+
+/*	These accessors are tacked on to 1.5. They should become a proper part of the model in 2.0
+ */
+
+- (BOOL)shouldUpdateFileNameWhenTitleChanges
+{
+	BOOL result;
+	
+	NSNumber *defaultResult = [self valueForUndefinedKey:@"shouldUpdateFileNameWhenTitleChanges"];
+	if (defaultResult)
+	{
+		result = [defaultResult boolValue];
+	}
+	else
+	{
+		result = (![self publishedPath] && ![self publishedDataDigest]);
+	}
+	
+	return result;
+}
+
+- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate
+{
+	[self setValue:[NSNumber numberWithBool:autoUpdate] forUndefinedKey:@"shouldUpdateFileNameWhenTitleChanges"];
 }
 
 #pragma mark -

@@ -653,7 +653,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			// server path
 			if ( [defaults boolForKey:@"OutlineTooltipShowServerPath"] )
 			{
-				NSString *serverPath = [item valueForKey:@"publishedPath"];
+				NSString *serverPath = [item publishedPath];
 				if ( nil != serverPath )
 				{
 					result = [result stringByAppendingFormat:@"\n%@%@", serverPathLabel, serverPath];

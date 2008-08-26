@@ -80,10 +80,6 @@
 - (void)setMenuTitle:(NSString *)newTitle;
 - (NSString *)menuTitleOrTitle;
 
-// Publishing
-- (NSString *)publishedPath;
-- (void)setPublishedPath:(NSString *)path;
-
 // Timestamps
 - (NSDate *)editableTimestamp;
 - (void)setEditableTimestamp:(NSDate *)aDate;

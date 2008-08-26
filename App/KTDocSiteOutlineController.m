@@ -215,5 +215,20 @@
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }
 
+#pragma mark -
+#pragma mark KVC
+
+/*	When the user customizes the filename, we want it to become fixed on their choice
+ */
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath
+{
+	[super setValue:value forKeyPath:keyPath];
+	
+	if ([keyPath isEqualToString:@"selection.fileName"])
+	{
+		[self setValue:[NSNumber numberWithBool:NO] forKeyPath:@"selection.shouldUpdateFileNameWhenTitleChanges"];
+	}
+}
+
 @end
 

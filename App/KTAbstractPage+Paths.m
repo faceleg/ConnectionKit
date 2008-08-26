@@ -12,7 +12,7 @@
 //		preview		- For previewing the page within the Sandvox UI
 
 #import "KTAbstractPage.h"
-
+#import "KTPage.h"
 
 #import "Debug.h"
 #import "KTDesign.h"
@@ -364,6 +364,16 @@
 	}
 	
 	return result;
+}
+
+- (NSString *)publishedPath { return [self wrappedValueForKey:@"publishedPath"]; }
+
+- (void)setPublishedPath:(NSString *)path
+{
+	[self setWrappedValue:path forKey:@"publishedPath"];
+	
+	// Our status in the index could depend on this key
+	[[self parent] invalidatePagesInIndexCache];
 }
 
 #pragma mark -
