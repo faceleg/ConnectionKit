@@ -969,10 +969,13 @@
         }
         else
         {
-            NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@",
-                  anAttributeKey,
-                  [oldObject objectID],
-                  [newObject objectID]);
+            if (![anAttributeKey isEqualToString:@"collectionSummaryType"])	// It's regular and expected so make an exception
+			{
+				NSLog(@"Not migrating value for key %@; it is invalid.\r\rOriginal object:\r%@\r\rNew Object:\r%@",
+					  anAttributeKey,
+					  [oldObject objectID],
+					  [newObject objectID]);
+			}
         }
     }
 }
