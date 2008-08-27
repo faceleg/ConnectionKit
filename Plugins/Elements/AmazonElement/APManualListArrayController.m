@@ -118,8 +118,12 @@
 	{
 		APManualListProduct *product = [[APManualListProduct alloc] init];
 		
-		[product setProductCode:[URL absoluteString]];
-		[product setStore:[[[pluginController content] delegateOwner] integerForKey:@"store"]];
+		// convert into a valid code
+		NSString *code = [URL absoluteString];
+		[product validateValue:&code forKey:@"productCode" error:NULL];
+		[product setProductCode:code];
+
+		[product setStore:[[pluginController content] /* a KTPagelet */ integerForKey:@"store"]];
 		
 		if (row == -1) {
 			row = 0;
