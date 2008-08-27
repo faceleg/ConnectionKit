@@ -17,6 +17,7 @@
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
+#import "NSThread+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <QTKit/QTKit.h>
@@ -243,15 +244,23 @@
 
 - (KTScaledImageProperties *)generateImageUsingQTKitWithProperties:(NSDictionary *)properties
 {
+	KTScaledImageProperties *result = nil;
+	
 	NSImage *image = [self moviePosterImage];
-	KTInDocumentMediaFile *mediaFile = [[self mediaManager] mediaFileWithImage:image];
-	KTScaledImageProperties *result = [KTScaledImageProperties connectSourceFile:self toFile:mediaFile withProperties:properties];
+	if (image)
+	{
+		KTInDocumentMediaFile *mediaFile = [[self mediaManager] mediaFileWithImage:image];
+		result = [KTScaledImageProperties connectSourceFile:self toFile:mediaFile withProperties:properties];
+	}
 	
 	return result;
 }
 
 - (NSImage *)moviePosterImage
 {	
+	if (![NSThread isMainThread]) return nil;
+	
+	
 	NSImage *result = nil;
 	
 	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
