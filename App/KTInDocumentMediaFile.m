@@ -145,8 +145,13 @@
 	// Make the move
 	if (![fileManager movePath:sourcePath toPath:destinationPath handler:self])
 	{
-		[NSException raise:NSInternalInconsistencyException
-					format:@"Unable to move temporary MediaFile %@ into the document", filename];
+		KTLog(KTMediaLogDomain,
+			  KTLogError,
+			  @"-[%@ %@] failed moving from %@ to %@",
+			  NSStringFromClass([self class]),
+			  NSStringFromSelector(_cmd),
+			  [sourcePath stringByAbbreviatingWithTildeInPath],
+			  [destinationPath stringByAbbreviatingWithTildeInPath]);
 	}
 }
 
