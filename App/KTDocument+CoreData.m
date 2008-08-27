@@ -205,8 +205,6 @@
         }
     }
 	
-	[self restartAutosaveTimersIfNecessary];
-	
 	return result;
 }
 
