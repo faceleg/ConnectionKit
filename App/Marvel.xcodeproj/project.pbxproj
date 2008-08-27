@@ -1824,8 +1824,6 @@
 		3C202D1B07DFC0AA00DE4994 /* KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTApplication.m; sourceTree = "<group>"; };
 		3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindow.h; sourceTree = "<group>"; };
 		3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindow.m; sourceTree = "<group>"; };
-		3C202D2207DFC0AA00DE4994 /* KTOldMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOldMediaManager.h; sourceTree = "<group>"; };
-		3C202D2307DFC0AA00DE4994 /* KTOldMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOldMediaManager.m; sourceTree = "<group>"; };
 		3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPrefsController.h; sourceTree = "<group>"; };
 		3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPrefsController.m; sourceTree = "<group>"; };
 		3C202D2607DFC0AA00DE4994 /* KTWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebView.h; sourceTree = "<group>"; };
@@ -2036,8 +2034,6 @@
 		3CEC86150BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.m; sourceTree = "<group>"; };
 		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
 		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
-		3CF941BC0D623BAB00B1C83D /* KTMediaRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaRef.h; sourceTree = "<group>"; };
-		3CF941BE0D623BB000B1C83D /* KTMediaRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaRef.m; sourceTree = "<group>"; };
 		3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStoredDictionary.h; sourceTree = "<group>"; };
 		3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStoredDictionary.m; sourceTree = "<group>"; };
 		3CF941C40D623BC600B1C83D /* KTStoredArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStoredArray.h; sourceTree = "<group>"; };
@@ -2046,8 +2042,6 @@
 		3CF941CA0D623BD400B1C83D /* KTStoredSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStoredSet.m; sourceTree = "<group>"; };
 		3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrator.h; sourceTree = "<group>"; };
 		3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrator.m; sourceTree = "<group>"; };
-		3CF941D00D623BEA00B1C83D /* KTCachedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCachedImage.h; sourceTree = "<group>"; };
-		3CF941D20D623BEE00B1C83D /* KTCachedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCachedImage.m; sourceTree = "<group>"; };
 		3CF941DA0D623E4900B1C83D /* NSImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImagePicker.h; sourceTree = "<group>"; };
 		3CF941DC0D623E5400B1C83D /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPassword.h; sourceTree = "<group>"; };
 		3CF941DE0D623E6B00B1C83D /* larger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = larger.png; sourceTree = "<group>"; };
@@ -3272,14 +3266,8 @@
 				CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */,
 				CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */,
 				27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */,
-				3CF941D00D623BEA00B1C83D /* KTCachedImage.h */,
-				3CF941D20D623BEE00B1C83D /* KTCachedImage.m */,
-				3C202D2207DFC0AA00DE4994 /* KTOldMediaManager.h */,
-				3C202D2307DFC0AA00DE4994 /* KTOldMediaManager.m */,
 				79C982BF09E34EDF0026A7B7 /* KTMediaDataProxy.h */,
 				79C982C009E34EDF0026A7B7 /* KTMediaDataProxy.m */,
-				3CF941BC0D623BAB00B1C83D /* KTMediaRef.h */,
-				3CF941BE0D623BB000B1C83D /* KTMediaRef.m */,
 				3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */,
 				3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */,
 				3CF941C40D623BC600B1C83D /* KTStoredArray.h */,
