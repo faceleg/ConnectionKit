@@ -101,7 +101,7 @@
     NSMutableSet *buffer = [[NSMutableSet alloc] init];
     if (HTML)
 	{
-		NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:HTML];
+		NSScanner *imageScanner = [[NSScanner alloc] initWithString:HTML];
 		while (![imageScanner isAtEnd])
 		{
 			// Look for an image tag

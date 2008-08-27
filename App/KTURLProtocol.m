@@ -69,7 +69,7 @@ static unsigned long sCacheConfusingNumber = 0;
 			mimeType = [NSString MIMETypeForUTI:uti];				// Are we not using this variable?
 		}
  */
-		NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
+		NSScanner *scanner = [NSScanner scannerWithString:resourceSpecifier];	
 		
 		// Get document ID
 		(void) [scanner scanString:@"/" intoString:nil];
@@ -119,7 +119,7 @@ static unsigned long sCacheConfusingNumber = 0;
 
 	if (resourceSpecifier)
 	{
-		NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
+		NSScanner *scanner = [NSScanner scannerWithString:resourceSpecifier];	
 		NSData *data = nil;
 		NSError *error = nil;
 		

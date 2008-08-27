@@ -42,7 +42,7 @@
 		NSString *HTML = [result innerHTML:kGeneratingPreview];
 		if (HTML)
 		{
-			NSScanner *scanner = [[[NSScanner alloc] initWithRealString:HTML] autorelease];
+			NSScanner *scanner = [[[NSScanner alloc] initWithString:HTML] autorelease];
 			NSString *searchString = @"<a href=\"";
 			NSString *aPagePreviewPath;
 			

@@ -348,7 +348,7 @@ NSString *KTMediaLogDomain = @"Media";
 
 	if (oldText)
 	{
-		NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:oldText];
+		NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
 		while (![imageScanner isAtEnd])
 		{
 			// Look for an image tag
@@ -369,7 +369,7 @@ NSString *KTMediaLogDomain = @"Media";
 			if (anImageURI)
 			{
 				// Look for a media ref within the URI
-				NSScanner *mediaRefScanner = [[NSScanner alloc] initWithRealString:anImageURI];
+				NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
 				[mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
 				if (![mediaRefScanner isAtEnd])
 				{

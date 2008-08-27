@@ -455,7 +455,7 @@
 		if ([self importsGraphics] && result)
 		{
 			// Convert media source paths
-			NSScanner *scanner = [[NSScanner alloc] initWithRealString:result];
+			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
 			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
 			NSString *aString;	NSString *aMediaPath;
 			

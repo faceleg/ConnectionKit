@@ -309,7 +309,7 @@ Makes the view so wide that text won't wrap anymore.
 		NSString *sString = [s string];
 		if (!sString) return;
 	
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
+		NSScanner*					vScanner = [NSScanner scannerWithString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -371,7 +371,7 @@ Makes the view so wide that text won't wrap anymore.
 		NSString *sString = [s string];
 		if (!sString) return;
 	
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
+		NSScanner*					vScanner = [NSScanner scannerWithString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -419,7 +419,7 @@ Makes the view so wide that text won't wrap anymore.
 		NSString *sString = [s string];
 		if (!sString) return;
 
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
+		NSScanner*					vScanner = [NSScanner scannerWithString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -467,7 +467,7 @@ Makes the view so wide that text won't wrap anymore.
 		NSString *sString = [s string];
 		if (!sString) return;
 
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
+		NSScanner*					vScanner = [NSScanner scannerWithString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -535,7 +535,7 @@ Makes the view so wide that text won't wrap anymore.
 		NSString *sString = [s string];
 		if (!sString) return;
 
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
+		NSScanner*					vScanner = [NSScanner scannerWithString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,

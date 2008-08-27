@@ -72,7 +72,7 @@
 	{
 		NSString *string = [pboard stringForType:NSStringPboardType];
 		// Do some scanning to see if it looks like HTML by trying to find some basic types
-		NSScanner *scanner = [NSScanner scannerWithRealString:string];
+		NSScanner *scanner = [NSScanner scannerWithString:string];
 		int confidence = 0;
 		BOOL keepGoing = YES;
 		while (keepGoing)

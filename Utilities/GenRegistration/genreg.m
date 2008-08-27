@@ -110,7 +110,7 @@ Date is in format like:  2001-03-24 10:45:32 +0600", argv[0]);
 				else if (0 == strcmp(cmd, "type") && strlen(value))
 				{
 					NSString *token = [[NSString stringWithUTF8String:value] lowercaseString];
-					NSScanner *intScanner = [NSScanner scannerWithRealString:token];
+					NSScanner *intScanner = [NSScanner scannerWithString:token];
 					if (![intScanner scanInt:&licenseType])	// try scanning directly as number first
 					{
 						NSArray *lookup = [NSArray arrayWithObjects:@"---", @"single", @"household", @"site", @"world", nil];
@@ -125,7 +125,7 @@ Date is in format like:  2001-03-24 10:45:32 +0600", argv[0]);
 				else if (0 == strcmp(cmd, "source") && strlen(value))
 				{
 					NSString *token = [[NSString stringWithUTF8String:value] lowercaseString];
-					NSScanner *intScanner = [NSScanner scannerWithRealString:token];
+					NSScanner *intScanner = [NSScanner scannerWithString:token];
 					if (![intScanner scanInt:&licenseSource])	// try scanning directly as number first
 					{
 						NSArray *lookup = [NSArray arrayWithObjects:@"---", @"comp", @"paypal", nil];

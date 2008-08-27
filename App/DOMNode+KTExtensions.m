@@ -871,7 +871,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	NSMutableString *styleString = [NSMutableString string];
 	BOOL hasStyleOutput = NO;
 	
-	NSScanner *scanner = [NSScanner scannerWithRealString:inStyleText];
+	NSScanner *scanner = [NSScanner scannerWithString:inStyleText];
 	NSString *keyValue;
 	while ([scanner scanUpToString:@";" intoString:&keyValue])
 	{

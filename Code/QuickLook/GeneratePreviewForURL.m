@@ -48,7 +48,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	
 	
 	// Search for <!svxdata> pseudo-tags
-	NSScanner *scanner = [[NSScanner alloc] initWithRealString:htmlString];
+	NSScanner *scanner = [[NSScanner alloc] initWithString:htmlString];
 	NSString *aString;
 	NSString *aURIScheme;	NSString *aURIPath;
 	

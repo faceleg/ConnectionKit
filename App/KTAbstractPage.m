@@ -222,7 +222,7 @@
 	NSMutableString *buffer = [NSMutableString string];
 	if (originalString)
 	{
-		NSScanner *scanner = [NSScanner scannerWithRealString:originalString];
+		NSScanner *scanner = [NSScanner scannerWithString:originalString];
 		while ( ![scanner isAtEnd] )
 		{
 			NSString *beforeLink = nil;

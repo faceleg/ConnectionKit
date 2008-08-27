@@ -57,7 +57,7 @@
 					if (safariURL && HTML && [safariURL isEqual:URL])
 					{
 						// Search for something good
-						NSScanner *scanner = [NSScanner scannerWithRealString:HTML];
+						NSScanner *scanner = [NSScanner scannerWithString:HTML];
 						
 						[scanner scanUpToString:@"&colid=" intoString:NULL];
 						[scanner scanString:@"&colid=" intoString:NULL];

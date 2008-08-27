@@ -87,7 +87,7 @@
 	OFF((@"scanning block for identifiers: \n%@", html));
 	if ( [html length] > [svxString length] )
 	{
-		NSScanner *scanner = [NSScanner scannerWithRealString:html];
+		NSScanner *scanner = [NSScanner scannerWithString:html];
 		while ( ![scanner isAtEnd] )
 		{
 			if ( [scanner scanUpToRealString:svxString intoString:NULL] )

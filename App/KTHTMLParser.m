@@ -348,7 +348,7 @@
 	NSString *property = nil;
 	NSMutableArray *classes = [NSMutableArray array];
 
-	NSScanner *scanner = [NSScanner scannerWithRealString:inRestOfTag];
+	NSScanner *scanner = [NSScanner scannerWithString:inRestOfTag];
 	while ( ![scanner isAtEnd] )
 	{
 		NSString *keyword;
