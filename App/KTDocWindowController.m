@@ -2577,11 +2577,6 @@ from representedObject */
 //	}
 //}
 
-- (void)logStaleness:(id)sender
-{
-	[[self document] logStaleness:sender];
-}
-
 - (BOOL)isSuspendingUIUpdates
 {
 	return myIsSuspendingUIUpdates;

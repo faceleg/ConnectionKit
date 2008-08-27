@@ -52,26 +52,30 @@ static unsigned long sCacheConfusingNumber = 0;
 
 - (KTDocument *)document
 {
+	NSString *documentID = nil;
 	NSURL *requestURL = [[self request] URL];
 	NSString *resourceSpecifier = [requestURL resourceSpecifier];
 	
-	// If there is no extension, it seems to crash to call UTIForFilenameExtension
-	NSString *mimeType = nil;
-	
-	NSString *ext = [resourceSpecifier pathExtension];
-	if (nil != ext && ![ext isEqualToString:@""])
+	if (resourceSpecifier)
 	{
-		NSString *uti = [NSString UTIForFilenameExtension:ext];
-		mimeType = [NSString MIMETypeForUTI:uti];
+/*
+		// If there is no extension, it seems to crash to call UTIForFilenameExtension
+		NSString *mimeType = nil;
+		
+		NSString *ext = [resourceSpecifier pathExtension];
+		if (nil != ext && ![ext isEqualToString:@""])
+		{
+			NSString *uti = [NSString UTIForFilenameExtension:ext];
+			mimeType = [NSString MIMETypeForUTI:uti];				// Are we not using this variable?
+		}
+ */
+		NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
+		
+		// Get document ID
+		(void) [scanner scanString:@"/" intoString:nil];
+		(void) [scanner scanUpToString:@"/" intoString:&documentID];
 	}
 	
-	NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
-	NSString *documentID = nil;
-	
-	// Get document ID
-	(void) [scanner scanString:@"/" intoString:nil];
-	(void) [scanner scanUpToString:@"/" intoString:&documentID];
-
 	return [[NSApp delegate] documentWithID:documentID];
 }
 
@@ -111,16 +115,19 @@ static unsigned long sCacheConfusingNumber = 0;
 		NSString *uti = [NSString UTIForFilenameExtension:ext];
 		mimeType = [NSString MIMETypeForUTI:uti];
 	}
-	
-	NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
 	NSString *documentID = nil;
-	NSData *data = nil;
-	NSError *error = nil;
-	
-	// Get document ID
-	(void) [scanner scanString:@"/" intoString:nil];
-	(void) [scanner scanUpToString:@"/" intoString:&documentID];
-	(void) [scanner scanString:@"/" intoString:nil];
+
+	if (resourceSpecifier)
+	{
+		NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
+		NSData *data = nil;
+		NSError *error = nil;
+		
+		// Get document ID
+		(void) [scanner scanString:@"/" intoString:nil];
+		(void) [scanner scanUpToString:@"/" intoString:&documentID];
+		(void) [scanner scanString:@"/" intoString:nil];
+	}
 	
 	OBASSERT_NOT_REACHED("KTURLProtocol is supposed to be dead.");
 	KTDocument *document = [[NSApp delegate] documentWithID:documentID];

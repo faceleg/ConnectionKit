@@ -452,7 +452,7 @@
 		
 		
 		
-		if ([self importsGraphics])
+		if ([self importsGraphics] && result)
 		{
 			// Convert media source paths
 			NSScanner *scanner = [[NSScanner alloc] initWithRealString:result];

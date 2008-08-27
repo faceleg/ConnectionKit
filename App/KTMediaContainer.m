@@ -99,29 +99,31 @@
 + (NSSet *)mediaContainerIdentifiersInHTML:(NSString *)HTML
 {
     NSMutableSet *buffer = [[NSMutableSet alloc] init];
-    
-    NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:HTML];
-    while (![imageScanner isAtEnd])
-    {
-        // Look for an image tag
-        [imageScanner scanUpToString:@"<img" intoString:NULL];
-        if ([imageScanner isAtEnd]) break;
-        
-        
-        // Locate the image's source attribute
-        [imageScanner scanUpToString:@"src=\"" intoString:NULL];
-        [imageScanner scanString:@"src=\"" intoString:NULL];
-        
-        NSString *aMediaURIString = nil;
-        if ([imageScanner scanUpToString:@"\"" intoString:&aMediaURIString])
-        {
-            NSURL *aMediaURI = [[NSURL alloc] initWithString:aMediaURIString];
-            [buffer addObjectIgnoringNil:[self mediaContainerIdentifierForURI:aMediaURI]];
-            [aMediaURI release];
-        }
-    }    
-    
-    [imageScanner release];
+    if (HTML)
+	{
+		NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:HTML];
+		while (![imageScanner isAtEnd])
+		{
+			// Look for an image tag
+			[imageScanner scanUpToString:@"<img" intoString:NULL];
+			if ([imageScanner isAtEnd]) break;
+			
+			
+			// Locate the image's source attribute
+			[imageScanner scanUpToString:@"src=\"" intoString:NULL];
+			[imageScanner scanString:@"src=\"" intoString:NULL];
+			
+			NSString *aMediaURIString = nil;
+			if ([imageScanner scanUpToString:@"\"" intoString:&aMediaURIString])
+			{
+				NSURL *aMediaURI = [[NSURL alloc] initWithString:aMediaURIString];
+				[buffer addObjectIgnoringNil:[self mediaContainerIdentifierForURI:aMediaURI]];
+				[aMediaURI release];
+			}
+		}    
+		
+		[imageScanner release];
+	}
     
     NSSet *result = [[buffer copy] autorelease];
     [buffer release];

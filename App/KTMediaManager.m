@@ -345,47 +345,46 @@ NSString *KTMediaLogDomain = @"Media";
                                newElement:(KTAbstractElement *)newElement
 {
     NSMutableString *buffer = [[NSMutableString alloc] init];
-    
-    
-    NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:oldText];
-    while (![imageScanner isAtEnd])
-    {
-        // Look for an image tag
-        NSString *someText = nil;
-        if (![imageScanner scanUpToString:@"<img" intoString:&someText]) break;
-        [buffer appendString:someText];
-        
-        
-        // Locate the image's source attribute
-        if (![imageScanner scanUpToString:@"src=\"" intoString:&someText]) break;
-        [buffer appendString:someText];
-        if (![imageScanner scanString:@"src=\"" intoString:&someText]) break;
-        [buffer appendString:someText];
-        
-        NSString *anImageURI = nil;
-        [imageScanner scanUpToString:@"\"" intoString:&anImageURI];
-        
-        
-        // Look for a media ref within the URI
-        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithRealString:anImageURI];
-        [mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
-        if (![mediaRefScanner isAtEnd])
-        {
-            NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
-            KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:oldMediaID element:oldElement];
-            anImage = [anImage imageWithScalingSettingsNamed:scalingSettings forPlugin:newElement];
-            anImageURI = [[anImage URIRepresentation] absoluteString];
-        }
-        [mediaRefScanner release];
-        
-        if (anImageURI)
-        {
-            [buffer appendString:anImageURI];
-        }
-    }    
-    
-    [imageScanner release];
-    
+
+	if (oldText)
+	{
+		NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:oldText];
+		while (![imageScanner isAtEnd])
+		{
+			// Look for an image tag
+			NSString *someText = nil;
+			if (![imageScanner scanUpToString:@"<img" intoString:&someText]) break;
+			[buffer appendString:someText];
+			
+			
+			// Locate the image's source attribute
+			if (![imageScanner scanUpToString:@"src=\"" intoString:&someText]) break;
+			[buffer appendString:someText];
+			if (![imageScanner scanString:@"src=\"" intoString:&someText]) break;
+			[buffer appendString:someText];
+			
+			NSString *anImageURI = nil;
+			[imageScanner scanUpToString:@"\"" intoString:&anImageURI];
+			
+			if (anImageURI)
+			{
+				// Look for a media ref within the URI
+				NSScanner *mediaRefScanner = [[NSScanner alloc] initWithRealString:anImageURI];
+				[mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
+				if (![mediaRefScanner isAtEnd])
+				{
+					NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
+					KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:oldMediaID element:oldElement];
+					anImage = [anImage imageWithScalingSettingsNamed:scalingSettings forPlugin:newElement];
+					anImageURI = [[anImage URIRepresentation] absoluteString];
+				}
+				[mediaRefScanner release];
+
+				[buffer appendString:anImageURI];
+			}
+		}
+		[imageScanner release];
+    }
     
     NSString *result = [[buffer copy] autorelease];
     [buffer release];

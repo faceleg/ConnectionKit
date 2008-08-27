@@ -40,29 +40,30 @@
 	{
 		// Scan through the preview text for page paths
 		NSString *HTML = [result innerHTML:kGeneratingPreview];
-		NSScanner *scanner = [[[NSScanner alloc] initWithRealString:HTML] autorelease];
-		NSString *searchString = @"<a href=\"";
-		NSString *aPagePreviewPath;
-		
-		while (![scanner isAtEnd])
+		if (HTML)
 		{
-			// Scan for an anchor
-			[scanner scanUpToRealString:searchString intoString:NULL];
-			if ([scanner isAtEnd]) break;
-			[scanner setScanLocation:([scanner scanLocation] + [searchString length])];
+			NSScanner *scanner = [[[NSScanner alloc] initWithRealString:HTML] autorelease];
+			NSString *searchString = @"<a href=\"";
+			NSString *aPagePreviewPath;
 			
-			[scanner scanUpToString:@"\"" intoString:&aPagePreviewPath];
-			
-			
-			// Figure the page corresponding to the path and inform the delegate
-			KTPage *page = [[[self currentPage] document] pageForURLPath:aPagePreviewPath];
-			if (page)
+			while (![scanner isAtEnd])
 			{
-				[self didEncounterKeyPath:@"URL" ofObject:page];
+				// Scan for an anchor
+				[scanner scanUpToRealString:searchString intoString:NULL];
+				if ([scanner isAtEnd]) break;
+				[scanner setScanLocation:([scanner scanLocation] + [searchString length])];
+				
+				[scanner scanUpToString:@"\"" intoString:&aPagePreviewPath];
+				
+				// Figure the page corresponding to the path and inform the delegate
+				KTPage *page = [[[self currentPage] document] pageForURLPath:aPagePreviewPath];
+				if (page)
+				{
+					[self didEncounterKeyPath:@"URL" ofObject:page];
+				}
 			}
 		}
 	}
-	
 	return result;
 }
 

@@ -306,7 +306,10 @@ Makes the view so wide that text won't wrap anymore.
 							withColor: (NSColor*) col andMode:(NSString*)attr andEscapeChar: (NSString*)vStringEscapeCharacter
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
+		NSString *sString = [s string];
+		if (!sString) return;
+	
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -365,7 +368,10 @@ Makes the view so wide that text won't wrap anymore.
 							withColor: (NSColor*) col andMode:(NSString*)attr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
+		NSString *sString = [s string];
+		if (!sString) return;
+	
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -410,7 +416,10 @@ Makes the view so wide that text won't wrap anymore.
 				withColor: (NSColor*) col andMode:(NSString*)attr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
+		NSString *sString = [s string];
+		if (!sString) return;
+
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -455,7 +464,10 @@ Makes the view so wide that text won't wrap anymore.
 			withColor: (NSColor*) col andMode:(NSString*)attr charset: (NSCharacterSet*)cset
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
+		NSString *sString = [s string];
+		if (!sString) return;
+
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -520,7 +532,10 @@ Makes the view so wide that text won't wrap anymore.
 				withColor: (NSColor*) col andMode:(NSString*)attr exceptIfMode: (NSString*)ignoreAttr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
+		NSString *sString = [s string];
+		if (!sString) return;
+
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: sString];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,

@@ -241,9 +241,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			return nil;
 		}
 		
-		NSScanner *scanner = [NSScanner scannerWithRealString:[self template]];
-		[scanner setCharactersToBeSkipped:nil];
-		result = [self startHTMLStringByScanning:scanner];
+		NSString *template = [self template];
+		if (template)
+		{
+			NSScanner *scanner = [NSScanner scannerWithRealString:template];
+			[scanner setCharactersToBeSkipped:nil];
+			result = [self startHTMLStringByScanning:scanner];
+		}
 	}
 	@finally
 	{
@@ -313,144 +317,146 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
                 continue;
             }
             else if ( [inScanner scanUpToString:kComponentTagEndDelim intoString:&tag] && 
-					 [inScanner scanString:kComponentTagEndDelim intoString:nil] ) {
+					 [inScanner scanString:kComponentTagEndDelim intoString:nil] )
+			{
                 
 				// LOG((@"scanner found tag: %@", tag));
-                
-                if ( [tag hasPrefix:kKeyPathIndicator] )
+                if (tag)
 				{
-                    NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
-					[tagScanner setCharactersToBeSkipped:nil];
-					
-                    NSString *keyPath;
-					
-					// switch to key path
-					NSString *indicatorChars;
-                    [tagScanner scanCharactersFromSet:[[self class] keyPathIndicatorCharacters]
-										   intoString:&indicatorChars];
-					int htmlEscapeLocation = [indicatorChars rangeOfString:kEscapeHTMLIndicator].location;
-					int urlEncodeLocation  = [indicatorChars rangeOfString:kEncodeURLIndicator].location;
-					int spacesToUnderscoreLocation  = [indicatorChars rangeOfString:kSpacesToUnderscoreIndicator].location;
-					
-                    // grab the class name to instantiate
-                    // grab the key path
-                    keyPath = [[tag substringFromIndex:[tagScanner scanLocation]] condenseWhiteSpace];
-                    
-					//                    LOG((@"keyPath = %@", keyPath));
-                    
-                    // do we already have an instance in the page's cache?
-                    id element = [[self cache] valueForKeyPath:keyPath];
-					                    if ( nil == element ) {
-						//LOG((@"%@ [[=%@]] element not found", inContext, keyPath));
-						LOG((@"[[=%@]] element not found", keyPath));
-						continue;
-					}
-					else
+					if ( [tag hasPrefix:kKeyPathIndicator] )
 					{
-						NSString *toAppend = [element templateParserStringValue];
+						NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
+						[tagScanner setCharactersToBeSkipped:nil];
 						
-						// first replace spaces with an underscore
-						if (NSNotFound != spacesToUnderscoreLocation)
-						{
-							toAppend = [toAppend legalizedURLNameWithFallbackID:@"_"];	// doesn't really matter if we lose everything
+						NSString *keyPath;
+						
+						// switch to key path
+						NSString *indicatorChars;
+						[tagScanner scanCharactersFromSet:[[self class] keyPathIndicatorCharacters]
+											   intoString:&indicatorChars];
+						int htmlEscapeLocation = [indicatorChars rangeOfString:kEscapeHTMLIndicator].location;
+						int urlEncodeLocation  = [indicatorChars rangeOfString:kEncodeURLIndicator].location;
+						int spacesToUnderscoreLocation  = [indicatorChars rangeOfString:kSpacesToUnderscoreIndicator].location;
+						
+						// grab the class name to instantiate
+						// grab the key path
+						keyPath = [[tag substringFromIndex:[tagScanner scanLocation]] condenseWhiteSpace];
+						
+						//                    LOG((@"keyPath = %@", keyPath));
+						
+						// do we already have an instance in the page's cache?
+						id element = [[self cache] valueForKeyPath:keyPath];
+											if ( nil == element ) {
+							//LOG((@"%@ [[=%@]] element not found", inContext, keyPath));
+							LOG((@"[[=%@]] element not found", keyPath));
+							continue;
 						}
-						
-						// now deal with url encoding and/or html escaping
-						
-						if ((NSNotFound != urlEncodeLocation) && (NSNotFound != htmlEscapeLocation))	// both?
+						else
 						{
-							if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
+							NSString *toAppend = [element templateParserStringValue];
+							
+							// first replace spaces with an underscore
+							if (NSNotFound != spacesToUnderscoreLocation)
 							{
-								toAppend = [toAppend URLQueryEncodedString:YES];
-								toAppend = [toAppend stringByEscapingHTMLEntities];
-							}
-							else	// HTML escape first
-							{
-								toAppend = [toAppend stringByEscapingHTMLEntities];
-								toAppend = [toAppend URLQueryEncodedString:YES];
+								toAppend = [toAppend legalizedURLNameWithFallbackID:@"_"];	// doesn't really matter if we lose everything
 							}
 							
-						}
-						else
-						{
-							if (NSNotFound != urlEncodeLocation)
+							// now deal with url encoding and/or html escaping
+							
+							if ((NSNotFound != urlEncodeLocation) && (NSNotFound != htmlEscapeLocation))	// both?
 							{
-								toAppend = [toAppend URLQueryEncodedString:YES];
+								if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
+								{
+									toAppend = [toAppend URLQueryEncodedString:YES];
+									toAppend = [toAppend stringByEscapingHTMLEntities];
+								}
+								else	// HTML escape first
+								{
+									toAppend = [toAppend stringByEscapingHTMLEntities];
+									toAppend = [toAppend URLQueryEncodedString:YES];
+								}
+								
 							}
-							if (NSNotFound != htmlEscapeLocation)
+							else
 							{
-								toAppend = [toAppend stringByEscapingHTMLEntities];
+								if (NSNotFound != urlEncodeLocation)
+								{
+									toAppend = [toAppend URLQueryEncodedString:YES];
+								}
+								if (NSNotFound != htmlEscapeLocation)
+								{
+									toAppend = [toAppend stringByEscapingHTMLEntities];
+								}
 							}
+							[htmlString appendString:toAppend];
 						}
-						[htmlString appendString:toAppend];
 					}
-                }
-                else if ([tag hasPrefix:kStringIndicator])
-                {
-					[htmlString appendString:[self componentLocalizedString:tag]];
-                }
-				else if ([tag hasPrefix:kTargetStringIndicator])
-				{
-					[htmlString appendString:[self componentTargetLocalizedString:tag]];
-                }
-				else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
-				{
-					[htmlString appendString:[self mainBundleLocalizedString:tag]];
-                }
-				else	// not for echoing.  Do something.
-				{
-                    NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
-					[tagScanner setCharactersToBeSkipped:nil];
-					
-					NSString *keyword;
-                    // grab the method keyword
-                    [tagScanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:&keyword];
-                    // throw away whitespace after
-                    [tagScanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:nil];
-					
-					NSString *inRestOfTag = @"";
-					if (![tagScanner isAtEnd])
+					else if ([tag hasPrefix:kStringIndicator])
 					{
-						inRestOfTag = [tag substringFromIndex:[tagScanner scanLocation]];
+						[htmlString appendString:[self componentLocalizedString:tag]];
 					}
-					
-					/// Now using performSelector: here instead of NSInvocation as it should be quicker
-					NSString *methodName = [NSString stringWithFormat:@"%@WithParameters:scanner:", [keyword lowercaseString]];
-					SEL firstWordSel = NSSelectorFromString(methodName);
-					
-					if ([self respondsToSelector:firstWordSel])
+					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
-						NSString *htmlFragment = [self performSelector:firstWordSel withObject:inRestOfTag withObject:inScanner];
+						[htmlString appendString:[self componentTargetLocalizedString:tag]];
+					}
+					else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
+					{
+						[htmlString appendString:[self mainBundleLocalizedString:tag]];
+					}
+					else	// not for echoing.  Do something.
+					{
+						NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
+						[tagScanner setCharactersToBeSkipped:nil];
 						
-						/*
-						 NSMethodSignature *sig = [[self class] instanceMethodSignatureForSelector:firstWordSel];
-						 NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sig];
-						 [inv setSelector: firstWordSel];
-						 [inv setTarget: self];
-						 [inv setArgument:(void *)&inRestOfTag atIndex: 2];
-						 [inv setArgument:(void *)&inScanner atIndex: 3];
-						 //[inv setArgument:(void *)&inContext atIndex: 4];
-						 
-						 [inv invoke];
-						 NSString *invokeResultString;
-						 [inv getReturnValue:&invokeResultString];
-						 */
-						if ( nil != htmlFragment )
+						NSString *keyword;
+						// grab the method keyword
+						[tagScanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:&keyword];
+						// throw away whitespace after
+						[tagScanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:nil];
+						
+						NSString *inRestOfTag = @"";
+						if (![tagScanner isAtEnd])
 						{
-							[htmlString appendString:htmlFragment];
+							inRestOfTag = [tag substringFromIndex:[tagScanner scanLocation]];
+						}
+						
+						/// Now using performSelector: here instead of NSInvocation as it should be quicker
+						NSString *methodName = [NSString stringWithFormat:@"%@WithParameters:scanner:", [keyword lowercaseString]];
+						SEL firstWordSel = NSSelectorFromString(methodName);
+						
+						if ([self respondsToSelector:firstWordSel])
+						{
+							NSString *htmlFragment = [self performSelector:firstWordSel withObject:inRestOfTag withObject:inScanner];
+							
+							/*
+							 NSMethodSignature *sig = [[self class] instanceMethodSignatureForSelector:firstWordSel];
+							 NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sig];
+							 [inv setSelector: firstWordSel];
+							 [inv setTarget: self];
+							 [inv setArgument:(void *)&inRestOfTag atIndex: 2];
+							 [inv setArgument:(void *)&inScanner atIndex: 3];
+							 //[inv setArgument:(void *)&inContext atIndex: 4];
+							 
+							 [inv invoke];
+							 NSString *invokeResultString;
+							 [inv getReturnValue:&invokeResultString];
+							 */
+							if ( nil != htmlFragment )
+							{
+								[htmlString appendString:htmlFragment];
+							}
+							else
+							{
+								LOG((@"[[%@ %@]] Invocation unexpectedly returned nil string!", keyword, inRestOfTag));
+							}
 						}
 						else
 						{
-							LOG((@"[[%@ %@]] Invocation unexpectedly returned nil string!", keyword, inRestOfTag));
+							LOG((@"Can't process %@: no method %@", tag, methodName));
 						}
+						
 					}
-					else
-					{
-						LOG((@"Can't process %@: no method %@", tag, methodName));
-					}
-					
 				}
-				
             }
         }
     }
@@ -543,24 +549,26 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *stuffIfTrue = @"";
 	NSString *stuffIfFalse = @"";
 	
-	NSScanner *elseScanner = [NSScanner scannerWithRealString:stuffUntilEndIf];
-	[elseScanner setCharactersToBeSkipped:nil];
-	
-	// Try to scan up to the else to get the "true" branch
-	[elseScanner scanUpToRealString:elseDelim intoString:&stuffIfTrue];
-	
-	// If we find an else, then get the "false" branch
-	if ( [elseScanner scanRealString:elseDelim intoString:nil] )
+	if (stuffUntilEndIf)
 	{
-		// Found an else; put the rest of it into the false part
-		stuffIfFalse = [stuffUntilEndIf substringFromIndex:[elseScanner scanLocation]];
+		NSScanner *elseScanner = [NSScanner scannerWithRealString:stuffUntilEndIf];
+		[elseScanner setCharactersToBeSkipped:nil];
+		
+		// Try to scan up to the else to get the "true" branch
+		[elseScanner scanUpToRealString:elseDelim intoString:&stuffIfTrue];
+		
+		// If we find an else, then get the "false" branch
+		if ( [elseScanner scanRealString:elseDelim intoString:nil] )
+		{
+			// Found an else; put the rest of it into the false part
+			stuffIfFalse = [stuffUntilEndIf substringFromIndex:[elseScanner scanLocation]];
+		}
+		else
+		{
+			// no else, so it's all the true part; the else is effectively empty.
+			stuffIfTrue = stuffUntilEndIf;
+		}
 	}
-	else
-	{
-		// no else, so it's all the true part; the else is effectively empty.
-		stuffIfTrue = stuffUntilEndIf;
-	}
-	
 	// Parse rest of tag, and try to separate into three pieces: LHS, comparator, and RHS
 	NSString *left = nil;
 	NSString *right = nil;
@@ -779,7 +787,10 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	NSMutableString *result = [NSMutableString string];
 	NSString *stuffToRepeat;
-	if ( [inScanner scanUpToRealString:endForEachDelim intoString:&stuffToRepeat] && 
+	if ( [inScanner scanUpToRealString:endForEachDelim intoString:&stuffToRepeat]
+		&&
+		(nil != stuffToRepeat)
+		&&
 		[inScanner scanRealString:endForEachDelim intoString:nil] )
 	{
 		NSString *keyForNewElement = [params objectAtIndex:1];
@@ -925,42 +936,45 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 	
-	NSScanner *scanner = [[NSScanner alloc] initWithRealString:parametersString];
-	while (![scanner isAtEnd])
+	if (parametersString)
 	{
-		// Scan the key
-		NSString *aKey = nil;
-		[scanner scanUpToString:@":" intoString:&aKey];
-		[scanner scanString:@":" intoString:NULL];
-		
-		// Scan up to the value (the template might leave a space between key & value)
-		[scanner scanUpToCharactersFromSet:[NSCharacterSet nonWhitespaceAndNewlineCharacterSet] intoString:NULL];
-		
-		// Scan the value. Handle quote marks a single long value containing spaces.
-		NSString *aValue = nil;
-		if ([parametersString characterAtIndex:[scanner scanLocation]] == '"')
+		NSScanner *scanner = [[NSScanner alloc] initWithRealString:parametersString];
+		while (![scanner isAtEnd])
 		{
-			[scanner setScanLocation:([scanner scanLocation] + 1)];
-			[scanner scanUpToString:@"\"" intoString:&aValue];
-			[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
-		}
-		else
-		{
-			[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:&aValue];
+			// Scan the key
+			NSString *aKey = nil;
+			[scanner scanUpToString:@":" intoString:&aKey];
+			[scanner scanString:@":" intoString:NULL];
+			
+			// Scan up to the value (the template might leave a space between key & value)
+			[scanner scanUpToCharactersFromSet:[NSCharacterSet nonWhitespaceAndNewlineCharacterSet] intoString:NULL];
+			
+			// Scan the value. Handle quote marks a single long value containing spaces.
+			NSString *aValue = nil;
+			if ([parametersString characterAtIndex:[scanner scanLocation]] == '"')
+			{
+				[scanner setScanLocation:([scanner scanLocation] + 1)];
+				[scanner scanUpToString:@"\"" intoString:&aValue];
+				[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
+			}
+			else
+			{
+				[scanner scanUpToCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:&aValue];
+			}
+			
+			// Store the key-value pair
+			if (aKey && aValue)
+			{
+				[result setObject:aValue forKey:aKey];
+			}
+			
+			// Scan up to the next key
+			[scanner scanCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
 		}
 		
-		// Store the key-value pair
-		if (aKey && aValue)
-		{
-			[result setObject:aValue forKey:aKey];
-		}
-		
-		// Scan up to the next key
-		[scanner scanCharactersFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] intoString:NULL];
+		// Tidy up
+		[scanner release];
 	}
-	
-	// Tidy up
-	[scanner release];
 	return result;
 }
 

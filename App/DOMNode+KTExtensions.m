@@ -865,7 +865,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
 {
-	if ([inStyleText isEqualToString:@""])  return inStyleText;
+	if (!inStyleText || [inStyleText isEqualToString:@""])  return @"";
 	
 	OFF((@"inStyleText = %@", inStyleText));
 	NSMutableString *styleString = [NSMutableString string];

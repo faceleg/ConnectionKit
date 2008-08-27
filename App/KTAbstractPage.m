@@ -220,31 +220,34 @@
 - (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context
 {
 	NSMutableString *buffer = [NSMutableString string];
-	NSScanner *scanner = [NSScanner scannerWithRealString:originalString];
-	while ( ![scanner isAtEnd] )
+	if (originalString)
 	{
-		NSString *beforeLink = nil;
-		BOOL found = [scanner scanUpToString:kKTPageIDDesignator intoString:&beforeLink];
-		if (found)
+		NSScanner *scanner = [NSScanner scannerWithRealString:originalString];
+		while ( ![scanner isAtEnd] )
 		{
-			[buffer appendString:beforeLink];
-			if (![scanner isAtEnd])
+			NSString *beforeLink = nil;
+			BOOL found = [scanner scanUpToString:kKTPageIDDesignator intoString:&beforeLink];
+			if (found)
 			{
-				[scanner scanString:kKTPageIDDesignator intoString:nil];
-				NSString *idString = nil;
-				BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
-													   intoString:&idString];
-				if (foundNumber)
+				[buffer appendString:beforeLink];
+				if (![scanner isAtEnd])
 				{
-					KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
-					NSString *newPath = nil;
-					if (thePage)
+					[scanner scanString:kKTPageIDDesignator intoString:nil];
+					NSString *idString = nil;
+					BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
+														   intoString:&idString];
+					if (foundNumber)
 					{
-						newPath = [[thePage URL] stringRelativeToURL:[self URL]];
+						KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
+						NSString *newPath = nil;
+						if (thePage)
+						{
+							newPath = [[thePage URL] stringRelativeToURL:[self URL]];
+						}
+						
+						if (!newPath) newPath = @"#";	// Fallback
+						[buffer appendString:newPath];
 					}
-					
-					if (!newPath) newPath = @"#";	// Fallback
-					[buffer appendString:newPath];
 				}
 			}
 		}
