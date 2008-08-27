@@ -205,6 +205,8 @@
         }
     }
 	
+	[self restartAutosaveTimersIfNecessary];
+	
 	return result;
 }
 
@@ -213,65 +215,17 @@
 
 - (void)contextDidChange:(NSNotification *)aNotification
 {
-	//LOGMETHOD;
-	
-	// if the context changes, we want to kick off the autosave timer
-	// if it keeps changing, we want to reset the timer
-	// except that we can't let it go too long
-	// what do we do about that?
-	// right now, this is the only place where we are starting the timers
-	
-	if ([self fileURL])
+	// NB: calling saveContext: from this method results in infinite loop, by design, so DON'T DO IT
+
+	if ( nil != [self fileURL] )
 	{
 		// if we have a place to save, then we can autosave
 		[self restartAutosaveTimersIfNecessary];
 	}
-	
-	// NB: calling saveContext: from this method results in infinite loop, by design, so DON'T DO IT
-	KTManagedObjectContext *context = [aNotification object];
-	
-	// if we remove a page, we need to remove our observing and retaining of it
-	
-	
-//	NSSet *changedObjects = [context changedObjects];
-//	
-//	// special case a change only to richTextHTML
-//	if ( [context isEqual:[self managedObjectContext]] )
-//	{
-//		if ( [NSThread isMainThread] && [self isOnlyRichTextChange:changedObjects] )
-//		{
-//			[self restartAutosaveTimersIfNecessary];
-//			return;
-//		}
-//	}
-		
+
 	// log changes if set in Debug menu
 	if ( [[NSApp delegate] logAllContextChanges] )
-	{		
-		NSLog(@"================== contextDidChange: ==================");		
-		if ( [NSThread isMainThread] )
-		{
-			if ( [context isEqual:[self managedObjectContext]] )
-			{
-				NSLog(@"============== main thread, main context ==============");
-			}
-			else
-			{
-				NSLog(@"============== main thread, context %p ", context);
-			}
-		}
-		else
-		{
-			if ( [context isEqual:[self managedObjectContext]] )
-			{
-				NSLog(@"============== thread %p, main context =========", [NSThread currentThread]);
-			}
-			else
-			{
-				NSLog(@"============== thread %p, context %p ", [NSThread currentThread], context);
-			}
-		}
-
+	{
 		NSDictionary *userInfo = [aNotification userInfo];
 		if ( nil != [userInfo valueForKey:NSInsertedObjectsKey] )
 		{
