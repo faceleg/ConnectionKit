@@ -87,12 +87,12 @@
 	OFF((@"scanning block for identifiers: \n%@", html));
 	if ( [html length] > [svxString length] )
 	{
-		NSScanner *scanner = [NSScanner scannerWithString:html];
+		NSScanner *scanner = [NSScanner scannerWithRealString:html];
 		while ( ![scanner isAtEnd] )
 		{
-			if ( [scanner scanUpToString:svxString intoString:NULL] )
+			if ( [scanner scanUpToRealString:svxString intoString:NULL] )
 			{
-				if ( [scanner scanString:svxString intoString:NULL] )
+				if ( [scanner scanRealString:svxString intoString:NULL] )
 				{
 					NSString *mediaPath = nil;
 					if ( [scanner scanUpToString:@"\"" intoString:&mediaPath] )

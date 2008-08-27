@@ -14,6 +14,7 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSScanner+Karelia.h"
 #import "Debug.h"
 
 
@@ -240,7 +241,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			return nil;
 		}
 		
-		NSScanner *scanner = [NSScanner scannerWithString:[self template]];
+		NSScanner *scanner = [NSScanner scannerWithRealString:[self template]];
 		[scanner setCharactersToBeSkipped:nil];
 		result = [self startHTMLStringByScanning:scanner];
 	}
@@ -318,7 +319,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
                 
                 if ( [tag hasPrefix:kKeyPathIndicator] )
 				{
-                    NSScanner *tagScanner = [NSScanner scannerWithString:tag];
+                    NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
 					[tagScanner setCharactersToBeSkipped:nil];
 					
                     NSString *keyPath;
@@ -398,7 +399,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
                 }
 				else	// not for echoing.  Do something.
 				{
-                    NSScanner *tagScanner = [NSScanner scannerWithString:tag];
+                    NSScanner *tagScanner = [NSScanner scannerWithRealString:tag];
 					[tagScanner setCharactersToBeSkipped:nil];
 					
 					NSString *keyword;
@@ -532,8 +533,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	int beforeScanLocation = [inScanner scanLocation];
 	NSString *stuffUntilEndIf;
-	if ( ![inScanner scanUpToString:endifDelim intoString:&stuffUntilEndIf] ||
-		![inScanner scanString:endifDelim intoString:nil] )
+	if ( ![inScanner scanUpToRealString:endifDelim intoString:&stuffUntilEndIf] ||
+		![inScanner scanRealString:endifDelim intoString:nil] )
 	{
 		NSLog(@"if: missing %@ tag, looking starting at %@", endifDelim, [[inScanner string] substringFromIndex:beforeScanLocation]);
 		return @"";
@@ -542,14 +543,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *stuffIfTrue = @"";
 	NSString *stuffIfFalse = @"";
 	
-	NSScanner *elseScanner = [NSScanner scannerWithString:stuffUntilEndIf];
+	NSScanner *elseScanner = [NSScanner scannerWithRealString:stuffUntilEndIf];
 	[elseScanner setCharactersToBeSkipped:nil];
 	
 	// Try to scan up to the else to get the "true" branch
-	[elseScanner scanUpToString:elseDelim intoString:&stuffIfTrue];
+	[elseScanner scanUpToRealString:elseDelim intoString:&stuffIfTrue];
 	
 	// If we find an else, then get the "false" branch
-	if ( [elseScanner scanString:elseDelim intoString:nil] )
+	if ( [elseScanner scanRealString:elseDelim intoString:nil] )
 	{
 		// Found an else; put the rest of it into the false part
 		stuffIfFalse = [stuffUntilEndIf substringFromIndex:[elseScanner scanLocation]];
@@ -576,7 +577,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	BOOL compareResult = [self compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
 	
 	// Now parse whatever piece we are supposed to use
-	NSScanner *ifScanner = [NSScanner scannerWithString:compareResult ? stuffIfTrue : stuffIfFalse];
+	NSScanner *ifScanner = [NSScanner scannerWithRealString:compareResult ? stuffIfTrue : stuffIfFalse];
 	[ifScanner setCharactersToBeSkipped:nil];
 	
 	NSString *result = [self HTMLStringByScanning:ifScanner];
@@ -778,8 +779,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	NSMutableString *result = [NSMutableString string];
 	NSString *stuffToRepeat;
-	if ( [inScanner scanUpToString:endForEachDelim intoString:&stuffToRepeat] && 
-		[inScanner scanString:endForEachDelim intoString:nil] )
+	if ( [inScanner scanUpToRealString:endForEachDelim intoString:&stuffToRepeat] && 
+		[inScanner scanRealString:endForEachDelim intoString:nil] )
 	{
 		NSString *keyForNewElement = [params objectAtIndex:1];
 		NSEnumerator *theEnum = [arrayToRepeat objectEnumerator];
@@ -793,7 +794,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			[[self cache] overrideKey:keyForNewElement withValue:object];
 			
 			// need a scanner up to next endForEach
-			NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
+			NSScanner *eachScanner = [NSScanner scannerWithRealString:stuffToRepeat];
 			[eachScanner setCharactersToBeSkipped:nil];
 			
 			NSString *eachResult = [self HTMLStringByScanning:eachScanner];
@@ -891,7 +892,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	if (nil != inString && ![inString isEqualToString:@""])
 	{
 		// Try to parse inString value -- as a constant integer, an literal string, or a key path value.
-		if ([[NSScanner scannerWithString:inString] scanInt:&parsedInt])
+		if ([[NSScanner scannerWithRealString:inString] scanInt:&parsedInt])
 		{
 			result = [NSNumber numberWithInt:parsedInt];
 		}
@@ -924,7 +925,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 	
-	NSScanner *scanner = [[NSScanner alloc] initWithString:parametersString];
+	NSScanner *scanner = [[NSScanner alloc] initWithRealString:parametersString];
 	while (![scanner isAtEnd])
 	{
 		// Scan the key

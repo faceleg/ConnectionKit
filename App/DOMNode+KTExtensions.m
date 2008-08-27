@@ -20,6 +20,7 @@
 #import <WebKit/WebKit.h>
 #import "DOMNodeList+KTExtensions.h"
 #import "WebView+Karelia.h"
+#import "NSScanner+Karelia.h"
 
 
 static NSSet *sTagsWithNewlineOnOpen  = nil;
@@ -870,7 +871,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	NSMutableString *styleString = [NSMutableString string];
 	BOOL hasStyleOutput = NO;
 	
-	NSScanner *scanner = [NSScanner scannerWithString:inStyleText];
+	NSScanner *scanner = [NSScanner scannerWithRealString:inStyleText];
 	NSString *keyValue;
 	while ([scanner scanUpToString:@";" intoString:&keyValue])
 	{

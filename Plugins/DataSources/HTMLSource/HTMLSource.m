@@ -72,7 +72,7 @@
 	{
 		NSString *string = [pboard stringForType:NSStringPboardType];
 		// Do some scanning to see if it looks like HTML by trying to find some basic types
-		NSScanner *scanner = [NSScanner scannerWithString:string];
+		NSScanner *scanner = [NSScanner scannerWithRealString:string];
 		int confidence = 0;
 		BOOL keepGoing = YES;
 		while (keepGoing)
@@ -93,7 +93,7 @@
 
 				while (nil != (pattern = [theEnum nextObject]) )
 				{
-					BOOL foundPattern = [scanner scanString:pattern intoString:nil];
+					BOOL foundPattern = [scanner scanRealString:pattern intoString:nil];
 					if (foundPattern)
 					{
 						confidence++;	// increment confidence factor

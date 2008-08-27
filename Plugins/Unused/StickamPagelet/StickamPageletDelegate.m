@@ -66,7 +66,7 @@ stickamCode
 		{
 			if (nil != theURL && nil != theSource && [[theURL host] isEqualToString:@"stickam.com"] || [[theURL host] isEqualToString:@"www.stickam.com"])
 			{
-				NSScanner *scanner = [NSScanner scannerWithString:theSource];
+				NSScanner *scanner = [NSScanner scannerWithRealString:theSource];
 				BOOL found = [scanner scanUpToString:@"stickamPlayer/" intoString:nil];
 				if (found && ![scanner isAtEnd])
 				{
@@ -104,7 +104,7 @@ stickamCode
 - (void)setStickamCode:(NSString *)aStickamCode
 {
 	// clean up the code so we have what we really want
-	NSScanner *scanner = [NSScanner scannerWithString:aStickamCode];
+	NSScanner *scanner = [NSScanner scannerWithRealString:aStickamCode];
 	BOOL found = [scanner scanUpToString:@"stickamPlayer/" intoString:nil];
 	if (found && ![scanner isAtEnd])
 	{

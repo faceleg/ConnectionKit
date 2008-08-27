@@ -306,7 +306,7 @@ Makes the view so wide that text won't wrap anymore.
 							withColor: (NSColor*) col andMode:(NSString*)attr andEscapeChar: (NSString*)vStringEscapeCharacter
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithString: [s string]];
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -327,17 +327,17 @@ Makes the view so wide that text won't wrap anymore.
 			vIsEndChar = NO;
 			
 			// Look for start of string:
-			[vScanner scanUpToString: startCh intoString: nil];
+			[vScanner scanUpToRealString: startCh intoString: nil];
 			vStartOffs = [vScanner scanLocation];
-			if( ![vScanner scanString:startCh intoString:nil] )
+			if( ![vScanner scanRealString:startCh intoString:nil] )
 				NS_VOIDRETURN;
 
 			while( !vIsEndChar && ![vScanner isAtEnd] )	// Loop until we find end-of-string marker or our text to color is finished:
 			{
-				[vScanner scanUpToString: endCh intoString: nil];
+				[vScanner scanUpToRealString: endCh intoString: nil];
 				if( ([vStringEscapeCharacter length] == 0) || [[s string] characterAtIndex: ([vScanner scanLocation] -1)] != vEscChar )	// Backslash before the end marker? That means ignore the end marker.
 					vIsEndChar = YES;	// A real one! Terminate loop.
-				if( ![vScanner scanString:endCh intoString:nil] )	// But skip this char before that.
+				if( ![vScanner scanRealString:endCh intoString:nil] )	// But skip this char before that.
 					NS_VOIDRETURN;
 				
 			}
@@ -365,7 +365,7 @@ Makes the view so wide that text won't wrap anymore.
 							withColor: (NSColor*) col andMode:(NSString*)attr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithString: [s string]];
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -377,14 +377,14 @@ Makes the view so wide that text won't wrap anymore.
 					vEndOffs;
 			
 			// Look for start of multi-line comment:
-			[vScanner scanUpToString: startCh intoString: nil];
+			[vScanner scanUpToRealString: startCh intoString: nil];
 			vStartOffs = [vScanner scanLocation];
-			if( ![vScanner scanString:startCh intoString:nil] )
+			if( ![vScanner scanRealString:startCh intoString:nil] )
 				NS_VOIDRETURN;
 
 			// Look for associated end-of-comment marker:
-			[vScanner scanUpToString: endCh intoString: nil];
-			if( ![vScanner scanString:endCh intoString:nil] )
+			[vScanner scanUpToRealString: endCh intoString: nil];
+			if( ![vScanner scanRealString:endCh intoString:nil] )
 				/*NS_VOIDRETURN*/;  // Don't exit. If user forgot trailing marker, indicate this by "bleeding" until end of string.
 			vEndOffs = [vScanner scanLocation];
 			
@@ -410,7 +410,7 @@ Makes the view so wide that text won't wrap anymore.
 				withColor: (NSColor*) col andMode:(NSString*)attr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithString: [s string]];
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -422,9 +422,9 @@ Makes the view so wide that text won't wrap anymore.
 					vEndOffs;
 			
 			// Look for start of one-line comment:
-			[vScanner scanUpToString: startCh intoString: nil];
+			[vScanner scanUpToRealString: startCh intoString: nil];
 			vStartOffs = [vScanner scanLocation];
-			if( ![vScanner scanString:startCh intoString:nil] )
+			if( ![vScanner scanRealString:startCh intoString:nil] )
 				NS_VOIDRETURN;
 
 			// Look for associated line break:
@@ -455,7 +455,7 @@ Makes the view so wide that text won't wrap anymore.
 			withColor: (NSColor*) col andMode:(NSString*)attr charset: (NSCharacterSet*)cset
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithString: [s string]];
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -478,9 +478,9 @@ Makes the view so wide that text won't wrap anymore.
 		while( ![vScanner isAtEnd] )
 		{
 			// Look for start of identifier:
-			[vScanner scanUpToString: ident intoString: nil];
+			[vScanner scanUpToRealString: ident intoString: nil];
 			vStartOffs = [vScanner scanLocation];
-			if( ![vScanner scanString:ident intoString:nil] )
+			if( ![vScanner scanRealString:ident intoString:nil] )
 				NS_VOIDRETURN;
 			
 			if( vStartOffs > 0 )	// Check that we're not in the middle of an identifier:
@@ -520,7 +520,7 @@ Makes the view so wide that text won't wrap anymore.
 				withColor: (NSColor*) col andMode:(NSString*)attr exceptIfMode: (NSString*)ignoreAttr
 {
 	NS_DURING
-		NSScanner*					vScanner = [NSScanner scannerWithString: [s string]];
+		NSScanner*					vScanner = [NSScanner scannerWithRealString: [s string]];
 		NSDictionary*				vStyles = [NSDictionary dictionaryWithObjectsAndKeys:
 													col, NSForegroundColorAttributeName,
 													attr, TD_SYNTAX_COLORING_MODE_ATTR,
@@ -532,12 +532,12 @@ Makes the view so wide that text won't wrap anymore.
 					vEndOffs;
 			
 			// Look for start of one-line comment:
-			[vScanner scanUpToString: startCh intoString: nil];
+			[vScanner scanUpToRealString: startCh intoString: nil];
 			vStartOffs = [vScanner scanLocation];
 			if( vStartOffs >= [s length] )
 				NS_VOIDRETURN;
 			NSString*   scMode = [[s attributesAtIndex:vStartOffs effectiveRange: nil] objectForKey: TD_SYNTAX_COLORING_MODE_ATTR];
-			if( ![vScanner scanString:startCh intoString:nil] )
+			if( ![vScanner scanRealString:startCh intoString:nil] )
 				NS_VOIDRETURN;
 			
 			// If start lies in range of ignored style, don't colorize it:
@@ -548,7 +548,7 @@ Makes the view so wide that text won't wrap anymore.
 			while( ![vScanner isAtEnd] )
 			{
 				// Scan up to the next occurence of the terminating sequence:
-				(BOOL) [vScanner scanUpToString: endCh intoString:nil];
+				(BOOL) [vScanner scanUpToRealString: endCh intoString:nil];
 				
 				// Now, if the mode of the end marker is not the mode we were told to ignore,
 				//  we're finished now and we can exit the inner loop:
@@ -556,7 +556,7 @@ Makes the view so wide that text won't wrap anymore.
 				if( vEndOffs < [s length] )
 				{
 					scMode = [[s attributesAtIndex:vEndOffs effectiveRange: nil] objectForKey: TD_SYNTAX_COLORING_MODE_ATTR];
-					[vScanner scanString: endCh intoString: nil];   // Also skip the terminating sequence.
+					[vScanner scanRealString: endCh intoString: nil];   // Also skip the terminating sequence.
 					if( ignoreAttr == nil || ![scMode isEqualToString: ignoreAttr] )
 						break;
 				}

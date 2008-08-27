@@ -46,7 +46,8 @@
 	NSURL *result = nil;
 	
 	// Look for the open of such a tag
-	NSScanner *scanner = [[NSScanner alloc] initWithString:self];
+	NSScanner *scanner = [[NSScanner alloc] initWithRealString:
+self];
 	[scanner scanUpToString:@"<embed src=\"" intoString:NULL];
 	if (![scanner isAtEnd])
 	{

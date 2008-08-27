@@ -22,6 +22,7 @@
 #import "KTDocumentInfo.h"
 
 #import "NSString+Karelia.h"
+#import "NSScanner+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
@@ -99,7 +100,7 @@
 {
     NSMutableSet *buffer = [[NSMutableSet alloc] init];
     
-    NSScanner *imageScanner = [[NSScanner alloc] initWithString:HTML];
+    NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:HTML];
     while (![imageScanner isAtEnd])
     {
         // Look for an image tag

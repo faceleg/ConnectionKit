@@ -65,7 +65,7 @@ static unsigned long sCacheConfusingNumber = 0;
 		mimeType = [NSString MIMETypeForUTI:uti];
 	}
 	
-	NSScanner *scanner = [NSScanner scannerWithString:resourceSpecifier];	
+	NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
 	NSString *documentID = nil;
 	
 	// Get document ID
@@ -112,7 +112,7 @@ static unsigned long sCacheConfusingNumber = 0;
 		mimeType = [NSString MIMETypeForUTI:uti];
 	}
 	
-	NSScanner *scanner = [NSScanner scannerWithString:resourceSpecifier];	
+	NSScanner *scanner = [NSScanner scannerWithRealString:resourceSpecifier];	
 	NSString *documentID = nil;
 	NSData *data = nil;
 	NSError *error = nil;

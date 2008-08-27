@@ -10,6 +10,7 @@
 #import "KTHTMLParser+Private.h"
 
 #import "KTWebViewTextBlock.h"
+#import "NSScanner+Karelia.h"
 
 
 @implementation KTStalenessHTMLParser
@@ -39,14 +40,14 @@
 	{
 		// Scan through the preview text for page paths
 		NSString *HTML = [result innerHTML:kGeneratingPreview];
-		NSScanner *scanner = [[[NSScanner alloc] initWithString:HTML] autorelease];
+		NSScanner *scanner = [[[NSScanner alloc] initWithRealString:HTML] autorelease];
 		NSString *searchString = @"<a href=\"";
 		NSString *aPagePreviewPath;
 		
 		while (![scanner isAtEnd])
 		{
 			// Scan for an anchor
-			[scanner scanUpToString:searchString intoString:NULL];
+			[scanner scanUpToRealString:searchString intoString:NULL];
 			if ([scanner isAtEnd]) break;
 			[scanner setScanLocation:([scanner scanLocation] + [searchString length])];
 			

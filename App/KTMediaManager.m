@@ -19,6 +19,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSScanner+Karelia.h"
 
 #import <Connection/KTLog.h>
 #import "BDAlias.h"
@@ -346,7 +347,7 @@ NSString *KTMediaLogDomain = @"Media";
     NSMutableString *buffer = [[NSMutableString alloc] init];
     
     
-    NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
+    NSScanner *imageScanner = [[NSScanner alloc] initWithRealString:oldText];
     while (![imageScanner isAtEnd])
     {
         // Look for an image tag
@@ -366,7 +367,7 @@ NSString *KTMediaLogDomain = @"Media";
         
         
         // Look for a media ref within the URI
-        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
+        NSScanner *mediaRefScanner = [[NSScanner alloc] initWithRealString:anImageURI];
         [mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
         if (![mediaRefScanner isAtEnd])
         {

@@ -9,6 +9,7 @@
 
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+QuickLook.h"
+#import "NSScanner+Karelia.h"
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file
@@ -47,7 +48,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	
 	
 	// Search for <!svxdata> pseudo-tags
-	NSScanner *scanner = [[NSScanner alloc] initWithString:htmlString];
+	NSScanner *scanner = [[NSScanner alloc] initWithRealString:htmlString];
 	NSString *aString;
 	NSString *aURIScheme;	NSString *aURIPath;
 	

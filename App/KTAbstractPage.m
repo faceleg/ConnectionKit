@@ -20,6 +20,7 @@
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSURL+Karelia.h"
+#import "NSScanner+Karelia.h"
 
 #import "Debug.h"
 
@@ -219,7 +220,7 @@
 - (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context
 {
 	NSMutableString *buffer = [NSMutableString string];
-	NSScanner *scanner = [NSScanner scannerWithString:originalString];
+	NSScanner *scanner = [NSScanner scannerWithRealString:originalString];
 	while ( ![scanner isAtEnd] )
 	{
 		NSString *beforeLink = nil;

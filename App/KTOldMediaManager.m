@@ -906,17 +906,17 @@ Scans for Media_/  and then backs up to beginning quote mark, and forward to pre
 	{
 	NSString *keyword = [NSString stringWithFormat:@"%@/", [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]];	//	_Media/
 	
-	NSScanner *scanner = [NSScanner scannerWithString:anHTMLString];
+	NSScanner *scanner = [NSScanner scannerWithRealString:anHTMLString];
 	while ( ![scanner isAtEnd] )
 	{
 		NSString *beforeKeyword = nil;	
-		BOOL foundBeforeKeyword = [scanner scanUpToString:keyword intoString:&beforeKeyword];
+		BOOL foundBeforeKeyword = [scanner scanUpToRealString:keyword intoString:&beforeKeyword];
 		if (!foundBeforeKeyword)
 		{
 			break;
 		}
 		NSString *keywordFound = nil;
-		BOOL foundKeyword = [scanner scanString:keyword intoString:&keywordFound];
+		BOOL foundKeyword = [scanner scanRealString:keyword intoString:&keywordFound];
 		if (!foundKeyword)
 		{
 			break;

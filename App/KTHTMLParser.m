@@ -21,6 +21,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
 #import "Registration.h"
+#import "NSScanner+Karelia.h"
 
 #import "Debug.h"
 
@@ -347,7 +348,7 @@
 	NSString *property = nil;
 	NSMutableArray *classes = [NSMutableArray array];
 
-	NSScanner *scanner = [NSScanner scannerWithString:inRestOfTag];
+	NSScanner *scanner = [NSScanner scannerWithRealString:inRestOfTag];
 	while ( ![scanner isAtEnd] )
 	{
 		NSString *keyword;

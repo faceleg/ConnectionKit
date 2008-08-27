@@ -33,6 +33,7 @@
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
+#import "NSScanner+Karelia.h"
 
 
 @interface KTWebViewTextBlock (Private)
@@ -454,7 +455,7 @@
 		if ([self importsGraphics])
 		{
 			// Convert media source paths
-			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
+			NSScanner *scanner = [[NSScanner alloc] initWithRealString:result];
 			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
 			NSString *aString;	NSString *aMediaPath;
 			
