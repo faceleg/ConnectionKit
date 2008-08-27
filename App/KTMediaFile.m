@@ -157,7 +157,8 @@
 		}
 		
 		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
-        NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[sourceFilename pathExtension]];
+        NSString *pathExtension = [[sourceFilename pathExtension] lowercaseString];
+		NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:pathExtension];
         
         NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
 		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
