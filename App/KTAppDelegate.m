@@ -1002,7 +1002,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 									);
 			[NSApp terminate:nil];
 		}
-		
+
+#ifdef VARIANT_BETA
+		NSLog(@"Running build %@", [NSApplication buildVersion]);
+#endif
+
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
 #endif
