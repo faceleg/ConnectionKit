@@ -515,29 +515,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 			[defaults setInteger:DEFAULT_LEVEL forKey:defaultsKey];
 		}
 	}
-
-	// For beta testers, throw an exception.
-#ifdef OMNI_FORCE_ASSERTIONS
-	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	NSLog(@"Throwing on Assertion failures; running build %@", [NSApplication buildVersion]);
-	
-#else
-	NSLog(@"Running build %@", [NSApplication buildVersion]);
-	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
-#endif
-	
-		// Set these for the next run -- it's probably too late now; the assertion thing may have already been set
-#ifdef DEBUG
-	[defaults setBool:YES forKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	NSLog(@"Aborting on Assertion failures; running build %@", [NSApplication buildVersion]);
-
-
-#else
-	[defaults removeObjectForKey:@"OBShouldThrowOnAssertFailureEnabled"];
-	[defaults removeObjectForKey:@"OBShouldAbortOnAssertFailureEnabled"];
-#endif
-	
 	
 // TODO: remove this for release.  I just don't want to have this old key around in the user defaults.
 	// However, later on, somebody might want to actually override things.
@@ -559,7 +536,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	
 	[defaults synchronize];
-	OBSetupFromDefaults();
 }	
 
 // TODO: make sure that everything used with wrappedInheritedValueForKey gets mentioned here!
