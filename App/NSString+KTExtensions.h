@@ -26,5 +26,7 @@
 - (NSString *)domainName;
 - (BOOL)looksLikeValidHost;
 
+- (NSString *)annotatedAtOffset:(unsigned int)anOffset;
+
 @end
 

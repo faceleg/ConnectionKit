@@ -13,7 +13,7 @@
 #import "NSCharacterSet+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
-
+#import "NSString+KTExtensions.h"
 #import "Debug.h"
 
 
@@ -651,13 +651,17 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (NSString *)endifWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	NSLog(@"[[endif...] tag found not balanced with previous [[if...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
+	NSLog(@"[[endif...] tag found not balanced with previous [[if...]] tag at %@", [[inScanner string] annotatedAtOffset:[inScanner scanLocation]]);
+	[NSException raise: NSInternalInconsistencyException
+				format: @"[[endif...] tag found not balanced with previous [[if...]] tag"];
 	return @"";
 }
 
 - (NSString *)elseWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	NSLog(@"[[else...] tag found not balanced with previous [[if...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
+	NSLog(@"[[else...] tag found not balanced with previous [[if...]] tag at %@", [[inScanner string] annotatedAtOffset:[inScanner scanLocation]]);
+	[NSException raise: NSInternalInconsistencyException
+				format: @"[[else...] tag found not balanced with previous [[if...]] tag"];
 	return @"";
 }
 
@@ -870,7 +874,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (NSString *)endforeachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	NSLog(@"[[endforeach...] tag found not balanced with previous [[forEach...]] tag at scanLocation %d of string:%@", [inScanner scanLocation], [[inScanner string] substringToIndex:[inScanner scanLocation]]);
+	NSLog(@"[[endforeach...] tag found not balanced with previous [[forEach...]] tag at %@", [[inScanner string] annotatedAtOffset:[inScanner scanLocation]]);
+	[NSException raise: NSInternalInconsistencyException
+				format: @"[[endforeach...] tag found not balanced with previous [[forEach...]] tag"];
 	return @"";
 }
 

@@ -25,7 +25,13 @@
 #endif
 
 
-
+// Show where the cursor is on the text by inserting some >>>> pointing to that spot
+- (NSString *)annotatedAtOffset:(unsigned int)anOffset
+{
+	NSString *string1 = [self substringToIndex:anOffset];
+	NSString *string2 = [self substringFromIndex:anOffset];
+	return [NSString stringWithFormat:@"%@>>>>%@", string1, string2];
+}
 
 
 

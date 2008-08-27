@@ -740,7 +740,7 @@
 	
 	// work-around for retain loop: we make a proxy that doesn't retain self
 	// Only create the helper once, though.
-	//COMMMENTING OUT CHECK FOR NOW -- PROBLEM WITH CONVERSE, removeWebScriptKey:@"helper", WE GOT A CRASH AFTER APPLYING THIS CHANGE.
+	//COMMENTING OUT CHECK FOR NOW -- PROBLEM WITH CONVERSE, removeWebScriptKey:@"helper", WE GOT A CRASH AFTER APPLYING THIS CHANGE.
 //	id currentHelper = [aWindowScriptObject valueForKey:@"helper"];
 //	if (nil == currentHelper || ![currentHelper isKindOfClass:[KTHelper class]])
 //	{
