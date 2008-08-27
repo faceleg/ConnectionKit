@@ -235,6 +235,7 @@
 	
 	// Figure out the filename to use
 	NSString *imageUTI = [image preferredFormatUTI];
+	OBASSERT(imageUTI);
 	NSString *extension = [NSString filenameExtensionForUTI:imageUTI];
 	OBASSERT(extension);
 	NSString *filename = [@"pastedImage" stringByAppendingPathExtension:extension];
