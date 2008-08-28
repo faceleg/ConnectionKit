@@ -349,6 +349,7 @@ NSString *KTMediaLogDomain = @"Media";
 	if (oldText)
 	{
 		NSScanner *imageScanner = [[NSScanner alloc] initWithString:oldText];
+		
 		while (![imageScanner isAtEnd])
 		{
 			// Look for an image tag
@@ -379,10 +380,16 @@ NSString *KTMediaLogDomain = @"Media";
 					anImageURI = [[anImage URIRepresentation] absoluteString];
 				}
 				[mediaRefScanner release];
-
-				[buffer appendString:anImageURI];
+				
+				
+				// Store the new image URI. This could be:
+				//	A) An external URL
+				//	B) A svxmedia: URL
+				//	C) In the event that a media container could not be created, nil.
+				if (anImageURI) [buffer appendString:anImageURI];
 			}
 		}
+		
 		[imageScanner release];
     }
     
