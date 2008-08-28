@@ -681,7 +681,17 @@
         
         KTPage *aNewPage = [KTPage insertNewPageWithParent:newParentPage plugin:plugin];
         
+        
+        // Migrate data from old page to new
         if (![self migratePage:aChildPage toPage:aNewPage error:error])
+        {
+            [pool release];
+            return NO;
+        }
+        
+        
+        // Save the migrated objects. Otherwise for really big sites a single final save uses too much memory
+        if (![[aNewPage managedObjectContext] save:error])
         {
             [pool release];
             return NO;
