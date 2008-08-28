@@ -249,6 +249,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			result = [self startHTMLStringByScanning:scanner];
 		}
 	}
+    @catch (NSException *exception)
+    {
+        NSLog(@"Exception raised during parsing of component:\n%@\nTemplate:\n%@",
+              [self component],
+              [self template]);
+        
+        @throw;
+    }
 	@finally
 	{
 		[self finishParsing];
