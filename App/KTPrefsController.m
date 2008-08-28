@@ -69,7 +69,9 @@
 	
 	if (nil == mySampleImage)
 	{
-		// public domain US government image: http://invasivespecies.nbii.gov/gardening.html
+		// public domain US government image: http://www.nps.gov/archive/prsf/desktop_photo_archive.htm 
+		// http://www.nps.gov/archive/prsf/images/desktop/11goldengate.jpg
+		// This really shows differences between 100% and 90%, and also shows good artifacts at high compression.
 		mySampleImage = [[NSImage imageNamed:@"quality_sample"] retain];
 	}
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
