@@ -52,6 +52,7 @@
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 
 	[controller removeObserver:self forKeyPath:@"values.KTPreferredJPEGQuality"];
+	[controller removeObserver:self forKeyPath:@"values.KTSharpeningFactor"];
 	[controller removeObserver:self forKeyPath:@"values.KTPrefersPNGFormat"];
 
 	[self removeObserver:self forKeyPath:@"sparkleOption"];
@@ -73,20 +74,24 @@
 	}
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 	NSUserDefaults *defaults = [controller defaults];
-	if ([defaults boolForKey:@"KTPrefersPNGFormat"])
+	
+	[oCompressionSample setHidden:NO];
+	
+	float quality = [defaults floatForKey:@"KTPreferredJPEGQuality"];
+	float sharpening = [defaults floatForKey:@"KTSharpeningFactor"];
+
+	CIImage *theCI			= [mySampleImage toCIImage];
+	CIImage *sharpenedCI	= [theCI sharpenLuminanceWithFactor:sharpening];
+	
+	NSImage *sharpenedImage = [sharpenedCI toNSImageBitmap];
+
+	if (![defaults boolForKey:@"KTPrefersPNGFormat"])	// convert to JPEG to show compression
 	{
-		[oCompressionSample setHidden:YES];
+		NSData *jpegData = [sharpenedImage JPEGRepresentationWithQuality:quality];
+		sharpenedImage = [[[NSImage alloc] initWithData:jpegData] autorelease];
+		[sharpenedImage normalizeSize];
 	}
-	else
-	{
-		[oCompressionSample setHidden:NO];
-		float quality = [defaults floatForKey:@"KTPreferredJPEGQuality"];
-		
-		NSData *jpegData = [mySampleImage JPEGRepresentationWithQuality:quality];
-		NSImage *newImage = [[[NSImage alloc] initWithData:jpegData] autorelease];
-		[newImage normalizeSize];
-		[oCompressionSample setImage:newImage];
-	}
+	[oCompressionSample setImage:sharpenedImage];
 	
 	/// Don't blow away in 1.5, the cache isn't used anyway
 	// TODO: remove this code, make sure all prefs work
@@ -160,6 +165,7 @@
 	NSUserDefaults *defaults = [controller defaults];
 
 	[controller addObserver:self forKeyPath:@"values.KTPreferredJPEGQuality" options:(NSKeyValueObservingOptionNew) context:nil];
+	[controller addObserver:self forKeyPath:@"values.KTSharpeningFactor" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTPrefersPNGFormat" options:(NSKeyValueObservingOptionNew) context:nil];
 
 
