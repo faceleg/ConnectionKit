@@ -64,7 +64,6 @@
 
 - (void)updateImageSettingsBlowAway:(BOOL)aBlowAway;
 {
-	
 	// PNG FORMAT OR JPEG QUALITY ... BLOW AWAY IMAGE CACHE WHEN CHANGED.
 	
 	if (nil == mySampleImage)
