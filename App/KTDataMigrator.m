@@ -691,7 +691,8 @@
         
         
         // Save the migrated objects. Otherwise for really big sites a single final save uses too much memory
-        if (![[aNewPage managedObjectContext] save:error])
+        KTDocument *document = [self newDocument];
+		if (![document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error])
         {
             [pool release];
             return NO;

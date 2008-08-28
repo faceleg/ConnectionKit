@@ -499,13 +499,16 @@
 	
 	
 	// Store QuickLook preview
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
-	[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-	NSString *previewHTML = [parser parseTemplate];
-	[parser release];
-	
-	NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-	[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+	if ([NSThread isMainThread])
+	{
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+		NSString *previewHTML = [parser parseTemplate];
+		[parser release];
+		
+		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+	}
 	
 	
 	result = [managedObjectContext save:&error];
