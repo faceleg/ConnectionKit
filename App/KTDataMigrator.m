@@ -238,6 +238,24 @@
     myNewDocument = document;
 }
 
+- (unsigned)countOfPagesToMigrate { return myCountOfPagesToMigrate; }
+
+- (void)_setCountOfPagesToMigrate:(NSNumber *)count
+{
+    [self willChangeValueForKey:@"countOfPagesToMigrate"];
+    myCountOfPagesToMigrate = [count unsignedIntValue];
+    [self didChangeValueForKey:@"countOfPagesToMigrate"];
+}
+
+- (unsigned)countOfPagesMigrated { return myCountOfPagesMigrated; }
+
+- (void)incrementCountOfPagesMigrated
+{
+    [self willChangeValueForKey:@"countOfPagesMigrated"];
+    myCountOfPagesMigrated++;
+    [self didChangeValueForKey:@"countOfPagesMigrated"];
+}
+
 #pragma mark -
 #pragma mark Migration
 
@@ -614,6 +632,10 @@
 		
 		// Import pagelets
 		result = [self migratePageletsFromPage:oldPage toPage:newPage error:error];
+        
+        
+        // We're pretty much done with that page, update the UI
+        [self performSelectorOnMainThread:@selector(incrementCountOfPagesMigrated) withObject:nil waitUntilDone:NO];
 		
 		
 		if (result)
@@ -928,7 +950,17 @@
     
     
     // Move onto individual pages
-    BOOL result = [self migrateRootPage:[oldDocInfo valueForKey:@"root"] error:error];
+    BOOL result = NO;
+    NSArray *allPages = [[self oldManagedObjectContext] allObjectsWithEntityName:@"Page" error:error];
+    if (allPages)
+    {
+        [self performSelectorOnMainThread:@selector(_setCountOfPagesToMigrate:)
+                               withObject:[NSNumber numberWithUnsignedInt:[allPages count]]
+                            waitUntilDone:NO];
+        
+        result = [self migrateRootPage:[oldDocInfo valueForKey:@"root"] error:error];
+    }
+    
     return result;
 }
 

@@ -32,7 +32,9 @@
     NSURL       *myNewDocumentURL;
     KTDocument  *myNewDocument;
     
-    BOOL    myIsCancelled;
+    unsigned    myCountOfPagesToMigrate;
+    unsigned    myCountOfPagesMigrated;
+    BOOL        myIsCancelled;
 }
 
 + (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
@@ -47,6 +49,9 @@
 
 - (NSURL *)newDocumentURL;
 - (KTDocument *)newDocument;
+
+- (unsigned)countOfPagesToMigrate;
+- (unsigned)countOfPagesMigrated;
 
 // Migration
 - (BOOL)migrate:(NSError **)error;

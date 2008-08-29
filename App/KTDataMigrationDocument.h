@@ -19,6 +19,8 @@
 	IBOutlet NSProgressIndicator	*progressIndicator;
 	IBOutlet NSButton				*cancelButton;
     
+    IBOutlet NSObjectController    *dataMigratorController;
+    
 @private
     
     KTDataMigrator  *myDataMigrator;

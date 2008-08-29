@@ -47,6 +47,8 @@
 			<dict>
 				<key>cancelButton</key>
 				<string>NSButton</string>
+				<key>dataMigratorController</key>
+				<string>NSObjectController</string>
 				<key>informativeTextField</key>
 				<string>NSTextField</string>
 				<key>messageTextField</key>
@@ -56,6 +58,14 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSDocument</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSManagedObjectContext</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

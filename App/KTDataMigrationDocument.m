@@ -71,6 +71,7 @@
 	[cancelButton setTitle:NSLocalizedString(@"Cancel","Button title")];
 
 	
+    [dataMigratorController setContent:[self dataMigrator]];
     [progressIndicator startAnimation:self];
     
 }
