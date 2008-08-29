@@ -64,6 +64,7 @@
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
+            includeMetadata:(BOOL)includeMetadata
 					  error:(NSError **)outError;
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL 
@@ -241,15 +242,27 @@
 #pragma mark -
 #pragma mark Write To URL
 
-/*	Called when creating a new document and when performing saveDocumentAs:
+/*  We're overriding NSDocument's default behaviour to give the option of writing metadata
  */
 - (BOOL)writeToURL:(NSURL *)inURL 
 			ofType:(NSString *)inType 
   forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
 			 error:(NSError **)outError 
 {
+    return [self writeToURL:inURL
+                     ofType:inType
+           forSaveOperation:inSaveOperation
+        originalContentsURL:inOriginalContentsURL
+            includeMetadata:YES
+                      error:outError];
+}
+
+/*	Called when creating a new document and when performing saveDocumentAs:
+ */
+- (BOOL)writeToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL includeMetadata:(BOOL)includeMetadata error:(NSError **)outError;
+{
 	// We don't support any of the other save ops here.
-	OBPRECONDITION(inSaveOperation == NSSaveOperation || inSaveOperation == NSSaveAsOperation);
+	OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
 	
 	
 	BOOL result = NO;
@@ -266,13 +279,17 @@
     
     
     // Prepare to save the context
-	result = [self prepareToWriteToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
+	result = [self prepareToWriteToURL:inURL
+                                ofType:inType
+                      forSaveOperation:saveOperation
+                       includeMetadata:includeMetadata
+                                 error:outError];
 	
 	
 	if (result)
 	{
 		// Save the context
-		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:inSaveOperation error:outError];
+		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:saveOperation error:outError];
 		
 		
 		if (result && quickLookThumbnailWebView)
@@ -359,7 +376,8 @@
  */
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
-		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
+		   forSaveOperation:(NSSaveOperationType)saveOperation 
+            includeMetadata:(BOOL)includeMetadata
 					  error:(NSError **)outError
 {
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
@@ -382,7 +400,7 @@
 	
 	
 	// For the first save of a document, create the wrapper paths on disk before we do anything else
-	if (inSaveOperation == NSSaveAsOperation)
+	if (saveOperation == NSSaveAsOperation)
 	{
 		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
 		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
@@ -398,7 +416,7 @@
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL UTI:nil];
 	
-	if ((inSaveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
+	if ((saveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
 	{
 		// NSDocument does atomic saves so the first time the user saves it's in a temporary
 		// directory and the file is then moved to the actual save path, so we need to tell the 
@@ -432,38 +450,41 @@
 	} 
 	
 	
-	// Set metadata
-	if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
-	{
-		if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
-		{
-			return NO; // couldn't setMetadata, but we should have, bail...
-		}
-	}
-	else
-	{
-		if ( inSaveOperation != NSSaveAsOperation )
-		{
-			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
-			return NO; // this case should not happen, stop
-		}
-	}
-	
-	
-	// Record display properties
-	[managedObjectContext processPendingChanges];
-	[[managedObjectContext undoManager] disableUndoRegistration];
-	[self copyDocumentDisplayPropertiesToModel];
-	[managedObjectContext processPendingChanges];
-	[[managedObjectContext undoManager] enableUndoRegistration];
-	
-	
-	// Move external media in-document if the user requests it
-	KTDocumentInfo *docInfo = [self documentInfo];
-	if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
-	{
-		[[self mediaManager] moveApplicableExternalMediaInDocument];
-	}
+    // Set metadata
+    if (includeMetadata)
+    {
+        if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
+        {
+            if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
+            {
+                return NO; // couldn't setMetadata, but we should have, bail...
+            }
+        }
+        else
+        {
+            if ( saveOperation != NSSaveAsOperation )
+            {
+                LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
+                return NO; // this case should not happen, stop
+            }
+        }
+    }
+    
+    
+    // Record display properties
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] disableUndoRegistration];
+    [self copyDocumentDisplayPropertiesToModel];
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] enableUndoRegistration];
+    
+    
+    // Move external media in-document if the user requests it
+    KTDocumentInfo *docInfo = [self documentInfo];
+    if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
+    {
+        [[self mediaManager] moveApplicableExternalMediaInDocument];
+    }
 	
 	
 	return YES;

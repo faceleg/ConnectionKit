@@ -290,4 +290,9 @@ typedef enum {
 - (void)restartAutosaveTimersIfNecessary;
 - (void)resumeAutosave;
 - (void)suspendAutosave;
+
+// Low-level
+- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL includeMetadata:(BOOL)includeMetadata error:(NSError **)error;
+
 @end
+

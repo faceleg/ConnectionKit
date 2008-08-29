@@ -714,7 +714,7 @@
         
         // Save the migrated objects. Otherwise for really big sites a single final save uses too much memory
         KTDocument *document = [self newDocument];
-		if (![document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:error])
+		if (![document writeToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation originalContentsURL:[document fileURL] includeMetadata:NO error:error])
         {
             [pool release];
             return NO;
