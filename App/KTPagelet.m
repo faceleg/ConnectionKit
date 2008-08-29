@@ -156,7 +156,11 @@
 	}
 	if (nil != title)
 	{
-		[self setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
+		NSString *titleHTML = [self valueForKey:@"titleHTML"];
+		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
+		{
+			[self setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
+		}
 	}
 }
 
