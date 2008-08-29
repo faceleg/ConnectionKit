@@ -82,7 +82,8 @@
 OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			
 			[element setContentEditable:@"true"];
-			if (isNew && [[element tagName] isEqualToString:@"H2"])		// The page title? (Only do first h2)
+			DOMElement *parentNode = (DOMElement *)[element parentNode];
+			if (isNew && [parentNode respondsToSelector:@selector(tagName)] && [[parentNode tagName] isEqualToString:@"H2"])		// The page title? (Only do first h2)
 			{
 				isNew = NO;		// Just focus the FIRST one!
 				[[[[self windowController] siteOutlineController] selectedPage] setNewPage:NO];		// STOP believing you're new now -- prevent recursion
@@ -105,16 +106,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			
 			// Turn back on "replaced" class and update its contents
 			NSString *theClass = [element className];
-			
-			// Check if it's empty ... if so, we will need to put in a "+" button
-			BOOL hasEmbed = NSNotFound != [[element outerHTML] rangeOfString:@"<embed"].location;
-			BOOL hasImage = NSNotFound != [[element outerHTML] rangeOfString:@"<img"].location;
-			BOOL hasObject = NSNotFound != [[element outerHTML] rangeOfString:@"<object"].location;		// logic duplicated in KTWebViewTextBlock
-			BOOL hasScript = NSNotFound != [[element outerHTML] rangeOfString:@"<script"].location;
-			BOOL hasIframe = NSNotFound != [[element outerHTML] rangeOfString:@"<iframe"].location;
-			BOOL hasContents = ![[[element textContent] trim] isEqualToString:@""];
-			
-			if (!hasContents && !hasScript && !hasObject && !hasImage && !hasIframe && !hasEmbed)		// if empty, insert an adder
+						
+			if (![element hasVisibleContents])		// if empty, insert an adder
 			{
 				BOOL hasParagraph = ![DOMNode isSingleLineFromDOMNodeClass:theClass];
 				BOOL hasSpan = !hasParagraph;

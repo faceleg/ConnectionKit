@@ -1311,7 +1311,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		
 		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
-		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:300.0];	// give user enough time to download and install
+		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:15 * 60];	// give user enough time to download and install, at least over DSL.
 	}
 	
 	// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.

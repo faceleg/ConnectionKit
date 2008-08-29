@@ -559,16 +559,7 @@
 	else
 	{
 		//   <p><br />  [newline] </p>		... BUT DON'T EMPTY OUT IF A SCRIPT
-		NSString *textContents = [[self DOMNode] textContent]; /// WAS [[((DOMHTMLElement *)outerNode) outerHTML] stringByConvertingHTMLToPlainText];
-		NSString *outerHTML = [[self DOMNode] outerHTML];
-
-		if ([textContents isEqualToString:@""]
-			&& (NSNotFound == [outerHTML rangeOfString:@"<embed"].location)
-			&& (NSNotFound == [outerHTML rangeOfString:@"<img"].location)
-			&& (NSNotFound == [outerHTML rangeOfString:@"<object"].location)	// logic duplicated in KTDocWebViewController+Editing
-			&& (NSNotFound == [outerHTML rangeOfString:@"<script"].location)
-			&& (NSNotFound == [outerHTML rangeOfString:@"<iframe"].location)
-			)
+		if (![[self DOMNode] hasVisibleContents])
 		{
 			DOMNodeList *list = [[self DOMNode] childNodes];
 			int i, len = [list length];
@@ -632,6 +623,13 @@
 {
 	// Fetch the HTML to save. Reduce to nil when appropriate
 	NSString *innerHTML = [[self DOMNode] cleanedInnerHTML];
+	
+	// OK, the problem is when all we have left is <p><br />\n</p> .... this should really be empty.
+	if (![[self DOMNode] hasVisibleContents])
+	{
+		innerHTML = @"";
+	}
+	
 	if ([self isFieldEditor])
 	{
 		NSString *flattenedHTML = [innerHTML stringByConvertingHTMLToPlainText];

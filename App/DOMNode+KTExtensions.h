@@ -118,6 +118,8 @@
 
 - (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
+-(BOOL) hasVisibleContents;
+
 @end
 
 #pragma mark -
