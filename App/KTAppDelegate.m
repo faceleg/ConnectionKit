@@ -973,6 +973,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	[super applicationDidFinishLaunching:aNotification];
+
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //	LOG((@"applicationDidFinishLaunching:... called from thread %X machine = %@", [NSThread currentThread], [KTApplication machineName]));
@@ -1270,9 +1272,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}
-	
-	[super applicationDidFinishLaunching:aNotification];
-	
+		
     applicationIsLaunching = NO; // we're done
 }
 
