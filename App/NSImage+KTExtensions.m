@@ -11,7 +11,8 @@
 #import "KTImageScalingSettings.h"
 #import "NSImage+Karelia.h"
 #import "NSBitmapImageRep+Karelia.h"
-
+#import "NSString+Karelia.h"
+#import "Debug.h"
 
 @implementation NSImage ( KTApplication )
 
@@ -353,6 +354,16 @@
 	
 	// TODO: Do I really NEED to get this as a bitmap?
 	NSImage *result = [sharpenedCI toNSImageBitmap];
+	
+#if 0
+	NSString *dirPath = [NSString stringWithFormat:@"/tmp/%@-%d", [NSApplication applicationName], [[NSProcessInfo processInfo] processIdentifier] ];
+	[[NSFileManager defaultManager] createDirectoryAtPath:dirPath attributes:nil];
+	NSString *path = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%p-%@.tiff", self, [NSString UUIDString]]];
+	[[result TIFFRepresentation] writeToFile:path atomically:NO];
+	
+	DJW((@"@Scaling image %@ down to %d %d -> %@", [[self description] condenseWhiteSpace], aWidth, aHeight, path));
+#endif
+	
 	return result;
 }
 

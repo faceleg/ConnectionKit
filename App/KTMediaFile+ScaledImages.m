@@ -147,6 +147,15 @@
 		finalImage = [NSImage imageWithBitmap:scaledImage];
 	}
     OBASSERT(finalImage);
+
+#if 0
+	NSString *dirPath = [NSString stringWithFormat:@"/tmp/%@-%d", [NSApplication applicationName], [[NSProcessInfo processInfo] processIdentifier] ];
+	[[NSFileManager defaultManager] createDirectoryAtPath:dirPath attributes:nil];
+	NSString *path = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%p-%@.tiff", self, [NSString UUIDString]]];
+	[[finalImage TIFFRepresentation] writeToFile:path atomically:NO];
+	
+	DJW((@"KTMediaFileScaling image %@ down to %@ -> %@", [[image description] condenseWhiteSpace], scalingBehavior, path));
+#endif
 	
 	
 	// Figure out the UTI
