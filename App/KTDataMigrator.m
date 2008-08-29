@@ -363,6 +363,11 @@
     [callback retainArguments];
     
     
+    // Log
+    NSLog(@"Preparing to migrate");
+    NSLog(@"Environment:\n%@", [[NSProcessInfo processInfo] environment]);
+    
+    
     // Make a backup before the migration. This is done on the main thread as it's fast and ensures doc UI has a backup filename to display.
     NSError *error = nil;
     BOOL result = [self backupDocumentBeforeMigration:&error];
