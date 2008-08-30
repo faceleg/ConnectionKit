@@ -198,12 +198,13 @@
             }
         }
 		
-		// store metadata if it doesn't exist yet
-		NSDictionary *metadata = [psc metadataForPersistentStore:theStore];
-		if ( nil == [metadata valueForKey:kKTMetadataModelVersionKey] )
-		{
-			result = [self setMetadataForStoreAtURL:storeURL error:error];
-		}
+		/// this should be active for document open and save, but not migration
+//		// store metadata if it doesn't exist yet
+//		NSDictionary *metadata = [psc metadataForPersistentStore:theStore];
+//		if ( nil == [metadata valueForKey:kKTMetadataModelVersionKey] )
+//		{
+//			result = [self setMetadataForStoreAtURL:storeURL error:error];
+//		}
     }
 	
 	return result;
