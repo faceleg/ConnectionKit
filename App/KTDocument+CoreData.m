@@ -197,12 +197,13 @@
                 }
             }
         }
-        // document is being saved for the first time
-        else
-        {
-            // set and save metadata (writeToURL: *will* grab these changes)
-//            (void)[self setMetadataForStoreAtURL:storeURL];
-        }
+		
+		// store metadata if it doesn't exist yet
+		NSDictionary *metadata = [psc metadataForPersistentStore:theStore];
+		if ( nil == [metadata valueForKey:kKTMetadataModelVersionKey] )
+		{
+			result = [self setMetadataForStoreAtURL:storeURL error:error];
+		}
     }
 	
 	return result;
