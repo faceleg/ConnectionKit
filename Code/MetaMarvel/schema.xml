@@ -11,9 +11,6 @@
         <attribute name="com_karelia_Sandvox_AppCreatedVersion" multivalued="false" type="CFString"/>
         <attribute name="com_karelia_Sandvox_AppLastSavedVersion" multivalued="false" type="CFString"/>
         <attribute name="com_karelia_Sandvox_ModelVersion" multivalued="false" type="CFString"/>
-        <attribute name="com_karelia_Sandvox_PageCount" multivalued="false" type="CFNumber"/>
-        <attribute name="com_karelia_Sandvox_SiteAuthor" multivalued="false" type="CFString"/>
-        <attribute name="com_karelia_Sandvox_SiteTitle" multivalued="false" type="CFString"/>
     </attributes>
 
     <types>
@@ -22,17 +19,11 @@
         com_karelia_Sandvox_AppCreatedVersion
         com_karelia_Sandvox_AppLastSavedVersion
         com_karelia_Sandvox_ModelVersion
-        com_karelia_Sandvox_PageCount
-        com_karelia_Sandvox_SiteAuthor
-	    com_karelia_Sandvox_SiteTitle
             </allattrs>
             <displayattrs>
         com_karelia_Sandvox_AppCreatedVersion
         com_karelia_Sandvox_AppLastSavedVersion
         com_karelia_Sandvox_ModelVersion
-        com_karelia_Sandvox_PageCount
-        com_karelia_Sandvox_SiteAuthor
-	    com_karelia_Sandvox_SiteTitle
             </displayattrs>
         </type>
     </types>
