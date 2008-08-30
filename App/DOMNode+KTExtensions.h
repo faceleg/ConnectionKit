@@ -98,6 +98,13 @@
 @end
 
 
+@interface DOMHTMLElement ( KTExtensions )
+
+-(BOOL) hasVisibleContents;
+
+@end
+
+
 #pragma mark -
 
 
@@ -118,7 +125,6 @@
 
 - (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
--(BOOL) hasVisibleContents;
 
 @end
 

@@ -863,24 +863,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMElement ( KTExtensions )
 
--(BOOL) hasVisibleContents
-{
-	BOOL result = ![[[self textContent] trim] isEqualToString:@""];
-	if (!result)
-	{
-		// Looks like no text, but make sure there aren't other useful tags in there
-		NSString *outerHTML = [self outerHTML];
-		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed"].location;
-		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img"].location;
-		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object"].location;
-		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script"].location;
-		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe"].location;
-		
-		result = hasEmbed || hasImage || hasObject || hasScript || hasIframe;
-	}
-	return result;
-}
-
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
 {
 	if (!inStyleText || [inStyleText isEqualToString:@""])  return @"";
@@ -1293,6 +1275,25 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 @end
 
 @implementation DOMHTMLElement ( KTExtensions )
+
+-(BOOL) hasVisibleContents
+{
+	BOOL result = ![[[self textContent] trim] isEqualToString:@""];
+	if (!result)
+	{
+		// Looks like no text, but make sure there aren't other useful tags in there
+		NSString *outerHTML = [self outerHTML];
+		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed"].location;
+		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img"].location;
+		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object"].location;
+		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script"].location;
+		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe"].location;
+		
+		result = hasEmbed || hasImage || hasObject || hasScript || hasIframe;
+	}
+	return result;
+}
+
 
 /*!	General case  .... look in child nodes and process there.  We call this when we want to recurse
 */
