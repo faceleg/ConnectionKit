@@ -16,9 +16,6 @@ NSString *kKTPageIDDesignator = @"~PAGEID~";
 NSString *kKTMetadataAppCreatedVersionKey = @"com_karelia_Sandvox_AppCreatedVersion"; // CFBundleVersion which created document
 NSString *kKTMetadataAppLastSavedVersionKey = @"com_karelia_Sandvox_AppLastSavedVersion"; // CFBundleVersion which last saved document
 NSString *kKTMetadataModelVersionKey = @"com_karelia_Sandvox_ModelVersion";
-NSString *kKTMetadataPageCountKey = @"com_karelia_Sandvox_PageCount";
-NSString *kKTMetadataSiteAuthorKey = @"com_karelia_Sandvox_SiteAuthor";
-NSString *kKTMetadataSiteTitleKey = @"com_karelia_Sandvox_SiteTitle";
 
 
 // Core Data

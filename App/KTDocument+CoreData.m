@@ -512,60 +512,45 @@
 			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
 			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
 			
-			// set ALL of our metadata for this store
-			//  kKTMetadataSiteTitleKey
-			NSString *siteTitle = [[[self root] master] valueForKey:@"siteTitleHTML"];        
-			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:kKTMetadataSiteTitleKey];
-			}
-			else
-			{
-				[metadata setObject:[siteTitle stringByConvertingHTMLToPlainText] forKey:kKTMetadataSiteTitleKey];
-			}
+			// remove old keys that might have been in use by older versions of Sandvox
+			[metadata removeObjectForKey:(NSString *)kMDItemDescription];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
 			
-			//  kKTMetadataModelVersionKey
-			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
-				
-			//  kKTMetadataSiteAuthorKey and kMDItemAuthors
+			// set ALL of our metadata for this store
+			
+			//  kMDItemAuthors
 			NSString *author = [[[self root] master] valueForKey:@"author"];
 			if ( (nil == author) || [author isEqualToString:@""] )
 			{
-				[metadata removeObjectForKey:kKTMetadataSiteAuthorKey];
 				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
 			}
 			else
 			{
-				[metadata setObject:author forKey:kKTMetadataSiteAuthorKey];
-				[metadata setObject:author forKey:(NSString *)kMDItemAuthors];
+				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
 			}
 			
-			// kKTMetadataAppCreatedVersionKey should only be set once
-			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
-			{
-				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
-			}
-			
-			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
-			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
-							
 			//  kMDItemCreator (Sandvox is the creator of this site document)
 			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+
+			// kMDItemKind
+			[metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
 			
 			/// we're going to fault every page, use a local pool to release them quickly
 			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
 			
-			//  kKTMetadataPageCountKey and kMDItemNumberOfPages
+			//  kMDItemNumberOfPages
 			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
 			unsigned int pageCount = 0;
 			if ( nil != pages )
 			{
 				pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
 			}
-			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:kKTMetadataPageCountKey];
 			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
 			
-			//  kMDItemDescription (free-text account of content)
+			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
 			NSString *subtitle = [[[self root] master] valueForKey:@"siteSubtitleHTML"];
 			if ( nil == subtitle )
@@ -575,7 +560,7 @@
 			subtitle = [subtitle stringByConvertingHTMLToPlainText];
 			
 			// add unique page titles
-			NSMutableString *itemDescription = [NSMutableString stringWithString:subtitle];
+			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
 			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
 			unsigned int i;
 			for ( i=0; i<[pageTitles count]; i++ )
@@ -584,11 +569,11 @@
 				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
 				if ( nil != pageTitle )
 				{
-					[itemDescription appendFormat:@" %@", pageTitle];
+					[textContent appendFormat:@" %@", pageTitle];
 				}
 			}
 						
-			// spotlightHTML as part of itemDescription
+			// spotlightHTML as part of textContent
 			for ( i=0; i<[pages count]; i++ )
 			{
 				KTPage *page = [pages objectAtIndex:i];
@@ -596,11 +581,10 @@
 				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
 				{
 					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
-					[itemDescription appendFormat:@" %@", spotlightText];
+					[textContent appendFormat:@" %@", spotlightText];
 				}
 			}
-			[metadata setObject:itemDescription forKey:(NSString *)kMDItemDescription];
-			
+			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
 			
 			//  kMDItemKeywords (keywords of all pages)
 			NSMutableSet *keySet = [NSMutableSet set];
@@ -615,10 +599,35 @@
 			}
 			else
 			{
-				
 				[metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
 			}
 			[localPool release];
+			
+			//  kMDItemTitle
+			NSString *siteTitle = [[[self root] master] valueForKey:@"siteTitleHTML"];        
+			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
+			}
+			else
+			{
+				siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
+				[metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
+			}
+			
+			// custom attributes
+			
+			//  kKTMetadataModelVersionKey
+			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
+			
+			// kKTMetadataAppCreatedVersionKey should only be set once
+			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
+			{
+				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
+			}
+			
+			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
+			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
 			
 			// replace the metadata in the store with our updates
 			// NB: changes to metadata through this method are not pushed to disk until the document is saved
