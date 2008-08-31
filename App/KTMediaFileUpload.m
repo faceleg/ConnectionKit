@@ -66,11 +66,11 @@
     if (result && [key isEqualToString:@"pathRelativeToSite"])
     {
         NSString *path = *value;
-        NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
-        NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
-        
-        if (![fileName isEqualToString:legalizedFileName])
+        if (![NSURL URLWithString:path])    // A fairly quick, neat way to test conformance
         {
+            NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
+            NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
+            
             NSString *legalizedPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:
                                        [legalizedFileName stringByAppendingPathExtension:
                                         [path pathExtension]]];
