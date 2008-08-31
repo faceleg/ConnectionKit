@@ -292,6 +292,8 @@
 		27B17DAC0CA80A9E00187918 /* KTParsedWebViewComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B17DAA0CA80A9E00187918 /* KTParsedWebViewComponent.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
+		27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */; };
+		27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
 		27CD65380CE1F32E00919E41 /* KTMediaFile+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
@@ -1755,6 +1757,8 @@
 		27B17DAA0CA80A9E00187918 /* KTParsedWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTParsedWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
+		27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWindowController+Karelia.h"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWindowController+Karelia.m"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
 		27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+Internal.h"; sourceTree = "<group>"; };
 		27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Deprecated.m"; sourceTree = "<group>"; };
@@ -4100,6 +4104,8 @@
 				3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */,
 				CE27F6620D6193B200D211EA /* NSTextView+KTExtensions.h */,
 				CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */,
+				27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */,
+				27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */,
 			);
 			name = AppKit;
 			sourceTree = "<group>";
@@ -4959,6 +4965,7 @@
 				270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */,
 				CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */,
 				CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */,
+				27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6400,6 +6407,7 @@
 				27368B200DE499120045E406 /* KTStoredDictionary.m in Sources */,
 				27368B210DE499170045E406 /* KTStoredSet.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
+				27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

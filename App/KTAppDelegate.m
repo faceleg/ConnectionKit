@@ -893,10 +893,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
-	if ( nil == [theApplication modalWindow] )
-	{
-		[self checkPlaceholderWindow:nil];
-	}
 	return YES; // we always return YES to purposefully thwart the NSDocument framework
 }
 
@@ -910,41 +906,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
     {
         return NO;
     }
-}
-
-- (void)checkPlaceholderWindow:(id)bogus
-{
-	int windowCount = 0;
-	NSEnumerator *theEnum = [[NSApp windows] objectEnumerator];
-	NSWindow *aWindow;
-
-	while (nil != (aWindow = [theEnum nextObject]) )
-	{
-		//LOG((@"%@ %@ visible:%d", aWindow, [aWindow title], [aWindow isVisible]));
-		if (![aWindow isExcludedFromWindowsMenu] && [aWindow isVisible] && ![aWindow isKindOfClass:[NSPanel class]])
-		{
-			windowCount++;
-		}
-	}
-	//LOG((@"%d windows menu items; allWindows = %@", windowCount, [[NSApp windows] description]));
-		
-	if ( nil == [NSApp modalWindow] && 0 == windowCount )
-	{
-		OFF((@"0 windows; so showing placeholder/violation window", windowCount));
-		if (gLicenseViolation)		// license violation dialog should open, not the new/open
-		{
-			[[KSRegistrationController sharedController] showWindow:nil];
-		}
-		else
-		{
-			[[KTPlaceholderController sharedController] showWindow:nil];
-		}
-	}
-	else	// we have a document; close this window
-	{
-		[[[KTPlaceholderController sharedControllerWithoutLoading] window] orderOut:nil];
-		OFF((@"%d windows; so closing placeholder window", windowCount));
-	}
 }
 
 - (void)checkQuartzExtreme:(id)bogus
@@ -1068,13 +1029,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		}
 		
 		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-        if ( firstRun )
-        {
-			[self performSelector:@selector(checkPlaceholderWindow:) 
-					   withObject:nil
-					   afterDelay:0.0];
-        }
-        else
+        if (!firstRun)
         {
             [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Searching for previously opened documents...",
                                                                           "Message while checking documents.")];
@@ -1216,13 +1171,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
             }
             
 			[self hideGenericProgressPanel];
-			[self performSelector:@selector(checkPlaceholderWindow:) 
-					   withObject:nil
-					   afterDelay:0.0];
-
-			
+        }
+        
+        
+        // If there's no docs open, want to see the placeholder window
+        if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
+        {
+            [[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
         }
 		
+        
 		// QE check AFTER the welcome message
 		[self performSelector:@selector(checkQuartzExtreme:) withObject:nil afterDelay:0.0];
 

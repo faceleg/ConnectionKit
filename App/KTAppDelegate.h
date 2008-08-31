@@ -240,9 +240,5 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath;
 
 
-- (void)checkPlaceholderWindow:(id)bogus;
-
-
-
 @end
 

@@ -12,15 +12,18 @@
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
 #import "KTDocument.h"
+#import "KTPlaceholderController.h"
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSWindowController+Karelia.h"
 
 #import "BDAlias.h"
 #import "KSApplication.h"
+#import "KSRegistrationController.h"
 
 #import "Debug.h"
 
@@ -312,6 +315,8 @@
 - (void)addDocument:(NSDocument *)document
 {
 	[super addDocument:document];
+    
+    [[KTPlaceholderController sharedController] hideWindow:self];
 	[self synchronizeOpenDocumentsUserDefault];
 }
 
@@ -320,11 +325,31 @@
 - (void)removeDocument:(NSDocument *)document
 {
 	[super removeDocument:document];
-	
-	if (![NSApp isTerminating])
+    
+    if (![NSApp isTerminating])
 	{
-		[self synchronizeOpenDocumentsUserDefault];
+		if ([[self documents] count] == 0)
+        {
+            [self showDocumentPlaceholderWindow:self];
+        }
+        
+        [self synchronizeOpenDocumentsUserDefault];
 	}
+}
+
+#pragma mark -
+#pragma mark Document placeholder window
+
+- (IBAction)showDocumentPlaceholderWindow:(id)sender
+{
+    if (gLicenseViolation)		// license violation dialog should open, not the new/open
+    {
+        [[KSRegistrationController sharedController] showWindow:nil];
+    }
+    else
+    {
+		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
+    }
 }
 
 @end

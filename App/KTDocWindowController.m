@@ -300,13 +300,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	/// just now that typing inside the field is now not undoable
 	[[oKeywordsField cell] setAllowsUndo:NO];
 	
-	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
-						   withObject:nil
-						   afterDelay:0.0];
-	
-	
-    // Media Manager
-    //[[self document] setOldMediaManager:[KTOldMediaManager mediaManagerWithDocument:[self document]]];
 	
 	
 	[self showInfo:[[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayInfo"]];

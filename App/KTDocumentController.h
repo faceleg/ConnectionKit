@@ -9,9 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @class KTDocument;
+
+
 @interface KTDocumentController : NSDocumentController
 {
 	KTDocument *myLastSavedDocumentWeakRef;
 }
+
+- (IBAction)showDocumentPlaceholderWindow:(id)sender;
 
 @end

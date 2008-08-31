@@ -143,21 +143,12 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 {
 	[[self window] orderOut:self];
 	[[NSDocumentController sharedDocumentController] newDocument:nil];
-
-	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
-						   withObject:nil
-						   afterDelay:0.0];
 }
 
 - (IBAction) doOpen:(id)sender
 {
 	[[self window] orderOut:self];
 	[[NSDocumentController sharedDocumentController] openDocument:self];
-
-	[[NSApp delegate] performSelector:@selector(checkPlaceholderWindow:) 
-			   withObject:nil
-			   afterDelay:0.0];
-	
 }
 
 - (IBAction) openLicensing:(id)sender
