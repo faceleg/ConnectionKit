@@ -324,7 +324,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 		[NSNumber numberWithUnsignedInt:2],			@"BackupOnOpening", // default is to snapshot
 	
-		
+		[NSNumber numberWithBool:YES],			@"allowCalloutsInIndex",		// should an index have the page's callout.  Initially yes but allow it to be set to no.
+										 
 		[NSNumber numberWithBool:NO],			@"AllowPasswordToBeLogged", // for Connection class
 		
 		[NSNumber numberWithBool:YES],			@"ShowOutlineTooltips",

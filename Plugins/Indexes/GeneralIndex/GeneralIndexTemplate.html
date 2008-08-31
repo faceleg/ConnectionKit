@@ -16,7 +16,9 @@
 [[endif]]
 [[if item.isSummaryOverridden]]
 [[else]]
+[[if userDefaults.allowCalloutsInIndex]][[COMMENT -- A HACK THAT WE SHOULD EXPOSE BETTER ]]
 [[parseComponent item parser.calloutContainerTemplateHTML]]
+[[endif2]]
 [[endif]]
 		<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
 		<div class="article-info">
