@@ -100,7 +100,13 @@
 			error:(NSError **)outError
 {
 	BOOL result = NO;
+    
+    
+    // Mark -isSaving as YES;
+    mySaveOperationCount++;
 	
+    
+    // Do the save op
 	if (saveOperation == NSSaveToOperation)
 	{
 		result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
@@ -114,7 +120,17 @@
 		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
 	}
 	
+    
+    // Unmark -isSaving as YES if applicable
+    mySaveOperationCount--;
+    
+    
 	return result;
+}
+
+- (BOOL)isSaving
+{
+    return (mySaveOperationCount > 0);
 }
 
 #pragma mark -

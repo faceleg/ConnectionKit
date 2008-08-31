@@ -66,6 +66,7 @@ typedef enum {
 		
 	BOOL myIsSuspendingAutosave;
 	BOOL myIsClosing;
+    unsigned mySaveOperationCount;
 	
     NSString *mySiteCachePath;
 	NSString *mySnapshotPath;
@@ -283,6 +284,9 @@ typedef enum {
 
 
 @interface KTDocument (Saving)
+
+- (BOOL)isSaving;
+
 // save/autosave
 - (IBAction)autosaveDocument:(id)sender;
 - (void)cancelAndInvalidateAutosaveTimers;
