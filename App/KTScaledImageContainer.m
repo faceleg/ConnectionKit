@@ -12,6 +12,7 @@
 #import "KTScaledImageProperties.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSThread+Karelia.h"
 
 #import "Debug.h"
 
@@ -72,18 +73,23 @@
 
 - (KTMediaFile *)generateMediaFile
 {
-	KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
-    NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
-	
-    KTMediaFile *scaledMediaFile = sourceFile;
-    if ([sourceFile propertiesRequireScaling:canonicalProperties])
+	KTMediaFile *result = nil;
+    
+    if ([NSThread isMainThread])    // Hack: Otherwise Tiger will repeatably call this method forever
     {
-        KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
-        [self setValue:generatedProperties forKey:@"generatedProperties"];
-        scaledMediaFile = [generatedProperties valueForKey:@"destinationFile"];
+        KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
+        NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
+        
+        result = sourceFile;
+        if ([sourceFile propertiesRequireScaling:canonicalProperties])
+        {
+            KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
+            [self setValue:generatedProperties forKey:@"generatedProperties"];
+            result = [generatedProperties valueForKey:@"destinationFile"];
+        }
     }
     
-    return scaledMediaFile;
+    return result;
 }
 
 #pragma mark -

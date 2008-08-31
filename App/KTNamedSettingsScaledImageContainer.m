@@ -39,16 +39,7 @@
 
 - (NSDictionary *)latestProperties
 {
-	//  Slightly hackily, we don't want to check for properties too much during data migration
-    if (![NSThread isMainThread] && [self valueForKey:@"generatedProperties"])
-    {
-        NSDictionary *result = [[self valueForKey:@"generatedProperties"] scalingProperties];
-        return result;
-    }
-    
-    
-    
-    KTDocument *document = [[self mediaManager] document];
+	KTDocument *document = [[self mediaManager] document];
 	
 	// Find the plugin, and thereby its design.
     KTAbstractElement *plugin = nil;
