@@ -58,11 +58,8 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	
-	NSManagedObjectContext *moc = [self managedObjectContext];
-	
-	
 	// If we have just been saved then move our underlying file into the document
-	if ([[moc insertedObjects] containsObject:self])
+	if ([self isInserted])
 	{
 		// During Save As operations, the files on disk are handled for us, so don't do this
         if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
