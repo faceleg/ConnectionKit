@@ -718,12 +718,12 @@
         
         
         // Save the migrated objects. Otherwise for really big sites a single final save uses too much memory
-        KTDocument *document = [self newDocument];
+        /*KTDocument *document = [self newDocument];
 		if (![document writeToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation originalContentsURL:[document fileURL] includeMetadata:NO error:error])
         {
             [pool release];
             return NO;
-        }
+        }*/     // Disabled since it wasn't the root problem, and signifcantly slow doc importing.
         
 		
 		// Tidy up.The old page is finished with, it can be turned back into a fault to conserve memory
