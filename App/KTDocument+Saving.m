@@ -28,10 +28,11 @@
 #import "NSThread+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "Registration.h"
+#import "NSURL+Karelia.h"
 
 #import "KTWebKitCompatibility.h"
 
+#import "Registration.h"
 #import "Debug.h"
 
 
@@ -653,6 +654,7 @@
 	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
 	WebView *result = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
+    [result setResourceLoadDelegate:self];
 	[window setContentView:result];
 	
 	
@@ -660,6 +662,26 @@
     [[result mainFrame] performSelectorOnMainThreadAndReturnResult:@selector(loadHTMLString:baseURL:)
                                                         withObject:thumbnailHTML
                                                         withObject:nil];
+    
+    return result;
+}
+
+- (NSURLRequest *)webView:(WebView *)sender
+				 resource:(id)identifier
+		  willSendRequest:(NSURLRequest *)request
+		 redirectResponse:(NSURLResponse *)redirectResponse
+		   fromDataSource:(WebDataSource *)dataSource
+{
+	NSURLRequest *result = request;
+    
+    NSURL *requestURL = [request URL];
+	if ([requestURL hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
+	{
+		result = nil;
+        result = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:@"/dev/null"]
+                                  cachePolicy:NSURLRequestReloadIgnoringCacheData
+                              timeoutInterval:0.0];
+	}
     
     return result;
 }

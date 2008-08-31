@@ -864,8 +864,10 @@
 	if ([requestURL hasNetworkLocation] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
 		LOG((@"DISALLOWING webView:resource:willSendRequest:%@ ....", requestURL));
-		NSString *pagePath = [[NSBundle mainBundle] pathForResource:@"Empty" ofType:@"html"];
-		return [NSURLRequest requestWithURL:[NSURL fileURLWithPath:pagePath]];
+		
+        return [NSURLRequest requestWithURL:[NSURL fileURLWithPath:@"/dev/null"]
+                                cachePolicy:NSURLRequestReloadIgnoringCacheData
+                            timeoutInterval:0.0];
 	}
 	else if ( nil != requestURL )
 	{
