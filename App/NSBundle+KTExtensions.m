@@ -72,7 +72,7 @@
 	else
 	{
 		// Use the Leopard-only technique; we need it from a bundle.
-//		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
+		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
 	}
 }
 

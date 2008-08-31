@@ -483,6 +483,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
 		[NSNumber numberWithBool:NO],	@"RSSFeedEnclosuresAreOriginalImages",
+										 
+		
+		/// whether bundles should -loadLocalFonts, currently used in KTDesigns
+		[NSNumber numberWithBool:YES], @"LoadLocalFonts",
 				
 		nil];
 	

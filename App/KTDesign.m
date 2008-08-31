@@ -53,7 +53,10 @@
 {
 	if ((self = [super initWithBundle:bundle]) != nil)
 	{
-		[bundle loadLocalFonts];			// load in the fonts (ON TIGER)
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LoadLocalFonts"] )
+		{
+			[bundle loadLocalFonts];			// load in the fonts (ON TIGER)
+		}
 	}
 	return self;
 }
