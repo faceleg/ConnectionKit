@@ -2427,27 +2427,18 @@ from representedObject */
 - (void)showDesigns:(BOOL)inShow
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults boolForKey:@"DoAnimations"])
+	BOOL animate = [defaults boolForKey:@"DoAnimations"];
+	if ( inShow )
 	{
-		if ( inShow )
-		{
-			[oDesignsSplitPane expandWithAnimation];
-		}
-		else
-		{
-			[oDesignsSplitPane collapseWithAnimation];
-		}
+		[oDesignsSplitPane expandWithAnimation:animate withResize:NO];
 	}
 	else
 	{
-		if ( inShow )
-		{
-			[oDesignsSplitPane expand];
-		}
-		else
-		{
-			[oDesignsSplitPane collapse];
-		}
+		[oDesignsSplitPane collapseWithAnimation:animate withResize:NO];
+	}
+	if (!animate)
+	{
+		[oDesignsSplitPane display];	// hack, rainer suggested this....
 	}
 }
 
