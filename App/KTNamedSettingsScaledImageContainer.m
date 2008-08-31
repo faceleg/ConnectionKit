@@ -7,13 +7,16 @@
 //
 
 #import "KTNamedSettingsScaledImageContainer.h"
+#import "KTScaledImageProperties.h"
 
 #import "KTMediaFile+ScaledImages.h"
 #import "KTDesign.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
 #import "KTPage.h"
+
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSThread+Karelia.h"
 
 
 @implementation KTNamedSettingsScaledImageContainer
@@ -36,7 +39,16 @@
 
 - (NSDictionary *)latestProperties
 {
-	KTDocument *document = [[self mediaManager] document];
+	//  Slightly hackily, we don't want to check for properties too much during data migration
+    if (![NSThread isMainThread] && [self valueForKey:@"generatedProperties"])
+    {
+        NSDictionary *result = [[self valueForKey:@"generatedProperties"] scalingProperties];
+        return result;
+    }
+    
+    
+    
+    KTDocument *document = [[self mediaManager] document];
 	
 	// Find the plugin, and thereby its design.
     KTAbstractElement *plugin = nil;
