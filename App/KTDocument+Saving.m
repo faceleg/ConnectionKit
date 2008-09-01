@@ -36,6 +36,9 @@
 #import "Debug.h"
 
 
+NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
+
+
 /*	These strings are used for generating Quick Look preview sticky-note text
  */
 // NSLocalizedString(@"Published at", "Quick Look preview sticky-note text");
@@ -89,8 +92,6 @@
 #pragma mark -
 #pragma mark Save to URL
 
-// TODO: add in code to do a backup or snapshot, see KTDocument+Deprecated.m. Should be in one of the -saveToURL methods.
-
 /*	-writeToURL: only supports the Save and SaveAs operations. Instead, we fake SaveTo operations by doing a standard
  *  Save operation and then copying the resultant file to the destination.
  */
@@ -99,7 +100,10 @@
  forSaveOperation:(NSSaveOperationType)saveOperation
 			error:(NSError **)outError
 {
-	BOOL result = NO;
+	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
+    
+    
+    BOOL result = NO;
     
     
     // Mark -isSaving as YES;

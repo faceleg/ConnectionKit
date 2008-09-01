@@ -13,7 +13,9 @@
 
 @interface KTDocumentController : NSDocumentController
 {
-	KTDocument *myLastSavedDocumentWeakRef;
+	NSMutableArray *myDocumentsAwaitingBackup;
+    
+    KTDocument *myLastSavedDocumentWeakRef;
 }
 
 - (IBAction)showDocumentPlaceholderWindow:(id)sender;

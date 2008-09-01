@@ -31,6 +31,9 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
+extern NSString *KTDocumentWillSaveNotification;
+
+
 @class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
@@ -162,9 +165,12 @@ typedef enum {
 										   ofType:(NSString *)fileType 
 											error:(NSError **)error;
 
-// backup
+// Backup
+- (void)createBackup;
+    // TT, are these 2 now needed in 1.5?
 - (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
 - (NSString *)backupPathForOriginalPath:(NSString *)aPath;
+    // ----------------------------------
 
 // snapshots
 - (void)snapshotPersistentStore;

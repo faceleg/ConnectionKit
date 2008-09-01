@@ -30,22 +30,20 @@
 #import "Registration.h"
 
 
+@interface KTDocumentController (Private)
+- (NSArray *)documentsAwaitingBackup;
+- (void)addDocumentAwaitingBackup:(KTDocument *)document;
+- (void)removeDocumentAwaitingBackup:(KTDocument *)document;
+@end
+
+
+#pragma mark -
+
+
 @implementation KTDocumentController
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-	OFF((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
-	//return (!gLicenseViolation);
-	
-	if ( gLicenseViolation )
-	{
-		return NO;
-	}
-	else
-	{
-		return [super validateMenuItem:menuItem];
-	}
-}
+#pragma mark -
+#pragma mark Init & Dealloc
 
 - (id)init
 {
@@ -54,10 +52,27 @@
 		return nil;
 	}
 	
-	//NSLog(@"substituting KTDocumentController for NSDocumentController");
-	
+	myDocumentsAwaitingBackup = [[NSMutableArray alloc] initWithCapacity:1];
+    
 	return self;
 }
+
+- (void)dealloc
+{
+    NSEnumerator *documents = [[self documentsAwaitingBackup] objectEnumerator];
+    KTDocument *aDocument;
+    while (aDocument = [documents nextObject])
+    {
+        [self removeDocumentAwaitingBackup:aDocument];
+    }
+    
+    OBASSERT([myDocumentsAwaitingBackup count] == 0);
+    [myDocumentsAwaitingBackup release];
+    
+    [super dealloc];
+}
+
+#pragma mark -
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
@@ -318,6 +333,11 @@
     
     [[KTPlaceholderController sharedController] hideWindow:self];
 	[self synchronizeOpenDocumentsUserDefault];
+    
+    if ([document isKindOfClass:[KTDocument class]])
+    {
+        [self addDocumentAwaitingBackup:(KTDocument *)document];
+    }
 }
 
 /*	When a document is removed we don't want to reopen on launch, unless the close was part of the app quitting
@@ -326,13 +346,22 @@
 {
 	[super removeDocument:document];
     
+    // Stop backup monitoring if appropriate
+    if ([document isKindOfClass:[KTDocument class]])
+    {
+        [self removeDocumentAwaitingBackup:(KTDocument *)document];
+    }
+    
+    
     if (![NSApp isTerminating])
 	{
-		if ([[self documents] count] == 0)
+		// Show the placeholder window when there are no docs open
+        if ([[self documents] count] == 0)
         {
             [self showDocumentPlaceholderWindow:self];
         }
         
+        // Record open doc list
         [self synchronizeOpenDocumentsUserDefault];
 	}
 }
@@ -350,6 +379,51 @@
     {
 		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
     }
+}
+
+#pragma mark -
+#pragma mark Backups
+
+/*  We monitor documents in order to make a backup the first time a change will be saved
+ */
+
+- (NSArray *)documentsAwaitingBackup
+{
+    return [[myDocumentsAwaitingBackup copy] autorelease];
+}
+
+- (void)addDocumentAwaitingBackup:(KTDocument *)document
+{
+    [myDocumentsAwaitingBackup addObject:document];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(documentAwaitingBackupWillSave:)
+                                                 name:KTDocumentWillSaveNotification
+                                               object:document];
+}
+
+- (void)removeDocumentAwaitingBackup:(KTDocument *)document
+{
+    unsigned index = [myDocumentsAwaitingBackup indexOfObjectIdenticalTo:document];
+    if (index != NSNotFound)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:KTDocumentWillSaveNotification
+                                                      object:document];
+        
+        [myDocumentsAwaitingBackup removeObjectAtIndex:index];
+    }
+}
+
+/*  The document's about to save. Make up the backup and then let the save continue
+ */
+- (void)documentAwaitingBackupWillSave:(NSNotification *)notification
+{
+    KTDocument *document = [notification object];
+    OBASSERT(document);
+    
+    [document createBackup];
+    [self removeDocumentAwaitingBackup:document];
 }
 
 @end
