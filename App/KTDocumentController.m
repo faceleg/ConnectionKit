@@ -425,7 +425,10 @@
     KTDocument *document = [notification object];
     OBASSERT(document);
     
-    [document createBackup];
+    if ( ![document createBackup] )
+	{
+		NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
+	}
     [self removeDocumentAwaitingBackup:document];
 }
 

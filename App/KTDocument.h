@@ -165,12 +165,8 @@ extern NSString *KTDocumentWillSaveNotification;
 										   ofType:(NSString *)fileType 
 											error:(NSError **)error;
 
-// Backup
-- (void)createBackup;
-    // TT, are these 2 now needed in 1.5?
-- (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
-- (NSString *)backupPathForOriginalPath:(NSString *)aPath;
-    // ----------------------------------
+// backup
+- (BOOL)createBackup;
 
 // snapshots
 - (void)snapshotPersistentStore;

@@ -36,10 +36,9 @@
 
 
 @interface KTDocument (CoreDataPrivate)
+- (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
+- (NSString *)backupPathForOriginalPath:(NSString *)aPath;
 - (void)logManagedObjectsInSet:(NSSet *)managedObjects;
-
-- (BOOL)backup;
-
 @end
 
 
@@ -263,7 +262,7 @@
 
 #pragma mark backup
 
-- (BOOL)backup
+- (BOOL)createBackup
 {
 	BOOL result = NO;
 	
