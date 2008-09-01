@@ -165,7 +165,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 // backup
 - (BOOL)createBackup;
-- (BOOL)backupToPath:(NSString *)anotherPath;
+- (BOOL)backupToURL:(NSURL *)anotherPath;
 
 // snapshots
 - (void)snapshotPersistentStore;

@@ -36,7 +36,7 @@
 
 
 @interface KTDocument (CoreDataPrivate)
-- (NSString *)backupPathForOriginalPath:(NSString *)aPath;
+- (NSURL *)backupURL;
 - (void)logManagedObjectsInSet:(NSSet *)managedObjects;
 @end
 
@@ -268,95 +268,91 @@
 	
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *originalPath = [[self fileURL] path];
-	NSString *backupPath = [self backupPathForOriginalPath:originalPath];
+	NSURL *backupURL = [self backupURL];
 	
 	if ( (nil != originalPath) && [fm fileExistsAtPath:originalPath] )
 	{
-		result = [self backupToPath:backupPath];
+		result = [self backupToURL:backupURL];
 	}
 	
 	return result;
 }
 
-- (NSString *)backupPathForOriginalPath:(NSString *)aPath
+- (NSURL *)backupURL
 {
-	NSString *result = nil;
+	NSURL *result = nil;
 	
-	if ( nil != aPath )
-	{
-		NSString *originalPath = [[aPath copy] autorelease];
-		NSString *originalPathWithoutFileName = [originalPath stringByDeletingLastPathComponent];
-		
-		NSString *fileName = [[originalPath lastPathComponent] stringByDeletingPathExtension];
-		NSString *fileExtension = [originalPath pathExtension];
-		
-		NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
-		OBASSERT(fileName);
-		backupFileName = [backupFileName stringByAppendingString:fileName];
-		OBASSERT(fileExtension);
-		backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
-		
-		// commenting this out for another day 20061213 -- currently can cause crash after hitting OK
-//		NSString *testPath = [originalPathWithoutFileName stringByAppendingPathComponent:backupFileName];
-//		testPath = [testPath stringByAppendingPathExtension:fileExtension];
-//		
-//		unsigned int maxNumberOfBackups = [[NSUserDefaults standardUserDefaults] integerForKey:@"KeepAtMostNBackups"];
-//		
-//		NSFileManager *fm = [NSFileManager defaultManager];
-//		if ( [fm fileExistsAtPath:testPath] )
-//		{
-//			// append a monotonically increasing digit until we find an available path ;-)
-//			// e.g., <fileName>-1.<fileExtension> <fileName>-2.<fileExtension> <fileName>-3.<fileExtension> ...
-//			unsigned int i = 1;
-//			BOOL foundAvailablePath = NO;
-//			while ( !foundAvailablePath )
-//			{
-//				// bail if we can't find a path after a number of tries
-//				if ( i > maxNumberOfBackups )
-//				{
-//					foundAvailablePath = YES;
-//					testPath = nil;
-//					
-//					NSDictionary *infoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-//						NSLocalizedString(@"Maximum number of backups exceeded.", "alert title: max number of backups exceeded"), @"messageText", 
-//						NSLocalizedString(@"Consider removing backups no longer needed, or send feedback to Karelia suggesting an increase in the maximum number of backups allowed.", "alert text: advice when maximum number of backups exceeded"), @"informativeText", 
-//						nil];
-//					[self performSelector:@selector(delayedAlertSheetWithInfo:)
-//							   withObject:infoDictionary
-//							   afterDelay:1.0];					
-//					break;
-//				}
-//				
-//				NSString *backupFileNameWithSuffix = [NSString stringWithFormat:@"%@-%u", backupFileName, i];
-//				testPath = [originalPathWithoutFileName stringByAppendingPathComponent:backupFileNameWithSuffix];
-//				testPath = [testPath stringByAppendingPathExtension:fileExtension];
-//				
-//				if ( ![fm fileExistsAtPath:testPath] )
-//				{
-//					foundAvailablePath = YES;
-//				}
-//				
-//				i++;
-//			}
-//		}
-		
-//		result = [[testPath copy] autorelease];
-		result = [originalPathWithoutFileName stringByAppendingPathComponent:backupFileName];
-	}
+    NSURL *originalURLWithoutFileName = [[self fileURL] URLByDeletingLastPathComponent];
+    
+    NSString *fileName = [[[self fileURL] lastPathComponent] stringByDeletingPathExtension];
+    NSString *fileExtension = [[self fileURL] pathExtension];
+    
+    NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
+    OBASSERT(fileName);
+    backupFileName = [backupFileName stringByAppendingString:fileName];
+    OBASSERT(fileExtension);
+    backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
+    
+    // commenting this out for another day 20061213 -- currently can cause crash after hitting OK
+    //		NSString *testPath = [originalPathWithoutFileName stringByAppendingPathComponent:backupFileName];
+    //		testPath = [testPath stringByAppendingPathExtension:fileExtension];
+    //		
+    //		unsigned int maxNumberOfBackups = [[NSUserDefaults standardUserDefaults] integerForKey:@"KeepAtMostNBackups"];
+    //		
+    //		NSFileManager *fm = [NSFileManager defaultManager];
+    //		if ( [fm fileExistsAtPath:testPath] )
+    //		{
+    //			// append a monotonically increasing digit until we find an available path ;-)
+    //			// e.g., <fileName>-1.<fileExtension> <fileName>-2.<fileExtension> <fileName>-3.<fileExtension> ...
+    //			unsigned int i = 1;
+    //			BOOL foundAvailablePath = NO;
+    //			while ( !foundAvailablePath )
+    //			{
+    //				// bail if we can't find a path after a number of tries
+    //				if ( i > maxNumberOfBackups )
+    //				{
+    //					foundAvailablePath = YES;
+    //					testPath = nil;
+    //					
+    //					NSDictionary *infoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+    //						NSLocalizedString(@"Maximum number of backups exceeded.", "alert title: max number of backups exceeded"), @"messageText", 
+    //						NSLocalizedString(@"Consider removing backups no longer needed, or send feedback to Karelia suggesting an increase in the maximum number of backups allowed.", "alert text: advice when maximum number of backups exceeded"), @"informativeText", 
+    //						nil];
+    //					[self performSelector:@selector(delayedAlertSheetWithInfo:)
+    //							   withObject:infoDictionary
+    //							   afterDelay:1.0];					
+    //					break;
+    //				}
+    //				
+    //				NSString *backupFileNameWithSuffix = [NSString stringWithFormat:@"%@-%u", backupFileName, i];
+    //				testPath = [originalPathWithoutFileName stringByAppendingPathComponent:backupFileNameWithSuffix];
+    //				testPath = [testPath stringByAppendingPathExtension:fileExtension];
+    //				
+    //				if ( ![fm fileExistsAtPath:testPath] )
+    //				{
+    //					foundAvailablePath = YES;
+    //				}
+    //				
+    //				i++;
+    //			}
+    //		}
+    
+    //		result = [[testPath copy] autorelease];
+    result = [originalURLWithoutFileName URLByAppendingPathComponent:backupFileName isDirectory:NO];
 	
 	return result;
 }
 
-- (BOOL)backupToPath:(NSString *)anotherPath
+- (BOOL)backupToURL:(NSURL *)anotherURL;
 {
 	BOOL result = NO;
 	
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *originalPath = [[[[self fileURL] path] copy] autorelease];
+	NSString *originalPath = [[self fileURL] path];
 	
 	if ( [fm fileExistsAtPath:originalPath] )
 	{			
-		NSString *backupPath = [[anotherPath copy] autorelease];
+		NSString *backupPath = [anotherURL path];
 		if ( nil != backupPath )
 		{
 			BOOL okToProceed = YES;

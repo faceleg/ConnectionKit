@@ -427,7 +427,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"] == 2)
     {
-        [document backupToPath:[[document snapshotURL] path]];
+        [document backupToURL:[document snapshotURL]];
     }
     else
     {
