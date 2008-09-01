@@ -1498,6 +1498,77 @@
 }
 
 #pragma mark -
+#pragma mark Backup
+
+- (NSURL *)backupURL
+{
+	NSURL *result = nil;
+	
+    NSURL *originalURLWithoutFileName = [[self fileURL] URLByDeletingLastPathComponent];
+    
+    NSString *fileName = [[[self fileURL] lastPathComponent] stringByDeletingPathExtension];
+    NSString *fileExtension = [[self fileURL] pathExtension];
+    
+    NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
+    OBASSERT(fileName);
+    backupFileName = [backupFileName stringByAppendingString:fileName];
+    OBASSERT(fileExtension);
+    backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
+    result = [originalURLWithoutFileName URLByAppendingPathComponent:backupFileName isDirectory:NO];
+	
+	return result;
+}
+
+#pragma mark TODO add an error: parameter and pass the error back for communication to user
+- (BOOL)backupToURL:(NSURL *)anotherURL;
+{
+	BOOL result = NO;
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *originalPath = [[self fileURL] path];
+	
+	if ( [fm fileExistsAtPath:originalPath] )
+	{			
+		NSString *backupPath = [anotherURL path];
+		if ( nil != backupPath )
+		{
+			BOOL okToProceed = YES;
+			
+			// delete old backup first
+			if ( [fm fileExistsAtPath:backupPath] )
+			{
+				okToProceed = [fm removeFileAtPath:backupPath handler:self];
+			}
+			
+			// make sure the directory exists
+			NSString *directoryPath = [backupPath stringByDeletingLastPathComponent];
+			NSError *localError = nil;
+			okToProceed = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
+
+			if ( okToProceed )
+			{
+				// grab the date
+				NSDate *now = [NSDate date];
+				
+				// make the backup
+				result = [fm copyPath:originalPath toPath:backupPath handler:self];
+				
+				// update the creation/lastModification times to now
+				//  what key is "Last opened" that we see in Finder?
+				//  until we know that, only update mod time
+				NSDictionary *dateInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+										  //now, NSFileCreationDate,
+										  now, NSFileModificationDate,
+										  nil];
+				(void)[fm changeFileAttributes:dateInfo atPath:backupPath];
+			}
+		}
+	}
+	
+	return result;
+}
+
+#pragma mark -
 #pragma mark Snapshots
 
 - (IBAction)saveDocumentSnapshot:(id)sender

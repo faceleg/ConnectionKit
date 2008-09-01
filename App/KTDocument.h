@@ -113,6 +113,10 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSString *)uploadCachePath;
 - (NSString *)siteCachePath;
 
+// backup support
+- (BOOL)backupToURL:(NSURL *)anotherPath;
+- (NSURL *)backupURL;
+
 // snapshot support
 - (IBAction)saveDocumentSnapshot:(id)sender;
 - (IBAction)revertDocumentToSnapshot:(id)sender;
@@ -162,10 +166,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
 										   ofType:(NSString *)fileType 
 											error:(NSError **)error;
-
-// backup
-- (BOOL)createBackup;
-- (BOOL)backupToURL:(NSURL *)anotherPath;
 
 // snapshots
 - (void)snapshotPersistentStore;

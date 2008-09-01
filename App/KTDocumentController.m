@@ -9,6 +9,7 @@
 #import "KTDocumentController.h"
 
 #import "KT.h"
+#import "KTAppDelegate.h"
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
 #import "KTDocument.h"
@@ -424,18 +425,31 @@
 {
     KTDocument *document = [notification object];
     OBASSERT(document);
-    
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"] == 2)
-    {
-        [document backupToURL:[document snapshotURL]];
-    }
-    else
-    {
-        if (![document createBackup])
-        {
-            NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
-        }
-    }
+	
+#pragma mark TODO put up an alert rather than log warning, actually backupToURL should have an error: parameter 
+	
+	int backupOrSnapshotOnOpening = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
+	switch ( backupOrSnapshotOnOpening )
+	{
+		case KTSnapshotOnOpening:
+		{
+			if ( ![document backupToURL:[document snapshotURL]] )
+			{
+				NSLog(@"warning: unable to create snapshot of document %@", [[document fileURL] path]);
+			}			
+			break;
+		}
+		case KTBackupOnOpening:
+		{
+			if ( ![document backupToURL:[document backupURL]] )
+			{
+				NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
+			}			
+			break;
+		}
+		default:
+			break;
+	}
     
     [self removeDocumentAwaitingBackup:document];
 }
