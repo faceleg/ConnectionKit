@@ -334,7 +334,10 @@
     [[KTPlaceholderController sharedController] hideWindow:self];
 	[self synchronizeOpenDocumentsUserDefault];
     
-    if ([document isKindOfClass:[KTDocument class]])
+    
+    // Backup the doc as needed if the user requested it
+    if ([document isKindOfClass:[KTDocument class]] &&
+        [[NSUserDefaults standardUserDefaults] boolForKey:@"BackupOnOpening"])
     {
         [self addDocumentAwaitingBackup:(KTDocument *)document];
     }
