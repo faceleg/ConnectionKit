@@ -539,7 +539,7 @@
 	// Store QuickLook preview
 	if ([NSThread isMainThread])
 	{
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
 		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
 		NSString *previewHTML = [parser parseTemplate];
 		[parser release];
@@ -654,7 +654,7 @@
 - (WebView *)newQuickLookThumbnailWebView
 {
 	// Put together the HTML for the thumbnail
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self root]];
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
@@ -662,7 +662,7 @@
 	
 	
 	// Create the webview. It must be in an offscreen window to do this properly.
-	unsigned designViewport = [[[[self root] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self documentInfo] root] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	NSWindow *window = [[NSWindow alloc]

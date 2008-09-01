@@ -13,6 +13,7 @@
 #import "KTTransferController.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
+#import "KTDocumentInfo.h"
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
@@ -57,17 +58,9 @@
 
 #pragma mark .... relationships
 
-- (KTPage *)root
-{
-    return myRoot;
-}
-
-- (void)setRoot:(KTPage *)value 
-{
-	[value retain];
-	[myRoot release];
-	myRoot = value;
-}
+/*  This method is no longer public, just there for backwards-compatibility. Use -documentInfo instead.
+ */
+- (KTPage *)root { return [[self documentInfo] root]; }
 
 #pragma mark ivar accessors (not stored objects)
 

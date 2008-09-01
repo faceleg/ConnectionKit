@@ -1137,7 +1137,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	}
 	else
 	{
-		result = [NSArray arrayWithObject:[[self associatedDocument] root]];
+		result = [NSArray arrayWithObject:[[[self associatedDocument] documentInfo] root]];
 	}
 	
 	OBPOSTCONDITION(result);

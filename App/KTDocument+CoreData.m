@@ -164,8 +164,6 @@
 				KTPage *root = [[self managedObjectContext] root];
 				if ( (nil != root) && [root isKindOfClass:[KTPage class]] )
 				{
-					[self setRoot:root];
-					//[root setDocument:self];
 					result = YES;
 				}
 				else
@@ -524,7 +522,7 @@
 			// set ALL of our metadata for this store
 			
 			//  kMDItemAuthors
-			NSString *author = [[[self root] master] valueForKey:@"author"];
+			NSString *author = [[[[self documentInfo] root] master] valueForKey:@"author"];
 			if ( (nil == author) || [author isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
@@ -554,7 +552,7 @@
 			
 			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[self root] master] valueForKey:@"siteSubtitleHTML"];
+			NSString *subtitle = [[[[self documentInfo] root] master] valueForKey:@"siteSubtitleHTML"];
 			if ( nil == subtitle )
 			{
 				subtitle = @"";
@@ -606,7 +604,7 @@
 			[localPool release];
 			
 			//  kMDItemTitle
-			NSString *siteTitle = [[[self root] master] valueForKey:@"siteTitleHTML"];        
+			NSString *siteTitle = [[[[self documentInfo] root] master] valueForKey:@"siteTitleHTML"];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];

@@ -51,7 +51,7 @@
 {
 	NSMutableArray *RSSCollectionArray = [NSMutableArray array];
 	
-	KTPage *root = [self root];
+	KTPage *root = [[self documentInfo] root];
 	[root makeSelfOrDelegatePerformSelector:@selector(addRSSCollectionsToArray:forPage:) withObject:RSSCollectionArray withPage:root recursive:YES];
 	return [RSSCollectionArray count] > 0;
 }
@@ -101,21 +101,21 @@
 - (NSString *) titleHTML
 {
 	// Note: the use of NS...Localized...String...With...Default...Value below gets this string picked up by genstrings for 
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"titleHTML" language:[[[self root] master] valueForKey:@"language"]
+	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"titleHTML" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
 		fallback:NSLocalizedStringWithDefaultValue(@"titleHTML", nil, [NSBundle mainBundle], @"Untitled",  @"Default Title of page")
 		];
 	return result;
 }
 - (NSString *) siteSubtitleHTML
 {
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML" language:[[[self root] master] valueForKey:@"language"]
+	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
 		fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML", nil, [NSBundle mainBundle], @"This is the subtitle for your site.",  @"Default introduction statement for a page")
 		];
 	return result;
 }
 - (NSString *) defaultRootPageTitleText
 {
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"defaultRootPageTitleText" language:[[[self root] master] valueForKey:@"language"]
+	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"defaultRootPageTitleText" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
 		fallback:NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
 	return result;
 }
@@ -276,7 +276,7 @@
 		}
 		else if ([path hasSuffix:@"/"])
 		{
-			result = (KTPage *)[self root];
+			result = (KTPage *)[[self documentInfo] root];
 		}
 	}
 	return result;

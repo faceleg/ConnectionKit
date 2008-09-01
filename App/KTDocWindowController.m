@@ -24,6 +24,7 @@
 #import "KTDesignPickerView.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindow.h"
 #import "KTElementPlugin.h"
@@ -352,7 +353,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[mySiteOutlineController release];
 	mySiteOutlineController = controller;
 	
-	[controller setContent:[[self document] root]];
+	[controller setContent:[[[self document] documentInfo] root]];
 	[controller setWindowController:self];
 	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
@@ -864,7 +865,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		if (nil == targetPage)
 		{
 			// if nothing is selected, treat as if the root folder were selected
-			targetPage = [(KTDocument *)[self document] root];
+			targetPage = [[[self document] documentInfo] root];
 		}
 		
 		KTPagelet *pagelet = [KTPagelet pageletWithPage:targetPage plugin:pageletPlugin];
@@ -1024,7 +1025,7 @@ from representedObject */
 	if (nil == targetPage)
 	{
 		// if nothing is selected, treat as if the root folder were selected
-		targetPage = [(KTDocument *)[self document] root];
+		targetPage = [[(KTDocument *)[self document] documentInfo] root];
 	}
 	
 	// add component to parent
@@ -1218,7 +1219,7 @@ from representedObject */
 	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
 	if (nil == selectedParent)
 	{
-		selectedParent = [(KTDocument *)[self document] root];
+		selectedParent = [[(KTDocument *)[self document] documentInfo] root];
 	}
 	
 	KTManagedObjectContext *context = (KTManagedObjectContext *)[selectedParent managedObjectContext];
@@ -1510,13 +1511,13 @@ from representedObject */
     }	
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
 	else if ( itemAction == @selector(duplicate:) )
@@ -1669,17 +1670,17 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[(KTDocument *)[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [(KTDocument *)[self document] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
     else if ( [toolbarItem action] == @selector(toggleDesignsShown:) )

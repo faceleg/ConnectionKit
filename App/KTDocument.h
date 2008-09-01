@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-//	#import "Registration.h"
+
 
 // publishing mode
 typedef enum {
@@ -31,9 +31,9 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager, CIFilter;
-@class KTDocWindowController, KTCodeInjectionController, KTHTMLInspectorController;
-@class KTAbstractElement, KTMediaContainer, KTPage, KTElementPlugin;
+@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager;
+@class KTDocWindowController, KTHTMLInspectorController;
+@class KTAbstractElement, KTPage, KTElementPlugin;
 
 
 @interface KTDocument : NSPersistentDocument
@@ -59,8 +59,6 @@ typedef enum {
 	KTTransferController		*myRemoteTransferController;
 	KTTransferController		*myExportTransferController;
 	
-	KTPage						*myRoot;
-
 	NSTimer						*myAutosaveTimer;
 	NSDate						*myLastSavedTime;	
 		
@@ -217,8 +215,8 @@ typedef enum {
 - (NSSet *)requiredBundlesIdentifiers;
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
 
-- (KTPage *)root;
-- (void)setRoot:(KTPage *)value;
+//- (KTPage *)root;
+//- (void)setRoot:(KTPage *)value;
 
 - (float)textSizeMultiplier;
 - (void)setTextSizeMultiplier:(float)value;

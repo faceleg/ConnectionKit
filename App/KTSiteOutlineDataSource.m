@@ -10,6 +10,7 @@
 #import "KTDocSiteOutlineController.h"
 
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
 #import "KTMaster.h"
@@ -346,7 +347,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if (![item isRoot])
 	{
 		// Due to the slightly odd layout of the site outline, must figure the right page
-		KTPage *page = (item) ? item : [[self document] root];
+		KTPage *page = (item) ? item : [[[self document] documentInfo] root];
 		OBASSERT(page);
 		
 		NSString *childrenKeyPath = [[self siteOutlineController] childrenKeyPath];	// Don't use -children as a shortcut as
@@ -364,7 +365,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	BOOL result = NO;
 	
-	if ( item == [[self document] root] )
+	if ( item == [[[self document] documentInfo] root] )
 	{
 		result = NO;
 	}
@@ -388,13 +389,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		if ( 0 == anIndex )
 		{
-			child = [[self document] root];
+			child = [[[self document] documentInfo] root];
 		}
 		else
 		{
 			// subtract 1 at top level for "My Site"
 			unsigned int childIndex = anIndex-1;
-			NSArray *children = [[(KTDocument *)[self document] root] sortedChildren];
+			NSArray *children = [[[[self document] documentInfo] root] sortedChildren];
 			if ( [children count] >= childIndex+1 )
 			{
 				child = [children objectAtIndex:childIndex];
@@ -512,7 +513,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	
 	//if ( (item == [context root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
-	if ( (item == [[self document] root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
+	if ( (item == [[[self document] documentInfo] root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
 	{
 		// draw a line to "separate" the root from its children
 		float width = [tableColumn width]*0.95;

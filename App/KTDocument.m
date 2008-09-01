@@ -339,7 +339,6 @@
     [[plugin bundle] load];
     KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
     OBASSERTSTRING((nil != root), @"root page is nil!");
-    [self setRoot:root];
     [[self documentInfo] setValue:root forKey:@"root"];
     
     
@@ -459,9 +458,9 @@
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
 		// A little bit of repair; we need to have language stored in the root if it's not there
-		if (![[[self root] master] valueForKey:@"language"])
+		if (![[[[self documentInfo] root] master] valueForKey:@"language"])
 		{
-			[[[self root] master] setValue:[self language] forKey:@"language"];
+			[[[[self documentInfo] root] master] setValue:[self language] forKey:@"language"];
 		}
 
 		// For diagnostics, log the value of the host properties
@@ -491,7 +490,6 @@
 	[oNewDocAccessoryView release];
 		
     [self setDocumentInfo:nil];
-    [self setRoot:nil];
 
 	[myMediaManager release];
 	
@@ -513,7 +511,7 @@
 /*! returns root as a single page array, used in DebugTable bindings */
 - (NSArray *)rootAsArray
 {
-	return [NSArray arrayWithObject:[self root]];
+	return [NSArray arrayWithObject:[[self documentInfo] root]];
 }
 
 #pragma mark -
@@ -1382,7 +1380,7 @@
 
 - (IBAction)viewPublishedSite:(id)sender
 {
-	NSURL *siteURL = [[self root] URL];
+	NSURL *siteURL = [[[self documentInfo] root] URL];
 	if (siteURL)
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
@@ -1436,7 +1434,7 @@
 		NSString *hostCharset = [hostProperties valueForKey:@"encoding"];
 		if ((nil != hostCharset) && ![hostCharset isEqualToString:@""])
 		{
-			NSString *rootCharset = [[[self root] master] valueForKey:@"charset"];
+			NSString *rootCharset = [[[[self documentInfo] root] master] valueForKey:@"charset"];
 			if (![[hostCharset lowercaseString] isEqualToString:[rootCharset lowercaseString]])
 			{
 				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0];
