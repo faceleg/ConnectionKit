@@ -867,7 +867,7 @@
 	
 	
 	// Is there actually anything to be saved?
-	if ([[self managedObjectContext] hasChanges] || [[[self mediaManager] managedObjectContext] hasChanges])
+	if ([self isDocumentEdited])
 	{
 		if ([self isReadOnly])
 		{
