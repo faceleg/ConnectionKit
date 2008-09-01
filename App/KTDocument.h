@@ -69,8 +69,8 @@ extern NSString *KTDocumentWillSaveNotification;
 	BOOL myIsClosing;
     unsigned mySaveOperationCount;
 	
-    NSString *mySiteCachePath;
-	NSString *mySnapshotPath;
+    NSString    *mySiteCachePath;
+	NSURL       *mySnapshotURL;
 		
 	
 	// UI
@@ -119,8 +119,8 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)createSnapshotDirectoryIfNecessary;
 - (NSString *)snapshotName;
-- (NSString *)snapshotDirectory;
-- (NSString *)snapshotPath;
+- (NSURL *)snapshotDirectoryURL;
+- (NSURL *)snapshotURL;
 - (BOOL)hasValidSnapshot;
 
 // cover for KTDocWindowController method

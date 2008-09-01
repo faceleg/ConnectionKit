@@ -120,7 +120,6 @@
 - (void)windowControllerWillLoadNib:(NSWindowController *)windowController;
 
 - (void)setSiteCachePath:(NSString *)aPath;
-- (void)setSnapshotPath:(NSString *)aPath;
 - (NSDate *)lastSnapshotDate;
 
 @end
@@ -490,7 +489,7 @@
     [self setRemoteTransferController:nil];
     [self setExportTransferController:nil];
     [self setSiteCachePath:nil];
-	[self setSnapshotPath:nil];
+	[mySnapshotURL release];
 	
 	[myStalenessManager stopObservingAllPages];
 	[myStalenessManager release];
@@ -1563,7 +1562,7 @@
 	
 	// grab date of last save
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSDictionary *attrs = [fm fileAttributesAtPath:[self snapshotPath] traverseLink:YES];
+	NSDictionary *attrs = [fm fileAttributesAtPath:[[self snapshotURL] path] traverseLink:YES];
 	
 	// try modDate then creationDate
 	result = [attrs valueForKey:NSFileModificationDate];
@@ -1580,7 +1579,7 @@
 	BOOL result = NO;
 	
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *snapshotPath = [self snapshotPath];
+	NSString *snapshotPath = [[self snapshotURL] path];
 	result = [fm fileExistsAtPath:snapshotPath];
 	result = result && [[NSFileManager defaultManager] isReadableFileAtPath:snapshotPath];
 	
@@ -1589,7 +1588,7 @@
 
 - (BOOL)createSnapshotDirectoryIfNecessary
 {
-	NSString *directoryPath = [[self snapshotPath] stringByDeletingLastPathComponent];
+	NSString *directoryPath = [[self snapshotDirectoryURL] path];
 	
     NSError *localError = nil;
     BOOL result = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
@@ -1605,38 +1604,33 @@
 /*! returns <fileName>.svxSite */
 - (NSString *)snapshotName
 {
-	NSString *fileName = [[[self fileURL] path] lastPathComponent];
+	NSString *fileName = [[self fileURL] lastPathComponent];
 	//return [NSString stringWithFormat:NSLocalizedString(@"Snapshot of %@", "snapshot of"), fileName];
 	return fileName;
 }
 
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
-- (NSString *)snapshotDirectory
+- (NSURL *)snapshotDirectoryURL
 {
-	return [[self snapshotPath] stringByDeletingLastPathComponent];
+	return [[self snapshotURL] URLByDeletingLastPathComponent];
 }
 
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
-- (NSString *)snapshotPath
+- (NSURL *)snapshotURL
 {
-    if (!mySnapshotPath)
+    if (!mySnapshotURL)
 	{
 		// construct path
-		NSString *snapshotPath = [NSApplication applicationSupportPath];
-		snapshotPath = [snapshotPath stringByAppendingPathComponent:@"Snapshots"];
-		snapshotPath = [snapshotPath stringByAppendingPathComponent:[[self documentInfo] siteID]];
-		snapshotPath = [snapshotPath stringByAppendingPathComponent:[self snapshotName]];
-		[self setSnapshotPath:snapshotPath];
+		NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
+        mySnapshotURL = [[[appSupportURL
+                            URLByAppendingPathComponent:@"Snapshots" isDirectory:YES]
+                             URLByAppendingPathComponent:[[self documentInfo] siteID] isDirectory:YES]
+                              URLByAppendingPathComponent:[self snapshotName] isDirectory:NO];
+        
+		[mySnapshotURL retain];
     }
     
-    return mySnapshotPath;
-}
-
-- (void)setSnapshotPath:(NSString *)aPath
-{
-    [aPath retain];
-    [mySnapshotPath release];
-    mySnapshotPath = aPath;
+    return mySnapshotURL;
 }
 
 # pragma mark ~/Library/Caches 

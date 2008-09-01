@@ -400,12 +400,12 @@
 	
 	// recycle current snapshot
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *snapshotPath = [self snapshotPath];
+	NSString *snapshotPath = [[self snapshotURL] path];
 	if ( [fm fileExistsAtPath:snapshotPath] )
 	{
 		files = [NSArray arrayWithObject:[snapshotPath lastPathComponent]];
 		BOOL didMoveOldSnapshotToTrash = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
-																					  source:[self snapshotDirectory]
+																					  source:[[self snapshotDirectoryURL] path]
 																				 destination:nil
 																					   files:files 
 																						 tag:&tag];
@@ -435,7 +435,8 @@
 	}
 	
 	
-	NSString *destPath = [[self snapshotDirectory] stringByAppendingPathComponent:[[self fileURL] lastPathComponent]];
+	NSString *destPath = [[[self snapshotDirectoryURL] URLByAppendingPathComponent:[[self fileURL] lastPathComponent] 
+                                                                    isDirectory:NO] path];
 	
 	NSError *error;
 	BOOL didSnapshot = [self saveToURL:[NSURL fileURLWithPath:destPath]
@@ -446,7 +447,7 @@
 	
 	if (!didSnapshot)
 	{
-		NSString *snapshotsDirectory = [[self snapshotDirectory] stringByDeletingLastPathComponent];
+		NSString *snapshotsDirectory = [[self snapshotDirectoryURL] path];
 		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Snaphot Failed", "alert: snapshot failed")
 										 defaultButton:NSLocalizedString(@"OK", "OK Button")
 									   alternateButton:nil 
@@ -466,17 +467,17 @@
 
 - (void)revertPersistentStoreToSnapshot
 {
-	if ( [[NSFileManager defaultManager] fileExistsAtPath:[self snapshotPath]] )
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[[self snapshotURL] path]])
 	{
 		// save document so no changes need to be dealt with...
 		[self autosaveDocument:nil];
 		
 		// message app delegate to take it from here
-		[[NSApp delegate] revertDocument:self toSnapshot:[self snapshotPath]];
+		[[NSApp delegate] revertDocument:self toSnapshot:[[self snapshotURL] path]];
 	}
 	else
 	{
-		NSLog(@"error: cannot revert to snapshot %@ , file does not exist!", [self snapshotPath]);
+		NSLog(@"error: cannot revert to snapshot %@ , file does not exist!", [[self snapshotURL] absoluteString]);
 	}
 }
 

@@ -717,7 +717,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSString *documentPath = [[[[aDocument fileURL] path] copy] autorelease];
 	NSString *documentDirectory = [documentPath stringByDeletingLastPathComponent];
 	NSString *documentName = [documentPath lastPathComponent];
-	NSString *snapshotPath = [aDocument snapshotPath];
+	NSString *snapshotPath = [[aDocument snapshotURL] path];
 	NSString *snapshotDirectory = [snapshotPath stringByDeletingLastPathComponent];
 	
 	// close document
