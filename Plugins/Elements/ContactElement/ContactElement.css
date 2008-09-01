@@ -20,5 +20,5 @@ form.contactElement th {
 /* Contact Element For IE 7 */
 *:first-child+html form.contactElement input.submit {
 	padding:0px 10%;
-	min-width: auto;
+	min-width: 0px;
 }
