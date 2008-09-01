@@ -396,10 +396,6 @@
     [self setRemoteTransferController:nil];
     [self setExportTransferController:nil];
     
-    // no snapshot/backup on opening new document
-    mySnapshotOrBackupUponFirstSave = KTNoBackupOnOpening;
-    
-    
     //  Set the site title
     NSString *siteName = [[NSFileManager defaultManager] displayNameAtPath:[[saveURL path] stringByDeletingPathExtension]];
     [master setValue:siteName forKey:@"siteTitleHTML"];
@@ -466,9 +462,6 @@
 		// For diagnostics, log the value of the host properties
 		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
 		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
-		
-		// note whether we should backup/snapshot before document (any context) is first saved
-		mySnapshotOrBackupUponFirstSave  = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
 	}
 	
 	return self;

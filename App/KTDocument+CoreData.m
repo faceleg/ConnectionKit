@@ -36,7 +36,6 @@
 
 
 @interface KTDocument (CoreDataPrivate)
-- (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath;
 - (NSString *)backupPathForOriginalPath:(NSString *)aPath;
 - (void)logManagedObjectsInSet:(NSSet *)managedObjects;
 @end
@@ -260,7 +259,8 @@
 	[self updateChangeCount:NSChangeCleared];
 }
 
-#pragma mark backup
+#pragma mark -
+#pragma mark Backup
 
 - (BOOL)createBackup
 {
@@ -272,7 +272,7 @@
 	
 	if ( (nil != originalPath) && [fm fileExistsAtPath:originalPath] )
 	{
-		result = [self backupPath:originalPath toPath:backupPath];
+		result = [self backupToPath:backupPath];
 	}
 	
 	return result;
@@ -347,12 +347,12 @@
 	return result;
 }
 
-- (BOOL)backupPath:(NSString *)aPath toPath:(NSString *)anotherPath
+- (BOOL)backupToPath:(NSString *)anotherPath
 {
 	BOOL result = NO;
 	
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *originalPath = [[aPath copy] autorelease];
+	NSString *originalPath = [[[[self fileURL] path] copy] autorelease];
 	
 	if ( [fm fileExistsAtPath:originalPath] )
 	{			

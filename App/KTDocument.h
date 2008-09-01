@@ -71,9 +71,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	
     NSString *mySiteCachePath;
 	NSString *mySnapshotPath;
-	
-	int mySnapshotOrBackupUponFirstSave;
-	
+		
 	
 	// UI
 	BOOL	myShowDesigns;				// is designs panel showing?
@@ -167,6 +165,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 // backup
 - (BOOL)createBackup;
+- (BOOL)backupToPath:(NSString *)anotherPath;
 
 // snapshots
 - (void)snapshotPersistentStore;
