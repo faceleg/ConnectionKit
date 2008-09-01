@@ -93,7 +93,7 @@
         // For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
         if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
         {
-            [stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\r%@\r</style>", masterCSS]];
+            [stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", masterCSS]];
         }
         else
         {
@@ -114,7 +114,7 @@
 	
 	
 	// Tidy up
-	NSString *result = [stylesheetLines componentsJoinedByString:@"\r"];
+	NSString *result = [stylesheetLines componentsJoinedByString:@"\n"];
 	return result;
 }
 

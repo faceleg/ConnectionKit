@@ -241,7 +241,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"%@\rThe image could not be read into memory for scaling",
+		NSString *message = [NSString stringWithFormat:@"%@\nThe image could not be read into memory for scaling",
 													   [imagePath stringByAbbreviatingWithTildeInPath]];
 		KTLog(KTMediaLogDomain, KTLogError, message);
 	}

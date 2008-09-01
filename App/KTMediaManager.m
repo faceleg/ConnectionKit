@@ -250,7 +250,7 @@ NSString *KTMediaLogDomain = @"Media";
  */
 - (void)deleteTemporaryMediaFiles
 {
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting the temporary media directory for the document at:\r%@", [[self document] fileURL]]));
+	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]]));
 	NSString *tempMedia = [[self document] temporaryMediaPath];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
@@ -260,7 +260,7 @@ NSString *KTMediaLogDomain = @"Media";
 
 - (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo
 {
-	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\r%@", errorInfo]));
+	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\n%@", errorInfo]));
 	return NO;
 }
 

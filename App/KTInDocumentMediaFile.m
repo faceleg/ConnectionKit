@@ -89,7 +89,7 @@
 		}
 		else
 		{
-			NSString *message = [NSString stringWithFormat:@"No file could be found at\r%@\rDeleting the MediaFile object it anyway",
+			NSString *message = [NSString stringWithFormat:@"No file could be found at\n%@\nDeleting the MediaFile object it anyway",
 				[sourcePath stringByAbbreviatingWithTildeInPath]];
 			KTLog(KTMediaLogDomain, KTLogWarn, message);
 		}
@@ -121,7 +121,7 @@
 	{
 		KTLog(KTMediaLogDomain,
 			  KTLogInfo,
-			  ([NSString stringWithFormat:@"No file to move at:\r%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
+			  ([NSString stringWithFormat:@"No file to move at:\n%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
 			   
 		return;
 	}
@@ -133,7 +133,7 @@
 	{
 		KTLog(KTMediaLogDomain,
 			  KTLogWarn,
-			  ([NSString stringWithFormat:@"%@\ralready exists; overwriting it.", [destinationPath stringByAbbreviatingWithTildeInPath]]));
+			  ([NSString stringWithFormat:@"%@\nalready exists; overwriting it.", [destinationPath stringByAbbreviatingWithTildeInPath]]));
 		
 		[fileManager removeFileAtPath:destinationPath handler:self];
 	}
@@ -219,7 +219,7 @@
 
 - (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo
 {
-	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\r%@", errorInfo]));
+	KTLog(KTMediaLogDomain, KTLogError, ([NSString stringWithFormat:@"Caught file manager error:\n%@", errorInfo]));
 	return NO;
 }
 

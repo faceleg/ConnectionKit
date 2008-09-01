@@ -466,7 +466,7 @@
             }
             else
             {
-                NSLog(@"Parent to child relationship is broken.\rChild:\r%@\rDeleted:%d\r",
+                NSLog(@"Parent to child relationship is broken.\nChild:\n%@\nDeleted:%d\n",
                       self,                     // Used to be an assertion. Now, we return nil and expect the
                       [self isDeleted]);       // original caller to tidy up.
             }

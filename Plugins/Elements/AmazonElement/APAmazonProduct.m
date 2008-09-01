@@ -259,17 +259,17 @@
 	
 	fragment = [self creator];
 	if (fragment && ![fragment isEqualToString: @""]) {
-		[result appendFormat: @"\r%@", fragment];
+		[result appendFormat: @"\n%@", fragment];
 	}
 	
 	fragment = [self releaseDate];
 	if (fragment && ![fragment isEqualToString: @""]) {
-		[result appendFormat: @"\r%@", fragment];
+		[result appendFormat: @"\n%@", fragment];
 	}
 	
 	fragment = [self binding];
 	if (fragment && ![fragment isEqualToString: @""]) {
-		[result appendFormat: @"\r%@", fragment];
+		[result appendFormat: @"\n%@", fragment];
 	}
 	
 	

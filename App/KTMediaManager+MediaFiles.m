@@ -169,7 +169,7 @@
 		result = [self anyExternalMediaFileMatchingPath:path];
 		if (!result)
 		{
-			KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating external MediaFile for path:\r%@", path]));
+			KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating external MediaFile for path:\n%@", path]));
 			result = [KTExternalMediaFile insertNewMediaFileWithPath:path inManagedObjectContext:[self managedObjectContext]];
 		}
 	}
@@ -351,7 +351,7 @@
 	KTInDocumentMediaFile *result = nil;
     
     
-    KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\r%@", path]));
+    KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from path:\n%@", path]));
 	
 	// Figure out the filename and copy the file there
 	NSString *sourceFilename = [path lastPathComponent];
@@ -372,7 +372,7 @@
     {
         KTLog(KTMediaLogDomain,
               KTLogError,
-              ([NSString stringWithFormat:@"Unable to create in-document MediaFile. The path may not exist:\r%@", path]));
+              ([NSString stringWithFormat:@"Unable to create in-document MediaFile. The path may not exist:\n%@", path]));
     }
     
 	return result;

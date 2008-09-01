@@ -230,7 +230,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		// The backup failed, construct an error
 		result = nil;
 		
-		NSString *failureReason = [NSString stringWithFormat:@"Could not remove the existing file at:\r%@", path];
+		NSString *failureReason = [NSString stringWithFormat:@"Could not remove the existing file at:\n%@", path];
 		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"Unable to save document", NSLocalizedDescriptionKey,
 																			failureReason, NSLocalizedFailureReasonErrorKey,
 																			path, NSFilePathErrorKey, nil];
@@ -256,7 +256,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	if (!result)
 	{
-		NSLog(@"Could not recover backup file:\r%@\rafter Save As operation failed for URL:\r%@", backupPath, [saveURL path]);
+		NSLog(@"Could not recover backup file:\n%@\nafter Save As operation failed for URL:\n%@", backupPath, [saveURL path]);
 	}
 }
 

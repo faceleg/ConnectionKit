@@ -41,7 +41,7 @@
 
 - (NSString *)outerHTML:(KTHTMLParser *)parser
 {
-	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\r%@\r</span>",
+	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
 												  [self DOMNodeID],
 												  [self innerHTML:parser]];
 	

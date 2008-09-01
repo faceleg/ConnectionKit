@@ -171,7 +171,7 @@
 	//int state = [self boolForKey:@"staleness"];
 	int state = [[self primitiveValueForKey:@"staleness"] intValue];
 	if (state != kNotStale)
-		[str appendFormat:@"%@ - %@ (%@)\r\n", NSStringFromClass([self class]), [self titleText], (state == kStalePage) ? @"On" : @"Mixed"];
+		[str appendFormat:@"%@ - %@ (%@)\n", NSStringFromClass([self class]), [self titleText], (state == kStalePage) ? @"On" : @"Mixed"];
 }
 
 #pragma mark -

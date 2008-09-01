@@ -68,13 +68,13 @@
 	
 	NSString *comment = [self comment];
 	if (comment) {
-		result = [result stringByAppendingFormat: @"\r%@", comment];
+		result = [result stringByAppendingFormat: @"\n%@", comment];
 	}
 	
 	// If the product is greyed out explain why
 	if ([self desiredQuantityHasBeenReceived]) {
 		NSString *explanation = LocalizedStringInThisBundle(@"The desired quantity of this product has been received.", "Tooltip text");
-		result = [result stringByAppendingFormat: @"\r%@", explanation];
+		result = [result stringByAppendingFormat: @"\n%@", explanation];
 	}
 	
 	return result;

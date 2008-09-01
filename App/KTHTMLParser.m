@@ -253,7 +253,7 @@
 		[self parentParser] &&
 		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
 	{
-		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\r%@\r</div>",
+		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
 				  [[self component] uniqueWebViewID],
 				  [self parserID],
 				  result];
@@ -623,7 +623,7 @@
         }
         else
         {
-            NSLog(@"Unable to fetch MediaFile for [[mediainfo %@]]\r%@", inRestOfTag, media);
+            NSLog(@"Unable to fetch MediaFile for [[mediainfo %@]]\n%@", inRestOfTag, media);
         }
     }
 	

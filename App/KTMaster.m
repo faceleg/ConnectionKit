@@ -407,7 +407,7 @@
         }
         
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\r", bannerURLString];
+        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\n", bannerURLString];
 	}
 	
 	

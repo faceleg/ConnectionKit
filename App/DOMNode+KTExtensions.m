@@ -1484,7 +1484,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     if ([HTMLChildren count] == [[self childNodes] length])
     {
         NSArray *HTMLFragments = [HTMLChildren valueForKey:@"outerHTML"];
-        result = [HTMLFragments componentsJoinedByString:@"\r"];
+        result = [HTMLFragments componentsJoinedByString:@"\n"];
     }
     
     return result;

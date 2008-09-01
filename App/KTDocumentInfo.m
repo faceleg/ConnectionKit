@@ -151,7 +151,7 @@
     NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
     if ([orphanedPages count] > 0)
     {
-        NSLog(@"Deleting orphaned pages:\r%@", orphanedPages);
+        NSLog(@"Deleting orphaned pages:\n%@", orphanedPages);
         [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
         
         result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
