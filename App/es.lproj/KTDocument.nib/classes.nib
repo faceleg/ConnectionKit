@@ -30,6 +30,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>NSString</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KTLinkSourceView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -42,14 +50,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSString</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -260,6 +260,19 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>hideWindow</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
 				<key>imagePickerCancelled</key>
 				<string>id</string>
 				<key>imagePickerSet</key>
@@ -463,7 +476,7 @@
 				<string>NSOutlineView</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSObjectController</string>
+			<string>NSArrayController</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>
