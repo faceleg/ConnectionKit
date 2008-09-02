@@ -55,11 +55,16 @@
 	[self setKey:@"root" triggersChangeNotificationsForDependentKey:@"isRoot"];
 	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
     
+    // Title
 	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
 	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"fileName"];
-    [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
-triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
+                                [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
+    triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
     
+    // Timestamp
+    [self setKey:@"editableTimestamp" triggersChangeNotificationsForDependentKey:@"timestamp"];
+    
+    // Collection
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
     
