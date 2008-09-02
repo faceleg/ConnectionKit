@@ -365,7 +365,8 @@
         NSNumber *sharpening = [properties objectForKey:@"sharpeningFactor"];
         if (KSISNULL(sharpening))
         {
-            sharpening = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTSharpeningFactor"];
+            sharpening = [NSNumber numberWithFloat:
+                          [[NSUserDefaults standardUserDefaults] floatForKey:@"KTSharpeningFactor"]];
             [buffer setObject:sharpening forKey:@"sharpeningFactor"];
         }
     }
