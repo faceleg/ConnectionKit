@@ -25,17 +25,31 @@
     <div id="mainbox">
         <h1 class="firstHeading">Diagnosing Keychain Problems</h1>
 
-        <p>When <a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">publishing</a>, some users have reported issues with publishing where the password required for publishing cannot be retrieved from the keychain.</p>
+        <p>When <a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">publishing</a>, some users have reported issues with publishing where the password required for publishing cannot be retrieved from the keychain. These problems may appear during the initial <a href="Host_Setup_Assistant.html" title="Host Setup Assistant">host-setup</a> phase, or during actual <a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">publishing</a>.</p>
+
+        <p>Some possible error messages you may encounter that are related to the keychain:</p>
+
+        <ul>
+            <li>Password not found</li>
+
+            <li>Exhausted all connection types</li>
+        </ul>
 
         <p>Here are some techniques which might help.</p>
 
         <ul>
             <li>Launch your "Keychain Access" utility. Then lock your keychain by clicking the lock icon in the upper left corner of the Keychain Access window. This forces the system to request authentication, which can often unstick the problem and allow Sandvox to find the requested password for publishing.</li>
 
-            <li>Delete or move your preferences file. The file is found at <i>home folder</i> → Library → Preferences → com.karelia.Sandvox.plist. Drag this file to your Desktop (or the Trash, if you don't mind permanently resetting your Sandvox <a href="Preferences.html" title="Preferences">Preferences</a>). Starting with empty Sandvox Preferences, rather than reinstalling, has also been reported to help unstick the problem and allow Sandvox to find the proper keychain entry.</li>
+            <li>In version 1.5, we have found a problem where loading the custom fonts embedded in <a href="Design.html" title="Design">designs</a> (used for <a href="Graphical_Text.html" title="Graphical Text">Graphical Text</a>) interferes with the keychain for certain users. We are working with Apple to resolve this problem. You may find that disabling this preference using the <a href="Hidden_Preferences.html#Publishing" title="Hidden Preferences">hidden preference</a> of "<a href="Hidden_Preferences.html#LoadLocalFonts" title="Hidden Preferences">LoadLocalFonts</a>" helps.</li>
 
-            <li>As a last resort, it may also be worth using Keychain Access's "Keychain First Aid" command to verify and repair the integrity of the default keychain.</li>
+            <li>It may also be worth using Keychain Access's "Keychain First Aid" command to verify and repair the integrity of the default keychain.</li>
+
+            <li>Another solution that works very well, <i>but is a potential security hole</i>, is to find the entry for your server in Keychain Access and set it to always allow all applications to access it. This makes the problems in Sandvox completely go away, but please be aware of the security implications before attempting this.</li>
         </ul>
+
+        <p><img alt="image:Keychain_Access_Allow.png" src="img/7/70/Keychain_Access_Allow.png" width="429" height="298" /></p>
+
+        <p>Karelia software is actively working to improve these issues related to publishing and the Keychain.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
