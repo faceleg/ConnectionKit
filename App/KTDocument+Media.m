@@ -15,11 +15,6 @@
 
 - (KTMediaManager *)mediaManager
 {
-	if (!myMediaManager)
-	{
-		myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
-	}
-	
 	return myMediaManager;
 }
 

@@ -56,10 +56,8 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	// Set up our MOC
 	myMOC = [[NSManagedObjectContext alloc] init];
-	[myMOC setUndoManager:nil];	// You can't auto-undo media stuff
 	
-	
-	KTMediaPersistentStoreCoordinator *mediaPSC = [[KTMediaPersistentStoreCoordinator alloc] initWithManagedObjectModel:
+    KTMediaPersistentStoreCoordinator *mediaPSC = [[KTMediaPersistentStoreCoordinator alloc] initWithManagedObjectModel:
 												   [[self class] managedObjectModel]];
 	
 	[mediaPSC setMediaManager:self];
@@ -67,12 +65,21 @@ NSString *KTMediaLogDomain = @"Media";
 	[mediaPSC release];
     
     
+    // We don't want to make undo/redo available to the user, but do want it to record the doc changed status
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(undoGroupWillClose:)
+                                                 name:NSUndoManagerWillCloseUndoGroupNotification
+                                               object:[[self managedObjectContext] undoManager]];
+    
+	
     return self;
 }
 
 - (void)dealloc
 {
-	[myMediaContainerIdentifiersCache release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [myMediaContainerIdentifiersCache release];
     [myMOC release];
 	
 	[super dealloc];
@@ -100,6 +107,21 @@ NSString *KTMediaLogDomain = @"Media";
 	}
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Document Change Status
+
+- (void)undoGroupWillClose:(NSNotification *)notification
+{
+    NSUndoManager *undoManager = [notification object];
+    if (undoManager == [[self managedObjectContext] undoManager])
+    {
+        if ([undoManager groupingLevel] == 1)
+        {
+            [[self document] updateChangeCount:NSChangeDone];
+        }
+    }
 }
 
 #pragma mark -

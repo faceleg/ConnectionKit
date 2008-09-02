@@ -161,6 +161,10 @@
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
 		
 		
+        // Create media manager and keep an eye on it
+        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
+        
+        
 #ifdef DEBUG
 		// custom undo manager for debugging only
 		//		KTUndoManager *undoManager = [[[KTUndoManager alloc] init] autorelease];
@@ -482,8 +486,8 @@
 	[oNewDocAccessoryView release];
 		
     [self setDocumentInfo:nil];
-
-	[myMediaManager release];
+    
+    [myMediaManager release];
 	
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];
