@@ -244,7 +244,16 @@
 		KTMediaContainer *posterImage = [value imageWithScaleFactor:1.0];
 		[[self delegateOwner] setValue:posterImage forKey:@"posterImage"];
 	}
+    else if ([key isEqualToString:@"remoteURL"])
+    {
+        [self loadMovie];
+    }
+    else if ([key isEqualToString:@"movieSource"])
+    {
+        [self loadMovie];
+    }
 	
+    
 	// Update page thumbnail if appropriate
 	else if ([key isEqualToString:@"posterImage"])
 	{
