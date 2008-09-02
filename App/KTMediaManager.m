@@ -120,7 +120,10 @@ NSString *KTMediaLogDomain = @"Media";
             [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"qmark"]] ||
             ![[NSFileManager defaultManager] fileExistsAtPath:path])
 		{
-			[result addObject:aMediaFile];
+			if ([(NSSet *)[aMediaFile valueForKey:@"containers"] count] > 0)
+            {
+                [result addObject:aMediaFile];
+            }
 		}
 	}
 	
