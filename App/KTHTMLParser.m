@@ -544,20 +544,12 @@
 	// Which MediaContainer is requested?
 	NSString *mediaKeyPath = [parameters objectForKey:@"media"];
 	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath];
-    if (!media)
-    {
-        NSLog(@"Unable to find media for [[mediainfo %@]]", inRestOfTag);
-    }
 	
 	
 	if ([parameters objectForKey:@"sizeToFit"])
 	{
 		NSSize imageSize = [[[self cache] valueForKeyPath:[parameters objectForKey:@"sizeToFit"]] sizeValue];
 		media = [media imageToFitSize:imageSize];
-        if (!media)
-        {
-            NSLog(@"Unable to scale media for [[mediainfo %@]]", inRestOfTag);
-        }
 	}
 	
 	
@@ -620,10 +612,6 @@
             
             // The delegate may want to know
             [self didEncounterMediaFile:mediaFile upload:upload];
-        }
-        else
-        {
-            NSLog(@"Unable to fetch MediaFile for [[mediainfo %@]]\n%@", inRestOfTag, media);
         }
     }
 	
