@@ -452,7 +452,7 @@
 		
 		
 		// establish autosave notifications
-		[self observeNotificationsForContext:(KTManagedObjectContext *)[self managedObjectContext]];
+//		[self observeNotificationsForContext:(KTManagedObjectContext *)[self managedObjectContext]];
 		
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
@@ -747,7 +747,7 @@
     {
 		// cleanup
 
-		[self removeObserversForContext:(KTManagedObjectContext *)[self managedObjectContext]];
+//		[self removeObserversForContext:(KTManagedObjectContext *)[self managedObjectContext]];
 		[self cancelAndInvalidateAutosaveTimers];
 		[[self windowController] selectionDealloc];
 		
@@ -1422,7 +1422,7 @@
 		
 		[undoManager setActionName:NSLocalizedString(@"Host Settings", @"Undo name")];
 		
-		[self fireAutosave:nil];
+//		[self fireAutosave:nil];
 		
 		// Check encoding from host properties
 		// Alas, I have no way to test this!

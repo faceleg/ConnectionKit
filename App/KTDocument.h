@@ -175,12 +175,11 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
 // support
-- (void)processPendingChangesAndClearChangeCount;
 
 // notifications
 /// these are now just used for debugging purposes
-- (void)observeNotificationsForContext:(KTManagedObjectContext *)aManagedObjectContext;
-- (void)removeObserversForContext:(KTManagedObjectContext *)aManagedObjectContext;
+//- (void)observeNotificationsForContext:(KTManagedObjectContext *)aManagedObjectContext;
+//- (void)removeObserversForContext:(KTManagedObjectContext *)aManagedObjectContext;
 
 // exception handling
 - (void)resetUndoManager;
@@ -290,10 +289,12 @@ extern NSString *KTDocumentWillSaveNotification;
 // save/autosave
 - (IBAction)autosaveDocument:(id)sender;
 - (void)cancelAndInvalidateAutosaveTimers;
-- (void)fireAutosave:(id)notUsedButRequiredParameter;
-- (void)restartAutosaveTimersIfNecessary;
+//- (void)fireAutosave:(id)notUsedButRequiredParameter;
+- (void)restartAutosaveTimerIfNecessary;
 - (void)resumeAutosave;
 - (void)suspendAutosave;
+
+- (void)processPendingChangesAndClearChangeCount;
 
 // Low-level
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL includeMetadata:(BOOL)includeMetadata error:(NSError **)error;

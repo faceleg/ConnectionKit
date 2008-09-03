@@ -500,6 +500,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether CKTransferController should set up a parallel verification connection
 		[NSNumber numberWithBool:NO], @"ConnectionVerifiesTransfers",
+										 
+		/// how frequently documents are autosaved as int (converted to NSTimeInternal (double))
+		[NSNumber numberWithInt:30], @"AutosaveFrequency",
 				
 		nil];
 	

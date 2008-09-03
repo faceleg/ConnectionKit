@@ -709,16 +709,40 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Autosave
 
+- (void)processPendingChangesAndClearChangeCount
+{
+	LOGMETHOD;
+	[[self managedObjectContext] processPendingChanges];
+	[[self undoManager] removeAllActions];
+	[self updateChangeCount:NSChangeCleared];
+}
+
+- (void)updateChangeCount:(NSDocumentChangeType)changeType
+{
+	LOGMETHOD;
+	[super updateChangeCount:changeType];
+	
+	switch ( changeType )
+	{
+		case NSChangeDone:
+		case NSChangeUndone:
+			[self restartAutosaveTimerIfNecessary];
+			break;
+		default:
+			break;
+	}
+}
+
 // main entry point for saving the document programmatically
 - (IBAction)autosaveDocument:(id)sender
 {
 	@try	 // Because it's on a timer, we have to catch any exceptions ourself.
 	{
         // the timer will fire whether there are changes to save or not
-		// but we only want to save if hasChanges
-		if ( [[self managedObjectContext] hasChanges] && (nil != [self fileURL]) )
+		// but we only want to save if isDocumentEdited
+		if ( [self isDocumentEdited] && (nil != [self fileURL]) )
 		{
-			//LOGMETHOD;
+			LOGMETHOD;
 			OBASSERT([NSThread isMainThread]);
 			
 			// remember the current status. PURPOSELY LEAKED AS WE RELEASE IT IN THE CALLBACK
@@ -726,7 +750,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
 			
 			// turn off timers before doing save
-			[self suspendAutosave];
+			[self cancelAndInvalidateAutosaveTimers];
 			
 			// Save the document through normal channels (ultimately calls writeToURL:::).
 		    [self saveDocumentWithDelegate:self
@@ -756,52 +780,56 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[self resumeAutosave];
 }
 
-- (void)fireAutosave:(id)notUsedButRequiredParameter
-{
-	//LOGMETHOD;
-	
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-	
-	[self cancelAndInvalidateAutosaveTimers];
-	[self performSelector:@selector(autosaveDocument:)
-			   withObject:nil
-			   afterDelay:0.0];
-}
+//- (void)fireAutosave:(id)notUsedButRequiredParameter
+//{
+//	LOGMETHOD;
+//	
+//	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
+//	
+//	[self cancelAndInvalidateAutosaveTimers];
+//	[self performSelector:@selector(autosaveDocument:)
+//			   withObject:nil
+//			   afterDelay:0.0];
+//}
 
 - (void)fireAutosaveViaTimer:(NSTimer *)aTimer
 {
 	//LOGMETHOD;
-	
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
-    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
-    {
+//    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
+//    {
 		[self cancelAndInvalidateAutosaveTimers];
 		[self performSelector:@selector(autosaveDocument:)
 				   withObject:nil
 				   afterDelay:0.0];
-    }
+//    }
 }
 
-- (void)restartAutosaveTimersIfNecessary
+- (void)restartAutosaveTimerIfNecessary
 {
 	//LOGMETHOD;
-	
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	if ( !myIsSuspendingAutosave )
 	{
 		// timer A, save in 3 seconds, cancelled by change to context
 		//LOG((@"cancelling previous and starting new 3 second timer"));
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
-		[self performSelector:@selector(fireAutosave:) withObject:nil afterDelay:FIRST_AUTOSAVE_DELAY];
+//		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
+//		[self performSelector:@selector(fireAutosave:) withObject:nil afterDelay:FIRST_AUTOSAVE_DELAY];
 		
-		// timer B, save in 60 seconds, if not saved within last 60 seconds
+		// timer B, save in N seconds, if not saved within last N seconds
 		if ( nil == myAutosaveTimer )
 		{
 			// start a timer
-			//LOG((@"starting new 60 second timer"));
-			NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:SECOND_AUTOSAVE_DELAY
+			
+			NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
+			// if the number is wildly out of range, go back to our default of 30
+			if ( interval < 5 ) interval = 30.0;
+			if ( interval > 5*60 ) interval = 30.0;
+			
+			LOG((@"starting new autosave timer to fire %g seconds from now", interval));
+			NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval
 															  target:self
 															selector:@selector(fireAutosaveViaTimer:)
 															userInfo:nil
@@ -814,11 +842,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)cancelAndInvalidateAutosaveTimers
 {
 	//LOGMETHOD;
-	
 	//OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
 	//LOG((@"cancelling autosave timers"));
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
+//	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
 	@synchronized ( myAutosaveTimer )
 	{
 		[self setAutosaveTimer:nil];
@@ -831,7 +858,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)suspendAutosave
 {
 	//LOGMETHOD;
-	
 	//LOG((@"---------------------------------------------- deactivating autosave"));
 	if ( !myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
@@ -850,7 +876,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)resumeAutosave
 {
 	//LOGMETHOD;
-	
 	//LOG((@"---------------------------------------------- (re)activating autosave"));
 	if ( myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
@@ -858,11 +883,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	}
 	if ( [NSThread isMainThread] )
 	{
-		[self restartAutosaveTimersIfNecessary];
+		[self restartAutosaveTimerIfNecessary];
 	}
 	else
 	{
-		[self performSelectorOnMainThread:@selector(restartAutosaveTimersIfNecessary) withObject:nil waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(restartAutosaveTimerIfNecessary) withObject:nil waitUntilDone:NO];
 	}
 }
 
