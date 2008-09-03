@@ -141,7 +141,7 @@
     if ( nil != [super init] )
 	{
 		// set up autosave
-		myIsSuspendingAutosave = NO;
+		myIsSuspendingAutosave = YES;
 		
 		// we always start in preview
 		[[self windowController] setPublishingMode:kGeneratingPreview];
@@ -310,8 +310,13 @@
 		// Hide the progress window
 		[[NSApp delegate] hideGenericProgressPanel];
 	}
+    
+    
+    // We're all setup, ready to allow autosaving
+    [self resumeAutosave];
 	
-	return self;
+	
+    return self;
 }
 
 
@@ -418,6 +423,10 @@
     if (!didSave) {
         [self release];	return nil;
     }
+    
+    
+    // We're all setup, ready to allow autosaving
+    [self resumeAutosave];
     
     
     return self;
