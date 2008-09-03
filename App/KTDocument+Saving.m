@@ -49,8 +49,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 // TODO: change these into defaults
-#define FIRST_AUTOSAVE_DELAY 3
-#define SECOND_AUTOSAVE_DELAY 60
+//#define FIRST_AUTOSAVE_DELAY 3
+//#define SECOND_AUTOSAVE_DELAY 60
 
 
 @interface KTDocument (PropertiesPrivate)
