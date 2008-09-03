@@ -85,7 +85,10 @@
 		[element setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
         
         
-        [(KTPage *)element setThumbnail:[[(KTPage *)element master] placeholderImage]];
+        if ([element isKindOfClass:[KTPage class]])
+        {
+            [(KTPage *)element setThumbnail:[[(KTPage *)element master] placeholderImage]];
+        }
 	}
 }
 
