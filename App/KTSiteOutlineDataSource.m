@@ -48,7 +48,22 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 @end
 
 
+#pragma mark -
+
+
 @implementation KTSiteOutlineDataSource
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"pages"])
+    {
+        return NO;
+    }
+    else
+    {
+        return [super automaticallyNotifiesObserversForKey:key];
+    }
+}
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller
 {
@@ -128,39 +143,54 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	return keyPaths;
 }
 
-- (void)addPagesObject:(KTPage *)aPage
+- (void)addPagesObject:(KTPage *)page
 {
-	if (![myPages containsObject:aPage] )
+	if (![myPages containsObject:page] )
 	{
-		//	Begin observing the page if needed
-		[aPage addObserver:self
+		// KVO
+        NSSet *pages = [NSSet setWithObject:page];
+        [self willChangeValueForKey:@"pages"
+                    withSetMutation:NSKeyValueUnionSetMutation
+                       usingObjects:pages];
+        
+        
+        //	Begin observing the page
+		[page addObserver:self
 				forKeyPath:[[self siteOutlineController] childrenKeyPath]
 				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
 				   context:nil];
 		
-		[aPage addObserver:self
+		[page addObserver:self
 			   forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]
 				   options:(NSKeyValueObservingOptionNew)
 				   context:nil];
 		
-		if ([aPage isRoot])	// Observe home page's favicon & master code injection
+		if ([page isRoot])	// Observe home page's favicon & master code injection
 		{
-			[aPage addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
-			[aPage addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
+			[page addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
+			[page addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
 		}
 		
+        
 		// Add to the set
-        OBASSERT(aPage);
-		[myPages addObject:aPage];
+        OBASSERT(page);
+		[myPages addObject:page];
 		
+        
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
-		[self iconForPage:aPage];
-		NSEnumerator *pagesEnumerator = [[aPage children] objectEnumerator];
+		[self iconForPage:page];
+		NSEnumerator *pagesEnumerator = [[page children] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{
 			[self iconForPage:aPage];
 		}
+        
+        
+        // KVO
+        [self didChangeValueForKey:@"pages"
+                   withSetMutation:NSKeyValueUnionSetMutation
+                      usingObjects:pages];
 	}
 }
 
@@ -168,7 +198,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	if ([myPages containsObject:aPage])
 	{
-		// Remove observers
+		// KVO
+        [self willChangeValueForKey:@"pages"
+                    withSetMutation:NSKeyValueMinusSetMutation
+                       usingObjects:[NSSet setWithObject:aPage]];
+        
+        // Remove observers
 		[aPage removeObserver:self forKeyPath:[[self siteOutlineController] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
@@ -183,6 +218,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		// Remove from the set
 		[myPages removeObject:aPage];
+        
+        // KVO
+        [self didChangeValueForKey:@"pages"
+                   withSetMutation:NSKeyValueMinusSetMutation
+                      usingObjects:[NSSet setWithObject:aPage]];
 	}
 }
 
@@ -385,9 +425,9 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	id child = nil;
 	
-	if ( nil == item )
+	if (!item)
 	{
-		if ( 0 == anIndex )
+		if (anIndex == 0)
 		{
 			child = [[[self document] documentInfo] root];
 		}
