@@ -227,20 +227,24 @@
 	NSDate *result = [self wrappedValueForKey:@"editableTimestamp"];
 	if (!result)
 	{
-		switch ([[self master] timestampType])
-		{
-			case KTTimestampCreationDate:
-				result = [self valueForKey:@"creationDate"];
-				break;
-			case KTTimestampModificationDate:
-				result = [self valueForKey:@"lastModificationDate"];
-				break;
-			default:
-				OBASSERT_NOT_REACHED("Page's master has an unknown timestamp type");
-				break;
-		}
-		
-		[self setPrimitiveValue:result forKey:@"editableTimestamp"];
+		KTMaster *master = [self master];
+        if (master)
+        {
+            switch ([master timestampType])
+            {
+                case KTTimestampCreationDate:
+                    result = [self valueForKey:@"creationDate"];
+                    break;
+                case KTTimestampModificationDate:
+                    result = [self valueForKey:@"lastModificationDate"];
+                    break;
+                default:
+                    OBASSERT_NOT_REACHED("Page's master has an unknown timestamp type");
+                    break;
+            }
+            
+            [self setPrimitiveValue:result forKey:@"editableTimestamp"];
+        }
 	}
 	
 	return result;
