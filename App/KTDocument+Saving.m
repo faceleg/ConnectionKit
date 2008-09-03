@@ -776,8 +776,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		
 		[contextInfoString release]; // balances copy in autosaveDocument:
 	}
-	
-	[self resumeAutosave];
 }
 
 //- (void)fireAutosave:(id)notUsedButRequiredParameter
