@@ -719,7 +719,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (void)updateChangeCount:(NSDocumentChangeType)changeType
 {
-	LOGMETHOD;
+	//LOGMETHOD;
 	[super updateChangeCount:changeType];
 	
 	switch ( changeType )
