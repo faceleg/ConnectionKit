@@ -207,7 +207,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[aPage removeObserver:self forKeyPath:[[self siteOutlineController] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
-		if ([aPage isRoot])	// Observe home page's favicon
+		if (aPage == [[[self document] documentInfo] root])	// Observe home page's favicon
 		{
 			[aPage removeObserver:self forKeyPaths:
 			 [NSSet setWithObjects:@"master.favicon", @"master.hasCodeInjection", nil]];
