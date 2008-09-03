@@ -597,6 +597,7 @@
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[[[self logoImage] imageToFitSize:NSMakeSize(200.0, 128.0)] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
+    [result addObjectIgnoringNil:[[self scaledFavicon] identifier]];
 	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
 	
 	return result;
