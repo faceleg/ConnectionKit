@@ -759,7 +759,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)outlineViewSelectionIsChanging:(NSNotification *)notification
 {
 	// Close the Raw HTML editing window, if open
-	NSWindowController *HTMLInspectorController = [[self document] HTMLInspectorController];
+	NSWindowController *HTMLInspectorController = [[self document] HTMLInspectorControllerWithoutLoading];
 	if ( nil != HTMLInspectorController )
 	{
 		NSWindow *HTMLInspectorWindow = [HTMLInspectorController window];

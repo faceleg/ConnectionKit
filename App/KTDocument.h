@@ -253,6 +253,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (void)setAutosaveTimer:(NSTimer *)aTimer;
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
+- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
 
 - (BOOL)showDesigns;

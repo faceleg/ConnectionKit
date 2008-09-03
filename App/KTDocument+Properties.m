@@ -270,6 +270,11 @@
     myHTMLInspectorController = anHTMLInspectorController;
 }
 
+- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading	// lazily instantiate
+{
+	return myHTMLInspectorController;
+}
+
 - (KTHTMLInspectorController *)HTMLInspectorController	// lazily instantiate
 {
 	if ( nil == myHTMLInspectorController )

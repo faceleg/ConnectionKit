@@ -38,12 +38,10 @@
 	<true/>
 	<key>KTPageShowSidebar</key>
 	<false/>
-	<key>KTPageUntitledName</key>
-	<string>Untitled Photo</string>
+	<key>KTPluginUntitledName</key>
+	<string>Photo</string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
-	<key>KTPageletUntitledName</key>
-	<string>Photo</string>
 	<key>KTPluginIconName</key>
 	<string>photopage.icns</string>
 	<key>KTPluginInitialProperties</key>

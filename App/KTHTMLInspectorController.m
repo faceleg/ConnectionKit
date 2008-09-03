@@ -274,7 +274,7 @@ initial syntax coloring.
 	else if (myKTHTMLElement)
 	{
 		[myKTHTMLElement setValue:str forKey:@"html"];
-		LOG((@"%p setValue:@\"%@\" forKey:@\"html\"", myKTHTMLElement, str));
+		LOG((@"saveBackToSource %p setValue:@\"%@\" forKey:@\"html\"", myKTHTMLElement, str));
 	}
 	else NSLog(@"Don't have any destination to save the HTML window");
 }
@@ -630,7 +630,7 @@ initial syntax coloring.
 		}
 		[self setTitle:title];
 		NSString *loadedSource = [[aKTHTMLElement valueForKey:@"html"] trim];
-		LOG((@"%p initializing with loaded source : %@", aKTHTMLElement, loadedSource));
+		LOG((@"setKTHTMLElement: %p initializing with loaded source : %@", aKTHTMLElement, loadedSource));
 		[self setSourceCode:loadedSource];
 	}
 }

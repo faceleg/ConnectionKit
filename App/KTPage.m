@@ -287,7 +287,11 @@
 	}
 	if (nil != title)
 	{
-		[self setTitleText:title];
+		NSString *titleHTML = [self valueForKey:@"titleHTML"];
+		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
+		{
+			[self setTitleText:title];
+		}
 	}
 	if ([defaults boolForKey:@"SetDateFromSourceMaterial"])
 	{
