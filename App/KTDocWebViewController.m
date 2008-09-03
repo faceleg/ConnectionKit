@@ -863,11 +863,11 @@
 	
 	if ([requestURL hasNetworkLocation] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
-		LOG((@"DISALLOWING webView:resource:willSendRequest:%@ ....", requestURL));
+		LOG((@"webView:resource:willSendRequest:%@ ....Forcing to ONLY load from any cache", requestURL));
 		
-        return [NSURLRequest requestWithURL:[NSURL fileURLWithPath:@"/dev/null"]
-                                cachePolicy:NSURLRequestReloadIgnoringCacheData
-                            timeoutInterval:0.0];
+		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
+		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
+		return mutableRequest;
 	}
 	else if ( nil != requestURL )
 	{
