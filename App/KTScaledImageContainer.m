@@ -158,7 +158,7 @@
     
     float sharpening1 = [newProperties floatForKey:@"sharpeningFactor"];
     float sharpening2 = [oldProperties floatForKey:@"sharpeningFactor"];
-    if (sharpening1 < (sharpening2 - 0.05) && sharpening1 > (sharpening2 + 0.05))
+    if (sharpening1 < (sharpening2 - 0.05) || sharpening1 > (sharpening2 + 0.05))
     {
         return YES;
     }
