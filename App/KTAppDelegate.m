@@ -177,12 +177,19 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
 	}
-		
-	NSString *urlString = [[[[[self currentDocument] documentInfo] hostProperties] siteURL] absoluteString];
-	if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.karelia.com/"])
-	{
-		[result appendFormat:@"\nURL:\n%@\n", urlString];
-	}
+	
+	
+	NSDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
+    if (document && [document isKindOfClass:[KTDocument class]])
+    {
+        NSString *urlString = [[[[(KTDocument *)document documentInfo] hostProperties] siteURL] absoluteString];
+        if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.karelia.com/"])
+        {
+            [result appendFormat:@"\nURL:\n%@\n", urlString];
+        }
+    }
+    
+    
 	return result;
 }
 
