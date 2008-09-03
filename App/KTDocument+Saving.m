@@ -807,10 +807,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)restartAutosaveTimerIfNecessary
 {
 	//LOGMETHOD;
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-	
 	if ( !myIsSuspendingAutosave && ![self isClosing] )
 	{
+		OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
+		
 		// timer A, save in 3 seconds, cancelled by change to context
 		//LOG((@"cancelling previous and starting new 3 second timer"));
 //		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
