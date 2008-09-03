@@ -531,6 +531,16 @@
 		DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
 		[node removeAttribute:@"style"];
 	}
+    
+    
+    // If needed, reload inner HTML from disk. BUGSID:30635
+    // TODO: Maintain the selection and merge in with our Summaries subclass
+    NSString *innerHTML = [self innerHTML:nil];
+    if (![innerHTML isEqualToString:[[self DOMNode] innerHTML]])
+    {
+        [[self DOMNode] setInnerHTML:innerHTML];
+    }
+    
 	
 	myIsEditing = YES;
 	return YES;

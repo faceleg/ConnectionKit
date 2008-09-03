@@ -16,7 +16,7 @@
 
 @interface KTWebViewTextBlock : NSObject
 {
-	@private
+	//@private
 	
 	NSString		*myDOMNodeID;
 	DOMHTMLElement	*myDOMNode;

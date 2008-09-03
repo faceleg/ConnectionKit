@@ -80,7 +80,8 @@
 		}
 	}
 	
-	return [super becomeFirstResponder];
+	myIsEditing = YES;
+	return YES;
 }
 
 /*	And after editing, truncate the text again
