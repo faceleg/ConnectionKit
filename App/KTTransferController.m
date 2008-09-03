@@ -917,7 +917,13 @@ static NSArray *sReservedNames = nil;
         
         
         // Upload sitemap if needed
-		[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
+		//
+		//	FIXME: THIS REALLY SHOULD BE DONE ONLY AFTER SUCCESS OF EVERYTHING ELSE; RIGHT NOW IT HAPPENS ASYNCHRONOUSLY AT THE START.
+		//
+		if ([self where] != kGeneratingRemoteExport)
+		{
+			[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
+		}
 	}
 	@catch (NSException *exception)
 	{
@@ -1105,8 +1111,13 @@ if ([self where] == kGeneratingRemoteExport) {
         
         
         // Upload sitemap if needed
-		[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
-		
+		//
+		//	FIXME: THIS REALLY SHOULD BE DONE ONLY AFTER SUCCESS OF EVERYTHING ELSE; RIGHT NOW IT HAPPENS ASYNCHRONOUSLY AT THE START.
+		//
+		if ([self where] != kGeneratingRemoteExport)
+		{
+			[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
+		}
 	}
 	@catch (NSException *exception)
 	{
@@ -1817,7 +1828,9 @@ if ([self where] == kGeneratingRemoteExport) {
 	NSTask *task = [[[NSTask alloc] init] autorelease];
 	[task setLaunchPath:@"/usr/bin/curl"];
 	[task setArguments:args];
-#ifndef DEBUG
+#ifdef DEBUG
+	NSLog(@"Output from %@", aURLString);		// not setting outputs so we will get resulting output in console for DEBUG.
+#else
 	[task setStandardError:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
 	[task setStandardOutput:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
 #endif
