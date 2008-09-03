@@ -490,6 +490,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		/// whether bundles should -loadLocalFonts, currently used in KTDesigns
 		[NSNumber numberWithBool:YES], @"LoadLocalFonts",
+										 
+		/// whether CKTransferController should set up a parallel verification connection
+		[NSNumber numberWithBool:NO], @"ConnectionVerifiesTransfers",
 				
 		nil];
 	

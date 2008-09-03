@@ -154,7 +154,19 @@ static NSArray *sReservedNames = nil;
 		myController = [[CKTransferController alloc] init];
 		[myController setIcon:[NSImage imageNamed:@"toolbar_publish"]];
 		[myController setContentGeneratedInSeparateThread:YES];
-		[myController setVerifyTransfers:YES];
+		
+		/// verifying transfers seems to be source of publishes-but-does-not-disconnect bug
+		/// CKTransferController already turns verification off for SFTP and FTP, so let's
+		/// just do that by default for all connection types
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"ConnectionVerifiesTransfers"] )
+		{
+			[myController setVerifyTransfers:YES];
+		}
+		else
+		{
+			[myController setVerifyTransfers:NO];
+		}
+		
 		[myController setWaitForConnection:YES];
 		[myController setDelegate:self];
 		(void) [myController window];	// get window loaded
