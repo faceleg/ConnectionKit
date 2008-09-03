@@ -1270,7 +1270,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	
 	// Design
 	KTDesign *design = [master design];
-	[info setObject:design forKey:@"design"];
+	[info setValue:design forKey:@"design"];		// Accounts for a nil
 	
 	
 	// Version
@@ -1481,6 +1481,10 @@ if ([self where] == kGeneratingRemoteExport) {
 			else
 			{
 				[myController setStatusMessage:@""];
+				
+				/* ERROR -- This doesn't actuually work.  There are still a couple of files that are added to the status message, so when we are done it looks like we are still working on one more file! */
+				
+				
 			}
 		}
 		else
