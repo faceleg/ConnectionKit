@@ -71,11 +71,10 @@
 
 - (void)setAutosaveTimer:(NSTimer *)aTimer
 {
-	if ( nil == aTimer ) LOG((@"stopping autosave timer"));
-	
 	[aTimer retain];
 	if ( [myAutosaveTimer isValid] )
 	{
+		LOG((@"invalidating autosave timer %@", myAutosaveTimer));
 		[myAutosaveTimer invalidate];
 	}
 	[myAutosaveTimer release];
