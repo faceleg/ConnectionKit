@@ -491,6 +491,8 @@
     KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:newRootPlugin error:outError];
     if (newDoc)
     {
+        [[newDoc undoManager] disableUndoRegistration];
+        
         [self setNewDocument:newDoc];
         [newDoc release];
     }

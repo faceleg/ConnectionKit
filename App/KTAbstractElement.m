@@ -122,6 +122,14 @@
 	}
 }
 
+/*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
+ */
+- (void)willTurnIntoFault
+{
+    [myDelegate setDelegateOwner:nil];
+	[myDelegate release];	myDelegate = nil;
+}
+
 - (void)didTurnIntoFault
 {
 	// Call the support method to do deallocation only for properties initialized from the awake.
