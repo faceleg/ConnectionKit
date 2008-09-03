@@ -425,10 +425,6 @@
     }
     
     
-    // We're all setup, ready to allow autosaving
-    [self resumeAutosave];
-    
-    
     return self;
 }
 
@@ -475,6 +471,11 @@
 		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
 		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 	}
+    
+    
+    // We're all setup, ready to allow autosaving
+    [self resumeAutosave];
+    
 	
 	return self;
 }
