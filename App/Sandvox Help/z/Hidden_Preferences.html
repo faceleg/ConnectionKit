@@ -291,6 +291,14 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd><code>defaults write com.karelia.Sandvox HomeBaseURL "<span class="prefValue">http://launch.karelia.com/</span>"</code></dd>
 
             <dd>The URL that Sandvox uses when checking for updates. It must end in a slash.</dd>
+        </dl>
+
+        <dl>
+            <dt>Log JavaScript console messages</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox LogJavaScript -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>If this is set, any JavaScript errors and messages will be appended to the system console log (along with what line number in the Sandvox HTML file it came from). Useful for diagnostics if your website has JavaScript in it.</dd>
         </dl><a name="Alerts" id="Alerts"></a>
 
         <h2><span class="mw-headline">Alerts</span></h2>
