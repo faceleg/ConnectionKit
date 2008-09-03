@@ -523,7 +523,16 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 		{
 			DOMDocument *document = [[[self webView] mainFrame] DOMDocument];
 			NSString *dtd = [page DTD];
-			NSString *html = [[document firstChild] cleanedOuterHTML];
+			DOMNode *child = [document firstChild];
+			NSString *html = @"";
+			if (![child isKindOfClass:[DOMHTMLElement class]])
+			{
+				child = [[document childNodes] item:1];
+			}
+			if ([child isKindOfClass:[DOMHTMLElement class]])
+			{
+				html = [child cleanedOuterHTML];
+			}
 			sourceCode = [NSString stringWithFormat:@"%@\n%@", dtd, html];
 			break;
 		}
