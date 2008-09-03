@@ -668,7 +668,11 @@
 				{
 					// couldn't find in site outline, add parent
 					toExpand = [toExpand parent];
-					[toExpandArray addObject:toExpand];
+					OBASSERT(toExpand);	// case 34150
+					if (toExpand)
+					{
+						[toExpandArray addObject:toExpand];
+					}
 					row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
 				}
 				// Now we have list of items to expand.	Go backward through that list, expanding farthest ancestor first
