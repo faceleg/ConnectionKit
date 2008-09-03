@@ -698,9 +698,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if ([requestURL hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
 		result = nil;
-        result = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:@"/dev/null"]
-                                  cachePolicy:NSURLRequestReloadIgnoringCacheData
-                              timeoutInterval:0.0];
+		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
+		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
+		result = mutableRequest;
 	}
     
     return result;

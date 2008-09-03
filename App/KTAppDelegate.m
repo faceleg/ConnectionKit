@@ -303,6 +303,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithBool:NO],			@"urls in background",
 		
+		[NSNumber numberWithBool:NO],			@"LogJavaScript",
+
+										 
 		[NSNumber numberWithBool:YES],			@"FirstRun",
 		
 		[NSNumber numberWithUnsignedInt:5],		@"KeepAtMostNBackups",

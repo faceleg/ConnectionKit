@@ -17,6 +17,8 @@
     @protected
     NSImage *myThumbnail;
 	NSSet	*myResourceFiles;
+	
+	BOOL myFontsLoaded;
 }
 
 - (int)numberOfSubDesigns;
@@ -42,12 +44,14 @@
 
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;
+- (BOOL)hasLocalFonts;
 
 // Viewport
 - (unsigned)viewport;	// Mainly used by the iPhone to know a page's optimum width
 
 // Other
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
+- (void) loadLocalFontsIfNeeded;
 
 // Resource data
 - (NSSet *)resourceFiles;

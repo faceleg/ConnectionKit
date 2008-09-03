@@ -440,7 +440,7 @@ static NSDictionary *sContributorLinkAttributes = nil;
 	if ([document isKindOfClass:[KTDocument class]])
 	{
 		KTDesign *design = [[self designsToShow] objectAtIndex:mySelectedIndex];
-		
+		[design loadLocalFontsIfNeeded];		// get a head start on loading local fonts.
 		
 		// Send the updated design to our controller. Bindings will take care of the rest
 		NSDictionary *bindingsInfo = [self infoForBinding:@"selectedDesign"];

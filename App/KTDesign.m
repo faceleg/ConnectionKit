@@ -49,14 +49,23 @@
 	[self registerPluginClass:[self class] forFileExtension:kKTDesignExtension];
 }
 
+- (void) loadLocalFontsIfNeeded;
+{
+	if (!myFontsLoaded
+		&& [self hasLocalFonts] 
+		&& (nil != [self imageReplacementTags])
+		&& [[NSUserDefaults standardUserDefaults] boolForKey:@"LoadLocalFonts"])
+	{
+		[[self bundle] loadLocalFonts];			// load in the fonts (ON TIGER)
+	}
+	myFontsLoaded = YES;	// once this is called, no need to check or load again.
+}
+
 - (id)initWithBundle:(NSBundle *)bundle;
 {
 	if ((self = [super initWithBundle:bundle]) != nil)
 	{
-		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LoadLocalFonts"] )
-		{
-			[bundle loadLocalFonts];			// load in the fonts (ON TIGER)
-		}
+		;		// do not load local fonts;  we probably won't need them.
 	}
 	return self;
 }
@@ -157,6 +166,8 @@
 
 - (NSImage *)replacementImageForCode:(NSString *)aCode string:(NSString *)aString size:(NSNumber *)aSize
 {
+	[self loadLocalFontsIfNeeded];		// just make sure they are loaded here
+
 	NSImage *result = nil;
 	NSDictionary *replacementParams = [[self imageReplacementTags] objectForKey:aCode];
 	if (nil != replacementParams)
@@ -238,6 +249,12 @@
 {
 	NSString *bannerCSSSelector = [self bannerCSSSelector];
 	BOOL result = (bannerCSSSelector && ![bannerCSSSelector isEqualToString:@""]);
+	return result;
+}
+
+- (BOOL)hasLocalFonts
+{
+	BOOL result = [[[self bundle] objectForInfoDictionaryKey:@"hasLocalFonts"] boolValue];
 	return result;
 }
 

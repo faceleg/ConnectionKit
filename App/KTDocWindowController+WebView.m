@@ -358,11 +358,15 @@ Node was retained so that it lives to this invocation!
 
 - (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)aDict
 {
-	NSString *message = [aDict objectForKey:@"message"];
-	NSString *lineNumber = [aDict objectForKey:@"lineNumber"];
-	if (!lineNumber) lineNumber = @""; else lineNumber = [NSString stringWithFormat:@" line %@", lineNumber];
-	// NSString *sourceURL = [aDict objectForKey:@"sourceURL"]; // not that useful, it's an applewebdata
-	NSLog(@"JavaScript%@> %@", lineNumber, message);
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults boolForKey:@"LogJavaScript"])
+	{
+		NSString *message = [aDict objectForKey:@"message"];
+		NSString *lineNumber = [aDict objectForKey:@"lineNumber"];
+		if (!lineNumber) lineNumber = @""; else lineNumber = [NSString stringWithFormat:@" line %@", lineNumber];
+		// NSString *sourceURL = [aDict objectForKey:@"sourceURL"]; // not that useful, it's an applewebdata
+		NSLog(@"JavaScript%@> %@", lineNumber, message);
+	}
 }
 
 /*!	This is my own delegate method for dealing with a click.  Store the selected ID away, and flash the rectangle of what was clicked, using an overlay window so we don't interfere with the WebView.
