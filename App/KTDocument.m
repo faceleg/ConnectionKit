@@ -303,9 +303,6 @@
 		[[NSApp delegate] hideGenericProgressPanel];
 	}
     
-    
-    // We're all setup, ready to allow autosaving
-	myIsSuspendingAutosave = NO;
 	
     return self;
 }
@@ -786,7 +783,9 @@
 	
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentWillClose" object:self];
-    
+
+	[self suspendAutosave];
+
 	//LOG((@"KTDocument -close"));
 	// NB: [self windowController] is nil by the time we get here...
 

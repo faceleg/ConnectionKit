@@ -798,8 +798,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 //    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
 //    {
 		[self autosaveDocument:nil];
-		[self cancelAndInvalidateAutosaveTimers];
 //    }
+}
+
+- (oneway void)release;
+{
+	[super release];
 }
 
 - (void)restartAutosaveTimerIfNecessary
