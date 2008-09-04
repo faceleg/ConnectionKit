@@ -797,10 +797,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 //    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
 //    {
+		[self autosaveDocument:nil];
 		[self cancelAndInvalidateAutosaveTimers];
-		[self performSelector:@selector(autosaveDocument:)
-				   withObject:nil
-				   afterDelay:0.0];
 //    }
 }
 
@@ -850,7 +848,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	}
 	
 	// also clear run loop of any previous requests that made it through
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveDocument:) object:nil];
+/// NOT USING	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveDocument:) object:nil];
 }
 
 - (void)suspendAutosave
