@@ -757,6 +757,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                            didSaveSelector:@selector(document:didAutosave:contextInfo:)
                                contextInfo:status];
         }
+		else
+		{
+			// turn off timer even if we don't need to save; we're done.
+			[self cancelAndInvalidateAutosaveTimers];
+
+		}
 	}
 	@catch (NSException *exception)
 	{
@@ -792,7 +798,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (void)fireAutosaveViaTimer:(NSTimer *)aTimer
 {
-	//LOGMETHOD;
+	LOGMETHOD;
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 //    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
@@ -834,6 +840,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 															selector:@selector(fireAutosaveViaTimer:)
 															userInfo:nil
 															 repeats:NO];
+			LOG((@"starting new autosave timer %@ to fire %g seconds from now: %@", timer, interval, [timer fireDate]));
 			[self setAutosaveTimer:timer];
 		}
 	}
