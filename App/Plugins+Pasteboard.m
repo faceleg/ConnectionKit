@@ -254,8 +254,15 @@
 		if ([anObject isKindOfClass:[KTMediaContainerPasteboardRepresentation class]])
 		{
 			NSString *mediaPath = [[(KTMediaContainerPasteboardRepresentation *)anObject alias] fullPath];
-			KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
-			[attributes setObject:mediaContainer forKey:aKey];
+            if (mediaPath)
+            {
+                KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
+                [attributes setObject:mediaContainer forKey:aKey];
+            }
+            else
+            {
+                [attributes removeObjectForKey:aKey];
+            }
 		}
 		else if ([anObject isKindOfClass:[KTPluginIDPasteboardRepresentation class]])
 		{
@@ -338,8 +345,15 @@
 		if ([anObject isKindOfClass:[KTMediaContainerPasteboardRepresentation class]])
 		{
 			NSString *mediaPath = [[(KTMediaContainerPasteboardRepresentation *)anObject alias] fullPath];
-			KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
-			[attributes setObject:mediaContainer forKey:aKey];
+            if (mediaPath)
+            {
+                KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
+                [attributes setObject:mediaContainer forKey:aKey];
+            }
+            else
+            {
+                [attributes removeObjectForKey:aKey];
+            }
 		}
 		else if ([anObject isKindOfClass:[KTPluginIDPasteboardRepresentation class]])
 		{
