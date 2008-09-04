@@ -305,8 +305,7 @@
     
     
     // We're all setup, ready to allow autosaving
-    [self resumeAutosave];
-	
+	myIsSuspendingAutosave = NO;
 	
     return self;
 }
@@ -412,10 +411,10 @@
                             ofType:kKTDocumentExtension 
                   forSaveOperation:NSSaveAsOperation
                              error:outError];
-    if (!didSave) {
+    if (!didSave) 
+	{
         [self release];	return nil;
     }
-    
     
     return self;
 }
@@ -466,8 +465,7 @@
     
     
     // We're all setup, ready to allow autosaving
-    [self resumeAutosave];
-    
+	myIsSuspendingAutosave = NO;
 	
 	return self;
 }
