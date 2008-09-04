@@ -113,11 +113,6 @@
  */
 - (void)beginObservingAllPages
 {
-	#ifdef DEBUG
-	NSDate *startDate = [NSDate date];
-	#endif
-	
-	
 	NSArray *pages = [[[self document] managedObjectContext] allObjectsWithEntityName:@"AbstractPage"
 																				error:NULL];
 	
@@ -134,11 +129,6 @@
         [self beginObservingPage:aPage];
         [pool release];
 	}
-	
-	
-	#ifdef DEBUG
-	NSLog(@"Observing all pages for staleness took %fs", -[startDate timeIntervalSinceNow]);
-	#endif
 }
 
 - (void)stopObservingPage:(KTAbstractPage *)page

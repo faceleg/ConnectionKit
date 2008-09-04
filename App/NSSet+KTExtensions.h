@@ -22,10 +22,6 @@
 
 @interface NSSet ( Ordering )
 
-#ifdef DEBUG
-- (NSString *)o;
-#endif
-
 - (NSString *)shortDescription;
 
 

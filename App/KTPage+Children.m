@@ -345,34 +345,6 @@
 	return result;
 }
 
-#pragma mark debug
-
-#ifdef DEBUG
-
-- (id)valueForUndefinedKey:(NSString *)key
-{
-	if ([key isEqualToString:@"ordering"])
-	{
-		OBASSERT_NOT_REACHED("Please don't use -ordering on pages");
-	}
-	
-	return [super valueForUndefinedKey:key];
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-	if ([key isEqualToString:@"ordering"])
-	{
-		OBASSERT_NOT_REACHED("Please don't use -ordering on pages");
-	}
-	else
-	{
-		[super setValue:value forUndefinedKey:key];
-	}
-}
-
-#endif
-
 #pragma mark -
 #pragma mark Page Hierarchy Queries
 

@@ -163,14 +163,6 @@
 		
         // Create media manager and keep an eye on it
         myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
-        
-        
-#ifdef DEBUG
-		// custom undo manager for debugging only
-		//		KTUndoManager *undoManager = [[[KTUndoManager alloc] init] autorelease];
-		//		[self setUndoManager:undoManager];
-		//		[undoManager setDocument:self];
-#endif
     }
 	
     return self;

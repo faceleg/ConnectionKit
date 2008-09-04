@@ -15,21 +15,6 @@
 
 @implementation NSSet ( Ordering )
 
-#ifdef DEBUG
-- (NSString *)o
-{
-	NSMutableString *string = [NSMutableString string];
-	NSEnumerator *theEnum = [self objectEnumerator];
-	id object;
-
-	while (nil != (object = [theEnum nextObject]) )
-	{
-		[string appendFormat:@"%@: %@  ", [object wrappedValueForKeyWithFallback:@"ordering"], [object wrappedValueForKeyWithFallback:@"pluginIdentifier"]];
-	}
-	return string;
-}
-#endif
-
 - (NSString *)shortDescription
 {
 	NSString *result = @"";
