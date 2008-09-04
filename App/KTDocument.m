@@ -142,6 +142,7 @@
 	{
 		// set up autosave
 		myIsSuspendingAutosave = YES;
+		LOG((@"%@ init suspending YES", self));
 		
 		// we always start in preview
 		[[self windowController] setPublishingMode:kGeneratingPreview];
@@ -463,6 +464,7 @@
     
     // We're all setup, ready to allow autosaving
 	myIsSuspendingAutosave = NO;
+	LOG((@"%@ initWithContentsOfURL suspending NO", self));
 	
 	return self;
 }

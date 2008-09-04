@@ -861,6 +861,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	//LOG((@"---------------------------------------------- deactivating autosave"));
 	if ( !myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
+		LOG((@"%@ suspendAutosave YES", self));
 		myIsSuspendingAutosave = YES;
 	}
 	if ( [NSThread isMainThread] )
@@ -880,6 +881,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if ( myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
 	{
 		myIsSuspendingAutosave = NO;
+		LOG((@"%@ resumeAutosave - suspending set to NO", self));
 	}
 	if ( [NSThread isMainThread] )
 	{
