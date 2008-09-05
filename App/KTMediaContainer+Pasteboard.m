@@ -38,6 +38,7 @@
 	NSString *path = [self currentPath];
     OBASSERT(path);
     BDAlias *alias = [BDAlias aliasWithPath:path];
+	OBASSERT(alias);
 	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
 }
 
@@ -49,6 +50,7 @@
 - (id <NSCoding>)pasteboardRepresentation
 {
 	BDAlias *alias = [self alias];
+	OBASSERT(alias);
 	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
 }
 
@@ -62,6 +64,7 @@
 
 - (id)initWithAlias:(BDAlias *)alias
 {
+	OBASSERT(alias);
 	[super init];
 	myAlias = [alias retain];
 	return self;

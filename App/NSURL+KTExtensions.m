@@ -217,6 +217,11 @@ readWeblocFiles:(BOOL)convertWeblocs
 		title = [NSNull null];
 	}
 	
+	if (!URL)	// Case 34206; looks like we had a nil URL
+	{
+		URL = [NSNull null];
+	}
+	
 	
 	if (URLs != NULL) {
 		*URLs = [NSArray arrayWithObject:URL];

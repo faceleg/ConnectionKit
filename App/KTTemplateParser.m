@@ -396,20 +396,27 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 									toAppend = [toAppend stringByEscapingHTMLEntities];
 								}
 							}
+							OBASSERT(toAppend);
 							[htmlString appendString:toAppend];
 						}
 					}
 					else if ([tag hasPrefix:kStringIndicator])
 					{
-						[htmlString appendString:[self componentLocalizedString:tag]];
+						NSString *toAppend = [self componentLocalizedString:tag];
+						OBASSERT(toAppend);
+						[htmlString appendString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
-						[htmlString appendString:[self componentTargetLocalizedString:tag]];
+						NSString *toAppend = [self componentTargetLocalizedString:tag];
+						OBASSERT(toAppend);
+						[htmlString appendString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
 					{
-						[htmlString appendString:[self mainBundleLocalizedString:tag]];
+						NSString *toAppend = [self mainBundleLocalizedString:tag];
+						OBASSERT(toAppend);
+						[htmlString appendString:toAppend];
 					}
 					else	// not for echoing.  Do something.
 					{
