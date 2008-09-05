@@ -92,9 +92,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Save to URL
 
-/*	-writeToURL: only supports the Save and SaveAs operations. Instead, we fake SaveTo operations by doing a standard
- *  Save operation and then copying the resultant file to the destination.
- */
 - (BOOL)saveToURL:(NSURL *)absoluteURL
 		   ofType:(NSString *)typeName
  forSaveOperation:(NSSaveOperationType)saveOperation
@@ -110,16 +107,25 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     mySaveOperationCount++;
 	
     
-    // Do the save op
-	if (saveOperation == NSSaveToOperation)
-	{
+    
+    //  Do the save op
+    if (saveOperation == NSSaveToOperation)     // -writeToURL: only supports the Save and SaveAs operations. Instead,
+	{                                           // we fake SaveTo operations by doing a standard Save operation and then
+                                                // copying the resultant file to the destination.
+        
 		result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
 		if (result)
 		{
 			result = [[NSFileManager defaultManager] copyPath:[[self fileURL] path] toPath:[absoluteURL path] handler:nil];
 		}
 	}
-	else
+    
+    else if ([absoluteURL isEqual:[self fileURL]])  // We can't support anything other than a standard Save operation when
+    {                                               // writing to the doc's URL
+        result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
+    }
+	
+    else
 	{
 		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
 	}
