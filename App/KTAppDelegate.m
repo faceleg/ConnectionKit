@@ -302,7 +302,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #ifdef VARIANT_BETA
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
-		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
+//		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
 #else
 		[NSNumber numberWithBool:NO],			@"ShowScoutMessages",
 #endif
@@ -1712,9 +1712,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (IBAction)openSupportForum:(id)sender
 {
 	
-#ifdef VARIANT_BETA
-	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
-#else
+//#ifdef VARIANT_BETA
+//	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
+//#else
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
 #endif
 	NSURL *url = [NSURL URLWithString:urlString];
