@@ -944,7 +944,9 @@
  */
 - (NSError *)willPresentError:(NSError *)inError
 {
-	// customizations for NSCocoaErrorDomain
+	NSError *result = inError;
+    
+    // customizations for NSCocoaErrorDomain
 	if ( [[inError domain] isEqualToString:NSCocoaErrorDomain] ) 
 	{
 		int errorCode = [inError code];
@@ -977,22 +979,24 @@
 				NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:[inError userInfo]];
 				[userInfo setObject:errorString forKey:NSLocalizedDescriptionKey];
 				
-				return [NSError errorWithDomain:[inError domain] code:[inError code] userInfo:userInfo];
+				result = [NSError errorWithDomain:[inError domain] code:[inError code] userInfo:userInfo];
 			} 
-			else 
-			{
-				// if there are no detailed errors (i.e., multiple errors), just return the error
-				return inError;
-			}
 		}
 	}
     
     
     // Log the error to the console for debugging
-    NSLog(@"KTDocument will present error:\n%@", [inError description]);
+    NSLog(@"KTDocument will present error:\n%@", result);
+    NSLog(@"Error user info: %@", [[[result userInfo] description] condenseWhiteSpace]);
+    
+    NSError *underlyingError = [[result userInfo] objectForKey:NSUnderlyingErrorKey];
+    if (underlyingError)
+    {
+        NSLog(@"Underlying error: %@", [[[underlyingError userInfo] description] condenseWhiteSpace]);
+    }
     
 	
-	return inError;
+	return result;
 }
 
 #pragma mark -
