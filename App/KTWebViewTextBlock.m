@@ -30,10 +30,12 @@
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 
+#import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
-#import "NSScanner+Karelia.h"
+
+#import "OmniCompatibility.h"
 
 
 @interface KTWebViewTextBlock (Private)
@@ -535,10 +537,12 @@
     
     // If needed, reload inner HTML from disk. BUGSID:30635
     // TODO: Maintain the selection and merge in with our Summaries subclass
-    NSString *innerHTML = [self innerHTML:nil];
-    if (![innerHTML isEqualToString:[[self DOMNode] innerHTML]])
+    NSString *expectedHTML = [self innerHTML:nil];
+    NSString *currentHTML = [[self DOMNode] innerHTML];
+    if (!KSISEQUAL(expectedHTML, currentHTML) &&
+        ![currentHTML isEqualToString:@"<p>Lorem ipsum dolor sit amet.</p>"])   // Hack for editing markers
     {
-        [[self DOMNode] setInnerHTML:innerHTML];
+        [[self DOMNode] setInnerHTML:expectedHTML];
     }
     
 	
