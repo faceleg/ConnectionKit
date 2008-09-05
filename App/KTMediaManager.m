@@ -379,8 +379,9 @@ NSString *KTMediaLogDomain = @"Media";
 		{
 			// Look for an image tag
 			NSString *someText = nil;
-			if (![imageScanner scanUpToString:@"<img" intoString:&someText]) break;
-			[buffer appendString:someText];
+			[imageScanner scanUpToString:@"<img" intoString:&someText];
+            if (someText) [buffer appendString:someText];
+			if ([imageScanner isAtEnd]) break;
 			
 			
 			// Locate the image's source attribute
