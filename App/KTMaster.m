@@ -237,7 +237,7 @@
 	if (error) {
 		[[NSAlert alertWithError:error] runModal];
 	}
-	NSManagedObject *result = [existingDesigns firstObject];
+	NSManagedObject *result = [existingDesigns lastObject];
 	
 	
 	// If no existing design was found, create a new object
