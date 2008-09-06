@@ -35,11 +35,6 @@
 #import "Registration.h"
 
 
-//@interface KTDocument (CoreDataPrivate)
-//- (void)logManagedObjectsInSet:(NSSet *)managedObjects;
-//@end
-
-
 @implementation KTDocument (CoreData)
 
 #pragma mark context
@@ -204,51 +199,6 @@
 	
 	return result;
 }
-
-#pragma mark -
-#pragma mark context notifications
-
-//- (void)contextDidChange:(NSNotification *)aNotification
-//{
-//	// NB: calling saveContext: from this method results in infinite loop, by design, so DON'T DO IT
-//
-////	if ( nil != [self fileURL] )
-////	{
-////		// if we have a place to save, then we can autosave
-////		[self restartAutosaveTimersIfNecessary];
-////	}
-//
-//	// log changes if set in Debug menu
-//	if ( [[NSApp delegate] logAllContextChanges] )
-//	{
-//		NSDictionary *userInfo = [aNotification userInfo];
-//		if ( nil != [userInfo valueForKey:NSInsertedObjectsKey] )
-//		{
-//			NSSet *insertedObjects = [userInfo valueForKey:NSInsertedObjectsKey];
-//			NSLog(@"** inserted objects:");
-//			[self logManagedObjectsInSet:insertedObjects];
-//		}
-//		if ( nil != [userInfo valueForKey:NSUpdatedObjectsKey] )
-//		{
-//			NSSet *updatedObjects = [userInfo valueForKey:NSUpdatedObjectsKey];
-//			NSLog(@"** updated objects:");
-//			[self logManagedObjectsInSet:updatedObjects];
-//		}
-//		if ( nil != [userInfo valueForKey:NSDeletedObjectsKey] )
-//		{
-//			NSSet *deletedObjects = [userInfo valueForKey:NSDeletedObjectsKey];
-//			NSLog(@"** deleted objects:");
-//			[self logManagedObjectsInSet:deletedObjects];
-//		}
-//		NSLog(@"=======================================================");
-//	}
-//}
-
-//- (void)contextDidSave:(id)aNotification
-//{
-//	// this method used to sync all peer contexts with fresh data after a save
-//}
-
 
 #pragma mark snapshot
 
@@ -561,45 +511,6 @@
 {
 	// something got screwed up in undo and we're being messaged to fix it
 	[[self undoManager] removeAllActions];
-}
-
-#pragma mark debug
-
-//- (void)logManagedObjectsInSet:(NSSet *)managedObjects
-//{
-//	NSEnumerator *e = [[managedObjects allObjects] objectEnumerator];
-//	NSManagedObject *managedObject = nil;
-//	while ( managedObject = [e nextObject] )
-//	{
-//		NSLog(@"%@", [managedObject managedObjectDescription]);
-//		//NSLog(@"DESCRIPTION: %@", [managedObject managedObjectDescription]);
-//		//NSLog(@"CHANGED VALUES: %@", [[managedObject changedValues] allKeys]);
-//	}
-//}
-
-- (void)observeNotificationsForContext:(KTManagedObjectContext *)aManagedObjectContext
-{
-	//LOG((@"document registering for context change, MOC = %@ thread = %p", aManagedObjectContext, [NSThread currentThread]));
-//	[[NSNotificationCenter defaultCenter] addObserver:self
-//											 selector:@selector(contextDidChange:)
-//												 name:NSManagedObjectContextObjectsDidChangeNotification
-//											   object:aManagedObjectContext];
-	
-//	[[NSNotificationCenter defaultCenter] addObserver:self
-//											 selector:@selector(contextDidSave:)
-//												 name:NSManagedObjectContextDidSaveNotification
-//											   object:aManagedObjectContext];			
-}
-
-- (void)removeObserversForContext:(KTManagedObjectContext *)aManagedObjectContext
-{
-	//LOG((@"document UN-reg for context change, MOC = %@ thread = %p", aManagedObjectContext, [NSThread currentThread]));
-//	[[NSNotificationCenter defaultCenter] removeObserver:self
-//													name:NSManagedObjectContextObjectsDidChangeNotification
-//												  object:aManagedObjectContext];
-//	[[NSNotificationCenter defaultCenter] removeObserver:self
-//													name:NSManagedObjectContextDidSaveNotification
-//												  object:aManagedObjectContext];
 }
 
 @end
