@@ -816,9 +816,4 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[self updateChangeCount:NSChangeCleared];
 }
 
-- (void)updateChangeCount:(NSDocumentChangeType)changeType
-{
-    [super updateChangeCount:changeType];
-}
-
 @end

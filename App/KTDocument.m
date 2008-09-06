@@ -460,16 +460,6 @@
 
 #pragma mark dealloc
 
-- (id)retain
-{
-    return [super retain];
-}
-
-- (oneway void)release
-{
-    return [super release];
-}
-
 - (void)dealloc
 {
 	// no more notifications
