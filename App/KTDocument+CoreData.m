@@ -279,9 +279,6 @@
 {
 	if ([[NSFileManager defaultManager] fileExistsAtPath:[[self snapshotURL] path]])
 	{
-		// save document so no changes need to be dealt with...
-		[self autosaveDocument:nil];
-		
 		// message app delegate to take it from here
 		[[NSApp delegate] revertDocument:self toSnapshot:[[self snapshotURL] path]];
 	}
