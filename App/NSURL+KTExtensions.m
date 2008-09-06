@@ -219,7 +219,7 @@ readWeblocFiles:(BOOL)convertWeblocs
 	
 	if (!URL)	// Case 34206; looks like we had a nil URL
 	{
-		URL = [NSNull null];
+		URL = (NSURL *)[NSNull null]; // strange casting needed here, are we sure this is good?
 	}
 	
 	
