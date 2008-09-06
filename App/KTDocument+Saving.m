@@ -60,6 +60,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 @interface KTDocument (SavingPrivate)
 
+// Save
+- (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError;
+
 // Write Safely
 - (NSString *)backupExistingFileForSaveAsOperation:(NSString *)path error:(NSError **)error;
 - (void)recoverBackupFile:(NSString *)backupPath toURL:(NSURL *)saveURL;
@@ -107,15 +110,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     //  Do the save op
-    if (saveOperation == NSSaveToOperation)     // -writeToURL: only supports the Save and SaveAs operations. Instead,
-	{                                           // we fake SaveTo operations by doing a standard Save operation and then
-                                                // copying the resultant file to the destination.
-        
-		result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
-		if (result)
-		{
-			result = [[NSFileManager defaultManager] copyPath:[[self fileURL] path] toPath:[absoluteURL path] handler:nil];
-		}
+    if (saveOperation == NSSaveToOperation)
+    {
+		result = [self performSaveToOperationToURL:absoluteURL error:outError];
 	}
     
     else if ([absoluteURL isEqual:[self fileURL]])  // We can't support anything other than a standard Save operation when
@@ -136,6 +133,39 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	return result;
 }
 
+/*  -writeToURL: only supports the Save and SaveAs operations. Instead,
+ *  we fake SaveTo operations by doing a standard Save operation and then
+ *  copying the resultant file to the destination.
+ */
+- (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError
+{
+    BOOL result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+    if (result)
+    {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if ([fileManager fileExistsAtPath:[absoluteURL path]])
+        {
+            [fileManager removeFileAtPath:[absoluteURL path] handler:nil];
+        }
+        
+        result = [fileManager copyPath:[[self fileURL] path] toPath:[absoluteURL path] handler:nil];
+        if (!result)
+        {
+            // didn't work, put up an error
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [absoluteURL path], NSFilePathErrorKey,
+                                      NSLocalizedString(@"Unable to copy to path", @"Unable to copy to path"), NSLocalizedDescriptionKey,
+                                      nil];
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+                                            code:512 // unknown write error 
+                                        userInfo:userInfo];
+        }
+    }
+    
+    return result;
+}
+    
 - (BOOL)isSaving
 {
     return (mySaveOperationCount > 0);
@@ -174,7 +204,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                 
             case NSSaveToOperation:
                 [savePanel setTitle:NSLocalizedString(@"Save a Copy As...", @"Save a Copy As...")];
-                [savePanel setPrompt:NSLocalizedString(@"Save a Copy", @"Save a Copy")];
+                [savePanel setNameFieldLabel:NSLocalizedString(@"Save Copy:", @"Save sheet name field label")];
                 
                 break;
                 

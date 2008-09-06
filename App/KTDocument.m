@@ -1405,48 +1405,9 @@
 	[sheetController autorelease];
 }
 
-- (void) warnThatHostUsesCharset:(NSString *)hostCharset
+- (void)warnThatHostUsesCharset:(NSString *)hostCharset
 {
 	[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
-}
-
-// deal with save panels
-- (void)savePanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if ( [((id)contextInfo) isKindOfClass:[NSString class]] && [((id)contextInfo) isEqualToString:@"saveDocumentTo:"] )
-	{
-		// ok, here we're going to get the filename and move it
-		
-		// first, close the sheet
-		[sheet orderOut:nil];
-		
-		if (returnCode == NSOKButton)
-		{
-			// now, copy the document with NSFileManager
-			NSString *currentPath = [[self fileURL] path];
-			NSString *saveToPath = [sheet filename];
-			
-			if ( [saveToPath isEqualToString:currentPath] )
-			{
-				// no need to copy over ourselves
-				return;
-			}
-			
-			NSFileManager *fileManager = [NSFileManager defaultManager];
-			if ( ![fileManager copyPath:currentPath toPath:saveToPath handler:nil] )
-			{
-				// didn't work, put up an error
-				NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-				saveToPath, NSFilePathErrorKey,
-				NSLocalizedString(@"Unable to copy to path", @"Unable to copy to path"), NSLocalizedDescriptionKey,
-				nil];
-				NSError *fileError = [NSError errorWithDomain:NSCocoaErrorDomain 
-				code:512 // unknown write error 
-				userInfo:userInfo];
-				[self presentError:fileError];
-			}
-		}
-	}
 }
 
 // staleness debugging
