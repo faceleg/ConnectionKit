@@ -72,12 +72,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL 
 			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
+	 forSaveOperation:(NSSaveOperationType)inSaveOperation
+  originalContentsURL:(NSURL *)inOriginalContentsURL
 				error:(NSError **)outError;
 
-- (BOOL)migrateToURL:(NSURL *)URL 
-			  ofType:(NSString *)typeName 
-			   error:(NSError **)outError;
+- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
 - (WebView *)newQuickLookThumbnailWebView;
 @end
@@ -302,7 +301,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if (result)
 	{
 		// Save the context
-		result = [self writeMOCToURL:inURL ofType:inType forSaveOperation:saveOperation error:outError];
+		result = [self writeMOCToURL:inURL
+                              ofType:inType
+                    forSaveOperation:saveOperation
+                 originalContentsURL:inOriginalContentsURL
+                               error:outError];
 		
 		
 		if (result && quickLookThumbnailWebView)
@@ -482,8 +485,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL 
 			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation 
-				error:(NSError **)outError
+	 forSaveOperation:(NSSaveOperationType)inSaveOperation
+  originalContentsURL:(NSURL *)inOriginalContentsURL
+				error:(NSError **)outError;
+
 {
 	BOOL result = NO;
 	NSError *error = nil;
@@ -495,7 +500,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	// Handle the user choosing "Save As" for an EXISTING document
 	if (inSaveOperation == NSSaveAsOperation && [self fileURL])
 	{
-		result = [self migrateToURL:inURL ofType:inType error:&error];
+		result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
 		if (!result)
 		{
 			*outError = error;
@@ -541,7 +546,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 /*	Called when performaing a "Save As" operation on an existing document
  */
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName error:(NSError **)outError
+- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError
 {
 	// Build a list of the media files that will require copying/moving to the new doc
 	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
@@ -569,7 +574,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
 	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
 	
-	if (![storeCoordinator migratePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
+	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL UTI:nil];
+    OBASSERT(oldDataStoreURL);
+    id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];
+    OBASSERT(oldDataStore);
+    if (![storeCoordinator migratePersistentStore:oldDataStore
 										    toURL:storeURL
 										  options:nil
 										 withType:[KTDocument defaultStoreType]
@@ -588,7 +597,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	storeURL = [KTDocument mediaStoreURLForDocumentURL:URL];
 	storeCoordinator = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
 	
-	if (![storeCoordinator migratePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
+	NSURL *oldMediaStoreURL = [KTDocument mediaStoreURLForDocumentURL:originalContentsURL];
+    OBASSERT(oldMediaStoreURL);
+    id oldMediaStore = [storeCoordinator persistentStoreForURL:oldMediaStoreURL];
+    OBASSERT(oldMediaStore);
+    if (![storeCoordinator migratePersistentStore:oldMediaStore
 										    toURL:storeURL
 										  options:nil
 										 withType:[KTDocument defaultMediaStoreType]
