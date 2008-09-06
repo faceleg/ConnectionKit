@@ -124,6 +124,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	{
 		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
 	}
+    
+    
+    // Since we're overriding the usual autosave mechanism, MUST call -updateChangeCount:
+    if (saveOperation == NSAutosaveOperation) [self updateChangeCount:NSChangeAutosaved];
 	
     
     // Unmark -isSaving as YES if applicable
@@ -801,6 +805,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [callbackInvocation release];
 }
 
+#pragma mark -
+#pragma mark Change Count
 
 - (void)processPendingChangesAndClearChangeCount
 {
@@ -808,6 +814,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[[self managedObjectContext] processPendingChanges];
 	[[self undoManager] removeAllActions];
 	[self updateChangeCount:NSChangeCleared];
+}
+
+- (void)updateChangeCount:(NSDocumentChangeType)changeType
+{
+    [super updateChangeCount:changeType];
 }
 
 @end

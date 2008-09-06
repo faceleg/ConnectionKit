@@ -119,7 +119,11 @@ NSString *KTMediaLogDomain = @"Media";
     {
         if ([undoManager groupingLevel] == 1)
         {
-            [[self document] updateChangeCount:NSChangeDone];
+            KTDocument *document = [self document];
+            if (![document isClosing])
+            {
+                [document updateChangeCount:NSChangeDone];
+            }
         }
     }
 }
