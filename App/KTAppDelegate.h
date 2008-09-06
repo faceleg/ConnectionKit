@@ -160,23 +160,16 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
 	
-	NSPoint myCascadePoint;
-
     // ivars
-	//KTDocument				*myCurrentDocument;
-	
 	KTDocumentController	*myDocumentController;
 	
-    BOOL applicationIsLaunching;
-	
+    BOOL myApplicationIsLaunching;
 	
 	BOOL myKTDidAwake;
 	BOOL myAppIsTerminating;
-
 	
-	
+	NSPoint myCascadePoint;
 }
-
 
 - (IBAction) openHigh:(id)sender;
 - (IBAction) openLow:(id)sender;
@@ -185,20 +178,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 + (BOOL) coreImageAccelerated;
 + (BOOL) fastEnoughProcessor;
 
-
-- (KTDocument *)currentDocument;
-//- (void)setCurrentDocument:(KTDocument *)aDocument;
-
-- (void)updateMenusForDocument:(KTDocument *)aDocument;
-
-- (IBAction)toggleLogAllContextChanges:(id)sender;
-- (BOOL)logAllContextChanges;
-
-//- (NSDictionary *)compositeDocumentModel;
-
-
 - (KTDocument *)documentWithID:(NSString *)anID;
-
+- (KTDocument *)currentDocument;
 
 - (IBAction)openSampleDocument:(id)sender;
 
@@ -221,6 +202,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 // methods to allow current document to update menus
+- (void)updateMenusForDocument:(KTDocument *)aDocument;
+
 - (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
 - (void)setCutPagesMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
 - (void)setCopyMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
@@ -235,10 +218,9 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (void)updateDuplicateMenuItemForDocument:(KTDocument *)aDocument;
 
+// backups and snapshots
 - (BOOL)shouldBackupOnOpening;
 - (BOOL)shouldSnapshotOnOpening;
 - (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath;
 
-
 @end
-

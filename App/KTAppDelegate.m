@@ -298,8 +298,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:NO],			@"LiveDataFeeds",
 #endif
 		
-		[NSNumber numberWithBool:NO],			@"KTLogAllContextChanges",
-
 #ifdef VARIANT_BETA
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 //		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
@@ -588,7 +586,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
         // fire up a designs manager and discover our designs
 		myCascadePoint = NSMakePoint(100, 100);
 
-        applicationIsLaunching = YES;
+        myApplicationIsLaunching = YES;
 		myKTDidAwake = NO;
 		myAppIsTerminating = NO;
 	}
@@ -919,7 +917,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)theApplication
 {
-    if ( !applicationIsLaunching )
+    if ( !myApplicationIsLaunching )
     {
         return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileWhenIconClicked"];
     }
@@ -1252,7 +1250,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}
 		
-    applicationIsLaunching = NO; // we're done
+    myApplicationIsLaunching = NO; // we're done
 }
 
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
@@ -2088,17 +2086,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		[oToggleMediaMenuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
 	}
-}
-
-- (IBAction)toggleLogAllContextChanges:(id)sender
-{
-	BOOL flagOn = ([sender state] == NSOnState) ? YES : NO;
-	[[NSUserDefaults standardUserDefaults] setBool:flagOn forKey:@"KTLogAllContextChanges"];
-}
-
-- (BOOL)logAllContextChanges
-{
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"KTLogAllContextChanges"];
 }
 
 /*! log undo-related notifications */

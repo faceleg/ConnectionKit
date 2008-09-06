@@ -1978,10 +1978,7 @@ from representedObject */
 	///only update menus, which will query document contents, if we're in normal mode
 	if ( kGeneratingPreview == [self publishingMode] )
 	{
-		// Update application menus to reflect this document
 		[[NSApp delegate] updateMenusForDocument:[self document]];
-		//	[[NSApp delegate] setCurrentDocument:[self document]];
-	
 		[self updateEditMenuItems];
 	}
 }
