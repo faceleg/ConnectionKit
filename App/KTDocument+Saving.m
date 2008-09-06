@@ -127,7 +127,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Since we're overriding the usual autosave mechanism, MUST call -updateChangeCount:
-    if (saveOperation == NSAutosaveOperation) [self updateChangeCount:NSChangeAutosaved];
+    if (saveOperation == NSAutosaveOperation && result)
+    {
+        [self updateChangeCount:NSChangeAutosaved];
+    }
 	
     
     // Unmark -isSaving as YES if applicable
