@@ -140,10 +140,6 @@
 	
     if ( nil != [super init] )
 	{
-		// set up autosave
-		myIsSuspendingAutosave = YES;
-		LOG((@"%@ init suspending YES", self));
-		
 		// we always start in preview
 		[[self windowController] setPublishingMode:kGeneratingPreview];
 		
@@ -445,9 +441,6 @@
 		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
 		
 		
-		// establish autosave notifications
-//		[self observeNotificationsForContext:(KTManagedObjectContext *)[self managedObjectContext]];
-		
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
 		// A little bit of repair; we need to have language stored in the root if it's not there
@@ -462,11 +455,7 @@
 	}
     
     
-    // We're all setup, ready to allow autosaving
-	myIsSuspendingAutosave = NO;
-	LOG((@"%@ initWithContentsOfURL suspending NO", self));
-	
-	return self;
+    return self;
 }
 
 #pragma mark dealloc
@@ -478,9 +467,7 @@
 	// rather than doing blanket removal
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	// no more saving
-	[self cancelAndInvalidateAutosaveTimers]; // invalidates and releases myAutosaveTimer
-    [myLastSavedTime release]; myLastSavedTime = nil;
+	[myLastSavedTime release]; myLastSavedTime = nil;
 	
 	[oNewDocAccessoryView release];
 		
@@ -529,17 +516,6 @@
 {
 	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
 	return myDocWindowController;
-}
-
-- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
-{
-	[savePanel setTitle:NSLocalizedString(@"New Site","Save Panel Title")];
-	[savePanel setPrompt:NSLocalizedString(@"Create","Create Button")];
-	[savePanel setTreatsFilePackagesAsDirectories:NO];
-	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setRequiredFileType:(NSString *)kKTDocumentExtension];
-	
-    return YES;
 }
 
 /*! returns publishSiteURL/sitemap.xml */
@@ -747,7 +723,6 @@
 		// cleanup
 
 //		[self removeObserversForContext:(KTManagedObjectContext *)[self managedObjectContext]];
-		[self cancelAndInvalidateAutosaveTimers];
 		[[self windowController] selectionDealloc];
 		
 		// suspend webview updating
@@ -785,8 +760,6 @@
 	
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentWillClose" object:self];
-
-	[self suspendAutosave];
 
 	//LOG((@"KTDocument -close"));
 	// NB: [self windowController] is nil by the time we get here...
@@ -1133,10 +1106,6 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification
 	object:[[[self windowController] siteOutlineController] selectedPage]];
 	
-	// save the context to make sure any changes got processed
-	[self cancelAndInvalidateAutosaveTimers];
-	[self autosaveDocument:nil]; // should still save all contexts before proceeding
-	
 	// no undo after publishing
 	[[self undoManager] removeAllActions];
 }
@@ -1426,9 +1395,7 @@
 		
 		
 		[undoManager setActionName:NSLocalizedString(@"Host Settings", @"Undo name")];
-		
-//		[self fireAutosave:nil];
-		
+				
 		// Check encoding from host properties
 		// Alas, I have no way to test this!
 		
@@ -1460,11 +1427,8 @@
 		// first, close the sheet
 		[sheet orderOut:nil];
 		
-		if ( returnCode == NSOKButton)
+		if (returnCode == NSOKButton)
 		{
-			// if ok button, save
-			[self autosaveDocument:nil];
-			
 			// now, copy the document with NSFileManager
 			NSString *currentPath = [[self fileURL] path];
 			NSString *saveToPath = [sheet filename];

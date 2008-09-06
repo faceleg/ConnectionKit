@@ -515,38 +515,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
 
-- (IBAction)saveDocumentTo:(id)sender
-{
-	// NSPersistentDocument does not support saveTo:
-	// so we're going to fudge it by, first,
-	// saving this document's context and, then,
-	// using NSFileManger to copy the saved context
-	// to another location
-	
-	// actually, before we do anything, let's make sure we're all on disk
-	[[self document] autosaveDocument:nil];
-	
-	// first, put up a sheet to pick a location
-	NSSavePanel *savePanel = [NSSavePanel savePanel];
-	
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:kKTDocumentExtension]];
-	[savePanel setAllowsOtherFileTypes:NO];
-	[savePanel setTitle:NSLocalizedString(@"Save a Copy As...", @"Save a Copy As...")];
-	[savePanel setPrompt:NSLocalizedString(@"Save a Copy", @"Save a Copy")];
-	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setRequiredFileType:kKTDocumentExtension];
-	
-	// the document will pick it up on the backend and do the saveTo: there
-	NSURL *fileURL = [[self document] fileURL];
-	NSString *directory = [[fileURL path] stringByDeletingLastPathComponent];
-	[savePanel beginSheetForDirectory:directory
-								 file:nil 
-					   modalForWindow:[self window] 
-						modalDelegate:[self document] 
-					   didEndSelector:@selector(savePanelDidEnd:returnCode:contextInfo:) 
-						  contextInfo:@"saveDocumentTo:"];
-}
-
 - (IBAction)deselectAll:(id)sender
 {
 	id documentView = [[[oWebView mainFrame] frameView] documentView];
@@ -2207,8 +2175,6 @@ from representedObject */
 {
 	// LOG((@"%@", NSStringFromSelector(_cmd) ));
 
-	[[self document] suspendAutosave];
-
 	BOOL result = NO;	// set to YES if at least one item got processed
 	int numberOfItems = [KTDataSource numberOfItemsToProcessDrag:info];
 	
@@ -2350,7 +2316,6 @@ from representedObject */
 	
 	// Done
 	[KTDataSource doneProcessingDrag];
-	[[self document] resumeAutosave];
 	
 	return result;
 }

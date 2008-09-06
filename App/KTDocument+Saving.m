@@ -142,6 +142,51 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 }
 
 #pragma mark -
+#pragma mark Save Panel
+
+- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation
+                                 delegate:(id)delegate
+                          didSaveSelector:(SEL)didSaveSelector
+                              contextInfo:(void *)contextInfo
+{
+    myLastSavePanelSaveOperation = saveOperation;
+    [super runModalSavePanelForSaveOperation:saveOperation
+                                    delegate:delegate
+                             didSaveSelector:didSaveSelector
+                                 contextInfo:contextInfo];
+}
+
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
+{
+	BOOL result = [super prepareSavePanel:savePanel];
+    
+    if (result)
+    {
+        switch (myLastSavePanelSaveOperation)
+        {
+            case NSSaveOperation:
+                [savePanel setTitle:NSLocalizedString(@"New Site","Save Panel Title")];
+                [savePanel setPrompt:NSLocalizedString(@"Create","Create Button")];
+                [savePanel setTreatsFilePackagesAsDirectories:NO];
+                [savePanel setCanSelectHiddenExtension:YES];
+                [savePanel setRequiredFileType:(NSString *)kKTDocumentExtension];
+                break;
+                
+            case NSSaveToOperation:
+                [savePanel setTitle:NSLocalizedString(@"Save a Copy As...", @"Save a Copy As...")];
+                [savePanel setPrompt:NSLocalizedString(@"Save a Copy", @"Save a Copy")];
+                
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return result;
+}
+
+#pragma mark -
 #pragma mark Write Safely
 
 /*	We override the behavior to save directly ('unsafely' I suppose!) to the URL,
@@ -530,12 +575,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	result = [managedObjectContext save:&error];
 	if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
 	
-	if (result)
-	{
-		// if we've saved, we don't need to autosave until after the next context change
-		[self cancelAndInvalidateAutosaveTimers];
-	}
-	else
+	if (!result)
 	{
         // Return, making sure to supply appropriate error info
         if (!result) *outError = error;
@@ -691,195 +731,53 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Autosave
 
-- (void)processPendingChangesAndClearChangeCount
+- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo
 {
-	LOGMETHOD;
-	[[self managedObjectContext] processPendingChanges];
-	[[self undoManager] removeAllActions];
-	[self updateChangeCount:NSChangeCleared];
-}
-
-- (void)updateChangeCount:(NSDocumentChangeType)changeType
-{
-	//LOGMETHOD;
-	[super updateChangeCount:changeType];
-	
-	switch ( changeType )
-	{
-		case NSChangeDone:
-		case NSChangeUndone:
-			[self restartAutosaveTimerIfNecessary];
-			break;
-		default:
-			break;
-	}
-}
-
-// main entry point for saving the document programmatically
-- (IBAction)autosaveDocument:(id)sender
-{
-	@try	 // Because it's on a timer, we have to catch any exceptions ourself.
-	{
-        // the timer will fire whether there are changes to save or not
-		// but we only want to save if isDocumentEdited
-		if ( [self isDocumentEdited] && (nil != [self fileURL]) )
-		{
-			LOGMETHOD;
-			OBASSERT([NSThread isMainThread]);
-			
-			// remember the current status. PURPOSELY LEAKED AS WE RELEASE IT IN THE CALLBACK
-			NSString *status = [[[self windowController] status] copy];
-			[[self windowController] setStatusField:NSLocalizedString(@"Autosaving...", @"Status: Autosaving...")];
-			
-			// turn off timers before doing save
-			[self cancelAndInvalidateAutosaveTimers];
-			
-			// Save the document through normal channels (ultimately calls writeToURL:::).
-		    [self saveDocumentWithDelegate:self
-                           didSaveSelector:@selector(document:didAutosave:contextInfo:)
-                               contextInfo:status];
-        }
-		else
-		{
-			// turn off timer even if we don't need to save; we're done.
-			[self cancelAndInvalidateAutosaveTimers];
-
-		}
-	}
-	@catch (NSException *exception)
-	{
-		[NSApp reportException:exception];
-	}
+    if (delegate)
+    {
+        NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:didAutosaveSelector];
+        NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
+        [callback setTarget:delegate];
+        [callback setSelector:didAutosaveSelector];
+        [callback setArgument:&self atIndex:2];
+        [callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
+    
+    
+        [self saveToURL:[self fileURL]
+                 ofType:[self fileType]
+       forSaveOperation:NSAutosaveOperation
+               delegate:self
+        didSaveSelector:@selector(document:didAutosave:contextInfo:)
+            contextInfo:[callback retain]]; // We will release the callback later
+    }
+    else
+    {
+        [self saveToURL:[self fileURL]
+                 ofType:[self fileType]
+       forSaveOperation:NSAutosaveOperation
+               delegate:nil
+        didSaveSelector:nil
+            contextInfo:NULL];
+    }
 }
 
 - (void)document:(NSDocument *)doc didAutosave:(BOOL)didSave contextInfo:(void  *)contextInfo
 {
 	NSAssert1(doc == self, @"%@ called for unknown document", _cmd);
 	
-	if ([(id)contextInfo isKindOfClass:[NSString class]])
-	{
-		// restore status
-		NSString *contextInfoString = contextInfo;
-		[[self windowController] setStatusField:contextInfoString];
-		
-		[contextInfoString release]; // balances copy in autosaveDocument:
-	}
+	NSInvocation *callbackInvocation = contextInfo;
+    [callbackInvocation setArgument:&didSave atIndex:3];
+    [callbackInvocation invoke];
+    [callbackInvocation release];
 }
 
-//- (void)fireAutosave:(id)notUsedButRequiredParameter
-//{
-//	LOGMETHOD;
-//	
-//	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-//	
-//	[self cancelAndInvalidateAutosaveTimers];
-//	[self performSelector:@selector(autosaveDocument:)
-//			   withObject:nil
-//			   afterDelay:0.0];
-//}
 
-- (void)fireAutosaveViaTimer:(NSTimer *)aTimer
+- (void)processPendingChangesAndClearChangeCount
 {
 	LOGMETHOD;
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-	
-//    if ( [myLastSavedTime timeIntervalSinceNow] >= SECOND_AUTOSAVE_DELAY )
-//    {
-		[self autosaveDocument:nil];
-//    }
-}
-
-- (oneway void)release;
-{
-	[super release];
-}
-
-- (void)restartAutosaveTimerIfNecessary
-{
-	//LOGMETHOD;
-	if ( !myIsSuspendingAutosave && ![self isClosing] )
-	{
-		OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-		
-		// timer A, save in 3 seconds, cancelled by change to context
-		//LOG((@"cancelling previous and starting new 3 second timer"));
-//		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
-//		[self performSelector:@selector(fireAutosave:) withObject:nil afterDelay:FIRST_AUTOSAVE_DELAY];
-		
-		// timer B, save in N seconds, if not saved within last N seconds
-		if ( nil == myAutosaveTimer )
-		{
-			// start a timer
-			
-			NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
-			// if the number is wildly out of range, go back to our default of 30
-			if ( interval < 5 ) interval = 30.0;
-			if ( interval > 5*60 ) interval = 30.0;
-			
-			LOG((@"starting new autosave timer to fire %g seconds from now", interval));
-			NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval
-															  target:self
-															selector:@selector(fireAutosaveViaTimer:)
-															userInfo:nil
-															 repeats:NO];
-			LOG((@"starting new autosave timer %@ to fire %g seconds from now: %@", timer, interval, [timer fireDate]));
-			[self setAutosaveTimer:timer];
-		}
-	}
-}
-
-- (void)cancelAndInvalidateAutosaveTimers
-{
-	//LOGMETHOD;
-	//OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-
-	//LOG((@"cancelling autosave timers"));
-//	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fireAutosave:) object:nil];
-	@synchronized ( myAutosaveTimer )
-	{
-		[self setAutosaveTimer:nil];
-	}
-	
-	// also clear run loop of any previous requests that made it through
-/// NOT USING	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveDocument:) object:nil];
-}
-
-- (void)suspendAutosave
-{
-	//LOGMETHOD;
-	//LOG((@"---------------------------------------------- deactivating autosave"));
-	if ( !myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
-	{
-		LOG((@"%@ suspendAutosave YES", self));
-		myIsSuspendingAutosave = YES;
-	}
-	if ( [NSThread isMainThread] )
-	{
-		[self cancelAndInvalidateAutosaveTimers];
-	}
-	else
-	{
-		[self performSelectorOnMainThread:@selector(cancelAndInvalidateAutosaveTimers) withObject:nil waitUntilDone:NO];
-	}
-}
-
-- (void)resumeAutosave
-{
-	//LOGMETHOD;
-	//LOG((@"---------------------------------------------- (re)activating autosave"));
-	if ( myIsSuspendingAutosave || !(kGeneratingPreview == [[self windowController] publishingMode]) )
-	{
-		myIsSuspendingAutosave = NO;
-		LOG((@"%@ resumeAutosave - suspending set to NO", self));
-	}
-	if ( [NSThread isMainThread] )
-	{
-		[self restartAutosaveTimerIfNecessary];
-	}
-	else
-	{
-		[self performSelectorOnMainThread:@selector(restartAutosaveTimerIfNecessary) withObject:nil waitUntilDone:NO];
-	}
+	[[self managedObjectContext] processPendingChanges];
+	[[self undoManager] removeAllActions];
+	[self updateChangeCount:NSChangeCleared];
 }
 
 @end

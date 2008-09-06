@@ -850,8 +850,6 @@ static NSArray *sReservedNames = nil;
 			
 		//force the connection creation on  the main thread
 		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
-		//[[[self associatedDocument] windowController] cancelFireUpdateElementTimer];
-		[[self associatedDocument] suspendAutosave];
 		mySuspended = YES;
 
 		myKeepPublishing = YES;
@@ -1034,7 +1032,6 @@ if ([self where] == kGeneratingRemoteExport) {
 
 		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		
-		[[self associatedDocument] suspendAutosave];
 		mySuspended = YES;
 		
 		myKeepPublishing = YES;
@@ -1419,7 +1416,6 @@ if ([self where] == kGeneratingRemoteExport) {
 	[[[self associatedDocument] windowController] setPublishingMode:kGeneratingPreview];
 		
 	myKeepPublishing = NO;
-	[[self associatedDocument] resumeAutosave];	// balance to upload...toSuggestedPath
 	mySuspended = NO;
 	
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread"); // if not, we have to make sure UI calls are performed on main thread

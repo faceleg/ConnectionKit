@@ -64,23 +64,6 @@
 
 #pragma mark ivar accessors (not stored objects)
 
-- (NSTimer *)autosaveTimer
-{
-	return myAutosaveTimer;
-}
-
-- (void)setAutosaveTimer:(NSTimer *)aTimer
-{
-	[aTimer retain];
-	if ( [myAutosaveTimer isValid] )
-	{
-		LOG((@"invalidating autosave timer %@", myAutosaveTimer));
-		[myAutosaveTimer invalidate];
-	}
-	[myAutosaveTimer release];
-	myAutosaveTimer = aTimer;
-}
-
 - (BOOL)connectionsAreConnected
 {
 	if ( [[myExportTransferController connection] isConnected]

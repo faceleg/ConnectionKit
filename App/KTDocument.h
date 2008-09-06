@@ -62,12 +62,11 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTTransferController		*myRemoteTransferController;
 	KTTransferController		*myExportTransferController;
 	
-	NSTimer						*myAutosaveTimer;
 	NSDate						*myLastSavedTime;	
 		
-	BOOL myIsSuspendingAutosave;
 	BOOL myIsClosing;
     unsigned mySaveOperationCount;
+    NSSaveOperationType myLastSavePanelSaveOperation;
 	
     NSString    *mySiteCachePath;
 	NSURL       *mySnapshotURL;
@@ -248,9 +247,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (KTDocumentInfo *)documentInfo;
 - (void)setDocumentInfo:(KTDocumentInfo *)anObject;
 
-- (NSTimer *)autosaveTimer;
-- (void)setAutosaveTimer:(NSTimer *)aTimer;
-
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
@@ -285,14 +281,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @interface KTDocument (Saving)
 
 - (BOOL)isSaving;
-
-// save/autosave
-- (IBAction)autosaveDocument:(id)sender;
-- (void)cancelAndInvalidateAutosaveTimers;
-//- (void)fireAutosave:(id)notUsedButRequiredParameter;
-- (void)restartAutosaveTimerIfNecessary;
-- (void)resumeAutosave;
-- (void)suspendAutosave;
 
 - (void)processPendingChangesAndClearChangeCount;
 

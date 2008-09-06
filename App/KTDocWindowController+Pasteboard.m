@@ -147,18 +147,9 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (void)copyPagelets:(NSArray *)thePagelets toPasteboard:(NSPasteboard *)aPboard
 {
-    @try
-    {
-		[[self document] suspendAutosave];
-		
-        // package up the selected pagelet(s)
-        NSArray *pasteboardReps = [thePagelets valueForKey:@"pasteboardRepresentation"];
-		[aPboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPageletsPboardType];
-	}
-    @finally
-	{
-		[[self document] resumeAutosave];
-	}
+    // package up the selected pagelet(s)
+    NSArray *pasteboardReps = [thePagelets valueForKey:@"pasteboardRepresentation"];
+    [aPboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPageletsPboardType];
 }
 
 #pragma mark -
@@ -230,9 +221,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (void)removePages:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext
 {
-	// at present, the only method that calls this one is cutPages:
-	// so WE ARE SUSPENDING AUTOSAVE AND LOCKING THE MOC AND PSC in cutPages: instead
-	
 	// we break this out into a separate method, currently, because during cutPages:
 	// we have to mark stale and then copy to the pboard before we delete the pages
 	// so we can't do it inside one enumeration like -actuallyDeletePages:
@@ -308,14 +296,13 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (void)removePagelets:(NSArray *)pagelets fromContext:(KTManagedObjectContext *)aContext
 {
-	[[self document] suspendAutosave];
 	//[aContext lockPSCAndSelf];
 	
 	NSEnumerator *e = [pagelets objectEnumerator];
 	KTPagelet *pagelet = nil;
 	while ( pagelet = [e nextObject] )
 	{
-		[aContext deleteObject:pagelet];
+		[aContext deleteObject:pagelet];    // THIS IS A BAD IDEA. INSTEAD, ASK THE PARENT TO DELETE THE PAGELET
 	}
 	
 	[aContext processPendingChanges];
@@ -323,7 +310,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 //	[[self document] saveContext:aContext onlyIfNecessary:NO];
 	
 	//[aContext unlockPSCAndSelf];
-	[[self document] resumeAutosave];
 }
 
 #pragma mark -
@@ -445,7 +431,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         LOG((@"expecting to paste pages, but KTPagesPboardType is not on the pboard!"));
     }
 	
-	[[self document] resumeAutosave];
 
 	return [NSArray arrayWithArray:result];
 }
@@ -541,7 +526,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag
 {
-	[[self document] suspendAutosave];
 
 	NSMutableArray *result = [NSMutableArray array];
     
@@ -588,7 +572,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         LOG((@"expecting to paste pagelets, but KTPageletsPboardType is not on the pboard!"));
     }
 	
-	[[self document] resumeAutosave];
 
 	return [NSArray arrayWithArray:result];
 }
@@ -827,7 +810,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 {
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 
-	[[self document] suspendAutosave];
 	[[[self document] managedObjectContext] lock];
 
     // currently assumes there is only one pagelet to be deleted
@@ -880,7 +862,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
 	
 	[[[self document] managedObjectContext] unlock];
-	[[self document] resumeAutosave];
 }
 
 #pragma mark duplicate

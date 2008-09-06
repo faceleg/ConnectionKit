@@ -1347,6 +1347,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	myDocumentController = [[KTDocumentController alloc] init];
+    
+    NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
+    if ( interval < 5 ) interval = 30.0;        // if the number is wildly out of range, go back to our default of 30
+    if ( interval > 5*60 ) interval = 30.0;
+    [myDocumentController setAutosavingDelay:interval];
+    
 			 
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
