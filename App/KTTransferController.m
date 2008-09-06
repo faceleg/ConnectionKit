@@ -404,17 +404,17 @@ static NSArray *sReservedNames = nil;
 
 - (void)suspendUIUpdates
 {
-	if ( ![[myAssociatedDocument windowController] isSuspendingUIUpdates] )
+	if ( ![[[self associatedDocument] windowController] isSuspendingUIUpdates] )
 	{
-		[[myAssociatedDocument windowController] suspendUIUpdates];
+		[[[self associatedDocument] windowController] suspendUIUpdates];
 	}
 }
 
 - (void)resumeUIUpdates
 {
-	if ( [[myAssociatedDocument windowController] isSuspendingUIUpdates] )
+	if ( [[[self associatedDocument] windowController] isSuspendingUIUpdates] )
 	{
-		[[myAssociatedDocument windowController] resumeUIUpdates];
+		[[[self associatedDocument] windowController] resumeUIUpdates];
 	}
 }
 
@@ -1030,21 +1030,23 @@ if ([self where] == kGeneratingRemoteExport) {
 		myInspectorWasDisplayed = [[[KTInfoWindowController sharedControllerWithoutLoading] window] isVisible];
 		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 		
-		//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];		// suspend until further notice
 		[self suspendUIUpdates];
 
 		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		
-		//[[[self associatedDocument] windowController] cancelFireUpdateElementTimer];
 		[[self associatedDocument] suspendAutosave];
 		mySuspended = YES;
 		
 		myKeepPublishing = YES;
-		NSArray *args;
-		if (aSuggestedPath)
+		NSArray *args = nil;
+		if (nil != aSuggestedPath)
+		{
 			args = [NSArray arrayWithObject:aSuggestedPath];
+		}
 		else
+		{
 			args = [NSArray array];
+		}
 		
 		myContentAction = [[NSInvocation invocationWithSelector:@selector(threadedUploadStaleAssetsToPath:)
 														 target:self
@@ -1634,14 +1636,20 @@ if ([self where] == kGeneratingRemoteExport) {
 
 - (KTDocument *)associatedDocument
 {
-    return myAssociatedDocument; 
+	if ( nil != myAssociatedDocumentWeakRef )
+	{
+		OBASSERT([myAssociatedDocumentWeakRef isKindOfClass:[KTDocument class]]);
+	}
+    return myAssociatedDocumentWeakRef; 
 }
 
 - (void)setAssociatedDocument:(KTDocument *)anAssociatedDocument
 {
-    [anAssociatedDocument retain];
-    [myAssociatedDocument release];
-    myAssociatedDocument = anAssociatedDocument;
+	if ( nil != anAssociatedDocument )
+	{
+		OBASSERT([anAssociatedDocument isKindOfClass:[KTDocument class]]);
+	}	
+    myAssociatedDocumentWeakRef = anAssociatedDocument;
 }
 
 - (int)where { return myWhere; }

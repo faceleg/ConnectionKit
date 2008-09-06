@@ -18,7 +18,7 @@
 
 @interface KTTransferController : NSWindowController <GrowlApplicationBridgeDelegate>
 {
-	KTDocument *myAssociatedDocument;	// don't use document method; that implies a window controller - NSDocument relationship.
+	KTDocument *myAssociatedDocumentWeakRef;	// don't use document method; that implies a window controller - NSDocument relationship.
 	
 	id <AbstractConnectionProtocol> myConnection;
 	CKTransferController *myController;
