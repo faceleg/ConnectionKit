@@ -25,6 +25,8 @@
 #import "NSIndexSet+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 
+#import "Elements+Pasteboard.h"
+
 
 /// these are localized strings for Case 26766 Disposable Dialog When Changing A Published Page's Path
 // NSLocalizedString(@"Are you sure you wish to change the file name of this page?", @"title of alert when changing page file name")

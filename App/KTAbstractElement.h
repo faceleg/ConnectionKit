@@ -80,13 +80,6 @@
 @end
 
 
-@interface KTAbstractElement (Pasteboard)
-+ (NSSet *)keysToIgnoreForPasteboardRepresentation;
-- (id <NSCoding>)pasteboardRepresentation;
-- (id <NSCoding>)IDOnlyPasteboardRepresentation;
-@end
-
-
 @interface NSObject (KTAbstractPluginDelegate)
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 

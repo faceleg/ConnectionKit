@@ -272,6 +272,20 @@
 }
 
 #pragma mark -
+#pragma mark Pasteboard
+
+- (id <NSCoding>)pasteboardRepresentation
+{
+	SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
+
+- (id <NSCoding>)IDOnlyPasteboardRepresentation
+{
+	return [self pasteboardRepresentation];
+}
+
+#pragma mark -
 #pragma mark Other
 
 + (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize

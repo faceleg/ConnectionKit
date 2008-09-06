@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "KTPasteboardArchiving.h"
+
 
 @class KTMediaManager, KTPage, KTMediaFileUpload;
 
 
-@interface KTMediaFile : NSManagedObject
+@interface KTMediaFile : NSManagedObject <KTPasteboardArchiving>
 {
 }
 

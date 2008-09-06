@@ -257,7 +257,6 @@
 		278ECBAF0D247BD60012BA6B /* KTCalloutContainerTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */; };
 		278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		278ECF1E0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */; };
-		278ECF5E0D26A74A0012BA6B /* Plugins+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ECF5C0D26A74A0012BA6B /* Plugins+Pasteboard.m */; };
 		278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */; settings = {ATTRIBUTES = (); }; };
 		27969F110CF5DCBC00C03F45 /* NSString+Publishing.h in Headers */ = {isa = PBXBuildFile; fileRef = 27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */; settings = {ATTRIBUTES = (); }; };
 		27969F120CF5DCBC00C03F45 /* NSString+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */; };
@@ -294,6 +293,8 @@
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */; };
 		27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */; };
+		27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C059B40E7299850033A715 /* Elements+Pasteboard.h */; };
+		27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C059B50E7299850033A715 /* Elements+Pasteboard.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
 		27CD65380CE1F32E00919E41 /* KTMediaFile+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
@@ -1719,7 +1720,6 @@
 		278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCalloutContainerTemplate.html; sourceTree = "<group>"; };
 		278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPasteboardArchiving.h; sourceTree = "<group>"; };
 		278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaContainer+Pasteboard.m"; sourceTree = "<group>"; };
-		278ECF5C0D26A74A0012BA6B /* Plugins+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Plugins+Pasteboard.m"; sourceTree = "<group>"; };
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Publishing.h"; sourceTree = "<group>"; };
 		27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
@@ -1758,6 +1758,8 @@
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
 		27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWindowController+Karelia.h"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWindowController+Karelia.m"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		27C059B40E7299850033A715 /* Elements+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Elements+Pasteboard.h"; sourceTree = "<group>"; };
+		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
 		27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+Internal.h"; sourceTree = "<group>"; };
 		27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Deprecated.m"; sourceTree = "<group>"; };
@@ -3290,8 +3292,9 @@
 			children = (
 				278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */,
 				278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */,
-				278ECF5C0D26A74A0012BA6B /* Plugins+Pasteboard.m */,
 				278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */,
+				27C059B40E7299850033A715 /* Elements+Pasteboard.h */,
+				27C059B50E7299850033A715 /* Elements+Pasteboard.m */,
 			);
 			name = Pasteboard;
 			sourceTree = "<group>";
@@ -4965,6 +4968,7 @@
 				CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */,
 				CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */,
 				27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */,
+				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6206,7 +6210,6 @@
 				27A093320D1DECDA00F57801 /* WebViewEditingHelperClasses.m in Sources */,
 				278EC9B30D23C77C0012BA6B /* KTHelper.m in Sources */,
 				278ECF1E0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m in Sources */,
-				278ECF5E0D26A74A0012BA6B /* Plugins+Pasteboard.m in Sources */,
 				3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */,
 				27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */,
 				27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */,
@@ -6406,6 +6409,7 @@
 				27368B210DE499170045E406 /* KTStoredSet.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
 				27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */,
+				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

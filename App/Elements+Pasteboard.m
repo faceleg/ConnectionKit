@@ -1,9 +1,9 @@
 //
-//  KTPage+Pasteboard.m
+//  Elements+Pasteboard.m
 //  Marvel
 //
-//  Created by Mike on 29/12/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Created by Mike on 06/09/2008.
+//  Copyright 2008 Karelia Software. All rights reserved.
 //
 
 #import "KTPage.h"
@@ -15,6 +15,11 @@
 #import "KTPasteboardArchiving.h"
 
 #import "NSEntityDescription+KTExtensions.h"
+
+
+@interface KTAbstractElement (Pasteboard)
++ (NSSet *)keysToIgnoreForPasteboardRepresentation;
+@end
 
 
 @interface KTPluginIDPasteboardRepresentation : NSObject <NSCoding>
@@ -274,7 +279,7 @@
 	
 	// Set the attributes. MUST set all values or some non-optional properties may be ignored. BUGSID:28711
 	[result setValuesForKeysWithDictionary:attributes setAllValues:YES];
-			
+    
 	
 	// Give the page a decent filename
 	NSString *suggestedFileName = [result suggestedFileName];
@@ -322,8 +327,8 @@
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
 	
 	KTPagelet *result = [self _insertNewPageletWithPage:page
-									  pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]
-											  location:[archive integerForKey:@"location"]];
+                                       pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]
+                                               location:[archive integerForKey:@"location"]];
 	
 	[attributes removeObjectForKey:@"pluginIdentifier"];
 	[attributes removeObjectForKey:@"location"];
