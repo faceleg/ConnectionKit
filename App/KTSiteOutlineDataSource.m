@@ -94,7 +94,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[myCustomIconGenerationQueue release];
 	
 	// Dump the pages list
-	OBASSERT([myPages count] == 0);
+	[self resetPageObservation];
+    OBASSERT([myPages count] == 0);
 	[myPages release];
 	
 	[super dealloc];
@@ -122,7 +123,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  *	Wolf wrote a nice blogpost on this sort of business - http://rentzsch.com/cocoa/foamingAtTheMouth
  */
 
-- (NSSet *)pages { return [NSSet setWithSet:myPages]; }
+- (NSSet *)pages { return [[myPages copy] autorelease]; }
 
 /*	Support method that returns the main keypaths the site outline depends on.
  */

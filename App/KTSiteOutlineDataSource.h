@@ -15,7 +15,8 @@
 
 @interface KTSiteOutlineDataSource : NSObject
 {
-	KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
+	@private
+    KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
 	
 	NSMutableSet			*myPages;
 	
