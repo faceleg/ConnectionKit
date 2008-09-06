@@ -1716,7 +1716,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 //	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
 //#else
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
-#endif
+//#endif
 	NSURL *url = [NSURL URLWithString:urlString];
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
 }
