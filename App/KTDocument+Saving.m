@@ -67,8 +67,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 // Write To URL
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
-		   forSaveOperation:(NSSaveOperationType)inSaveOperation 
-            includeMetadata:(BOOL)includeMetadata
+		   forSaveOperation:(NSSaveOperationType)inSaveOperation
 					  error:(NSError **)outError;
 
 - (BOOL)writeMOCToURL:(NSURL *)inURL 
@@ -269,24 +268,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Write To URL
 
-/*  We're overriding NSDocument's default behaviour to give the option of writing metadata
+/*	Called when creating a new document and when performing saveDocumentAs:
  */
 - (BOOL)writeToURL:(NSURL *)inURL 
 			ofType:(NSString *)inType 
-  forSaveOperation:(NSSaveOperationType)inSaveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
+  forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
 			 error:(NSError **)outError 
-{
-    return [self writeToURL:inURL
-                     ofType:inType
-           forSaveOperation:inSaveOperation
-        originalContentsURL:inOriginalContentsURL
-            includeMetadata:YES
-                      error:outError];
-}
-
-/*	Called when creating a new document and when performing saveDocumentAs:
- */
-- (BOOL)writeToURL:(NSURL *)inURL ofType:(NSString *)inType forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL includeMetadata:(BOOL)includeMetadata error:(NSError **)outError;
 {
 	// We don't support any of the other save ops here.
 	OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
@@ -309,7 +296,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	result = [self prepareToWriteToURL:inURL
                                 ofType:inType
                       forSaveOperation:saveOperation
-                       includeMetadata:includeMetadata
                                  error:outError];
 	
 	
@@ -403,8 +389,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  */
 - (BOOL)prepareToWriteToURL:(NSURL *)inURL 
 					 ofType:(NSString *)inType 
-		   forSaveOperation:(NSSaveOperationType)saveOperation 
-            includeMetadata:(BOOL)includeMetadata
+		   forSaveOperation:(NSSaveOperationType)saveOperation
 					  error:(NSError **)outError
 {
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
@@ -443,27 +428,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL UTI:nil];
 	
-	if ((saveOperation == NSSaveOperation) && ![storeCoordinator persistentStoreForURL:persistentStoreURL]) 
-	{
-		// NSDocument does atomic saves so the first time the user saves it's in a temporary
-		// directory and the file is then moved to the actual save path, so we need to tell the 
-		// persistentStoreCoordinator to remove the old persistentStore, otherwise if we attempt
-		// to migrate it, the coordinator complains because it knows they are the same store
-		// despite having two different URLs
-		(void)[storeCoordinator removePersistentStore:[[storeCoordinator persistentStores] objectAtIndex:0]
-												error:outError];
-	}
-	
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
-		// this is our first save so we just set the persistentStore and save normally
-//		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-//																	 ofType:[KTDocument defaultStoreType]
-//														 modelConfiguration:nil
-//															   storeOptions:nil
-//																	  error:outError];
-		// the above method isn't available in Tiger, so we use the old, deprecated method
-		
 		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
 																	 ofType:[KTDocument defaultStoreType]
 																	  error:outError];
@@ -478,22 +444,19 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
     // Set metadata
-    if (includeMetadata)
+    if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
     {
-        if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
+        if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
         {
-            if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
-            {
-                return NO; // couldn't setMetadata, but we should have, bail...
-            }
+            return NO; // couldn't setMetadata, but we should have, bail...
         }
-        else
+    }
+    else
+    {
+        if ( saveOperation != NSSaveAsOperation )
         {
-            if ( saveOperation != NSSaveAsOperation )
-            {
-                LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
-                return NO; // this case should not happen, stop
-            }
+            LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
+            return NO; // this case should not happen, stop
         }
     }
     
