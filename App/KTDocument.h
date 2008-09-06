@@ -173,13 +173,6 @@ extern NSString *KTDocumentWillSaveNotification;
 // spotlight
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
-// support
-
-// notifications
-/// these are now just used for debugging purposes
-//- (void)observeNotificationsForContext:(KTManagedObjectContext *)aManagedObjectContext;
-//- (void)removeObserversForContext:(KTManagedObjectContext *)aManagedObjectContext;
-
 // exception handling
 - (void)resetUndoManager;
 

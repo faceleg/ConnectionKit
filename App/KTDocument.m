@@ -722,7 +722,6 @@
     {
 		// cleanup
 
-//		[self removeObserversForContext:(KTManagedObjectContext *)[self managedObjectContext]];
 		[[self windowController] selectionDealloc];
 		
 		// suspend webview updating
@@ -1123,9 +1122,8 @@
 //	FIXME:	We are temporarily changing from allowing both remote and local to an and/or situation
 		if (nil == myRemoteTransferController)
 		{
-			KTTransferController *remoteTC
-			= [[[KTTransferController alloc] initWithAssociatedDocument:self
-			where:kGeneratingRemote] autorelease];
+			KTTransferController *remoteTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																								 where:kGeneratingRemote] autorelease];
 			[self setRemoteTransferController:remoteTC];
 		}
 		[myRemoteTransferController uploadStaleAssets];
@@ -1134,9 +1132,8 @@
 	{
 		if (nil == myLocalTransferController)
 		{
-			KTTransferController *localTC
-			= [[[KTTransferController alloc] initWithAssociatedDocument:self
-			where:kGeneratingLocal] autorelease];
+			KTTransferController *localTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																								where:kGeneratingLocal] autorelease];
 			[self setLocalTransferController:localTC];
 		}
 		[myLocalTransferController uploadStaleAssets];
@@ -1145,9 +1142,8 @@
 	{
 		if (nil == myRemoteTransferController)
 		{
-			KTTransferController *remoteTC
-			= [[[KTTransferController alloc] initWithAssociatedDocument:self
-			where:kGeneratingRemote] autorelease];
+			KTTransferController *remoteTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																								 where:kGeneratingRemote] autorelease];
 			[self setRemoteTransferController:remoteTC];
 		}
 		[myRemoteTransferController uploadStaleAssets];
@@ -1163,9 +1159,8 @@
 	{
 		if (nil == myLocalTransferController)
 		{
-			KTTransferController *local
-			= [[[KTTransferController alloc] initWithAssociatedDocument:self
-			where:kGeneratingLocal] autorelease];
+			KTTransferController *local = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																							  where:kGeneratingLocal] autorelease];
 			[self setLocalTransferController:local];
 		}
 		[myLocalTransferController uploadEverything];
@@ -1175,9 +1170,8 @@
 	{
 		if (nil == myRemoteTransferController)
 		{
-			KTTransferController *remote
-			= [[[KTTransferController alloc] initWithAssociatedDocument:self
-			where:kGeneratingRemote] autorelease];
+			KTTransferController *remote = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																							   where:kGeneratingRemote] autorelease];
 			[self setRemoteTransferController:remote];
 		}
 		[myRemoteTransferController uploadEverything];
@@ -1199,9 +1193,8 @@
 	NSString *suggestedPath = nil;
 	if (nil == myExportTransferController)
 	{
-		KTTransferController *export
-		= [[[KTTransferController alloc] initWithAssociatedDocument:self
-		where:kGeneratingRemoteExport] autorelease];
+		KTTransferController *export = [[[KTTransferController alloc] initWithAssociatedDocument:self
+																						   where:kGeneratingRemoteExport] autorelease];
 		[self setExportTransferController:export];
 	}
 	else
