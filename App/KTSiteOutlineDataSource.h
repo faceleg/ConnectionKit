@@ -18,7 +18,8 @@
 	@private
     KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
 	
-	NSMutableSet			*myPages;
+	NSMutableSet    *myPages;
+    KTPage          *myHomePage;
 	
 	NSImage				*myCachedFavicon;
 	NSMutableDictionary	*myCachedPluginIcons;

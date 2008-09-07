@@ -39,6 +39,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
 @interface KTSiteOutlineDataSource (Private)
++ (NSSet *)mostSiteOutlineRefreshingKeyPaths;
+
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context;
 
 - (void)observeValueForOtherKeyPath:(NSString *)keyPath
@@ -94,7 +96,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[myCustomIconGenerationQueue release];
 	
 	// Dump the pages list
-	[self resetPageObservation];
+	[self resetPageObservation];       // This will also remove home page observation
     OBASSERT([myPages count] == 0);
 	[myPages release];
 	
@@ -125,23 +127,19 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (NSSet *)pages { return [[myPages copy] autorelease]; }
 
-/*	Support method that returns the main keypaths the site outline depends on.
- */
-+ (NSSet *)mostSiteOutlineRefreshingKeyPaths
+- (KTPage *)homePage { return myHomePage; }
+
+- (void)setHomePage:(KTPage *)page
 {
-	static NSSet *keyPaths;
-	
-	if (!keyPaths)
-	{
-		keyPaths = [[NSSet alloc] initWithObjects:@"titleHTML",
-					@"isStale",
-					@"hasCodeInjection",
-					@"isDraft",
-					@"customSiteOutlineIcon",
-					@"index", nil];
-	}
-	
-	return keyPaths;
+    [[self homePage] removeObserver:self forKeyPath:@"master.favicon"];
+    [[self homePage] removeObserver:self forKeyPath:@"master.hasCodeInjection"];
+    
+    [page retain];
+    [myHomePage release];
+    myHomePage = page;
+    
+    [[self homePage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
+    [[self homePage] addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
 }
 
 - (void)addPagesObject:(KTPage *)page
@@ -168,8 +166,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		if ([page isRoot])	// Observe home page's favicon & master code injection
 		{
-			[page addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
-			[page addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
+			[self setHomePage:page];
 		}
 		
         
@@ -208,12 +205,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[aPage removeObserver:self forKeyPath:[[self siteOutlineController] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
-		if (aPage == [[[self document] documentInfo] root])	// Observe home page's favicon
-		{
-			[aPage removeObserver:self forKeyPaths:
-			 [NSSet setWithObjects:@"master.favicon", @"master.hasCodeInjection", nil]];
-		}
-		
 		// Uncache custom icon to free memory
 		[myCachedCustomPageIcons removeObjectForKey:aPage];
 		
@@ -227,9 +218,36 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
+/*	Support method that returns the main keypaths the site outline depends on.
+ */
++ (NSSet *)mostSiteOutlineRefreshingKeyPaths
+{
+	static NSSet *keyPaths;
+	
+	if (!keyPaths)
+	{
+		keyPaths = [[NSSet alloc] initWithObjects:@"titleHTML",
+					@"isStale",
+					@"hasCodeInjection",
+					@"isDraft",
+					@"customSiteOutlineIcon",
+					@"index", nil];
+	}
+	
+	return keyPaths;
+}
+
 - (void)resetPageObservation
 {
-	[[self mutableSetValueForKey:@"pages"] removeAllObjects];
+	[self setHomePage:nil];
+    
+    // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc
+    NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
+    KTPage *aPage;
+    while (aPage = [pagesEnumerator nextObject])
+    {
+        [self removePagesObject:aPage];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
