@@ -175,7 +175,7 @@ NSString *KTMediaLogDomain = @"Media";
     
 	// Garbage collect AbstractMediaFiles
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]]));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]);
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFilesForDeletion objectEnumerator];
 	KTMediaFile *aMediaFile;
@@ -217,7 +217,7 @@ NSString *KTMediaLogDomain = @"Media";
 	}
 	
 	// Delete those unrequired media IDs
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Removing %u unneeded MediaContainer(s)", [unrequiredMedia count]]));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Removing %u unneeded MediaContainer(s)", [unrequiredMedia count]);
 	NSEnumerator *unrequiredMediaEnumerator = [unrequiredMedia objectEnumerator];
 	while (aMedia = [unrequiredMediaEnumerator nextObject])
 	{
@@ -235,7 +235,7 @@ NSString *KTMediaLogDomain = @"Media";
 	NSError *error = nil;
 	NSArray *deadMediaFiles = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
 	
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Found %u unwanted MediaFile(s) for deletion", [deadMediaFiles count]]));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Found %u unwanted MediaFile(s) for deletion", [deadMediaFiles count]);
 	return deadMediaFiles;
 }
 
@@ -279,7 +279,7 @@ NSString *KTMediaLogDomain = @"Media";
  */
 - (void)deleteTemporaryMediaFiles
 {
-	KTLog(KTMediaLogDomain, KTLogDebug, ([NSString stringWithFormat:@"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]]));
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]);
 	NSString *tempMedia = [[self document] temporaryMediaPath];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
