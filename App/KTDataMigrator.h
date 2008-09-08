@@ -37,6 +37,7 @@
     BOOL        myIsCancelled;
 }
 
++ (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
 + (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
 
 // Init

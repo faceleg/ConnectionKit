@@ -10,6 +10,7 @@
 #import "KTDataMigrator.h"
 
 #import "NSObject+Karelia.h"
+#import "KT.h"
 
 
 @implementation KTDataMigrationDocument
@@ -63,6 +64,7 @@
     [messageTextField setStringValue:message];
     
     filename = [[NSFileManager defaultManager] displayNameAtPath:[[[self dataMigrator] oldStoreURL] path]];
+    filename = [KTDataMigrator renamedFileName:filename modelVersion:kKTModelVersion_ORIGINAL];
     message = [NSString stringWithFormat:
                NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\"","document upgrade informative text"),
                filename];

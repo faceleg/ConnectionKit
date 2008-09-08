@@ -48,8 +48,7 @@
 
 // Generic migration methods
 - (BOOL)_migrate:(NSError **)outError;
-- (BOOL)backupDocumentBeforeMigration:(NSError **)outError;
-- (void)recoverFailedMigration;
+- (BOOL)backupOldDocumentAfterMigration:(NSError **)outError;
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)error;
 
 - (NSSet *)matchingAttributesFromObject:(NSManagedObject *)oldObject toObject:(NSManagedObject *)newObject;
@@ -69,7 +68,6 @@
 
 - (BOOL)migrateDocumentInfo:(NSError **)error;
 
-+ (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
 + (BOOL)validatePathForNewStore:(NSString *)aStorePath error:(NSError **)outError;
 
 @end
@@ -164,7 +162,13 @@
     OBPRECONDITION([docURL isFileURL]);
     
     [self setOldStoreURL:docURL];
-    [self setNewDocumentURL:docURL];
+    
+    // We'll do the migration to the tmp directory in case of a crash
+    NSString *tmpDirPath = NSTemporaryDirectory();
+    NSString *newDocPath = [[[[tmpDirPath stringByAppendingPathComponent:@"Sandvox"]
+                              stringByAppendingPathComponent:@"Data Migration"]
+                             stringByAppendingPathComponent:[NSString UUIDString]] stringByAppendingPathExtension:@"svxSite"];
+    [self setNewDocumentURL:[NSURL fileURLWithPath:newDocPath]];
     
     return self;
 }
@@ -261,12 +265,7 @@
 
 - (BOOL)migrate:(NSError **)outError
 {
-    // Make a backup before the migration
-    BOOL result = [self backupDocumentBeforeMigration:outError];
-    if (result)
-    {
-        result = [self _migrate:outError];
-    }
+    BOOL result = [self _migrate:outError];
     
     return result;
 }
@@ -306,9 +305,38 @@
         result = [self genericallyMigrateDataFromOldModelVersion:kKTModelVersion_ORIGINAL error:&localError];
         
         
-        // After migration we can dispose of the new doc. This ensures it done on the right thread
+        // After migration we can dispose of the new doc. This ensures it is done on the right thread
         [self setNewDocument:nil];
+        
+        
+        // Backup the old doc
+        NSURL *finalDocumentURL = [[[self oldStoreURL] copy] autorelease];
+        
+        result = [self backupOldDocumentAfterMigration:&localError];
+        if (result)
+        {
+            // Move the finished doc to the correct location
+            result = [[NSFileManager defaultManager] movePath:[[self newDocumentURL] path]
+                                                       toPath:[finalDocumentURL path]
+                                                      handler:nil];
+            if (result)
+            {
+                [self setNewDocumentURL:finalDocumentURL];
+            }
+            else
+            {
+                // we cannot proceed, pass back an error and return NO
+                NSString *errorDescription = [NSString stringWithFormat:
+                                              NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
+                                              [[self newDocumentURL] path], [finalDocumentURL path]];
+                
+                localError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
+            }
+        }
     }
+    
+    
+    
     @catch (NSException *exception)
     {
         result = NO;
@@ -321,22 +349,19 @@
         // Recover failed migrations and pass out an error
         if (!result)
         {
-            
-            [self recoverFailedMigration];
-            
             if (localError)
             {
                 *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
                              [NSString stringWithFormat:
-                              NSLocalizedString(@"Unable to migrate document data from %@ to %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
-                              [[self oldStoreURL] lastPathComponent], [[self newDocumentURL] lastPathComponent], localError]];
+                              NSLocalizedString(@"Unable to migrate document data from %@, reason: %@.","Alert: Unable to migrate document data from %@ to %@, reason: %@."),
+                              [[self oldStoreURL] lastPathComponent], localError]];
             }
             else
             {
                 *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotUpgrade localizedDescription:
                              [NSString stringWithFormat:
-                              NSLocalizedString(@"Unable to migrate document data from %@ to %@.","Alert: Unable to migrate document data from %@ to %@."),
-                              [[self oldStoreURL] lastPathComponent], [[self newDocumentURL] lastPathComponent]]];
+                              NSLocalizedString(@"Unable to migrate document data from %@.","Alert: Unable to migrate document data from %@ to %@."),
+                              [[self oldStoreURL] lastPathComponent]]];
             }
         }
     }
@@ -344,7 +369,7 @@
     return result;
 }
 
-/*  Performs the migration on a background thread. -oldStoreURL is guaranteed to be set before this method returns though.
+/*  Performs the migration on a background thread.
  */
 - (void)migrateWithDelegate:(id)delegate
          didMigrateSelector:(SEL)didMigrateSelector
@@ -367,22 +392,7 @@
     NSLog(@"Preparing to migrate");
     
     
-    // Make a backup before the migration. This is done on the main thread as it's fast and ensures doc UI has a backup filename to display.
-    NSError *error = nil;
-    BOOL result = [self backupDocumentBeforeMigration:&error];
-    if (result)
-    {
-        // We're ready to kick off threaded migration
-        [NSThread detachNewThreadSelector:@selector(threadedMigrateWithCallback:) toTarget:self withObject:callback];
-    }
-    else
-    {
-        [callback setArgument:&result atIndex:3];
-        [callback setArgument:&error atIndex:4];
-        [callback retainArguments];
-        
-        [callback invoke];
-    }
+    [NSThread detachNewThreadSelector:@selector(threadedMigrateWithCallback:) toTarget:self withObject:callback];
 }
 
 - (void)threadedMigrateWithCallback:(NSInvocation *)callback
@@ -408,17 +418,14 @@
     [pool release];
 }
 
-- (BOOL)backupDocumentBeforeMigration:(NSError **)outError
+- (BOOL)backupOldDocumentAfterMigration:(NSError **)outError
 {
-    OBPRECONDITION([NSThread isMainThread]);
-    
-    
     // TODO: Figure out the model version
     NSString *modelVersion = kKTModelVersion_ORIGINAL;
     
     
     // move the original to a new location
-    NSString *originalPath = [[self newDocumentURL] path];
+    NSString *originalPath = [[self oldStoreURL] path];
 	NSString *destinationPath = [KTDataMigrator renamedFileName:originalPath modelVersion:modelVersion];
 	
 	BOOL result = [[NSFileManager defaultManager] movePath:originalPath toPath:destinationPath handler:nil];
@@ -440,23 +447,6 @@
     
     return result;
 }
-
-- (void)recoverFailedMigration
-{
-    OBPRECONDITION([self newDocumentURL]);
-    OBPRECONDITION([[self newDocumentURL] isFileURL]);
-    NSString *upgradePath = [[self newDocumentURL] path];
-    
-    OBPRECONDITION([self oldStoreURL]);
-    OBPRECONDITION([[self oldStoreURL] isFileURL]);
-    NSString *backupPath = [[self oldStoreURL] path];
-    
-    
-    // It doesn't matter if either of these methods fail, we're just doing our best to recover.
-    [[NSFileManager defaultManager] removeFileAtPath:upgradePath handler:nil];
-    [[NSFileManager defaultManager] movePath:backupPath toPath:upgradePath handler:nil];
-}
-
 
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)outError
 {
