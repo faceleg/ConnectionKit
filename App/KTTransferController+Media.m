@@ -38,6 +38,7 @@
         if (sourcePath && ![sourcePath isEqualToString:@""] )
         {
             [self uploadFile:sourcePath toFile:uploadPath];
+			[myController setPermissions:myPagePermissions forFile:uploadPath];
         }
         
         // Add the file to the upload list

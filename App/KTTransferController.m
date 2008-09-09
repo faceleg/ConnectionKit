@@ -901,6 +901,7 @@ static NSArray *sReservedNames = nil;
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
+			[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
 		}
 		
 		
@@ -1095,6 +1096,7 @@ if ([self where] == kGeneratingRemoteExport) {
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
+			[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
 		}
 		
 		
@@ -1174,6 +1176,7 @@ if ([self where] == kGeneratingRemoteExport) {
         
         NSString *siteMapPath = [[self storagePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         [self uploadFromData:gzipped toFile:siteMapPath];
+		[myController setPermissions:myPagePermissions forFile:siteMapPath];
         
         // Don't ping google if we are just exporting
         if ([self where] != kGeneratingRemoteExport)
@@ -1249,6 +1252,7 @@ if ([self where] == kGeneratingRemoteExport) {
                                                                       allowLossyConversion:YES];
 			NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:filename];
             [self uploadFromData:mainCSSData toFile:uploadPath];
+			[myController setPermissions:myPagePermissions forFile:uploadPath];
         }
         else
         {
