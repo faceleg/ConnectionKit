@@ -341,7 +341,7 @@
     
     
     // Set the design
-    KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObject];
+    KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
     [master setDesign:design];		
     
     
@@ -646,7 +646,7 @@
 {
 	/// This used to be done from [self fileURL] but that doesn't work when making the very first save
 	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObject]];
+	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
 	NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
 	NSURL *docURL = [[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath];
 	NSString *result = [[KTDocument mediaURLForDocumentURL:docURL] path];
@@ -686,7 +686,7 @@
 	if (!docURL)
 	{
 		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObject]];
+		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
 		NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
 		docURL = [[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath];
 	}

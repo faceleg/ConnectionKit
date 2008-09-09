@@ -382,7 +382,7 @@
 	// Generate the first icon in queue
 	if ([myCustomIconGenerationQueue count] > 0)
 	{
-		[self beginGeneratingCustomIconForPage:[myCustomIconGenerationQueue firstObject]];
+		[self beginGeneratingCustomIconForPage:[myCustomIconGenerationQueue firstObjectKS]];
 	}
 }
 

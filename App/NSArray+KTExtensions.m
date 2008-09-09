@@ -20,7 +20,7 @@
 		return NO;
 	}
 	
-	KTPage *firstPage = [self firstObject];
+	KTPage *firstPage = [self firstObjectKS];
 	KTPage *firstParent = [firstPage parent];
 	
 	unsigned int i;
@@ -38,7 +38,7 @@
 
 - (KTPage *)commonParent
 {
-	KTPage *firstPage = [self firstObject];
+	KTPage *firstPage = [self firstObjectKS];
 	KTPage *seedParent = [firstPage parent];
 	KTPage *commonParent = nil;
 	

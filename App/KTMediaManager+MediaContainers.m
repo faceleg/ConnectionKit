@@ -87,7 +87,7 @@
         [[self document] presentError:error];
     }
     
-    return [matches firstObject];
+    return [matches firstObjectKS];
 }
 
 #pragma mark -
@@ -186,7 +186,7 @@
 	// If the drag was a file, store the source alias
 	if ([[[info draggingPasteboard] types] containsObject:NSFilenamesPboardType])
 	{
-		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObject];
+		NSString *path = [[[info draggingPasteboard] propertyListForType:NSFilenamesPboardType] firstObjectKS];
 		if (path)
 		{
 			[result setSourceAlias:[BDAlias aliasWithPath:path]];
@@ -242,7 +242,7 @@
 							  size - 0.01, size + 0.01];
 	
 	NSArray *objects = [[self managedObjectContext] objectsWithEntityName:@"GraphicalText" predicate:predicate error:NULL];
-	KTGraphicalTextMediaContainer *result = [objects firstObject];
+	KTGraphicalTextMediaContainer *result = [objects firstObjectKS];
 	
 	if (!result)
 	{

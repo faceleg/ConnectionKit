@@ -922,7 +922,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 		
 		
 		// Select into the first available collection
-		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObject] parent];
+		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObjectKS] parent];
 		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:parentOfFirstSelectedItem]];
 		
 		

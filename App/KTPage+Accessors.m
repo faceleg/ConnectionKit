@@ -455,10 +455,10 @@
 	switch ([self collectionSummaryType])
 	{
 		case KTSummarizeFirstItem:
-			result = [[self sortedChildren] firstObject];
+			result = [[self sortedChildren] firstObjectKS];
 			break;
 		case KTSummarizeMostRecent:
-			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO] firstObject];
+			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO] firstObjectKS];
 			break;
 		default:
 			result = self;

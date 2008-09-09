@@ -1409,7 +1409,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		// Figure out the URL and title to paste
 		NSURL *URL = [urls objectAtIndex:0];
 		
-		NSString *title = [titles firstObject];
+		NSString *title = [titles firstObjectKS];
 		if (KSISNULL(title) || [title isEmptyString]) {
 			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
 		}
@@ -1620,8 +1620,8 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			
 			// we're only taking the first one
 			/// These two were just blindly calling objectAtIndex:0 and getting an exception sometimes
-			URLAsString = [URLsAsStrings firstObject];
-			title = [titles firstObject];
+			URLAsString = [URLsAsStrings firstObjectKS];
+			title = [titles firstObjectKS];
 		}
 	}
 	else if ( [[pboard types] containsObject:NSURLPboardType] )

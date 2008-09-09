@@ -88,7 +88,7 @@
 		if ([dropType isEqualToString:NSFilenamesPboardType])
 		{
 			NSArray *paths = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-			NSString *path = [paths firstObject];
+			NSString *path = [paths firstObjectKS];
 			
 			if (path)
 			{

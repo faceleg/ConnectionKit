@@ -2446,7 +2446,7 @@ from representedObject */
 		}
 		else if ([[[self siteOutlineController] selectedObjects] count] > 0)
 		{
-			[sharedController setupViewStackFor:[[[self siteOutlineController] selectedObjects] firstObject]
+			[sharedController setupViewStackFor:[[[self siteOutlineController] selectedObjects] firstObjectKS]
                                     selectLevel:NO];
 		}
 		

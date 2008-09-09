@@ -190,7 +190,7 @@
 		return;
 	}
 	
-	KTMediaContainer *image = [[[self container] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *image = [[[self container] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[self setImage:image];
 }
 

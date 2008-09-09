@@ -120,7 +120,7 @@
 		case KTSummarizeFirstItem:
 		{
 			result = @"";
-			KTPage *firstChild = [[page sortedChildren] firstObject];
+			KTPage *firstChild = [[page sortedChildren] firstObjectKS];
 			if (firstChild) result = [self summaryForContentOfPage:firstChild];
 			break;
 		}
@@ -129,7 +129,7 @@
 		{
 			result = @"";
 			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
-			KTPage *recentChild = [children firstObject];
+			KTPage *recentChild = [children firstObjectKS];
 			if (recentChild) result = [self summaryForContentOfPage:recentChild];
 			break;
 		}

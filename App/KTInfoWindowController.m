@@ -909,7 +909,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		return;
 	}
 	
-	KTMediaContainer *media  = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *media  = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[[self selectedLevel] master] setBannerImage:media];
 }
 
@@ -936,7 +936,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		return;
 	}
 	
-	KTMediaContainer *logo = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *logo = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[[self selectedLevel] master] setLogoImage:logo];
 }
 
@@ -1038,7 +1038,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		return;
 	}
 	
-	KTMediaContainer *favicon = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *favicon = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[[self selectedLevel] master] setFavicon:favicon];
 }
 
@@ -1065,7 +1065,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		return;
 	}
 	
-	KTMediaContainer *thumbnail = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *thumbnail = [[[self associatedDocument] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[[self siteOutlineController] selection] setValue:thumbnail forKey:@"thumbnail"];
 }
 

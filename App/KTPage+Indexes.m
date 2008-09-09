@@ -608,7 +608,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	
 	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
-	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObject];
+	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
 	
 	if (!result && flag)
 	{

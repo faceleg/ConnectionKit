@@ -170,7 +170,7 @@
 	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
 	if ([children count] > 0)
 	{
-		previousPage = [children firstObject];
+		previousPage = [children firstObjectKS];
 	}
 	
 	

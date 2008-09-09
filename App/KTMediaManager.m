@@ -313,7 +313,7 @@ NSString *KTMediaLogDomain = @"Media";
     
     // Locate the media ref for the name
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND owner == %@", oldMediaRefName, oldElement];
-    NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObject];
+    NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObjectKS];
         
     
     // Look up the media object

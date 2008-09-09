@@ -461,7 +461,7 @@
     
     // Set up the new document
     NSError *error = nil;
-    NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:&error] firstObject];
+    NSManagedObject *oldRoot = [[[self oldManagedObjectContext] objectsWithEntityName:@"Root" predicate:nil error:&error] firstObjectKS];
     if (!oldRoot)
     {
         NSMutableDictionary *errorInfo = [NSMutableDictionary dictionaryWithObject:@"Root page could not be found."
@@ -928,7 +928,7 @@
     NSArray *docInfos = [[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:error];
     if (!docInfos) return NO;
     
-    NSManagedObject *oldDocInfo = [docInfos firstObject];
+    NSManagedObject *oldDocInfo = [docInfos firstObjectKS];
     OBASSERT(oldDocInfo);
     
     KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
