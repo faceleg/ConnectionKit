@@ -12,6 +12,7 @@
 
 #import "KT.h"
 #import "KTDesign.h"
+#import "KTDocument.h"
 #import "KTMediaFile.h"
 
 #import "NSArray+Karelia.h"
@@ -257,6 +258,18 @@
 															 inManagedObjectContext:[self managedObjectContext]];
 	
 	return result;
+}
+
+/*  Generating media files is disabled when:
+ *      A) Saving
+ *      B) Closing the doc
+ *      C) There is no media manager
+ */
+- (BOOL)scaledImageContainersShouldGenerateMediaFiles;
+{
+    KTDocument *document = [self document];
+    BOOL result = ![document isSaving] && ![document isClosing];
+    return result;
 }
 
 @end

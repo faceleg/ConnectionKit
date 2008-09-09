@@ -621,7 +621,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	return result;
 }
 
-/*	Called when performaing a "Save As" operation on an existing document
+/*	Called when performing a "Save As" operation on an existing document
  */
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError
 {

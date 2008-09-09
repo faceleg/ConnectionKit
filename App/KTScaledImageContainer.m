@@ -7,9 +7,10 @@
 //
 
 #import "KTScaledImageContainer.h"
-
 #import "KTMediaFile+ScaledImages.h"
+#import "KTMediaManager.h"
 #import "KTScaledImageProperties.h"
+
 #import "KTDocument.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -38,7 +39,7 @@
 	if (![self isDeleted] &&                        // One or more of these
         [self managedObjectContext] &&              // should fail during
         [self checkIfFileNeedsGenerating] &&        // object deletion.
-        ![[[self mediaManager] document] isSaving]) // Generating during saves will infinite loop on Tiger
+        [[self mediaManager] scaledImageContainersShouldGenerateMediaFiles]) // Generating during saves will infinite loop on Tiger
 	{                                                                                        
 		if (result)                                                                             
 		{
