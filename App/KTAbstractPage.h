@@ -22,7 +22,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTDocumentInfo;
+@class KTDocumentInfo, KTHTMLParser;
 
 
 @interface KTAbstractPage : KTAbstractElement <KTWebViewComponent>
@@ -54,7 +54,7 @@ KTCollectionPathStyle;
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 
-- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context;
+- (NSString *)fixPageLinksFromString:(NSString *)originalString parser:(KTHTMLParser *)context;
 
 
 // Staleness

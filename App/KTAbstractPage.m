@@ -217,7 +217,7 @@
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
  */
-- (NSString *)fixPageLinksFromString:(NSString *)originalString managedObjectContext:(NSManagedObjectContext *)context
+- (NSString *)fixPageLinksFromString:(NSString *)originalString parser:(KTHTMLParser *)parser
 {
 	NSMutableString *buffer = [NSMutableString string];
 	if (originalString)
@@ -238,11 +238,11 @@
 														   intoString:&idString];
 					if (foundNumber)
 					{
-						KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
+						KTPage* thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:[self managedObjectContext]];
 						NSString *newPath = nil;
 						if (thePage)
 						{
-							newPath = [[thePage URL] stringRelativeToURL:[self URL]];
+							newPath = [[thePage URL] stringRelativeToURL:[[parser currentPage] URL]];
 						}
 						
 						if (!newPath) newPath = @"#";	// Fallback

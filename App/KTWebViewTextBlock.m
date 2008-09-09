@@ -450,7 +450,7 @@
 	if ([parser HTMLGenerationPurpose] != kGeneratingPreview && ![parser isKindOfClass:[KTStalenessHTMLParser class]])
 	{
 		// Fix page links
-		result = [[self page] fixPageLinksFromString:result managedObjectContext:[[self page] managedObjectContext]];
+		result = [[self page] fixPageLinksFromString:result parser:parser];
 		
 		
 		
