@@ -654,7 +654,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL UTI:nil];
     OBASSERT(oldDataStoreURL);
     id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];
-    OBASSERT(oldDataStore);
+    OBASSERTSTRING(oldDataStore, [oldDataStoreURL absoluteString]);
     if (![storeCoordinator migratePersistentStore:oldDataStore
 										    toURL:storeURL
 										  options:nil
