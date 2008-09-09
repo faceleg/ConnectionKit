@@ -932,7 +932,7 @@
 			}
 			else
 			{
-				NSLog(@"error: could not find media container for %@", requestURL);
+				LOG((@"error: could not find media container for %@", requestURL));
 			}
 			
 			return result;
