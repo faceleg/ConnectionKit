@@ -25,6 +25,9 @@
 #import "assertions.h"
 
 
+NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
+
+
 @interface KTSiteOutlineDataSource (IconsPrivate)
 
 - (NSImage *)favicon;
@@ -66,7 +69,7 @@
 	{
 		// Custom icon if available
 		KTMediaContainer *customIcon = [page customSiteOutlineIcon];
-		if (customIcon)
+		if (customIcon && [[NSUserDefaults standardUserDefaults] boolForKey:KTDisableCustomSiteOutlineIcons])
 		{
 			result = [self customIconForPage:page];
 		}

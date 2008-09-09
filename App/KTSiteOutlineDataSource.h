@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 
 
+extern NSString *KTDisableCustomSiteOutlineIcons;
+
+
+
 @class KTDocSiteOutlineController, KTDocument;
 @class KTPage;
 
