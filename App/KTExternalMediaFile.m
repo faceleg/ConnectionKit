@@ -74,7 +74,7 @@
 	NSString *result = [[self alias] fullPath];
 	
 	// Ignore files which are in the Trash
-	if ([result rangeOfString:@".Trash"].location != NSNotFound)
+	if (result && [result rangeOfString:@".Trash"].location != NSNotFound)
 	{
 		result = nil;
 	}
