@@ -651,13 +651,17 @@
 	
 	
 	// Emboss the image
-	NSImage *placeholderImage = [[[NSImage alloc] initWithContentsOfFile:imagePath] autorelease];
-	[placeholderImage embossPlaceholder];
-	
-	
-	// Create a media container and store it
-	KTMediaContainer *placeholderMedia = [[self mediaManager] mediaContainerWithImage:placeholderImage];
-	[self setValue:placeholderMedia forKey:@"placeholderImage"];
+	NSImage *placeholderImage = [[NSImage alloc] initWithContentsOfFile:imagePath];
+    if (placeholderImage)
+    {
+        [placeholderImage embossPlaceholder];
+        
+        // Create a media container and store it
+        KTMediaContainer *placeholderMedia = [[self mediaManager] mediaContainerWithImage:placeholderImage];
+        [self setValue:placeholderMedia forKey:@"placeholderImage"];
+        
+        [placeholderImage release];
+    }
 }
 
 @end
