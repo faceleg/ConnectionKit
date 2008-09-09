@@ -300,7 +300,7 @@
 		return;
 	}
 	
-	KTMediaContainer *video = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *video = [[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[self delegateOwner] setValue:video forKey:@"video"];
 }
 

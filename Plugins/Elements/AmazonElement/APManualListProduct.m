@@ -236,7 +236,7 @@
 	
 		
 	// Store the resultant Amazon item
-	[self setAmazonItem: [[lookupOp returnedItems] firstObject]];
+	[self setAmazonItem: [[lookupOp returnedItems] firstObjectKS]];
 	[self setProductDetailsFromAmazonItem];
 	
 	// Download the product thumbnail

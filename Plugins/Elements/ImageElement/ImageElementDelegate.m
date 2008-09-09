@@ -245,7 +245,7 @@
 	}
 	
 	KTMediaContainer *image =
-		[[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+		[[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	
 	[[self delegateOwner] setValue:image forKey:@"image"];
 }

@@ -221,7 +221,7 @@
 	
 	
 	// Is the lookup our first?
-	if (listLookupOp == [[self listLookupOperations] firstObject]) {
+	if (listLookupOp == [[self listLookupOperations] firstObjectKS]) {
 		[self firstListLookupDidFinish:listLookupOp];
 	}
 	else {

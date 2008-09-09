@@ -102,8 +102,8 @@
 	
 	if (URLs && [URLs count] > 0)
 	{
-		NSURL *URL = [URLs firstObject];
-		NSString *title = [titles firstObject];
+		NSURL *URL = [URLs firstObjectKS];
+		NSString *title = [titles firstObjectKS];
 		
 		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
         if (title && (id)title != [NSNull null])

@@ -175,7 +175,7 @@
 		return;
 	}
 	
-	KTMediaContainer *downloadMedia = [[self mediaManager] mediaContainerWithPath:[selectedPaths firstObject]];
+	KTMediaContainer *downloadMedia = [[self mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	[[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
 }
 
