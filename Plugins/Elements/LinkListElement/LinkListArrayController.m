@@ -39,6 +39,14 @@
 
 @implementation LinkListArrayController
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [tableView setDataSource:self];
+    [tableView setDelegate:self];
+}
+
 /*!	Create a new "template" object.  Try to pick up default from frontmost Safari doc.
 */
 - (id)newObject	// must return object with a retain count of one
