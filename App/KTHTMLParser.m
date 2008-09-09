@@ -605,7 +605,8 @@
                 if (path)
                 {
                     NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO];
-                    result = [[fileAttributes objectForKey:NSFileSize] stringValue];
+                    NSString *fileSize = [[fileAttributes objectForKey:NSFileSize] stringValue];
+                    if (fileSize) result = fileSize;
                 }
             }
             
