@@ -346,16 +346,23 @@ NSString *KTMediaLogDomain = @"Media";
         }
         else
         {
-            // Some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr). If so, go back to the original path
-            if (![NSString filenameExtensionForUTI:oldMediaUTI])
-            {
-                NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
-                oldMediaUTI = [NSString UTIForFilenameExtension:fileExtension];
-            }
-            
             result = [self mediaContainerWithData:oldMediaData
                                          filename:[oldMedia valueForKey:@"name"] 
                                               UTI:oldMediaUTI];
+            
+            
+            // This may fail fail as some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr).
+            // If so, go back to the original path
+            if (!result)
+            {
+                NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
+                if (fileExtension)
+                {
+                    result = [self mediaContainerWithData:oldMediaData
+                                                 filename:[oldMedia valueForKey:@"name"]
+                                            fileExtension:fileExtension];
+                }
+            }
         }
 		
 		

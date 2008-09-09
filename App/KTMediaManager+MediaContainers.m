@@ -126,14 +126,15 @@
 	return result;
 }
 
-- (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)filename UTI:(NSString *)UTI;
+- (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)fileName fileExtension:(NSString *)extension
 {
-	// Figure out a full filename
-	NSString *fileExtension = [NSString filenameExtensionForUTI:UTI];
-	OBASSERT(fileExtension);
-    OBASSERT(![fileExtension isEqualToString:@""]);
+	OBPRECONDITION(data);
+    OBPRECONDITION(fileName);   OBPRECONDITION(![fileName isEqualToString:@""]);
+    OBPRECONDITION(extension);  OBPRECONDITION(![extension isEqualToString:@""]);
     
-	NSString *preferredFilename = [filename stringByAppendingPathExtension:fileExtension];
+    
+    // Figure out a full filename
+	NSString *preferredFilename = [fileName stringByAppendingPathExtension:extension];
 	
 	// Create media container & file
 	KTMediaContainer *result = [self insertNewMediaContainer];
@@ -142,6 +143,27 @@
 	[result setValue:mediaFile forKey:@"file"];
 	
 	return result;
+}
+
+
+- (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)filename UTI:(NSString *)UTI;
+{
+	OBPRECONDITION(data);
+    OBPRECONDITION(filename);
+    OBPRECONDITION(UTI);
+    
+    
+    KTMediaContainer *result = nil;
+    
+    // Figure out a full filename
+	NSString *fileExtension = [NSString filenameExtensionForUTI:UTI];
+	if (fileExtension)
+    {
+        result = [self mediaContainerWithData:data filename:filename fileExtension:fileExtension];
+    }
+    
+    
+    return result;
 }
 
 - (KTMediaContainer *)mediaContainerWithImage:(NSImage *)image;

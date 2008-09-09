@@ -44,6 +44,7 @@ extern NSString *KTMediaLogDomain;
 
 - (KTMediaContainer *)mediaContainerWithPath:(NSString *)path;
 - (KTMediaContainer *)mediaContainerWithURL:(NSURL *)aURL;
+- (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)filename fileExtension:(NSString *)extension;
 - (KTMediaContainer *)mediaContainerWithData:(NSData *)data filename:(NSString *)filename UTI:(NSString *)UTI;
 - (KTMediaContainer *)mediaContainerWithImage:(NSImage *)image;
 - (KTMediaContainer *)mediaContainerWithDraggingInfo:(id <NSDraggingInfo>)dragInfo preferExternalFile:(BOOL)external;
