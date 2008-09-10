@@ -76,7 +76,6 @@
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				2770641E0DA985AA001EB02A /* Script - Add QuickLook LEOPARD */,
-				CECFC7FB0E54FF1D0080FB3D /* Script - Add LeopardStuff LEOPARD */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 			);
 			dependencies = (
@@ -1497,7 +1496,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* LeopardStuff.bundle */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = LeopardStuff;
 		};
 		CE9510B50D63B0A3008D163A /* PBXContainerItemProxy */ = {
@@ -6103,21 +6102,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../../Shared/trunk/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
-		};
-		CECFC7FB0E54FF1D0080FB3D /* Script - Add LeopardStuff LEOPARD */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Add LeopardStuff LEOPARD";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../../Shared/trunk/Tools/pbxcp\"\n\nLEOPARDSTUFF=\"${TARGET_BUILD_DIR}/LeopardStuff.bundle\"\nLEOPARDSTUFF_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Resources\"\n\necho \"LeopardStuff bundle: PBXCp ${LEOPARDSTUFF} ${LEOPARDSTUFF_DIR}\"\n\nmkdir -p ${LEOPARDSTUFF_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${LEOPARDSTUFF}\" \"${LEOPARDSTUFF_DIR}\"\n\n\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
