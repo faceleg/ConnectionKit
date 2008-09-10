@@ -545,10 +545,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// This allows us to start out with a beta/release type, and keep that type even after we have
 	// made a release and somebody was originally getting betas.
 	
-	NSString *feedType = [defaults objectForKey:@"KSFeedType"];
+	NSString *feedType = [[defaults objectForKey:@"KSFeedType"] lowercaseString];
 	if (nil == feedType || [feedType isEqualToString:@""])		// 'beta' or 'release' or '' (empty string) for none
 	{
-		NSString *feedType = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"];	// default feed type
+		NSString *feedType = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"KSFeedType"] lowercaseString];	// default feed type
 		[defaults setObject:feedType forKey:@"KSFeedType"];
 	}
 	

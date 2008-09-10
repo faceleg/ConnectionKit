@@ -174,7 +174,7 @@
 	if ([[[NSApp delegate] sparkleUpdater] automaticallyChecksForUpdates])
 	{
 		
-		NSString *feedType = [defaults objectForKey:@"KSFeedType"];
+		NSString *feedType = [[defaults objectForKey:@"KSFeedType"] lowercaseString];
 		
 		if (nil == feedType || [feedType isEqualToString:@""] || [feedType isEqualToString:@"release"])
 		{
