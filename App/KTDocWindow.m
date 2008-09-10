@@ -191,4 +191,8 @@ void dumpBacktrace(unsigned int startFrameNumber)
 	}
 }
 
+/*  Due to our autosave system, we do not want to display the doc edited indicator
+ */
+- (void)setDocumentEdited:(BOOL)documentEdited { }
+
 @end
