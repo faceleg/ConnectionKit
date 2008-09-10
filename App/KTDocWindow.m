@@ -108,24 +108,6 @@ void dumpBacktrace(unsigned int startFrameNumber)
 	[super close];
 }
 
-- (id)initWithContentRect:(NSRect)contentRect
-				styleMask:(unsigned int)styleMask
-				  backing:(NSBackingStoreType)backingType
-					defer:(BOOL)flag
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL useTextured = [defaults boolForKey:@"UseTexturedDocumentWindows"];
-	BOOL useUnified = [defaults boolForKey:@"UseUnifiedToolbarWindows"];
-
-	unsigned int newMask = styleMask
-		| (useTextured? NSTexturedBackgroundWindowMask : 0)
-		| (useUnified ? NSUnifiedTitleAndToolbarWindowMask : 0);
-	return [super initWithContentRect:contentRect
-							styleMask:newMask
-							  backing:backingType
-								defer:flag];
-}
-
 // Private override, this is hit downstream from NSapplication sendEvent in Tiger when you change the key window.
 - (void)_setFrameNeedsDisplay:(BOOL)fp8;
 {

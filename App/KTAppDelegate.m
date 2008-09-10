@@ -350,8 +350,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithInt:5],				@"MaximumTitlesInCollectionSummary",
 		[NSNumber numberWithBool:NO],			@"CreateBackupFileWhenSaving",
 		[NSNumber numberWithBool:YES],			@"UseGradientSiteOutlineHilite",
-		[NSNumber numberWithBool:NO],			@"UseTexturedDocumentWindows",
-		[NSNumber numberWithBool:YES],			@"UseUnifiedToolbarWindows",
 		[NSNumber numberWithBool:NO],			@"PathsWithIndexPages",	// should paths end in index.html ?
 		// DON'T HAVE DEFAULT VALUE -->	   NSStringFromSize(NSMakeSize(1024, 530)), @"DefaultDocumentWindowContentSize",
 		@"",	@"DefaultRootIndexBundleIdentifier",	// no index default on root
