@@ -629,6 +629,7 @@
 		CE7779C80AE4945D002E6844 /* Placeholder.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE7779C60AE4945D002E6844 /* Placeholder.nib */; };
 		CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
+		CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE82F0390E777491003A0110 /* TigerStuff.bundle */; };
 		CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */; };
 		CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
@@ -884,7 +885,6 @@
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
 		CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = CECCED1C0E64643A00BE9016 /* Symbolicator.h */; };
 		CECDC3E208287E920090F560 /* Info.nib in Resources */ = {isa = PBXBuildFile; fileRef = CECDC3E008287E920090F560 /* Info.nib */; };
-		CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = CECFC6480E54FABC0080FB3D /* LeopardStuff.h */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
 		CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CED26DC40D383F4B002C0137 /* a2hosting.png */; };
 		CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */ = {isa = PBXBuildFile; fileRef = CED45AEC0947891100BB172E /* CheckOpenGL.qtz */; };
@@ -2226,6 +2226,7 @@
 		CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = SyntaxColorDefaults.plist; sourceTree = "<group>"; };
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxSymbols.xcconfig; sourceTree = "<group>"; };
 		CE16A3D7087319720006F80B /* KTStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStackView.m; sourceTree = "<group>"; };
 		CE16A3D8087319720006F80B /* KTStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStackView.h; sourceTree = "<group>"; };
 		CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMovieViewPlugin.h; sourceTree = "<group>"; };
@@ -2334,6 +2335,7 @@
 		CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		CE82F0390E777491003A0110 /* TigerStuff.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TigerStuff.bundle; path = ../../../Shared/trunk/Code/TigerLeopardStuff/TigerStuff/TigerStuff.bundle; sourceTree = SOURCE_ROOT; };
 		CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSKeepInTouchController.m; path = ../../../Shared/trunk/App/KSKeepInTouchController.m; sourceTree = SOURCE_ROOT; };
 		CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSKeepInTouchController.h; path = ../../../Shared/trunk/App/KSKeepInTouchController.h; sourceTree = SOURCE_ROOT; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
@@ -2636,7 +2638,6 @@
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../Code/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
-		CECFC6480E54FABC0080FB3D /* LeopardStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeopardStuff.h; path = ../Code/LeopardStuff/LeopardStuff.h; sourceTree = SOURCE_ROOT; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
@@ -3738,6 +3739,7 @@
 		3C202E9807E00F8500DE4994 /* Executables */ = {
 			isa = PBXGroup;
 			children = (
+				CE82F0390E777491003A0110 /* TigerStuff.bundle */,
 				3C202E9607E00F8000DE4994 /* png2ico */,
 			);
 			name = Executables;
@@ -4342,7 +4344,6 @@
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
-				CECFC6480E54FABC0080FB3D /* LeopardStuff.h */,
 			);
 			name = "Common Headers";
 			sourceTree = "<group>";
@@ -4475,6 +4476,7 @@
 			children = (
 				3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */,
 				3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */,
+				CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */,
 			);
 			name = "Xcode Configurations";
 			sourceTree = "<group>";
@@ -4965,7 +4967,6 @@
 				2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */,
-				CECFC6490E54FABC0080FB3D /* LeopardStuff.h in Headers */,
 				CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */,
 				27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */,
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
@@ -5790,6 +5791,7 @@
 				CEA2BA370DC79F0C00A8023F /* KSWebViewWindow.nib in Resources */,
 				279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
+				CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7281,6 +7283,162 @@
 			};
 			name = Debug;
 		};
+		CE15C2BD0E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Symbols;
+		};
+		CE15C2BE0E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Sandvox;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Symbols;
+		};
+		CE15C2BF0E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = Sandvox;
+			};
+			name = Symbols;
+		};
+		CE15C2C00E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = DiskImage;
+			};
+			name = Symbols;
+		};
+		CE15C2C10E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = DeployRelease;
+			};
+			name = Symbols;
+		};
+		CE15C2C20E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = PackageBonusDesigns;
+			};
+			name = Symbols;
+		};
+		CE15C2C30E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = UpdateVersion;
+			};
+			name = Symbols;
+		};
+		CE15C2C40E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = UpdateShared;
+			};
+			name = Symbols;
+		};
+		CE15C2C50E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = UpdateDesigns;
+			};
+			name = Symbols;
+		};
+		CE15C2C60E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = iMediaFramework;
+			};
+			name = Symbols;
+		};
+		CE15C2C70E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = ConnectionFramework;
+			};
+			name = Symbols;
+		};
+		CE15C2C80E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "ImageWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ImageWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Symbols;
+		};
+		CE15C2C90E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "MovieWebKitPlugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MovieWebKitPlugin;
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+			};
+			name = Symbols;
+		};
+		CE15C2CA0E75CA0F00755113 /* Symbols */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
+				PRODUCT_NAME = DeploySymbols;
+			};
+			name = Symbols;
+		};
 		CE16DC5B0D8711790077C779 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7387,6 +7545,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C15B85F0DC790A200DE9957 /* Release */,
+				CE15C2C50E75CA0F00755113 /* Symbols */,
 				3C15B8600DC790A200DE9957 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7396,6 +7555,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A9A860D11E4DF0054058C /* Release */,
+				CE15C2C60E75CA0F00755113 /* Symbols */,
 				3C5A9A870D11E4DF0054058C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7405,6 +7565,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A9A960D11E68B0054058C /* Release */,
+				CE15C2C70E75CA0F00755113 /* Symbols */,
 				3C5A9A970D11E68B0054058C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7414,6 +7575,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C8883990BFCB4EE00921FA4 /* Release */,
+				CE15C2C00E75CA0F00755113 /* Symbols */,
 				3C88839A0BFCB4EE00921FA4 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7423,6 +7585,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C96ADE20CA06FB900C5249F /* Release */,
+				CE15C2C30E75CA0F00755113 /* Symbols */,
 				3C96ADE30CA06FB900C5249F /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7432,6 +7595,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C9B65960BFA7F9E007A4871 /* Release */,
+				CE15C2BF0E75CA0F00755113 /* Symbols */,
 				3C9B65970BFA7F9E007A4871 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7441,6 +7605,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CA0FEE50D7614AC0093562D /* Release */,
+				CE15C2C10E75CA0F00755113 /* Symbols */,
 				3CA0FEE60D7614AC0093562D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7450,6 +7615,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CA786E70DB546070014AD7E /* Release */,
+				CE15C2C20E75CA0F00755113 /* Symbols */,
 				3CA786E80DB546070014AD7E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7459,6 +7625,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CD5B7850DCA668E006EE4D9 /* Release */,
+				CE15C2CA0E75CA0F00755113 /* Symbols */,
 				3CD5B7860DCA668E006EE4D9 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7468,6 +7635,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CE2B2B80D7F1DD900E2711E /* Release */,
+				CE15C2C40E75CA0F00755113 /* Symbols */,
 				3CE2B2B90D7F1DD900E2711E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7477,6 +7645,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE16DC5B0D8711790077C779 /* Release */,
+				CE15C2C90E75CA0F00755113 /* Symbols */,
 				CE16DC5C0D8711790077C779 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7486,6 +7655,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C0CF98B085E3D50009E3AD3 /* Release */,
+				CE15C2BE0E75CA0F00755113 /* Symbols */,
 				3C0CFA3E085E3E9C009E3AD3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7495,6 +7665,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C0CF98C085E3D50009E3AD3 /* Release */,
+				CE15C2BD0E75CA0F00755113 /* Symbols */,
 				3C0CFA3F085E3E9C009E3AD3 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -7504,6 +7675,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CEF9D0B20D862B5100BD9895 /* Release */,
+				CE15C2C80E75CA0F00755113 /* Symbols */,
 				CEF9D0B30D862B5100BD9895 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;

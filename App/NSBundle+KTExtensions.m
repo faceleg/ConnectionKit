@@ -12,7 +12,6 @@
 #import "NSApplication+Karelia.h"
 #import "KTAbstractElement.h"		// just for class reference for bundle
 #import "KSAppDelegate.h"
-#import "LeopardStuff.h"
 
 @implementation NSBundle ( KTExtensions )
 
@@ -37,42 +36,34 @@
 
 - (void)loadLocalFonts
 {
-	if (floor(NSAppKitVersionNumber) <= 824)		// only do stuff on Tiger, not Leopard
+	NSString *fontsFolder = [self resourcePath];
+	if (fontsFolder)
 	{
-		NSString *fontsFolder = [self resourcePath];
-		if (fontsFolder)
+		NSURL *fontsURL = [NSURL fileURLWithPath:fontsFolder];
+		if (fontsURL)
 		{
-			NSURL *fontsURL = [NSURL fileURLWithPath:fontsFolder];
-			if (fontsURL)
-			{
-				FSRef fsRef;
-				(void)CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
-				
-				OSStatus error = -8675309;	// seed with a bogus error, in case we can't get it really filled
+			FSRef fsRef;
+			(void)CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
+			
+			OSStatus error = -8675309;	// seed with a bogus error, in case we can't get it really filled
 
 // 10.5 version if we weren't using ATSApplicationFontsPath
 //				error = ATSFontActivateFromFileReference(&fsRef, kATSFontContextLocal, kATSFontFormatUnspecified, 
 //													 NULL, kATSOptionFlagsProcessSubdirectories, NULL);
 
-				FSSpec fsSpec;
-				if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) == noErr)
-				{
-					error = ATSFontActivateFromFileSpecification(&fsSpec,
-																 kATSFontContextLocal,
-																 kATSFontFormatUnspecified,
-																 NULL,
-																 kATSOptionFlagsProcessSubdirectories,
-																 NULL);
-				}
-				
-				if (noErr != error) NSLog(@"Error %s activating fonts in bundle %@", GetMacOSStatusErrorString(error), [[self bundlePath] lastPathComponent]);
+			FSSpec fsSpec;
+			if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) == noErr)
+			{
+				error = ATSFontActivateFromFileSpecification(&fsSpec,
+															 kATSFontContextLocal,
+															 kATSFontFormatUnspecified,
+															 NULL,
+															 kATSOptionFlagsProcessSubdirectories,
+															 NULL);
 			}
+	
+			if (noErr != error) NSLog(@"Error %s activating fonts in bundle %@", GetMacOSStatusErrorString(error), [[self bundlePath] lastPathComponent]);
 		}
-	}
-	else
-	{
-		// Use the Leopard-only technique; we need it from a bundle.
-		[[[NSApp delegate] leopardStuff] loadLocalFontsInBundle:self];
 	}
 }
 
