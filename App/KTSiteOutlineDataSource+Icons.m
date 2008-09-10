@@ -69,7 +69,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	{
 		// Custom icon if available
 		KTMediaContainer *customIcon = [page customSiteOutlineIcon];
-		if (customIcon && [[NSUserDefaults standardUserDefaults] boolForKey:KTDisableCustomSiteOutlineIcons])
+		if (customIcon && ![[NSUserDefaults standardUserDefaults] boolForKey:KTDisableCustomSiteOutlineIcons])
 		{
 			result = [self customIconForPage:page];
 		}

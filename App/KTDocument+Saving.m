@@ -114,24 +114,16 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     {
 		result = [self performSaveToOperationToURL:absoluteURL error:outError];
 	}
-    
-    else if ([absoluteURL isEqual:[self fileURL]])  // We can't support anything other than a standard Save operation when
-    {                                               // writing to the doc's URL
+    else if (saveOperation == NSSaveAsOperation &&  // We can't support anything other than a standard Save operation when
+             [absoluteURL isEqual:[self fileURL]])    // writing to the doc's URL
+    {                                           
         result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
     }
-	
-    else
+	else
 	{
 		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
 	}
     
-    
-    // Since we're overriding the usual autosave mechanism, MUST call -updateChangeCount:
-    if (saveOperation == NSAutosaveOperation && result)
-    {
-        [self updateChangeCount:NSChangeAutosaved];
-    }
-	
     
     // Unmark -isSaving as YES if applicable
     mySaveOperationCount--;
@@ -235,7 +227,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				   error:(NSError **)outError
 {
 	// We're only interested in special behaviour for Save As operations
-	if (saveOperation != NSSaveAsOperation)
+	if (saveOperation == NSAutosaveOperation)
+    {
+        return [super writeSafelyToURL:absoluteURL 
+								ofType:typeName 
+					  forSaveOperation:NSSaveOperation 
+								 error:outError];
+    }
+    else if (saveOperation != NSSaveAsOperation)
 	{
 		return [super writeSafelyToURL:absoluteURL 
 								ofType:typeName 
@@ -807,6 +806,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [callbackInvocation invoke];
     [callbackInvocation release];
 }
+
+/*  We override this accessor to always be nil. Otherwise, the doc architecture will assume our doc is the autosaved copy and delete it!
+ */
+- (NSURL *)autosavedContentsFileURL { return nil; }
+- (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL { }
 
 #pragma mark -
 #pragma mark Change Count
