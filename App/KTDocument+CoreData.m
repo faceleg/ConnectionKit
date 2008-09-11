@@ -78,7 +78,10 @@
 		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
         OBASSERT(componentsBundle);
 		
-		NSURL *modelURL = [NSURL fileURLWithPath:[componentsBundle pathForResource:@"Sandvox" ofType:@"mom"]];
+        NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
+        OBASSERTSTRING(modelPath, [componentsBundle description]);
+        
+		NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
 		OBASSERT(modelURL);
 		
 		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
