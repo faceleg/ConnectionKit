@@ -478,7 +478,7 @@
     NSString *newRootPluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
     KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
     
-    KTDocument *newDoc = [[KTDocument alloc] initWithURL:[self newDocumentURL] ofType:kKTDocumentUTI homePagePlugIn:newRootPlugin error:outError];
+    KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI rootPlugin:newRootPlugin error:outError];
     if (newDoc)
     {
         [[newDoc undoManager] disableUndoRegistration];
@@ -501,7 +501,7 @@
     
     // Save the doc and finish up
     KTDocument *document = [self newDocument];
-    BOOL result = [document saveToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation error:outError];
+    BOOL result = [document saveToURL:[self newDocumentURL] ofType:[document fileType] forSaveOperation:NSSaveAsOperation error:outError];
     
     return result;
 }
