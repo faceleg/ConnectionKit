@@ -104,7 +104,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 - (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractElement *)aContainer;
 
 - (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow;
-- (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element;
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange;
 
 - (void)insertHref:(NSString *)aURLAsString inRange:(DOMRange *)aRange;
@@ -1168,6 +1167,10 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				theLinkString = [targetPage titleText];
 				localLink = YES;
 			}
+            
+            // Since we're editing a link, select it
+            [selectedRange selectNode:possibleAnchor];
+            [[[self webViewController] webView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
 		}
 		else if ( nil != node )
 		{
@@ -1280,35 +1283,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 }
 
-- (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element openLinkInNewWindow:(BOOL)openLinkInNewWindow
-{
-	// there is an anchor in play, find it and set its href
-	DOMHTMLAnchorElement *anchor = [element immediateContainerOfClass:[DOMHTMLAnchorElement class]];
-	if ( nil != anchor )
-	{
-		NSString *target = nil;
-		
-		// Should the link be opened in a new window? It depends on what the user sets, plus if the destination page chooses to override it.
-		BOOL targetPageDemandsNewWindow = NO;
-		id targetPageDelegate = [[[self document] pageForURLPath:newLink] delegate];
-		if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)]) {
-			targetPageDemandsNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
-		}
-		
-		if (targetPageDemandsNewWindow || openLinkInNewWindow )
-		{
-			target = @"_blank";
-		}
-		[[DOMHTMLAnchorElement class] element:anchor setHref:newLink target:target];
-		return NSLocalizedString(@"Edit Link","ActionName: Remove Link");
-	}
-	else
-	{
-		OFF((@"unable to locate parent anchor for node: %@", element));
-		return nil;
-	}
-}
-
 /*  The process of creating a link is very simple: Crate the DOM nodes and then insert them using -replaceSelectionWithNode:
  *  WebKit will manage the undo/redo stuff for us.
  */
@@ -1400,14 +1374,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		// have we set up a local link?
 		if ( nil != [info valueForKey:@"KTLocalLink"] )
 		{
-			if ( nil != [info valueForKey:WebElementLinkURLKey] )
-			{
-				undoActionName = [self editLink:[info valueForKey:@"KTLocalLink"] withDOMNode:[info objectForKey:WebElementDOMNodeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
-			}
-			else
-			{
-				undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
-			}
+			undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 		}
 		else
 		{
@@ -1434,14 +1401,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				}
 				
 				// not empty, is there already an anchor in play?
-				if ( nil != [info objectForKey:WebElementLinkURLKey] )
-				{
-					undoActionName = [self editLink:value withDOMNode:[info objectForKey:WebElementDOMNodeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
-				}
-				else
-				{
-					undoActionName = [self createLink:value openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
-				}
+				undoActionName = [self createLink:value openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 			}
 		}
 
