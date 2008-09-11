@@ -122,7 +122,11 @@
 		
 		if (aPage == thisPage)	// not likely but maybe possible
 		{
-			[string appendString:[[aPage titleText] stringByEscapingHTMLEntities]];	/// HTML was leaving extra formatting; we want it less dramatic
+			NSString *title = [[aPage titleText] stringByEscapingHTMLEntities];	/// HTML was leaving extra formatting; we want it less dramatic
+            if (title)
+            {
+                [string appendString:title];
+            }
 		}
 		else
 		{
@@ -265,7 +269,11 @@
 		[string appendString:(sections ? @"<h3>" : @"<p>")];
 		if (root == thisPage)	// not likely but maybe possible
 		{
-			[string appendString:[[root titleText] stringByEscapingHTMLEntities]];
+			NSString *title = [[root titleText] stringByEscapingHTMLEntities];
+            if (title)
+            {
+                [string appendString:title];
+            }
 		}
 		else
 		{
