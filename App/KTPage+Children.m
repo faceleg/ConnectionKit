@@ -90,13 +90,23 @@
 	
 	// Change our index and that of any affected siblings
 	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[parent sortedChildren]];
-	[newSortedChildren moveObjectAtIndex:[newSortedChildren indexOfObjectIdenticalTo:self] toIndex:index];
-	[KTPage setCollectionIndexForPages:newSortedChildren];
+	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:self];
 	
-	// Invalidate our parent's sortedChildren cache if it is manually sorted
-	if ([parent collectionSortOrder] == KTCollectionUnsorted)
+	// Check that we were actually found.  Mystery case 34642. If not found, just 
+	if (NSNotFound != whereSelfInParent)
 	{
-		[parent invalidateSortedChildrenCache];
+		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
+		[KTPage setCollectionIndexForPages:newSortedChildren];
+		
+		// Invalidate our parent's sortedChildren cache if it is manually sorted
+		if ([parent collectionSortOrder] == KTCollectionUnsorted)
+		{
+			[parent invalidateSortedChildrenCache];
+		}
+	}
+	else
+	{
+		NSLog(@"moveToIndex: unable to find %@", self);
 	}
 }
 
