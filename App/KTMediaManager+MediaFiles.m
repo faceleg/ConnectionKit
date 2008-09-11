@@ -178,7 +178,6 @@
 		result = [self inDocumentMediaFileForPath:path];
 	}
 	
-	OBPOSTCONDITION(result);
 	return result;
 }
 
