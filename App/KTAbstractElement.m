@@ -31,14 +31,6 @@
 #import "NSString+Karelia.h"
 
 
-@interface NSObject ( delegateMethods )
-- (void)awakenedDidTurnIntoFaultSupport;
-@end
-
-
-#pragma mark -
-
-
 @implementation KTAbstractElement
 
 #pragma mark -
