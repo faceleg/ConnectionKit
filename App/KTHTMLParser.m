@@ -415,6 +415,7 @@
 		else if ([keyword isEqualToString:@"id"])
 		{
 			uniqueID = [[self cache] valueForKeyPath:value];
+            if (!uniqueID) uniqueID = @"";
 		}
 		else if ([keyword isEqualToString:@"replacement"])	// key path to property to replace, flattened version of property
 		{
