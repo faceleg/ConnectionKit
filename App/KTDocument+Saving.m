@@ -19,6 +19,7 @@
 #import "KTMediaManager+Internal.h"
 
 #import "CIImage+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
@@ -104,29 +105,48 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     BOOL result = NO;
     
     
-    // Mark -isSaving as YES;
-    mySaveOperationCount++;
-	
-    
-    
-    //  Do the save op
-    if (saveOperation == NSSaveToOperation)
+    if ([self isSaving])
     {
-		result = [self performSaveToOperationToURL:absoluteURL error:outError];
-	}
-    else if (saveOperation == NSSaveAsOperation &&  // We can't support anything other than a standard Save operation when
-             [absoluteURL isEqual:[self fileURL]])    // writing to the doc's URL
-    {                                           
-        result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
+        if (saveOperation == NSSaveOperation || saveOperation == NSAutosaveOperation)
+        {
+            // This can happen if there's an autosave request while we're still generating the Quick Look thumbnail.
+            // If so, saving the MOCs has been completed already so we can just go ahead and return YES.
+            result = YES;
+        }
+        else
+        {
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                            code:0
+                            localizedDescription:NSLocalizedString(@"Another save operation is already in progress.",
+                                                                   "Saving error")];
+        }
     }
-	else
-	{
-		result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-	}
-    
-    
-    // Unmark -isSaving as YES if applicable
-    mySaveOperationCount--;
+    else
+    {
+        // Mark -isSaving as YES;
+        mySaveOperationCount++;
+        
+        
+        
+        //  Do the save op
+        if (saveOperation == NSSaveToOperation)
+        {
+            result = [self performSaveToOperationToURL:absoluteURL error:outError];
+        }
+        else if (saveOperation == NSSaveAsOperation &&  // We can't support anything other than a standard Save operation when
+                 [absoluteURL isEqual:[self fileURL]])    // writing to the doc's URL
+        {                                           
+            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
+        }
+        else
+        {
+            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+        }
+        
+        
+        // Unmark -isSaving as YES if applicable
+        mySaveOperationCount--;
+    }
     
     
 	return result;
@@ -138,7 +158,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  */
 - (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError
 {
-    BOOL result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+    BOOL result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
     if (result)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
