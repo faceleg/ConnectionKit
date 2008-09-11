@@ -346,8 +346,10 @@ NSString *KTMediaLogDomain = @"Media";
         }
         else
         {
+            NSString *mediaFileName = [oldMedia valueForKey:@"name"];
+            
             result = [self mediaContainerWithData:oldMediaData
-                                         filename:[oldMedia valueForKey:@"name"] 
+                                         filename:mediaFileName
                                               UTI:oldMediaUTI];
             
             
@@ -356,10 +358,16 @@ NSString *KTMediaLogDomain = @"Media";
             if (!result)
             {
                 NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
-                if (fileExtension)
+                if (!fileExtension || [fileExtension isEqualToString:@""])
+                {
+                    fileExtension = [mediaFileName pathExtension];
+                    mediaFileName = [mediaFileName stringByDeletingPathExtension];
+                }
+                
+                if (fileExtension && ![fileExtension isEqualToString:@""])
                 {
                     result = [self mediaContainerWithData:oldMediaData
-                                                 filename:[oldMedia valueForKey:@"name"]
+                                                 filename:mediaFileName
                                             fileExtension:fileExtension];
                 }
             }
