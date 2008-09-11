@@ -170,248 +170,66 @@
  */
 - (id)initWithType:(NSString *)type error:(NSError **)error
 {
- 	// Do nothing if the license is invalid
-	if (gLicenseViolation) {
-		NSBeep();
-		*error = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
-		[self release];	return nil;
-	}
-	
-	
-	// Ask the user for the location and home page type of the document
-	NSSavePanel *savePanel = [NSSavePanel savePanel];
-	[savePanel setTitle:NSLocalizedString(@"New Site", @"Save Panel Title")];
-	[savePanel setPrompt:NSLocalizedString(@"Create", @"Create Button")];
-	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setRequiredFileType:kKTDocumentExtension];
-	[savePanel setCanCreateDirectories:YES];
-	
-	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
-	[savePanel setAccessoryView:oNewDocAccessoryView];
-	
-	NSSet *pagePlugins = [KTElementPlugin pagePlugins];
-	[KTElementPlugin addPlugins:pagePlugins
-						 toMenu:[oNewDocHomePageTypePopup menu]
-						 target:nil
-						 action:nil
-					  pullsDown:NO
-					  showIcons:YES smallIcons:YES smallText:NO];
-	
-	int saveResult = [savePanel runModalForDirectory:nil file:nil];
-	if (saveResult == NSFileHandlingPanelCancelButton) {
-		*error = nil;	// Otherwise we crash
-		[self release];	return nil;
-	}
-		
-	
-	//  Put up a progress bar
-	NSImage *newDocumentImage = [NSImage imageNamed:@"document.icns"];
-	NSString *progressMessage = NSLocalizedString(@"Creating Site...",@"Creating Site...");
-	[[NSApp delegate] showGenericProgressPanelWithMessage:progressMessage image:newDocumentImage];
-		
-	
-	@try
-	{
-		// Do we already have a file there? Remove it.
-		NSURL *saveURL = [savePanel URL];
-		if ([[NSFileManager defaultManager] fileExistsAtPath:[saveURL path]])
-		{
-			// is saveURL path writeable?
-			if (![[NSFileManager defaultManager] isWritableFileAtPath:[saveURL path]])
-			{
-				NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-				[errorInfo setObject:[NSString stringWithFormat:
-					NSLocalizedString(@"Unable to create new document.",@"Alert: Unable to create new document.")]
-							  forKey:NSLocalizedDescriptionKey]; // message text
-				[errorInfo setObject:[NSString stringWithFormat:
-					NSLocalizedString(@"The path %@ is not writeable.",@"Alert: The path %@ is not writeable."), [saveURL path]]
-							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
-				*error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
-				
-				[self release];
-				return nil;
-			}
-			
-			if (![[NSFileManager defaultManager] removeFileAtPath:[saveURL path] handler:nil])
-			{
-				
-				//  put up an error that the previous file could not be overwritten
-				NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-				[errorInfo setObject:[NSString stringWithFormat:
-					NSLocalizedString(@"Unable to create new document.",@"Alert: Unable to create new document.")]
-							  forKey:NSLocalizedDescriptionKey]; // message text
-				[errorInfo setObject:[NSString stringWithFormat:
-					NSLocalizedString(@"Could not remove pre-existing file at path %@.",@"Alert: Could not remove pre-existing file at path %@."), [saveURL path]]
-							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
-				
-				*error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
-				
-				[self release];
-				return nil;
-			}
-		}
-		
-		
-		// Create the document
-        KTElementPlugin *defaultRootPlugin = [[oNewDocHomePageTypePopup selectedItem] representedObject];
-        [self initWithURL:saveURL ofType:type homePagePlugIn:defaultRootPlugin error:error];
-		
-		
-		// Make the initial Sandvox badge
-        NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
-        if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-        {
-            KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-            if (badgePlugin)
-            {
-                KTPagelet *pagelet = [KTPagelet pageletWithPage:[[self documentInfo] root] plugin:badgePlugin];
-                [pagelet setPrefersBottom:YES];
-            }
-        }
-        
-        if (![self saveToURL:saveURL ofType:type forSaveOperation:NSSaveOperation error:error])
-        {
-            [self release];
-            return nil;
-        }
-        
-        
-		// Is this path a currently open document? if yes, close it!
-		NSDocument *openDocument = [[NSDocumentController sharedDocumentController] documentForURL:saveURL];
-		if (openDocument)
-		{
-			[openDocument canCloseDocumentWithDelegate:nil shouldCloseSelector:NULL contextInfo:nil];
-			[openDocument close];
-		}	
-			
-			
-        
-        
-        // Hide the doc's extension if requested
-        if ([savePanel isExtensionHidden])
-        {
-            [[NSFileManager defaultManager] setExtensionHiddenAtPath:[saveURL path]];
-        }
-        
-	}
-	@finally
-	{
-		// Hide the progress window
-		[[NSApp delegate] hideGenericProgressPanel];
-	}
-    
-	
-    return self;
+ 	NOTYETIMPLEMENTED;
+    return nil;
 }
-
-
-/*  Use to create a new document when you already know the home page type and save location.
- */
-- (id)initWithURL:(NSURL *)saveURL ofType:(NSString *)type homePagePlugIn:(KTElementPlugin *)plugin error:(NSError **)outError
+    
+- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error
 {
-    OBPRECONDITION(plugin);
+	self = [super initWithType:type error:error];
     
-    
-    [super initWithType:type error:outError];
-    
-    
-    // Make a new documentInfo to store document properties
-    KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
-    KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
-    [self setDocumentInfo:documentInfo];
-    
-    NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
-    if (docProperties)
+    if (self)
     {
-        [documentInfo setValuesForKeysWithDictionary:docProperties];
-    }
-    
-    
-    // make a new root
-    // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
-    [[plugin bundle] load];
-    KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
-    OBASSERTSTRING((nil != root), @"root page is nil!");
-    [[self documentInfo] setValue:root forKey:@"root"];
-    
-    
-    // Create the site Master object
-    KTMaster *master = [NSEntityDescription insertNewObjectForEntityForName:@"Master" inManagedObjectContext:[self managedObjectContext]];
-    [root setValue:master forKey:@"master"];
-    
-    
-    // Set the design
-    KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
-    [master setDesign:design];		
-    
-    
-    // set up root properties that used to come from document defaults
-    [master setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"author"] forKey:@"author"];
-    [root setBool:YES forKey:@"isCollection"];
-    
-    [master setValue:[self language] forKey:@"language"];
-    [master setValue:[self charset] forKey:@"charset"];
-    
-    NSString *subtitle = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML"
-                                                                language:[master valueForKey:@"language"]
-                                                                fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML", nil, [NSBundle mainBundle],
-                                                                                                           @"This is the subtitle for your site.",
-                                                                                                           @"Default introduction statement for a page")];
-    [master setValue:subtitle forKey:@"siteSubtitleHTML"];
-    
-    
-    // FIXME: we should load up the properties from a KTPreset
-    [root setBool:NO forKey:@"includeTimestamp"];
-    [root setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];
-    [root setBool:NO forKey:@"collectionSyndicate"];
-    [root setInteger:0 forKey:@"collectionMaxIndexItems"];
-    [root setBool:NO forKey:@"collectionShowPermanentLink"];
-    [root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		
-    [root setTitleText:[self defaultRootPageTitleText]];
-    
-    
-    NSString *defaultRootIndexIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultRootIndexBundleIdentifier"];
-    if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
-    {
-        KTAbstractHTMLPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier];
-        if (nil != plugin)
+        // Make a new documentInfo to store document properties
+        KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
+        KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
+        [self setDocumentInfo:documentInfo];
+        
+        NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
+        if (docProperties)
         {
-            NSBundle *bundle = [plugin bundle];
-            [root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
-            
-            Class indexToAllocate = [NSBundle principalClassForBundle:bundle];
-            KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:plugin] autorelease];
-            [root setIndex:theIndex];
+            [documentInfo setValuesForKeysWithDictionary:docProperties];
         }
-    }
-    
-    [self setLocalTransferController:nil];		// make sure to clear old settings after we have some host properties
-    [self setRemoteTransferController:nil];
-    [self setExportTransferController:nil];
-    
-    //  Set the site title
-    NSString *siteName = [[NSFileManager defaultManager] displayNameAtPath:[[saveURL path] stringByDeletingPathExtension]];
-    [master setValue:siteName forKey:@"siteTitleHTML"];
-    
-    
-    // Set the Favicon
-    NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-    KTMediaContainer *faviconMedia = [[root mediaManager] mediaContainerWithPath:faviconPath];
-    [master setValue:[faviconMedia identifier] forKey:@"faviconMediaIdentifier"];
-    
-    
-    // Save ourself
-    BOOL didSave = [self saveToURL:saveURL 
-                            ofType:kKTDocumentExtension 
-                  forSaveOperation:NSSaveAsOperation
-                             error:outError];
-    if (!didSave) 
-	{
-        [self release];	return nil;
-    }
-    
+        
+        
+        // make a new root
+        // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
+        [[plugin bundle] load];
+        KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
+        OBASSERTSTRING((nil != root), @"root page is nil!");
+        [[self documentInfo] setValue:root forKey:@"root"];
+        
+        
+        // Create the site Master object
+        KTMaster *master = [NSEntityDescription insertNewObjectForEntityForName:@"Master" inManagedObjectContext:[self managedObjectContext]];
+        [root setValue:master forKey:@"master"];
+        
+        
+        // Set the design
+        KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
+        [master setDesign:design];		
+        
+        
+        // Set up root properties that used to come from document defaults
+        [master setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"author"] forKey:@"author"];
+        [root setBool:YES forKey:@"isCollection"];
+        
+        [master setValue:[self language] forKey:@"language"];
+        [master setValue:[self charset] forKey:@"charset"];
+        
+        [root setTitleText:[self defaultRootPageTitleText]];
+        
+        
+        
+        [self setLocalTransferController:nil];		// make sure to clear old settings after we have some host properties
+        [self setRemoteTransferController:nil];
+        [self setExportTransferController:nil];
+     }
+	
+	
     return self;
 }
+
 
 /*! initializer for opening an existing document */
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -468,9 +286,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[myLastSavedTime release]; myLastSavedTime = nil;
-	
-	[oNewDocAccessoryView release];
-		
+			
     [self setDocumentInfo:nil];
     
     [myMediaManager release];

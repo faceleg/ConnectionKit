@@ -41,11 +41,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 @interface KTDocument : NSPersistentDocument
 {
-	// New docs
-	IBOutlet NSView			*oNewDocAccessoryView;
-	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
-	
-	@private
+@private
 	
 	KTManagedObjectContext		*myManagedObjectContext;
 	KTDocumentInfo				*myDocumentInfo;
@@ -96,8 +92,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSString *)siteDirectoryPath;
 
 
-- (id)initWithType:(NSString *)typeName error:(NSError **)outError;
-- (id)initWithURL:(NSURL *)saveURL ofType:(NSString *)type homePagePlugIn:(KTElementPlugin *)plugin error:(NSError **)outError;
+- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error;
 
 
 - (IBAction)setupHost:(id)sender;

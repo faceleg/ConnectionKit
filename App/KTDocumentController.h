@@ -13,6 +13,11 @@
 
 @interface KTDocumentController : NSDocumentController
 {
+	// New docs
+	IBOutlet NSView			*oNewDocAccessoryView;
+	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
+	
+    @private
 	NSMutableArray *myDocumentsAwaitingBackup;
     
     KTDocument *myLastSavedDocumentWeakRef;

@@ -22,6 +22,7 @@
 }
 
 - (NSString *)siteTitleText;
+- (void)setSiteTitleHTML:(NSString *)value;
 
 - (NSString *)copyrightHTML;
 - (void)setCopyrightHTML:(NSString *)copyrightHTML;
