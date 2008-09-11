@@ -132,14 +132,6 @@
 
 - (void)didTurnIntoFault
 {
-	// Call the support method to do deallocation only for properties initialized from the awake.
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(awakenedDidTurnIntoFaultSupport)] )
-	{
-		[delegate awakenedDidTurnIntoFaultSupport];
-	}
-	
-	
 	// Dispose of delegate
 	[myDelegate setDelegateOwner:nil];
 	[myDelegate release];	myDelegate = nil;
