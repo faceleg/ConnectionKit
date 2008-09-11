@@ -103,7 +103,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 - (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractElement *)aContainer;
 
-- (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow;
+- (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow;
 - (NSString *)editLink:(NSString *)newLink withDOMNode:(DOMNode *)element;
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange;
 
@@ -1309,92 +1309,31 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 }
 
-// need to save off URL from drag and not call this until inside finish
-
-- (NSString *)createLink:(NSString *)link withDOMRange:(DOMRange *)selectedRange openLinkInNewWindow:(BOOL)openLinkInNewWindow
+/*  The process of creating a link is very simple: Crate the DOM nodes and then insert them using -replaceSelectionWithNode:
+ *  WebKit will manage the undo/redo stuff for us.
+ */
+- (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow
 {
-	WebView *webView = [[self webViewController] webView];
-    NSUndoManager *undoManager = [webView undoManager];
-	
-	// we seem to need retains here to prevent zombies after manipulating the DOM
-	// pull out the selection and its nodes
-	[selectedRange retain];
-	DOMNode *commonAncestorContainer = [[selectedRange commonAncestorContainer] retain];
-	
-	// during undo, we need to replace at the parent of the parent level in case
-	// extractContents chops up the commonAncestorContainer
-	DOMNode *ancestorParent = [[commonAncestorContainer parentNode] retain];
-	OBASSERT(nil != ancestorParent);
-	DOMNode *ancestorParentsParent = [[ancestorParent parentNode] retain];
-	OBASSERT(nil != ancestorParentsParent);
-	
-	// clone the ancestor's parent for undo
-	DOMNode *clonedParent = [[ancestorParent cloneNode:YES] retain]; // YES means deep copy
-	OBASSERT(nil != clonedParent);
-	
-	// fire up a new anchor
-	DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[commonAncestorContainer ownerDocument] createElement:@"a"];
-	[anchor setHref:link];
-	
-	// Should the link be opened in a new window? It depends on what the user sets, plus if the destination page chooses to override it.
-	BOOL targetPageDemandsNewWindow = NO;
-	id targetPageDelegate = [[[self document] pageForURLPath:link] delegate];
-	if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)]) {
-		targetPageDemandsNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
-	}
-	
-	
-	if (targetPageDemandsNewWindow || openLinkInNewWindow)
-	{
-		[anchor setTarget:@"_blank"];
-	}
-	else
-	{
-		[anchor setTarget:nil];
-	}
-	
-	[anchor retain];
-	
-	// surrond the selectedRange with the new anchor
-	
-	// the DOMRange method -surroundContents is almost exactly what we need but is not undoable
-	
-	// how do we implement -surroundContents so that it is undoable?
-	// here's what surroundContents does in C++
-	//  extractContents into a fragment
-	//  inserts new parent
-	//  appends fragment to new parent
-	//  selects new parent
-	
-	// so let's try it...
-	// extract the contents
-	DOMDocumentFragment *contents = [selectedRange extractContents];
-	
-	// insert anchor
-	[selectedRange insertNode:anchor];
-	
-	// remove any anchors from extracted contents
-	[contents removeAnyDescendentElementsNamed:@"A"];
-	
-	// surround cloned contents with new anchor
-	[anchor appendChildren:[contents childNodes]];
-	
-	// fix the selection
-	[selectedRange selectNode:anchor];
-	
-	// our undo strategy: ancestorParentsParent will swap the clonedParent for the ancestorParent
-	// (the underlying NSInvocation this creates should retain the nodes passed in)
-	[[undoManager prepareWithInvocationTarget:webView] replaceNode:ancestorParent withNode:clonedParent];
-	
-	[anchor release];
-	[clonedParent release];
-	[ancestorParentsParent release];
-	[ancestorParent release];
-	[commonAncestorContainer release];
-	[selectedRange release];
-	
-	return NSLocalizedString(@"Add Link","Action Name: Add Link");
-	
+	// Preparation
+    WebView *webView = [[self webViewController] webView];
+    DOMRange *selectedRange = [webView selectedDOMRange];
+    DOMDocument *DOMDoc = [[selectedRange startContainer] ownerDocument];
+    
+    
+    // Create the link DOM nodes
+    DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[DOMDoc createElement:@"a"];
+    OBASSERT(anchor);   OBASSERT([anchor isKindOfClass:[DOMHTMLAnchorElement class]]);
+    
+    [anchor setHref:link];
+    if (openLinkInNewWindow) [anchor setTarget:@"_blank"];
+	[anchor setInnerText:[selectedRange toString]];
+    
+    
+    // Insert the link into the DOM
+    [webView replaceSelectionWithNode:anchor];
+    
+    
+    return NSLocalizedString(@"Add Link","Action Name: Add Link");
 }	
 
 // paste some raw HTML
@@ -1467,7 +1406,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			}
 			else
 			{
-				undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] withDOMRange:[info objectForKey:KTSelectedDOMRangeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+				undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 			}
 		}
 		else
@@ -1501,7 +1440,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				}
 				else
 				{
-					undoActionName = [self createLink:value withDOMRange:[info objectForKey:KTSelectedDOMRangeKey] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+					undoActionName = [self createLink:value openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 				}
 			}
 		}

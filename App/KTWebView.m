@@ -27,6 +27,7 @@ TO DO:
 
 
 #import "KTWebView.h"
+#import "WebView+Karelia.h"
 
 #import "Debug.h"
 #import "KT.h"
@@ -564,6 +565,128 @@ TO DO:
 {
 	OFF((@"paste: %@", [[NSPasteboard generalPasteboard] types]));
 	[super paste:sender];
+}
+
+#pragma mark -
+#pragma mark DOM
+
+/*  WebKit 3 has a nasty bug whereby if you insert the node in the middle of some text, any
+ *  surrounding spaces will be converted to non0breaking spaces. e.g.
+ *
+ *      foo bar baz    ->    foo&nbsp;<a>bar</a>&nbsp;baz
+ */
+- (void)replaceSelectionWithNode:(DOMNode *)node
+{
+    DOMRange *selectedRange = [self selectedDOMRange];
+    
+    
+    // Check if there's a situation that will arouse the WebKit 3 bug
+    BOOL nodeHasPreceedingSpace = NO;
+    DOMText *preceedingTextNode = (DOMText *)[selectedRange startContainer];
+    if (preceedingTextNode && [preceedingTextNode isKindOfClass:[DOMText class]])
+    {
+        long startOffset = [selectedRange startOffset];
+        if (startOffset > 0 && [[preceedingTextNode data] characterAtIndex:(startOffset - 1)] == 32)
+        {
+            nodeHasPreceedingSpace = YES;
+        }
+    }
+    
+    
+    BOOL nodeHasFollowingSpace = NO;
+    DOMText *followingTextNode = (DOMText *)[selectedRange endContainer];
+    if (followingTextNode && [followingTextNode isKindOfClass:[DOMText class]])
+    {
+        NSString *followingText = [followingTextNode data];
+        long endOffset = [selectedRange endOffset];
+        if (endOffset < [followingText length] && [followingText characterAtIndex:endOffset] == 32)
+        {
+            nodeHasFollowingSpace = YES;
+        }
+    }
+    
+    
+    
+    
+    // Do the standard rpelacement
+    [super replaceSelectionWithNode:node];
+    
+    
+    // Handle WebKit 3's bugginess and replace unwanted preceeding non-breaking spaces
+    if (nodeHasPreceedingSpace)
+    {
+        if (![node parentNode])   // In edge cases, WebKit prdocues a different anchor when inserting
+        {
+            selectedRange = [self selectedDOMRange];
+            DOMNode *aDOMNode = [selectedRange startContainer];
+            if ([aDOMNode isKindOfClass:[DOMHTMLAnchorElement class]])
+            {
+                node = (DOMHTMLAnchorElement *)aDOMNode;
+            }
+            else
+            {
+                aDOMNode = [aDOMNode parentNode];
+                if ([aDOMNode isKindOfClass:[DOMHTMLAnchorElement class]])
+                {
+                    node = (DOMHTMLAnchorElement *)aDOMNode;
+                }
+            }    
+        }
+        
+        DOMText *preceedingTextNode = (DOMText *)[node previousSibling];
+        if (preceedingTextNode && [preceedingTextNode isKindOfClass:[DOMText class]])
+        {
+            NSString *preceedingText = [preceedingTextNode data];
+            if ([preceedingText length] > 0 && [preceedingText lastCharacter] == 160)
+            {
+                NSMutableString *replacementText = [preceedingText mutableCopy];
+                [replacementText replaceCharactersInRange:NSMakeRange([preceedingText length] -1, 1) withString:@" "];
+                
+                [self replaceDOMText:preceedingTextNode withText:replacementText];
+                
+                [replacementText release];
+            }
+        }
+    }
+    
+    
+    
+    // Handle WebKit 3's bugginess and replace unwanted following non-breaking spaces
+    if (nodeHasFollowingSpace)
+    {
+        if (![node parentNode])   // In edge cases, WebKit prdocues a different anchor when inserting
+        {
+            selectedRange = [self selectedDOMRange];
+            DOMNode *aDOMNode = [selectedRange endContainer];
+            if ([aDOMNode isKindOfClass:[DOMHTMLAnchorElement class]])
+            {
+                node = (DOMHTMLAnchorElement *)aDOMNode;
+            }
+            else
+            {
+                aDOMNode = [aDOMNode parentNode];
+                if ([aDOMNode isKindOfClass:[DOMHTMLAnchorElement class]])
+                {
+                    node = (DOMHTMLAnchorElement *)aDOMNode;
+                }
+            }    
+        }
+        
+        DOMText *followingTextNode = (DOMText *)[node nextSibling];
+        if (followingTextNode && [followingTextNode isKindOfClass:[DOMText class]])
+        {
+            NSString *followingText = [followingTextNode data];
+            if ([followingText length] > 0 && [followingText firstCharacter] == 160)
+            {
+                NSMutableString *replacementText = [followingText mutableCopy];
+                [replacementText replaceCharactersInRange:NSMakeRange(0, 1) withString:@" "];
+                
+                [self replaceDOMText:followingTextNode withText:replacementText];
+                
+                [replacementText release];
+            }
+        }
+    }
 }
 
 @end
