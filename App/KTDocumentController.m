@@ -81,6 +81,16 @@
 }
 
 #pragma mark -
+#pragma mark Creating New Documents
+
+- (IBAction)newDocument:(id)sender
+{
+    NSError *error = nil;
+    if (![self openUntitledDocumentAndDisplay:YES error:&error])
+    {
+        if (error) [self presentError:error];
+    }
+}
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
 {
