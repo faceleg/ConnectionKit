@@ -28,6 +28,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWindowController+Karelia.h"
+#import "NSBundle+Karelia.h"
 
 #import "BDAlias.h"
 #import "KSApplication.h"

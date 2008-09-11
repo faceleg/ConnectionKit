@@ -2297,6 +2297,7 @@
 		CE55B0EF0AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		CE55B0F00AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = zh_CN; path = zh_CN.lproj/MultipleSelection.html; sourceTree = "<group>"; };
 		CE55B0F20AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Prefs.nib; sourceTree = "<group>"; };
+		CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxGraylistedLicenses.h; sourceTree = "<group>"; };
 		CE5CA3190D15B90B0021E9B3 /* toolbar_html.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_html.tiff; sourceTree = "<group>"; };
 		CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = GenericFileServerIcon.icns; sourceTree = "<group>"; };
 		CE5CA3670D15C1DE0021E9B3 /* pageborder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = pageborder.tiff; sourceTree = "<group>"; };
@@ -4336,6 +4337,7 @@
 			children = (
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
+				CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
