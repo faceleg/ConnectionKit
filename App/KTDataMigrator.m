@@ -162,13 +162,7 @@
     OBPRECONDITION([docURL isFileURL]);
     
     [self setOldStoreURL:docURL];
-    
-    // We'll do the migration to the tmp directory in case of a crash
-    NSString *tmpDirPath = NSTemporaryDirectory();
-    NSString *newDocPath = [[[[tmpDirPath stringByAppendingPathComponent:@"Sandvox"]
-                              stringByAppendingPathComponent:@"Data Migration"]
-                             stringByAppendingPathComponent:[NSString UUIDString]] stringByAppendingPathExtension:@"svxSite"];
-    [self setNewDocumentURL:[NSURL fileURLWithPath:newDocPath]];
+    [self setNewDocumentURL:docURL];
     
     return self;
 }
@@ -270,7 +264,7 @@
     return result;
 }
 
-/*  Handles all migration apart from pre-flight backup
+/*  Handles all migration, regardless of thread
  */
 - (BOOL)_migrate:(NSError **)outError
 {
@@ -303,36 +297,19 @@
         
         // Migrate!
         result = [self genericallyMigrateDataFromOldModelVersion:kKTModelVersion_ORIGINAL error:&localError];
-        
-        
-        // After migration we can dispose of the new doc. This ensures it is done on the right thread
-        [self setNewDocument:nil];
+        if (!result) return NO;
         
         
         // Backup the old doc
-        NSURL *finalDocumentURL = [[[self oldStoreURL] copy] autorelease];
-        
         result = [self backupOldDocumentAfterMigration:&localError];
-        if (result)
-        {
-            // Move the finished doc to the correct location
-            result = [[NSFileManager defaultManager] movePath:[[self newDocumentURL] path]
-                                                       toPath:[finalDocumentURL path]
-                                                      handler:nil];
-            if (result)
-            {
-                [self setNewDocumentURL:finalDocumentURL];
-            }
-            else
-            {
-                // we cannot proceed, pass back an error and return NO
-                NSString *errorDescription = [NSString stringWithFormat:
-                                              NSLocalizedString(@"Unable to rename document from %@ to %@. Upgrade cannot be completed.","Alert: Unable to rename document from %@ to %@. Upgrade cannot be completed."),
-                                              [[self newDocumentURL] path], [finalDocumentURL path]];
-                
-                localError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
-            }
-        }
+        if (!result) return NO;
+        
+        
+        // Save the new doc to the correct location
+        KTDocument *document = [self newDocument];
+        result = [document saveToURL:[self newDocumentURL] ofType:[document fileType] forSaveOperation:NSSaveAsOperation error:outError];
+        
+        [self setNewDocument:nil];
     }
     
     
@@ -493,16 +470,7 @@
 	
     
 	// Migrate (this recurses into pages and so on)
-    if (![self migrateDocumentInfo:outError])
-    {
-        return NO;
-    }
-    
-    
-    // Save the doc and finish up
-    KTDocument *document = [self newDocument];
-    BOOL result = [document saveToURL:[self newDocumentURL] ofType:[document fileType] forSaveOperation:NSSaveAsOperation error:outError];
-    
+    BOOL result = [self migrateDocumentInfo:outError];
     return result;
 }
 
@@ -1058,16 +1026,7 @@
 			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSPathIsDirectory localizedDescription:NSLocalizedString(@"Specified document path is a directory.","Specified document path is a directory.")];
             return NO;
         } 
-		else 
-		{
-            if ( ![fileManager removeFileAtPath:aStorePath handler:nil] ) 
-			{
-				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSCannotRemove localizedDescription:[NSString stringWithFormat:
-                                                                                                                           NSLocalizedString(@"Can\\U2019t remove pre-existing file at path (%@)","Error: Can't remove pre-existing file at path (%@)"), aStorePath]];      
-                return NO;
-            }
-        }
-    } 
+	} 
 	else if ( [fileManager fileExistsAtPath:storeDirectory isDirectory:&isDirectory] ) 
 	{
         if ( isDirectory )
