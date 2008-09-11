@@ -403,8 +403,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 					else if ([tag hasPrefix:kStringIndicator])
 					{
 						NSString *toAppend = [self componentLocalizedString:tag];
-						OBASSERT(toAppend);
-						[htmlString appendString:toAppend];
+						if (toAppend) [htmlString appendString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
