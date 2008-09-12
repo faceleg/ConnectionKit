@@ -608,14 +608,10 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPage class]])	// was the selected item the page?
 		{
-			//			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			if ([((KTPage *)myCurrentSelection) isCollection])
 			{
-				NSString *identifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
-				
 				// Select the right choice in the "Index" popup
-				KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
-				NSString *pluginIdentifier = [[plugin bundle] bundleIdentifier];
+				NSString *pluginIdentifier = [myCurrentSelection wrappedValueForKey:@"collectionIndexBundleIdentifier"];
 				int itemIndex = (pluginIdentifier) ? [oIndexPopup indexOfItemWithRepresentedObject:pluginIdentifier] : -1;
 				if (itemIndex == -1) itemIndex = 0;
 				[oIndexPopup selectItemAtIndex:itemIndex];
