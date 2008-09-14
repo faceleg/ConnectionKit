@@ -92,8 +92,8 @@
 	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[parent sortedChildren]];
 	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:self];
 	
-	// Check that we were actually found.  Mystery case 34642. If not found, just 
-	if (NSNotFound != whereSelfInParent)
+	// Check that we were actually found.  Mystery case 34642, or 34974.  
+	if ( (NSNotFound != whereSelfInParent) && (index < [newSortedChildren count]) && (index < [newSortedChildren count]) )
 	{
 		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
 		[KTPage setCollectionIndexForPages:newSortedChildren];
@@ -106,7 +106,7 @@
 	}
 	else
 	{
-		NSLog(@"moveToIndex: unable to find %@", self);
+		NSLog(@"moveToIndex: trying to move from %d to %d in an array of %d elements", whereSelfInParent, index, [newSortedChildren count]);
 	}
 }
 
