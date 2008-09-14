@@ -121,7 +121,17 @@
 	[savePanel setCanCreateDirectories:YES];
 	
 	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
+	
+	NSButton *helpButton = [[[NSButton alloc] initWithFrame:NSMakeRect(20, 20, 21, 23)] autorelease];
+	[helpButton setBezelStyle:NSHelpButtonBezelStyle];
+	[helpButton setTitle:@""];
+	[helpButton setTarget:self];
+	[helpButton setAction:@selector(newDocShowHelp:)];
+
 	[savePanel setAccessoryView:oNewDocAccessoryView];
+
+	NSView *view = [oNewDocAccessoryView superview];		// we want this to be ABOVE the accessory view.
+	[view addSubview:helpButton];
 	
 	NSSet *pagePlugins = [KTElementPlugin pagePlugins];
 	[KTElementPlugin addPlugins:pagePlugins
@@ -292,6 +302,11 @@
 			[super noteNewRecentDocument:aDocument];
 		}
 	}
+}
+
+- (IBAction)newDocShowHelp:(id)sender
+{
+	[[NSApp delegate] showHelpPage:@"Replacing_the_Home_Page_with_an_alternative_page_type"];		// HELPSTRING
 }
 
 - (BOOL)alertShowHelp:(NSAlert *)alert
