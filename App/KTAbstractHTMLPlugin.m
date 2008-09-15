@@ -68,8 +68,9 @@
 		
 // TODO: We should not be referncing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
 		
-		// Create the icon, falling back to the broken image if necessary
-		myIcon = [[NSImage alloc] initByReferencingFile:filename];
+		//	Create the icon, falling back to the broken image if necessary
+		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
+		myIcon = [[NSImage alloc] initWithContentsOfFile:filename];
 		if (!myIcon)
 		{
 			myIcon = [[NSImage brokenImage] retain];
