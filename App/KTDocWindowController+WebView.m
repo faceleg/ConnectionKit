@@ -1300,7 +1300,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
     
     [anchor setHref:link];
     if (openLinkInNewWindow) [anchor setTarget:@"_blank"];
-	[anchor setInnerText:[selectedRange toString]];
+	[anchor appendChild:[selectedRange cloneContents]];
     
     
     // Insert the link into the DOM
