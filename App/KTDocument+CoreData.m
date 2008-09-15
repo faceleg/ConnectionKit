@@ -108,6 +108,8 @@
 										   ofType:(NSString *)fileType 
 											error:(NSError **)error
 {
+	BOOL result = YES;
+	
 	//LOGMETHOD;
 	
     // NB: called whenever a document is opened *and* when a document is first saved
@@ -119,23 +121,25 @@
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
 	NSPersistentStoreCoordinator *psc = [[self managedObjectContext] persistentStoreCoordinator];
-	id theStore = [psc addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType] 
-									configuration:nil 
-											  URL:storeURL
-										  options:nil 
-										 error:error];
+	result = (nil != [psc addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+									   configuration:nil
+												 URL:storeURL
+											 options:nil
+											   error:error]);
 	
 	// Also configure media manager's store
-	NSPersistentStoreCoordinator *mediaPSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-	[mediaPSC addPersistentStoreWithType:NSXMLStoreType
-					       configuration:nil
-									 URL:[KTDocument mediaStoreURLForDocumentURL:url]
-								 options:nil
-								   error:error];
+	if (result)
+	{
+		NSPersistentStoreCoordinator *mediaPSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
+		result = (nil != [mediaPSC addPersistentStoreWithType:NSXMLStoreType
+												configuration:nil
+														  URL:[KTDocument mediaStoreURLForDocumentURL:url]
+													  options:nil
+														error:error]);
+	}
 	
 	
 	
-	BOOL result = (nil != theStore);
 	if ( result )
     {
         // handle datastore open, grab documentInfo and root
