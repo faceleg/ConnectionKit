@@ -24,6 +24,7 @@
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"
 
+#import "NSArray+Karelia.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
@@ -290,14 +291,25 @@
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
-	if ([aDocument isKindOfClass:[KTDocument class]])
+	// By default, NSDocument tries to register itself even if it's not in the documents list.
+	if ([[self documents] containsObjectIdenticalTo:aDocument])
 	{
-		// we override here to prevent sample sites from being added to list
-		NSURL *documentURL = [aDocument fileURL];
-		NSString *documentPath = [documentURL path];
+		BOOL noteDocument = ![aDocument isKindOfClass:[KTPluginInstaller class]];
 		
-		NSString *samplesPath = [[NSBundle mainBundle] bundlePath];
-		if ( ![documentPath hasPrefix:samplesPath] )
+		if ([aDocument isKindOfClass:[KTDocument class]])
+		{
+			// we override here to prevent sample sites from being added to list
+			NSURL *documentURL = [aDocument fileURL];
+			NSString *documentPath = [documentURL path];
+			
+			NSString *samplesPath = [[NSBundle mainBundle] bundlePath];
+			if ([documentPath hasPrefix:samplesPath])
+			{
+				noteDocument = NO;
+			}
+		}
+		
+		if (noteDocument)
 		{
 			[super noteNewRecentDocument:aDocument];
 		}
@@ -477,11 +489,6 @@
 {
 	NSLog(@"!!WARNING!! -lastSavedDocument called; please re-enable -setLastSavedDocument calls elsewhere in the app.");
 	return myLastSavedDocumentWeakRef;
-}
-
-- (void)setLastSavedDocument:(KTDocument *)aDocument
-{
-	myLastSavedDocumentWeakRef = aDocument;
 }
 
 #pragma mark -
