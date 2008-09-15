@@ -277,3 +277,17 @@ a[href ^="https://"] {
     padding:3px 18px 3px 3px;
 }
 
+
+
+#feedback {
+	font-size:9px;
+	color:#888;
+}
+#feedback a {
+	font-weight:bold;
+	color:#888;
+    background: url(g/globe_sm.png) center right no-repeat !important;
+    padding-right: 12px !important;
+}
+
+

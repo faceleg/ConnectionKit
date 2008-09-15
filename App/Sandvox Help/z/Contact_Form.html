@@ -131,49 +131,72 @@ me@example.com, someoneelse@example.com
             </div>
         </div>
 
-        <p>The five default fields are already listed for you. You can change the order of the fields by dragging them within the list.</p>
+        <p>The five predefined fields are already listed for you. You can change the order of the fields by dragging them within the list.</p>
 
-        <p>The lock icon to the right of each default field indicates that these fields can not be deleted (although they can be hidden).</p>
+        <p>The lock icon to the right of each default field indicates that these fields can not be deleted (although they can be hidden).</p><a name="Display_Types" id="Display_Types"></a>
+
+        <h4><span class="mw-headline">Display Types</span></h4>
+
+        <p>There are several display types available for a field, although some types are not available for the predefined (locked) fields.</p>
+
+        <dl>
+            <dt>Text Field</dt>
+
+            <dd>A single line of input.</dd>
+
+            <dt>Text Area</dt>
+
+            <dd>Multiple lines of input, most useful for a free-form message.</dd>
+
+            <dt>Checkbox</dt>
+
+            <dd>For choosing an single option. Specify the text to the right of the checkbox in the "value" field. You can also indicate if the checkbox will initially be checked by checking "On by default."</dd>
+
+            <dt>Popup</dt>
+
+            <dd>For choosing a selection from a number of predefined options. Enter the choices in the inspector, separating with commas as you type; these will be converted into rearrangeable tokens. The first value will be the one initially chosen when a visitor loads your web page, so you may want to make the first item be something like "- Choose One -" to indicate that a choice needs to be made.</dd>
+
+            <dt>Radio buttons</dt>
+
+            <dd>Similar to popup, but all choices are presented as radio buttons. No button is initially chosen when the page is loaded.</dd>
+
+            <dt>Hidden</dt>
+
+            <dd>The input exists but is not shown to the visitor. The label and value will be still sent in the message. This might be useful if you wanted to prevent one of the predefined fields from being presented to the user. For example, you could specify a subject so that all your messages sent to you via this form have the same subject, or you could specify a fake email address and hide the email field if you wanted to use the contact form as an anonymous drop-box.</dd>
+
+            <dt>Send button</dt>
+
+            <dd>Only applicable for the send button; it doesn't make sense to have more or less than the one submission button.</dd>
+        </dl><a name="Predefined_Fields" id="Predefined_Fields"></a>
+
+        <h4><span class="mw-headline">Predefined Fields</span></h4>
 
         <dl>
             <dt>Name</dt>
 
-            <dd>The "Name" field can be hidden using the pull-down menu under "Type." The label on the "Name" field can be changed by typing a different label in the box marked "Label."</dd>
-        </dl>
+            <dd>Name of the person sending the message.</dd>
 
-        <dl>
             <dt>Email</dt>
 
-            <dd>To change the label on the "Email" field, click "Email" on the left and then type a new label in the "Label" box.</dd>
-        </dl>
+            <dd>Email of the person sending the message. You will be able to reply to the sender of the message when you receive the email.</dd>
 
-        <dl>
             <dt>Message Subject</dt>
 
-            <dd>
-                The default text field allows visitors to enter any subject they want. If you would like to give visitors a set list of subjects to choose from, select "Subject" on the left and then "Type" to Radio Buttons or Popup. Then list the choices you want visitors to see in the box marked "Choices." Separate the subjects with commas like this:
-                <pre>
-cheddar, stilton, edam
-</pre>You can also change the label for the field. If you choose to hide the subject field, you can enter text that will appear as the subject line for any message a visitor sends.
-            </dd>
-        </dl>
+            <dd>The subject of the message. You may wish to change the field type to popup or hidden if you wish to have a pre-defined subject to the email message you receive.</dd>
 
-        <dl>
             <dt>Message</dt>
 
-            <dd>Select "Message" on the left and then use the pull-down menu to hide the "Message" field or change it into a Send button. Type new text in the box marked "Label" to change the label of the "Message" field.</dd>
-        </dl>
+            <dd>Free-form text that the visitor of your page can use for their main message to you.</dd>
 
-        <dl>
             <dt>Send</dt>
 
-            <dd>Select "Send" on the left and then type new text in the box marked "Label" if you'd like to change the words on the Send button.</dd>
-        </dl>
+            <dd>The button that your page visitor must click upon in order to send the message to you.</dd>
+        </dl><a name="Adding_and_Rearranging_Fields" id="Adding_and_Rearranging_Fields"></a>
+
+        <h4><span class="mw-headline">Adding and Rearranging Fields</span></h4>
 
         <dl>
-            <dt>Add a Field</dt>
-
-            <dd>Click the + button in the lower left to add a new field. This can be useful if you'd like to ask visitors for different kinds of information.</dd>
+            <dd>Click the + button in the lower left to add a new field. This can be useful if you'd like to ask visitors for different kinds of information. These fields can be dragged up or down in the list to change their order. To delete a custom field, select it and click on the - button.</dd>
         </dl><a name="Testing" id="Testing"></a>
 
         <h2><span class="mw-headline">Testing</span></h2>
