@@ -99,6 +99,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  forSaveOperation:(NSSaveOperationType)saveOperation
 			error:(NSError **)outError
 {
+	OBPRECONDITION([absoluteURL isFileURL]);
+	
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
@@ -134,7 +137,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             result = [self performSaveToOperationToURL:absoluteURL error:outError];
         }
         else if (saveOperation == NSSaveAsOperation &&  // We can't support anything other than a standard Save operation when
-                 [absoluteURL isEqual:[self fileURL]])    // writing to the doc's URL
+                 [[absoluteURL path] isEqualToString:[[self fileURL] path]])    // writing to the doc's URL
         {                                           
             result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
         }
