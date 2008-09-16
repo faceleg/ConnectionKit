@@ -430,10 +430,13 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			
 			
 			// Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
+			[self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
 			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
 			{
 				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
 			}
+			[self autorelease];
+			
 			
 			if (![quickLookThumbnailWebView isLoading])
 			{

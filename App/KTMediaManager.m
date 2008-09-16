@@ -311,75 +311,84 @@ NSString *KTMediaLogDomain = @"Media";
 {
     KTMediaContainer *result = nil;
     
-    // Locate the media ref for the name
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND owner == %@", oldMediaRefName, oldElement];
-    NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObjectKS];
+    /// BUGSID:35057	Some 1.2 docs have a media ref with no corresponding media entry. This raises a Core Data
+	///					exception. We handle it by replacing with empty media
+	@try
+	{
+		// Locate the media ref for the name
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND owner == %@", oldMediaRefName, oldElement];
+		NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObjectKS];
         
-    
-    // Look up the media object
-    if (mediaRef)
-    {
-        NSManagedObject *oldMedia = [mediaRef valueForKey:@"media"];
-        
-        // Import either data or a path
-        NSData *oldMediaData = [oldMedia valueForKeyPath:@"mediaData.contents"];
-        NSString *oldMediaUTI = [oldMedia valueForKey:@"mediaUTI"];
-            
-        if ([oldMedia integerForKey:@"storageType"] == KTMediaCopyAliasStorage)
-        {
-            BDAlias *alias = [BDAlias aliasWithData:oldMediaData];
-            NSString *path = [alias fullPath];
-            if (path)
-            {
-                result = [self mediaContainerWithPath:path];
-            }
-            else
-            {
-                // We'll construct the MediaFile ourself to account for missing media
-                result = [self insertNewMediaContainer];
-                [result setSourceAlias:alias];
-                
-                KTMediaFile *mediaFile = [KTExternalMediaFile insertNewMediaFileWithAlias:alias
-                                                                   inManagedObjectContext:[self managedObjectContext]];
-                [result setValue:mediaFile forKey:@"file"];
-            }
-        }
-        else
-        {
-            NSString *mediaFileName = [oldMedia valueForKey:@"name"];
-            
-            result = [self mediaContainerWithData:oldMediaData
-                                         filename:mediaFileName
-                                              UTI:oldMediaUTI];
-            
-            
-            // This may fail fail as some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr).
-            // If so, go back to the original path
-            if (!result)
-            {
-                NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
-                if (!fileExtension || [fileExtension isEqualToString:@""])
-                {
-                    fileExtension = [mediaFileName pathExtension];
-                    mediaFileName = [mediaFileName stringByDeletingPathExtension];
-                }
-                
-                if (fileExtension && ![fileExtension isEqualToString:@""])
-                {
-                    result = [self mediaContainerWithData:oldMediaData
-                                                 filename:mediaFileName
-                                            fileExtension:fileExtension];
-                }
-            }
-        }
 		
+		// Look up the media object
+		if (mediaRef)
+		{
+			NSManagedObject *oldMedia = [mediaRef valueForKey:@"media"];
+			
+			// Import either data or a path
+			NSData *oldMediaData = [oldMedia valueForKeyPath:@"mediaData.contents"];
+			NSString *oldMediaUTI = [oldMedia valueForKey:@"mediaUTI"];
+			if ([oldMedia integerForKey:@"storageType"] == KTMediaCopyAliasStorage)
+			{
+				BDAlias *alias = [BDAlias aliasWithData:oldMediaData];
+				NSString *path = [alias fullPath];
+				if (path)
+				{
+					result = [self mediaContainerWithPath:path];
+				}
+				else
+				{
+					// We'll construct the MediaFile ourself to account for missing media
+					result = [self insertNewMediaContainer];
+					[result setSourceAlias:alias];
+					
+					KTMediaFile *mediaFile = [KTExternalMediaFile insertNewMediaFileWithAlias:alias
+																	   inManagedObjectContext:[self managedObjectContext]];
+					[result setValue:mediaFile forKey:@"file"];
+				}
+			}
+			else
+			{
+				NSString *mediaFileName = [oldMedia valueForKey:@"name"];
+				
+				result = [self mediaContainerWithData:oldMediaData
+											 filename:mediaFileName
+												  UTI:oldMediaUTI];
+				
+				
+				// This may fail fail as some UTIs do not have an associated file extension (namely com.pkware.zip-archive grrrrr).
+				// If so, go back to the original path
+				if (!result)
+				{
+					NSString *fileExtension = [[oldMedia valueForKey:@"originalPath"] pathExtension];
+					if (!fileExtension || [fileExtension isEqualToString:@""])
+					{
+						fileExtension = [mediaFileName pathExtension];
+						mediaFileName = [mediaFileName stringByDeletingPathExtension];
+					}
+					
+					if (fileExtension && ![fileExtension isEqualToString:@""])
+					{
+						result = [self mediaContainerWithData:oldMediaData
+													 filename:mediaFileName
+												fileExtension:fileExtension];
+					}
+				}
+			}
+			
+			
+			// There is potentially some rather large chunks of memory tied up by the old media, so turn into a fault
+			[[mediaRef managedObjectContext] refreshObject:oldMedia mergeChanges:NO];
+			[[mediaRef managedObjectContext] refreshObject:mediaRef mergeChanges:NO];
+		}
 		
-		// There is potentially some rather large chunks of memory tied up by the old media, so turn into a fault
-		[[mediaRef managedObjectContext] refreshObject:oldMedia mergeChanges:NO];
-		[[mediaRef managedObjectContext] refreshObject:mediaRef mergeChanges:NO];
     }
-    
-    
+	@catch (NSException *exception)
+	{
+		result = nil;
+	}
+	
+	
     return result;
 }
 
