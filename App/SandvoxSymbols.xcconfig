@@ -1,6 +1,3 @@
-// xcodebuild    build DEBUG_INFORMATION_FORMAT=dwarf STRIP_INSTALLED_PRODUCT=NO SEPARATE_STRIP=NO
-
-
 
 // grab SANDVOX_VERSION and SVN_VERSION
 #include "../Xcode/Configurations/Sandvox.xcconfig"
@@ -56,3 +53,8 @@ GCC_WARN_UNUSED_VALUE = YES
 LIBRARY_SEARCH_PATHS = $(BUILD_DIR)
 OTHER_LDFLAGS = -lssl -lcrypto -seg1addr 0x70000000
 PREBINDING = NO
+
+// xcodebuild    build DEBUG_INFORMATION_FORMAT=dwarf STRIP_INSTALLED_PRODUCT=NO SEPARATE_STRIP=NO
+
+// dwarf-with-dsym instead of dwarf
+

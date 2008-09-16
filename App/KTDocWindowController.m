@@ -868,7 +868,7 @@ from representedObject */
 	
 	NSDictionary *presetDict= [sender representedObject];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-	KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:identifier];
+	KTIndexPlugin *indexPlugin = identifier ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
 	
     if ( nil != indexPlugin )
     {		
@@ -879,11 +879,11 @@ from representedObject */
 		{
 			pageIdentifier = [indexBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
 		}
-		KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+		KTElementPlugin *pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier]  : nil;
 		if (nil == pagePlugin)
 		{
 			pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-			pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+			pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
 		}
 		if (nil == pagePlugin)
 		{
@@ -1089,18 +1089,18 @@ from representedObject */
 	if (!collectionPlugin)
 	{
 		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-		collectionPlugin = [KTIndexPlugin pluginWithIdentifier:defaultIdentifier];
+		collectionPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
 	}
 	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plugin to group the pages into");
 	
 	
 	NSBundle *collectionBundle = [collectionPlugin bundle];
 	NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-	KTElementPlugin *pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+	KTElementPlugin *pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
 	if ( nil == pagePlugin )
 	{
 		pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-		pagePlugin = [KTElementPlugin pluginWithIdentifier:pageIdentifier];
+		pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
 	}
 	if ( nil == pagePlugin )
 	{
@@ -2253,7 +2253,7 @@ from representedObject */
 							if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
 							{
 								NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-								KTIndexPlugin *indexPlugin = [KTIndexPlugin pluginWithIdentifier:defaultIdentifier];
+								KTIndexPlugin *indexPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
 								NSBundle *indexBundle = [indexPlugin bundle];
 								
 // FIXME: we should load up the properties from a KTPreset
