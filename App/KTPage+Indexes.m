@@ -62,7 +62,6 @@
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:flag];
-	[oldArchivePage setIsStale:YES];
 	
 	
 	[self setWrappedBool:flag forKey:@"includeInIndex"];

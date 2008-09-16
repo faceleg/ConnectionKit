@@ -150,8 +150,7 @@
 	
 	
 	// Create an archive to conatain the page if needed
-	KTArchivePage *archive = [self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
-	[archive setIsStale:YES];
+	[self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
 }
 
 
@@ -164,16 +163,12 @@
 	[[self mutableSetValueForKey:@"children"] removeObject:aPage];
 	[self invalidateSortedChildrenCache];
 	
-	// Delete / mark stale the corresponding archive page if unused now
+	// Delete the corresponding archive page if unused now
 	KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
 	if (archive)
 	{
 		NSArray *archivePages = [archive sortedPages];
-		if (archivePages && [archivePages count] > 0)
-		{
-			[archive setIsStale:YES];
-		}
-		else
+		if ([archivePages count] == 0)
 		{
 			[[self managedObjectContext] deleteObject:archive];
 		}
@@ -198,11 +193,7 @@
 		if (archive)
 		{
 			NSArray *archivePages = [archive sortedPages];
-			if (archivePages && [archivePages count] > 0)
-			{
-				[archive setIsStale:YES];
-			}
-			else
+			if ([archivePages count] == 0)
 			{
 				[[self managedObjectContext] deleteObject:archive];
 			}

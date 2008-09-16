@@ -105,7 +105,6 @@
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:!flag];
-	[oldArchivePage setIsStale:YES];
 	
 	
 	[self setWrappedBool:flag forKey:@"isDraft"];
@@ -268,7 +267,6 @@
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
-	[oldArchivePage setIsStale:YES];
 	
 	
 	[self willChangeValueForKey:@"editableTimestamp"];
@@ -305,8 +303,7 @@
 	
 	
 	// Mark our new archive page (if there is one) stale
-	KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
-	[archivePage setIsStale:YES];
+	[[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
 }
 
 /*	A property affecting the timestamp has changed, update it.
@@ -315,7 +312,6 @@
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
-	[oldArchivePage setIsStale:YES];
 	
 	
 	// Reload the timestamp
@@ -341,8 +337,7 @@
 	
 	
 	// Mark our new archive page (if there is one) stale
-	KTArchivePage *archivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
-	[archivePage setIsStale:YES];
+	[[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
 }
 
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;

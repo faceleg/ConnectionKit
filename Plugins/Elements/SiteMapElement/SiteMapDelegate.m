@@ -86,12 +86,7 @@
  */
 - (void)siteStructureDidChange:(NSNotification *)notification
 {
-	// If this is during an undo, ignore it as the staleness is managed for us
-	NSUndoManager *undoManager = [self undoManager];
-	if (![undoManager isUndoing] && ![undoManager isRedoing])
-	{
-		[[self delegateOwner] setIsStale:YES];
-	}
+	
 }
 
 #pragma mark -
