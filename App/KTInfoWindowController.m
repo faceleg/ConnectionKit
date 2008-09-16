@@ -283,8 +283,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	else if (nil != presetDict)
 	{
 		NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-		
-		KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
+		KTIndexPlugin *plugin = (identifier) ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
 		NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
 		
 		myIgnoreCollectionStyleChanges = YES;
@@ -312,7 +311,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (IBAction)changeIndexType:(id)sender
 {
 	NSString *pluginIdentifier = [sender representedObject];
-	KTIndexPlugin *plugin = [KSPlugin pluginWithIdentifier:pluginIdentifier];
+	KTIndexPlugin *plugin = (pluginIdentifier) ? [KSPlugin pluginWithIdentifier:pluginIdentifier] : nil;
 	
 	[[[self siteOutlineController] selectedPage] setIndexFromPlugin:plugin];
 }
