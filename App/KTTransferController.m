@@ -506,13 +506,20 @@ static NSArray *sReservedNames = nil;
 		[myController createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path like /User/ghulands/Sites/
 		if ( flag )
 		{
-			[myController setPermissions:myDirectoryPermissions forFile:builtupPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myDirectoryPermissions forFile:builtupPath];
+			}
 		}
 		[myPathsCreated addObject:[NSString stringWithString:builtupPath]];
 	}
 	
 	if (!myKeepPublishing) return;
-	[myController setPermissions:myDirectoryPermissions forFile:builtupPath];
+	
+	if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+	{
+		[myController setPermissions:myDirectoryPermissions forFile:builtupPath];
+	}
 }
 
 /*	Uploads the specified page
@@ -562,7 +569,10 @@ static NSArray *sReservedNames = nil;
             [myUploadedPageDataDigests setObject:digest forKey:page copyKeyFirst:NO];
             [self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
             [self uploadFromData:pageData toFile:uploadPath];
-            [myController setPermissions:myPagePermissions forFile:uploadPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myPagePermissions forFile:uploadPath];
+			}
         }
     }
     
@@ -574,7 +584,10 @@ static NSArray *sReservedNames = nil;
         NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
         NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
         [self uploadFromData:RSSData toFile:RSSUploadPath];
-        [myController setPermissions:myPagePermissions forFile:RSSUploadPath];
+		if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+		{
+			[myController setPermissions:myPagePermissions forFile:RSSUploadPath];
+		}
     }
 }
 
@@ -901,7 +914,10 @@ static NSArray *sReservedNames = nil;
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
-			[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
+			}
 		}
 		
 		
@@ -1096,7 +1112,10 @@ if ([self where] == kGeneratingRemoteExport) {
 			NSString *masterCSSUploadPath = [designUploadPath stringByAppendingPathComponent:@"master.css"];
 			
 			[self uploadFromData:masterCSSData toFile:masterCSSUploadPath];
-			[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myPagePermissions forFile:masterCSSUploadPath];
+			}
 		}
 		
 		
@@ -1176,7 +1195,10 @@ if ([self where] == kGeneratingRemoteExport) {
         
         NSString *siteMapPath = [[self storagePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         [self uploadFromData:gzipped toFile:siteMapPath];
-		[myController setPermissions:myPagePermissions forFile:siteMapPath];
+		if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+		{
+			[myController setPermissions:myPagePermissions forFile:siteMapPath];
+		}
         
         // Don't ping google if we are just exporting
         if ([self where] != kGeneratingRemoteExport)
@@ -1252,13 +1274,19 @@ if ([self where] == kGeneratingRemoteExport) {
                                                                       allowLossyConversion:YES];
 			NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:filename];
             [self uploadFromData:mainCSSData toFile:uploadPath];
-			[myController setPermissions:myPagePermissions forFile:uploadPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myPagePermissions forFile:uploadPath];
+			}
         }
         else
         {
             NSString *uploadPath = [uploadDirectory stringByAppendingPathComponent:filename];
             [self uploadFile:aResource toFile:uploadPath];
-            [myController setPermissions:myPagePermissions forFile:uploadPath];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myController setPermissions:myPagePermissions forFile:uploadPath];
+			}
         }
 	}
 	
@@ -1333,7 +1361,10 @@ if ([self where] == kGeneratingRemoteExport) {
 		NSString *aResourceFilename = [aResourceSourcePath lastPathComponent];
 		NSString *aResourceUploadPath = [resourcesDirectoryPath stringByAppendingPathComponent:aResourceFilename];
 		[self uploadFile:aResourceSourcePath toFile:aResourceUploadPath];
-		[myController setPermissions:myPagePermissions forFile:aResourceUploadPath];
+		if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+		{
+			[myController setPermissions:myPagePermissions forFile:aResourceUploadPath];
+		} 
 	}
 }
 

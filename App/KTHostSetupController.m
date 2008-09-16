@@ -987,7 +987,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// Upload file ... same as in connection:didConnectToHost:
 	NSString *remoteFile = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
 	[myTestConnection uploadFile:myTemporaryTestFilePath toFile:remoteFile];
-	[myTestConnection setPermissions:0644 forFile:remoteFile];
+	
+	if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+	{
+		[myTestConnection setPermissions:0644 forFile:remoteFile];
+	}
 	
 	LOG((remoteFile));
 	
@@ -1033,7 +1037,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				LOG((@"Creating Directory: %@", builtupPath));
 				[myTestConnection createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path liek /User/ghulands/Sites/
 			}
-			[myTestConnection setPermissions:0755 forFile:path];
+			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			{
+				[myTestConnection setPermissions:0755 forFile:path];
+			}
 			LOG((@"Changing to %@", builtupPath));
 			[myTestConnection changeToDirectory:builtupPath];
 		}
