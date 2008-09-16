@@ -103,7 +103,21 @@
 
 - (void)setIsDraft:(BOOL)flag;
 {
+	// Mark our old archive page (if there is one) stale
+	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:!flag];
+	[oldArchivePage setIsStale:YES];
+	
+	
 	[self setWrappedBool:flag forKey:@"isDraft"];
+	
+	
+	// Delete the old archive page if it has nothing on it now
+	if (oldArchivePage)
+	{
+		NSArray *pages = [oldArchivePage sortedPages];
+		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
+	}
+	
 	
 	// By toggling draft status, the site structure must have changed
 	[self postSiteStructureDidChangeNotification];

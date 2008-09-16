@@ -60,7 +60,21 @@
 
 - (void)setIncludeInIndex:(BOOL)flag
 {
+	// Mark our old archive page (if there is one) stale
+	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:flag];
+	[oldArchivePage setIsStale:YES];
+	
+	
 	[self setWrappedBool:flag forKey:@"includeInIndex"];
+	
+	
+	// Delete the old archive page if it has nothing on it now
+	if (oldArchivePage)
+	{
+		NSArray *pages = [oldArchivePage sortedPages];
+		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
+	}
+	
 	
 	// We must update the parent's list of pages
 	[[self parent] invalidatePagesInIndexCache];
@@ -579,7 +593,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	// Delete or add archive pages as needed
 	if (generateArchive)
 	{
-		NSSet *children = [self children];
+		NSArray *children = [self navigablePages];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
 		KTPage *aPage;
 		

@@ -53,7 +53,7 @@
 	NSDate *endDate = [self valueForKey:@"archiveEndDate"];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:
-							  @"editableTimestamp BETWEEN { %@, %@ } AND includeInIndex == 1",
+							  @"editableTimestamp BETWEEN { %@, %@ } AND includeInIndexAndPublish == 1",
 							  startDate,
 							  endDate];
 	
