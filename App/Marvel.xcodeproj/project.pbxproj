@@ -7266,7 +7266,6 @@
 		};
 		CE15C2BD0E75CA0F00755113 /* Release w/ Symbols */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -7275,7 +7274,7 @@
 		};
 		CE15C2BE0E75CA0F00755113 /* Release w/ Symbols */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
+			baseConfigurationReference = CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7294,8 +7293,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = Sandvox;
+				SEPARATE_STRIP = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = "Release w/ Symbols";
 		};
