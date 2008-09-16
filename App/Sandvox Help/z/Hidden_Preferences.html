@@ -142,6 +142,14 @@ defaults delete com.karelia.Sandvox metaRobots
         </dl>
 
         <dl>
+            <dt>Publishing sets permissions</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ConnectionSetsPermissions -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Normally when <a href="Publishing_Your_Site.html" title="Publish">publishing</a>, Sandvox sets the Unix file permissions for each file that it uploads (see above setting). However, some servers refuse to allow setting permissions and disconnect immediately. Setting this hidden preference to "NO" will tell Sandvox to ignore setting file permissions on the server, allowing publishing to continue.</dd>
+        </dl>
+
+        <dl>
             <dt>Apache publishing folder</dt>
 
             <dd><code>defaults write com.karelia.Sandvox ApacheDocRoot "<span class="prefValue">/Library/WebServer/Documents</span>"</code></dd>
@@ -469,16 +477,6 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd><code>defaults write com.karelia.Sandvox DisableCustomSiteOutlineIcons -bool <span class="prefValue">YES</span></code></dd>
 
             <dd>Stops Sandvox generating a custom Site Outline thumbnail image when appropriate. e.g. <a href="Photo.html" title="Photo">Photo</a> pages and <a href="File_Download.html" title="File Download">File Download</a> pages</dd>
-        </dl><a name="Amazon" id="Amazon"></a>
-
-        <h2><span class="mw-headline">Amazon</span></h2>
-
-        <dl>
-            <dt>Amazon Associate ID</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox AmazonAssociateID "<span class="prefValue">myamazonid-20</span>"</code></dd>
-
-            <dd>By default, <a href="Amazon_List.html" title="Amazon List">Amazon Lists</a> link to Amazon products using Karelia's Associate ID. This preference lets you override this and use your own Associate ID instead when creating an <a href="Amazon_List.html" title="Amazon List">Amazon List</a> where you pick the individual products yourself. For lists which are loaded from an online Amazon list (e.g. a Wish List), the associate ID cannot be overridden.</dd>
         </dl><a name="Contact_Form" id="Contact_Form"></a>
 
         <h2><span class="mw-headline">Contact Form</span></h2>
