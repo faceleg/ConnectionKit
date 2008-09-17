@@ -42,9 +42,6 @@ KTCollectionPathStyle;
 - (KTDocumentInfo *)documentInfo;
 
 // Title
-- (void)setTitleHTML:(NSString *)value;
-- (NSString *)titleText;
-- (void)setTitleText:(NSString *)value;
 - (BOOL)canEditTitle;
 
 - (BOOL)shouldUpdateFileNameWhenTitleChanges;

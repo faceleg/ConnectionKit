@@ -97,9 +97,11 @@
 #pragma mark -
 #pragma mark Title
 
+/*	We supplement superclass behaviour by implementing page-specific actions
+ */
 - (void)setTitleHTML:(NSString *)value
 {
-	[self setWrappedValue:value forKey:@"titleHTML"];
+	[super setTitleHTML:value];
 	
 	
 	// The site structure has changed as a result of this
@@ -111,28 +113,6 @@
 	{
 		[self setValue:[self suggestedFileName] forKey:@"fileName"];
 	}
-	
-	
-	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	KTCollectionSortType sorting = [[self parent] collectionSortOrder];
-	if (sorting == KTCollectionSortAlpha || sorting == KTCollectionSortReverseAlpha)
-	{
-		[[self parent] invalidateSortedChildrenCache];
-	}
-}
-
-- (NSString *)titleText	// get title, but without attributes
-{
-	NSString *html = [self valueForKey:@"titleHTML"];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
-}
-
-// We set attributed title, but since we're giving it plain text, it's just an attributed version of that.
-
-- (void)setTitleText:(NSString *)value
-{
-	[self setTitleHTML:[value stringByEscapingHTMLEntities]];
 }
 
 // For bindings.  We can edit title if we aren't root;
@@ -141,6 +121,7 @@
 	BOOL result = ![self isRoot];
 	return result;
 }
+
 
 /*	These accessors are tacked on to 1.5. They should become a proper part of the model in 2.0
  */

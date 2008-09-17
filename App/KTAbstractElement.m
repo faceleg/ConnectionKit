@@ -34,6 +34,14 @@
 @implementation KTAbstractElement
 
 #pragma mark -
+#pragma mark Class Methods
+
++ (void)initialize
+{
+	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
+}
+
+#pragma mark -
 #pragma mark Core Data
 
 /*!	Called when an object is done initializing; specifically, the bundle has been set.
@@ -266,6 +274,29 @@
 - (BOOL)allowIntroduction
 {
 	return [[[self plugin] pluginPropertyForKey:@"KTElementAllowsIntroduction"] boolValue];
+}
+
+#pragma mark title
+
+- (NSString *)titleHTML { return [self wrappedValueForKey:@"titleHTML"]; }
+
+/*	Very simple accessor for setting the titleHTML. Page subclasses override this to do additional work
+ */
+- (void)setTitleHTML:(NSString *)value
+{
+	[self setWrappedValue:value forKey:@"titleHTML"];
+}
+
+- (NSString *)titleText	// get title, but without attributes
+{
+	NSString *html = [self titleHTML];
+	NSString *result = [html stringByConvertingHTMLToPlainText];
+	return result;
+}
+
+- (void)setTitleText:(NSString *)value
+{
+	[self setTitleHTML:[value stringByEscapingHTMLEntities]];
 }
 
 #pragma mark -

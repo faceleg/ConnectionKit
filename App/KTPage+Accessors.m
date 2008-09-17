@@ -45,6 +45,24 @@
 - (void)setDisableComments:(BOOL)disableComments { [self setWrappedBool:disableComments forKey:@"disableComments"]; }
 
 #pragma mark -
+#pragma mark Title
+
+/*	Pages may need to be resorted after changing the title. This only affects KTPage, not KTAbstractPage
+ */
+- (void)setTitleHTML:(NSString *)value
+{
+	[super setTitleHTML:value];
+	
+	
+	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
+	KTCollectionSortType sorting = [[self parent] collectionSortOrder];
+	if (sorting == KTCollectionSortAlpha || sorting == KTCollectionSortReverseAlpha)
+	{
+		[[self parent] invalidateSortedChildrenCache];
+	}
+}
+
+#pragma mark -
 #pragma mark Pro
 
 - (NSString *)googleAnalytics

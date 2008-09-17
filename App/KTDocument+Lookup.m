@@ -98,7 +98,7 @@
 
 // Return the appropriate localization for these default values.
 
-- (NSString *) titleHTML
+- (NSString *)titleHTML
 {
 	// Note: the use of NS...Localized...String...With...Default...Value below gets this string picked up by genstrings for 
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"titleHTML" language:[[[[self documentInfo] root] master] valueForKey:@"language"]

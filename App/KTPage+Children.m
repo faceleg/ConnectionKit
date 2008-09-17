@@ -524,7 +524,7 @@
 	KTPage *child;
 	while ( child = [e nextObject] )
 	{
-		[titlesArray addObject:[child wrappedValueForKey:@"titleHTML"]];
+		[titlesArray addObject:[child titleHTML]];
 	}
 	[titlesArray sortUsingSelector:@selector(caseInsensitiveCompare:)];
 	int result = [titlesArray indexOfObject:sortableTitle];

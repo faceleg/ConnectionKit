@@ -56,8 +56,6 @@
 	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
     
     // Title
-	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
-	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"fileName"];
                                 [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
     triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
     
@@ -287,7 +285,7 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [self valueForKey:@"titleHTML"];
+		NSString *titleHTML = [self titleHTML];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
 		{
 			[self setTitleText:title];

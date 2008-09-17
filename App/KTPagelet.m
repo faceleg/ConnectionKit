@@ -156,10 +156,10 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [self valueForKey:@"titleHTML"];
+		NSString *titleHTML = [self titleHTML];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
 		{
-			[self setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
+			[self setTitleHTML:[title stringByEscapingHTMLEntities]];
 		}
 	}
 }
@@ -200,13 +200,6 @@
 - (BOOL)showBorder { return [self wrappedBoolForKey:@"showBorder"]; }
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
-
-- (NSString *)titleHTML { return [self wrappedValueForKey:@"titleHTML"]; }
-
-/*	used in bindings from page templates...		*/
-- (NSString *)titleText { return [[self titleHTML] stringByConvertingHTMLToPlainText]; }
-
-- (void)setTitleHTML:(NSString *)value { [self setWrappedValue:value forKey:@"titleHTML"]; }
 
 - (NSString *)titleLinkURLPath { return [self wrappedValueForKey:@"titleLinkURLPath"]; }
 

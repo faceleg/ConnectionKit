@@ -64,10 +64,6 @@ typedef enum {
 - (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)flag;
 
-- (NSString *)titleText;
-- (NSString *)titleHTML;
-- (void)setTitleHTML:(NSString *)value;
-
 - (NSString *)titleLinkURLPath;
 - (void)setTitleLinkURLPath:(NSString *)aTitleLinkURLPath;
 

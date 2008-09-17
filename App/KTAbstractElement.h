@@ -50,6 +50,11 @@
 - (KTPage *)page;	// enclosing page (self if this is a page)
 - (BOOL)allowIntroduction;
 
+- (NSString *)titleHTML;
+- (void)setTitleHTML:(NSString *)value;
+- (NSString *)titleText;
+- (void)setTitleText:(NSString *)title;
+
 // Media
 - (KTMediaManager *)mediaManager;
 - (NSSet *)requiredMediaIdentifiers;

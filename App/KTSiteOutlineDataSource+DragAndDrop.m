@@ -316,9 +316,9 @@
 							NSDictionary *pboardInfo = [NSUnarchiver unarchiveObjectWithData:pagesPboardData];
 							NSArray *pagesArray = [pboardInfo valueForKey:@"pages"];
 							NSDictionary *firstPage = [pagesArray firstObjectKS];
-							if ( nil != [firstPage valueForKey:@"titleHTML"] )
+							if ( nil != [firstPage objectForKey:@"titleHTML"] )
 							{
-								title = [firstPage valueForKey:@"titleHTML"];
+								title = [firstPage objectForKey:@"titleHTML"];
 							}
 						}
 						if ( nil == title )
