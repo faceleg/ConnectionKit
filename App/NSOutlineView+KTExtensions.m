@@ -24,12 +24,54 @@
 	return result;
 }
 
+/*	A similar method is available on Leopard. Ours:
+ *		A) Supports Tiger
+ *		B) Uses the data source to do the dirty work, which should be generally better
+ */
+- (id)parentOfItem:(id)item
+{
+	id result = nil;
+	
+	id datasource = [self dataSource];
+	if (datasource && [datasource respondsToSelector:@selector(outlineView:parentOfItem:)])
+	{
+		result = [datasource outlineView:self parentOfItem:item];
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Selection
 
 - (void)expandSelectedRow
 {
 	[self expandItem:[self itemAtRow:[self selectedRow]]];
+}
+
+/*	Walks up the hierarchy expanding the item's parents so that it is visible.
+ *	Returns the row the item ends up at. (-1 if the op couldn't be done)
+ */
+- (int)makeItemVisible:(id)item
+{
+	OBPRECONDITION(item);
+	
+	int result = [self rowForItem:item];
+	if (result < 0)
+	{
+		id parent = [self parentOfItem:item];
+		if (parent)
+		{
+			int parentRow = [self makeItemVisible:parent];
+			if (parentRow >= 0)
+			{
+				[self expandItem:parent];
+				result = [self rowForItem:item];
+			}
+		}
+	}
+	
+	return result;
 }
 
 - (void)selectItem:(id)anItem
@@ -73,23 +115,31 @@
     
     NSEnumerator *e = [theItems objectEnumerator];
     id item;
-    while ( item = [e nextObject] )
+    while (item = [e nextObject])
     {
         int row = [self rowForItem:item];
-        if ( 0 <= row )
+		
+		// If the item doesn't have a row, it is presumably hidden inside a collapsed parent.
+		// We must work up the hierarchy expanding items until it becomes visible.
+		if (row < 0)
+		{
+			row = [self makeItemVisible:item];
+		}
+		
+        if (row >= 0)
         {
             [indexSet addIndex:row];
         }
     }
     
-    if ( [indexSet count] > 0 )
+    if ([indexSet count] > 0)
     {
         [self selectRowIndexes:indexSet byExtendingSelection:NO];
-		if ( aFlag )
+		
+		if (aFlag)
 		{
-			NSNotification *notification = [NSNotification notificationWithName:NSOutlineViewSelectionDidChangeNotification
-																		 object:self];
-			[[NSNotificationCenter defaultCenter] postNotification:notification];
+			[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
+																object:self];
 		}
     }
 }

@@ -516,6 +516,17 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	return result;
 }
 
+- (id)outlineView:(NSOutlineView *)outlineView parentOfItem:(id)item
+{
+	id result = nil;
+	if ([item isKindOfClass:[KTPage class]])
+	{
+		result = [item parent];
+	}
+	
+	return result;
+}
+
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)aNewValue forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	; // we don't accept editing of page title via the site outline

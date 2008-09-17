@@ -648,7 +648,7 @@
 		else if ([scheme isEqualToString:@"applewebdata"] && ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther) )
 		{
 			KTPage *thePage = [[[self windowController] document] pageForURLPath:[url path]];
-			if (nil == thePage)
+			if (!thePage)
 			{
 				[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window]
 											silencingKey:@"shutUpFakeURL"
@@ -660,41 +660,8 @@
 			}
 			else
 			{
-				NSMutableArray *toExpandArray = [NSMutableArray array];
-				
-				KTPage *toExpand = thePage;
-				int row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
-				while (row < 0)
-				{
-					// couldn't find in site outline, add parent
-					toExpand = [toExpand parent];
-					OBASSERT(toExpand);	// case 34150
-					if (toExpand)
-					{
-						[toExpandArray addObject:toExpand];
-					}
-					row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:toExpand];
-				}
-				// Now we have list of items to expand.	Go backward through that list, expanding farthest ancestor first
-				NSEnumerator *theEnum = [toExpandArray reverseObjectEnumerator];
-				
-				while (nil != (toExpand = [theEnum nextObject]) )
-				{
-					[[[[self windowController] siteOutlineController] siteOutline] expandItem:toExpand];
-				}
-				
-				// Now we should have our row
-				row = [[[[self windowController] siteOutlineController] siteOutline] rowForItem:thePage];
-				if (row >= 0)
-				{
-					[[[[self windowController] siteOutlineController] siteOutline] selectRow:row byExtendingSelection:NO];
-					[listener use];	// it's been loaded for us I think
-				}
-				else
-				{
-					NSBeep();
-					[listener ignore];
-				}
+				[[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
+				[listener use];	// it's been loaded for us I think
 			}
 		}
 		else if([scheme isEqualToString:@"file"] )

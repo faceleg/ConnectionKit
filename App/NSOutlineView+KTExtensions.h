@@ -29,9 +29,11 @@
 - (NSArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
 - (NSIndexSet *)rowsForItems:(NSArray *)items;
 
+- (id)parentOfItem:(id)item;
 
 #pragma mark Selection
 - (void)expandSelectedRow;
+- (int)makeItemVisible:(id)item;
 
 - (void)selectItem:(id)anItem;
 - (void)selectItem:(id)anItem forceDidChangeNotification:(BOOL)aFlag;
@@ -48,4 +50,9 @@
 - (void)setItemNeedsDisplay:(id)item childrenNeedDisplay:(BOOL)recursive;
 - (id)lastVisibleChildOfItem:(id)item;
 
+@end
+
+
+@interface NSObject (KTOutlineViewDataSourceExtensions)
+- (id)outlineView:(NSOutlineView *)outlineView parentOfItem:(id)item;
 @end
