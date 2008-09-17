@@ -75,7 +75,7 @@
     id item;
     while ( item = [e nextObject] )
     {
-        unsigned int row = [self rowForItem:item];
+        int row = [self rowForItem:item];
         if ( 0 <= row )
         {
             [indexSet addIndex:row];
