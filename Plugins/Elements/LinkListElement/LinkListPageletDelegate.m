@@ -68,10 +68,10 @@
 */
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
-	NSString *oldTitle = [[self delegateOwner] valueForKey:@"titleHTML"];
+	NSString *oldTitle = [[self delegateOwner] titleHTML];
 	[super awakeFromDragWithDictionary:aDictionary];
 	// Above sets the title ... Restore it to the generic.
-	[[self delegateOwner] setValue:oldTitle forKey:@"titleHTML"];
+	[[self delegateOwner] setTitleHTML:oldTitle];
 	
 	// We are building up this array
 	NSMutableArray *array = [NSMutableArray array];

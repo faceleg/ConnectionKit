@@ -81,7 +81,7 @@
 	
 	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
 	if ( nil != title ) {
-		[[self delegateOwner] setValue:[title stringByEscapingHTMLEntities] forKey:@"titleHTML"];
+		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
 	}
 }
 
