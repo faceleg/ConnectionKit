@@ -686,6 +686,8 @@ static NSArray *sReservedNames = nil;
 	return result; 
 }
 
+#pragma mark -
+#pragma mark Export
 
 - (void)savePanelDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 {
@@ -784,13 +786,12 @@ static NSArray *sReservedNames = nil;
 	{
 		/// defend against nil
 		if (nil == stemURL) stemURL = @"";
-		[oExportURL performSelector:@selector(setStringValue:) withObject:stemURL afterDelay:0.0];
+		[oExportURL performSelector:@selector(setStringValue:) withObject:[testURL absoluteString] afterDelay:0.0];
 		return NO;		// only way to replace and stop it .. though now we are OK!
 	}
 	
 	return YES;
 } 
-
 
 - (void)uploadEverything
 {
@@ -806,19 +807,15 @@ static NSArray *sReservedNames = nil;
 	[self removeAllParsedMediaFileUploads];
 	[self removeAllMediaFileUploads];
 	
-	BOOL hasRSSFeeds = [[self associatedDocument] hasRSSFeeds];
-	BOOL hasGoogleSiteMap = [[[self associatedDocument] documentInfo] boolForKey:@"generateGoogleSiteMap"];
-	
 	// Make sure we can upload somewhere. Select path if not.
-	if (kGeneratingRemoteExport ==  [self where]
-		&& (nil == [self storagePath] 
-			|| (hasRSSFeeds && [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.stemURL"] == nil) ) )
+	if ([self where] == kGeneratingRemoteExport &&
+        (![self storagePath] || ![[[[self associatedDocument] documentInfo] hostProperties] siteURL]))
 	{
 		NSSavePanel *savePanel = [NSSavePanel savePanel];
 		[savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
 		[savePanel setDelegate:self];
 		
-		if (( !hasRSSFeeds && !hasGoogleSiteMap) || [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.remoteSiteURL"])
+		if ([[[[self associatedDocument] documentInfo] hostProperties] siteURL])
 		{
 			[oExportURL setStringValue:@""];		// no export URL showing, so don't put in a value
 		}
