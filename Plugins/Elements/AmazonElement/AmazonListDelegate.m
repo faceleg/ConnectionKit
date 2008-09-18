@@ -257,7 +257,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 	else if ([keyPath isEqualToString:@"store"])
 	{
-		if (![changeNewObject isEqual:changeOldObject])
+		if (changeNewObject != [NSNull null] && ![changeNewObject isEqual:changeOldObject])
         {
 			[self storeDidChangeTo:[changeNewObject intValue]];
 		}

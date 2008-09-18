@@ -96,11 +96,10 @@
         
         // Page path or filename should match media generally
 		if ([(KTPage *)plugin shouldUpdateFileNameWhenTitleChanges])
-            {
-                NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
-                [(KTPage *)plugin setFileName:[filename stringByDeletingPathExtension]];
-            }
-		}
+        {
+            NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
+            [(KTPage *)plugin setFileName:[filename stringByDeletingPathExtension]];
+        }
         [(KTPage *)plugin setCustomPathRelativeToSite:nil];
 		
 		
