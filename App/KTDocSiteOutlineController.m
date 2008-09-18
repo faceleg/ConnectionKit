@@ -104,6 +104,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+    [self setWindowController:nil];
 	[self setSiteOutline:nil];
 	
 	
