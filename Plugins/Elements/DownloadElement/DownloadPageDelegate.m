@@ -86,22 +86,29 @@
 		// Turn on page replacement (it's off for imported pages)
 		[plugin setBool:YES forKey:@"uploadMediaInPlaceOfPage"];
 		
+        
 		
-		// Set page's file extension (and if needed path) to match media
+		// Page's file extension needs to match media
 		NSString *fileExtension = [[[(KTMediaContainer *)value file] currentPath] pathExtension];
 		[(KTPage *)plugin setCustomFileExtension:fileExtension];
 		
-		NSString *mediaPath = nil;
-		if (![plugin boolForKey:@"uploadMediaInPlaceOfPage"])
-		{
-			mediaPath = [[[(KTMediaContainer *)value file] defaultUpload] pathRelativeToSite];
+        
+        
+        // Page path or filename should match media generally
+		if ([(KTPage *)plugin shouldUpdateFileNameWhenTitleChanges])
+            {
+                NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
+                [(KTPage *)plugin setFileName:[filename stringByDeletingPathExtension]];
+            }
 		}
-		[(KTPage *)plugin setCustomPathRelativeToSite:mediaPath];
+        [(KTPage *)plugin setCustomPathRelativeToSite:nil];
 		
 		
+                
 		// Set our page's thumbnail to match the file's Finder icon
 		[(KTPage *)plugin setThumbnail:[value imageWithScaleFactor:1.0]];
 		
+                
 		
 		// Composite the download arrow onto the file's Finder icon
 		NSString *UTI = [NSString UTIForFileAtPath:[[value file] currentPath]];
