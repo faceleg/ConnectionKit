@@ -134,9 +134,12 @@ static NSManagedObjectModel *sKTComponentsModel;
 								substitutionVariable:(id)substitution
 											  forKey:(NSString *)substitutionKey
 {
-	NSDictionary *substitutions = [[NSDictionary alloc] initWithObjectsAndKeys:substitution, substitutionKey, nil];
+	OBPRECONDITION(substitutionKey);
+    
+    if (!substitution) substitution = [NSNull null];
+    
+    NSDictionary *substitutions = [NSDictionary dictionaryWithObject:substitution forKey:substitutionKey];
 	NSFetchRequest *result = [self fetchRequestFromTemplateWithName:name substitutionVariables:substitutions];
-	[substitutions release];
 	
 	return result;
 }
