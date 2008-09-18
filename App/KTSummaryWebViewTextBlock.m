@@ -36,7 +36,7 @@
 - (BOOL)becomeFirstResponder
 {
 	KTPage *page = [self HTMLSourceObject];
-	if (![page customSummaryHTML])
+	if (![page customSummaryHTML] && [page summaryHTMLKeyPath])
 	{
 		// We need to maintain the selected DOMRange after the full text has been inserted.
 		// Figure out index paths to the selection
@@ -93,7 +93,7 @@
 	if (result)
 	{
 		KTPage *page = [self HTMLSourceObject];
-		if (![page customSummaryHTML])
+		if (![page customSummaryHTML] && [page summaryHTMLKeyPath])
 		{
 			[[self DOMNode] setInnerHTML:[self innerHTML:kGeneratingPreview]];
 		}
@@ -108,7 +108,7 @@
 - (BOOL)commitEditing
 {
 	KTPage *page = [self HTMLSourceObject];
-	if ([page customSummaryHTML])
+	if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
 	{
 		[page setCustomSummaryHTML:[[self DOMNode] cleanedInnerHTML]];
 		return YES;
@@ -127,7 +127,7 @@
 	KTPage *page = [self HTMLSourceObject];
 	
 	NSString *result;
-	if ([page customSummaryHTML])
+	if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
 	{
 		result = [page customSummaryHTML];
 	}
@@ -148,7 +148,7 @@
 	KTPage *page = [self HTMLSourceObject];
 	
 	NSString *result;
-	if ([page customSummaryHTML])
+	if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
 	{
 		result = [page customSummaryHTML];
 	}

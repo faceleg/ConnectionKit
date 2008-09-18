@@ -233,7 +233,7 @@
 	return result;
 }
 
-- (NSString *)summary
+- (NSString *)summary   // Only called for page-within-page
 {
 	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:[self iFrameTemplateHTML]
 														component:[self delegateOwner]];
@@ -245,7 +245,7 @@
 	return result;
 }
 
-/*	A summary is only available if using page-witin-page
+/*	Summary differs if using page-witin-page
  */
 - (NSString *)summaryHTMLKeyPath
 {
@@ -255,11 +255,15 @@
 	{
 		result = @"delegate.summary";
 	}
-	
+    
 	return result;
 }
 
-- (BOOL)summaryHTMLIsEditable { return NO; }
+- (BOOL)summaryHTMLIsEditable
+{
+    BOOL result = ([[self delegateOwner] integerForKey:@"linkType"] != iframeLink);
+    return result;
+}
 
 #pragma mark -
 #pragma mark Support
