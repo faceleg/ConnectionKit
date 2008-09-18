@@ -11,7 +11,6 @@
 
 @protocol KTInspectorPlugin <NSObject>
 - (id)inspectorObject;	// The object to connect the objectController to (generally self)
-- (NSString *)uniqueID;
 - (NSBundle *)inspectorNibBundle;
 - (NSString *)inspectorNibName;
 - (id)inspectorNibOwner;	// The nib's "File's Owner" object (generally self)

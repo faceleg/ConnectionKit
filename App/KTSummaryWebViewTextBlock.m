@@ -73,7 +73,7 @@
                 {
                     endContainer = [[self DOMNode] descendantNodeAtIndexPath:selectionEndIndexPath];
                 }
-                [selection setEnd:endContainer offset:selectionEndOffset];
+                if (endContainer) [selection setEnd:endContainer offset:selectionEndOffset];
                 
                 [webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
             }

@@ -9,6 +9,7 @@
 #import "KTPluginInspectorViewsManager.h"
 
 #import "NSException+Karelia.h"
+#import "NSMutableDictionary+Karelia.h"
 #import "NSObject+Karelia.h"
 
 
@@ -74,13 +75,13 @@
  */
 - (NSView *)inspectorViewForPlugin:(id <KTInspectorPlugin>)plugin
 {
-	NSView *result = [myPluginInspectorViews objectForKey:[plugin uniqueID]];
+	NSView *result = [myPluginInspectorViews objectForKey:plugin];
 	
 	// If no Inspector view is found, try to load the plugin's nib file and return the result of that.
 	if (!result)
 	{
 		[self loadNibFileForPlugin:plugin];
-		result = [myPluginInspectorViews objectForKey:[plugin uniqueID]];
+		result = [myPluginInspectorViews objectForKey:plugin];
 	}
 	
 	return result;
@@ -115,24 +116,28 @@
 		return;
 	}
 	
+    
 	// Store the various nib objects
-	[myPluginInspectorViews setValue:inspectorView forKey:[plugin uniqueID]];
-	[myPluginControllers setValue:objectController forKey:[plugin uniqueID]];
-	[myPluginTopLevelObjects setObject:topLevelObjects forKey:[plugin uniqueID]];
+	[myPluginInspectorViews setObject:inspectorView forKey:plugin copyKeyFirst:NO];
+	
+    if (objectController)
+    {
+        [myPluginControllers setObject:objectController forKey:plugin copyKeyFirst:NO];
+    }
+    
+	[myPluginTopLevelObjects setObject:topLevelObjects forKey:plugin copyKeyFirst:NO];
 	[topLevelObjects makeObjectsPerformSelector:@selector(release)];	// Cancels out the retain from loading the nib
 }
 
 /*	Handy if you need to trim memory usage. e.g. you know the plugin will never have its view displayed again.
  */
 - (void)removeInspectorViewForPlugin:(id <KTInspectorPlugin>)plugin
-{
-	NSString *pluginID = [plugin uniqueID];
+{	
+	[[myPluginControllers objectForKey:plugin] setContent:nil];
+	[myPluginControllers removeObjectForKey:plugin];
 	
-	[[myPluginControllers objectForKey:pluginID] setContent:nil];
-	[myPluginControllers removeObjectForKey:pluginID];
-	
-	[myPluginTopLevelObjects removeObjectForKey:pluginID];
-	[myPluginInspectorViews removeObjectForKey:pluginID];
+	[myPluginTopLevelObjects removeObjectForKey:plugin];
+	[myPluginInspectorViews removeObjectForKey:plugin];
 }
 
 - (void)removeAllPluginInspectorViews
@@ -158,8 +163,7 @@
 	
 	while (aDeletedObject = [deletedObjectsEnumerator nextObject])
 	{
-		if ([aDeletedObject conformsToProtocol:@protocol(KTInspectorPlugin)] &&
-			[myPluginInspectorViews objectForKey:[(<KTInspectorPlugin>)aDeletedObject uniqueID]])
+		if ([aDeletedObject conformsToProtocol:@protocol(KTInspectorPlugin)])
 		{
 			[self removeInspectorViewForPlugin:aDeletedObject];
 		}
