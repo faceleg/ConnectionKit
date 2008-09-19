@@ -503,7 +503,7 @@
 		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
 		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
 		NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
-		docURL = [[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath];
+		docURL = [[[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath] autorelease];
 	}
 	
 	NSString *result = [[KTDocument siteURLForDocumentURL:docURL] path];
