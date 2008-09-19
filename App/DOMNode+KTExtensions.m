@@ -902,7 +902,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			NSFont *theFont = [NSFont fontWithName:fontName size:12.0];
 			
 			// If fixed pitch, mark that -- otherwise, do not output this style
-			if ([theFont isFixedPitch])
+			if (outWasTT && [theFont isFixedPitch])
 			{
 				*outWasTT = YES;
 //				if (NSNotFound != [fontName rangeOfString:@" "].location)
@@ -933,11 +933,17 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		}
 		else if ([keyValue isEqualToString:@"font-weight: bold"] && nil != outWasBold)
 		{
-			*outWasBold = YES;
+			if (outWasBold)
+			{
+				*outWasBold = YES;
+			}
 		}
 		else if ([keyValue isEqualToString:@"font-style: italic"] && nil != outWasItalic)
 		{
-			*outWasItalic = YES;
+			if (outWasItalic)
+			{
+				*outWasItalic = YES;
+			}
 		}
 		else
 		{

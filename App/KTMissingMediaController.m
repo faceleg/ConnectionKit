@@ -29,8 +29,14 @@
 - (void)getCommonSourcePath:(NSString **)sourceDir andDestinationPath:(NSString **)destDir
 			  forMoveToPath:(NSString *)destPath
 {
-	*sourceDir = self;
-	*destDir = destPath;
+	if (sourceDir)
+	{
+		*sourceDir = self;
+	}
+	if (destDir)
+	{
+		*destDir = destPath;
+	}
 	
 	NSArray *sourceComponents = [self pathComponents];
 	NSArray *destComponents = [destPath pathComponents];
@@ -43,8 +49,14 @@
 		NSString *aDestComponent = [destComponents objectAtReverseIndex:i];
 		if ([aSourceComponent isEqualToString:aDestComponent])
 		{
-			*sourceDir = [*sourceDir stringByDeletingLastPathComponent];
-			*destDir = [*destDir stringByDeletingLastPathComponent];
+			if (sourceDir)
+			{
+				*sourceDir = [*sourceDir stringByDeletingLastPathComponent];
+			}
+			if (destDir)
+			{
+				*destDir = [*destDir stringByDeletingLastPathComponent];
+			}
 		}
 		else
 		{

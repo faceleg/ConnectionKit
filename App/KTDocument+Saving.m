@@ -348,7 +348,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"Unable to save document", NSLocalizedDescriptionKey,
 																			failureReason, NSLocalizedFailureReasonErrorKey,
 																			path, NSFilePathErrorKey, nil];
-		*error = [NSError errorWithDomain:@"KTDocument" code:0 userInfo:userInfo];
+		if (error)
+		{
+			*error = [NSError errorWithDomain:@"KTDocument" code:0 userInfo:userInfo];
+		}
 	}
 	
 	return result;

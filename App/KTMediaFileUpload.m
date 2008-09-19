@@ -63,7 +63,7 @@
 {
     BOOL result = [super validateValue:value forKey:key error:error];
     
-    if (result && [key isEqualToString:@"pathRelativeToSite"])
+    if (nil != value && result && [key isEqualToString:@"pathRelativeToSite"])
     {
         NSString *path = *value;
         if (![NSURL URLWithString:path])    // A fairly quick, neat way to test conformance

@@ -227,8 +227,14 @@
 	if (result)
 	{
 		// Search for the inspector view and object controller
-		*inspectorView = nil;
-		*objectController = nil;
+		if (inspectorView)
+		{
+			*inspectorView = nil;
+		}
+		if (objectController)
+		{
+			*objectController = nil;
+		}
 		NSEnumerator *enumerator = [*topLevelObjects objectEnumerator];
 		id anObject;
 		
@@ -236,7 +242,7 @@
 		{
 			if ([anObject isKindOfClass:[NSObjectController class]] && ![anObject content])
 			{
-				if (*objectController)	// Already thinks it has an object controller? Could be a problem!
+				if (objectController && *objectController)	// Already thinks it has an object controller? Could be a problem!
 				{
 					NSString *identifier = [[plugin inspectorNibBundle] bundleIdentifier];
 					[NSException raise:kKareliaPluginException 
@@ -246,23 +252,29 @@
 				}
 				else
 				{
-					*objectController = anObject;
-					[*objectController setContent:plugin];
+					if (objectController)
+					{
+						*objectController = anObject;
+						[*objectController setContent:plugin];
+					}
 				}
 			}
 			else if ([anObject isKindOfClass:[NSView class]])
 			{
-				if (*inspectorView)	// Already thinks it has an inspector view? Could be a problem!
+				if (inspectorView)
 				{
-					NSString *identifier = [[plugin inspectorNibBundle] bundleIdentifier];
-					[NSException raise:kKareliaPluginException 
-										  reason:@"Unable to load inspector from bundle, more than one view object found." 
-										userInfo:[NSDictionary dictionaryWithObject:identifier forKey:@"plugin"]];
-					result = NO;
-				}
-				else
-				{
-					*inspectorView = anObject;
+					if (*inspectorView)	// Already thinks it has an inspector view? Could be a problem!
+					{
+						NSString *identifier = [[plugin inspectorNibBundle] bundleIdentifier];
+						[NSException raise:kKareliaPluginException 
+									reason:@"Unable to load inspector from bundle, more than one view object found." 
+								  userInfo:[NSDictionary dictionaryWithObject:identifier forKey:@"plugin"]];
+						result = NO;
+					}
+					else
+					{
+						*inspectorView = anObject;
+					}
 				}
 			}
 		}

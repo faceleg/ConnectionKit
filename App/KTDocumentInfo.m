@@ -217,9 +217,12 @@
 	float levelFraction = 1.0 / aLevel;
 	if ([aPage boolForKey:@"includeInSiteMenu"] && aLevel > 1)	// boost items in site menu?
 	{
-		(*ioSiteMenuCounter)++;	// we have one more site menu item
-		levelFraction = 0.95 - (0.05 * (*ioSiteMenuCounter));	// .90, .85, 0.80, 0.75 etc.
-		if (levelFraction < 0.55) levelFraction = .55;	// keep site menu above .5
+		if (ioSiteMenuCounter)
+		{
+			(*ioSiteMenuCounter)++;	// we have one more site menu item
+			levelFraction = 0.95 - (0.05 * (*ioSiteMenuCounter));	// .90, .85, 0.80, 0.75 etc.
+			if (levelFraction < 0.55) levelFraction = .55;	// keep site menu above .5
+		}
 	}
 	OBASSERT(levelFraction <= 1.0 && levelFraction > 0.0);
 	[entry setObject:[NSNumber numberWithFloat:levelFraction] forKey:@"priority"];

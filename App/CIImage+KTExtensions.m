@@ -89,8 +89,14 @@
 	
 	// Figure out scaling & aspect ratio
 	NSSize sourceImageSize = NSMakeSize(sourceSize.width, sourceSize.height);
-	*scaleFactor = [settings scaleFactorForImageOfSize:sourceImageSize];
-	*aspectRatio = [settings aspectRatioForImageOfSize:sourceImageSize];
+	if (scaleFactor)
+	{
+		*scaleFactor = [settings scaleFactorForImageOfSize:sourceImageSize];
+	}
+	if (aspectRatio)
+	{
+		*aspectRatio = [settings aspectRatioForImageOfSize:sourceImageSize];
+	}
 	
 	NSSize cropSize = [settings scaledSizeForImageOfSize:sourceImageSize];
 	float cropWidth = roundf(cropSize.width);
@@ -102,7 +108,10 @@
 	}
 	else
 	{
-		*cropRect = CGRectMake(0.0, 0.0, cropWidth, cropHeight);
+		if (cropRect)
+		{
+			*cropRect = CGRectMake(0.0, 0.0, cropWidth, cropHeight);
+		}
 	}
 }
 

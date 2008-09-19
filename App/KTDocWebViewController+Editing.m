@@ -578,7 +578,10 @@ through.  We seem to do OK by filtering later.
 
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title
 {
-    *title = TOOLBAR_CREATE_LINK;
+	if (title)
+	{
+		*title = TOOLBAR_CREATE_LINK;
+	}
 	
 	if (![self currentTextEditingBlock]) return NO;		// Can't create a link if nothing is being edited
     
@@ -588,7 +591,7 @@ through.  We seem to do OK by filtering later.
 	if ([selection startContainer] == [selection endContainer])
 	{
 		// Check for an existing link containing the selection, that will mean we can edit it.
-		if ([[selection startContainer] isContainedByElementOfClass:[DOMHTMLAnchorElement class]])
+		if (title && [[selection startContainer] isContainedByElementOfClass:[DOMHTMLAnchorElement class]])
 		{
 			*title = TOOLBAR_EDIT_LINK;
 		}

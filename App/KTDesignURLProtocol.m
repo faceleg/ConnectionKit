@@ -71,13 +71,15 @@
 		result = [NSData dataWithData:tempData];
 		[tempData release];
 		
-		if (nil == result)
+		if (nil == result && anError)
 		{
 			*anError = [self errorWithString:[NSString stringWithFormat:NSLocalizedString(@"Unable to generate CSS for identifier %@",
 																						  "error message"), designBundleIdentifier]]; 
 		}
-		
-		*aMimeType = @"text/css";
+		if (aMimeType)
+		{
+			*aMimeType = @"text/css";
+		}
 	}
 	else	// Read the resource in from the file
 	{

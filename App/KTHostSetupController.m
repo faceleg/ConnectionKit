@@ -1887,7 +1887,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *leftDoubleQuote = NSLocalizedString(@"\\U201C", "left double quote");
 	NSString *rightDoubleQuote = NSLocalizedString(@"\\U201D", "right double quote");
 
-    if (*ioValue == nil)
+    if (ioValue == nil || *ioValue == nil)
 	{
         return YES;
     }

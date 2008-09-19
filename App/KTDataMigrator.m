@@ -666,10 +666,12 @@
         
         if (!plugin)
         {
-            *error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
-                                         code:KareliaError
-                         localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
-            
+			if (error)
+			{
+				*error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+											 code:KareliaError
+							 localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
+			}
             [pool release];
 			return NO;
         }
@@ -885,7 +887,10 @@
     // Exit if the user cancelled
     if ([self isCancelled])
     {
-        *error = nil;
+		if (error)
+		{
+			*error = nil;
+		}
         return NO;
     }
     

@@ -123,11 +123,9 @@ NSString *selectionChangedNotification = @"ImageSelectionChanged";
 	
 	if (!NSIsEmptyRect(newImageBounds))
 	{
-		NSImage 
-		*newImage = [[NSImage alloc] initWithSize:sourceImageRect.size];
+		NSImage *newImage = [[NSImage alloc] initWithSize:sourceImageRect.size];
 		
-		NSAffineTransform 
-			*pathAdjustment = [NSAffineTransform transform];
+		NSAffineTransform *pathAdjustment = [NSAffineTransform transform];
 		
 		[pathAdjustment translateXBy: -NSMinX(sourceImageRect) yBy: -NSMinY(sourceImageRect)];
 		NSBezierPath *croppingPath = [pathAdjustment transformBezierPath:[selectionMarker selectedPath]];
