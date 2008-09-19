@@ -106,8 +106,7 @@
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
 - (id)initWithType:(NSString *)type error:(NSError **)error;
 
-- (void)close;
-- (void)dealloc;
+- (void)setClosing:(BOOL)aFlag;
 
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
 - (void)makeWindowControllers;
@@ -572,6 +571,9 @@
 - (void)close
 {	
 	LOGMETHOD;
+    
+    
+    [self setClosing:YES];
 	
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentWillClose" object:self];
@@ -635,8 +637,11 @@
 	
 	if (!result)
 	{
-		[callback setArgument:&result atIndex:3];
+		[self setClosing:NO];
+        
+        [callback setArgument:&result atIndex:3];
 		[callback invoke];
+        
 		return;
 	}
 	
@@ -710,22 +715,20 @@
  */
 - (void)document:(NSDocument *)document didSaveWhileClosing:(BOOL)didSaveSuccessfully contextInfo:(void  *)contextInfo
 {
-	NSInvocation *callback = [(NSInvocation *)contextInfo autorelease];	// It was retained at the start
+	[self setClosing:didSaveSuccessfully];
+    
+    NSInvocation *callback = [(NSInvocation *)contextInfo autorelease];	// It was retained at the start
 	
 	// Let the delegate know if the save was successful or not
 	[callback setArgument:&didSaveSuccessfully atIndex:3];
 	[callback invoke];
 }
 
-- (BOOL)isClosing
-{
-	return myIsClosing;
-}
+- (BOOL)isClosing { return myIsClosing; }
 
-- (void)setClosing:(BOOL)aFlag
-{
-	myIsClosing = aFlag;
-}
+- (void)setClosing:(BOOL)aFlag { myIsClosing = aFlag; }
+
+#pragma mark -
 
 /*! we override willPresentError: here largely to deal with
 	any validation issues when saving the document

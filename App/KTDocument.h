@@ -121,9 +121,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSURL *)snapshotURL;
 - (BOOL)hasValidSnapshot;
 
-// cover for KTDocWindowController method
 - (BOOL)isClosing;
-- (void)setClosing:(BOOL)aFlag;
 
 - (IBAction)clearStaleness:(id)sender;
 - (IBAction)markAllStale:(id)sender;

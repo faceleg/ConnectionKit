@@ -187,7 +187,7 @@ void dumpBacktrace(unsigned int startFrameNumber)
 {
 	if ( !shouldClose )
 	{
-		[doc setClosing:NO];
+		//[doc setClosing:NO];
 	}
 }
 
