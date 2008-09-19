@@ -778,7 +778,7 @@
 		CEC11B9E0D78BE5300513E70 /* AMRollOverButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B310D78BE5300513E70 /* AMRollOverButtonCell.h */; };
 		CEC11B9F0D78BE5300513E70 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B320D78BE5300513E70 /* AQDataExtensions.h */; };
 		CEC11BA00D78BE5300513E70 /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B330D78BE5300513E70 /* assertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BA10D78BE5300513E70 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B340D78BE5300513E70 /* BDAlias.h */; };
+		CEC11BA10D78BE5300513E70 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B340D78BE5300513E70 /* BDAlias.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA20D78BE5300513E70 /* CharsetToEncodingTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B350D78BE5300513E70 /* CharsetToEncodingTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA30D78BE5300513E70 /* CIImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B360D78BE5300513E70 /* CIImage+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA40D78BE5300513E70 /* ContainerIsEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B370D78BE5300513E70 /* ContainerIsEmptyTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };

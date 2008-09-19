@@ -46,6 +46,7 @@
 #import "DownloadPageDelegate.h"
 
 #import "SandvoxPlugin.h"
+#import "BDAlias.h"
 
 
 @implementation DownloadPageDelegate

@@ -28,6 +28,7 @@
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
 - (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType;
++ (NSSet *)sortedChildrenDependentChildrenKeys;
 
 @end
 

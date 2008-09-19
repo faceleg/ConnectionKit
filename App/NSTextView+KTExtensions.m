@@ -210,7 +210,7 @@ static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 	{
 		NSString *keyForSelf = [NSString stringWithFormat:@"%p", self];
 		NSDictionary *valueForSelf = nil;
-		if (nil != (valueForSelf = [sDefaultTextAttributesPerInstance objectForKey:keyForSelf]) );
+		if (nil != (valueForSelf = [sDefaultTextAttributesPerInstance objectForKey:keyForSelf]) )
 		{
 			result = valueForSelf;
 		}
@@ -391,7 +391,9 @@ Makes the view so wide that text won't wrap anymore.
 			// Look for associated end-of-comment marker:
 			[vScanner scanUpToRealString: endCh intoString: nil];
 			if( ![vScanner scanRealString:endCh intoString:nil] )
+			{
 				/*NS_VOIDRETURN*/;  // Don't exit. If user forgot trailing marker, indicate this by "bleeding" until end of string.
+			}
 			vEndOffs = [vScanner scanLocation];
 			
 			// Now mess with the string's styles:
@@ -493,7 +495,9 @@ Makes the view so wide that text won't wrap anymore.
 			[vScanner scanUpToRealString: ident intoString: nil];
 			vStartOffs = [vScanner scanLocation];
 			if( ![vScanner scanRealString:ident intoString:nil] )
+			{
 				NS_VOIDRETURN;
+			}
 			
 			if( vStartOffs > 0 )	// Check that we're not in the middle of an identifier:
 			{

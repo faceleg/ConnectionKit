@@ -179,7 +179,7 @@
 
 - (NSString *)spotlightHTML
 {
-	NSMutableString *result = [NSMutableString stringWithString:[super spotlightHTML]];
+	NSMutableString *buf = [NSMutableString stringWithString:[super spotlightHTML]];
 	
 	// Add spotlightHTML of any pagelets owned by this page	
 	NSEnumerator *e = [[self pagelets] objectEnumerator];
@@ -189,13 +189,14 @@
 		NSString *pageletHTML = [pagelet spotlightHTML];
 		if ( (nil != pageletHTML) && ![pageletHTML isEqualToString:@""] )
 		{
-			[result appendFormat:@" %@", pageletHTML];
+			[buf appendFormat:@" %@", pageletHTML];
 		}
 	}
 	
-	if ( nil == result )
+	NSString *result = @"";
+	if ( nil != buf )
 	{
-		result = @"";
+		result = [NSString stringWithString:buf];
 	}
 	
 	return result;

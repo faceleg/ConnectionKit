@@ -176,7 +176,7 @@
     NSString *path = [result pathRelativeToSite];
     
     NSString *validatedPath = path;
-    if (![result validateValue:&validatedPath forKey:@"pathRelativeToSite" error:NULL])
+    if (![result validateValue:(id *)&validatedPath forKey:@"pathRelativeToSite" error:NULL])
     {
         [[result managedObjectContext] deleteObject:result];        
         result = [self defaultUpload];
@@ -377,9 +377,9 @@
     
     if (!width ||
         !height ||
-        ![self validateValue:&width forKey:@"width" error:NULL]
+        ![self validateValue:(id *)&width forKey:@"width" error:NULL]
 		||
-        ![self validateValue:&height forKey:@"height" error:NULL]
+        ![self validateValue:(id *)&height forKey:@"height" error:NULL]
 		)
     {
         [self cacheImageDimensions];
