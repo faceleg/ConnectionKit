@@ -178,12 +178,11 @@
 	if (!result)
 	{
 		NSString *identifier = [self valueForKey:@"pluginIdentifier"];
-#ifdef VARIANT_BETA
-		// Really we need to when we are getting a nil and trap for it.  bug 34987
-		OBPRECONDITION(nil != identifier);
-#endif
-		result = [KTElementPlugin pluginWithIdentifier:identifier];
-		[self setPrimitiveValue:result forKey:@"plugin"];
+        if (identifier)
+        {
+            result = [KTElementPlugin pluginWithIdentifier:identifier];
+            [self setPrimitiveValue:result forKey:@"plugin"];
+        }
 	}
 	
 	return result;
