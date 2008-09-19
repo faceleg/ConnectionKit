@@ -30,7 +30,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	NSMutableDictionary	*myCachedCustomPageIcons;
 	
 	NSMutableArray		*myCustomIconGenerationQueue;
-	KTPage				*myGeneratingCustomIcon;
+	KTPage				*myGeneratingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m
 }
 
 - (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller;

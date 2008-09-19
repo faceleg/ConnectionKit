@@ -29,6 +29,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	NSString *previewPath = [[docPath stringByAppendingPathComponent:@"QuickLook"] stringByAppendingPathComponent:@"preview.html"];
 	if (![[NSFileManager defaultManager] fileExistsAtPath:previewPath])
 	{
+		[pool release];
         return noErr; 
 	}
 	
@@ -38,6 +39,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
     
     if (QLPreviewRequestIsCancelled(preview))	// Before proceeding make sure the user didn't cancel the request 
 	{
+		[pool release];
 		return noErr; 
 	}
 	

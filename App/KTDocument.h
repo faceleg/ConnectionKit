@@ -44,7 +44,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @private
 	
 	KTManagedObjectContext		*myManagedObjectContext;
-	KTDocumentInfo				*myDocumentInfo;
+	KTDocumentInfo				*myDocumentInfo;			// accessor in category method
 	
 	KTDocWindowController		*myDocWindowController;
 	
@@ -61,22 +61,22 @@ extern NSString *KTDocumentWillSaveNotification;
 	NSDate						*myLastSavedTime;	
 		
 	BOOL myIsClosing;
-    unsigned mySaveOperationCount;
-    NSSaveOperationType myLastSavePanelSaveOperation;
+    unsigned mySaveOperationCount;						// used in KTDocument+Saving.m
+    NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
 	
     NSString    *mySiteCachePath;
 	NSURL       *mySnapshotURL;
 		
 	
 	// UI
-	BOOL	myShowDesigns;				// is designs panel showing?
-	BOOL	myDisplaySiteOutline;
-	BOOL	myDisplaySmallPageIcons;
-	BOOL	myDisplayStatusBar;
-	BOOL	myDisplayEditingControls;
-	short	mySiteOutlineSize;
-	float	myTextSizeMultiplier;
-	BOOL	myDisplayCodeInjectionWarnings;
+	BOOL	myShowDesigns;						// accessor in category method
+	BOOL	myDisplaySiteOutline;				// accessor in category method
+	BOOL	myDisplaySmallPageIcons;			// accessor in category method
+	BOOL	myDisplayStatusBar;					// accessor in category method
+	BOOL	myDisplayEditingControls;			// accessor in category method
+//	short	mySiteOutlineSize;
+	float	myTextSizeMultiplier;				// accessor in category method
+	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method
 }
 
 + (NSString *)defaultStoreType;

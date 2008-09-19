@@ -784,8 +784,6 @@ static NSArray *sReservedNames = nil;
 	
 	if ( ![stemURL isEqualToString:initialStemURL] )	// changed; fix it!
 	{
-		/// defend against nil
-		if (nil == stemURL) stemURL = @"";
 		[oExportURL performSelector:@selector(setStringValue:) withObject:[testURL absoluteString] afterDelay:0.0];
 		return NO;		// only way to replace and stop it .. though now we are OK!
 	}

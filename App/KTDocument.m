@@ -1084,6 +1084,7 @@
 {
 	KTHostSetupController* sheetController
 	= [[KTHostSetupController alloc] initWithHostProperties:[self valueForKeyPath:@"documentInfo.hostProperties"]];
+		// LEAKING ON PURPOSE, THIS WILL BE AUTORELEASED IN setupHostSheetDidEnd:
 	
 	[NSApp beginSheet:[sheetController window]
 	   modalForWindow:[[self windowController] window]
@@ -1283,7 +1284,7 @@
 			// delete old backup first
 			if ( [fm fileExistsAtPath:backupPath] )
 			{
-				okToProceed = [fm removeFileAtPath:backupPath handler:self];
+				(void) [fm removeFileAtPath:backupPath handler:self];	// ignore error removing
 			}
 			
 			// make sure the directory exists

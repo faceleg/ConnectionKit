@@ -632,28 +632,29 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		}
 	}
 	
-	
-	// Store QuickLook preview
-	if ([NSThread isMainThread])
+	if (result)	// keep going if OK
 	{
-		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
-		[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-		NSString *previewHTML = [parser parseTemplate];
-		[parser release];
+		// Store QuickLook preview
+		if ([NSThread isMainThread])
+		{
+			KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+			[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+			NSString *previewHTML = [parser parseTemplate];
+			[parser release];
+			
+			NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
+			[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+		}
 		
-		NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-		[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
+		
+		result = [managedObjectContext save:&error];
 	}
-	
-	
-	result = [managedObjectContext save:&error];
-	if (result) result = [[[self mediaManager] managedObjectContext] save:&error];
-	
-	if (!result)
+	if (result)
 	{
-        // Return, making sure to supply appropriate error info
-        if (!result && outError) *outError = error;
-    }
+		result = [[[self mediaManager] managedObjectContext] save:&error];
+	}
+	// Return, making sure to supply appropriate error info
+	if (!result && outError) *outError = error;
     
 	return result;
 }
