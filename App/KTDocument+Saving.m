@@ -118,10 +118,13 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         }
         else
         {
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:0
-                            localizedDescription:NSLocalizedString(@"Another save operation is already in progress.",
-                                                                   "Saving error")];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+												code:0
+								localizedDescription:NSLocalizedString(@"Another save operation is already in progress.",
+																	   "Saving error")];
+			}
         }
     }
     else
@@ -179,9 +182,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                       [absoluteURL path], NSFilePathErrorKey,
                                       NSLocalizedString(@"Unable to copy to path", @"Unable to copy to path"), NSLocalizedDescriptionKey,
                                       nil];
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-                                            code:512 // unknown write error 
-                                        userInfo:userInfo];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+												code:512 // unknown write error 
+											userInfo:userInfo];
+			}
         }
     }
     
@@ -547,7 +553,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
 		if ( !newStore || !didConfigure )
 		{
-			NSLog(@"error: unable to create document: %@", [*outError description]);
+			NSLog(@"error: unable to create document: %@", (outError ? [*outError description] : nil) );
 			return NO; // bail out and display outError
 		}
 	} 
@@ -610,7 +616,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
 		if (!result)
 		{
-			*outError = error;
+			if (outError)
+			{
+				*outError = error;
+			}
 			return NO; // bail out and display outError
 		}
 		else
@@ -640,7 +649,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if (!result)
 	{
         // Return, making sure to supply appropriate error info
-        if (!result) *outError = error;
+        if (!result && outError) *outError = error;
     }
     
 	return result;

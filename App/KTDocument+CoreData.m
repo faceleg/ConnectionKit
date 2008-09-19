@@ -454,24 +454,30 @@
 			NSLog(@"error: unable to setMetadataForStoreAtURL:%@ (no persistent store)", [aStoreURL path]);
 			NSString *path = [aStoreURL path];
 			NSString *reason = [NSString stringWithFormat:@"(%@ is not a valid persistent store.)", path];
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-											code:134070 // NSPersistentStoreOperationError
-										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-												  reason, NSLocalizedDescriptionKey,
-												  nil]]; 
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+												code:134070 // NSPersistentStoreOperationError
+											userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+													  reason, NSLocalizedDescriptionKey,
+													  nil]];
+			}
 			result = NO;
 		}
 	}
 	@catch (NSException * e)
 	{
 		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
-		*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-										code:134070 // NSPersistentStoreOperationError
-									userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-											  [aStoreURL path], @"path",
-											  [e name], @"name",
-											  [e reason], NSLocalizedDescriptionKey,
-											  nil]]; 
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+											code:134070 // NSPersistentStoreOperationError
+										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												  [aStoreURL path], @"path",
+												  [e name], @"name",
+												  [e reason], NSLocalizedDescriptionKey,
+												  nil]];
+		}
 		result = NO;
 	}
 	

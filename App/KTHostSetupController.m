@@ -1901,7 +1901,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
 													 code:1
 												 userInfo:userInfoDict] autorelease];
-        *outError = error;
+		if (outError)
+		{
+			*outError = error;
+		}
 		return NO;
 	}
 
@@ -2041,7 +2044,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
 													 code:2
 												 userInfo:userInfoDict] autorelease];
-        *outError = error;
+ 		if (outError)
+		{
+			*outError = error;
+		}
 	}
 	return result;
 }

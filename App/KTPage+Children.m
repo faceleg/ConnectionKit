@@ -375,7 +375,10 @@
 				@"parent", NSValidationKeyErrorKey,
 				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
 			
-			*outError = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
+			}
 		}
 	}
 	

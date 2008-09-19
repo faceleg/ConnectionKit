@@ -282,7 +282,10 @@
                                           [[self newDocumentURL] absoluteString]];
             
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
-            *outError = error;
+            if (outError)
+			{
+				*outError = error;
+			}
             
             result = NO;    return result;
         }
@@ -324,7 +327,7 @@
     @finally
     {
         // Recover failed migrations and pass out an error
-        if (!result)
+        if (!result && outError)
         {
             if (localError)
             {
@@ -419,7 +422,10 @@
                                       originalPath, destinationPath];
 		
 		NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError localizedDescription:errorDescription];
-		*outError = error;
+		if (outError)
+		{
+			*outError = error;
+		}
 	}
     
     return result;
@@ -445,9 +451,12 @@
                                                                            forKey:NSLocalizedDescriptionKey];
         if (error) [errorInfo setObject:error forKey:NSUnderlyingErrorKey];
         
-        *outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain
-                                        code:KareliaError
-                                    userInfo:errorInfo];
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+											code:KareliaError
+										userInfo:errorInfo];
+		}
         return NO;
     }
     
@@ -1011,7 +1020,10 @@
 	// check that we at least have aStorePath
     if (nil == aStorePath || [@"" isEqualToString:aStorePath])
 	{
-		*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSNoDocPathSpecified localizedDescription:NSLocalizedString(@"No document path specified.","No document path specified.")];
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSNoDocPathSpecified localizedDescription:NSLocalizedString(@"No document path specified.","No document path specified.")];
+		}
         return NO;
     }
     
@@ -1023,7 +1035,10 @@
 	{
         if ( isDirectory ) 
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSPathIsDirectory localizedDescription:NSLocalizedString(@"Specified document path is a directory.","Specified document path is a directory.")];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSPathIsDirectory localizedDescription:NSLocalizedString(@"Specified document path is a directory.","Specified document path is a directory.")];
+			}
             return NO;
         } 
 	} 
@@ -1033,15 +1048,21 @@
 		{
             if ( ![fileManager isWritableFileAtPath:storeDirectory] ) 
 			{
-				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSDirNotWritable localizedDescription:[NSString stringWithFormat:
-                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - directory is not writable (%@)","Error: Can't write file to path - directory is not writable (%@)"), storeDirectory]];       
+				if (outError)
+				{
+					*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSDirNotWritable localizedDescription:[NSString stringWithFormat:
+                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - directory is not writable (%@)","Error: Can't write file to path - directory is not writable (%@)"), storeDirectory]];
+				}
                 return NO;
             }
         }
 		else
 		{
-			*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSParentNotDirectory localizedDescription:[NSString stringWithFormat:
-                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]]; 
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSParentNotDirectory localizedDescription:[NSString stringWithFormat:
+                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]];
+			}
             return NO;
         }
     }

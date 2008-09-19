@@ -149,10 +149,13 @@
             if ( !success ) 
 			{
 				NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to create directory at path (%@).",@"Error: Unable to create directory at path (%@)."), next];
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-												code:NSFileWriteUnknownError
-								localizedDescription:errorDescription];
-                return NO;
+				if (outError)
+				{
+					*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+													code:NSFileWriteUnknownError
+									localizedDescription:errorDescription];
+				}
+				return NO;
             }
         } 
     }

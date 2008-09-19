@@ -99,7 +99,10 @@
     // Do nothing if the license is invalid
 	if (gLicenseViolation) {
 		NSBeep();
-		*outError = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
+		if (outError)
+		{
+			*outError = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
+		}
 		return nil;
 	}
 	
@@ -144,7 +147,10 @@
 	
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {
-		*outError = nil;	// Otherwise we crash
+		if (outError)
+		{
+			*outError = nil;	// Otherwise we crash
+		}
 		return nil;
 	}
     
@@ -172,7 +178,10 @@
 				[errorInfo setObject:[NSString stringWithFormat:
                                       NSLocalizedString(@"The path %@ is not writeable.",@"Alert: The path %@ is not writeable."), [saveURL path]]
 							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
+				if (outError)
+				{
+					*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
+				}
 				
 				return nil;
 			}
@@ -189,7 +198,10 @@
                                       NSLocalizedString(@"Could not remove pre-existing file at path %@.",@"Alert: Could not remove pre-existing file at path %@."), [saveURL path]]
 							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
 				
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
+				if (outError)
+				{
+					*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
+				}
 				
 				return nil;
 			}
@@ -404,9 +416,12 @@
 			
 			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
 			
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-											code:NSPersistentStoreInvalidTypeError 
-										userInfo:userInfo];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+												code:NSPersistentStoreInvalidTypeError 
+											userInfo:userInfo];
+			}
 			return nil;
 		}
 		
@@ -427,9 +442,12 @@
 			
 			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
 			
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-											code:NSPersistentStoreInvalidTypeError 
-										userInfo:userInfo];										
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+												code:NSPersistentStoreInvalidTypeError 
+											userInfo:userInfo];	
+			}
 			return nil;
 		}
 
