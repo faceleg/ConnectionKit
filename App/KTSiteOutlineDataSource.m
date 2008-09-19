@@ -262,16 +262,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	
 	
-	// This probably shouldn't happen, but if the observed object has been deleted stop observing it and reload the parent
-	if ([object isDeleted])
-	{
-		OBASSERT_NOT_REACHED("As far as I'm aware, this codepath shouldn't happen. Mike.");
-		[self removePagesObject:object];
-		[[self siteOutline] reloadData];
-		return;
-	}
-	
-	
 	// Having prescreened the parameters, pass them onto the right support methods for processing
 	OBASSERT([object isKindOfClass:[KTPage class]]);
 	if ([keyPath isEqualToString:[[self siteOutlineController] childrenKeyPath]])
