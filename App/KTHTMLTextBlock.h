@@ -14,10 +14,11 @@
 @class KTDocWebViewController, KTMediaContainer, KTAbstractPage, KTHTMLParser;
 
 
-@interface KTWebViewTextBlock : NSObject
+@interface KTHTMLTextBlock : NSObject
 {
-	//@private
-	
+//@private
+	KTHTMLParser    *myParser;
+    
 	NSString		*myDOMNodeID;
 	DOMHTMLElement	*myDOMNode;
 	
@@ -32,19 +33,18 @@
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
-	KTPage		*myPage;
 		
 	BOOL	myIsEditing;
 }
 
-+ (KTWebViewTextBlock *)textBlockForDOMNode:(DOMNode *)node
++ (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node
 						  webViewController:(KTDocWebViewController *)webViewController;
 
 
 #pragma mark Accessors
 
-// PRIVATE method. Designated initialiser.
-- (id)initWithDOMNodeID:(NSString *)ID;
+- (id)initWithParser:(KTHTMLParser *)parser;
+- (KTHTMLParser *)parser;
 
 - (NSString *)DOMNodeID;
 - (DOMHTMLElement *)DOMNode;
@@ -71,18 +71,15 @@
 - (NSString *)HTMLSourceKeyPath;
 - (void)setHTMLSourceKeyPath:(NSString *)keyPath;
 
-- (KTPage *)page;
-- (void)setPage:(KTPage *)page;
-
 - (NSString *)graphicalTextCode;
 - (void)setGraphicalTextCode:(NSString *)code;
 - (KTMediaContainer *)graphicalTextMedia;
 
 #pragma mark HTML
-- (NSString *)innerHTML:(KTHTMLParser *)parser;
-- (NSString *)outerHTML:(KTHTMLParser *)parser;
+- (NSString *)innerHTML;
+- (NSString *)outerHTML;
 
-- (NSString *)processHTML:(NSString *)originalHTML withParser:(KTHTMLParser *)parser;
+- (NSString *)processHTML:(NSString *)originalHTML;
 
 #pragma mark Editing
 

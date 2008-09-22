@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 
 #import "Debug.h"
 
@@ -38,11 +38,9 @@
 #import "OmniCompatibility.h"
 
 
-@interface KTWebViewTextBlock (Private)
+@interface KTHTMLTextBlock (Private)
 
 + (NSMutableDictionary *)knownTextBlocks;
-
-- (id)initWithHTMLElement:(DOMHTMLElement *)DOMNode webViewController:(KTDocWebViewController *)webViewController;
 
 - (void)setDOMNode:(DOMHTMLElement *)node;
 
@@ -51,15 +49,15 @@
 @end
 
 
-@implementation KTWebViewTextBlock
+@implementation KTHTMLTextBlock
 
 #pragma mark -
 #pragma mark Factory Methods
 
-+ (KTWebViewTextBlock *)textBlockForDOMNode:(DOMNode *)node
++ (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node
 								  webViewController:(KTDocWebViewController *)webViewController;
 {
-	KTWebViewTextBlock *result = nil;
+	KTHTMLTextBlock *result = nil;
 	
 	
 	// Find the overall element encapsualting the editing block
@@ -70,26 +68,8 @@
 	NSString *textBlockDOMID = [textBlockDOMElement idName];
 	result = [[self knownTextBlocks] objectForKey:textBlockDOMID];
 	[result setDOMNode:textBlockDOMElement];
-	
-	if (!result)
-	{
-		// Find the object corresponding to the element's ID
-		id HTMLSourceObject = nil;
-		if (textBlockDOMID && [[webViewController windowController] isEditableElement:textBlockDOMElement])
-		{
-			HTMLSourceObject = [[webViewController windowController] itemForDOMNodeID:textBlockDOMID];
-		}
-		
-		
-		// If we're sure that some actual editable text has been chosen, continue.
-		if (HTMLSourceObject)
-		{	
-			result = [[[KTWebViewTextBlock alloc] initWithHTMLElement:textBlockDOMElement
-														   webViewController:webViewController] autorelease];
-		}
-	}
-	
-	return result;
+    
+    return result;
 }
 
 + (NSMutableDictionary *)knownTextBlocks
@@ -107,49 +87,26 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-/*	Designated initialiser for now.
- */
-- (id)initWithDOMNodeID:(NSString *)ID;
-{
-	[super init];
-	
-	myDOMNodeID = [ID copy];
-	myIsEditable = YES;
-	[self setHTMLTag:@"div"];
-	[[KTWebViewTextBlock knownTextBlocks] setObject:self forKey:ID];	// That's a wak ref
-	
-	return self;
-}
-
 - (id)init
 {
-	NSString *DOMID = [NSString stringWithFormat:@"k-svxTextBlock-%@", [NSString shortUUIDString]];
-	[self initWithDOMNodeID:DOMID];
-	
-	return self;
+    return [self initWithParser:nil];
 }
 
-/*	PRIVATE init method. Do NOT call this directly, but go through the class factory method instead
- */
-- (id)initWithHTMLElement:(DOMHTMLElement *)aDOMNode webViewController:(KTDocWebViewController *)webViewController
+- (id)initWithParser:(KTHTMLParser *)parser;
 {
-	[self initWithDOMNodeID:[aDOMNode idName]];
-	
-	NSString *textBlockDOMClass = [aDOMNode className];
-	NSString *propertyName = [[webViewController windowController] propertyNameForDOMNodeID:[aDOMNode idName]];
-	
-	
-	// Set our attributes from the various DOM properties
-	[self setRichText:[propertyName hasSuffix:@"HTML"]];
-	[self setFieldEditor:[DOMNode isSingleLineFromDOMNodeClass:textBlockDOMClass]];
-	[self setImportsGraphics:[aDOMNode isImageable]];
-	
-	[self setDOMNode:[aDOMNode retain]];
-	
-	myHTMLSourceObject = [[[webViewController windowController] itemForDOMNodeID:[aDOMNode idName]] retain];
-	myHTMLSourceKeyPath = [propertyName copy];
-	
-	myHasSpanIn = [aDOMNode hasSpanIn];
+	OBPRECONDITION(parser);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        myParser = [parser retain];
+        myDOMNodeID = [[NSString alloc] initWithFormat:@"k-svxTextBlock-%@", [NSString shortUUIDString]];
+        
+        myIsEditable = YES;
+        [self setHTMLTag:@"div"];
+        [[KTHTMLTextBlock knownTextBlocks] setObject:self forKey:myDOMNodeID];	// That's a weak ref
+    }
 	
 	return self;
 }
@@ -159,7 +116,7 @@
 	OBASSERT(!myIsEditing);
 	
 	// Remove us from the list of known text blocks otherwise there will be a memory crasher later
-	[[KTWebViewTextBlock knownTextBlocks] removeObjectForKey:[self DOMNodeID]];	// This was a weak ref
+	[[KTHTMLTextBlock knownTextBlocks] removeObjectForKey:[self DOMNodeID]];	// This was a weak ref
 	
 	[myDOMNode release];
 	[myDOMNodeID release];
@@ -168,13 +125,15 @@
 	[myHyperlink release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
-	[myPage release];
-	
+    [myParser release];
+    
 	[super dealloc];
 }
 
 #pragma mark -
 #pragma mark Accessors
+
+- (KTHTMLParser *)parser { return myParser; }
 
 - (NSString *)DOMNodeID { return myDOMNodeID; }
 
@@ -237,15 +196,6 @@
 	myHTMLSourceKeyPath = keyPath;
 }
 
-- (KTPage *)page { return myPage; }
-
-- (void)setPage:(KTPage *)page
-{
-	[page retain];
-	[myPage release];
-	myPage = page;
-}
-
 #pragma mark NSTextView clone
 
 - (BOOL)isEditable { return myIsEditable; }
@@ -287,7 +237,7 @@
 	NSString *graphicalTextCode = [self graphicalTextCode];
 	if (graphicalTextCode)
 	{
-		KTPage *page = [self page];		OBASSERT(page);
+		KTPage *page = (KTPage *)[[self parser] currentPage];		OBASSERT(page);
 		KTMaster *master = [page master];
 		if ([master boolForKey:@"enableImageReplacement"])
 		{
@@ -297,7 +247,7 @@
 			{
 				// Generate the image
 				KTMediaManager *mediaManager = [page mediaManager];
-				result = [mediaManager graphicalTextWithString:[[self innerHTML:kGeneratingPreview] stringByConvertingHTMLToPlainText]
+				result = [mediaManager graphicalTextWithString:[[self innerHTML] stringByConvertingHTMLToPlainText]
 														design:design
 										  imageReplacementCode:graphicalTextCode
 														  size:[master floatForKey:@"graphicalTitleSize"]];
@@ -333,22 +283,22 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)innerHTML:(KTHTMLParser *)parser
+- (NSString *)innerHTML
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
 	if (!result) result = @"";
 
-	result = [self processHTML:result withParser:parser];
+	result = [self processHTML:result];
 	return result;
 }
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (NSString *)outerHTML:(KTHTMLParser *)parser
+- (NSString *)outerHTML
 {
 	// When publishing, generate an empty string (or maybe nil) for empty text blocks
-	NSString *innerHTML = [self innerHTML:parser];
-	if ([parser HTMLGenerationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
+	NSString *innerHTML = [self innerHTML];
+	if ([[self parser] HTMLGenerationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
 	{
 		return @"";
 	}
@@ -363,7 +313,7 @@
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
+		if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:
              @" id=\"%@\" class=\"%@\"",
@@ -378,12 +328,12 @@
 	
 	
 	// Add in graphical text styling if there is any
-	if ([parser includeStyling])
+	if ([[self parser] includeStyling])
 	{
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([parser HTMLGenerationPurpose] == kGeneratingPreview)
+			if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
 			{
 				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 			}
@@ -413,7 +363,7 @@
 		[buffer appendString:@"<span"];
         
         NSString *CSSClassName = @"in";
-        if ([self isEditable] && [parser HTMLGenerationPurpose] == kGeneratingPreview)
+        if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
             CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
@@ -444,13 +394,13 @@
 
 /*  Support method that takes a block of HTML and applies to it anything special the receiver and the parser require
  */
-- (NSString *)processHTML:(NSString *)result withParser:(KTHTMLParser *)parser
+- (NSString *)processHTML:(NSString *)result
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if ([parser HTMLGenerationPurpose] != kGeneratingPreview && ![parser isKindOfClass:[KTStalenessHTMLParser class]])
+	if ([[self parser] HTMLGenerationPurpose] != kGeneratingPreview)
 	{
 		// Fix page links
-		result = [[self page] fixPageLinksFromString:result parser:parser];
+		result = [[[self parser] currentPage] fixPageLinksFromString:result parser:[self parser]];
 		
 		
 		
@@ -479,18 +429,18 @@
 					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
 					if (mediaContainer)
 					{
-						if ([parser HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+						if ([[self parser] HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 						{
 							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
 						}
 						else
 						{
-							KTPage *page = [self page];		OBASSERT(page);
+							KTAbstractPage *page = [[self parser] currentPage];		OBASSERT(page);
 							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
-							aMediaPath = [[upload URL] stringRelativeToURL:[[parser currentPage] URL]];
+							aMediaPath = [[upload URL] stringRelativeToURL:[[[self parser] currentPage] URL]];
 							
 							// Tell the parser's delegate
-							[parser didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
+							[[self parser] didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
 						}
 					}
 					
@@ -537,7 +487,7 @@
     
     // If needed, reload inner HTML from disk. BUGSID:30635
     // TODO: Maintain the selection and merge in with our Summaries subclass
-    NSString *expectedHTML = [self innerHTML:nil];
+    NSString *expectedHTML = [self innerHTML];
     NSString *currentHTML = [[self DOMNode] innerHTML];
     if (!KSISEQUAL(expectedHTML, currentHTML) &&
         ![currentHTML isEqualToString:@"<p>Lorem ipsum dolor sit amet.</p>"])   // Hack for editing markers
@@ -678,7 +628,7 @@
     KTAbstractElement *plugin = [self HTMLSourceObject];
     if (![plugin isKindOfClass:[KTAbstractElement class]])
     {
-        plugin = [self page];
+        plugin = [[self parser] currentPage];
     }
     
     

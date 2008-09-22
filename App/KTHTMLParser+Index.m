@@ -147,11 +147,11 @@
 - (NSString *)summaryForContentOfPage:(KTPage *)page
 {
 	// Create a text block object to handle truncation etc.
-	KTSummaryWebViewTextBlock *textBlock = [[KTSummaryWebViewTextBlock alloc] init];
+	KTSummaryWebViewTextBlock *textBlock = [[KTSummaryWebViewTextBlock alloc] initWithParser:self];
 	[textBlock setHTMLSourceObject:page];
 	[textBlock setHTMLSourceKeyPath:[page summaryHTMLKeyPath]];
 	
-	NSString *result = [textBlock innerHTML:self];
+	NSString *result = [textBlock innerHTML];
 	
 	
 	// Enclose the HTML in an editable div if it needs it

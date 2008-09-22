@@ -71,7 +71,7 @@
 #import "KTInfoWindowController.h"
 #import "KTMaster.h"
 #import "KTTranscriptController.h"
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 #import "KTUtilities.h"
 
 #import "KTMediaContainer.h"
@@ -123,7 +123,7 @@ static NSArray *sReservedNames = nil;
 - (void)setSubfolder:(NSString *)subfolder;
 
 - (NSDictionary *)graphicalTextBlocks;
-- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock;
+- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
 - (void)removeAllGraphicalTextBlocks;
 
 - (void)pingThisURLString:(NSString *)aURLString;
@@ -1238,7 +1238,7 @@ if ([self where] == kGeneratingRemoteExport) {
             NSString *aGraphicalTextID;
             while (aGraphicalTextID = [textBlocksEnumerator nextObject])
             {
-                KTWebViewTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
+                KTHTMLTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
                 KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
                 
                 NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
@@ -1645,7 +1645,7 @@ if ([self where] == kGeneratingRemoteExport) {
 
 /*	Upload graphical text media
  */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
 	KTMediaFileUpload *upload = [[[textBlock graphicalTextMedia] file] defaultUpload];
 	if (upload)
@@ -1691,7 +1691,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	return myParsedGraphicalTextBlocks;
 }
 
-- (void)addGraphicalTextBlock:(KTWebViewTextBlock *)textBlock
+- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock
 {
 	NSString *ID = [NSString stringWithFormat:@"graphical-text-%@", [[[textBlock graphicalTextMedia] file] valueForKey:@"uniqueID"]];
 	[myParsedGraphicalTextBlocks setObject:textBlock forKey:ID];

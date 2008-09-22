@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 
 
-@interface KTSummaryWebViewTextBlock : KTWebViewTextBlock
+@interface KTSummaryWebViewTextBlock : KTHTMLTextBlock
 {
 }
 

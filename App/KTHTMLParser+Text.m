@@ -68,7 +68,7 @@
 		
 		
 		// Build the text block
-		KTWebViewTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
+		KTHTMLTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
 													     ofObject:object
 														    flags:flags
 													      HTMLTag:tag
@@ -76,7 +76,7 @@
 													    hyperlink:hyperlink];
 		
 		// Generate HTML
-		result = [textBlock outerHTML:self];
+		result = [textBlock outerHTML];
 		if (!result) result = @"";
 	}
 	else
@@ -87,14 +87,14 @@
 	return result;
 }
 
-- (KTWebViewTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (KTHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
 	// Build the text block
-	KTWebViewTextBlock *result = [[[KTWebViewTextBlock alloc] init] autorelease];
+	KTHTMLTextBlock *result = [[[KTHTMLTextBlock alloc] initWithParser:self] autorelease];
 	
 	BOOL fieldEditor = [flags containsObject:@"line"];
 	BOOL richText = [flags containsObject:@"block"];
@@ -112,10 +112,6 @@
 		[result setHyperlink:path];
 	}
 	
-	//if ([[self currentPage] isKindOfClass:[KTPage class]])
-	//{
-		[result setPage:(KTPage *)[self currentPage]];
-	//}
 	
 	[result setHTMLSourceObject:object];
 	[result setHTMLSourceKeyPath:keypath];

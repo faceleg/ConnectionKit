@@ -12,7 +12,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTInfoWindowController.h"
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
@@ -41,7 +41,7 @@
 
 
 @interface KTDocWebViewController (EditingPrivate)
-- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 @end
 
@@ -281,9 +281,9 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Editing Status
 
-- (KTWebViewTextBlock *)currentTextEditingBlock { return myTextEditingBlock; }
+- (KTHTMLTextBlock *)currentTextEditingBlock { return myTextEditingBlock; }
 
-- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock
+- (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock
 {
 	// Ignore unecessary changes
 	if (textBlock == myTextEditingBlock) {
@@ -379,7 +379,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	WebView *theWebview = [notification object];
 	DOMRange *selectedDOMRange = [theWebview selectedDOMRange];
 	DOMHTMLElement *selectableDOMElement = [[selectedDOMRange startContainer] firstSelectableParentNode];
-	KTWebViewTextBlock *currentTextBlock = [self currentTextEditingBlock];
+	KTHTMLTextBlock *currentTextBlock = [self currentTextEditingBlock];
 	
 	if (selectableDOMElement)
 	{
@@ -387,7 +387,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		{
 			if (!currentTextBlock || [currentTextBlock DOMNode] != selectableDOMElement)
 			{
-				KTWebViewTextBlock *newBlock = [KTWebViewTextBlock textBlockForDOMNode:selectableDOMElement
+				KTHTMLTextBlock *newBlock = [KTHTMLTextBlock textBlockForDOMNode:selectableDOMElement
 																					webViewController:self];
 				
 				[self setCurrentTextEditingBlock:newBlock];
@@ -462,7 +462,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	BOOL result = NO;
 	
-	KTWebViewTextBlock *textBlock = [KTWebViewTextBlock textBlockForDOMNode:[range startContainer] webViewController:self];
+	KTHTMLTextBlock *textBlock = [KTHTMLTextBlock textBlockForDOMNode:[range startContainer] webViewController:self];
 	if (textBlock)
     {
 		result = [textBlock webView:aWebView shouldInsertNode:node replacingDOMRange:range givenAction:action];

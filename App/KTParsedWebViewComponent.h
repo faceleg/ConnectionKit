@@ -15,7 +15,7 @@
 #import "KTWebViewComponent.h"
 
 
-@class KTParsedKeyPath, KTHTMLParser, KTWebViewTextBlock;
+@class KTParsedKeyPath, KTHTMLParser, KTHTMLTextBlock;
 
 
 @interface KTParsedWebViewComponent : NSObject
@@ -43,7 +43,7 @@
 - (void)removeAllParsedKeyPaths;
 
 - (NSSet *)textBlocks;
-- (void)addTextBlock:(KTWebViewTextBlock *)textBlock;
+- (void)addTextBlock:(KTHTMLTextBlock *)textBlock;
 - (void)removeAllTextBlocks;
 
 - (NSSet *)subcomponents;

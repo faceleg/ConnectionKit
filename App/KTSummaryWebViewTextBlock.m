@@ -95,7 +95,7 @@
 		KTPage *page = [self HTMLSourceObject];
 		if (![page customSummaryHTML] && [page summaryHTMLKeyPath])
 		{
-			[[self DOMNode] setInnerHTML:[self innerHTML:kGeneratingPreview]];
+			[[self DOMNode] setInnerHTML:[self innerHTML]];
 		}
 	}
 	
@@ -122,7 +122,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (NSString *)innerHTML:(KTHTMLParser *)parser
+- (NSString *)innerHTML
 {
 	KTPage *page = [self HTMLSourceObject];
 	
@@ -138,7 +138,7 @@
 	
 	if (!result) result = @"";
 	
-    result = [self processHTML:result withParser:parser];
+    result = [self processHTML:result];
 	OBPOSTCONDITION(result);
 	return result;
 }
@@ -168,7 +168,7 @@
 - (IBAction)overrideSummary:(id)sender		// respond to menu
 {
 	KTPage *page = [self HTMLSourceObject];
-	[page setCustomSummaryHTML:[self innerHTML:kGeneratingPreview]];
+	[page setCustomSummaryHTML:[self innerHTML]];
 	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 }
 

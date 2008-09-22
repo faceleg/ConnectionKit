@@ -25,7 +25,7 @@
 #import "KTParsedKeyPath.h"
 #import "KTParsedWebViewComponent.h"
 #import "KTAsyncOffscreenWebViewController.h"
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 #import "WebViewEditingHelperClasses.h"
 
 #import "NSMutableDictionary+Karelia.h"
@@ -490,7 +490,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 /*	We want to record the text block.
  *	This includes making sure the webview refreshes upon a graphical text size change.
  */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
 	KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
 	[component addTextBlock:textBlock];

@@ -207,7 +207,7 @@
 	}
 }
 
-- (void)didParseTextBlock:(KTWebViewTextBlock *)textBlock
+- (void)didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseTextBlock:)])

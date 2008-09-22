@@ -16,7 +16,7 @@
 - (void)loadPageIntoSourceCodeTextView:(KTPage *)page;
 
 // Editing
-- (void)setCurrentTextEditingBlock:(KTWebViewTextBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
 @end
 
 

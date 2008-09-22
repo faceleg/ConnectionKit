@@ -265,8 +265,8 @@
 		27A093320D1DECDA00F57801 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
 		27A094760D1F0EA900F57801 /* KTMediaManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27A50CC80D188C2700149038 /* KTDocWebViewController+Editing.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */; };
-		27A50E8A0D19282B00149038 /* KTWebViewTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* KTWebViewTextBlock.h */; settings = {ATTRIBUTES = (); }; };
-		27A50E8B0D19282B00149038 /* KTWebViewTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* KTWebViewTextBlock.m */; };
+		27A50E8A0D19282B00149038 /* KTHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* KTHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
+		27A50E8B0D19282B00149038 /* KTHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* KTHTMLTextBlock.m */; };
 		27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50F270D19443800149038 /* DOM+KTWebViewController.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27A832870D92D8F7005FF13D /* KTCodeInjectionSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A832850D92D8F7005FF13D /* KTCodeInjectionSplitView.m */; };
@@ -1721,8 +1721,8 @@
 		27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewEditingHelperClasses.m; sourceTree = "<group>"; };
 		27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaManager+Internal.h"; sourceTree = "<group>"; };
 		27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Editing.m"; sourceTree = "<group>"; };
-		27A50E880D19282B00149038 /* KTWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewTextBlock.h; sourceTree = "<group>"; };
-		27A50E890D19282B00149038 /* KTWebViewTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewTextBlock.m; sourceTree = "<group>"; };
+		27A50E880D19282B00149038 /* KTHTMLTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLTextBlock.h; sourceTree = "<group>"; };
+		27A50E890D19282B00149038 /* KTHTMLTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLTextBlock.m; sourceTree = "<group>"; };
 		27A50F260D19443800149038 /* DOM+KTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+KTWebViewController.h"; sourceTree = "<group>"; };
 		27A50F270D19443800149038 /* DOM+KTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+KTWebViewController.m"; sourceTree = "<group>"; };
 		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
@@ -3153,16 +3153,10 @@
 				27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */,
 				27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */,
 				27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */,
-				27A50E880D19282B00149038 /* KTWebViewTextBlock.h */,
-				27A50E890D19282B00149038 /* KTWebViewTextBlock.m */,
 				27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */,
 				27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */,
 				27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */,
 				27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */,
-				27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */,
-				27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */,
-				27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */,
-				27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */,
 			);
 			name = Editing;
 			sourceTree = "<group>";
@@ -3284,6 +3278,19 @@
 			name = Media;
 			sourceTree = "<group>";
 		};
+		278CDCCE0E83DB2000477D3A /* Text Editing */ = {
+			isa = PBXGroup;
+			children = (
+				27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */,
+				27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */,
+				27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */,
+				27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */,
+				27A50E880D19282B00149038 /* KTHTMLTextBlock.h */,
+				27A50E890D19282B00149038 /* KTHTMLTextBlock.m */,
+			);
+			name = "Text Editing";
+			sourceTree = "<group>";
+		};
 		278ECE560D259F400012BA6B /* Pasteboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -3400,6 +3407,7 @@
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CD0D85780100AEF4B5 /* Document UI */,
 				27DB80770C84658200E29C38 /* Inspector */,
+				278CDCCE0E83DB2000477D3A /* Text Editing */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
 				3C5A73830BF7B8F200776464 /* Index */,
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
@@ -4774,7 +4782,7 @@
 				27F0F3A40D0F46AC00B7555A /* KTExternalMediaFile.h in Headers */,
 				2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */,
 				27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */,
-				27A50E8A0D19282B00149038 /* KTWebViewTextBlock.h in Headers */,
+				27A50E8A0D19282B00149038 /* KTHTMLTextBlock.h in Headers */,
 				27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */,
 				27A093310D1DECDA00F57801 /* WebViewEditingHelperClasses.h in Headers */,
 				27A094760D1F0EA900F57801 /* KTMediaManager+Internal.h in Headers */,
@@ -6187,7 +6195,7 @@
 				2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */,
 				27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */,
 				27A50CC80D188C2700149038 /* KTDocWebViewController+Editing.m in Sources */,
-				27A50E8B0D19282B00149038 /* KTWebViewTextBlock.m in Sources */,
+				27A50E8B0D19282B00149038 /* KTHTMLTextBlock.m in Sources */,
 				27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */,
 				27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */,
 				3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */,

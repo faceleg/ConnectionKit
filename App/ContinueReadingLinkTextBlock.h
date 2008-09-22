@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 
 
 @class KTPage;
 
 
-@interface ContinueReadingLinkTextBlock : KTWebViewTextBlock
+@interface ContinueReadingLinkTextBlock : KTHTMLTextBlock
 {
 	KTPage *myTargetPage;
 }

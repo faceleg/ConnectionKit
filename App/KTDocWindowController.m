@@ -40,7 +40,7 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"
-#import "KTWebViewTextBlock.h"
+#import "KTHTMLTextBlock.h"
 
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
