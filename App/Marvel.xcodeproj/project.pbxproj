@@ -1754,7 +1754,6 @@
 		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
 		27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+Internal.h"; sourceTree = "<group>"; };
-		27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Deprecated.m"; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* KTHTMLParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Text.m"; sourceTree = "<group>"; };
@@ -1838,8 +1837,6 @@
 		3C202DA707DFC4DD00DE4994 /* KTBackgroundTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTBackgroundTabView.m; sourceTree = "<group>"; };
 		3C202DA807DFC4DD00DE4994 /* KTImageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageTextCell.h; sourceTree = "<group>"; };
 		3C202DA907DFC4DD00DE4994 /* KTImageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageTextCell.m; sourceTree = "<group>"; };
-		3C202DAA07DFC4DD00DE4994 /* KTURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLProtocol.h; sourceTree = "<group>"; };
-		3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLProtocol.m; sourceTree = "<group>"; };
 		3C202DAF07E00B9300DE4994 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		3C202DB007E00B9300DE4994 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		3C202DB107E00B9300DE4994 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
@@ -2081,8 +2078,6 @@
 		798634F2094E763F003B2653 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
 		79B7310E0A33BF9A008F7F58 /* KTHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHost.h; sourceTree = "<group>"; };
 		79B7310F0A33BF9A008F7F58 /* KTHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHost.m; sourceTree = "<group>"; };
-		79C982BF09E34EDF0026A7B7 /* KTMediaDataProxy.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = KTMediaDataProxy.h; sourceTree = "<group>"; };
-		79C982C009E34EDF0026A7B7 /* KTMediaDataProxy.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = KTMediaDataProxy.m; sourceTree = "<group>"; };
 		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../../Shared/trunk/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
 		79EC3C020973CECD00FE7D50 /* upload_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_complete.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
@@ -2389,8 +2384,6 @@
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
 		CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+WebView.m"; sourceTree = "<group>"; };
 		CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Lookup.m"; sourceTree = "<group>"; };
-		CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignURLProtocol.h; sourceTree = "<group>"; };
-		CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignURLProtocol.m; sourceTree = "<group>"; };
 		CEB53A800899A9AD006B0019 /* KTDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesign.h; sourceTree = "<group>"; };
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
 		CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_choose_design.png; sourceTree = "<group>"; };
@@ -3249,13 +3242,6 @@
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C202DAA07DFC4DD00DE4994 /* KTURLProtocol.h */,
-				3C202DAB07DFC4DD00DE4994 /* KTURLProtocol.m */,
-				CEB53A770899A99C006B0019 /* KTDesignURLProtocol.h */,
-				CEB53A780899A99C006B0019 /* KTDesignURLProtocol.m */,
-				27CD665A0CE32D4B00919E41 /* KTDocument+Deprecated.m */,
-				79C982BF09E34EDF0026A7B7 /* KTMediaDataProxy.h */,
-				79C982C009E34EDF0026A7B7 /* KTMediaDataProxy.m */,
 				3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */,
 				3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */,
 				3CF941C40D623BC600B1C83D /* KTStoredArray.h */,
