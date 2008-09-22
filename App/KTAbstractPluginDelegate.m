@@ -101,8 +101,11 @@
 	}
 	
 	// At this point we should have a page
-	OBPOSTCONDITION(container);
-    OBPOSTCONDITION([container isKindOfClass:[KTPage class]]);
+	if (container)
+    {
+        OBPOSTCONDITION([container isKindOfClass:[KTPage class]]);
+    }
+    
 	return container;
 }
 
