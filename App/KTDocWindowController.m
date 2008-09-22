@@ -33,7 +33,6 @@
 #import "KTInfoWindowController.h"
 #import "KTInlineImageElement.h"
 #import "KTLinkSourceView.h"
-#import "KTManagedObjectContext.h"
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 #import "KTPage.h"
@@ -785,7 +784,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	if ( nil != plugin )
     {
 		/// Case 17992, we now pass in a context to nearestParent
-		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		KTPage *nearestParent = [self nearestParent:[[self document] managedObjectContext]];
 		if ( ![nearestParent isKindOfClass:[KTPage class]] )
 		{
 			NSLog(@"unable to addPage: nearestParent is nil");
@@ -893,7 +892,7 @@ from representedObject */
 		}
 		
 		/// Case 17992, nearestParent method now requires we pass in a context
-		KTPage *nearestParent = [self nearestParent:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		KTPage *nearestParent = [self nearestParent:[[self document] managedObjectContext]];
 		/// Case 17992, added assert to better detect source of exception
 		OBASSERTSTRING((nil != nearestParent), @"nearestParent should not be nil, root at worst");
 		
@@ -1190,7 +1189,7 @@ from representedObject */
 		selectedParent = [[(KTDocument *)[self document] documentInfo] root];
 	}
 	
-	KTManagedObjectContext *context = (KTManagedObjectContext *)[selectedParent managedObjectContext];
+	NSManagedObjectContext *context = [selectedParent managedObjectContext];
 	
 	NSEnumerator *e = [selectedPages objectEnumerator];
 	KTPage *object;
@@ -2227,7 +2226,7 @@ from representedObject */
 						
 						KTPage *newPage = [KTPage pageWithParent:aCollection
 											dataSourceDictionary:dragDataDictionary
-								  insertIntoManagedObjectContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+								  insertIntoManagedObjectContext:[[self document] managedObjectContext]];
 						
 						if ( nil != newPage )
 						{
@@ -2294,8 +2293,6 @@ from representedObject */
 			
 			[poolForEachDrag release];
 		}
-		LOG((@"removed a save here, is it still needed?"));
-//		[[self document] saveContext:(KTManagedObjectContext *)[[self document] managedObjectContext] onlyIfNecessary:YES];
 		
 		if ( didDisplayProgressIndicator )
 		{

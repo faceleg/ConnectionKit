@@ -13,7 +13,6 @@
 #import "KTAppDelegate.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
-#import "KTManagedObjectContext.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
 #import "KTPasteboardArchiving.h"
@@ -34,8 +33,8 @@
 - (NSArray *)pastePagesFromArchive:(NSArray *)archive toParent:(KTPage *)aParent;
 - (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag;
 
-- (void)removePages:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext;
-- (void)removePagelets:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext;
+- (void)removePages:(NSArray *)anArray fromContext:(NSManagedObjectContext *)aContext;
+- (void)removePagelets:(NSArray *)anArray fromContext:(NSManagedObjectContext *)aContext;
 - (void)actuallyDeletePages:(NSDictionary *)aContext;
 @end
 
@@ -219,7 +218,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	[self actuallyDeletePages:nil];
 }
 
-- (void)removePages:(NSArray *)anArray fromContext:(KTManagedObjectContext *)aContext
+- (void)removePages:(NSArray *)anArray fromContext:(NSManagedObjectContext *)aContext
 {
 	// we break this out into a separate method, currently, because during cutPages:
 	// we have to mark stale and then copy to the pboard before we delete the pages
@@ -288,13 +287,13 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 		}
 		
 		// remove from page/context
-		[self removePagelets:selectedPagelets fromContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+		[self removePagelets:selectedPagelets fromContext:[[self document] managedObjectContext]];
 		LOG((@"removed a save here, is it still needed?"));
-//		[[self document] saveContext:(KTManagedObjectContext *)[[self document] managedObjectContext]];
+//		[[self document] saveContext:[[self document] managedObjectContext]];
 	}
 }
 
-- (void)removePagelets:(NSArray *)pagelets fromContext:(KTManagedObjectContext *)aContext
+- (void)removePagelets:(NSArray *)pagelets fromContext:(NSManagedObjectContext *)aContext
 {
 	//[aContext lockPSCAndSelf];
 	
@@ -834,7 +833,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
         KTPage *selectedPage = [[self siteOutlineController] selectedPage];
         if ( [[selectedPagelet page] isEqual:selectedPage] )
         {		
-            KTManagedObjectContext *context = (KTManagedObjectContext *)[selectedPage managedObjectContext];
+            NSManagedObjectContext *context = [selectedPage managedObjectContext];
             
             // remove pagelet from the page
 			[[selectedPagelet page] removePagelet:selectedPagelet];

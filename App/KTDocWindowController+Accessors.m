@@ -11,7 +11,6 @@
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTInlineImageElement.h"
-#import "KTManagedObjectContext.h"
 #import "KTPage.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -66,7 +65,7 @@
 /*!	Determine the default collection, either the root (if nothing selected), or the selected
  collection, or the selection's parent collection if it's not a collection.
  */
-- (KTPage *)nearestParent:(KTManagedObjectContext *)aManagedObjectContext
+- (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext
 {
 	KTPage *parentCollection = nil;
 	

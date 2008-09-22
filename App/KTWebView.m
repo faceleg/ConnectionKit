@@ -453,7 +453,7 @@ TO DO:
 		KTPage *root = [theDocument root];
 		
 		KTMedia *headerImageMedia = [KTMedia mediaWithDataSourceDictionary:dragDataDictionary
-									insertIntoManagedObjectContext:(KTManagedObjectContext *)[theDocument managedObjectContext]];
+									insertIntoManagedObjectContext:(NSManagedObjectContext *)[theDocument managedObjectContext]];
 			
 		KTMediaRef *headerImageRef = [KTMediaRef retainMedia:headerImageMedia 
 														name:@"headerImage"

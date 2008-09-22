@@ -14,7 +14,6 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
-#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 
 #import "NSBundle+KTExtensions.h"

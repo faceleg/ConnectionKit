@@ -19,7 +19,6 @@
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
 #import "KTLinkSourceView.h"
-#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTPseudoElement.h"

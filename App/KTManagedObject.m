@@ -107,7 +107,7 @@
 }
 
 /*! returns first matching object in aContext using predicateForSimilarObject */
-- (KTManagedObject *)similarObjectInContext:(KTManagedObjectContext *)aContext 
+- (KTManagedObject *)similarObjectInContext:(NSManagedObjectContext *)aContext 
 {
     // attempt to find a matching object using the built-in predicate
     KTManagedObject *result = nil;

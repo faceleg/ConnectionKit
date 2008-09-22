@@ -57,7 +57,6 @@
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
-#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage.h"
@@ -180,7 +179,7 @@
     if (self)
     {
         // Make a new documentInfo to store document properties
-        KTManagedObjectContext *context = (KTManagedObjectContext *)[self managedObjectContext];
+        NSManagedObjectContext *context = [self managedObjectContext];
         KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
         [self setDocumentInfo:documentInfo];
         

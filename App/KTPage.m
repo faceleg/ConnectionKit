@@ -17,7 +17,6 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
-#import "KTManagedObjectContext.h"
 #import "KTMaster.h"
 
 #import "NSArray+Karelia.h"
@@ -189,7 +188,7 @@
 
 + (KTPage *)pageWithParent:(KTPage *)aParent
 				dataSourceDictionary:(NSDictionary *)aDictionary
-	  insertIntoManagedObjectContext:(KTManagedObjectContext *)aContext;
+	  insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
 {
 	OBPRECONDITION(nil != aParent);
 

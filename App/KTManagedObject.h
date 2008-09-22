@@ -22,7 +22,7 @@
 #import "NSObject+Karelia.h"
 #import "NSObject+KTExtensions.h"
 
-@class KTManagedObjectContext;
+
 @interface KTManagedObject : KSExtensibleManagedObject
 {
 }
@@ -36,6 +36,6 @@
 - (NSPredicate *)predicateForSimilarObject;
 
 /*! returns first matching object in aContext using predicateForSimilarObject */
-- (KTManagedObject *)similarObjectInContext:(KTManagedObjectContext *)context;
+- (KTManagedObject *)similarObjectInContext:(NSManagedObjectContext *)context;
 
 @end

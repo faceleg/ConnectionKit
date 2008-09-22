@@ -23,7 +23,6 @@
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
-#import "KTDesignURLProtocol.h"
 #import "KTDocumentInfo.h"
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"

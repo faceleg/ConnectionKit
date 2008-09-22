@@ -80,7 +80,7 @@
 	}
 	
 	//==//NSManagedObjectContext *result = [[NSManagedObjectContext alloc] init];
-	KTManagedObjectContext *result = [[KTManagedObjectContext alloc] init];
+	NSManagedObjectContext *result = [[KTManagedObjectContext alloc] init];
 	[result setPersistentStoreCoordinator:coordinator];
 	
 	[coordinator release];

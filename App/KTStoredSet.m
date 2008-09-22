@@ -8,7 +8,6 @@
 #import "KTStoredSet.h"
 
 #import "Debug.h"
-#import "KTManagedObjectContext.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 

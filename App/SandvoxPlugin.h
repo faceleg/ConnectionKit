@@ -34,7 +34,6 @@
 #import "assertions.h"
 
 // Core Data classes
-#import "KTManagedObjectContext.h"
 #import "KTPersistentStoreCoordinator.h"
 
 //  superclass of all managed objects

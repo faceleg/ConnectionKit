@@ -53,7 +53,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (BOOL)disclosedPreset;
 - (void)setDisclosedPreset:(BOOL)flag;
 
-- (KTManagedObjectContext *)currentManagedObjectContext;
+- (NSManagedObjectContext *)currentManagedObjectContext;
 
 - (void)setCurrentSelection:(id)aCurrentSelection;
 
@@ -1183,18 +1183,18 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
     myAssociatedDocument = aDocument;
 }
 
-- (KTManagedObjectContext *)currentManagedObjectContext
+- (NSManagedObjectContext *)currentManagedObjectContext
 {
-	KTManagedObjectContext *result = nil;
+	NSManagedObjectContext *result = nil;
 	
 	if ( (nil != myCurrentSelection) && [myCurrentSelection respondsToSelector:@selector(managedObjectContext)] )
 	{
-		result = (KTManagedObjectContext *)[myCurrentSelection managedObjectContext];
+		result = [myCurrentSelection managedObjectContext];
 	}
 	
 	if ( (nil == result) && (nil != myAssociatedDocument) )
 	{
-		result = (KTManagedObjectContext *)[myAssociatedDocument managedObjectContext];
+		result = [myAssociatedDocument managedObjectContext];
 	}
 	
 	if ( nil == result )

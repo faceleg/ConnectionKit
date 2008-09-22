@@ -9,7 +9,6 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "Debug.h"
-#import "KTManagedObjectContext.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
@@ -396,13 +395,13 @@
 
 - (BOOL)lockContextIfNeeded
 {
-	//[(KTManagedObjectContext *)[self managedObjectContext] lock];
+	//[[self managedObjectContext] lock];
 	return YES;
 }
 
 - (void)unlockContextIfNeeded:(BOOL)didLock
 {
-	//[(KTManagedObjectContext *)[self managedObjectContext] unlock];
+	//[[self managedObjectContext] unlock];
 }
 
 // these two methods should be paired

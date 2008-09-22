@@ -61,9 +61,9 @@
 	return [[self page] document];
 }
 
-- (KTManagedObjectContext *)managedObjectContext
+- (NSManagedObjectContext *)managedObjectContext
 {
-	return (KTManagedObjectContext *)[myDelegateOwner managedObjectContext];
+	return [myDelegateOwner managedObjectContext];
 }
 
 - (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }

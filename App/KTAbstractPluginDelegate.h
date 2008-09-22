@@ -47,7 +47,7 @@
 // these are covers for the same accessors in myDelegateOwner
 - (NSBundle *)bundle;
 - (KTDocument *)document;
-- (KTManagedObjectContext *)managedObjectContext;
+- (NSManagedObjectContext *)managedObjectContext;
 - (KTMediaManager *)mediaManager;
 //- (KTOldMediaManager *)oldMediaManager;
 - (NSMutableDictionary *)pluginProperties;

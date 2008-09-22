@@ -34,7 +34,7 @@ typedef enum {
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTDocumentInfo, KTMediaManager, KTManagedObjectContext, KTTransferController, KTStalenessManager;
+@class KTDocumentInfo, KTMediaManager, KTTransferController, KTStalenessManager;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
@@ -43,7 +43,7 @@ extern NSString *KTDocumentWillSaveNotification;
 {
 @private
 	
-	KTManagedObjectContext		*myManagedObjectContext;
+	NSManagedObjectContext		*myManagedObjectContext;
 	KTDocumentInfo				*myDocumentInfo;			// accessor in category method
 	
 	KTDocWindowController		*myDocWindowController;

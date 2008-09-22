@@ -27,7 +27,6 @@
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
-@class KTManagedObjectContext;
 
 extern NSString *gInfoWindowAutoSaveName;
 
@@ -272,7 +271,7 @@ extern NSString *KTSelectedDOMRangeKey;
 - (KTInlineImageElement *)selectedInlineImageElement;
 - (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement;
 
-- (KTPage *)nearestParent:(KTManagedObjectContext *)aManagedObjectContext;
+- (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext;
 
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
