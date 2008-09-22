@@ -606,7 +606,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				error:(NSError **)outError;
 
 {
-	BOOL result = NO;
+	BOOL result = YES;
 	NSError *error = nil;
 	
 	
