@@ -39,7 +39,7 @@
 	if ([result isRichText])
 	{
 		// Scan through the preview text for page paths
-		NSString *HTML = [result innerHTML:kGeneratingPreview];
+		NSString *HTML = [result innerHTML];
 		if (HTML)
 		{
 			NSScanner *scanner = [[[NSScanner alloc] initWithString:HTML] autorelease];

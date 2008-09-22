@@ -137,7 +137,7 @@
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
 	if (parameters && [parameters count] == 1)
 	{
-		ContinueReadingLinkTextBlock *textBlock = [[ContinueReadingLinkTextBlock alloc] init];
+		ContinueReadingLinkTextBlock *textBlock = [[ContinueReadingLinkTextBlock alloc] initWithParser:self];
 		[textBlock setFieldEditor:YES];
 		[textBlock setRichText:NO];
 		[textBlock setImportsGraphics:NO];
@@ -146,7 +146,7 @@
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
 		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
-		result = [textBlock outerHTML:self];
+		result = [textBlock outerHTML];
 		
 		[self didParseTextBlock:textBlock];
 		[textBlock release];
