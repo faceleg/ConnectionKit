@@ -1271,47 +1271,55 @@
 {
 	BOOL result = NO;
 	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *originalPath = [[self fileURL] path];
-	
-	if ( [fm fileExistsAtPath:originalPath] )
-	{			
-		NSString *backupPath = [anotherURL path];
-		if ( nil != backupPath )
-		{
-			BOOL okToProceed = YES;
-			
-			// delete old backup first
-			if ( [fm fileExistsAtPath:backupPath] )
-			{
-				(void) [fm removeFileAtPath:backupPath handler:self];	// ignore error removing
-			}
-			
-			// make sure the directory exists
-			NSString *directoryPath = [backupPath stringByDeletingLastPathComponent];
-			NSError *localError = nil;
-			okToProceed = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
+    
+    // We can't backup to the same location
+    if (![[[anotherURL path] stringByResolvingSymlinksInPath] isEqualToString:[[[self fileURL] path] stringByResolvingSymlinksInPath]])
+    {
+    
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSString *originalPath = [[self fileURL] path];
+        
+        if ( [fm fileExistsAtPath:originalPath] )
+        {			
+            NSString *backupPath = [anotherURL path];
+            if ( nil != backupPath )
+            {
+                BOOL okToProceed = YES;
+                
+                // delete old backup first
+                if ( [fm fileExistsAtPath:backupPath] )
+                {
+                    (void) [fm removeFileAtPath:backupPath handler:self];	// ignore error removing
+                }
+                
+                // make sure the directory exists
+                NSString *directoryPath = [backupPath stringByDeletingLastPathComponent];
+                NSError *localError = nil;
+                okToProceed = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
 
-			if ( okToProceed )
-			{
-				// grab the date
-				NSDate *now = [NSDate date];
-				
-				// make the backup
-				result = [fm copyPath:originalPath toPath:backupPath handler:self];
-				
-				// update the creation/lastModification times to now
-				//  what key is "Last opened" that we see in Finder?
-				//  until we know that, only update mod time
-				NSDictionary *dateInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-										  //now, NSFileCreationDate,
-										  now, NSFileModificationDate,
-										  nil];
-				(void)[fm changeFileAttributes:dateInfo atPath:backupPath];
-			}
-		}
-	}
-	
+                if ( okToProceed )
+                {
+                    // grab the date
+                    NSDate *now = [NSDate date];
+                    
+                    // make the backup
+                    result = [fm copyPath:originalPath toPath:backupPath handler:self];
+                    
+                    // update the creation/lastModification times to now
+                    //  what key is "Last opened" that we see in Finder?
+                    //  until we know that, only update mod time
+                    NSDictionary *dateInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              //now, NSFileCreationDate,
+                                              now, NSFileModificationDate,
+                                              nil];
+                    (void)[fm changeFileAttributes:dateInfo atPath:backupPath];
+                }
+            }
+        }
+
+    }
+    
+    
 	return result;
 }
 

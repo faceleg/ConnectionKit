@@ -646,9 +646,7 @@
 {
     KTDocument *document = [notification object];
     OBASSERT(document);
-	
-#pragma mark TODO put up an alert rather than log warning, actually backupToURL should have an error: parameter 
-	
+		
 	int backupOrSnapshotOnOpening = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
 	switch ( backupOrSnapshotOnOpening )
 	{
