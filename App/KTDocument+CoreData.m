@@ -41,7 +41,7 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-	if ( nil == myManagedObjectContext )
+	if (!myManagedObjectContext)
 	{
 		//LOGMETHOD;
 		
@@ -59,9 +59,9 @@
 		[PSC release];
 	}
 	
-	OBASSERTSTRING((nil != myManagedObjectContext), @"myManagedObjectContext should not be nil");
+	OBPOSTCONDITION(myManagedObjectContext);
 	
-	return (NSManagedObjectContext *)myManagedObjectContext;
+	return myManagedObjectContext;
 }
 
 #pragma mark model
