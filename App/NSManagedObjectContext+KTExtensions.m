@@ -18,11 +18,6 @@
 #import "NSString+KTExtensions.h"
 
 
-@interface NSManagedObjectContext ( KTManagedObjectContext )
-- (void)checkPublishingModeAndThread;
-@end
-
-
 @implementation NSManagedObjectContext (KTExtensions)
 
 - (void)deleteObjectsInCollection:(id)collection   // Assume objects conform to -objectEnumerator

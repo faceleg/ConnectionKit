@@ -29,27 +29,7 @@ static NSString *sMainThreadID = nil;
 #endif
 
 
-//@interface KTDataMigrator ( PrivateHack )
-//+ (void)crashKTDataMigrator;
-//@end
-
-
 @implementation KTManagedObjectContext
-
-//+ (void)crashKTManagedObjectContext
-//{
-//	[KTDataMigrator crashKTDataMigrator];
-//}
-
-// in RELEASE, we want KTManagedObjectContext to poseAsClass: NSManagedObjectContext so that saveDocumentAs: works!
-#ifndef DEBUG
-+ (void)initialize		// Not +load; we have problems with that.  But then we need to get the class loaded right.
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	[self poseAsClass:[NSManagedObjectContext class]];
-	[pool release];
-}
-#endif
 
 #ifdef DEBUG
 
@@ -314,11 +294,6 @@ static NSString *sMainThreadID = nil;
 	[self checkThread:_cmd];
 	return [super redo];
 }
-- (void)reset
-{
-	[self checkThread:_cmd];
-	return [super reset];
-}
 - (void)rollback
 {
 	[self checkThread:_cmd];
@@ -411,5 +386,11 @@ static NSString *sMainThreadID = nil;
 	return [super mergePolicy];
 }
 #endif
+
+- (void)reset
+{
+	OBASSERT_NOT_REACHED("Sandvox is not expected to ever reset the context");
+	return [super reset];
+}
 
 @end

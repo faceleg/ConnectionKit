@@ -18,11 +18,6 @@
 @end
 
 
-@interface NSManagedObjectContext ( KTManagedObjectContext )
-- (void)checkPublishingModeAndThread;
-@end
-
-
 @interface NSManagedObject ( DelegateHack )
 - (id)delegate;
 @end
