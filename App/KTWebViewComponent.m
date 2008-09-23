@@ -6,12 +6,12 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTParsedWebViewComponent.h"
+#import "KTWebViewComponent.h"
 
 #import "KTHTMLParser.h"
 
 
-@implementation KTParsedWebViewComponent
+@implementation KTWebViewComponent
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -19,6 +19,8 @@
 - (id)initWithParser:(KTHTMLParser *)parser
 {
 	[super init];
+	
+	myParser = [parser retain];
 	
 	myComponent = [[parser component] retain];
 	myTemplateHTML = [[parser template] copy];
@@ -41,6 +43,8 @@
 	[myTextBlocks release];
     [myHTML release];
 	
+	[myParser release];
+	
 	[super dealloc];
 }
 
@@ -52,6 +56,8 @@
 - (NSString *)templateHTML { return myTemplateHTML; }
 
 - (NSString *)divID { return myDivID; }
+
+- (KTHTMLParser *)parser { return myParser; }
 
 - (NSString *)HTML { return myHTML; }
 
@@ -110,7 +116,7 @@
 	
 	// Them go through and add all their subcomponents
 	NSEnumerator *subComponentsEnumerator = [[self subcomponents] objectEnumerator];
-	KTParsedWebViewComponent *aComponent;
+	KTWebViewComponent *aComponent;
 	while (aComponent = [subComponentsEnumerator nextObject])
 	{
 		[result unionSet:[aComponent allSubcomponents]];
@@ -119,7 +125,7 @@
 	return result;
 }
 
-- (KTParsedWebViewComponent *)supercomponent { return mySupercomponent; }
+- (KTWebViewComponent *)supercomponent { return mySupercomponent; }
 
 /*	Returns our parent, plus their parent etc.
  */
@@ -127,7 +133,7 @@
 {
 	NSMutableSet *result = [NSMutableSet set];
 	
-	KTParsedWebViewComponent *aComponent = [self supercomponent];
+	KTWebViewComponent *aComponent = [self supercomponent];
 	while (aComponent)
 	{
 		[result addObject:aComponent];
@@ -137,15 +143,15 @@
 	return result;
 }
 
-- (void)setSuperComponent:(KTParsedWebViewComponent *)component { mySupercomponent = component; }
+- (void)setSuperComponent:(KTWebViewComponent *)component { mySupercomponent = component; }
 
 /*	Searches all subComponents (and their subComponents etc.) for the parsed component with the 
  *	right properties. Returns nil if not found.
  */
-- (KTParsedWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
+- (KTWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
 												 templateHTML:(NSString *)templateHTML
 {
-	KTParsedWebViewComponent *result = nil;
+	KTWebViewComponent *result = nil;
 	
 	// Are we a match?
 	if ([[self parsedComponent] isEqual:component] &&
@@ -158,12 +164,12 @@
 	{
 		NSSet *subComponents = mySubcomponents;
 		NSEnumerator *componentsEnumerator = [subComponents objectEnumerator];
-		KTParsedWebViewComponent *aParsedComponent;
+		KTWebViewComponent *aParsedComponent;
 		
 		while (aParsedComponent = [componentsEnumerator nextObject])
 		{
 			// OK then, does this component contain the component?
-			KTParsedWebViewComponent *possibleResult = [aParsedComponent componentWithParsedComponent:component
+			KTWebViewComponent *possibleResult = [aParsedComponent componentWithParsedComponent:component
 																							templateHTML:templateHTML];
 			if (possibleResult)
 			{
@@ -176,7 +182,7 @@
 	return result;
 }
 
-- (void)addSubcomponent:(KTParsedWebViewComponent *)component
+- (void)addSubcomponent:(KTWebViewComponent *)component
 {
 	if (!mySubcomponents)
 	{
@@ -206,7 +212,7 @@
 	if (recursive)
 	{
 		NSEnumerator *subcomponentsEnumerator = [[self subcomponents] objectEnumerator];
-		KTParsedWebViewComponent *aComponent;
+		KTWebViewComponent *aComponent;
 		while (aComponent = [subcomponentsEnumerator nextObject])
 		{
 			[aComponent setNeedsReload:flag recursive:YES];

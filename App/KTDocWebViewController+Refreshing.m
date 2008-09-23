@@ -22,7 +22,7 @@
 #import "KTHTMLParser.h"
 #import "KTPage.h"
 #import "KTParsedKeyPath.h"
-#import "KTParsedWebViewComponent.h"
+#import "KTWebViewComponent.h"
 #import "KTAsyncOffscreenWebViewController.h"
 #import "KTHTMLTextBlock.h"
 #import "WebViewEditingHelperClasses.h"
@@ -43,17 +43,17 @@
 @interface KTDocWebViewController (RefreshingPrivate)
 
 - (void)setWebViewNeedsReload:(BOOL)needsRefresh;
-- (void)setWebViewComponentNeedsReload:(KTParsedWebViewComponent *)component;
+- (void)setWebViewComponentNeedsReload:(KTWebViewComponent *)component;
 
-- (void)reloadWebViewComponent:(KTParsedWebViewComponent *)component;
-- (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component;
+- (void)reloadWebViewComponent:(KTWebViewComponent *)component;
+- (void)reloadWebViewComponentIfNeeded:(KTWebViewComponent *)component;
 
 - (void)loadPageIntoWebView:(KTPage *)page;
 
-- (KTParsedWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser;
-- (void)resetWebViewComponent:(KTParsedWebViewComponent *)component;
+- (KTWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser;
+- (void)resetWebViewComponent:(KTWebViewComponent *)component;
 
-- (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParsedComponent:(KTParsedWebViewComponent *)parsedComponent;
+- (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParsedComponent:(KTWebViewComponent *)parsedComponent;
 - (NSSet *)webViewComponentsWithParsedKeyPath:(KTParsedKeyPath *)keyPath;
 
 - (void)loadMultiplePagesMarkerIntoWebView;
@@ -156,7 +156,7 @@
  *
  *	If component is nil, we assume the whole webview needs a refresh
  */
-- (void)setWebViewComponentNeedsReload:(KTParsedWebViewComponent *)component
+- (void)setWebViewComponentNeedsReload:(KTWebViewComponent *)component
 {
 	// Mark the component
 	if (!component) component = [self mainWebViewComponent];
@@ -203,7 +203,16 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
  */
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
 {
-    
+    KTHTMLParser *parser = [[self mainWebViewComponent] parser];
+	[parser setDelegate:nil];
+	
+	NSString *oldHTML = [[self mainWebViewComponent] HTML];
+	NSString *newHTML = [parser parseTemplate];
+	
+	if (![oldHTML isEqualToString:newHTML])
+	{
+		[self setWebViewNeedsReload];
+	}
 }
 
 #pragma mark -
@@ -255,7 +264,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[self setWebViewNeedsReload:NO];
 }
 
-- (void)reloadWebViewComponent:(KTParsedWebViewComponent *)component
+- (void)reloadWebViewComponent:(KTWebViewComponent *)component
 {
 	// If we're trying to redraw the main component cut straight to -refreshWebView
 	if ([component isEqual:[self mainWebViewComponent]])
@@ -396,7 +405,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)reloadWebViewIfNeeded;
 {
 	// Work through the hierarchy looking for components that need it
-		KTParsedWebViewComponent *mainComponent = [self mainWebViewComponent];
+		KTWebViewComponent *mainComponent = [self mainWebViewComponent];
 	if (mainComponent)
 	{
 		[self reloadWebViewComponentIfNeeded:mainComponent];
@@ -411,7 +420,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[self setWebViewNeedsReload:NO];
 }
 
-- (void)reloadWebViewComponentIfNeeded:(KTParsedWebViewComponent *)component
+- (void)reloadWebViewComponentIfNeeded:(KTWebViewComponent *)component
 {
 	OBPRECONDITION(component);
 	
@@ -423,7 +432,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	else
 	{
 		NSEnumerator *subcomponentsEnumerator = [[component subcomponents] objectEnumerator];
-		KTParsedWebViewComponent *aSubcomponent;
+		KTWebViewComponent *aSubcomponent;
 		while (aSubcomponent = [subcomponentsEnumerator nextObject])
 		{
 			[self reloadWebViewComponentIfNeeded:aSubcomponent];
@@ -460,7 +469,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 - (void)parser:(KTHTMLParser *)parser didEndParsing:(NSString *)HTML;
 {
-    KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
+    KTWebViewComponent *component = [self webViewComponentForParser:parser];
     [component setHTML:HTML];
 }
 
@@ -469,7 +478,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
-	KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
+	KTWebViewComponent *component = [self webViewComponentForParser:parser];
 	[component addTextBlock:textBlock];
 }
 
@@ -542,9 +551,9 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 #pragma mark -
 #pragma mark WebView Components
 
-- (KTParsedWebViewComponent *)mainWebViewComponent { return myMainWebViewComponent; }
+- (KTWebViewComponent *)mainWebViewComponent { return myMainWebViewComponent; }
 
-- (void)setMainWebViewComponent:(KTParsedWebViewComponent *)component
+- (void)setMainWebViewComponent:(KTWebViewComponent *)component
 {
 	// Do the usual behavior for dumping a component. This empties the component out, including subcomponents, but keeps
 	// the component itself in the tree...
@@ -561,12 +570,12 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 /*	Locates the component that corresponds with the parser. If none is found, creates it.
  */
-- (KTParsedWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser
+- (KTWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser
 {
 	// Ensure we have a main parsed component before doing anything else
 	if (![self mainWebViewComponent])
 	{
-		KTParsedWebViewComponent *mainComponent = [[KTParsedWebViewComponent alloc] initWithParser:parser];
+		KTWebViewComponent *mainComponent = [[KTWebViewComponent alloc] initWithParser:parser];
 		[self setMainWebViewComponent:mainComponent];
 		[myWebViewComponents setObject:mainComponent forKey:[parser parserID]];
 		[mainComponent release];
@@ -574,15 +583,15 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// Search for the component
-	KTParsedWebViewComponent *result = [myWebViewComponents objectForKey:[parser parserID]];
+	KTWebViewComponent *result = [myWebViewComponents objectForKey:[parser parserID]];
 	
 	
 	// Create a new component if not found
 	if (!result)
 	{
-		KTParsedWebViewComponent *parentComponent = [self webViewComponentForParser:[parser parentParser]];
+		KTWebViewComponent *parentComponent = [self webViewComponentForParser:[parser parentParser]];
 		
-		result = [[KTParsedWebViewComponent alloc] initWithParser:parser];
+		result = [[KTWebViewComponent alloc] initWithParser:parser];
 		[parentComponent addSubcomponent:result];
 		[myWebViewComponents setObject:result forKey:[parser parserID]];
 		[result release];
@@ -594,12 +603,12 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 /*	Leaves the actual component in the hierarchy, but removes all its subComponents & parsed keyPaths.
  *	Before doing so, we stop all KVO for the objects contained.
  */
-- (void)resetWebViewComponent:(KTParsedWebViewComponent *)component
+- (void)resetWebViewComponent:(KTWebViewComponent *)component
 {
 	// Deal with subcomponents first
 	NSSet *subcomponents = [component subcomponents];
 	NSEnumerator *subcomponentsEnumerator = [subcomponents objectEnumerator];
-	KTParsedWebViewComponent *aSubcomponent;
+	KTWebViewComponent *aSubcomponent;
 	while (aSubcomponent = [subcomponentsEnumerator nextObject])
 	{
 		[self resetWebViewComponent:aSubcomponent];

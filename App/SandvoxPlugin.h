@@ -156,7 +156,7 @@
 
 
 
-#import "KTWebViewComponent.h"
+#import "KTWebViewComponentProtocol.h"
 
 #import "KTPasteboardArchiving.h"
 

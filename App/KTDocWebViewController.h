@@ -23,7 +23,7 @@ typedef enum {
 
 
 @class KTAbstractElement, KTPage, KTPagelet;
-@class KTParsedWebViewComponent;
+@class KTWebViewComponent;
 @class KTHTMLTextBlock, KTWebViewUndoManagerProxy;
 @class KTHTMLParser;
 @class KTInlineImageElement;
@@ -50,7 +50,7 @@ typedef enum {
 	// Refreshing
     NSSet   *myPages;
     
-	KTParsedWebViewComponent	*myMainWebViewComponent;	// used by category method
+	KTWebViewComponent	*myMainWebViewComponent;	// used by category method
 	NSMutableDictionary			*myWebViewComponents;
 	
 	CFRunLoopObserverRef		myRunLoopObserver;			// used by category method
@@ -161,8 +161,8 @@ typedef enum {
 - (void)spliceElement:(DOMHTMLElement *)loadedBody;
 
 // Web View component hierarchy
-- (KTParsedWebViewComponent *)mainWebViewComponent;
-- (void)setMainWebViewComponent:(KTParsedWebViewComponent *)component;
+- (KTWebViewComponent *)mainWebViewComponent;
+- (void)setMainWebViewComponent:(KTWebViewComponent *)component;
 
 @end
 

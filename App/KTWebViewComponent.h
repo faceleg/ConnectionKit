@@ -1,16 +1,72 @@
 //
-//  KTWebViewComponent.h
+//  KTParsedWebViewComponent.h
 //  Marvel
 //
-//  Created by Mike on 23/09/2007.
+//  Created by Mike on 24/09/2007.
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
+//
+//	Represents an object that was parsed with an HTML template to form a portion of a page's HTML.
+//	KTDocWebViewController maintains the hierarchy of these objects.
 
 
-@protocol KTWebViewComponent <NSObject>
+#import <Cocoa/Cocoa.h>
 
-//	Return as unique an ID to identify the object as possible.
-//	e.g. @"ktpagelet-100"
-- (NSString *)uniqueWebViewID;
+#import "KTWebViewComponentProtocol.h"
+
+
+@class KTParsedKeyPath, KTHTMLParser, KTHTMLTextBlock;
+
+
+@interface KTWebViewComponent : NSObject
+{
+	KTHTMLParser	*myParser;
+	
+	id <KTWebViewComponent>	myComponent;
+	NSString				*myTemplateHTML;
+	NSString				*myDivID;
+	NSMutableSet			*myKeyPaths;
+	NSMutableSet			*myTextBlocks;
+    
+    NSString        *myHTML;
+	
+	NSMutableSet				*mySubcomponents;
+	KTWebViewComponent	*mySupercomponent;
+	
+	BOOL	myNeedsReload;
+}
+
+- (id)initWithParser:(KTHTMLParser *)parser;
+
+- (id <KTWebViewComponent>)parsedComponent;
+- (NSString *)templateHTML;
+- (NSString *)divID;
+
+- (KTHTMLParser *)parser;
+- (NSString *)HTML;
+- (void)setHTML:(NSString *)HTML;
+
+- (NSSet *)parsedKeyPaths;
+- (void)addParsedKeyPath:(KTParsedKeyPath *)keypath;
+- (void)removeAllParsedKeyPaths;
+
+- (NSSet *)textBlocks;
+- (void)addTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)removeAllTextBlocks;
+
+- (NSSet *)subcomponents;
+- (NSSet *)allSubcomponents;
+- (void)addSubcomponent:(KTWebViewComponent *)component;
+- (void)removeAllSubcomponents;
+
+- (KTWebViewComponent *)supercomponent;
+- (NSSet *)allSupercomponents;
+
+- (KTWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
+											  templateHTML:(NSString *)templateHTML;
+
+- (BOOL)needsReload;
+- (void)setNeedsReload:(BOOL)flag;
+- (void)setNeedsReload:(BOOL)flag recursive:(BOOL)recursive;
 
 @end

@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebViewComponent.h"
+#import "KTWebViewComponentProtocol.h"
 
 typedef enum {
 	KTNavigationArrowsStyleNone,

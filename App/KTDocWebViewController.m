@@ -18,7 +18,7 @@
 #import "KTHelper.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "KTParsedWebViewComponent.h"
+#import "KTWebViewComponent.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"

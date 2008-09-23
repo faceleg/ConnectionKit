@@ -21,7 +21,7 @@
 #import "KTTemplateParser.h"
 
 #import "KTDocument.h"
-#import "KTWebViewComponent.h"
+#import "KTWebViewComponentProtocol.h"
 
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTHTMLTextBlock;

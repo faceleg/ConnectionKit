@@ -20,7 +20,7 @@
 
 #import "KTAbstractElement.h"
 
-#import "KTWebViewComponent.h"
+#import "KTWebViewComponentProtocol.h"
 
 
 typedef enum {

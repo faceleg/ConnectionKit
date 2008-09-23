@@ -10,7 +10,7 @@
 #import "KTAbstractElement.h"
 
 #import "KTWebPathsProtocol.h"
-#import "KTWebViewComponent.h"
+#import "KTWebViewComponentProtocol.h"
 
 
 typedef enum	//	Defines the 3 ways of linking to a collection:
