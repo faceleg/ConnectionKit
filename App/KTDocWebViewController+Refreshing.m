@@ -467,10 +467,25 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[[[self webView] mainFrame] loadRequest:request];
 }
 
-- (void)parser:(KTHTMLParser *)parser didEndParsing:(NSString *)HTML;
+- (NSString *)parser:(KTHTMLParser *)parser willEndParsing:(NSString *)result;
 {
-    KTWebViewComponent *component = [self webViewComponentForParser:parser];
-    [component setHTML:HTML];
+	// Preview HTML should be wrapped in an identiying div for the webview
+	if ([parser HTMLGenerationPurpose] == kGeneratingPreview &&
+		result &&
+		[parser parentParser] &&
+		[[parser component] conformsToProtocol:@protocol(KTWebViewComponent)])
+	{
+		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
+				  [[parser component] uniqueWebViewID],
+				  [parser parserID],
+				  result];
+	}
+	
+	KTWebViewComponent *component = [self webViewComponentForParser:parser];
+    [component setHTML:result];
+	
+	
+	return result;
 }
 
 /*	We want to record the text block.

@@ -247,19 +247,7 @@
         result = [result stringByRemovingMultipleNewlines];
     }
     
-    // Preview HTML should be wrapped in an identiying div for the webview
-	if (HTMLPurpose == kGeneratingPreview &&
-		result &&
-		[self parentParser] &&
-		[[self component] conformsToProtocol:@protocol(KTWebViewComponent)])
-	{
-		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
-				  [[self component] uniqueWebViewID],
-				  [self parserID],
-				  result];
-	}
-	
-	return result;
+    return result;
 }
 
 /*	We have to implement kCompareNotEmptyOrEditing as KTTemplateParser has no concept of editing.
