@@ -629,6 +629,8 @@
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE82F0390E777491003A0110 /* TigerStuff.bundle */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
+		CE8A760F0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8A760D0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h */; };
+		CE8A76100E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8A760E0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m */; };
 		CE8DEC8F0D93561000CEB9F7 /* KSKeepInTouchController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */; };
 		CE8DEC900D93561000CEB9F7 /* KSKeepInTouchController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
@@ -882,7 +884,6 @@
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
-		CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */ = {isa = PBXBuildFile; fileRef = CECCED1C0E64643A00BE9016 /* Symbolicator.h */; };
 		CECDC3E208287E920090F560 /* Info.nib in Resources */ = {isa = PBXBuildFile; fileRef = CECDC3E008287E920090F560 /* Info.nib */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
 		CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CED26DC40D383F4B002C0137 /* a2hosting.png */; };
@@ -2325,6 +2326,8 @@
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE82F0390E777491003A0110 /* TigerStuff.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TigerStuff.bundle; path = ../../../Shared/trunk/Code/TigerLeopardStuff/TigerStuff/TigerStuff.bundle; sourceTree = SOURCE_ROOT; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
+		CE8A760D0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSHTTPCookieStorage+Karelia.h"; path = "../../../Shared/trunk/App/NSHTTPCookieStorage+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		CE8A760E0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSHTTPCookieStorage+Karelia.m"; path = "../../../Shared/trunk/App/NSHTTPCookieStorage+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CE8DEC8D0D93561000CEB9F7 /* KSKeepInTouchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSKeepInTouchController.m; path = ../../../Shared/trunk/App/KSKeepInTouchController.m; sourceTree = SOURCE_ROOT; };
 		CE8DEC8E0D93561000CEB9F7 /* KSKeepInTouchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSKeepInTouchController.h; path = ../../../Shared/trunk/App/KSKeepInTouchController.h; sourceTree = SOURCE_ROOT; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
@@ -2621,7 +2624,6 @@
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
-		CECCED1C0E64643A00BE9016 /* Symbolicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Symbolicator.h; path = ../../../Shared/trunk/App/Symbolicator.h; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
 		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../../../Shared/trunk/Code/TigerLeopardStuff/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2833,6 +2835,8 @@
 		270FB8F50E01BECC0076FCA0 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				CE8A760D0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h */,
+				CE8A760E0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m */,
 				CEC11B680D78BE5300513E70 /* NSApplication+Karelia.h */,
 				CEC11A900D78BE3C00513E70 /* NSApplication+Karelia.m */,
 				CEC11B6A0D78BE5300513E70 /* NSArrayController+Karelia.h */,
@@ -4691,7 +4695,6 @@
 		CEC11A2E0D78BE0100513E70 /* Shared Classes */ = {
 			isa = PBXGroup;
 			children = (
-				CECCED1C0E64643A00BE9016 /* Symbolicator.h */,
 				270FB8F90E01BFD70076FCA0 /* Core Image */,
 				270FB8F80E01BFCE0076FCA0 /* WebKit */,
 				270FB8F70E01BFC00076FCA0 /* QTKit */,
@@ -4958,9 +4961,9 @@
 				2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				270FB8FC0E01C2AC0076FCA0 /* Foundation+KSAdditions.h in Headers */,
-				CECCED1D0E64643A00BE9016 /* Symbolicator.h in Headers */,
 				27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */,
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
+				CE8A760F0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6388,6 +6391,7 @@
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
 				27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */,
 				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
+				CE8A76100E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
