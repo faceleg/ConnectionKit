@@ -22,13 +22,12 @@ typedef enum {
 } KTWebViewViewType;
 
 
+@class KTAbstractElement, KTPage, KTPagelet;
 @class KTParsedWebViewComponent;
 @class KTHTMLTextBlock, KTWebViewUndoManagerProxy;
 @class KTHTMLParser;
 @class KTInlineImageElement;
-@class KTPagelet;
 @class CIFilter;
-@class KTAbstractElement;
 @class KTDocument;
 @class KTDocWindowController;
 @class KTAsyncOffscreenWebViewController;
@@ -49,6 +48,8 @@ typedef enum {
 	
 	
 	// Refreshing
+    NSSet   *myPages;
+    
 	KTParsedWebViewComponent	*myMainWebViewComponent;	// used by category method
 	NSMutableDictionary			*myWebViewComponents;
 	
@@ -147,28 +148,24 @@ typedef enum {
 
 @interface KTDocWebViewController (Refreshing)
 
+- (NSSet *)pages;
+- (void)setPages:(NSSet *)pages;
+- (KTPage *)page;
+
 // Content loading
 - (BOOL)webViewNeedsReload;
 - (void)setWebViewNeedsReload;
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;
-
-- (void)suspendWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject;
-- (void)resumeWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject;
-- (void)resumeWebViewRefreshing;
+- (void)spliceElement:(DOMHTMLElement *)loadedBody;
 
 // Web View component hierarchy
 - (KTParsedWebViewComponent *)mainWebViewComponent;
 - (void)setMainWebViewComponent:(KTParsedWebViewComponent *)component;
 
-- (void)addParsedKeyPath:(NSString *)keyPath
-				ofObject:(NSObject *)object
-			   forParser:(KTHTMLParser *)parser;
-
-- (void) spliceElement:(DOMHTMLElement *)loadedBody;
-
 @end
+
 
 @interface KTDocWebViewController (Editing)
 

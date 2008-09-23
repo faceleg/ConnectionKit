@@ -295,8 +295,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	{
 		[myTextEditingBlock resignFirstResponder];
 		
-		[self resumeWebViewRefreshingForKeyPath:[myTextEditingBlock HTMLSourceKeyPath]
-									   ofObject:[myTextEditingBlock HTMLSourceObject]];
+		/*[self resumeWebViewRefreshingForKeyPath:[myTextEditingBlock HTMLSourceKeyPath]
+									   ofObject:[myTextEditingBlock HTMLSourceObject]];*/
 		
 		// Kill off the undo actions and other data specific to that editing block
 		[myInlineImageElements removeAllObjects];
@@ -316,7 +316,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	if (textBlock)
 	{
 		[textBlock becomeFirstResponder];
-		[self suspendWebViewRefreshingForKeyPath:[textBlock HTMLSourceKeyPath] ofObject:[textBlock HTMLSourceObject]];
+		/*[self suspendWebViewRefreshingForKeyPath:[textBlock HTMLSourceKeyPath] ofObject:[textBlock HTMLSourceObject]];*/
 	}
 }
 

@@ -18,7 +18,6 @@
 
 #import "Debug.h"
 #import "KTAbstractIndex.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTDocWindowController.h"
 #import "KTHTMLParser.h"
 #import "KTPage.h"
@@ -86,32 +85,53 @@
 	[[self webView] stopLoading:nil];
 	[[self asyncOffscreenWebViewController] stopLoading];
 	[self setWebViewNeedsReload:NO];
+    
+    [self setPages:nil];
 }
 
 #pragma mark -
-#pragma mark KVO
+#pragma mark Pages
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (NSSet *)pages { return myPages; }
+
+- (void)setPages:(NSSet *)pages
 {
-	KTParsedKeyPath *parsedKeyPath = [[[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:object] autorelease];
-	
-	
-	// If refreshing for this particular key path & object has been suspended then perform refreshing later
-	if ([mySuspendedKeyPaths containsObject:parsedKeyPath])
-	{
-		[mySuspendedKeyPathsAwaitingRefresh addObject:parsedKeyPath];
-	}
-	else
-	{
-		// Gather up all the components that rely on this keypath and mark them as needing refreshing
-		NSSet *componentsToRefresh = [self webViewComponentsWithParsedKeyPath:parsedKeyPath];
-		NSEnumerator *componentsEnumerator = [componentsToRefresh objectEnumerator];
-		KTParsedWebViewComponent *aComponent;
-		while (aComponent = [componentsEnumerator nextObject])
-		{
-			[self performSelector:@selector(setWebViewComponentNeedsReload:) withObject:aComponent afterDelay:0.0];
-		}
-	}
+    // Stop observation if needed
+    KTPage *oldPage = [self page];
+    if (oldPage)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:NSManagedObjectContextObjectsDidChangeNotification
+                                                      object:[oldPage managedObjectContext]];
+    }
+    
+    
+    // Store pages
+    pages = [pages copy];
+    [myPages release];
+    myPages = pages;
+    
+    
+    // Reload
+    [self reloadWebView];
+    
+    
+    // Observe new page if needed
+    KTPage *page = [self page];
+    if (page)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(managedObjectContextObjectsDidChange:)
+                                                     name:NSManagedObjectContextObjectsDidChangeNotification
+                                                   object:[page managedObjectContext]];
+    }
+}
+
+- (KTPage *)page
+{
+    NSSet *pages = [self pages];
+    KTPage *result = ([pages count] == 1) ? [pages anyObject] : nil;
+    return result;
 }
 
 #pragma mark -
@@ -179,6 +199,13 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 }
 
 
+/*  Reparse the page and refresh those components that have changed
+ */
+- (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
+{
+    
+}
+
 #pragma mark -
 #pragma mark Loading
 
@@ -194,7 +221,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// How we load depends on the current selection
-	NSArray *selectedPages = [[[self windowController] siteOutlineController] selectedObjects];
+	NSSet *selectedPages = [self pages];
 	if (!selectedPages || [selectedPages count] == 0)
 	{
 		[[[self webView] mainFrame] loadHTMLString:@"" baseURL:nil];
@@ -204,7 +231,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 		[[WebPreferences standardPreferences] setJavaScriptEnabled:YES];	// enable javascript to force + button to work
 		[[self webView] setPreferences:[WebPreferences standardPreferences]];	// force it to load new prefs
 		
-		KTPage *selectedPage = [selectedPages objectAtIndex:0];
+		KTPage *selectedPage = [selectedPages anyObject];
         [self loadPageIntoWebView:selectedPage];
 		
 		
@@ -405,49 +432,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 }
 
 #pragma mark -
-#pragma mark Suspended Refreshes
-
-- (void)suspendWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject
-{
-	KTParsedKeyPath *keyPathObject = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:anObject];
-	[mySuspendedKeyPaths addObject:keyPathObject];
-	[keyPathObject release];
-}
-
-- (void)resumeWebViewRefreshingForKeyPath:(KTParsedKeyPath *)keyPath
-{
-	[mySuspendedKeyPaths removeObject:keyPath];
-	
-	// If that key path has been awaiting refresh, go ahead and do so.
-	if (![mySuspendedKeyPaths containsObject:keyPath] &&
-		[mySuspendedKeyPathsAwaitingRefresh containsObject:keyPath])
-	{
-		[self observeValueForKeyPath:[keyPath keyPath] ofObject:[keyPath parsedObject] change:nil context:NULL];
-		[mySuspendedKeyPathsAwaitingRefresh removeObject:keyPath];
-	}
-}
-
-- (void)resumeWebViewRefreshingForKeyPath:(NSString *)keyPath ofObject:(id)anObject
-{
-	KTParsedKeyPath *keyPathObject = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:anObject];
-	[self resumeWebViewRefreshingForKeyPath:keyPathObject];
-	[keyPathObject release];
-}
-
-- (void)resumeWebViewRefreshing
-{
-	NSSet *suspendedKeyPaths = [NSSet setWithSet:mySuspendedKeyPaths];
-	[mySuspendedKeyPaths removeAllObjects];
-	
-	NSEnumerator *suspendedKeyPathsEnumerator = [suspendedKeyPaths objectEnumerator];
-	KTParsedKeyPath *aKeyPath;
-	while (aKeyPath = [suspendedKeyPathsEnumerator nextObject])
-	{
-		[self resumeWebViewRefreshingForKeyPath:aKeyPath];
-	}
-}
-
-#pragma mark -
 #pragma mark WebView Loading
 
 - (void)loadPageIntoWebView:(KTPage *)page
@@ -460,14 +444,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	NSString *pageHTML = [parser parseTemplate];
 	[parser release];
-	
-	// There's a few keypaths that the parser will not pick up. We have to explicitly observe them here.
-	[self addParsedKeyPath:@"pluginHTMLIsFullPage" ofObject:page forParsedComponent:[self mainWebViewComponent]];
-	[self addParsedKeyPath:@"master.bannerImage.file" ofObject:page forParsedComponent:[self mainWebViewComponent]];
-	
-	[self addParsedKeyPath:@"values.LiveDataFeeds"
-				  ofObject:[NSUserDefaultsController sharedUserDefaultsController]
-		forParsedComponent:[self mainWebViewComponent]];
 	
 	// Load the HTML into the webview
 	[[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:nil];
@@ -482,9 +458,10 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[[[self webView] mainFrame] loadRequest:request];
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
+- (void)parser:(KTHTMLParser *)parser didEndParsing:(NSString *)HTML;
 {
-	[self addParsedKeyPath:keyPath ofObject:object forParser:parser];
+    KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
+    [component setHTML:HTML];
 }
 
 /*	We want to record the text block.
@@ -494,11 +471,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 {
 	KTParsedWebViewComponent *component = [self webViewComponentForParser:parser];
 	[component addTextBlock:textBlock];
-	
-	if ([textBlock graphicalTextCode])
-	{
-		[self addParsedKeyPath:@"master.graphicalTitleSize" ofObject:[parser currentPage] forParser:parser];
-	}
 }
 
 
@@ -635,57 +607,10 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	[component removeAllSubcomponents];
 	[myWebViewComponents removeObjects:[subcomponents allObjects]];
-	
-	
-	// Stop observing keypaths of the component
-	NSEnumerator *keyPathsEnumerator = [[component parsedKeyPaths] objectEnumerator];
-	KTParsedKeyPath *aKeyPath;
-	while (aKeyPath = [keyPathsEnumerator nextObject])
-	{
-		[[aKeyPath parsedObject] removeObserver:self forKeyPath:[aKeyPath keyPath]];
-	}
-	[component removeAllParsedKeyPaths];
 }
 
 #pragma mark -
 #pragma mark Page Key Paths
-
-- (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParsedComponent:(KTParsedWebViewComponent *)parsedComponent
-{
-	// Add the keypath to the parsedComponent and observe it
-	KTParsedKeyPath *parsedKeyPath = [[KTParsedKeyPath alloc] initWithKeyPath:keyPath ofObject:object];
-	if (![[parsedComponent parsedKeyPaths] containsObject:parsedKeyPath])
-	{
-		[parsedComponent addParsedKeyPath:parsedKeyPath];
-		[object addObserver:self forKeyPath:keyPath options:0 context:NULL];
-	}
-	[parsedKeyPath release];
-}
-
-- (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParser:(KTHTMLParser *)parser
-{
-	// Add the keypath to the parsedComponent and observe it
-	KTParsedWebViewComponent *parsedComponent = [self webViewComponentForParser:parser];
-	[self addParsedKeyPath:keyPath ofObject:object forParsedComponent:parsedComponent];
-}
-
-// Run through our list of webview components to find any that match the keyPath
-- (NSSet *)webViewComponentsWithParsedKeyPath:(KTParsedKeyPath *)keyPath
-{
-	NSMutableSet *result = [NSMutableSet setWithCapacity:1];
-	
-	NSEnumerator *componentsEnumerator = [myWebViewComponents objectEnumerator];
-	KTParsedWebViewComponent *aComponent;
-	while (aComponent = [componentsEnumerator nextObject])
-	{
-		if ([[aComponent parsedKeyPaths] containsObject:keyPath])
-		{
-			[result addObject:aComponent];
-		}
-	}
-	
-	return result;
-}
 
 /*	We are registered to know when the document will close so that key paths can be cleared out first.
  *	Otherwise, one key path is bound to try to access the document and then ... kaboom!

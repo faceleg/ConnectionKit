@@ -38,7 +38,8 @@
 	[myTemplateHTML release];
 	[myDivID release];
 	[myKeyPaths release];
-	[mySummaryTextBlocks release];
+	[myTextBlocks release];
+    [myHTML release];
 	
 	[super dealloc];
 }
@@ -51,6 +52,15 @@
 - (NSString *)templateHTML { return myTemplateHTML; }
 
 - (NSString *)divID { return myDivID; }
+
+- (NSString *)HTML { return myHTML; }
+
+- (void)setHTML:(NSString *)HTML
+{
+    HTML = [HTML copy];
+    [myHTML release];
+    myHTML = HTML;
+}
 
 #pragma mark -
 #pragma mark Parsed Key Paths
@@ -68,19 +78,19 @@
 }
 
 #pragma mark -
-#pragma mark Summaries
+#pragma mark Text Blocks
 
 - (NSMutableSet *)_textBlocks
 {
-	if (!mySummaryTextBlocks)
+	if (!myTextBlocks)
 	{
-		mySummaryTextBlocks = [[NSMutableSet alloc] init];
+		myTextBlocks = [[NSMutableSet alloc] init];
 	}
 	
-	return mySummaryTextBlocks;
+	return myTextBlocks;
 }
 
-- (NSSet *)textBlocks { return [NSSet setWithSet:mySummaryTextBlocks]; }
+- (NSSet *)textBlocks { return [NSSet setWithSet:myTextBlocks]; }
 
 - (void)addTextBlock:(KTHTMLTextBlock *)textBlock { [[self _textBlocks] addObject:textBlock]; }
 

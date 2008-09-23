@@ -279,7 +279,7 @@
 	// If the source code view is visible now, it will require loading
 	if ([self hideWebView])
 	{
-		[self loadPageIntoSourceCodeTextView:[[[self windowController] siteOutlineController] selectedPage]];
+		[self loadPageIntoSourceCodeTextView:[self page]];
 	}
 	else if (aViewType != KTHTMLValidationView)
 	{

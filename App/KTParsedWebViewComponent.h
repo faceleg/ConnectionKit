@@ -24,7 +24,9 @@
 	NSString				*myTemplateHTML;
 	NSString				*myDivID;
 	NSMutableSet			*myKeyPaths;
-	NSMutableSet			*mySummaryTextBlocks;
+	NSMutableSet			*myTextBlocks;
+    
+    NSString        *myHTML;
 	
 	NSMutableSet				*mySubcomponents;
 	KTParsedWebViewComponent	*mySupercomponent;
@@ -37,6 +39,9 @@
 - (id <KTWebViewComponent>)parsedComponent;
 - (NSString *)templateHTML;
 - (NSString *)divID;
+
+- (NSString *)HTML;
+- (void)setHTML:(NSString *)HTML;
 
 - (NSSet *)parsedKeyPaths;
 - (void)addParsedKeyPath:(KTParsedKeyPath *)keypath;

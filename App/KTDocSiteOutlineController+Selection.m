@@ -64,7 +64,7 @@
 														object:[selectedPages firstObjectKS]];
 	
 	// Refresh webview
-	[[[self windowController] webViewController] setWebViewNeedsReload];
+	[[[self windowController] webViewController] setPages:[NSSet setWithArray:selectedPages]];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
