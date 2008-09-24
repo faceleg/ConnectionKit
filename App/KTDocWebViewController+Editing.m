@@ -538,7 +538,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 - (void)webViewDidEditChunk:(NSNotification *)notification
 {
-	[[self currentTextEditingBlock] commitEditing];
+	//[[self currentTextEditingBlock] commitEditing];
 }
 
 #pragma mark -
