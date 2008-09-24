@@ -148,7 +148,7 @@ typedef enum {
 
 // Content loading
 - (BOOL)webViewNeedsReload;
-- (void)setWebViewNeedsReload;
+- (void)setWebViewNeedsReload:(BOOL)flag;
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;

@@ -27,14 +27,12 @@
 	
 	myParser = [parser retain];
 	mySubcomponents = [[NSMutableArray alloc] init];
-	myKeyPaths = [[NSMutableSet alloc] initWithCapacity:10];
 	
 	return self;
 }
 
 - (void)dealloc
 {
-	[myKeyPaths release];
 	[myTextBlocks release];
 	[myInnerHTML release];
     [myComponentHTML release];
@@ -83,21 +81,6 @@
     HTML = [HTML copy];
     [myComponentHTML release];
     myComponentHTML = HTML;
-}
-
-#pragma mark -
-#pragma mark Parsed Key Paths
-
-- (NSSet *)parsedKeyPaths { return myKeyPaths; }
-
-- (void)addParsedKeyPath:(KTParsedKeyPath *)keypath
-{
-	[myKeyPaths addObject:keypath];
-}
-
-- (void)removeAllParsedKeyPaths
-{
-	[myKeyPaths removeAllObjects];
 }
 
 #pragma mark -

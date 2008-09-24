@@ -280,7 +280,7 @@
 	}
 	else if (aViewType != KTHTMLValidationView)
 	{
-		[self setWebViewNeedsReload];
+		[self reloadWebView];
 	}
 }
 

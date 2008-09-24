@@ -15,7 +15,7 @@
 #import "KTWebViewComponentProtocol.h"
 
 
-@class KTDocWebViewController, KTParsedKeyPath, KTHTMLParser, KTHTMLTextBlock;
+@class KTDocWebViewController, KTHTMLParser, KTHTMLTextBlock;
 
 
 @interface KTWebViewComponent : NSObject
@@ -25,7 +25,6 @@
 	NSString	*myInnerHTML;
     NSString	*myComponentHTML;
 	
-	NSMutableSet			*myKeyPaths;
 	NSMutableSet			*myTextBlocks;
     
 	NSMutableArray			*mySubcomponents;
@@ -40,10 +39,6 @@
 
 - (NSString *)outerHTML;
 - (NSString *)componentHTML;
-
-- (NSSet *)parsedKeyPaths;
-- (void)addParsedKeyPath:(KTParsedKeyPath *)keypath;
-- (void)removeAllParsedKeyPaths;
 
 - (NSSet *)textBlocks;
 - (void)addTextBlock:(KTHTMLTextBlock *)textBlock;

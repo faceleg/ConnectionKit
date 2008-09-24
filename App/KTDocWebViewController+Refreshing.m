@@ -41,11 +41,7 @@
 
 @interface KTDocWebViewController (RefreshingPrivate)
 
-- (void)_setWebViewNeedsReload:(BOOL)needsRefresh;
-
 - (void)loadPageIntoWebView:(KTPage *)page;
-
-- (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParsedComponent:(KTWebViewComponent *)parsedComponent;
 
 - (void)loadMultiplePagesMarkerIntoWebView;
 
@@ -72,7 +68,7 @@
 {
 	[[self webView] stopLoading:nil];
 	[[self asyncOffscreenWebViewController] stopLoading];
-	[self _setWebViewNeedsReload:NO];
+	[self setWebViewNeedsReload:NO];
     
     [self setPages:nil];
 }
@@ -130,15 +126,6 @@
 	return (myRunLoopObserver != nil);
 }
 
-/*	Convenience (and public) method for marking the entire webview for a reload.
- */
-- (void)setWebViewNeedsReload
-{
-	// Schedule the actual reload
-	[self _setWebViewNeedsReload:YES];
-}
-
-
 /*	Private callback function for scheduled webview loading
  */
 void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info)
@@ -150,7 +137,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 /*	Private method. Called whenever some portion of the webview needs reloading.
  *	Schedules a CFRunLoopObserver to perform the actual reload at the end of the run loop.
  */
-- (void)_setWebViewNeedsReload:(BOOL)needsRefresh
+- (void)setWebViewNeedsReload:(BOOL)needsRefresh
 { 
 	if (needsRefresh && !myRunLoopObserver)
 	{
@@ -169,7 +156,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
 {
-    [self setWebViewNeedsReload];
+    [self setWebViewNeedsReload:YES];
 }
 
 #pragma mark -
@@ -218,7 +205,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// Clearly the webview is no longer in need of refreshing
-	[self _setWebViewNeedsReload:NO];
+	[self setWebViewNeedsReload:NO];
 }
 
 
@@ -361,7 +348,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	// Tidy up
 	[webViewComponent release];
 	
-	[self _setWebViewNeedsReload:NO];
+	[self setWebViewNeedsReload:NO];
 }
 
 #pragma mark -
@@ -488,7 +475,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)documentWillClose:(NSNotification *)notification
 {
 	[self setMainWebViewComponent:nil];
-	[self _setWebViewNeedsReload:NO];
+	[self setWebViewNeedsReload:NO];
 }
 
 @end
