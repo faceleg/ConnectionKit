@@ -15,36 +15,33 @@
 #import "KTWebViewComponentProtocol.h"
 
 
-@class KTParsedKeyPath, KTHTMLParser, KTHTMLTextBlock;
+@class KTDocWebViewController, KTParsedKeyPath, KTHTMLParser, KTHTMLTextBlock;
 
 
 @interface KTWebViewComponent : NSObject
 {
 	KTHTMLParser	*myParser;
 	
-	id <KTWebViewComponent>	myComponent;
-	NSString				*myTemplateHTML;
-	NSString				*myDivID;
+	NSString	*myInnerHTML;
+    NSString	*myComponentHTML;
+	
 	NSMutableSet			*myKeyPaths;
 	NSMutableSet			*myTextBlocks;
     
-    NSString        *myHTML;
-	
-	NSMutableSet		*mySubcomponents;
-	KTWebViewComponent	*mySupercomponent;	// Weak ref
+	NSMutableArray			*mySubcomponents;
+	KTWebViewComponent		*mySupercomponent;		// Weak ref
+	KTDocWebViewController	*myWebViewController;	// Weak ref
 	
 	BOOL	myNeedsReload;
 }
 
 - (id)initWithParser:(KTHTMLParser *)parser;
 
-- (id <KTWebViewComponent>)parsedComponent;
-- (NSString *)templateHTML;
+- (KTHTMLParser *)parser;
 - (NSString *)divID;
 
-- (KTHTMLParser *)parser;
-- (NSString *)HTML;
-- (void)setHTML:(NSString *)HTML;
+- (NSString *)outerHTML;
+- (NSString *)componentHTML;
 
 - (NSSet *)parsedKeyPaths;
 - (void)addParsedKeyPath:(KTParsedKeyPath *)keypath;
@@ -55,13 +52,14 @@
 - (void)removeAllTextBlocks;
 - (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 
-- (NSSet *)subcomponents;
-- (NSSet *)allSubcomponents;
+- (NSArray *)subcomponents;
 - (void)addSubcomponent:(KTWebViewComponent *)component;
 - (void)removeAllSubcomponents;
 
 - (KTWebViewComponent *)supercomponent;
-- (NSSet *)allSupercomponents;
+
+- (KTDocWebViewController *)webViewController;
+- (void)setWebViewController:(KTDocWebViewController *)webViewController;
 
 - (KTWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
 											  templateHTML:(NSString *)templateHTML;

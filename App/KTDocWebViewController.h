@@ -47,12 +47,10 @@ typedef enum {
 	KTAsyncOffscreenWebViewController				*myAsyncOffscreenWebViewController;
 	
 	
-	// Refreshing
+	// Loading
     NSSet   *myPages;
-    
-	KTWebViewComponent	*myMainWebViewComponent;	// used by category method
-	
-	CFRunLoopObserverRef		myRunLoopObserver;			// used by category method
+    KTWebViewComponent	*myMainWebViewComponent;
+	CFRunLoopObserverRef		myRunLoopObserver;
 	
 	
 	
@@ -154,7 +152,7 @@ typedef enum {
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;
-- (void)spliceElement:(DOMHTMLElement *)loadedBody;
+- (void)spliceElement:(DOMHTMLElement *)loadedBody;	// Private
 
 // Web View component hierarchy
 - (KTWebViewComponent *)mainWebViewComponent;

@@ -23,29 +23,20 @@
 	[super init];
 	
 	myParser = [parser retain];
-	
-	myComponent = [[parser component] retain];
-	myTemplateHTML = [[parser template] copy];
 	myKeyPaths = [[NSMutableSet alloc] initWithCapacity:10];
-	
-	myDivID = [[NSString alloc] initWithFormat:@"%@-%@",
-		[[parser component] uniqueWebViewID],
-		[parser parserID]];
 	
 	return self;
 }
 
 - (void)dealloc
 {
-	[mySubcomponents release];
-	[myComponent release];
-	[myTemplateHTML release];
-	[myDivID release];
 	[myKeyPaths release];
 	[myTextBlocks release];
-    [myHTML release];
-	
+	[myInnerHTML release];
+    [myComponentHTML release];
 	[myParser release];
+	
+	[mySubcomponents release];
 	
 	[super dealloc];
 }
@@ -53,21 +44,41 @@
 #pragma mark -
 #pragma mark Basic Accessors
 
-- (id <KTWebViewComponent>)parsedComponent { return myComponent; }
-
-- (NSString *)templateHTML { return myTemplateHTML; }
-
-- (NSString *)divID { return myDivID; }
+- (NSString *)divID
+{
+	NSString *result = [NSString stringWithFormat:@"%@-%@", 
+						[[[self parser] component] uniqueWebViewID], 
+						[[self parser] parserID]];
+	
+	return result;
+}
 
 - (KTHTMLParser *)parser { return myParser; }
 
-- (NSString *)HTML { return myHTML; }
+- (NSString *)outerHTML
+{
+	NSString *result = myInnerHTML;
+	
+	if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview &&
+		myInnerHTML &&
+		[[self parser] parentParser] &&
+		[[[self parser] component] conformsToProtocol:@protocol(KTWebViewComponent)])
+	{
+		result = [NSString stringWithFormat:@"<div id=\"%@\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
+				  [self divID],
+				  myInnerHTML];
+	}
+	
+	return result;
+}
 
-- (void)setHTML:(NSString *)HTML
+- (NSString *)componentHTML { return myComponentHTML; }
+
+- (void)setComponentHTML:(NSString *)HTML
 {
     HTML = [HTML copy];
-    [myHTML release];
-    myHTML = HTML;
+    [myComponentHTML release];
+    myComponentHTML = HTML;
 }
 
 #pragma mark -
@@ -157,16 +168,16 @@
 }
 
 #pragma mark -
-#pragma mark Sub & Super Components
+#pragma mark Tree Nodes
 
-- (NSSet *)subcomponents { return [NSSet setWithSet:mySubcomponents]; }
+- (NSArray *)subcomponents { return [[mySubcomponents copy] autorelease]; }
 
 /*	Every single component that is in our chain of subComponents.
  */
 - (NSSet *)allSubcomponents
 {
 	// Start off with our list of subcomponents
-	NSMutableSet *result = [NSMutableSet setWithSet:[self subcomponents]];
+	NSMutableSet *result = [NSMutableSet setWithArray:[self subcomponents]];
 	
 	// Them go through and add all their subcomponents
 	NSEnumerator *subComponentsEnumerator = [[self subcomponents] objectEnumerator];
@@ -197,7 +208,11 @@
 	return result;
 }
 
-- (void)setSuperComponent:(KTWebViewComponent *)component { mySupercomponent = component; }
+- (void)setSuperComponent:(KTWebViewComponent *)component
+{
+	mySupercomponent = component;	// Weak ref
+	[self setWebViewController:[component webViewController]];
+}
 
 /*	Searches all subComponents (and their subComponents etc.) for the parsed component with the 
  *	right properties. Returns nil if not found.
@@ -208,15 +223,15 @@
 	KTWebViewComponent *result = nil;
 	
 	// Are we a match?
-	if ([[self parsedComponent] isEqual:component] &&
-		[[self templateHTML] isEqual:templateHTML])
+	if ([[[self parser] component] isEqual:component] &&
+		[[[self parser] template] isEqual:templateHTML])
 	{
 		result = self;
 	}
 	// No we're not, so search subComponents
 	else
 	{
-		NSSet *subComponents = mySubcomponents;
+		NSArray *subComponents = mySubcomponents;
 		NSEnumerator *componentsEnumerator = [subComponents objectEnumerator];
 		KTWebViewComponent *aParsedComponent;
 		
@@ -240,7 +255,7 @@
 {
 	if (!mySubcomponents)
 	{
-		mySubcomponents = [[NSMutableSet alloc] initWithCapacity:1];
+		mySubcomponents = [[NSMutableArray alloc] initWithCapacity:1];
 	}
 	
 	[mySubcomponents addObject:component];
@@ -250,6 +265,17 @@
 - (void)removeAllSubcomponents
 {
 	[mySubcomponents removeAllObjects];
+}
+
+#pragma mark WebView controller
+
+- (KTDocWebViewController *)webViewController { return myWebViewController; }
+
+- (void)setWebViewController:(KTDocWebViewController *)webViewController
+{
+	myWebViewController = webViewController;
+	
+	[[self subcomponents] setValue:webViewController forKey:@"webViewController"];
 }
 
 #pragma mark -
@@ -289,24 +315,33 @@
 	}
 }
 
-- (NSString *)parser:(KTHTMLParser *)parser willEndParsing:(NSString *)result;
+- (NSString *)parser:(KTHTMLParser *)parser didEndTemplate:(NSString *)HTML;
 {
-	// Preview HTML should be wrapped in an identiying div for the webview
-	if ([parser HTMLGenerationPurpose] == kGeneratingPreview &&
-		result &&
-		[parser parentParser] &&
-		[[parser component] conformsToProtocol:@protocol(KTWebViewComponent)])
+	// Store the HTML
+	myInnerHTML = [HTML copy];
+	
+	
+	// Calculate and store component HTML
+	NSMutableString *componentHTML = [HTML mutableCopy];
+	
+	NSEnumerator *subcomponentsEnumerator = [[self subcomponents] objectEnumerator];
+	KTWebViewComponent *aSubcomponent;
+	while (aSubcomponent = [subcomponentsEnumerator nextObject])
 	{
-		result = [NSString stringWithFormat:@"<div id=\"%@-%u\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
-				  [[parser component] uniqueWebViewID],
-				  [[parser template] hash],
-				  result];
+		NSString *subcomponentHTML = [aSubcomponent outerHTML];
+		NSRange subcomponentHTMLRange = [componentHTML rangeOfString:subcomponentHTML];
+		if (subcomponentHTMLRange.location != NSNotFound)
+		{
+			[componentHTML deleteCharactersInRange:subcomponentHTMLRange];
+		}
 	}
 	
-	[self setHTML:result];
+	[self setComponentHTML:componentHTML];
+	[componentHTML release];
 	
 	
-	return result;
+	// Wrap in identifying div if possible
+	return [self outerHTML];
 }
 
 /*	We want to record the text block.

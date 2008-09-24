@@ -907,7 +907,7 @@
 		}
 		
 		//	Handle pointers to the resources folder. e.g. "sandvox_Aqua/main.css"
-		KTDesign *design = [[(KTPage *)[[self mainWebViewComponent] parsedComponent] master] design];
+		KTDesign *design = [[[self page] master] design];
 		if ([relativePath hasPrefix:[NSString stringWithFormat:@"/%@", [design remotePath]]])
 		{
 			NSURL *URL = [NSURL fileURLWithPath:[[design bundle] pathForResource:@"main" ofType:@"css"]];

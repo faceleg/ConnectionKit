@@ -273,9 +273,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     
     // Let the delegate know
     id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(parser:willEndParsing:)])
+    if (delegate && [delegate respondsToSelector:@selector(parser:didEndTemplate:)])
     {
-        result = [delegate parser:self willEndParsing:result];
+        result = [delegate parser:self didEndTemplate:result];
     }
     
     
