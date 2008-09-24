@@ -33,7 +33,8 @@
 
 - (void)dealloc
 {
-	[myTextBlocks release];
+	[self removeAllTextBlocks];	[myTextBlocks release];
+	
 	[myInnerHTML release];
     [myComponentHTML release];
 	[myParser release];
@@ -98,9 +99,17 @@
 
 - (NSSet *)textBlocks { return [NSSet setWithSet:myTextBlocks]; }
 
-- (void)addTextBlock:(KTHTMLTextBlock *)textBlock { [[self _textBlocks] addObject:textBlock]; }
+- (void)addTextBlock:(KTHTMLTextBlock *)textBlock
+{
+	[[self _textBlocks] addObject:textBlock];
+	[textBlock setWebViewComponent:self];
+}
 
-- (void)removeAllTextBlocks { [[self _textBlocks] removeAllObjects]; }
+- (void)removeAllTextBlocks
+{
+	[[self textBlocks] setValue:nil forKey:@"webViewComponent"];
+	[[self _textBlocks] removeAllObjects];
+}
 
 /*	Search our text blocks for a match. If not found, do the same for subcomponents.
  */

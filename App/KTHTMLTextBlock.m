@@ -8,18 +8,19 @@
 
 
 #import "KTHTMLTextBlock.h"
+#import "KTHTMLParser.h"
+#import "KTHTMLParser+Private.h"
+
 
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
 
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
+#import "KTDocWebViewController.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTWebKitCompatibility.h"
-
-#import "KTHTMLParser.h"
-#import "KTHTMLParser+Private.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
@@ -90,6 +91,10 @@
 #pragma mark Accessors
 
 - (KTHTMLParser *)parser { return myParser; }
+
+- (KTWebViewComponent *)webViewComponent { return myWebViewComponent; }
+
+- (void)setWebViewComponent:(KTWebViewComponent *)component { myWebViewComponent = component; }	// Weak ref
 
 - (NSString *)DOMNodeID
 {
@@ -564,13 +569,20 @@
 		if ([flattenedHTML isEmptyString]) innerHTML = nil;
 	}
 	
+	
 	// Save back to model
+	KTDocWebViewController *webViewController = [[self webViewComponent] webViewController];
+	[webViewController suspendWebViewLoading];
+	
 	id sourceObject = [self HTMLSourceObject];
 	NSString *sourceKeyPath = [self HTMLSourceKeyPath];
 	if (![[sourceObject valueForKeyPath:sourceKeyPath] isEqualToString:innerHTML])
 	{
 		[sourceObject setValue:innerHTML forKeyPath:sourceKeyPath];
 	}
+	
+	[webViewController resumeWebViewLoading];
+	
 	
 	
 	return YES;

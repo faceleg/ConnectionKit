@@ -3134,8 +3134,6 @@
 			isa = PBXGroup;
 			children = (
 				2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */,
-				277560340CA5228B00D8A412 /* KTParsedKeyPath.h */,
-				277560350CA5228B00D8A412 /* KTParsedKeyPath.m */,
 				27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */,
 				27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */,
 				2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */,
@@ -4265,6 +4263,8 @@
 		3C5A73950BF7BA6800776464 /* HTML Parsing */ = {
 			isa = PBXGroup;
 			children = (
+				277560340CA5228B00D8A412 /* KTParsedKeyPath.h */,
+				277560350CA5228B00D8A412 /* KTParsedKeyPath.m */,
 				27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */,
 				27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */,
 				278EC6F10C97136500A212EC /* KTHTMLParserCache.h */,

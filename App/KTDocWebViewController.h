@@ -48,9 +48,10 @@ typedef enum {
 	
 	
 	// Loading
-    NSSet   *myPages;
-    KTWebViewComponent	*myMainWebViewComponent;
-	CFRunLoopObserverRef		myRunLoopObserver;
+    NSSet					*myPages;
+    KTWebViewComponent		*myMainWebViewComponent;
+	CFRunLoopObserverRef	myRunLoopObserver;
+	unsigned				myLoadingSuspensionCount;
 	
 	
 	
@@ -149,6 +150,10 @@ typedef enum {
 // Content loading
 - (BOOL)webViewNeedsReload;
 - (void)setWebViewNeedsReload:(BOOL)flag;
+
+- (void)suspendWebViewLoading;
+- (void)resumeWebViewLoading;
+- (BOOL)webViewLoadingIsSuspended;
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;

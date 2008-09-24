@@ -156,7 +156,37 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
 {
-    [self setWebViewNeedsReload:YES];
+	if (![self webViewLoadingIsSuspended])
+	{
+		[self setWebViewNeedsReload:YES];
+	}
+}
+
+#pragma mark -
+#pragma mark Loading Suspesion
+
+- (void)suspendWebViewLoading
+{
+	// Before the suspension, force through any pending changes
+	if (![self webViewLoadingIsSuspended])
+	{
+		[[[self page] managedObjectContext] processPendingChanges];
+	}
+	
+	myLoadingSuspensionCount++;
+}
+
+- (void)resumeWebViewLoading
+{
+	// Before resuming, force through any pending changes so we can ignore them
+	[[[self page] managedObjectContext] processPendingChanges];
+
+	myLoadingSuspensionCount--;
+}
+
+- (BOOL)webViewLoadingIsSuspended
+{
+	return myLoadingSuspensionCount > 0;
 }
 
 #pragma mark -

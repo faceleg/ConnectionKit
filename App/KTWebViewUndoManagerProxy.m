@@ -43,7 +43,7 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 {
 	[anInvocation setTarget:myUndoManager];
 	
-	LOG((@"Invoking method -%@ on undo manager", NSStringFromSelector([anInvocation selector])));
+	OFF((@"Invoking method -%@ on undo manager", NSStringFromSelector([anInvocation selector])));
 	
 	[anInvocation invoke];
 }
