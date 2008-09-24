@@ -15,6 +15,7 @@
 #import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
+#import "KTWebViewComponent.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
@@ -398,7 +399,7 @@ Note that this method is called AFTER the webview handles the click.
 	
 	if ([[aNode nodeName] isEqualToString:@"IMG"] && ![[aNode className] isEqualToString:kKTInternalImageClassName])
 	{
-		KTHTMLTextBlock *textBlock = [KTHTMLTextBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
+		KTHTMLTextBlock *textBlock = [[[self webViewController] mainWebViewComponent] textBlockForDOMNode:aNode];
 		
 		// did we click on an image in a block of editable text, or on a photo (like a photo page/pagelet)
 		if (textBlock || [DOMNode isImageFromDOMNodeClass:[[textBlock DOMNode] className]])
@@ -881,8 +882,7 @@ but the only trick is -- how to display a highlight?
 		
 		if (selectedNode)
 		{
-			KTHTMLTextBlock *textBlock = [KTHTMLTextBlock textBlockForDOMNode:selectedNode
-																				 webViewController:[self webViewController]];
+			KTHTMLTextBlock *textBlock = [[[self webViewController] mainWebViewComponent] textBlockForDOMNode:selectedNode];
 			
 			if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])
 			{
@@ -955,7 +955,7 @@ forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 	NSDictionary *item = [oWebView elementAtPoint:location];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
-	KTHTMLTextBlock *textBlock = [KTHTMLTextBlock textBlockForDOMNode:aNode webViewController:[self webViewController]];
+	KTHTMLTextBlock *textBlock = [[[self webViewController] mainWebViewComponent] textBlockForDOMNode:aNode];
 	if (textBlock && textBlock != [[self webViewController] currentTextEditingBlock])	// avoid calling this again if we already have a selection since that clones the contents
 	{
 		[[self webViewController] setCurrentTextEditingBlock:textBlock];

@@ -259,7 +259,7 @@
 #pragma mark -
 #pragma mark Parser Delegate
 
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
+- (void)parser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	[self beginObservingKeyPath:keyPath ofObject:object onNonStalePage:[parser currentPage]];
 }

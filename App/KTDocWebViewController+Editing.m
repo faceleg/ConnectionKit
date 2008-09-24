@@ -21,6 +21,7 @@
 #import "NSString-Utilities.h"
 #import "KTPseudoElement.h"
 #import "KTInlineImageElement.h"
+#import "KTWebViewComponent.h"
 
 #import "KTPage.h"
 #import "KTDocument.h"
@@ -387,8 +388,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		{
 			if (!currentTextBlock || [currentTextBlock DOMNode] != selectableDOMElement)
 			{
-				KTHTMLTextBlock *newBlock = [KTHTMLTextBlock textBlockForDOMNode:selectableDOMElement
-																					webViewController:self];
+				KTHTMLTextBlock *newBlock = [[self mainWebViewComponent] textBlockForDOMNode:selectableDOMElement];
 				
 				[self setCurrentTextEditingBlock:newBlock];
 			}
@@ -462,7 +462,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	BOOL result = NO;
 	
-	KTHTMLTextBlock *textBlock = [KTHTMLTextBlock textBlockForDOMNode:[range startContainer] webViewController:self];
+	KTHTMLTextBlock *textBlock = [[self mainWebViewComponent] textBlockForDOMNode:[range startContainer]];
 	if (textBlock)
     {
 		result = [textBlock webView:aWebView shouldInsertNode:node replacingDOMRange:range givenAction:action];

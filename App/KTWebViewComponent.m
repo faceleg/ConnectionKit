@@ -9,6 +9,8 @@
 #import "KTWebViewComponent.h"
 
 #import "KTHTMLParser.h"
+#import "KTHTMLTextBlock.h"
+#import "DOM+KTWebViewController.h"
 
 
 @implementation KTWebViewComponent
@@ -101,6 +103,58 @@
 - (void)addTextBlock:(KTHTMLTextBlock *)textBlock { [[self _textBlocks] addObject:textBlock]; }
 
 - (void)removeAllTextBlocks { [[self _textBlocks] removeAllObjects]; }
+
+/*	Search our text blocks for a match. If not found, do the same for subcomponents.
+ */
+- (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+{
+	OBPRECONDITION(node);
+	
+	KTHTMLTextBlock *result = nil;
+	
+	// Find the overall element encapsualting the editing block
+	DOMHTMLElement *textBlockDOMElement = [node firstSelectableParentNode];
+	NSString *textBlockDOMID = [textBlockDOMElement idName];
+	if (textBlockDOMID)
+	{
+
+		// Search for an existing TextBlock object with that ID
+		NSEnumerator *textBlocksEnumerator = [[self textBlocks] objectEnumerator];
+		KTHTMLTextBlock *aTextBlock;
+		while (aTextBlock = [textBlocksEnumerator nextObject])
+		{
+			if ([[aTextBlock DOMNodeID] isEqualToString:textBlockDOMID])
+			{
+				result = aTextBlock;
+				break;
+			}
+		}
+		
+		
+		// Resort to searching children as needed
+		if (!result)
+		{
+			NSEnumerator *subcomponentsEnumerator = [[self subcomponents] objectEnumerator];
+			KTWebViewComponent *aComponent;
+			while (aComponent = [subcomponentsEnumerator nextObject])
+			{
+				aTextBlock = [aComponent textBlockForDOMNode:node];
+				if (aTextBlock)
+				{
+					result = aTextBlock;
+					break;
+				}
+			}
+		}
+		
+		
+		// Hook the text block up to its DOM node
+		[result setDOMNode:textBlockDOMElement];
+	}
+	
+	
+	return result;
+}
 
 #pragma mark -
 #pragma mark Sub & Super Components
@@ -218,6 +272,49 @@
 			[aComponent setNeedsReload:flag recursive:YES];
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Parser
+
+- (void)parserDidStartTemplate:(KTHTMLParser *)parser;
+{
+	if ([[parser parentParser] delegate] == self)
+	{
+		// Start a new child component
+		KTWebViewComponent *newComponent = [[KTWebViewComponent alloc] initWithParser:parser];
+		[self addSubcomponent:newComponent];
+		[parser setDelegate:newComponent];
+		[newComponent release];
+	}
+}
+
+- (NSString *)parser:(KTHTMLParser *)parser willEndParsing:(NSString *)result;
+{
+	// Preview HTML should be wrapped in an identiying div for the webview
+	if ([parser HTMLGenerationPurpose] == kGeneratingPreview &&
+		result &&
+		[parser parentParser] &&
+		[[parser component] conformsToProtocol:@protocol(KTWebViewComponent)])
+	{
+		result = [NSString stringWithFormat:@"<div id=\"%@-%u\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
+				  [[parser component] uniqueWebViewID],
+				  [[parser template] hash],
+				  result];
+	}
+	
+	[self setHTML:result];
+	
+	
+	return result;
+}
+
+/*	We want to record the text block.
+ *	This includes making sure the webview refreshes upon a graphical text size change.
+ */
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
+{
+	[self addTextBlock:textBlock];
 }
 
 @end

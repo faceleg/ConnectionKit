@@ -30,8 +30,8 @@
     
     NSString        *myHTML;
 	
-	NSMutableSet				*mySubcomponents;
-	KTWebViewComponent	*mySupercomponent;
+	NSMutableSet		*mySubcomponents;
+	KTWebViewComponent	*mySupercomponent;	// Weak ref
 	
 	BOOL	myNeedsReload;
 }
@@ -53,6 +53,7 @@
 - (NSSet *)textBlocks;
 - (void)addTextBlock:(KTHTMLTextBlock *)textBlock;
 - (void)removeAllTextBlocks;
+- (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 
 - (NSSet *)subcomponents;
 - (NSSet *)allSubcomponents;

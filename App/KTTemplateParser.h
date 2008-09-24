@@ -69,7 +69,8 @@
 
 
 @interface NSObject (Delegate)
-- (void)HTMLParser:(KTTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
+- (void)parser:(KTTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
+- (void)parserDidStartTemplate:(KTTemplateParser *)parser;
 - (NSString *)parser:(KTTemplateParser *)parser willEndParsing:(NSString *)result;
 @end
 

@@ -42,8 +42,8 @@
 
 @interface KTDocWebViewController (RefreshingPrivate)
 
-- (void)setWebViewNeedsReload:(BOOL)needsRefresh;
-- (void)setWebViewComponentNeedsReload:(KTWebViewComponent *)component;
+- (void)_setWebViewNeedsReload:(BOOL)needsRefresh;
+- (void)_setWebViewComponentNeedsReload:(KTWebViewComponent *)component;
 
 - (void)reloadWebViewComponent:(KTWebViewComponent *)component;
 - (void)reloadWebViewComponentIfNeeded:(KTWebViewComponent *)component;
@@ -75,16 +75,13 @@
 
 - (void)init_webViewLoading
 {
-	myWebViewComponents = [[NSMutableDictionary alloc] initWithCapacity:1];
-	mySuspendedKeyPaths = [[NSCountedSet alloc] init];
-	mySuspendedKeyPathsAwaitingRefresh = [[NSMutableSet alloc] init];
 }
 
 - (void)dealloc_webViewLoading
 {
 	[[self webView] stopLoading:nil];
 	[[self asyncOffscreenWebViewController] stopLoading];
-	[self setWebViewNeedsReload:NO];
+	[self _setWebViewNeedsReload:NO];
     
     [self setPages:nil];
 }
@@ -147,7 +144,7 @@
  */
 - (void)setWebViewNeedsReload
 {
-	[self setWebViewComponentNeedsReload:[self mainWebViewComponent]];
+	[self _setWebViewComponentNeedsReload:[self mainWebViewComponent]];
 }
 
 
@@ -156,7 +153,7 @@
  *
  *	If component is nil, we assume the whole webview needs a refresh
  */
-- (void)setWebViewComponentNeedsReload:(KTWebViewComponent *)component
+- (void)_setWebViewComponentNeedsReload:(KTWebViewComponent *)component
 {
 	// Mark the component
 	if (!component) component = [self mainWebViewComponent];
@@ -166,7 +163,7 @@
 	
 	
 	// Schedule the actual reload
-	[self setWebViewNeedsReload:YES];
+	[self _setWebViewNeedsReload:YES];
 }
 
 
@@ -181,7 +178,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 /*	Private method. Called whenever some portion of the webview needs reloading.
  *	Schedules a CFRunLoopObserver to perform the actual reload at the end of the run loop.
  */
-- (void)setWebViewNeedsReload:(BOOL)needsRefresh
+- (void)_setWebViewNeedsReload:(BOOL)needsRefresh
 { 
 	if (needsRefresh && !myRunLoopObserver)
 	{
@@ -203,16 +200,21 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
  */
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
 {
-    KTHTMLParser *parser = [[self mainWebViewComponent] parser];
-	[parser setDelegate:nil];
+    [self setWebViewNeedsReload];
+	return;
 	
-	NSString *oldHTML = [[self mainWebViewComponent] HTML];
+	KTHTMLParser *parser = [[self mainWebViewComponent] parser];
+	//[parser setDelegate:nil];
+	
+	NSString *oldHTML = [[[self mainWebViewComponent] HTML] copy];
 	NSString *newHTML = [parser parseTemplate];
 	
 	if (![oldHTML isEqualToString:newHTML])
 	{
 		[self setWebViewNeedsReload];
 	}
+	
+	[oldHTML release];
 }
 
 #pragma mark -
@@ -261,12 +263,15 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// Clearly the webview is no longer in need of refreshing
-	[self setWebViewNeedsReload:NO];
+	[self _setWebViewNeedsReload:NO];
 }
 
+
+/*	Generates HTML for just the specified component and inserts it into the webview, replacing the old HTML
+ */
 - (void)reloadWebViewComponent:(KTWebViewComponent *)component
 {
-	// If we're trying to redraw the main component cut straight to -refreshWebView
+	// If we're trying to redraw the main component, cut straight to -refreshWebView
 	if ([component isEqual:[self mainWebViewComponent]])
 	{
 		[self reloadWebView];
@@ -301,8 +306,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	
 	[component retain];
-	[myWebViewComponents removeObjectsForKeys:[myWebViewComponents allKeysForObject:component]];
-	[myWebViewComponents setObject:component forKey:[parser parserID]];
 	[component release];
 	
 	
@@ -405,7 +408,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)reloadWebViewIfNeeded;
 {
 	// Work through the hierarchy looking for components that need it
-		KTWebViewComponent *mainComponent = [self mainWebViewComponent];
+	KTWebViewComponent *mainComponent = [self mainWebViewComponent];
 	if (mainComponent)
 	{
 		[self reloadWebViewComponentIfNeeded:mainComponent];
@@ -417,7 +420,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	OFF((@"Refreshed Webview"));
-	[self setWebViewNeedsReload:NO];
+	[self _setWebViewNeedsReload:NO];
 }
 
 - (void)reloadWebViewComponentIfNeeded:(KTWebViewComponent *)component
@@ -447,7 +450,12 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 {
 	// Build the HTML
 	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:page];
-	[parser setDelegate:self];
+	
+	KTWebViewComponent *webViewComponent = [[KTWebViewComponent alloc] initWithParser:parser];
+	[self setMainWebViewComponent:webViewComponent];
+	[parser setDelegate:webViewComponent];
+	[webViewComponent release];
+	
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
 	
@@ -466,37 +474,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	NSURLRequest *request = [NSURLRequest requestWithURL:pageURL];
 	[[[self webView] mainFrame] loadRequest:request];
 }
-
-- (NSString *)parser:(KTHTMLParser *)parser willEndParsing:(NSString *)result;
-{
-	// Preview HTML should be wrapped in an identiying div for the webview
-	if ([parser HTMLGenerationPurpose] == kGeneratingPreview &&
-		result &&
-		[parser parentParser] &&
-		[[parser component] conformsToProtocol:@protocol(KTWebViewComponent)])
-	{
-		result = [NSString stringWithFormat:@"<div id=\"%@-%@\" class=\"kt-parsecomponent-placeholder\">\n%@\n</div>",
-				  [[parser component] uniqueWebViewID],
-				  [parser parserID],
-				  result];
-	}
-	
-	KTWebViewComponent *component = [self webViewComponentForParser:parser];
-    [component setHTML:result];
-	
-	
-	return result;
-}
-
-/*	We want to record the text block.
- *	This includes making sure the webview refreshes upon a graphical text size change.
- */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
-{
-	KTWebViewComponent *component = [self webViewComponentForParser:parser];
-	[component addTextBlock:textBlock];
-}
-
 
 #pragma mark -
 #pragma mark Source Code Text View Loading
@@ -574,45 +551,10 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	// the component itself in the tree...
 	[self resetWebViewComponent:[self mainWebViewComponent]];
 	
-	
-	// ...so we now get rid of the top level component too
-	[myWebViewComponents removeAllObjects];
-	
+		
 	[component retain];
 	[myMainWebViewComponent release];
 	myMainWebViewComponent = component;
-}
-
-/*	Locates the component that corresponds with the parser. If none is found, creates it.
- */
-- (KTWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser
-{
-	// Ensure we have a main parsed component before doing anything else
-	if (![self mainWebViewComponent])
-	{
-		KTWebViewComponent *mainComponent = [[KTWebViewComponent alloc] initWithParser:parser];
-		[self setMainWebViewComponent:mainComponent];
-		[myWebViewComponents setObject:mainComponent forKey:[parser parserID]];
-		[mainComponent release];
-	}
-	
-	
-	// Search for the component
-	KTWebViewComponent *result = [myWebViewComponents objectForKey:[parser parserID]];
-	
-	
-	// Create a new component if not found
-	if (!result)
-	{
-		KTWebViewComponent *parentComponent = [self webViewComponentForParser:[parser parentParser]];
-		
-		result = [[KTWebViewComponent alloc] initWithParser:parser];
-		[parentComponent addSubcomponent:result];
-		[myWebViewComponents setObject:result forKey:[parser parserID]];
-		[result release];
-	}
-	
-	return result;
 }
 
 /*	Leaves the actual component in the hierarchy, but removes all its subComponents & parsed keyPaths.
@@ -630,7 +572,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	}
 	
 	[component removeAllSubcomponents];
-	[myWebViewComponents removeObjects:[subcomponents allObjects]];
 }
 
 #pragma mark -
@@ -642,7 +583,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)documentWillClose:(NSNotification *)notification
 {
 	[self setMainWebViewComponent:nil];
-	[self setWebViewNeedsReload:NO];
+	[self _setWebViewNeedsReload:NO];
 }
 
 @end

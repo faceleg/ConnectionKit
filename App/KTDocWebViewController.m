@@ -95,9 +95,6 @@
     [self setTransitionFilter:nil];
     
 	[self setMainWebViewComponent:nil];
-	[myWebViewComponents release];
-	[mySuspendedKeyPaths release];
-	[mySuspendedKeyPathsAwaitingRefresh release];
 	
 	[myTextEditingBlock release];
 	[myUndoManagerProxy release];

@@ -6,9 +6,8 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLTextBlock.h"
 
-#import "Debug.h"
+#import "KTHTMLTextBlock.h"
 
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
@@ -17,12 +16,10 @@
 #import "KTDocWindowController.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "KTWeakReferenceMutableDictionary.h"
 #import "KTWebKitCompatibility.h"
 
 #import "KTHTMLParser.h"
 #import "KTHTMLParser+Private.h"
-#import "KTStalenessHTMLParser.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTMediaContainer.h"
@@ -37,12 +34,10 @@
 
 #import "OmniCompatibility.h"
 
+#import "Debug.h"
+
 
 @interface KTHTMLTextBlock (Private)
-
-+ (NSMutableDictionary *)knownTextBlocks;
-
-- (void)setDOMNode:(DOMHTMLElement *)node;
 
 + (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)element;
 
@@ -50,39 +45,6 @@
 
 
 @implementation KTHTMLTextBlock
-
-#pragma mark -
-#pragma mark Factory Methods
-
-+ (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node
-								  webViewController:(KTDocWebViewController *)webViewController;
-{
-	KTHTMLTextBlock *result = nil;
-	
-	
-	// Find the overall element encapsualting the editing block
-	DOMHTMLElement *textBlockDOMElement = [node firstSelectableParentNode];
-	
-	
-	// Search for an existing TextBlock object with that ID
-	NSString *textBlockDOMID = [textBlockDOMElement idName];
-	result = [[self knownTextBlocks] objectForKey:textBlockDOMID];
-	[result setDOMNode:textBlockDOMElement];
-    
-    return result;
-}
-
-+ (NSMutableDictionary *)knownTextBlocks
-{
-	static NSMutableDictionary *result;
-	
-	if (!result)
-	{
-		result = [[KTWeakReferenceMutableDictionary alloc] init];
-	}
-	
-	return result;
-}
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -101,11 +63,9 @@
     if (self)
     {
         myParser = [parser retain];
-        myDOMNodeID = [[NSString alloc] initWithFormat:@"k-svxTextBlock-%@", [NSString shortUUIDString]];
         
         myIsEditable = YES;
         [self setHTMLTag:@"div"];
-        [[KTHTMLTextBlock knownTextBlocks] setObject:self forKey:myDOMNodeID];	// That's a weak ref
     }
 	
 	return self;
@@ -115,11 +75,7 @@
 {
 	OBASSERT(!myIsEditing);
 	
-	// Remove us from the list of known text blocks otherwise there will be a memory crasher later
-	[[KTHTMLTextBlock knownTextBlocks] removeObjectForKey:[self DOMNodeID]];	// This was a weak ref
-	
 	[myDOMNode release];
-	[myDOMNodeID release];
 	[myHTMLTag release];
 	[myGraphicalTextCode release];
 	[myHyperlink release];
@@ -135,7 +91,15 @@
 
 - (KTHTMLParser *)parser { return myParser; }
 
-- (NSString *)DOMNodeID { return myDOMNodeID; }
+- (NSString *)DOMNodeID
+{
+	NSString *result = [NSString stringWithFormat:@"k-svxTextBlock-%@-%p",
+						[self HTMLSourceKeyPath],
+						[self HTMLSourceObject]];
+	
+	// We used to just use  [NSString shortUUIDString], but that changes with each webview refresh
+	return result;
+}
 
 - (DOMHTMLElement *)DOMNode { return myDOMNode; }
 

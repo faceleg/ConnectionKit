@@ -19,7 +19,6 @@
 //@private
 	KTHTMLParser    *myParser;
     
-	NSString		*myDOMNodeID;
 	DOMHTMLElement	*myDOMNode;
 	
 	BOOL			myIsEditable;
@@ -37,10 +36,6 @@
 	BOOL	myIsEditing;
 }
 
-+ (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node
-						  webViewController:(KTDocWebViewController *)webViewController;
-
-
 #pragma mark Accessors
 
 - (id)initWithParser:(KTHTMLParser *)parser;
@@ -48,6 +43,8 @@
 
 - (NSString *)DOMNodeID;
 - (DOMHTMLElement *)DOMNode;
+- (void)setDOMNode:(DOMHTMLElement *)node;
+
 
 - (BOOL)isEditable;
 - (void)setEditable:(BOOL)flag;

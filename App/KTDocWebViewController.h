@@ -51,12 +51,8 @@ typedef enum {
     NSSet   *myPages;
     
 	KTWebViewComponent	*myMainWebViewComponent;	// used by category method
-	NSMutableDictionary			*myWebViewComponents;
 	
 	CFRunLoopObserverRef		myRunLoopObserver;			// used by category method
-	
-	NSCountedSet				*mySuspendedKeyPaths;
-	NSMutableSet				*mySuspendedKeyPathsAwaitingRefresh;
 	
 	
 	

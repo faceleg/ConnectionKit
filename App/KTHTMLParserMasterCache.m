@@ -164,9 +164,9 @@
 {
 	// Alert the parser's delegate
 	id delegate = [[self parser] delegate];
-	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterKeyPath:ofObject:)])
+	if (delegate && [delegate respondsToSelector:@selector(parser:didEncounterKeyPath:ofObject:)])
 	{
-		[delegate HTMLParser:[self parser] didEncounterKeyPath:keyPath ofObject:object];
+		[delegate parser:[self parser] didEncounterKeyPath:keyPath ofObject:object];
 	}
 }
 

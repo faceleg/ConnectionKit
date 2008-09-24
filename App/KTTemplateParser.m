@@ -211,9 +211,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterKeyPath:ofObject:)])
+	if (delegate && [delegate respondsToSelector:@selector(parser:didEncounterKeyPath:ofObject:)])
 	{
-		[delegate HTMLParser:self didEncounterKeyPath:keyPath ofObject:object];
+		[delegate parser:self didEncounterKeyPath:keyPath ofObject:object];
 	}
 }
 
@@ -237,16 +237,24 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	@try
 	{
 		BOOL readyToParse = [self prepareToParse];
-		if (!readyToParse) {
-			return nil;
-		}
-		
-		NSString *template = [self template];
-		if (template)
+		if (readyToParse)
 		{
-			NSScanner *scanner = [NSScanner scannerWithString:template];
-			[scanner setCharactersToBeSkipped:nil];
-			result = [self startHTMLStringByScanning:scanner];
+			NSString *template = [self template];
+			if (template)
+			{
+				// Let the delegate know
+				id delegate = [self delegate];
+				if (delegate && [delegate respondsToSelector:@selector(parserDidStartTemplate:)])
+				{
+					[delegate parserDidStartTemplate:self];
+				}
+				
+				
+				// Parse!
+				NSScanner *scanner = [NSScanner scannerWithString:template];
+				[scanner setCharactersToBeSkipped:nil];
+				result = [self startHTMLStringByScanning:scanner];
+			}
 		}
 	}
     @catch (NSException *exception)
