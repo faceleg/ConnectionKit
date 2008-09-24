@@ -31,8 +31,6 @@
 	NSMutableArray			*mySubcomponents;
 	KTWebViewComponent		*mySupercomponent;		// Weak ref
 	KTDocWebViewController	*myWebViewController;	// Weak ref
-	
-	BOOL	myNeedsReload;
 }
 
 - (id)initWithParser:(KTHTMLParser *)parser;
@@ -54,6 +52,7 @@
 
 - (NSArray *)subcomponents;
 - (void)addSubcomponent:(KTWebViewComponent *)component;
+- (void)replaceWithComponent:(KTWebViewComponent *)replacementComponent;
 - (void)removeAllSubcomponents;
 
 - (KTWebViewComponent *)supercomponent;
@@ -61,11 +60,7 @@
 - (KTDocWebViewController *)webViewController;
 - (void)setWebViewController:(KTDocWebViewController *)webViewController;
 
-- (KTWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
-											  templateHTML:(NSString *)templateHTML;
-
-- (BOOL)needsReload;
-- (void)setNeedsReload:(BOOL)flag;
-- (void)setNeedsReload:(BOOL)flag recursive:(BOOL)recursive;
+#pragma mark Loading
+- (void)_reloadIfNeededWithPossibleReplacement:(KTWebViewComponent *)replacementComponent;
 
 @end

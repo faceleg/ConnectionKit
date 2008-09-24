@@ -862,9 +862,4 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[self updateChangeCount:NSChangeCleared];
 }
 
-- (oneway void)release
-{
-    return [super release];
-}
-
 @end

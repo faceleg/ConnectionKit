@@ -171,7 +171,7 @@
 	// HACK: Preview paths need a fake query to fool webkit's caching.
     if ([self HTMLGenerationPurpose] == kGeneratingPreview)
     {
-        stylesheetPath = [stylesheetPath stringByAppendingFormat:@"?%@", [self parserID]];
+        //stylesheetPath = [stylesheetPath stringByAppendingFormat:@"?%@", [self parserID]];
     }
     
     NSMutableString *buffer = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",

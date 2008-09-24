@@ -7,6 +7,7 @@
 //
 
 #import "KTWebViewComponent.h"
+#import "KTDocWebViewController.h"
 
 #import "KTHTMLParser.h"
 #import "KTHTMLTextBlock.h"
@@ -20,9 +21,12 @@
 
 - (id)initWithParser:(KTHTMLParser *)parser
 {
+	OBPRECONDITION(parser);
+	
 	[super init];
 	
 	myParser = [parser retain];
+	mySubcomponents = [[NSMutableArray alloc] init];
 	myKeyPaths = [[NSMutableSet alloc] initWithCapacity:10];
 	
 	return self;
@@ -214,56 +218,26 @@
 	[self setWebViewController:[component webViewController]];
 }
 
-/*	Searches all subComponents (and their subComponents etc.) for the parsed component with the 
- *	right properties. Returns nil if not found.
- */
-- (KTWebViewComponent *)componentWithParsedComponent:(id <KTWebViewComponent>)component
-												 templateHTML:(NSString *)templateHTML
-{
-	KTWebViewComponent *result = nil;
-	
-	// Are we a match?
-	if ([[[self parser] component] isEqual:component] &&
-		[[[self parser] template] isEqual:templateHTML])
-	{
-		result = self;
-	}
-	// No we're not, so search subComponents
-	else
-	{
-		NSArray *subComponents = mySubcomponents;
-		NSEnumerator *componentsEnumerator = [subComponents objectEnumerator];
-		KTWebViewComponent *aParsedComponent;
-		
-		while (aParsedComponent = [componentsEnumerator nextObject])
-		{
-			// OK then, does this component contain the component?
-			KTWebViewComponent *possibleResult = [aParsedComponent componentWithParsedComponent:component
-																							templateHTML:templateHTML];
-			if (possibleResult)
-			{
-				result = possibleResult;
-				break;
-			}
-		}
-	}
-	
-	return result;
-}
-
 - (void)addSubcomponent:(KTWebViewComponent *)component
 {
-	if (!mySubcomponents)
-	{
-		mySubcomponents = [[NSMutableArray alloc] initWithCapacity:1];
-	}
-	
 	[mySubcomponents addObject:component];
 	[component setSuperComponent:self];
 }
 
+- (void)replaceWithComponent:(KTWebViewComponent *)replacementComponent
+{
+	KTWebViewComponent *supercomponent = [self supercomponent];
+	[self setSuperComponent:nil];
+	
+	unsigned index = [[supercomponent subcomponents] indexOfObjectIdenticalTo:self];
+	[supercomponent->mySubcomponents replaceObjectAtIndex:index withObject:replacementComponent];
+	
+	[replacementComponent setSuperComponent:supercomponent];
+}
+
 - (void)removeAllSubcomponents
 {
+	[mySubcomponents setValue:nil forKey:@"superComponent"];
 	[mySubcomponents removeAllObjects];
 }
 
@@ -279,26 +253,33 @@
 }
 
 #pragma mark -
-#pragma mark Needs Reload
+#pragma mark Loading
 
-- (BOOL)needsReload { return myNeedsReload; }
-
-- (void)setNeedsReload:(BOOL)flag { myNeedsReload = flag; }
-
-- (void)setNeedsReload:(BOOL)flag recursive:(BOOL)recursive
+/*	Compares componentHTML, then children to see what needs reloading
+ */
+- (void)_reloadIfNeededWithPossibleReplacement:(KTWebViewComponent *)replacementComponent;
 {
-	[self setNeedsReload:flag];
-	
-	if (recursive)
+	if (![[self componentHTML] isEqualToString:[replacementComponent componentHTML]] ||
+		[[self subcomponents] count] != [[replacementComponent subcomponents] count])
 	{
-		NSEnumerator *subcomponentsEnumerator = [[self subcomponents] objectEnumerator];
-		KTWebViewComponent *aComponent;
-		while (aComponent = [subcomponentsEnumerator nextObject])
+		[[self webViewController] replaceWebViewComponent:self withComponent:replacementComponent];
+	}
+	else
+	{
+		NSArray *subcomponents = [self subcomponents];
+		NSArray *replacementSubcomponents = [replacementComponent subcomponents];
+		
+		unsigned i, count = [subcomponents count];
+		for (i = 0; i < count; i++)
 		{
-			[aComponent setNeedsReload:flag recursive:YES];
+			KTWebViewComponent *aSubcomponent = [subcomponents objectAtIndex:i];
+			KTWebViewComponent *aReplacementSubcomponent = [replacementSubcomponents objectAtIndex:i];
+			
+			[aSubcomponent _reloadIfNeededWithPossibleReplacement:aReplacementSubcomponent];
 		}
 	}
 }
+
 
 #pragma mark -
 #pragma mark Parser

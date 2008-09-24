@@ -42,14 +42,8 @@
 @interface KTDocWebViewController (RefreshingPrivate)
 
 - (void)_setWebViewNeedsReload:(BOOL)needsRefresh;
-- (void)_setWebViewComponentNeedsReload:(KTWebViewComponent *)component;
-
-- (void)reloadWebViewComponent:(KTWebViewComponent *)component;
 
 - (void)loadPageIntoWebView:(KTPage *)page;
-
-- (KTWebViewComponent *)webViewComponentForParser:(KTHTMLParser *)parser;
-- (void)resetWebViewComponent:(KTWebViewComponent *)component;
 
 - (void)addParsedKeyPath:(NSString *)keyPath ofObject:(NSObject *)object forParsedComponent:(KTWebViewComponent *)parsedComponent;
 
@@ -136,29 +130,10 @@
 	return (myRunLoopObserver != nil);
 }
 
-
 /*	Convenience (and public) method for marking the entire webview for a reload.
  */
 - (void)setWebViewNeedsReload
 {
-	[self _setWebViewComponentNeedsReload:[self mainWebViewComponent]];
-}
-
-
-/*	Private method for marking an individual component as needing a refresh.
- *	DO NOT use -[KTParsedWebViewComponent setNeedsReload:] instead as it will not be detected by the webview controller.
- *
- *	If component is nil, we assume the whole webview needs a refresh
- */
-- (void)_setWebViewComponentNeedsReload:(KTWebViewComponent *)component
-{
-	// Mark the component
-	if (!component) component = [self mainWebViewComponent];
-	
-	[component setNeedsReload:YES];
-	[self resetWebViewComponent:component];
-	
-	
 	// Schedule the actual reload
 	[self _setWebViewNeedsReload:YES];
 }
@@ -249,10 +224,10 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 /*	Generates HTML for just the specified component and inserts it into the webview, replacing the old HTML
  */
-- (void)reloadWebViewComponent:(KTWebViewComponent *)component
+- (void)replaceWebViewComponent:(KTWebViewComponent *)oldComponent withComponent:(KTWebViewComponent *)newComponent
 {
 	// If we're trying to redraw the main component, cut straight to -refreshWebView
-	if ([component isEqual:[self mainWebViewComponent]])
+	if (oldComponent == [self mainWebViewComponent])
 	{
 		[self reloadWebView];
 		return;
@@ -260,7 +235,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// Search for the div with the right ID.
-	NSString *divID = [component divID];
+	NSString *divID = [oldComponent divID];
 	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
 	OBASSERT([document isKindOfClass:[DOMHTMLDocument class]]);
 	DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:divID];
@@ -268,38 +243,13 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	// If a suitable element couldn't be found try the component's parent instead
 	if (!element || ![element isKindOfClass:[DOMHTMLDivElement class]])
 	{
-		[self reloadWebViewComponent:[component supercomponent]];
+		[self replaceWebViewComponent:[oldComponent supercomponent] withComponent:[newComponent supercomponent]];
 		return;
 	}
 	
 	
-	id parsedComponent = [[component parser] component];
-	NSString *templateHTML = [[component parser] template];
-	
-	
-	// Mark the component as no longer needing a refresh
-	[component setNeedsReload:NO];
-	
-	
-	// Before generating the HTML, we need to change the key of the component to reflect the new parser that's going to be used
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:templateHTML component:parsedComponent];
-	[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	
-	[component retain];
-	[component release];
-	
-	
-	// Generate the HTML that will replace the component
-	[parser setDelegate:self];
-	KTPage *page = [self page];
-	[parser setCurrentPage:page];
-	if ([parsedComponent isKindOfClass:[KTAbstractIndex class]])	// A hack to handle indexes in 1.5
-	{
-		[parser overrideKey:@"pages" withValue:[page pagesInIndex]];
-	}
-	
-	NSString *replacementHTML = [parser parseTemplate];
-	[parser release];
+	// Replace the component in the hierarchy
+	[oldComponent replaceWithComponent:newComponent];
 
 
 /*
@@ -323,13 +273,13 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	[[self asyncOffscreenWebViewController] setDelegate:self];
 	[self setElementWaitingForFragmentLoad:element];
 	// Kick off load of fragment, we will be notified when it's done.
-	[[self asyncOffscreenWebViewController]  loadHTMLFragment:replacementHTML];
+	[[self asyncOffscreenWebViewController]  loadHTMLFragment:[newComponent outerHTML]];
 
 	
 	// Reload the source code text view if it's visible
 	if ([self hideWebView])
 	{
-		[self loadPageIntoSourceCodeTextView:page];
+		[self loadPageIntoSourceCodeTextView:[self page]];
 	}
 }
 
@@ -405,8 +355,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	
 	
 	// Look for components which don't match
-	//[[webViewComponent outerHTML] isEqualToString:[[self mainWebViewComponent] outerHTML]];
-	
+	[[self mainWebViewComponent] _reloadIfNeededWithPossibleReplacement:webViewComponent];
 	
 	
 	// Tidy up
@@ -521,7 +470,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 {
 	// Do the usual behavior for dumping a component. This empties the component out, including subcomponents, but keeps
 	// the component itself in the tree...
-	[self resetWebViewComponent:[self mainWebViewComponent]];
 	[[self mainWebViewComponent] setWebViewController:nil];
 		
 	[component retain];
@@ -529,23 +477,6 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	myMainWebViewComponent = component;
 	
 	[component setWebViewController:self];
-}
-
-/*	Leaves the actual component in the hierarchy, but removes all its subComponents & parsed keyPaths.
- *	Before doing so, we stop all KVO for the objects contained.
- */
-- (void)resetWebViewComponent:(KTWebViewComponent *)component
-{
-	// Deal with subcomponents first
-	NSArray *subcomponents = [component subcomponents];
-	NSEnumerator *subcomponentsEnumerator = [subcomponents objectEnumerator];
-	KTWebViewComponent *aSubcomponent;
-	while (aSubcomponent = [subcomponentsEnumerator nextObject])
-	{
-		[self resetWebViewComponent:aSubcomponent];
-	}
-	
-	[component removeAllSubcomponents];
 }
 
 #pragma mark -

@@ -152,6 +152,8 @@ typedef enum {
 
 - (void)reloadWebView;
 - (void)reloadWebViewIfNeeded;
+
+- (void)replaceWebViewComponent:(KTWebViewComponent *)oldComponent withComponent:(KTWebViewComponent *)newComponent;
 - (void)spliceElement:(DOMHTMLElement *)loadedBody;	// Private
 
 // Web View component hierarchy
