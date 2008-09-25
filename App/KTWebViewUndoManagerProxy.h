@@ -24,6 +24,7 @@ extern NSString *KTWebViewDidEditChunkNotification;
 }
 
 - (id)initWithUndoManager:(NSUndoManager *)undoManager;
+- (NSUndoManager *)undoManager;
 
 - (void)removeAllWebViewTargettedActions;
 

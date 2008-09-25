@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTDocWebViewController.h"
+#import "KTDocWebViewController+Private.h"
 
 #import "Debug.h"
 #import "KTDocWindowController.h"
@@ -45,7 +45,6 @@
 - (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
 
 - (void)webViewWillEditDOM:(WebView *)webView;
-- (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 @end
 
 
@@ -304,7 +303,10 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		// Kill off the undo actions and other data specific to that editing block
 		[myInlineImageElements removeAllObjects];
 		[myInlineImageNodes removeAllObjects];
+		
+		[[[self webViewUndoManagerProxy] undoManager] removeAllActionsWithTarget:self];	// Handles suspend/resume webview refresh stuff
 		[[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];
+		
 		
 		// Convert empty text blocks back into + editing markers.
 		[self processEditableElementsFromElement:[myTextEditingBlock DOMNode]];

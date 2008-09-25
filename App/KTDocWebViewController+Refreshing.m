@@ -171,6 +171,8 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	if (![self webViewLoadingIsSuspended])
 	{
 		[[[self page] managedObjectContext] processPendingChanges];
+		
+		[[[self webViewUndoManagerProxy] undoManager] registerUndoWithTarget:self selector:@selector(resumeWebViewLoading) object:nil];
 	}
 	
 	myLoadingSuspensionCount++;
@@ -181,6 +183,8 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 	// Before resuming, force through any pending changes so we can ignore them
 	[[[self page] managedObjectContext] processPendingChanges];
 
+	[[[self webViewUndoManagerProxy] undoManager] registerUndoWithTarget:self selector:@selector(suspendWebViewLoading) object:nil];
+	
 	myLoadingSuspensionCount--;
 }
 

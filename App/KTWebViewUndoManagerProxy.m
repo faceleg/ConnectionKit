@@ -25,6 +25,8 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 	return self;
 }
 
+- (NSUndoManager *)undoManager { return myUndoManager; }
+
 - (void)dealloc
 {
 	[myUndoManager release];
@@ -35,24 +37,24 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
 {
-	NSMethodSignature *result = [myUndoManager methodSignatureForSelector:aSelector];
+	NSMethodSignature *result = [[self undoManager] methodSignatureForSelector:aSelector];
 	return result;
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
-	[anInvocation setTarget:myUndoManager];
+	[anInvocation setTarget:[self undoManager]];
 	
 	OFF((@"Invoking method -%@ on undo manager", NSStringFromSelector([anInvocation selector])));
 	
 	[anInvocation invoke];
 }
 
-- (void)registeringUndoWithTarget:(id)target
+- (void)willRegisterUndoWithTarget:(id)target
 {
 	// Post a notification that the WebView has been edited.
 	// We DON'T do this for the first registration or if undoing/redoing
-	if (myRegisteredUndosCount > 0 && ![myUndoManager isUndoing] && ![myUndoManager isRedoing])
+	if (myRegisteredUndosCount > 0 && ![[self undoManager] isUndoing] && ![[self undoManager] isRedoing])
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:KTWebViewDidEditChunkNotification
 															object:self];
@@ -60,7 +62,7 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 	
 	
 	// Increment or decrement our registered undo count as appropriate
-	if ([myUndoManager isUndoing]) {
+	if ([[self undoManager] isUndoing]) {
 		myRegisteredUndosCount--;
 	}
 	else {
@@ -78,16 +80,16 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 
 - (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject
 {
-	[self registeringUndoWithTarget:target];
+	[self willRegisterUndoWithTarget:target];
 	
-	[myUndoManager registerUndoWithTarget:target selector:aSelector object:anObject];
+	[[self undoManager] registerUndoWithTarget:target selector:aSelector object:anObject];
 }
 
 - (id)prepareWithInvocationTarget:(id)target
 {
-	[self registeringUndoWithTarget:target];
+	[self willRegisterUndoWithTarget:target];
 	
-	id result = [myUndoManager prepareWithInvocationTarget:target];
+	id result = [[self undoManager] prepareWithInvocationTarget:target];
 	return result;
 }
 
@@ -102,7 +104,7 @@ NSString *KTWebViewDidEditChunkNotification = @"WebViewDidEditTextChunk";
 	id aTarget;
 	while (aTarget = [actionTargetsEnumerator nextObject])
 	{
-		[myUndoManager removeAllActionsWithTarget:aTarget];
+		[[self undoManager] removeAllActionsWithTarget:aTarget];
 	}
 	
 	[myWebViewActionTargets removeAllObjects];

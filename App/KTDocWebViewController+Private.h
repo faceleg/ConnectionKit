@@ -17,6 +17,7 @@
 
 // Editing
 - (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
+- (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 @end
 
 
