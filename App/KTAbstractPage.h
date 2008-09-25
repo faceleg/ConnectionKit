@@ -51,8 +51,6 @@ KTCollectionPathStyle;
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 
-- (NSString *)fixPageLinksFromString:(NSString *)originalString parser:(KTHTMLParser *)context;
-
 
 // Staleness
 - (BOOL)isStale;

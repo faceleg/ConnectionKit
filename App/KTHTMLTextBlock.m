@@ -360,6 +360,46 @@
 	return result;
 }
 
+/*!	Given the page text, scan for all page ID references and convert to the proper relative links.
+ */
+- (NSString *)fixPageLinksFromString:(NSString *)originalString
+{
+	NSMutableString *buffer = [NSMutableString string];
+	if (originalString)
+	{
+		NSScanner *scanner = [NSScanner scannerWithString:originalString];
+		while (![scanner isAtEnd])
+		{
+			NSString *beforeLink = nil;
+			BOOL found = [scanner scanUpToString:kKTPageIDDesignator intoString:&beforeLink];
+			if (found)
+			{
+				[buffer appendString:beforeLink];
+				if (![scanner isAtEnd])
+				{
+					[scanner scanString:kKTPageIDDesignator intoString:nil];
+					NSString *idString = nil;
+					BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
+														   intoString:&idString];
+					if (foundNumber)
+					{
+						KTPage *thePage = [KTPage pageWithUniqueID:idString inManagedObjectContext:[[self HTMLSourceObject] managedObjectContext]];
+						NSString *newPath = nil;
+						if (thePage)
+						{
+							newPath = [[thePage URL] stringRelativeToURL:[[[self parser] currentPage] URL]];
+						}
+						
+						if (!newPath) newPath = @"#";	// Fallback
+						[buffer appendString:newPath];
+					}
+				}
+			}
+		}
+	}
+	return [NSString stringWithString:buffer];
+}
+
 
 /*  Support method that takes a block of HTML and applies to it anything special the receiver and the parser require
  */
@@ -369,7 +409,7 @@
 	if ([[self parser] HTMLGenerationPurpose] != kGeneratingPreview)
 	{
 		// Fix page links
-		result = [[[self parser] currentPage] fixPageLinksFromString:result parser:[self parser]];
+		result = [self fixPageLinksFromString:result];
 		
 		
 		
