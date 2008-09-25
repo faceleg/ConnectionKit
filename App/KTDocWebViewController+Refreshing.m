@@ -156,7 +156,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
 {
-	if (![self webViewLoadingIsSuspended])
+	if (![self webViewLoadingIsSuspended] && ![[[self windowController] document] isSaving])
 	{
 		[self setWebViewNeedsReload:YES];
 	}
