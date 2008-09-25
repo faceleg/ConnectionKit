@@ -258,16 +258,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				   error:(NSError **)outError
 {
 	// We're only interested in special behaviour for Save As operations
-	if (saveOperation == NSAutosaveOperation)
-    {
-        BOOL result = [super writeSafelyToURL:absoluteURL 
-									   ofType:typeName 
-							 forSaveOperation:NSSaveOperation 
-										error:outError];
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return result;
-    }
-    else if (saveOperation != NSSaveAsOperation)
+	if (saveOperation == NSAutosaveOperation) saveOperation = NSSaveOperation;
+	
+	if (saveOperation != NSSaveAsOperation)
 	{
 		BOOL result =  [super writeSafelyToURL:absoluteURL 
 										ofType:typeName 
