@@ -96,6 +96,8 @@
     
 	[self setMainWebViewComponent:nil];
 	
+	// Editing
+	[myMidEditHTML release];
 	[myTextEditingBlock release];
 	[myUndoManagerProxy release];
 	[myInlineImageNodes release];

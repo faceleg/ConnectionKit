@@ -82,11 +82,14 @@
 
 - (NSString *)processHTML:(NSString *)originalHTML;
 
+- (NSString *)liveInnerHTML;
+
 #pragma mark Editing
 
 - (BOOL)becomeFirstResponder;
 - (BOOL)resignFirstResponder;
-- (BOOL)commitEditing;
 
+- (BOOL)commitEditing;
+- (void)commitHTML:(NSString *)commitHTML;
 
 @end

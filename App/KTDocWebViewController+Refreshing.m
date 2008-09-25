@@ -97,11 +97,11 @@
     
     
     // Reload
-    [self reloadWebView];
+    KTPage *page = [self page];
+    if (oldPage != page) [self reloadWebView];
     
     
     // Observe new page if needed
-    KTPage *page = [self page];
     if (page)
     {
         [[NSNotificationCenter defaultCenter] addObserver:self

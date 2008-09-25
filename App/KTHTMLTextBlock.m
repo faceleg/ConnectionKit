@@ -432,6 +432,21 @@
     return result;
 }
 
+
+/*	This method could probably do with a better name. It returns the HTML presently inside the DOM node.
+ */
+- (NSString *)liveInnerHTML
+{
+	NSString *result = [[self DOMNode] cleanedInnerHTML];
+	// OK, the problem is when all we have left is <p><br />\n</p> .... this should really be empty.
+	if (![[self DOMNode] hasVisibleContents])
+	{
+		result = @"";
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Editing
 
@@ -555,14 +570,16 @@
 - (BOOL)commitEditing
 {
 	// Fetch the HTML to save. Reduce to nil when appropriate
-	NSString *innerHTML = [[self DOMNode] cleanedInnerHTML];
+	NSString *innerHTML = [self liveInnerHTML];
+	[self commitHTML:innerHTML];
 	
-	// OK, the problem is when all we have left is <p><br />\n</p> .... this should really be empty.
-	if (![[self DOMNode] hasVisibleContents])
-	{
-		innerHTML = @"";
-	}
 	
+	return YES;
+}
+
+
+- (void)commitHTML:(NSString *)innerHTML
+{
 	if ([self isFieldEditor])
 	{
 		NSString *flattenedHTML = [innerHTML stringByConvertingHTMLToPlainText];
@@ -582,10 +599,6 @@
 	}
 	
 	[webViewController resumeWebViewLoading];
-	
-	
-	
-	return YES;
 }
 
 #pragma mark -

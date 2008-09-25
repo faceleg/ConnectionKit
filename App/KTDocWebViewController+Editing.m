@@ -43,6 +43,8 @@
 
 @interface KTDocWebViewController (EditingPrivate)
 - (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
+
+- (void)webViewWillEditDOM:(WebView *)webView;
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 @end
 
@@ -455,6 +457,29 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Change Management
 
+/*!	OK, don't filter stuff.	 For some reason, when I filter the style, it doesn't let valid stuff
+ through.  We seem to do OK by filtering later.
+ */
+- (BOOL)webView:(WebView *)aWebView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
+{
+	OFF((@"%@", NSStringFromSelector(_cmd) ));
+	//	NSString *cssText = [style cssText];
+	//	cssText = [DOMElement cleanupStyleText:cssText];
+	//	[style setCssText:cssText];
+	
+	[self webViewWillEditDOM:aWebView];
+	
+	return YES;
+}
+
+
+- (BOOL)webView:(WebView *)aWebView shouldDeleteDOMRange:(DOMRange *)range
+{
+	[self webViewWillEditDOM:aWebView];
+	return YES;
+}
+
+
 /*	Control is passed onto the current text block to handle.
  */
 - (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
@@ -468,6 +493,12 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		result = [textBlock webView:aWebView shouldInsertNode:node replacingDOMRange:range givenAction:action];
 	}
 	
+	
+	if (result)
+	{
+		[self webViewWillEditDOM:aWebView];
+	}
+	
 	return result;
 }
 
@@ -475,13 +506,19 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 /*	Called whenever the user tries to type something.
  *	We never allow a tab to be entered. (Although such a case never seems to occur)
  */
-- (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+- (BOOL)webView:(WebView *)aWebView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
 	BOOL result = YES;
 	
 	if ([text isEqualToString:@"\t"])	// Disallow tabs
 	{
 		result = NO;
+	}
+	
+	
+	if (result)
+	{
+		[self webViewWillEditDOM:aWebView];
 	}
 	
 	return result;
@@ -514,6 +551,36 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 }
 
 #pragma mark -
+#pragma mark Undo Management
+
+/*	We want to commit HTML to the MOC in a fashion that makes sense to the user if they choose to undo it later.
+ *	At present, the best strategy is this:
+ *
+ *		1. WebEditingDelegate methods inform us that the DOM is about to change. Record the current HTML
+ *		2. If WebKit registers an undo operation, commit that HTML to the MOC
+ *		3. Dispose of the HTML once WebKit is done with that edit
+ */
+
+- (void)webViewWillEditDOM:(WebView *)webView
+{
+	myMidEditHTML = [[[self currentTextEditingBlock] liveInnerHTML] copy];
+}
+
+- (void)webViewDidEditChunk:(NSNotification *)notification
+{
+	if (myMidEditHTML)
+	{
+		[[self currentTextEditingBlock] commitHTML:myMidEditHTML];
+	}
+}
+
+- (void)webViewDidChange:(NSNotification *)notification
+{
+	[myMidEditHTML release];
+	myMidEditHTML = nil;
+}
+
+#pragma mark -
 #pragma mark Undo Manager Proxy
 
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy
@@ -536,30 +603,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	return (NSUndoManager *)[self webViewUndoManagerProxy];
 }
 
-- (void)webViewDidEditChunk:(NSNotification *)notification
-{
-	//[[self currentTextEditingBlock] commitEditing];
-}
-
 #pragma mark -
 #pragma mark Unused delegate methods
-
-- (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
-{
-	return YES;
-}
-
-/*!	OK, don't filter stuff.	 For some reason, when I filter the style, it doesn't let valid stuff
-through.  We seem to do OK by filtering later.
-*/
-- (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
-{
-	OFF((@"%@", NSStringFromSelector(_cmd) ));
-	//	NSString *cssText = [style cssText];
-	//	cssText = [DOMElement cleanupStyleText:cssText];
-	//	[style setCssText:cssText];
-	return YES;
-}
 
 - (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
 {

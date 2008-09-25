@@ -80,8 +80,9 @@ typedef enum {
 	
 	
 	// Editing
-	KTHTMLTextBlock	*myTextEditingBlock;
+	KTHTMLTextBlock				*myTextEditingBlock;
 	KTWebViewUndoManagerProxy	*myUndoManagerProxy;
+	NSString					*myMidEditHTML;
 	
 	NSMutableDictionary	*myInlineImageNodes;
 	NSMutableDictionary *myInlineImageElements;
