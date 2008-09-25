@@ -1,4 +1,7 @@
 [[if address]]
+[[foreach delegate.fields aField]]
+[[if aField.identifier=="email"]]
+[[if aField.type!=0]]
 <script type="text/javascript"><!--
 
 function verifyAndSubmit[[=uniqueID]](form) {
@@ -32,6 +35,9 @@ function dofocus[[=uniqueID]](anInput) {
 }
 
 //--></script>
+[[endif3]]
+[[endif2]]
+[[endforeach]]
 
 <form class="contactElement" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
 		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
