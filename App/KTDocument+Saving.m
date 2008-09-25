@@ -105,7 +105,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
-    BOOL result = NO;
+    BOOL result = NO;		// We have to supply an Error if we are going to return NO....
     
     
     if ([self isSaving])
@@ -148,7 +148,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         {
             result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
         }
-        
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         
         // Unmark -isSaving as YES if applicable
         mySaveOperationCount--;
@@ -165,6 +165,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError
 {
     BOOL result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+
     if (result)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -258,17 +260,21 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	// We're only interested in special behaviour for Save As operations
 	if (saveOperation == NSAutosaveOperation)
     {
-        return [super writeSafelyToURL:absoluteURL 
-								ofType:typeName 
-					  forSaveOperation:NSSaveOperation 
-								 error:outError];
+        BOOL result = [super writeSafelyToURL:absoluteURL 
+									   ofType:typeName 
+							 forSaveOperation:NSSaveOperation 
+										error:outError];
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+		return result;
     }
     else if (saveOperation != NSSaveAsOperation)
 	{
-		return [super writeSafelyToURL:absoluteURL 
-								ofType:typeName 
-					  forSaveOperation:saveOperation 
-								 error:outError];
+		BOOL result =  [super writeSafelyToURL:absoluteURL 
+										ofType:typeName 
+							  forSaveOperation:saveOperation 
+										 error:outError];
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+		return result;
 	}
 	
 	
@@ -298,6 +304,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				 forSaveOperation:saveOperation
 			  originalContentsURL:[self fileURL]
 							error:outError];
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 	}
 	@catch (NSException *exception) 
 	{
@@ -409,6 +416,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                 ofType:inType
                       forSaveOperation:saveOperation
                                  error:outError];
+	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 	
 	
 	if (result)
@@ -419,7 +427,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                     forSaveOperation:saveOperation
                  originalContentsURL:inOriginalContentsURL
                                error:outError];
-		
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+	
 		
 		if (result && quickLookThumbnailWebView)
 		{
@@ -483,6 +492,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:inURL]];
 				OBASSERT(thumbnailURL);	// shouldn't be nil, right?
 				result = [[snapshot512 PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:outError];
+				OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 			}
 			
 			
@@ -553,6 +563,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 																	 ofType:[KTDocument defaultStoreType]
 																	  error:outError];
 		
+		OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+
 		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
 		if ( !newStore || !didConfigure )
 		{
@@ -567,6 +579,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     {
         if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
         {
+			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
             return NO; // couldn't setMetadata, but we should have, bail...
         }
     }
@@ -574,7 +587,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     {
         if ( saveOperation != NSSaveAsOperation )
         {
-            LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
+			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
             return NO; // this case should not happen, stop
         }
     }
@@ -655,6 +669,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	}
 	// Return, making sure to supply appropriate error info
 	if (!result && outError) *outError = error;
+	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     
 	return result;
 }
@@ -699,12 +714,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 										 withType:[KTDocument defaultStoreType]
 										    error:outError])
 	{
+		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 		return NO;
 	}
 	
 	// Set the new metadata
 	if ( ![self setMetadataForStoreAtURL:storeURL error:outError] )
 	{
+		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 		return NO;
 	}	
 	
@@ -722,6 +739,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 										 withType:[KTDocument defaultMediaStoreType]
 										    error:outError])
 	{
+		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 		return NO;
 	}
 	
