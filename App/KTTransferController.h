@@ -41,6 +41,7 @@
 	NSInvocation *myContentAction;
 	
 	NSMutableDictionary *myUploadedPageDataDigests;
+	NSMutableDictionary *myUploadedPagesByPath;
 	NSMutableSet		*myUploadedDesigns;
 	NSMutableArray		*myPathsCreated;	
 	
@@ -49,9 +50,7 @@
 	
 	NSMutableSet		*myParsedResources;
 	NSMutableDictionary	*myParsedGraphicalTextBlocks;
-	
-	NSMutableDictionary *myFilesTransferred;
-		
+			
 	// Export Save Panel
 	IBOutlet NSView			*oExportPanelAccessoryView;
 	IBOutlet NSTextField	*oExportURL;
