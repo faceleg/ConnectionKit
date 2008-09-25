@@ -173,12 +173,12 @@ static NSArray *sReservedNames = nil;
 		
 		myPathsCreated = [[NSMutableArray array] retain];
 		myUploadedPageDataDigests = [[NSMutableDictionary alloc] init];
+		myUploadedPagesByPath = [[NSMutableDictionary alloc] init];
 		myUploadedDesigns = [[NSMutableSet alloc] init];
 		myParsedResources = [[NSMutableSet alloc] init];
 		myParsedGraphicalTextBlocks = [[NSMutableDictionary alloc] init];
 		myParsedMediaFileUploads = [[NSMutableSet alloc] init];
 		myMediaFileUploads = [[NSMutableSet alloc] init];
-		myFilesTransferred = [[NSMutableDictionary alloc] init];
 		
 		// get page permissions value for user defaults
 		NSString *perms = [[NSUserDefaults standardUserDefaults] objectForKey:@"pagePermissions"];
@@ -262,8 +262,8 @@ static NSArray *sReservedNames = nil;
     [myContentAction release];
 
 	[myPathsCreated release];
-	[myFilesTransferred release];
 	[myUploadedPageDataDigests release];
+	[myUploadedPagesByPath release];
 	[myUploadedDesigns release];
 	[myParsedResources release];
 	[myParsedGraphicalTextBlocks release];
@@ -550,28 +550,34 @@ static NSArray *sReservedNames = nil;
 	NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
     
 	
-	if (staleOnly)
+	NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
+	NSString *publishedPath = [publishingInfo objectForKey:@"publishedPath"];
+    if (staleOnly)
     {
         // Compare digests to see if we should publish
         NSData *publishedDataDigest = [publishingInfo objectForKey:@"publishedDataDigest"];
-        if (KSISEQUAL(digest, publishedDataDigest)) return;
+        if (KSISEQUAL(digest, publishedDataDigest) && KSISEQUAL(uploadPath, publishedPath))
+		{
+			return;
+		}
     }
     
     
     // Upload the page itself
-    NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
     if (uploadPath)
     {
-        uploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+        NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
         
         if (pageData)
         {
             [myUploadedPageDataDigests setObject:digest forKey:page copyKeyFirst:NO];
-            [self recursivelyCreateDirectoriesFromPath:[uploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
-            [self uploadFromData:pageData toFile:uploadPath];
+			[myUploadedPagesByPath setObject:page forKey:uploadPath];
+			
+            [self recursivelyCreateDirectoriesFromPath:[fullUploadPath stringByDeletingLastPathComponent] setPermissionsOnAllFolders:YES];
+            [self uploadFromData:pageData toFile:fullUploadPath];
 			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 			{
-				[myController setPermissions:myPagePermissions forFile:uploadPath];
+				[myController setPermissions:myPagePermissions forFile:fullUploadPath];
 			}
         }
     }
@@ -597,6 +603,7 @@ static NSArray *sReservedNames = nil;
  *	Returns a dictionary with the following keys:
  *		sourceData			-	NSData representation of the page's HTML. nil if not for publishing (e.g. Download page)
  *		uploadPath			-	The page's path relative to   docRoot/subFolder/
+ *		publishedPath		-	Path the page was last published to
  *		RSSData				-	If the collection has an RSS feed, its NSData representation
  *      HTML				-   Page's source code
  *		charset				-	Character set string
@@ -663,6 +670,7 @@ static NSArray *sReservedNames = nil;
 	
 	// Upload path
 	[info setObject:uploadPath forKey:@"uploadPath"];
+	[info setValue:[page publishedPath] forKey:@"publishedPath"];
 	
 	
 	// RSS feed
@@ -799,6 +807,7 @@ static NSArray *sReservedNames = nil;
 - (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath
 {
 	[myUploadedPageDataDigests removeAllObjects];
+	[myUploadedPagesByPath removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	[self removeAllGraphicalTextBlocks];
@@ -1002,6 +1011,7 @@ if ([self where] == kGeneratingRemoteExport) {
 - (void)uploadStaleAssetsToSuggestedPath:(NSString *)aSuggestedPath
 {
 	[myUploadedPageDataDigests removeAllObjects];
+	[myUploadedPagesByPath removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	
@@ -1589,6 +1599,16 @@ if ([self where] == kGeneratingRemoteExport) {
             }
 			
                 
+			// Update the publishedPath of each page
+			pagesEnumerator = [myUploadedPagesByPath keyEnumerator];
+            NSString *aPublishedPath;
+            while (aPublishedPath = [pagesEnumerator nextObject])
+            {
+                KTPage *aPage = [myUploadedPagesByPath objectForKey:aPublishedPath];
+                [aPage setPublishedPath:aPublishedPath];
+            }
+			
+			
 			// Record the app version published with
 			NSManagedObject *hostProperties = [[[self associatedDocument] documentInfo] valueForKey:@"hostProperties"];
 			[hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
@@ -1751,9 +1771,9 @@ if ([self where] == kGeneratingRemoteExport) {
 	[[KTApplication sharedApplication] endSheet:[myController window]];
 	[[myController window] orderOut:self];
 	
-	[myFilesTransferred removeAllObjects];
 	[myPathsCreated removeAllObjects];
 	[myUploadedPageDataDigests removeAllObjects];
+	[myUploadedPagesByPath removeAllObjects];
 	[self clearUploadedDesigns];
 	[self removeAllParsedResources];
 	[self removeAllGraphicalTextBlocks];
