@@ -564,9 +564,9 @@ static NSArray *sReservedNames = nil;
     
     
     // Upload the page itself
-    if (uploadPath)
+    NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+	if (fullUploadPath)
     {
-        NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
         
         if (pageData)
         {
@@ -588,7 +588,7 @@ static NSArray *sReservedNames = nil;
     if (RSSData)
     {
         NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-        NSString *RSSUploadPath = [[uploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+        NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
         [self uploadFromData:RSSData toFile:RSSUploadPath];
 		if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 		{
