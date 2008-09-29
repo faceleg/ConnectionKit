@@ -1,7 +1,7 @@
 <div class="Index-Pagelet">
 [[if indexedPage]]
 <ul>
-[[foreach indexedPage.pagesInIndex item maxItems]]
+[[foreach indexedPage.navigablePages item maxItems]]
 	<li class="[[i]] [[eo]]"><a href="[[path item]]">[[=item.titleText]]</a></li>
 [[endForEach]]
 </ul>
