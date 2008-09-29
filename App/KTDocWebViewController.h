@@ -32,7 +32,7 @@ typedef enum {
 @class KTDocWindowController;
 @class KTAsyncOffscreenWebViewController;
 
-@interface KTDocWebViewController : NSObject
+@interface KTDocWebViewController : NSResponder
 {
 	IBOutlet WebView				*webView;
 	IBOutlet NSTextView				*oSourceTextView;
@@ -183,8 +183,6 @@ typedef enum {
 
 // Links
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;
-
-- (BOOL)webKitValidateMenuItem:(NSMenuItem *)menuItem;
 
 
 @end

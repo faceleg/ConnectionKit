@@ -1235,15 +1235,7 @@ from representedObject */
 	// "Cut" cut:
 	if (itemAction == @selector(cut:))
 	{
-		// if there's a WebKit selection, let WebKit handle it
-		if ([oWebView selectedDOMRange])
-		{
-			return [[self webViewController] webKitValidateMenuItem:menuItem];
-		}
-		else
-		{
-			return [self validateCutPagesItem:menuItem];
-		}
+		return [self validateCutPagesItem:menuItem];
 	}
 	
 	// "Cut Page(s)" cutPages:
@@ -1255,15 +1247,7 @@ from representedObject */
 	// "Copy" copy:
 	else if (itemAction == @selector(copy:))
 	{
-		// if there's a selection, let WebKit handle it
-		if ( nil != [oWebView selectedDOMRange] )
-		{
-			return [[self webViewController] webKitValidateMenuItem:menuItem];
-		}
-		else
-		{
-			return [self validateCopyPagesItem:menuItem];
-		}
+		return [self validateCopyPagesItem:menuItem];
 	}	
 	
 	// "Copy Page(s)" copyPages:
@@ -1275,12 +1259,6 @@ from representedObject */
 	// "Paste" paste:
 	else if ( itemAction == @selector(paste:) )
 	{
-		// if there's a selection, let WebKit handle it
-		if ( nil != [oWebView selectedDOMRange] )
-		{
-			return [[self webViewController] webKitValidateMenuItem:menuItem];
-		}
-		else
 		{
 			NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
 			if (1 != [selectedPages count])
@@ -1314,29 +1292,10 @@ from representedObject */
 		{
 			return YES;
 		}
-		else if ( (nil != [oWebView selectedDOMRange]) 
-				  && nil != [types firstObjectCommonWithArray:[oWebView pasteboardTypesForSelection]] )
-		{
-			return [[self webViewController] webKitValidateMenuItem:menuItem];
-		}
 		else
 		{
 			return NO;
 		}
-	}
-	
-	// "Paste as Plain Text" pasteAsPlainText:
-	else if ( itemAction == @selector(pasteAsPlainText:) )
-	{
-		// let WebKit handle it
-		return [[self webViewController] webKitValidateMenuItem:menuItem];
-	}
-
-	// "Paste As HTML":
-	else if ( itemAction == @selector(pasteTextAsMarkup:) )
-	{
-		// let WebKit handle it ?????
-		return [[self webViewController] webKitValidateMenuItem:menuItem];
 	}
 	
 	// "Paste Link"
@@ -1606,14 +1565,7 @@ from representedObject */
 	// DEFAULT: let webKit handle it
 	else
 	{
-		if ( kGeneratingPreview == [self publishingMode] )
-		{
-			return [[self webViewController] webKitValidateMenuItem:menuItem];
-		}
-		else 
-		{
-			return NO;
-		}
+		return NO;
 
 	}
 }

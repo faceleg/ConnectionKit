@@ -140,8 +140,11 @@
     myAsyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
 }
 
+
 - (WebView *)webView { return myWebView; }
 
+/*  We act like UIViewController and insert ourself in the responder chain between the webview and its superview
+ */
 - (void)setWebView:(WebView *)aWebView
 {
 	// Clear old delegates to avoid memory bugs
@@ -152,6 +155,9 @@
     [oldWebView setResourceLoadDelegate:nil];
     [oldWebView setUIDelegate:nil];
     
+    // Reset responder chain
+    [oldWebView setNextResponder:[self nextResponder]];
+    
 	
     // Store new webview
 	[aWebView retain];
@@ -159,9 +165,14 @@
 	myWebView = aWebView;
 	
     
-    // Setup new delegation
-	[[self webView] setEditingDelegate:self];
+    // Setup new delegation and responder chain
+    WebView *newWebView = [self webView];
+	[newWebView setEditingDelegate:self];
+    
+    [self setNextResponder:[newWebView nextResponder]];
+    [newWebView setNextResponder:self];
 }
+
 
 - (NSTextView *)sourceCodeTextView { return oSourceTextView; }
 

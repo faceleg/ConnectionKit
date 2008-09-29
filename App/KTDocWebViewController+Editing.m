@@ -892,7 +892,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 // This is called by validateMenuItem: in another file; this is webkit-specific stuff
 
-- (BOOL)webKitValidateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OFF((@"KTDocWindowController webkitValidateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 
@@ -900,8 +900,14 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 	if (action == @selector(clearStyles:))
 	{
-		DOMRange *range = [[self webView] selectedDOMRange];
-		return (nil != range);
+		DOMRange *selection = [[self webView] selectedDOMRange];
+        
+		BOOL result = (selection &&
+                       [selection startContainer] &&
+                       [selection endContainer] &&
+                       ![selection collapsed]);
+        
+        return result;
 	}
 	if (action == @selector(typewriter:))
 	{
