@@ -822,7 +822,8 @@ static NSArray *sReservedNames = nil;
 		[savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
 		[savePanel setDelegate:self];
 		
-		if ([[[[self associatedDocument] documentInfo] hostProperties] siteURL])
+		NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
+        if (siteURL && ![[siteURL absoluteString] isEqualToString:@"http://unpublished.karelia.com/"])
 		{
 			[oExportURL setStringValue:@""];		// no export URL showing, so don't put in a value
 		}
