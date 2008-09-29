@@ -136,7 +136,11 @@
     
     if ([[mediaURI scheme] isEqualToString:@"svxmedia"])
 	{
-        result = [[[mediaURI path] pathComponents] objectAtIndex:1];
+        NSArray *pathComponents = [[mediaURI path] pathComponents];
+        if ([pathComponents count] == 2)
+        {
+            result = [pathComponents objectAtIndex:1];
+        }
     }
     
     return result;
