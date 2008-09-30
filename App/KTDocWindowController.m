@@ -1287,7 +1287,6 @@ from representedObject */
 	{
 		// check the general pasteboard to see if there are any pages on it
 		NSPasteboard *generalPboard = [NSPasteboard generalPasteboard];
-		NSArray *types = [generalPboard types];
 		if ( nil != [generalPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]] )
 		{
 			return YES;
