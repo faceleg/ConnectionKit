@@ -1564,7 +1564,7 @@ from representedObject */
 	// DEFAULT: let webKit handle it
 	else
 	{
-		return NO;
+		return YES;
 
 	}
 }
