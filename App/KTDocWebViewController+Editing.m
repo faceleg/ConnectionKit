@@ -297,9 +297,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	{
 		[myTextEditingBlock resignFirstResponder];
 		
-		/*[self resumeWebViewRefreshingForKeyPath:[myTextEditingBlock HTMLSourceKeyPath]
-									   ofObject:[myTextEditingBlock HTMLSourceObject]];*/
-		
 		// Kill off the undo actions and other data specific to that editing block
 		[myInlineImageElements removeAllObjects];
 		[myInlineImageNodes removeAllObjects];
@@ -321,11 +318,10 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	if (textBlock)
 	{
 		[textBlock becomeFirstResponder];
-		/*[self suspendWebViewRefreshingForKeyPath:[textBlock HTMLSourceKeyPath] ofObject:[textBlock HTMLSourceObject]];*/
 	}
 }
 
-/*	WebView does not have its own isEditing method so we have to manage one ourself.
+/*	WebView does not have its own -isEditing method so we have to manage one ourself.
  */
 - (BOOL)webViewIsEditing { return ([self currentTextEditingBlock] != nil); }
 
@@ -701,7 +697,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	NSString *styleString = [((DOMElement*)node) getAttribute:@"style"];
 	return ([[[node nodeName] lowercaseString] isEqualToString:@"tt"] || NSNotFound != [styleString rangeOfString:@"monospace"].location);
 }
-- (BOOL) isSelectionStrikeout:(DOMRange *)range
+
+- (BOOL)isSelectionStrikeout:(DOMRange *)range
 {
 	if (nil == range) return NO;
 	DOMNode *node = [range startContainer];
@@ -740,34 +737,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 }
 
-// Handle italic ourselves so that we can force Lucida Grande to be italic!
-
-- (BOOL) isSelectionItalic:(DOMRange *)range
-{
-	//	  DOMCSSStyleDeclaration *style = [self _emptyStyle];
-	//	  [style setFontStyle:@"italic"];
-	//	WebBridge *bridge = [self _bridge];					// NOT SURE HOW TO GET HERE
-	//	  return ([bridge selectionStartHasStyle:style]);
-	return NO;		// for now, say NO
-}
-
-/*!	Pass italic command to font manager.  We do this so that we can intercept validation
-*/
-- (IBAction) italic:(id)sender
-{
-	[[[[self webView] undoManager] prepareWithInvocationTarget:[NSFontManager sharedFontManager]] removeFontTrait:sender];
-	[[NSFontManager sharedFontManager] addFontTrait:sender];
-}
-
-/*!	Pass bold command to font manager.	We do this only to be consistent with italic
-*/
-- (IBAction) bold:(id)sender
-{
-	[[[[self webView] undoManager] prepareWithInvocationTarget:[NSFontManager sharedFontManager]] removeFontTrait:sender];
-	[[NSFontManager sharedFontManager] addFontTrait:sender];
-}
-
-- (IBAction) strikeout:(id)sender
+- (IBAction)strikeout:(id)sender
 {
 	DOMRange *range = [[self webView] selectedDOMRange];
 	if (nil != range)
@@ -932,15 +902,9 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		DOMRange *range = [[self webView] selectedDOMRange];
 		return (nil != range);
 	}
-	else if (action == @selector(italic:) || action == @selector(bold:))
-	{
-		(void) [[NSFontManager sharedFontManager] validateMenuItem:menuItem];
-		// Above should have side effect of fixing checkmark
-		
-		return (nil != [[self webView] selectedDOMRange]);	// enable if there is a selection, regardless of whether particular font can be bolded/italic'd.
-	}
 	
-	return YES; // default returns YES
+    
+    return YES; // default returns YES
 }
 
 @end
