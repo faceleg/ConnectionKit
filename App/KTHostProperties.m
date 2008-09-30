@@ -388,6 +388,11 @@ to be verified.
 			URLString = [self remoteSiteURL];
 		}
 	}
+    else
+    {
+        URLString = [self valueForKey:@"stemURL"];
+    }
+    
 	
 	// Backup option
 	if (!URLString)
