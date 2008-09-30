@@ -321,7 +321,26 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
 - (void)spliceElement:(DOMHTMLElement *)loadedBody;
 {
 	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
-	if ([element hasChildNodes])
+    
+    
+    
+	// If the webview's selection covers the replacement, we have to clear out the undo information that could become corrupted
+    DOMRange *selection = [[self webView] selectedDOMRange];
+    if (selection)
+    {
+        DOMNode *selectionNode = [selection commonAncestorContainer];
+        if (selectionNode && [element containsNode:selectionNode])
+        {
+            [[[self webViewUndoManagerProxy] undoManager] removeAllActionsWithTarget:self];	// Handles suspend/resume webview refresh stuff
+            [[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];
+        }
+    }
+    
+    
+    
+    
+    // Do the replacement
+    if ([element hasChildNodes])
 	{
 		DOMNodeList *childNodes = [element childNodes];
 		int i, length = [childNodes length];

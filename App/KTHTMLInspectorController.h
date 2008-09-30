@@ -19,13 +19,14 @@
 @interface KTHTMLInspectorController : NSWindowController
 {
 	IBOutlet NSTextView*			textView;				// The text view used for editing code.
+    NSUndoManager                   *myUndoManager;
 	
 	// Not really hooked up!
 	IBOutlet NSProgressIndicator*	progress;				// Progress indicator while coloring syntax.
 	IBOutlet NSTextField*			status;					// Status display for things like syntax coloring or background syntax checks.
 
 	
-	
+@private	
 	BOOL							autoSyntaxColoring;		// Automatically refresh syntax coloring when text is changed?
 	BOOL							maintainIndentation;	// Keep new lines indented at same depth as their predecessor?
 	NSTimer*						recolorTimer;			// Timer used to do the actual recoloring a little while after the last keypress.

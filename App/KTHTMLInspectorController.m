@@ -79,6 +79,8 @@
 	[self setTitle:nil];
 	[self setSourceCode:nil];
 	[self setExplanation:nil];
+    [myUndoManager release];
+    
 	[super dealloc];
 }
 
@@ -175,6 +177,8 @@ initial syntax coloring.
 	{
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
 		[self saveBackToSource:nil];
+        
+        [[textView undoManager] removeAllActions];
 	}
 }
 
@@ -434,7 +438,7 @@ initial syntax coloring.
 		Perform indentation-maintaining if we're supposed to.
    -------------------------------------------------------------------------- */
 
--(BOOL) textView:(NSTextView *)tv shouldChangeTextInRdfange:(NSRange)afcr replacementString:(NSString *)rps
+- (BOOL)textView:(NSTextView *)tv shouldChangeTextInRange:(NSRange)afcr replacementString:(NSString *)rps
 {
 	if( maintainIndentation )
 	{
@@ -453,6 +457,21 @@ initial syntax coloring.
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Undo
+
+/*  The text view needs its own undo manager separate from the documents
+ */
+- (NSUndoManager *)undoManagerForTextView:(NSTextView *)aTextView
+{
+    return [[self window] undoManager];
+}
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
+{
+    if (!myUndoManager) myUndoManager = [[NSUndoManager alloc] init];
+    return myUndoManager;
+}
 
 #pragma mark -
 #pragma mark Deferring recoloring

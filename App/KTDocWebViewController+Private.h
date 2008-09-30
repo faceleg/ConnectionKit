@@ -7,6 +7,8 @@
 //
 
 #import "KTDocWebViewController.h"
+#import "KTWebViewUndoManagerProxy.h"
+
 
 @class KTPage;
 
