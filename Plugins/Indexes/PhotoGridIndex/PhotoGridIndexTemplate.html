@@ -9,12 +9,6 @@
 [[else]]
 	<div style="width:128px; height:128px;"> </div>	<!-- no image, just a placeholder -->
 [[endif]]
-
-[[if page.collectionHyperlinkPageTitles]]
-	[[textblock tag:h3 property:aPage.titleText flags:"line" hyperlink:aPage]]
-[[else]]
-	<h3><span class="in">[[=&aPage.titleText]]</span></h3>
-[[endif]]
-
+[[textblock tag:h3 property:aPage.titleText flags:"line" hyperlink:aPage]]
 </div>
 [[endForEach]]
