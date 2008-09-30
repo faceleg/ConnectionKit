@@ -21,4 +21,7 @@
 @interface DOMHTMLElement (KTWebViewController)
 - (BOOL)isImageable;
 - (BOOL)hasSpanIn;
+
+- (void)unstyleWithElementWhitelist:(NSSet *)whitelist;
+
 @end

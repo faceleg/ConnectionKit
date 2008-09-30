@@ -229,6 +229,8 @@
 		275E07240DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */; };
 		276428F90E90D2BD00FCE981 /* KSFontManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 276428F70E90D2BD00FCE981 /* KSFontManager.h */; };
 		276428FA0E90D2BD00FCE981 /* KSFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 276428F80E90D2BD00FCE981 /* KSFontManager.m */; };
+		27642B9A0E92B49600FCE981 /* DOMNode+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27642B980E92B49600FCE981 /* DOMNode+Karelia.h */; };
+		27642B9B0E92B49600FCE981 /* DOMNode+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27642B990E92B49600FCE981 /* DOMNode+Karelia.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1686,6 +1688,8 @@
 		275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaPersistentStoreCoordinator.m; sourceTree = "<group>"; };
 		276428F70E90D2BD00FCE981 /* KSFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFontManager.h; path = ../../../Shared/trunk/AppKit/KSFontManager.h; sourceTree = SOURCE_ROOT; };
 		276428F80E90D2BD00FCE981 /* KSFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFontManager.m; path = ../../../Shared/trunk/AppKit/KSFontManager.m; sourceTree = SOURCE_ROOT; };
+		27642B980E92B49600FCE981 /* DOMNode+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DOMNode+Karelia.h"; path = "../../../Shared/trunk/WebKit/DOMNode+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		27642B990E92B49600FCE981 /* DOMNode+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DOMNode+Karelia.m"; path = "../../../Shared/trunk/WebKit/DOMNode+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		27668FC20D63D3070019686C /* KTIndexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugin.h; sourceTree = "<group>"; };
@@ -4115,6 +4119,8 @@
 				271575CB0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h */,
 				271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */,
 				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
+				27642B980E92B49600FCE981 /* DOMNode+Karelia.h */,
+				27642B990E92B49600FCE981 /* DOMNode+Karelia.m */,
 			);
 			name = WebKit;
 			sourceTree = "<group>";
@@ -4966,6 +4972,7 @@
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
 				CE8A760F0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h in Headers */,
 				276428F90E90D2BD00FCE981 /* KSFontManager.h in Headers */,
+				27642B9A0E92B49600FCE981 /* DOMNode+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6394,6 +6401,7 @@
 				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
 				CE8A76100E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m in Sources */,
 				276428FA0E90D2BD00FCE981 /* KSFontManager.m in Sources */,
+				27642B9B0E92B49600FCE981 /* DOMNode+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

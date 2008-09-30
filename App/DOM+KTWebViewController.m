@@ -8,6 +8,7 @@
 
 #import "DOM+KTWebViewController.h"
 
+#import "DOMNode+Karelia.h"
 #import "DOMNode+KTExtensions.h"
 #import "WebView+Karelia.h"
 
@@ -96,6 +97,42 @@ To find out of it's editable, try
 	}
 	
 	return result;
+}
+
+#pragma mark -
+#pragma mark Unstyle
+
+- (void)unstyleWithElementWhitelist:(NSSet *)whitelist
+{
+    BOOL keepElement = [whitelist containsObject:[self tagName]];
+    
+    
+    // Remove any inline styling. No point doing this if we're going to be destroyed
+    if (keepElement)
+    {
+        [self removeAttribute:@"style"];
+        [self removeAttribute:@"align"];
+    }
+     
+    
+    // Recurse
+    DOMNodeList *childNodes = [self childNodes];
+    unsigned long i;
+    for (i = 0; i < [childNodes length]; i++)
+    {
+        DOMNode *aNode = [childNodes item:i];
+        if ([aNode isKindOfClass:[DOMHTMLElement class]])
+        {
+            [(DOMHTMLElement *)aNode unstyleWithElementWhitelist:whitelist];
+        }
+    }
+    
+    
+    // Remove us from the tree if not in the whitelist
+    if (!keepElement)
+    {
+        [self unlink];
+    }
 }
 
 @end

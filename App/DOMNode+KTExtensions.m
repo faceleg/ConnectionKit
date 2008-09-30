@@ -537,32 +537,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 #pragma mark Additional Utility operations
 
-/*!	Remove this node from its parent, replacing with its children.  Returns first child, if there was one
-*/
-- (DOMNode *)unlink
-{
-	DOMNode *firstChild = nil;
-	DOMNode *parent = [self parentNode];
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int i, length = [childNodes length];
-		// Move to parent
-		for (i = 0 ; i < length ; i++)
-		{
-			DOMNode *child = [childNodes item:0];	// removing, so always get item 0
-			if (nil == firstChild)
-			{
-				firstChild = child;
-			}
-			[parent insertBefore:child :self];	// crashing, e.g. case 18942
-		}
-	}
-	(void)[parent removeChild:self];	// that's it, I'm dead!
-	return firstChild;
-}
-
-
 /*!	When nodes next to each other are the same, like <b>foo</b><b>bar</b> this combines them.
 */
 - (void)combineAdjacentRedundantNodes
@@ -1484,15 +1458,21 @@ static NSSet *sTagsWithNewlineOnClose = nil;
  */
 - (NSString *)innerHTML
 {
-    NSString *result = nil;
+   NSMutableArray *nodes = [[NSMutableArray alloc] init];
     
-    NSArray *HTMLChildren = [self childrenOfClass:[DOMHTMLElement class]];
-    if ([HTMLChildren count] == [[self childNodes] length])
+    
+    unsigned long i, count = [[self childNodes] length];
+    for (i = 0; i < count; i++)
     {
-        NSArray *HTMLFragments = [HTMLChildren valueForKey:@"outerHTML"];
-        result = [HTMLFragments componentsJoinedByString:@"\n"];
+        DOMNode *aNode = [[self childNodes] item:i];
+        if ([aNode isKindOfClass:[DOMHTMLElement class]])
+        {
+            [nodes addObject:aNode];
+        }
     }
     
+    NSString *result = [[nodes valueForKey:@"outerHTML"] componentsJoinedByString:@"\n"];
+    [nodes release];
     return result;
 }
 

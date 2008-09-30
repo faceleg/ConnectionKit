@@ -783,78 +783,45 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 }
 
 
+/*  Processes the current selection in an undo-compatible fashion such that all styling information is removed.
+ */
 - (IBAction)clearStyles:(id)sender
 {
-	static NSArray *copiedStyleProperties = nil;
-	
-	if (!copiedStyleProperties) {
-		copiedStyleProperties = [[NSArray arrayWithObjects:@"color", @"font-family", @"font-size", @"font-style", 
-			@"font-variant", @"font-weight", @"letter-spacing", @"line-height",@"text-align",
-			@"text-decoration", @"text-indent", @"text-shadow", @"text-transform", nil] retain];
-	}
-	
-	DOMDocumentFragment *frag = nil;	// if non-nil, this is a document fragment
-	DOMNode *node = nil;
-		
-	// Compare to the whole editable div
-	DOMRange *range = [[self webView] selectedDOMRange];
-	DOMHTMLElement *selectableNode = [[range startContainer] firstSelectableParentNode];
-	DOMRange *wholeRange = [[selectableNode ownerDocument] createRange];
-	[wholeRange selectNodeContents:selectableNode];
-	short comparison1 = [wholeRange compareBoundaryPoints:DOM_START_TO_START :range];
-	short comparison2 = [wholeRange compareBoundaryPoints:DOM_END_TO_END :range];
-	if (0 != comparison1 || 0 != comparison2)
-	{
-		frag = [range cloneContents];
-		node = frag;
-	}
-	else
-	{
-		node = selectableNode;	// work with the whole selectable node
-	}
-	
-//	LOG((@"BEFORE  styleSpan: %@", [frag outerHTML]));
-
-	[node removeStylesRecursive];
-	[node removeJunkRecursiveRestrictive:NO allowEmptyParagraphs:YES];
-	
-	// Only remove Underline, Bold, Italic, Strong, Emphasis if the option key is down
-	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
-	{
-		[node removeAnyDescendentElementsNamed:@"B"];
-		[node removeAnyDescendentElementsNamed:@"I"];
-		[node removeAnyDescendentElementsNamed:@"STRONG"];
-		[node removeAnyDescendentElementsNamed:@"EM"];
-		[node removeAnyDescendentElementsNamed:@"U"];
-	}
-	[node removeAnyDescendentElementsNamed:@"FONT"];
-	
-	DOMDocument *doc = [[self webView] mainFrameDocument];
-//	DOMElement *styleSpan = [doc createElement:@"SPAN"];
-//	DOMCSSStyleDeclaration *rootStyle = [doc getComputedStyle:[[[oWebView selectedDOMRange] commonAncestorContainer] rootEditableElement] pseudoElement: nil];
-//	DOMCSSStyleDeclaration *wrapperStyle = [styleSpan style];
-//	
-//	NSEnumerator *e = [copiedStyleProperties objectEnumerator];
-//	NSString *property;
-//	while ((property = [e nextObject])) {
-//		NSString *value = [rootStyle getPropertyValue:property];
-//		if ([value isEqualToString:@"auto"])
-//			continue;
-//		[wrapperStyle setProperty:property value:value priority:@""];
-//	}
-//	
-//	LOG((@"DURING styleSpan: %@", [styleSpan outerHTML]));
-//	
-//	[frag insert:styleSpan];
-//	LOG((@"AFTER  styleSpan: %@", [styleSpan outerHTML]));
-	
-	if (nil != frag) [[self webView] replaceSelectionWithNode:frag];
-
-	DOMCSSStyleDeclaration *clearUnderlineStyle = [doc createCSSStyleDeclaration];
-	
-	// This tells WebCore to remove any underline stylings
-	[clearUnderlineStyle setProperty:@"-webkit-text-decorations-in-effect" value:@"none" priority:@""];
-	[[self webView] applyStyle:clearUnderlineStyle];
+	static NSSet *whitelist;
+    if (!whitelist)
+    {
+        whitelist = [[NSSet alloc] initWithObjects:@"P", @"A", @"DIV", @"BR", nil]; //TODO: Add the rest in
+    }
+    
+    
+    // Ensure there's a selection to work with
+    DOMRange *selection = [[self webView] selectedDOMRange];
+	if (selection && ![selection collapsed])
+    {
+        // Clone the selection so we can work on it without upsetting the undo manager
+        DOMDocumentFragment *result = [selection cloneContents];
+            
+        
+        // Clean each childNode of the fragment
+        DOMNodeList *childNodes = [result childNodes];
+        unsigned long i;
+        for (i = 0; i < [childNodes length]; i++)
+        {
+            DOMNode *aNode = [childNodes item:i];
+            if ([aNode isKindOfClass:[DOMHTMLElement class]])
+            {
+                [(DOMHTMLElement *)aNode unstyleWithElementWhitelist:whitelist];
+            }
+        }
+        
+        
+        // Normalize post-surgery. (Ensures no text nodes needlessly split)
+        [result normalize];
+        
+        
+        // Feed the unstyled nodes back into the webview
+        [[self webView] replaceSelectionWithNode:result];
+    }
 }
 
 #pragma mark -
