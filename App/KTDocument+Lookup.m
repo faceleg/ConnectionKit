@@ -141,10 +141,6 @@
 	return @"";	// don't inherit from defaults; we want it to be empty if it got emptied out
 }
 
-- (NSString *)googleAnalytics
-{
-	return @"";	// don't inherit from defaults; we want it to be empty if no value set
-}
 
 - (BOOL)addBool1
 {

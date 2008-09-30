@@ -62,51 +62,6 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Pro
-
-- (NSString *)googleAnalytics
-{
-	// should return full Google <script> so it can just plug into template
-	NSString *result = [self wrappedValueForKey:@"googleAnalytics"];
-	
-	if (	NSNotFound == [result rangeOfString:@"<"].location
-		&&	NSNotFound == [result rangeOfString:@"\""].location )
-	{
-		// put result, if it's just the ID, into the rest of the required text
-		/// use of urchin.js is now known as the "legacy" tracking script by Google
-		///result = [NSString stringWithFormat:@"<script src=\"http://www.google-analytics.com/urchin.js\" type=\"text/javascript\">\n</script>\n<script type=\"text/javascript\">\n_uacct = \"%@\";\nurchinTracker();\n</script>",result];
-		/// new Google Analytics tracking script, as of 12/26/07
-		result = [NSString stringWithFormat:@"<script type=\"text/javascript\">\nvar gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");\ndocument.write(unescape(\"%%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%%3E%%3C/script%%3E\"));\n</script>\n<script type=\"text/javascript\">\nvar pageTracker = _gat._getTracker(\"%@\");\npageTracker._initData();\npageTracker._trackPageview();\n</script>", result];
-	}
-	return result;
-}
-
-- (void)setGoogleAnalytics:(NSString *)aString
-{
-	// scan here to see if we got an ID or code
-	// should store the full Google <script> so getter yields complete result
-	[self setWrappedValue:aString forKey:@"googleAnalytics"];
-}
-
-- (NSString *)googleSiteVerification
-{
-	// should be a complete <meta> tag supplied by Google
-	NSString *result = [self wrappedValueForKey:@"googleSiteVerification"];
-
-	if (	NSNotFound == [result rangeOfString:@"<"].location
-			&&	NSNotFound == [result rangeOfString:@"\""].location )
-	{
-		// put result, if it's just the ID, into the rest of the required text
-		result = [NSString stringWithFormat:@"<meta name=\"verify-v1\" content=\"%@\" />",result];
-	}
-	return result;
-}
-
-- (void)setGoogleSiteVerification:(NSString *)aString
-{
-	[self setWrappedValue:aString forKey:@"googleSiteVerification"];
-}
 
 #pragma mark -
 #pragma mark Relationships

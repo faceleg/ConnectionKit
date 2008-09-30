@@ -447,8 +447,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:YES], @"propagateInsertBody",
 		[NSNumber numberWithBool:YES], @"propagateInsertEndBody",
 		
-		@"", @"googleSiteVerification",
-		@"", @"googleAnalyticsID",
 		[NSNumber numberWithBool:NO], @"generateGoogleSitemap",
 
 		[NSNumber numberWithInt:1], @"MediaLoaderMaxThreads",
