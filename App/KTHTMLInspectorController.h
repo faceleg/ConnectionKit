@@ -34,8 +34,10 @@
 	NSString*						replacementString;
 
 	// ivar of what to send the information back to
-	DOMHTMLElement		*myDOMHTMLElement;
-	KTAbstractElement	*myKTHTMLElement;
+	NSObject			*myHTMLSourceObject;
+	NSString			*myHTMLSourceKeyPath;
+	BOOL				fromEditableBlock;
+	
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
 	NSString			*myExplanation;
@@ -43,10 +45,6 @@
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
 
-- (DOMHTMLElement *)DOMHTMLElement;
-- (void)setDOMHTMLElement:(DOMHTMLElement *)aDOMHTMLElement;
-- (KTAbstractElement *)KTHTMLElement;
-- (void)setKTHTMLElement:(KTAbstractElement *)aKTHTMLElement;
 - (NSString *)explanation;
 - (void)setExplanation:(NSString *)anExplanation;
 - (NSString *)sourceCode;
@@ -54,6 +52,19 @@
 - (NSString *)title;
 - (void)setTitle:(NSString *)aTitle;
 - (IBAction) windowHelp:(id)sender;
+
+- (NSObject *)HTMLSourceObject;
+- (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject;
+- (NSString *)HTMLSourceKeyPath;
+- (void)setHTMLSourceKeyPath:(NSString *)anHTMLSourceKeyPath;
+- (BOOL)fromEditableBlock;
+- (void)setFromEditableBlock:(BOOL)flag;
+
+
+
+
+
+
 
 
 

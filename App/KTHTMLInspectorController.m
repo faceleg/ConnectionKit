@@ -1,11 +1,6 @@
-
-
-
-
-
 /* =============================================================================
 
-	Based on code by ...
+	Partly based on code by ...
 
 	AUTHORS:	M. Uli Kusterer <witness@zathras.de>, (c) 2003, all rights
 				reserved.
@@ -78,8 +73,8 @@
 	recolorTimer = nil;
 	[replacementString release];
 	replacementString = nil;
-    [self setDOMHTMLElement:nil];
-    [self setKTHTMLElement:nil];
+    [self setHTMLSourceObject:nil];
+    [self setHTMLSourceKeyPath:nil];
 	[self setTitle:nil];
 	[self setSourceCode:nil];
 	[self setExplanation:nil];
@@ -185,10 +180,11 @@ initial syntax coloring.
 // Re-load from DOM node
 - (void)windowDidBecomeKey:(NSNotification *)notification;
 {
-	if (myDOMHTMLElement)
+	if (myHTMLSourceObject)
 	{
 		// reload from DOM
-		NSString *source = [myDOMHTMLElement cleanedInnerHTML];
+		NSString *source = [myHTMLSourceObject valueForKeyPath:myHTMLSourceKeyPath];
+		
 		if (nil == source) source = @"";
 		source = [source stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
 		source = [source trim];
@@ -229,38 +225,17 @@ initial syntax coloring.
 {
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *str = [[[textStore string] copy] autorelease];
-	if (myDOMHTMLElement)
+	if (myHTMLSourceObject)
 	{
 		
-		
-//	TODO:	Try to get webkit to actually allow us to type in CDATA sections and properly deal with them!
-		
-		// This is an attempted workaround, which itself doesn't work; I can't even create a CDATA section programatically!!!????
-		
-//		// Wacky processing to save <![CDATA[ ... ]]> sections until this will actually be honored!
-//		// Basically turn it into fake <cdata> tags and then convert back
-//		NSMutableString *ms = [NSMutableString stringWithString:str];
-//		BOOL checkCDATA = YES;
-//		while (checkCDATA)
-//		{
-//			NSRange whereCDATA = [ms rangeFromString:@"<![CDATA[" toString:@"]]>"];
-//			if (NSNotFound != whereCDATA.location)
-//			{
-//				NSString *segment = [ms substringWithRange:NSMakeRange(whereCDATA.location+9, whereCDATA.length-12)];	// string inside
-//				NSString *fakeTag = [NSString stringWithFormat:@"<fakecdata>%@</fakecdata>", [segment stringByEscapingHTMLEntities]];
-//				[ms replaceCharactersInRange:whereCDATA withString:fakeTag];
-//			}
-//			else
-//			{
-//				checkCDATA = NO;	// done looking
-//			}
-//		}
 		while (NSNotFound != [str rangeOfString:@"\n\n\n"].location)
 		{
 			str = [str stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
 		}
-		[myDOMHTMLElement setInnerHTML:str];
 
+		[myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
+
+		
 		// somewhat hackish, make the webview object match for the notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
 															object:[[[[self document] windowController] webViewController] webView]];
@@ -270,11 +245,6 @@ initial syntax coloring.
 //		[myDOMHTMLElement replaceFakeCDataWithCDATA];
 		
 		OFF((@"setInnerHTML: %@", str));
-	}
-	else if (myKTHTMLElement)
-	{
-		[myKTHTMLElement setValue:str forKey:@"html"];
-		OFF((@"saveBackToSource %p setValue:@\"%@\" forKey:@\"html\"", myKTHTMLElement, str));
 	}
 	else NSLog(@"Don't have any destination to save the HTML window");
 }
@@ -581,58 +551,40 @@ initial syntax coloring.
 #pragma mark Accessors
 
 
-- (DOMHTMLElement *)DOMHTMLElement
+- (BOOL)fromEditableBlock
 {
-    return myDOMHTMLElement; 
+    return fromEditableBlock;
 }
 
-- (void)setDOMHTMLElement:(DOMHTMLElement *)aDOMHTMLElement
+- (void)setFromEditableBlock:(BOOL)flag
 {
-    [aDOMHTMLElement retain];
-    [myDOMHTMLElement release];
-    myDOMHTMLElement = aDOMHTMLElement;
-
-	NSString *source = [aDOMHTMLElement cleanedInnerHTML];
-	if (nil == source) source = @"";
-	source = [source stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
-	source = [source trim];
-	[textView setString: source];
-	[self setSourceCode:source];
+    fromEditableBlock = flag;
 }
 
-- (KTAbstractElement *)KTHTMLElement
+
+
+- (NSObject *)HTMLSourceObject
 {
-    return myKTHTMLElement; 
+    return myHTMLSourceObject; 
 }
 
-- (void)setKTHTMLElement:(KTAbstractElement *)aKTHTMLElement
+- (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject
 {
-    [aKTHTMLElement retain];
-    [myKTHTMLElement release];
-    myKTHTMLElement = aKTHTMLElement;
-	
-	if (nil != aKTHTMLElement)
-	{
-		// Figure out a title
-		NSString *title = @"";
-		
-		if ( [aKTHTMLElement isKindOfClass:[KTPage class]] )
-		{
-			title = [((KTPage *)aKTHTMLElement) titleText];
-		}
-		else if ( [aKTHTMLElement isKindOfClass:[KTPagelet class]] )
-		{
-			title = [((KTPagelet *)aKTHTMLElement) titleText];
-			if (!title || [title isEqualToString:@""])
-			{
-				title = @"Pagelet";
-			}
-		}
-		[self setTitle:title];
-		NSString *loadedSource = [[aKTHTMLElement valueForKey:@"html"] trim];
-		OFF((@"setKTHTMLElement: %p initializing with loaded source : %@", aKTHTMLElement, loadedSource));
-		[self setSourceCode:loadedSource];
-	}
+    [anHTMLSourceObject retain];
+    [myHTMLSourceObject release];
+    myHTMLSourceObject = anHTMLSourceObject;
+}
+
+- (NSString *)HTMLSourceKeyPath
+{
+    return myHTMLSourceKeyPath; 
+}
+
+- (void)setHTMLSourceKeyPath:(NSString *)anHTMLSourceKeyPath
+{
+    [anHTMLSourceKeyPath retain];
+    [myHTMLSourceKeyPath release];
+    myHTMLSourceKeyPath = anHTMLSourceKeyPath;
 }
 
 
@@ -657,17 +609,13 @@ initial syntax coloring.
 	}
 	
 	
-	if (myDOMHTMLElement)
+	if (fromEditableBlock)
 	{
 		[self setExplanation:NSLocalizedString(@"This text can only contain HTML, no scripting constructs",@"")];
 	}
-	else if (myKTHTMLElement)
-	{
-		[self setExplanation:NSLocalizedString(@"This text can contain HTML or scripts such as JavaScript and PHP.",@"")];
-	}
 	else
 	{
-		[self setExplanation:@""];
+		[self setExplanation:NSLocalizedString(@"This text can contain HTML or scripts such as JavaScript and PHP.",@"")];
 	}
 }
 

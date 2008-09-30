@@ -558,7 +558,9 @@ Note that this method is called AFTER the webview handles the click.
 			// extract result
 			if (foundKTElement)
 			{
-				[[self document] editKTHTMLElement:foundKTElement];
+				
+				[[self document] editSourceObject:foundKTElement keyPath:@"html" isRawHTML:YES];
+
 			}
 		}
 		else

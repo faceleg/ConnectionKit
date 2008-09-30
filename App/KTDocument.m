@@ -1103,69 +1103,84 @@
 }
 
 
-- (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
+- (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
 {
-	[[self HTMLInspectorController] setDOMHTMLElement:anElement];	// saves will put back into this node
-	[[self HTMLInspectorController] setTitle:aTitle];
+	[[self HTMLInspectorController] setHTMLSourceObject:aSourceObject];	// saves will put back into this node
+	[[self HTMLInspectorController] setHTMLSourceKeyPath:aKeyPath];
+	
+	
+	NSString *title = @"";
+	if (isRawHTML)
+	{
+		// Get title of page/pagelet we are editing
+		if ([aSourceObject respondsToSelector:@selector(titleText)])
+		{
+			NSString *itsTitle = [((KTAbstractElement *)aSourceObject) titleText];
+			if (nil != itsTitle && ![itsTitle isEqualToString:@""])
+			{
+				title = itsTitle;
+			}
+		}
+	}
+	[[self HTMLInspectorController] setTitle:title];
+	[[self HTMLInspectorController] setFromEditableBlock:!isRawHTML];
+
 	[[self HTMLInspectorController] showWindow:nil];
 }
 
-- (void)editKTHTMLElement:(KTAbstractElement *)anElement;
-{
-	[[self HTMLInspectorController] setKTHTMLElement:anElement];
-	[[self HTMLInspectorController] showWindow:nil];
-}
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	DOMNode *selectedDomNode = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock.DOMNode"];
-	
-	if (selectedDomNode)		// Edit the Editable Rich Text
+	BOOL result = [[[self windowController] webViewController] commitEditing];
+
+	if (result)
 	{
-		if ([selectedDomNode hasChildNodes] )
+		BOOL isRawHTML = NO;
+		KTHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
+		id sourceObject = [textBlock HTMLSourceObject];
+		id sourceKeyPath = [textBlock HTMLSourceKeyPath];
+		
+		if (!textBlock)
 		{
-			DOMNode *firstChild = [selectedDomNode firstChild];
-			if ([firstChild isKindOfClass:[DOMHTMLElement class]]
-				&& [[((DOMHTMLElement *)firstChild) tagName] isEqualToString:@"SPAN"])
+			isRawHTML = YES;
+			sourceKeyPath = @"html";	// raw HTML
+			KTPagelet *selPagelet = [[self windowController] selectedPagelet];
+			if (nil != selPagelet)
 			{
-				if ([[((DOMHTMLElement *)firstChild) className] isEqualToString:@"in"])
+				if (![@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
 				{
-					// get into the span class="in"
-					selectedDomNode = firstChild;	// we will get contents of this
+					sourceObject = nil;		// no, don't try to edit a non-rich text
+				}
+				else
+				{
+					sourceObject = selPagelet;
 				}
 			}
+			
+			if (nil == sourceObject)	// no appropriate pagelet selected, try page
+			{
+				sourceObject = [[[self windowController] siteOutlineController] selectedPage];
+				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
+				{
+					sourceObject = nil;		// no, don't try to edit a non-rich text
+				}
+				else
+				{
+				}
+			}
+
+			
 		}
-		KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
-		[self editDOMHTMLElement:(DOMHTMLElement *)selectedDomNode withTitle:[selPage titleText]]; // use title of page
+		
+		if (sourceObject)
+		{
+
+			[self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
+		}
 	}
-	else	// Edit the HTML Element
+	else
 	{
-		KTAbstractElement *htmlElement = nil;
-		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
-		if (nil != selPagelet)
-		{
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-			{
-				htmlElement = selPagelet;
-			}
-		}
-		if (nil == htmlElement)
-		{
-			KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
-			{
-				htmlElement = selPage;
-			}
-		}
-		if (nil != htmlElement)
-		{
-			[self editKTHTMLElement:htmlElement];
-		}
-		else
-		{
-			NSLog(@"Nothing to edit");
-			NSBeep();	// nothing to edit; should not happen
-		}
+		NSLog(@"Cannot commit editing to edit HTML");
 	}
 }
 

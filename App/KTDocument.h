@@ -131,11 +131,10 @@ extern NSString *KTDocumentWillSaveNotification;
 
 // Editing
 
-- (void)editDOMHTMLElement:(DOMHTMLElement *)anElement withTitle:(NSString *)aTitle;
-- (void)editKTHTMLElement:(KTAbstractElement *)anElement;
-
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 - (BOOL)mayAddScreenshotsToAttachments;
+
+- (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
 
 @end
 
