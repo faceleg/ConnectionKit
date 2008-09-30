@@ -276,8 +276,8 @@
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
 		27AA102D0CDA06C6001D6B9B /* MissingMedia.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */; };
 		27AA4B520D959BDF00B871A9 /* KSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4B500D959BDF00B871A9 /* KSPlaceholderTextView.m */; };
-		27ACA2DC0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */; settings = {ATTRIBUTES = (); }; };
-		27ACA2DD0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */; };
+		27ACA2DC0D57961A004732D0 /* KSWeakReferenceMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACA2DA0D57961A004732D0 /* KSWeakReferenceMutableDictionary.h */; settings = {ATTRIBUTES = (); }; };
+		27ACA2DD0D57961A004732D0 /* KSWeakReferenceMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA2DB0D57961A004732D0 /* KSWeakReferenceMutableDictionary.m */; };
 		27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
@@ -1737,8 +1737,8 @@
 		27AA102C0CDA06C6001D6B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MissingMedia.nib; sourceTree = "<group>"; };
 		27AA4B4F0D959BDF00B871A9 /* KSPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlaceholderTextView.h; path = ../../../Shared/trunk/App/KSPlaceholderTextView.h; sourceTree = SOURCE_ROOT; };
 		27AA4B500D959BDF00B871A9 /* KSPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlaceholderTextView.m; path = ../../../Shared/trunk/App/KSPlaceholderTextView.m; sourceTree = SOURCE_ROOT; };
-		27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWeakReferenceMutableDictionary.h; sourceTree = "<group>"; };
-		27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWeakReferenceMutableDictionary.m; sourceTree = "<group>"; };
+		27ACA2DA0D57961A004732D0 /* KSWeakReferenceMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSWeakReferenceMutableDictionary.h; path = ../../../Shared/trunk/Foundation/KSWeakReferenceMutableDictionary.h; sourceTree = "<group>"; };
+		27ACA2DB0D57961A004732D0 /* KSWeakReferenceMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSWeakReferenceMutableDictionary.m; path = ../../../Shared/trunk/Foundation/KSWeakReferenceMutableDictionary.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
 		27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSummaryWebViewTextBlock.m; sourceTree = "<group>"; };
 		27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderBindingTextField.h; sourceTree = "<group>"; };
@@ -3151,8 +3151,6 @@
 				27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */,
 				27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */,
 				27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */,
-				27ACA2DA0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h */,
-				27ACA2DB0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m */,
 			);
 			name = Editing;
 			sourceTree = "<group>";
@@ -4044,6 +4042,8 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				27ACA2DA0D57961A004732D0 /* KSWeakReferenceMutableDictionary.h */,
+				27ACA2DB0D57961A004732D0 /* KSWeakReferenceMutableDictionary.m */,
 				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
 				3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */,
 				3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */,
@@ -4790,7 +4790,7 @@
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
 				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
 				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
-				27ACA2DC0D57961A004732D0 /* KTWeakReferenceMutableDictionary.h in Headers */,
+				27ACA2DC0D57961A004732D0 /* KSWeakReferenceMutableDictionary.h in Headers */,
 				27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
 				2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */,
@@ -6206,7 +6206,7 @@
 				27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */,
 				273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */,
 				273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */,
-				27ACA2DD0D57961A004732D0 /* KTWeakReferenceMutableDictionary.m in Sources */,
+				27ACA2DD0D57961A004732D0 /* KSWeakReferenceMutableDictionary.m in Sources */,
 				27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */,
 				27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */,
 				27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */,
