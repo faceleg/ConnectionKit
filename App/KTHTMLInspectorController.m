@@ -223,11 +223,11 @@ initial syntax coloring.
 
 - (void)saveBackToSource
 {
-	NSMutableAttributedString*  textStore = [textView textStorage];
-	NSString *str = [[[textStore string] copy] autorelease];
 	if (myHTMLSourceObject)
 	{
-		
+		NSMutableAttributedString*  textStore = [textView textStorage];
+        NSString *str = [[[textStore string] copy] autorelease];
+        
 		while (NSNotFound != [str rangeOfString:@"\n\n\n"].location)
 		{
 			str = [str stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
@@ -236,17 +236,14 @@ initial syntax coloring.
 		[myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
 
 		
-		// somewhat hackish, make the webview object match for the notification
-		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-															object:[[[[self document] windowController] webViewController] webView]];
-		
 		// Now find the cdata tags and convert back to CDATA
 		// myHTMLElement is a div or something, won't be changed, so no need to worry about myHTMLElement itself being replaced.
 //		[myDOMHTMLElement replaceFakeCDataWithCDATA];
-		
-		OFF((@"setInnerHTML: %@", str));
 	}
-	else NSLog(@"Don't have any destination to save the HTML window");
+	else
+    {
+        NSLog(@"Don't have any destination to save the HTML window");
+    }
 }
 
 #pragma mark -
