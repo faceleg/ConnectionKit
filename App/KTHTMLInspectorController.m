@@ -32,7 +32,8 @@
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;
 -(void)		recolorRange: (NSRange)range;
-- (void)saveBackToSource;
+
+- (void)saveBackToSource:(NSNumber *)disableUndoRegistration;
 @end
 
 @implementation KTHTMLInspectorController
@@ -170,19 +171,18 @@ initial syntax coloring.
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
-	if ( [[aNotification object] isEqual:[self window]] )
+	if ([[aNotification object] isEqual:[self window]])
 	{
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		[self saveBackToSource];
+		[self saveBackToSource:nil];
 	}
 }
 
-// Re-load from DOM node
 - (void)windowDidBecomeKey:(NSNotification *)notification;
 {
 	if (myHTMLSourceObject)
 	{
-		// reload from DOM
+		// reload from model
 		NSString *source = [myHTMLSourceObject valueForKeyPath:myHTMLSourceKeyPath];
 		
 		if (nil == source) source = @"";
@@ -203,7 +203,7 @@ initial syntax coloring.
 	if ( [[aNotification object] isEqual:[self window]] )
 	{
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		[self saveBackToSource];
+		[self saveBackToSource:nil];
 		
 		[[self window] saveFrameUsingName:@"RawHTMLPanel"];
 	}
@@ -212,7 +212,7 @@ initial syntax coloring.
 - (void)textDidEndEditing:(NSNotification *)aNotification
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self saveBackToSource];
+	[self saveBackToSource:nil];
 }
 
 - (IBAction) windowHelp:(id)sender
@@ -221,7 +221,7 @@ initial syntax coloring.
 }
 
 
-- (void)saveBackToSource
+- (void)saveBackToSource:(NSNumber *)disableUndoRegistration
 {
 	if (myHTMLSourceObject)
 	{
@@ -233,9 +233,29 @@ initial syntax coloring.
 			str = [str stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
 		}
 
-		[myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
+		
+        
+        // Disable undo registration if requested
+        NSManagedObjectContext *MOC = nil;
+        if (disableUndoRegistration && [myHTMLSourceObject isKindOfClass:[NSManagedObject class]])
+        {
+            MOC = [(NSManagedObject *)myHTMLSourceObject managedObjectContext];
+            [MOC processPendingChanges];
+            [[MOC undoManager] disableUndoRegistration];
+        }
+        
+        // Store the HTML
+        [myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
 
 		
+        // Re-enable undo registration
+        if (MOC)
+        {
+            [MOC processPendingChanges];
+            [[MOC undoManager] enableUndoRegistration];
+        }
+        
+        
 		// Now find the cdata tags and convert back to CDATA
 		// myHTMLElement is a div or something, won't be changed, so no need to worry about myHTMLElement itself being replaced.
 //		[myDOMHTMLElement replaceFakeCDataWithCDATA];
@@ -344,7 +364,7 @@ initial syntax coloring.
 	
 	// Save this back to the source, after a delay
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self performSelector:@selector(saveBackToSource) withObject:nil afterDelay:1.0];
+	[self performSelector:@selector(saveBackToSource:) withObject:[NSNumber numberWithBool:YES] afterDelay:1.0];
 }
 
 
