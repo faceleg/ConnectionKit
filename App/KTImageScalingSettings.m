@@ -22,7 +22,7 @@
 
 @implementation KTImageScalingSettings
 
-+ (id)settingsWithScaleFactor:(float)scaleFactor sharpening:(NSNumber *)sharpening
++ (id)settingsWithScaleFactor:(float)scaleFactor
 {
 	KTImageScalingSettings *result = [[[self alloc] init] autorelease];
 	
@@ -32,9 +32,7 @@
 	return result;
 }
 
-+ (id)settingsWithBehavior:(KTMediaScalingOperation)behavior
-					  size:(NSSize)size
-				sharpening:(NSNumber *)sharpening;
++ (id)settingsWithBehavior:(KTMediaScalingOperation)behavior size:(NSSize)size;
 {
 	KTImageScalingSettings *result = [[[self alloc] init] autorelease];
 	
@@ -46,7 +44,7 @@
 
 + (id)cropToSize:(NSSize)size alignment:(NSImageAlignment)alignment
 {
-	KTImageScalingSettings *result = [self settingsWithBehavior:KTCropToSize size:size sharpening:nil];
+	KTImageScalingSettings *result = [self settingsWithBehavior:KTCropToSize size:size];
 	[result setAlignment:alignment];
 	//[result setScaleFactor:0.0];	// By default -cropToFit items are infinitely scalable
 	return result;

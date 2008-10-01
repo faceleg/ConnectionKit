@@ -272,8 +272,7 @@
 
 - (KTMediaContainer *)imageWithScaleFactor:(float)scaleFactor
 {
-	KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithScaleFactor:scaleFactor
-																			sharpening:nil];
+	KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithScaleFactor:scaleFactor];
 	
 	KTMediaContainer *result = [self imageWithScalingSettings:settings];
 													
@@ -283,7 +282,7 @@
 - (KTMediaContainer *)imageToFitSize:(NSSize)size
 {
 	KTImageScalingSettings *settings =
-		[KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:size sharpening:nil];
+		[KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:size];
 	
 	KTMediaContainer *result = [self imageWithScalingSettings:settings];
 													
@@ -301,7 +300,7 @@
 - (KTMediaContainer *)imageStretchedToSize:(NSSize)size
 {
 	KTImageScalingSettings *settings =
-		[KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:size sharpening:nil];
+		[KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:size];
 	
 	KTMediaContainer *result = [self imageWithScalingSettings:settings];
 													

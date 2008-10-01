@@ -21,11 +21,9 @@
 }
 
 // Init
-+ (id)settingsWithScaleFactor:(float)scaleFactor sharpening:(NSNumber *)sharpening;
++ (id)settingsWithScaleFactor:(float)scaleFactor;
 
-+ (id)settingsWithBehavior:(KTMediaScalingOperation)behavior
-					  size:(NSSize)size
-				sharpening:(NSNumber *)sharpening;
++ (id)settingsWithBehavior:(KTMediaScalingOperation)behavior size:(NSSize)size;
 
 + (id)cropToSize:(NSSize)size alignment:(NSImageAlignment)alignment;
 

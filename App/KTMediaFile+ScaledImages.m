@@ -89,7 +89,7 @@
 	{
 		// Go for a super-simple unscaled image from the source media
 		NSMutableDictionary *unscaledImageProperties = [NSMutableDictionary dictionary];
-		[unscaledImageProperties setObject:[KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil] forKey:@"scalingBehavior"];
+		[unscaledImageProperties setObject:[KTImageScalingSettings settingsWithScaleFactor:1.0] forKey:@"scalingBehavior"];
 		[unscaledImageProperties setObject:[NSNumber numberWithFloat:0.0] forKey:@"compression"];
 		[unscaledImageProperties setObject:[NSNumber numberWithFloat:0.0] forKey:@"sharpeningFactor"];
 		
@@ -442,9 +442,7 @@
         NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
         NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
         
-        settings = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize
-                                                           size:roundedSize
-                                                     sharpening:nil];
+        settings = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:roundedSize];
     }
 	
     
@@ -453,7 +451,7 @@
     OBASSERT([settings behavior] == KTStretchToSize);
     if (NSEqualSizes([settings size], [self dimensions]))
     {
-        settings = [KTImageScalingSettings settingsWithScaleFactor:1.0 sharpening:nil];
+        settings = [KTImageScalingSettings settingsWithScaleFactor:1.0];
     }
     
 	
