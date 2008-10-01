@@ -859,22 +859,21 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	OFF((@"KTDocWindowController webkitValidateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	BOOL result = YES;
 
 	SEL action = [menuItem action];
-
-	if (action == @selector(clearStyles:))
+    
+    // Clear Styles - Enable when the user selects some editable text
+    if (action == @selector(clearStyles:))
 	{
-		DOMRange *selection = [[self webView] selectedDOMRange];
-        
-		BOOL result = (selection &&
-                       [selection startContainer] &&
-                       [selection endContainer] &&
-                       ![selection collapsed]);
-        
-        return result;
+		result = NO;
+        if ([self currentTextEditingBlock])
+        {
+            DOMRange *selection = [[self webView] selectedDOMRange];
+            result = (selection && [selection startContainer] && [selection endContainer] && ![selection collapsed]);
+        }
 	}
-	if (action == @selector(typewriter:))
+	else if (action == @selector(typewriter:))
 	{
 		DOMRange *range = [[self webView] selectedDOMRange];
 		if (nil != range)
@@ -899,7 +898,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	}
 	
     
-    return YES; // default returns YES
+    return result;
 }
 
 @end
