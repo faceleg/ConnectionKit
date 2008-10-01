@@ -444,7 +444,7 @@
 						}
 						else
 						{
-							KTAbstractPage *page = [[self parser] currentPage];		OBASSERT(page);
+							KTAbstractPage *page = [[self parser] currentPage];
 							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
 							aMediaPath = [[upload URL] stringRelativeToURL:[[[self parser] currentPage] URL]];
 							
