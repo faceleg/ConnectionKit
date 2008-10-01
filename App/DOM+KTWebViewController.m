@@ -102,13 +102,13 @@ To find out of it's editable, try
 #pragma mark -
 #pragma mark Unstyle
 
-- (void)unstyleWithElementWhitelist:(NSSet *)whitelist
+- (void)unstyleWithBlacklist:(NSSet *)whitelist
 {
-    BOOL keepElement = [whitelist containsObject:[self tagName]];
+    BOOL ditchElement = [whitelist containsObject:[self tagName]];
     
     
     // Remove any inline styling. No point doing this if we're going to be destroyed
-    if (keepElement)
+    if (!ditchElement)
     {
         [self removeAttribute:@"style"];
         [self removeAttribute:@"align"];
@@ -123,13 +123,13 @@ To find out of it's editable, try
         DOMNode *aNode = [childNodes item:i];
         if ([aNode isKindOfClass:[DOMHTMLElement class]])
         {
-            [(DOMHTMLElement *)aNode unstyleWithElementWhitelist:whitelist];
+            [(DOMHTMLElement *)aNode unstyleWithBlacklist:whitelist];
         }
     }
     
     
     // Remove us from the tree if not in the whitelist
-    if (!keepElement)
+    if (ditchElement)
     {
         [self unlink];
     }

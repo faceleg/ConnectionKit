@@ -787,10 +787,37 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
  */
 - (IBAction)clearStyles:(id)sender
 {
-	static NSSet *whitelist;
-    if (!whitelist)
+	static NSSet *blacklist;
+    if (!blacklist)
     {
-        whitelist = [[NSSet alloc] initWithObjects:@"P", @"A", @"DIV", @"BR", nil]; //TODO: Add the rest in
+        blacklist = [[NSSet alloc] initWithObjects:
+                     @"B",
+                     @"BASEFONT",
+                     @"BDO",
+                     @"BIG"
+                     @"CENTER",
+                     @"CITE",
+                     @"CODE"
+                     @"DEL",
+                     @"EM",
+                     @"FONT",
+                     @"I",
+                     @"INS",
+                     @"KBD",
+                     @"PRE",
+                     @"Q",
+                     @"S",
+                     @"SAMP",
+                     @"SMALL",
+                     @"SPAN",
+                     @"STRIKE",
+                     @"STRONG",
+                     @"SUB",
+                     @"SUP",
+                     @"TT",
+                     @"U",
+                     @"VAR",
+                     @"XMP", nil];
     }
     
     
@@ -810,7 +837,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
             DOMNode *aNode = [childNodes item:i];
             if ([aNode isKindOfClass:[DOMHTMLElement class]])
             {
-                [(DOMHTMLElement *)aNode unstyleWithElementWhitelist:whitelist];
+                [(DOMHTMLElement *)aNode unstyleWithBlacklist:blacklist];
             }
         }
         

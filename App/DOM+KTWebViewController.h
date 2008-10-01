@@ -22,6 +22,6 @@
 - (BOOL)isImageable;
 - (BOOL)hasSpanIn;
 
-- (void)unstyleWithElementWhitelist:(NSSet *)whitelist;
+- (void)unstyleWithBlacklist:(NSSet *)whitelist;
 
 @end
