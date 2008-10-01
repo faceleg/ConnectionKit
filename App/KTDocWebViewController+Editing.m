@@ -847,7 +847,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
         
         
         // Feed the unstyled nodes back into the webview
-        [[self webView] replaceSelectionWithNode:result];
+        [self webViewWillEditDOM:[self webView]];           // -[WebView replaceSelectioWithNode:] calls -didChange for
+        [[self webView] replaceSelectionWithNode:result];   // us, but we need to trigger -willChange
     }
 }
 
