@@ -126,28 +126,27 @@
     
     
     // Scale the image
-	KTImageScalingSettings *scalingBehavior = [properties objectForKey:@"scalingBehavior"];
 	[image normalizeSize];
-	NSBitmapImageRep *scaledImage = [image bitmapByScalingWithBehavior:scalingBehavior];
-    OBASSERT(scaledImage);
-	NSImage *finalImage = nil;
+	CIImage *unscaledImage = [[CIImage alloc] initWithBitmapImageRep:[image bitmap]];
+    
+    KTImageScalingSettings *scalingBehavior = [properties objectForKey:@"scalingBehavior"];
+    CIImage *scaledImage = [unscaledImage imageByApplyingScalingSettings:scalingBehavior opaqueEdges:YES];
 	
-	
-	// Sharpen if necessary
+    
+    // Sharpen if necessary
 	NSNumber *sharpening = [properties objectForKey:@"sharpeningFactor"];
 	if (sharpening && [sharpening floatValue] > 0.0)
 	{
-		CIImage *unsharpenedImage = [[CIImage alloc] initWithBitmapImageRep:scaledImage];
-		CIImage *sharpenedImage = [unsharpenedImage sharpenLuminanceWithFactor:[sharpening floatValue]];
-		finalImage = [sharpenedImage toNSImageBitmap];
-		[unsharpenedImage release];
+		scaledImage = [scaledImage sharpenLuminanceWithFactor:[sharpening floatValue]];
 	}
-	else
-	{
-		finalImage = [NSImage imageWithBitmap:scaledImage];
-	}
+	
+    
+    // Convert back to bitmap
+    NSImage *finalImage = [scaledImage toNSImageBitmap];
     OBASSERT(finalImage);
+    [unscaledImage release];
 
+    
 #if 0
 	NSString *dirPath = [NSString stringWithFormat:@"/tmp/%@-%d", [NSApplication applicationName], [[NSProcessInfo processInfo] processIdentifier] ];
 	[[NSFileManager defaultManager] createDirectoryAtPath:dirPath attributes:nil];

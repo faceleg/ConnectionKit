@@ -43,9 +43,11 @@
 // Resizing
 - (NSRect)sourceRectForImageOfSize:(NSSize)sourceSize;
 
-- (float)scaleFactorForImageOfSize:(NSSize)sourceSize;
-- (float)aspectRatioForImageOfSize:(NSSize)sourceSize;
+- (float)scaleFactorForImageOfSize:(CGSize)sourceSize;
+- (float)aspectRatioForImageOfSize:(CGSize)sourceSize;
 - (NSSize)scaledSizeForImageOfSize:(NSSize)sourceSize;
+- (CGSize)scaledCGSizeForImageOfSize:(CGSize)sourceSize;
+
 //- (NSSize)destinationSizeForImageOfSize:(NSSize)sourceSize;
 //- (float)heightForImageOfSize:(NSSize)sourceSize;
 

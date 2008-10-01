@@ -9,6 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class KTImageScalingSettings;
+
+
 @interface CIImage (KTExtensions)
+
+- (CIImage *)imageByApplyingScalingSettings:(KTImageScalingSettings *)settings
+                                opaqueEdges:(BOOL)anOpaqueEdges;
 
 @end

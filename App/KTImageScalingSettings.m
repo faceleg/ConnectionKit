@@ -260,7 +260,8 @@
 	if ([self behavior] == KTCropToSize)
 	{
 		// The source size must be the destination size scaled back down
-		float scaleFactor = [self scaleFactorForImageOfSize:sourceSize];
+        CGSize CGSourceSize = CGSizeMake(sourceSize.width, sourceSize.height);
+		float scaleFactor = [self scaleFactorForImageOfSize:CGSourceSize];
 		result.size = NSMakeSize(roundf([self size].width / scaleFactor), roundf([self size].height / scaleFactor));
 		
 		// The origin depends on the chosen alignment
@@ -326,7 +327,7 @@
 
 /*	Assumes we are in fitToSize mode
  */
-- (float)_fitToSizeScaleFactor:(NSSize)size
+- (float)_fitToSizeScaleFactor:(CGSize)size
 {
 	float result;
 	
@@ -354,7 +355,7 @@
 	return result;
 }
 
-- (float)_cropToSizeScaleFactor:(NSSize)size
+- (float)_cropToSizeScaleFactor:(CGSize)size
 {
 	float result = MAX([self _scaleFactorToFitWidth:size.width], [self _scaleFactorToFitHeight:size.height]);
 	
@@ -368,7 +369,7 @@
 	return result;
 }
 
-- (float)scaleFactorForImageOfSize:(NSSize)sourceSize
+- (float)scaleFactorForImageOfSize:(CGSize)sourceSize
 {
 	float result = 1.0;
 	
@@ -388,17 +389,23 @@
 		
 		case KTStretchToSize:
 			// Fairly simple conversion between size & scale
-			result = [self size].width / sourceSize.width;
+			result = [self size].height / sourceSize.height;
 			break;
 	}
 	
 	return result;
 }
 
-- (float)aspectRatioForImageOfSize:(NSSize)sourceSize
+- (float)aspectRatioForImageOfSize:(CGSize)sourceSize
 {
-	return 1.0;
-	// TODO: Properly handle stretchToFit
+	float result = 1.0;
+    
+    if ([self behavior] == KTStretchToSize)
+    {
+        result = [self scaleFactorForImageOfSize:sourceSize] / ([self size].width / sourceSize.width);
+    }
+    
+    return result;
 }
 
 - (NSSize)scaledSizeForImageOfSize:(NSSize)sourceSize
@@ -419,13 +426,20 @@
 		*/	
 		default:
 		{
-			float scale = [self scaleFactorForImageOfSize:sourceSize];
+			CGSize CGSourceSize = CGSizeMake(sourceSize.width, sourceSize.height);
+            float scale = [self scaleFactorForImageOfSize:CGSourceSize];
 			result = NSMakeSize(roundf(scale * sourceSize.width), roundf(scale * sourceSize.height));
 			break;
 		}	
 	}
 	
 	return result;
+}
+
+- (CGSize)scaledCGSizeForImageOfSize:(CGSize)sourceSize
+{
+    NSSize result = [self scaledSizeForImageOfSize:(*(NSSize *)&(sourceSize))];
+    return (*(CGSize *)&(result));
 }
 
 @end
