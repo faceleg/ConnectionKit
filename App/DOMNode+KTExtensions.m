@@ -294,68 +294,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	return [self childrenOfClass:[DOMHTMLObjectElement class]];
 }
 
-#pragma mark formatted description
-
-- (NSString *)verboseDescriptionIndented:(int)inIndent
-{
-	NSMutableString *output = [NSMutableString string];
-	int i;
-	for (i = 0 ; i < inIndent; i++)
-	{
-		[output appendString:@"\t"];
-	}
-	
-	NSString *value = [self nodeValue];
-	if ([self isKindOfClass:[DOMCharacterData class]])
-	{
-		NSMutableString *replacement = [NSMutableString stringWithString:value];
-		[replacement replaceOccurrencesOfString:@"\n" withString:@"\\n" options:0 range:NSMakeRange(0,[value length])];
-		value = [NSString stringWithFormat:@"'%@'", replacement];
-	}
-	if (![value isEqualToString:@""])
-	{
-		value = [NSString stringWithFormat:@" = %@", value];
-	}
-
-	[output appendFormat:@"%@ %@", [self nodeName], value ];
-	
-	if ([self hasAttributes])
-	{
-		DOMNamedNodeMap *attrMap = [self attributes];
-		int length = [attrMap length];
-		for ( i = 0 ; i < length ; i++ )
-		{
-			DOMNode *oneAttr = [attrMap item:i];
-			[output appendString:@"\n"];
-			[output appendString:[oneAttr verboseDescriptionIndented:inIndent+1] ];
-		}
-		if ([attrMap length])
-		{
-	//		[output deleteCharactersInRange:NSMakeRange([output length] - 1, 1)];
-		}
-	}
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int length = [childNodes length];
-		for (i = 0 ; i < length ; i++)
-		{
-			[output appendString:@"\n"];
-			[output appendString:[[childNodes item:i] verboseDescriptionIndented:inIndent+1]];
-		}
-	}
-	return output;
-}
-
-/*!	Fallback description, if not one of the known subclass description overrides.
-*/
-
-- (NSString *)verboseDescription
-{
-	return [self verboseDescriptionIndented:0];
-}
-
-
 #pragma mark inner/outer HTML
 
 - (NSString *)cleanedInnerHTML
@@ -748,6 +686,9 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 
 @end
+
+
+// FIXME: These methods do not account for removing the undo history once the enclosing WebFrame goes away
 
 @implementation DOMNode ( KTUndo )
 
@@ -1409,73 +1350,3 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 @end
-
-
-#pragma mark -
-
-
-@implementation DOMRange ( description )
-
-- (NSString *)description
-{
-	if ([self startContainer] == [self endContainer])
-	{
-		return [NSString stringWithFormat:@"<%@ %p: %@ +%ld - %ld>", [[self class] description], self, [self startContainer], [self startOffset], [self endOffset]];
-	}
-	else
-	{
-		return [NSString stringWithFormat:@"<%@ %p: %@ +%ld - %@ +%ld>", [[self class] description], self, [self startContainer], [self startOffset], [self endContainer], [self endOffset]];
-	}
-	}
-
-@end
-
-@implementation DOMNode ( description )
-
-- (NSString *)description
-{
-	NSString *value = [self nodeValue];
-	if (value) {
-		return [NSString stringWithFormat:@"<!%@ %p: [%@] '%@'>",
-			[[self class] description], self, [self nodeName], value];
-	}
-	return [NSString stringWithFormat:@"<!%@ %p: [%@]>",
-		[[self class] description], self, [self nodeName]];
-}
-
-@end
-
-
-#pragma mark -
-#pragma mark DOMDocumentFragment
-
-@implementation DOMDocumentFragment (KTExtensions)
-
-/*  Normally this method is only available to DOMHTMLElement. However, I'm defining it here so that there's a nice easy
- *  way to get debugging output from DOMDocumentFragments (which we are passed by WebKit sometimes).
- *
- *  Returns nil if one or more childNodes is not an HTML element.
- */
-- (NSString *)innerHTML
-{
-   NSMutableArray *nodes = [[NSMutableArray alloc] init];
-    
-    
-    unsigned long i, count = [[self childNodes] length];
-    for (i = 0; i < count; i++)
-    {
-        DOMNode *aNode = [[self childNodes] item:i];
-        if ([aNode isKindOfClass:[DOMHTMLElement class]])
-        {
-            [nodes addObject:aNode];
-        }
-    }
-    
-    NSString *result = [[nodes valueForKey:@"outerHTML"] componentsJoinedByString:@"\n"];
-    [nodes release];
-    return result;
-}
-
-@end
-
-

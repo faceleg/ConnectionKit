@@ -33,7 +33,6 @@
 
 - (NSString *)cleanedInnerHTML;
 - (NSString *)cleanedOuterHTML;
-- (NSString *)verboseDescription;
 
 #pragma mark parent elements
 
@@ -140,11 +139,3 @@
 @interface DOMHTMLImageElement (KTExtensions)
 - (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 @end
-
-
-#pragma mark -
-
-@interface DOMDocumentFragment (KTExtensions)
-- (NSString *)innerHTML;
-@end
-

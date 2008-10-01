@@ -313,6 +313,8 @@
 		27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */; };
 		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */; };
+		27E3835C0E938A0F00DE9EB4 /* DOM+Debugging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E3835A0E938A0F00DE9EB4 /* DOM+Debugging.h */; };
+		27E3835D0E938A0F00DE9EB4 /* DOM+Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3835B0E938A0F00DE9EB4 /* DOM+Debugging.m */; };
 		27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */; };
 		27E3F8330D9C34B000A64154 /* KTDataMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */; };
 		27E3F8340D9C34B000A64154 /* KTDataMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */; };
@@ -1778,6 +1780,8 @@
 		27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractHTMLPlugin.m; sourceTree = "<group>"; };
 		27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugin.h; sourceTree = "<group>"; };
 		27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugin.m; sourceTree = "<group>"; };
+		27E3835A0E938A0F00DE9EB4 /* DOM+Debugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DOM+Debugging.h"; path = "../../../Shared/trunk/WebKit/DOM+Debugging.h"; sourceTree = SOURCE_ROOT; };
+		27E3835B0E938A0F00DE9EB4 /* DOM+Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DOM+Debugging.m"; path = "../../../Shared/trunk/WebKit/DOM+Debugging.m"; sourceTree = SOURCE_ROOT; };
 		27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DocumentMigration.nib; sourceTree = "<group>"; };
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
@@ -4121,6 +4125,8 @@
 				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
 				27642B980E92B49600FCE981 /* DOMNode+Karelia.h */,
 				27642B990E92B49600FCE981 /* DOMNode+Karelia.m */,
+				27E3835A0E938A0F00DE9EB4 /* DOM+Debugging.h */,
+				27E3835B0E938A0F00DE9EB4 /* DOM+Debugging.m */,
 			);
 			name = WebKit;
 			sourceTree = "<group>";
@@ -4973,6 +4979,7 @@
 				CE8A760F0E897BD1003C394B /* NSHTTPCookieStorage+Karelia.h in Headers */,
 				276428F90E90D2BD00FCE981 /* KSFontManager.h in Headers */,
 				27642B9A0E92B49600FCE981 /* DOMNode+Karelia.h in Headers */,
+				27E3835C0E938A0F00DE9EB4 /* DOM+Debugging.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6402,6 +6409,7 @@
 				CE8A76100E897BD1003C394B /* NSHTTPCookieStorage+Karelia.m in Sources */,
 				276428FA0E90D2BD00FCE981 /* KSFontManager.m in Sources */,
 				27642B9B0E92B49600FCE981 /* DOMNode+Karelia.m in Sources */,
+				27E3835D0E938A0F00DE9EB4 /* DOM+Debugging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
