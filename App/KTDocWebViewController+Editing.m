@@ -28,6 +28,7 @@
 
 #import "KTWebKitCompatibility.h"
 
+#import "DOMNode+Karelia.h"
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
 
@@ -356,8 +357,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	if ( nil != [[self windowController] selectedInlineImageElement]
 		 && [[[KTInfoWindowController sharedControllerWithoutLoading] currentSelection] isEqual:[[self windowController] selectedInlineImageElement]] )
 	{
-		if ( ![[proposedRange startContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]]
-			 && ![[proposedRange endContainer] containsNode:[[[self windowController] selectedInlineImageElement] DOMNode]] )
+		if (![[[[self windowController] selectedInlineImageElement] DOMNode] isDescendantOfNode:[proposedRange startContainer]]
+			 && ![[[[self windowController] selectedInlineImageElement] DOMNode] isDescendantOfNode:[proposedRange endContainer]])
 		{
 			[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
 																object:[[[[self windowController] selectedInlineImageElement] container] page]];			

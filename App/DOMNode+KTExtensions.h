@@ -42,9 +42,6 @@
 /*! returns whether any parent node if of class aClass */
 - (BOOL)isContainedByElementOfClass:(Class)aClass;
 
-/*! returns whether self has aDOMNode as a child */
-- (BOOL)containsNode:(DOMNode *)aDOMNode;
-
 #pragma mark index paths
 - (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathFromNode:(DOMNode *)node;

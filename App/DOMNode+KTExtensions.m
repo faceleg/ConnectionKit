@@ -142,41 +142,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	return NO;
 }
 
-- (BOOL)containsNode:(DOMNode *)aDOMNode
-{
-	BOOL result = NO;
-	if ( [self hasChildNodes] )
-	{
-		DOMNodeList *nodes = [self childNodes];
-		int i;
-		int length = [nodes length];
-		for ( i=0; i<length; i++ )
-		{
-			id node = [nodes item:i];
-			if ( [node isEqual:aDOMNode] )
-			{
-				result = YES;
-				break;
-			}
-			else if ( [node containsNode:aDOMNode] )
-			{
-				result = YES;
-				break;
-			}
-		}
-	}
-	
-//	if ( result )
-//	{
-//		NSLog(@"%@ does contain %@", self, aDOMNode);
-//	}
-//	else
-//	{
-//		NSLog(@"%@ does not contain %@", self, aDOMNode);
-//	}
-	return result;
-}
-
 #pragma mark -
 #pragma mark Index Paths
 

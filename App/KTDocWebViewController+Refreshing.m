@@ -31,6 +31,7 @@
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 
+#import "DOMNode+Karelia.h"
 #import "DOMNode+KTExtensions.h"
 
 
@@ -329,7 +330,7 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
     if (selection)
     {
         DOMNode *selectionNode = [selection commonAncestorContainer];
-        if (selectionNode && [element containsNode:selectionNode])
+        if (selectionNode && [selectionNode isDescendantOfNode:element])
         {
             [[[self webViewUndoManagerProxy] undoManager] removeAllActionsWithTarget:self];	// Handles suspend/resume webview refresh stuff
             [[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];
