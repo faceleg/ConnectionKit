@@ -123,50 +123,20 @@
     
 	
     
-	// Calculate cropping offset, dX and dY, if applicable
-	//
+	// Crop
 	if ([settings behavior] == KTCropToSize)
 	{
-		switch ([settings alignment])
-		{
-            case NSImageAlignCenter:		dX = roundf((w-finalW)/2.0);	dY = roundf((h-finalH)/2.0);	break;
-            case NSImageAlignTop:			dX = roundf((w-finalW)/2.0);	dY = (h-finalH);				break;
-            case NSImageAlignTopLeft:		dX = 0.0;						dY = (h-finalH);				break;
-            case NSImageAlignTopRight:		dX = (w-finalW);				dY = (h-finalH);				break;
-            case NSImageAlignLeft:			dX = 0.0;						dY = roundf((h-finalH)/2.0);	break;
-            case NSImageAlignBottom:		dX = roundf((w-finalW)/2.0);	dY = 0.0;						break;
-            case NSImageAlignBottomLeft:	dX = 0.0;						dY = 0.0;						break;
-            case NSImageAlignBottomRight:	dX = (w-finalW);				dY = 0.0;						break;
-            case NSImageAlignRight:			dX = (w-finalW);				dY = roundf((h-finalH)/2.0);	break;
-		}
+		result = [result imageByCroppingToSize:CGSizeMake(finalW, finalH)
+                                    withinRect:CGRectMake(0.0, 0.0, w, h)
+                                     alignment:[settings alignment]];
 	}
-	
-	//
-	// Perform crop, now that we have scaled.  Since we did an affine clamp, it's currently infinite!
-	//
-	CIVector *cropRect = [CIVector vectorWithX:dX Y:dY Z:finalW W:finalH];
-	filter = [CIFilter filterWithName:@"CICrop"];
-	[filter setValue:result forKey:@"inputImage"];
-	[filter setValue:cropRect forKey:@"inputRectangle"];
-	result = [filter valueForKey:@"outputImage"];
-	// NSLog(@"Extent of cropped (to %.3f %.3f %.3f %.3f) image:%.3f %.3f %.3f %.3f", dX,dY,finalW,finalH, [im extent].origin.x, [im extent].origin.y, [im extent].size.width, [im extent].size.height);
-    
-	
-	// Transform the image back to the origin, if necessary
-	//
-	if (dX > 0.0 || dY > 0.0)
+	else
 	{
-		// Transform it down to the origin, to make NSImage happy
-		NSAffineTransform *t = [NSAffineTransform transform];
-		[t translateXBy:-dX yBy:-dY];
-		filter = [CIFilter filterWithName:@"CIAffineTransform"];
-		[filter setValue:t forKey:@"inputTransform"];
-		[filter setValue:result forKey:@"inputImage"];
-		result = [filter valueForKey:@"outputImage"];
-		// NSLog(@"Extent of translated (by %.3f %.3f) image:%.3f %.3f %.3f %.3f", -dX, -dY, [im extent].origin.x, [im extent].origin.y, [im extent].size.width, [im extent].size.height);
-	}
+        CIVector *cropRect = [CIVector vectorWithX:dX Y:dY Z:finalW W:finalH];
+        result = [self imageByCroppingToRectangle:cropRect];
+    }
     
-    
+	
 	return result;
 }
 
