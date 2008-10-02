@@ -37,7 +37,14 @@
 	switch ([settings behavior])
 	{
 		case KTScaleByFactor:
-            OBASSERT_NOT_REACHED("KTScaleByFactor not implemented");
+            if ([settings scaleFactor] == 1.0)
+            {
+                return self;
+            }
+            else
+            {
+                OBASSERT_NOT_REACHED("KTScaleByFactor not implemented");
+            }
             break;
         
         case KTStretchToSize:
