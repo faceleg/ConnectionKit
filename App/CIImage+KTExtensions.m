@@ -63,7 +63,7 @@
         if (opaqueEdges && [settings behavior] != KTCropToSize) // CropToSize will do the crop anyway in a sec
         {
             CIVector *cropRect = [CIVector vectorWithX:0.0 Y:0.0 Z:finalW W:finalH];
-            result = [self imageByCroppingToRectangle:cropRect];
+            result = [result imageByCroppingToRectangle:cropRect];
         }
     }
 	
