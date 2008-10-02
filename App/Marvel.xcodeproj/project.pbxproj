@@ -2034,8 +2034,6 @@
 		3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KTExtensions.m"; sourceTree = "<group>"; };
 		3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSOutlineView+KTExtensions.h"; sourceTree = "<group>"; };
 		3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+KTExtensions.m"; sourceTree = "<group>"; };
-		3CEC86140BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.h; sourceTree = "<group>"; };
-		3CEC86150BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = ClassThatSeemsToHaveUnfixableBindingBugPoser.m; sourceTree = "<group>"; };
 		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
 		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
 		3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStoredDictionary.h; sourceTree = "<group>"; };
@@ -4190,8 +4188,6 @@
 		3C5A73770BF7B82600776464 /* Debugging */ = {
 			isa = PBXGroup;
 			children = (
-				3CEC86140BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.h */,
-				3CEC86150BF8CAEA00CC732B /* ClassThatSeemsToHaveUnfixableBindingBugPoser.m */,
 				3CA6BB480A086E54009DBBA8 /* KTUndoManager.h */,
 				3CA6BB490A086E54009DBBA8 /* KTUndoManager.m */,
 			);
