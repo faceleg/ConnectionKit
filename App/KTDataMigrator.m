@@ -25,6 +25,7 @@
 #import "NSArray+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSError+Karelia.h"
+#import "NSFileManager+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObjectModel+KTExtensions.h"
@@ -400,7 +401,6 @@
 
 - (BOOL)backupOldDocumentAfterMigration:(NSError **)outError
 {
-    // TODO: Figure out the model version
     NSString *modelVersion = kKTModelVersion_ORIGINAL;
     
     
@@ -1013,7 +1013,10 @@
 										   "name appened to copy of file before version migration");
 	
 	//return [NSString stringWithFormat:@"%@-%@.%@", fileName, aVersion, extension];
-	return [NSString stringWithFormat:@"%@-%@.%@", fileName, previous, extension];
+	NSString *preferredPath = [NSString stringWithFormat:@"%@-%@.%@", fileName, previous, extension];
+    NSString *finalFilename = [[NSFileManager defaultManager] uniqueFilenameAtPath:preferredPath];
+    NSString *result = [[preferredPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:finalFilename];
+    return result;
 }
 
 // this is a slightly cleaned up method from Apple's Migrator example

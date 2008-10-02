@@ -63,8 +63,11 @@
                          NSLocalizedString(@"Upgrading document \"%@.\"","document upgrade message text"), filename];
     [messageTextField setStringValue:message];
     
-    filename = [[NSFileManager defaultManager] displayNameAtPath:[[[self dataMigrator] oldStoreURL] path]];
-    filename = [KTDataMigrator renamedFileName:filename modelVersion:kKTModelVersion_ORIGINAL];
+    
+    NSString *path = [[[self dataMigrator] oldStoreURL] path];
+    path = [KTDataMigrator renamedFileName:path modelVersion:kKTModelVersion_ORIGINAL];
+    filename = [[NSFileManager defaultManager] displayNameAtPath:path];
+    
     message = [NSString stringWithFormat:
                NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\"","document upgrade informative text"),
                filename];
