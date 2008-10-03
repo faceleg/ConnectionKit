@@ -273,9 +273,10 @@
 		else
 		{
 			NSString *path = [[root URL] stringRelativeToURL:[thisPage URL]];
-            OBASSERT([path lowercaseString]);
+            if (!path) path = @"";  // Happens for a site with no -siteURL set yet
+            
             NSString *title = [[root titleText] stringByEscapingHTMLEntities];
-            OBASSERT([title lowercaseString]);
+            
             [string appendFormat:@"<a href=\"%@\">%@</a>", path, title];
 		}
 		[string appendString:(sections ? @"</h3>\n" : @"</p>\n")];

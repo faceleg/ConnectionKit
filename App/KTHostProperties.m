@@ -394,15 +394,7 @@ to be verified.
     }
     
 	
-	// Backup option
-	if (!URLString)
-	{
-		URLString = @"http://unpublished.karelia.com/";
-	}
-	OBPOSTCONDITION(URLString);
-    
-    
-    // Create the URL
+	// Create the URL
     NSURL *result = nil;
     if (URLString)
     {

@@ -823,7 +823,7 @@ static NSArray *sReservedNames = nil;
 		[savePanel setDelegate:self];
 		
 		NSURL *siteURL = [[[[self associatedDocument] documentInfo] hostProperties] siteURL];
-        if (siteURL && ![[siteURL absoluteString] isEqualToString:@"http://unpublished.karelia.com/"])
+        if (siteURL)
 		{
 			[oExportURL setStringValue:@""];		// no export URL showing, so don't put in a value
 		}

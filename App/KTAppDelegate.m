@@ -173,7 +173,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
     if (document && [document isKindOfClass:[KTDocument class]])
     {
         NSString *urlString = [[[[(KTDocument *)document documentInfo] hostProperties] siteURL] absoluteString];
-        if (urlString && ![urlString isEqualToString:@""] && ![urlString isEqualToString:@"http://unpublished.karelia.com/"])
+        if (urlString && ![urlString isEqualToString:@""])
         {
             [result appendFormat:@"\nURL:\n%@\n", urlString];
         }
