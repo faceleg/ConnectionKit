@@ -10,6 +10,7 @@
 		27069F9A0E966E1F0041F149 /* Twitter.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27069F980E966E1F0041F149 /* Twitter.nib */; };
 		271018410E96708F0095D365 /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 271018400E96708F0095D365 /* twitter_logo.png */; };
 		2737B0210E994BFC00048D1F /* scripttemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2737B0200E994BFC00048D1F /* scripttemplate.html */; };
+		2737B0410E9977AB00048D1F /* twittercallback.js in Sources */ = {isa = PBXBuildFile; fileRef = 2737B0400E9977AB00048D1F /* twittercallback.js */; };
 		3C4A185B0D5F9BFB009476BF /* TwitterElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* TwitterElementDelegate.m */; };
 		3C4A18610D5F9C07009476BF /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185E0D5F9C07009476BF /* template.html */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
@@ -25,6 +26,7 @@
 		27069F990E966E1F0041F149 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Twitter.nib; sourceTree = "<group>"; };
 		271018400E96708F0095D365 /* twitter_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_logo.png; sourceTree = "<group>"; };
 		2737B0200E994BFC00048D1F /* scripttemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = scripttemplate.html; sourceTree = "<group>"; };
+		2737B0400E9977AB00048D1F /* twittercallback.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = twittercallback.js; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* TwitterElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterElement_Prefix.pch; sourceTree = "<group>"; };
 		3C4A18590D5F9BFB009476BF /* TwitterElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterElementDelegate.h; sourceTree = "<group>"; };
 		3C4A185A0D5F9BFB009476BF /* TwitterElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterElementDelegate.m; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				3C4A187D0D5F9E25009476BF /* Localizable.strings */,
 				3C4A189A0D5F9F5C009476BF /* License.rtf */,
 				2737B0200E994BFC00048D1F /* scripttemplate.html */,
+				2737B0400E9977AB00048D1F /* twittercallback.js */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C4A185B0D5F9BFB009476BF /* TwitterElementDelegate.m in Sources */,
+				2737B0410E9977AB00048D1F /* twittercallback.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
