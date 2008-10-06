@@ -3,6 +3,14 @@
     <ul id="twitter_update_list"></ul>
 </div>
 
+<script type="text/javascript" src="[[resourcepath delegate.twitterCallbackScriptPath]]"></script>
+<script type="text/javascript">
+function twitterCallback2(obj)
+{
+	twitterCallback_withOptions(obj, [[if openLinksInNewWindow]]true[[else2]]false[[endif2]], [[if includeTimestamp]]true[[else2]]false[[endif2]]);
+}
+</script>
+
 [[else]]
 [[if parser.HTMLGenerationPurpose==0]]
 <div class="svx-placeholder">

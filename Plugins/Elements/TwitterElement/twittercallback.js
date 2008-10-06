@@ -1,4 +1,4 @@
-function twitterCallback2(obj)
+function twitterCallback_withOptions(obj, linksinnewwindows, includetimestamp)
 {
 	var wwwregular = /\bwww\.\w.\w/ig;
 	var regular = /((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g;
@@ -15,9 +15,23 @@ function twitterCallback2(obj)
 		posttext = posttext.replace(atregular, '@<a href="http://twitter.com/$1">$1</a>');
 		
 		username = twitters[i].user.screen_name
-		statusHTML += ('<li><span>'+posttext+'</span> <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="Tweet Permalink">'+relative_time(twitters[i].created_at)+'</a></li>')
+		statusHTML += ('<li><span>'+posttext+'</span>');
+		if (includetimestamp) {
+			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="Tweet Permalink">'+relative_time(twitters[i].created_at)+'</a>');
+		}
+		statusHTML += ('</li>');
 	}
-	document.getElementById('twitter_update_list').innerHTML = statusHTML;
+	
+	var twitterupdatelist = document.getElementById('twitter_update_list');
+	twitterupdatelist.innerHTML = statusHTML;
+	
+	if (linksinnewwindows)
+	{
+		var m = twitterupdatelist.getElementsByTagName("A");
+		for (var i=0; i<m.length; i++) {
+			m[i].target = "_blank";
+		}
+	}
 }
 
 function relative_time(time_value)

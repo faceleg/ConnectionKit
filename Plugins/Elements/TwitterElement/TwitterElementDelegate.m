@@ -63,6 +63,12 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com"]];
 }
 
+- (NSString *)twitterCallbackScriptPath
+{
+	NSString *result = [[self bundle] pathForResource:@"twittercallback" ofType:@"js"];
+	return result;
+}
+
 /*	If the user has requested it, add the product preview popups javascript to the end of the page
  */
 - (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage	// level, since we don't want this on all pages on the site!
@@ -70,9 +76,10 @@
 	if ([[self delegateOwner] valueForKey:@"username"])
 	{
 		NSString *template = [[self class] scriptTemplate];
-		KTTemplateParser *parser = [[KTTemplateParser alloc] initWithTemplate:template component:[self delegateOwner]];
-		NSString *script = [parser parseTemplate];
+		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:[self delegateOwner]];
+		[parser setCurrentPage:aPage];
 		
+		NSString *script = [parser parseTemplate];
 		if (script)
 		{
 			// Only append the script if it's not already there (e.g. if there's > 1 element)

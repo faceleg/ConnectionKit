@@ -40,6 +40,10 @@
 	<string>digg.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
+		<key>openLinksInNewWindow</key>
+		<false/>
+		<key>includeTimestamp</key>
+		<true/>
 		<key>count</key>
 		<integer>5</integer>
 	</dict>

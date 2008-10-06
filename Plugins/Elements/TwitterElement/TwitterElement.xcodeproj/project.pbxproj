@@ -10,7 +10,7 @@
 		27069F9A0E966E1F0041F149 /* Twitter.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27069F980E966E1F0041F149 /* Twitter.nib */; };
 		271018410E96708F0095D365 /* twitter_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 271018400E96708F0095D365 /* twitter_logo.png */; };
 		2737B0210E994BFC00048D1F /* scripttemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2737B0200E994BFC00048D1F /* scripttemplate.html */; };
-		2737B0410E9977AB00048D1F /* twittercallback.js in Sources */ = {isa = PBXBuildFile; fileRef = 2737B0400E9977AB00048D1F /* twittercallback.js */; };
+		2737B0820E9A1FC200048D1F /* twittercallback.js in Resources */ = {isa = PBXBuildFile; fileRef = 2737B0400E9977AB00048D1F /* twittercallback.js */; };
 		3C4A185B0D5F9BFB009476BF /* TwitterElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* TwitterElementDelegate.m */; };
 		3C4A18610D5F9C07009476BF /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185E0D5F9C07009476BF /* template.html */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
@@ -201,6 +201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2737B0820E9A1FC200048D1F /* twittercallback.js in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C4A18610D5F9C07009476BF /* template.html in Resources */,
 				3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */,
@@ -237,7 +238,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C4A185B0D5F9BFB009476BF /* TwitterElementDelegate.m in Sources */,
-				2737B0410E9977AB00048D1F /* twittercallback.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
