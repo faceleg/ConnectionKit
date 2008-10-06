@@ -1,20 +1,18 @@
 [[if username]]
+[[if parser.liveDataFeeds]]
 <div id="twitter_div">
     <ul id="twitter_update_list"></ul>
 </div>
-
-<script type="text/javascript" src="[[resourcepath delegate.twitterCallbackScriptPath]]"></script>
-<script type="text/javascript">
-function twitterCallback2(obj)
-{
-	twitterCallback_withOptions(obj, [[if openLinksInNewWindow]]true[[else2]]false[[endif2]], [[if includeTimestamp]]true[[else2]]false[[endif2]]);
-}
-</script>
+[[else2]]
+<div class="svx-placeholder">
+	[['This is a placeholder for a Twitter pagelet. It will appear here once published or if you enable live data feeds in the preferences.]]
+</div>
+[[endif2]]
 
 [[else]]
 [[if parser.HTMLGenerationPurpose==0]]
 <div class="svx-placeholder">
-	[['Please enter your Twitter username or <a href="http://twitter.com/signup">sign up</a> for a Twitter account]]
+	[['Please enter your Twitter username or]] <a href="http://twitter.com/signup">[['sign up]]</a> [['for a Twitter account]]
 </div>
 [[endif2]]
 [[endif]]

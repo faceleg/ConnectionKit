@@ -38,7 +38,11 @@
 #import "SandvoxPlugin.h"
 
 
-// LocalizedStringInThisBundle(@"Digg example no.", "String_On_Page_Template - followed by a number")
+// LocalizedStringInThisBundle(@"This is a placeholder for a Twitter pagelet. It will appear here once published or if you enable live data feeds in the preferences.", "WebView Placeholder")
+// LocalizedStringInThisBundle(@"Please enter your Twitter username or", "WebView prompt fragment")
+// LocalizedStringInThisBundle(@"sign up", "WebView prompt fragment")
+// LocalizedStringInThisBundle(@"for a Twitter account", "WebView prompt fragment")
+
 
 
 @implementation TwitterElementDelegate
@@ -69,9 +73,7 @@
 	return result;
 }
 
-/*	If the user has requested it, add the product preview popups javascript to the end of the page
- */
-- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage	// level, since we don't want this on all pages on the site!
+- (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage
 {
 	if ([[self delegateOwner] valueForKey:@"username"])
 	{
