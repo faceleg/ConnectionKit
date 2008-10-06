@@ -100,7 +100,6 @@
 - (NSString *)defaultStoreFileName;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
-- (id)init;
 - (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError;
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
 - (id)initWithType:(NSString *)type error:(NSError **)error;
@@ -205,7 +204,8 @@
         
         // Set the design
         KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
-        [master setDesign:design];		
+        [master setDesign:design];
+		[self setShowDesigns:YES];
         
         
         // Set up root properties that used to come from document defaults
@@ -242,17 +242,6 @@
 	self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError];
 	if ( nil != self )
 	{
-		if ([[self documentInfo] boolForKey:@"isNewDocument"])
-		{
-			[self setShowDesigns:YES];	// new doc needs designs showing initially
-			[[self documentInfo] setBool:NO forKey:@"isNewDocument"];
-		}
-		else
-		{
-			[self setShowDesigns:NO];	// assume doc already opened doesn't need to show designs initially
-		}
-		
-		
 		// Load up document display properties
 		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
 		

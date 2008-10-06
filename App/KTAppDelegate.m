@@ -1546,7 +1546,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
     // before we do *anything*, grab currentDocument to see if we already have a window on-screen
     KTDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
 
-    //  now, open newly saved document w/ isNewDocument = YES
+    //  now, open newly saved document
     NSError *localError = nil;
     KTDocument *newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aURL
                                                                                                      display:YES
