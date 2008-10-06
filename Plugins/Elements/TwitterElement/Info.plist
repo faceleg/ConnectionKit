@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2008 Karelia Software</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2008 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -31,13 +31,13 @@
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
 	<key>KSHelpAnchor</key>
-	<string>Digg_List</string>
+	<string>Twitter</string>
 	<key>KTMainElement</key>
 	<string></string>
 	<key>KTPageletCanHaveTitle</key>
 	<true/>
 	<key>KTPluginIconName</key>
-	<string>digg.icns</string>
+	<string>t.icns</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>openLinksInNewWindow</key>
