@@ -1458,55 +1458,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 #pragma mark -
-#pragma mark Document communication
-
-/*!	Update menus or whatever is global based on the given document coming to the front
-*/
--(void)updateMenusForDocument:(KTDocument *)aDocument
-{
-	OBPRECONDITION(aDocument);
-    if ( [aDocument showDesigns] )
-    {
-        [oToggleAddressBarMenuItem setTitle:NSLocalizedString(@"Hide Designs", @"menu title to hide designs bar")];
-    }
-    else
-    {
-        [oToggleAddressBarMenuItem setTitle:NSLocalizedString(@"Show Designs", @"menu title to show design bar")];
-    }
-
-    if ([aDocument displayEditingControls] )
-    {
-        [oToggleEditingControlsMenuItem setTitle:NSLocalizedString(@"Hide Editing Markers", @"menu title to hide Editing Markers")];
-    }
-    else
-    {
-        [oToggleEditingControlsMenuItem setTitle:NSLocalizedString(@"Show Editing Markers", @"menu title to show Editing Markers")];
-    }
-	
-    if ( [aDocument displayStatusBar] )
-    {
-        [oToggleStatusBarMenuItem setTitle:NSLocalizedString(@"Hide Status Bar", @"menu title to hide status bar")];
-    }
-    else
-    {
-        [oToggleStatusBarMenuItem setTitle:NSLocalizedString(@"Show Status Bar", @"menu title to show status bar")];
-    }
-
-    if ( [[aDocument windowController] sidebarIsCollapsed] )
-    {
-        [oToggleSiteOutlineMenuItem setTitle:NSLocalizedString(@"Show Site Outline", @"menu title to show site outline")];
-        [oToggleSiteOutlineMenuItem setToolTip:NSLocalizedString(@"Shows the outline of the site on the left side of the window. Window must be wide enough to accomodate it.", @"Tooltip: menu tooltip to show site outline")];
-    }
-    else
-    {
-		[oToggleSiteOutlineMenuItem setTitle:NSLocalizedString(@"Hide Site Outline", @"menu title to hide site outline")];
-        [oToggleSiteOutlineMenuItem setToolTip:NSLocalizedString(@"Collapses the outline of the site from the left side of the window.", @"menu tooltip to hide site outline")];
-	}
-	
-	[self updateDuplicateMenuItemForDocument:aDocument];
-}
-
-#pragma mark -
 #pragma mark Accessors
 
 - (KTDocument *)currentDocument
@@ -1739,46 +1690,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 //#endif
 	NSURL *url = [NSURL URLWithString:urlString];
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
-}
-
-#pragma mark -
-#pragma mark Utility Methods
-
-- (void)updateDuplicateMenuItemForDocument:(KTDocument *)aDocument
-{
-	OBPRECONDITION(aDocument);
-	// label duplicate: (order is selected text, selected pagelet, selected page(s))
-	KTPagelet *selectedPagelet = [[aDocument windowController] selectedPagelet];
-	KTPage *selectedPage = [[[aDocument windowController] siteOutlineController] selectedPage];
-	NSArray *selectedPages = [[[aDocument windowController] siteOutlineController] selectedObjects];
-	
-	if ( [[aDocument windowController] selectedDOMRangeIsEditable] )
-	{
-		[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-	}
-	else if ( nil != selectedPagelet )
-	{
-		[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
-	}
-	else if ( (nil != selectedPage) && ![selectedPage isRoot] )
-	{
-		if ( [selectedPage isCollection] )
-		{
-			[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
-		}
-		else
-		{
-			[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
-		}
-	}
-	else if ( ([selectedPages count] > 1) && ![selectedPages containsRoot] )
-	{
-		[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
-	}
-	else
-	{
-		[oDuplicateMenuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-	}	
 }
 
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)

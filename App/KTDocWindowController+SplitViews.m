@@ -61,13 +61,11 @@ TO DO:
 {
     if ( sender == oSidebarSplitView )
     {
-		[[NSApp delegate] updateMenusForDocument:[self document]];
 		[[self document] setDisplaySiteOutline:NO];
 		[self updateDraggerState];
     }
 	else if (sender == oDesignsSplitView)
 	{
-		[[NSApp delegate] updateMenusForDocument:[self document]];
 		[oDesignsView inUse:NO];
 	}
 }
@@ -76,14 +74,11 @@ TO DO:
 {
     if ( sender == oSidebarSplitView )
     {
-		[[NSApp delegate] updateMenusForDocument:[self document]];
 		[[self document] setDisplaySiteOutline:YES];
 		[self updateDraggerState];
     }
 	if (sender == oDesignsSplitView)
 	{
-		[[NSApp delegate] updateMenusForDocument:[self document]];
-
 		[oDesignsView inUse:YES];		// set up UI since we're showing it
 	}
 }

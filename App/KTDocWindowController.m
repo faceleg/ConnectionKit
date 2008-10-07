@@ -635,7 +635,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
 	// update UI
 	[self showDesigns:newValue];
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 - (IBAction)toggleStatusBarShown:(id)sender
@@ -646,7 +645,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self document] setDisplayStatusBar:newValue];
 	
 	// update UI
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 	[self showStatusBar:newValue];
 }
 
@@ -658,7 +656,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self document] setDisplayEditingControls:newValue];
 
 	// update UI
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 	[self updateToolbar];
 	[[self webViewController] reloadWebView];
 }
@@ -711,36 +708,30 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[window setFrame:frame display:NO];
 	
 	[oSidebarSplitView adjustSubviews];
-    
-    [[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
 	BOOL value = [[self document] displaySmallPageIcons];
     [[self document] setDisplaySmallPageIcons:!value];
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 - (IBAction) makeTextLarger:(id)sender
 {
 	[oWebView makeTextLarger:sender];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 - (IBAction) makeTextSmaller:(id)sender
 {
 	[oWebView makeTextSmaller:sender];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 - (IBAction) makeTextNormal:(id)sender
 {
 	[oWebView setTextSizeMultiplier:1.0];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:1.0] forKey:@"textSizeMultiplier"];
-	[[NSApp delegate] updateMenusForDocument:[self document]];
 }
 
 
@@ -1345,6 +1336,40 @@ from representedObject */
 			return NO;
 		}
 	}
+    
+    // Duplicate
+    else if (itemAction == @selector(duplicate:))
+    {
+        if ([self selectedDOMRangeIsEditable] )
+        {
+            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
+        }
+        else if ([self selectedPagelet])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
+        }
+        else if ([[self siteOutlineController] selectedPage] &&
+                 ![[[self siteOutlineController] selectedPage] isRoot])
+        {
+            if ([[[self siteOutlineController] selectedPage] isCollection])
+            {
+                [menuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
+            }
+            else
+            {
+                [menuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
+            }
+        }
+        else if ([[[self siteOutlineController] selectedObjects] count] > 1 &&
+                 ![[[self siteOutlineController] selectedObjects] containsRoot])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
+        }
+    }
 	
 	// "Create Link..." showLinkPanel:
 	else if (itemAction == @selector(showLinkPanel:))
@@ -1357,17 +1382,56 @@ from representedObject */
 	
 	// View menu
 	// "Hide Designs" toggleDesignsShown:
-    else if ( itemAction == @selector(toggleDesignsShown:) )
+    else if (itemAction == @selector(toggleDesignsShown:))
     {
-        return YES;
+        if ([[self document] showDesigns])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Hide Designs", @"menu title to hide designs bar")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Show Designs", @"menu title to show design bar")];
+        }
+    }
+    
+    else if (itemAction == @selector(toggleEditingControlsShown:))
+    {
+        if ([[self document] displayEditingControls])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Hide Editing Markers", @"menu title to hide Editing Markers")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Show Editing Markers", @"menu title to show Editing Markers")];
+        }
     }
 	
 	// "Hide Status Bar" toggleStatusBarShown:
+    else if (itemAction == @selector(toggleStatusBarShown:))
+    {
+        if ([[self document] displayStatusBar])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Hide Status Bar", @"menu title to hide status bar")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Show Status Bar", @"menu title to show status bar")];
+        }
+    }
 	
 	// "Hide Site Outline" toggleSiteOutlineShown:
-	else if ( itemAction == @selector(toggleSiteOutlineShown:) )
+	else if (itemAction == @selector(toggleSiteOutlineShown:))
 	{
-		return YES;
+		if ([self sidebarIsCollapsed])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Show Site Outline", @"menu title to show site outline")];
+            [menuItem setToolTip:NSLocalizedString(@"Shows the outline of the site on the left side of the window. Window must be wide enough to accomodate it.", @"Tooltip: menu tooltip to show site outline")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Hide Site Outline", @"menu title to hide site outline")];
+            [menuItem setToolTip:NSLocalizedString(@"Collapses the outline of the site from the left side of the window.", @"menu tooltip to hide site outline")];
+        }
 	}
 	
 	// "Use Small Page Icons" toggleSmallPageIcons:
@@ -1567,6 +1631,8 @@ from representedObject */
 		return YES;
 
 	}
+    
+    return YES;
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
@@ -1716,7 +1782,6 @@ from representedObject */
 	}
 	
 	[self updateEditMenuItems];
-	[[NSApp delegate] updateDuplicateMenuItemForDocument:[self document]];
 }
 
 - (void)updateEditMenuItems
@@ -1928,7 +1993,6 @@ from representedObject */
 	///only update menus, which will query document contents, if we're in normal mode
 	if ( kGeneratingPreview == [self publishingMode] )
 	{
-		[[NSApp delegate] updateMenusForDocument:[self document]];
 		[self updateEditMenuItems];
 	}
 }
