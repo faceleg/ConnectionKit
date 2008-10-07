@@ -63,33 +63,6 @@
 @implementation SiteMapDelegate
 
 #pragma mark -
-#pragma mark Site Structure Notification
-
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-	id site = [[[self delegateOwner] page] valueForKey:@"documentInfo"];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(siteStructureDidChange:)
-												 name:KTSiteStructureDidChangeNotification
-											   object:site];
-}
-
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
-}
-
-/*	Due to the unique nature of the Site Map, we want to be marked as stale whenever a change happens to another page that affects
- *	the overall site structure.
- */
-- (void)siteStructureDidChange:(NSNotification *)notification
-{
-	
-}
-
-#pragma mark -
 #pragma mark HTML
 
 /*!	Recursive method
@@ -103,9 +76,18 @@
 {	
 	if (![aPage excludedFromSiteMap])
 	{
-		NSArray *children = [aPage sortedChildren];
+		// Fetch all children suitable for inclusion in the sitemap
+        static NSPredicate *includeInSiteMapPredicate;
+        if (!includeInSiteMapPredicate) {
+            includeInSiteMapPredicate = [[NSPredicate predicateWithFormat:@"excludedFromSiteMap == 0"] retain];
+        }
+        
+        NSArray *children = [[aPage sortedChildren] filteredArrayUsingPredicate:includeInSiteMapPredicate];
 
-		[string appendIndent:anIndent];
+		
+        
+        
+        [string appendIndent:anIndent];
 		if (isTopSection)
 		{
 			[string appendString:@"<h3>"];
@@ -171,7 +153,7 @@
 
 				while (aChildPage = [theEnum nextObject])
 				{
-					if (![aChildPage hasChildren] && ![aChildPage excludedFromSiteMap])
+					if (![aChildPage hasChildren])
 					{
 						canBeCompact = YES;
 						break;
@@ -189,31 +171,28 @@
 				[string appendString:@"<ul><li>\n"];
 				while (aChildPage = [theEnum nextObject])
 				{
-					if (![aChildPage excludedFromSiteMap])
-					{
-						[string appendIndent:anIndent+2];
-						if (firstPass)
-						{
-							firstPass = NO;
-						}
-						else
-						{
-							[string appendString:@"&middot; "];
-						}
-						if (aChildPage == thisPage)	// not likely but maybe possible
-						{
-							NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
-                            OBASSERT([title lowercaseString]);
-                            [string appendFormat:@"%@\n", title];
-						}
-						else
-						{
-							NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
-                            NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
-                            if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
-						}
-						// need separator?	
-					}
+                    [string appendIndent:anIndent+2];
+                    if (firstPass)
+                    {
+                        firstPass = NO;
+                    }
+                    else
+                    {
+                        [string appendString:@"&middot; "];
+                    }
+                    if (aChildPage == thisPage)	// not likely but maybe possible
+                    {
+                        NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
+                        OBASSERT([title lowercaseString]);
+                        [string appendFormat:@"%@\n", title];
+                    }
+                    else
+                    {
+                        NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
+                        NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
+                        if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
+                    }
+                    // need separator?	
 				}
 				[string appendIndent:anIndent+1];
 				[string appendString:@"</li></ul>\n"];
