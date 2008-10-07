@@ -28,16 +28,35 @@
 
 + (id)insertNewMediaFileWithAlias:(BDAlias *)alias inManagedObjectContext:(NSManagedObjectContext *)moc;
 {
-    KTExternalMediaFile *result = [super insertNewMediaFileWithPath:[alias fullPath] inManagedObjectContext:moc];
-	
-	[result setAlias:alias];
+    KTExternalMediaFile *result = nil;
+    BOOL canInsert = YES;
     
-    // As a last resort, try to set the UTI from the last known path
-    if (![result fileType])
+    
+    // Figure out if the alias is suitable
+    NSString *path = [alias fullPath];
+    NSString *UTI = nil;
+    if (!path)
     {
-        [result setValue:[NSString UTIForFileAtPath:[alias lastKnownPath]] forKey:@"fileType"];
+        UTI = [NSString UTIForFileAtPath:[alias lastKnownPath]];
+        if (!UTI) canInsert = NO;
     }
-	
+    
+    
+    // Insert if possible
+    if (canInsert)
+    {
+        result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
+        [result setAlias:alias];
+    
+        
+        // As a last resort, try to set the UTI from the last known path
+        if (![result fileType])
+        {
+            if (!UTI) UTI = [NSString UTIForFileAtPath:[alias lastKnownPath]];
+            [result setValue:UTI forKey:@"fileType"];
+        }
+    }
+    
 	return result;
 }
 
