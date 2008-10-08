@@ -181,11 +181,16 @@
 - (void)setWindowController:(KTDocWindowController *)aWindowController
 {
 	// In adition to standard accessor behaviour, keep an eye out for the document closing and for changes to the selected pages.
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"KTDocumentWillClose" object:[self document]];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"KTDocumentWillClose"
+                                                  object:[[self windowController] document]];
 	
 	myWindowController = aWindowController;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWillClose:) name:@"KTDocumentWillClose" object:[self document]];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(documentWillClose:)
+                                                 name:@"KTDocumentWillClose"
+                                               object:[aWindowController document]];
 }
 
 - (KTDocument *)document { return [[self windowController] document]; }

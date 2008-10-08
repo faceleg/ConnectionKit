@@ -50,7 +50,7 @@ typedef enum {
 	// Loading
     NSSet					*myPages;
     KTWebViewComponent		*myMainWebViewComponent;
-	CFRunLoopObserverRef	myRunLoopObserver;
+    BOOL                    _needsReload;
 	unsigned				myLoadingSuspensionCount;
 	
 	

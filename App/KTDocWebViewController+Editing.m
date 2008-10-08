@@ -64,7 +64,7 @@
 	DOMDocument *doc = [aDOMElement ownerDocument];
 	BOOL isNew = [[[[self windowController] siteOutlineController] selectedPage] isNewPage];
 	OFF((@"%@", NSStringFromSelector(_cmd) ));
-	BOOL displayEditingControls = [[self document] displayEditingControls];
+	BOOL displayEditingControls = [[[self windowController] document] displayEditingControls];
 
 	if (nil != aDOMElement)
 	{
@@ -586,7 +586,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	if (!myUndoManagerProxy)
 	{
-		myUndoManagerProxy = [[KTWebViewUndoManagerProxy alloc] initWithUndoManager:[[self document] undoManager]];
+		myUndoManagerProxy = [[KTWebViewUndoManagerProxy alloc] initWithUndoManager:[[[self windowController] document] undoManager]];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(webViewDidEditChunk:)

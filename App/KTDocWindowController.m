@@ -317,12 +317,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	//												 name:kKTInfoWindowMayNeedRefreshingNotification
 	//											   object:nil];	
 	
-	if ( ![[self document] isReadOnly] )
-	{
-		[[self document] setLastSavedTime:[NSDate date]];
-	}
-	
-	
 	// Check for missing media
 	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 	

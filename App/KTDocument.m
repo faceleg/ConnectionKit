@@ -271,9 +271,7 @@
 	// TODO: FIXME: Chris Hanson indicates that we should be removing each specific observation
 	// rather than doing blanket removal
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	[myLastSavedTime release]; myLastSavedTime = nil;
-			
+				
     [self setDocumentInfo:nil];
     
     [myMediaManager release];
@@ -541,16 +539,13 @@
 		// balance retain in makeWindowControllers
 		[myDocWindowController release]; myDocWindowController = nil;
 	}
-    
-	if ( nil != windowController )
-	{
-		if ( [windowController isEqual:myHTMLInspectorController] )
-		{
-			[self setHTMLInspectorController:nil];
-		}
-		
-		[super removeWindowController:windowController];
+    else if ( [windowController isEqual:myHTMLInspectorController] )
+    {
+		[self setHTMLInspectorController:nil];
 	}
+		
+	
+    [super removeWindowController:windowController];
 }
 
 #pragma mark -

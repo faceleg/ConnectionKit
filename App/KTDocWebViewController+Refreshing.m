@@ -124,15 +124,7 @@
 
 - (BOOL)webViewNeedsReload
 {
-	return (myRunLoopObserver != nil);
-}
-
-/*	Private callback function for scheduled webview loading
- */
-void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info)
-{
-	KTDocWebViewController *webViewController = info;
-	[webViewController reloadWebViewIfNeeded];
+	return _needsReload;
 }
 
 /*	Private method. Called whenever some portion of the webview needs reloading.
@@ -140,19 +132,24 @@ void ReloadWebViewIfNeeded(CFRunLoopObserverRef observer, CFRunLoopActivity acti
  */
 - (void)setWebViewNeedsReload:(BOOL)needsRefresh
 { 
-	if (needsRefresh && !myRunLoopObserver)
+	if (needsRefresh && ![self webViewNeedsReload])
 	{
 		// Install a fresh observer for the end of the run loop
-		CFRunLoopObserverContext context = { 0, self, NULL, NULL, NULL };
-		myRunLoopObserver = CFRunLoopObserverCreate(NULL, kCFRunLoopExit, NO, 0, &ReloadWebViewIfNeeded, &context);
-		CFRunLoopAddObserver([[NSRunLoop currentRunLoop] getCFRunLoop], myRunLoopObserver, kCFRunLoopCommonModes);
+		[[NSRunLoop currentRunLoop] performSelector:@selector(reloadWebViewIfNeeded)
+                                             target:self
+                                           argument:nil
+                                              order:0
+                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
 	}
-	else if (!needsRefresh && myRunLoopObserver)
+	else if (!needsRefresh && [self webViewNeedsReload])
 	{
 		// Unschedule the existing observer and throw it away
-		CFRunLoopRemoveObserver([[NSRunLoop currentRunLoop] getCFRunLoop], myRunLoopObserver, kCFRunLoopCommonModes);
-		CFRelease(myRunLoopObserver);	myRunLoopObserver = NULL;
+		[[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(reloadWebViewIfNeeded)
+                                                   target:self
+                                                 argument:nil];
 	}
+    
+    _needsReload = needsRefresh;
 }
 
 - (void)managedObjectContextObjectsDidChange:(NSNotification *)notification

@@ -57,9 +57,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTTransferController		*myLocalTransferController;
 	KTTransferController		*myRemoteTransferController;
 	KTTransferController		*myExportTransferController;
-	
-	NSDate						*myLastSavedTime;	
-		
+			
 	BOOL myIsClosing;
     unsigned mySaveOperationCount;						// used in KTDocument+Saving.m
     NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
@@ -198,9 +196,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (float)textSizeMultiplier;
 - (void)setTextSizeMultiplier:(float)value;
-
-- (NSDate *)lastSavedTime;
-- (void)setLastSavedTime:(NSDate *)aLastSavedTime;
 
 // export/upload
 

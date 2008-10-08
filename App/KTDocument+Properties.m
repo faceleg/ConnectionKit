@@ -143,15 +143,6 @@
 	return result;
 }
 
-- (NSDate *)lastSavedTime { return myLastSavedTime; }
-
-- (void)setLastSavedTime:(NSDate *)aLastSavedTime
-{
-    [aLastSavedTime retain];
-    [myLastSavedTime release];
-    myLastSavedTime = aLastSavedTime;
-}
-
 - (KTTransferController *)localTransferController
 {
     return myLocalTransferController;
