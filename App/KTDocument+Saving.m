@@ -696,11 +696,20 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	// Migrate the main document store
 	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
 	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
+    OBASSERT(storeCoordinator);
 	
 	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL UTI:nil];
     OBASSERT(oldDataStoreURL);
+    
     id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];
-    OBASSERTSTRING(oldDataStore, [oldDataStoreURL absoluteString]);
+    NSAssert5(oldDataStore,
+              @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
+              [oldDataStoreURL absoluteString],
+              [storeCoordinator persistentStores],
+              [self fileURL],
+              originalContentsURL,
+              URL);
+    
     if (![storeCoordinator migratePersistentStore:oldDataStore
 										    toURL:storeURL
 										  options:nil
@@ -711,6 +720,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		return NO;
 	}
 	
+    
 	// Set the new metadata
 	if ( ![self setMetadataForStoreAtURL:storeURL error:outError] )
 	{
@@ -718,6 +728,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		return NO;
 	}	
 	
+    
 	// Migrate the media store
 	storeURL = [KTDocument mediaStoreURLForDocumentURL:URL];
 	storeCoordinator = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
