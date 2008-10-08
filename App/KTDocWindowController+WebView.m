@@ -1290,9 +1290,10 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 - (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow
 {
 	// Preparation
-    WebView *webView = [[self webViewController] webView];
-    DOMRange *selectedRange = [webView selectedDOMRange];
-    DOMDocument *DOMDoc = [[selectedRange startContainer] ownerDocument];
+    WebView *webView = [[self webViewController] webView];      OBASSERT(webView);
+    DOMRange *selectedRange = [webView selectedDOMRange];       OBASSERT(selectedRange);
+    DOMNode *selectionStart = [selectedRange startContainer];   OBASSERT(selectionStart);
+    DOMDocument *DOMDoc = [selectionStart ownerDocument];       OBASSERT(DOMDoc);
     
     
     // Create the link DOM nodes
