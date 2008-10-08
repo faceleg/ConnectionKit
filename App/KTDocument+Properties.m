@@ -27,6 +27,9 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation KTDocument ( Properties )
 
 #pragma mark -
@@ -44,16 +47,6 @@
 	// we store NSIndexSets internally as a string
 	NSString *string = [value indexSetAsString];
 	[self setWrappedValue:string forKey:@"lastSelectedRows"];
-}
-
-- (NSSet *)requiredBundlesIdentifiers
-{
-	return [[self documentInfo] requiredBundlesIdentifiers];
-}
-
-- (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers
-{
-	[[self documentInfo] setRequiredBundlesIdentifiers:identifiers];
 }
 
 #pragma mark .... relationships
@@ -230,23 +223,6 @@
 	}
 }
 
-- (BOOL)showDesigns
-{
-	return myShowDesigns;
-}
-
-- (void)setShowDesigns:(BOOL)value
-{
-	myShowDesigns = value;
-}
-
-- (void)terminateConnections
-{
-	[myExportTransferController terminateConnection];
-	[myLocalTransferController terminateConnection];
-	[myRemoteTransferController terminateConnection];
-}
-
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)anHTMLInspectorController
 {
     [anHTMLInspectorController retain];
@@ -270,20 +246,18 @@
 	return myHTMLInspectorController;
 }
 
-//- (BOOL)suspendSavesDuringPeerCreation
-//{
-//	return mySuspendSavesDuringPeerCreation;
-//}
-//
-//- (void)setSuspendSavesDuringPeerCreation:(BOOL)aFlag
-//{
-//	mySuspendSavesDuringPeerCreation = aFlag;
-//}
-
 #pragma mark -
 #pragma mark Document Display Properties
 
-// these were changed from setWrapped to setPrimitive to avoid being marked on undo stack
+- (BOOL)showDesigns
+{
+	return myShowDesigns;
+}
+
+- (void)setShowDesigns:(BOOL)value
+{
+	myShowDesigns = value;
+}
 
 - (BOOL)displaySiteOutline { return myDisplaySiteOutline; }
 

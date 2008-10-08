@@ -1992,9 +1992,15 @@ from representedObject */
 
 - (void)alertDidEndForWindowClosingWithTransfersInProgress:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	if (returnCode == NSAlertFirstButtonReturn) {
+	if (returnCode == NSAlertFirstButtonReturn)
+    {
 		NSLog(@"terminating transfers");
-		[[self document] terminateConnections];
+        
+        // Terminate connections
+        [[[self document] exportTransferController] terminateConnection];
+        [[[self document] localTransferController] terminateConnection];
+        [[[self document] remoteTransferController] terminateConnection];
+        
 		[[self window] performClose:nil];
 	}
 }

@@ -174,7 +174,7 @@
             // if we're good, make sure all our required bundles have been loaded
             if ( result )
             {
-                NSEnumerator *e = [[self requiredBundlesIdentifiers] objectEnumerator];
+                NSEnumerator *e = [[[self documentInfo] requiredBundlesIdentifiers] objectEnumerator];
                 NSString *bundleIdentifier;
                 while ( bundleIdentifier  = [e nextObject] )
                 {

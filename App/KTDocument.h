@@ -196,12 +196,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSIndexSet *)lastSelectedRows;
 - (void)setLastSelectedRows:(NSIndexSet *)value;
 
-- (NSSet *)requiredBundlesIdentifiers;
-- (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
-
-//- (KTPage *)root;
-//- (void)setRoot:(KTPage *)value;
-
 - (float)textSizeMultiplier;
 - (void)setTextSizeMultiplier:(float)value;
 
@@ -217,7 +211,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (KTTransferController *)remoteTransferController;
 
 - (BOOL)connectionsAreConnected;
-- (void)terminateConnections;
 
 // support
 
