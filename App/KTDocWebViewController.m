@@ -109,37 +109,7 @@
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-
-
-- (DOMHTMLElement *)elementWaitingForFragmentLoad
-{
-    return myElementWaitingForFragmentLoad; 
-}
-- (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad
-{
-    [anElementWaitingForFragmentLoad retain];
-    [myElementWaitingForFragmentLoad release];
-    myElementWaitingForFragmentLoad = anElementWaitingForFragmentLoad;
-}
-
-
-- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
-{
-	if (nil == myAsyncOffscreenWebViewController)
-	{
-		myAsyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
-	}
-    return myAsyncOffscreenWebViewController; 
-}
-- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController
-{
-    [anAsyncOffscreenWebViewController retain];
-    [myAsyncOffscreenWebViewController release];
-    myAsyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
-}
-
+#pragma mark View
 
 - (WebView *)webView { return myWebView; }
 
@@ -173,27 +143,74 @@
     [newWebView setNextResponder:self];
 }
 
+#pragma mark -
+#pragma mark Controller Chain
 
-- (NSTextView *)sourceCodeTextView { return oSourceTextView; }
-
-- (KTDocWindowController *)windowController { return myWindowController; }
+- (KTDocWindowController *)windowController { return _windowController; }
 
 - (void)setWindowController:(KTDocWindowController *)aWindowController
 {
-	// In adition to standard accessor behaviour, keep an eye out for the document closing and for changes to the selected pages.
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"KTDocumentWillClose"
-                                                  object:[[self windowController] document]];
-	
-	myWindowController = aWindowController;
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(documentWillClose:)
-                                                 name:@"KTDocumentWillClose"
-                                               object:[aWindowController document]];
+	_windowController = aWindowController;  // Weak ref
 }
 
-- (KTDocument *)document { return [[self windowController] document]; }
+- (KTDocument *)document { return _document; }
+
+- (void)setDocument:(KTDocument *)document
+{
+    if (_document)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:NSManagedObjectContextObjectsDidChangeNotification
+                                                      object:[[self document] managedObjectContext]];
+    }
+    
+    _document = document;   // Weak ref
+    [self setWebViewNeedsReload:NO];
+    
+    if (document)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(documentDidChange:)
+                                                     name:NSManagedObjectContextObjectsDidChangeNotification
+                                                   object:[[self document] managedObjectContext]];
+    }
+}
+
+
+#pragma mark -
+#pragma mark Accessors
+
+
+
+- (DOMHTMLElement *)elementWaitingForFragmentLoad
+{
+    return myElementWaitingForFragmentLoad; 
+}
+- (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad
+{
+    [anElementWaitingForFragmentLoad retain];
+    [myElementWaitingForFragmentLoad release];
+    myElementWaitingForFragmentLoad = anElementWaitingForFragmentLoad;
+}
+
+
+- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
+{
+	if (nil == myAsyncOffscreenWebViewController)
+	{
+		myAsyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
+	}
+    return myAsyncOffscreenWebViewController; 
+}
+- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController
+{
+    [anAsyncOffscreenWebViewController retain];
+    [myAsyncOffscreenWebViewController release];
+    myAsyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
+}
+
+
+- (NSTextView *)sourceCodeTextView { return oSourceTextView; }
 
 - (BOOL)isWebViewLoading { return myWebViewIsLoading; }
 
@@ -363,7 +380,7 @@
 	[self setTransitionFilter:nil];
 	if ([self animationCoverWindow])
 	{
-		[[[self windowController] window] removeChildWindow:[self animationCoverWindow]];
+		[[[self webView] window] removeChildWindow:[self animationCoverWindow]];
 		[self setAnimationCoverWindow:nil];
 	}
 	// (stop loading just in case it was already loading, to handle multiple clicks.
@@ -399,7 +416,7 @@
 		[theView unlockFocus];
 		
 		NSRect subWindowRect = [theView convertRect:r toView:nil];
-		subWindowRect.origin = [[[self windowController] window] convertBaseToScreen:subWindowRect.origin];
+		subWindowRect.origin = [[[self webView] window] convertBaseToScreen:subWindowRect.origin];
 		
 		NSWindow *childWindow = [[[NSWindow alloc] initWithContentRect:subWindowRect
 															 styleMask:NSBorderlessWindowMask
@@ -413,7 +430,7 @@
 		
 		[imageView setImage:image];
 		[childWindow setContentView:imageView];
-		[[[self windowController] window] addChildWindow:childWindow ordered:NSWindowAbove];
+		[[[self webView] window] addChildWindow:childWindow ordered:NSWindowAbove];
 		[self setAnimationCoverWindow:childWindow];
 		
 		// Kick off animation after a short delay to get at least partial webview loaded.
@@ -583,7 +600,7 @@
 		[self setTransitionFilter:nil];
 		[sender invalidate];
 		//		[sender release];
-		[[[self windowController] window] removeChildWindow:[self animationCoverWindow]];
+		[[[self webView] window] removeChildWindow:[self animationCoverWindow]];
 		[self setAnimationCoverWindow:nil];
 	}
 }
@@ -662,10 +679,10 @@
 		}
 		else if ([scheme isEqualToString:@"applewebdata"] && ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther) )
 		{
-			KTPage *thePage = [[[self windowController] document] pageForURLPath:[url path]];
+			KTPage *thePage = [[self document] pageForURLPath:[url path]];
 			if (!thePage)
 			{
-				[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window]
+				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
 											silencingKey:@"shutUpFakeURL"
 												   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
 												  format:NSLocalizedString

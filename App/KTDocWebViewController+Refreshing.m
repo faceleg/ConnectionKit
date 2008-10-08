@@ -81,14 +81,7 @@
 
 - (void)setPages:(NSSet *)pages
 {
-    // Stop observation if needed
     KTPage *oldPage = [self page];
-    if (oldPage)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:NSManagedObjectContextObjectsDidChangeNotification
-                                                      object:[oldPage managedObjectContext]];
-    }
     
     
     // Store pages
@@ -100,16 +93,6 @@
     // Reload
     KTPage *page = [self page];
     if (oldPage != page) [self reloadWebView];
-    
-    
-    // Observe new page if needed
-    if (page)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(managedObjectContextObjectsDidChange:)
-                                                     name:NSManagedObjectContextObjectsDidChangeNotification
-                                                   object:[page managedObjectContext]];
-    }
 }
 
 - (KTPage *)page
@@ -152,9 +135,10 @@
     _needsReload = needsRefresh;
 }
 
-- (void)managedObjectContextObjectsDidChange:(NSNotification *)notification
+- (void)documentDidChange:(NSNotification *)notification
 {
-	if (![self webViewLoadingIsSuspended] && ![[[self windowController] document] isSaving])
+	if (![self webViewLoadingIsSuspended] &&
+        ![[self document] isSaving])
 	{
 		[self setWebViewNeedsReload:YES];
 	}
@@ -515,18 +499,6 @@
 	myMainWebViewComponent = component;
 	
 	[component setWebViewController:self];
-}
-
-#pragma mark -
-#pragma mark Page Key Paths
-
-/*	We are registered to know when the document will close so that key paths can be cleared out first.
- *	Otherwise, one key path is bound to try to access the document and then ... kaboom!
- */
-- (void)documentWillClose:(NSNotification *)notification
-{
-	[self setMainWebViewComponent:nil];
-	[self setWebViewNeedsReload:NO];
 }
 
 @end

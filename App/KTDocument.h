@@ -21,6 +21,10 @@
 #import <WebKit/WebKit.h>
 
 
+extern NSString *KTDocumentDidChangeNotification;
+extern NSString *KTDocumentWillCloseNotification;
+
+
 // publishing mode
 typedef enum {
 	kGeneratingPreview = 0,

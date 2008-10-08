@@ -32,6 +32,7 @@ typedef enum {
 @class KTDocWindowController;
 @class KTAsyncOffscreenWebViewController;
 
+
 @interface KTDocWebViewController : NSResponder
 {
 	IBOutlet WebView				*webView;
@@ -40,8 +41,12 @@ typedef enum {
 	
 	@private
 	
+    // View
 	WebView					*myWebView;
-	KTDocWindowController	*myWindowController;
+    
+    // Controller chain
+	KTDocWindowController	*_windowController;
+    KTDocument              *_document;
 	
 	DOMHTMLElement			*myElementWaitingForFragmentLoad;
 	KTAsyncOffscreenWebViewController				*myAsyncOffscreenWebViewController;
@@ -88,20 +93,27 @@ typedef enum {
 	NSMutableDictionary *myInlineImageElements;
 }
 
-// Accessors
+
+#pragma mark View
 - (WebView *)webView;
 - (void)setWebView:(WebView *)webView;	// No-one should have to call this.
 
+
+#pragma mark Controller chain
+- (KTDocWindowController *)windowController;	// Weak reference
+- (void)setWindowController:(KTDocWindowController *)windowController;	// Don't call this.
+
+- (KTDocument *)document;   // Weak ref
+- (void)setDocument:(KTDocument *)document;
+
+
+#pragma mark Accessors
 - (DOMHTMLElement *)elementWaitingForFragmentLoad;
 - (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad;
 - (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController;
 - (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController;
 
 - (NSTextView *)sourceCodeTextView;
-
-- (KTDocWindowController *)windowController;	// Weak reference
-- (void)setWindowController:(KTDocWindowController *)windowController;	// Don't call this.
-- (KTDocument *)document;
 
 - (NSString *)savedPageletStyle;
 - (void)setSavedPageletStyle:(NSString *)aSavedPageletStyle;
@@ -142,6 +154,9 @@ typedef enum {
 @end
 
 
+#pragma mark -
+
+
 @interface KTDocWebViewController (Refreshing)
 
 - (NSSet *)pages;
@@ -167,6 +182,9 @@ typedef enum {
 - (void)setMainWebViewComponent:(KTWebViewComponent *)component;
 
 @end
+
+
+#pragma mark -
 
 
 @interface KTDocWebViewController (Editing)

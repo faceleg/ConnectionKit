@@ -2123,17 +2123,24 @@ from representedObject */
 	[notificationCenter removeObserver:self
 								  name:NSUndoManagerWillCloseUndoGroupNotification
 								object:[[self document] undoManager]];
-	
-	
-	// Default behaviour
+    
+    
+    // Default behaviour
 	[super setDocument:document];
 	
 	
+	// Alert sub-controllers to the change
+    [[self webViewController] setDocument:[self document]];
+	
+	
 	// Observe new document
-	[notificationCenter addObserver:self
-						   selector:@selector(undoManagerWillCloseUndoGroup:)
-						       name:NSUndoManagerWillCloseUndoGroupNotification
-							 object:[document undoManager]];
+    if (document)
+    {
+        [notificationCenter addObserver:self
+                               selector:@selector(undoManagerWillCloseUndoGroup:)
+                                   name:NSUndoManagerWillCloseUndoGroupNotification
+                                 object:[document undoManager]];
+    }
 }
 
 /*	Called whenever a change is undone. Ensure the correct page is highlighted in the Site Outline to show the change.

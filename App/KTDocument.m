@@ -84,6 +84,10 @@
 #import "Registration.h"
 
 
+NSString *KTDocumentDidChangeNotification = @"KTDocumentDidChange";
+NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
+
+
 @interface KTDocument ( Private )
 + (void)initialize;
 - (BOOL)keepBackupFile;
@@ -497,7 +501,7 @@
 }
 
 #pragma mark -
-#pragma mark NSDocument Overrides
+#pragma mark Window Controllers
 
 /*!	Force KTDocument to use a custom subclass of NSWindowController
  */
@@ -549,6 +553,21 @@
 }
 
 #pragma mark -
+#pragma mark Changes
+
+/*  Supplement NSDocument by broadcasting a notification that the document did change
+ */
+- (void)updateChangeCount:(NSDocumentChangeType)changeType
+{
+    [super updateChangeCount:changeType];
+    
+    if (changeType == NSChangeDone || changeType == NSChangeUndone)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentDidChangeNotification object:self];
+    }
+}
+
+#pragma mark -
 #pragma mark Closing Documents
 
 - (void)close
@@ -559,7 +578,7 @@
     [self setClosing:YES];
 	
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentWillClose" object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
 	//LOG((@"KTDocument -close"));
 	// NB: [self windowController] is nil by the time we get here...

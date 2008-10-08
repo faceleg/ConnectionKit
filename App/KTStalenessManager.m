@@ -63,7 +63,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(documentWillClose:)
-												 name:@"KTDocumentWillClose"
+												 name:KTDocumentWillCloseNotification
 											   object:document];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self

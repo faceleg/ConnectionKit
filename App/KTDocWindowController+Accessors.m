@@ -246,12 +246,14 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 - (void)setWebViewController:(KTDocWebViewController *)controller
 {
 	[[self webViewController] setWindowController:nil];
+    [[self webViewController] setDocument:nil];
 	
 	[controller retain];
 	[myWebViewController release];
 	myWebViewController = controller;
 	
 	[[self webViewController] setWindowController:self];
+    [[self webViewController] setDocument:[self document]];
 }
 
 @end
