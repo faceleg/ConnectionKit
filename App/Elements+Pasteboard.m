@@ -148,8 +148,7 @@
 		if (!objectIsNSCodingCompliant)
 		{
 			id <NSCoding> pasteboardRepObject = [anObject valueForKey:@"pasteboardRepresentation"];
-            OBASSERTSTRING(pasteboardRepObject, aKey);
-			[buffer setObject:pasteboardRepObject forKey:aKey];
+            [buffer setValue:pasteboardRepObject forKey:aKey];
 		}
 	}
 	
