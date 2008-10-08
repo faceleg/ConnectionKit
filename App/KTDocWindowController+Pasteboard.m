@@ -760,10 +760,22 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 
 - (void)actuallyDeletePages:(NSDictionary *)aContext
 {	
+	[aContext release]; // balancing retain in deletePages:
+    
+    
 	// FIXME: we could do away with the context dictionay, since we're going off of selected pages,
 	// but first test whether this is OK for deleting from a contextual menu
-	NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
-	OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"You can't delete root");
+	
+    NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
+	
+    
+    // The user shouldn't be able to try to delete root, but if so, beep and fail
+    if ([selectedPages containsObject:[[[self document] documentInfo] root]])
+    {
+        NSBeep();
+        return;
+    }
+    
 	
 	if ([selectedPages count] > 0)
 	{		
@@ -800,8 +812,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 			[[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
 		}
 	}
-	
-	[aContext release]; // balancing retain in deletePages:
 
 }
 
