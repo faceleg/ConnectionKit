@@ -1146,13 +1146,6 @@ from representedObject */
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
 }
 
-// paste some raw HTML
-- (IBAction)pasteTextAsMarkup:(id)sender
-{
-    NSString *markup = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
-    [oWebView replaceSelectionWithMarkupString:markup ? markup : @""];
-}
-
 - (IBAction)insertList:(id)sender
 {
     [oWebView replaceSelectionWithMarkupString:@"<p><ul><li></li></ul></p>"];

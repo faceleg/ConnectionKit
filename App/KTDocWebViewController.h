@@ -184,5 +184,7 @@ typedef enum {
 // Links
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;
 
+- (IBAction)pasteTextAsMarkup:(id)sender;
+
 
 @end

@@ -856,7 +856,13 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Menu Validation
 
-// This is called by validateMenuItem: in another file; this is webkit-specific stuff
+// paste some raw HTML
+
+- (IBAction)pasteTextAsMarkup:(id)sender
+{
+    NSString *markup = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
+    [[self webView] replaceSelectionWithMarkupString:markup ? markup : @""];
+}
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
@@ -894,8 +900,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	}
 	else if (action == @selector(pasteTextAsMarkup:))
 	{
-		DOMRange *range = [[self webView] selectedDOMRange];
-		return (nil != range);
+		result = [self webViewIsEditing];
 	}
 	
     
