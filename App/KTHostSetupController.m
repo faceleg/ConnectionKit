@@ -2206,7 +2206,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			}
 			return;	// no point in proceeding.
 		}
-		NSString *homeBaseURL = [[[NSBundle mainBundle] homeBaseURL] absoluteString];
+		NSString *homeBaseURL = [[[NSApp delegate] homeBaseURL] absoluteString];
 		NSURLConnection *theConnection = nil;
 		if (nil != homeBaseURL)
 		{

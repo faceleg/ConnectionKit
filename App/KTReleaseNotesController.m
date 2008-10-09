@@ -32,7 +32,7 @@
 	// Add our key  that makes this into release notes
 	[simpleParameters setObject:@"1" forKey:@"rn"];
 
-	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSBundle mainBundle] homeBaseURL]];
+	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSApp delegate] homeBaseURL]];
 	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:simpleParameters];
 	
 	DJW((@"release notes URL = %@", result));
