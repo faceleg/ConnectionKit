@@ -1328,6 +1328,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
                 if ( okToProceed )
                 {
+                    [[self windowController] beginSheetWithStatus:NSLocalizedString(@"Creating backup\\U2026","Message title when backuping up doc")
+                                                            image:nil];
+                    
                     // grab the date
                     NSDate *now = [NSDate date];
                     
@@ -1342,6 +1345,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                               now, NSFileModificationDate,
                                               nil];
                     (void)[fm changeFileAttributes:dateInfo atPath:backupPath];
+                    
+                    
+                    [[self windowController] endSheet];
                 }
             }
         }
