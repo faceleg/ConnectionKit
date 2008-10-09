@@ -85,8 +85,4 @@
 
 - (NSSet *)uploadedDesigns;
 
-// covers that message associatedDocument's main windowController
-- (void)suspendUIUpdates;
-- (void)resumeUIUpdates;
-
 @end

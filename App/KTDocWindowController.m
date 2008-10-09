@@ -115,10 +115,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	if ( nil != self )
 	{
-		// be ready for webview vs. context updating collisions
-		myUpdateLock = [[NSLock alloc] init];
-		myIsSuspendingUIUpdates = NO;
-		
 		// set up a pseudo lock that we can @syncronized around
 		[self setAddingPagesViaDragPseudoLock:[[[NSObject alloc] init] autorelease]];
 		
@@ -144,9 +140,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    // no more updating
-	[myUpdateLock release]; myUpdateLock = nil;
-
     // disconnect UI delegates
     [oDesignsSplitView setDelegate:nil];
 	[oDocumentController unbind:@"contentObject"];
@@ -2484,6 +2477,16 @@ from representedObject */
 	
 }
 
+// the goal here will be to clear the HTML markup from the pasteboard before pasting,
+// if we can just get this to work!
+- (void)handleEvent:(DOMEvent *)event;
+{
+	LOG((@"event= %@", event));
+}
+
+#pragma mark -
+#pragma mark Inspector
+
 /*!	Show the info, in whatever is the current configuration.  Close other things not showing.
 */
 - (void)showInfo:(BOOL)inShow
@@ -2556,54 +2559,6 @@ from representedObject */
 			[[sharedControllerMaybe window] orderOut:nil];
 		}
 	}
-}
-
-//- (void)infoWindowMayNeedRefreshing:(NSNotification *)aNotification
-//{
-//	KTDocument *document = [aNotification object];
-//	if ( [document isEqual:[self document]] )
-//	{
-//		KTInfoWindowController *sharedController = [KTInfoWindowController sharedInfoWindowController];
-//		[sharedController setAssociatedDocument:[self document]];
-//		if (nil != mySelectedInlineImageElement)
-//		{
-//			[sharedController setupViewStackFor:mySelectedInlineImageElement];
-//		}
-//		else if (nil != mySelectedPagelet)
-//		{
-//			[sharedController setupViewStackFor:mySelectedPagelet];
-//		}
-//		else if (nil != mySelectedPage)
-//		{
-//			[sharedController setupViewStackFor:mySelectedPage];
-//		}	
-//	}
-//}
-
-- (BOOL)isSuspendingUIUpdates
-{
-	return myIsSuspendingUIUpdates;
-}
-
-- (void)suspendUIUpdates
-{
-	//LOG((@"deactivating UI updates"));
-	[myUpdateLock lock];
-	myIsSuspendingUIUpdates = YES;
-}
-
-- (void)resumeUIUpdates
-{
-	//LOG((@"(re)activating UI updates"));
-	[myUpdateLock unlock];
-	myIsSuspendingUIUpdates = NO;
-}
-
-// the goal here will be to clear the HTML markup from the pasteboard before pasting,
-// if we can just get this to work!
-- (void)handleEvent:(DOMEvent *)event;
-{
-	LOG((@"event= %@", event));
 }
 
 @end

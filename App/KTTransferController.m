@@ -402,22 +402,6 @@ static NSArray *sReservedNames = nil;
 	[self setConnection:nil];
 }
 
-- (void)suspendUIUpdates
-{
-	if ( ![[[self associatedDocument] windowController] isSuspendingUIUpdates] )
-	{
-		[[[self associatedDocument] windowController] suspendUIUpdates];
-	}
-}
-
-- (void)resumeUIUpdates
-{
-	if ( [[[self associatedDocument] windowController] isSuspendingUIUpdates] )
-	{
-		[[[self associatedDocument] windowController] resumeUIUpdates];
-	}
-}
-
 #pragma mark -
 #pragma mark Convenience wrappers
 
@@ -721,7 +705,6 @@ static NSArray *sReservedNames = nil;
 	else
 	{
 		[[[self associatedDocument] windowController] setPublishingMode:kGeneratingPreview];
-		[self resumeUIUpdates];
 		//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:DONT_SUSPEND];
 	}
 }
@@ -743,7 +726,6 @@ static NSArray *sReservedNames = nil;
 	else
 	{
 		[[[self associatedDocument] windowController] setPublishingMode:kGeneratingPreview];
-		[self resumeUIUpdates];
 		//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:DONT_SUSPEND];
 	}
 }
@@ -1049,7 +1031,6 @@ if ([self where] == kGeneratingRemoteExport) {
 		myInspectorWasDisplayed = [[[KTInfoWindowController sharedControllerWithoutLoading] window] isVisible];
 		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 		
-		[self suspendUIUpdates];
 
 		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		
@@ -1623,14 +1604,6 @@ if ([self where] == kGeneratingRemoteExport) {
 			NSSet *publishedMedia = [self mediaFileUploads];
 			[publishedMedia setBool:NO forKey:@"isStale"];
 		}
-		
-		
-		
-		
-		// turn the document UI back on
-		[self resumeUIUpdates];
-		//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:DONT_SUSPEND];		// restore
-		
 	}
 	else if (!myHadFilesToUpload)
 	{
@@ -1782,8 +1755,6 @@ if ([self where] == kGeneratingRemoteExport) {
 	[self removeAllMediaFileUploads];
 	
 	myPanelIsDisplayed = NO;
-	[self resumeUIUpdates];
-	//[[[[self associatedDocument] windowController] webViewController] setSuspendNextWebViewUpdate:DONT_SUSPEND];		// restore
 																									//we need to reactivate the autosave just in case	
 	if (myInspectorWasDisplayed)
 	{

@@ -114,9 +114,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSTextField			*oModalStatus;
 	IBOutlet NSImageView			*oModalImage;
 		
-	NSLock							*myUpdateLock;
-	BOOL myIsSuspendingUIUpdates;	// flag to see whether myUpdateLock isLocked
-	
 	NSObject						*myAddingPagesViaDragPseudoLock;
 	
 	// Code Injection
@@ -189,9 +186,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)selectionDealloc;
 - (void)documentControllerDeallocSupport;
 
-- (BOOL)isSuspendingUIUpdates;
-- (void)suspendUIUpdates;
-- (void)resumeUIUpdates;
 - (void)showInfo:(BOOL)inShow;
 
 // Plugin Inspector Views
