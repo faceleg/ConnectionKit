@@ -16,6 +16,8 @@
 - (void)setParentController:(id <KTDocumentControllerChain>)controller
 {
     _parentController = controller; // Weak ref
+    [self setWindowController:[controller windowController]];
+    [self setDocument:[controller document]];
 }
 
 - (KTDocWindowController *)windowController { return _windowController; }

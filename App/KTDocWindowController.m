@@ -68,8 +68,12 @@
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
-@interface KTDocWindowController ( Private )
+@interface KTDocWindowController (Private)
 
+// Controller chain
+- (void)removeAllChildControllers;
+
+// Actions
 - (void)showDesigns:(BOOL)inShow;
 - (void)showStatusBar:(BOOL)inShow;
 
@@ -85,16 +89,23 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 @end
 
 
+#pragma mark -
+
+
 @implementation KTDocWindowController
 
-/*!	Designated initializer.
-*/
-
+/*	Designated initializer.
+ */
 - (id)initWithWindow:(NSWindow *)window;
 {
 	self = [super initWithWindow:window];
-	[self setShouldCloseDocument:YES];
-	///[self siteOutlineInitSupport];
+	
+    if (self)
+    {
+        _childControllers = [[NSMutableArray alloc] init];
+        [self setShouldCloseDocument:YES];
+    }
+        
 	return self;
 }
 
@@ -117,36 +128,23 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     return self;
 }
 
-//- (oneway void)release
-//{
-//	//  TOTAL BIZARRE KLUDGE -- I CAN'T DO THIS IN DEALLOC; I GET COMPLAINTS ABOUT STILL HAVING
-//	// REGISTERED OBSERVERS. FOR SOME REASON, IT COMPLAINS ABOUT THIS BEFORE MY DEALLOC CODE IS
-//	// CALLED!  SO INSTEAD, I DO THIS JUST BEFORE IT'S ABOUT TO DEALLOC!
-//	
-//	if ([self retainCount] == 1)
-//	{
-//		[self webViewDeallocSupport];
-//		[self siteOutlineDeallocSupport];
-//	}
-//	[super release];
-//}
-
 - (void)dealloc
 {
 	// Get rid of the site outline controller
 	[self setSiteOutlineController:nil];
 	
+	// release my copy of the window script object.
+	[[self webViewController] setWindowScriptObject:nil];
 	
-	// Dispose of the web view controller
-	[self setWebViewController:nil];
 	
+	// Dispose of the controller chain
+    [self removeAllChildControllers];
+	
+    
 	// stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    // release my copy of the window script object.
-	[[self webViewController] setWindowScriptObject:nil];
-	
-	// no more updating
+    // no more updating
 	[myUpdateLock release]; myUpdateLock = nil;
 
     // disconnect UI delegates
@@ -328,7 +326,35 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark -
-#pragma mark Site Outline
+#pragma mark Controller Chain
+
+- (NSArray *)childControllers { return [[_childControllers copy] autorelease]; }
+
+- (void)addChildController:(KTDocViewController *)controller
+{
+    OBPRECONDITION(![controller parentController]); // The controller shouldn't already have a parent
+    [controller setParentController:self];
+    
+    [_childControllers addObject:controller];
+}
+
+- (void)removeChildController:(KTDocViewController *)controller
+{
+    unsigned index = [_childControllers indexOfObjectIdenticalTo:controller];
+    if (index != NSNotFound)
+    {
+        [controller setParentController:nil];
+        [_childControllers removeObjectAtIndex:index];
+    }
+}
+
+- (void)removeAllChildControllers
+{
+    [_childControllers makeObjectsPerformSelector:@selector(setParentController:) withObject:nil];
+    [_childControllers removeAllObjects];
+}
+
+#pragma mark Individual controllers
 
 - (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
 
@@ -349,6 +375,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[controller setContent:[[[self document] documentInfo] root]];
 	[controller setWindowController:self];
 	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
+}
+
+- (KTDocWebViewController *)webViewController { return webViewController; }
+
+- (void)setWebViewController:(KTDocWebViewController *)controller
+{
+	// Dispose of the old controller
+    if (webViewController) [self removeChildController:webViewController];
+    
+    webViewController = controller; // Weak ref since -childControllers retains it
+    [self addChildController:controller];
 }
 
 #pragma mark -
@@ -2132,7 +2169,7 @@ from representedObject */
 	
 	
 	// Alert sub-controllers to the change
-    [[self webViewController] setDocument:[self document]];
+    [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
 	
 	
 	// Observe new document

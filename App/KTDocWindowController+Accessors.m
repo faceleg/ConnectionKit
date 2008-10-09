@@ -238,24 +238,6 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
 	myAddingPagesViaDragPseudoLock = anObject;
 }
 
-#pragma mark -
-#pragma mark Related Controllers
-
-- (KTDocWebViewController *)webViewController { return myWebViewController; }
-
-- (void)setWebViewController:(KTDocWebViewController *)controller
-{
-	[[self webViewController] setWindowController:nil];
-    [[self webViewController] setDocument:nil];
-	
-	[controller retain];
-	[myWebViewController release];
-	myWebViewController = controller;
-	
-	[[self webViewController] setWindowController:self];
-    [[self webViewController] setDocument:[self document]];
-}
-
 @end
 
 

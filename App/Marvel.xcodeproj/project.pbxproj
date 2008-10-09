@@ -3054,13 +3054,13 @@
 			name = "Core Image";
 			sourceTree = "<group>";
 		};
-		2721E0ED0E9E0CA200A458B2 /* General */ = {
+		2721E0ED0E9E0CA200A458B2 /* Controller Chain */ = {
 			isa = PBXGroup;
 			children = (
 				2721E0EE0E9E0CBD00A458B2 /* KTController.h */,
 				2721E0EF0E9E0CBD00A458B2 /* KTController.m */,
 			);
-			name = General;
+			name = "Controller Chain";
 			sourceTree = "<group>";
 		};
 		272321DB0D48B5A70075F31F /* Page Details */ = {
@@ -3366,7 +3366,7 @@
 		27DF88CD0D85780100AEF4B5 /* Document UI */ = {
 			isa = PBXGroup;
 			children = (
-				2721E0ED0E9E0CA200A458B2 /* General */,
+				2721E0ED0E9E0CA200A458B2 /* Controller Chain */,
 				27DF88CE0D85785D00AEF4B5 /* Window */,
 				3C5188A10D2F4DDC002D7414 /* Site Outline */,
 				3C202DA507DFC4BA00DE4994 /* WebView */,

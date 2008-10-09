@@ -38,7 +38,7 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet RBSplitView				*oSidebarSplitView;
     IBOutlet RBSplitView				*oDesignsSplitView;
 	IBOutlet WebView					*oWebView;
-	IBOutlet KTDocWebViewController		*webViewController;
+	IBOutlet KTDocWebViewController		*webViewController;     // Weak ref
 	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
@@ -73,7 +73,6 @@ extern NSString *gInfoWindowAutoSaveName;
     RYZImagePopUpButton             *myAddCollectionPopUpButton;    // constructed via toolbar code
 	
 	// WEBVIEW STUFF ....
-	KTDocWebViewController			*myWebViewController;
 	int								myPublishingMode;
 	NSString						*myWebViewTitle;
 	@public
@@ -129,10 +128,25 @@ extern NSString *gInfoWindowAutoSaveName;
 	KTPluginInspectorViewsManager	*myPluginInspectorViewsManager;
 	
 	NSButton *myBuyNowButton;
+    
+    
+    // Controller Chain
+    NSMutableArray  *_childControllers;
 }
+
+#pragma mark Controller Chain
+- (NSArray *)childControllers;
+- (void)addChildController:(KTDocViewController *)controller;
+- (void)removeChildController:(KTDocViewController *)controller;
 
 - (KTDocSiteOutlineController *)siteOutlineController;
 - (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
+
+- (KTDocWebViewController *)webViewController;
+- (void)setWebViewController:(KTDocWebViewController *)controller;
+
+
+
 
 
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
@@ -315,9 +329,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (NSObject *)addingPagesViaDragPseudoLock;
 - (void)setAddingPagesViaDragPseudoLock:(NSObject *)anObject;
-
-- (KTDocWebViewController *)webViewController;
-- (void)setWebViewController:(KTDocWebViewController *)controller;
 
 @end
 
