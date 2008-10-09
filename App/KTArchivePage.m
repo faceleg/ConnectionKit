@@ -84,4 +84,6 @@
 	return sPageTemplateString;
 }
 
+- (BOOL)isXHTML { return [[self parent] isXHTML]; }
+
 @end

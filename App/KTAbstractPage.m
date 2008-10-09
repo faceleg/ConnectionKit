@@ -19,6 +19,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 #import "NSScanner+Karelia.h"
 
@@ -93,6 +94,12 @@
 }
 
 - (KTDocumentInfo *)documentInfo { return [self wrappedValueForKey:@"documentInfo"]; }
+
+- (KTMaster *)master
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
 
 #pragma mark -
 #pragma mark Title
@@ -193,7 +200,22 @@
 	[parser release];
 	
 	
+	// Now that we have page contents in unicode, clean up to the desired character encoding.
+	result = [result stringByEscapingCharactersOutOfCharset:[[self master] valueForKey:@"charset"]];
+    
+	if (![self isXHTML])	// convert /> to > for HTML 4.0.1 compatibility
+	{
+		result = [result stringByReplacing:@"/>" with:@">"];
+	}
+	
+	
 	return result;
+}
+
+- (BOOL)isXHTML
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return YES;
 }
 
 #pragma mark -

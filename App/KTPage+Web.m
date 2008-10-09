@@ -66,15 +66,6 @@
 	NSString *result = [super contentHTMLWithParserDelegate:parserDelegate isPreview:isPreview];
 	
 	
-	// Now that we have page contents in unicode, clean up to the desired character encoding.
-	result = [result stringByEscapingCharactersOutOfCharset:[[self master] valueForKey:@"charset"]];		
-
-	if (![self isXHTML])	// convert /> to > for HTML 4.0.1 compatibility
-	{
-		result = [result stringByReplacing:@"/>" with:@">"];
-	}
-	
-	
 	return result;
 }
 

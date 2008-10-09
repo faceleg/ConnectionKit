@@ -47,9 +47,6 @@
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
-// Master
-- (KTMaster *)master;
-
 // Inspector
 - (BOOL)separateInspectorSegment;
 
@@ -254,7 +251,6 @@
 - (void)setNewPage:(BOOL)flag;
 - (NSString *)comboTitleText;
 
-- (BOOL)isXHTML;
 - (NSString *)DTD;
 
 @end
