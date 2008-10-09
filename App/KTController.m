@@ -1,0 +1,36 @@
+//
+//  KTController.m
+//  Marvel
+//
+//  Created by Mike on 09/10/2008.
+//  Copyright 2008 Karelia Software. All rights reserved.
+//
+
+#import "KTController.h"
+
+
+@implementation KTDocViewController
+
+- (id <KTDocumentControllerChain>)parentController { return _parentController; }
+
+- (void)setParentController:(id <KTDocumentControllerChain>)controller
+{
+    _parentController = controller; // Weak ref
+}
+
+- (KTDocWindowController *)windowController { return _windowController; }
+
+- (void)setWindowController:(KTDocWindowController *)aWindowController
+{
+	_windowController = aWindowController;  // Weak ref
+}
+
+- (KTDocument *)document { return _document; }
+
+- (void)setDocument:(KTDocument *)document
+{
+    _document = document;   // Weak ref
+}
+
+
+@end

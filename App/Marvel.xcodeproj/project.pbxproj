@@ -190,6 +190,8 @@
 		27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
+		2721E0F00E9E0CBD00A458B2 /* KTController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E0EE0E9E0CBD00A458B2 /* KTController.h */; };
+		2721E0F10E9E0CBD00A458B2 /* KTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721E0EF0E9E0CBD00A458B2 /* KTController.m */; };
 		272321320D48013F0075F31F /* KTDocWebViewController+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321310D48013F0075F31F /* KTDocWebViewController+Private.h */; settings = {ATTRIBUTES = (); }; };
 		272321A00D48A7690075F31F /* action12.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2723219F0D48A7690075F31F /* action12.tiff */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
@@ -1656,6 +1658,8 @@
 		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
+		2721E0EE0E9E0CBD00A458B2 /* KTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTController.h; sourceTree = "<group>"; };
+		2721E0EF0E9E0CBD00A458B2 /* KTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTController.m; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		2723219F0D48A7690075F31F /* action12.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = action12.tiff; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
@@ -3050,6 +3054,15 @@
 			name = "Core Image";
 			sourceTree = "<group>";
 		};
+		2721E0ED0E9E0CA200A458B2 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				2721E0EE0E9E0CBD00A458B2 /* KTController.h */,
+				2721E0EF0E9E0CBD00A458B2 /* KTController.m */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
 		272321DB0D48B5A70075F31F /* Page Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -3353,6 +3366,7 @@
 		27DF88CD0D85780100AEF4B5 /* Document UI */ = {
 			isa = PBXGroup;
 			children = (
+				2721E0ED0E9E0CA200A458B2 /* General */,
 				27DF88CE0D85785D00AEF4B5 /* Window */,
 				3C5188A10D2F4DDC002D7414 /* Site Outline */,
 				3C202DA507DFC4BA00DE4994 /* WebView */,
@@ -4979,6 +4993,7 @@
 				276428F90E90D2BD00FCE981 /* KSFontManager.h in Headers */,
 				27642B9A0E92B49600FCE981 /* DOMNode+Karelia.h in Headers */,
 				27E3835C0E938A0F00DE9EB4 /* DOM+Debugging.h in Headers */,
+				2721E0F00E9E0CBD00A458B2 /* KTController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6410,6 +6425,7 @@
 				276428FA0E90D2BD00FCE981 /* KSFontManager.m in Sources */,
 				27642B9B0E92B49600FCE981 /* DOMNode+Karelia.m in Sources */,
 				27E3835D0E938A0F00DE9EB4 /* DOM+Debugging.m in Sources */,
+				2721E0F10E9E0CBD00A458B2 /* KTController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

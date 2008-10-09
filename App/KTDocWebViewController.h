@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "KTController.h"
+
 
 // myViewTypes
 typedef enum {
@@ -33,7 +35,7 @@ typedef enum {
 @class KTAsyncOffscreenWebViewController;
 
 
-@interface KTDocWebViewController : NSResponder
+@interface KTDocWebViewController : KTDocViewController
 {
 	IBOutlet WebView				*webView;
 	IBOutlet NSTextView				*oSourceTextView;
@@ -44,12 +46,8 @@ typedef enum {
     // View
 	WebView					*myWebView;
     
-    // Controller chain
-	KTDocWindowController	*_windowController;
-    KTDocument              *_document;
-	
-	DOMHTMLElement			*myElementWaitingForFragmentLoad;
-	KTAsyncOffscreenWebViewController				*myAsyncOffscreenWebViewController;
+    DOMHTMLElement                      *myElementWaitingForFragmentLoad;
+	KTAsyncOffscreenWebViewController	*myAsyncOffscreenWebViewController;
 	
 	
 	// Loading
@@ -97,14 +95,6 @@ typedef enum {
 #pragma mark View
 - (WebView *)webView;
 - (void)setWebView:(WebView *)webView;	// No-one should have to call this.
-
-
-#pragma mark Controller chain
-- (KTDocWindowController *)windowController;	// Weak reference
-- (void)setWindowController:(KTDocWindowController *)windowController;	// Don't call this.
-
-- (KTDocument *)document;   // Weak ref
-- (void)setDocument:(KTDocument *)document;
 
 
 #pragma mark Accessors

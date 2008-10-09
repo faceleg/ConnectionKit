@@ -1050,7 +1050,7 @@ from representedObject */
 	
 	
 	// It is not possible to make a group containing root
-	OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"Can't create a group containing root");
+	OBASSERTSTRING(![selectedPages containsObject:[[[self document] documentInfo] root]], @"Can't create a group containing root");
 	
 	
 	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
@@ -1508,7 +1508,7 @@ from representedObject */
 		else
 		{
 			// we're going to be duplicating a page or pages
-			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[self document] root]] );
+			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] documentInfo] root]] );
 		}
     }
 	
@@ -1660,7 +1660,7 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(duplicate:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[self document] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] documentInfo] root]] );
     }
 	else if ([toolbarItem action] == @selector(showLinkPanel:))
 	{
@@ -1714,7 +1714,7 @@ from representedObject */
 	BOOL result = NO;
 	
 	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[self document] root]])
+	if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] documentInfo] root]])
 	{
 		result = YES;
 	}
@@ -2107,7 +2107,9 @@ from representedObject */
 }
 
 #pragma mark -
-#pragma mark Undo
+#pragma mark Controller Chain
+
+- (id <KTDocumentControllerChain>)parentController { return [self document]; }
 
 /*	We observe notifications from the document's undo manager
  */
@@ -2142,6 +2144,11 @@ from representedObject */
                                  object:[document undoManager]];
     }
 }
+
+- (KTDocWindowController *)windowController { return self; }
+
+#pragma mark -
+#pragma mark Undo
 
 /*	Called whenever a change is undone. Ensure the correct page is highlighted in the Site Outline to show the change.
  */

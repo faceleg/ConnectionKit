@@ -207,7 +207,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	// We should never get here if the root page is in the selection
     OBASSERTSTRING((nil != selectedPages), @"selectedPages cannot be nil.");
     OBASSERTSTRING([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
-    OBASSERTSTRING(![selectedPages containsObject:[[self document] root]], @"Cannot cut the home page");
+    OBASSERTSTRING(![selectedPages containsObject:[[[self document] documentInfo] root]], @"Cannot cut the home page");
 	
 	
 	// Copy to the clipboard

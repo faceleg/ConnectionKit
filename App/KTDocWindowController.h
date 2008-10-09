@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+#import "KTController.h"
+
 
 @class CIFilter;
 @class KSBorderlessWindow;
@@ -31,7 +33,7 @@
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <DOMEventListener>
+@interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain>
 {
     IBOutlet RBSplitView				*oSidebarSplitView;
     IBOutlet RBSplitView				*oDesignsSplitView;

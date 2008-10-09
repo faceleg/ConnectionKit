@@ -20,6 +20,8 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+#import "KTController.h"
+
 
 extern NSString *KTDocumentDidChangeNotification;
 extern NSString *KTDocumentWillCloseNotification;
@@ -43,7 +45,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
 
-@interface KTDocument : NSPersistentDocument
+@interface KTDocument : NSPersistentDocument <KTDocumentControllerChain>
 {
 @private
 	
@@ -98,7 +100,12 @@ extern NSString *KTDocumentWillSaveNotification;
 
 
 - (IBAction)setupHost:(id)sender;
+- (IBAction)export:(id)sender;
+- (IBAction)exportAgain:(id)sender;
+- (IBAction)saveToHost:(id)sender;
+- (IBAction)saveAllToHost:(id)sender;
 
+// Controller chain
 - (KTDocWindowController *)windowController;
 
 // cache support

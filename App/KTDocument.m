@@ -92,8 +92,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 + (void)initialize;
 - (BOOL)keepBackupFile;
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
-- (IBAction)saveAllToHost:(id)sender;
-- (IBAction)saveToHost:(id)sender;
 - (KTTransferController *)localTransferController;
 - (KTTransferController *)remoteTransferController;
 
@@ -316,13 +314,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-/*! return the single KTDocWindowController associated with this document */
-- (KTDocWindowController *)windowController
-{
-	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
-	return myDocWindowController;
-}
-
 /*! returns publishSiteURL/sitemap.xml */
 - (NSString *)publishedSitemapURL
 {
@@ -501,7 +492,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 }
 
 #pragma mark -
-#pragma mark Window Controllers
+#pragma mark Controller Chain
+
+/*! return the single KTDocWindowController associated with this document */
+- (KTDocWindowController *)windowController
+{
+	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
+	return myDocWindowController;
+}
 
 /*!	Force KTDocument to use a custom subclass of NSWindowController
  */
@@ -551,6 +549,11 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
     [super removeWindowController:windowController];
 }
+
+/*  The document is the end of the chain    */
+- (id <KTDocumentControllerChain>)parentController { return nil; }
+
+- (KTDocument *)document { return self; }
 
 #pragma mark -
 #pragma mark Changes
@@ -939,7 +942,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[self undoManager] removeAllActions];
 }
 
-- (IBAction) saveToHost:(id)sender
+- (IBAction)saveToHost:(id)sender
 {
 	[self cleanupBeforePublishing];
 	
@@ -980,7 +983,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 }
 
-- (IBAction) saveAllToHost:(id)sender
+- (IBAction)saveAllToHost:(id)sender
 {
 	[self cleanupBeforePublishing];
 	
@@ -1037,7 +1040,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 }
 
-- (IBAction) export:(id)sender
+- (IBAction)export:(id)sender
 {
 	[self cleanupBeforePublishing];
 	[self setExportTransferController:nil];

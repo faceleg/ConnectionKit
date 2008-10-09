@@ -146,28 +146,19 @@
 #pragma mark -
 #pragma mark Controller Chain
 
-- (KTDocWindowController *)windowController { return _windowController; }
-
-- (void)setWindowController:(KTDocWindowController *)aWindowController
-{
-	_windowController = aWindowController;  // Weak ref
-}
-
-- (KTDocument *)document { return _document; }
-
 - (void)setDocument:(KTDocument *)document
 {
-    if (_document)
+    if ([self document])
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:NSManagedObjectContextObjectsDidChangeNotification
                                                       object:[[self document] managedObjectContext]];
     }
     
-    _document = document;   // Weak ref
+    [super setDocument:document];
     [self setWebViewNeedsReload:NO];
     
-    if (document)
+    if ([self document])
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(documentDidChange:)
@@ -179,8 +170,6 @@
 
 #pragma mark -
 #pragma mark Accessors
-
-
 
 - (DOMHTMLElement *)elementWaitingForFragmentLoad
 {

@@ -211,7 +211,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	}
 	else if ([entityName isEqualToString:@"Root"])
 	{
-		return [[self document] root];	// don't need to look up object; it's the root
+		return [[[self document] documentInfo] root];	// don't need to look up object; it's the root
 	}
 	
 	// peform fetch
