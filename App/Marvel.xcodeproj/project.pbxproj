@@ -1660,6 +1660,7 @@
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
 		2721E0EE0E9E0CBD00A458B2 /* KTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTController.h; sourceTree = "<group>"; };
 		2721E0EF0E9E0CBD00A458B2 /* KTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTController.m; sourceTree = "<group>"; };
+		2721E1960E9E4D6000A458B2 /* ControllerChain.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ControllerChain.graffle; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		2723219F0D48A7690075F31F /* action12.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = action12.tiff; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
@@ -3057,6 +3058,7 @@
 		2721E0ED0E9E0CA200A458B2 /* Controller Chain */ = {
 			isa = PBXGroup;
 			children = (
+				2721E1960E9E4D6000A458B2 /* ControllerChain.graffle */,
 				2721E0EE0E9E0CBD00A458B2 /* KTController.h */,
 				2721E0EF0E9E0CBD00A458B2 /* KTController.m */,
 			);
