@@ -125,6 +125,10 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
 	[oLowLink setAttributedTitle:attrString];
 	
+	// LATER -- FOR VARIATIONS.  Get the localized strings collected though.
+//	[oDemoNotification setStringValue:NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
+//	[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
+	
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
@@ -153,7 +157,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 - (IBAction) openLicensing:(id)sender
 {
-	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:nil afterDelay:0.0];
+	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:sender afterDelay:0.0];
 }
 
 - (IBAction) openHigh:(id)sender;

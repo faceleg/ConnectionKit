@@ -543,6 +543,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[defaults setObject:feedType forKey:@"KSFeedType"];
 	}
 	
+	id coinFlip = [defaults objectForKey:@"coinFlip"];		// this is constant for the lifetime of these preferences!
+	if (nil == coinFlip)
+	{
+		sranddev();	// seed random.  We are looking for a number either 1 or 2 (zero meaning not set)
+		int value = 1+ (rand() % 2);
+		OBASSERT(value == 1 || value == 2);
+		[defaults setInteger:value forKey:@"coinFlip"];
+	}
+	
 	[defaults synchronize];
 }	
 
@@ -1583,7 +1592,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showProductPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.sandvox.com/"]];
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:
+														[NSString stringWithFormat:
+			@"http://www.sandvox.com/?utm_source=%@&utm_medium=application&utm_campaign=product_menu", [NSApplication applicationName]]]];
 }
 
 - (IBAction)toggleMediaBrowserShown:(id)sender

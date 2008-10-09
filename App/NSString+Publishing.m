@@ -25,7 +25,7 @@
 	{
 		NSString *sandvoxTrialFormat = NSLocalizedString(@"This page was created by a trial version of %@. (Sandvox must be purchased to publish multiple pages.)",@"Warning for a published home page; the placeholder is replaced with 'Sandvox' as a hyperlink.");
 		
-		NSString *sandvoxToReplace = @"<a style=\"color:blue;\" href=\"http://www.sandvox.com/\">Sandvox</a>";
+		NSString *sandvoxToReplace = @"<a style=\"color:blue;\" href=\"http://www.sandvox.com/?utm_source=demo_site&utm_medium=link&utm_campaign=trial\">Sandvox</a>";
 		NSString *sandvoxText = [NSString stringWithFormat:sandvoxTrialFormat, sandvoxToReplace];
 		NSString *endingBodyText = [NSString stringWithFormat: @"<div style=\"z-index:999; position:fixed; bottom:0; left:0; right:0; margin:10px; padding:10px; background-color:yellow; border: 2px dashed gray; color:black; text-align:center; font:150%% 'Lucida Grande', sans-serif;\">%@</div></body>", sandvoxText];
 		

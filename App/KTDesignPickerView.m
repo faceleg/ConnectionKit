@@ -513,7 +513,12 @@ static NSDictionary *sContributorLinkAttributes = nil;
 				if (isInside)
 				{
 					// Did mouseup happen in the text area, and there's a URL?
-					KTDesign *design = [[self designsToShow] objectAtIndex:myHoveredScreenIndex + myListOffset];
+					int mouseUpIndex = myHoveredScreenIndex + myListOffset;
+					if (mouseUpIndex >= [[self designsToShow] count])
+					{
+						mouseUpIndex = [[self designsToShow] count] - 1;	// BUGSID:35518
+					}
+					KTDesign *design = [[self designsToShow] objectAtIndex:mouseUpIndex];
 					NSURL *url = [design URL];
 					if (nil != url && [self mouse:mouseLoc inRect:textRect])	// did we click on the title
 					{

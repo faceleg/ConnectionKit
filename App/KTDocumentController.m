@@ -598,7 +598,7 @@
 {
     if (gLicenseViolation)		// license violation dialog should open, not the new/open
     {
-        [[KSRegistrationController sharedController] showWindow:nil];
+        [[KSRegistrationController sharedController] showWindow:@"license"];		// string is just a tag for the source of this
     }
     else
     {
