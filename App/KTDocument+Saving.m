@@ -272,7 +272,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	// We'll need a path for various operations below
-	NSAssert2([absoluteURL isFileURL], @"%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
+	NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
 	NSString *path = [absoluteURL path];
 	
 	

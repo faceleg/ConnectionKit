@@ -229,19 +229,27 @@
  */
 - (NSArray *)availableIndexFilenames
 {
-	NSArray *availableExtensions = [self availableFileExtensions];
-	NSEnumerator *extensionsEnumerator = [availableExtensions objectEnumerator];
-	NSString *anExtension;
-	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[availableExtensions count]];
-	
-	while (anExtension = [extensionsEnumerator nextObject])
-	{
-		OBASSERT(anExtension);
-		NSString *aFilename = [[self indexFileName] stringByAppendingPathExtension:anExtension];
-		[result addObject:aFilename];
-	}
-	
-	return result;
+	NSString *indexFileName = [self indexFileName];
+    if (indexFileName)
+    {
+        NSArray *availableExtensions = [self availableFileExtensions];
+        NSEnumerator *extensionsEnumerator = [availableExtensions objectEnumerator];
+        NSString *anExtension;
+        NSMutableArray *result = [NSMutableArray arrayWithCapacity:[availableExtensions count]];
+        
+        while (anExtension = [extensionsEnumerator nextObject])
+        {
+            OBASSERT(anExtension);
+            NSString *aFilename = [indexFileName stringByAppendingPathExtension:anExtension];
+            [result addObject:aFilename];
+        }
+        
+        return result;
+    }
+    else
+    {
+        return [NSArray array];
+    }
 }
 
 #pragma mark -
