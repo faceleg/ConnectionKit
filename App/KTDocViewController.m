@@ -1,15 +1,49 @@
 //
-//  KTController.m
+//  KTDocViewController.m
 //  Marvel
 //
 //  Created by Mike on 09/10/2008.
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTController.h"
+#import "KTDocViewController.h"
 
 
 @implementation KTDocViewController
+
+- (void)dealloc
+{
+    [self setView:nil]; // Removes us from responder chain and releases view
+    
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark View
+
+- (NSView *)view { return view; }
+
+/*  We act like UIViewController and insert ourself in the responder chain between the view and its superview
+ */
+- (void)setView:(NSView *)aView
+{
+    // Reset responder chain
+    [view setNextResponder:[self nextResponder]];
+    
+	
+    // Store view
+	[aView retain];
+	[view release];
+	view = aView;
+	
+    
+    // Patch responder chain
+    [self setNextResponder:[view nextResponder]];
+    [view setNextResponder:self];
+}
+
+#pragma mark -
+#pragma mark Controller Chain
 
 - (id <KTDocumentControllerChain>)parentController { return _parentController; }
 

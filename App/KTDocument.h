@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "KTController.h"
+#import "KTDocumentControllerChain.h"
 
 
 extern NSString *KTDocumentDidChangeNotification;

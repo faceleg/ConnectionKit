@@ -111,13 +111,11 @@
 #pragma mark -
 #pragma mark View
 
-- (WebView *)webView { return myWebView; }
-
-/*  We act like UIViewController and insert ourself in the responder chain between the webview and its superview
+/*  The view SHOULD be a WebView or nil unless someone is abusing the property
  */
-- (void)setWebView:(WebView *)aWebView
+- (void)setView:(id)aView
 {
-	// Clear old delegates to avoid memory bugs
+    // Clear old delegates to avoid memory bugs
     WebView *oldWebView = [self webView];
     [oldWebView setEditingDelegate:nil];
     [oldWebView setFrameLoadDelegate:nil];
@@ -125,22 +123,24 @@
     [oldWebView setResourceLoadDelegate:nil];
     [oldWebView setUIDelegate:nil];
     
-    // Reset responder chain
-    [oldWebView setNextResponder:[self nextResponder]];
     
-	
-    // Store new webview
-	[aWebView retain];
-	[myWebView release];
-	myWebView = aWebView;
-	
+    // Store the view
+    [super setView:aView];
     
-    // Setup new delegation and responder chain
+    
+    // Setup new delegation
     WebView *newWebView = [self webView];
 	[newWebView setEditingDelegate:self];
-    
-    [self setNextResponder:[newWebView nextResponder]];
-    [newWebView setNextResponder:self];
+}
+
+- (WebView *)webView
+{
+    return (WebView *)[self view];
+}
+
+- (void)setWebView:(WebView *)aWebView
+{
+	[self setView:aWebView];
 }
 
 #pragma mark -

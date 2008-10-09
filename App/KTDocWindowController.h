@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "KTController.h"
+#import "KTDocumentControllerChain.h"
 
 
 @class CIFilter;
@@ -24,8 +24,7 @@
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTPluginInspectorViewsManager;
-@class KTDocWebViewController;
-@class KTDocSiteOutlineController;
+@class KTDocViewController, KTDocWebViewController, KTDocSiteOutlineController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;

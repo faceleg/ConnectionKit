@@ -7,8 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTDocViewController.h"
 
-#import "KTController.h"
+
+#import "KTDocumentControllerChain.h"
 
 
 // myViewTypes
@@ -37,15 +39,12 @@ typedef enum {
 
 @interface KTDocWebViewController : KTDocViewController
 {
-	IBOutlet WebView				*webView;
-	IBOutlet NSTextView				*oSourceTextView;
+	IBOutlet WebView	*webView;
+	IBOutlet NSTextView *oSourceTextView;
 	
 	
 	@private
 	
-    // View
-	WebView					*myWebView;
-    
     DOMHTMLElement                      *myElementWaitingForFragmentLoad;
 	KTAsyncOffscreenWebViewController	*myAsyncOffscreenWebViewController;
 	
