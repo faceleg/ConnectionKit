@@ -47,7 +47,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		089C166AFE841209C02AAC07 /* ___PROJECTNAMEASIDENTIFIER___Element */ = {
+		089C166AFE841209C02AAC07 /* ___PROJECTNAMEASIDENTIFIER___ */ = {
 			isa = PBXGroup;
 			children = (
 				08FB77AFFE84173DC02AAC07 /* Classes */,
@@ -57,7 +57,7 @@
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 			);
-			name = "___PROJECTNAMEASIDENTIFIER___Element";
+			name = "___PROJECTNAMEASIDENTIFIER___";
 			sourceTree = "<group>";
 		};
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
@@ -137,9 +137,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5B49AC048680CD000E48DA /* ___PROJECTNAMEASIDENTIFIER___Element */ = {
+		8D5B49AC048680CD000E48DA /* ___PROJECTNAMEASIDENTIFIER___ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "___PROJECTNAMEASIDENTIFIER___Element" */;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "___PROJECTNAMEASIDENTIFIER___" */;
 			buildPhases = (
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
@@ -149,9 +149,9 @@
 			);
 			dependencies = (
 			);
-			name = "___PROJECTNAMEASIDENTIFIER___Element";
+			name = "___PROJECTNAMEASIDENTIFIER___";
 			productInstallPath = "$(HOME)/Library/Bundles";
-			productName = "___PROJECTNAMEASIDENTIFIER___Element";
+			productName = "___PROJECTNAMEASIDENTIFIER___";
 			productReference = 8D5B49B6048680CD000E48DA /* ___PROJECTNAMEASIDENTIFIER___.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -170,11 +170,11 @@
 				German,
 				en,
 			);
-			mainGroup = 089C166AFE841209C02AAC07 /* ___PROJECTNAMEASIDENTIFIER___Element */;
+			mainGroup = 089C166AFE841209C02AAC07 /* ___PROJECTNAMEASIDENTIFIER___ */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* ___PROJECTNAMEASIDENTIFIER___Element */,
+				8D5B49AC048680CD000E48DA /* ___PROJECTNAMEASIDENTIFIER___ */,
 			);
 		};
 /* End PBXProject section */
@@ -256,33 +256,19 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.4;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "___PROJECTNAMEASIDENTIFIER___Element" */ = {
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "___PROJECTNAMEASIDENTIFIER___" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,

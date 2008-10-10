@@ -1,14 +1,14 @@
 //
-//  «PROJECTNAMEASIDENTIFIER»Delegate.m
-//  «PROJECTNAME»
+//  ___PROJECTNAMEASIDENTIFIER___Delegate.m
+//  ___PROJECTNAME___
 //
-//  Created by «FULLUSERNAME» on «DATE».
-//  Copyright «ORGANIZATIONNAME» «YEAR» . All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___ . All rights reserved.
 //
 
-#import "«PROJECTNAMEASIDENTIFIER»Delegate.h"
+#import "___PROJECTNAMEASIDENTIFIER___Delegate.h"
 
 
-@implementation «PROJECTNAMEASIDENTIFIER»Delegate
+@implementation ___PROJECTNAMEASIDENTIFIER___Delegate
 
 @end

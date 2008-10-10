@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION}), (c) 2008 Karelia Software</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), (c) 2008 ______________ Software</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.yourcompany.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -27,7 +27,7 @@
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KSHelpAnchor</key>
-	<string>«PROJECTNAMEASXML»</string>
+	<string>___PROJECTNAMEASXML___</string>
 	<key>KSMinimumAppVersion</key>
 	<string>1.5</string>
 	<key>KTMainElement</key>
@@ -37,20 +37,20 @@
 	<key>KTPluginCSSFilesNeeded</key>
 	<array/>
 	<key>KTPluginIconName</key>
-	<string>«PROJECTNAMEASIDENTIFIER»</string>
+	<string>___PROJECTNAMEASIDENTIFIER___</string>
 	<key>KTPluginInitialProperties</key>
 	<dict/>
 	<key>KTPluginName</key>
-	<string>«PROJECTNAMEASXML»</string>
+	<string>___PROJECTNAMEASXML___</string>
 	<key>KTPluginNibFile</key>
-	<string>«PROJECTNAMEASIDENTIFIER»</string>
+	<string>___PROJECTNAMEASIDENTIFIER___</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
-	<string>My Google Map</string>
+	<string>My ___PROJECTNAME___</string>
 	<key>KTTemplateName</key>
-	<string>«PROJECTNAMEASIDENTIFIER»Template</string>
+	<string>___PROJECTNAMEASIDENTIFIER___Template</string>
 	<key>NSPrincipalClass</key>
-	<string>«PROJECTNAMEASIDENTIFIER»Delegate</string>
+	<string>___PROJECTNAMEASIDENTIFIER___Delegate</string>
 </dict>
 </plist>

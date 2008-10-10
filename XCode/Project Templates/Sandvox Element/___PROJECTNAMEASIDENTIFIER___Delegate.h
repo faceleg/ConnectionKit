@@ -1,15 +1,15 @@
 //
-//  «PROJECTNAMEASIDENTIFIER»Delegate.h
-//  «PROJECTNAME»
+//  ___PROJECTNAMEASIDENTIFIER___Delegate.h
+//  ___PROJECTNAME___
 //
-//  Created by «FULLUSERNAME» on «DATE».
-//  Copyright «ORGANIZATIONNAME» «YEAR» . All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___ . All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-@interface «PROJECTNAMEASIDENTIFIER»Delegate : KTAbstractPluginDelegate {
+@interface ___PROJECTNAMEASIDENTIFIER___Delegate : KTAbstractPluginDelegate {
 
 }
 

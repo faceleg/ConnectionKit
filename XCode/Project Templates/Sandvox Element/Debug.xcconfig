@@ -1,5 +1,8 @@
+// For Sandvox-internal plugins, please instead link to these files:
+// ../../Configurations/Debug.xcconfig
+// ../../Configurations/Release.xcconfig
 
-// we want to "link" against Sandvox directly
+// we want to "link" against Sandvox directly. CHANGE THESE IF YOU HAVE SANDVOX INSTALLED ELSEWHERE.
 USER_HEADER_SEARCH_PATHS =  "/Applications/Sandvox.app/Contents/Headers"
 BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox
 
@@ -17,6 +20,9 @@ DEBUG_INFORMATION_FORMAT = dwarf;
 PREBINDING = NO
 ZERO_LINK = YES
 
+ARCHS = $(NATIVE_ARCH)
+ONLY_ACTIVE_ARCH = YES
+
 // we use PROJECT_NAME instead of PRODUCT_NAME
 GCC_PREFIX_HEADER = $(PROJECT_NAME)_Prefix.pch
 
@@ -30,6 +36,7 @@ GCC_MODEL_TUNING = G5
 GCC_OPTIMIZATION_LEVEL = 0
 GCC_PRECOMPILE_PREFIX_HEADER = NO
 GCC_PREPROCESSOR_DEFINITIONS = DEBUG
+GCC_C_LANGUAGE_STANDARD = c99
 
 GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES
 GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = YES
@@ -57,4 +64,3 @@ GCC_WARN_UNUSED_VARIABLE = YES
 // GCC_WARN_SHADOW = YES				    // useful to check from time to time
 // GCC_WARN_SIGN_COMPARE = YES			    // useful to check from time to time
 // GCC_WARN_PEDANTIC = YES				    // Not very useful, warns too much
-

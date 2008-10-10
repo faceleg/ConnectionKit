@@ -1,7 +1,10 @@
+// For Sandvox-internal plugins, please instead link to these files:
+// ../../Configurations/Debug.xcconfig
+// ../../Configurations/Release.xcconfig
 
 // we want to grab SANDVOX_VERSION and SVN_VERSION from Sandvox
 
-// we want to "link" against Sandvox directly
+// we want to "link" against Sandvox directly. CHANGE THESE IF YOU HAVE SANDVOX INSTALLED ELSEWHERE.
 USER_HEADER_SEARCH_PATHS =  "/Applications/Sandvox.app/Contents/Headers"
 BUNDLE_LOADER = /Applications/Sandvox.app/Contents/MacOS/Sandvox
 
@@ -28,6 +31,9 @@ COPY_PHASE_STRIP = NO
 DEPLOYMENT_LOCATION = NO
 DEPLOYMENT_POSTPROCESSING = YES
 
+ARCHS = $(ARCHS_STANDARD_32_BIT)
+ONLY_ACTIVE_ARCH = NO
+
 // we use PROJECT_NAME instead of PRODUCT_NAME
 GCC_PREFIX_HEADER = $(PROJECT_NAME)_Prefix.pch
 GCC_PRECOMPILE_PREFIX_HEADER = NO
@@ -41,6 +47,6 @@ GCC_WARN_ABOUT_RETURN_TYPE = YES
 GCC_WARN_UNINITIALIZED_AUTOS = YES
 GCC_WARN_UNUSED_VALUE = YES
 GCC_WARN_UNUSED_VARIABLE = YES
+GCC_C_LANGUAGE_STANDARD = c99
 
 PREBINDING = YES
-

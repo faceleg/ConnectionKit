@@ -1,13 +1,13 @@
 {
 	FilesToMacroExpand = (
-		"«PROJECTNAMEASIDENTIFIER»_Prefix.pch",
+		"___PROJECTNAMEASIDENTIFIER____Prefix.pch",
 		"en.lproj/InfoPlist.strings",
-		"«PROJECTNAMEASIDENTIFIER»_Prefix.pch",
-		"«PROJECTNAMEASIDENTIFIER».icns",
-		"«PROJECTNAMEASIDENTIFIER»Delegate.h",
-		"«PROJECTNAMEASIDENTIFIER»Delegate.m",
-		"«PROJECTNAMEASIDENTIFIER»Template.html",
+		"___PROJECTNAMEASIDENTIFIER____Prefix.pch",
+		"___PROJECTNAMEASIDENTIFIER___.icns",
+		"___PROJECTNAMEASIDENTIFIER___Delegate.h",
+		"___PROJECTNAMEASIDENTIFIER___Delegate.m",
+		"___PROJECTNAMEASIDENTIFIER___Template.html",
 		"Info.plist"
 	);
-	Description = "This project builds a cocoa-based \"element\" plugin for Sandvox.";
+	Description = "This project builds a cocoa-based \"element\" plugin for Sandvox. Generally you name the project something like FooElement";
 }
