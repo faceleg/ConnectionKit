@@ -14,6 +14,14 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
+			<string>KSVerticallyAlignedTextCell</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextFieldCell</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
 			<string>KTMissingMediaArrayController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -29,15 +37,20 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KSVerticallyAlignedTextCell</string>
+			<string>NSApplication</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSTextFieldCell</string>
+			<string>NSResponder</string>
 		</dict>
 		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>hideWindow</key>
+				<string>id</string>
+			</dict>
 			<key>CLASS</key>
-			<string>NSApplication</string>
+			<string>NSWindowController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>

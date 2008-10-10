@@ -35,7 +35,8 @@
 
 - (void)awakeFromNib
 {
-	[oTableView setAllowsColumnSelection:NO];
+	[oTableView setDataSource:self];
+    [oTableView setAllowsColumnSelection:NO];
 	[oTableView registerForDraggedTypes:[[self class] supportedDropTypes]];
 }
 
@@ -169,30 +170,5 @@
 	
 	return NO;
 }
-
-#pragma mark -
-#pragma mark Bogus Data Source definitions
-
-// CASE 34025 -- in spite of bindings, this was being called!
-
-- (int)numberOfRowsInTableView:(NSTableView *)theTableView
-{
-	// WARN -- THIS IS FISHY -- BUT ONLY WARN ONCE PER LAUNCH!
-	static BOOL sAlreadyWarned = NO;
-	if (!sAlreadyWarned)
-	{
-		sAlreadyWarned = YES;
-		NSLog(@"missing media controller should not be asking for numberOfRowsInTableView:");
-	}
-    return 0;
-}
-
-- (id)tableView:(NSTableView *)theTableView 
-objectValueForTableColumn:(NSTableColumn *)theColumn
-			row:(int)rowIndex
-{
-	return nil;
-}
-
 
 @end
