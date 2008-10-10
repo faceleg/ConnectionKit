@@ -60,12 +60,6 @@
 	return [[[self displayName] stringByDeletingPathExtension] stringByEscapingHTMLEntities];		// get the default title from the document name
 }
 
-- (NSAttributedString *)siteTitleAttributed		// same as above, but don't escape entities
-{
-	NSString *str = [[self displayName] stringByDeletingPathExtension];
-	return [NSAttributedString systemFontStringWithString:str];
-}
-
 /*!	Used by iframe pagelets and "keypath:" URL protocol to generate image data showing that iframe is not loaded
 */
 - (NSData *)hashPattern
@@ -142,11 +136,6 @@
 }
 
 
-- (BOOL)addBool1
-{
-	return NO;
-}
-
 #pragma mark -
 #pragma mark Fallback values for properties in pages and collections
 
@@ -162,17 +151,6 @@
 
 
 - (NSString *)charset { return @"UTF-8"; }
-
-- (NSURL *)thumbURL
-{
-	return [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"emptyDoc"]];
-}
-
-- (NSString *)thumbURLPath
-{
-    return [[self thumbURL] absoluteString];
-}
-
 
 // TODO: hook these methods below back up, remember to add in Index plugins, etc.
 
