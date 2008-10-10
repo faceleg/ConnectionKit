@@ -407,6 +407,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[self synchronizeWindowTitleWithDocumentName];
 	}
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 + (NSSet *)windowTitleKeyPaths
@@ -422,6 +426,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	return result;
 }
+
+// Overridden to stop the document appearing edited to the user
+- (void)setDocumentEdited:(BOOL)flag { }
 
 #pragma mark -
 #pragma mark Missing Media
