@@ -326,8 +326,18 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)addChildController:(KTDocViewController *)controller
 {
     OBPRECONDITION(![controller parentController]); // The controller shouldn't already have a parent
-    [controller setParentController:self];
     
+    
+    // Patch responder chain
+    NSResponder *previousResponder = [_childControllers lastObject];
+    if (!previousResponder) previousResponder = self;
+    
+    [controller setNextResponder:[previousResponder nextResponder]];
+    [previousResponder setNextResponder:controller];
+    
+    
+    // Add to controller chain
+    [controller setParentController:self];
     [_childControllers addObject:controller];
 }
 
@@ -336,6 +346,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     unsigned index = [_childControllers indexOfObjectIdenticalTo:controller];
     if (index != NSNotFound)
     {
+        // Patch responder chain
+        NSResponder *previousResponder = (index > 0) ? [_childControllers objectAtIndex:(index - 1)] : self;
+        [previousResponder setNextResponder:[controller nextResponder]];
+        [controller setNextResponder:nil];
+        
+        
+        // Remove from controller chain
         [controller setParentController:nil];
         [_childControllers removeObjectAtIndex:index];
     }
@@ -343,6 +360,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)removeAllChildControllers
 {
+    // Patch responder chain
+    KTDocViewController *lastController = [_childControllers lastObject];
+    if (lastController)
+    {
+        [self setNextResponder:[lastController nextResponder]];
+    }
+    
+    [_childControllers makeObjectsPerformSelector:@selector(setNextResponder:) withObject:nil];
+    
+    
+    // Dump controllers
     [_childControllers makeObjectsPerformSelector:@selector(setParentController:) withObject:nil];
     [_childControllers removeAllObjects];
 }

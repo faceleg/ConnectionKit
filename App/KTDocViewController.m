@@ -27,19 +27,10 @@
  */
 - (void)setView:(NSView *)aView
 {
-    // Reset responder chain
-    [view setNextResponder:[self nextResponder]];
-    
-	
     // Store view
 	[aView retain];
 	[view release];
 	view = aView;
-	
-    
-    // Patch responder chain
-    [self setNextResponder:[view nextResponder]];
-    [view setNextResponder:self];
 }
 
 #pragma mark -
