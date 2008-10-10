@@ -1844,7 +1844,6 @@
 		3C202D2707DFC0AA00DE4994 /* KTWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebView.m; sourceTree = "<group>"; };
 		3C202D3307DFC0F000DE4994 /* KTDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocument.h; sourceTree = "<group>"; };
 		3C202D3407DFC0F000DE4994 /* KTDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocument.m; sourceTree = "<group>"; };
-		3C202D3507DFC0F000DE4994 /* KTDocument+Bindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Bindings.m"; sourceTree = "<group>"; };
 		3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+SplitViews.m"; sourceTree = "<group>"; };
 		3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Toolbar.m"; sourceTree = "<group>"; };
 		3C202D6107DFC18600DE4994 /* KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTransferController.h; sourceTree = "<group>"; };
@@ -3630,7 +3629,6 @@
 				3C202D3307DFC0F000DE4994 /* KTDocument.h */,
 				3C202D3407DFC0F000DE4994 /* KTDocument.m */,
 				3CBC1F230AC9CA11007D6C52 /* KTDocument+Alert.m */,
-				3C202D3507DFC0F000DE4994 /* KTDocument+Bindings.m */,
 				3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */,
 				CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */,
 				3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */,
