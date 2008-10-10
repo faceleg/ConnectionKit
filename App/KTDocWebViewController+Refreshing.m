@@ -406,7 +406,8 @@
 	[parser release];
 	
 	// Load the HTML into the webview
-	[[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:nil];
+    NSURL *pageURL = [page URL];    // TODO: How should we handle this being nil for a fresh site?
+	[[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:pageURL];
 }
 
 - (void)loadMultiplePagesMarkerIntoWebView

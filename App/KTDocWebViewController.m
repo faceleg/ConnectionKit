@@ -853,7 +853,16 @@
 {
 	NSURL *requestURL = [request URL];
 	
-	if ([requestURL hasNetworkLocation] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
+    
+	if ([requestURL isEqual:[request mainDocumentURL]])
+    {
+        // Force webkit to reload subresources all the time. BUGSID:35835
+        request = [[request mutableCopy] autorelease];
+        [(NSMutableURLRequest *)request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    }
+    else if ([requestURL hasNetworkLocation] &&
+        ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] &&
+        ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
 		LOG((@"webView:resource:willSendRequest:%@ ....Forcing to ONLY load from any cache", requestURL));
 		
@@ -861,10 +870,10 @@
 		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
 		return mutableRequest;
 	}
-	else if ( nil != requestURL )
+	else if (requestURL)
 	{
 		NSString *relativePath = [requestURL relativePath];
-		if ( [relativePath hasPrefix:[NSString stringWithFormat:@"/%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]]] )
+		if ([relativePath hasPrefix:[NSString stringWithFormat:@"/%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]]])
 		{
 			switch ([[self windowController] publishingMode])
 			{
@@ -902,7 +911,7 @@
 					break;
 			}
 		}
-		else if ( [[requestURL scheme] isEqualToString:@"svxmedia"] )
+		else if ([[requestURL scheme] isEqualToString:@"svxmedia"])
 		{
 			NSURLRequest *result = request; 
 			
