@@ -64,13 +64,14 @@ static NSArray *sAltStrings = nil;
 	if (nil == sAltStrings)
 	{
 		sAltStrings = [[NSArray alloc] initWithObjects:
-			LocalizedStringInThisBundle(@"The Mac Website Creator - publish weblogs and photos on any host", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"The easy mac web site Builder - for school, business, family", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Build simple websites on the Mac and host it anywhere", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Create websites, photo albums, and weblogs on the Mac", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Create and publish a web site with your Mac - for individuals, small business, and education", @"Sandvox link-back blurb"),
-			LocalizedStringInThisBundle(@"Using your Macintosh, publish your blog / photo album / web site on any ISP", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"The Website Builder for the Mac - publish blogs and photos on any host", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"The easy mac web site creator - for school, family, business", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"Create websites on the Mac and host them anywhere", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"Build websites, photo albums, and blogs on the Mac", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"Build and publish a web site with your Mac - for individuals, education, and small business", @"Sandvox link-back blurb"),
+			LocalizedStringInThisBundle(@"Using your Macintosh, publish your photo album / blog / website on any ISP", @"Sandvox link-back blurb"),
 			nil];
+		// Changed 9 Oct 2008 to tweak the terms a bit, just so that the phrases used will be adjusted to mix things up a bit.
 	}
 	return sAltStrings;
 }
