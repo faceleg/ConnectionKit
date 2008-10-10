@@ -118,7 +118,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)setupTransferControllers;
 - (void)windowControllerWillLoadNib:(NSWindowController *)windowController;
 
-- (void)setSiteCachePath:(NSString *)aPath;
 - (NSDate *)lastSnapshotDate;
 
 @end
@@ -281,7 +280,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];
     [self setExportTransferController:nil];
-    [self setSiteCachePath:nil];
 	[mySnapshotURL release];
 	
 	[myStalenessManager stopObservingAllPages];
@@ -1494,25 +1492,17 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return mySnapshotURL;
 }
 
-# pragma mark ~/Library/Caches 
+#pragma mark -
+#pragma mark Upload Cache
 
-/*! creates, if necessary, ~/Library/Caches/Sandvox/Sites.noindex/<siteID>/Images */
-- (BOOL)createImagesCacheIfNecessary
+- (NSString *)uploadCachePath	// returns path without resolving symbolic links
 {
-    NSError *localError = nil;
-    BOOL result = [KTUtilities createPathIfNecessary:[self imagesCachePath] error:&localError];
-    
-    if ( nil != localError )
-	{
-		// put up an error alert
-    }
-    
-    return result;
-}
-
-- (NSString *)imagesCachePath	// returns path without resolving symbolic links
-{
-    return [[self siteCachePath] stringByAppendingPathComponent:@"Images"];
+	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
+	NSString *result = NSTemporaryDirectory();
+	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
+	result = [result stringByAppendingPathComponent:[[self documentInfo] siteID]];
+	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
+	return result;
 }
 
 /*! creates, if necessary, ~/Library/Caches/Sandvox/Sites.noindex/<siteID>/Upload */
@@ -1551,47 +1541,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	return result;
-}
-
-- (NSString *)uploadCachePath	// returns path without resolving symbolic links
-{
-	//return [[self siteCachePath] stringByAppendingPathComponent:@"Upload"];
-	
-	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
-	NSString *result = NSTemporaryDirectory();
-	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
-	result = [result stringByAppendingPathComponent:[[self documentInfo] siteID]];
-	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
-	return result;
-}
-
-- (NSString *)siteCachePath		// returns path without resolving symbolic links
-{
-    if ( nil == mySiteCachePath )
-	{
-		NSString *siteCachePath = nil;
-		
-		// construct path
-		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
-		if ( [libraryPaths count] == 1 )
-        {
-			siteCachePath = [libraryPaths objectAtIndex:0];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:@"Sites"];
-			siteCachePath = [siteCachePath stringByAppendingPathExtension:@"noindex"];
-			siteCachePath = [siteCachePath stringByAppendingPathComponent:[[self documentInfo] siteID]];
-			[self setSiteCachePath:siteCachePath];
-		}
-    }
-    
-    return mySiteCachePath;
-}
-
-- (void)setSiteCachePath:(NSString *)aPath
-{
-    [aPath retain];
-    [mySiteCachePath release];
-    mySiteCachePath = aPath;
 }
 
 #pragma mark -

@@ -49,26 +49,27 @@ extern NSString *KTDocumentWillSaveNotification;
 {
 @private
 	
-	NSManagedObjectContext		*myManagedObjectContext;
+	// Standard document behaviour additions
+    BOOL myIsClosing;
+    unsigned mySaveOperationCount;						// used in KTDocument+Saving.m
+    NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
+	
+    
+    // KT
+    NSManagedObjectContext		*myManagedObjectContext;
 	KTDocumentInfo				*myDocumentInfo;			// accessor in category method
-	
-	KTDocWindowController		*myDocWindowController;
-	
-	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	KTMediaManager				*myMediaManager;
 	
-	KTStalenessManager			*myStalenessManager;
+    KTStalenessManager			*myStalenessManager;
+	
+	KTDocWindowController		*myDocWindowController;
+	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	KTTransferController		*myLocalTransferController;
 	KTTransferController		*myRemoteTransferController;
 	KTTransferController		*myExportTransferController;
 			
-	BOOL myIsClosing;
-    unsigned mySaveOperationCount;						// used in KTDocument+Saving.m
-    NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
-	
-    NSString    *mySiteCachePath;
 	NSURL       *mySnapshotURL;
 		
 	
@@ -108,13 +109,10 @@ extern NSString *KTDocumentWillSaveNotification;
 // Controller chain
 - (KTDocWindowController *)windowController;
 
-// cache support
-- (BOOL)createImagesCacheIfNecessary;
-- (NSString *)imagesCachePath;
+// Upload cache
 - (BOOL)createUploadCacheIfNecessary;
 - (BOOL)clearUploadCache;
 - (NSString *)uploadCachePath;
-- (NSString *)siteCachePath;
 
 // backup support
 - (BOOL)backupToURL:(NSURL *)anotherPath;
