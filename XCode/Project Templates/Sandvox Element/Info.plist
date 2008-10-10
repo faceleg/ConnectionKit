@@ -47,7 +47,7 @@
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
-	<string>My ___PROJECTNAME___</string>
+	<string>My ___PROJECTNAMEASXML___</string>
 	<key>KTTemplateName</key>
 	<string>___PROJECTNAMEASIDENTIFIER___Template</string>
 	<key>NSPrincipalClass</key>
