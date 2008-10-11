@@ -162,7 +162,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 // Actions
 
-- (IBAction) windowHelp:(id)sender;
+- (IBAction)windowHelp:(id)sender;
 - (IBAction)addPage:(id)sender;
 - (IBAction)addPagelet:(id)sender;
 - (IBAction)addCollection:(id)sender;
@@ -170,8 +170,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)remove:(id)sender;
 
 - (IBAction)toggleDesignsShown:(id)sender;
-
-- (IBAction)validateSource:(id)sender;
 
 - (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem;
 - (IBAction)reloadOutline:(id)sender;
@@ -239,9 +237,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)showLinkPanel:(id)sender;
 - (IBAction)finishLinkPanel:(id)sender;
-- (IBAction) clearLinkDestination:(id)sender;
-
-- (IBAction)pasteLink:(id)sender;
+- (IBAction)clearLinkDestination:(id)sender;
 
 - (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
 

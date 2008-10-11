@@ -193,6 +193,7 @@ typedef enum {
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;
 
 - (IBAction)pasteTextAsMarkup:(id)sender;
+- (IBAction)pasteLink:(id)sender;
 
 
 @end

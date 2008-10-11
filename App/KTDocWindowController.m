@@ -573,15 +573,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
 
-- (IBAction)deselectAll:(id)sender
-{
-	id documentView = [[[oWebView mainFrame] frameView] documentView];
-	if ( [documentView conformsToProtocol:@protocol(WebDocumentText)] )
-	{
-		[documentView deselectAll];
-	}
-}
-
 #pragma mark -
 #pragma mark Other
 
@@ -675,19 +666,19 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self document] setDisplaySmallPageIcons:!value];
 }
 
-- (IBAction) makeTextLarger:(id)sender
+- (IBAction)makeTextLarger:(id)sender
 {
 	[oWebView makeTextLarger:sender];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
 }
 
-- (IBAction) makeTextSmaller:(id)sender
+- (IBAction)makeTextSmaller:(id)sender
 {
 	[oWebView makeTextSmaller:sender];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
 }
 
-- (IBAction) makeTextNormal:(id)sender
+- (IBAction)makeTextNormal:(id)sender
 {
 	[oWebView setTextSizeMultiplier:1.0];
 	[[self document] setWrappedValue:[NSNumber numberWithFloat:1.0] forKey:@"textSizeMultiplier"];
@@ -1240,15 +1231,6 @@ from representedObject */
 		}
 	}
 	
-	// "Paste Link"
-	else if (itemAction == @selector(pasteLink:))
-	{
-		NSArray *URLs = nil;
-		[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:[NSPasteboard generalPasteboard]];
-		BOOL result = (URLs != nil && [URLs count] > 0);
-		return result;
-	}
-
 	// "Delete Page(s)" deletePage:
 	else if ( itemAction == @selector(deletePages:) )
 	{

@@ -1306,31 +1306,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
     return NSLocalizedString(@"Add Link","Action Name: Add Link");
 }	
 
-// paste some raw HTML
-- (IBAction)pasteLink:(id)sender
-{
-	NSArray *urls = nil;
-	NSArray *titles = nil;
-	[NSURL getURLs:&urls andTitles:&titles fromPasteboard:[NSPasteboard generalPasteboard]];
-	
-	if ([urls count])
-	{
-		// Figure out the URL and title to paste
-		NSURL *URL = [urls objectAtIndex:0];
-		
-		NSString *title = [titles firstObjectKS];
-		if (KSISNULL(title) || [title isEmptyString]) {
-			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
-		}
-		
-		
-		// Do the paste
-		WebView *webView = [[self webViewController] webView];
-		NSString *linkHTML = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", [URL absoluteString], title];
-		[webView replaceSelectionWithMarkupString:linkHTML];
-	}
-}
-
 - (IBAction)clearLinkDestination:(id)sender;
 {
 	[oLinkLocalPageField setStringValue:@""];

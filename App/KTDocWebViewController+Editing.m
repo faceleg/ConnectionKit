@@ -16,21 +16,22 @@
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
-#import "NSArray+Karelia.h"
-#import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "KTPseudoElement.h"
 #import "KTInlineImageElement.h"
 #import "KTWebViewComponent.h"
-
 #import "KTPage.h"
 #import "KTDocument.h"
 
-#import "KTWebKitCompatibility.h"
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSString-Utilities.h"
 
+#import "KTWebKitCompatibility.h"
 #import "DOMNode+Karelia.h"
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
+
+#import "OmniCompatibility.h"
 
 
 @interface NSView ( WebHTMLViewHack )
@@ -685,6 +686,15 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Editing Actions
 
+- (IBAction)deselectAll:(id)sender
+{
+	NSView *documentView = [[[[self webView] mainFrame] frameView] documentView];
+	if ([documentView conformsToProtocol:@protocol(WebDocumentText)])
+	{
+		[(NSView <WebDocumentText> *)documentView deselectAll];
+	}
+}
+
 - (BOOL)isSelectionTypewriter:(DOMRange *)range
 {
 	if (nil == range) return NO;
@@ -780,6 +790,30 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			if (nil == sTypewriterOff) sTypewriterOff = [[TypewriterOff alloc] init];
 			[[self webView] changeAttributes:sTypewriterOff];
 		}
+	}
+}
+
+// paste some raw HTML
+- (IBAction)pasteLink:(id)sender
+{
+	NSArray *urls = nil;
+	NSArray *titles = nil;
+	[NSURL getURLs:&urls andTitles:&titles fromPasteboard:[NSPasteboard generalPasteboard]];
+	
+	if ([urls count])
+	{
+		// Figure out the URL and title to paste
+		NSURL *URL = [urls objectAtIndex:0];
+		
+		NSString *title = [titles firstObjectKS];
+		if (KSISNULL(title) || [title isEmptyString]) {
+			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
+		}
+		
+		
+		// Do the paste
+		NSString *linkHTML = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", [URL absoluteString], title];
+		[[self webView] replaceSelectionWithMarkupString:linkHTML];
 	}
 }
 
@@ -898,12 +932,23 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		}
 		return (nil != range);
 	}
-	else if (action == @selector(pasteTextAsMarkup:))
+	
+    // Paste HTML into Text
+    else if (action == @selector(pasteTextAsMarkup:))
 	{
 		result = [self webViewIsEditing];
 	}
 	
-    // View type
+    // "Paste Link"
+	else if (action == @selector(pasteLink:))
+	{
+		NSArray *URLs = nil;
+		[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:[NSPasteboard generalPasteboard]];
+		BOOL result = (URLs != nil && [URLs count] > 0);
+		return result;
+	}
+    
+	// View type
     else if (action == @selector(selectWebViewViewType:))
 	{
 		// Select the correct item for the current view type
