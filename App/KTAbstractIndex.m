@@ -124,4 +124,24 @@
  */
 - (NSSet *)requiredMediaIdentifiers { return nil; }
 
+- (void)addCSSFilePathToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
+{
+	NSBundle *bundle = [[self plugin] bundle];
+	
+	if ( nil == bundle ) return;
+	
+	NSString *resourcePath = [bundle resourcePath];
+	NSArray *cssFilesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginCSSFilesNeeded"];
+	NSEnumerator *theEnum = [cssFilesNeeded objectEnumerator];
+	NSString *fileName;
+	
+	while (nil != (fileName = [theEnum nextObject]) )
+	{
+		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
+        //		LOG((@"%@ adding css file:%@", [self class], path));
+        OBASSERT(path);
+		[aSet addObject:path];
+	}
+}
+
 @end
