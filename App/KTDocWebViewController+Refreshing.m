@@ -409,9 +409,12 @@
 	NSString *pageHTML = [parser parseTemplate];
 	[parser release];
 	
+    // Figure out the URL to use
+	NSURL *pageURL = [page URL];
+    if (![pageURL scheme] || ![pageURL host]) pageURL = nil;
+    
 	// Load the HTML into the webview
-    NSURL *pageURL = [page URL];    // TODO: How should we handle this being nil for a fresh site?
-	[[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:pageURL];
+    [[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:pageURL];
 }
 
 - (void)loadMultiplePagesMarkerIntoWebView
