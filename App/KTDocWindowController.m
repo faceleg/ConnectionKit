@@ -568,7 +568,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark IBActions
 
-- (IBAction) windowHelp:(id)sender
+- (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
@@ -580,106 +580,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[documentView deselectAll];
 	}
-}
-
-- (IBAction) validateSource:(id)sender
-{
-	KTPage *page = [[self siteOutlineController] selectedPage];
-    NSString *pageSource = [page contentHTMLWithParserDelegate:nil isPreview:NO];
-	
-    NSString *charset = [[page master] valueForKey:@"charset"];
-	NSStringEncoding encoding = [charset encodingFromCharset];
-	NSData *pageData = [pageSource dataUsingEncoding:encoding allowLossyConversion:YES];
-	
-	NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sandvox_source.html"];
-	NSString *pathOut = [NSTemporaryDirectory() stringByAppendingPathComponent:@"validation.html"];
-	[pageData writeToFile:path atomically:NO];
-	
-	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
-	NSString *argString = [NSString stringWithFormat:@"-F uploaded_file=@%@ -F ss=1 -F verbose=1 http://validator.w3.org/check", path, pathOut];
-	NSArray *args = [argString componentsSeparatedByString:@" "];
-	
-	NSTask *task = [[[NSTask alloc] init] autorelease];
-	[task setLaunchPath:@"/usr/bin/curl"];
-	[task setArguments:args];
-	
-	[[NSFileManager defaultManager] createFileAtPath:pathOut contents:[NSData data] attributes:nil];
-	NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:pathOut];
-	[task setStandardOutput:fileHandle];
-	
-#ifndef DEBUG
-	// Non-debug builds should throw away stderr
-	[task setStandardError:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
-#endif
-	[task launch];
-	[task waitUntilExit];
-	int status = [task terminationStatus];
-	
-	if (0 == status)
-	{
-		// Scrape page to get status
-		BOOL isValid = NO;
-		NSString *resultingPageString = [[[NSString alloc] initWithContentsOfFile:pathOut
-																		 encoding:NSUTF8StringEncoding
-																			error:nil] autorelease];
-		if (nil != resultingPageString)
-		{
-			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
-			if (NSNotFound != foundValidRange.location)
-			{
-				isValid = YES;
-				NSString *explanation = [resultingPageString substringWithRange:foundValidRange];
-				
-				NSRunInformationalAlertPanelRelativeToWindow(
-					NSLocalizedString(@"HTML is Valid",@"Title of results alert"),
-					NSLocalizedString(@"The validator returned the following status message:\n\t%@",@""),
-					nil,nil,nil, [self window], explanation);
-			}
-		}
-		
-		if (!isValid)		// not valid -- load the page, give them a way out!
-		{
-			[[self webViewController] setViewType:KTHTMLValidationView];
-			[[[[self webViewController] webView] mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
-								  MIMEType:@"text/html"
-						  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
-			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0];
-		}
-	}
-	else
-	{
-		[KSSilencingConfirmSheet
-			alertWithWindow:[self window]
-			   silencingKey:@"shutUpValidateError"
-					  title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
-					 format:NSLocalizedString(@"Unable to post HTML to validator.w3.org:\n%@", @"error message"), path];
-	}
-}
-
-- (void)showValidationResultsAlert
-{
-				[KSSilencingConfirmSheet
-				alertWithWindow:[self window]
-				   silencingKey:@"shutUpNotValidated"
-						  title:NSLocalizedString(@"Validation Results Loaded",@"Title of alert")
-						 format:NSLocalizedString(@"The results from the HTML validator have been loaded into Sandvox's web view. To return to the standard view of your web page, choose the 'Reload Web View' menu.", @"validated message")];
-}
-
-#pragma mark -
-#pragma mark WebView View Type
-
-/*	The sender's tag should correspond to a view type. If the user clicks the currently selected option for the second time,
- *	we revert back to standard preview.
- */
-- (IBAction)selectWebViewViewType:(id)sender;
-{
-	KTWebViewViewType viewType = [sender tag];
-	if (viewType == [[self webViewController] viewType])
-	{
-		viewType = KTStandardWebView;
-	}
-	
-	[[self webViewController] setViewType:viewType];
 }
 
 #pragma mark -
@@ -1510,30 +1410,6 @@ from representedObject */
 	else if ( itemAction == @selector(makeTextNormal:) )
 	{
 		return YES;
-	}
-	
-	else if (itemAction == @selector(selectWebViewViewType:))
-	{
-		// Select the correct item for the current view type
-		KTWebViewViewType menuItemViewType = [menuItem tag];
-		if (menuItemViewType == [[self webViewController] viewType]) {
-			[menuItem setState:NSOnState];
-		}
-		else {
-			[menuItem setState:NSOffState];
-		}
-		
-		// Disable the RSS item if the current page does not support it
-		BOOL result = YES;
-		if (menuItemViewType == KTRSSSourceView || menuItemViewType == KTRSSView)
-		{
-			KTPage *page = [[self siteOutlineController] selectedPage];
-			if (![page collectionCanSyndicate] || ![page boolForKey:@"collectionSyndicate"]) {
-				result = NO;
-			}
-		}
-		
-		return result;
 	}
 	
 	// Site menu items

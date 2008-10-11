@@ -169,9 +169,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)group:(id)sender;
 - (IBAction)remove:(id)sender;
 
-// Webview view type
-- (IBAction)selectWebViewViewType:(id)sender;
-
 - (IBAction)toggleDesignsShown:(id)sender;
 
 - (IBAction)validateSource:(id)sender;
@@ -234,8 +231,6 @@ extern NSString *gInfoWindowAutoSaveName;
 @end
 
 @interface KTDocWindowController ( WebView )
-
-- (IBAction)updateWebView:(id)sender;
 
 - (NSWindow *)linkPanel;
 - (void)closeLinkPanel;

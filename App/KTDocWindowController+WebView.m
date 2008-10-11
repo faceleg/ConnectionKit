@@ -117,12 +117,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 @implementation KTDocWindowController ( WebView )
 
-- (IBAction)updateWebView:(id)sender
-{
-	[[self webViewController] reloadWebView];
-}
-
-
 - (void) webViewDeallocSupport
 {
 	[self setSelectedPagelet:nil];

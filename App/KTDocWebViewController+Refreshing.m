@@ -224,6 +224,10 @@
 	[self setWebViewNeedsReload:NO];
 }
 
+- (IBAction)updateWebView:(id)sender
+{
+	[self reloadWebView];
+}
 
 /*	Generates HTML for just the specified component and inserts it into the webview, replacing the old HTML
  */

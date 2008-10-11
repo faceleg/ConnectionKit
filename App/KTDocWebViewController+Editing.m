@@ -903,7 +903,32 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		result = [self webViewIsEditing];
 	}
 	
-    
+    // View type
+    else if (action == @selector(selectWebViewViewType:))
+	{
+		// Select the correct item for the current view type
+		KTWebViewViewType menuItemViewType = [menuItem tag];
+		if (menuItemViewType == [self viewType]) {
+			[menuItem setState:NSOnState];
+		}
+		else {
+			[menuItem setState:NSOffState];
+		}
+		
+		// Disable the RSS item if the current page does not support it
+		BOOL result = YES;
+		if (menuItemViewType == KTRSSSourceView || menuItemViewType == KTRSSView)
+		{
+			KTPage *page = [self page];
+			if (![page collectionCanSyndicate] || ![page boolForKey:@"collectionSyndicate"]) {
+				result = NO;
+			}
+		}
+		
+		return result;
+	}
+	
+	
     return result;
 }
 

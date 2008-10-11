@@ -308,6 +308,20 @@
 	}
 }
 
+/*	The sender's tag should correspond to a view type. If the user clicks the currently selected option for the second time,
+ *	we revert back to standard preview.
+ */
+- (IBAction)selectWebViewViewType:(id)sender;
+{
+	KTWebViewViewType viewType = [sender tag];
+	if (viewType == [self viewType])
+	{
+		viewType = KTStandardWebView;
+	}
+	
+	[self setViewType:viewType];
+}
+
 - (BOOL)hideWebView
 {
 	switch ([self viewType])
@@ -326,6 +340,92 @@
 		default:
 			return NO;
 	}
+}
+
+#pragma mark -
+#pragma mark HTML Validation
+
+- (IBAction)validateSource:(id)sender
+{
+	KTPage *page = [self page];
+    NSString *pageSource = [page contentHTMLWithParserDelegate:nil isPreview:NO];
+	
+    NSString *charset = [[page master] valueForKey:@"charset"];
+	NSStringEncoding encoding = [charset encodingFromCharset];
+	NSData *pageData = [pageSource dataUsingEncoding:encoding allowLossyConversion:YES];
+	
+	NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sandvox_source.html"];
+	NSString *pathOut = [NSTemporaryDirectory() stringByAppendingPathComponent:@"validation.html"];
+	[pageData writeToFile:path atomically:NO];
+	
+	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
+	NSString *argString = [NSString stringWithFormat:@"-F uploaded_file=@%@ -F ss=1 -F verbose=1 http://validator.w3.org/check", path, pathOut];
+	NSArray *args = [argString componentsSeparatedByString:@" "];
+	
+	NSTask *task = [[[NSTask alloc] init] autorelease];
+	[task setLaunchPath:@"/usr/bin/curl"];
+	[task setArguments:args];
+	
+	[[NSFileManager defaultManager] createFileAtPath:pathOut contents:[NSData data] attributes:nil];
+	NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:pathOut];
+	[task setStandardOutput:fileHandle];
+	
+#ifndef DEBUG
+	// Non-debug builds should throw away stderr
+	[task setStandardError:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
+#endif
+	[task launch];
+	[task waitUntilExit];
+	int status = [task terminationStatus];
+	
+	if (0 == status)
+	{
+		// Scrape page to get status
+		BOOL isValid = NO;
+		NSString *resultingPageString = [[[NSString alloc] initWithContentsOfFile:pathOut
+																		 encoding:NSUTF8StringEncoding
+																			error:nil] autorelease];
+		if (nil != resultingPageString)
+		{
+			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
+			if (NSNotFound != foundValidRange.location)
+			{
+				isValid = YES;
+				NSString *explanation = [resultingPageString substringWithRange:foundValidRange];
+				
+				NSRunInformationalAlertPanelRelativeToWindow(
+                                                             NSLocalizedString(@"HTML is Valid",@"Title of results alert"),
+                                                             NSLocalizedString(@"The validator returned the following status message:\n\t%@",@""),
+                                                             nil,nil,nil, [[self view] window], explanation);
+			}
+		}
+		
+		if (!isValid)		// not valid -- load the page, give them a way out!
+		{
+			[self setViewType:KTHTMLValidationView];
+			[[[self webView] mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
+                                                            MIMEType:@"text/html"
+                                                    textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
+			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0];
+		}
+	}
+	else
+	{
+		[KSSilencingConfirmSheet
+         alertWithWindow:[[self view] window]
+         silencingKey:@"shutUpValidateError"
+         title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
+         format:NSLocalizedString(@"Unable to post HTML to validator.w3.org:\n%@", @"error message"), path];
+	}
+}
+
+- (void)showValidationResultsAlert
+{
+    [KSSilencingConfirmSheet
+     alertWithWindow:[[self view] window]
+     silencingKey:@"shutUpNotValidated"
+     title:NSLocalizedString(@"Validation Results Loaded",@"Title of alert")
+     format:NSLocalizedString(@"The results from the HTML validator have been loaded into Sandvox's web view. To return to the standard view of your web page, choose the 'Reload Web View' menu.", @"validated message")];
 }
 
 #pragma mark -

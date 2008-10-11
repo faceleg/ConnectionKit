@@ -161,6 +161,7 @@ typedef enum {
 - (BOOL)webViewLoadingIsSuspended;
 
 - (void)reloadWebView;
+- (IBAction)updateWebView:(id)sender;
 - (void)reloadWebViewIfNeeded;
 
 - (void)replaceWebViewComponent:(KTWebViewComponent *)oldComponent withComponent:(KTWebViewComponent *)newComponent;
