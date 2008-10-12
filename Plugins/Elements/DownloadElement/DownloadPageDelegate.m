@@ -99,7 +99,8 @@
 		if ([(KTPage *)plugin shouldUpdateFileNameWhenTitleChanges])
         {
             NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
-            [(KTPage *)plugin setFileName:[filename stringByDeletingPathExtension]];
+            NSString *legalizedFileName = [[filename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+            [(KTPage *)plugin setFileName:legalizedFileName];
         }
         [(KTPage *)plugin setCustomPathRelativeToSite:nil];
 		
