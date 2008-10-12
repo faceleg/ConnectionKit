@@ -343,6 +343,28 @@
 }
 
 #pragma mark -
+#pragma mark Text Size
+
+/*  WebKit provides its own version of all these methods. We define them here to catch when
+ *  the WebView is not in the responder chain.
+ */
+
+- (IBAction)makeTextLarger:(id)sender
+{
+	[[self webView] makeTextLarger:sender];
+}
+
+- (IBAction)makeTextSmaller:(id)sender
+{
+	[[self webView] makeTextSmaller:sender];
+}
+
+- (IBAction)makeTextStandardSize:(id)sender
+{
+	[[self webView] setTextSizeMultiplier:1.0];
+}
+
+#pragma mark -
 #pragma mark HTML Validation
 
 - (IBAction)validateSource:(id)sender

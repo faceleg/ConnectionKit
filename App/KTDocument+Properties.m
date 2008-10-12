@@ -338,7 +338,8 @@
 
 /*	Generally this method is used when saving the document.
  *	We don't want manage these view properties in the model normally since they would be affected by undo/redo.
- *	Instead, they are kept within KTDocument and then only written out at save-time.
+ *	Instead, they are kept within KTDocument and then only written out at save-time. If the user
+ *  happens to hit undo and change the property, it is ignored.
  */
 - (void)copyDocumentDisplayPropertiesToModel
 {
@@ -383,6 +384,11 @@
 	{
 		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
 	}
+    
+    
+    // WebView text size
+    float textSize = [[[[self windowController] webViewController] webView] textSizeMultiplier];
+    [[self documentInfo] setFloat:textSize forKey:@"textSizeMultiplier"];
 }
 
 #pragma mark -

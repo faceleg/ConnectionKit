@@ -666,26 +666,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self document] setDisplaySmallPageIcons:!value];
 }
 
-- (IBAction)makeTextLarger:(id)sender
-{
-	[oWebView makeTextLarger:sender];
-	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
-}
-
-- (IBAction)makeTextSmaller:(id)sender
-{
-	[oWebView makeTextSmaller:sender];
-	[[self document] setWrappedValue:[NSNumber numberWithFloat:[oWebView textSizeMultiplier]] forKey:@"textSizeMultiplier"];
-}
-
-- (IBAction)makeTextNormal:(id)sender
-{
-	[oWebView setTextSizeMultiplier:1.0];
-	[[self document] setWrappedValue:[NSNumber numberWithFloat:1.0] forKey:@"textSizeMultiplier"];
-}
-
-
-
 /*!	We need to define export here so it can be validated by the doc window controller.
 */
 - (IBAction)export:(id)sender
@@ -1375,23 +1355,6 @@ from representedObject */
 			([[self document] displaySmallPageIcons] ? NSOnState : NSOffState)];
 		RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
 		return ![sidebarSplit isCollapsed];	// enabled if we can see the site outline
-	}
-	
-	// "Make Text Bigger" makeTextLarger:
-	else if ( itemAction == @selector(makeTextLarger:) )
-	{
-		return [oWebView canMakeTextLarger];
-	}
-	
-	// "Make Text Smaller" makeTextSmaller:
-	else if ( itemAction == @selector(makeTextSmaller:) )
-	{
-		return [oWebView canMakeTextSmaller];
-	}
-	
-	else if ( itemAction == @selector(makeTextNormal:) )
-	{
-		return YES;
 	}
 	
 	// Site menu items

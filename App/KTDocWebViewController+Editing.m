@@ -973,6 +973,23 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		return result;
 	}
 	
+	// "Make Text Bigger" makeTextLarger:
+	else if (action == @selector(makeTextLarger:))
+	{
+		result = [[self webView] canMakeTextLarger];
+	}
+	
+	// "Make Text Smaller" makeTextSmaller:
+	else if (action == @selector(makeTextSmaller:))
+	{
+		result = [[self webView] canMakeTextSmaller];
+	}
+	
+	else if (action == @selector(makeTextStandardSize:))
+	{
+		result = [[self webView] canMakeTextStandardSize];
+	}
+	
 	
     return result;
 }

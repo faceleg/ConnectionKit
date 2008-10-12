@@ -34,4 +34,5 @@
 @interface WebView ( KTWebKitCompatibility )
 - (DOMDocument *)mainFrameDocument;
 - (BOOL)isLoading;
+- (BOOL)canMakeTextStandardSize;
 @end
