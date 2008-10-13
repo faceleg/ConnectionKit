@@ -693,6 +693,7 @@ static NSArray *sReservedNames = nil;
 		{
 			KTHostProperties *hostProperties = [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties"];
 			[hostProperties setValue:stemURL forKey:@"stemURL"];
+            [[[[self associatedDocument] documentInfo] root] recursivelyInvalidateURL:YES];
 		}
 		
 		[self setDocumentRoot:[sheet filename]];
