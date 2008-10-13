@@ -143,11 +143,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[self setThread:[NSThread currentThread]];
         
         
-        // we always start in preview
-		[[self windowController] setPublishingMode:kGeneratingPreview];
-		
-		
-		// Init UI accessors
+        // Init UI accessors
 		NSNumber *tmpValue = [self wrappedInheritedValueForKey:@"displaySiteOutline"];
 		[self setDisplaySiteOutline:(tmpValue) ? [tmpValue boolValue] : YES];
 		
