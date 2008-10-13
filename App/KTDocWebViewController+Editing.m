@@ -25,6 +25,7 @@
 #import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
+#import "NSURL+KTExtensions.h"
 
 #import "KTWebKitCompatibility.h"
 #import "DOMNode+Karelia.h"
