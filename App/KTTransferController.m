@@ -513,11 +513,7 @@ static NSArray *sReservedNames = nil;
 	// Fetch the publishing info for the page. Bail if it is not for publishing.
 	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForPage:)
 																		 withObject:page];
-	if (!publishingInfo)
-	{
-		// LOG((@"BAILING OUT"));
-        return;
-	}
+	if (!publishingInfo) return;
     
     
 	NSString *pageString = [publishingInfo objectForKey:@"HTML"];
@@ -534,16 +530,23 @@ static NSArray *sReservedNames = nil;
 	NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
     
 	
+    // Obviously, don't publish a page with nowhere to publish to
 	NSString *uploadPath = [publishingInfo objectForKey:@"uploadPath"];
+    if (!uploadPath) return;
+    
 	NSString *publishedPath = [publishingInfo objectForKey:@"publishedPath"];
+    
+    
+    // Ignore unmodified pages if requested
     if (staleOnly)
     {
-        // Compare digests to see if we should publish
         NSData *publishedDataDigest = [publishingInfo objectForKey:@"publishedDataDigest"];
-        if (KSISEQUAL(digest, publishedDataDigest) && KSISEQUAL(uploadPath, publishedPath))
-		{
-			return;
-		}
+        if (publishedDataDigest &&
+            (!publishedPath || [uploadPath isEqualToString:publishedPath]) &&   // 1.5.1 and earlier didn't store -publishedPath
+            [publishedDataDigest isEqualToData:digest])
+        {
+            return;
+        }
     }
     
     
