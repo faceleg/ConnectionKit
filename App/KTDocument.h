@@ -50,9 +50,11 @@ extern NSString *KTDocumentWillSaveNotification;
 @private
 	
 	// Standard document behaviour additions
-    BOOL myIsClosing;
-    unsigned mySaveOperationCount;						// used in KTDocument+Saving.m
+    BOOL                myIsClosing;
+    unsigned            mySaveOperationCount;			// used in KTDocument+Saving.m
     NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
+    
+    NSThread    *myThread;
 	
     
     // KT
@@ -198,6 +200,9 @@ extern NSString *KTDocumentWillSaveNotification;
 - (KTStalenessManager *)stalenessManager;
 
 - (BOOL)isReadOnly;
+
+- (NSThread *)thread;
+- (void)setThread:(NSThread *)thread;
 
 // export/upload
 

@@ -133,12 +133,17 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (gLicenseViolation)
 	{
 		NSBeep();
+        [self release];
 		return nil;
 	}
 	
-    if ( nil != [super init] )
+    
+    if (self = [super init])
 	{
-		// we always start in preview
+		[self setThread:[NSThread currentThread]];
+        
+        
+        // we always start in preview
 		[[self windowController] setPublishingMode:kGeneratingPreview];
 		
 		
@@ -287,6 +292,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	// release context
 	[myManagedObjectContext release]; myManagedObjectContext = nil;
+    
+    [myThread release];
 	
 	[super dealloc];
 }

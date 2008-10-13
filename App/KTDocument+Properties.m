@@ -28,7 +28,25 @@
 #pragma mark -
 
 
-@implementation KTDocument ( Properties )
+@implementation KTDocument (Properties)
+
+#pragma mark -
+
+/*  We store the thread the document was intialised on so that threading-critical operation
+ *  like saves can assert that they're being run on the right thread. You can change this thread
+ *  using -setThread, but this shouldn't generally be needed.
+ *
+ *  Normal documents are on the main thread, but data migration docs work in the background.
+ */
+
+- (NSThread *)thread { return myThread; }
+
+- (void)setThread:(NSThread *)thread
+{
+    [thread retain];
+    [myThread release];
+    myThread = thread;
+}
 
 #pragma mark .... relationships
 
