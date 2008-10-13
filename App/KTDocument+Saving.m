@@ -428,12 +428,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			// Wait a second before putting up a progress sheet
 			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 8.0)
 			{
-				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
+				OBASSERT([NSThread currentThread] == [self thread]);
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
 			}
 			BOOL beganSheet = NO;
 			if ([quickLookThumbnailWebView isLoading])
 			{
-				[[self windowController] beginSheetWithStatus:NSLocalizedString(@"Saving\\U2026","Message title when performing a lengthy save")
+				OBASSERT([NSThread isMainThread]);
+                [[self windowController] beginSheetWithStatus:NSLocalizedString(@"Saving\\U2026","Message title when performing a lengthy save")
 														image:nil];
 				beganSheet = YES;
 			}
@@ -444,15 +446,18 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			[self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
 			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
 			{
-				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
+				OBASSERT([NSThread currentThread] == [self thread]);
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
 			}
 			[self autorelease];
 			
 			
-			if (![quickLookThumbnailWebView isLoading])
+            OBASSERT([NSThread isMainThread]);
+            if (![quickLookThumbnailWebView isLoading])
 			{
 				// Write the thumbnail to disk
-				[quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+				OBASSERT([NSThread currentThread] == [self thread]);
+                [quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
 				NSImage *snapshot = [[[[quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
 				
 				NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
@@ -492,7 +497,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			// Close the progress sheet
 			if (beganSheet)
 			{
-				[[self windowController] endSheet];
+				OBASSERT([NSThread isMainThread]);
+                [[self windowController] endSheet];
 			}
 		}
 	}
@@ -552,7 +558,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
-		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+		OBASSERT([NSThread currentThread] == [self thread]);
+        BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
 																	 ofType:[KTDocument defaultStoreType]
 																	  error:outError];
 		
@@ -568,9 +575,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
     // Set metadata
-    if ( nil != [storeCoordinator persistentStoreForURL:persistentStoreURL] )
+    if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
     {
-        if ( ![self setMetadataForStoreAtURL:persistentStoreURL error:outError] )
+        OBASSERT([NSThread currentThread] == [self thread]);
+        if (![self setMetadataForStoreAtURL:persistentStoreURL error:outError])
         {
 			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
             return NO; // couldn't setMetadata, but we should have, bail...
@@ -578,7 +586,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     }
     else
     {
-        if ( saveOperation != NSSaveAsOperation )
+        if (saveOperation != NSSaveAsOperation)
         {
 			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
@@ -588,6 +596,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Record display properties
+    OBASSERT([NSThread currentThread] == [self thread]);
     [managedObjectContext processPendingChanges];
     [[managedObjectContext undoManager] disableUndoRegistration];
     [self copyDocumentDisplayPropertiesToModel];
@@ -596,6 +605,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Move external media in-document if the user requests it
+    OBASSERT([NSThread currentThread] == [self thread]);
     KTDocumentInfo *docInfo = [self documentInfo];
     if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
     {
@@ -634,7 +644,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		}
 		else
 		{
-			result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
+			OBASSERT([NSThread currentThread] == [self thread]);
+            result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
 											  error:&error];
 		}
 	}
@@ -642,7 +653,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if (result)	// keep going if OK
 	{
 		// Store QuickLook preview
-		if ([NSThread isMainThread])
+		if ([NSThread currentThread] == [self thread])
 		{
 			KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
 			[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
@@ -654,11 +665,13 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		}
 		
 		
-		result = [managedObjectContext save:&error];
+		OBASSERT([NSThread currentThread] == [self thread]);
+        result = [managedObjectContext save:&error];
 	}
 	if (result)
 	{
-		result = [[[self mediaManager] managedObjectContext] save:&error];
+		OBASSERT([NSThread currentThread] == [self thread]);
+        result = [[[self mediaManager] managedObjectContext] save:&error];
 	}
 	// Return, making sure to supply appropriate error info
 	if (!result && outError) *outError = error;
@@ -777,7 +790,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (WebView *)newQuickLookThumbnailWebView
 {
 	// Put together the HTML for the thumbnail
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+	OBASSERT([NSThread currentThread] == [self thread]);
+    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
