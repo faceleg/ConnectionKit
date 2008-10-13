@@ -17,8 +17,6 @@
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
-#import "NSIndexSet+Karelia.h"
-
 #import <iMediaBrowser/RBSplitView.h>
 
 
@@ -31,23 +29,6 @@
 
 
 @implementation KTDocument ( Properties )
-
-#pragma mark -
-#pragma mark Properties that do not inherit from the preferences
-
-- (NSIndexSet *)lastSelectedRows
-{
-	// we are storing NSIndexSets internally as strings
-	NSString *string = [self wrappedValueForKey:@"lastSelectedRows"];
-	return [NSIndexSet indexSetWithString:string];			// warning: accessors that convert from object cannot be for optional properties
-}
-
-- (void)setLastSelectedRows:(NSIndexSet *)value
-{
-	// we store NSIndexSets internally as a string
-	NSString *string = [value indexSetAsString];
-	[self setWrappedValue:string forKey:@"lastSelectedRows"];
-}
 
 #pragma mark .... relationships
 
@@ -287,10 +268,6 @@
 	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
 }
 
-- (float)textSizeMultiplier { return myTextSizeMultiplier; }
-
-- (void)setTextSizeMultiplier:(float)value { myTextSizeMultiplier = value; }
-
 - (BOOL)displayCodeInjectionWarnings { return myDisplayCodeInjectionWarnings; }
 
 - (void)setDisplayCodeInjectionWarnings:(BOOL)flag
@@ -301,8 +278,8 @@
 
 - (NSRect)documentWindowContentRect
 {
-	NSString *rectAsString = [self wrappedValueForKey:@"documentWindowContentRect"];
-	if ( nil != rectAsString )
+	NSString *rectAsString = [[self documentInfo] valueForKey:@"documentWindowContentRect"];
+	if (rectAsString)
 	{
 		return NSRectFromString(rectAsString);
 	}
@@ -345,12 +322,7 @@
 {
 	// Selected pages
 	NSIndexSet *outlineSelectedRowIndexSet = [[[[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
-	NSIndexSet *storedIndexSet = [self lastSelectedRows];
-	
-	if ( ![storedIndexSet isEqualToIndexSet:outlineSelectedRowIndexSet] )
-	{
-		[self setLastSelectedRows:outlineSelectedRowIndexSet];	
-	}
+	[[self documentInfo] setLastSelectedRows:outlineSelectedRowIndexSet];
 	
 	
 	// Source Outline width
@@ -394,34 +366,6 @@
 #pragma mark -
 #pragma mark *valueForKey: support
 
-- (id)wrappedValueForKey:(NSString *)aKey
-{
-	OFF((@"WARNING: wrappedValueForKey: %@ is being called on a document; it MUST BE REPLACED with a call to DocumentInfo directly to make KVO happy", aKey));
-	KTDocumentInfo *documentInfo = [self documentInfo];
-	
-//	[documentInfo lockPSCAndMOC];
-    [documentInfo willAccessValueForKey:aKey];
-	id result = [documentInfo primitiveValueForKey:aKey];
-	[documentInfo didAccessValueForKey:aKey];
-//	[documentInfo unlockPSCAndMOC];
-
-    return result;
-}
-
-//#warning setWrappedValue:forKey: SHOULD NOT BE USED TO SET A RELATIONSHIP (IT WILL DIE DOWNSTREAM)
-//#warning setWrappedValue:forKey: ALSO WILL NOT SET BOTH SIDES OF A RELATIONSHIP
-- (void)setWrappedValue:(id)aValue forKey:(NSString *)aKey
-{
-	OFF((@"WARNING: setWrappedValue:forKey: %@ is being called on a document; it MUST BE REPLACED with a call to DocumentInfo directly to make KVO happy", aKey));
-	KTDocumentInfo *documentInfo = [self documentInfo];
-
-//	[documentInfo lockPSCAndMOC];
-    [documentInfo willChangeValueForKey:aKey];
-    [documentInfo setPrimitiveValue:aValue forKey:aKey];
-    [documentInfo didChangeValueForKey:aKey];
-//	[documentInfo unlockPSCAndMOC];
-}
-
 - (id)wrappedInheritedValueForKey:(NSString *)aKey
 {
 	OFF((@"WARNING: wrappedInheritedValueForKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
@@ -447,7 +391,7 @@
 {
 	OFF((@"WARNING: setWrappedInheritedValue:forKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
 
-	[self setWrappedValue:aValue forKey:aKey];
+	[[self documentInfo] setValue:aValue forKey:aKey];
 	
 	// we only want to be storing property values in defaults
 	// for now, we're going to specialize support for known entities
@@ -458,18 +402,6 @@
 		value = [value dictionary]; // convert KTStoredSet to NSDictionary
 	}
 	[[NSUserDefaults standardUserDefaults] setObject:value forKey:aKey];
-}
-
-- (void)setPrimitiveInheritedValue:(id)aValue forKey:(NSString *)aKey
-{
-	LOG((@"WARNING: setPrimitiveInheritedValue:forKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
-
-	KTDocumentInfo *documentInfo = [self documentInfo];
-
-//	[documentInfo lockPSCAndMOC];
-    [documentInfo setPrimitiveValue:aValue forKey:aKey];
-//	[documentInfo unlockPSCAndMOC];
-    [[NSUserDefaults standardUserDefaults] setObject:aValue forKey:aKey];
 }
 
 @end

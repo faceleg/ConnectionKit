@@ -41,6 +41,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+@interface KTDocWebViewController (Internal)
+- (void)_loadWebViewTextSizeMultiplier;
+@end
+
+
+#pragma mark -
+
+
 @implementation KTDocWebViewController
 
 #pragma mark -
@@ -142,6 +150,25 @@
     WebView *newWebView = [self webView];
 	[newWebView setEditingDelegate:self];
     [newWebView setUIDelegate:[self windowController]];
+    
+    
+    // Text size
+    [self _loadWebViewTextSizeMultiplier];
+}
+
+/*  Support method to set the webview text size from document info.
+ */
+- (void)_loadWebViewTextSizeMultiplier
+{
+    if ([self document])
+    {
+        float multiplier = [[[self document] documentInfo] floatForKey:@"textSizeMultiplier"];
+        if (multiplier < 0.01)
+        {
+            multiplier = [[NSUserDefaults standardUserDefaults] floatForKey:@"textSizeMultiplier"];	// put into a sane range
+        }
+        [[self webView] setTextSizeMultiplier:multiplier];
+    }
 }
 
 #pragma mark -
@@ -165,6 +192,8 @@
                                                  selector:@selector(documentDidChange:)
                                                      name:NSManagedObjectContextObjectsDidChangeNotification
                                                    object:[[self document] managedObjectContext]];
+        
+        [self _loadWebViewTextSizeMultiplier];
     }
 }
 

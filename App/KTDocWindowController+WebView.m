@@ -137,13 +137,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	// method for detecting clicks.
 	[webView setUIDelegate:self];				// WebUIDelegate
 	
-	float multiplier = [[[self document] wrappedValueForKey:@"textSizeMultiplier"] floatValue];
-	if (multiplier < 0.01)
-	{
-		multiplier = [defaults floatForKey:@"textSizeMultiplier"];	// put into a sane range
-	}
-	[webView setTextSizeMultiplier:multiplier];
-	
 	/*
 	 // doesn't actually work yet
 	 DOMDocument *document = [[oWebView mainFrame] DOMDocument];

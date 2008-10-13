@@ -16,6 +16,7 @@
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSIndexSet+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
@@ -75,6 +76,20 @@
 - (NSSet *)requiredBundlesIdentifiers
 {
 	return [self transientValueForKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
+}
+
+- (NSIndexSet *)lastSelectedRows
+{
+	// we are storing NSIndexSets internally as strings
+	NSString *string = [self wrappedValueForKey:@"lastSelectedRows"];
+	return [NSIndexSet indexSetWithString:string];			// warning: accessors that convert from object cannot be for optional properties
+}
+
+- (void)setLastSelectedRows:(NSIndexSet *)value
+{
+	// we store NSIndexSets internally as a string
+	NSString *string = [value indexSetAsString];
+	[self setWrappedValue:string forKey:@"lastSelectedRows"];
 }
 
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers

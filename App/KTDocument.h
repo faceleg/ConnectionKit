@@ -80,7 +80,6 @@ extern NSString *KTDocumentWillSaveNotification;
 	BOOL	myDisplayStatusBar;					// accessor in category method
 	BOOL	myDisplayEditingControls;			// accessor in category method
 //	short	mySiteOutlineSize;
-	float	myTextSizeMultiplier;				// accessor in category method
 	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method
 }
 
@@ -200,12 +199,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)isReadOnly;
 
-- (NSIndexSet *)lastSelectedRows;
-- (void)setLastSelectedRows:(NSIndexSet *)value;
-
-- (float)textSizeMultiplier;
-- (void)setTextSizeMultiplier:(float)value;
-
 // export/upload
 
 - (KTTransferController *)exportTransferController;
@@ -218,13 +211,9 @@ extern NSString *KTDocumentWillSaveNotification;
 
 // support
 
-- (id)wrappedValueForKey:(NSString *)aKey;
-- (void)setWrappedValue:(id)aValue forKey:(NSString *)aKey;
-
 // these are really for properties stored in defaults
 - (id)wrappedInheritedValueForKey:(NSString *)aKey;
-- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
-- (void)setPrimitiveInheritedValue:(id)aValue forKey:(NSString *)aKey;
+//- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
 - (KTDocumentInfo *)documentInfo;
 - (void)setDocumentInfo:(KTDocumentInfo *)anObject;
