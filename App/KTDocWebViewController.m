@@ -111,26 +111,11 @@
 #pragma mark -
 #pragma mark View
 
-/*  The view SHOULD be a WebView or nil unless someone is abusing the property
- */
-- (void)setView:(id)aView
+- (void)setView:(NSView *)aView
 {
-    // Clear old delegates to avoid memory bugs
-    WebView *oldWebView = [self webView];
-    [oldWebView setEditingDelegate:nil];
-    [oldWebView setFrameLoadDelegate:nil];
-    [oldWebView setPolicyDelegate:nil];
-    [oldWebView setResourceLoadDelegate:nil];
-    [oldWebView setUIDelegate:nil];
-    
-    
-    // Store the view
-    [super setView:aView];
-    
-    
-    // Setup new delegation
-    WebView *newWebView = [self webView];
-	[newWebView setEditingDelegate:self];
+    // The view SHOULD be a WebView or nil unless someone is abusing the property
+    OBPRECONDITION(!aView || [aView isKindOfClass:[WebView class]]);
+    [self setWebView:(WebView *)aView];
 }
 
 - (WebView *)webView
@@ -140,7 +125,23 @@
 
 - (void)setWebView:(WebView *)aWebView
 {
-	[self setView:aWebView];
+	// Clear old delegates to avoid memory bugs
+    WebView *oldWebView = [self webView];
+    [oldWebView setEditingDelegate:nil];
+    [oldWebView setFrameLoadDelegate:nil];
+    [oldWebView setPolicyDelegate:nil];
+    [oldWebView setResourceLoadDelegate:nil];
+    [oldWebView setUIDelegate:nil];
+    
+    
+    // Store the view
+    [super setView:aWebView];
+    
+    
+    // Setup new delegation
+    WebView *newWebView = [self webView];
+	[newWebView setEditingDelegate:self];
+    [newWebView setUIDelegate:[self windowController]];
 }
 
 #pragma mark -
@@ -167,6 +168,13 @@
     }
 }
 
+/*  At present, the window controller is the UI delegate.
+ */
+- (void)setWindowController:(KTDocWindowController *)aWindowController
+{
+    [super setWindowController:aWindowController];
+    [[self webView] setUIDelegate:[self windowController]];
+}
 
 #pragma mark -
 #pragma mark Accessors

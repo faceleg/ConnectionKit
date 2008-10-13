@@ -41,9 +41,9 @@
 	
 	if (mySelectedInlineImageElement != anElement && nil != anElement)
 	{
-		DOMRange *selectionRange = [[[oWebView selectedFrame] DOMDocument] createRange];
+		DOMRange *selectionRange = [[[[[self webViewController] webView] selectedFrame] DOMDocument] createRange];
 		[selectionRange selectNode:(DOMNode *)[anElement DOMNode]];
-		[oWebView setSelectedDOMRange:selectionRange affinity:NSSelectionAffinityDownstream];
+		[[[self webViewController] webView] setSelectedDOMRange:selectionRange affinity:NSSelectionAffinityDownstream];
 	}
 	// standard setter pattern, but tell old object to release its nib objects first!
 	[anElement retain];

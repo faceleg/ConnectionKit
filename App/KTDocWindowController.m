@@ -1078,12 +1078,12 @@ from representedObject */
 
 - (IBAction)insertList:(id)sender
 {
-    [oWebView replaceSelectionWithMarkupString:@"<p><ul><li></li></ul></p>"];
+    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<p><ul><li></li></ul></p>"];
 }
 
 - (IBAction)insert2Table:(id)sender
 {
-    [oWebView replaceSelectionWithMarkupString:@"<table><tr><td></td><td></td></tr></table>"];
+    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<table><tr><td></td><td></td></tr></table>"];
 }
 
 
@@ -1626,7 +1626,7 @@ from representedObject */
 	{
 		DOMNode *dn = [selectedObject DOMNode];
 		DOMDocument *dd = [dn ownerDocument];
-		DOMDocument *myDD = [[oWebView mainFrame] DOMDocument];
+		DOMDocument *myDD = [[[[self webViewController] webView] mainFrame] DOMDocument];
 		if (dd != myDD)
 		{
 			return;		// notification is coming from a different dom document, thus differnt svx document
@@ -2311,24 +2311,26 @@ from representedObject */
         // resize the two views in the frame
 		[oStatusBar setHidden:NO];
 		
-		NSRect webViewFrame = [oWebView frame];
+        WebView *webView = [[self webViewController] webView];
+		NSRect webViewFrame = [webView frame];
 		float statusBarHeight = [oStatusBar frame].size.height;
 		webViewFrame.size.height -= statusBarHeight;
 		webViewFrame.origin.y += statusBarHeight;
-		[oWebView setFrame:webViewFrame];
-		[oWebView setNeedsDisplay:YES];
+		[webView setFrame:webViewFrame];
+		[webView setNeedsDisplay:YES];
     }
     else {
         // hide status bars
 		
 		[oStatusBar setHidden:YES];
 		
-		NSRect webViewFrame = [oWebView frame];
+		WebView *webView = [[self webViewController] webView];
+		NSRect webViewFrame = [webView frame];
 		float statusBarHeight = [oStatusBar frame].size.height;
 		webViewFrame.size.height += statusBarHeight;
 		webViewFrame.origin.y -= statusBarHeight;
-		[oWebView setFrame:webViewFrame];
-		[oWebView setNeedsDisplay:YES];
+		[webView setFrame:webViewFrame];
+		[webView setNeedsDisplay:YES];
     }
 	
 }

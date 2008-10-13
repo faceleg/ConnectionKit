@@ -23,8 +23,6 @@
 
 - (NSView *)view { return view; }
 
-/*  We act like UIViewController and insert ourself in the responder chain between the view and its superview
- */
 - (void)setView:(NSView *)aView
 {
     // Store view

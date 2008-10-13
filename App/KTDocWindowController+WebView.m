@@ -115,40 +115,34 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 #pragma mark -
 
 
-@implementation KTDocWindowController ( WebView )
-
-- (void) webViewDeallocSupport
-{
-	[self setSelectedPagelet:nil];
-	
-    [oWebView setUIDelegate:nil];
-}
+@implementation KTDocWindowController (WebView)
 
 /*!	More initialization code specific to the webview, called from windowDidLoad
 */
 
 - (void)webViewDidLoad
 {
-	[oWebView setApplicationNameForUserAgent:[NSApplication applicationName]];
+	WebView *webView = [[self webViewController] webView];
+    [webView setApplicationNameForUserAgent:[NSApplication applicationName]];
 	
-	[oWebView setPreferencesIdentifier:[NSApplication applicationName]];
-	if ([[oWebView preferences] respondsToSelector:@selector(setEditableLinkBehavior:)])
+	[webView setPreferencesIdentifier:[NSApplication applicationName]];
+	if ([[webView preferences] respondsToSelector:@selector(setEditableLinkBehavior:)])
 	{
-		[[oWebView preferences] setEditableLinkBehavior:WebKitEditableLinkLiveWhenNotFocused];
+		[[webView preferences] setEditableLinkBehavior:WebKitEditableLinkLiveWhenNotFocused];
 	}
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[oWebView setContinuousSpellCheckingEnabled:[defaults boolForKey:@"ContinuousSpellChecking"]];
+	[webView setContinuousSpellCheckingEnabled:[defaults boolForKey:@"ContinuousSpellChecking"]];
 	// Set UI delegate -- we don't actually use the built-in methods, but we use our custom
 	// method for detecting clicks.
-	[oWebView setUIDelegate:self];				// WebUIDelegate
+	[webView setUIDelegate:self];				// WebUIDelegate
 	
 	float multiplier = [[[self document] wrappedValueForKey:@"textSizeMultiplier"] floatValue];
 	if (multiplier < 0.01)
 	{
 		multiplier = [defaults floatForKey:@"textSizeMultiplier"];	// put into a sane range
 	}
-	[oWebView setTextSizeMultiplier:multiplier];
+	[webView setTextSizeMultiplier:multiplier];
 	
 	/*
 	 // doesn't actually work yet
@@ -261,7 +255,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 - (BOOL)selectedDOMRangeIsEditable
 {
-	DOMRange *selectedRange = [oWebView selectedDOMRange];
+	DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
 	if ( nil == selectedRange )
 	{
 		return NO;
@@ -273,7 +267,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 - (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty
 {
-	DOMRange *selectedRange = [oWebView selectedDOMRange];
+	DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
 	if ( nil == selectedRange )
 	{
 		return NO; // no selected text, not even an insertion point
@@ -310,7 +304,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 - (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString
 {
 	KTAbstractElement *result = nil;
-	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	NSDictionary *item = [[[self webViewController] webView] elementAtPoint:aPoint];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	NSString *theID = nil;
 	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
@@ -379,7 +373,7 @@ Note that this method is called AFTER the webview handles the click.
 	
 	[self setLastClickedPoint:aPoint];
 	
-	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	NSDictionary *item = [[[self webViewController] webView] elementAtPoint:aPoint];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
 	if (nil == aNode)		// nothing found, no point in continuing
@@ -527,7 +521,7 @@ Note that this method is called AFTER the webview handles the click.
 */
 - (void)webView:(WebView *)sender doubleClickAtCoordinates:(NSPoint)aPoint modifierFlags:(unsigned int)modifierFlags
 {
-	NSDictionary *item = [oWebView elementAtPoint:aPoint];
+	NSDictionary *item = [sender elementAtPoint:aPoint];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
 	DOMHTMLElement *selectedNode = [aNode firstSelectableParentNode];
@@ -695,7 +689,7 @@ but the only trick is -- how to display a highlight?
 			// add selectedDOMRange to elementInformation
 			NSMutableDictionary *elementDictionary = [NSMutableDictionary dictionaryWithDictionary:[self contextElementInformation]];
 			
-			DOMRange *selectedDOMRange = [oWebView selectedDOMRange];
+			DOMRange *selectedDOMRange = [sender selectedDOMRange];
 			if ( nil != selectedDOMRange )
 			{
 				[elementDictionary setObject:selectedDOMRange forKey:KTSelectedDOMRangeKey];
@@ -947,8 +941,8 @@ forDraggingInfo:(id <NSDraggingInfo>)draggingInfo
 	
 	// Dragging location is in window coordinates.
 	// location is converted to webview coordinates
-	NSPoint location = [oWebView convertPoint:[draggingInfo draggingLocation] fromView:nil];
-	NSDictionary *item = [oWebView elementAtPoint:location];
+	NSPoint location = [inWebView convertPoint:[draggingInfo draggingLocation] fromView:nil];
+	NSDictionary *item = [inWebView elementAtPoint:location];
 	DOMNode *aNode = [item objectForKey:WebElementDOMNodeKey];
 	
 	KTHTMLTextBlock *textBlock = [[[self webViewController] mainWebViewComponent] textBlockForDOMNode:aNode];
@@ -1133,7 +1127,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	if (info)
 	{
 		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
-		DOMRange *selectedRange = [oWebView selectedDOMRange];
+		DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
 		
         
 		// Hunt down the anchor to edit
@@ -1223,11 +1217,11 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		
 		// set top left corner of window to top of selectedTextRect in screen coordinates
 		NSPoint topLeftCorner = [self linkPanelTopLeftPointForSelectionRect:mySelectionRect];
-		NSPoint convertedWindowOrigin = [[oWebView window] convertBaseToScreen:topLeftCorner];
+		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:topLeftCorner];
 		[oLinkPanel setFrameTopLeftPoint:convertedWindowOrigin];
 		
 		// make it a child window, set focus on the link, and display
-		[[oWebView window] addChildWindow:oLinkPanel ordered:NSWindowAbove];
+		[[self window] addChildWindow:oLinkPanel ordered:NSWindowAbove];
 		[oLinkPanel makeKeyAndOrderFront:nil]; // we do makeKey so that textfield gets focus
 	}
 	else
@@ -1320,7 +1314,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (void)closeLinkPanel
 {
-	[[oWebView window] removeChildWindow:oLinkPanel];
+	[[self window] removeChildWindow:oLinkPanel];
 	[oLinkPanel close];
 }
 
@@ -1377,7 +1371,8 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		}
 
 		// update webview to reflect node changes
-		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:oWebView];	
+		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                            object:[[self webViewController] webView]];	
 		[self setContextElementInformation:nil];
 		
 		// label undo last
@@ -1548,7 +1543,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	
 	// figure out where we are in the WebHTMLView
 	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
-	NSView *documentView = [[[oWebView mainFrame] frameView] documentView];
+	NSView *documentView = [[[[[self webViewController] webView] mainFrame] frameView] documentView];
 	OBASSERTSTRING([documentView isKindOfClass:[WebHTMLView class]], @"documentView should be a WebHTMLView");
 	
 	// determine dragCaretDOMRange (DOMRange, of 0 length, where drop will go, between chars)
@@ -1560,7 +1555,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 	
 	// get our currently selected range
-	DOMRange *selectedDOMRange = [oWebView selectedDOMRange];
+	DOMRange *selectedDOMRange = [[[self webViewController] webView] selectedDOMRange];
 	
 	// if selectedDOMRange is nil, insert a new text node at caretPosition
 	if ( nil == selectedDOMRange )

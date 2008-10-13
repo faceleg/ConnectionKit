@@ -528,7 +528,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// suspend webview updating
 		//[[[self windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];
 		//[NSObject cancelPreviousPerformRequestsWithTarget:[[self windowController] webViewController] selector:@selector(doDelayedRefreshWebViewOnMainThread) object:nil];
-		[[self windowController] webViewDeallocSupport];
+		[[self windowController] setSelectedPagelet:nil];
 		
 		// suspend outline view updating
 		///[[self windowController] siteOutlineDeallocSupport];

@@ -242,7 +242,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
 
 - (void)webViewDidLoad;
-- (void) webViewDeallocSupport;
 
 - (id)itemForDOMNodeID:(NSString *)anID;
 
