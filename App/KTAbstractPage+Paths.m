@@ -56,6 +56,28 @@
 	[self recursivelyInvalidateURL:YES];	// For collections this affects all children
 }
 
+/*  Legalize the filename
+ */
+- (BOOL)validateFileName:(NSString **)outFileName error:(NSError **)error
+{
+    if (![self isRoot])
+    {
+        NSString *fileName = *outFileName;
+        if (!fileName || ![NSURL URLWithString:fileName])
+        {
+            NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
+            if (!legalizedFileName || [legalizedFileName isEqualToString:@""])
+            {
+                legalizedFileName = [self uniqueID];
+            }
+            
+            *outFileName = legalizedFileName;
+        }
+    }
+    
+    return YES;
+}
+
 /*	Looks at sibling pages and the page title to determine the best possible filename.
  *	Guaranteed to return something unique.
  */
