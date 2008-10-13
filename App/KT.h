@@ -104,7 +104,6 @@ extern NSString *kKTOutlineDraggingPboardType;
 extern NSString *kKTPagesPboardType;
 extern NSString *kKTPageletsPboardType;
 
-extern NSString *kKTDocumentEditorURLScheme;
 extern NSString *kKTPagePathURLScheme;
 
 extern NSString *kKTIndexExtension;

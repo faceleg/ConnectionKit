@@ -783,29 +783,40 @@
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id<WebPolicyDecisionListener>)listener
 {
-	@try	// To stop WebKit swallowing any exceptions which occur in this method.
+	// To stop WebKit swallowing any exceptions which occur in this method.
+    @try
 	{
-		// get the url from the information dictionary:
-		NSURL *url = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
-		NSString *scheme = [url scheme];
+		NSURL *URL = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
 		
-		if([scheme isEqualToString:kKTDocumentEditorURLScheme]) {
-			// we clicked a link that has our application-specific scheme, do whatever we want:
-			
-			NSRunAlertPanel(@"internal link clicked", @"You clicked an internal link that I caught.\nThat link's path was %@.", nil,nil,nil, [url path]);
-			//NSPoint mouseLoc = [oWindow mouseLocationOutsideOfEventStream];
-			//NSLog(@"link clicked at point: %f, %f", mouseLoc.x, mouseLoc.y);
-			
-			// then stop further processing:
-			[listener ignore];
-		}
-		else if ([scheme isEqualToString:kKTPagePathURLScheme])
+        
+        // Links by page ID open get selected in the Site Outline and therby the webview
+        NSString *relativeURLString = [URL stringRelativeToURL:[[self page] URL]];
+        
+		if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativeURLString hasPrefix:kKTPageIDDesignator]) &&
+            [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
 		{
-			
+			KTPage *thePage = [[self document] pageForURLPath:relativeURLString];
+			if (!thePage)
+			{
+				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
+											silencingKey:@"shutUpFakeURL"
+												   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
+												  format:NSLocalizedString
+					(@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
+					[URL path]];
+				[listener ignore];
+			}
+			else
+			{
+				[[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
+				[listener use];	// it's been loaded for us I think
+			}
 		}
-		else if([scheme isEqualToString:@"http"])
+        
+        
+        // Open normal links in the user's browser
+		else if ([[URL scheme] isEqualToString:@"http"])
 		{
-			// Load extedrnally unless we loaded page by clicking on a sidebar -- not a link.
 			int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
 			switch (navigationType)
 			{
@@ -820,31 +831,14 @@
 				case WebNavigationTypeLinkClicked:
 				default:
 					// load with user's preferred browser:
-					[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+					[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
 					// don't continue loading this url in our view:
 					[listener ignore];
 			}
 		}
-		else if ([scheme isEqualToString:@"applewebdata"] && ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther) )
-		{
-			KTPage *thePage = [[self document] pageForURLPath:[url path]];
-			if (!thePage)
-			{
-				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
-											silencingKey:@"shutUpFakeURL"
-												   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
-												  format:NSLocalizedString
-					(@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
-					[url path]];
-				[listener ignore];
-			}
-			else
-			{
-				[[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
-				[listener use];	// it's been loaded for us I think
-			}
-		}
-		else if([scheme isEqualToString:@"file"] )
+        
+        // file:// URLs
+		else if ([[URL scheme] isEqualToString:@"file"] )
 		{
 			if ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] == WebNavigationTypeOther)
 			{
@@ -855,7 +849,10 @@
 				[listener ignore];
 			}
 		}
-		else {
+        
+        // Fallback
+		else
+        {
 			// do the default stuff for other schemes:
 			[listener use];
 		}

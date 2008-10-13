@@ -59,7 +59,6 @@ NSString *kKTTemplateParserException = @"KTTemplateParserException";
 
 // KTComponents
 NSString *kKTDefaultCalendarFormat = @"%Y-%m-%d %H:%M:%S %z";
-NSString *kKTDocumentEditorURLScheme = @"ktedit";
 NSString *kKTOutlineDraggingPboardType = @"KTOutlineDraggingPboardType";
 NSString *kKTPagesPboardType = @"KTPagesPboardType";
 NSString *kKTPageletsPboardType = @"KTPageletsPboardType";
