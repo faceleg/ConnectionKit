@@ -296,6 +296,8 @@
 		27B17DAC0CA80A9E00187918 /* KTWebViewComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
+		27B4D55C0EA4DF820000FB1C /* KSThreadProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B4D55A0EA4DF820000FB1C /* KSThreadProxy.h */; };
+		27B4D55D0EA4DF820000FB1C /* KSThreadProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B4D55B0EA4DF820000FB1C /* KSThreadProxy.m */; };
 		27B685B60E6AF89C00B50FA7 /* NSWindowController+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */; };
 		27B685B70E6AF89C00B50FA7 /* NSWindowController+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */; };
 		27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C059B40E7299850033A715 /* Elements+Pasteboard.h */; };
@@ -1766,6 +1768,8 @@
 		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
+		27B4D55A0EA4DF820000FB1C /* KSThreadProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSThreadProxy.h; sourceTree = "<group>"; };
+		27B4D55B0EA4DF820000FB1C /* KSThreadProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSThreadProxy.m; sourceTree = "<group>"; };
 		27B685B40E6AF89C00B50FA7 /* NSWindowController+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSWindowController+Karelia.h"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		27B685B50E6AF89C00B50FA7 /* NSWindowController+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSWindowController+Karelia.m"; path = "../../../Shared/trunk/App/NSWindowController+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		27C059B40E7299850033A715 /* Elements+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Elements+Pasteboard.h"; sourceTree = "<group>"; };
@@ -4730,6 +4734,8 @@
 				270FB8F60E01BF140076FCA0 /* Other */,
 				270FB8F40E01BE030076FCA0 /* Foundation */,
 				270FB8F50E01BECC0076FCA0 /* AppKit */,
+				27B4D55A0EA4DF820000FB1C /* KSThreadProxy.h */,
+				27B4D55B0EA4DF820000FB1C /* KSThreadProxy.m */,
 			);
 			name = "Shared Classes";
 			sourceTree = "<group>";
@@ -4998,6 +5004,7 @@
 				27E3835C0E938A0F00DE9EB4 /* DOM+Debugging.h in Headers */,
 				2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */,
 				2721E19B0E9E597300A458B2 /* KTDocumentControllerChain.h in Headers */,
+				27B4D55C0EA4DF820000FB1C /* KSThreadProxy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6430,6 +6437,7 @@
 				27642B9B0E92B49600FCE981 /* DOMNode+Karelia.m in Sources */,
 				27E3835D0E938A0F00DE9EB4 /* DOM+Debugging.m in Sources */,
 				2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */,
+				27B4D55D0EA4DF820000FB1C /* KSThreadProxy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
