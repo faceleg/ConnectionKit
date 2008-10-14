@@ -18,6 +18,8 @@
 #import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
 
+#import "KTWebKitCompatibility.h"
+
 #import "CIImage+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
@@ -31,7 +33,9 @@
 #import "NSWorkspace+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import "KTWebKitCompatibility.h"
+#import "KSThreadProxy.h"
+
+#import <Connection/Connection.h>
 
 #import "Registration.h"
 #import "Debug.h"
@@ -82,7 +86,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
-- (WebView *)newQuickLookThumbnailWebView;
+// Quick Look
+- (void)startGeneratingQuickLookThumbnail;
+- (NSString *)quickLookPreviewHTML;
+
 @end
 
 
@@ -257,71 +264,82 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		forSaveOperation:(NSSaveOperationType)saveOperation 
 				   error:(NSError **)outError
 {
-	// We're only interested in special behaviour for Save As operations
-	if (saveOperation == NSAutosaveOperation) saveOperation = NSSaveOperation;
-	
-	if (saveOperation != NSSaveAsOperation)
-	{
-		BOOL result =  [super writeSafelyToURL:absoluteURL 
-										ofType:typeName 
-							  forSaveOperation:saveOperation 
-										 error:outError];
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return result;
-	}
-	
-	
-	// We'll need a path for various operations below
-	NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
-	NSString *path = [absoluteURL path];
-	
-	
-	// If a file already exists at the desired location move it out of the way
-	NSString *backupPath = nil;
-	if ([[NSFileManager defaultManager] fileExistsAtPath:path])
-	{
-		backupPath = [self backupExistingFileForSaveAsOperation:path error:outError];
-		if (!backupPath) return NO;
-	}
-	
-	
-	// We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
-	// be dealt with at the moment.
 	BOOL result = NO;
-	
-	@try
-	{
-		// Write to the new URL
-		result = [self writeToURL:absoluteURL
-						   ofType:typeName
-				 forSaveOperation:saveOperation
-			  originalContentsURL:[self fileURL]
-							error:outError];
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-	}
-	@catch (NSException *exception) 
-	{
-		// Recover from an exception as best as possible and then rethrow the exception so it goes the exception reporter mechanism
-		[self recoverBackupFile:backupPath toURL:absoluteURL];
-		@throw;
-	}
-	
-	
-	if (result)
-	{
-		// The save was successful, delete the backup file
-		if (backupPath)
-		{
-			[[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
-		}
-	}
-	else
-	{
-		// There was an error saving, recover from it
-		[self recoverBackupFile:backupPath toURL:absoluteURL];
-	}
-	
-	return result;
+    
+    // We're only interested in special behaviour for Save As operations
+    switch (saveOperation)
+    {
+        case NSSaveOperation:
+        case NSAutosaveOperation:
+            result = [self writeToURL:absoluteURL       // Stops NSPersistentDocument locking the store in the background
+                               ofType:typeName
+                     forSaveOperation:NSSaveOperation 
+                  originalContentsURL:[self fileURL]
+                                error:outError];
+            
+            break;
+            
+        case NSSaveAsOperation:
+        {
+            // We'll need a path for various operations below
+            NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
+            NSString *path = [absoluteURL path];
+            
+            
+            // If a file already exists at the desired location move it out of the way
+            NSString *backupPath = nil;
+            if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+            {
+                backupPath = [self backupExistingFileForSaveAsOperation:path error:outError];
+                if (!backupPath) return NO;
+            }
+            
+            
+            // We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
+            // be dealt with at the moment.
+            @try
+            {
+                // Write to the new URL
+                result = [self writeToURL:absoluteURL
+                                   ofType:typeName
+                         forSaveOperation:saveOperation
+                      originalContentsURL:[self fileURL]
+                                    error:outError];
+                OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+            }
+            @catch (NSException *exception) 
+            {
+                // Recover from an exception as best as possible and then rethrow the exception so it goes the exception reporter mechanism
+                [self recoverBackupFile:backupPath toURL:absoluteURL];
+                @throw;
+            }
+            
+            
+            if (result)
+            {
+                // The save was successful, delete the backup file
+                if (backupPath)
+                {
+                    [[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
+                }
+            }
+            else
+            {
+                // There was an error saving, recover from it
+                [self recoverBackupFile:backupPath toURL:absoluteURL];
+            }
+        }
+            
+            
+        default:
+            result = [super writeSafelyToURL:absoluteURL 
+                                      ofType:typeName 
+                            forSaveOperation:saveOperation 
+                                       error:outError];
+    }
+    
+    OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    return result;
 }
 
 /*	Support method for -writeSafelyToURL:
@@ -394,119 +412,69 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	BOOL result = NO;
 	
 	
-    // Begin loading the thumbnail if on the main thread
-	NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
-	
-    WebView *quickLookThumbnailWebView = nil;
-    if ([NSThread isMainThread])
+    // Kick off thumbnail generation
+    if ([NSThread currentThread] == [self thread])
     {
-        quickLookThumbnailWebView = [self newQuickLookThumbnailWebView];
+        [self startGeneratingQuickLookThumbnail];
 	}
+    else
+    {
+        [self performSelector:@selector(startGeneratingQuickLookThumbnail) inThread:[self thread]];
+    }
+    
     
     
     // Prepare to save the context
-	result = [self prepareToWriteToURL:inURL
-                                ofType:inType
-                      forSaveOperation:saveOperation
-                                 error:outError];
-	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    KTDocument *docProxy = ([NSThread currentThread] == [self thread]) ? [self retain] : [[KSThreadProxy alloc] initWithTarget:self];
+    result = [docProxy prepareToWriteToURL:inURL
+                                    ofType:inType
+                          forSaveOperation:saveOperation
+                                     error:outError];
+    [docProxy release];
+    OBASSERT(result || !outError || (nil != *outError));    // make sure we didn't return NO with an empty error
 	
+    
 	
 	if (result)
 	{
-		// Save the context
-		result = [self writeMOCToURL:inURL
+		// Generate Quick Look preview HTML
+        KTDocument *docProxy = ([NSThread currentThread] == [self thread]) ? [self retain] : [[KSThreadProxy alloc] initWithTarget:self thread:[self thread]];
+        NSString *quickLookPreviewHTML = [docProxy quickLookPreviewHTML];
+        
+        
+        // Save the context
+		result = [docProxy writeMOCToURL:inURL
                               ofType:inType
                     forSaveOperation:saveOperation
                  originalContentsURL:inOriginalContentsURL
                                error:outError];
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-	
 		
-		if (result && quickLookThumbnailWebView)
-		{
-			// Wait a second before putting up a progress sheet
-			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 8.0)
-			{
-				OBASSERT([NSThread currentThread] == [self thread]);
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
-			}
-			BOOL beganSheet = NO;
-			if ([quickLookThumbnailWebView isLoading])
-			{
-				OBASSERT([NSThread isMainThread]);
-                [[self windowController] beginSheetWithStatus:NSLocalizedString(@"Saving\\U2026","Message title when performing a lengthy save")
-														image:nil];
-				beganSheet = YES;
-			}
-			
-			
-			
-			// Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
-			[self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
-			while ([quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
-			{
-				OBASSERT([NSThread currentThread] == [self thread]);
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
-			}
-			[self autorelease];
-			
-			
-            OBASSERT([NSThread isMainThread]);
-            if (![quickLookThumbnailWebView isLoading])
-			{
-				// Write the thumbnail to disk
-				OBASSERT([NSThread currentThread] == [self thread]);
-                [quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-				NSImage *snapshot = [[[[quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
-				
-				NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
-														  behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
-														 alignment:NSImageAlignTop];
-				// Now composite "SANDVOX" at the bottom
-				NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
-				NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-				[aShadow setShadowOffset:NSMakeSize(0,0)];
-				[aShadow setShadowBlurRadius:32.0];
-				[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
-				
-				NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-												   font, NSFontAttributeName, 
-												   aShadow, NSShadowAttributeName, 
-												   [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
-												   nil];
-				NSString *s = @"SANDVOX";	// No need to localize of course
-				
-				NSSize textSize = [s sizeWithAttributes:attributes];
-				float left = ([snapshot512 size].width - textSize.width) / 2.0;
-				float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
-				
-				[snapshot512 lockFocus];
-				[s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
-				[snapshot512 unlockFocus];
-				
-				
-				
-				NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:inURL]];
-				OBASSERT(thumbnailURL);	// shouldn't be nil, right?
-				result = [[snapshot512 PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:outError];
-				OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-			}
-			
-			
-			// Close the progress sheet
-			if (beganSheet)
-			{
-				OBASSERT([NSThread isMainThread]);
-                [[self windowController] endSheet];
-			}
-		}
+        [docProxy release];
+        
+        
+        // Write out Quick Look preview
+        if (result && quickLookPreviewHTML)
+        {
+            NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"preview.html" isDirectory:NO];
+            result = [quickLookPreviewHTML writeToURL:previewURL
+                                           atomically:NO
+                                             encoding:NSUTF8StringEncoding
+                                                error:outError];
+        }
+    }
+    
+    
+    if (result && _quickLookThumbnailWebView)
+    {
+        [self finishGeneratingQuickLookThumbnail:inURL error:outError];
 	}
 	
 	
 	// Tidy up
-	NSWindow *webViewWindow = [quickLookThumbnailWebView window];
-	[quickLookThumbnailWebView release];
+	[_quickLookThumbnailWebView setResourceLoadDelegate:nil];
+    NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
+	[_quickLookThumbnailWebView release];
 	[webViewWindow release];
 	
 	return result;
@@ -552,14 +520,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	// Make sure we have a persistent store coordinator properly set up
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	OBASSERT([NSThread currentThread] == [self thread]);
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL UTI:nil];
 	
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
-		OBASSERT([NSThread currentThread] == [self thread]);
-        BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
 																	 ofType:[KTDocument defaultStoreType]
 																	  error:outError];
 		
@@ -627,57 +595,49 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSError *error = nil;
 	
 	
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-	
-	
-	// Handle the user choosing "Save As" for an EXISTING document
-	if (inSaveOperation == NSSaveAsOperation && [self fileURL])
-	{
-		result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
-		if (!result)
-		{
-			if (outError)
-			{
-				*outError = error;
-			}
-			return NO; // bail out and display outError
-		}
-		else
-		{
-			OBASSERT([NSThread currentThread] == [self thread]);
-            result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
-											  error:&error];
-		}
-	}
-	
-	if (result)	// keep going if OK
-	{
-		// Store QuickLook preview
-		if ([NSThread currentThread] == [self thread])
-		{
-			KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
-			[parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-			NSString *previewHTML = [parser parseTemplate];
-			[parser release];
-			
-			NSString *previewPath = [[[KTDocument quickLookURLForDocumentURL:inURL] path] stringByAppendingPathComponent:@"preview.html"];
-			[previewHTML writeToFile:previewPath atomically:NO encoding:NSUTF8StringEncoding error:NULL];
-		}
-		
-		
-		OBASSERT([NSThread currentThread] == [self thread]);
-        result = [managedObjectContext save:&error];
-	}
 	if (result)
-	{
-		OBASSERT([NSThread currentThread] == [self thread]);
-        result = [[[self mediaManager] managedObjectContext] save:&error];
-	}
-	// Return, making sure to supply appropriate error info
-	if (!result && outError) *outError = error;
-	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    {
+        NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	
+	
+        
+        // Handle the user choosing "Save As" for an EXISTING document
+        if (inSaveOperation == NSSaveAsOperation && [self fileURL])
+        {
+            result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
+            if (!result)
+            {
+                if (outError)
+                {
+                    *outError = error;
+                }
+                return NO; // bail out and display outError
+            }
+            else
+            {
+                OBASSERT([NSThread currentThread] == [self thread]);
+                result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
+                                                  error:&error];
+            }
+        }
+        
+        if (result)	// keep going if OK
+        {
+            OBASSERT([NSThread currentThread] == [self thread]);
+            result = [managedObjectContext save:&error];
+        }
+        if (result)
+        {
+            OBASSERT([NSThread currentThread] == [self thread]);
+            result = [[[self mediaManager] managedObjectContext] save:&error];
+        }
+    }
     
-	return result;
+    // Return, making sure to supply appropriate error info
+    if (!result && outError) *outError = error;
+    OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    
+    return result;
 }
 
 /*	Called when performing a "Save As" operation on an existing document
@@ -787,7 +747,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 /*	Please note the "new" in the title. The result is NOT autoreleased. And neither is its window.
  */
-- (WebView *)newQuickLookThumbnailWebView
+- (void)startGeneratingQuickLookThumbnail
 {
 	// Put together the HTML for the thumbnail
 	OBASSERT([NSThread currentThread] == [self thread]);
@@ -798,7 +758,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[parser release];
 	
 	
-	// Create the webview. It must be in an offscreen window to do this properly.
+    // View and WebView handling MUST be on the main thread
+    OBASSERT([NSThread isMainThread]);
+    
+    
+	// Create the webview's offscreen window
 	unsigned designViewport = [[[[[self documentInfo] root] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
@@ -806,18 +770,107 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
-	WebView *result = [[WebView alloc] initWithFrame:frame];	// Both window and webview will be released later
-    [result setResourceLoadDelegate:self];
-	[window setContentView:result];
+    
+    // Create the webview
+    OBASSERT(!_quickLookThumbnailWebView);
+	_quickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
+    
+    [_quickLookThumbnailWebView setResourceLoadDelegate:self];
+	[window setContentView:_quickLookThumbnailWebView];
+    
+    
+    // We want to know when it's finished loading. TODO: Unsubscribe from the notification later
+    OBASSERT(_quickLookThumbnailWebView);
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(webViewDidFinishLoading:)
+                                                 name:WebViewProgressFinishedNotification
+                                               object:_quickLookThumbnailWebView];
 	
 	
-	// Go ahead and begin building the thumbnail. This MUST be done on the main thread
-    [[result mainFrame] performSelectorOnMainThreadAndReturnResult:@selector(loadHTMLString:baseURL:)
-                                                        withObject:thumbnailHTML
-                                                        withObject:nil];
+	// Go ahead and begin building the thumbnail
+    [[_quickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+}
+
+
+- (BOOL)finishGeneratingQuickLookThumbnail:(NSURL *)docURL error:(NSError **)error
+{
+    BOOL result = YES;
+    
+    if ([NSThread isMainThread])
+    {
+        // Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
+        NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
+        
+        [self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
+        while ([_quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
+        {
+            OBASSERT([NSThread currentThread] == [self thread]);
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
+        }
+        [self autorelease];
+        
+        
+        
+        OBASSERT([NSThread isMainThread]);
+        if (![_quickLookThumbnailWebView isLoading])
+        {
+            // Save the snapshot
+            NSImage *thumbnail = [self performSelectorOnMainThreadAndReturnResult:@selector(_quickLookThumbnail)];
+            
+            NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:docURL]];
+            OBASSERT(thumbnailURL);	// shouldn't be nil, right?
+            
+            result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
+            OBASSERT(result || !error || *error != nil); // make sure we don't return NO with an empty error
+        }
+        
+    }
     
     return result;
 }
+
+/*  Captures the Quick Look webview in its current state. MUST happen on the main thread
+ */
+- (NSImage *)_quickLookThumbnail
+{
+    OBASSERT([NSThread isMainThread]);
+    
+    
+    // Write the thumbnail to disk
+    [_quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+    NSImage *snapshot = [[[[_quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
+    
+    NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
+                                              behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+                                             alignment:NSImageAlignTop];
+    // Now composite "SANDVOX" at the bottom
+    NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
+    NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
+    [aShadow setShadowOffset:NSMakeSize(0,0)];
+    [aShadow setShadowBlurRadius:32.0];
+    [aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       font, NSFontAttributeName, 
+                                       aShadow, NSShadowAttributeName, 
+                                       [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
+                                       nil];
+    NSString *s = @"SANDVOX";	// No need to localize of course
+    
+    NSSize textSize = [s sizeWithAttributes:attributes];
+    float left = ([snapshot512 size].width - textSize.width) / 2.0;
+    float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
+    
+    [snapshot512 lockFocus];
+    [s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
+    [snapshot512 unlockFocus];
+    
+    
+    
+    return snapshot512;
+}
+
+#pragma mark delegate
 
 - (NSURLRequest *)webView:(WebView *)sender
 				 resource:(id)identifier
@@ -839,11 +892,37 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
+- (void)webViewDidFinishLoading:(NSNotification *)notification
+{
+    
+}
+
+#pragma mark -
+#pragma mark Quick Look preview
+
+/*  Parses the home page to generate a Quick Look preview
+ */
+- (NSString *)quickLookPreviewHTML
+{
+    OBASSERT([NSThread currentThread] == [self thread]);
+    
+    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+    [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
+    NSString *result = [parser parseTemplate];
+    [parser release];
+    
+    return result;
+}
+
 #pragma mark -
 #pragma mark Autosave
 
+/*  Run the autosave on a background thread to avoid upsetting users
+ */
 - (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo
 {
+    // Prepare callback invocation
+    NSInvocation *callback = nil;
     if (delegate)
     {
         NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:didAutosaveSelector];
@@ -852,34 +931,47 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         [callback setSelector:didAutosaveSelector];
         [callback setArgument:&self atIndex:2];
         [callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
-    
-    
-        [self saveToURL:[self fileURL]
-                 ofType:[self fileType]
-       forSaveOperation:NSAutosaveOperation
-               delegate:self
-        didSaveSelector:@selector(document:didAutosave:contextInfo:)
-            contextInfo:[callback retain]]; // We will release the callback later
     }
-    else
+    
+    
+    // We only allow triggering an autosave on the main thread. i.e. ignore autosaves during migration
+    if (![NSThread isMainThread])
     {
-        [self saveToURL:[self fileURL]
-                 ofType:[self fileType]
-       forSaveOperation:NSAutosaveOperation
-               delegate:nil
-        didSaveSelector:nil
-            contextInfo:NULL];
+        BOOL didSave = NO;
+        [callback setArgument:&didSave atIndex:3];
+        [callback invoke];
+        return;
     }
+    
+        
+    // Do the save in the background
+    [NSThread detachNewThreadSelector:@selector(threadedAutosaveWithCallback:) toTarget:self withObject:callback];
 }
 
-- (void)document:(NSDocument *)doc didAutosave:(BOOL)didSave contextInfo:(void  *)contextInfo
+- (void)threadedAutosaveWithCallback:(NSInvocation *)callback
 {
-	NSAssert1(doc == self, @"%@ called for unknown document", _cmd);
-	
-	NSInvocation *callbackInvocation = contextInfo;
-    [callbackInvocation setArgument:&didSave atIndex:3];
-    [callbackInvocation invoke];
-    [callbackInvocation release];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    // Because we're a secondary thread, retain for duration of operation
+    NSURL *URL = [[self fileURL] retain];           
+    NSString *fileType = [[self fileType] copy];
+    
+    // Do the save
+    NSError *error;
+    BOOL didSave = [self saveToURL:URL ofType:fileType forSaveOperation:NSAutosaveOperation error:&error];
+    
+    // Tidy up
+    [URL release];
+    [fileType release];
+    
+    // Perform callback. Does nothing if callback is nil
+    [callback setArgument:&didSave atIndex:3];
+    [callback performSelectorOnMainThread:@selector(invoke)
+                               withObject:nil
+                            waitUntilDone:NO];
+    
+    // Tidy up
+    [pool release];
 }
 
 /*  We override this accessor to always be nil. Otherwise, the doc architecture will assume our doc is the autosaved copy and delete it!

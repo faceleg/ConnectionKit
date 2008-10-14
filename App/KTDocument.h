@@ -51,9 +51,6 @@ extern NSString *KTDocumentWillSaveNotification;
 	
 	// Standard document behaviour additions
     BOOL                myIsClosing;
-    unsigned            mySaveOperationCount;			// used in KTDocument+Saving.m
-    NSSaveOperationType myLastSavePanelSaveOperation;	// used in KTDocument+Saving.m
-    
     NSThread    *myThread;
 	
     
@@ -83,6 +80,12 @@ extern NSString *KTDocumentWillSaveNotification;
 	BOOL	myDisplayEditingControls;			// accessor in category method
 //	short	mySiteOutlineSize;
 	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method
+    
+    
+    // Saving
+    unsigned            mySaveOperationCount;
+    NSSaveOperationType myLastSavePanelSaveOperation;
+    WebView             *_quickLookThumbnailWebView;
 }
 
 + (NSString *)defaultStoreType;
