@@ -85,7 +85,9 @@ extern NSString *KTDocumentWillSaveNotification;
     // Saving
     unsigned            mySaveOperationCount;
     NSSaveOperationType myLastSavePanelSaveOperation;
+    
     WebView             *_quickLookThumbnailWebView;
+    NSLock              *_quickLookThumbnailLock;
 }
 
 + (NSString *)defaultStoreType;

@@ -88,6 +88,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 // Quick Look
 - (void)startGeneratingQuickLookThumbnail;
+- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
 - (NSString *)quickLookPreviewHTML;
 
 @end
@@ -467,15 +468,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     if (result && _quickLookThumbnailWebView)
     {
-        [self finishGeneratingQuickLookThumbnail:inURL error:outError];
+        [self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:outError];
 	}
 	
-	
-	// Tidy up
-	[_quickLookThumbnailWebView setResourceLoadDelegate:nil];
-    NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
-	[_quickLookThumbnailWebView release];
-	[webViewWindow release];
 	
 	return result;
 }
@@ -779,7 +774,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[window setContentView:_quickLookThumbnailWebView];
     
     
-    // We want to know when it's finished loading. TODO: Unsubscribe from the notification later
+    // We want to know when it's finished loading.
+    _quickLookThumbnailLock = [[NSLock alloc] init];
+    [_quickLookThumbnailLock lock];
+    
     OBASSERT(_quickLookThumbnailWebView);
 	[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(webViewDidFinishLoading:)
@@ -792,15 +790,17 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 }
 
 
-- (BOOL)finishGeneratingQuickLookThumbnail:(NSURL *)docURL error:(NSError **)error
+- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error
 {
     BOOL result = YES;
     
+    
+    
+    // Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
+    NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
+    
     if ([NSThread isMainThread])
     {
-        // Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
-        NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
-        
         [self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
         while ([_quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
         {
@@ -808,66 +808,98 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
         }
         [self autorelease];
-        
-        
-        
-        OBASSERT([NSThread isMainThread]);
-        if (![_quickLookThumbnailWebView isLoading])
-        {
-            // Save the snapshot
-            NSImage *thumbnail = [self performSelectorOnMainThreadAndReturnResult:@selector(_quickLookThumbnail)];
-            
-            NSURL *thumbnailURL = [NSURL URLWithString:@"thumbnail.png" relativeToURL:[KTDocument quickLookURLForDocumentURL:docURL]];
-            OBASSERT(thumbnailURL);	// shouldn't be nil, right?
-            
-            result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
-            OBASSERT(result || !error || *error != nil); // make sure we don't return NO with an empty error
-        }
-        
     }
+    else
+    {
+        OBASSERT(_quickLookThumbnailLock);
+        BOOL didLock = [_quickLookThumbnailLock lockBeforeDate:documentSaveLimit];
+        if (didLock) [_quickLookThumbnailLock unlock];
+    }
+        
+    
+        
+    // Save the thumbnail to disk
+    NSImage *thumbnail = [self performSelectorOnMainThreadAndReturnResult:@selector(_quickLookThumbnail)];
+    if (thumbnail)
+    {
+        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"thumbnail.png" isDirectory:NO];
+        OBASSERT(thumbnailURL);	// shouldn't be nil, right?
+        
+        result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
+        OBASSERT(result || !error || *error != nil); // make sure we don't return NO with an empty error
+    }        
+        
     
     return result;
 }
 
-/*  Captures the Quick Look webview in its current state. MUST happen on the main thread
+/*  Captures the Quick Look thumbnail from the webview if it's finished loading. MUST happen on the main thread.
+ *  Has the side effect of disposing of the webview once done.
  */
 - (NSImage *)_quickLookThumbnail
 {
-    OBASSERT([NSThread isMainThread]);
+    NSImage *result = nil;
     
     
-    // Write the thumbnail to disk
-    [_quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-    NSImage *snapshot = [[[[_quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
+    if (_quickLookThumbnailWebView)
+    {
+        OBASSERT([NSThread isMainThread]);
+        
+        
+        if (![_quickLookThumbnailWebView isLoading])
+        {
+            // Draw the view
+            [_quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+            NSImage *snapshot = [[[[_quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
+            
+            result = [snapshot imageWithMaxWidth:512 height:512 
+                                                      behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
+                                                     alignment:NSImageAlignTop];
+            // Now composite "SANDVOX" at the bottom
+            NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
+            NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
+            [aShadow setShadowOffset:NSMakeSize(0,0)];
+            [aShadow setShadowBlurRadius:32.0];
+            [aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
+            
+            NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                               font, NSFontAttributeName, 
+                                               aShadow, NSShadowAttributeName, 
+                                               [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
+                                               nil];
+            NSString *s = @"SANDVOX";	// No need to localize of course
+            
+            NSSize textSize = [s sizeWithAttributes:attributes];
+            float left = ([result size].width - textSize.width) / 2.0;
+            float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
+            
+            [result lockFocus];
+            [s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
+            [result unlockFocus];
+        }
+        
+        
+        
+        // Dump the webview and window
+        [_quickLookThumbnailWebView setResourceLoadDelegate:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:_quickLookThumbnailWebView];
+        
+        NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
+        [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
+        [webViewWindow release];
+        
+        
+        // Remove the lock. Ensure it's unlocked
+        [_quickLookThumbnailLock tryLock];
+        [_quickLookThumbnailLock unlock];
+        
+        [_quickLookThumbnailLock release];
+        _quickLookThumbnailLock = nil;
+    }
+	
     
-    NSImage *snapshot512 = [snapshot imageWithMaxWidth:512 height:512 
-                                              behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
-                                             alignment:NSImageAlignTop];
-    // Now composite "SANDVOX" at the bottom
-    NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
-    NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-    [aShadow setShadowOffset:NSMakeSize(0,0)];
-    [aShadow setShadowBlurRadius:32.0];
-    [aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
-    
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       font, NSFontAttributeName, 
-                                       aShadow, NSShadowAttributeName, 
-                                       [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
-                                       nil];
-    NSString *s = @"SANDVOX";	// No need to localize of course
-    
-    NSSize textSize = [s sizeWithAttributes:attributes];
-    float left = ([snapshot512 size].width - textSize.width) / 2.0;
-    float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
-    
-    [snapshot512 lockFocus];
-    [s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
-    [snapshot512 unlockFocus];
-    
-    
-    
-    return snapshot512;
+    // Finish up
+    return result;
 }
 
 #pragma mark delegate
@@ -894,7 +926,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (void)webViewDidFinishLoading:(NSNotification *)notification
 {
-    
+    // Release the hounds! er, I mean the lock.
+    OBASSERT(_quickLookThumbnailLock);
+    [_quickLookThumbnailLock unlock];
 }
 
 #pragma mark -
