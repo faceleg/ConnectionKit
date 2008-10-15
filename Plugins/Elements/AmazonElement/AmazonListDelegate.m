@@ -145,6 +145,29 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     }
 }
 
+- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
+{
+	[super awakeFromDragWithDictionary:aDataSourceDictionary];
+	
+	// Look for an Amazon URL
+	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
+	if (URLString)
+	{
+		NSURL *URL = [NSURL URLWithString:URLString];
+		NSString *ASIN = [URL amazonProductASIN];	// Product
+		
+        if (ASIN && ![ASIN isEqualToString:@""])
+		{
+			APManualListProduct *product = [[APManualListProduct alloc] init];
+			[self insertObject:product inProductsAtIndex:0];
+			
+			[product setProductCode:URLString];
+            [product validateValueForKey:@"productCode" error:NULL];
+			[product release];
+		}
+	}
+}
+
 - (void)awakeFromNib
 {
 	// Load the automatic list if needed
