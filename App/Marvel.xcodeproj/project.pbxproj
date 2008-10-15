@@ -984,62 +984,6 @@
 			remoteGlobalIDString = 3C15B85E0DC790A100DE9957;
 			remoteInfo = UpdateDesigns;
 		};
-		3C1D06680D5D667C00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = DeliciousSource;
-		};
-		3C1D06710D5D668800782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = FeedSource;
-		};
-		3C1D067A0D5D669800782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06730D5D669800782A95 /* FileSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = FileSource;
-		};
-		3C1D06830D5D66AA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = FolderSource;
-		};
-		3C1D068C0D5D66B800782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = HTMLSource;
-		};
-		3C1D06950D5D66C700782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = ImageSource;
-		};
-		3C1D06A70D5D66DD00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = RichTextSource;
-		};
-		3C1D06B00D5D66E700782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = URLSource;
-		};
 		3C1D06CA0D5D67DA00782A95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -1257,13 +1201,6 @@
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
 		};
-		3C66EA3B0DD4129200F56B04 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = VideoSource;
-		};
 		3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
@@ -1284,13 +1221,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C9B65920BFA7F6F007A4871;
 			remoteInfo = Sandvox;
-		};
-		3C8B32980DC6327C001405AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = VideoSource;
 		};
 		3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1754,15 +1684,6 @@
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../Plugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /System/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../../Shared/trunk/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
-		3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousSource.xcodeproj; path = ../Plugins/DataSources/DeliciousSource/DeliciousSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedSource.xcodeproj; path = ../Plugins/DataSources/FeedSource/FeedSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D06730D5D669800782A95 /* FileSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FileSource.xcodeproj; path = ../Plugins/DataSources/FileSource/FileSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FolderSource.xcodeproj; path = ../Plugins/DataSources/FolderSource/FolderSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLSource.xcodeproj; path = ../Plugins/DataSources/HTMLSource/HTMLSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ImageSource.xcodeproj; path = ../Plugins/DataSources/ImageSource/ImageSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoSource.xcodeproj; path = ../Plugins/DataSources/VideoSource/VideoSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RichTextSource.xcodeproj; path = ../Plugins/DataSources/RichTextSource/RichTextSource.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = URLSource.xcodeproj; path = ../Plugins/DataSources/URLSource/URLSource.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
 		3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppDelegate.h; sourceTree = "<group>"; };
 		3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAppDelegate.m; sourceTree = "<group>"; };
@@ -1867,7 +1788,6 @@
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C66E3E908A9781400EC7716 /* 16x16_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16x16_empty.png; sourceTree = "<group>"; };
-		3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeSource.xcodeproj; path = ../Plugins/DataSources/YouTubeSource/YouTubeSource.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ImageElement.xcodeproj; path = ../Plugins/Elements/ImageElement/ImageElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPlugin.h; sourceTree = "<group>"; };
 		3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = KTComponents.xcdatamodel; sourceTree = "<group>"; };
@@ -3478,70 +3398,6 @@
 			name = "Testing Frameworks";
 			sourceTree = "<group>";
 		};
-		3C1D06620D5D667C00782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06690D5D667C00782A95 /* Delicious.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D066B0D5D668800782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06720D5D668800782A95 /* Feed.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D06740D5D669800782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D067B0D5D669800782A95 /* File.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D067D0D5D66A900782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06840D5D66AA00782A95 /* Folder.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D06860D5D66B800782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D068D0D5D66B800782A95 /* HTML.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D068F0D5D66C700782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06960D5D66C700782A95 /* Image.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D06A10D5D66DD00782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06A80D5D66DD00782A95 /* RichText.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3C1D06AA0D5D66E700782A95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C1D06B10D5D66E700782A95 /* URL.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C202D1707DFC06B00DE4994 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -4265,14 +4121,6 @@
 			name = Feedback;
 			sourceTree = "<group>";
 		};
-		3C66EA380DD4129200F56B04 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C66EA3C0DD4129200F56B04 /* YouTube.svxDataSource */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -4281,14 +4129,6 @@
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
 			name = Libraries;
-			sourceTree = "<group>";
-		};
-		3C8B32950DC6327C001405AD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C8B32990DC6327C001405AD /* Video.svxDataSource */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3C951FF20D762D87009FCAC9 /* Common Headers */ = {
@@ -4347,16 +4187,6 @@
 		3CA9FD020D63A04A00815310 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */,
-				3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */,
-				3C1D06730D5D669800782A95 /* FileSource.xcodeproj */,
-				3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */,
-				3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */,
-				3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */,
-				3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */,
-				3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */,
-				3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */,
-				3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */,
 			);
 			name = DataSources;
 			sourceTree = "<group>";
@@ -5053,10 +4883,6 @@
 					ProjectRef = 3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C1D06620D5D667C00782A95 /* Products */;
-					ProjectRef = 3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C4C6A7F0D64123200398BDA /* Products */;
 					ProjectRef = 3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */;
 				},
@@ -5073,20 +4899,8 @@
 					ProjectRef = 3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C1D066B0D5D668800782A95 /* Products */;
-					ProjectRef = 3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */;
-				},
-				{
-					ProductGroup = 3C1D06740D5D669800782A95 /* Products */;
-					ProjectRef = 3C1D06730D5D669800782A95 /* FileSource.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C42E4F20D650429004F35FD /* Products */;
 					ProjectRef = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 3C1D067D0D5D66A900782A95 /* Products */;
-					ProjectRef = 3C1D067C0D5D66A900782A95 /* FolderSource.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C095BE30D5D27FA00DE6F62 /* Products */;
@@ -5097,20 +4911,12 @@
 					ProjectRef = 3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C1D06860D5D66B800782A95 /* Products */;
-					ProjectRef = 3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */;
-				},
-				{
 					ProductGroup = 3CA900680D63C76100815310 /* Products */;
 					ProjectRef = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C4C69B10D640D8000398BDA /* Products */;
 					ProjectRef = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 3C1D068F0D5D66C700782A95 /* Products */;
-					ProjectRef = 3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */;
 				},
 				{
 					ProductGroup = CE9983080D614D7400F2DD12 /* Products */;
@@ -5157,10 +4963,6 @@
 					ProjectRef = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C1D06A10D5D66DD00782A95 /* Products */;
-					ProjectRef = 3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C42DE170D64CCC7004F35FD /* Products */;
 					ProjectRef = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 				},
@@ -5173,24 +4975,12 @@
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C1D06AA0D5D66E700782A95 /* Products */;
-					ProjectRef = 3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C42E5EB0D650ABF004F35FD /* Products */;
 					ProjectRef = 3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C8B32950DC6327C001405AD /* Products */;
-					ProjectRef = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
-				},
-				{
 					ProductGroup = CEF12E780D908EB400FCAC70 /* Products */;
 					ProjectRef = CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 3C66EA380DD4129200F56B04 /* Products */;
-					ProjectRef = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -5246,62 +5036,6 @@
 			fileType = wrapper.cfbundle;
 			path = PhotoGrid.svxIndex;
 			remoteRef = 3C095BFB0D5D281000DE6F62 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06690D5D667C00782A95 /* Delicious.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Delicious.svxDataSource;
-			remoteRef = 3C1D06680D5D667C00782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06720D5D668800782A95 /* Feed.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Feed.svxDataSource;
-			remoteRef = 3C1D06710D5D668800782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D067B0D5D669800782A95 /* File.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = File.svxDataSource;
-			remoteRef = 3C1D067A0D5D669800782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06840D5D66AA00782A95 /* Folder.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Folder.svxDataSource;
-			remoteRef = 3C1D06830D5D66AA00782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D068D0D5D66B800782A95 /* HTML.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = HTML.svxDataSource;
-			remoteRef = 3C1D068C0D5D66B800782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06960D5D66C700782A95 /* Image.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Image.svxDataSource;
-			remoteRef = 3C1D06950D5D66C700782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06A80D5D66DD00782A95 /* RichText.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RichText.svxDataSource;
-			remoteRef = 3C1D06A70D5D66DD00782A95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C1D06B10D5D66E700782A95 /* URL.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = URL.svxDataSource;
-			remoteRef = 3C1D06B00D5D66E700782A95 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C42DDAB0D64C8B3004F35FD /* SiteMap.svxElement */ = {
@@ -5402,13 +5136,6 @@
 			remoteRef = 3C4C6AAD0D64136C00398BDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C66EA3C0DD4129200F56B04 /* YouTube.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = YouTube.svxDataSource;
-			remoteRef = 3C66EA3B0DD4129200F56B04 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3C8344610DA98E160051A2A3 /* iMediaTesterSingle.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -5421,13 +5148,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = movietool;
 			remoteRef = 3C8344620DA98E160051A2A3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C8B32990DC6327C001405AD /* Video.svxDataSource */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Video.svxDataSource;
-			remoteRef = 3C8B32980DC6327C001405AD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CA9006C0D63C76100815310 /* IFrame.svxElement */ = {
