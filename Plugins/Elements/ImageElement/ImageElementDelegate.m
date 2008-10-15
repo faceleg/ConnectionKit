@@ -40,6 +40,7 @@
 
 
 #import <QuartzCore/QuartzCore.h>
+#import <WebKit/WebKit.h>
 
 
 // LocalizedStringInThisBundle(@"Please use the Inspector to enter the URL of an image", "Prompt when no URL has been entered")
@@ -418,6 +419,76 @@
     
     *error = nil;
     return YES;
+}
+
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            WebArchivePboardType,	// drags from safari, includes links and such
+            NSFilenamesPboardType,
+            NSTIFFPboardType,
+            NSPICTPboardType,
+            NSPDFPboardType,
+            //		@"Apple PNG pasteboard type",		// not defined in headers, but it's on screenshots!
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    return 1;
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex;
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    [pboard types];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [fileNames count])
+		{
+			NSString *fileName = [fileNames objectAtIndex:dragIndex];
+			if ( nil != fileName )
+			{
+				// check to see if it's an image file
+				NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
+                
+				if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeImage] )
+				{
+					return KTSourcePriorityIdeal;
+				}
+				else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"ImageDataListPboardType"]])
+				{
+					return KTSourcePriorityFallback;	// doesn't look like there's an image, but there is image metadata, this must be an image.
+				}
+				else
+				{
+					return KTSourcePriorityNone;	// not an image
+				}
+			}
+		}
+	}
+	else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]])
+	{
+		return KTSourcePriorityTypical;	// there is an image, so it's probably OK
+	}
+    
+    return KTSourcePriorityNone;	// doesn't actually have any image data
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex
+{
+	BOOL result = [KTImageView populateDictionary:aDictionary
+						orderedImageTypesAccepted:[self supportedDragTypes]
+								 fromDraggingInfo:draggingInfo
+											index:dragIndex];
+    return result;
 }
 
 @end

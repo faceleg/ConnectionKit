@@ -51,8 +51,6 @@ typedef enum {
 
 @interface KTDataSource : KSPlugin
 
-- (void) doneProcessingDrag;
-
 /*!	Return an array of accepted drag types, with best/richest types first
 */
 - (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;

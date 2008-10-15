@@ -10,6 +10,7 @@
 #import "Debug.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
+#import "KTImageView.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -52,14 +53,6 @@
 
 #pragma mark -
 #pragma mark Other
-
-/*!	For each subclass to have the opportunity to clean up any cache it may have built
-*/
-- (void) doneProcessingDrag
-{
-	;
-}
-
 
 /*!	Return an array of accepted drag types, with best/richest types first
 */
@@ -218,14 +211,7 @@
  */
 + (void)doneProcessingDrag
 {
-    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
-    NSEnumerator  *e = [dataSources objectEnumerator];
-    KTDataSource *dataSource;
-	
-    while ( dataSource = [e nextObject] )
-    {
-		[dataSource doneProcessingDrag];
-    }
+    [KTImageView clearCachedIPhotoInfoDict];
 }
 
 

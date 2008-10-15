@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27412DA40EA6621700A76666 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27412DA30EA6621700A76666 /* WebKit.framework */; };
 		2743601D0D52A5E900C257BA /* photopage.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2743601C0D52A5E900C257BA /* photopage.icns */; };
 		3C09FF2B0D50089F001A4237 /* ImageElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C09FF2A0D50089F001A4237 /* ImageElementDelegate.m */; };
 		3C09FF330D5008CC001A4237 /* ImageElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C09FF2F0D5008CC001A4237 /* ImageElementTemplate.html */; };
@@ -23,6 +24,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27412DA30EA6621700A76666 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2743601C0D52A5E900C257BA /* photopage.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = photopage.icns; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ImageElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageElement_Prefix.pch; sourceTree = "<group>"; };
 		3C09FF290D50089F001A4237 /* ImageElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageElementDelegate.h; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				3C09FF3F0D500941001A4237 /* Quartz.framework in Frameworks */,
+				27412DA40EA6621700A76666 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +129,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27412DA30EA6621700A76666 /* WebKit.framework */,
 				3C09FF3E0D500941001A4237 /* Quartz.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
