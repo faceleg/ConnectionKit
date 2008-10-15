@@ -14,6 +14,7 @@
 #import "KTScaledImageProperties.h"
 
 #import "CIImage+Karelia.h"
+#import "CIImage+KTExtensions.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
