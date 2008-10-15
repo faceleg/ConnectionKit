@@ -2080,7 +2080,7 @@ from representedObject */
 	// LOG((@"%@", NSStringFromSelector(_cmd) ));
 
 	BOOL result = NO;	// set to YES if at least one item got processed
-	int numberOfItems = [KTDataSource numberOfItemsToProcessDrag:info];
+	int numberOfItems = [KTElementPlugin numberOfItemsToProcessDrag:info];
 	
 	/*
 	/// Mike: I see no point in this artificial limit in 1.5
@@ -2115,7 +2115,7 @@ from representedObject */
 				[self updateSheetWithStatus:localizedStatus progressValue:i];
 			}
 			
-			Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+			Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
 			if ( nil != bestSource )
 			{
 				NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
@@ -2217,7 +2217,7 @@ from representedObject */
 	}
 	
 	// Done
-	[KTDataSource doneProcessingDrag];
+	[KTElementPlugin doneProcessingDrag];
 	
 	return result;
 }

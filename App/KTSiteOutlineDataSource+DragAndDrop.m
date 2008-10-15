@@ -431,7 +431,7 @@
 	
 	// do we have a good drag source?
 	/// check the *first* item in the list ... probably not perfect but it ought to do
-	Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
+	Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
 	if ( nil != bestSource )
 	{
 		if ( NSOutlineViewDropOnItemIndex == anIndex )
@@ -573,7 +573,7 @@
 		}
 		
 		// Done with that single pass process
-		[KTDataSource doneProcessingDrag];
+		[KTElementPlugin doneProcessingDrag];
 		
 	}
 	else

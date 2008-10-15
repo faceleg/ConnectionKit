@@ -161,7 +161,7 @@ TO DO:
 - (void)registerForDraggedTypes:(NSArray *)newTypes
 {
 
-	NSMutableSet *collected = [NSMutableSet setWithSet:[KTDataSource setOfAllDragSourceAcceptedDragTypesForPagelets:YES]];
+	NSMutableSet *collected = [NSMutableSet setWithSet:[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:YES]];
 	[collected addObjectsFromArray:newTypes];
 
 	[super registerForDraggedTypes:[collected allObjects]];
@@ -330,7 +330,7 @@ TO DO:
 	// Not dragging into editable text; try to perform drag otherwise.
 
 	// Just handle first item for pagelet
-    Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
+    Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
     if ( nil == bestSource )
 	{
 		return NO;
@@ -346,7 +346,7 @@ TO DO:
 	}
 	
 	// Done with the drag
-	[KTDataSource doneProcessingDrag];
+	[KTElementPlugin doneProcessingDrag];
 	
 	// If dragging into an image element, process it
 	KTDocWindowController *controller = ((KTDocWindowController *)[self UIDelegate]);

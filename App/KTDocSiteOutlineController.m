@@ -182,7 +182,7 @@
     
     // Drag n drop
 	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
-                                 [[KTDataSource setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
+                                 [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
     
 	[dragTypes addObject:kKTOutlineDraggingPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardType];

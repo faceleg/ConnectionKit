@@ -17,10 +17,9 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
-#import "KTAbstractElement.h"
-#import "KSPlugin.h"
+
+#import "KTElementPlugin.h"
+
 
 // Priority
 typedef enum { 
@@ -46,32 +45,7 @@ typedef enum {
 @end
 
 
-@class KTAbstractElement;
-
-
-@interface KTDataSource : KSPlugin
-
-/*!	Return an array of accepted drag types, with best/richest types first
-*/
-- (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;
-
-/*! returns KTSourcePriorty for draggingPasteboard */
-- (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
-
-- (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
-				forPagelet:(BOOL)isAPagelet
-		  fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-					 index:(unsigned int)anIndex;
-
-- (unsigned int)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender;
-
-- (NSString *)pageBundleIdentifier;
-- (NSString *)pageletBundleIdentifier;
-
-@end
-
-
-@interface KTDataSource (DataSourceRegistration)
+@interface KTElementPlugin (DataSourceRegistration)
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;

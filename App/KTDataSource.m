@@ -7,101 +7,15 @@
 
 #import "KTDataSource.h"
 
-#import "Debug.h"
 #import "KT.h"
-#import "KTAppDelegate.h"
 #import "KTImageView.h"
 
-#import "NSBundle+Karelia.h"
-#import "NSObject+Karelia.h"
-#import "NSObject+KTExtensions.h"
 #import "NSString+Karelia.h"
 
-#import "Registration.h"
+#import "Debug.h"
 
 
-@implementation KTDataSource
-
-#pragma mark -
-#pragma mark KSPlugin
-
-+ (void)load
-{
-	[self registerPluginClass:[KTDataSource class] forFileExtension:kKTDataSourceExtension];
-}
-
-+ (BOOL)supportPluginSubclasses { return YES; }
-
-/*	We only want to load 1.5 and later plugins
- */
-+ (BOOL)validateBundle:(NSBundle *)aCandidateBundle
-{
-	BOOL result = NO;
-	
-	NSString *minVersion = [aCandidateBundle minimumAppVersion];
-	if (minVersion)
-	{
-		float floatMinVersion = [minVersion floatVersion];
-		if (floatMinVersion >= 1.5)
-		{
-			result = YES;
-		}
-	}
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Other
-
-/*!	Return an array of accepted drag types, with best/richest types first
-*/
-- (NSArray *)acceptedDragTypesCreatingPagelet:(BOOL)isPagelet;
-{
-	//[self subclassResponsibility:_cmd];
-	//return nil;
-	LOG((@"%@ should be implementing acceptedDragTypesCreatingPagelet:", [self class]));
-	return nil;
-}
-
-/*! returns KTSourcePriorty for draggingPasteboard */
-- (int)priorityForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex;
-{
-	LOG((@"%@ should be implementing draggingInfo index:(unsigned int)anIndex", [self class]));
-    return KTSourcePriorityNone;
-}
-
-/*!	Optional: examine pasteboard and return a number > 1 if it looks like there are multiple items to process
-*/
-- (unsigned int)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
-{
-	return 1;
-}
-
-/*! asks datasource to accept drop of draggingPasteboard, utilizing/supplying values via aDictionary */
-- (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
-				forPagelet:(BOOL)isAPagelet
-		  fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-					 index:(unsigned int)anIndex;
-{
-	[self subclassResponsibility:_cmd];
-	return false;
-}
-
-- (NSString *)pageBundleIdentifier
-{
-	return nil;	// not defined unless overridden
-}
-- (NSString *)pageletBundleIdentifier
-{
-	return nil;	// not defined unless overridden
-}
-
-
-@end
-
-
-@implementation KTDataSource (DataSourceRegistration)
+@implementation KTElementPlugin (DataSourceRegistration)
 
 /*  Returns an set of all the available KTElement classes that conform to the KTDataSource protocol
  */
