@@ -35,7 +35,8 @@
 //
 
 #import "TwitterElementDelegate.h"
-#import "SandvoxPlugin.h"
+
+#import "NSURL+Twitter.h"
 
 
 // LocalizedStringInThisBundle(@"This is a placeholder for a Twitter pagelet. It will appear here once published or if you enable live data feeds in the preferences.", "WebView Placeholder")
@@ -46,6 +47,9 @@
 
 
 @implementation TwitterElementDelegate
+
+#pragma mark -
+#pragma mark Class Methods
 
 + (NSString *)scriptTemplate
 {
@@ -61,6 +65,29 @@
 	
 	return result;
 }
+
+#pragma mark -
+#pragma mark Init
+
+- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
+{
+	[super awakeFromDragWithDictionary:aDataSourceDictionary];
+	
+	// Look for a YouTube URL
+	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
+	if (URLString)
+	{
+		NSURL *URL = [NSURL URLWithString:URLString];
+		NSString *username = [URL twitterUsername];
+        if (username)
+		{
+			[[self delegateOwner] setValue:username forKey:@"username"];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Other
 
 - (IBAction)openTwitter:(id)sender
 {
@@ -92,6 +119,75 @@
 		
 		[parser release];
 	}
+}
+
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+	return [NSURL KTComponentsSupportedURLPasteboardTypes];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    return 1;
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+	KTSourcePriority result = KTSourcePriorityNone;
+    
+	NSArray *URLs = nil;
+	
+	[NSURL getURLs:&URLs
+		 andTitles:NULL
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > dragIndex)
+	{
+		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		if ([URL twitterUsername])
+		{
+			result = KTSourcePrioritySpecialized;
+		}
+	}
+	
+	return result;
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+	BOOL result = NO;
+    
+    NSArray *URLs = nil;
+	NSArray *titles = nil;
+	
+	[NSURL getURLs:&URLs
+		 andTitles:&titles
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > dragIndex && [titles count] > dragIndex)
+	{
+		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		NSString *title = [titles objectAtIndex:dragIndex];
+		
+		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+        if (!KSISNULL(title))
+		{
+			[aDictionary setObject:title forKey:kKTDataSourceTitle];
+		}
+		
+		result = YES;
+	}
+    
+    return result;
 }
 
 @end

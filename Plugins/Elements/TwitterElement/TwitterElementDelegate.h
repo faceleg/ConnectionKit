@@ -38,9 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface TwitterElementDelegate : KTAbstractPluginDelegate
-{
-}
+@interface TwitterElementDelegate : KTAbstractPluginDelegate <KTDataSource>
 
 - (IBAction)openTwitter:(id)sender;
 
