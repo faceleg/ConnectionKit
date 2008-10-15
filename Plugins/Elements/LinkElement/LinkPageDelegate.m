@@ -286,4 +286,80 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            @"WebURLsWithTitlesPboardType",
+            @"BookmarkDictionaryListPboardType",
+            NSURLPboardType,	// Apple URL pasteboard type
+            NSStringPboardType,
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    NSPasteboard *pboard = [sender draggingPasteboard];
+	NSArray *theArray = nil;
+	
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"WebURLsWithTitlesPboardType"]]
+		&& nil != (theArray = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"]) )
+	{
+		NSArray *urlArray = [theArray objectAtIndex:0];
+		return [urlArray count];
+	}
+	return 1;	// can't find any multiplicity
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    int result = KTSourcePriorityNone;
+    
+	NSArray *URLs = nil;
+	[NSURL getURLs:&URLs
+		 andTitles:NULL
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > 0)
+	{
+		result = KTSourcePriorityReasonable;
+	}
+	
+	return result;
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+    BOOL result = NO;
+    
+    NSArray *URLs = nil;	NSArray *titles = nil;
+	[NSURL getURLs:&URLs
+		 andTitles:&titles
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > 0)
+	{
+		NSURL *URL = [URLs firstObjectKS];
+		NSString *title = [titles firstObjectKS];
+		
+		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+        if (title && (id)title != [NSNull null])
+		{
+			[aDictionary setValue:title forKey:kKTDataSourceTitle];
+		}
+		
+		result = YES;
+	}
+    
+    return result;
+}
+
 @end

@@ -37,8 +37,5 @@
 #import "SandvoxPlugin.h"
 
 
-@interface LinkListPageletDelegate : KTAbstractPluginDelegate {
-
-}
-
+@interface LinkListPageletDelegate : KTAbstractPluginDelegate <KTDataSource>
 @end

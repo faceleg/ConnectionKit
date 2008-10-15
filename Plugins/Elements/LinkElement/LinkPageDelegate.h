@@ -39,7 +39,7 @@
 typedef enum { plainLink, newWindowLink, iframeLink, framesetLink } LinkPageType;
 
 @class WebView;
-@interface LinkPageDelegate : KTAbstractPluginDelegate 
+@interface LinkPageDelegate : KTAbstractPluginDelegate <KTDataSource>
 {
 }
 
