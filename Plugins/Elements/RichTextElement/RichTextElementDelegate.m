@@ -294,12 +294,12 @@
 				if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeRTF] || 
 					[NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeFlatRTFD] ||
 					[NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeRTFD] ||
-					[NSString UTI:aUTI conformsToUTI:@"com.microsoft.word.doc"]
-					)
+					[NSString UTI:aUTI conformsToUTI:@"com.microsoft.word.doc"])
 				{
 					return KTSourcePriorityIdeal;
 				}
-				else if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypePlainText])
+				else if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypePlainText] ||
+                         [aUTI conformsToUTI:(NSString *)kUTTypeFolder])
 				{
 					return KTSourcePriorityTypical;
 				}
