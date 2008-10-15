@@ -194,4 +194,117 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            NSFilenamesPboardType,			// We'll take a file that's HTML type
+            NSStringPboardType,				// We'll take plain text with HTML contents
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender { return 1; }
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    [pboard types];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [fileNames count])
+		{
+			NSString *fileName = [fileNames objectAtIndex:dragIndex];
+            
+			// check to see if it's an rich text file
+			NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
+			if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeHTML] )
+			{
+				return KTSourcePriorityIdeal;
+			}
+		}
+    }
+	else
+	{
+		NSString *string = [pboard stringForType:NSStringPboardType];
+		// Do some scanning to see if it looks like HTML by trying to find some basic types
+		NSScanner *scanner = [NSScanner scannerWithString:string];
+		int confidence = 0;
+		BOOL keepGoing = YES;
+		while (keepGoing)
+		{
+			(void) [scanner scanUpToString:@"<" intoString:nil];
+			keepGoing = [scanner scanString:@"<" intoString:nil];	// see if we are at a <
+			if (keepGoing)
+			{
+				static NSArray *sTagPatterns = nil;
+				
+				// Quick & dirty pattern matching.
+				if (nil == sTagPatterns) sTagPatterns = [[NSArray alloc] initWithObjects:
+                                                         @"html>", @"b>", @"i>", @"br>", @"br />", @"p>", @"p />", @"a href=", @"span ", @"div ",
+                                                         @"/html>", @"/b>", @"/i>", @"/p>", @"/a>", @"/span>", @"/div>",
+                                                         @"img src=", nil];
+				NSEnumerator *theEnum = [sTagPatterns objectEnumerator];
+				NSString *pattern;
+                
+				while (nil != (pattern = [theEnum nextObject]) )
+				{
+					BOOL foundPattern = [scanner scanRealString:pattern intoString:nil];
+					if (foundPattern)
+					{
+						confidence++;	// increment confidence factor
+						break;			// no need to keep scanning this tag
+					}
+				}
+				if (confidence >= 3)
+				{
+					return KTSourcePriorityReasonable;	// OK, I'm convinced.   This is HTML.  (Ideal?)
+					// (Perhaps some more specialized data source will scan for more specific patterns.)
+				}
+			}
+		}
+	}
+    return KTSourcePriorityNone;	// one of our other types -- string, rich text ... sounds good to me!
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+    BOOL result = NO;
+    NSString *filePath = nil;
+    
+    NSArray *orderedTypes = [self supportedDragTypes];
+    
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    
+    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    if ( [bestType isEqualToString:NSFilenamesPboardType] )
+    {
+		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [filePaths count])
+		{
+			filePath = [filePaths objectAtIndex:dragIndex];
+			if ( nil != filePath )
+			{
+				[aDictionary setValue:[[NSFileManager defaultManager] resolvedAliasPath:filePath]
+							   forKey:kKTDataSourceFilePath];
+				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
+				result = YES;
+			}
+		}
+    }
+	else
+	{
+		NSString *string = [pboard stringForType:NSStringPboardType];
+		[aDictionary setValue:string forKey:kKTDataSourceString];
+		result = YES;
+	}
+    
+    return result;
+}
+
 @end
