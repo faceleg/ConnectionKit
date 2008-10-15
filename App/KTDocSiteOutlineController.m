@@ -12,7 +12,7 @@
 #import "Debug.h"
 #import "KTAbstractElement.h"
 #import "KTAppDelegate.h"
-#import "KTDataSource.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"

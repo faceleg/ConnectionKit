@@ -31,7 +31,7 @@ TO DO:
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTDataSource.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTAppDelegate.h"
 #import "KTDocSiteOutlineController.h"

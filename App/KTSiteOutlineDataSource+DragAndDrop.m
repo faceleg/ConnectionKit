@@ -10,7 +10,7 @@
 #import "Debug.h"
 #import "DOMNode+KTExtensions.h"
 #import "KT.h"
-#import "KTDataSource.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAppDelegate.h"
 #import "KTSiteOutlineDataSource.h"
 #import "KTDocument.h"

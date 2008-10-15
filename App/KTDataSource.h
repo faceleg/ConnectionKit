@@ -18,7 +18,7 @@
 //
 
 
-#import "KTElementPlugin.h"
+#import <Cocoa/Cocoa.h>
 
 
 // Priority
@@ -42,17 +42,4 @@ typedef enum {
 + (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
               fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
                        atIndex:(unsigned)dragIndex;
-@end
-
-
-@interface KTElementPlugin (DataSourceRegistration)
-
-/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
-
-
-+ (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
-+ (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
-
-+ (void)doneProcessingDrag;
 @end

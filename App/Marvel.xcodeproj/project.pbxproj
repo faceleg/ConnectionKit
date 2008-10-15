@@ -303,6 +303,8 @@
 		27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */; };
 		27DB807A0C8465C200E29C38 /* KTPluginInspectorViewsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
+		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
+		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -401,7 +403,6 @@
 		3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B250D622FC700B4D485 /* KTManagedObject.m */; };
 		3C682B290D622FF000B4D485 /* KTManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B280D622FF000B4D485 /* KTManagedObjectContext.m */; };
 		3C682B2C0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */; };
-		3C682B2F0D62301000B4D485 /* KTDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B2E0D62301000B4D485 /* KTDataSource.m */; };
 		3C682B320D62301E00B4D485 /* KTDraggingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B310D62301E00B4D485 /* KTDraggingInfo.m */; };
 		3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B340D62302F00B4D485 /* KTAbstractIndex.m */; };
 		3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B370D62303C00B4D485 /* KTAbstractPluginDelegate.m */; };
@@ -1641,6 +1642,8 @@
 		27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueReadingLinkTextBlock.m; sourceTree = "<group>"; };
 		27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInspectorViewsManager.h; sourceTree = "<group>"; };
 		27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInspectorViewsManager.m; sourceTree = "<group>"; };
+		27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTElementPlugin+DataSourceRegistration.h"; sourceTree = "<group>"; };
+		27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTElementPlugin+DataSourceRegistration.m"; sourceTree = "<group>"; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
@@ -1810,7 +1813,6 @@
 		3C682B2A0D622FF800B4D485 /* KTPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPersistentStoreCoordinator.h; sourceTree = "<group>"; };
 		3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPersistentStoreCoordinator.m; sourceTree = "<group>"; };
 		3C682B2D0D62300B00B4D485 /* KTDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataSource.h; sourceTree = "<group>"; };
-		3C682B2E0D62301000B4D485 /* KTDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataSource.m; sourceTree = "<group>"; };
 		3C682B300D62301900B4D485 /* KTDraggingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDraggingInfo.h; sourceTree = "<group>"; };
 		3C682B310D62301E00B4D485 /* KTDraggingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDraggingInfo.m; sourceTree = "<group>"; };
 		3C682B330D62302A00B4D485 /* KTAbstractIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractIndex.h; sourceTree = "<group>"; };
@@ -4006,9 +4008,10 @@
 			isa = PBXGroup;
 			children = (
 				3C682B2D0D62300B00B4D485 /* KTDataSource.h */,
-				3C682B2E0D62301000B4D485 /* KTDataSource.m */,
 				3C682B300D62301900B4D485 /* KTDraggingInfo.h */,
 				3C682B310D62301E00B4D485 /* KTDraggingInfo.m */,
+				27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */,
+				27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -4763,6 +4766,7 @@
 				2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */,
 				2721E19B0E9E597300A458B2 /* KTDocumentControllerChain.h in Headers */,
 				27B4D55C0EA4DF820000FB1C /* KSThreadProxy.h in Headers */,
+				27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5915,7 +5919,6 @@
 				3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */,
 				3C682B290D622FF000B4D485 /* KTManagedObjectContext.m in Sources */,
 				3C682B2C0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m in Sources */,
-				3C682B2F0D62301000B4D485 /* KTDataSource.m in Sources */,
 				3C682B320D62301E00B4D485 /* KTDraggingInfo.m in Sources */,
 				3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */,
 				3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */,
@@ -6086,6 +6089,7 @@
 				27E3835D0E938A0F00DE9EB4 /* DOM+Debugging.m in Sources */,
 				2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */,
 				27B4D55D0EA4DF820000FB1C /* KSThreadProxy.m in Sources */,
+				27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

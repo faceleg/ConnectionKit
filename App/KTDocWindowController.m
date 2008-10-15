@@ -16,7 +16,7 @@
 #import "KSNetworkNotifier.h"
 #import "KSValidateCharFormatter.h"
 #import "KT.h"
-#import "KTDataSource.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"

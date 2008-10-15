@@ -1,11 +1,12 @@
 //
-//  KTDataSource.m
-//  KTComponents
+//  KTElementPlugin+DataSourceRegistration.m
+//  Marvel
 //
-//  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
+//  Created by Mike on 16/10/2008.
+//  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTDataSource.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 
 #import "KT.h"
 #import "KTImageView.h"
@@ -56,7 +57,7 @@
 }
 
 /*!	Ask all the data sources to try to figure out how many items need to be processed in a drag
-*/
+ */
 + (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
 {
 	unsigned result = 1;
@@ -73,8 +74,8 @@
 }
 
 + (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo
-                                                               index:(unsigned)anIndex
-                                                   isCreatingPagelet:(BOOL)isCreatingPagelet
+                                                   index:(unsigned)anIndex
+                                       isCreatingPagelet:(BOOL)isCreatingPagelet
 {
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     NSArray *pboardTypes = [pboard types];
@@ -91,7 +92,7 @@
     {
 		// for each dataSource, see if it will handle what's on the pboard
         NSArray *acceptedTypes = [anElementClass supportedDragTypes];
-                
+        
         if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
         {
             // yep, so get the rating and see if it's better than our current bestRating
