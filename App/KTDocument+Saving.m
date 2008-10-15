@@ -798,22 +798,19 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     // Wait for the thumbnail to complete. We shall allocate a maximum of 10 seconds for this
     NSDate *documentSaveLimit = [[NSDate date] addTimeInterval:10.0];
-    
     if ([NSThread isMainThread])
     {
-        [self retain];	/// BUGSID:34789 It seems possible that running the run loop is autoreleasing the document early. Retain to stop it
-        while ([_quickLookThumbnailWebView isLoading] && [documentSaveLimit timeIntervalSinceNow] > 0.0)
+        while (![_quickLookThumbnailLock tryLock] &&     // Don't worry, it'll be unlocked again when tearing down the webview
+               [documentSaveLimit timeIntervalSinceNow] > 0.0)
         {
-            OBASSERT([NSThread currentThread] == [self thread]);
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:documentSaveLimit];
         }
-        [self autorelease];
     }
     else
     {
         OBASSERT(_quickLookThumbnailLock);
-        BOOL didLock = [_quickLookThumbnailLock lockBeforeDate:documentSaveLimit];
-        if (didLock) [_quickLookThumbnailLock unlock];
+        BOOL didLock = [_quickLookThumbnailLock lockBeforeDate:documentSaveLimit];  // The lock can only be acquired once webview 
+        if (didLock) [_quickLookThumbnailLock unlock];                              // loading is complete
     }
         
     
@@ -889,7 +886,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         [webViewWindow release];
         
         
-        // Remove the lock. Ensure it's unlocked
+        // Remove the lock. In the event that loading the webview timed out, it will still be locked.
+        // So, we call -tryLock followed by -unlock as a neat trick to ensure it's unlocked
         [_quickLookThumbnailLock tryLock];
         [_quickLookThumbnailLock unlock];
         
@@ -927,6 +925,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (void)webViewDidFinishLoading:(NSNotification *)notification
 {
     // Release the hounds! er, I mean the lock.
+    // This allows a background thread to acquire the lock, signalling that saving can continue.
     OBASSERT(_quickLookThumbnailLock);
     [_quickLookThumbnailLock unlock];
 }
