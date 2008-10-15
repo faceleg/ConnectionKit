@@ -17,6 +17,8 @@
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
+#import "NSIndexSet+Karelia.h"
+
 #import <iMediaBrowser/RBSplitView.h>
 
 
@@ -340,7 +342,7 @@
 {
 	// Selected pages
 	NSIndexSet *outlineSelectedRowIndexSet = [[[[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
-	[[self documentInfo] setLastSelectedRows:outlineSelectedRowIndexSet];
+	[[self documentInfo] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
 	
 	
 	// Source Outline width

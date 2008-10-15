@@ -329,6 +329,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                 // There was an error saving, recover from it
                 [self recoverBackupFile:backupPath toURL:absoluteURL];
             }
+            
+            break;
         }
             
             
@@ -740,19 +742,26 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Quick Look Thumbnail
 
-/*	Please note the "new" in the title. The result is NOT autoreleased. And neither is its window.
- */
 - (void)startGeneratingQuickLookThumbnail
 {
-	// Put together the HTML for the thumbnail
 	OBASSERT([NSThread currentThread] == [self thread]);
-    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+    
+    // Put together the HTML for the thumbnail
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
 	[parser release];
 	
 	
+    // Load into webview
+    [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
+                           withObject:thumbnailHTML
+                        waitUntilDone:NO];
+}
+
+- (void)_startGeneratingQuickLookThumbnailWithHTML:(NSString *)thumbnailHTML
+{
     // View and WebView handling MUST be on the main thread
     OBASSERT([NSThread isMainThread]);
     
@@ -762,7 +771,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	NSWindow *window = [[NSWindow alloc]
-		initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+                        initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
     
@@ -788,7 +797,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	// Go ahead and begin building the thumbnail
     [[_quickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
 }
-
 
 - (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error
 {

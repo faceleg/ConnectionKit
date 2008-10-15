@@ -42,8 +42,8 @@ typedef enum {
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
 
-- (NSIndexSet *)lastSelectedRows;
-- (void)setLastSelectedRows:(NSIndexSet *)value;
+- (NSString *)lastSelectedRows;
+- (void)setLastSelectedRows:(NSString *)value;
 
 - (NSSet *)requiredBundlesIdentifiers;
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
