@@ -259,5 +259,112 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            NSFilenamesPboardType,
+            NSRTFDPboardType,
+            NSRTFPboardType,
+            NSStringPboardType,
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    return 1;
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [fileNames count])
+		{
+			NSString *fileName = [fileNames objectAtIndex:dragIndex];
+			if ( nil != fileName )
+			{
+				// check to see if it's an rich text file
+				NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
+				if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeRTF] || 
+					[NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeFlatRTFD] ||
+					[NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeRTFD] ||
+					[NSString UTI:aUTI conformsToUTI:@"com.microsoft.word.doc"]
+					)
+				{
+					return KTSourcePriorityIdeal;
+				}
+				else if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypePlainText])
+				{
+					return KTSourcePriorityTypical;
+				}
+				/// MMMMmaybe we will handle other kind of text ... doubtful.
+				else if ([NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeText])
+				{
+					return KTSourcePriorityFallback;
+				}
+				else
+				{
+					return KTSourcePriorityNone;		// doesn't look like a rich text file
+				}
+			}
+		}
+	}
+    return KTSourcePriorityFallback;		// file-less rich text, this should be OK ... unless something better comes along
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex
+{
+    BOOL result = NO;
+    NSString *filePath= nil;
+    
+    NSArray *orderedTypes = [self supportedDragTypes];
+    
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    
+    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    if ( [bestType isEqualToString:NSFilenamesPboardType] )
+    {
+		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [filePaths count])
+		{
+			filePath = [filePaths objectAtIndex:dragIndex];
+			if ( nil != filePath )
+			{
+				[aDictionary setValue:[[NSFileManager defaultManager] resolvedAliasPath:filePath]
+							   forKey:kKTDataSourceFilePath];
+				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
+				result = YES;
+			}
+		}
+    }
+	else
+	{
+		NSString *string = nil;
+		// Get a title from the FIRST line of the text
+		if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]]
+            && nil != (string = [pboard stringForType:NSStringPboardType]))
+		{
+			NSString *firstLine = string;
+			NSRange firstNewLine = [string rangeOfCharacterFromSet:[NSCharacterSet fullNewlineCharacterSet]];
+			if (NSNotFound != firstNewLine.location)
+			{
+				firstLine = [string substringToIndex:firstNewLine.location];
+			}
+			[aDictionary setValue:firstLine forKey:kKTDataSourceTitle];
+		}
+		
+		result = YES;	// client will get data from pasteboard
+	}
+    
+    return result;
+}
 
 @end

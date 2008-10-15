@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 @class KTRTFDImporter;
-@interface RichTextElementDelegate : KTAbstractPluginDelegate
+@interface RichTextElementDelegate : KTAbstractPluginDelegate <KTDataSource>
 {
 	KTRTFDImporter *myRTFDImporter;
 	//NSArray *myMediaRefNames;
