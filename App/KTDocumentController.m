@@ -459,7 +459,6 @@
 	}
 	
 	// by now, absoluteURL should be a good file, open it
-// FIXME: this annoyingly shows the window on the screen, though we resize it later.  I'd rather NOT display it and show it later... how?
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
 											   display:displayDocument
 												 error:outError];
