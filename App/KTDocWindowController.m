@@ -2115,20 +2115,20 @@ from representedObject */
 				[self updateSheetWithStatus:localizedStatus progressValue:i];
 			}
 			
-			KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+			Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
 			if ( nil != bestSource )
 			{
 				NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
 				[dragDataDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
 				
 				BOOL didPerformDrag;
-				didPerformDrag = [bestSource populateDictionary:dragDataDictionary forPagelet:NO fromDraggingInfo:info index:i];
-				NSString *theBundleIdentifier = [bestSource pageBundleIdentifier];
+				didPerformDrag = [bestSource populateDragDictionary:dragDataDictionary fromDraggingInfo:info atIndex:i];
+				NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
 				
-				if ( didPerformDrag && (nil != theBundleIdentifier) )
+				if ( didPerformDrag && theBundleIdentifier)
 				{
 					KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
-					if ( nil != thePlugin )
+					if (thePlugin)
 					{
 						[dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
 						
@@ -2191,7 +2191,7 @@ from representedObject */
 				}
 				else
 				{
-					LOG((@"%@ did not accept drop, no child returned", [bestSource className]));
+					LOG((@"%@ did not accept drop, no child returned", bestSource));
 				}
 			}
 			else

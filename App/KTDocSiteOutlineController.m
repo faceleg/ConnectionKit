@@ -179,7 +179,11 @@
 	[outlineView setTarget:myWindowController];
 	[outlineView setDoubleAction:@selector(showInfo:)];
 	
-	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:[KTDataSource allDragSourceAcceptedDragTypesForPagelets:NO]];
+    
+    // Drag n drop
+	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
+                                 [[KTDataSource setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
+    
 	[dragTypes addObject:kKTOutlineDraggingPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardType];
 	[outlineView registerForDraggedTypes:dragTypes];

@@ -139,6 +139,7 @@
 #import "ValuesAreEqualTransformer.h"
 
 // general support
+#import "OmniCompatibility.h"
 
 //  drag-and-drop
 #import "KTDraggingInfo.h"

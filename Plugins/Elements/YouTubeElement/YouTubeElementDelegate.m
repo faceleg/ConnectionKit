@@ -333,5 +333,74 @@ Break
 	[element setValue:[[self class] defaultPrimaryColor] forKey:@"color2"];
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+	return [NSURL KTComponentsSupportedURLPasteboardTypes];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    return 1;
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+	KTSourcePriority result = KTSourcePriorityNone;
+    
+	NSArray *URLs = nil;
+	
+	[NSURL getURLs:&URLs
+		 andTitles:NULL
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > dragIndex)
+	{
+		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		if ([URL youTubeVideoID])
+		{
+			result = KTSourcePrioritySpecialized;
+		}
+	}
+	
+	return result;
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+	BOOL result = NO;
+    
+    NSArray *URLs = nil;
+	NSArray *titles = nil;
+	
+	[NSURL getURLs:&URLs
+		 andTitles:&titles
+	fromPasteboard:[draggingInfo draggingPasteboard]
+   readWeblocFiles:YES
+	ignoreFileURLs:YES];
+	
+	if (URLs && [URLs count] > dragIndex && [titles count] > dragIndex)
+	{
+		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		NSString *title = [titles objectAtIndex:dragIndex];
+		
+		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+        if (!KSISNULL(title))
+		{
+			[aDictionary setObject:title forKey:kKTDataSourceTitle];
+		}
+		
+		result = YES;
+	}
+    
+    return result;
+}
+
 @end
 

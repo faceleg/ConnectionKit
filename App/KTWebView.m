@@ -330,7 +330,7 @@ TO DO:
 	// Not dragging into editable text; try to perform drag otherwise.
 
 	// Just handle first item for pagelet
-    KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
+    Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:sender index:0 isCreatingPagelet:YES];
     if ( nil == bestSource )
 	{
 		return NO;
@@ -338,7 +338,7 @@ TO DO:
 	
 	NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
 	[dragDataDictionary setValue:[sender draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
-	BOOL didPerformDrag = [bestSource populateDictionary:dragDataDictionary forPagelet:YES fromDraggingInfo:sender index:0];
+	BOOL didPerformDrag = [bestSource populateDragDictionary:dragDataDictionary fromDraggingInfo:sender atIndex:0];
 	
 	if ( !didPerformDrag )
 	{
@@ -376,7 +376,7 @@ TO DO:
 
 	// Handle drag onto an image element
 	
-	if ([[bestSource className] isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
+	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
 		&& [[[[draggedItem plugin] bundle]bundleIdentifier] isEqualToString:@"sandvox.ImageElement"])
 	{
 		LOG((@"Dragging into an image element"));
@@ -389,7 +389,7 @@ TO DO:
 // TODO: handle drag of video onto a quicktime thing, too!  Somehow we have to intercept the drag from the QT view.
 	
 	// Handle drag onto a thumbnail (which summarizes a page)
-	if ([[bestSource className] isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
+	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
 		&& [draggedItem isKindOfClass:[KTPage class]] 
 		&& [property isEqualToString:@"image"])
 	{
@@ -446,7 +446,7 @@ TO DO:
 	
 	if ([aNode respondsToSelector:@selector(idName)]
 		&& [[((DOMHTMLElement *)aNode) idName] isEqualToString:@"logo"]
-		&& [[bestSource className] isEqualToString:@"ImageSource"] )	// Hack ... a better way of verify it's an image source?
+		&& [NSStringFromClass(bestSource) isEqualToString:@"ImageSource"] )	// Hack ... a better way of verify it's an image source?
 	{
 		// Drag into site title ... this affects the document root
 		/*
@@ -483,7 +483,7 @@ TO DO:
 		return NO;		// sorry, can't drag a onto a page without a sidebar or callout
 	}
 	
-	NSString *theBundleIdentifier = [bestSource pageletBundleIdentifier];
+	NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
 	if (nil == theBundleIdentifier)
 	{
 		return NO;

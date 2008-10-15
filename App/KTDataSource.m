@@ -53,21 +53,6 @@
 #pragma mark -
 #pragma mark Other
 
-/*!	After the drag, clean up.... send message to all data source objects to let them clean up.  Called
-	after the last populateDictionary:... invocation.
-*/
-+ (void)doneProcessingDrag
-{
-    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
-    NSEnumerator  *e = [dataSources objectEnumerator];
-    KTDataSource *dataSource;
-	
-    while ( dataSource = [e nextObject] )
-    {
-		[dataSource doneProcessingDrag];
-    }
-}
-
 /*!	For each subclass to have the opportunity to clean up any cache it may have built
 */
 - (void) doneProcessingDrag
@@ -75,76 +60,6 @@
 	;
 }
 
-
-/*!	Ask all the data sources to try to figure out how many items need to be processed in a drag
-*/
-+ (int) numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
-{
-	int result = 1;
-    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
-    NSEnumerator  *e = [dataSources objectEnumerator];
-    KTDataSource *dataSource;
-		
-    while ( dataSource = [e nextObject] )
-    {
-		int multiplicity = [dataSource numberOfItemsFoundInDrag:draggingInfo];
-		if (multiplicity > result)
-		{
-			result = multiplicity;
-		}
-    }
-    return result;
-}
-
-+ (KTDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-    NSArray *pboardTypes = [pboard types];
-    NSSet *setOfTypes = [NSSet setWithArray:pboardTypes];
-	
-    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
-    NSEnumerator  *e = [dataSources objectEnumerator];
-    KTDataSource *dataSource;
-	
-    KTDataSource *bestDataSource = nil;
-    KTDataSource *secondBestDataSource = nil;
-	int bestRating = 0;
-   int secondBestRating = 0;
-	
-    while ( dataSource = [e nextObject] )
-    {
-		// If non-pro and HTMLSource, don't allow.  So if Pro or NOT data source, allow.
-		if ([[NSApp delegate] isPro]
-			|| ! [NSStringFromClass([dataSource class]) isEqualToString:@"HTMLSource"])
-		{
-			// for each dataSource, see if it will handle what's on the pboard
-			NSArray *acceptedTypes = [dataSource acceptedDragTypesCreatingPagelet:isCreatingPagelet];
-			
-			OBASSERT([setOfTypes isKindOfClass:[NSSet class]]);
-
-			if ( nil != acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]] )
-			{
-				// yep, so get the rating and see if it's better than our current bestRating
-				int rating = [dataSource priorityForDrag:draggingInfo index:anIndex];
-				if ( rating >= bestRating )
-				{
-					secondBestRating = bestRating;
-					secondBestDataSource = bestDataSource;
-					
-					bestRating = rating;
-					bestDataSource = dataSource;
-				}
-			}
-		}
-    }
-	if (bestRating != 0 && (bestRating == secondBestRating))
-	{
-		NSLog(@"Warning: Data sources %@ and %@ both wanted to handle these pasteboard types: %@", 
-			  [bestDataSource class], [secondBestDataSource class], [[pboardTypes description] condenseWhiteSpace]);
-	}
-	
-    return bestRating ? bestDataSource : nil;
-}
 
 /*!	Return an array of accepted drag types, with best/richest types first
 */
@@ -190,31 +105,131 @@
 }
 
 
+@end
+
+
+@implementation KTDataSource (DataSourceRegistration)
+
+/*  Returns an set of all the available KTElement classes that conform to the KTDataSource protocol
+ */
++ (NSSet *)dataSources
+{
+    NSDictionary *elements = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
+    NSMutableSet *result = [NSMutableSet setWithCapacity:[elements count]];
+	
+    
+    NSEnumerator *pluginsEnumerator = [elements objectEnumerator];
+    KTElementPlugin *aPlugin;
+	while (aPlugin = [pluginsEnumerator nextObject])
+    {
+		Class anElementClass = [[aPlugin bundle] principalClass];
+        if ([anElementClass conformsToProtocol:@protocol(KTDataSource)])
+        {
+            [result addObject:anElementClass];
+        }
+    }
+	
+    return result;
+}
+
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet
 {
-    NSMutableSet *typesSet = [NSMutableSet setWithCapacity:10];
+    NSMutableSet *result = [NSMutableSet set];
 	
-    NSEnumerator *e = [[KSPlugin pluginsWithFileExtension:kKTDataSourceExtension] objectEnumerator];
-    id dataSource;
-	
-    while (dataSource = [e nextObject] )
+    NSEnumerator *pluginsEnumerator = [[self dataSources] objectEnumerator];
+    Class anElementClass;
+	while (anElementClass = [pluginsEnumerator nextObject])
     {
-		NSArray *acceptedTypes = [dataSource acceptedDragTypesCreatingPagelet:isPagelet];
-		if (nil != acceptedTypes)
-		{
-			[typesSet addObjectsFromArray:acceptedTypes];
-		}
+		NSArray *acceptedTypes = [anElementClass supportedDragTypes];
+        [result addObjectsFromArray:acceptedTypes];
     }
 	
-    return [NSSet setWithSet:typesSet];
+    return [NSSet setWithSet:result];
 }
 
-/*! returns array of setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet */
-+ (NSArray *)allDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet
+/*!	Ask all the data sources to try to figure out how many items need to be processed in a drag
+*/
++ (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
 {
-    return [NSArray arrayWithArray:[[self setOfAllDragSourceAcceptedDragTypesForPagelets:isPagelet] allObjects]];
+	unsigned result = 1;
+    
+    NSEnumerator *pluginsEnumerator = [[self dataSources] objectEnumerator];
+    Class anElementClass;
+	while (anElementClass = [pluginsEnumerator nextObject])
+    {
+		unsigned multiplicity = [anElementClass numberOfItemsFoundInDrag:draggingInfo];
+		if (multiplicity > result) result = multiplicity;
+    }
+    
+    return result;
 }
+
++ (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo
+                                                               index:(unsigned)anIndex
+                                                   isCreatingPagelet:(BOOL)isCreatingPagelet
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    NSArray *pboardTypes = [pboard types];
+    NSSet *setOfTypes = [NSSet setWithArray:pboardTypes];
+	
+    Class <KTDataSource> bestDataSource = nil;
+    Class <KTDataSource> secondBestDataSource = nil;
+	KTSourcePriority bestRating = KTSourcePriorityNone;
+    KTSourcePriority secondBestRating = KTSourcePriorityNone;
+	
+    NSEnumerator *pluginsEnumerator = [[self dataSources] objectEnumerator];
+    Class <KTDataSource> anElementClass;
+	while (anElementClass = [pluginsEnumerator nextObject])
+    {
+		// for each dataSource, see if it will handle what's on the pboard
+        NSArray *acceptedTypes = [anElementClass supportedDragTypes];
+                
+        if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
+        {
+            // yep, so get the rating and see if it's better than our current bestRating
+            KTSourcePriority rating = [anElementClass priorityForDrag:draggingInfo atIndex:anIndex];
+            if (rating >= bestRating)
+            {
+                secondBestRating = bestRating;
+                secondBestDataSource = bestDataSource;
+                
+                bestRating = rating;
+                bestDataSource = anElementClass;
+            }
+        }
+    }
+	
+    
+    if (bestRating != KTSourcePriorityNone && (bestRating == secondBestRating))
+	{
+		NSLog(@"Warning: Data sources %@ and %@ both wanted to handle these pasteboard types: %@", 
+			  bestDataSource,
+              secondBestDataSource,
+              [[pboardTypes description] condenseWhiteSpace]);
+	}
+	
+    
+    return bestRating ? bestDataSource : nil;
+}
+
+/*!	After the drag, clean up.... send message to all data source objects to let them clean up.  Called
+ after the last populateDictionary:... invocation.
+ */
++ (void)doneProcessingDrag
+{
+    NSDictionary *dataSources = [KSPlugin pluginsWithFileExtension:kKTDataSourceExtension];
+    NSEnumerator  *e = [dataSources objectEnumerator];
+    KTDataSource *dataSource;
+	
+    while ( dataSource = [e nextObject] )
+    {
+		[dataSource doneProcessingDrag];
+    }
+}
+
+
 
 
 @end
+

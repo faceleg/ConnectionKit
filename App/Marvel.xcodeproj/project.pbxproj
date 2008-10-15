@@ -88,7 +88,6 @@
 				3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */,
 				3C1D06C90D5D67DA00782A95 /* PBXTargetDependency */,
 				3C8B329B0DC632A1001405AD /* PBXTargetDependency */,
-				3C66EA3E0DD4131100F56B04 /* PBXTargetDependency */,
 				3C1D06CB0D5D67DA00782A95 /* PBXTargetDependency */,
 				3C095C090D5D282F00DE6F62 /* PBXTargetDependency */,
 				3C095C0B0D5D283200DE6F62 /* PBXTargetDependency */,
@@ -876,7 +875,7 @@
 		CEC11BFA0D78BE5300513E70 /* NSXMLElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8D0D78BE5300513E70 /* NSXMLElement+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BFB0D78BE5300513E70 /* NTBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8E0D78BE5300513E70 /* NTBoxView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BFC0D78BE5300513E70 /* NTSUTaskController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8F0D78BE5300513E70 /* NTSUTaskController.h */; };
-		CEC11BFD0D78BE5300513E70 /* OmniCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B900D78BE5300513E70 /* OmniCompatibility.h */; };
+		CEC11BFD0D78BE5300513E70 /* OmniCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B900D78BE5300513E70 /* OmniCompatibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BFE0D78BE5300513E70 /* Registration.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B910D78BE5300513E70 /* Registration.h */; };
 		CEC11BFF0D78BE5300513E70 /* RichTextHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B920D78BE5300513E70 /* RichTextHTMLTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11C000D78BE5300513E70 /* RoundedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B930D78BE5300513E70 /* RoundedBox.h */; };
@@ -1321,13 +1320,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = VideoSource;
-		};
-		3C66EA3D0DD4131100F56B04 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C66EA370DD4129200F56B04 /* YouTubeSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = YouTubeSource;
 		};
 		3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6609,11 +6601,6 @@
 			isa = PBXTargetDependency;
 			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
 			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
-		};
-		3C66EA3E0DD4131100F56B04 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = YouTubeSource;
-			targetProxy = 3C66EA3D0DD4131100F56B04 /* PBXContainerItemProxy */;
 		};
 		3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

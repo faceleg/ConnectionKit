@@ -33,24 +33,24 @@ typedef enum {
 	KTSourcePrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
 } KTSourcePriority;
 
+
+@protocol KTDataSource
++ (NSArray *)supportedDragTypes;
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender;
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex;
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+@end
+
+
 @class KTAbstractElement;
 
+
 @interface KTDataSource : KSPlugin
-{
-    
-}
 
-
-/*! returns array of setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet */
-+ (NSArray *)allDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
-
-/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
-
-
-+ (KTDataSource *)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned int)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
-+ (int) numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
-+ (void) doneProcessingDrag;
 - (void) doneProcessingDrag;
 
 /*!	Return an array of accepted drag types, with best/richest types first
@@ -70,4 +70,17 @@ typedef enum {
 - (NSString *)pageBundleIdentifier;
 - (NSString *)pageletBundleIdentifier;
 
+@end
+
+
+@interface KTDataSource (DataSourceRegistration)
+
+/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
++ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
+
+
++ (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
++ (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
+
++ (void)doneProcessingDrag;
 @end

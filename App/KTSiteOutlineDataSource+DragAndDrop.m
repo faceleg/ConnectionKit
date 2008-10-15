@@ -431,7 +431,7 @@
 	
 	// do we have a good drag source?
 	/// check the *first* item in the list ... probably not perfect but it ought to do
-	KTDataSource *bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
+	Class <KTDataSource> bestSource = [KTDataSource highestPriorityDataSourceForDrag:info index:0 isCreatingPagelet:NO];
 	if ( nil != bestSource )
 	{
 		if ( NSOutlineViewDropOnItemIndex == anIndex )
@@ -480,16 +480,16 @@
 					NSMutableDictionary *sourceInfoDictionary = [NSMutableDictionary dictionary];
 					[sourceInfoDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
 					// No way to really deal with multiple items here, so just take the first title
-					(void)[bestSource populateDictionary:sourceInfoDictionary forPagelet:NO fromDraggingInfo:info index:0];
+					[bestSource populateDragDictionary:sourceInfoDictionary fromDraggingInfo:info atIndex:0];
 					NSString *title = [sourceInfoDictionary valueForKey:kKTDataSourceTitle];
-					if ( nil == title )
+					if (title)
 					{
 						NSFileManager *fm = [NSFileManager defaultManager];
 						title = [[fm displayNameAtPath:[sourceInfoDictionary valueForKey:kKTDataSourceFileName] ] stringByDeletingPathExtension];
-						if  ( nil == title )
+						if  (title)
 						{
-							NSString *bundleIdentifier = [bestSource pageBundleIdentifier];
-							if  ( nil != bundleIdentifier  )
+							NSString *bundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
+							if  (bundleIdentifier)
 							{
 								id plugin = [KTElementPlugin pluginWithIdentifier:bundleIdentifier];
 								if ( nil != plugin )
