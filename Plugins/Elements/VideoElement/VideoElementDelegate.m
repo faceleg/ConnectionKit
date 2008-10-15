@@ -966,4 +966,94 @@ After deflating starting at byte 8, you get:
     return YES;
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            NSFilenamesPboardType,
+            QTMoviePasteboardType,		
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    return 1;
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    [pboard types];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [fileNames count])
+		{
+			NSString *fileName = [fileNames objectAtIndex:dragIndex];
+			if ( nil != fileName )
+			{
+				// check to see if it's an image file
+				NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
+				
+				if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio] )
+				{
+					return KTSourcePriorityNone;	// disallow protected audio; don't try to play as audio
+				}
+				else if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeAudiovisualContent] )
+				{
+					return KTSourcePriorityIdeal;
+				}
+				else
+				{
+					return KTSourcePriorityNone;	// not an image
+				}
+			}
+		}
+	}
+	else if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:QTMoviePasteboardType]])
+	{
+		return KTSourcePriorityIdeal;	// there is an image, so it's probably OK
+	}
+    return KTSourcePriorityNone;	// doesn't actually have any image data
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex
+{
+    BOOL result = NO;
+    NSString *filePath = nil;
+    
+    NSArray *orderedTypes = [self supportedDragTypes];
+    
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+	
+    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    if ( [bestType isEqualToString:NSFilenamesPboardType] )
+    {
+		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [filePaths count])
+		{
+			filePath = [filePaths objectAtIndex:dragIndex];
+			if ( nil != filePath )
+			{
+				[aDictionary setValue:
+                 [[NSFileManager defaultManager] resolvedAliasPath:filePath]
+							   forKey:kKTDataSourceFilePath];
+				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
+				result = YES;
+			}
+		}
+    }
+	else
+	{
+		; // QT on pasteboard ... I think I can just leave the pasteboard alone?
+	}
+    
+    return result;
+}
+
 @end
