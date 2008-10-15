@@ -908,8 +908,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
-#pragma mark delegate
-
 - (NSURLRequest *)webView:(WebView *)sender
 				 resource:(id)identifier
 		  willSendRequest:(NSURLRequest *)request
@@ -984,6 +982,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         return;
     }
     
+    
+    // UI
+    [[self windowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
+    
         
     // Do the save in the background
     [NSThread detachNewThreadSelector:@selector(threadedAutosaveWithCallback:) toTarget:self withObject:callback];
@@ -1004,6 +1006,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     // Tidy up
     [URL release];
     [fileType release];
+    
+    // UI
+    [[self windowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
     
     // Perform callback. Does nothing if callback is nil
     [callback setArgument:&didSave atIndex:3];
