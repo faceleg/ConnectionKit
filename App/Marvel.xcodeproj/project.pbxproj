@@ -80,14 +80,6 @@
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
-				3C1D06BB0D5D67B800782A95 /* PBXTargetDependency */,
-				3C1D06BD0D5D67BC00782A95 /* PBXTargetDependency */,
-				3C1D06C50D5D67DA00782A95 /* PBXTargetDependency */,
-				3C1D06B90D5D67B400782A95 /* PBXTargetDependency */,
-				3C1D06C30D5D67DA00782A95 /* PBXTargetDependency */,
-				3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */,
-				3C1D06C90D5D67DA00782A95 /* PBXTargetDependency */,
-				3C8B329B0DC632A1001405AD /* PBXTargetDependency */,
 				3C1D06CB0D5D67DA00782A95 /* PBXTargetDependency */,
 				3C095C090D5D282F00DE6F62 /* PBXTargetDependency */,
 				3C095C0B0D5D283200DE6F62 /* PBXTargetDependency */,
@@ -1048,55 +1040,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = URLSource;
 		};
-		3C1D06B80D5D67B400782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06850D5D66B800782A95 /* HTMLSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = HTMLSource;
-		};
-		3C1D06BA0D5D67B800782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06610D5D667C00782A95 /* DeliciousSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = DeliciousSource;
-		};
-		3C1D06BC0D5D67BC00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D066A0D5D668800782A95 /* FeedSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = FeedSource;
-		};
-		3C1D06C20D5D67DA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D068E0D5D66C700782A95 /* ImageSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = ImageSource;
-		};
-		3C1D06C40D5D67DA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06730D5D669800782A95 /* FileSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = FileSource;
-		};
-		3C1D06C60D5D67DA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06A00D5D66DD00782A95 /* RichTextSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = RichTextSource;
-		};
-		3C1D06C80D5D67DA00782A95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06A90D5D66E700782A95 /* URLSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = URLSource;
-		};
 		3C1D06CA0D5D67DA00782A95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -1347,13 +1290,6 @@
 			containerPortal = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = VideoSource;
-		};
-		3C8B329A0DC632A1001405AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1D06970D5D66D200782A95 /* VideoSource.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = VideoSource;
 		};
 		3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */ = {
@@ -6482,41 +6418,6 @@
 			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
 			targetProxy = 3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */;
 		};
-		3C1D06B90D5D67B400782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = HTMLSource;
-			targetProxy = 3C1D06B80D5D67B400782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06BB0D5D67B800782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DeliciousSource;
-			targetProxy = 3C1D06BA0D5D67B800782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06BD0D5D67BC00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FeedSource;
-			targetProxy = 3C1D06BC0D5D67BC00782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06C30D5D67DA00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ImageSource;
-			targetProxy = 3C1D06C20D5D67DA00782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06C50D5D67DA00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FileSource;
-			targetProxy = 3C1D06C40D5D67DA00782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06C70D5D67DA00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RichTextSource;
-			targetProxy = 3C1D06C60D5D67DA00782A95 /* PBXContainerItemProxy */;
-		};
-		3C1D06C90D5D67DA00782A95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = URLSource;
-			targetProxy = 3C1D06C80D5D67DA00782A95 /* PBXContainerItemProxy */;
-		};
 		3C1D06CB0D5D67DA00782A95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DownloadIndex;
@@ -6606,11 +6507,6 @@
 			isa = PBXTargetDependency;
 			target = 3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */;
 			targetProxy = 3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */;
-		};
-		3C8B329B0DC632A1001405AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VideoSource;
-			targetProxy = 3C8B329A0DC632A1001405AD /* PBXContainerItemProxy */;
 		};
 		3C96ADF10CA074A900C5249F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
