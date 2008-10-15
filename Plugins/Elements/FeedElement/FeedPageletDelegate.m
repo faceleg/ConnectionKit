@@ -36,6 +36,10 @@
 
 #import "FeedPageletDelegate.h"
 
+
+#define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
+
+
 // LocalizedStringInThisBundle(@"example no.", "String_On_Page_Template- followed by a number")
 // LocalizedStringInThisBundle(@"Please specify the URL of the feed using the Inspector.", "String_On_Page_Template")
 // LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item")
@@ -167,6 +171,128 @@
 			*docType = KTXHTMLTransitionalDocType;
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            kNetNewsWireString,	// from NetNewsWire
+            @"WebURLsWithTitlesPboardType",
+            @"BookmarkDictionaryListPboardType",
+            NSURLPboardType,	// Apple URL pasteboard type
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    NSPasteboard *pboard = [sender draggingPasteboard];
+	NSArray *theArray = nil;
+    
+	if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
+        && nil != (theArray = [pboard propertyListForType:kNetNewsWireString]) )
+	{
+		return [theArray count];
+	}
+	return 1;	// can't find any multiplicity
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
+		&& nil != [pboard propertyListForType:kNetNewsWireString])
+	{
+		return KTSourcePriorityIdeal;	// Yes, it's really a feed, from NNW
+	}
+    
+	// Check to make sure it's not file: or feed:
+	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
+	NSString *scheme = [extractedURL scheme];
+	if ([scheme isEqualToString:@"feed"])
+	{
+		return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
+	}
+	if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
+	{
+		NSString *extension = [[[extractedURL path] pathExtension] lowercaseString];
+		if ([extension isEqualToString:@"xml"]
+			|| [extension isEqualToString:@"rss"]
+			|| [extension isEqualToString:@"rdf"]
+			|| [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
+		{
+			return KTSourcePriorityIdeal;
+		}
+	}
+    
+	// Otherwise, it doesn't look like it's a feed, so reject
+	return KTSourcePriorityNone;
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+    BOOL result = NO;
+    
+    NSString *feedURLString = nil;
+    NSString *feedTitle= nil;
+	NSString *pageURLString = nil;
+    
+    NSArray *orderedTypes = [self supportedDragTypes];
+    
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+	
+    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    
+    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
+    {
+        NSArray *arrayFromData = [pboard propertyListForType:@"BookmarkDictionaryListPboardType"];
+        NSDictionary *objectInfo = [arrayFromData objectAtIndex:dragIndex];
+        feedURLString = [objectInfo valueForKey:@"URLString"];
+        feedTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
+    }
+    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
+    {
+        NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
+        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
+        feedURLString = [urlStringArray objectAtIndex:dragIndex];
+        feedTitle = [urlTitleArray objectAtIndex:dragIndex];
+    }
+    else if ( [bestType isEqualToString:kNetNewsWireString] )
+    {
+        NSArray *arrayFromData = [pboard propertyListForType:kNetNewsWireString];
+        NSDictionary *firstFeed = [arrayFromData objectAtIndex:dragIndex];
+        feedURLString = [firstFeed objectForKey:@"sourceRSSURL"];
+		pageURLString = [firstFeed objectForKey:@"sourceHomeURL"];
+        feedTitle = [firstFeed objectForKey:@"sourceName"];
+    }
+    else if ( [bestType isEqualToString:NSURLPboardType] )		// only one here
+    {
+		NSURL *url = [NSURL URLFromPasteboard:pboard];
+		feedURLString = [url absoluteString];
+		// Note: no title available from this
+    }
+    
+    if ( nil != feedURLString )
+    {
+        [aDictionary setValue:feedURLString forKey:kKTDataSourceFeedURLString];
+        if ( nil != feedTitle )
+        {
+            [aDictionary setValue:feedTitle forKey:kKTDataSourceTitle];
+        }
+		if (nil != pageURLString)	// only shows up on NNW drags
+		{
+			[aDictionary setValue:feedURLString forKey:kKTDataSourceURLString];
+		}
+        result = YES;
+    }
+    
+    return result;
 }
 
 @end
