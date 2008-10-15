@@ -500,15 +500,6 @@
 	return document;
 }
 
-
-#pragma mark -
-
-- (KTDocument *)lastSavedDocument
-{
-	NSLog(@"!!WARNING!! -lastSavedDocument called; please re-enable -setLastSavedDocument calls elsewhere in the app.");
-	return myLastSavedDocumentWeakRef;
-}
-
 #pragma mark -
 #pragma mark Document List
 

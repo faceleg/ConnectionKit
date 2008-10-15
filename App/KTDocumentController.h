@@ -19,8 +19,6 @@
 	
     @private
 	NSMutableArray *myDocumentsAwaitingBackup;
-    
-    KTDocument *myLastSavedDocumentWeakRef;
 }
 
 - (IBAction)showDocumentPlaceholderWindow:(id)sender;
