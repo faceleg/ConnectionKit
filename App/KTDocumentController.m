@@ -83,6 +83,21 @@
 }
 
 #pragma mark -
+#pragma mark Document placeholder window
+
+- (IBAction)showDocumentPlaceholderWindow:(id)sender
+{
+    if (gLicenseViolation)		// license violation dialog should open, not the new/open
+    {
+        [[KSRegistrationController sharedController] showWindow:@"license"];		// string is just a tag for the source of this
+    }
+    else
+    {
+		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
+    }
+}
+
+#pragma mark -
 #pragma mark Creating New Documents
 
 - (IBAction)newDocument:(id)sender
@@ -299,35 +314,6 @@
     return result;
 }
     
-#pragma mark -
-
-- (void)noteNewRecentDocument:(NSDocument *)aDocument
-{
-	// By default, NSDocument tries to register itself even if it's not in the documents list.
-	if ([[self documents] containsObjectIdenticalTo:aDocument])
-	{
-		BOOL noteDocument = ![aDocument isKindOfClass:[KTPluginInstaller class]];
-		
-		if ([aDocument isKindOfClass:[KTDocument class]])
-		{
-			// we override here to prevent sample sites from being added to list
-			NSURL *documentURL = [aDocument fileURL];
-			NSString *documentPath = [documentURL path];
-			
-			NSString *samplesPath = [[NSBundle mainBundle] bundlePath];
-			if ([documentPath hasPrefix:samplesPath])
-			{
-				noteDocument = NO;
-			}
-		}
-		
-		if (noteDocument)
-		{
-			[super noteNewRecentDocument:aDocument];
-		}
-	}
-}
-
 - (IBAction)newDocShowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Replacing_the_Home_Page_with_an_alternative_page_type"];		// HELPSTRING
@@ -340,6 +326,48 @@
 }
 
 #pragma mark -
+#pragma mark Document Closing
+
+/*  Normally, if there are 2 or more edited docs open, NSDocumentController asks the user what they want to do.
+ *  We override this method to jump straight to asking each individual doc to close.
+ */
+- (void)reviewUnsavedDocumentsWithAlertTitle:(NSString *)title
+                                 cancellable:(BOOL)cancellable
+                                    delegate:(id)delegate
+                        didReviewAllSelector:(SEL)didReviewAllSelector
+                                 contextInfo:(void *)contextInfo
+{
+    // Act as if the user had chosen "Review..."
+    if (delegate)
+    {
+        BOOL result = NO;
+        
+        NSInvocation *callback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:didReviewAllSelector]];
+        [callback setTarget:delegate];
+        [callback setSelector:didReviewAllSelector];
+        [callback setArgument:&self atIndex:2];                         // documentController:
+        [callback setArgument:&result atIndex:3];                       // didReviewAll:
+        if (contextInfo) [callback setArgument:&contextInfo atIndex:4]; // contextInfo:
+        
+        [callback invoke];
+    }
+    
+    [self closeAllDocumentsWithDelegate:self didCloseAllSelector:@selector(documentController:didCloseAll:contextInfo:) contextInfo:NULL];
+}
+
+/*  The user tried to quit, and in response, all documents tried to close themselves. If that was successful and there are now no edited
+ *  documents open, we can quit.
+ */
+- (void)documentController:(NSDocumentController *)docController didCloseAll:(BOOL)didCloseAll contextInfo:(void *)contextInfo
+{
+    if (didCloseAll && ![self hasEditedDocuments])
+    {
+        [NSApp terminate:self];
+    }
+}
+
+#pragma mark -
+#pragma mark Other
 
 - (Class)documentClassForType:(NSString *)documentTypeName
 {
@@ -582,18 +610,33 @@
 }
 
 #pragma mark -
-#pragma mark Document placeholder window
+#pragma mark Recent Documents
 
-- (IBAction)showDocumentPlaceholderWindow:(id)sender
+- (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
-    if (gLicenseViolation)		// license violation dialog should open, not the new/open
-    {
-        [[KSRegistrationController sharedController] showWindow:@"license"];		// string is just a tag for the source of this
-    }
-    else
-    {
-		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
-    }
+	// By default, NSDocument tries to register itself even if it's not in the documents list.
+	if ([[self documents] containsObjectIdenticalTo:aDocument])
+	{
+		BOOL noteDocument = ![aDocument isKindOfClass:[KTPluginInstaller class]];
+		
+		if ([aDocument isKindOfClass:[KTDocument class]])
+		{
+			// we override here to prevent sample sites from being added to list
+			NSURL *documentURL = [aDocument fileURL];
+			NSString *documentPath = [documentURL path];
+			
+			NSString *samplesPath = [[NSBundle mainBundle] bundlePath];
+			if ([documentPath hasPrefix:samplesPath])
+			{
+				noteDocument = NO;
+			}
+		}
+		
+		if (noteDocument)
+		{
+			[super noteNewRecentDocument:aDocument];
+		}
+	}
 }
 
 #pragma mark -
