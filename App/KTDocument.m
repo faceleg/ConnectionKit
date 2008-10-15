@@ -1312,14 +1312,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         if ( [fm fileExistsAtPath:originalPath] )
         {			
             NSString *backupPath = [anotherURL path];
-            if ( nil != backupPath )
+            if (backupPath)
             {
                 BOOL okToProceed = YES;
                 
                 // delete old backup first
-                if ( [fm fileExistsAtPath:backupPath] )
+                if ([fm fileExistsAtPath:backupPath])
                 {
-                    (void) [fm removeFileAtPath:backupPath handler:self];	// ignore error removing
+                    [fm removeFileAtPath:backupPath handler:self];	// ignore error removing
                 }
                 
                 // make sure the directory exists
@@ -1327,11 +1327,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                 NSError *localError = nil;
                 okToProceed = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
 
-                if ( okToProceed )
+                if (okToProceed)
                 {
-                    [[self windowController] beginSheetWithStatus:NSLocalizedString(@"Creating backup\\U2026","Message title when backuping up doc")
-                                                            image:nil];
-                    
                     // grab the date
                     NSDate *now = [NSDate date];
                     
@@ -1346,9 +1343,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                               now, NSFileModificationDate,
                                               nil];
                     (void)[fm changeFileAttributes:dateInfo atPath:backupPath];
-                    
-                    
-                    [[self windowController] endSheet];
                 }
             }
         }

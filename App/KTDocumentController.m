@@ -644,36 +644,33 @@
  */
 - (void)documentAwaitingBackupWillSave:(NSNotification *)notification
 {
-    if ([NSThread isMainThread])
+    KTDocument *document = [notification object];
+    OBASSERT(document);
+    
+    int backupOrSnapshotOnOpening = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
+    switch (backupOrSnapshotOnOpening)
     {
-        KTDocument *document = [notification object];
-        OBASSERT(document);
-            
-        int backupOrSnapshotOnOpening = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
-        switch ( backupOrSnapshotOnOpening )
+        case KTSnapshotOnOpening:
         {
-            case KTSnapshotOnOpening:
+            if (![document backupToURL:[document snapshotURL]])
             {
-                if ( ![document backupToURL:[document snapshotURL]] )
-                {
-                    NSLog(@"warning: unable to create snapshot of document %@", [[document fileURL] path]);
-                }			
-                break;
-            }
-            case KTBackupOnOpening:
-            {
-                if ( ![document backupToURL:[document backupURL]] )
-                {
-                    NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
-                }			
-                break;
-            }
-            default:
-                break;
+                NSLog(@"warning: unable to create snapshot of document %@", [[document fileURL] path]);
+            }			
+            break;
         }
-        
-        [self removeDocumentAwaitingBackup:document];
+        case KTBackupOnOpening:
+        {
+            if (![document backupToURL:[document backupURL]])
+            {
+                NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
+            }			
+            break;
+        }
+        default:
+            break;
     }
+    
+    [self removeDocumentAwaitingBackup:document];
 }
 
 @end
