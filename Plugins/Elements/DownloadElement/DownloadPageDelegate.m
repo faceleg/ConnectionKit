@@ -277,4 +277,82 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Data Source
+
++ (NSArray *)supportedDragTypes
+{
+    return [NSArray arrayWithObjects:
+            NSFilenamesPboardType,
+            nil];
+}
+
++ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
+{
+    NSPasteboard *pboard = [sender draggingPasteboard];
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		return [fileNames count];
+	}
+	else
+	{
+		return 1;
+	}
+}
+
++ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
+{
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    [pboard types];
+    
+	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	{
+		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		if (dragIndex < [fileNames count])
+		{
+			NSString *fileName = [fileNames objectAtIndex:dragIndex];
+			if ( nil != fileName )
+			{
+				NSString *aUTI = [NSString UTIForFileAtPath:fileName];	// takes account as much as possible
+				
+				if ( [NSString UTI:aUTI conformsToUTI:(NSString *)kUTTypeAppleProtectedMPEG4Audio] )
+				{
+					return KTSourcePriorityNone;	// disallow protected audio; don't try to play as audio
+				}
+			}
+		}
+		else
+		{
+			return KTSourcePriorityNone;	// no actual files
+		}
+	}
+	return KTSourcePriorityMinimum;		// For a truly generic file.
+}
+
++ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
+              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+                       atIndex:(unsigned)dragIndex;
+{
+    BOOL result = NO;
+    NSArray *orderedTypes = [self supportedDragTypes];
+    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    
+    if ( [bestType isEqualToString:NSFilenamesPboardType] )
+    {
+        NSArray *arrayFromData = [pboard propertyListForType:NSFilenamesPboardType];
+        if (dragIndex < [arrayFromData count])
+        {
+            NSString *filePath = [arrayFromData objectAtIndex:dragIndex];
+            
+            [aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
+            [aDictionary setValue:[[NSFileManager defaultManager] resolvedAliasPath:filePath]
+                           forKey:kKTDataSourceFilePath];
+            result = YES;
+        }
+    }
+	return result;
+}
+
 @end
