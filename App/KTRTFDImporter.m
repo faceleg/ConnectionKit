@@ -34,7 +34,7 @@
 	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
-		return [NSString stringWithFormat:@"Unable to convert %@ to editable HTML.", snippet];
+		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert %@ to editable HTML.", @""), snippet];
 	}
 	
 	NSString *result = [self processDOMDocument:aDOMDocument basePath:@"" /* What should be specified here? */ requestor:anObject];
@@ -46,7 +46,7 @@
 	NSAttributedString *attr = [NSAttributedString attributedStringWithURL:[NSURL fileURLWithPath:aPath] documentAttributes:dict];
 	if ( nil == attr )
 	{
-		return [NSString stringWithFormat:@"Unable to read document \"%@\".", [aPath lastPathComponent]];
+		return [NSString stringWithFormat:NSLocalizedString(@"Unable to read document \"%@\".", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
 	}
 
 	NSString *snippet = [attr standardSnippet];
@@ -54,7 +54,7 @@
 	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
-		return [NSString stringWithFormat:@"Unable to convert document %@ to HTML.", [aPath lastPathComponent]];
+		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert document %@ to HTML.", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
 	}
 
 	NSString *result = [self processDOMDocument:aDOMDocument basePath: aPath requestor:anObject];
