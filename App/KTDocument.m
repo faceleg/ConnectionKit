@@ -909,16 +909,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)saveDocumentAs:(id)sender
-{
-	LOG((@"========= beginning Save As... ========="));
-// FIXME: the prompt for the panel should really be Save As, not Create
-	//[self saveAllContexts]; // could be autosaveDocument
-	//[self autosaveDocument:nil];
-	
-	[super saveDocumentAs:sender];
-}
-
 - (void)cleanupBeforePublishing
 {
 	[[[self windowController] webViewController] commitEditing];

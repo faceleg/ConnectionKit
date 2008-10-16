@@ -178,7 +178,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 + (BOOL) coreImageAccelerated;
 + (BOOL) fastEnoughProcessor;
 
-- (KTDocument *)documentWithID:(NSString *)anID;
 - (KTDocument *)currentDocument;
 
 - (IBAction)openSampleDocument:(id)sender;

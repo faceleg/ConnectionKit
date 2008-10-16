@@ -34,7 +34,6 @@
 	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
-		// FIXME: this error string could be localized
 		return [NSString stringWithFormat:@"Unable to convert %@ to editable HTML.", snippet];
 	}
 	
@@ -47,7 +46,6 @@
 	NSAttributedString *attr = [NSAttributedString attributedStringWithURL:[NSURL fileURLWithPath:aPath] documentAttributes:dict];
 	if ( nil == attr )
 	{
-		// FIXME: this error string could be localized
 		return [NSString stringWithFormat:@"Unable to read document \"%@\".", [aPath lastPathComponent]];
 	}
 
@@ -56,7 +54,6 @@
 	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
-		// FIXME: this error string could be localized
 		return [NSString stringWithFormat:@"Unable to convert document %@ to HTML.", [aPath lastPathComponent]];
 	}
 

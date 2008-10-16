@@ -641,7 +641,7 @@
 	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
 	if ([params count] > 2)
 	{
-		NSLog(@"resourcepath: usage [[ resourcepath resource.keyPath page.keyPath (OPTIONAL) ]]");
+		NSLog(@"resourcepath: usage [[resourcepath resource.keyPath (page.keyPath)]]");
 	}
 	else
     {
@@ -652,7 +652,6 @@
             page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
 			
         }
-// FIXME: We should either find the resource path relative to this page, or remove the option to do so.
         
         // Where is the resource file on disk?
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];

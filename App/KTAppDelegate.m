@@ -1721,28 +1721,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #endif
 
 
-- (KTDocument *)documentWithID:(NSString *)anID
-{
-	OBPRECONDITION(anID);	OBPRECONDITION(![anID isEmptyString]);
-	
-    NSEnumerator *e = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
-    KTDocument *document;
-
-    while ( ( document = [e nextObject] ) )
-    {
-// FIXME: it would be better to not have KTPluginInstallers added to sharedDocumentController
-		if ( [document isKindOfClass:[KTDocument class]] )
-		{
-			if ([anID isEqualToString:[[document documentInfo] siteID]])
-			{
-				return document;
-			}
-		}
-    }
-
-    return nil;
-}
-
 /*!	Utility method for bindings. If we aren't PNG (or nil), then we're JPEG. */
 - (BOOL)preferredImageFormatIsJPEG
 {
@@ -2164,40 +2142,3 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 @end
-
-// FIXME: apparently something was displaying a KTStoredArray in a tableview -- debug table?
-// KTStoredArray is now a deprecated class
-
-//#import "KTStoredArray.h"
-//
-//@implementation KTStoredArray ( TableDataSource )
-//
-//- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
-//{
-//	NSString *result = nil;
-////	id obj = [[self storedArray] objectAtIndex:rowIndex];
-//	id obj = [self objectAtIndex:rowIndex];
-//	if ([obj respondsToSelector:@selector(objectForKey:)])
-//	{
-//		NSString *ident = [aTableColumn identifier];
-//		unsigned int colNum = [ident intValue] - 1; // 0 or 1 or 2...
-//		NSArray *allValues = [obj allValues];
-//		if (colNum < [allValues count])
-//		{
-//			result = [[[allValues objectAtIndex:colNum] description] condenseWhiteSpace];
-//		}
-//	}
-//	else
-//	{
-//		result = [obj description];
-//	}
-//	return result;
-//}
-//
-//- (int)numberOfRowsInTableView:(NSTableView *)inTableView
-//{
-////	return [[self storedArray] count];
-//	return [self count];
-//}
-//
-//@end

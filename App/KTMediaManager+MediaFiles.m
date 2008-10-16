@@ -497,8 +497,6 @@
     static NSString *sITunesRoot = nil;
 	if (!sITunesRoot)
 	{
-		// FIXME: the defaults key used here was determined empirically and could break!
-		// FIXME: This could be very slow to resolve if this points who-knows-where.  And it doesn't save the alias back if it's changed. 
 		NSDictionary *iTunesDefaults = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.iTunes"];
 		NSString *musicFolderLocationKey = @"alis:11345:Music Folder Location";
 		NSData *aliasData = [iTunesDefaults valueForKey:musicFolderLocationKey];

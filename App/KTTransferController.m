@@ -921,9 +921,6 @@ static NSArray *sReservedNames = nil;
         
         
         // Upload sitemap if needed
-		//
-		//	FIXME: THIS REALLY SHOULD BE DONE ONLY AFTER SUCCESS OF EVERYTHING ELSE; RIGHT NOW IT HAPPENS ASYNCHRONOUSLY AT THE START.
-		//
 		if ([self where] != kGeneratingRemoteExport)
 		{
 			[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
@@ -1120,9 +1117,6 @@ if ([self where] == kGeneratingRemoteExport) {
         
         
         // Upload sitemap if needed
-		//
-		//	FIXME: THIS REALLY SHOULD BE DONE ONLY AFTER SUCCESS OF EVERYTHING ELSE; RIGHT NOW IT HAPPENS ASYNCHRONOUSLY AT THE START.
-		//
 		if ([self where] != kGeneratingRemoteExport)
 		{
 			[self performSelectorOnMainThread:@selector(uploadGoogleSiteMapIfNeeded) withObject:nil waitUntilDone:YES];
