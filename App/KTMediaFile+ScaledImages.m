@@ -135,8 +135,8 @@
 	
     
     // Sharpen if necessary
-	id sharpening = [properties objectForKey:@"sharpeningFactor"];	// allow NSNumber of NSString
-	if (sharpening && [sharpening floatValue] > 0.0)
+	id sharpening = [properties objectForKey:@"sharpeningFactor"];	// allow NSNumber or NSString
+	if (sharpening && [sharpening floatValue] > 0.0 && scaledImage != unscaledImage)
 	{
 		scaledImage = [scaledImage sharpenLuminanceWithFactor:[sharpening floatValue]];
 	}

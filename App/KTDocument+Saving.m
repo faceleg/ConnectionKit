@@ -53,11 +53,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 // NSLocalizedString(@"Pages", "Quick Look preview sticky-note text");
 
 
-// TODO: change these into defaults
-//#define FIRST_AUTOSAVE_DELAY 3
-//#define SECOND_AUTOSAVE_DELAY 60
-
-
 @interface KTDocument (PropertiesPrivate)
 - (void)copyDocumentDisplayPropertiesToModel;
 @end
