@@ -11,26 +11,6 @@
 
 @implementation KTDocViewController
 
-- (void)dealloc
-{
-    [self setView:nil]; // Removes us from responder chain and releases view
-    
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma mark View
-
-- (NSView *)view { return view; }
-
-- (void)setView:(NSView *)aView
-{
-    // Store view
-	[aView retain];
-	[view release];
-	view = aView;
-}
-
 #pragma mark -
 #pragma mark Controller Chain
 

@@ -6,7 +6,7 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "KSViewController.h"
 
 #import "KTDocumentControllerChain.h"
 
@@ -14,19 +14,13 @@
 @class KTDocument, KTDocWindowController;
 
 
-@interface KTDocViewController : NSResponder <KTDocumentControllerChain>
+@interface KTDocViewController : KSViewController <KTDocumentControllerChain>
 {
-    IBOutlet NSView  *view;
-    
-    @private
+@private
     id <KTDocumentControllerChain>  _parentController;  // All weak refs
     KTDocWindowController           *_windowController;
     KTDocument                      *_document;
 }
-
-#pragma mark View
-- (NSView *)view;
-- (void)setView:(NSView *)view;
 
 #pragma mark Controller Chain
 - (id <KTDocumentControllerChain>)parentController;
