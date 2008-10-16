@@ -47,9 +47,52 @@
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
     [anInvocation retainArguments];
-    [anInvocation performSelectorOnMainThread:@selector(invokeWithTarget:)
-                                   withObject:_target
-                                waitUntilDone:YES];
+    
+    [anInvocation performSelectorOnMainThread:@selector(invokeWithTargetAndReportExceptions:)
+                                    withObject:_target
+                                 waitUntilDone:YES];
 }
 
 @end
+
+
+@implementation NSInvocation (KSThreadProxyAdditions)
+
+/*  We perform our own exception handling as by default -performSelectorOnMainThread:
+ *  does nothing more than log exceptions.
+ */
+- (void)invokeWithTargetAndReportExceptions:(id)target
+{
+	@try
+    {
+        [self invokeWithTarget:target];
+        [self retainArguments];
+    }
+    @catch (NSException *exception)
+    {
+        [NSApp reportException:exception];
+    }
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation NSObject (KSThreadProxy)
+
+- (id)proxyForThread:(NSThread *)thread
+{
+    KSThreadProxy *result = [[KSThreadProxy alloc] initWithTarget:self thread:thread];
+    return [result autorelease];
+}
+
+- (id)proxyForMainThread
+{
+    return [self proxyForThread:nil];
+}
+
+@end
+
+

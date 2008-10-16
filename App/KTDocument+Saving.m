@@ -89,6 +89,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 // Quick Look
 - (void)startGeneratingQuickLookThumbnail;
 - (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
+- (NSImage *)_quickLookThumbnail;
 - (NSString *)quickLookPreviewHTML;
 
 @end
@@ -824,7 +825,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
         
     // Save the thumbnail to disk
-    NSImage *thumbnail = [self performSelectorOnMainThreadAndReturnResult:@selector(_quickLookThumbnail)];
+    NSImage *thumbnail = [[self proxyForMainThread] _quickLookThumbnail];
     if (thumbnail)
     {
         NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"thumbnail.png" isDirectory:NO];

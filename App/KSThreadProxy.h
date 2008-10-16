@@ -20,3 +20,10 @@
 - (id)initWithTarget:(id)target;
 
 @end
+
+
+@interface NSObject (KSThreadProxy)
+- (id)proxyForThread:(NSThread *)thread;
+- (id)proxyForMainThread;
+@end
+

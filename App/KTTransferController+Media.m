@@ -9,8 +9,19 @@
 #import "KTTransferController+Internal.h"
 #import "KTMediaFileUpload.h"
 
+#import "KSThreadProxy.h"
+
 #import "NSObject+Karelia.h"
 #import "NSThread+Karelia.h"
+
+
+@interface KTTransferController (MediaPrivate)
+- (NSDictionary *)publishingInfoForMediaFile:(KTMediaFileUpload *)mediaFileUpload;
+@end
+
+
+#pragma mark -
+
 
 @implementation KTTransferController (Media)
 
@@ -23,8 +34,7 @@
 
 - (void)threadedUploadMediaFile:(KTMediaFileUpload *)mediaFileUpload
 {
-	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForMediaFile:)
-                                                                         withObject:mediaFileUpload];
+	NSDictionary *publishingInfo = [[self proxyForMainThread] publishingInfoForMediaFile:mediaFileUpload];
     
     
     if (publishingInfo)
@@ -35,11 +45,11 @@
         
         // Upload the file
         NSString *sourcePath = [publishingInfo objectForKey:@"sourcePath"];
-        if (sourcePath && ![sourcePath isEqualToString:@""] )
+        if (sourcePath && ![sourcePath isEqualToString:@""])
         {
             [self uploadFile:sourcePath toFile:uploadPath];
 			
-			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
+			if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue])
 			{
 				[myController setPermissions:myPagePermissions forFile:uploadPath];
 			}

@@ -22,6 +22,8 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableDictionary+Karelia.h"
 
+#import "KSThreadProxy.h"
+
 #import "assertions.h"
 
 
@@ -405,8 +407,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	
 	// Notify the main thread that we're done
-	[self performSelectorOnMainThreadAndReturnResult:@selector(didGenerateCustomIcon:forPage:)
-										  withObject:result withObject:page];
+	[[self proxyForMainThread] didGenerateCustomIcon:result forPage:page];
 	
 	// Tidy up
 	[result release];

@@ -58,6 +58,7 @@
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KSCircularProgressCell.h"
+#import "KSThreadProxy.h"
 #import "KSUtilities.h"
 
 #import "KTPage.h"
@@ -110,9 +111,13 @@ static NSArray *sReservedNames = nil;
 
 @interface KTTransferController (Private)
 
+- (NSDictionary *)publishingInfoForPage:(KTAbstractPage *)page;
+
 - (void)threadedPrepareHostForUpload;
+- (NSArray *)pagesToParse;
 
 - (void)uploadDesign:(KTDesign *)design;
+- (NSDictionary *)siteDesignPublishingInfo;
 - (void)clearUploadedDesigns;
 
 - (void)threadedUploadResources:(NSSet *)resources;
@@ -511,8 +516,7 @@ static NSArray *sReservedNames = nil;
 - (void)threadedUploadPage:(KTAbstractPage *)page onlyUploadStalePages:(BOOL)staleOnly
 {
 	// Fetch the publishing info for the page. Bail if it is not for publishing.
-	NSDictionary *publishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(publishingInfoForPage:)
-																		 withObject:page];
+	NSDictionary *publishingInfo = [[self proxyForMainThread] publishingInfoForPage:page];
 	if (!publishingInfo) return;
     
     
@@ -874,7 +878,7 @@ static NSArray *sReservedNames = nil;
 	
 	
 	// Run through each page, performing the upload & building the list of required resources.
-	NSArray *allPages = [self performSelectorOnMainThreadAndReturnResult:@selector(pagesToParse)];
+	NSArray *allPages = [[self proxyForMainThread] pagesToParse];
 	@try
 	{
 		NSEnumerator *pagesEnumerator = [allPages objectEnumerator];
@@ -891,7 +895,7 @@ static NSArray *sReservedNames = nil;
 			
 	
 		// Upload the design - in the future there may be more than one - and master.css
-		NSDictionary *designPublishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(siteDesignPublishingInfo)];
+		NSDictionary *designPublishingInfo = [[self proxyForMainThread] siteDesignPublishingInfo];
 		KTDesign *design = [designPublishingInfo objectForKey:@"design"];
 		[self performSelectorOnMainThread:@selector(uploadDesign:) withObject:design waitUntilDone:YES];
 		
@@ -1063,7 +1067,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	
 	
 	// Get the list of all pages in the site. We fetch just stale pages, but that might not catch all stale media
-	NSArray *allPages = [self performSelectorOnMainThreadAndReturnResult:@selector(pagesToParse)];
+	NSArray *allPages = [[self proxyForMainThread] pagesToParse];
 	@try
 	{
 		// Run through each page, performing the upload & building the list of required resources.
@@ -1081,7 +1085,7 @@ if ([self where] == kGeneratingRemoteExport) {
 			
 	
 		// Upload the design if its published version is different to the current one
-		NSDictionary *designPublishingInfo = [self performSelectorOnMainThreadAndReturnResult:@selector(siteDesignPublishingInfo)];
+		NSDictionary *designPublishingInfo = [[self proxyForMainThread] siteDesignPublishingInfo];
 		KTDesign *design = [designPublishingInfo objectForKey:@"design"];
 		if (![[design marketingVersion] isEqualToString:[designPublishingInfo objectForKey:@"versionLastPublished"]])
 		{
@@ -1108,7 +1112,7 @@ if ([self where] == kGeneratingRemoteExport) {
 		
 		
 		// Upload media
-		NSSet *staleMedia = [self performSelectorOnMainThreadAndReturnResult:@selector(staleParsedMediaFileUploads)];
+		NSSet *staleMedia = [[self proxyForMainThread] staleParsedMediaFileUploads];
 		[self threadedUploadMediaFiles:staleMedia];
 				
 		
