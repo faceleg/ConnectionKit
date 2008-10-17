@@ -1262,26 +1262,32 @@ from representedObject */
         {
             [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
         }
-        else if ([[self siteOutlineController] selectedPage] &&
-                 ![[[self siteOutlineController] selectedPage] isRoot])
+        else
         {
-            if ([[[self siteOutlineController] selectedPage] isCollection])
+            NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+            if ([selectedPages count] > 0 && ![selectedPages containsRoot])
             {
-                [menuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
+                if ([selectedPages count] == 1)
+                {
+                    if ([[selectedPages objectAtIndex:0] isCollection])
+                    {
+                        [menuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
+                    }
+                    else
+                    {
+                        [menuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
+                    }
+                }
+                else
+                {
+                    [menuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
+                }
             }
             else
             {
-                [menuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
+                [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
+                return NO;
             }
-        }
-        else if ([[[self siteOutlineController] selectedObjects] count] > 1 &&
-                 ![[[self siteOutlineController] selectedObjects] containsRoot])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
         }
     }
 	

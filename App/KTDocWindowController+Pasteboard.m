@@ -921,7 +921,11 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	
 	
 	// Don't duplicate root
-	OBASSERTSTRING(![selectedPages containsRoot], @"Can't duplicate root page");
+	if ([selectedPages containsRoot])
+    {
+        NSBeep();
+        return;
+    }
 	
 	
 	if ([selectedPages count] > 0)
