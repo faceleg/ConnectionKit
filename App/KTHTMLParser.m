@@ -629,9 +629,8 @@
     return result;
 }
 
-// Following parameters:  (1) key-value path to media or mediaImage object  (2) k-v path to page [optional]
-// If (2) not specified, it's the page itself... but template better be a page
-// Should call resourcePathRelativeTo: on (1) with (2) as the parameter and return the result.
+// Following parameters:  (1) key-value path to media or mediaImage object
+// Should call resourcePathRelativeTo: and return the result.
 
 - (NSString *)resourcepathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
@@ -639,25 +638,17 @@
     
     // Check suitable parameters were supplied
 	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
-	if ([params count] > 2)
+	if ([params count] != 1)
 	{
-		NSLog(@"resourcepath: usage [[resourcepath resource.keyPath (page.keyPath)]]");
+		NSLog(@"resourcepath: usage [[resourcepath resource.keyPath]]");
 	}
 	else
     {
-        // Figure out the correct page
-		KTAbstractPage *page = [self currentPage];
-        if ([params count] > 1)
-        {
-            page = [[self cache] valueForKeyPath:[params objectAtIndex:1]];
-			
-        }
-        
         // Where is the resource file on disk?
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:resourceFilePath relativeToPage:page];
+            result = [self resourceFilePath:resourceFilePath relativeToPage:[self currentPage]];
         }
     }
     

@@ -316,7 +316,7 @@
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 {
 	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];
-	NSCalendarDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
+	NSDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
 	? [self wrappedValueForKey:@"lastModificationDate"]
 	: [self wrappedValueForKey:@"creationDate"];
 	

@@ -207,7 +207,7 @@
 
 /*!	Pass on messages to set modification data of a pagelet to its containing page, who really cares
  */
-- (void)setLastModificationDate:(NSCalendarDate *)value 
+- (void)setLastModificationDate:(NSDate *)value 
 {
 	[[self page] setWrappedValue:value forKey:@"lastModificationDate"];
 }

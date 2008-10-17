@@ -946,7 +946,7 @@ if ([self where] == kGeneratingRemoteExport) {
 			// Put the warning file in there.  This will actually happen first....
 			NSString *infoFileName = NSLocalizedString(@"_EXPORT INFORMATION_.txt", @"obvious warning string for file name, starts with _ for alphabetical sorting");
 			
-			NSString *message = [NSString stringWithFormat:NSLocalizedString(@"This was exported on %@\n\n", @"followed by date"), [NSCalendarDate date]];
+			NSString *message = [NSString stringWithFormat:NSLocalizedString(@"This was exported on %@\n\n", @"followed by date"), [NSDate date]];
 			
 			NSString *remoteSiteURL = [[self associatedDocument] valueForKeyPath:@"documentInfo.hostProperties.remoteSiteURL"];
 			if (nil != remoteSiteURL && ![remoteSiteURL isEqualToString:@""])
