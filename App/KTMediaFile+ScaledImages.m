@@ -332,11 +332,15 @@
  */ 
 - (NSDictionary *)canonicalImagePropertiesForProperties:(NSDictionary *)properties
 {
-	NSMutableDictionary *buffer = [properties mutableCopy];
+	OBPRECONDITION(properties);
+    
+    
+    NSMutableDictionary *buffer = [properties mutableCopy];
 	
 	
 	// Figure the canonical scaling specification
 	KTImageScalingSettings *specifiedScalingSettings = [properties objectForKey:@"scalingBehavior"];
+    OBASSERT(specifiedScalingSettings);
     KTImageScalingSettings *canonicalScalingSettings = [self canonicalScalingSettingsForSettings:specifiedScalingSettings];
     [buffer setObject:canonicalScalingSettings forKey:@"scalingBehavior"];
     
