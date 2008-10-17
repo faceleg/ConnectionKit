@@ -311,6 +311,9 @@
 		27DB82300EA7B94A0099ED9E /* KSProgressPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB822E0EA7B94A0099ED9E /* KSProgressPanel.m */; };
 		27DB82350EA7BA420099ED9E /* KSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB82330EA7BA420099ED9E /* KSViewController.h */; };
 		27DB82360EA7BA420099ED9E /* KSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB82340EA7BA420099ED9E /* KSViewController.m */; };
+		27DB82D50EA8949C0099ED9E /* NSScanner+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAB0D78BE3C00513E70 /* NSScanner+Karelia.m */; };
+		27DB82D80EA894C10099ED9E /* NSDateFormatter+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB82D60EA894C10099ED9E /* NSDateFormatter+Karelia.h */; };
+		27DB82D90EA894C10099ED9E /* NSDateFormatter+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB82D70EA894C10099ED9E /* NSDateFormatter+Karelia.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -742,7 +745,6 @@
 		CEC11AFD0D78BE3D00513E70 /* NSBezierPath+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A950D78BE3C00513E70 /* NSBezierPath+Karelia.m */; };
 		CEC11AFE0D78BE3D00513E70 /* NSBitmapImageRep+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A960D78BE3C00513E70 /* NSBitmapImageRep+Karelia.m */; };
 		CEC11AFF0D78BE3D00513E70 /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A970D78BE3C00513E70 /* NSBundle+Karelia.m */; };
-		CEC11B000D78BE3D00513E70 /* NSCalendarDate+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A980D78BE3C00513E70 /* NSCalendarDate+Karelia.m */; };
 		CEC11B010D78BE3D00513E70 /* NSCharacterSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A990D78BE3C00513E70 /* NSCharacterSet+Karelia.m */; };
 		CEC11B020D78BE3D00513E70 /* NSColor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A9A0D78BE3C00513E70 /* NSColor+Karelia.m */; };
 		CEC11B030D78BE3D00513E70 /* NSData+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A9B0D78BE3C00513E70 /* NSData+Karelia.m */; };
@@ -760,7 +762,6 @@
 		CEC11B0F0D78BE3D00513E70 /* NSMutableDictionary+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA70D78BE3C00513E70 /* NSMutableDictionary+Karelia.m */; };
 		CEC11B100D78BE3D00513E70 /* NSMutableSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA80D78BE3C00513E70 /* NSMutableSet+Karelia.m */; };
 		CEC11B110D78BE3D00513E70 /* NSObject+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AA90D78BE3C00513E70 /* NSObject+Karelia.m */; };
-		CEC11B130D78BE3D00513E70 /* NSScanner+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAB0D78BE3C00513E70 /* NSScanner+Karelia.m */; };
 		CEC11B140D78BE3D00513E70 /* NSSortDescriptor+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAC0D78BE3C00513E70 /* NSSortDescriptor+Karelia.m */; };
 		CEC11B150D78BE3D00513E70 /* NSString-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAD0D78BE3C00513E70 /* NSString-Utilities.m */; };
 		CEC11B160D78BE3D00513E70 /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AAE0D78BE3C00513E70 /* NSString+Karelia.m */; };
@@ -843,7 +844,6 @@
 		CEC11BDA0D78BE5300513E70 /* NSBezierPath+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6D0D78BE5300513E70 /* NSBezierPath+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDB0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6E0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDC0D78BE5300513E70 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B6F0D78BE5300513E70 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BDD0D78BE5300513E70 /* NSCalendarDate+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B700D78BE5300513E70 /* NSCalendarDate+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BDE0D78BE5300513E70 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B710D78BE5300513E70 /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BDF0D78BE5300513E70 /* NSColor+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B720D78BE5300513E70 /* NSColor+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BE00D78BE5300513E70 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B730D78BE5300513E70 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1656,6 +1656,8 @@
 		27DB822E0EA7B94A0099ED9E /* KSProgressPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSProgressPanel.m; path = ../../../Shared/trunk/AppKit/KSProgressPanel.m; sourceTree = "<group>"; };
 		27DB82330EA7BA420099ED9E /* KSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSViewController.h; path = ../../../Shared/trunk/AppKit/KSViewController.h; sourceTree = SOURCE_ROOT; };
 		27DB82340EA7BA420099ED9E /* KSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSViewController.m; path = ../../../Shared/trunk/AppKit/KSViewController.m; sourceTree = SOURCE_ROOT; };
+		27DB82D60EA894C10099ED9E /* NSDateFormatter+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDateFormatter+Karelia.h"; path = "../../../Shared/trunk/Foundation/NSDateFormatter+Karelia.h"; sourceTree = SOURCE_ROOT; };
+		27DB82D70EA894C10099ED9E /* NSDateFormatter+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDateFormatter+Karelia.m"; path = "../../../Shared/trunk/Foundation/NSDateFormatter+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
@@ -2353,7 +2355,6 @@
 		CEC11A950D78BE3C00513E70 /* NSBezierPath+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+Karelia.m"; path = "../../../Shared/trunk/App/NSBezierPath+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A960D78BE3C00513E70 /* NSBitmapImageRep+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep+Karelia.m"; path = "../../../Shared/trunk/App/NSBitmapImageRep+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A970D78BE3C00513E70 /* NSBundle+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Karelia.m"; path = "../../../Shared/trunk/App/NSBundle+Karelia.m"; sourceTree = SOURCE_ROOT; };
-		CEC11A980D78BE3C00513E70 /* NSCalendarDate+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCalendarDate+Karelia.m"; path = "../../../Shared/trunk/App/NSCalendarDate+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A990D78BE3C00513E70 /* NSCharacterSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCharacterSet+Karelia.m"; path = "../../../Shared/trunk/App/NSCharacterSet+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A9A0D78BE3C00513E70 /* NSColor+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+Karelia.m"; path = "../../../Shared/trunk/App/NSColor+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A9B0D78BE3C00513E70 /* NSData+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Karelia.m"; path = "../../../Shared/trunk/App/NSData+Karelia.m"; sourceTree = SOURCE_ROOT; };
@@ -2455,7 +2456,6 @@
 		CEC11B6D0D78BE5300513E70 /* NSBezierPath+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBezierPath+Karelia.h"; path = "../../../Shared/trunk/App/NSBezierPath+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B6E0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBitmapImageRep+Karelia.h"; path = "../../../Shared/trunk/App/NSBitmapImageRep+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B6F0D78BE5300513E70 /* NSBundle+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Karelia.h"; path = "../../../Shared/trunk/App/NSBundle+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		CEC11B700D78BE5300513E70 /* NSCalendarDate+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCalendarDate+Karelia.h"; path = "../../../Shared/trunk/App/NSCalendarDate+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B710D78BE5300513E70 /* NSCharacterSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCharacterSet+Karelia.h"; path = "../../../Shared/trunk/App/NSCharacterSet+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B720D78BE5300513E70 /* NSColor+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+Karelia.h"; path = "../../../Shared/trunk/App/NSColor+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B730D78BE5300513E70 /* NSData+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Karelia.h"; path = "../../../Shared/trunk/App/NSData+Karelia.h"; sourceTree = SOURCE_ROOT; };
@@ -2664,8 +2664,6 @@
 				CEC11A930D78BE3C00513E70 /* NSAttributedString+Karelia.m */,
 				CEC11B6F0D78BE5300513E70 /* NSBundle+Karelia.h */,
 				CEC11A970D78BE3C00513E70 /* NSBundle+Karelia.m */,
-				CEC11B700D78BE5300513E70 /* NSCalendarDate+Karelia.h */,
-				CEC11A980D78BE3C00513E70 /* NSCalendarDate+Karelia.m */,
 				CEC11B710D78BE5300513E70 /* NSCharacterSet+Karelia.h */,
 				CEC11A990D78BE3C00513E70 /* NSCharacterSet+Karelia.m */,
 				CEC11B730D78BE5300513E70 /* NSData+Karelia.h */,
@@ -2711,6 +2709,8 @@
 				CEC11B690D78BE5300513E70 /* NSArray+Karelia.h */,
 				CEC11A910D78BE3C00513E70 /* NSArray+Karelia.m */,
 				270FB8FB0E01C2AC0076FCA0 /* Foundation+KSAdditions.h */,
+				27DB82D60EA894C10099ED9E /* NSDateFormatter+Karelia.h */,
+				27DB82D70EA894C10099ED9E /* NSDateFormatter+Karelia.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -4717,7 +4717,6 @@
 				CEC11BDA0D78BE5300513E70 /* NSBezierPath+Karelia.h in Headers */,
 				CEC11BDB0D78BE5300513E70 /* NSBitmapImageRep+Karelia.h in Headers */,
 				CEC11BDC0D78BE5300513E70 /* NSBundle+Karelia.h in Headers */,
-				CEC11BDD0D78BE5300513E70 /* NSCalendarDate+Karelia.h in Headers */,
 				CEC11BDE0D78BE5300513E70 /* NSCharacterSet+Karelia.h in Headers */,
 				CEC11BDF0D78BE5300513E70 /* NSColor+Karelia.h in Headers */,
 				CEC11BE00D78BE5300513E70 /* NSData+Karelia.h in Headers */,
@@ -4796,6 +4795,7 @@
 				27DB82290EA7B73C0099ED9E /* KSAlert.h in Headers */,
 				27DB822F0EA7B94A0099ED9E /* KSProgressPanel.h in Headers */,
 				27DB82350EA7BA420099ED9E /* KSViewController.h in Headers */,
+				27DB82D80EA894C10099ED9E /* NSDateFormatter+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6039,7 +6039,6 @@
 				CEC11AFD0D78BE3D00513E70 /* NSBezierPath+Karelia.m in Sources */,
 				CEC11AFE0D78BE3D00513E70 /* NSBitmapImageRep+Karelia.m in Sources */,
 				CEC11AFF0D78BE3D00513E70 /* NSBundle+Karelia.m in Sources */,
-				CEC11B000D78BE3D00513E70 /* NSCalendarDate+Karelia.m in Sources */,
 				CEC11B010D78BE3D00513E70 /* NSCharacterSet+Karelia.m in Sources */,
 				CEC11B020D78BE3D00513E70 /* NSColor+Karelia.m in Sources */,
 				CEC11B030D78BE3D00513E70 /* NSData+Karelia.m in Sources */,
@@ -6057,7 +6056,6 @@
 				CEC11B0F0D78BE3D00513E70 /* NSMutableDictionary+Karelia.m in Sources */,
 				CEC11B100D78BE3D00513E70 /* NSMutableSet+Karelia.m in Sources */,
 				CEC11B110D78BE3D00513E70 /* NSObject+Karelia.m in Sources */,
-				CEC11B130D78BE3D00513E70 /* NSScanner+Karelia.m in Sources */,
 				CEC11B140D78BE3D00513E70 /* NSSortDescriptor+Karelia.m in Sources */,
 				CEC11B150D78BE3D00513E70 /* NSString-Utilities.m in Sources */,
 				CEC11B160D78BE3D00513E70 /* NSString+Karelia.m in Sources */,
@@ -6122,6 +6120,8 @@
 				27DB822A0EA7B73C0099ED9E /* KSAlert.m in Sources */,
 				27DB82300EA7B94A0099ED9E /* KSProgressPanel.m in Sources */,
 				27DB82360EA7BA420099ED9E /* KSViewController.m in Sources */,
+				27DB82D50EA8949C0099ED9E /* NSScanner+Karelia.m in Sources */,
+				27DB82D90EA894C10099ED9E /* NSDateFormatter+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
