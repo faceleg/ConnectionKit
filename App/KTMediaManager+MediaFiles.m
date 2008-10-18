@@ -444,7 +444,7 @@
 			
 		case KTCopyMediaAutomatic:
 			// If it's a piece of iMedia reference rather than copy it
-			if ([[self class] fileConstituesIMedia:path])
+			if ([[self class] fileConstitutesIMedia:path])
 			{
 				result = YES;
 			}
@@ -464,7 +464,7 @@
 
 /*	Determines if the file is considered to be "iMedia"
  */
-+ (BOOL)fileConstituesIMedia:(NSString *)path
++ (BOOL)fileConstitutesIMedia:(NSString *)path
 {
 	//  anything in ~/Movies, ~/Music, or ~/Pictures is considered iMedia.
     //  NB: there appear to be no standard library functions for finding these

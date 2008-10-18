@@ -33,7 +33,7 @@ extern NSString *KTMediaLogDomain;
 
 @interface KTMediaManager (MediaFiles)
 - (BOOL)mediaFileShouldBeExternal:(NSString *)path;
-+ (BOOL)fileConstituesIMedia:(NSString *)path;
++ (BOOL)fileConstitutesIMedia:(NSString *)path;
 @end
 
 
