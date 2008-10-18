@@ -280,19 +280,18 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
     return [NSArray arrayWithObjects:
             NSFilenamesPboardType,
             nil];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard
 {
-    NSPasteboard *pboard = [sender draggingPasteboard];
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
+	if (nil != [pasteboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
 	{
-		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		NSArray *fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
 		return [fileNames count];
 	}
 	else
@@ -301,9 +300,8 @@
 	}
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     [pboard types];
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
@@ -330,18 +328,17 @@
 	return KTSourcePriorityMinimum;		// For a truly generic file.
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex
 {
     BOOL result = NO;
-    NSArray *orderedTypes = [self supportedDragTypes];
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    NSArray *orderedTypes = [self supportedPasteboardTypes];
+    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
     
     if ( [bestType isEqualToString:NSFilenamesPboardType] )
     {
-        NSArray *arrayFromData = [pboard propertyListForType:NSFilenamesPboardType];
+        NSArray *arrayFromData = [pasteboard propertyListForType:NSFilenamesPboardType];
         if (dragIndex < [arrayFromData count])
         {
             NSString *filePath = [arrayFromData objectAtIndex:dragIndex];

@@ -2128,7 +2128,7 @@ from representedObject */
 				[dragDataDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
 				
 				BOOL didPerformDrag;
-				didPerformDrag = [bestSource populateDragDictionary:dragDataDictionary fromDraggingInfo:info atIndex:i];
+				didPerformDrag = [bestSource populateDataSourceDictionary:dragDataDictionary fromPasteboard:[info draggingPasteboard] atIndex:i];
 				NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
 				
 				if ( didPerformDrag && theBundleIdentifier)

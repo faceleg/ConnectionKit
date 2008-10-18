@@ -336,17 +336,17 @@ Break
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
 	return [NSURL KTComponentsSupportedURLPasteboardTypes];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
 {
     return 1;
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)dragIndex
 {
 	KTSourcePriority result = KTSourcePriorityNone;
     
@@ -354,7 +354,7 @@ Break
 	
 	[NSURL getURLs:&URLs
 		 andTitles:NULL
-	fromPasteboard:[draggingInfo draggingPasteboard]
+	fromPasteboard:pasteboard
    readWeblocFiles:YES
 	ignoreFileURLs:YES];
 	
@@ -370,9 +370,9 @@ Break
 	return result;
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex
 {
 	BOOL result = NO;
     
@@ -381,7 +381,7 @@ Break
 	
 	[NSURL getURLs:&URLs
 		 andTitles:&titles
-	fromPasteboard:[draggingInfo draggingPasteboard]
+	fromPasteboard:pasteboard
    readWeblocFiles:YES
 	ignoreFileURLs:YES];
 	

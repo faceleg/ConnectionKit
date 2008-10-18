@@ -424,7 +424,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
     return [NSArray arrayWithObjects:
             WebArchivePboardType,	// drags from safari, includes links and such
@@ -436,14 +436,13 @@
             nil];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
 {
     return 1;
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex;
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex;
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     [pboard types];
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
@@ -480,13 +479,13 @@
     return KTSourcePriorityNone;	// doesn't actually have any image data
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex
 {
 	BOOL result = [KTImageView populateDictionary:aDictionary
-						orderedImageTypesAccepted:[self supportedDragTypes]
-								 fromDraggingInfo:draggingInfo
+						orderedImageTypesAccepted:[self supportedPasteboardTypes]
+                                   fromPasteboard:pasteboard
 											index:dragIndex];
     return result;
 }

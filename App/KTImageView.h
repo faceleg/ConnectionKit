@@ -38,7 +38,7 @@
 + (void)clearCachedIPhotoInfoDict;
 + (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
  orderedImageTypesAccepted:(NSArray *)orderedTypes
-		  fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+            fromPasteboard:(NSPasteboard *)pasteboard
 					 index:(unsigned int)anIndex;
 
 // Accessors

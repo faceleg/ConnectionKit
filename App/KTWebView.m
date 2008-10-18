@@ -338,7 +338,7 @@ TO DO:
 	
 	NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
 	[dragDataDictionary setValue:[sender draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
-	BOOL didPerformDrag = [bestSource populateDragDictionary:dragDataDictionary fromDraggingInfo:sender atIndex:0];
+	BOOL didPerformDrag = [bestSource populateDataSourceDictionary:dragDataDictionary fromPasteboard:[sender draggingPasteboard] atIndex:0];
 	
 	if ( !didPerformDrag )
 	{

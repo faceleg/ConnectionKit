@@ -176,7 +176,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
     return [NSArray arrayWithObjects:
             kNetNewsWireString,	// from NetNewsWire
@@ -186,9 +186,8 @@
             nil];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
 {
-    NSPasteboard *pboard = [sender draggingPasteboard];
 	NSArray *theArray = nil;
     
 	if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
@@ -199,9 +198,8 @@
 	return 1;	// can't find any multiplicity
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)index
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
 		&& nil != [pboard propertyListForType:kNetNewsWireString])
@@ -232,9 +230,9 @@
 	return KTSourcePriorityNone;
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex
 {
     BOOL result = NO;
     
@@ -242,22 +240,21 @@
     NSString *feedTitle= nil;
 	NSString *pageURLString = nil;
     
-    NSArray *orderedTypes = [self supportedDragTypes];
+    NSArray *orderedTypes = [self supportedPasteboardTypes];
     
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
 	
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
     
     if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
     {
-        NSArray *arrayFromData = [pboard propertyListForType:@"BookmarkDictionaryListPboardType"];
+        NSArray *arrayFromData = [pasteboard propertyListForType:@"BookmarkDictionaryListPboardType"];
         NSDictionary *objectInfo = [arrayFromData objectAtIndex:dragIndex];
         feedURLString = [objectInfo valueForKey:@"URLString"];
         feedTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
     }
     else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
     {
-        NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+        NSArray *arrayFromData = [pasteboard propertyListForType:@"WebURLsWithTitlesPboardType"];
         NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
         NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
         feedURLString = [urlStringArray objectAtIndex:dragIndex];
@@ -265,7 +262,7 @@
     }
     else if ( [bestType isEqualToString:kNetNewsWireString] )
     {
-        NSArray *arrayFromData = [pboard propertyListForType:kNetNewsWireString];
+        NSArray *arrayFromData = [pasteboard propertyListForType:kNetNewsWireString];
         NSDictionary *firstFeed = [arrayFromData objectAtIndex:dragIndex];
         feedURLString = [firstFeed objectForKey:@"sourceRSSURL"];
 		pageURLString = [firstFeed objectForKey:@"sourceHomeURL"];
@@ -273,7 +270,7 @@
     }
     else if ( [bestType isEqualToString:NSURLPboardType] )		// only one here
     {
-		NSURL *url = [NSURL URLFromPasteboard:pboard];
+		NSURL *url = [NSURL URLFromPasteboard:pasteboard];
 		feedURLString = [url absoluteString];
 		// Note: no title available from this
     }

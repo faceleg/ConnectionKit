@@ -200,7 +200,7 @@
 	
 	BOOL result = [KTImageView populateDictionary:dataSourceDictionary
 						orderedImageTypesAccepted:acceptedTypes
-								 fromDraggingInfo:draggingInfo
+                                    fromPasteboard:[draggingInfo draggingPasteboard]
 											index:0];	// get info for first item, if multiple
 	[self setDataSourceDictionary:dataSourceDictionary];
 	/*!	General method to populate dictionary of useful information about a dragged image.  Accepts
@@ -307,32 +307,30 @@ the indexed value into NSFilenamesPboardType.
 
 + (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
  orderedImageTypesAccepted:(NSArray *)orderedTypes
-		  fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+            fromPasteboard:(NSPasteboard *)pasteboard
 					 index:(unsigned int)anIndex;
 {
     BOOL result = NO;
 	NSString *UTI = nil;		// set this so we can check later
 	NSData *imageData = nil;
-	
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-	
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+		
+    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
 	
 	BOOL hasiPhotoData = NO;
 	// Check for additional information that iPhoto supplies; build our own cache
 	if (nil == sCachedIPhotoInfoDict
-		&& nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"ImageDataListPboardType"]]
-		&& (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]]) )
+		&& nil != [pasteboard availableTypeFromArray:[NSArray arrayWithObject:@"ImageDataListPboardType"]]
+		&& (nil != [pasteboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]]) )
 	{
 		[self buildCachedIPhotoInfoDictFromImageDataList:
-			[pboard propertyListForType:@"ImageDataListPboardType"]];
+			[pasteboard propertyListForType:@"ImageDataListPboardType"]];
 		hasiPhotoData = YES;
 	}
 	
 	// Get an image, alt text, and linked URL from a drag from Safari/WebKit
 	if ( [bestType isEqualToString:WebArchivePboardType] )
 	{
-		NSData *webArchiveData = [pboard dataForType:WebArchivePboardType];
+		NSData *webArchiveData = [pasteboard dataForType:WebArchivePboardType];
 		WebArchive *webArchive = [[[WebArchive alloc] initWithData:webArchiveData] autorelease];
 		WebResource *resource = [webArchive mainResource];
 		UTI = [NSString UTIForMIMEType:[resource MIMEType]];
@@ -355,7 +353,7 @@ the indexed value into NSFilenamesPboardType.
 			NSURL *imageURL = [resource URL];
 			[aDictionary setValue:[[imageURL path] lastPathComponent] forKey:kKTDataSourceFileName];	// just name			
 			// Now get the alt text and the linked URL
-			NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+			NSArray *arrayFromData = [pasteboard propertyListForType:@"WebURLsWithTitlesPboardType"];
 			NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
 			NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
 			NSString *urlString = [urlStringArray objectAtIndex:anIndex];
@@ -385,7 +383,7 @@ the indexed value into NSFilenamesPboardType.
 	}
 	else if ( [bestType isEqualToString:NSFilenamesPboardType] )
     {
-		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
+		NSArray *filePaths = [pasteboard propertyListForType:NSFilenamesPboardType];
 		if (anIndex < [filePaths count])
 		{
 			NSString *filePath = [filePaths objectAtIndex:anIndex];
@@ -407,7 +405,7 @@ the indexed value into NSFilenamesPboardType.
 	else
 	{
 		// some other kind of image
-		imageData = [pboard dataForType:bestType];
+		imageData = [pasteboard dataForType:bestType];
 		UTI = [NSString UTIForPboardType:bestType];
 	}
 	
@@ -425,7 +423,7 @@ the indexed value into NSFilenamesPboardType.
 	// If we have an info dictionary from ImageDataListPboardType, populate the info
 	if (nil != sCachedIPhotoInfoDict)
 	{
-		NSArray *fileNames = [pboard propertyListForType:NSFilenamesPboardType];
+		NSArray *fileNames = [pasteboard propertyListForType:NSFilenamesPboardType];
 		if (anIndex < [fileNames count])
 		{
 			NSString *fileName = [fileNames objectAtIndex:anIndex];

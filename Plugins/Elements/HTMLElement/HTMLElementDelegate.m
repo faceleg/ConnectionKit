@@ -197,7 +197,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
     return [NSArray arrayWithObjects:
             NSFilenamesPboardType,			// We'll take a file that's HTML type
@@ -205,11 +205,10 @@
             nil];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender { return 1; }
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender { return 1; }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     [pboard types];
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
@@ -270,21 +269,20 @@
     return KTSourcePriorityNone;	// one of our other types -- string, rich text ... sounds good to me!
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex
 {
     BOOL result = NO;
     NSString *filePath = nil;
     
-    NSArray *orderedTypes = [self supportedDragTypes];
+    NSArray *orderedTypes = [self supportedPasteboardTypes];
     
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
     if ( [bestType isEqualToString:NSFilenamesPboardType] )
     {
-		NSArray *filePaths = [pboard propertyListForType:NSFilenamesPboardType];
+		NSArray *filePaths = [pasteboard propertyListForType:NSFilenamesPboardType];
 		if (dragIndex < [filePaths count])
 		{
 			filePath = [filePaths objectAtIndex:dragIndex];
@@ -299,7 +297,7 @@
     }
 	else
 	{
-		NSString *string = [pboard stringForType:NSStringPboardType];
+		NSString *string = [pasteboard stringForType:NSStringPboardType];
 		[aDictionary setValue:string forKey:kKTDataSourceString];
 		result = YES;
 	}

@@ -480,7 +480,7 @@
 					NSMutableDictionary *sourceInfoDictionary = [NSMutableDictionary dictionary];
 					[sourceInfoDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
 					// No way to really deal with multiple items here, so just take the first title
-					[bestSource populateDragDictionary:sourceInfoDictionary fromDraggingInfo:info atIndex:0];
+					[bestSource populateDataSourceDictionary:sourceInfoDictionary fromPasteboard:[info draggingPasteboard] atIndex:0];
 					NSString *title = [sourceInfoDictionary valueForKey:kKTDataSourceTitle];
 					if (title)
 					{

@@ -138,7 +138,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes
 {
     return [NSArray arrayWithObjects:
             @"WebURLsWithTitlesPboardType",
@@ -148,9 +148,8 @@
             nil];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
 {
-    NSPasteboard *pboard = [sender draggingPasteboard];
 	NSArray *theArray = nil;
 	
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"WebURLsWithTitlesPboardType"]]
@@ -162,14 +161,14 @@
 	return 1;	// can't find any multiplicity
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)index
 {
     int result = KTSourcePriorityNone;
     
 	NSArray *URLs = nil;
 	[NSURL getURLs:&URLs
 		 andTitles:NULL
-	fromPasteboard:[draggingInfo draggingPasteboard]
+	fromPasteboard:pasteboard
    readWeblocFiles:YES
 	ignoreFileURLs:YES];
 	
@@ -181,16 +180,16 @@
 	return result;
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex;
 {
     BOOL result = NO;
     
     NSArray *URLs = nil;	NSArray *titles = nil;
 	[NSURL getURLs:&URLs
 		 andTitles:&titles
-	fromPasteboard:[draggingInfo draggingPasteboard]
+	fromPasteboard:pasteboard
    readWeblocFiles:YES
 	ignoreFileURLs:YES];
 	

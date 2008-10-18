@@ -34,12 +34,12 @@ typedef enum {
 
 
 @protocol KTDataSource
-+ (NSArray *)supportedDragTypes;
++ (NSArray *)supportedPasteboardTypes;
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender;
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex;
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)index;
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex;
 @end
