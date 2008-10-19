@@ -226,18 +226,6 @@ enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemot
     myAddCollectionPopUpButton = anAddCollectionPopUpButton;
 }
 
-- (NSObject *)addingPagesViaDragPseudoLock
-{
-	return myAddingPagesViaDragPseudoLock;
-}
-
-- (void)setAddingPagesViaDragPseudoLock:(NSObject *)anObject
-{
-	[anObject retain];
-	[myAddingPagesViaDragPseudoLock release];
-	myAddingPagesViaDragPseudoLock = anObject;
-}
-
 @end
 
 

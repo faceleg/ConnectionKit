@@ -115,12 +115,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	if ( nil != self )
 	{
-		// set up a pseudo lock that we can @syncronized around
-		[self setAddingPagesViaDragPseudoLock:[[[NSObject alloc] init] autorelease]];
-		
 		// do not cascade window using size in nib
 		[self setShouldCascadeWindows:NO];
 	}
+    
     return self;
 }
 
@@ -157,7 +155,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setSelectedPagelet:nil];
     [self setToolbars:nil];
     [self setWebViewTitle:nil];    
-	[self setAddingPagesViaDragPseudoLock:nil];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 	[myPluginInspectorViewsManager release];
@@ -377,7 +374,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Individual controllers
 
-- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }
+- (KTDocSiteOutlineController *)siteOutlineController { return siteOutlineController; }
 
 - (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
 {
@@ -390,8 +387,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Set up the new controller
 	[controller retain];
-	[mySiteOutlineController release];
-	mySiteOutlineController = controller;
+	[siteOutlineController release];
+	siteOutlineController = controller;
 	
 	[controller setContent:[[[self document] documentInfo] root]];
 	[controller setWindowController:self];
@@ -2084,131 +2081,130 @@ from representedObject */
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info
 {
 	// LOG((@"%@", NSStringFromSelector(_cmd) ));
-
+    
 	BOOL result = NO;	// set to YES if at least one item got processed
 	int numberOfItems = [KTElementPlugin numberOfItemsToProcessDrag:info];
 	
 	/*
-	/// Mike: I see no point in this artificial limit in 1.5
-	int maxNumberDragItems = [defaults integerForKey:@"MaximumDraggedPages"];
-	numberOfItems = MIN(numberOfItems, maxNumberDragItems);
-	*/
+     /// Mike: I see no point in this artificial limit in 1.5
+     int maxNumberDragItems = [defaults integerForKey:@"MaximumDraggedPages"];
+     numberOfItems = MIN(numberOfItems, maxNumberDragItems);
+     */
 	KTPage *latestPage = nil; //only select the last page created
 	
-	@synchronized ( [self addingPagesViaDragPseudoLock] )
-	{
-		//[[[self document] managedObjectContext] lockPSCAndSelf];
-// TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
-		
-		NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
-		KSProgressPanel *progressPanel = nil;
-		if (numberOfItems > 3)
-		{
-			progressPanel = [[KSProgressPanel alloc] init];
-            [progressPanel setMessageText:localizedStatus];
-            [progressPanel setInformativeText:nil];
-            [progressPanel setMinValue:0 maxValue:numberOfItems doubleValue:0];
-            [progressPanel beginSheetModalForWindow:[self window]];
-		}
-				
-		int i;
-		for ( i = 0 ; i < numberOfItems ; i++ )
-		{
-			NSAutoreleasePool *poolForEachDrag = [[NSAutoreleasePool alloc] init];
-
-			[progressPanel setMessageText:localizedStatus];
-            [progressPanel setDoubleValue:i];
-			
-			Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
-			if ( nil != bestSource )
-			{
-				NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
-				[dragDataDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
-				
-				BOOL didPerformDrag;
-				didPerformDrag = [bestSource populateDataSourceDictionary:dragDataDictionary fromPasteboard:[info draggingPasteboard] atIndex:i];
-				NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
-				
-				if ( didPerformDrag && theBundleIdentifier)
-				{
-					KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
-					if (thePlugin)
-					{
-						[dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
-						
-						KTPage *newPage = [KTPage pageWithParent:aCollection
-											dataSourceDictionary:dragDataDictionary
-								  insertIntoManagedObjectContext:[[self document] managedObjectContext]];
-						
-						if ( nil != newPage )
-						{
-							int insertIndex = anIndex+i;		// add 1 to the index so we will always go after the next one
-							if ( NSOutlineViewDropOnItemIndex == anIndex )
-							{
-								// add at end
-								insertIndex = [[aCollection children] count];
-							}
-							
-							// insert the page where indicated
-							[aCollection addPage:newPage];
-							
-							if ( NSOutlineViewDropOnItemIndex != anIndex )
-							{
-								latestPage = newPage;
-							}
-							
-							// we're golden
-							result = YES;
-							
-							// Now see if we need to recurse; it's a collection
-							if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
-							{
-								NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-								KTIndexPlugin *indexPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
-								NSBundle *indexBundle = [indexPlugin bundle];
-								
-// FIXME: we should load up the properties from a KTPreset
-								
-								[newPage setValue:[indexBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-								Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
-								KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:indexPlugin] autorelease];
-								[newPage setIndex:theIndex];
-								[newPage setBool:YES forKey:@"isCollection"]; // should this info be specified in the plist?
-								[newPage setBool:NO forKey:@"includeTimestamp"];		// collection should generally not have timestamp
-								
-								// At this point we should recurse ... deal with indexes, and whether it was photos
-							}
-							
-							// label undo last
-							[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag from External Source",
-																						   "action name for dragging external objects to source outline")];
-						}
-						else
-						{
-							LOG((@"error: unable to create item of type: %@", theBundleIdentifier));
-						}
-					}
-					else
-					{
-						LOG((@"error: datasource returned unknown bundle identifier: %@", theBundleIdentifier));
-					}
-				}
-				else
-				{
-					LOG((@"%@ did not accept drop, no child returned", bestSource));
-				}
-			}
-			else
-			{
-				LOG((@"No datasource agreed to handle types: %@", [[[info draggingPasteboard] types] description]));
-			}
-			
-			[poolForEachDrag release];
-		}
-		
-		[progressPanel endSheet];
-        [progressPanel release];
-	}
+	
+    //[[[self document] managedObjectContext] lockPSCAndSelf];
+    // TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
+    
+    NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
+    KSProgressPanel *progressPanel = nil;
+    if (numberOfItems > 3)
+    {
+        progressPanel = [[KSProgressPanel alloc] init];
+        [progressPanel setMessageText:localizedStatus];
+        [progressPanel setInformativeText:nil];
+        [progressPanel setMinValue:0 maxValue:numberOfItems doubleValue:0];
+        [progressPanel beginSheetModalForWindow:[self window]];
+    }
+    
+    int i;
+    for ( i = 0 ; i < numberOfItems ; i++ )
+    {
+        NSAutoreleasePool *poolForEachDrag = [[NSAutoreleasePool alloc] init];
+        
+        [progressPanel setMessageText:localizedStatus];
+        [progressPanel setDoubleValue:i];
+        
+        Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+        if ( nil != bestSource )
+        {
+            NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
+            [dragDataDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
+            
+            BOOL didPerformDrag;
+            didPerformDrag = [bestSource populateDataSourceDictionary:dragDataDictionary fromPasteboard:[info draggingPasteboard] atIndex:i];
+            NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
+            
+            if ( didPerformDrag && theBundleIdentifier)
+            {
+                KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
+                if (thePlugin)
+                {
+                    [dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
+                    
+                    KTPage *newPage = [KTPage pageWithParent:aCollection
+                                        dataSourceDictionary:dragDataDictionary
+                              insertIntoManagedObjectContext:[[self document] managedObjectContext]];
+                    
+                    if ( nil != newPage )
+                    {
+                        int insertIndex = anIndex+i;		// add 1 to the index so we will always go after the next one
+                        if ( NSOutlineViewDropOnItemIndex == anIndex )
+                        {
+                            // add at end
+                            insertIndex = [[aCollection children] count];
+                        }
+                        
+                        // insert the page where indicated
+                        [aCollection addPage:newPage];
+                        
+                        if ( NSOutlineViewDropOnItemIndex != anIndex )
+                        {
+                            latestPage = newPage;
+                        }
+                        
+                        // we're golden
+                        result = YES;
+                        
+                        // Now see if we need to recurse; it's a collection
+                        if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
+                        {
+                            NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
+                            KTIndexPlugin *indexPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
+                            NSBundle *indexBundle = [indexPlugin bundle];
+                            
+                            // FIXME: we should load up the properties from a KTPreset
+                            
+                            [newPage setValue:[indexBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
+                            Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
+                            KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:indexPlugin] autorelease];
+                            [newPage setIndex:theIndex];
+                            [newPage setBool:YES forKey:@"isCollection"]; // should this info be specified in the plist?
+                            [newPage setBool:NO forKey:@"includeTimestamp"];		// collection should generally not have timestamp
+                            
+                            // At this point we should recurse ... deal with indexes, and whether it was photos
+                        }
+                        
+                        // label undo last
+                        [[[self document] undoManager] setActionName:NSLocalizedString(@"Drag from External Source",
+                                                                                       "action name for dragging external objects to source outline")];
+                    }
+                    else
+                    {
+                        LOG((@"error: unable to create item of type: %@", theBundleIdentifier));
+                    }
+                }
+                else
+                {
+                    LOG((@"error: datasource returned unknown bundle identifier: %@", theBundleIdentifier));
+                }
+            }
+            else
+            {
+                LOG((@"%@ did not accept drop, no child returned", bestSource));
+            }
+        }
+        else
+        {
+            LOG((@"No datasource agreed to handle types: %@", [[[info draggingPasteboard] types] description]));
+        }
+        
+        [poolForEachDrag release];
+    }
+    
+    [progressPanel endSheet];
+    [progressPanel release];
+    
 	
 	// if not dropping on an item, set the selection to the last page created
 	if ( latestPage != nil )

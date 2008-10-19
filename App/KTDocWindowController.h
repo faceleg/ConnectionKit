@@ -78,9 +78,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	BOOL							myHasSavedVisibleRect;
 	NSRect							myDocumentVisibleRect;
 	
-	// Site Outline
-	KTDocSiteOutlineController	*mySiteOutlineController;
-	
 	
     NSMutableDictionary				*myContextElementInformation;
 	IBOutlet KSBorderlessWindow		*oLinkPanel;
@@ -109,9 +106,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSProgressIndicator	*oModalProgress;
 	IBOutlet NSTextField			*oModalStatus;
 	IBOutlet NSImageView			*oModalImage;
-		
-	NSObject						*myAddingPagesViaDragPseudoLock;
-	
+			
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;
@@ -305,8 +300,5 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (RYZImagePopUpButton *)addCollectionPopUpButton;
 - (void)setAddCollectionPopUpButton:(RYZImagePopUpButton *)anAddCollectionPopUpButton;
-
-- (NSObject *)addingPagesViaDragPseudoLock;
-- (void)setAddingPagesViaDragPseudoLock:(NSObject *)anObject;
 
 @end
