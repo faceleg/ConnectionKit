@@ -316,14 +316,9 @@
 {
     int result = KTSourcePriorityNone;
     
-	NSArray *URLs = nil;
-	[NSURL getURLs:&URLs
-		 andTitles:NULL
-	fromPasteboard:pasteboard
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
+    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	if (URLs && [URLs count] > 0)
+	if ([webLocations count] > 0)
 	{
 		result = KTSourcePriorityReasonable;
 	}
@@ -337,17 +332,12 @@
 {
     BOOL result = NO;
     
-    NSArray *URLs = nil;	NSArray *titles = nil;
-	[NSURL getURLs:&URLs
-		 andTitles:&titles
-	fromPasteboard:pasteboard
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
+    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	if (URLs && [URLs count] > 0)
+	if ([webLocations count] > 0)
 	{
-		NSURL *URL = [URLs firstObjectKS];
-		NSString *title = [titles firstObjectKS];
+		NSURL *URL = [[webLocations objectAtIndex:0] URL]; 
+		NSString *title = [[webLocations objectAtIndex:0] title];
 		
 		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
         if (title && (id)title != [NSNull null])

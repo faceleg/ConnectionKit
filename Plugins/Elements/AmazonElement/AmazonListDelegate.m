@@ -470,7 +470,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)supportedPasteboardTypes
 {
-	return [NSURL KTComponentsSupportedURLPasteboardTypes];
+	return [KSWebLocation webLocationPasteboardTypes];
 }
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
@@ -482,17 +482,13 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 {
     KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *URLs = nil;
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard
+													  readWeblocFiles:YES
+													   ignoreFileURLs:YES];
 	
-	[NSURL getURLs:&URLs
-		 andTitles:NULL
-	fromPasteboard:pasteboard
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
-	
-	if (URLs && [URLs count] > dragIndex)
+	if (webLocations && [webLocations count] > dragIndex)
 	{
-		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
 		if ([URL amazonProductASIN])
 		{
 			result = KTSourcePriorityIdeal;
@@ -508,19 +504,15 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 {
     BOOL result = NO;
     
-    NSArray *URLs = nil;
-	NSArray *titles = nil;
+    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard
+													  readWeblocFiles:YES
+													   ignoreFileURLs:YES];
 	
-	[NSURL getURLs:&URLs
-		 andTitles:&titles
-	fromPasteboard:pasteboard
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
 	
-	if (URLs && [URLs count] > dragIndex && [titles count] > dragIndex)
+	if (webLocations && [webLocations count] > dragIndex)
 	{
-		NSURL *URL = [URLs objectAtIndex:dragIndex];
-		NSString *title = [titles objectAtIndex:dragIndex];
+		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
+		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
 		
 		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
         if (!KSISNULL(title))

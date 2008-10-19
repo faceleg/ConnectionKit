@@ -76,6 +76,7 @@
 #import "KSTrimFirstLineFormatter.h"
 #import "KSValidateCharFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
+#import "KSWebLocation.h"
 
 // Foundation extensions
 #import "NSAppleScript+Karelia.h"
@@ -103,7 +104,6 @@
 #import "NSString-Utilities.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
-#import "NSURL+KTExtensions.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSScanner+Karelia.h"
 

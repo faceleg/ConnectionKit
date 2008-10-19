@@ -281,6 +281,9 @@
 		27ACADB60D589C8C004732D0 /* Z.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACADB50D589C8C004732D0 /* Z.png */; };
 		27AD539B0D6B3E8700883550 /* KTHTMLParser+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD539A0D6B3E8700883550 /* KTHTMLParser+CSS.m */; };
 		27AD53A60D6B40C300883550 /* KTHTMLParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* KTHTMLParser+Private.h */; };
+		27AD81710EAB343D0083ED52 /* KSWebLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD81570EAB2A5D0083ED52 /* KSWebLocation.m */; };
+		27AD81720EAB34400083ED52 /* KSWebLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD81560EAB2A5D0083ED52 /* KSWebLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27AD81760EAB34E30083ED52 /* KSWebLocation+WeblocFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD81740EAB34B50083ED52 /* KSWebLocation+WeblocFiles.m */; };
 		27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B17DAB0CA80A9E00187918 /* KTWebViewComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */; settings = {ATTRIBUTES = (); }; };
@@ -687,8 +690,6 @@
 		CEBCFF050DB90A1D001BF0DF /* help.small.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBCFF030DB90A1D001BF0DF /* help.small.png */; };
 		CEBFCE6F0D7F53DC006B94B9 /* KSPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = CEBFCE6D0D7F53DC006B94B9 /* KSPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEBFCE700D7F53DC006B94B9 /* KSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBFCE6E0D7F53DC006B94B9 /* KSPlugin.m */; };
-		CEC118CD0D78A8E900513E70 /* NSURL+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC118CB0D78A8E900513E70 /* NSURL+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC118CE0D78A8E900513E70 /* NSURL+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC118CC0D78A8E900513E70 /* NSURL+KTExtensions.m */; };
 		CEC11AC40D78BE3D00513E70 /* AMRollOverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A5C0D78BE3C00513E70 /* AMRollOverButton.m */; };
 		CEC11AC50D78BE3D00513E70 /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A5D0D78BE3C00513E70 /* AMRollOverButtonCell.m */; };
 		CEC11AC60D78BE3D00513E70 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A5E0D78BE3C00513E70 /* AQDataExtensions.m */; };
@@ -1627,6 +1628,9 @@
 		27ACADB50D589C8C004732D0 /* Z.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Z.png; sourceTree = "<group>"; };
 		27AD539A0D6B3E8700883550 /* KTHTMLParser+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+CSS.m"; sourceTree = "<group>"; };
 		27AD53A40D6B40C300883550 /* KTHTMLParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTHTMLParser+Private.h"; sourceTree = "<group>"; };
+		27AD81560EAB2A5D0083ED52 /* KSWebLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSWebLocation.h; path = ../../../Shared/trunk/App/KSWebLocation.h; sourceTree = "<group>"; };
+		27AD81570EAB2A5D0083ED52 /* KSWebLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSWebLocation.m; path = ../../../Shared/trunk/App/KSWebLocation.m; sourceTree = "<group>"; };
+		27AD81740EAB34B50083ED52 /* KSWebLocation+WeblocFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "KSWebLocation+WeblocFiles.m"; path = "../../../Shared/trunk/App/KSWebLocation+WeblocFiles.m"; sourceTree = "<group>"; };
 		27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFile.h; sourceTree = "<group>"; };
 		27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
@@ -2296,8 +2300,6 @@
 		CEBCFF030DB90A1D001BF0DF /* help.small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help.small.png; path = ../../../Shared/trunk/App/help.small.png; sourceTree = SOURCE_ROOT; };
 		CEBFCE6D0D7F53DC006B94B9 /* KSPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlugin.h; path = ../../../Shared/trunk/App/KSPlugin.h; sourceTree = SOURCE_ROOT; };
 		CEBFCE6E0D7F53DC006B94B9 /* KSPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlugin.m; path = ../../../Shared/trunk/App/KSPlugin.m; sourceTree = SOURCE_ROOT; };
-		CEC118CB0D78A8E900513E70 /* NSURL+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+KTExtensions.h"; sourceTree = "<group>"; };
-		CEC118CC0D78A8E900513E70 /* NSURL+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+KTExtensions.m"; sourceTree = "<group>"; };
 		CEC11A5C0D78BE3C00513E70 /* AMRollOverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButton.m; path = ../../../Shared/trunk/App/AMRollOverButton.m; sourceTree = SOURCE_ROOT; };
 		CEC11A5D0D78BE3C00513E70 /* AMRollOverButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMRollOverButtonCell.m; path = ../../../Shared/trunk/App/AMRollOverButtonCell.m; sourceTree = SOURCE_ROOT; };
 		CEC11A5E0D78BE3C00513E70 /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQDataExtensions.m; path = ../../../Shared/trunk/App/AQDataExtensions.m; sourceTree = SOURCE_ROOT; };
@@ -2895,6 +2897,9 @@
 				CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */,
 				CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */,
 				CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */,
+				27AD81560EAB2A5D0083ED52 /* KSWebLocation.h */,
+				27AD81570EAB2A5D0083ED52 /* KSWebLocation.m */,
+				27AD81740EAB34B50083ED52 /* KSWebLocation+WeblocFiles.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -3897,8 +3902,6 @@
 				3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */,
 				3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */,
 				3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */,
-				CEC118CB0D78A8E900513E70 /* NSURL+KTExtensions.h */,
-				CEC118CC0D78A8E900513E70 /* NSURL+KTExtensions.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -4658,7 +4661,6 @@
 				3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */,
 				270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */,
 				275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */,
-				CEC118CD0D78A8E900513E70 /* NSURL+KTExtensions.h in Headers */,
 				CEC11B9D0D78BE5300513E70 /* AMRollOverButton.h in Headers */,
 				CEC11B9E0D78BE5300513E70 /* AMRollOverButtonCell.h in Headers */,
 				CEC11B9F0D78BE5300513E70 /* AQDataExtensions.h in Headers */,
@@ -4796,6 +4798,7 @@
 				27DB822F0EA7B94A0099ED9E /* KSProgressPanel.h in Headers */,
 				27DB82350EA7BA420099ED9E /* KSViewController.h in Headers */,
 				27DB82D80EA894C10099ED9E /* NSDateFormatter+Karelia.h in Headers */,
+				27AD81720EAB34400083ED52 /* KSWebLocation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5982,7 +5985,6 @@
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
 				270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */,
 				275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */,
-				CEC118CE0D78A8E900513E70 /* NSURL+KTExtensions.m in Sources */,
 				CEC11AC40D78BE3D00513E70 /* AMRollOverButton.m in Sources */,
 				CEC11AC50D78BE3D00513E70 /* AMRollOverButtonCell.m in Sources */,
 				CEC11AC60D78BE3D00513E70 /* AQDataExtensions.m in Sources */,
@@ -6122,6 +6124,8 @@
 				27DB82360EA7BA420099ED9E /* KSViewController.m in Sources */,
 				27DB82D50EA8949C0099ED9E /* NSScanner+Karelia.m in Sources */,
 				27DB82D90EA894C10099ED9E /* NSDateFormatter+Karelia.m in Sources */,
+				27AD81710EAB343D0083ED52 /* KSWebLocation.m in Sources */,
+				27AD81760EAB34E30083ED52 /* KSWebLocation+WeblocFiles.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

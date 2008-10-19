@@ -55,7 +55,6 @@
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
-#import "NSURL+KTExtensions.h"
 #import "NSWindow+Karelia.h"
 
 #import "NTBoxView.h"

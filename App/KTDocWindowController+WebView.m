@@ -37,7 +37,6 @@
 #import "NSString-Utilities.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
-#import "NSURL+KTExtensions.h"
 
 #import "DOMNode+KTExtensions.h"
 #import "DOM+KTWebViewController.h"

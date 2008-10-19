@@ -15,7 +15,6 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "NSURL+AmazonPagelet.h"
-#import "NSURL+KTExtensions.h"
 
 
 @implementation APManualListArrayController
@@ -57,20 +56,19 @@
 #pragma mark -
 #pragma mark Dragging
 
-- (NSArray *)URLDragTypes { return [NSURL KTComponentsSupportedURLPasteboardTypes]; }
+- (NSArray *)URLDragTypes { return [KSWebLocation webLocationPasteboardTypes]; }
 
 - (NSArray *)dragTypesToRegister
 {
-	return [[super dragTypesToRegister] arrayByAddingObjectsFromArray: [self URLDragTypes]];
+	return [[super dragTypesToRegister] arrayByAddingObjectsFromArray:[self URLDragTypes]];
 }
 
 - (id)valueForDropFromPasteboard:(NSPasteboard *)pasteboard
 {
 	// Retrieve the appropriate URL from the pasteboard
-	NSArray *URLs = nil;
-	[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	return [URLs firstObjectKS];
+	return [[webLocations firstObjectKS] URL];
 }
 
 - (NSDragOperation)tableView:(NSTableView *)aTableView	

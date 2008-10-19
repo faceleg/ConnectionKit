@@ -77,7 +77,7 @@
 		id property = [[[[parentProperty class] alloc] init] autorelease];
 		
 		// set the common things
-		[(NSPropertyDescription *)property setName:[[[parentProperty name] copy] autorelease]];
+		[(NSPropertyDescription *)property setName:[[[parentProperty title] copy] autorelease]];
 		[property setOptional:[parentProperty isOptional]];
 		[property setTransient:[parentProperty isTransient]];
 		[property setUserInfo:nil];

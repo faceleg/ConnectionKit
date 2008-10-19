@@ -25,13 +25,13 @@
 #import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
-#import "NSURL+KTExtensions.h"
 
 #import "KTWebKitCompatibility.h"
 #import "DOMNode+Karelia.h"
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"
 
+#import "KSWebLocation.h"
 #import "OmniCompatibility.h"
 
 
@@ -799,7 +799,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	NSArray *urls = nil;
 	NSArray *titles = nil;
-	[NSURL getURLs:&urls andTitles:&titles fromPasteboard:[NSPasteboard generalPasteboard]];
+	[KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
 	
 	if ([urls count])
 	{
@@ -944,7 +944,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	else if (action == @selector(pasteLink:))
 	{
 		NSArray *URLs = nil;
-		[NSURL getURLs:&URLs andTitles:NULL fromPasteboard:[NSPasteboard generalPasteboard]];
+		[KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
 		BOOL result = (URLs != nil && [URLs count] > 0);
 		return result;
 	}
