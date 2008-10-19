@@ -124,31 +124,25 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedDragTypes
++ (NSArray *)supportedPasteboardTypes;
 {
-	return [NSURL KTComponentsSupportedURLPasteboardTypes];
+	return [KSWebLocation webLocationPasteboardTypes];
 }
 
-+ (unsigned)numberOfItemsFoundInDrag:(id <NSDraggingInfo>)sender
++ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
 {
     return 1;
 }
 
-+ (KTSourcePriority)priorityForDrag:(id <NSDraggingInfo>)draggingInfo atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)dragIndex;
 {
 	KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *URLs = nil;
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	[NSURL getURLs:&URLs
-		 andTitles:NULL
-	fromPasteboard:[draggingInfo draggingPasteboard]
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
-	
-	if (URLs && [URLs count] > dragIndex)
+	if ([webLocations count] > dragIndex)
 	{
-		NSURL *URL = [URLs objectAtIndex:dragIndex];
+		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
 		if ([URL twitterUsername])
 		{
 			result = KTSourcePrioritySpecialized;
@@ -158,25 +152,18 @@
 	return result;
 }
 
-+ (BOOL)populateDragDictionary:(NSMutableDictionary *)aDictionary
-              fromDraggingInfo:(id <NSDraggingInfo>)draggingInfo
-                       atIndex:(unsigned)dragIndex;
++ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+                      fromPasteboard:(NSPasteboard *)pasteboard
+                             atIndex:(unsigned)dragIndex;
 {
 	BOOL result = NO;
     
-    NSArray *URLs = nil;
-	NSArray *titles = nil;
+    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	[NSURL getURLs:&URLs
-		 andTitles:&titles
-	fromPasteboard:[draggingInfo draggingPasteboard]
-   readWeblocFiles:YES
-	ignoreFileURLs:YES];
-	
-	if (URLs && [URLs count] > dragIndex && [titles count] > dragIndex)
+	if ([webLocations count] > dragIndex)
 	{
-		NSURL *URL = [URLs objectAtIndex:dragIndex];
-		NSString *title = [titles objectAtIndex:dragIndex];
+		NSURL *URL = [[webLocations objectAtIndex:dragIndex] URL];
+		NSString *title = [[webLocations objectAtIndex:dragIndex] title];
 		
 		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
         if (!KSISNULL(title))
