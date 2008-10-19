@@ -81,11 +81,8 @@ extern NSString *gInfoWindowAutoSaveName;
 	// Site Outline
 	KTDocSiteOutlineController	*mySiteOutlineController;
 	
-	// Editing
-	BOOL							myRichText;
-	BOOL							mySingleLine;
-    
-	NSMutableDictionary				*myContextElementInformation;
+	
+    NSMutableDictionary				*myContextElementInformation;
 	IBOutlet KSBorderlessWindow		*oLinkPanel;
 	IBOutlet RoundedBox				*oLinkControlsBox;
 	IBOutlet NSTextField			*oLinkDestinationField;
@@ -94,7 +91,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet KTLinkSourceView		*oLinkView;
 	
 	BOOL							myIsLinkPanelClosing;
-	BOOL							myIsCopying;
 	
 	IBOutlet KSBorderlessWindow		*oMessageWindow;
 	IBOutlet NSTextField			*oMessageTextField;
