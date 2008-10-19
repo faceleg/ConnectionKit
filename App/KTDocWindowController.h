@@ -314,20 +314,3 @@ extern NSString *KTSelectedDOMRangeKey;
 - (void)setAddingPagesViaDragPseudoLock:(NSObject *)anObject;
 
 @end
-
-/*! 
-	General Purpose methods to display a document modal sheet
-	
-	- beginSheetWithStatus: displays an indeterminate progress bar
-	- beginSheetWithStatus:minValue:maxValue: displays a determinate progress bar
-
-*/
-@interface KTDocWindowController (ModalOperation)
-
-- (void)beginSheetWithStatus:(NSString *)status image:(NSImage *)image;
-- (void)beginSheetWithStatus:(NSString *)status minValue:(double)min maxValue:(double)max image:(NSImage *)image;
-- (void)updateSheetWithStatus:(NSString *)status progressValue:(double)value;
-- (void)endSheet;
-- (void)setSheetMinValue:(double)min maxValue:(double)max;
-
-@end

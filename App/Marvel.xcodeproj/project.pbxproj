@@ -328,6 +328,7 @@
 		27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E3F82D0D9C32F500A64154 /* DocumentMigration.nib */; };
 		27E3F8330D9C34B000A64154 /* KTDataMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */; };
 		27E3F8340D9C34B000A64154 /* KTDataMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */; };
+		27EDDAC50EA8EA4D000A5BCD /* KSProgressPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27EDDAC40EA8EA4D000A5BCD /* KSProgressPanel.nib */; };
 		27EF1BCF0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */; };
 		27EF1BD00DC1F9BF00976C66 /* KTSiteOutlineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -535,7 +536,6 @@
 		3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */; };
 		3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
-		7939562209501EA500961D65 /* KTDocWindowController+ModalOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */; };
 		795D666309D356C6005F166D /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = 795D666209D356C6005F166D /* target.png */; };
 		795F0360098F0293000202D5 /* upload_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 795F035F098F0293000202D5 /* upload_warning.png */; };
 		796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */; };
@@ -1677,6 +1677,7 @@
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
+		27EDDAC40EA8EA4D000A5BCD /* KSProgressPanel.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSProgressPanel.nib; path = ../../../Shared/trunk/AppKit/KSProgressPanel.nib; sourceTree = SOURCE_ROOT; };
 		27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineDataSource.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineDataSource.m; sourceTree = "<group>"; };
 		27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+QuickLook.h"; path = "../Code/QuickLook/NSBundle+QuickLook.h"; sourceTree = SOURCE_ROOT; };
@@ -1957,7 +1958,6 @@
 		3CF942280D6244BB00B1C83D /* DOMNode+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+KTExtensions.h"; sourceTree = "<group>"; };
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+ModalOperation.m"; sourceTree = "<group>"; };
 		795D666209D356C6005F166D /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target.png; sourceTree = "<group>"; };
 		795F035F098F0293000202D5 /* upload_warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_warning.png; sourceTree = "<group>"; };
 		796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPulsatingOverlay.h; sourceTree = "<group>"; };
@@ -3245,6 +3245,7 @@
 		27DB822B0EA7B8DF0099ED9E /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
+				27EDDAC40EA8EA4D000A5BCD /* KSProgressPanel.nib */,
 				27DB82270EA7B73C0099ED9E /* KSAlert.h */,
 				27DB82280EA7B73C0099ED9E /* KSAlert.m */,
 				27DB822D0EA7B94A0099ED9E /* KSProgressPanel.h */,
@@ -3269,7 +3270,6 @@
 			isa = PBXGroup;
 			children = (
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
-				7939562109501EA500961D65 /* KTDocWindowController+ModalOperation.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
 				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
@@ -5512,6 +5512,7 @@
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 				CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
+				27EDDAC50EA8EA4D000A5BCD /* KSProgressPanel.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5864,7 +5865,6 @@
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,
 				CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */,
 				3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */,
-				7939562209501EA500961D65 /* KTDocWindowController+ModalOperation.m in Sources */,
 				3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */,
 				3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */,
 				3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */,
