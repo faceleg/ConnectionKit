@@ -58,6 +58,7 @@
 #import "NSWindow+Karelia.h"
 
 #import "NTBoxView.h"
+#import "KSProgressPanel.h"
 
 #import "Registration.h"
 
@@ -2100,14 +2101,14 @@ from representedObject */
 // TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
 		
 		NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
-		BOOL didDisplayProgressIndicator = NO;
-		if ( numberOfItems > 3 )
+		KSProgressPanel *progressPanel = nil;
+		if (numberOfItems > 3)
 		{
-			[self beginSheetWithStatus:localizedStatus
-							  minValue:0 
-							  maxValue:numberOfItems 
-								 image:nil];
-			didDisplayProgressIndicator = YES;
+			progressPanel = [[KSProgressPanel alloc] init];
+            [progressPanel setMessageText:localizedStatus];
+            [progressPanel setInformativeText:nil];
+            [progressPanel setMinValue:0 maxValue:numberOfItems doubleValue:0];
+            [progressPanel beginSheetModalForWindow:[self window]];
 		}
 				
 		int i;
@@ -2115,10 +2116,8 @@ from representedObject */
 		{
 			NSAutoreleasePool *poolForEachDrag = [[NSAutoreleasePool alloc] init];
 
-			if ( didDisplayProgressIndicator )
-			{
-				[self updateSheetWithStatus:localizedStatus progressValue:i];
-			}
+			[progressPanel setMessageText:localizedStatus];
+            [progressPanel setDoubleValue:i];
 			
 			Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
 			if ( nil != bestSource )
@@ -2207,12 +2206,8 @@ from representedObject */
 			[poolForEachDrag release];
 		}
 		
-		if ( didDisplayProgressIndicator )
-		{
-			[self endSheet];
-		}
-		
-		//[[[self document] managedObjectContext] unlockPSCAndSelf];
+		[progressPanel endSheet];
+        [progressPanel release];
 	}
 	
 	// if not dropping on an item, set the selection to the last page created

@@ -27,6 +27,8 @@
 
 #import "Elements+Pasteboard.h"
 
+#import "KSProgressPanel.h"
+
 
 /// these are localized strings for Case 26766 Disposable Dialog When Changing A Published Page's Path
 // NSLocalizedString(@"Are you sure you wish to change the file name of this page?", @"title of alert when changing page file name")
@@ -728,7 +730,6 @@
 	int i = 0;
 	NSString *localizedStatus = NSLocalizedString(@"Copying...", "");
 	BOOL displayProgressIndicator = NO;
-	BOOL didDisplayProgressIndicator = NO;
 	if ([archivedPages count] > 3)
 	{
 		displayProgressIndicator = YES;
@@ -747,32 +748,31 @@
 		}
 	}
 	
+    KSProgressPanel *progressPanel = nil;
 	if (displayProgressIndicator)
 	{
-		[[self windowController] beginSheetWithStatus:localizedStatus
-											 minValue:1 
-											 maxValue:[archivedPages count] 
-												image:nil];
-		didDisplayProgressIndicator = YES;
+		progressPanel = [[KSProgressPanel alloc] init];
+        [progressPanel setMessageText:localizedStatus];
+        [progressPanel setInformativeText:nil];
+        [progressPanel setMinValue:1 maxValue:[archivedPages count] doubleValue:1];
+        
+        [progressPanel beginSheetModalForWindow:[[self windowController] window]];
 	}
 	
 	
 	// Add the pages
-	if (didDisplayProgressIndicator)
-	{
-		i = 1;
-		[[self windowController] setSheetMinValue:1 maxValue:[archivedPages count]];
-	}				
+	i = 1;			
 	
 	NSMutableArray *droppedPages = [NSMutableArray array];
 	NSEnumerator *e = [archivedPages objectEnumerator];
 	NSDictionary *rep;
 	while (rep = [e nextObject])
 	{
-		if (didDisplayProgressIndicator)
+		if (progressPanel)
 		{
 			localizedStatus = NSLocalizedString(@"Copying pages...", "");
-			[[self windowController] updateSheetWithStatus:localizedStatus progressValue:i];
+			[progressPanel setMessageText:localizedStatus];
+            [progressPanel setDoubleValue:i];
 			i++;
 		}
 		
@@ -794,10 +794,8 @@
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag",
 																   @"action name for dragging source objects withing the outline")];
 	
-	if (didDisplayProgressIndicator)
-	{
-		[[self windowController] endSheet];
-	}
+	[progressPanel endSheet];
+    [progressPanel release];
 	
 	
 	// Select the dropped pages
