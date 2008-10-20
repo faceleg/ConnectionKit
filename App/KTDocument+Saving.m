@@ -1237,14 +1237,19 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Snapshot Support
 
+/*! returns ~/Library/Application Support/Sandvox/Snapshots/    */
++ (NSURL *)snapshotsDirectoryURL
+{
+    NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
+    NSURL *result = [appSupportURL URLByAppendingPathComponent:@"Snapshots" isDirectory:YES];
+    return result;
+}
+
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
 - (NSURL *)snapshotDirectoryURL
 {
-	NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
-    NSURL *result = [[appSupportURL
-                      URLByAppendingPathComponent:@"Snapshots" isDirectory:YES]
-                     URLByAppendingPathComponent:[[self documentInfo] siteID] isDirectory:YES];
-    
+	NSURL *result = [[[self class] snapshotsDirectoryURL] URLByAppendingPathComponent:[[self documentInfo] siteID]
+                                                                          isDirectory:YES];
     return result;
 }
 

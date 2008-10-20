@@ -234,13 +234,14 @@ extern NSString *KTDocumentWillSaveNotification;
 - (void)saveSnapshotWithDelegate:(id)delegate didSaveSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
 - (BOOL)saveSnapshot:(NSError **)error;
 
+- (IBAction)revertDocumentToSnapshot:(id)sender;
+
++ (NSURL *)snapshotsDirectoryURL;
 - (NSURL *)snapshotDirectoryURL;
 - (NSURL *)snapshotURL;
 
 - (BOOL)hasValidSnapshot;
 - (NSDate *)lastSnapshotDate;
-
-- (IBAction)revertDocumentToSnapshot:(id)sender;
 
 #pragma mark Other
 - (void)processPendingChangesAndClearChangeCount;
