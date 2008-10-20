@@ -20,9 +20,6 @@
 // SandvoxPlugin.h is a convenience header that imports all "public" headers in Sandvox
 //  should be sufficient for almost all plugins
 
-// Safari 3 WebKit methods, available in 10.4.11 and above
-#import "KTWebKitCompatibility.h"
-
 // defines/enums used throughout Sandvox
 #import "KT.h"
 
@@ -32,9 +29,6 @@
 // debugging
 #import "Debug.h"
 #import "assertions.h"
-
-// Core Data classes
-#import "KTPersistentStoreCoordinator.h"
 
 //  superclass of all managed objects
 #import "KTManagedObject.h"
@@ -65,7 +59,6 @@
 #import "KTAbstractIndex.h"
 
 // Foundation/AppKit subclasses
-#import "KTImageView.h"
 #import "KSLabel.h"
 #import "KSPlaceholderTableView.h"
 #import "KSSmallDatePicker.h"
@@ -81,7 +74,6 @@
 #import "NSAttributedString+Karelia.h"
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSBundle+Karelia.h"
-#import "NSBundle+KTExtensions.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSDate+Karelia.h"
@@ -93,7 +85,6 @@
 #import "NSIndexSet+Karelia.h"
 #import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSObject+KTExtensions.h"
 #import "NSSet+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
@@ -121,7 +112,6 @@
 #import "OmniCompatibility.h"
 
 //  drag-and-drop
-#import "KTDraggingInfo.h"
 #import "KTLinkSourceView.h"
 
 //  RTFD to HTML conversion
@@ -131,13 +121,6 @@
 #import "KSEmailAddressComboBox.h"
 
 
-#import "KTPluginInspectorViewsManager.h"
-
-
-
-#import "KTWebViewComponentProtocol.h"
-
-#import "KTPasteboardArchiving.h"
 
 #import "DNDArrayController.h"
 #import "NTBoxView.h"
@@ -149,6 +132,5 @@
 #import "KSPathInfoField.h"
 #import "NSMutableSet+Karelia.h"
 #import "KTHTMLParser.h"
-//#import "KTDocWindowController.h"
 #import "NSString+KTExtensions.h"
 

@@ -325,42 +325,6 @@
 }
 
 #pragma mark -
-#pragma mark Inspector
-
-/*	For all of these methods if we have no Inspector nib, then instead point to the main
- *	element's nib.
- */
-- (id)inspectorObject { return self; }
-
-- (NSBundle *)inspectorNibBundle
-{
-	NSBundle *result = [[self plugin] bundle];
-	return result;
-}
-
-- (NSString *)inspectorNibName
-{
-	NSString *key = @"KTPluginNibFile";
-	if ([self isKindOfClass:[KTPage class]])
-	{
-		key = @"KTPageNibFile";
-	}
-	
-	NSString *result = [[self plugin] pluginPropertyForKey:key];
-	return result;
-}
-
-- (id)inspectorNibOwner
-{
-	id result = self;
-	if ([result delegate])
-	{
-		result = [result delegate];
-	}
-	return result;
-}
-
-#pragma mark -
 #pragma mark Support
 
 /*	As the title suggests, performs the selector upon either self or the delegate. Delegate takes preference.

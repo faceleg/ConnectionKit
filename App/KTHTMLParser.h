@@ -20,8 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "KTTemplateParser.h"
 
-#import "KTWebViewComponentProtocol.h"
-
 
 // publishing mode
 typedef enum {

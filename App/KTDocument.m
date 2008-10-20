@@ -60,6 +60,7 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage.h"
+#import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
 #import "KTTransferController.h"
 #import "KTUtilities.h"

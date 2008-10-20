@@ -12,11 +12,13 @@
 #import "KTExternalMediaFile.h"
 #import "KTInDocumentMediaFile.h"
 
+#import "KTPasteboardArchiving.h"
+
 
 @class KTImageScalingSettings;
 
 
-@interface KTMediaFile (Internal)
+@interface KTMediaFile (Internal) <KTPasteboardArchiving>
 
 + (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 
@@ -25,6 +27,6 @@
 @end
 
 
-@interface KTExternalMediaFile (Internal)
+@interface KTExternalMediaFile (Internal) <KTPasteboardArchiving>
 + (id)insertNewMediaFileWithAlias:(BDAlias *)alias inManagedObjectContext:(NSManagedObjectContext *)moc;
 @end

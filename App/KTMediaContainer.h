@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
-#import "KTPasteboardArchiving.h"
 
 
 typedef enum {

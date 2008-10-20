@@ -35,7 +35,6 @@
 //
 
 #import "IndexPageletDelegate.h"
-#import "NSBundle+KTExtensions.h"
 
 // LocalizedStringInThisBundle(@"Please specify the collection to index using the Pagelet Inspector.", "String_On_Page_Template")
 

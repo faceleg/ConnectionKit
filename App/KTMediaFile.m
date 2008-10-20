@@ -26,7 +26,8 @@
 #import "Debug.h"
 
 
-@interface KTMediaFile ( Private )
+
+@interface KTMediaFile (Private)  
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 @end

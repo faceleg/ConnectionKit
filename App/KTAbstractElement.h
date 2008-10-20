@@ -18,7 +18,6 @@
 //
 
 #import "KTManagedObject.h"
-#import "KTPluginInspectorViewsManager.h"
 
 
 #import <WebKit/WebKit.h>
@@ -27,7 +26,7 @@
 @class KTDocument, KTMediaManager, KTElementPlugin, KTPage;
 
 
-@interface KTAbstractElement : KTManagedObject <KTInspectorPlugin>
+@interface KTAbstractElement : KTManagedObject 
 {
     // optional delegate
 	id					myDelegate;
@@ -58,12 +57,6 @@
 // Media
 - (KTMediaManager *)mediaManager;
 - (NSSet *)requiredMediaIdentifiers;
-
-// Inspector
-- (id)inspectorObject;
-- (NSBundle *)inspectorNibBundle;
-- (NSString *)inspectorNibName;
-- (id)inspectorNibOwner;
 
 // Perform Selector
 - (void)makeSelfOrDelegatePerformSelector:(SEL)selector

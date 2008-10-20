@@ -11,6 +11,13 @@
 #import "KTHTMLParser.h"
 #import "KTAbstractHTMLPlugin.h"
 
+#import "KTWebViewComponentProtocol.h"
+
+
+@interface KTAbstractIndex (Private) <KTWebViewComponent>
+@end
+
+
 @implementation KTAbstractIndex
 
 - (id)initWithPage:(KTPage *)aPage plugin:(KTAbstractHTMLPlugin *)plugin;

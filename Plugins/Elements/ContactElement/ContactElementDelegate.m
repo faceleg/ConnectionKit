@@ -203,7 +203,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	static NSDictionary *sLocalizations = nil;
 	if (nil == sLocalizations)
 	{
-		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] overridingPathForResource:@"ContactStrings" ofType:@"plist"]];
+		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
 	}
 	
 	NSString *languageCode = [[[self delegateOwner] page] valueForKeyPath:@"master.language"];
