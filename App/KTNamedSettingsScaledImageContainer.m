@@ -12,7 +12,7 @@
 #import "KTMediaFile+ScaledImages.h"
 #import "KTDesign.h"
 #import "KTImageScalingSettings.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"

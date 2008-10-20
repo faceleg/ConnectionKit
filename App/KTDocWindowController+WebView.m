@@ -1060,7 +1060,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [self document];
+	return [[self document] documentInfo];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link

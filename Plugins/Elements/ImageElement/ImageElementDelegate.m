@@ -485,10 +485,10 @@
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex
 {
-	BOOL result = [KTImageView populateDictionary:aDictionary
-						orderedImageTypesAccepted:[self supportedPasteboardTypes]
-                                   fromPasteboard:pasteboard
-											index:dragIndex];
+	BOOL result = [NSImage populateDictionary:aDictionary
+                    orderedImageTypesAccepted:[self supportedPasteboardTypes]
+                               fromPasteboard:pasteboard
+                                        index:dragIndex];
     return result;
 }
 

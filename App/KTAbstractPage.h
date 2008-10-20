@@ -10,7 +10,6 @@
 #import "KTAbstractElement.h"
 
 #import "KTWebPathsProtocol.h"
-#import "KTWebViewComponentProtocol.h"
 
 
 typedef enum	//	Defines the 3 ways of linking to a collection:
@@ -26,7 +25,7 @@ KTCollectionPathStyle;
 @class KTHTMLParser;
 
 
-@interface KTAbstractPage : KTAbstractElement <KTWebViewComponent>
+@interface KTAbstractPage : KTAbstractElement
 {
 }
 

@@ -14,7 +14,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"

@@ -60,26 +60,6 @@
 - (int)wrappedIntegerForKey:(NSString *)aKey;
 - (void)setWrappedInteger:(int)value forKey:(NSString *)aKey;
 
-- (id)delegableWrappedValueForKey:(NSString *)aKey;
-- (void)setDelegableWrappedValue:(id)aValue forKey:(NSString *)aKey;
-
-// deprecated as of Sandvox 1.5
-- (id)threadSafeWrappedValueForKey:(NSString *)aKey;
-- (void)threadSafeSetWrappedValue:(id)aValue forKey:(NSString *)aKey;
-
-- (id)threadSafeValueForKey:(NSString *)aKey;
-- (void)threadSafeSetValue:(id)aValue forKey:(NSString *)aKey;
-
-- (id)threadSafeValueForKeyPath:(NSString *)aKeyPath;
-- (void)threadSafeSetValue:(id)aValue forKeyPath:(NSString *)aKeyPath;
-
-// deprecated as of Sandvox 1.5
-- (void)lockContext;
-- (void)unlockContext;
-
-- (BOOL)lockContextIfNeeded;
-- (void)unlockContextIfNeeded:(BOOL)didLock;
-
 /* Non-standard, transient attributes */
 - (id)transientValueForKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey;
 - (void)setTransientValue:(id)value forKey:(NSString *)key persistentPropertyListKey:(NSString *)plistKey;

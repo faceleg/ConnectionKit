@@ -11,6 +11,8 @@
 #import "Debug.h"
 //#import "ImageCropperController.h"
 #import "KT.h"
+#import "KTDataSource.h"
+
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -198,7 +200,7 @@
 	
 	NSMutableDictionary *dataSourceDictionary = [NSMutableDictionary dictionary];
 	
-	BOOL result = [KTImageView populateDictionary:dataSourceDictionary
+	BOOL result = [NSImage populateDictionary:dataSourceDictionary
 						orderedImageTypesAccepted:acceptedTypes
                                     fromPasteboard:[draggingInfo draggingPasteboard]
 											index:0];	// get info for first item, if multiple
@@ -236,8 +238,13 @@
     //[super concludeDragOperation:draggingInfo];
 }
 
+@end
+
+
 #pragma mark -
-#pragma mark D&D helper methods
+
+
+@implementation NSImage (KTDataSource)
 
 static NSDictionary *sCachedIPhotoInfoDict = nil;
 
@@ -522,163 +529,3 @@ the indexed value into NSFilenamesPboardType.
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// ALL THIS IMAGE PICKER STUFF IS REMOVED FROM 1.0.x
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-#if 0
-
-//- (id)initWithCoder:(NSCoder *)decoder
-//{
-//	if (self = [super initWithCoder:decoder])
-//	{
-//		myImageCropperController = [ImageCropperController sharedImageCropperControllerCreate:YES];		
-////		myPickController = [NSImagePickerController sharedImagePickerControllerCreate:YES];		
-//	}
-//	return self;
-//}
-	
-//- (id)initWithFrame:(NSRect)aFrameRect
-//{
-//	if (self = [super initWithFrame:aFrameRect])
-//	{
-//		myImageCropperController = [ImageCropperController sharedImageCropperControllerCreate:YES];
-////		myPickController = [NSImagePickerController sharedImagePickerControllerCreate:YES];
-//	}
-//	return self;
-//}
-
-#pragma mark -
-#pragma mark Clicking
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-#warning Reinstall the image picker
-	//	if (2 == [theEvent clickCount])
-	//	{
-	//		if (0 != ([theEvent modifierFlags]&NSAlternateKeyMask) )
-	//		{
-	//			[self pickSomeoneWithNewCropper:self];
-	//		}
-	//		else
-	//		{
-	//			[self pickSomeone:self];
-	//		}
-	//	}
-	//	else
-	{
-		[super mouseDown:theEvent];
-	}
-}
-
-
-
-#pragma mark -
-#pragma mark Picking
-
-
-//- (void)pickSomeoneWithNewCropper:(id)sender
-{
-	[myImageCropperController setOriginalImage: [self image]];
-	[myImageCropperController setOriginalImagePath:[myDataSourceDictionary objectForKey:@"kKTDataSourceFilePath"]];
-	[myImageCropperController showWindow:self];
-	//[[myImageCropperController window] makeKeyAndOrderFront: sender];
-}
-
-// The user hit OK, so here's the image
-- (void) imagePickerSet:(ImageCropperController *) sender
-{
-	NSImage *finalImage = [sender croppedImage];
-	if (nil == finalImage)
-	{
-		finalImage = [sender originalImage];
-	}
-	NSDictionary *dataSourceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-		finalImage, kKTDataSourceImage,
-		nil];
-	[self setDataSourceDictionary:dataSourceDictionary];	
-	[self tellDelegate];
-    [self setImage:finalImage];
-}
-
-- (void)imagePickerCancelled: (id) sender
-{
-	//	NSLog(@"Canceled, %@", sender);
-}
-
-#pragma mark -
-#pragma mark Old picker ...
-
-
-- (void)pickSomeone:(id)sender
-{
-	NSPoint mouse = [NSEvent mouseLocation];
-	[myPickController setDelegate: self];
-	[myPickController initAtPoint: mouse inWindow: nil];
-	
-	// It's a shared controller, so it remembers the last state
-	[myPickController setHasChanged: NO];
-	// Set an initial image
-	[myPickController setWidgetImage: [self image]];
-	
-	[[myPickController window] makeKeyAndOrderFront: sender];
-}
-
-// Let's us test the callbacks to display...InPicker
-// Also fakes a camera change notification
-- (IBAction)changeSelection: (id) sender {
-	[myPickController selectionChanged];
-	[myPickController _updateCameraButton];
-}
-
-// We don't use this, since it can't tell if the user canceled
-- (IBAction) choseSomeone:(id)sender
-{
-	if ([myPickController hasChanged])
-	{
-		NSDictionary *dataSourceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-			[sender image], kKTDataSourceImage,
-			nil];
-		[self setDataSourceDictionary:dataSourceDictionary];		
-		[self tellDelegate];
-	}
-	
-}
-
-// Supply an initial image for the picker
-- (NSImage *)displayImageInPicker:junk
-{
-	//	NSLog(@"Image setter, junk=%p, picker is %p", junk, myPickController);
-	return [self image];
-}
-
-// Supply a title for the picker
-- (NSString *)displayTitleInPicker:junk
-{
-	//	NSLog(@"Title setter, junk=%p, picker is %p", junk, myPickController);
-	NSString *result = [self windowTitle];
-	if (nil == result)
-	{
-		result = @"";
-	}
-	return result;
-}
-
-// The user hit OK, so here's the image
-- (void)imagePicker:(id)sender selectedImage:(NSImage *)image
-{
-	NSDictionary *dataSourceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-		[sender image], kKTDataSourceImage,
-		nil];
-	[self setDataSourceDictionary:dataSourceDictionary];
-	[self tellDelegate];
-    [self setImage:image];
-}
-
-// The user canceled
-- (void)imagePickerCanceled:(id)sender
-{
-	//	NSLog(@"Canceled, %@", sender);
-}
-
-#endif

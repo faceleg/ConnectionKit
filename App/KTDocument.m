@@ -57,7 +57,7 @@
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage.h"
 #import "KTStalenessManager.h"

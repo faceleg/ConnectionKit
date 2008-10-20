@@ -76,7 +76,7 @@
 		
 		if (nil != theURL)
 		{
-			[[self pluginProperties] setObject:[theURL absoluteString] forKey:@"linkURL"];
+			[[self delegateOwner] setObject:[theURL absoluteString] forKey:@"linkURL"];
 		}
 		if (nil != theTitle)
 		{

@@ -18,8 +18,6 @@
 
 
 @interface KTMaster : KTManagedObject 
-{
-}
 
 - (NSString *)siteTitleText;
 - (void)setSiteTitleHTML:(NSString *)value;
@@ -28,9 +26,6 @@
 - (void)setCopyrightHTML:(NSString *)copyrightHTML;
 - (NSString *)defaultCopyrightHTML;
 
-- (KTDesign *)design;
-- (void)setDesign:(KTDesign *)design;
-- (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
 
 - (KTMediaContainer *)bannerImage;
@@ -52,9 +47,6 @@
 
 #pragma mark Language
 - (NSString *)language;
-
-#pragma mark CSS
-- (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
 - (BOOL)hasCodeInjection;
 

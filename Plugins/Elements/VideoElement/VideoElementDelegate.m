@@ -773,7 +773,7 @@ After deflating starting at byte 8, you get:
 			// I don't know if we will EVER get to this point.  However, when I force it to happen,
 			// it seems to be OK.  The idea is that if we are getting here for the first time 
 			// when publishing, wait until we get the information we need.
-			if ([[[self document] windowController] publishingMode] != kGeneratingPreview)
+			if ([self documentIsPublishing])
 			{
 				BOOL doContinue = YES;	// if we get a zero, I think that means we ran out of events so stop
 				while (doContinue && (nil == [[self delegateOwner] objectForKey:@"movieSize"]))

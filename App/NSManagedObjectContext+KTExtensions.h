@@ -31,10 +31,6 @@
 
 - (void)deleteObjectsInCollection:(id)collection;   // e.g. NSArray or NSSet
 
-// deprecated
-- (void)lockPSCAndSelf;
-- (void)unlockPSCAndSelf;
-
 - (NSArray *)objectsWithFetchRequestTemplateWithName:(NSString *)aTemplateName
 							   substitutionVariables:(NSDictionary *)aDictionary
 											   error:(NSError **)anError;
@@ -66,9 +62,6 @@
 // return context's DocumentInfo
 - (KTDocumentInfo *)documentInfo;
 
-// return YES if self is a known KTDocument MOC (rather than a peer MOC)
-- (BOOL)isDocumentMOC;
-
 // returns KTMedia object matching digest(s), nil is taken into account
 - (KTMedia *)objectMatchingMediaDigest:(NSString *)aMediaDigest
 					   thumbnailDigest:(NSString *)aThumbnailDigest;
@@ -81,13 +74,11 @@
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
 - (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
 
-// returns objectWithUniqueID: searching only Media
-- (KTMedia *)mediaWithUniqueID:(NSString *)anID;
-
 - (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
 
 // returns context's Root
 - (KTPage *)root;
 
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page;
+
 @end

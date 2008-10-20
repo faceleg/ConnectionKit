@@ -16,7 +16,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTHelper.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 #import "KTWebViewComponent.h"
 #import "KTAppDelegate.h"

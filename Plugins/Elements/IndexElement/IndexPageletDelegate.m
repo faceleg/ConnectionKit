@@ -64,7 +64,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(indexedPageMayHaveBeenDeleted:)
 												 name:NSManagedObjectContextObjectsDidChangeNotification
-											   object:[self managedObjectContext]];
+											   object:[[self delegateOwner] managedObjectContext]];
 }
 
 - (void)awakeFromNib
@@ -76,7 +76,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 												    name:NSManagedObjectContextObjectsDidChangeNotification
-												  object:[self managedObjectContext]];
+												  object:[[self delegateOwner] managedObjectContext]];
 	
 	[super dealloc];
 }
@@ -124,7 +124,7 @@
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [self document];
+	return [[self page] documentInfo];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
@@ -141,7 +141,7 @@
 	NSString *pageID = [pboard stringForType:@"kKTLocalLinkPboardType"];
 	if ( (pageID != nil) && ![pageID isEqualToString:@""]  && ![pageID isEqualToString:@"KTCollection"] )
 	{
-		KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[self managedObjectContext]];
+		KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
 		if ( nil != target )
 		{
 			[[self delegateOwner] setValue:target forKey:@"indexedPage"];

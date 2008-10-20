@@ -13,7 +13,7 @@
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
 #import "KTUtilities.h"

@@ -230,9 +230,9 @@
 - (NSString *)siteMap
 {	
 	NSMutableString *string = [NSMutableString string];	
-	BOOL sections = [[self pluginProperties] boolForKey:@"sections"];	// top level items as H3
-	BOOL showHome = [[self pluginProperties] boolForKey:@"showHome"];
-	BOOL compact = [[self pluginProperties] boolForKey:@"compact"];
+	BOOL sections = [[self delegateOwner] boolForKey:@"sections"];	// top level items as H3
+	BOOL showHome = [[self delegateOwner] boolForKey:@"showHome"];
+	BOOL compact = [[self delegateOwner] boolForKey:@"compact"];
 	
 	KTPage *thisPage = [self delegateOwner];
 	KTPage *root = [[thisPage documentInfo] root];

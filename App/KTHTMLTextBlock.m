@@ -18,7 +18,7 @@
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 #import "KTWebKitCompatibility.h"
 

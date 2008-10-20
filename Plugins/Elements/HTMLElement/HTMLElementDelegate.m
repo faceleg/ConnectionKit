@@ -144,7 +144,7 @@
 	// it would be better to coalesce this last bit, if possible
 	// right now, we're updating the display (and the undo stack)
 	// after every keypress!
-	[[self managedObjectContext] processPendingChanges];
+	[[[self delegateOwner] managedObjectContext] processPendingChanges];
 	[[self undoManager] setActionName:LocalizedStringInThisBundle(@"Edit Raw HTML", "editing raw html")];
 }
 

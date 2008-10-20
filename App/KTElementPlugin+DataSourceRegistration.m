@@ -126,7 +126,7 @@
  */
 + (void)doneProcessingDrag
 {
-    [KTImageView clearCachedIPhotoInfoDict];
+    [NSImage clearCachedIPhotoInfoDict];
 }
 
 

@@ -43,3 +43,15 @@ typedef enum {
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex;
 @end
+
+
+@interface NSImage (KTDataSource)
+
++ (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
+ orderedImageTypesAccepted:(NSArray *)orderedTypes
+            fromPasteboard:(NSPasteboard *)pasteboard
+                     index:(unsigned int)anIndex;
+
++ (void)clearCachedIPhotoInfoDict;
+
+@end

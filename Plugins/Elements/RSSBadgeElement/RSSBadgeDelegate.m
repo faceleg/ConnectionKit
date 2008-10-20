@@ -82,7 +82,7 @@
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [self document];
+	return [[self page] documentInfo];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
@@ -105,7 +105,7 @@
 	if (!collectionID || [collectionID isEqualToString:@""])
 		return;
 	
-	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[self managedObjectContext]];
+	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
 	if (target)
 	{
 		[[self delegateOwner] setValue:target forKey:@"collection"];

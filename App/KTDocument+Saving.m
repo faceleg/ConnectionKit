@@ -16,7 +16,7 @@
 #import "KTDocumentInfo.h"
 #import "KTHTMLParser.h"
 #import "KTPage.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTUtilities.h"
 

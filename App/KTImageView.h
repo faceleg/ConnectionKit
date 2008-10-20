@@ -19,8 +19,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 @class ImageCropperController;
 @class NSImagePickerController;
+
 
 @interface KTImageView : NSImageView
 {
@@ -35,11 +37,6 @@
 //	NSImagePickerController *myPickController;
 }
 
-+ (void)clearCachedIPhotoInfoDict;
-+ (BOOL)populateDictionary:(NSMutableDictionary *)aDictionary
- orderedImageTypesAccepted:(NSArray *)orderedTypes
-            fromPasteboard:(NSPasteboard *)pasteboard
-					 index:(unsigned int)anIndex;
 
 // Accessors
 - (NSDictionary *)dataSourceDictionary;

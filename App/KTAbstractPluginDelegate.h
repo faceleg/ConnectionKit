@@ -41,30 +41,15 @@
 #pragma mark accessors
 
 - (id)delegateOwner;
-- (KTPage *)page;
 - (void)setDelegateOwner:(id)anObject; // sets only a weak reference
+- (KTPage *)page;
 
 // these are covers for the same accessors in myDelegateOwner
 - (NSBundle *)bundle;
-- (KTDocument *)document;
-- (NSManagedObjectContext *)managedObjectContext;
+
 - (KTMediaManager *)mediaManager;
-//- (KTOldMediaManager *)oldMediaManager;
-- (NSMutableDictionary *)pluginProperties;
 - (NSUndoManager *)undoManager;
 
-// covers that handle context locking for multi-threaded use
-// deprecated
-- (BOOL)lockContextIfNeeded;
-- (void)unlockContextIfNeeded:(BOOL)didLock;
-
-#pragma mark content change propagation
-
-/*! when a page receives a notification that its content has changed we ask the
-	page's delegate which properties propagate up and down the heirachy of pages */
-- (NSArray *)propertiesPropagatingToParent;
-- (NSArray *)propertiesPropagatingToChildren;
-
-- (NSArray *)reservedMediaRefNames;
+- (BOOL)documentIsPublishing;
 
 @end

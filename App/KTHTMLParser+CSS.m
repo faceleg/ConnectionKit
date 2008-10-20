@@ -10,7 +10,7 @@
 #import "KTHTMLParser+Private.h"
 
 #import "KTAbstractPluginDelegate.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 #import "KTArchivePage.h"
 

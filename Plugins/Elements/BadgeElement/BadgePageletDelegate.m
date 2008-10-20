@@ -104,7 +104,7 @@ static NSArray *sAltStrings = nil;
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *) generateBlurbVariant:(int)aVariant
 {
-	NSString *seedString = [[[self document] documentInfo] URIRepresentationString];
+	NSString *seedString = [[[self page] documentInfo] URIRepresentationString];
 	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] sha1Digest];
 	unsigned char *bytes = (unsigned char *)[hashData bytes];
 	// we have a nice 20-byte hash .... now to boil this down to a very small number!
@@ -184,9 +184,9 @@ static NSArray *sAltStrings = nil;
 	}
 }
 
-- (IBAction) badgeClicked:(id)sender
+- (IBAction)badgeClicked:(id)sender
 {
-	[[self pluginProperties] setInteger:[sender tag] forKey:@"badgeTypeTag"];
+	[[self delegateOwner] setInteger:[sender tag] forKey:@"badgeTypeTag"];
 }
 
 - (void)dealloc

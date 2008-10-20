@@ -10,9 +10,13 @@
 
 #import "Debug.h"
 #import "KTDocument.h"
+#import "KTDocWindowController.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
+#import "KTHTMLParser.h"
+
 #import "NSManagedObject+KTExtensions.h"
+
 
 @implementation KTAbstractPluginDelegate
 
@@ -68,25 +72,9 @@
 
 - (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }
 
-//- (KTOldMediaManager *)oldMediaManager
-//{
-//	return [myDelegateOwner oldMediaManager];
-//}
-
-- (NSMutableDictionary *)pluginProperties {	return [[self delegateOwner] pluginProperties]; }
-
-- (NSUndoManager *)undoManager { return [[self delegateOwner] undoManager]; }
-
-- (BOOL)lockContextIfNeeded
+- (NSUndoManager *)undoManager
 {
-	LOG((@"lockContextIfNeeded is deprecated -- who's calling me?"));
-	return [myDelegateOwner lockContextIfNeeded];
-}
-
-- (void)unlockContextIfNeeded:(BOOL)didLock
-{
-	LOG((@"unlockContextIfNeeded is deprecated -- who's calling me?"));
-	[myDelegateOwner unlockContextIfNeeded:didLock];
+    return [[[self delegateOwner] managedObjectContext] undoManager];
 }
 
 - (KTPage *)page;
@@ -122,25 +110,13 @@
 	myDelegateOwner = anObject;
 }
 
-#pragma mark content change propagation
-
-/*! when a page receives a notification that its content has changed we ask the
-page's delegate which properties propagate up and down the heirachy of pages */
-- (NSArray *)propertiesPropagatingToParent
+/*  Plugins aren't allowed access to KTDocument or KTDocWindowController.
+ *  This method allows them access to the publishing status.
+ */
+- (BOOL)documentIsPublishing
 {
-	return [NSArray array];
-}
-
-- (NSArray *)propertiesPropagatingToChildren
-{
-	return [NSArray array];
-}
-
-#pragma mark media ref management
-
-- (NSArray *)reservedMediaRefNames
-{
-	return [NSArray array];
+    KTHTMLGenerationPurpose status = [[[self document] windowController] publishingMode]; 
+    return (status != kGeneratingPreview && status != kGeneratingQuickLookPreview);
 }
 
 @end

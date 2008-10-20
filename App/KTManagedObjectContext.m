@@ -308,33 +308,14 @@ static NSString *sMainThreadID = nil;
 {
 	// no need to check thread; obviously we can lock from another thread
 	myLockCount++;
-	if ( [self isDocumentMOC] )
-	{
-		OFF((@"MOC+++++ %p   lock, now = %d", self, myLockCount));
-	}
 	return [super lock];
 }
 - (void)unlock
 {
 	// no need to check thread; obviously we can lock from another thread
 	myLockCount--;
-	if ( [self isDocumentMOC] )
-	{
-		OFF((@"MOC----- %p unlock, now = %d", self, myLockCount));
-	}
-	if (myLockCount == 0)
-	{
-		if ( [self isDocumentMOC] )
-		{
-			OFF((@"MOC-------------------- %p", self));
-		}
-	}
 	if (myLockCount < 0)
 	{
-		if ( [self isDocumentMOC] )
-		{
-			LOG((@"unlock of KTManagedObjectContext -- Less than zero!"));
-		}
 		myLockCount = 0;
 	}
 	return [super unlock];

@@ -70,7 +70,7 @@
 #import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
 #import "KTInfoWindowController.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTTranscriptController.h"
 #import "KTHTMLTextBlock.h"
 #import "KTUtilities.h"

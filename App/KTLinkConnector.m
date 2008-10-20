@@ -7,6 +7,9 @@
 //
 
 #import "KTLinkConnector.h"
+
+#import "KTDocument.h"
+
 #import "Debug.h"
 
 NSRect KTRectFromPoints(NSPoint point1, NSPoint point2);
@@ -122,7 +125,7 @@ static KTLinkConnector *_sharedConnector = nil;
 		
 		while (curWindow = [winEnum nextObject])
 		{
-			if ([[curWindow windowController] document] != ui)
+			if ([[[curWindow windowController] document] documentInfo] != ui)
 			{
 				continue; // we only want to allow links to the same document
 			}
