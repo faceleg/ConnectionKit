@@ -126,25 +126,6 @@
 	}
 }
 
-- (BOOL)isReadOnly
-{
-	BOOL result = NO; // default is that we assume we are writable
-	
-	NSString *documentPath = [[self fileURL] path];
-	if ( nil != documentPath )
-	{
-		BOOL isWithinAppWrapper = [documentPath hasPrefix:[[NSBundle mainBundle] bundlePath]];
-		BOOL isWritableAtPath = [[NSFileManager defaultManager] isWritableFileAtPath:documentPath];
-		
-		if ( isWithinAppWrapper || !isWritableAtPath )
-		{
-			result = YES;
-		}
-	}
-	
-	return result;
-}
-
 - (KTTransferController *)localTransferController
 {
     return myLocalTransferController;

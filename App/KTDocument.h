@@ -178,8 +178,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (KTStalenessManager *)stalenessManager;
 
-- (BOOL)isReadOnly;
-
 - (NSThread *)thread;
 - (void)setThread:(NSThread *)thread;
 

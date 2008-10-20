@@ -672,42 +672,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	// Is there actually anything to be saved?
 	if ([self isDocumentEdited])
 	{
-		if ([self isReadOnly])
-		{
-			// Document is read only, offer to Save As...
-			NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"This document is read-only. Would you like to save it to a new location?", 
-			"alert message text: Document is read-only.") 
-			defaultButton:NSLocalizedString(@"Save As...",
-			"Save As... Button") 
-			alternateButton:NSLocalizedString(@"Don\\U2019t Save",
-			"Don't Save Button") 
-			otherButton:NSLocalizedString(@"Cancel",
-			"Cancel Button")
-								 informativeTextWithFormat:NSLocalizedString(@"If you don\\U2019t save, your changes will be lost.",
-			"alert informative text: If you don’t save, your changes will be lost.")];
-			
-			NSMutableDictionary *alertContextInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			@"canCloseDocumentWithDelegate:", @"context",
-			delegate, @"delegate",
-			NSStringFromSelector(shouldCloseSelector), @"selector",
-			nil];
-			
-			[alert beginSheetModalForWindow:[[self windowController] window]
-							  modalDelegate:self 
-			didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
-			contextInfo:[alertContextInfo retain]];
-			return;
-		}
-		else
-		{
-			// Go for it, save the document!
-			[self saveToURL:[self fileURL]
-					 ofType:[self fileType]
-		   forSaveOperation:NSSaveOperation
-				   delegate:self
-			didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
-				contextInfo:[callback retain]];		// Our callback method will release it
-		}
+        // Go for it, save the document!
+        [self saveToURL:[self fileURL]
+                 ofType:[self fileType]
+       forSaveOperation:NSSaveOperation
+               delegate:self
+        didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
+            contextInfo:[callback retain]];		// Our callback method will release it
 	}
 	else
 	{
@@ -846,14 +817,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	OFF((@"KTDocument validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	
 	// File menu	
-	// "Save Snapshot" saveDocumentSnapshot:
-	if ( [menuItem action] == @selector(saveDocumentSnapshot:) ) 
-	{
-		return ![self isReadOnly];
-	}
-	
 	// "Save As..." saveDocumentAs:
-	else if ( [menuItem action] == @selector(saveDocumentAs:) )
+	if ( [menuItem action] == @selector(saveDocumentAs:) )
 	{
 		return YES;
 	}
