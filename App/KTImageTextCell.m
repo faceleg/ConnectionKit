@@ -77,7 +77,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	{
         [self setImage:nil];
         [self setPadding:DEFAULT_PADDING];
-		[self setStaleness:kNotStale];
+//		[self setStaleness:kNotStale]; // enum removed, staleness flag has changed
         
 		myImageCell = [[NSImageCell alloc] initImageCell:nil];
 		[myImageCell setImageAlignment:NSImageAlignCenter];
