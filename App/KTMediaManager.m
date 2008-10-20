@@ -307,6 +307,13 @@ NSString *KTMediaLogDomain = @"Media";
 
 @implementation KTMediaManager (LegacySupport)
 
+typedef enum {
+    KTMediaCopyAliasStorage = 10, 
+    KTMediaCopyContentsStorage, // default, stores a copy of the file in the datastore
+    KTMediaCopyFileStorage,
+	KTMediaPlaceholderStorage	// a singleton
+} KTMediaStorageType;
+
 - (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement
 {
     KTMediaContainer *result = nil;
