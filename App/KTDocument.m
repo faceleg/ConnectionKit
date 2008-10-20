@@ -118,8 +118,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)setupTransferControllers;
 - (void)windowControllerWillLoadNib:(NSWindowController *)windowController;
 
-- (NSDate *)lastSnapshotDate;
-
 @end
 
 
@@ -281,7 +279,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [self setLocalTransferController:nil];
     [self setRemoteTransferController:nil];
     [self setExportTransferController:nil];
-	[mySnapshotURL release];
 	
 	[myStalenessManager stopObservingAllPages];
 	[myStalenessManager release];
@@ -1346,33 +1343,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Snapshots
 
-- (IBAction)saveDocumentSnapshot:(id)sender
-{
-	if ([self hasValidSnapshot])
-	{
-		NSDate *snapshotDate = [self lastSnapshotDate];
-		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-		
-		NSString *title = NSLocalizedString(
-											@"Do you want to replace the last snapshot?", @"alert: replace snapshot title");		
-		NSString *message = [NSString stringWithFormat: NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
-		
-		// confirm with silencing confirm sheet
-		[[self confirmWithWindow:[[self windowController] window]
-					silencingKey:@"SilenceSaveDocumentSnapshot"
-					   canCancel:YES 
-						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")
-						 silence:nil 
-						   title:title
-						  format:message] snapshotPersistentStore];
-	}
-	else
-	{
-		// nothing to replace, just create the snapshot
-		[self snapshotPersistentStore];
-	}
-}
-
 - (IBAction)revertDocumentToSnapshot:(id)sender
 {
 	if ( [self hasValidSnapshot] )
@@ -1400,83 +1370,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// should never reach here if menu validation is working
 		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
 	}
-}
-
-- (NSDate *)lastSnapshotDate
-{
-	NSDate *result = nil;
-	
-	// grab date of last save
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSDictionary *attrs = [fm fileAttributesAtPath:[[self snapshotURL] path] traverseLink:YES];
-	
-	// try modDate then creationDate
-	result = [attrs valueForKey:NSFileModificationDate];
-	if ( nil == result )
-	{
-		result = [attrs valueForKey:NSFileCreationDate];
-	}
-	
-	return result;
-}
-
-- (BOOL)hasValidSnapshot
-{
-	BOOL result = NO;
-	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *snapshotPath = [[self snapshotURL] path];
-	result = [fm fileExistsAtPath:snapshotPath];
-	result = result && [[NSFileManager defaultManager] isReadableFileAtPath:snapshotPath];
-	
-	return result;
-}
-
-- (BOOL)createSnapshotDirectoryIfNecessary
-{
-	NSString *directoryPath = [[self snapshotDirectoryURL] path];
-	
-    NSError *localError = nil;
-    BOOL result = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
-    
-    if ( nil != localError )
-	{
-		// put up an error alert
-    }
-    
-    return result;
-}
-
-/*! returns <fileName>.svxSite */
-- (NSString *)snapshotName
-{
-	NSString *fileName = [[self fileURL] lastPathComponent];
-	//return [NSString stringWithFormat:NSLocalizedString(@"Snapshot of %@", "snapshot of"), fileName];
-	return fileName;
-}
-
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
-- (NSURL *)snapshotDirectoryURL
-{
-	return [[self snapshotURL] URLByDeletingLastPathComponent];
-}
-
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
-- (NSURL *)snapshotURL
-{
-    if (!mySnapshotURL)
-	{
-		// construct path
-		NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
-        mySnapshotURL = [[[appSupportURL
-                            URLByAppendingPathComponent:@"Snapshots" isDirectory:YES]
-                             URLByAppendingPathComponent:[[self documentInfo] siteID] isDirectory:YES]
-                              URLByAppendingPathComponent:[self snapshotName] isDirectory:NO];
-        
-		[mySnapshotURL retain];
-    }
-    
-    return mySnapshotURL;
 }
 
 #pragma mark -

@@ -17,14 +17,17 @@
 #import "KTPage.h"
 #import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
+#import "KTUtilities.h"
 
 #import "KTWebKitCompatibility.h"
 
-#import "CIImage+Karelia.h"
+#import "NSApplication+Karelia.h"
+#import "NSDate+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
+#import "NSInvocation+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
@@ -33,6 +36,9 @@
 #import "NSWorkspace+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "CIImage+Karelia.h"
+
+#import "KSSilencingConfirmSheet.h"
 #import "KSThreadProxy.h"
 
 #import <Connection/Connection.h>
@@ -86,6 +92,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
 - (NSImage *)_quickLookThumbnail;
 - (NSString *)quickLookPreviewHTML;
+
+// Snapshots
+- (void)_saveDocumentSnapshotWithDelegate:(id)delegate didSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
+- (BOOL)createSnapshotDirectoryIfNeeded:(NSError **)outError;
 
 @end
 
@@ -1020,6 +1030,239 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  */
 - (NSURL *)autosavedContentsFileURL { return nil; }
 - (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL { }
+
+#pragma mark -
+#pragma mark Save Snapshot
+
+- (IBAction)saveDocumentSnapshot:(id)sender
+{
+    [self saveSnapshotWithDelegate:nil didSaveSnapshotSelector:nil contextInfo:NULL];
+}
+
+/*  Handles the GUI-side of snapshots.
+ *      1. If needed, asks the user if they want to replace the last snapshot
+ *      2. Saves the snapshot
+ *      3. Presents any error encountered during saving
+ */
+- (void)saveSnapshotWithDelegate:(id)delegate didSaveSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo
+{
+    OBASSERT([NSThread isMainThread]);
+    
+    
+    if ([self hasValidSnapshot])
+	{
+		NSDate *snapshotDate = [self lastSnapshotDate];
+		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
+		
+		NSString *title = NSLocalizedString(@"Do you want to replace the last snapshot?", @"alert: replace snapshot title");		
+		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
+		
+		// confirm with silencing confirm sheet
+		[[self confirmWithWindow:[[self windowController] window]
+					silencingKey:@"SilenceSaveDocumentSnapshot"
+					   canCancel:YES 
+						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")
+						 silence:nil 
+						   title:title
+						  format:message] _saveDocumentSnapshotWithDelegate:delegate didSnapshotSelector:selector contextInfo:contextInfo];
+	}
+	else
+	{
+		[self _saveDocumentSnapshotWithDelegate:delegate didSnapshotSelector:selector contextInfo:contextInfo];
+	}
+}
+
+
+/*  Support for the public version of this method; doesn't do any checks for existing snapshots
+ */
+- (void)_saveDocumentSnapshotWithDelegate:(id)delegate didSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo
+{
+    // Do the save
+    NSError *error;
+    BOOL result = [self saveSnapshot:&error];
+    
+    
+    // Build callback
+    NSInvocation *callback = nil;
+    if (delegate && selector)
+    {
+        callback = [NSInvocation invocationWithSelector:selector target:delegate];
+        [callback setArgument:&self atIndex:2];
+        [callback setArgument:&result atIndex:3];
+        [callback setArgument:&contextInfo atIndex:4];
+    }
+    
+    
+    // Either present error, or inform delegate
+    if (result)
+    {
+        [callback invoke];
+    }
+    else
+    {
+        [self presentError:error
+            modalForWindow:[self windowForSheet]
+                  delegate:self
+        didPresentSelector:@selector(didPresentSaveSnapshotErrorWithRecovery:contextInfo:)
+               contextInfo:[callback retain]];  // Callback will be released later
+    }
+}
+
+- (void)didPresentSaveSnapshotErrorWithRecovery:(BOOL)didRecover contextInfo:(void *)contextInfo
+{
+    NSInvocation *callback = contextInfo;
+    [callback invoke];
+    [callback release];
+}
+
+/*  Performs the low-level business of snapshotting. No GUI.
+ */
+- (BOOL)saveSnapshot:(NSError **)outError
+{
+    NSArray *files = nil;
+	int tag = 0;
+	
+    
+	// Recycle existing snapshot if there is one
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *snapshotPath = [[self snapshotURL] path];
+	if ([fm fileExistsAtPath:snapshotPath])
+	{
+		files = [NSArray arrayWithObject:[snapshotPath lastPathComponent]];
+		BOOL didMoveOldSnapshotToTrash = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
+																					  source:[[self snapshotDirectoryURL] path]
+																				 destination:nil
+																					   files:files 
+																						 tag:&tag];
+		if (!didMoveOldSnapshotToTrash)
+		{
+			// Deleting snapshot failed, return an error
+            if (outError)
+            {
+                NSString *snapshotPathAsDisplayPath = [[snapshotPath stringByAbbreviatingWithTildeInPath] stringBySubstitutingRightArrowForPathSeparator];
+                NSString *failureReason = [NSString stringWithFormat:NSLocalizedString(@"Sandvox was unable to move this document's previous snapshot to the Trash. Please remove the document at %@.", "alert: could not remove prior snap"),
+                                           snapshotPathAsDisplayPath];
+                
+                NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
+                                               failureReason, NSLocalizedRecoverySuggestionErrorKey,
+                                               nil];
+                
+                *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
+                return NO;
+            }
+		}
+	}
+	else
+	{
+		// Create snapshot directory, if needed
+		if (![self createSnapshotDirectoryIfNeeded:outError])
+        {
+            return NO;
+        }
+	}
+	
+	
+	NSError *saveError;
+	BOOL result = [self saveToURL:[self snapshotURL]
+                           ofType:kKTDocumentType
+                 forSaveOperation:NSSaveToOperation
+                            error:&saveError];
+	
+	
+	if (!result && outError)
+	{
+		NSString *snapshotsDirectory = [[self snapshotDirectoryURL] path];
+		NSString *failureReason = [NSString stringWithFormat:
+                                   NSLocalizedString(@"Sandvox was unable to create a snapshot of this document. Please check that the folder %@ exists and is writeable.", "alert: could not remove prior snap"),
+                                   [snapshotsDirectory stringByAbbreviatingWithTildeInPath]];
+        
+        NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
+                                       failureReason, NSLocalizedRecoverySuggestionErrorKey,
+                                       saveError, NSUnderlyingErrorKey,
+                                       nil];
+        
+        *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
+	}
+    
+    return result;
+}
+
+#pragma mark support
+
+/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
+- (NSURL *)snapshotDirectoryURL
+{
+	NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
+    NSURL *result = [[appSupportURL
+                      URLByAppendingPathComponent:@"Snapshots" isDirectory:YES]
+                     URLByAppendingPathComponent:[[self documentInfo] siteID] isDirectory:YES];
+    
+    return result;
+}
+
+/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
+- (NSURL *)snapshotURL
+{
+    NSURL *result = [[self snapshotDirectoryURL] URLByAppendingPathComponent:[[self fileURL] lastPathComponent] isDirectory:NO];
+    return result;
+}
+
+- (BOOL)hasValidSnapshot
+{
+	BOOL result = NO;
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *snapshotPath = [[self snapshotURL] path];
+	result = [fm fileExistsAtPath:snapshotPath];
+	result = result && [[NSFileManager defaultManager] isReadableFileAtPath:snapshotPath];
+	
+	return result;
+}
+
+- (NSDate *)lastSnapshotDate
+{
+	NSDate *result = nil;
+	
+	// grab date of last save
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSDictionary *attrs = [fm fileAttributesAtPath:[[self snapshotURL] path] traverseLink:YES];
+	
+	// try modDate then creationDate
+	result = [attrs valueForKey:NSFileModificationDate];
+	if ( nil == result )
+	{
+		result = [attrs valueForKey:NSFileCreationDate];
+	}
+	
+	return result;
+}
+
+- (BOOL)createSnapshotDirectoryIfNeeded:(NSError **)outError
+{
+	NSString *directoryPath = [[self snapshotDirectoryURL] path];
+	
+    NSError *localError = nil;
+    BOOL result = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
+    
+    if (!result)
+	{
+		NSString *failureReason = [NSString stringWithFormat:
+                                   NSLocalizedString(@"Unable to create snapshot folder at %@.", "alert failure reason"),
+                                   [directoryPath stringByAbbreviatingWithTildeInPath]];
+        
+        NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
+                                       failureReason, NSLocalizedRecoverySuggestionErrorKey,
+                                       localError, NSUnderlyingErrorKey,
+                                       nil];
+        
+        *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
+    }
+    
+    return result;
+}
 
 #pragma mark -
 #pragma mark Change Count

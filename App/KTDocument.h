@@ -68,9 +68,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTTransferController		*myLocalTransferController;
 	KTTransferController		*myRemoteTransferController;
 	KTTransferController		*myExportTransferController;
-			
-	NSURL       *mySnapshotURL;
-		
+					
 	
 	// UI
 	BOOL	myShowDesigns;						// accessor in category method
@@ -125,14 +123,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSURL *)backupURL;
 
 // snapshot support
-- (IBAction)saveDocumentSnapshot:(id)sender;
 - (IBAction)revertDocumentToSnapshot:(id)sender;
-
-- (BOOL)createSnapshotDirectoryIfNecessary;
-- (NSString *)snapshotName;
-- (NSURL *)snapshotDirectoryURL;
-- (NSURL *)snapshotURL;
-- (BOOL)hasValidSnapshot;
 
 - (BOOL)isClosing;
 
@@ -172,7 +163,6 @@ extern NSString *KTDocumentWillSaveNotification;
 											error:(NSError **)error;
 
 // snapshots
-- (void)snapshotPersistentStore;
 - (void)revertPersistentStoreToSnapshot;
 
 // spotlight
@@ -263,6 +253,18 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)isSaving;
 
+#pragma mark Snapshots
+- (IBAction)saveDocumentSnapshot:(id)sender;
+- (void)saveSnapshotWithDelegate:(id)delegate didSaveSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
+- (BOOL)saveSnapshot:(NSError **)error;
+
+- (NSURL *)snapshotDirectoryURL;
+- (NSURL *)snapshotURL;
+
+- (BOOL)hasValidSnapshot;
+- (NSDate *)lastSnapshotDate;
+
+#pragma mark Other
 - (void)processPendingChangesAndClearChangeCount;
 
 @end
