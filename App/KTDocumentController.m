@@ -33,6 +33,7 @@
 
 #import "BDAlias.h"
 #import "KSApplication.h"
+#import "KSProgressPanel.h"
 #import "KSRegistrationController.h"
 
 #import "Debug.h"
@@ -173,8 +174,13 @@
 	//  Put up a progress bar
 	NSImage *newDocumentImage = [NSImage imageNamed:@"document.icns"];
 	NSString *progressMessage = NSLocalizedString(@"Creating Site...",@"Creating Site...");
-	[[NSApp delegate] showGenericProgressPanelWithMessage:progressMessage image:newDocumentImage];
-    
+	
+    KSProgressPanel *progressPanel = [[KSProgressPanel alloc] init];
+    [progressPanel setMessageText:progressMessage];
+    [progressPanel setInformativeText:nil];
+    [progressPanel setIcon:newDocumentImage];
+    [progressPanel makeKeyAndOrderFront:self];
+        
 	
     KTDocument *result = nil;
     @try    // To remove the progress bar if something goes wrong
@@ -306,7 +312,8 @@
     @finally
 	{
 		// Hide the progress window
-		[[NSApp delegate] hideGenericProgressPanel];
+		[progressPanel performClose:self];
+        [progressPanel release];
 	}
     
         

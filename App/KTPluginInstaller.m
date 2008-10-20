@@ -16,6 +16,7 @@
 #import "NSError+Karelia.h"
 #import "KSAppDelegate.h"
 #import "KSPlugin.h"
+#import "KSProgressPanel.h"
 
 #import "NSObject+Karelia.h"
 
@@ -44,14 +45,21 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 - (void)dealloc
 {
 	[myURLs release];
+    [myProgressPanel release];
+    
 	[super dealloc];
 }
 
 - (void)queueURL:(NSURL *)aURL		// cancel queued requests and queue up another one.
 {
-	if (0 == [myURLs count])
+	if (0 == [myURLs count] && !myProgressPanel)
 	{
-		[[NSApp delegate] showGenericProgressPanelWithMessage:@"Installing Plugins..." image:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
+        myProgressPanel = [[KSProgressPanel alloc] init];
+        [myProgressPanel setMessageText:@"Installing Plugins..."];
+        [myProgressPanel setInformativeText:nil];
+        [myProgressPanel setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
+        
+        [myProgressPanel makeKeyAndOrderFront:self];
 	}
 	
 	[myURLs addObject:aURL];
@@ -111,7 +119,9 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 		}
 	}
 	[myURLs removeAllObjects];
-	[[NSApp delegate] hideGenericProgressPanel];
+	
+    [myProgressPanel performClose:self];
+    [myProgressPanel release];  myProgressPanel = nil;
 	
 	// First, announce what was installed.
 	if ([successURLs count])

@@ -30,6 +30,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KSEmailAddressComboBox.h"
 #import "KSNetworkNotifier.h"
 #import "KSPluginInstallerController.h"
+#import "KSProgressPanel.h"
 #import "KSRegistrationController.h"
 #import "KSSilencingConfirmSheet.h"
 #import "KSUtilities.h"
@@ -982,10 +983,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//	LOG((@"applicationDidFinishLaunching:... called from thread %X machine = %@", [NSThread currentThread], [KTApplication machineName]));
+
 	
-    //LOG((@"Sandvox: applicationDidFinishLaunching: %@", aNotification));
-	@try
+	KSProgressPanel *progressPanel = nil;
+    @try
 	{
 		// just to be sure, make sure that webview is loaded
 		(void) [KTWebView class];
@@ -1031,14 +1032,17 @@ IMPLEMENTATION NOTES & CAUTIONS:
         
         
 		// put up a splash panel with a progress indicator
-		[self showGenericProgressPanelWithMessage:NSLocalizedString(@"Initializing...",
-                                                                    "Message while initializing launching application.")
-											image:nil];
+		progressPanel = [[KSProgressPanel alloc] init];
+        [progressPanel setMessageText:NSLocalizedString(@"Initializing...",
+                                                        "Message while initializing launching application.")];
+        [progressPanel setInformativeText:nil];
+        [progressPanel makeKeyAndOrderFront:self];
 
 
 		// load plugins
-        [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Loading Plug-ins...",
-                                                                      "Message while loading plugins.")];
+        [progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plugins.")];
+        
+        
 		// build menus
 		[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
 							 toMenu:oAddPageMenu
@@ -1059,8 +1063,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 									pullsDown:NO
 									showIcons:YES smallIcons:NO smallText:NO];
 		
-        [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Building Menus...",
-                                                                      "Message while building menus.")];
+        [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 		[self buildSampleSitesMenu];
 		
 		if ( [defaults boolForKey:@"DisplayInfo"] )
@@ -1075,8 +1078,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
         if (!firstRun)
         {
-            [self updateGenericProgressPanelWithMessage:NSLocalizedString(@"Searching for previously opened documents...",
-                                                                          "Message while checking documents.")];
+            [progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
+                                                            "Message while checking documents.")];
             
             // figure out if we should create or open document(s)
             BOOL openLastOpened = [defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"];
@@ -1138,10 +1141,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
                         }				
                         
                         NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
-                        [oGenericProgressTextField setStringValue:message];
-                        [oGenericProgressImageView setImage:[NSImage imageNamed:@"document"]];
-						[oGenericProgressImageView display];
-                       [oGenericProgressTextField displayIfNeeded];
+                        [progressPanel setMessageText:message];
+                        [progressPanel setIcon:[NSImage imageNamed:@"document"]];
                         
                         NSURL *fileURL = [NSURL fileURLWithPath:path];
                         
@@ -1201,7 +1202,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                         }
                     }
 
-					[self hideGenericProgressPanel];	// hide this FIRST
+					[progressPanel performClose:self];	// hide this FIRST
 
                     NSAlert *alert = [[NSAlert alloc] init];
                     [alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
@@ -1214,7 +1215,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                 }
             }
             
-			[self hideGenericProgressPanel];
+			[progressPanel performClose:self];
         }
         
         
@@ -1231,7 +1232,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	@finally
 	{
-		[self hideGenericProgressPanel];
+		[progressPanel performClose:self];
+        [progressPanel release];
 	}
 
 	

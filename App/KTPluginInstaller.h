@@ -9,9 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface KTPluginInstaller : NSDocument {
+@class KSProgressPanel;
 
-	NSMutableArray *myURLs;
+
+@interface KTPluginInstaller : NSDocument
+{
+    @private
+    NSMutableArray  *myURLs;
+    KSProgressPanel *myProgressPanel;
 }
 
 @end

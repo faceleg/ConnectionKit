@@ -547,7 +547,6 @@
 		79EC3C030973CECD00FE7D50 /* upload_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC3C020973CECD00FE7D50 /* upload_complete.png */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		CE018C040DB6D7DE003E008B /* KSGenericProgress.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */; };
 		CE018C050DB6D7DE003E008B /* KSPDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */; };
 		CE018C060DB6D7DE003E008B /* KSRTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */; };
 		CE018C170DB6D7F1003E008B /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE018C070DB6D7F1003E008B /* KSBugReporterViews.nib */; };
@@ -1970,7 +1969,6 @@
 		79EC3C020973CECD00FE7D50 /* upload_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_complete.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sandvox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandvox.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSGenericProgress.nib; path = ../../../Shared/trunk/App/KSGenericProgress.nib; sourceTree = SOURCE_ROOT; };
 		CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSPDFWindow.nib; path = ../../../Shared/trunk/App/KSPDFWindow.nib; sourceTree = SOURCE_ROOT; };
 		CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = KSRTFDWindow.nib; path = ../../../Shared/trunk/App/KSRTFDWindow.nib; sourceTree = SOURCE_ROOT; };
 		CE018C080DB6D7F1003E008B /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = ../../../Shared/trunk/App/da.lproj/KSBugReporterViews.nib; sourceTree = SOURCE_ROOT; };
@@ -4345,7 +4343,6 @@
 				CE018C110DB6D7F1003E008B /* KSKeepInTouch.nib */,
 				CE018C130DB6D7F1003E008B /* KSRegistration.nib */,
 				CE018C150DB6D7F1003E008B /* KSSilencingWarningSheet.nib */,
-				CE018C010DB6D7DE003E008B /* KSGenericProgress.nib */,
 				CE018C020DB6D7DE003E008B /* KSPDFWindow.nib */,
 				CEA2BA360DC79F0C00A8023F /* KSWebViewWindow.nib */,
 				CE018C030DB6D7DE003E008B /* KSRTFDWindow.nib */,
@@ -5487,7 +5484,6 @@
 				CE7230EA0D85D5BB00E9C592 /* syringe.tiff in Resources */,
 				CE7231220D85D96F00E9C592 /* favicon.icns in Resources */,
 				27E3F82E0D9C32F500A64154 /* DocumentMigration.nib in Resources */,
-				CE018C040DB6D7DE003E008B /* KSGenericProgress.nib in Resources */,
 				CE018C050DB6D7DE003E008B /* KSPDFWindow.nib in Resources */,
 				CE018C060DB6D7DE003E008B /* KSRTFDWindow.nib in Resources */,
 				CE018C170DB6D7F1003E008B /* KSBugReporterViews.nib in Resources */,
