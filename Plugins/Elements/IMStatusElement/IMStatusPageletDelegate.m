@@ -10,13 +10,8 @@
 
 #import "IMStatusService.h"
 
-#import "SandvoxPlugin.h"
-
-#import <ValuesAreEqualTransformer.h>
-
 #import "ABPerson+IMStatus.h"
 #import <AddressBook/AddressBook.h>
-#import "NSImage+KTExtensions.h"
 
 NSString *IMServiceKey = @"service";
 NSString *IMHTMLKey = @"html"; 
@@ -28,7 +23,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 @interface IMStatusPageletDelegate (Private)
 - (NSString *)onlineImagePath;
 - (NSString *)offlineImagePath;
-- (NSString *)cacheConfuser;
 @end
 
 
@@ -222,7 +216,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 		}
 		else {
 			NSURL *baseURL = [NSURL fileURLWithPath:onlineImagePath];
-			onlineImagePath = [[NSURL URLWithString:[self cacheConfuser] relativeToURL:baseURL] absoluteString];
+			onlineImagePath = [baseURL absoluteString];
 		}
 		
 		[result replaceOccurrencesOfString:@"#ONLINE#" 
@@ -240,7 +234,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 		}
 		else {
 			NSURL *baseURL = [NSURL fileURLWithPath:offlineImagePath];
-			offlineImagePath = [[NSURL URLWithString:[self cacheConfuser] relativeToURL:baseURL] absoluteString];
+			offlineImagePath = [baseURL absoluteString];
 		}
 		
 		[result replaceOccurrencesOfString:@"#OFFLINE#" 
@@ -314,17 +308,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 	return result;
 }
 
-- (NSString *)cacheConfuser
-{
-	NSString *result = @"";
-	if ([[[self document] windowController] publishingMode] == kGeneratingPreview)
-	{
-		static int sCacheConfuser = 1;
-		result = [NSString stringWithFormat:@"?cacheConfuser=%d", sCacheConfuser++];
-	}
-	return result;
-}	
-
 - (BOOL) wantBorder
 {
 	BOOL result = [[[myConfigs objectAtIndex:[[[self delegateOwner] objectForKey:@"selectedIMService"] unsignedIntValue]]
@@ -344,7 +327,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
 													 status:[[self delegateOwner] valueForKey:@"onlineText"]];
 		
-		NSData *pngRepresentation = [compositedImage PNGRepresentation];
+		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
+                                                                           properties:[NSDictionary dictionary]];
 		result = [NSTemporaryDirectory() stringByAppendingPathComponent:@"online.png"];
 		[pngRepresentation writeToFile:result atomically:NO];
 	}
@@ -364,8 +348,10 @@ NSString *IMWantBorderKey = @"wantBorder";
 												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
 													 status:[[self delegateOwner] valueForKey:@"offlineText"]];
 		
-		NSData *pngRepresentation = [compositedImage PNGRepresentation];
-		result = [NSTemporaryDirectory() stringByAppendingPathComponent:@"offline.png"];
+		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
+                                                                           properties:[NSDictionary dictionary]];
+		
+        result = [NSTemporaryDirectory() stringByAppendingPathComponent:@"offline.png"];
 		[pngRepresentation writeToFile:result atomically:NO];
 	}
 	

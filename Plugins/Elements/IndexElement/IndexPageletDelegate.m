@@ -91,7 +91,7 @@
 	{
 		if (!value)
 		{
-			[[self delegateOwner] setTitleHTML:[[[self delegateOwner] plugin] pluginPropertyForKey:@"KTPluginUntitledName"]];
+			[[self delegateOwner] setTitleHTML:[[self bundle] objectForInfoDictionaryKey:@"KTPluginUntitledName"]];
 		}
 		else
 		{

@@ -1341,38 +1341,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 }
 
 #pragma mark -
-#pragma mark Snapshots
-
-- (IBAction)revertDocumentToSnapshot:(id)sender
-{
-	if ( [self hasValidSnapshot] )
-	{
-		NSDate *snapshotDate = [self lastSnapshotDate];
-		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-		
-		NSString *titleFormatString = NSLocalizedString(@"Do you want to revert to the most recently saved snapshot?", 
-														"alert: revert to snapshot.");
-		NSString *title = [NSString stringWithFormat:titleFormatString, dateString];
-		
-		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The previous snapshot was saved %@. Your current changes will be lost.", "alert: changes will be lost. %@ is replaced by a date or day+time"), dateString];
-		
-		NSAlert *alert = [NSAlert alertWithMessageText:title 
-										 defaultButton:NSLocalizedString(@"Revert", "Revert Button") 
-									   alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
-										   otherButton:nil
-							 informativeTextWithFormat:message];
-		
-		[alert beginSheetModalForWindow:[[self windowController] window] modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:[[NSDictionary dictionaryWithObject:@"revertDocumentToSnapshot:" forKey:@"context"] retain]];
-	}
-	else
-	{
-		// might want to change this to an alert, though the code
-		// should never reach here if menu validation is working
-		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
-	}
-}
-
-#pragma mark -
 #pragma mark Upload Cache
 
 - (NSString *)uploadCachePath	// returns path without resolving symbolic links

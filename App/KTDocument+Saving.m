@@ -8,6 +8,7 @@
 
 #import "KTDocument.h"
 
+#import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
@@ -1189,7 +1190,52 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
-#pragma mark support
+#pragma mark -
+#pragma mark Revert To Snapshot
+
+/*  Handles the GUI portion of reverting a snapshot
+ */
+- (IBAction)revertDocumentToSnapshot:(id)sender
+{
+	if (![self hasValidSnapshot])
+	{
+		// should never reach here if menu validation is working
+        NSBeep();
+		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
+	}
+	
+    
+	NSDate *snapshotDate = [self lastSnapshotDate];
+    NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
+    
+    NSString *titleFormatString = NSLocalizedString(@"Do you want to revert to the most recently saved snapshot?", 
+                                                    "alert: revert to snapshot.");
+    NSString *title = [NSString stringWithFormat:titleFormatString, dateString];
+    
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The previous snapshot was saved %@. Your current changes will be lost.", "alert: changes will be lost. %@ is replaced by a date or day+time"), dateString];
+    
+    NSAlert *alert = [NSAlert alertWithMessageText:title 
+                                     defaultButton:NSLocalizedString(@"Revert", "Revert Button") 
+                                   alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
+                                       otherButton:nil
+                         informativeTextWithFormat:message];
+    
+    [alert beginSheetModalForWindow:[self windowForSheet]
+                      modalDelegate:self
+                     didEndSelector:@selector(shouldRevertToSnapshotAlertDidEnd:returnCode:contextInfo:)
+                        contextInfo:NULL];
+}
+
+- (void)shouldRevertToSnapshotAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if (returnCode == NSAlertDefaultReturn)
+    {
+        [[NSApp delegate] revertDocument:self toSnapshot:[[self snapshotURL] path]];
+    }
+}
+
+#pragma mark -
+#pragma mark Snapshot Support
 
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
 - (NSURL *)snapshotDirectoryURL

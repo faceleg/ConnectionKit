@@ -36,7 +36,9 @@
 
 #import "SandvoxPlugin.h"
 
-@class KSEmailAddressComboBox, ContactElementFieldsArrayController, ContactElementField;
+
+@class ContactElementFieldsArrayController, ContactElementField;
+
 
 @interface ContactElementDelegate : KTAbstractPluginDelegate
 {

@@ -36,7 +36,6 @@
 
 #import "DiggPageletDelegate.h"
 #import "SandvoxPlugin.h"
-#import <ContainsValueTransformer.h>
 
 
 typedef enum { diggTypePromoted, diggTypeSubmitted, diggTypeUser, diggTypeFriends } diggType;

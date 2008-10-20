@@ -207,32 +207,6 @@
 	return result;
 }
 
-#pragma mark snapshot
-
-- (void)revertPersistentStoreToSnapshot
-{
-	if ([[NSFileManager defaultManager] fileExistsAtPath:[[self snapshotURL] path]])
-	{
-		// message app delegate to take it from here
-		[[NSApp delegate] revertDocument:self toSnapshot:[[self snapshotURL] path]];
-	}
-	else
-	{
-		NSLog(@"error: cannot revert to snapshot %@ , file does not exist!", [[self snapshotURL] absoluteString]);
-	}
-}
-
-
-- (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo
-{
-	LOG((@"File manager error - really an error? %@", [[errorInfo description] condenseWhiteSpace]));
-	return YES;	// always proceed
-}
-
-- (void)fileManager:(NSFileManager *)manager willProcessPath:(NSString *)path
-{
-}
-
 #pragma mark metadata
 
 /*! setMetadataForStoreAtURL: sets all metadata for the store all at once */

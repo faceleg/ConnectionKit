@@ -27,16 +27,6 @@ extern NSString *KTDocumentDidChangeNotification;
 extern NSString *KTDocumentWillCloseNotification;
 
 
-// publishing mode
-typedef enum {
-	kGeneratingPreview = 0,
-	kGeneratingLocal,
-	kGeneratingRemote,
-	kGeneratingRemoteExport,
-	kGeneratingQuickLookPreview = 10,
-} KTHTMLGenerationPurpose;
-
-
 extern NSString *KTDocumentWillSaveNotification;
 
 
@@ -122,9 +112,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)backupToURL:(NSURL *)anotherPath;
 - (NSURL *)backupURL;
 
-// snapshot support
-- (IBAction)revertDocumentToSnapshot:(id)sender;
-
 - (BOOL)isClosing;
 
 - (IBAction)clearStaleness:(id)sender;
@@ -161,9 +148,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
 										   ofType:(NSString *)fileType 
 											error:(NSError **)error;
-
-// snapshots
-- (void)revertPersistentStoreToSnapshot;
 
 // spotlight
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
@@ -263,6 +247,8 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)hasValidSnapshot;
 - (NSDate *)lastSnapshotDate;
+
+- (IBAction)revertDocumentToSnapshot:(id)sender;
 
 #pragma mark Other
 - (void)processPendingChangesAndClearChangeCount;

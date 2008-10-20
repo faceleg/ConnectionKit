@@ -26,7 +26,7 @@
 // defines/enums used throughout Sandvox
 #import "KT.h"
 
-#import "KTDocument.h"
+//#import "KTDocument.h"
 #import "KTDocumentInfo.h"
 
 // debugging
@@ -43,9 +43,6 @@
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
-#import "KTAbstractHTMLPlugin.h"
-#import "KTIndexPlugin.h"
-
 //  major Core Data-based plugin superclasses
 #import "KTAbstractPage.h"
 #import "KTPage.h"
@@ -56,6 +53,7 @@
 #import "KTMediaFileUpload.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
+#import "KTImageScalingSettings.h"
 
 // publishing
 #import "KTHostProperties.h"
@@ -67,14 +65,11 @@
 #import "KTAbstractIndex.h"
 
 // Foundation/AppKit subclasses
-#import "KSSilencingConfirmSheet.h"
 #import "KTImageView.h"
 #import "KSLabel.h"
 #import "KSPlaceholderTableView.h"
 #import "KSSmallDatePicker.h"
-#import "KSSmallDatePickerCell.h"
 #import "KSTrimFirstLineFormatter.h"
-#import "KSValidateCharFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
 #import "KSWebLocation.h"
 
@@ -111,9 +106,6 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
-// CoreImage extensions
-#import "CIImage+Karelia.h"
-
 // AppKit extensions
 #import "NSApplication+Karelia.h"
 #import "NSArrayController+Karelia.h"
@@ -121,21 +113,8 @@
 #import "NSImage+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
-// WebCore extensions
-#import "DOMNode+KTExtensions.h"
-
 // Value Transformers
-#import "CharsetToEncodingTransformer.h"
-#import "ContainerIsEmptyTransformer.h"
 #import "ContainsValueTransformer.h"
-#import "ContainerIsNotEmptyTransformer.h"
-#import "EscapeHTMLTransformer.h"
-#import "RichTextHTMLTransformer.h"
-#import "RowHeightTransformer.h"
-#import "StripHTMLTransformer.h"
-#import "TrimFirstLineTransformer.h"
-#import "TrimTransformer.h"
-#import "StringToNumberTransformer.h"
 #import "ValuesAreEqualTransformer.h"
 
 // general support
@@ -153,7 +132,6 @@
 
 
 #import "KTPluginInspectorViewsManager.h"
-#import "KSPlugin.h"
 
 
 
@@ -165,13 +143,12 @@
 #import "NTBoxView.h"
 #import "KSPathInfoField.h"
 #import "KSPathInfoFieldCell.h"
-#import "KTDesign.h"
 #import "KTMaster.h"
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
 #import "KSPathInfoField.h"
 #import "NSMutableSet+Karelia.h"
 #import "KTHTMLParser.h"
-#import "KTDocWindowController.h"
+//#import "KTDocWindowController.h"
 #import "NSString+KTExtensions.h"
 

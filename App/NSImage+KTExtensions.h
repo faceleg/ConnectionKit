@@ -7,9 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 #import "CIImage+Karelia.h"
 
+
 @class KTImageScalingSettings, KTMedia;
+
 
 @interface NSImage ( KTApplication )
 

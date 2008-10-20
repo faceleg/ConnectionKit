@@ -25,7 +25,7 @@ TO DO:
 
 #import "Debug.h"
 #import "KTDocWindowController.h"
-#import "KTDocument.h"
+#import "KTHTMLParser.h"
 #import "KTWebView.h"
 
 /*

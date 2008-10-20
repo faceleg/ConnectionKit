@@ -67,7 +67,6 @@
 
 - (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse;
 - (KTImageScalingSettings *)imageScalingSettingsForUse:(NSString *)mediaUse;
-- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse;	// e.g. how big a Photo page should be
 
 @end
 

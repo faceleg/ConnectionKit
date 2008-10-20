@@ -20,8 +20,17 @@
 #import <Foundation/Foundation.h>
 #import "KTTemplateParser.h"
 
-#import "KTDocument.h"
 #import "KTWebViewComponentProtocol.h"
+
+
+// publishing mode
+typedef enum {
+	kGeneratingPreview = 0,
+	kGeneratingLocal,
+	kGeneratingRemote,
+	kGeneratingRemoteExport,
+	kGeneratingQuickLookPreview = 10,
+} KTHTMLGenerationPurpose;
 
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTHTMLTextBlock;

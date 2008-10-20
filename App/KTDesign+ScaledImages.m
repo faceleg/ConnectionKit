@@ -111,30 +111,4 @@
 	return result;
 }
 
-
-- (NSSize)maximumMediaSizeForUse:(NSString *)mediaUse
-{
-	// Pull the values out of the design bundle. They may well be nil
-	NSDictionary *allMediaInfo = [[[self bundle] infoDictionary] objectForKey:@"KTScaledImageTypes"];
-	NSDictionary *mediaInfo = [allMediaInfo objectForKey:mediaUse];
-	
-	NSNumber *maxWidth = [mediaInfo objectForKey:@"maxWidth"];
-	NSNumber *maxHeight = [mediaInfo objectForKey:@"maxHeight"];
-	
-	// Replace nil values with the default
-	if (!maxWidth)
-	{
-		maxWidth = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxWidth"];
-	}
-	
-	if (!maxHeight)
-	{
-		maxHeight = [[KTDesign infoForMediaUse:mediaUse] objectForKey:@"maxHeight"];
-	}
-	
-	NSSize result = NSMakeSize([maxWidth unsignedIntValue], [maxHeight unsignedIntValue]);
-	return result;
-}
-
-
 @end

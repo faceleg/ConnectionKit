@@ -10,6 +10,7 @@
 #import <WebKit/WebKit.h>
 
 #import "KTDocumentControllerChain.h"
+#import "KTHTMLParser.h"
 
 
 @class CIFilter;
@@ -101,12 +102,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSPoint							myLastClickedPoint;
 	NSRect							mySelectionRect;
 	
-	// General purpose modal panel
-	IBOutlet NSPanel				*oModalPanel;
-	IBOutlet NSProgressIndicator	*oModalProgress;
-	IBOutlet NSTextField			*oModalStatus;
-	IBOutlet NSImageView			*oModalImage;
-			
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;

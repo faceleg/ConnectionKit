@@ -10,7 +10,7 @@
 #import "KTManagedObject.h"
 
 #import "KT.h"
-#import "KTDocument.h"
+#import "KTHTMLParser.h"
 
 
 @class KTDesign;
@@ -61,4 +61,9 @@
 #pragma mark Placeholder
 - (KTMediaContainer *)placeholderImage;
 
+@end
+
+
+@interface KTMaster (PluginAPI)
+- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse;
 @end

@@ -13,7 +13,6 @@
 
 #import <AmazonSupport/AmazonSupport.h>
 #import "SandvoxPlugin.h"
-#import <ContainsValueTransformer.h>
 
 
 #import "NSURL+AmazonPagelet.h"
