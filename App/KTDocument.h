@@ -130,12 +130,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @end
 
 
-@interface KTDocument ( Alert )
-- (void)delayedAlertSheetWithInfo:(NSDictionary *)anInfoDictionary;
-- (void)alertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(id)contextInfo;
-@end
-
-
 @interface KTDocument ( CoreData )
 
 //- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
