@@ -17,6 +17,7 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString-Utilities.h"

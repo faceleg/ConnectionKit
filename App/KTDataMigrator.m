@@ -29,6 +29,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSManagedObjectModel+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"

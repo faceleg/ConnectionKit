@@ -30,6 +30,7 @@
 #import "NSImage+Karelia.h"
 #import "CIImage+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"

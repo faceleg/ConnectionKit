@@ -17,16 +17,11 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
+
 #import "KSExtensibleManagedObject.h"
-#import "NSObject+Karelia.h"
-#import "NSObject+KTExtensions.h"
 
 
 @interface KTManagedObject : KSExtensibleManagedObject
-{
-}
-
 
 #pragma mark Migration Methods
 

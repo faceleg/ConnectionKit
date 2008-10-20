@@ -28,6 +28,7 @@
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 
+#import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"

@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebViewComponentProtocol.h"
+
 
 typedef enum {
 	KTNavigationArrowsStyleNone,
@@ -26,10 +26,11 @@ typedef enum {
 	KTNavigationArrowsStyleText,
 } KTNavigationArrowsStyle;
 
+
 @class KTPage, KTAbstractHTMLPlugin;
 
 
-@interface KTAbstractIndex : NSObject <KTWebViewComponent>
+@interface KTAbstractIndex : NSObject
 {
 	KTPage *myPage;
 	KTAbstractHTMLPlugin *myPlugin;

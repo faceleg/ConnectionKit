@@ -20,8 +20,6 @@
 
 #import "KTAbstractElement.h"
 
-#import "KTWebViewComponentProtocol.h"
-
 
 typedef enum {
 	KTSidebarPageletLocation = 1,
@@ -34,7 +32,7 @@ typedef enum {
 @class KTManagedObject, KTPage;
 
 
-@interface KTPagelet : KTAbstractElement	<KTWebViewComponent>
+@interface KTPagelet : KTAbstractElement
 {
 }
 

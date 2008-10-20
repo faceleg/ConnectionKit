@@ -15,6 +15,7 @@
 #import "KTPasteboardArchiving.h"
 
 #import "NSEntityDescription+KTExtensions.h"
+#import "NSObject+Karelia.h"
 
 
 @interface KTAbstractElement (Pasteboard)

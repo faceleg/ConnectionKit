@@ -18,6 +18,7 @@
 #import "KTStalenessManager.h"
 
 #import "NSIndexSet+Karelia.h"
+#import "NSObject+Karelia.h"
 
 #import <iMediaBrowser/RBSplitView.h>
 

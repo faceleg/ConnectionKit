@@ -14,6 +14,7 @@
 #import "KTDocument.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSObject+Karelia.h"
 
 #import "Debug.h"
 

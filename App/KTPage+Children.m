@@ -13,6 +13,7 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableArray+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 
 #import "Debug.h"

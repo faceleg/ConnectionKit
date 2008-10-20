@@ -39,6 +39,7 @@ TO DO:
 #import "NSColor+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "NSAttributedString+Karelia.h"

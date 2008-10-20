@@ -71,6 +71,7 @@
 #import "NSDate+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"

@@ -28,6 +28,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 

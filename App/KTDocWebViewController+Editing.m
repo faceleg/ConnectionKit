@@ -23,6 +23,7 @@
 #import "KTDocument.h"
 
 #import "NSArray+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString-Utilities.h"
 

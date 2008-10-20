@@ -11,6 +11,8 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTDocument.h"
+
+#import "NSObject+Karelia.h"
 #import "NSSet+KTExtensions.h"
 
 

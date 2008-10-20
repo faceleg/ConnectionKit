@@ -14,6 +14,7 @@
 #import "KTElementPlugin.h"
 
 #import "NSMutableArray+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 
 

@@ -23,6 +23,7 @@
 #import "NSArray+Karelia.h"
 #import "NSException+Karelia.h"
 #import "NSIndexSet+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 
 #import "Elements+Pasteboard.h"

@@ -22,6 +22,7 @@
 #import "NSArray+KTExtensions.h"
 #import "NSIndexSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 

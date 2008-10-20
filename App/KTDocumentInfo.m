@@ -18,6 +18,7 @@
 #import "NSArray+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 

@@ -18,6 +18,7 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSXMLElement+Karelia.h"
 

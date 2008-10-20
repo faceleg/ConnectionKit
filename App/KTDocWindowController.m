@@ -49,6 +49,7 @@
 #import "NSException+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"

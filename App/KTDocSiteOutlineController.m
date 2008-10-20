@@ -21,8 +21,10 @@
 #import "KTImageTextCell.h"
 #import "KTMaster.h"
 #import "KTPage.h"
+
 #import "NSAttributedString+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSString+Karelia.h"
 

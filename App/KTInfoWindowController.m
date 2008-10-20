@@ -30,8 +30,10 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTPseudoElement.h"
 #import "KTStackView.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "ValuesAreEqualTransformer.h"
