@@ -1805,8 +1805,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
                            titled:@"Available Components: Element Bundles"];
 	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTIndexExtension]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDataSourceExtension]
-                           titled:@"Available Components: Data Source Bundles"];
 	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDesignExtension]
                            titled:@"Available Components: Design Bundles"];
 }
