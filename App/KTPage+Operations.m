@@ -136,45 +136,6 @@
 }
 
 #pragma mark -
-#pragma mark Other Recursive Methods
-
-/*! We set these as kStaleFamily as we only call these with the recursive methods
-	to propagate the staleness
- */
-
-// Called via recursivePerformSelector
-- (void)setStaleIfInheritsSidebar:(id)ignored forPage:(KTPage *)aPage
-{
-	if ([self boolForKey:@"includeInheritedSidebar"] == YES && 
-		[[self primitiveValueForKey:@"staleness"] intValue] != kStalePage)
-	{
-		////LOG((@"~~~~~~~~~ %@ ....%@", NSStringFromSelector(_cmd), [self titleText]));
-		//[self markStale:kStaleFamily];
-	}
-}
-
-// Called via recursivePerformSelector
-- (void)setStaleIfIncludedInIndex:(id)ignored forPage:(KTPage *)aPage
-{
-	if ([self includeInIndexAndPublish] == YES && 
-		[[[self parentOrRoot] primitiveValueForKey:@"staleness"] intValue] != kStalePage)
-	{
-		////LOG((@"~~~~~~~~~ %@ ....%@", NSStringFromSelector(_cmd), [self titleText]));
-		//[[self parentOrRoot] markStale:kStaleFamily];
-	}
-}
-
-// Called via recursivePerformSelector
-
-- (void)addToStringIfStale:(NSMutableString *)str forPage:(KTPage *)aPage
-{
-	//int state = [self boolForKey:@"staleness"];
-	int state = [[self primitiveValueForKey:@"staleness"] intValue];
-	if (state != kNotStale)
-		[str appendFormat:@"%@ - %@ (%@)\n", NSStringFromClass([self class]), [self titleText], (state == kStalePage) ? @"On" : @"Mixed"];
-}
-
-#pragma mark -
 #pragma mark Spotlight
 
 - (NSString *)spotlightHTML
