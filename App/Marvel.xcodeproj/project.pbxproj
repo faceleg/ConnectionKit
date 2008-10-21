@@ -871,7 +871,7 @@
 		CEC11BF40D78BE5300513E70 /* NSThread+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B870D78BE5300513E70 /* NSThread+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BF50D78BE5300513E70 /* NSToolbar+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B880D78BE5300513E70 /* NSToolbar+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BF60D78BE5300513E70 /* NSURL+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B890D78BE5300513E70 /* NSURL+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CEC11BF70D78BE5300513E70 /* NSView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8A0D78BE5300513E70 /* NSView+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BF70D78BE5300513E70 /* NSView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8A0D78BE5300513E70 /* NSView+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BF80D78BE5300513E70 /* NSWindow+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8B0D78BE5300513E70 /* NSWindow+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BF90D78BE5300513E70 /* NSWorkspace+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8C0D78BE5300513E70 /* NSWorkspace+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BFA0D78BE5300513E70 /* NSXMLElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B8D0D78BE5300513E70 /* NSXMLElement+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
