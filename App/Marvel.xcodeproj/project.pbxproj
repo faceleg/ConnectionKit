@@ -3476,24 +3476,25 @@
 		3C202D5B07DFC13D00DE4994 /* Remote Transfer */ = {
 			isa = PBXGroup;
 			children = (
+				3C202D6107DFC18600DE4994 /* KTTransferController.h */,
 				27F0EDC00D0C556600B7555A /* KTTransferController+Internal.h */,
+				3C202D6207DFC18600DE4994 /* KTTransferController.m */,
 				27F0EDC10D0C556600B7555A /* KTTransferController+Media.m */,
+				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
+				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
+				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
 				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
 				3C202D7807DFC30800DE4994 /* KTHostArrayController.h */,
 				3C202D7907DFC30800DE4994 /* KTHostArrayController.m */,
 				3C202D7A07DFC30800DE4994 /* KTHostSetupController.h */,
 				3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */,
-				3C202D6107DFC18600DE4994 /* KTTransferController.h */,
-				3C202D6207DFC18600DE4994 /* KTTransferController.m */,
 				CEAE1667084530C1007025D4 /* KTHostProperties.h */,
 				CEAE1668084530C1007025D4 /* KTHostProperties.m */,
 				79B7310E0A33BF9A008F7F58 /* KTHost.h */,
 				79B7310F0A33BF9A008F7F58 /* KTHost.m */,
 				277EE9200CFD8CFF005617FE /* KTStalenessManager.h */,
 				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
-				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
-				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
@@ -4180,11 +4181,10 @@
 		3C951FF20D762D87009FCAC9 /* Common Headers */ = {
 			isa = PBXGroup;
 			children = (
+				3C202D1407DFC06100DE4994 /* KT.h */,
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
 				CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */,
-				3C202D1407DFC06100DE4994 /* KT.h */,
-				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 			);
 			name = "Common Headers";
