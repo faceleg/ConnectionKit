@@ -1331,15 +1331,4 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
-#pragma mark -
-#pragma mark Change Count
-
-- (void)processPendingChangesAndClearChangeCount
-{
-	LOGMETHOD;
-	[[self managedObjectContext] processPendingChanges];
-	[[self undoManager] removeAllActions];
-	[self updateChangeCount:NSChangeCleared];
-}
-
 @end

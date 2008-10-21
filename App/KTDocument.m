@@ -90,35 +90,15 @@ NSString *KTDocumentDidChangeNotification = @"KTDocumentDidChange";
 NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
-@interface KTDocument ( Private )
-+ (void)initialize;
-- (BOOL)keepBackupFile;
-- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
-- (KTTransferController *)localTransferController;
-- (KTTransferController *)remoteTransferController;
-
-- (NSArray *)bundleIdentifiersRequiredByPlugin:(id)aPlugin;
-- (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation;
-- (NSError *)willPresentError:(NSError *)inError;
-- (NSMutableSet *)bundlesRequiredByPlugin:(id)aPlugin;
+@interface KTDocument (Private)
 - (NSString *)defaultStoreFileName;
-- (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
-
-- (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError;
-- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
-- (id)initWithType:(NSString *)type error:(NSError **)error;
 
 - (void)setClosing:(BOOL)aFlag;
 
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
 - (void)makeWindowControllers;
-- (void)setDocument:(KTDocument *)aDocument;
 - (void)setLocalTransferController:(KTTransferController *)aLocalTransferController;
-- (void)setPluginInspectorViews:(NSMutableDictionary *)aDictionary;
 - (void)setRemoteTransferController:(KTTransferController *)aRemoteTransferController;
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void)setupTransferControllers;
-- (void)windowControllerWillLoadNib:(NSWindowController *)windowController;
 
 @end
 
@@ -568,6 +548,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentDidChangeNotification object:self];
     }
+}
+
+- (void)processPendingChangesAndClearChangeCount
+{
+	LOGMETHOD;
+	[[self managedObjectContext] processPendingChanges];
+	[[self undoManager] removeAllActions];
+	[self updateChangeCount:NSChangeCleared];
 }
 
 #pragma mark -

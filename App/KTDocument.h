@@ -40,7 +40,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @private
 	
 	// Standard document behaviour additions
-    BOOL                myIsClosing;
+    BOOL        myIsClosing;
     NSThread    *myThread;
 	
     
@@ -226,9 +226,6 @@ extern NSString *KTDocumentWillSaveNotification;
 #pragma mark Backup
 - (NSURL *)backupURL;
 - (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error;
-
-#pragma mark Other
-- (void)processPendingChangesAndClearChangeCount;
 
 @end
 
