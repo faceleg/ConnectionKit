@@ -41,35 +41,14 @@
 
 #import "Registration.h"
 
-@implementation KTDocument ( Lookup )
+@implementation KTDocument (Lookup)
 
 #pragma mark -
 #pragma mark Generated properties
 
-- (BOOL)hasRSSFeeds;	// determine if we need to show export panel
-{
-	NSMutableArray *RSSCollectionArray = [NSMutableArray array];
-	
-	KTPage *root = [[self documentInfo] root];
-	[root makeSelfOrDelegatePerformSelector:@selector(addRSSCollectionsToArray:forPage:) withObject:RSSCollectionArray withPage:root recursive:YES];
-	return [RSSCollectionArray count] > 0;
-}
-
 - (NSString *)siteTitleHTML
 {
 	return [[[self displayName] stringByDeletingPathExtension] stringByEscapingHTMLEntities];		// get the default title from the document name
-}
-
-/*!	Used by iframe pagelets and "keypath:" URL protocol to generate image data showing that iframe is not loaded
-*/
-- (NSData *)hashPattern
-{
-	static NSData *sHashData = nil;
-	if (nil == sHashData)
-	{
-		sHashData = [[[NSImage imageNamed:@"qmark50"] TIFFRepresentation] retain];
-	}
-	return sHashData;	
 }
 
 #pragma mark -
@@ -151,87 +130,6 @@
 
 
 - (NSString *)charset { return @"UTF-8"; }
-
-// TODO: hook these methods below back up, remember to add in Index plugins, etc.
-
-/*! returns a recursively assembled NSMutableSet of NSBundles used for each active component */
-- (NSMutableSet *)bundlesRequiredByPlugin:(id)aPlugin
-{
-    NSMutableSet *requiredBundles = [NSMutableSet set];
-
-//    if ( [aPlugin isKindOfClass:[KTCollection class]] )
-	if ( [aPlugin isKindOfClass:[KTPage class]] && [(KTPage *)aPlugin index])
-    {
-        // add Collection's bundle
-        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
-        OBASSERT(bundle);
-        [requiredBundles addObject:bundle];
-
-        // add Collection's pages' bundles
-        NSEnumerator *enumerator = [[(KTPage *)aPlugin children] objectEnumerator];
-        id item;
-        while ( item = [enumerator nextObject] )
-        {
-            [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
-        }
-
-		// add sidebars
-        enumerator = [[(KTPage *)aPlugin pageletsInLocation:KTSidebarPageletLocation] objectEnumerator];
-        while ( item = [enumerator nextObject] )
-        {
-            [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
-        }
-    }
-    else if ( [aPlugin isKindOfClass:[KTPage class]] )
-    {
-        // add Page's bundle
-        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
-        OBASSERT(bundle);
-        [requiredBundles addObject:bundle];
-
-        // add Page's elements
-        NSEnumerator *enumerator = [[(KTPage *)aPlugin wrappedValueForKey:@"elements"] objectEnumerator];
-        id item;
-        while ( item = [enumerator nextObject] )
-        {
-            [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
-        }
-
-        // add Page's callouts
-        enumerator = [[(KTPage *)aPlugin callouts] objectEnumerator];
-        while ( item = [enumerator nextObject] )
-        {
-            [requiredBundles unionSet:[self bundlesRequiredByPlugin:item]];
-        }
-    }
-    else
-    {
-        // just add aComponent's bundle
-        NSBundle *bundle = [NSBundle bundleForClass:[aPlugin class]];
-        OBASSERT(bundle);
-        [requiredBundles addObject:bundle];
-    }
-
-    return requiredBundles;
-}
-
-/*! walks through bundlesRequiredByPlugin and returns an array of bundleIdentifiers */
-- (NSArray *)bundleIdentifiersRequiredByPlugin:(id)aPlugin
-{
-    NSMutableArray *bundles = [NSMutableArray array];
-    NSEnumerator *enumerator = [[[self bundlesRequiredByPlugin:aPlugin] allObjects] objectEnumerator];
-    id bundle;
-    while ( bundle = [enumerator nextObject] )
-    {
-        if ( bundle != [NSBundle mainBundle] )
-        {
-            OBASSERT([bundle bundleIdentifier]);
-            [bundles addObject:[bundle bundleIdentifier]];
-        }
-    }
-
-    return [NSArray arrayWithArray:bundles];
-}
 
 - (KTPage *)pageForURLPath:(NSString *)path
 {

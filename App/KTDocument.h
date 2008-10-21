@@ -137,10 +137,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @end
 
 
-@interface KTDocument ( Lookup )
-
-// derived properties
-- (BOOL)hasRSSFeeds;	// determine if we need to show export panel
+@interface KTDocument (Lookup)
 
 - (NSString *)titleHTML;
 - (NSString *)siteSubtitleHTML;
