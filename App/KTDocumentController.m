@@ -25,11 +25,13 @@
 #import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWindowController+Karelia.h"
 #import "NSBundle+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "BDAlias.h"
 #import "KSApplication.h"
@@ -532,6 +534,29 @@
 
 	
 	return document;
+}
+
+/*  Disallow the user from opening a Sandvox document that is in the Snapshots directory
+ */
+- (id)makeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+    Class docClass = [self documentClassForType:typeName];
+    
+    if ([docClass isSubclassOfClass:[KTDocument class]] &&
+        [absoluteURL isSubpathOfURL:[docClass snapshotsDirectoryURL]])
+    {
+        if (outError)
+        {
+            *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError
+                            localizedDescription:NSLocalizedString(@"Documents cannot be opened while in the Snapshots folder.", "alert message")
+                     localizedRecoverySuggestion:NSLocalizedString(@"Please move the document out of the Snapshots folder first.", "alert info")
+                                 underlyingError:nil];
+        }
+        
+        return nil;
+    }
+    
+    return [super makeDocumentWithContentsOfURL:absoluteURL ofType:typeName error:outError];
 }
 
 #pragma mark -

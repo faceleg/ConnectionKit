@@ -122,7 +122,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (NSMutableDictionary *)dataModelForPlugin:(NSBundle *)aPlugin;
 - (void)connectToHomeBase:(NSTimer *)aTimer;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
-- (void)buildSampleSitesMenu;
 
 - (void)warnExpiring:(id)bogus;
 
@@ -1064,7 +1063,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 									showIcons:YES smallIcons:NO smallText:NO];
 		
         [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
-		[self buildSampleSitesMenu];
+		//[self buildSampleSitesMenu];
 		
 		if ( [defaults boolForKey:@"DisplayInfo"] )
 		{
