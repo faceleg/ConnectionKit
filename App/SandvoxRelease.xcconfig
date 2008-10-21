@@ -21,6 +21,9 @@ SEPARATE_STRIP = YES
 
 // so we also pass -S, rather than -s, so that the application is stripped like a framework
 STRIPFLAGS = "-S"
+// NOTE: Gehrman suggested STRIP_STYLE = debugging  but I didn't want to change it....
+
+
 
 // but do we strip frameworks when we copy them? (No for now...)
 COPY_PHASE_STRIP = NO 
