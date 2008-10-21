@@ -11,7 +11,7 @@
 
 #import "KTAbstractPluginDelegate.h"
 #import "KTMaster+Internal.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTArchivePage.h"
 
 #import "NSBundle+QuickLook.h"

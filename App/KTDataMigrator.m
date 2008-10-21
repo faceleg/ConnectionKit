@@ -15,7 +15,7 @@
 #import "KTElementPlugin.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "KTUtilities.h"
 

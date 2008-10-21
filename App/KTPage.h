@@ -28,31 +28,20 @@
 @class WebView;
 @class KTMediaContainer;
 
+
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
 {
-	// these ivars are only set if the page is root
+@private
+    // these ivars are only set if the page is root
 	BOOL				myIsNewPage;
 }
 
 
-// Creation
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin;
-
-+ (KTPage *)pageWithParent:(KTPage *)aParent
-	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-
-+ (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle;
-
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
-// Inspector
-- (BOOL)separateInspectorSegment;
-
 // Debugging
 - (NSString *)shortDescription;
-
-+ (NSCharacterSet *)uniqueIDCharacters;
 
 @end
 
@@ -124,15 +113,8 @@
 // Hierarchy Queries
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;
 
 - (NSIndexPath *)indexPath;
-
-
-- (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(KTCollectionSortType)aSortType;
-- (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
-
 
 @end
 
@@ -148,9 +130,6 @@
 
 // Index
 - (KTAbstractIndex *)index;
-- (void)setIndex:(KTAbstractIndex *)anIndex;
-- (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
-
 - (NSArray *)pagesInIndex;
 - (void)invalidatePagesInIndexCache;
 
@@ -176,25 +155,6 @@
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
-
-
-@end
-
-
-@interface KTPage (Operations)
-
-- (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive;
-
-// Perform selector
-- (void)makeComponentsPerformSelector:(SEL)selector
-						   withObject:(void *)anObject
-							 withPage:(KTPage *)page
-							recursive:(BOOL)recursive;
-
-- (void)addDesignsToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
-- (void)addStaleToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
-- (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage;
-- (NSString *)spotlightHTML;
 
 
 @end
@@ -231,12 +191,7 @@
 @end
 
 
-@interface KTPage (Pasteboard)
-+ (KTPage *)pageWithPasteboardRepresentation:(NSDictionary *)archive parent:(KTPage *)parent;
-@end
-
-
-@interface KTPage ( Web )
+@interface KTPage (Web)
 
 + (NSString *)pageTemplate;
 
@@ -246,8 +201,6 @@
 - (BOOL)shouldPublishHTMLTemplate;
 
 - (NSString *)javascriptURLPath;
-- (BOOL)isNewPage;
-- (void)setNewPage:(BOOL)flag;
 - (NSString *)comboTitleText;
 
 - (NSString *)DTD;

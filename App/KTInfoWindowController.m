@@ -25,7 +25,7 @@
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
 #import "KTMediaManager.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTPagelet.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTPseudoElement.h"

@@ -19,7 +19,8 @@
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
 #import "KTMaster+Internal.h"
-#import "KTPage.h"
+#import "KTAbstractPage+Internal.h"
+#import "KTPage+Internal.h"
 #import "KTWebKitCompatibility.h"
 
 #import "KTMediaManager+Internal.h"
@@ -380,7 +381,7 @@
 				{
 					[scanner scanString:kKTPageIDDesignator intoString:nil];
 					NSString *idString = nil;
-					BOOL foundNumber = [scanner scanCharactersFromSet:[KTPage uniqueIDCharacters]
+					BOOL foundNumber = [scanner scanCharactersFromSet:[KTAbstractPage uniqueIDCharacters]
 														   intoString:&idString];
 					if (foundNumber)
 					{

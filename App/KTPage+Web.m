@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 Biophony LLC. All rights reserved.
 //
 
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 
 #import "KT.h"
 #import "KTAppDelegate.h"

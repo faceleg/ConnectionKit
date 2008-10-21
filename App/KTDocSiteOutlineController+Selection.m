@@ -11,7 +11,7 @@
 #import "KT.h"
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 
 #import "NSArray+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"

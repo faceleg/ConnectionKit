@@ -179,6 +179,18 @@
 	return result;
 }
 
++ (NSCharacterSet *)uniqueIDCharacters
+{
+	static NSCharacterSet *result;
+	
+	if (!result)
+	{
+		result = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEF"] retain];
+	}
+	
+	return result;
+}
+
 /*!	Return the HTML.
 */
 - (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;

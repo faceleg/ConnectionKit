@@ -19,7 +19,7 @@
 #import "KTPseudoElement.h"
 #import "KTInlineImageElement.h"
 #import "KTWebViewComponent.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTDocument.h"
 
 #import "NSArray+Karelia.h"

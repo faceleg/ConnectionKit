@@ -61,7 +61,7 @@
 #import "KSThreadProxy.h"
 #import "KSUtilities.h"
 
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 
 #import "KTDesign.h"
 #import "KTDocWindowController.h"

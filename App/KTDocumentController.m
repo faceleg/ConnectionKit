@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTAbstractIndex.h"
+#import "KTAbstractPage+Internal.h"
 #import "KTAppDelegate.h"
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
@@ -19,7 +20,7 @@
 #import "KTIndexPlugin.h"
 #import "KTMediaManager.h"
 #import "KTMaster.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "KTPlaceholderController.h"
 #import "KTPluginInstaller.h"

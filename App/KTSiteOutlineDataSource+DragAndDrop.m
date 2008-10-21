@@ -16,7 +16,7 @@
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTDocWindowController.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTPulsatingOverlay.h"
 #import "KTElementPlugin.h"
 

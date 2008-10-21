@@ -7,7 +7,7 @@
 //
 
 #import "KTAbstractIndex.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTHTMLParser.h"
 #import "KTAbstractHTMLPlugin.h"
 

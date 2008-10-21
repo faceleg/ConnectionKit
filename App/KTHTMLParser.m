@@ -10,7 +10,7 @@
 
 #import "KTDocumentInfo.h"
 #import "KTMaster.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "KTArchivePage.h"
 #import "KTHostProperties.h"
 #import "KTMediaContainer.h"

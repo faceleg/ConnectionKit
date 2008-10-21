@@ -8,7 +8,7 @@
 
 #import "NSArray+KTExtensions.h"
 
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 #import "NSArray+Karelia.h"
 
 @implementation NSArray (KTExtensions)
