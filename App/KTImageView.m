@@ -11,7 +11,7 @@
 #import "Debug.h"
 //#import "ImageCropperController.h"
 #import "KT.h"
-#import "KTDataSource.h"
+#import "KTDataSourceProtocol.h"
 
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSFileManager+Karelia.h"

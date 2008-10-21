@@ -53,7 +53,7 @@
 #import "KTHostProperties.h"
 
 // abstract superclass of all data sources (drag-and-drop external sources)
-#import "KTDataSource.h"
+#import "KTDataSourceProtocol.h"
 
 // abstract superclass of all indexes
 #import "KTAbstractIndex.h"

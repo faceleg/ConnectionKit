@@ -1,5 +1,5 @@
 //
-//  KTDataSource.h
+//  KTDataSourceProtocol.h
 //  Sandvox
 //
 //  Copyright (c) 2004-2008, Karelia Software. All rights reserved.

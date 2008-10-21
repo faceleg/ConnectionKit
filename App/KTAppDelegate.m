@@ -38,7 +38,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTAcknowledgmentsController.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
-#import "KTDataSource.h"
+#import "KTDataSourceProtocol.h"
 #import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"

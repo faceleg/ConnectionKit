@@ -7,7 +7,7 @@
 //
 
 #import "KTElementPlugin.h"
-#import "KTDataSource.h"
+#import "KTDataSourceProtocol.h"
 
 
 
