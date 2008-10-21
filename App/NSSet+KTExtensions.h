@@ -1,8 +1,8 @@
 //
 //  NSSet+KTExtensions.h
-//  KTComponents
+//  Sandvox
 //
-//  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2005-2008, Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -22,11 +22,10 @@
 
 @interface NSSet ( Ordering )
 
-- (NSString *)shortDescription;
-
-
+- (NSSet *)setByIntersectingObjectsFromArray:(NSArray *)array;
+- (NSSet *)setByIntersectingSet:(NSSet *)objects;
 - (NSSet *)setByRemovingObjects:(NSSet *)objects;
 
-- (NSSet *)setByIntersectingSet:(NSSet *)objects;
-- (NSSet *)setByIntersectingObjectsFromArray:(NSArray *)array;
+- (NSString *)shortDescription;
+
 @end

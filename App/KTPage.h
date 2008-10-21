@@ -1,8 +1,8 @@
 //
 //  KTPage.h
-//  KTComponents
+//  Sandvox
 //
-//  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2005-2008, Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -16,7 +16,6 @@
 //  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 //
-
 
 #import "KT.h"
 #import "KTAbstractPage.h"

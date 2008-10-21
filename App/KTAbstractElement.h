@@ -1,8 +1,8 @@
 //
 //  KTAbstractElement.h
-//  KTComponents
+//  Sandvox
 //
-//  Copyright (c) 2005-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2005-2008, Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -19,13 +19,10 @@
 
 #import "KTManagedObject.h"
 
-
 #import <WebKit/WebKit.h>
 
 
 @class KTDocument, KTMediaManager, KTElementPlugin, KTPage;
-
-
 @interface KTAbstractElement : KTManagedObject 
 {
     // optional delegate

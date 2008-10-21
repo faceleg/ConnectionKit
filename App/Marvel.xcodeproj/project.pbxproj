@@ -4178,8 +4178,8 @@
 				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
 				CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */,
 				3C202D1407DFC06100DE4994 /* KT.h */,
-				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
+				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 			);
 			name = "Common Headers";
 			sourceTree = "<group>";
