@@ -1812,36 +1812,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #pragma mark -
 #pragma mark Support
 
-- (void)buildSampleSitesMenu
-{
-	// iterate through every file in Sample Sites,
-	// setting representedObject to NSURL of location
-	
-	// original Sample Sites in IB were "iPod Adventures", "Girlfriends", and "Voice Lessons"
-	NSMenu *submenu = [[NSMenu alloc] initWithTitle:@""];
-
-	NSArray *paths = [[NSBundle mainBundle] pathsForResourcesOfType:kKTDocumentExtension inDirectory:kKTSampleSitesDirectory];
-	NSEnumerator *e = [paths objectEnumerator];
-	NSString *samplePath;
-	while ( (samplePath = [e nextObject]) )
-	{
-		NSURL *fileURL = [NSURL fileURLWithPath:samplePath];
-		NSString *title = [[samplePath lastPathComponent] stringByDeletingPathExtension];
-		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:title 
-														   action:@selector(openSampleDocument:) 
-													keyEquivalent:@""];
-		[menuItem setTarget:self];
-		[menuItem setRepresentedObject:fileURL];
-		
-		[submenu addItem:menuItem];
-		[menuItem release];
-	}
-	
-    [submenu setAutoenablesItems:NO];
-	[oOpenSampleSiteMenuItem setSubmenu:submenu];
-	[submenu release];
-}
-
 /*! changes title of oCutMenuItem to match aKTCutMenuItemTitleType */
 - (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType
 {

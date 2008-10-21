@@ -104,9 +104,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oDeletePageletsMenuItem;
 	
 	IBOutlet NSMenuItem		*oDuplicateMenuItem;
-	
-	IBOutlet NSMenuItem		*oOpenSampleSiteMenuItem;
-	
+		
 	IBOutlet NSMenuItem		*oCreateLinkMenuItem;
 	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
 
