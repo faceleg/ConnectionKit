@@ -20,6 +20,7 @@
 #import "KTMediaManager.h"
 #import "KTMaster.h"
 #import "KTPage.h"
+#import "KTPagelet+Internal.h"
 #import "KTPlaceholderController.h"
 #import "KTPluginInstaller.h"
 #import "KTPersistentStoreCoordinator.h"

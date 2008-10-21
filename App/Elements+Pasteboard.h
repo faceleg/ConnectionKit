@@ -7,7 +7,15 @@
 //
 
 #import "KTAbstractElement.h"
+#import "KTPagelet+Internal.h"
+
 #import "KTPasteboardArchiving.h"
 
+
 @interface KTAbstractElement (Pasteboard) <KTPasteboardArchiving>
+@end
+
+
+@interface KTPagelet (Pasteboard)
++ (KTPagelet *)pageletWithPasteboardRepresentation:(NSDictionary *)archive page:(KTPage *)page;
 @end

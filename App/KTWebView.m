@@ -39,6 +39,7 @@ TO DO:
 #import "KTAbstractElement.h"
 #import "KTElementPlugin.h"
 #import "KTPage.h"
+#import "KTPagelet+Internal.h"
 
 #import "NSString+Karelia.h"
 

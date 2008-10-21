@@ -36,6 +36,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 #import "KTPage.h"
+#import "KTPagelet+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"

@@ -28,26 +28,11 @@ typedef enum {
 } KTPageletLocation;
 
 
-@class KTManagedObject, KTPage;
+@class KTPage;
 
 
 @interface KTPagelet : KTAbstractElement
-{
-}
 
-#pragma mark Initialization
-
-// general constructor
-+ (KTPagelet *)pageletWithPage:(KTPage *)aPage plugin:(KTElementPlugin *)plugin;
-
-+ (KTPagelet *)insertNewPageletWithPage:(KTPage *)page
-                       pluginIdentifier:(NSString *)pluginIdentifier
-                               location:(KTPageletLocation)location;
-
-// drag-and-drop constructor
-+ (KTPagelet *)pageletWithPage:(KTPage *)aPage dataSourceDictionary:(NSDictionary *)aDictionary;
-
-				  
 #pragma mark Basic accessors
 
 - (int)ordering;
@@ -60,9 +45,6 @@ typedef enum {
 
 - (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)flag;
-
-- (NSString *)titleLinkURLPath;
-- (void)setTitleLinkURLPath:(NSString *)aTitleLinkURLPath;
 
 - (KTPage *)page;
 - (NSSet *)allPages;
@@ -83,14 +65,4 @@ typedef enum {
 
 - (NSArray *)pageletsInSameLocation;
 
-#pragma mark Support
-
-- (NSString *)shortDescription;
-- (BOOL)canHaveTitle;
-
-@end
-
-
-@interface KTPagelet (Pasteboard)
-+ (KTPagelet *)pageletWithPasteboardRepresentation:(NSDictionary *)archive page:(KTPage *)page;
 @end

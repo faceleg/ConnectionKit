@@ -16,6 +16,7 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
+#import "KTPagelet+Internal.h"
 #import "KTUtilities.h"
 
 #import "KTStoredArray.h"

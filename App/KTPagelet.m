@@ -5,7 +5,7 @@
 //  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
 //
 
-#import "KTPagelet.h"
+#import "KTPagelet+Internal.h"
 
 #import "Debug.h"
 #import "KT.h"
@@ -201,10 +201,6 @@
 - (BOOL)showBorder { return [self wrappedBoolForKey:@"showBorder"]; }
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
-
-- (NSString *)titleLinkURLPath { return [self wrappedValueForKey:@"titleLinkURLPath"]; }
-
-- (void)setTitleLinkURLPath:(NSString *)aTitleLinkURLPath {	[self setWrappedValue:aTitleLinkURLPath forKey:@"titleLinkURLPath"]; }
 
 /*!	Pass on messages to set modification data of a pagelet to its containing page, who really cares
  */

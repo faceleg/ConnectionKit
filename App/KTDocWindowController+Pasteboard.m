@@ -14,7 +14,7 @@
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
 #import "KTPage.h"
-#import "KTPagelet.h"
+#import "Elements+Pasteboard.h"
 #import "KTPasteboardArchiving.h"
 #import "KSSilencingConfirmSheet.h"
 

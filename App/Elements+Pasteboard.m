@@ -6,6 +6,7 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
+#import "Elements+Pasteboard.h"
 #import "KTPage.h"
 
 #import "BDAlias.h"
@@ -18,7 +19,7 @@
 #import "NSObject+Karelia.h"
 
 
-@interface KTAbstractElement (Pasteboard)
+@interface KTAbstractElement (PasteboardPrivate)
 + (NSSet *)keysToIgnoreForPasteboardRepresentation;
 @end
 
