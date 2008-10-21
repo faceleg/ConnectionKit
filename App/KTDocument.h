@@ -103,11 +103,6 @@ extern NSString *KTDocumentWillSaveNotification;
 // Controller chain
 - (KTDocWindowController *)windowController;
 
-// Upload cache
-- (BOOL)createUploadCacheIfNecessary;
-- (BOOL)clearUploadCache;
-- (NSString *)uploadCachePath;
-
 - (BOOL)isClosing;
 
 - (IBAction)clearStaleness:(id)sender;

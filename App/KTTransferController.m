@@ -247,7 +247,7 @@ static NSArray *sReservedNames = nil;
 		[self setSubfolder:subfolder];
 		
 		// make sure we have an upload cache directory, if needed
-		(void)[aDocument createUploadCacheIfNecessary];
+		(void)[self createUploadCacheIfNecessary];
 		
 		[self window]; // this forces the nib to be loaded so when we do an export the accessory view is not nil.
 	}
@@ -1201,6 +1201,58 @@ if ([self where] == kGeneratingRemoteExport) {
         }
     }
 }
+
+#pragma mark -
+#pragma mark Upload Cache
+
+- (NSString *)uploadCachePath	// returns path without resolving symbolic links
+{
+	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
+	NSString *result = NSTemporaryDirectory();
+	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
+	result = [result stringByAppendingPathComponent:[[[self document] documentInfo] siteID]];
+	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
+	return result;
+}
+
+/*! creates, if necessary, ~/Library/Caches/Sandvox/Sites.noindex/<siteID>/Upload */
+- (BOOL)createUploadCacheIfNecessary
+{
+    NSError *localError = nil;
+    BOOL result = [KTUtilities createPathIfNecessary:[self uploadCachePath] error:&localError];
+    
+    if ( nil != localError )
+	{
+		// put up an error alert
+    }
+    
+    return result;
+}
+
+- (BOOL)clearUploadCache
+{
+	BOOL result = YES;
+	
+	// just delete the upload cache directory and recreate it
+	NSFileManager *fm = [NSFileManager defaultManager];
+	
+	if ( [fm fileExistsAtPath:[self uploadCachePath]] )
+	{
+		result = [fm removeFileAtPath:[self uploadCachePath] handler:nil];
+		if ( result )
+		{
+			result = [self createUploadCacheIfNecessary];
+		}
+	}
+	
+	if ( !result )
+	{
+		NSLog(@"error: unable to clear upload cache");
+	}
+	
+	return result;
+}
+
 
 #pragma mark -
 #pragma mark Design

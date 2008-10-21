@@ -85,4 +85,9 @@
 
 - (NSSet *)uploadedDesigns;
 
+// Upload cache
+- (BOOL)createUploadCacheIfNecessary;
+- (BOOL)clearUploadCache;
+- (NSString *)uploadCachePath;
+
 @end
