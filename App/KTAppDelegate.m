@@ -490,6 +490,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether CKTransferController sets permissions on uploads
 		[NSNumber numberWithBool:YES], @"ConnectionSetsPermissions",
+										 
+		/// whether we use secure NSTemporaryDirectory() or ~/Library/Caches/ for upload cache
+		[NSNumber numberWithBool:NO], @"DisableSecureUploadCache",
 				
 		nil];
 	
