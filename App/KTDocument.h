@@ -170,6 +170,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 @interface KTDocument (Properties)
 
+- (KTMediaManager *)mediaManager;
 - (KTStalenessManager *)stalenessManager;
 
 - (NSThread *)thread;
@@ -215,12 +216,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (void)setDisplaySmallPageIcons:(BOOL)value;
 
 - (NSRect)documentWindowContentRect;
-
-@end
-
-
-@interface KTDocument (Media)
-- (KTMediaManager *)mediaManager;
 
 @end
 

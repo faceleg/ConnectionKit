@@ -471,7 +471,6 @@
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
 		3C7DC2410921A7190081668F /* toolbar_edit_link.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7DC2400921A7190081668F /* toolbar_edit_link.png */; };
-		3C864F2B0B0CF7EA0037434E /* KTDocument+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */; };
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
@@ -1888,7 +1887,6 @@
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		3C7DC2400921A7190081668F /* toolbar_edit_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_link.png; sourceTree = "<group>"; };
-		3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Media.m"; sourceTree = "<group>"; };
 		3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentController.h; sourceTree = "<group>"; };
 		3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocumentController.m; sourceTree = "<group>"; };
 		3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStringRenderer.h; sourceTree = "<group>"; };
@@ -3461,7 +3459,6 @@
 				3C202D3407DFC0F000DE4994 /* KTDocument.m */,
 				3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */,
 				CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */,
-				3C864F2A0B0CF7EA0037434E /* KTDocument+Media.m */,
 				3CA9B30D0804643200C3053B /* KTDocument+Properties.m */,
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
@@ -5884,7 +5881,6 @@
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
 				79B731110A33BF9A008F7F58 /* KTHost.m in Sources */,
 				CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */,
-				3C864F2B0B0CF7EA0037434E /* KTDocument+Media.m in Sources */,
 				3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */,
 				CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */,
 				3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */,

@@ -74,7 +74,12 @@
 }
 
 #pragma mark -
-#pragma mark Staleness
+#pragma mark Managers
+
+- (KTMediaManager *)mediaManager
+{
+	return myMediaManager;
+}
 
 - (KTStalenessManager *)stalenessManager
 {
