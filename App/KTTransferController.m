@@ -106,6 +106,7 @@
 
 #import "Debug.h"
 
+#import <Foundation/NSPathUtilities.h>
 
 static NSArray *sReservedNames = nil;
 
@@ -447,7 +448,7 @@ static NSArray *sReservedNames = nil;
 //	[myController uploadFromData:data toFile:remotePath];
 	
 	// in 1.5, we're going to write everything to a path first so we're just uploading files on disk
-	NSString *tmpPath = [[[self document] uploadCachePath] stringByAppendingPathComponent:[NSString shortUUIDString]];
+	NSString *tmpPath = [[self uploadCachePath] stringByAppendingPathComponent:[NSString shortUUIDString]];
 	if ( [data writeToFile:tmpPath atomically:NO] )
 	{
 		[self uploadFile:tmpPath toFile:remotePath];
@@ -1207,11 +1208,29 @@ if ([self where] == kGeneratingRemoteExport) {
 
 - (NSString *)uploadCachePath	// returns path without resolving symbolic links
 {
-	// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
-	NSString *result = NSTemporaryDirectory();
+	NSString *result = nil;
+	
+	BOOL useLibraryCache = [[NSUserDefaults standardUserDefaults] boolForKey:@"DisableSecureUploadCache"];
+	if ( !useLibraryCache )
+	{
+		// under Leopard, NSTemporaryDirectory() returns something like /var/folders/3B/3BPx90jsEyay4WyjMQAI6E+++TI/-Tmp-
+		result = NSTemporaryDirectory();
+	}
+	else
+	{
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+		if ( [paths count] > 0 )
+		{
+			result = [paths objectAtIndex:0];
+		}
+	}
+	
+	OBASSERT(nil != result);
+	
 	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
 	result = [result stringByAppendingPathComponent:[[[self document] documentInfo] siteID]];
-	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];
+	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];	
+	
 	return result;
 }
 
@@ -1671,7 +1690,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	}
 	
 	// clear upload cache
-	(void)[[self document] clearUploadCache];
+	(void)[self clearUploadCache];
 }
 
 #pragma mark -
