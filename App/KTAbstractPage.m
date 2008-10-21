@@ -254,7 +254,7 @@
 - (void)postSiteStructureDidChangeNotification;
 {
 	KTDocumentInfo *site = [self valueForKey:@"documentInfo"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:KTSiteStructureDidChangeNotification object:site];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTSiteStructureDidChangeNotification object:site];
 }
 
 @end

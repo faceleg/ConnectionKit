@@ -1,9 +1,4 @@
 
-
-
-NSString *kKTSampleSitesDirectory = @"Sample Sites";
-NSString *kKTAutoOpenSampleSiteName = @"Sample Site";
-
 // Document
 NSString *kKTDocumentType = @"Sandvox Document";
 NSString *kKTDocumentExtension = @"svxSite";
@@ -16,7 +11,6 @@ NSString *kKTPageIDDesignator = @"~PAGEID~";
 NSString *kKTMetadataAppCreatedVersionKey = @"com_karelia_Sandvox_AppCreatedVersion"; // CFBundleVersion which created document
 NSString *kKTMetadataAppLastSavedVersionKey = @"com_karelia_Sandvox_AppLastSavedVersion"; // CFBundleVersion which last saved document
 NSString *kKTMetadataModelVersionKey = @"com_karelia_Sandvox_ModelVersion";
-
 
 // Core Data
 NSString *kKTModelVersion = @"15001";
@@ -48,47 +42,30 @@ NSString *kKTDataSourceNil = @"kKTDataSourceNil";
 
 // Error Domains
 NSString *kKTDataMigrationErrorDomain = @"com.karelia.Sandvox.DataMigrationErrorDomain";
-NSString *kKTURLPrococolErrorDomain = @"com.karelia.Sandvox.GenericErrorDomain";
-NSString *kKTHostSetupErrorDomain = @"com.karelia.Sandvox.HostSetupDomain";
-NSString *kKTConnectionErrorDomain = @"com.karelia.Sandvox.ConnectionDomain";
-
+NSString *kKTHostSetupErrorDomain = @"com.karelia.Sandvox.HostSetupErrorDomain";
+NSString *kKTConnectionErrorDomain = @"com.karelia.Sandvox.ConnectionErrorDomain";
 
 // Exceptions
-
 NSString *kKTTemplateParserException = @"KTTemplateParserException";
 
-// KTComponents
-NSString *kKTDefaultCalendarFormat = @"%Y-%m-%d %H:%M:%S %z";
+// Pasteboards
 NSString *kKTOutlineDraggingPboardType = @"KTOutlineDraggingPboardType";
 NSString *kKTPagesPboardType = @"KTPagesPboardType";
 NSString *kKTPageletsPboardType = @"KTPageletsPboardType";
-NSString *kKTPagePathURLScheme = @"page";
-NSString *kKTMediaNotFoundMediaName = @"KT_MediaNotFound_KT";
-//NSString *kKTDocumentDefaultFileName = NSLocalizedString(@"My Site", @"default document file name");
 
 // Plugin Extensions
 NSString *kKTIndexExtension = @"svxIndex";
-NSString *kKTDataSourceExtension = @"svxDataSource";
 NSString *kKTElementExtension = @"svxElement";
 NSString *kKTDesignExtension = @"svxDesign";
 
 // Notifications
-NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
-NSString *KTSiteStructureDidChangeNotification = @"KTSiteStructureDidChange";
-NSString *kKTRootPageSavingNotification = @"KTRootPageSavingNotification";
-NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
-NSString *kKTInternalImageClassName = @"InternalImageClassName";
-
-NSString *kKTMediaObjectDidBecomeActiveNotification = @"KTMediaObjectDidBecomeActiveNotification";
-NSString *kKTMediaObjectDidBecomeInactiveNotification = @"KTMediaObjectDidBecomeInactiveNotification";
 NSString *kKTDesignChangedNotification = @"kKTDesignChangedNotification";
-NSString *kKTDesignWillChangeNotification = @"kKTDesignWillChangeNotification";
-
-NSString *kKTMediaIsBeingCachedNotification = @"KTMediaIsBeingCachedNotification";
+NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
+NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
+NSString *kKTSiteStructureDidChangeNotification = @"KTSiteStructureDidChangeNotification";
 
 // Site Publication
-NSString *kKTSourceMediaDirectory = @"SourceMedia";
 NSString *kKTDefaultMediaPath = @"_Media";
 NSString *kKTDefaultResourcesPath = @"_Resources";
-NSString *kKTImageReplacementFolder = @"IR";
 
+NSString *kKTInternalImageClassName = @"InternalImageClassName";
