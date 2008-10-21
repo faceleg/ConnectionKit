@@ -105,9 +105,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)isClosing;
 
-- (IBAction)clearStaleness:(id)sender;
-- (IBAction)markAllStale:(id)sender;
-
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 - (IBAction)viewPublishedSite:(id)sender;
 

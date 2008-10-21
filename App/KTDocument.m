@@ -1214,20 +1214,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
 }
 
-// staleness debugging
-
-- (IBAction)clearStaleness:(id)sender
-{
-	NSArray *pages = [KTAbstractPage allPagesInManagedObjectContext:[self managedObjectContext]];
-	[pages setBool:NO forKey:@"isStale"];
-}
-
-- (IBAction)markAllStale:(id)sender
-{
-	NSArray *pages = [KTAbstractPage allPagesInManagedObjectContext:[self managedObjectContext]];
-	[pages setBool:YES forKey:@"isStale"];
-}
-
 #pragma mark -
 #pragma mark screenshot for feedback
 
