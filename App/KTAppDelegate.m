@@ -878,7 +878,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		{
 			LOG((@"caught _registerUndoObject exception, resetting undoManager"));
 			KTDocument *document = [self currentDocument];
-			[document resetUndoManager];
+			[[document undoManager] removeAllActions];
 			return NO;
 		}
 		
@@ -887,7 +887,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		{
 			LOG((@"caught undo called with too many nested undo groups exception, resetting undoManager"));
 			KTDocument *document = [self currentDocument];
-			[document resetUndoManager];
+			[[document undoManager] removeAllActions];
 			return NO;
 		}
 	}

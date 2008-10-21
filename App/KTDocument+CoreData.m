@@ -401,27 +401,4 @@
 	return [self defaultStoreType];
 }
 
-- (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
-{
-	// we restrict writableTypes to our main document type
-	// so that the persistence framework does not allow the user to pick
-	// a persistence store format and confuse the app
-	return [NSArray arrayWithObject:@"KTDocument"];
-}
-
-- (BOOL)keepBackupFile
-{
-	// we tie this standard NSDocument method to a user default
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"CreateBackupFileWhenSaving"];
-}
-
-#pragma mark managed object support
-
-// exception handling
-- (void)resetUndoManager
-{
-	// something got screwed up in undo and we're being messaged to fix it
-	[[self undoManager] removeAllActions];
-}
-
 @end

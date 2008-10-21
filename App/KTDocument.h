@@ -134,9 +134,6 @@ extern NSString *KTDocumentWillSaveNotification;
 // spotlight
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
-// exception handling
-- (void)resetUndoManager;
-
 @end
 
 

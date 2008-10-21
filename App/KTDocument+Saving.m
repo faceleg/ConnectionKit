@@ -193,6 +193,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return (mySaveOperationCount > 0);
 }
 
+- (BOOL)keepBackupFile
+{
+	// we tie this standard NSDocument method to a user default
+	return [[NSUserDefaults standardUserDefaults] boolForKey:@"CreateBackupFileWhenSaving"];
+}
+
 #pragma mark -
 #pragma mark Save Panel
 
@@ -236,6 +242,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     }
     
     return result;
+}
+
+- (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
+{
+	// we restrict writableTypes to our main document type
+	// so that the persistence framework does not allow the user to pick
+	// a persistence store format and confuse the app
+	return [NSArray arrayWithObject:@"KTDocument"];
 }
 
 #pragma mark -
