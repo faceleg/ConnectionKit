@@ -108,10 +108,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)clearUploadCache;
 - (NSString *)uploadCachePath;
 
-// backup support
-- (BOOL)backupToURL:(NSURL *)anotherPath;
-- (NSURL *)backupURL;
-
 - (BOOL)isClosing;
 
 - (IBAction)clearStaleness:(id)sender;
@@ -237,6 +233,10 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)hasValidSnapshot;
 - (NSDate *)lastSnapshotDate;
+
+#pragma mark Backup
+- (NSURL *)backupURL;
+- (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error;
 
 #pragma mark Other
 - (void)processPendingChangesAndClearChangeCount;

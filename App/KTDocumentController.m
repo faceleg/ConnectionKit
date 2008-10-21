@@ -719,15 +719,15 @@
     {
         case KTSnapshotOnOpening:
         {
-            if (![document backupToURL:[document snapshotURL]])
+            if (![document backupToURL:[document snapshotURL] error:NULL])
             {
                 NSLog(@"warning: unable to create snapshot of document %@", [[document fileURL] path]);
-            }			
+            }
             break;
         }
         case KTBackupOnOpening:
         {
-            if (![document backupToURL:[document backupURL]])
+            if (![document backupToURL:[document backupURL] error:NULL])
             {
                 NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
             }			

@@ -7,6 +7,7 @@
 //
 
 #import "KTDocument.h"
+#import "NSDocument+KTExtensions.h"
 
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
@@ -67,9 +68,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 @interface KTDocument (SavingPrivate)
 
-// Save
-- (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError;
-
 // Write Safely
 - (NSString *)backupExistingFileForSaveAsOperation:(NSString *)path error:(NSError **)error;
 - (void)recoverBackupFile:(NSString *)backupPath toURL:(NSURL *)saveURL;
@@ -97,6 +95,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 // Snapshots
 - (void)_saveDocumentSnapshotWithDelegate:(id)delegate didSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
 - (BOOL)createSnapshotDirectoryIfNeeded:(NSError **)outError;
+
+// Backups (inc. Snapshots)
+- (BOOL)prepareToBackupToURL:(NSURL *)URL error:(NSError **)outError;
 
 @end
 
@@ -149,16 +150,30 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         
         
         
-        //  Do the save op
-        if (saveOperation == NSSaveToOperation)
-        {
-            result = [self performSaveToOperationToURL:absoluteURL error:outError];
-        }
-        else if (saveOperation == NSSaveAsOperation &&  // We can't support anything other than a standard Save operation when
-                 [[absoluteURL path] isEqualToString:[[self fileURL] path]])    // writing to the doc's URL
+        // When writing to the doc's URL, we only support Save and Autosave
+        if ([[[absoluteURL path] stringByResolvingSymlinksInPath] isEqualToString:[[[self fileURL] path] stringByResolvingSymlinksInPath]])
         {                                           
-            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:NSSaveOperation error:outError];
+            NSSaveOperationType realSaveOp = (saveOperation == NSAutosaveOperation) ? NSAutosaveOperation : NSSaveOperation;
+            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:realSaveOp error:outError];
         }
+        
+        
+        // -writeToURL: only supports the Save and SaveAs operations. Instead,
+        // we fake SaveTo operations by doing a standard Save operation and then
+        // copying the resultant file to the destination.
+        else if (saveOperation == NSSaveToOperation)
+        {
+            result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+            OBASSERT(result || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+            
+            if (result)
+            {
+                result = [self copyDocumentToURL:absoluteURL recycleExistingFiles:NO error:outError];
+            }
+        }
+        
+        
+        // Anything else passes through normally
         else
         {
             result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
@@ -173,44 +188,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	return result;
 }
 
-/*  -writeToURL: only supports the Save and SaveAs operations. Instead,
- *  we fake SaveTo operations by doing a standard Save operation and then
- *  copying the resultant file to the destination.
- */
-- (BOOL)performSaveToOperationToURL:(NSURL *)absoluteURL error:(NSError **)outError
-{
-    BOOL result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
-	OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-
-    if (result)
-    {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        if ([fileManager fileExistsAtPath:[absoluteURL path]])
-        {
-            [fileManager removeFileAtPath:[absoluteURL path] handler:nil];
-        }
-        
-        result = [fileManager copyPath:[[self fileURL] path] toPath:[absoluteURL path] handler:nil];
-        if (!result)
-        {
-            // didn't work, put up an error
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [absoluteURL path], NSFilePathErrorKey,
-                                      NSLocalizedString(@"Unable to copy to path", @"Unable to copy to path"), NSLocalizedDescriptionKey,
-                                      nil];
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:512 // unknown write error 
-											userInfo:userInfo];
-			}
-        }
-    }
-    
-    return result;
-}
-    
 - (BOOL)isSaving
 {
     return (mySaveOperationCount > 0);
@@ -1117,75 +1094,64 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 }
 
 /*  Performs the low-level business of snapshotting. No GUI.
+ *  Moves old snapshot to the trash first if there is one
  */
 - (BOOL)saveSnapshot:(NSError **)outError
 {
-    NSArray *files = nil;
-	int tag = 0;
-	
+    NSURL *snapshotURL = [self snapshotURL];
+        
     
-	// Recycle existing snapshot if there is one
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *snapshotPath = [[self snapshotURL] path];
-	if ([fm fileExistsAtPath:snapshotPath])
-	{
-		files = [NSArray arrayWithObject:[snapshotPath lastPathComponent]];
-		BOOL didMoveOldSnapshotToTrash = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
-																					  source:[[self snapshotDirectoryURL] path]
-																				 destination:nil
-																					   files:files 
-																						 tag:&tag];
-		if (!didMoveOldSnapshotToTrash)
-		{
-			// Deleting snapshot failed, return an error
+    // Save the document normally
+    BOOL result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSAutosaveOperation error:outError];
+    
+    
+    if (result)
+    {
+        // Disallow creating snapshot to the same location
+        NSString *destinationPath = [[snapshotURL path] stringByResolvingSymlinksInPath];
+        NSString *sourcePath = [[[self fileURL] path] stringByResolvingSymlinksInPath];
+        if ([destinationPath isEqualToString:sourcePath])
+        {
             if (outError)
             {
-                NSString *snapshotPathAsDisplayPath = [[snapshotPath stringByAbbreviatingWithTildeInPath] stringBySubstitutingRightArrowForPathSeparator];
-                NSString *failureReason = [NSString stringWithFormat:NSLocalizedString(@"Sandvox was unable to move this document's previous snapshot to the Trash. Please remove the document at %@.", "alert: could not remove prior snap"),
-                                           snapshotPathAsDisplayPath];
+                *outError = [NSError errorWithDomain:kKareliaErrorDomain
+                                                code:KareliaError
+                                localizedDescription:NSLocalizedString(@"A snapshot of the document could not be created as it is already a snapshot.", "alert message")
+                         localizedRecoverySuggestion:NSLocalizedString(@"Please close the document and then move it out of the Snapshots folder.", "alert info")
+                                     underlyingError:nil];
+            }
+            
+            return NO;
+        }
+            
+        
+        // Create snapshot directory
+        result = [self createSnapshotDirectoryIfNeeded:outError];
+        
+        
+        // Copy the doc to the snapshot location
+        if (result)
+        {
+            NSError *copyError;
+            result = [self copyDocumentToURL:snapshotURL recycleExistingFiles:YES error:outError];
+            
+            if (!result && outError)
+            {
+                NSString *snapshotsDirectory = [[self snapshotDirectoryURL] path];
+                NSString *failureReason = [NSString stringWithFormat:
+                                           NSLocalizedString(@"Sandvox was unable to create a snapshot of this document. Please check that the folder %@ exists and is writeable.", "alert: could not remove prior snap"),
+                                           [snapshotsDirectory stringByAbbreviatingWithTildeInPath]];
                 
                 NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                                NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
                                                failureReason, NSLocalizedRecoverySuggestionErrorKey,
+                                               copyError, NSUnderlyingErrorKey,
                                                nil];
                 
                 *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
-                return NO;
             }
-		}
-	}
-	else
-	{
-		// Create snapshot directory, if needed
-		if (![self createSnapshotDirectoryIfNeeded:outError])
-        {
-            return NO;
         }
-	}
-	
-	
-	NSError *saveError;
-	BOOL result = [self saveToURL:[self snapshotURL]
-                           ofType:kKTDocumentType
-                 forSaveOperation:NSSaveToOperation
-                            error:&saveError];
-	
-	
-	if (!result && outError)
-	{
-		NSString *snapshotsDirectory = [[self snapshotDirectoryURL] path];
-		NSString *failureReason = [NSString stringWithFormat:
-                                   NSLocalizedString(@"Sandvox was unable to create a snapshot of this document. Please check that the folder %@ exists and is writeable.", "alert: could not remove prior snap"),
-                                   [snapshotsDirectory stringByAbbreviatingWithTildeInPath]];
-        
-        NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
-                                       failureReason, NSLocalizedRecoverySuggestionErrorKey,
-                                       saveError, NSUnderlyingErrorKey,
-                                       nil];
-        
-        *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
-	}
+    }
     
     return result;
 }
@@ -1310,6 +1276,42 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                        nil];
         
         *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
+    }
+    
+    return result;
+}
+
+#pragma mark -
+#pragma mark Backup
+
+- (NSURL *)backupURL
+{
+	NSURL *result = nil;
+	
+    NSURL *originalURLWithoutFileName = [[self fileURL] URLByDeletingLastPathComponent];
+    
+    NSString *fileName = [[[self fileURL] lastPathComponent] stringByDeletingPathExtension];
+    NSString *fileExtension = [[self fileURL] pathExtension];
+    
+    NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
+    OBASSERT(fileName);
+    backupFileName = [backupFileName stringByAppendingString:fileName];
+    OBASSERT(fileExtension);
+    backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
+    result = [originalURLWithoutFileName URLByAppendingPathComponent:backupFileName isDirectory:NO];
+	
+	return result;
+}
+
+/*  A) Recursively creates required directories
+ *  B) Copies the doc to the location
+ */
+- (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error
+{
+    BOOL result = [KTUtilities createPathIfNecessary:[[URL path] stringByDeletingLastPathComponent] error:error];
+    if (result)
+    {
+        result = [self copyDocumentToURL:URL recycleExistingFiles:YES error:error];
     }
     
     return result;
