@@ -17,12 +17,11 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-// KT.h lists enums and strings that are used throughout Sandvox
-// they can only be #imported once, so they are kept separately from Sandvox.h
+// KT.h lists #defines, enums, and NSStrings that are used throughout Sandvox
+// they can only be #imported once, so they are kept separately from SandvoxPlugin.h
 
-// LocalizedStringInThisBundle is really for use by plugins,
-// But WARNING -- it won't work in Category Methods, since the class will have the wrong bundle.
-// Code in Sandvox.app should always just use standard NSLocalized* macros
+// LocalizedStringInThisBundle should be used by PLUGINS, but WARNING not in category methods
+// as the class will have the wrong bundle. Code in Sandvox.app should always just use standard NSLocalized* macros.
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
 // Description Forthcoming
@@ -58,40 +57,26 @@ typedef enum {
 	KTXHTML11DocType
 } KTDocType;
 
-// strings
-extern NSString *kKTModelVersion;
-extern NSString *kKTModelVersion_ORIGINAL;
-extern NSString *kKTModelMaximumVersion;
-extern NSString *kKTModelMinimumVersion;
-
+// Document
 extern NSString *kKTDocumentType;
 extern NSString *kKTDocumentExtension;
 extern NSString *kKTDocumentUTI; // 1.5+ documents
 extern NSString *kKTDocumentUTI_ORIGINAL; // 1.0-1.2 documents
 
-extern NSString *kKTIndexExtension;
-extern NSString *kKTElementExtension;
-extern NSString *kKTDesignExtension;
+extern NSString *kKTPageIDDesignator;
 
-extern NSString *kKTMetadataAppCreatedVersionKey;
-extern NSString *kKTMetadataAppLastSavedVersionKey;
+// Spotlight metadata keys
+extern NSString *kKTMetadataAppCreatedVersionKey; // CFBundleVersion which created document
+extern NSString *kKTMetadataAppLastSavedVersionKey;  // CFBundleVersion which last saved document
 extern NSString *kKTMetadataModelVersionKey;
 
-extern NSString *kKTOutlineDraggingPboardType;
-extern NSString *kKTPagesPboardType;
-extern NSString *kKTPageletsPboardType;
+// Core Data
+extern NSString *kKTModelVersion;
+extern NSString *kKTModelVersion_ORIGINAL;
+extern NSString *kKTModelMinimumVersion;  // we'll support models >= this
+extern NSString *kKTModelMaximumVersion;  // we'll support models <= this
 
-
-extern NSString *kKTDesignChangedNotification;
-extern NSString *kKTInfoWindowMayNeedRefreshingNotification; // not currently used
-extern NSString *kKTItemSelectedNotification;
-extern NSString *kKTSiteStructureDidChangeNotification;
-
-extern NSString *kKTInternalImageClassName;
-
-extern NSString *kKTDefaultMediaPath;
-extern NSString *kKTDefaultResourcesPath;
-
+// DataSources
 extern NSString *kKTDataSourceFileName;	// name of file, with extension -- may not be on file system!
 extern NSString *kKTDataSourceFilePath;	// path of actual file
 extern NSString *kKTDataSourceTitle;	// title other than the file name, if it's known
@@ -113,13 +98,36 @@ extern NSString *kKTDataSourceCreationDate;
 extern NSString *kKTDataSourceKeywords;
 extern NSString *kKTDataSourcePasteboard;
 
-extern NSString *kKTPageIDDesignator;
-
-extern NSString *kKTSelectedObjectsKey;
-extern NSString *kKTSelectedObjectsClassNameKey;
-
+// Error Domains
 extern NSString *kKTHostSetupErrorDomain;
 extern NSString *kKTConnectionErrorDomain;
 extern NSString *kKTDataMigrationErrorDomain;
 
+// Exceptions
 extern NSString *kKTTemplateParserException;
+
+// Pasteboards
+extern NSString *kKTOutlineDraggingPboardType;
+extern NSString *kKTPagesPboardType;
+extern NSString *kKTPageletsPboardType;
+
+// Plugin Extensions
+extern NSString *kKTIndexExtension;
+extern NSString *kKTElementExtension;
+extern NSString *kKTDesignExtension;
+
+// Notifications
+extern NSString *kKTDesignChangedNotification;
+extern NSString *kKTInfoWindowMayNeedRefreshingNotification; // not currently used
+extern NSString *kKTItemSelectedNotification;
+extern NSString *kKTSiteStructureDidChangeNotification;
+
+// Site Outline
+extern NSString *kKTSelectedObjectsKey;
+extern NSString *kKTSelectedObjectsClassNameKey;
+
+// Site Publication
+extern NSString *kKTDefaultMediaPath;
+extern NSString *kKTDefaultResourcesPath;
+
+extern NSString *kKTInternalImageClassName;
