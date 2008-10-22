@@ -1146,7 +1146,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         // Copy the doc to the snapshot location
         if (result)
         {
-            NSError *copyError;
+            NSError *copyError = nil;
             result = [self copyDocumentToURL:snapshotURL recycleExistingFiles:YES error:outError];
             
             if (!result && outError)
