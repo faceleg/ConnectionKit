@@ -80,70 +80,74 @@
 #pragma mark -
 #pragma mark Icons
 
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+- (void)plugin:(KTPage *)page didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
-	if ([key isEqualToString:@"downloadMedia"])
-	{
-		// Turn on page replacement (it's off for imported pages)
-		[plugin setBool:YES forKey:@"uploadMediaInPlaceOfPage"];
-		
-        
-		
-		// Page's file extension needs to match media
-		NSString *fileExtension = [[[(KTMediaContainer *)value file] currentPath] pathExtension];
-		[(KTPage *)plugin setCustomFileExtension:fileExtension];
-		
-        
-        
-        // Page path or filename should match media generally
-		if ([(KTPage *)plugin shouldUpdateFileNameWhenTitleChanges])
-        {
-            NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
-            NSString *legalizedFileName = [[filename stringByDeletingPathExtension] legalizedWebPublishingFileName];
-            [(KTPage *)plugin setFileName:legalizedFileName];
-        }
-        [(KTPage *)plugin setCustomPathRelativeToSite:nil];
-		
-		
-                
-		// Set our page's thumbnail to match the file's Finder icon
-		[(KTPage *)plugin setThumbnail:[value imageWithScaleFactor:1.0]];
-		
-                
-		
-		// Composite the download arrow onto the file's Finder icon
-		NSString *UTI = [NSString UTIForFileAtPath:[[value file] currentPath]];
-		NSImage *fileIcon = [[NSWorkspace sharedWorkspace] iconImageForUTI:UTI];
-		
-		NSString *overlayImagePath = [[self bundle] pathForImageResource:@"download-overlay"];
-		NSImage *overlayImage = [[NSImage alloc] initWithContentsOfFile:overlayImagePath];
-		
-		NSImage *thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(128.0, 128.0)];
-		[thumbnail lockFocus];
-		
-		[fileIcon drawInRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)
-					fromRect:NSMakeRect(0.0, 0.0, [fileIcon size].width, [fileIcon size].height)
-				   operation:NSCompositeCopy
-				    fraction:1.0];
-		
-		[overlayImage drawInRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)
-						fromRect:NSMakeRect(0.0, 0.0, [overlayImage size].width, [overlayImage size].height)
-					   operation:NSCompositeSourceOver
-					    fraction:1.0];
-		
-		[thumbnail unlockFocus];
-		
-		// Create the media container
-		KTMediaContainer *thumbnailMedia = [[self mediaManager] mediaContainerWithImage:thumbnail];
-		[[self delegateOwner] setCustomSiteOutlineIcon:thumbnailMedia];
-		
-		// Tidy up
-		[overlayImage release];
-		[thumbnail release];
-	}
+	if (![key isEqualToString:@"downloadMedia"]) return;
+	
+	
+    
+    // Page's file extension needs to match media
+    NSString *mediaPath = [[(KTMediaContainer *)value file] currentPath];
+    NSString *fileExtension = [mediaPath pathExtension];
+    if (!fileExtension || [fileExtension isEqualToString:@""])
+    {
+        NSString *UTI = [NSString UTIForFileAtPath:mediaPath];
+        if (UTI) fileExtension = [NSString filenameExtensionForUTI:UTI];
+    }
+    
+    if ([fileExtension isEqualToString:@""]) fileExtension = nil;
+    [page setCustomFileExtension:fileExtension];
+    
+    
+    
+    // Page path or filename should match media generally
+    if ([page shouldUpdateFileNameWhenTitleChanges])
+    {
+        NSString *filename = [[[(KTMediaContainer *)value sourceAlias] lastKnownPath] lastPathComponent];
+        NSString *legalizedFileName = [[filename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+        [page setFileName:legalizedFileName];
+    }
+    [page setCustomPathRelativeToSite:nil];
+    
+    
+    
+    // Set our page's thumbnail to match the file's Finder icon
+    [page setThumbnail:[value imageWithScaleFactor:1.0]];
+    
+    
+    
+    // Composite the download arrow onto the file's Finder icon
+    NSString *UTI = [NSString UTIForFileAtPath:[[value file] currentPath]];
+    NSImage *fileIcon = [[NSWorkspace sharedWorkspace] iconImageForUTI:UTI];
+    
+    NSString *overlayImagePath = [[self bundle] pathForImageResource:@"download-overlay"];
+    NSImage *overlayImage = [[NSImage alloc] initWithContentsOfFile:overlayImagePath];
+    
+    NSImage *thumbnail = [[NSImage alloc] initWithSize:NSMakeSize(128.0, 128.0)];
+    [thumbnail lockFocus];
+    
+    [fileIcon drawInRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)
+                fromRect:NSMakeRect(0.0, 0.0, [fileIcon size].width, [fileIcon size].height)
+               operation:NSCompositeCopy
+                fraction:1.0];
+    
+    [overlayImage drawInRect:NSMakeRect(0.0, 0.0, 128.0, 128.0)
+                    fromRect:NSMakeRect(0.0, 0.0, [overlayImage size].width, [overlayImage size].height)
+                   operation:NSCompositeSourceOver
+                    fraction:1.0];
+    
+    [thumbnail unlockFocus];
+    
+    // Create the media container
+    KTMediaContainer *thumbnailMedia = [[self mediaManager] mediaContainerWithImage:thumbnail];
+    [[self delegateOwner] setCustomSiteOutlineIcon:thumbnailMedia];
+    
+    // Tidy up
+    [overlayImage release];
+    [thumbnail release];
 }
 
-/*	We already handle this ourselves, so return NO.
+/*	We already handled this ourselves, so return NO.
  */
 - (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page
 {
@@ -211,15 +215,12 @@
 	KTMediaFileUpload *result = nil;
 	KTMediaFile *media = [[[self delegateOwner] valueForKey:@"downloadMedia"] file];
 	
-	if ([[self delegateOwner] boolForKey:@"uploadMediaInPlaceOfPage"])
-	{
-		NSURL *siteURL = [[[[self page] documentInfo] hostProperties] siteURL];
-		NSString *path = [[[self page] URL] stringRelativeToURL:siteURL];
-        if (path)
-        {
-            result = [media uploadForPath:path];
-        }
-	}
+    NSURL *siteURL = [[[[self page] documentInfo] hostProperties] siteURL];
+    NSString *path = [[[self page] URL] stringRelativeToURL:siteURL];
+    if (path)
+    {
+        result = [media uploadForPath:path];
+    }
 	
     if (!result)
 	{
