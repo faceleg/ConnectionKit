@@ -8,7 +8,7 @@
 
 #import "KTPage+Internal.h"
 
-#import "ContainsValueTransformer.h"
+#import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
@@ -100,7 +100,7 @@
 												   [NSNumber numberWithInt:KTSummarizeAlphabeticalList],
 												   nil];
 	
-	NSValueTransformer *transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:collectionTypes];
+	NSValueTransformer *transformer = [[KSContainsObjectValueTransformer alloc] initWithComparisonObjects:collectionTypes];
 	[NSValueTransformer setValueTransformer:transformer forName:@"KTCollectionSummaryTypeIsTitleList"];
 	[transformer release];
 	

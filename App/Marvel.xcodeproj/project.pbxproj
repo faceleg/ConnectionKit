@@ -703,7 +703,7 @@
 		CEC11ACA0D78BE3D00513E70 /* CIImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A620D78BE3C00513E70 /* CIImage+Karelia.m */; };
 		CEC11ACB0D78BE3D00513E70 /* ContainerIsEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A630D78BE3C00513E70 /* ContainerIsEmptyTransformer.m */; };
 		CEC11ACC0D78BE3D00513E70 /* ContainerIsNotEmptyTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A640D78BE3C00513E70 /* ContainerIsNotEmptyTransformer.m */; };
-		CEC11ACD0D78BE3D00513E70 /* ContainsValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A650D78BE3C00513E70 /* ContainsValueTransformer.m */; };
+		CEC11ACD0D78BE3D00513E70 /* KSContainsObjectValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A650D78BE3C00513E70 /* KSContainsObjectValueTransformer.m */; };
 		CEC11ACE0D78BE3D00513E70 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A660D78BE3C00513E70 /* DNDArrayController.m */; };
 		CEC11ACF0D78BE3D00513E70 /* EscapeHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A670D78BE3C00513E70 /* EscapeHTMLTransformer.m */; };
 		CEC11AD00D78BE3D00513E70 /* KSAbstractBugReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11A680D78BE3C00513E70 /* KSAbstractBugReporter.m */; };
@@ -788,7 +788,7 @@
 		CEC11B270D78BE3D00513E70 /* StripHTMLTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11ABF0D78BE3D00513E70 /* StripHTMLTransformer.m */; };
 		CEC11B280D78BE3D00513E70 /* TrimFirstLineTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC00D78BE3D00513E70 /* TrimFirstLineTransformer.m */; };
 		CEC11B290D78BE3D00513E70 /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */; };
-		CEC11B2A0D78BE3D00513E70 /* ValuesAreEqualTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */; };
+		CEC11B2A0D78BE3D00513E70 /* KSIsEqualValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC20D78BE3D00513E70 /* KSIsEqualValueTransformer.m */; };
 		CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */; };
 		CEC11B9D0D78BE5300513E70 /* AMRollOverButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B300D78BE5300513E70 /* AMRollOverButton.h */; };
 		CEC11B9E0D78BE5300513E70 /* AMRollOverButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B310D78BE5300513E70 /* AMRollOverButtonCell.h */; };
@@ -799,7 +799,7 @@
 		CEC11BA30D78BE5300513E70 /* CIImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B360D78BE5300513E70 /* CIImage+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BA40D78BE5300513E70 /* ContainerIsEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B370D78BE5300513E70 /* ContainerIsEmptyTransformer.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11BA50D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B380D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h */; settings = {ATTRIBUTES = (); }; };
-		CEC11BA60D78BE5300513E70 /* ContainsValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B390D78BE5300513E70 /* ContainsValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11BA60D78BE5300513E70 /* KSContainsObjectValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B390D78BE5300513E70 /* KSContainsObjectValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA70D78BE5300513E70 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3A0D78BE5300513E70 /* Debug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA80D78BE5300513E70 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3B0D78BE5300513E70 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11BA90D78BE5300513E70 /* EscapeHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B3C0D78BE5300513E70 /* EscapeHTMLTransformer.h */; settings = {ATTRIBUTES = (); }; };
@@ -888,7 +888,7 @@
 		CEC11C050D78BE5300513E70 /* StripHTMLTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B980D78BE5300513E70 /* StripHTMLTransformer.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11C060D78BE5300513E70 /* TrimFirstLineTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B990D78BE5300513E70 /* TrimFirstLineTransformer.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11C070D78BE5300513E70 /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */; settings = {ATTRIBUTES = (); }; };
-		CEC11C080D78BE5300513E70 /* ValuesAreEqualTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEC11C080D78BE5300513E70 /* KSIsEqualValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9B0D78BE5300513E70 /* KSIsEqualValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEC11C090D78BE5300513E70 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC11B9C0D78BE5300513E70 /* WebView+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
@@ -2318,7 +2318,7 @@
 		CEC11A620D78BE3C00513E70 /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CIImage+Karelia.m"; path = "../../../Shared/trunk/App/CIImage+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11A630D78BE3C00513E70 /* ContainerIsEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainerIsEmptyTransformer.m; path = ../../../Shared/trunk/App/ContainerIsEmptyTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11A640D78BE3C00513E70 /* ContainerIsNotEmptyTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainerIsNotEmptyTransformer.m; path = ../../../Shared/trunk/App/ContainerIsNotEmptyTransformer.m; sourceTree = SOURCE_ROOT; };
-		CEC11A650D78BE3C00513E70 /* ContainsValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainsValueTransformer.m; path = ../../../Shared/trunk/App/ContainsValueTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEC11A650D78BE3C00513E70 /* KSContainsObjectValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSContainsObjectValueTransformer.m; path = App/KSContainsObjectValueTransformer.m; sourceTree = "<group>"; };
 		CEC11A660D78BE3C00513E70 /* DNDArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DNDArrayController.m; path = ../../../Shared/trunk/App/DNDArrayController.m; sourceTree = SOURCE_ROOT; };
 		CEC11A670D78BE3C00513E70 /* EscapeHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EscapeHTMLTransformer.m; path = ../../../Shared/trunk/App/EscapeHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11A680D78BE3C00513E70 /* KSAbstractBugReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSAbstractBugReporter.m; path = ../../../Shared/trunk/App/KSAbstractBugReporter.m; sourceTree = SOURCE_ROOT; };
@@ -2405,7 +2405,7 @@
 		CEC11ABF0D78BE3D00513E70 /* StripHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StripHTMLTransformer.m; path = ../../../Shared/trunk/App/StripHTMLTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11AC00D78BE3D00513E70 /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrimFirstLineTransformer.m; path = ../../../Shared/trunk/App/TrimFirstLineTransformer.m; sourceTree = SOURCE_ROOT; };
 		CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrimTransformer.m; path = ../../../Shared/trunk/App/TrimTransformer.m; sourceTree = SOURCE_ROOT; };
-		CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValuesAreEqualTransformer.m; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.m; sourceTree = SOURCE_ROOT; };
+		CEC11AC20D78BE3D00513E70 /* KSIsEqualValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSIsEqualValueTransformer.m; path = App/KSIsEqualValueTransformer.m; sourceTree = "<group>"; };
 		CEC11AC30D78BE3D00513E70 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WebView+Karelia.m"; path = "../../../Shared/trunk/App/WebView+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CEC11B300D78BE5300513E70 /* AMRollOverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButton.h; path = ../../../Shared/trunk/App/AMRollOverButton.h; sourceTree = SOURCE_ROOT; };
 		CEC11B310D78BE5300513E70 /* AMRollOverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMRollOverButtonCell.h; path = ../../../Shared/trunk/App/AMRollOverButtonCell.h; sourceTree = SOURCE_ROOT; };
@@ -2416,7 +2416,7 @@
 		CEC11B360D78BE5300513E70 /* CIImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CIImage+Karelia.h"; path = "../../../Shared/trunk/App/CIImage+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC11B370D78BE5300513E70 /* ContainerIsEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainerIsEmptyTransformer.h; path = ../../../Shared/trunk/App/ContainerIsEmptyTransformer.h; sourceTree = SOURCE_ROOT; };
 		CEC11B380D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainerIsNotEmptyTransformer.h; path = ../../../Shared/trunk/App/ContainerIsNotEmptyTransformer.h; sourceTree = SOURCE_ROOT; };
-		CEC11B390D78BE5300513E70 /* ContainsValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainsValueTransformer.h; path = ../../../Shared/trunk/App/ContainsValueTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEC11B390D78BE5300513E70 /* KSContainsObjectValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSContainsObjectValueTransformer.h; path = App/KSContainsObjectValueTransformer.h; sourceTree = "<group>"; };
 		CEC11B3A0D78BE5300513E70 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debug.h; path = ../../../Shared/trunk/App/Debug.h; sourceTree = SOURCE_ROOT; };
 		CEC11B3B0D78BE5300513E70 /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DNDArrayController.h; path = ../../../Shared/trunk/App/DNDArrayController.h; sourceTree = SOURCE_ROOT; };
 		CEC11B3C0D78BE5300513E70 /* EscapeHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EscapeHTMLTransformer.h; path = ../../../Shared/trunk/App/EscapeHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
@@ -2506,7 +2506,7 @@
 		CEC11B980D78BE5300513E70 /* StripHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StripHTMLTransformer.h; path = ../../../Shared/trunk/App/StripHTMLTransformer.h; sourceTree = SOURCE_ROOT; };
 		CEC11B990D78BE5300513E70 /* TrimFirstLineTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrimFirstLineTransformer.h; path = ../../../Shared/trunk/App/TrimFirstLineTransformer.h; sourceTree = SOURCE_ROOT; };
 		CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrimTransformer.h; path = ../../../Shared/trunk/App/TrimTransformer.h; sourceTree = SOURCE_ROOT; };
-		CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValuesAreEqualTransformer.h; path = ../../../Shared/trunk/App/ValuesAreEqualTransformer.h; sourceTree = SOURCE_ROOT; };
+		CEC11B9B0D78BE5300513E70 /* KSIsEqualValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSIsEqualValueTransformer.h; path = App/KSIsEqualValueTransformer.h; sourceTree = "<group>"; };
 		CEC11B9C0D78BE5300513E70 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WebView+Karelia.h"; path = "../../../Shared/trunk/App/WebView+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC3B5120BA9107A006DA002 /* KTTranscript.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KTTranscript.nib; sourceTree = "<group>"; };
@@ -2778,8 +2778,8 @@
 				CEC11A630D78BE3C00513E70 /* ContainerIsEmptyTransformer.m */,
 				CEC11B380D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h */,
 				CEC11A640D78BE3C00513E70 /* ContainerIsNotEmptyTransformer.m */,
-				CEC11B390D78BE5300513E70 /* ContainsValueTransformer.h */,
-				CEC11A650D78BE3C00513E70 /* ContainsValueTransformer.m */,
+				CEC11B390D78BE5300513E70 /* KSContainsObjectValueTransformer.h */,
+				CEC11A650D78BE3C00513E70 /* KSContainsObjectValueTransformer.m */,
 				CEC11B3A0D78BE5300513E70 /* Debug.h */,
 				CEF0F6250D7F306C00AF5BC0 /* Debug.m */,
 				CEC11B3B0D78BE5300513E70 /* DNDArrayController.h */,
@@ -2902,8 +2902,8 @@
 				CEC11AC00D78BE3D00513E70 /* TrimFirstLineTransformer.m */,
 				CEC11B9A0D78BE5300513E70 /* TrimTransformer.h */,
 				CEC11AC10D78BE3D00513E70 /* TrimTransformer.m */,
-				CEC11B9B0D78BE5300513E70 /* ValuesAreEqualTransformer.h */,
-				CEC11AC20D78BE3D00513E70 /* ValuesAreEqualTransformer.m */,
+				CEC11B9B0D78BE5300513E70 /* KSIsEqualValueTransformer.h */,
+				CEC11AC20D78BE3D00513E70 /* KSIsEqualValueTransformer.m */,
 				27AD81560EAB2A5D0083ED52 /* KSWebLocation.h */,
 				27AD81570EAB2A5D0083ED52 /* KSWebLocation.m */,
 				27AD81740EAB34B50083ED52 /* KSWebLocation+WeblocFiles.m */,
@@ -4681,7 +4681,7 @@
 				CEC11BA30D78BE5300513E70 /* CIImage+Karelia.h in Headers */,
 				CEC11BA40D78BE5300513E70 /* ContainerIsEmptyTransformer.h in Headers */,
 				CEC11BA50D78BE5300513E70 /* ContainerIsNotEmptyTransformer.h in Headers */,
-				CEC11BA60D78BE5300513E70 /* ContainsValueTransformer.h in Headers */,
+				CEC11BA60D78BE5300513E70 /* KSContainsObjectValueTransformer.h in Headers */,
 				CEC11BA70D78BE5300513E70 /* Debug.h in Headers */,
 				CEC11BA80D78BE5300513E70 /* DNDArrayController.h in Headers */,
 				CEC11BA90D78BE5300513E70 /* EscapeHTMLTransformer.h in Headers */,
@@ -4770,7 +4770,7 @@
 				CEC11C050D78BE5300513E70 /* StripHTMLTransformer.h in Headers */,
 				CEC11C060D78BE5300513E70 /* TrimFirstLineTransformer.h in Headers */,
 				CEC11C070D78BE5300513E70 /* TrimTransformer.h in Headers */,
-				CEC11C080D78BE5300513E70 /* ValuesAreEqualTransformer.h in Headers */,
+				CEC11C080D78BE5300513E70 /* KSIsEqualValueTransformer.h in Headers */,
 				CEC11C090D78BE5300513E70 /* WebView+Karelia.h in Headers */,
 				CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */,
 				27D90B3B0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h in Headers */,
@@ -6007,7 +6007,7 @@
 				CEC11ACA0D78BE3D00513E70 /* CIImage+Karelia.m in Sources */,
 				CEC11ACB0D78BE3D00513E70 /* ContainerIsEmptyTransformer.m in Sources */,
 				CEC11ACC0D78BE3D00513E70 /* ContainerIsNotEmptyTransformer.m in Sources */,
-				CEC11ACD0D78BE3D00513E70 /* ContainsValueTransformer.m in Sources */,
+				CEC11ACD0D78BE3D00513E70 /* KSContainsObjectValueTransformer.m in Sources */,
 				CEC11ACE0D78BE3D00513E70 /* DNDArrayController.m in Sources */,
 				CEC11ACF0D78BE3D00513E70 /* EscapeHTMLTransformer.m in Sources */,
 				CEC11AD00D78BE3D00513E70 /* KSAbstractBugReporter.m in Sources */,
@@ -6092,7 +6092,7 @@
 				CEC11B270D78BE3D00513E70 /* StripHTMLTransformer.m in Sources */,
 				CEC11B280D78BE3D00513E70 /* TrimFirstLineTransformer.m in Sources */,
 				CEC11B290D78BE3D00513E70 /* TrimTransformer.m in Sources */,
-				CEC11B2A0D78BE3D00513E70 /* ValuesAreEqualTransformer.m in Sources */,
+				CEC11B2A0D78BE3D00513E70 /* KSIsEqualValueTransformer.m in Sources */,
 				CEC11B2B0D78BE3D00513E70 /* WebView+Karelia.m in Sources */,
 				27D90AD90D7ED62800C13012 /* KTHTMLParser+Text.m in Sources */,
 				27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */,

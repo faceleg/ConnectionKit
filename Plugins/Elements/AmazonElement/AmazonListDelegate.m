@@ -45,32 +45,32 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 + (void)initialize
 {
 	// Register value transformers
-	ValuesAreEqualTransformer *transformer = nil;
+	KSIsEqualValueTransformer *transformer = nil;
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutCentered]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutCentered]];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AmazonListLayoutIsCentered"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutBullets]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutBullets]];
 	[transformer setNegatesResult:YES];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AmazonListLayoutIsNotBullets"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutEnhanced]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutEnhanced]];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AmazonListLayoutIsEnhanced"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutEnhanced]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutEnhanced]];
 	[transformer setNegatesResult:YES];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AmazonListLayoutIsNotEnhanced"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutRandom]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:APLayoutRandom]];
 	[transformer setNegatesResult:YES];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AmazonListLayoutIsNotRandom"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:AmazonWishList]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:AmazonWishList]];
 	[NSValueTransformer setValueTransformer:transformer forName:@"AutomaticAmazonListTypeIsWishList"];
 	[transformer release];
 	

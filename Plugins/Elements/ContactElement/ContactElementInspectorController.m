@@ -7,10 +7,7 @@
 //
 
 #import "ContactElementInspectorController.h"
-
-#import <NSImage+Karelia.h>
-#import <NTBoxView.h>
-#import <ValuesAreEqualTransformer.h>
+#import <SandvoxPlugin.h>
 
 
 @implementation ContactElementInspectorController
@@ -18,30 +15,30 @@
 + (void)initialize
 {
 	// Register value transformers
-	ValuesAreEqualTransformer *transformer = nil;
+	KSIsEqualValueTransformer *transformer = nil;
 	
 // TODO: when we can mess with the nib, just take out this transformer binding.
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:             @"email___"];	// HACK -- "DISABLE" THIS SO EMAIL PLACEHOLDER IS ALWAYS ENABLED.  COMPARISON WILL NEVER SUCCEED.
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:             @"email___"];	// HACK -- "DISABLE" THIS SO EMAIL PLACEHOLDER IS ALWAYS ENABLED.  COMPARISON WILL NEVER SUCCEED.
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotEmail"];
 	[transformer setNegatesResult:YES];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:@"visitorName"];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:@"visitorName"];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotName"];
 	[transformer setNegatesResult:YES];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:@"subject"];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:@"subject"];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotSubject"];
 	[transformer setNegatesResult:YES];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:@"message"];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:@"message"];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotMessage"];
 	[transformer setNegatesResult:YES];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:@"send"];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:@"send"];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ContactElementFieldIsNotSend"];
 	[transformer setNegatesResult:YES];
 	[transformer release];

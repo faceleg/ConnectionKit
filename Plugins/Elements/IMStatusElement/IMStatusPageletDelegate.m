@@ -35,7 +35,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 {
 	// Value transformers
 	NSValueTransformer *valueTransformer;
-	valueTransformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:IMServiceIChat]];
+	valueTransformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:IMServiceIChat]];
 	[NSValueTransformer setValueTransformer:valueTransformer forName:@"IMStatusPageletServiceIsIChat"];
 	[valueTransformer release];
 }

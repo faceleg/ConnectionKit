@@ -58,7 +58,7 @@
 + (void)initialize
 {
 	// Register our custom value transformer
-	NSValueTransformer *transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:iframeLink]];
+	NSValueTransformer *transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:iframeLink]];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ExternalPageLinkTypeIsPageWithinPage"];
 	[transformer release];
 }

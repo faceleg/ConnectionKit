@@ -76,12 +76,12 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 	
 	// Register value transformers
 	NSSet *comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeUser], [NSNumber numberWithInt:diggTypeFriends], nil];
-	NSValueTransformer *transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
+	NSValueTransformer *transformer = [[KSContainsObjectValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
 	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsUserOrFriends"];
 	[transformer release];
 	
 	comparisonObjects = [NSSet setWithObjects:[NSNumber numberWithInt:diggTypeSubmitted], [NSNumber numberWithInt:diggTypePromoted], nil];
-	transformer = [[ContainsValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
+	transformer = [[KSContainsObjectValueTransformer alloc] initWithComparisonObjects:comparisonObjects];
 	[NSValueTransformer setValueTransformer:transformer forName:@"DiggPageletTypeIsSubmittedOrPromoted"];
 	[transformer release];
 	

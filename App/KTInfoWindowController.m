@@ -36,7 +36,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "ValuesAreEqualTransformer.h"
+#import "KSIsEqualValueTransformer.h"
 
 #import "Registration.h"
 
@@ -85,12 +85,12 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 {
 	NSValueTransformer *aTransformer;
 	
-	aTransformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:
+	aTransformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:
 		[NSNumber numberWithInt:KTCalloutPageletLocation]];
 	[NSValueTransformer setValueTransformer:aTransformer forName:@"PageletLocationIsCallout"];
 	[aTransformer release];
 	
-	aTransformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:
+	aTransformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:
 		[NSNumber numberWithInt:KTSidebarPageletLocation]];
 	[NSValueTransformer setValueTransformer:aTransformer forName:@"PageletLocationIsSidebar"];
 	[aTransformer release];

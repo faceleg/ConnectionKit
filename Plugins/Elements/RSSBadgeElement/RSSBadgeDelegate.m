@@ -8,8 +8,6 @@
 
 #import "RSSBadgeDelegate.h"
 
-#import <NSBundle+Karelia.h>
-
 
 @implementation RSSBadgeDelegate
 
@@ -19,14 +17,14 @@
 + (void)initialize
 {
 	// Register value trasnsformers
-	ValuesAreEqualTransformer *transformer = nil;
+	KSIsEqualValueTransformer *transformer = nil;
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:RSSBadgeIconStyleStandardOrangeLarge]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:RSSBadgeIconStyleStandardOrangeLarge]];
 	[transformer setNegatesResult:YES];
 	[NSValueTransformer setValueTransformer:transformer forName:@"RSSBadgeIconIsNotStandardOrangeLarge"];
 	[transformer release];
 	
-	transformer = [[ValuesAreEqualTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:RSSBadgeIconStyleStandardGrayLarge]];
+	transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:RSSBadgeIconStyleStandardGrayLarge]];
 	[transformer setNegatesResult:YES];
 	[NSValueTransformer setValueTransformer:transformer forName:@"RSSBadgeIconIsNotStandardGrayLarge"];
 	[transformer release];
