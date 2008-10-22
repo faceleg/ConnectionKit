@@ -750,7 +750,7 @@
 		CE01A80C0EAFD63600BDF264 /* AMRollOverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7090EAFD63600BDF264 /* AMRollOverButtonCell.m */; };
 		CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */; };
 		CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */; };
-		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; };
+		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70D0EAFD63600BDF264 /* BDAlias.m */; };
 		CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */; };
@@ -838,7 +838,7 @@
 		CE5CA3470D15BE580021E9B3 /* GenericFileServerIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */; };
 		CE5CA3690D15C1DE0021E9B3 /* pageborder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3670D15C1DE0021E9B3 /* pageborder.tiff */; };
 		CE5CA36A0D15C1DE0021E9B3 /* pagemask.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3680D15C1DE0021E9B3 /* pagemask.tiff */; };
-		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; };
+		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE603A680D0C7EA60016A30E /* quality_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = CE603A670D0C7EA60016A30E /* quality_sample.png */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
 		CE6BC84D096CA10B00F94F8B /* home.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE6BC84C096CA10B00F94F8B /* home.icns */; };

@@ -25,6 +25,7 @@
 // Debugging
 #import "Debug.h"
 #import "assertions.h"
+#import "Macros.h"
 
 // Document
 #import "KTDocumentInfo.h"
@@ -66,7 +67,6 @@
 #import "KSEmailAddressComboBox.h"
 #import "KSLabel.h"
 #import "KSPathInfoField.h"
-#import "KSPathInfoFieldCell.h"
 #import "KSPlaceholderTableView.h"
 #import "KSSmallDatePicker.h"
 #import "KSTrimFirstLineFormatter.h"
@@ -124,3 +124,4 @@
 // Third Party
 #import "DNDArrayController.h"
 #import "NTBoxView.h"
+#import "BDAlias.h"
