@@ -15,7 +15,6 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 
 #import <WebKit/WebKit.h>

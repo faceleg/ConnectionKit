@@ -20,7 +20,6 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
-#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 #import "NSScanner+Karelia.h"
 

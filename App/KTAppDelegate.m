@@ -70,7 +70,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSException+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSToolbar+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import <AmazonSupport/AmazonSupport.h>

@@ -28,7 +28,6 @@
 #import "NSScanner+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSScanner+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSXMLElement+Karelia.h"

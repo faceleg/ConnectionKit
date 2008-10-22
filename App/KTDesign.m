@@ -19,7 +19,6 @@
 #import "NSImage+KTExtensions.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 
 #import "Debug.h"

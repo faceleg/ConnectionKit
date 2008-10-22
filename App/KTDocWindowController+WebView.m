@@ -34,7 +34,6 @@
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
 

@@ -87,7 +87,6 @@
 #import "NSObject+Karelia.h"
 #import "NSSet+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSHelpManager+Karelia.h"

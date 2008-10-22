@@ -37,7 +37,6 @@
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 
 #import "Registration.h"
 

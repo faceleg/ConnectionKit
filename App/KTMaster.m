@@ -30,7 +30,6 @@
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSMutableSet+Karelia.h"
 #import "NSURL+Karelia.h"
 

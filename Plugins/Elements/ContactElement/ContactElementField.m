@@ -9,8 +9,7 @@
 #import "ContactElementField.h"
 
 #import "ContactElementDelegate.h"
-
-#import <NSString-Utilities.h>
+#import <NSString+Karelia.h>
 
 
 @implementation ContactElementField

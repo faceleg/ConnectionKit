@@ -27,7 +27,6 @@
 #import "WebViewEditingHelperClasses.h"
 
 #import "NSMutableDictionary+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 

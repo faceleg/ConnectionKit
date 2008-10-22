@@ -32,7 +32,6 @@
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 
 #import "OmniCompatibility.h"

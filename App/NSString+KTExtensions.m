@@ -10,7 +10,6 @@
 #import "KT.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSData+Karelia.h"
-#import "NSString-Utilities.h"
 
 @implementation NSString ( KTExtensions )
 

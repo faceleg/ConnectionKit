@@ -20,7 +20,6 @@
 #import "NSBundle+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSString-Utilities.h"
 #import "NSURL+Karelia.h"
 
 #import <WebKit/WebKit.h>

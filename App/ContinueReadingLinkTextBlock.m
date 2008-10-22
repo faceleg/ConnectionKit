@@ -9,8 +9,7 @@
 #import "ContinueReadingLinkTextBlock.h"
 
 #import "KTPage.h"
-
-#import "NSString-Utilities.h"
+#import "NSString+Karelia.h"
 
 
 @implementation ContinueReadingLinkTextBlock
