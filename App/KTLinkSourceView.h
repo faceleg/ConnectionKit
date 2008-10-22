@@ -19,6 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 @interface KTLinkSourceView : NSView 
 {
 	IBOutlet id					delegate; // not retained
@@ -40,10 +41,9 @@
 
 @end
 
-@interface NSObject (KTLinkSourceViewDelegate)
 
+@interface NSObject (KTLinkSourceViewDelegate)
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link;
 - (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard;
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link;
-
 @end

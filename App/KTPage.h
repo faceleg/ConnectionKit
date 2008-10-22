@@ -18,6 +18,7 @@
 //
 
 #import "KT.h"
+
 #import "KTAbstractPage.h"
 #import "KTPagelet.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -28,14 +29,12 @@
 @class WebView;
 @class KTMediaContainer;
 
-
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
 {
-@private
+	@private
     // these ivars are only set if the page is root
-	BOOL				myIsNewPage;
+	BOOL myIsNewPage;
 }
-
 
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
@@ -45,8 +44,8 @@
 
 @end
 
-@interface KTPage (Accessors)
 
+@interface KTPage (Accessors)
 - (BOOL)disableComments;
 - (void)setDisableComments:(BOOL)disableComments;
 
@@ -86,12 +85,10 @@
 - (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon;
 
 - (BOOL)hasCodeInjection;
-
 @end
 
 
 @interface KTPage (Children)
-
 // Basic Accessors
 - (KTCollectionSortType)collectionSortOrder;
 - (void)setCollectionSortOrder:(KTCollectionSortType)sorting;
@@ -115,12 +112,10 @@
 - (BOOL)hasChildren;
 
 - (NSIndexPath *)indexPath;
-
 @end
 
 
 @interface KTPage (Indexes)
-
 // Simple Accessors
 - (KTCollectionSummaryType)collectionSummaryType;
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
@@ -155,13 +150,10 @@
 - (BOOL)collectionGenerateArchives;
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
-
-
 @end
 
 
 @interface KTPage (Pagelets)
-
 // General accessors
 - (BOOL)includeSidebar;
 - (void)setIncludeSidebar:(BOOL)flag;
@@ -187,12 +179,10 @@
 
 // Support
 + (void)updatePageletOrderingsFromArray:(NSArray *)pagelets;
-
 @end
 
 
 @interface KTPage (Web)
-
 + (NSString *)pageTemplate;
 
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
@@ -204,7 +194,6 @@
 - (NSString *)comboTitleText;
 
 - (NSString *)DTD;
-
 @end
 
 
@@ -218,5 +207,3 @@
 - (NSString *)summaryHTMLKeyPath;
 - (BOOL)summaryHTMLIsEditable;
 @end
-
-

@@ -23,7 +23,6 @@
 
 @class KTPage;
 
-
 @interface KTMediaFileUpload : NSManagedObject <KTWebPaths>
 {
 }

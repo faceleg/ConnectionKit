@@ -18,48 +18,55 @@
 //
 
 // SandvoxPlugin.h is a convenience header that imports all "public" headers in Sandvox
-//  should be sufficient for almost all plugins
 
-// defines/enums used throughout Sandvox
+// defines/enums/strings used throughout Sandvox
 #import "KT.h"
 
-//#import "KTDocument.h"
-#import "KTDocumentInfo.h"
-
-// debugging
+// Debugging
 #import "Debug.h"
 #import "assertions.h"
 
-//  superclass of all managed objects
+// Document
+#import "KTDocumentInfo.h"
+
+// Core Data
 #import "KTManagedObject.h"
 
-//  abstract superclass of all plugins (bundles)
+// Plugins (abstract superclass of all plugins)
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
-//  major Core Data-based plugin superclasses
+// Page composition
 #import "KTAbstractPage.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
+#import "KTMaster.h"
 
-//  media
+// Template parsing
+#import "KTTemplateParser.h"
+#import "KTHTMLParser.h"
+
+//  Media
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 #import "KTImageScalingSettings.h"
 
-// publishing
-#import "KTHostProperties.h"
-
-// abstract superclass of all data sources (drag-and-drop external sources)
+// DataSources (drag-and-drop external sources)
 #import "KTDataSourceProtocol.h"
 
-// abstract superclass of all indexes
+// Indexes
 #import "KTAbstractIndex.h"
 
+// Publishing
+#import "KTHostProperties.h"
+
 // Foundation/AppKit subclasses
+#import "KSEmailAddressComboBox.h"
 #import "KSLabel.h"
+#import "KSPathInfoField.h"
+#import "KSPathInfoFieldCell.h"
 #import "KSPlaceholderTableView.h"
 #import "KSSmallDatePicker.h"
 #import "KSTrimFirstLineFormatter.h"
@@ -69,28 +76,28 @@
 // Foundation extensions
 #import "NSAppleScript+Karelia.h"
 #import "NSArray+Karelia.h"
-#import "NSMutableArray+Karelia.h"
-#import "NSMutableSet+Karelia.h"
 #import "NSAttributedString+Karelia.h"
-#import "NSBitmapImageRep+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSDictionary+Karelia.h"
-#import "NSMutableDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
+#import "NSHelpManager+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSIndexSet+Karelia.h"
 #import "NSInvocation+Karelia.h"
+#import "NSMutableArray+Karelia.h"
+#import "NSMutableDictionary+Karelia.h"
+#import "NSMutableSet+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "NSScanner+Karelia.h"
 #import "NSSet+KTExtensions.h"
+#import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
-#import "NSHelpManager+Karelia.h"
-#import "NSScanner+Karelia.h"
 
 // CoreData extensions
 #import "NSManagedObject+KTExtensions.h"
@@ -102,34 +109,19 @@
 #import "NSColor+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "NSBitmapImageRep+Karelia.h"
 
 // Value Transformers
 #import "ContainsValueTransformer.h"
 #import "ValuesAreEqualTransformer.h"
 
-// general support
-#import "OmniCompatibility.h"
-
-//  drag-and-drop
+//  Drag-and-Drop
 #import "KTLinkSourceView.h"
 
 //  RTFD to HTML conversion
 #import "KTRTFDImporter.h"
 
-//  intelligently dismissable sheet
-#import "KSEmailAddressComboBox.h"
-
-
-
+// Third Party
+#import "OmniCompatibility.h"
 #import "DNDArrayController.h"
 #import "NTBoxView.h"
-#import "KSPathInfoField.h"
-#import "KSPathInfoFieldCell.h"
-#import "KTMaster.h"
-#import "KTMediaContainer.h"
-#import "KTMediaFile.h"
-#import "KSPathInfoField.h"
-#import "NSMutableSet+Karelia.h"
-#import "KTHTMLParser.h"
-#import "NSString+KTExtensions.h"
-

@@ -27,9 +27,7 @@ typedef enum {
 } KTCopyMediaType;
 
 
-
 @class KTPage,KTHostProperties;
-
 
 @interface KTDocumentInfo : KTManagedObject 
 {

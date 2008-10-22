@@ -35,7 +35,6 @@ typedef enum {
 @class KTAbstractPage;
 @class KTMediaFile;
 
-
 @interface KTHTMLParser : KTTemplateParser
 {
 	KTAbstractPage			*myCurrentPage;
@@ -58,7 +57,7 @@ typedef enum {
 - (BOOL)liveDataFeeds;
 - (void)setLiveDataFeeds:(BOOL)flag;
 
-// Fucntions
+// Functions
 - (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile;
 - (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile;
 

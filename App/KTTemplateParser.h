@@ -17,7 +17,6 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 #import <Cocoa/Cocoa.h>
 #import "NSString+Karelia.h"
 

@@ -18,7 +18,6 @@
 //
 
 #import "KTManagedObject.h"
-
 #import <WebKit/WebKit.h>
 
 
@@ -26,7 +25,7 @@
 @interface KTAbstractElement : KTManagedObject 
 {
     // optional delegate
-	id					myDelegate;
+	id myDelegate;
 }
 
 #pragma mark awake
@@ -76,13 +75,15 @@
 
 
 @interface NSObject (KTAbstractPluginDelegate)
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)plugin:(KTAbstractElement *)plugin 
+   didSetValue:(id)value 
+  forPluginKey:(NSString *)key 
+	  oldValue:(id)oldValue;
 
 - (BOOL)plugin:(KTAbstractElement *)plugin
 	shouldInsertNode:(DOMNode *)node
   intoTextForKeyPath:(NSString *)keyPath
 		 givenAction:(WebViewInsertAction)action;
-
 @end
 
 

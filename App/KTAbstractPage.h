@@ -19,7 +19,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
-
 #import "KTWebPathsProtocol.h"
 
 
@@ -34,7 +33,6 @@ KTCollectionPathStyle;
 
 @class KTDocumentInfo, KTMaster;
 @class KTHTMLParser;
-
 
 @interface KTAbstractPage : KTAbstractElement
 {
@@ -123,4 +121,3 @@ KTCollectionPathStyle;
 - (NSString *)previewPath;
 
 @end
-

@@ -22,7 +22,6 @@
 
 @interface NSString (KTExtensions)
 
-
 - (NSString *)domainName;
 - (BOOL)looksLikeValidHost;
 

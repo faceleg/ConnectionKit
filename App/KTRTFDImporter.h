@@ -21,10 +21,13 @@
 
 @class DOMDocument, KTOffScreenWebViewController;
 @interface KTRTFDImporter : NSObject 
+{
+}
 
-#pragma mark -
+- (NSString *)importWithContentsOfFile:(NSString *)aPath 
+					documentAttributes:(NSDictionary **)dict 
+							 requestor:(id)anObject;
 
-- (NSString *)importWithContentsOfFile:(NSString *)aPath documentAttributes:(NSDictionary **)dict requestor:(id)anObject;
 - (NSString *)importWithAttributedString:(NSAttributedString *)anAttrString requestor:(id)anObject;
 
 @end

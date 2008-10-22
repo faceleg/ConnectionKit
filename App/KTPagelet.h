@@ -29,9 +29,9 @@ typedef enum {
 
 
 @class KTPage;
-
-
 @interface KTPagelet : KTAbstractElement
+{
+}
 
 #pragma mark Basic accessors
 

@@ -29,7 +29,6 @@ typedef enum {
 
 @class KTPage, KTAbstractHTMLPlugin;
 
-
 @interface KTAbstractIndex : NSObject
 {
 	KTPage *myPage;
@@ -52,6 +51,5 @@ typedef enum {
 
 // Media
 - (NSSet *)requiredMediaIdentifiers;
-
 
 @end

@@ -22,6 +22,8 @@
 
 
 @interface KTHostProperties : KTManagedObject
+{
+}
 
 - (BOOL)remoteSiteURLIsValid;
 - (NSString *)globalBaseURLUsingHome:(BOOL)inHome;

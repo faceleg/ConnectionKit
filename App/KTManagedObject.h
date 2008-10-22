@@ -21,6 +21,8 @@
 
 
 @interface KTManagedObject : KSExtensibleManagedObject
+{
+}
 
 #pragma mark Migration Methods
 

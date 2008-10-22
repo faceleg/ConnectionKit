@@ -18,17 +18,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTManagedObject.h"
-
 #import "KT.h"
 #import "KTHTMLParser.h"
+#import "KTManagedObject.h"
 
 
 @class KTDesign;
 @class KTMediaContainer;
 
-
 @interface KTMaster : KTManagedObject 
+{
+}
 
 - (NSString *)siteTitleText;
 - (void)setSiteTitleHTML:(NSString *)value;

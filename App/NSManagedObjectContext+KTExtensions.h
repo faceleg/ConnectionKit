@@ -19,8 +19,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTMedia, KTAbstractPage, KTPage;
 
+@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTAbstractPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
 

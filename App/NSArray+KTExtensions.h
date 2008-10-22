@@ -21,8 +21,6 @@
 
 
 @class KTPage;
-
-
 @interface NSArray (KTExtensions)
 
 // operations that assume all objects in array are KTPages
@@ -46,6 +44,5 @@
  NB: this is not a sophisticated search, assumes parents
  and children are essentially in order */
 - (BOOL)containsParentOfPage:(KTPage *)aPage;
-
 
 @end
