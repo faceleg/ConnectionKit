@@ -17,6 +17,7 @@
 #import "KTDocWebViewController.h"
 #import "KTWebViewComponent.h"
 #import "KTDocument.h"
+#import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
 #import "KTLinkSourceView.h"
@@ -608,7 +609,7 @@ but the only trick is -- how to display a highlight?
 		NSString *urlString = @"";
 		if ([[URL scheme] isEqualToString:@"applewebdata"])
 		{
-			KTPage *linkedPage = [[self document] pageForURLPath:[URL path]];
+			KTPage *linkedPage = [[[self document] documentInfo] pageWithPreviewURLPath:[URL path]];
 			if (nil != linkedPage)
 			{
 				if ([linkedPage isRoot])

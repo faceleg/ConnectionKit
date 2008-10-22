@@ -70,25 +70,4 @@
 }
 
 
-- (KTPage *)pageForURLPath:(NSString *)path
-{
-	KTPage *result = nil;
-	
-	// skip media objects ... starting or containing Media if it's not a request in the main frame
-	if ( NSNotFound == [path rangeOfString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]].location )
-	{
-		int whereTilde = [path rangeOfString:kKTPageIDDesignator options:NSBackwardsSearch].location;	// special mark internally to look up page IDs
-		if (NSNotFound != whereTilde)
-		{
-			NSString *idString = [path substringFromIndex:whereTilde+[kKTPageIDDesignator length]];
-			NSManagedObjectContext *context = [self managedObjectContext];
-			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
-		}
-		else if ([path hasSuffix:@"/"])
-		{
-			result = (KTPage *)[[self documentInfo] root];
-		}
-	}
-	return result;
-}
 @end

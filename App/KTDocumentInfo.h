@@ -30,12 +30,14 @@ typedef enum {
 @class KTPage,KTHostProperties;
 
 @interface KTDocumentInfo : KTManagedObject 
-{
-}
 
 - (NSString *)siteID;
-- (KTPage *)root;
 - (KTHostProperties *)hostProperties;
+
+// Pages
+- (KTPage *)root;
+- (KTPage *)pageWithPreviewURLPath:(NSString *)path;
+
 
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;

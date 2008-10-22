@@ -138,10 +138,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 
 @interface KTDocument (Lookup)
-
 - (NSString *)defaultRootPageTitleText;
-
-- (KTPage *)pageForURLPath:(NSString *)path;
 @end
 
 

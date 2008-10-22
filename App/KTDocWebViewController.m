@@ -795,7 +795,7 @@
 		if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativeURLString hasPrefix:kKTPageIDDesignator]) &&
             [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
 		{
-			KTPage *thePage = [[self document] pageForURLPath:relativeURLString];
+			KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativeURLString];
 			if (!thePage)
 			{
 				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
