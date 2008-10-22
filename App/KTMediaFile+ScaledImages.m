@@ -26,7 +26,6 @@
 #import <Connection/KTLog.h>
 
 #import "Debug.h"
-#import "OmniCompatibility.h"
 
 
 @interface QTMovie (iMediaHack)

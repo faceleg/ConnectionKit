@@ -50,7 +50,6 @@
 #import "Registration.h"
 
 #import "Debug.h"
-#import "OmniCompatibility.h"
 
 
 typedef enum {

@@ -32,7 +32,6 @@
 #import "DOMNode+KTExtensions.h"
 
 #import "KSWebLocation.h"
-#import "OmniCompatibility.h"
 
 
 @interface NSView ( WebHTMLViewHack )

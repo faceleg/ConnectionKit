@@ -122,6 +122,5 @@
 #import "KTRTFDImporter.h"
 
 // Third Party
-#import "OmniCompatibility.h"
 #import "DNDArrayController.h"
 #import "NTBoxView.h"

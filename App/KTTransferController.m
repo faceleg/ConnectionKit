@@ -94,8 +94,6 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import "OmniCompatibility.h"
-
 #import <Connection/AbstractConnection.h>
 #import <Connection/FileConnection.h>
 #import <Connection/EMKeychainItem.h>

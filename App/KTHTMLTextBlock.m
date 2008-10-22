@@ -34,10 +34,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import "OmniCompatibility.h"
-
 #import "Debug.h"
-
+#import "Macros.h"
 
 @interface KTHTMLTextBlock (Private)
 

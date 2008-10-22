@@ -101,7 +101,7 @@ static NSManagedObjectModel *sKTComponentsModel;
 		sKTComponentsModel = [[NSManagedObjectModel modelWithPath:modelPath] retain];
 		if ( nil == sKTComponentsModel )
 		{
-			[NSException raise:kKareliaObjectException format:@"unable to construct model at path: %@", modelPath];
+			[NSException raise:kKareliaGeneralException format:@"unable to construct model at path: %@", modelPath];
 		}
 	}
 	
