@@ -194,8 +194,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [master setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"author"] forKey:@"author"];
         [root setBool:YES forKey:@"isCollection"];
         
-        [master setValue:[self language] forKey:@"language"];
-        [master setValue:[self charset] forKey:@"charset"];
+        // This probably should use -[NSBundle preferredLocalizationsFromArray:forPreferences:]
+        // http://www.cocoabuilder.com/archive/message/cocoa/2003/4/24/84070
+        // though there's a problem ... that will return a string like "English" not "en"
+        NSString *language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0];
+        [master setValue:language forKey:@"language"];
+        [master setValue:@"UTF-8" forKey:@"charset"];
         
         [root setTitleText:[self defaultRootPageTitleText]];
         
@@ -230,13 +234,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
-		// A little bit of repair; we need to have language stored in the root if it's not there
-		if (![[[[self documentInfo] root] master] valueForKey:@"language"])
-		{
-			[[[[self documentInfo] root] master] setValue:[self language] forKey:@"language"];
-		}
-
-		// For diagnostics, log the value of the host properties
+		
+        // For diagnostics, log the value of the host properties
 		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
 		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 	}

@@ -40,15 +40,8 @@
 
 #import "Registration.h"
 
+
 @implementation KTDocument (Lookup)
-
-#pragma mark -
-#pragma mark Generated properties
-
-- (NSString *)siteTitleHTML
-{
-	return [[[self displayName] stringByDeletingPathExtension] stringByEscapingHTMLEntities];		// get the default title from the document name
-}
 
 #pragma mark -
 #pragma mark Non-simple lookups from the user defaults
@@ -69,21 +62,6 @@
 
 // Return the appropriate localization for these default values.
 
-- (NSString *)titleHTML
-{
-	// Note: the use of NS...Localized...String...With...Default...Value below gets this string picked up by genstrings for 
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"titleHTML" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"titleHTML", nil, [NSBundle mainBundle], @"Untitled",  @"Default Title of page")
-		];
-	return result;
-}
-- (NSString *) siteSubtitleHTML
-{
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML", nil, [NSBundle mainBundle], @"This is the subtitle for your site.",  @"Default introduction statement for a page")
-		];
-	return result;
-}
 - (NSString *) defaultRootPageTitleText
 {
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"defaultRootPageTitleText" language:[[[[self documentInfo] root] master] valueForKey:@"language"]
@@ -91,44 +69,6 @@
 	return result;
 }
 
-// DERIVED
-
-- (NSString *)siteSubtitleText
-{
-	NSString *result = [self siteSubtitleHTML];
-	if (![result isEqualToString:@""])
-	{
-		result = [result stringByConvertingHTMLToPlainText];
-	}
-	return result;
-}
-
-
-
-#pragma mark -
-#pragma mark Simple lookups from the user defaults
-
-- (NSString *)author
-{
-	return @"";	// don't inherit from defaults; we want it to be empty if it got emptied out
-}
-
-
-#pragma mark -
-#pragma mark Fallback values for properties in pages and collections
-
-- (NSString *)language
-{
-// This probably should use -[NSBundle preferredLocalizationsFromArray:forPreferences:]
-// http://www.cocoabuilder.com/archive/message/cocoa/2003/4/24/84070
-// though there's a problem ... that will return a string like "English" not "en"
-
-	NSArray *langArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-	return [langArray objectAtIndex:0];		// preferred langauge is probably language of file
-}
-
-
-- (NSString *)charset { return @"UTF-8"; }
 
 - (KTPage *)pageForURLPath:(NSString *)path
 {
