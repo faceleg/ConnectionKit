@@ -931,10 +931,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #pragma mark -
 #pragma mark NSApplication Delegate
 
-- (NSError *)application:(NSApplication *)theApplication willPresentError:(NSError *)inError
+/*  We want all errors logged in detail for further analysis later if needed
+ */
+- (NSError *)application:(NSApplication *)theApplication willPresentError:(NSError *)error
 {
-	//LOG((@"willPresentError: %@", inError));
-	return inError;
+    // Log the error to the console for debugging
+    // Don't log 259 userInfo ... crashes, see case 34969
+    NSString *errorDescription = ([error code] == NSFileReadCorruptFileError) ? [error description] : [error debugDescription];
+	NSLog(@"Error: %@", [errorDescription condenseWhiteSpace]);
+	
+    return error;
 }
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication

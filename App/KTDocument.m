@@ -740,27 +740,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
     
     
-    // Log the error to the console for debugging
-    NSLog(@"KTDocument will present error:\n%@", result);
-	
-	// Don't log 259 ... crashes, see case 34969
-	if (NSFileReadCorruptFileError != [result code])
-	{
-		NSDictionary *dict = [result userInfo];
-		NSString *desc = [dict description];
-		NSString *condensed = [desc condenseWhiteSpace];
-		NSLog(@"Error user info: %@", condensed);
-	}
-	
-    
-    NSError *underlyingError = [[result userInfo] objectForKey:NSUnderlyingErrorKey];
-    if (underlyingError)
-    {
-        NSLog(@"Underlying error: %@", [[[underlyingError userInfo] description] condenseWhiteSpace]);
-    }
-    
-	
-	return result;
+    return result;
 }
 
 #pragma mark -
