@@ -112,8 +112,8 @@
 #import "NSBitmapImageRep+Karelia.h"
 
 // Value Transformers
-#import "ContainsValueTransformer.h"
-#import "ValuesAreEqualTransformer.h"
+#import "KSContainsObjectValueTransformer.h"
+#import "KSIsEqualValueTransformer.h"
 
 //  Drag-and-Drop
 #import "KTLinkSourceView.h"
