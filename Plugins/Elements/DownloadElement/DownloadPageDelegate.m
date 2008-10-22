@@ -74,7 +74,7 @@
 	
 	KTMediaContainer *downloadMedia =
 		[[self mediaManager] mediaContainerWithDataSourceDictionary:aDataSourceDictionary];
-	[[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
+	[self setDownloadMedia:downloadMedia];
 }
 
 #pragma mark -
@@ -188,7 +188,7 @@
 	}
 	
 	KTMediaContainer *downloadMedia = [[self mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
-	[[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
+	[self setDownloadMedia:downloadMedia];
 }
 
 - (BOOL)pathInfoField:(KSPathInfoField *)field
@@ -203,7 +203,7 @@
 	
 	KTMediaContainer *downloadMedia =
 		[[self mediaManager] mediaContainerWithDraggingInfo:sender preferExternalFile:fileShouldBeExternal];
-	[[self delegateOwner] setValue:downloadMedia forKey:@"downloadMedia"];
+	[self setDownloadMedia:downloadMedia];
 	
 	return YES;
 }
@@ -228,6 +228,36 @@
 	}
 	
 	return result;
+}
+
+/*  Prompts the user if there's an issue with the media. Otherwise, stores it
+ */
+- (BOOL)setDownloadMedia:(KTMediaContainer *)media
+{
+    // We need a valid filename to upload from
+    NSString *mediaPath = [[media file] currentPath];
+    NSString *fileExtension = [mediaPath pathExtension];
+    if (!fileExtension || [fileExtension isEqualToString:@""])
+    {
+        NSString *UTI = [NSString UTIForFileAtPath:mediaPath];
+        if (UTI) fileExtension = [NSString filenameExtensionForUTI:UTI];
+    }
+    
+    if (!fileExtension || [fileExtension isEqualToString:@""])
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:LocalizedStringInThisBundle(@"This file cannot be used for downloading as it has no filename extension.", "alert title")];
+        [alert setInformativeText:LocalizedStringInThisBundle(@"Please select a different file or use the Finder to give the file an extension.", "alert info")];
+        [alert addButtonWithTitle:@"OK"];
+        [alert runModal];
+        
+        return NO;
+    }
+    
+    
+    // Store the media
+    [[self delegateOwner] setValue:media forKey:@"downloadMedia"];
+    return YES;
 }
 
 #pragma mark -
