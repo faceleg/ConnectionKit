@@ -8,9 +8,8 @@
     #import <AppKit/AppKit.h>
     #import <WebKit/WebKit.h>
 
-	#import "assertions.h"
-
-#define NSMakeCollectable(x) (id)(x)
-
+#import "Debug.h"
+#import "Macros.h"
+#import "assertions.h"
 
 #endif
