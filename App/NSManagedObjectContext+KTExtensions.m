@@ -121,43 +121,6 @@
     return nil;
 }
 
-// return media object matching digest(s), nil is taken into account
-- (KTMedia *)objectMatchingMediaDigest:(NSString *)aMediaDigest
-					   thumbnailDigest:(NSString *)aThumbnailDigest
-{
-	OBASSERTSTRING((nil != aMediaDigest), @"aMediaDigest cannot be nil");
-	
-	KTMedia *result = nil;
-	
-	NSPredicate *predicate = nil;
-	if ( nil != aThumbnailDigest )
-	{
-		predicate = [NSPredicate predicateWithFormat:@"(mediaDigest == %@) && (thumbnailDigest == %@)", aMediaDigest, aThumbnailDigest];
-	}
-	else
-	{
-		predicate = [NSPredicate predicateWithFormat:@"(mediaDigest == %@) && (thumbnailDigest == %@)", aMediaDigest, [NSNull null]];
-	}
-	
-	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"Media"
-												predicate:predicate
-													error:&localError];
-		
-	// return only the first object that matches
-	if ( [fetchedObjects count] > 0 )
-	{
-		if ( [fetchedObjects count] > 1 )
-		{
-			NSLog(@"warning: document contains more than one Media with mediaDigest %@ and thumbnailDigest %@, close and reopen document to correct this problem", 
-				  aMediaDigest, aThumbnailDigest);
-		}
-		result = [fetchedObjects objectAtIndex:0];
-	}
-	
-	return result;
-}
-
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray
 {
 	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
@@ -235,18 +198,6 @@
 	}
 	
 	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
-	return result;
-}
-
-- (KTMedia *)mediaWithUniqueID:(NSString *)anID
-{
-	KTMedia *result = nil;
-	
-	if ( (nil != anID) && ![anID isEqualToString:@""] )
-	{
-		result = (KTMedia *)[self objectWithUniqueID:anID entityName:@"Media"];
-	}
-	
 	return result;
 }
 

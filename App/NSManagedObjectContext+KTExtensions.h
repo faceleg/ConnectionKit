@@ -62,10 +62,6 @@
 // return context's DocumentInfo
 - (KTDocumentInfo *)documentInfo;
 
-// returns KTMedia object matching digest(s), nil is taken into account
-- (KTMedia *)objectMatchingMediaDigest:(NSString *)aMediaDigest
-					   thumbnailDigest:(NSString *)aThumbnailDigest;
-
 // returns KTManagedObject in context matching criteria 
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray;
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
