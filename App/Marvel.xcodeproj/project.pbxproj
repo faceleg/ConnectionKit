@@ -884,7 +884,6 @@
 		CEB32CD60806E6ED00A92187 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = CEB32CD50806E6ED00A92187 /* favicon.ico */; };
 		CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34930082961880073A7A4 /* KTInfoWindowController.m */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
-		CEB3510D08298A1D0073A7A4 /* KTDocument+Lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
@@ -1546,6 +1545,7 @@
 		272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTSiteOutlineDataSource+Icons.m"; sourceTree = "<group>"; };
 		2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTemplateParser.h; sourceTree = "<group>"; };
 		2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTemplateParser.m; sourceTree = "<group>"; };
+		27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DocumentSaving.graffle; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
@@ -2470,7 +2470,6 @@
 		CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindowController.h; sourceTree = "<group>"; };
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
 		CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+WebView.m"; sourceTree = "<group>"; };
-		CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Lookup.m"; sourceTree = "<group>"; };
 		CEB53A800899A9AD006B0019 /* KTDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesign.h; sourceTree = "<group>"; };
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
 		CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_choose_design.png; sourceTree = "<group>"; };
@@ -3151,12 +3150,12 @@
 		3C202D3207DFC0BF00DE4994 /* Document */ = {
 			isa = PBXGroup;
 			children = (
+				27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */,
 				3C682B100D622F1600B4D485 /* KTDocumentInfo.h */,
 				3C682B110D622F1D00B4D485 /* KTDocumentInfo.m */,
 				3C202D3307DFC0F000DE4994 /* KTDocument.h */,
 				3C202D3407DFC0F000DE4994 /* KTDocument.m */,
 				3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */,
-				CEB3510C08298A1D0073A7A4 /* KTDocument+Lookup.m */,
 				3CA9B30D0804643200C3053B /* KTDocument+Properties.m */,
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
@@ -5841,7 +5840,6 @@
 				3C2EA6D00819F95500C35FCD /* KTDocument+CoreData.m in Sources */,
 				CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */,
 				CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */,
-				CEB3510D08298A1D0073A7A4 /* KTDocument+Lookup.m in Sources */,
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,

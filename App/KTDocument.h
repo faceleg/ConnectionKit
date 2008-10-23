@@ -137,11 +137,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @end
 
 
-@interface KTDocument (Lookup)
-- (NSString *)defaultRootPageTitleText;
-@end
-
-
 @interface KTDocument (Properties)
 
 - (KTMediaManager *)mediaManager;
