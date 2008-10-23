@@ -315,6 +315,7 @@ typedef enum {
 	KTMediaPlaceholderStorage	// a singleton
 } KTMediaStorageType;
 
+
 - (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement
 {
     KTMediaContainer *result = nil;
@@ -438,6 +439,12 @@ typedef enum {
                 if ([pathComponents count] >= 3 && [[pathComponents objectAtIndex:1] isEqualToString:@"_Media"])
                 {
                     NSString *mediaRef = [[imageURL queryDictionary] objectForKey:@"ref"];
+                    if (!mediaRef)
+                    {
+                        // This is a REALLY old media URL. Fallback to filename
+                        mediaRef = [[pathComponents objectAtIndex:2] stringByDeletingPathExtension];
+                    }
+                    
                     if (mediaRef)
                     {
                         KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:mediaRef element:oldElement];
