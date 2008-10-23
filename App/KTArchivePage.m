@@ -37,27 +37,6 @@
 
 - (KTMaster *)master { return [[self parent] master]; }
 
-/*  Generates a fresh -titleHTML value and stores it
- */
-- (void)updateTitle;
-{
-    // Give the archive a decent title
-    NSDate *monthStart = [self valueForKey:@"archiveStartDate"];
-    NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
-    
-    NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@",
-                              NSLocalizedString(@"Archive", "Part of an archive's page title"),
-                              monthDescription];
-    
-    NSString *collectionTitle = [[self parent] titleText];
-    if (collectionTitle && ![collectionTitle isEqualToString:@""])
-    {
-        archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];
-    }
-    
-    [self setTitleText:archiveTitle];
-}
-
 - (NSString *)dateDescription
 {
 	NSDate *date = [self valueForKey:@"archiveStartDate"];
@@ -84,6 +63,50 @@
 	[result sortUsingDescriptors:[NSSortDescriptor reverseChronologicalSortDescriptors]];
 	
 	return result;
+}
+
+
+#pragma mark -
+#pragma mark Title
+
+/*  Wen updating the page title, also update filename to match
+ */
+- (void)setTitleHTML:(NSString *)value
+{
+    [super setTitleHTML:value];
+    
+    
+    // Get the month formatted like "01_2008"
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+    [formatter setDateFormat:@"'archive_'MM'_'yyyy"];
+    
+    NSDate *date = [self valueForKey:@"archiveStartDate"];
+	NSString *filename = [formatter stringFromDate:date];
+    [self setFileName:filename];
+    
+    [formatter release];
+}
+
+/*  Generates a fresh -titleHTML value and stores it
+ */
+- (void)updateTitle
+{
+    // Give the archive a decent title
+    NSDate *monthStart = [self valueForKey:@"archiveStartDate"];
+    NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
+    
+    NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@",
+                              NSLocalizedString(@"Archive", "Part of an archive's page title"),
+                              monthDescription];
+    
+    NSString *collectionTitle = [[self parent] titleText];
+    if (collectionTitle && ![collectionTitle isEqualToString:@""])
+    {
+        archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];
+    }
+    
+    [self setTitleText:archiveTitle];
 }
 
 #pragma mark -

@@ -56,9 +56,6 @@ KTCollectionPathStyle;
 #pragma mark Title
 - (BOOL)canEditTitle;
 
-- (BOOL)shouldUpdateFileNameWhenTitleChanges;
-- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate;
-
 #pragma mark Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;

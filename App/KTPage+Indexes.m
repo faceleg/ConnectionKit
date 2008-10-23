@@ -638,7 +638,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
 		
 		
-		// Create the archive. Since it's new, it's automatically marked as stale.
+		// Create the archive.
 		result = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
 		[result setValue:monthStart forKey:@"archiveStartDate"];
 		[result setValue:monthEnd forKey:@"archiveEndDate"];

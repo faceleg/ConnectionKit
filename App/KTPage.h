@@ -46,8 +46,13 @@
 
 
 @interface KTPage (Accessors)
+
 - (BOOL)disableComments;
 - (void)setDisableComments:(BOOL)disableComments;
+
+// Title
+- (BOOL)shouldUpdateFileNameWhenTitleChanges;
+- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate;
 
 // Draft
 - (void)setIsDraft:(BOOL)flag;
