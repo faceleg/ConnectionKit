@@ -140,7 +140,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[element setValue:address forKey:@"address"];
 		
 		// Set up default bunch of fields
-		NSString *language = [[[element page] master] language];
+		NSString *language = [[[self page] master] language];
 		NSMutableArray *fields = [NSMutableArray array];
 		
 		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];

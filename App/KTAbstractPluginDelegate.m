@@ -8,7 +8,7 @@
 
 #import "KTAbstractPluginDelegate.h"
 
-#import "Debug.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
@@ -16,6 +16,8 @@
 #import "KTHTMLParser.h"
 
 #import "NSManagedObject+KTExtensions.h"
+
+#import "Debug.h"
 
 
 @implementation KTAbstractPluginDelegate

@@ -9,6 +9,7 @@
 
 #import "Debug.h"
 #import "KT.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"

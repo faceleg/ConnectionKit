@@ -9,6 +9,7 @@
 
 #import "Debug.h"
 #import "KT.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"

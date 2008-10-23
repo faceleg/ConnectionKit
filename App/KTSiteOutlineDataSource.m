@@ -9,6 +9,7 @@
 #import "KTSiteOutlineDataSource.h"
 #import "KTDocSiteOutlineController.h"
 
+#import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 #import "KTHTMLInspectorController.h"

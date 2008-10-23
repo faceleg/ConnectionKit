@@ -29,8 +29,8 @@ TO DO:
 #import "KTWebView.h"
 #import "WebView+Karelia.h"
 
-#import "Debug.h"
 #import "KT.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTAppDelegate.h"
@@ -42,6 +42,8 @@ TO DO:
 #import "KTPagelet+Internal.h"
 
 #import "NSString+Karelia.h"
+
+#import "Debug.h"
 
 
 @class ImageSource;

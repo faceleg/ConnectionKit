@@ -36,40 +36,15 @@
 
 // Delegate
 - (id)delegate;
-- (KTElementPlugin *)plugin;
 
 
 // Accessors
 - (NSString *)uniqueID; // for convenience
-- (KTDocument *)document;
-- (KTPage *)page;	// enclosing page (self if this is a page)
-- (BOOL)allowIntroduction;
 
 - (NSString *)titleHTML;
 - (void)setTitleHTML:(NSString *)value;
 - (NSString *)titleText;
 - (void)setTitleText:(NSString *)title;
-
-// Media
-- (KTMediaManager *)mediaManager;
-- (NSSet *)requiredMediaIdentifiers;
-
-// Perform Selector
-- (void)makeSelfOrDelegatePerformSelector:(SEL)selector
-							   withObject:(void *)anObject
-								 withPage:(KTPage *)page
-								recursive:(BOOL)recursive;
-
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
-- (void)addCSSFilePathToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
-- (NSString *)spotlightHTML;
-
-// HTML
-- (NSString *)elementTemplate;	// instance method too for key paths to work in tiger
-- (NSString *)commentsTemplate;
-
-- (NSString *)templateHTML;
-- (NSString *)cssClassName;
 
 @end
 

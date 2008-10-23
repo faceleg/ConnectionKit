@@ -6,7 +6,7 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractElement+Inspector.h"
+#import "KTAbstractElement+Internal.h"
 
 #import "KTPage.h"
 

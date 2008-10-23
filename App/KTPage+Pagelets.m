@@ -10,6 +10,7 @@
 
 #import "Debug.h"
 
+#import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 

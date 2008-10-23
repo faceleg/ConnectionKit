@@ -9,7 +9,7 @@
 #import "KTDocWindowController.h"
 
 #import "KT.h"
-#import "KTAbstractElement.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTAppDelegate.h"
 #import "KSBorderlessWindow.h"
 #import "KTDesign.h"

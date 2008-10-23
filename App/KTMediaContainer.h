@@ -32,8 +32,6 @@ typedef enum {
 @class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias;
 
 @interface KTMediaContainer : NSManagedObject <KTExtensiblePluginPropertiesArchiving>
-{
-}
 
 + (KTMediaContainer *)mediaContainerForURI:(NSURL *)mediaURI;
 + (NSSet *)mediaContainerIdentifiersInHTML:(NSString *)HTML;

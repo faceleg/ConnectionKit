@@ -8,6 +8,7 @@
 
 #import "KTHTMLParser+Private.h"
 
+#import "KTAbstractElement+Internal.h"
 #import "KTPage.h"
 #import "KTSummaryWebViewTextBlock.h"
 

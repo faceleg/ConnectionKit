@@ -8,7 +8,7 @@
 
 #import "DOMNode+KTExtensions.h"
 
-#import "Debug.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 #import "NSColor+Karelia.h"
@@ -21,6 +21,8 @@
 #import "DOMNodeList+KTExtensions.h"
 #import "WebView+Karelia.h"
 #import "NSScanner+Karelia.h"
+
+#import "Debug.h"
 
 
 static NSSet *sTagsWithNewlineOnOpen  = nil;

@@ -8,7 +8,7 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
-#import "Debug.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTDocumentInfo.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
@@ -16,6 +16,8 @@
 #import "NSDocumentController+KTExtensions.h"
 #import "NSFetchRequest+KTExtensions.h"
 #import "NSString+KTExtensions.h"
+
+#import "Debug.h"
 
 
 @implementation NSManagedObjectContext (KTExtensions)
