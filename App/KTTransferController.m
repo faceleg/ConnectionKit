@@ -1225,7 +1225,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	OBASSERT(nil != result);
 	
 	result = [result stringByAppendingPathComponent:[NSApplication applicationIdentifier]];
-	result = [result stringByAppendingPathComponent:[[[self document] documentInfo] siteID]];
+	result = [result stringByAppendingPathComponent:[[[self associatedDocument] documentInfo] siteID]];
 	result = [result stringByAppendingPathComponent:@"TmpUploadCache"];	
 	
 	return result;
@@ -1363,7 +1363,7 @@ if ([self where] == kGeneratingRemoteExport) {
 {
 	NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
 	
-	KTPage *root = [[[self document] managedObjectContext] root];
+	KTPage *root = [[[self associatedDocument] managedObjectContext] root];
 	KTMaster *master = [root master];
 	
 	// Design
