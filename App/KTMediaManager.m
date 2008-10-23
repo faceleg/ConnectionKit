@@ -20,6 +20,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSScanner+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import <Connection/KTLog.h>
 #import "BDAlias.h"
@@ -425,29 +426,32 @@ typedef enum {
 			if (![imageScanner scanString:@"src=\"" intoString:&someText]) break;
 			[buffer appendString:someText];
 			
-			NSString *anImageURI = nil;
-			[imageScanner scanUpToString:@"\"" intoString:&anImageURI];
+			NSString *imageURLString = nil;
+			[imageScanner scanUpToString:@"\"" intoString:&imageURLString];
 			
-			if (anImageURI)
+			if (imageURLString)
 			{
-				// Look for a media ref within the URI
-				NSScanner *mediaRefScanner = [[NSScanner alloc] initWithString:anImageURI];
-				[mediaRefScanner scanUpToString:@"?ref=" intoString:NULL];
-				if (![mediaRefScanner isAtEnd])
-				{
-					NSString *oldMediaID = [anImageURI substringFromIndex:[mediaRefScanner scanLocation] + [@"?ref=" length]];
-					KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:oldMediaID element:oldElement];
-					anImage = [anImage imageWithScalingSettingsNamed:scalingSettings forPlugin:newElement];
-					anImageURI = [[anImage URIRepresentation] absoluteString];
-				}
-				[mediaRefScanner release];
-				
-				
+				// Look for a media ref or media within the URI
+				NSURL *imageURL = [NSURL URLWithString:imageURLString];
+                
+                NSArray *pathComponents = [[imageURL path] pathComponents];
+                if ([pathComponents count] >= 3 && [[pathComponents objectAtIndex:1] isEqualToString:@"_Media"])
+                {
+                    NSString *mediaRef = [[imageURL queryDictionary] objectForKey:@"ref"];
+                    if (mediaRef)
+                    {
+                        KTMediaContainer *anImage = [self mediaContainerWithMediaRefNamed:mediaRef element:oldElement];
+                        anImage = [anImage imageWithScalingSettingsNamed:scalingSettings forPlugin:newElement];
+                        imageURLString = [[anImage URIRepresentation] absoluteString];
+                    }
+                }
+                
+               				
 				// Store the new image URI. This could be:
 				//	A) An external URL
 				//	B) A svxmedia: URL
 				//	C) In the event that a media container could not be created, nil.
-				if (anImageURI) [buffer appendString:anImageURI];
+				if (imageURLString) [buffer appendString:imageURLString];
 			}
 		}
 		
