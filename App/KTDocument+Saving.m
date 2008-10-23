@@ -43,8 +43,6 @@
 #import "KSSilencingConfirmSheet.h"
 #import "KSThreadProxy.h"
 
-#import <Connection/Connection.h>
-
 #import "Registration.h"
 #import "Debug.h"
 
@@ -414,14 +412,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
     // Kick off thumbnail generation
-    if ([NSThread currentThread] == [self thread])
-    {
-        [self startGeneratingQuickLookThumbnail];
-	}
-    else
-    {
-        [self performSelector:@selector(startGeneratingQuickLookThumbnail) inThread:[self thread]];
-    }
+    [[self proxyForThread:[self thread]] startGeneratingQuickLookThumbnail];
     
     
     
