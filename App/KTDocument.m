@@ -106,11 +106,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
 @interface KTDocument (Private)
-- (NSString *)defaultStoreFileName;
 
 - (void)setClosing:(BOOL)aFlag;
 
-- (void)makeWindowControllers;
 - (void)setLocalTransferController:(KTTransferController *)aLocalTransferController;
 - (void)setRemoteTransferController:(KTTransferController *)aRemoteTransferController;
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
@@ -120,7 +118,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 @implementation KTDocument
 
-#pragma mark init
+#pragma mark -
+#pragma mark Init & Dealloc
 
 /*! designated initializer for all NSDocument instances. Common initialization to new doc and opening a doc */
 - (id)init
@@ -152,7 +151,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
 		
 		
-        // Create media manager and keep an eye on it
+        // Create media manager
         myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
     }
 	
@@ -238,21 +237,11 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*! initializer for opening an existing document */
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-	if (gLicenseViolation)
-	{
-		NSBeep();
-		return nil;
-	}
-	
 	// now, open document
-	self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError];
-	if ( nil != self )
+	if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
 	{
 		// Load up document display properties
 		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
-		
-		
-		[[self stalenessManager] performSelector:@selector(beginObservingAllPages) withObject:nil afterDelay:0.0];
 		
 		
         // For diagnostics, log the value of the host properties
@@ -263,8 +252,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     return self;
 }
-
-#pragma mark dealloc
 
 - (void)dealloc
 {
@@ -291,6 +278,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark Debug?
 
 /*! returns root as a single page array, used in DebugTable bindings */
 - (NSArray *)rootAsArray
