@@ -18,6 +18,7 @@
 #import "KTDocumentInfo.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
+#import "KTHostProperties.h"
 #import "KTHTMLParser.h"
 #import "KTManagedObjectContext.h"
 #import "KTPage.h"
@@ -26,6 +27,7 @@
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -96,6 +98,26 @@
 - (NSManagedObjectModel *)managedObjectModel { return [[self class] managedObjectModel]; }
 
 #pragma mark store coordinator
+
+/*  Supplement the usual read behaviour by logging host properties and loading document display properties
+ */
+- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+	BOOL result = [super readFromURL:absoluteURL ofType:typeName error:outError];
+    
+    if (result)
+	{
+		// Load up document display properties
+		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
+		
+		
+        // For diagnostics, log the value of the host properties
+		KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
+	}
+    
+    return result;
+}
 
 //- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
 //										   ofType:(NSString *)fileType 

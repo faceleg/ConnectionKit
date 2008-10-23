@@ -233,26 +233,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return self;
 }
 
-
-/*! initializer for opening an existing document */
-- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
-{
-	// now, open document
-	if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
-	{
-		// Load up document display properties
-		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
-		
-		
-        // For diagnostics, log the value of the host properties
-		KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
-		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
-	}
-    
-    
-    return self;
-}
-
 - (void)dealloc
 {
 	// no more notifications
