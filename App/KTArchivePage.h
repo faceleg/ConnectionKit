@@ -11,9 +11,8 @@
 
 
 @interface KTArchivePage : KTAbstractPage
-{
-}
 
+- (void)updateTitle;
 - (NSString *)dateDescription;
 - (NSArray *)sortedPages;
 

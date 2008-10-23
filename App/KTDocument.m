@@ -116,6 +116,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 @end
 
 
+#pragma mark -
+
+
 @implementation KTDocument
 
 #pragma mark -
@@ -682,6 +685,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)setClosing:(BOOL)aFlag { myIsClosing = aFlag; }
 
 #pragma mark -
+#pragma mark Error Presentation
 
 /*! we override willPresentError: here largely to deal with
 	any validation issues when saving the document

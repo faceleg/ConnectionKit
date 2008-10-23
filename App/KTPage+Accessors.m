@@ -60,6 +60,10 @@
 	{
 		[[self parent] invalidateSortedChildrenCache];
 	}
+    
+    
+    // Update archive page titles to match
+    [[self valueForKey:@"archivePages"] makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
 

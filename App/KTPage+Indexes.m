@@ -644,12 +644,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		
 		
 		// Give the archive a decent title
-		NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
-		NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@ %@",
-															[self titleText],
-															NSLocalizedString(@"Archive", "Part of an archive's page title"),
-															monthDescription];
-		[result setTitleText:archiveTitle];
+		[result updateTitle];
 	}
 	
 	return result;

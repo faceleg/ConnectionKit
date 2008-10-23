@@ -37,6 +37,27 @@
 
 - (KTMaster *)master { return [[self parent] master]; }
 
+/*  Generates a fresh -titleHTML value and stores it
+ */
+- (void)updateTitle;
+{
+    // Give the archive a decent title
+    NSDate *monthStart = [self valueForKey:@"archiveStartDate"];
+    NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
+    
+    NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@",
+                              NSLocalizedString(@"Archive", "Part of an archive's page title"),
+                              monthDescription];
+    
+    NSString *collectionTitle = [[self parent] titleText];
+    if (collectionTitle && ![collectionTitle isEqualToString:@""])
+    {
+        archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];
+    }
+    
+    [self setTitleText:archiveTitle];
+}
+
 - (NSString *)dateDescription
 {
 	NSDate *date = [self valueForKey:@"archiveStartDate"];
