@@ -106,17 +106,16 @@
 /*	When the user has a custom summary, we override the default behavior to save in the custom summary property,
  *	not the standard key path.
  */
-- (BOOL)commitEditing
+- (void)commitHTML:(NSString *)innerHTML
 {
 	KTPage *page = [self HTMLSourceObject];
 	if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
 	{
-		[page setCustomSummaryHTML:[[self DOMNode] cleanedInnerHTML]];
-		return YES;
+		[page setCustomSummaryHTML:innerHTML];
 	}
 	else
 	{
-		return [super commitEditing];
+		return [super commitHTML:innerHTML];
 	}
 }
 
