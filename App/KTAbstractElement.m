@@ -206,7 +206,9 @@
  */
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-	// Let our delegate know if possible
+	OBPRECONDITION(key);
+    
+    // Let our delegate know if possible
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(plugin:didSetValue:forPluginKey:oldValue:)])
 	{

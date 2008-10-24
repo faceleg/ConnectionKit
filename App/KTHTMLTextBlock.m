@@ -632,6 +632,7 @@
 	
 	id sourceObject = [self HTMLSourceObject];
 	NSString *sourceKeyPath = [self HTMLSourceKeyPath];
+    OBASSERT(sourceKeyPath);
 	if (![[sourceObject valueForKeyPath:sourceKeyPath] isEqualToString:innerHTML])
 	{
 		[sourceObject setValue:innerHTML forKeyPath:sourceKeyPath];
