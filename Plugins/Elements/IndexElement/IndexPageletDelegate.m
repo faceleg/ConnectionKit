@@ -64,6 +64,20 @@
 											 selector:@selector(indexedPageMayHaveBeenDeleted:)
 												 name:NSManagedObjectContextObjectsDidChangeNotification
 											   object:[[self delegateOwner] managedObjectContext]];
+    
+    // 1.5 plugins won't have a maxSummaryCharacters value. We need to provide one
+    if (!isNewlyCreated)
+    {
+        if (![[self delegateOwner] valueForKey:@"enableMaxItems"])
+        {
+            [[self delegateOwner] setBool:YES forKey:@"enableMaxItems"];
+        }
+        
+        if (![[self delegateOwner] valueForKey:@"maxSummaryCharacters"])
+        {
+            [[self delegateOwner] setInteger:1000 forKey:@"maxSummaryCharacters"];
+        }
+    }
 }
 
 - (void)awakeFromNib
