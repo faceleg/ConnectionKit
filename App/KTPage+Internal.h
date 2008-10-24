@@ -11,7 +11,7 @@
 #import "KTAbstractElement+Internal.h"
 
 
-@interface KTPage (Internal)	<KTExtensiblePluginPropertiesArchiving>
+@interface KTPage (Internal)
 
 // Creation
 + (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin;
