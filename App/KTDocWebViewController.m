@@ -490,37 +490,6 @@
 #pragma mark -
 #pragma mark Update / Animation
 
-- (void)updateWebViewX
-{
-	/*
-	
-		id selectedItem = [selection objectAtIndex:0];
-        
-        if ( [selectedItem isDeleted] )
-        {
-            OFF((@"WebView told to load deleted page, substituting root. Page: %@", [selectedItem managedObjectDescription]));
-            selectedItem = [[self document] root];
-            [[[self windowController] siteOutline] selectItem:selectedItem];
-            return;
-        }
-		
-		NSScrollView *scrollView=firstScrollView([self webView]);
-		if (scrollView && !([self windowController]->myHasSavedVisibleRect))
-		{
-			([self windowController]->myDocumentVisibleRect) = [scrollView documentVisibleRect];
-			([self windowController]->myHasSavedVisibleRect)=YES;
-		}
-		
-		[[WebPreferences standardPreferences] setJavaScriptEnabled:YES];	// enable javascript to force + button to work
-		
-		[[self webView] setPreferences:[WebPreferences standardPreferences]];	// force it to load new prefs
-		(void) [selectedItem loadIntoWebView:[self webView]];
-//		NSString *scrolledResult = [oWebView stringByEvaluatingJavaScriptFromString:
-//			[NSString stringWithFormat:@"window.scrollTo(0,%@)", yPos]];
-//		NSLog(@"result of scroll was %@", scrolledResult);
-	}*/
-}
-
 - (void)updateWebViewAnimated
 {
 	// Clear things just in case
