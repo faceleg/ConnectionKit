@@ -146,9 +146,14 @@
     [super setView:aWebView];
     
     
-    // Setup new delegation
+    // Web Preferences
     WebView *newWebView = [self webView];
-	[newWebView setEditingDelegate:self];
+	[newWebView setPreferencesIdentifier:@"SandvoxSitePreview"];
+    [[newWebView preferences] setAutosaves:NO];
+    
+    
+    // Setup new delegation
+    [newWebView setEditingDelegate:self];
     [newWebView setUIDelegate:[self windowController]];
     
     

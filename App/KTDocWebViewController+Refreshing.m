@@ -196,9 +196,6 @@
 	}
 	else if ([selectedPages count] == 1)
 	{
-		[[WebPreferences standardPreferences] setJavaScriptEnabled:YES];	// enable javascript to force + button to work
-		[[self webView] setPreferences:[WebPreferences standardPreferences]];	// force it to load new prefs
-		
 		KTPage *selectedPage = [selectedPages anyObject];
         [self loadPageIntoWebView:selectedPage];
 		
