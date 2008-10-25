@@ -578,12 +578,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
     if ( self )
     {
 
-		// fire up a components manager and discover our components
-
-		// force webkit to load so we can log the version early
-		(void) [[WebPreferences standardPreferences] setAutosaves:YES];
-
-        // fire up a designs manager and discover our designs
 		myCascadePoint = NSMakePoint(100, 100);
 
         myApplicationIsLaunching = YES;
