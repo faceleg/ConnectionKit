@@ -15,7 +15,7 @@
 
 @interface KTPersistentStoreCoordinator : NSPersistentStoreCoordinator 
 {
-	KTDocument *myDocument;
+	KTDocument *myDocument; // weak ref
 
 #ifdef DEBUG
 	int myLockCount; // in RELEASE, we poseAsClass: which can't have any ivars

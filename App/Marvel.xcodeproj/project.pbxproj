@@ -7182,7 +7182,7 @@
 				CE15C2C50E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "iMedia-UpdateRevision" */ = {
 			isa = XCConfigurationList;
@@ -7192,7 +7192,7 @@
 				CE15C2C60E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3C5A9A980D11E6A90054058C /* Build configuration list for PBXAggregateTarget "ConnectionKit-UpdateRevision" */ = {
 			isa = XCConfigurationList;
@@ -7202,7 +7202,7 @@
 				CE15C2C70E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3C8883980BFCB4EE00921FA4 /* Build configuration list for PBXAggregateTarget "BuildAndPackageRelease" */ = {
 			isa = XCConfigurationList;
@@ -7212,7 +7212,7 @@
 				CE15C2C00E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3C96ADE70CA06FD700C5249F /* Build configuration list for PBXAggregateTarget "UpdateVersion" */ = {
 			isa = XCConfigurationList;
@@ -7222,7 +7222,7 @@
 				CE15C2C30E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */ = {
 			isa = XCConfigurationList;
@@ -7232,7 +7232,7 @@
 				CE15C2BF0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3CA0FEE90D7615020093562D /* Build configuration list for PBXAggregateTarget "DeployRelease" */ = {
 			isa = XCConfigurationList;
@@ -7242,7 +7242,7 @@
 				CE15C2C10E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3CA786E90DB546350014AD7E /* Build configuration list for PBXAggregateTarget "PackageBonusDesigns" */ = {
 			isa = XCConfigurationList;
@@ -7252,7 +7252,7 @@
 				CE15C2C20E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3CD5B7880DCA66FB006EE4D9 /* Build configuration list for PBXAggregateTarget "BuildAndDeploySymbols" */ = {
 			isa = XCConfigurationList;
@@ -7262,7 +7262,7 @@
 				CE15C2CA0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		3CE2B2BA0D7F1DF700E2711E /* Build configuration list for PBXAggregateTarget "UpdateShared" */ = {
 			isa = XCConfigurationList;
@@ -7272,7 +7272,7 @@
 				CE15C2C40E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		CE16DC5D0D8711790077C779 /* Build configuration list for PBXNativeTarget "MovieWebKitPlugin" */ = {
 			isa = XCConfigurationList;
@@ -7282,7 +7282,7 @@
 				CE15C2C90E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		CE3BC23D08575E2800576982 /* Build configuration list for PBXNativeTarget "Sandvox-ExecutableOnly" */ = {
 			isa = XCConfigurationList;
@@ -7292,7 +7292,7 @@
 				CE15C2BE0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */ = {
 			isa = XCConfigurationList;
@@ -7302,7 +7302,7 @@
 				CE15C2BD0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		CEF9D0B40D862B5200BD9895 /* Build configuration list for PBXNativeTarget "ImageWebKitPlugin" */ = {
 			isa = XCConfigurationList;
@@ -7312,7 +7312,7 @@
 				CE15C2C80E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
