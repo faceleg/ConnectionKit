@@ -257,6 +257,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 + (void) registerDefaults
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    // BUGSID:36452 - having WebKitDefaultFontSize present seriously screws up text rendering
+    [defaults removeObjectForKey:@"WebKitDefaultFontSize"];
+    [defaults removeObjectForKey:@"WebKitStandardFont"];
+    
+    
 
 // TODO: Remove this later (v2.0) once the old contactHomeBase hasn't been around for a while
 	id oldContactHomeBase = [defaults  objectForKey:@"contactHomeBase"];
