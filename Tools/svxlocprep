@@ -61,11 +61,11 @@ mkdir -p$VERBOSE $WD/Subversion/Sandvox/$CURRENTBRANCH/App/$1.lproj
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox/$CURRENTBRANCH/App/$1.lproj/
 rm -rf$VERBOSE $WD/Subversion/Sandvox/$CURRENTBRANCH/App/$1.lproj/KS*
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App
-mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/App/$1.lproj
+mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/Interfaces
+mkdir -p$VERBOSE $WD/Subversion/Shared/trunk/Interfaces/$1.lproj
 echo ./Contents/Resources/$1.lproj/KS*
-echo $WD/Subversion/Shared/trunk/App/$1.lproj/
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/trunk/App/$1.lproj/
+echo $WD/Subversion/Shared/trunk/Interfaces/$1.lproj/
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/trunk/Interfaces/$1.lproj/
 
 
 # plugins with their own project
