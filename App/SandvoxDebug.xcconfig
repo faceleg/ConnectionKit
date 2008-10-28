@@ -4,7 +4,7 @@
 
 COPY_PHASE_STRIP = NO
 DEBUG_INFORMATION_FORMAT = dwarf
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl $(SRCROOT)/../../../Shared/trunk/ThirdParty/Sparkle
+FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../../Shared/trunk/ThirdParty/Sparkle $(SRCROOT)/../../../Shared/trunk/ThirdParty/Growl
 GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = YES
 GCC_ENABLE_OBJC_EXCEPTIONS = YES
@@ -14,11 +14,10 @@ GCC_MODEL_TUNING = G5
 GCC_OPTIMIZATION_LEVEL = 0
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Marvel_Prefix.pch
-
 LIBRARY_SEARCH_PATHS = $(BUILD_DIR)
 MACOSX_DEPLOYMENT_TARGET = 10.4
-SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk
 PREBINDING = NO
+SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk
 ZERO_LINK = NO
 
 GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES
@@ -43,9 +42,6 @@ GCC_SYMBOLS_PRIVATE_EXTERN=NO
 // and -framework OmniObjectMeterFramework in OTHER_LDFLAGS, and throw away your
 // <build-dir>/intermediates directory -- a simple clean build is not enough 
 
-GCC_PREPROCESSOR_DEFINITIONS = VARIANT_$(PRODUCT_VARIANT) $(OMNI_DEBUG_CURRENT_SETTING) DEBUG
-OTHER_LDFLAGS = -lssl -lcrypto -seg1addr 0x70000000
-
 // Additional warnings we may want from time to time.
 // Note that GCC_WARN_UNINITIALIZED_AUTOS requires GCC_OPTIMIZATION_LEVEL
 
@@ -57,4 +53,7 @@ OTHER_LDFLAGS = -lssl -lcrypto -seg1addr 0x70000000
 // GCC_WARN_SHADOW = YES				// useful to check from time to time
 // GCC_WARN_SIGN_COMPARE = YES			// useful to check from time to time
 // GCC_WARN_PEDANTIC = YES				// Not very useful, warns too m
+
+GCC_PREPROCESSOR_DEFINITIONS = VARIANT_$(PRODUCT_VARIANT) $(OMNI_DEBUG_CURRENT_SETTING) DEBUG
+OTHER_LDFLAGS = -lssl -lcrypto -seg1addr 0x70000000
 
