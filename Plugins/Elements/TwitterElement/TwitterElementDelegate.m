@@ -1,6 +1,6 @@
 //
-//  DiggPageletDelegate.m
-//  DiggPagelet
+//  TwitterElementDelegate.m
+//  TwitterElement
 //
 //  Copyright (c) 2006, Karelia Software. All rights reserved.
 //
@@ -96,7 +96,7 @@
 
 - (NSString *)twitterCallbackScriptPath
 {
-	NSString *result = [[self bundle] pathForResource:@"twittercallback" ofType:@"js"];
+	NSString *result = [[self bundle] pathForResource:@"twittercallbacktemplate" ofType:@"js"];
 	return result;
 }
 
@@ -104,18 +104,13 @@
 {
 	if ([[self delegateOwner] valueForKey:@"username"])
 	{
+		// Append element-specific script
 		NSString *template = [[self class] scriptTemplate];
 		KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:[self delegateOwner]];
 		[parser setCurrentPage:aPage];
 		
 		NSString *script = [parser parseTemplate];
-		if (script)
-		{
-			// Only append the script if it's not already there (e.g. if there's > 1 element)
-			if ([ioString rangeOfString:script].location == NSNotFound) {
-				[ioString appendString:script];
-			}
-		}
+		if (script) [ioString appendString:script];
 		
 		[parser release];
 	}
