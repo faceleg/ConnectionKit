@@ -18,16 +18,16 @@
 			name = UpdateDesigns;
 			productName = UpdateDesigns;
 		};
-		3C5A77C50EB6E0880049B898 /* PackagePluginsSDK */ = {
+		3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackagePluginsSDK" */;
+			buildConfigurationList = 3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */;
 			buildPhases = (
 				3C5A77C40EB6E0880049B898 /* ShellScript */,
 			);
 			dependencies = (
 				3C5A77CA0EB6E08F0049B898 /* PBXTargetDependency */,
 			);
-			name = PackagePluginsSDK;
+			name = PackageAndDeploySDK;
 			productName = PackageSDK;
 		};
 		3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */ = {
@@ -5031,7 +5031,7 @@
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
-				3C5A77C50EB6E0880049B898 /* PackagePluginsSDK */,
+				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3C96ADE10CA06FB900C5249F /* UpdateVersion */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
@@ -5582,7 +5582,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../Tools/package-sdk\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox SDK\"\n\n${SRCROOT}/../Tools/package-sdk\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
@@ -6810,7 +6810,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				PRODUCT_NAME = PackageSDK;
+				PRODUCT_NAME = PluginsSDK;
 			};
 			name = Debug;
 		};
@@ -6818,7 +6818,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				PRODUCT_NAME = PackageSDK;
+				PRODUCT_NAME = PluginsSDK;
 			};
 			name = Release;
 		};
@@ -6826,7 +6826,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
-				PRODUCT_NAME = PackageSDK;
+				PRODUCT_NAME = PluginsSDK;
 			};
 			name = ReleaseSymbols;
 		};
@@ -7247,7 +7247,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackagePluginsSDK" */ = {
+		3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A77C60EB6E0880049B898 /* Debug */,

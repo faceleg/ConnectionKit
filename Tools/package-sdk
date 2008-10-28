@@ -4,22 +4,42 @@
 # this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION
 
 echo ""
-echo "Gathering resources for packaging SDK ..."
+echo "Gathering resources for packaging Sandvox Plugins SDK ..."
 echo "SVN_VERSION is ${SVN_VERSION}"
-echo "SANDVOX_VERSION is ${SANDVOX_VERSION}"
 echo "PRODUCT_VARIANT is ${PRODUCT_VARIANT}"
-echo ""
+echo "APPNAME is ${APPNAME}"
+
+if [ "${SVN_VERSION}" == "" ]
+then
+	echo ""
+	echo "No SVN_VERSION. Cannot deploy. Exiting..."
+	exit 1
+fi
+
+PBXCP="${SRCROOT}/../../../Shared/trunk/Tools/pbxcp"
+
+APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
+APPNAMELOWER=`echo "$APPNAMENOSPACES" | tr '[A-Z]' '[a-z]'`
 
 PLUGINS_DIR="${SRCROOT}/../Plugins"
 XCODE_DIR="${SRCROOT}/../XCode"
 
-PBXCP="${SRCROOT}/../../../Shared/trunk/Tools/pbxcp"
-
 # the location of BuildSettings comes from the Update Version script
-BUILDSETTINGS_DIR="/private/tmp/build-sandvox"
+BUILDSETTINGS_DIR="/private/tmp/build-${APPNAMELOWER}"
+if [ ! -r $BUILDSETTINGS_DIR ]
+then
+	mkdir -p "${BUILDSETTINGS_DIR}"
+fi
 
-SLA_ZIP_FILE="${PLUGINS_DIR}/SLA-Plugins.zip"
-SLA_FILE="${BUILDSETTINGS_DIR}/SLA-Plugins"
+# determine which SLA to use
+if [ ${PRODUCT_VARIANT} == "BETA" ]
+	then
+		SLA_ZIP_FILE="${PLUGINS_DIR}/SLA-Plugins-Beta.zip"
+		SLA_FILE="${BUILDSETTINGS_DIR}/SLA-Plugins-Beta"
+	else
+		SLA_ZIP_FILE="${PLUGINS_DIR}/SLA-Plugins.zip"
+		SLA_FILE="${BUILDSETTINGS_DIR}/SLA-Plugins"
+fi
 
 # we keep the .zip of the SLA with the project, then copy it to /tmp and inflate it, if needed
 if test -r ${SLA_FILE}
@@ -36,25 +56,33 @@ then
 	ditto -x -k --rsrc "${SLA_FILE}.zip" ${BUILDSETTINGS_DIR}
 fi
 
-LICENSE_RTF="License.rtf"
-LICENSE_FILE="${PLUGINS_DIR}/${LICENSE_RTF}"
 
-READ_ME_RTF="READ ME.rtf"
-READ_ME_FILE="${PLUGINS_DIR}/${READ_ME_RTF}"
+# ------- File Names
+
+VARIANTLOWER=`echo "${PRODUCT_VARIANT}" | tr '[A-Z]' '[a-z]'`
+
+# determine the name of the dmg to upload and where to upload it
+if [ "${VARIANTLOWER}" == "beta" ]
+	then
+	    VARIANTTAG="-beta"
+	else
+        VARIANTTAG=""
+		VARIANTLOWER="files"
+fi
 
 # the dmg names that we'll use
-VOLUME_NAME="Sandvox-Plugin-SDK"
+VOLUME_NAME="${APPNAMENOSPACES}"
 DMG_TEMP_NAME="temp"
-DMG_FINAL_NAME="_Sandvox-Plugin-SDK-${SVN_VERSION}"
+DMG_FINAL_NAME="_${APPNAMENOSPACES}${VARIANTTAG}-${SVN_VERSION}"
 
 # the directory that will appear on ~/Desktop after download
-SDK_DIR_NAME="Sandvox Plugin SDK"
+SDK_DIR_NAME="${APPNAME}"
 
 # the directory within the mounted .dmg we'll copy to
 DMG_DIR="/Volumes/${VOLUME_NAME}/${SDK_DIR_NAME}"
 
 # the directory we'll do our work in
-SCRATCH_DIR="/private/tmp/build-sdk-dmg"
+SCRATCH_DIR="/private/tmp/build-${APPNAMELOWER}-dmg"
 
 if test -d "${SCRATCH_DIR}"
 then
@@ -63,7 +91,7 @@ then
 fi
 mkdir -p "${SCRATCH_DIR}"
 
-echo "Packaging SDK..."
+echo "Packaging ${APPNAME}..."
 pushd "${SCRATCH_DIR}"
 
 # create an initial disk image (128 MB)
@@ -81,12 +109,11 @@ pushd "/Volumes/${VOLUME_NAME}"
 mkdir "${SDK_DIR_NAME}"
 popd
 
-# copy READ ME to dmg (we use PBXCP to copy the rtfd)
+# copy READ ME to dmg
 echo "Copying ${READ_ME_FILE} to disk image..."
+READ_ME_RTF="READ ME.rtf"
+READ_ME_FILE="${PLUGINS_DIR}/${READ_ME_RTF}"
 ${PBXCP} \
-	-exclude .DS_Store \
-	-exclude CVS \
-	-exclude .svn \
 	-resolve-src-symlinks \
 	"${READ_ME_FILE}" "${DMG_DIR}"
 
@@ -94,12 +121,11 @@ ${PBXCP} \
 echo "Setting ${READ_ME_RTF} extension to be hidden..."
 /Developer/Tools/SetFile -a E "${DMG_DIR}/${READ_ME_RTF}"
 	
-# copy License to dmg (we use PBXCP to copy the rtfd)
+# copy License to dmg
 echo "Copying ${LICENSE_FILE} to disk image..."
+LICENSE_RTF="License.rtf"
+LICENSE_FILE="${PLUGINS_DIR}/${LICENSE_RTF}"
 ${PBXCP} \
-	-exclude .DS_Store \
-	-exclude CVS \
-	-exclude .svn \
 	-resolve-src-symlinks \
 	"${LICENSE_FILE}" "${DMG_DIR}"
 
@@ -135,8 +161,6 @@ echo '</plist>' >> "$DOCS_WEBLOC_PATH"
 echo "Copying Plugins marked BUNDLED_SDK..."
 
 mkdir -p "${DMG_DIR}/Elements"
-mkdir -p "${DMG_DIR}/Indexes"
-
 pushd "${PLUGINS_DIR}/Elements"
 for i in *
 do
@@ -167,6 +191,7 @@ do
 done
 popd
 
+mkdir -p "${DMG_DIR}/Indexes"
 pushd "${PLUGINS_DIR}/Indexes"
 for i in *
 do
@@ -240,9 +265,67 @@ hdiutil flatten ${DMG_FINAL_NAME}.dmg
 rm sla.r
 
 popd
+
 echo "Packaging Complete!"
 echo ""
-echo "Your Sandvox Plugin SDK is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
+echo "Your ${APPNAME} is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
 echo ""
+
+echo "Deploying..."
+echo ""
+
+SERVER_PATH="/home/19590/domains/karelia.com/MANUAL/${VARIANTLOWER}"
+BACKUP_SERVER_PATH="/home/kareliasw/dh.karelia.com/${VARIANTLOWER}"
+
+UPLOAD_PATH="${SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
+BACKUP_UPLOAD_PATH="${BACKUP_SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
+
+# ------- Server Info
+
+# SCP assumes public key login through Karelia's (mt) account
+SCP_LOGIN="serveradmin%karelia.com@s19590.gridserver.com"
+BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
+
+DISTRO_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg"
+EMAIL_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}-msg.txt"
+
+# if we don't have a distro ready, exit
+if test -r ${DISTRO_PATH}
+then
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
+	echo ""
+#	echo "Uploading ${DISTRO_PATH} ..."
+#	echo "... to ${BACKUP_UPLOAD_PATH}"
+#	scp "${DISTRO_PATH}" "${BACKUP_SCP_LOGIN}:${BACKUP_UPLOAD_PATH}"
+else
+	echo ""
+	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
+	exit 1
+fi
+
+# email engineering
+echo ""
+echo "Emailing URL to engineering ..."
+
+echo "" > $EMAIL_PATH
+echo "Greetings!" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "A new ${APPNAME} build ${SVN_VERSION} is now available at:" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+echo "<http://karelia.com/${VARIANTLOWER}/${DMG_FINAL_NAME}.dmg>" >> $EMAIL_PATH
+
+echo "" >> $EMAIL_PATH
+echo "If requested, please download and verify this release." >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "Thanks!" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+mail -s "${APPNAME} Build ${SVN_VERSION} Now Available" engineering@karelia.com < ${EMAIL_PATH}
+
+echo ""
+echo "${APPNAME} deployment completed."
 
 exit 0
