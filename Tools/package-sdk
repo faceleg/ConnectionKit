@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# we base the PackageSDK target on Sandvox.xcconfig through the Xcode UI
-# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION
+# we base the PackageAndDeploySDK target on Sandvox.xcconfig through the Xcode UI
+# this brings in SVN_VERSION and PRODUCT_VARIANT
 
 echo ""
 echo "Gathering resources for packaging Sandvox Plugins SDK ..."
 echo "SVN_VERSION is ${SVN_VERSION}"
 echo "PRODUCT_VARIANT is ${PRODUCT_VARIANT}"
-echo "APPNAME is ${APPNAME}"
 
 if [ "${SVN_VERSION}" == "" ]
 then
@@ -16,10 +15,13 @@ then
 	exit 1
 fi
 
-PBXCP="${SRCROOT}/../../../Shared/trunk/Tools/pbxcp"
+# the script phase itself brings in APPNAME
+echo "APPNAME is ${APPNAME}"
 
 APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
 APPNAMELOWER=`echo "$APPNAMENOSPACES" | tr '[A-Z]' '[a-z]'`
+
+PBXCP="${SRCROOT}/../../../Shared/trunk/Tools/pbxcp"
 
 PLUGINS_DIR="${SRCROOT}/../Plugins"
 XCODE_DIR="${SRCROOT}/../XCode"
