@@ -127,7 +127,7 @@ echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com
 echo '<plist version="1.0">' >> "$DOCS_WEBLOC_PATH"
 echo '<dict>' >> "$DOCS_WEBLOC_PATH"
 echo '    <key>URL</key>' >> "$DOCS_WEBLOC_PATH"
-echo "    <string>http://wiki2.karelia.com/Sandvox_Developers_Guide</string>" >> "$DOCS_WEBLOC_PATH"
+echo "    <string>http://docs.karelia.com/z/Sandvox_Developers_Guide.html</string>" >> "$DOCS_WEBLOC_PATH"
 echo '</dict>' >> "$DOCS_WEBLOC_PATH"
 echo '</plist>' >> "$DOCS_WEBLOC_PATH"
 
