@@ -66,6 +66,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSException+Karelia.h"
 #import "NSString+KTExtensions.h"
