@@ -1602,9 +1602,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)showProductPage:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:
-														[NSString stringWithFormat:
-			@"http://www.sandvox.com/?utm_source=%@&utm_medium=application&utm_campaign=product_menu", [NSApplication applicationName]]]];
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSApplication applicationName], @"utm_source",
+								@"application", @"utm_medium",
+								@"utm_campaign", @"product_menu",
+						  nil];
+	NSString *queryString = [dict formatForHTTP];
+	NSString *urlString = [NSString stringWithFormat:
+						   @"http://www.sandvox.com/?%@", queryString];
+    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:urlString]];
 }
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
