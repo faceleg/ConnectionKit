@@ -9,6 +9,7 @@
 #import "KTSiteOutlineView.h"
 
 #import "KT.h"
+#import "KTAbstractElement+Internal.h"
 #import "KTAppDelegate.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
@@ -128,7 +129,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 		
 		// add Edit Raw HTML...
 		if ( ((nil == gRegistrationString) || gIsPro) 
-			 && [[[item bundle] bundleIdentifier] isEqualToString:@"sandvox.HTMLElement"] )
+			 && [[[[(KTPage *)item plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.HTMLElement"] )
 		{
 			// --
 			[menu addItem:[NSMenuItem separatorItem]];
