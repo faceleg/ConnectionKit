@@ -1018,19 +1018,23 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		// NB: we expect a 1 character prefix on divID (the pagelet DIV)
 		// which we have to strip before passing to Core Data
 		// pagelet DIVs are built from the various pagelet templates
-		divID = [divID substringFromIndex:2];
 		
-		// Fetch the pagelet object
-		// peform fetch
-		NSManagedObjectContext *context = [[self document] managedObjectContext];
-		NSError *fetchError = nil;
-		NSArray *fetchedObjects = [context objectsWithEntityName:@"Pagelet"
-													   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
-														   error:&fetchError];	
-		// extract result
-		if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+		if ([divID length] > 2)
 		{
-			result = [fetchedObjects objectAtIndex:0];
+			divID = [divID substringFromIndex:2];
+			
+			// Fetch the pagelet object
+			// peform fetch
+			NSManagedObjectContext *context = [[self document] managedObjectContext];
+			NSError *fetchError = nil;
+			NSArray *fetchedObjects = [context objectsWithEntityName:@"Pagelet"
+														   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
+															   error:&fetchError];	
+			// extract result
+			if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
+			{
+				result = [fetchedObjects objectAtIndex:0];
+			}
 		}
 	}
 	return result;
