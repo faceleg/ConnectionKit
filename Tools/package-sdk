@@ -291,12 +291,28 @@ BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
 DISTRO_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg"
 EMAIL_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}-msg.txt"
 
+# set DSA_FILE_PATH name to what addToSparkle.php requires
+DSA_FILE_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}-${SVN_VERSION}.dsa"
+
+# ------- DSA File Creation
+
+SIGN_UPDATE_PATH="${SRCROOT}/../../../Shared/trunk/Security/sign_update.rb"
+DSA_PRIV_PEM_PATH="${SRCROOT}/../../../Shared/trunk/Security/dsa_priv.pem"
+
+DSA=`ruby "${SIGN_UPDATE_PATH}" "${DISTRO_PATH}" "${DSA_PRIV_PEM_PATH}"`
+echo "$DSA" > $DSA_FILE_PATH
+DSA_UPLOAD_PATH="/home/19590/domains/karelia.com/DSA"
+
 # if we don't have a distro ready, exit
 if test -r ${DISTRO_PATH}
 then
-	echo "Uploading ${DISTRO_PATH} ..."
-	echo "... to ${UPLOAD_PATH}"
-	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
+	echo "Uploading ${DSA_FILE_PATH} ..."
+	echo "... to ${DSA_UPLOAD_PATH}"
+	scp "${DSA_FILE_PATH}" "${SCP_LOGIN}:${DSA_UPLOAD_PATH}"
+	echo ""
+#	echo "Uploading ${DISTRO_PATH} ..."
+#	echo "... to ${UPLOAD_PATH}"
+#	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
 	echo ""
 #	echo "Uploading ${DISTRO_PATH} ..."
 #	echo "... to ${BACKUP_UPLOAD_PATH}"
@@ -306,6 +322,8 @@ else
 	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
 	exit 1
 fi
+
+exit 0
 
 # email engineering
 echo ""
