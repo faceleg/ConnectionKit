@@ -1489,7 +1489,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			if ([myCurrentSelection isKindOfClass:[KTPagelet class]])
 			{
 				pageName = @"General_Pagelet_Attributes";	// fallback 	// HELPSTRING
-				NSString *helpAnchor = [[myCurrentSelection bundle] helpAnchor];
+				NSString *helpAnchor = [[[(KTPagelet *)myCurrentSelection plugin] bundle] helpAnchor];
 				if (nil != helpAnchor)
 				{
 					pageName = helpAnchor;
