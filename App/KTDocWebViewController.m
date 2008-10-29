@@ -764,12 +764,13 @@
 		
         
         // Links by page ID open get selected in the Site Outline and therby the webview
-        NSString *relativeURLString = [URL stringRelativeToURL:[[self page] URL]];
+        NSURL *relativeURL = [URL URLRelativeToURL:[[self page] URL]];
+		NSString *relativePath = [relativeURL relativePath];
         
-		if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativeURLString hasPrefix:kKTPageIDDesignator]) &&
+		if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
             [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
 		{
-			KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativeURLString];
+			KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativePath];
 			if (!thePage)
 			{
 				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
