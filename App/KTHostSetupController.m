@@ -23,39 +23,35 @@ TO DO:
 #import "KTHostSetupController.h"
 
 #import "Debug.h"
-#import "NSError+Karelia.h"
-#import "NSBundle+Karelia.h"
-
+#import "KSUtilities.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTBackgroundTabView.h"
 #import "KTDocument.h"
+#import "KTHost.h"
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
-#import "KSUtilities.h"
-#import "NSString+KTExtensions.h"
-#import "NSString+Karelia.h"
-#import "NSColor+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
-#import "NSManagedObject+KTExtensions.h"
-#import "NSObject+Karelia.h"
-#import "NSWorkspace+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "NSAttributedString+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSCharacterSet+Karelia.h"
+#import "NSColor+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSObject+Karelia.h"
+#import "NSString+KTExtensions.h"
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+#import "NTSUTaskController.h"
 
 #import <AddressBook/AddressBook.h>
-#import <Connection/AbstractConnection.h>
-#import <Connection/ConnectionOpenPanel.h>
+#import <Connection/Connection.h> // for AbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
 
 #import <Security/Security.h>
 #import <sys/sysctl.h>
-#import "KTHost.h"
-#import "NTSUTaskController.h"
 
-#import <Connection/EMKeychainItem.h>
-#import <Connection/EMKeychainProxy.h>
 
 NSString *KTHostConnectionTimeoutValueKey = @"connectionTimeoutValue";
 
