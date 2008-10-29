@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Connection/AbstractConnectionProtocol.h>
+#import <Connection/Connection.h>
 #import "KSSingletonWindowController.h"
 
 @class KTHostProperties, AbstractConnection;
