@@ -1274,25 +1274,30 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 {
 	// Preparation
     WebView *webView = [[self webViewController] webView];      OBASSERT(webView);
-    DOMRange *selectedRange = [webView selectedDOMRange];       OBASSERT(selectedRange);
-    DOMNode *selectionStart = [selectedRange startContainer];   OBASSERT(selectionStart);
-    DOMDocument *DOMDoc = [selectionStart ownerDocument];       OBASSERT(DOMDoc);
-    
-    
-    // Create the link DOM nodes
-    DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[DOMDoc createElement:@"a"];
-    OBASSERT(anchor);   OBASSERT([anchor isKindOfClass:[DOMHTMLAnchorElement class]]);
-    
-    [anchor setHref:link];
-    if (openLinkInNewWindow) [anchor setTarget:@"_blank"];
-	[anchor appendChild:[selectedRange cloneContents]];
-    
-    
-    // Insert the link into the DOM
-    [webView replaceSelectionWithNode:anchor];
-    
-    
-    return NSLocalizedString(@"Add Link","Action Name: Add Link");
+    DOMRange *selectedRange = [webView selectedDOMRange];
+	if (selectedRange)
+	{
+		DOMNode *selectionStart = [selectedRange startContainer];   OBASSERT(selectionStart);
+		DOMDocument *DOMDoc = [selectionStart ownerDocument];       OBASSERT(DOMDoc);
+		
+		
+		// Create the link DOM nodes
+		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[DOMDoc createElement:@"a"];
+		OBASSERT(anchor);   OBASSERT([anchor isKindOfClass:[DOMHTMLAnchorElement class]]);
+		
+		[anchor setHref:link];
+		if (openLinkInNewWindow) [anchor setTarget:@"_blank"];
+		[anchor appendChild:[selectedRange cloneContents]];
+		
+		
+		// Insert the link into the DOM
+		[webView replaceSelectionWithNode:anchor];
+		
+		
+		return NSLocalizedString(@"Add Link","Action Name: Add Link");
+	}
+	
+	return nil;
 }	
 
 - (IBAction)clearLinkDestination:(id)sender;
