@@ -10,7 +10,7 @@
 #import <Connection/Connection.h>
 
 @class KTDocument, KTDocumentInfo;
-//@protocol AbstractConnectionProtocol;
+
 @interface KTTransferController : NSObject 
 {
 	KTDocumentInfo *myDocumentInfoWeakRef;
