@@ -354,7 +354,6 @@ TO DO:
 	// If dragging into an image element, process it
 	KTDocWindowController *controller = ((KTDocWindowController *)[self UIDelegate]);
 	KTPage *selectedPage = [[controller siteOutlineController] selectedPage];
-	KTDocument *theDocument = [selectedPage document];
 	NSPoint location = [self convertPoint:[sender draggingLocation] fromView:nil];
 	NSString *theID = nil;
 	NSString *property = nil;
@@ -379,7 +378,7 @@ TO DO:
 
 	// Handle drag onto an image element
 	
-	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
+	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageElementDelegate"]		// Hack ... a better way of verify it's an image source?
 		&& [[[[draggedItem plugin] bundle]bundleIdentifier] isEqualToString:@"sandvox.ImageElement"])
 	{
 		LOG((@"Dragging into an image element"));
@@ -392,7 +391,7 @@ TO DO:
 // TODO: handle drag of video onto a quicktime thing, too!  Somehow we have to intercept the drag from the QT view.
 	
 	// Handle drag onto a thumbnail (which summarizes a page)
-	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageSource"]		// Hack ... a better way of verify it's an image source?
+	if ([NSStringFromClass(bestSource) isEqualToString:@"ImageElementDelegate"]		// Hack ... a better way of verify it's an image source?
 		&& [draggedItem isKindOfClass:[KTPage class]] 
 		&& [property isEqualToString:@"image"])
 	{
@@ -449,7 +448,7 @@ TO DO:
 	
 	if ([aNode respondsToSelector:@selector(idName)]
 		&& [[((DOMHTMLElement *)aNode) idName] isEqualToString:@"logo"]
-		&& [NSStringFromClass(bestSource) isEqualToString:@"ImageSource"] )	// Hack ... a better way of verify it's an image source?
+		&& [NSStringFromClass(bestSource) isEqualToString:@"ImageElementDelegate"] )	// Hack ... a better way of verify it's an image source?
 	{
 		// Drag into site title ... this affects the document root
 		/*
@@ -471,7 +470,7 @@ TO DO:
 		}
 		if (nil != altText )
 		{
-			[[[theDocument root] valueForKey:@"master"] setValue:altText forKey:@"headerImageDescription"];
+			[[selectedPage master] setValue:altText forKey:@"headerImageDescription"];
 		}
 		
 		[[self undoManager] setActionName:NSLocalizedString(@"Set Banner",@"action name for setting banner image")];
