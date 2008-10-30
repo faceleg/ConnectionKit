@@ -11,6 +11,9 @@
 #import "Debug.h"
 #import "KTDocumentInfo.h"
 
+@interface KTTransferController ( Private )
+- (void)setDocumentInfo:(KTDocumentInfo *)aDocumentInfo;
+@end
 
 @implementation KTTransferController
 
@@ -19,7 +22,7 @@
 	[super init];
 	if ( nil != self )
 	{
-		myDocumentInfoWeakRef = aDocumentInfo;
+		[self setDocumentInfo:aDocumentInfo];
 	}
 	
 	return self;
@@ -27,8 +30,15 @@
 
 - (void)dealloc
 {
-	myDocumentInfoWeakRef = nil;
+	[self setDocumentInfo:nil];
 	[super dealloc];
+}
+
+- (void)setDocumentInfo:(KTDocumentInfo *)aDocumentInfo
+{
+	[aDocumentInfo retain];
+	[myDocumentInfo release];
+	myDocumentInfo = aDocumentInfo;
 }
 
 // old API

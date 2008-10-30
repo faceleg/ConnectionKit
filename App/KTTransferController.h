@@ -13,7 +13,7 @@
 
 @interface KTTransferController : NSObject 
 {
-	KTDocumentInfo *myDocumentInfoWeakRef;
+	KTDocumentInfo *myDocumentInfo;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo;
