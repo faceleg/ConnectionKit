@@ -159,9 +159,22 @@ echo "    <string>http://docs.karelia.com/z/Sandvox_Developers_Guide.html</strin
 echo '</dict>' >> "$DOCS_WEBLOC_PATH"
 echo '</plist>' >> "$DOCS_WEBLOC_PATH"
 
+# add Forum .webloc file to dmg
+FORUM_WEBLOC_PATH="${DMG_DIR}/Sandvox Developer Forum.webloc"
+
+echo '<?xml version="1.0" encoding="UTF-8"?>' > "$FORUM_WEBLOC_PATH"
+echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$FORUM_WEBLOC_PATH"
+echo '<plist version="1.0">' >> "$FORUM_WEBLOC_PATH"
+echo '<dict>' >> "$FORUM_WEBLOC_PATH"
+echo '    <key>URL</key>' >> "$FORUM_WEBLOC_PATH"
+echo "    <string>http://support.karelia.com/?sandvox-dev</string>" >> "$FORUM_WEBLOC_PATH"
+echo '</dict>' >> "$FORUM_WEBLOC_PATH"
+echo '</plist>' >> "$FORUM_WEBLOC_PATH"
+
 # copy Plugins to dmg
 echo "Copying Plugins marked BUNDLED_SDK..."
 
+# Elements
 mkdir -p "${DMG_DIR}/Elements"
 pushd "${PLUGINS_DIR}/Elements"
 for i in *
@@ -193,6 +206,7 @@ do
 done
 popd
 
+# Indexes
 mkdir -p "${DMG_DIR}/Indexes"
 pushd "${PLUGINS_DIR}/Indexes"
 for i in *
@@ -310,20 +324,18 @@ then
 	echo "... to ${DSA_UPLOAD_PATH}"
 	scp "${DSA_FILE_PATH}" "${SCP_LOGIN}:${DSA_UPLOAD_PATH}"
 	echo ""
-#	echo "Uploading ${DISTRO_PATH} ..."
-#	echo "... to ${UPLOAD_PATH}"
-#	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
 	echo ""
-#	echo "Uploading ${DISTRO_PATH} ..."
-#	echo "... to ${BACKUP_UPLOAD_PATH}"
-#	scp "${DISTRO_PATH}" "${BACKUP_SCP_LOGIN}:${BACKUP_UPLOAD_PATH}"
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${BACKUP_UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${BACKUP_SCP_LOGIN}:${BACKUP_UPLOAD_PATH}"
 else
 	echo ""
 	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
 	exit 1
 fi
-
-exit 0
 
 # email engineering
 echo ""
