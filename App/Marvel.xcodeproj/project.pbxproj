@@ -798,7 +798,6 @@
 		CE01A99C0EAFDF6900BDF264 /* KSFeedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A98D0EAFDF6900BDF264 /* KSFeedback.nib */; };
 		CE01A99D0EAFDF6900BDF264 /* KSJoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A98F0EAFDF6900BDF264 /* KSJoinList.nib */; };
 		CE01A99E0EAFDF6900BDF264 /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A9910EAFDF6900BDF264 /* KSKeepInTouch.nib */; };
-		CE01A99F0EAFDF6900BDF264 /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A9930EAFDF6900BDF264 /* KSPluginInstaller.nib */; };
 		CE01A9A00EAFDF6900BDF264 /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A9950EAFDF6900BDF264 /* KSRegistration.nib */; };
 		CE01A9A10EAFDF6900BDF264 /* KSSilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A9970EAFDF6900BDF264 /* KSSilencingWarningSheet.nib */; };
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
@@ -5516,7 +5515,6 @@
 				CE01A99C0EAFDF6900BDF264 /* KSFeedback.nib in Resources */,
 				CE01A99D0EAFDF6900BDF264 /* KSJoinList.nib in Resources */,
 				CE01A99E0EAFDF6900BDF264 /* KSKeepInTouch.nib in Resources */,
-				CE01A99F0EAFDF6900BDF264 /* KSPluginInstaller.nib in Resources */,
 				CE01A9A00EAFDF6900BDF264 /* KSRegistration.nib in Resources */,
 				CE01A9A10EAFDF6900BDF264 /* KSSilencingWarningSheet.nib in Resources */,
 			);
