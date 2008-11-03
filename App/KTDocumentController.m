@@ -271,7 +271,7 @@
                 NSBundle *bundle = [plugin bundle];
                 [root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
                 
-                Class indexToAllocate = [NSBundle principalClassForBundle:bundle];
+                Class indexToAllocate = [bundle principalClassIncludingOtherLoadedBundles:YES];
                 KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:plugin] autorelease];
                 [root setIndex:theIndex];
             }

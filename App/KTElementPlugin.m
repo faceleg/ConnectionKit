@@ -229,7 +229,7 @@
 		KTAbstractHTMLPlugin *plugin = [dictOfPlugins objectForKey:priorityAndName];
 		NSBundle *bundle = [plugin bundle];
 		
-        if ( ![bundle isLoaded] && (Nil != [NSBundle principalClassForBundle:bundle]) ) {
+        if ( ![bundle isLoaded] && (Nil != [bundle principalClassIncludingOtherLoadedBundles:YES]) ) {
             [bundle load];
         }
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];

@@ -821,7 +821,7 @@ from representedObject */
 		
 		// Now set the index on the page
 		[indexPage setWrappedValue:identifier forKey:@"collectionIndexBundleIdentifier"];
-		Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
+		Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
 		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:indexPage plugin:indexPlugin] autorelease];
 		[indexPage setIndex:theIndex];
 		
@@ -1050,7 +1050,7 @@ from representedObject */
 	
 // FIXME: we should load up the properties from a KTPreset
 	
-	Class indexToAllocate = [NSBundle principalClassForBundle:collectionBundle];
+	Class indexToAllocate = [collectionBundle principalClassIncludingOtherLoadedBundles:YES];
 	KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
 	[collection setIndex:theIndex];
 	[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
@@ -2170,7 +2170,7 @@ from representedObject */
                             // FIXME: we should load up the properties from a KTPreset
                             
                             [newPage setValue:[indexBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-                            Class indexToAllocate = [NSBundle principalClassForBundle:indexBundle];
+                            Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
                             KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:indexPlugin] autorelease];
                             [newPage setIndex:theIndex];
                             [newPage setBool:YES forKey:@"isCollection"]; // should this info be specified in the plist?

@@ -95,7 +95,7 @@
 		NSBundle *bundle = [plugin bundle];
 		[self setValue:[bundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
 		
-		Class indexClass = [NSBundle principalClassForBundle:bundle];
+		Class indexClass = [bundle principalClassIncludingOtherLoadedBundles:YES];
 		KTAbstractIndex *theIndex = [[[indexClass alloc] initWithPage:self plugin:plugin] autorelease];
 		[self setIndex:theIndex];
 	}

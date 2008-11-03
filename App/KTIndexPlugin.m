@@ -99,7 +99,7 @@
 		KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:bundleIdentifier];
 		NSBundle *pluginBundle = [plugin bundle];
 		
-        if ( ![pluginBundle isLoaded] && (Nil != [NSBundle principalClassForBundle:pluginBundle]) ) {
+        if ( ![pluginBundle isLoaded] && (Nil != [pluginBundle principalClassIncludingOtherLoadedBundles:YES]) ) {
             [pluginBundle load];
         }
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];

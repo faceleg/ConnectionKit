@@ -253,7 +253,7 @@
 		if (nil != identifier)
 		{
 			KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
-			Class indexToAllocate = [NSBundle principalClassForBundle:[plugin bundle]];
+			Class indexToAllocate = [[plugin bundle] principalClassIncludingOtherLoadedBundles:YES];
 			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:plugin] autorelease];
 			[self setIndex:theIndex];
 		}
