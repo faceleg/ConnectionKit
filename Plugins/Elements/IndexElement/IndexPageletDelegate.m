@@ -195,7 +195,7 @@
     [archivedObject release];
          
     
-    *error = nil;
+    if (error) *error = nil;
     return YES;
 }
 
