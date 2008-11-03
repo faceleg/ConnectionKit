@@ -419,7 +419,7 @@
     
     [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
     
-    *error = nil;
+    if (error) *error = nil;
     return YES;
 }
 

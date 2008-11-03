@@ -912,6 +912,7 @@ from representedObject */
 	if (nil == targetPage)
 	{
 		// if nothing is selected, treat as if the root folder were selected
+#warning: This is not actualy used.  What's going on here?
 		targetPage = [[(KTDocument *)[self document] documentInfo] root];
 	}
 	
@@ -2140,6 +2141,7 @@ from representedObject */
                     
                     if ( nil != newPage )
                     {
+#warning: This is not actualy used.  What's going on here?
                         int insertIndex = anIndex+i;		// add 1 to the index so we will always go after the next one
                         if ( NSOutlineViewDropOnItemIndex == anIndex )
                         {

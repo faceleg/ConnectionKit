@@ -1280,7 +1280,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                        localError, NSUnderlyingErrorKey,
                                        nil];
         
-        *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
+        if (outError) *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
     }
     
     return result;

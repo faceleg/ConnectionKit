@@ -250,6 +250,7 @@
         [alert setInformativeText:LocalizedStringInThisBundle(@"Please select a different file or use the Finder to give the file an extension.", "alert info")];
         [alert addButtonWithTitle:@"OK"];
         [alert runModal];
+		[alert release];
         
         return NO;
     }
@@ -304,7 +305,7 @@
     
     [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
     
-    *error = nil;
+    if (error) *error = nil;
     return YES;
 }
 
