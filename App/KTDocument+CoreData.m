@@ -204,7 +204,7 @@
                     if ( nil != bundle )
                     {
                         // NB: bundles without delegates may not have a principal class
-                        if ( Nil != [NSBundle principalClassForBundle:bundle] )
+                        if ( Nil != [bundle principalClassIncludingOtherLoadedBundles:YES] )
                         {
                             [bundle load];
                         }
