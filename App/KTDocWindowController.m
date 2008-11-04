@@ -907,15 +907,6 @@ from representedObject */
 /*! inserts aPage at the current selection */
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection
 {
-	KTPage *targetPage = [[self siteOutlineController] selectedPage];
-	// figure out our selection
-	if (nil == targetPage)
-	{
-		// if nothing is selected, treat as if the root folder were selected
-#warning: This is not actualy used.  What's going on here?
-		targetPage = [[(KTDocument *)[self document] documentInfo] root];
-	}
-	
 	// add component to parent
 	[aCollection addPage:aPage];
 	
@@ -2139,18 +2130,16 @@ from representedObject */
                                         dataSourceDictionary:dragDataDictionary
                               insertIntoManagedObjectContext:[[self document] managedObjectContext]];
                     
-                    if ( nil != newPage )
+                    if (newPage)
                     {
-#warning: This is not actualy used.  What's going on here?
-                        int insertIndex = anIndex+i;		// add 1 to the index so we will always go after the next one
-                        if ( NSOutlineViewDropOnItemIndex == anIndex )
+                        // Insert the page where indicated
+                        [aCollection addPage:newPage];
+                        if (anIndex != NSOutlineViewDropOnItemIndex)
                         {
-                            // add at end
-                            insertIndex = [[aCollection children] count];
+                            [newPage moveToIndex:anIndex];
                         }
                         
-                        // insert the page where indicated
-                        [aCollection addPage:newPage];
+                        
                         
                         if ( NSOutlineViewDropOnItemIndex != anIndex )
                         {
