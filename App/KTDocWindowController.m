@@ -2132,16 +2132,14 @@ from representedObject */
                     
                     if (newPage)
                     {
-#warning: This is not actualy used.  What's going on here?
-                        int insertIndex = anIndex+i;		// add 1 to the index so we will always go after the next one
-                        if ( NSOutlineViewDropOnItemIndex == anIndex )
+                        // Insert the page where indicated
+                        [aCollection addPage:newPage];
+                        if (anIndex != NSOutlineViewDropOnItemIndex)
                         {
-                            // add at end
-                            insertIndex = [[aCollection children] count];
+                            [newPage moveToIndex:anIndex];
                         }
                         
-                        // insert the page where indicated
-                        [aCollection addPage:newPage];
+                        
                         
                         if ( NSOutlineViewDropOnItemIndex != anIndex )
                         {
