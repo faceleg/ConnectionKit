@@ -1712,12 +1712,20 @@ if ([self where] == kGeneratingRemoteExport) {
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
-	KTMediaFileUpload *upload = [[[textBlock graphicalTextMedia] file] defaultUpload];
-	if (upload)
-	{
-		[self addGraphicalTextBlock:textBlock];
-		[self addParsedMediaFileUpload:upload];
-	}
+	KTMediaContainer *media = [textBlock graphicalTextMedia];
+    if (media)
+    {
+        KTMediaFileUpload *upload = [[media file] defaultUpload];
+        if (upload)
+        {
+            [self addGraphicalTextBlock:textBlock];
+            [self addParsedMediaFileUpload:upload];
+        }
+        else
+        {
+            NSLog(@"Graphical text block %@ has no upload info", media);
+        }
+    }
 }
 
 #pragma mark -
