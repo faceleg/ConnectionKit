@@ -953,6 +953,48 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
+		27B03EAA0EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090 /* Connection.app */;
+			remoteInfo = Connection;
+		};
+		27B03EAC0EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteInfo = Framework;
+		};
+		27B03EAE0EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteInfo = UnitTest;
+		};
+		27B03EB00EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 790FF0CC0ACCE4B7004B4021 /* KTLog Viewer.app */;
+			remoteInfo = "KTLog Viewer";
+		};
+		27B03EB20EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteInfo = DropletHelper;
+		};
+		27B03EB40EC25C2600A40AE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteInfo = DropletLauncher;
+		};
 		3C095BE00D5D27F100DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BD90D5D27F100DE6F62 /* DownloadIndex.xcodeproj */;
@@ -1232,55 +1274,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
-		};
-		3C6948B90EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = Connection;
-		};
-		3C6948BB0EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
-			remoteInfo = Framework;
-		};
-		3C6948BD0EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00;
-			remoteInfo = UnitTest;
-		};
-		3C6948BF0EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 790FF0CC0ACCE4B7004B4021;
-			remoteInfo = "KTLog Viewer";
-		};
-		3C6948C10EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
-			remoteInfo = DropletHelper;
-		};
-		3C6948C30EB8FDF2005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
-			remoteInfo = DropletLauncher;
-		};
-		3C6949080EB8FEC0005DD69D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
-			remoteInfo = Framework;
 		};
 		3C8344600DA98E160051A2A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1777,7 +1770,7 @@
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../../Shared/trunk/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
-		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/branches/LeopardPlusErrorHandling/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2965,6 +2958,19 @@
 			name = "Code Injection";
 			sourceTree = "<group>";
 		};
+		27B03EA10EC25C2600A40AE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27B03EAB0EC25C2600A40AE2 /* Connection.app */,
+				27B03EAD0EC25C2600A40AE2 /* Connection.framework */,
+				27B03EAF0EC25C2600A40AE2 /* UnitTest.octest */,
+				27B03EB10EC25C2600A40AE2 /* KTLog Viewer.app */,
+				27B03EB30EC25C2600A40AE2 /* DropletHelper.app */,
+				27B03EB50EC25C2600A40AE2 /* DropletLauncher */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		27DB80770C84658200E29C38 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -3871,19 +3877,6 @@
 			children = (
 			);
 			name = Feedback;
-			sourceTree = "<group>";
-		};
-		3C6948B00EB8FDF2005DD69D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C6948BA0EB8FDF2005DD69D /* Connection.app */,
-				3C6948BC0EB8FDF2005DD69D /* Connection.framework */,
-				3C6948BE0EB8FDF2005DD69D /* UnitTest.octest */,
-				3C6948C00EB8FDF2005DD69D /* KTLog Viewer.app */,
-				3C6948C20EB8FDF2005DD69D /* DropletHelper.app */,
-				3C6948C40EB8FDF2005DD69D /* DropletLauncher */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
@@ -4832,7 +4825,6 @@
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
-				3C6949090EB8FEC0005DD69D /* PBXTargetDependency */,
 				3CE79D690D625E3600FCEE6D /* PBXTargetDependency */,
 				3CE79D6D0D625E4400FCEE6D /* PBXTargetDependency */,
 			);
@@ -4915,7 +4907,7 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C6948B00EB8FDF2005DD69D /* Products */;
+					ProductGroup = 27B03EA10EC25C2600A40AE2 /* Products */;
 					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 				},
 				{
@@ -5055,6 +5047,48 @@
 			remoteRef = 274339ED0D77339B00164FA5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		27B03EAB0EC25C2600A40AE2 /* Connection.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Connection.app;
+			remoteRef = 27B03EAA0EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27B03EAD0EC25C2600A40AE2 /* Connection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Connection.framework;
+			remoteRef = 27B03EAC0EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27B03EAF0EC25C2600A40AE2 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = 27B03EAE0EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27B03EB10EC25C2600A40AE2 /* KTLog Viewer.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "KTLog Viewer.app";
+			remoteRef = 27B03EB00EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27B03EB30EC25C2600A40AE2 /* DropletHelper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DropletHelper.app;
+			remoteRef = 27B03EB20EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27B03EB50EC25C2600A40AE2 /* DropletLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DropletLauncher;
+			remoteRef = 27B03EB40EC25C2600A40AE2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C095BE10D5D27F100DE6F62 /* Download.svxIndex */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5179,48 +5213,6 @@
 			fileType = wrapper.cfbundle;
 			path = Amazon.svxElement;
 			remoteRef = 3C4C6AAD0D64136C00398BDA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948BA0EB8FDF2005DD69D /* Connection.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Connection.app;
-			remoteRef = 3C6948B90EB8FDF2005DD69D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948BC0EB8FDF2005DD69D /* Connection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Connection.framework;
-			remoteRef = 3C6948BB0EB8FDF2005DD69D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948BE0EB8FDF2005DD69D /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = 3C6948BD0EB8FDF2005DD69D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948C00EB8FDF2005DD69D /* KTLog Viewer.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "KTLog Viewer.app";
-			remoteRef = 3C6948BF0EB8FDF2005DD69D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948C20EB8FDF2005DD69D /* DropletHelper.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DropletHelper.app;
-			remoteRef = 3C6948C10EB8FDF2005DD69D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3C6948C40EB8FDF2005DD69D /* DropletLauncher */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = DropletLauncher;
-			remoteRef = 3C6948C30EB8FDF2005DD69D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C8344610DA98E160051A2A3 /* iMediaTesterSingle.app */ = {
@@ -6288,11 +6280,6 @@
 			isa = PBXTargetDependency;
 			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
 			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
-		};
-		3C6949090EB8FEC0005DD69D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Framework;
-			targetProxy = 3C6949080EB8FEC0005DD69D /* PBXContainerItemProxy */;
 		};
 		3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
