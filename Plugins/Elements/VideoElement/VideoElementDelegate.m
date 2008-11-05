@@ -137,9 +137,9 @@
 	if ( nil == title )
 	{
 		// No title specified; use file name (minus extension)
-#warning: title is not actualy used.  What's going on here?
 		title = [[aDataSourceDictionary valueForKey:kKTDataSourceFileName] stringByDeletingPathExtension];
 	}
+    [[self delegateOwner] setTitleText:title];
 	
 	// set caption
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceCaption])

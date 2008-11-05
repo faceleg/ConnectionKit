@@ -74,10 +74,15 @@
 
 - (BOOL)becomeFirstResponder
 {
-	// Insert the new HTML
-	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
-	
-	return [super becomeFirstResponder];
+	BOOL result = [super becomeFirstResponder];
+    
+    // Insert the new HTML
+    if (result)
+    {
+        [[self DOMNode] setInnerHTML:[self innerEditingHTML]];
+    }
+    
+	return result;
 }
 
 - (BOOL)resignFirstResponder

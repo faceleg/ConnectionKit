@@ -142,7 +142,7 @@
 		[textBlock setRichText:NO];
 		[textBlock setImportsGraphics:NO];
 		[textBlock setHasSpanIn:NO];
-		[textBlock setHTMLSourceObject:[self component]];
+		[textBlock setHTMLSourceObject:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		[textBlock setHTMLSourceKeyPath:@"page.master.continueReadingLinkFormat"];
 		[textBlock setTargetPage:[[self cache] valueForKeyPath:[parameters objectAtIndex:0]]];
 		
