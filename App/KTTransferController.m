@@ -7,22 +7,44 @@
 //
 
 #import "KTTransferController.h"
+#import "NSString+Publishing.h"
+
+#import "KTAbstractElement+Internal.h"
+#import "KTAbstractPage+Internal.h"
+#import "KTDocumentInfo.h"
+#import "KTMediaFileUpload.h"
+#import "KTPage.h"
+
+#import "NSObject+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSThread+Karelia.h"
+
+#import "KSPlugin.h"
+#import "KSThreadProxy.h"
 
 #import "Debug.h"
-#import "KTDocumentInfo.h"
+#import "Registration.h"
 
-@interface KTTransferController ( Private )
-- (void)setDocumentInfo:(KTDocumentInfo *)aDocumentInfo;
+
+@interface KTTransferController (Private)
+- (void)uploadPage:(KTAbstractPage *)page;
 @end
 
+
+#pragma mark -
+
+
 @implementation KTTransferController
+
+#pragma mark -
+#pragma mark Init & Dealloc
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo
 {
 	[super init];
 	if ( nil != self )
 	{
-		[self setDocumentInfo:aDocumentInfo];
+		myDocumentInfo = [aDocumentInfo retain];
 	}
 	
 	return self;
@@ -30,18 +52,151 @@
 
 - (void)dealloc
 {
-	[self setDocumentInfo:nil];
+	[myDocumentInfo release];
+	OBASSERT(!myConnection);	// TODO: Gracefully close connection
+	
 	[super dealloc];
 }
 
-- (void)setDocumentInfo:(KTDocumentInfo *)aDocumentInfo
+#pragma mark -
+#pragma mark Accessors
+
+- (KTDocumentInfo *)documentInfo
 {
-	[aDocumentInfo retain];
-	[myDocumentInfo release];
-	myDocumentInfo = aDocumentInfo;
+	return myDocumentInfo;
 }
 
-// old API
+- (id <AbstractConnectionProtocol>)connection
+{
+	return myConnection;
+}
+
+#pragma mark -
+#pragma mark Uploading
+
+- (void)startUploading
+{
+	// TODO: Create connection
+	
+	
+	// In demo mode, only publish the home page
+	NSArray *pagesToParse;
+	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
+	{
+		pagesToParse = [KTAbstractPage allPagesInManagedObjectContext:[[self documentInfo] managedObjectContext]];
+	}
+	else
+	{
+		pagesToParse = [NSArray arrayWithObject:[[self documentInfo] root]];
+	}
+	
+	
+	// Parsing every page is a long process so do it on a background thread
+	[NSThread detachNewThreadSelector:@selector(threadedGenerateContentFromPages:)
+							 toTarget:self
+						   withObject:pagesToParse];
+}
+
+/*	Public method that parses each page in the site and uploads what's needed
+ */
+- (void)threadedGenerateContentFromPages:(NSArray *)pages
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
+	KTAbstractPage *aPage;
+	
+	while (aPage = [pagesEnumerator nextObject])
+	{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		[[self proxyForThread:nil] uploadPage:aPage];
+		[pool release];
+	}
+	
+	
+	
+	
+	
+	
+	[pool release];
+}
+
+- (void)uploadPage:(KTAbstractPage *)page
+{
+	OBASSERT([NSThread isMainThread]);
+	
+	
+    // Bail early if the page is not for publishing
+	NSString *uploadPath = [page uploadPath];
+	if (!uploadPath) return;
+	
+	if ([page isKindOfClass:[KTPage class]])
+	{
+		// This is currently a special case to make sure Download Page media is published
+		// We really ought to generalise this feature if any other plugins actually need it
+		if ([[[[page plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.DownloadElement"])
+		{
+			KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
+			if (upload)
+			{
+				[self addParsedMediaFileUpload:upload];
+			}
+		}
+		
+		
+		if ([(KTPage *)page pageOrParentDraft] || ![(KTPage *)page shouldPublishHTMLTemplate]) return;
+	}
+			
+	
+	// TODO: return if the page isn't stale and we've been requested to publish changes
+	
+	
+	// Generate HTML data
+	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
+	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
+	OBASSERT(HTML);
+	
+	NSString *charset = [[masterPage master] valueForKey:@"charset"];
+	NSStringEncoding encoding = [charset encodingFromCharset];
+	NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
+	OBASSERT(pageData);
+	
+	
+	// Upload page data
+    NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+	if (fullUploadPath)
+    {
+		[[self connection] uploadFromData:pageData toFile:fullUploadPath];
+		// TODO: Create directories, set permissions etc.
+	}
+
+
+	// TODO: Ask the delegate for any extra resource files
+
+
+	// Generate and publish RSS feed if needed
+	if ([page isKindOfClass:[KTPage class]] && [page boolForKey:@"collectionSyndicate"] && [(KTPage *)page collectionCanSyndicate])
+	{
+		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
+		if (RSSString)
+		{			
+			// Now that we have page contents in unicode, clean up to the desired character encoding.
+			// MAYBE DO THIS TOO IF WE USE SOMETHING OTHER THAN UTF8
+			// rssString = [rssString stringByEscapingCharactersOutOfCharset:[aPage valueForKeyPath:@"master.charset"]];		
+			// FIXME: If we specify UTF8 here, won't that get us in trouble?  Should we use other encodings, like of site?
+			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+			OBASSERT(RSSData);
+			
+			NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+			[[self connection] uploadFromData:RSSData toFile:RSSUploadPath];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Old API
+
 - (id)initWithAssociatedDocument:(KTDocument *)aDocument where:(int)aWhere;
 {
 	ISDEPRECATEDAPI;
@@ -69,12 +224,7 @@
 	RAISE_EXCEPTION(@"Old API Exception", @"you need to intercept this and rewrite it", nil);
 	return nil;
 }
-- (id <AbstractConnectionProtocol>)connection
-{
-	ISDEPRECATEDAPI;
-	RAISE_EXCEPTION(@"Old API Exception", @"you need to intercept this and rewrite it", nil);
-	return nil;	
-}
+
 - (void)terminateConnection
 {
 	ISDEPRECATEDAPI;

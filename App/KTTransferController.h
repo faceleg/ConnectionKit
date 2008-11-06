@@ -6,17 +6,29 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
+
 #import <Cocoa/Cocoa.h>
 #import <Connection/Connection.h>
 
+
 @class KTDocument, KTDocumentInfo;
+
 
 @interface KTTransferController : NSObject 
 {
-	KTDocumentInfo *myDocumentInfo;
+	KTDocumentInfo					*myDocumentInfo;
+	id <AbstractConnectionProtocol>	myConnection;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo;
+
+// Accessors
+- (KTDocumentInfo *)documentInfo;
+- (id <AbstractConnectionProtocol>)connection;
+
+// Uploading
+- (void)startUploading;
+
 
 
 // old API
@@ -25,7 +37,6 @@
 - (void)uploadEverything;
 - (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath;
 - (NSString *)storagePath;
-- (id <AbstractConnectionProtocol>)connection;
 - (void)terminateConnection;
 
 @end
