@@ -1170,6 +1170,27 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = HTMLElement;
 		};
+		3C43C7DA0EC3789D00457FA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteInfo = Framework;
+		};
+		3C43C7DC0EC378AB00457FA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* AmazonSupport */;
+			remoteInfo = AmazonSupport;
+		};
+		3C43C7DE0EC378B400457FA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 791679FD0975255000D9EF74 /* iMediaBrowser */;
+			remoteInfo = iMediaBrowser;
+		};
 		3C4C68F10D64086000398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
@@ -4780,6 +4801,9 @@
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
+				3C43C7DB0EC3789D00457FA7 /* PBXTargetDependency */,
+				3C43C7DF0EC378B400457FA7 /* PBXTargetDependency */,
+				3C43C7DD0EC378AB00457FA7 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6178,6 +6202,21 @@
 			isa = PBXTargetDependency;
 			name = HTMLElement;
 			targetProxy = 3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */;
+		};
+		3C43C7DB0EC3789D00457FA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = 3C43C7DA0EC3789D00457FA7 /* PBXContainerItemProxy */;
+		};
+		3C43C7DD0EC378AB00457FA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AmazonSupport;
+			targetProxy = 3C43C7DC0EC378AB00457FA7 /* PBXContainerItemProxy */;
+		};
+		3C43C7DF0EC378B400457FA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iMediaBrowser;
+			targetProxy = 3C43C7DE0EC378B400457FA7 /* PBXContainerItemProxy */;
 		};
 		3C4C68F40D64086A00398BDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
