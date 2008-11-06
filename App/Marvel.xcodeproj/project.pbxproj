@@ -1758,7 +1758,7 @@
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../Plugins/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../Plugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /System/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
-		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/trunk/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
+		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
 		3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppDelegate.h; sourceTree = "<group>"; };
 		3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAppDelegate.m; sourceTree = "<group>"; };
@@ -1823,12 +1823,12 @@
 		3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAcknowledgmentsController.h; sourceTree = "<group>"; };
 		3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAcknowledgmentsController.m; sourceTree = "<group>"; };
 		3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+CoreData.m"; sourceTree = "<group>"; };
-		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/trunk/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
+		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54900D625952004885E7 /* iMediaBrowser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMediaBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1859,7 +1859,7 @@
 		3C5A71440BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+KTExtensions.m"; sourceTree = "<group>"; };
 		3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A71500BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+KTExtensions.m"; sourceTree = "<group>"; };
-		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../../Shared/trunk/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../../Shared/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C66E3E908A9781400EC7716 /* 16x16_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16x16_empty.png; sourceTree = "<group>"; };
@@ -1960,7 +1960,7 @@
 		3CBDE9110EBA65D20059C56C /* KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTransferController.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
 		3CBFD396093C45930057668A /* KTSiteOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineView.m; sourceTree = "<group>"; };
-		3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../imedia/trunk/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../imedia/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+ScaledImages.m"; sourceTree = "<group>"; };
 		3CD6B0EE0BFA380600B9287E /* ThirdParty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdParty.h; sourceTree = "<group>"; };
 		3CE686D30B531F9B0097451B /* movie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie.png; sourceTree = "<group>"; };
@@ -2019,7 +2019,7 @@
 		798634F2094E763F003B2653 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
 		79B7310E0A33BF9A008F7F58 /* KTHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHost.h; sourceTree = "<group>"; };
 		79B7310F0A33BF9A008F7F58 /* KTHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHost.m; sourceTree = "<group>"; };
-		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../Shared/trunk/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
+		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../Shared/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
 		79EC3C020973CECD00FE7D50 /* upload_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_complete.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sandvox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandvox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2437,7 +2437,7 @@
 		CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		CE82F0390E777491003A0110 /* TigerStuff.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TigerStuff.bundle; path = ../../Shared/trunk/Code/TigerLeopardStuff/TigerStuff/TigerStuff.bundle; sourceTree = SOURCE_ROOT; };
+		CE82F0390E777491003A0110 /* TigerStuff.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TigerStuff.bundle; path = ../../Shared/Code/TigerLeopardStuff/TigerStuff/TigerStuff.bundle; sourceTree = SOURCE_ROOT; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE8E834A0917EFE2001DC88D /* designCoverLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeft.png; sourceTree = "<group>"; };
@@ -2520,7 +2520,7 @@
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CECDC3E108287E920090F560 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Info.nib; sourceTree = "<group>"; };
-		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../../Shared/trunk/Code/TigerLeopardStuff/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../../Shared/Code/TigerLeopardStuff/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
@@ -4391,7 +4391,7 @@
 				CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */,
 			);
 			name = Shared;
-			path = ../../Shared/trunk/Interfaces;
+			path = ../../Shared/Interfaces;
 			sourceTree = "<group>";
 		};
 		CE22E5E40D7C73C00055D8E9 /* Graphics */ = {
@@ -4401,7 +4401,7 @@
 				CE01A82A0EAFD65E00BDF264 /* help.small.png */,
 			);
 			name = Graphics;
-			path = ../../Shared/trunk/Graphics;
+			path = ../../Shared/Graphics;
 			sourceTree = "<group>";
 		};
 		CE2556CC0D3432AF003A5B5E /* Products */ = {
@@ -4526,7 +4526,7 @@
 				CE01A71E0EAFD63600BDF264 /* WebKit */,
 			);
 			name = Shared;
-			path = ../../Shared/trunk;
+			path = ../../Shared;
 			sourceTree = "<group>";
 		};
 		CEF12E780D908EB400FCAC70 /* Products */ = {
@@ -5556,7 +5556,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nQUICKLOOK=\"${TARGET_BUILD_DIR}/SandvoxQuickLook.qlgenerator\"\nQUICKLOOK_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/QuickLook\"\n\necho \"QuickLook Plugin: PBXCp ${QUICKLOOK} ${QUICKLOOK_DIR}\"\n\nmkdir -p ${QUICKLOOK_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${QUICKLOOK}\" \"${QUICKLOOK_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C15B85D0DC790A100DE9957 /* ShellScript */ = {
@@ -5627,7 +5627,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/trunk/tools/build_package\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/build_package\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3C96ADE00CA06FB900C5249F /* ShellScript */ = {
@@ -5657,7 +5657,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../../Shared/trunk/App/*.[hm]\n\n";
+			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../../Shared/App/*.[hm]\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
@@ -5703,7 +5703,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxElement *.svxIndex\ndo\n\n\techo \"PLUGIN: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t${PBXCP} \\\n\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
@@ -5718,7 +5718,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DESIGNS_FOLDER_PATH}/${i}/Info.plist\"\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -5733,7 +5733,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
@@ -5748,7 +5748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nIMPORTER=\"${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\"\nSPOTLIGHT_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\"\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p ${SPOTLIGHT_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
@@ -5762,7 +5762,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/trunk/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA786E50DB546060014AD7E /* ShellScript */ = {
@@ -5776,7 +5776,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n# we base the PackageBonusDesigns target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Bonus Designs ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"PRODUCT_VARIANT is ${PRODUCT_VARIANT}\"\necho \"\"\n\nDESIGNS_DIR=\"${SRCROOT}/../../Designs\"\nPBXCP=\"${SRCROOT}/../../Shared/trunk/Tools/pbxcp\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nREAD_ME=\"READ ME - Sandvox Bonus Designs\"\nREAD_ME_ZIP_FILE=\"${SRCROOT}/../Other/${READ_ME}.zip\"\nREAD_ME_FILE=\"${BUILDSETTINGS_DIR}/${READ_ME}.rtfd\"\n\n# we keep the .zip of the READ_ME in Other, then copy it to /tmp and inflate it, if needed\nif test -r \"${READ_ME_FILE}\"\nthen\n\techo \"Removing previous READ_ME file...\"\n\trm -rf \"${READ_ME_FILE}\"\nfi\n\necho \"copying ${READ_ME_ZIP_FILE} to ${READ_ME_FILE}.zip\"\ncp \"${READ_ME_ZIP_FILE}\" \"${READ_ME_FILE}.zip\"\necho \"unarchving ${READ_ME_FILE}.zip\"\nditto -x -k --rsrc \"${READ_ME_FILE}.zip\" \"${BUILDSETTINGS_DIR}\"\n\n# the dmg names that we'll use\nVOLUME_NAME=\"Designs\"\nDMG_TEMP_NAME=\"temp\"\nDMG_FINAL_NAME=\"_SandvoxBonusDesigns-${SVN_VERSION}\"\n\n# the directory that will appear on ~/Desktop after download\nBONUS_DIR_NAME=\"Sandvox Bonus Designs\"\n\n# the directory within the mounted .dmg we'll copy to\nDMG_DIR=\"/Volumes/${VOLUME_NAME}/${BONUS_DIR_NAME}\"\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-bonusdesigns-dmg\"\n\nif test -d \"${SCRATCH_DIR}\"\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf \"${SCRATCH_DIR}\"\nfi\nmkdir -p \"${SCRATCH_DIR}\"\n\necho \"Packaging Bonus Designs...\"\npushd \"${SCRATCH_DIR}\"\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -ov -scrub -size 128m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach ${DMG_TEMP_NAME}.dmg\n\n# create directory\necho \"DMG_DIR is ${DMG_DIR}\"\n#mkdir -pv \"${DMG_DIR}\"\npushd \"/Volumes/${VOLUME_NAME}\"\nmkdir \"${BONUS_DIR_NAME}\"\npopd\n\n# copy READ ME to dmg (we use PBXCP to copy the rtfd)\necho \"Copying ${READ_ME_FILE} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${READ_ME_FILE}\" \"${DMG_DIR}\"\n\n# set READ ME's extension to be hidden\necho \"Setting ${READ_ME}.rtfd extension to be hidden...\"\n/Developer/Tools/SetFile -a E \"${DMG_DIR}/${READ_ME}.rtfd\"\n\n# add .webloc file to dmg\nWEBLOC_PATH=\"${DMG_DIR}/Check for Updates.webloc\"\n\necho '<?xml version=\"1.0\" encoding=\"UTF-8\"?>' > \"$WEBLOC_PATH\"\necho '<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">' >> \"$WEBLOC_PATH\"\necho '<plist version=\"1.0\">' >> \"$WEBLOC_PATH\"\necho '<dict>' >> \"$WEBLOC_PATH\"\necho '    <key>URL</key>' >> \"$WEBLOC_PATH\"\necho \"    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=4&amp;check=1</string>\" >> \"$WEBLOC_PATH\"\necho '</dict>' >> \"$WEBLOC_PATH\"\necho '</plist>' >> \"$WEBLOC_PATH\"\n\n# copy Designs to dmg\necho \"Copying Designs marked BONUS...\"\npushd \"${DESIGNS_DIR}\"\nfor i in *\ndo\n\tif [ -e \"${i}/BONUS\" ];\n    \tthen\n        \t# copy to DMG \n        \techo \"BONUS DESIGN: PBXCp \\\"$i\\\" ${DMG_DIR}\"\n\n        \t${PBXCP} \\\n\t\t\t-exclude .DS_Store \\\n\t\t\t-exclude CVS \\\n\t\t\t-exclude .svn \\\n\t\t\t-exclude BONUS \\\n\t\t\t-resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${DMG_DIR}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DMG_DIR}/${i}/Info.plist\"\n\n   \telse\n        \techo \"--------------  Not including $i\"\n    \tfi\ndone\npopd\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach \"${DMG_TEMP_NAME}.dmg\" | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach \"$DEV\"\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert \"${DMG_TEMP_NAME}.dmg\" -format UDZO -o \"${DMG_FINAL_NAME}.dmg\"\nrm \"${DMG_TEMP_NAME}.dmg\"\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes \"${DMG_FINAL_NAME}.dmg\"\n\n# install license agreement (there isn't one for bonus designs as of 11/6/2007)\n#echo \"Installing License Agreement...\"\n#hdiutil unflatten ${DMG_FINAL_NAME}.dmg\n#/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n#/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\n#hdiutil flatten ${DMG_FINAL_NAME}.dmg\n#rm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox Bonus Designs are waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n# we base the PackageBonusDesigns target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Bonus Designs ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"PRODUCT_VARIANT is ${PRODUCT_VARIANT}\"\necho \"\"\n\nDESIGNS_DIR=\"${SRCROOT}/../../Designs\"\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nREAD_ME=\"READ ME - Sandvox Bonus Designs\"\nREAD_ME_ZIP_FILE=\"${SRCROOT}/../Other/${READ_ME}.zip\"\nREAD_ME_FILE=\"${BUILDSETTINGS_DIR}/${READ_ME}.rtfd\"\n\n# we keep the .zip of the READ_ME in Other, then copy it to /tmp and inflate it, if needed\nif test -r \"${READ_ME_FILE}\"\nthen\n\techo \"Removing previous READ_ME file...\"\n\trm -rf \"${READ_ME_FILE}\"\nfi\n\necho \"copying ${READ_ME_ZIP_FILE} to ${READ_ME_FILE}.zip\"\ncp \"${READ_ME_ZIP_FILE}\" \"${READ_ME_FILE}.zip\"\necho \"unarchving ${READ_ME_FILE}.zip\"\nditto -x -k --rsrc \"${READ_ME_FILE}.zip\" \"${BUILDSETTINGS_DIR}\"\n\n# the dmg names that we'll use\nVOLUME_NAME=\"Designs\"\nDMG_TEMP_NAME=\"temp\"\nDMG_FINAL_NAME=\"_SandvoxBonusDesigns-${SVN_VERSION}\"\n\n# the directory that will appear on ~/Desktop after download\nBONUS_DIR_NAME=\"Sandvox Bonus Designs\"\n\n# the directory within the mounted .dmg we'll copy to\nDMG_DIR=\"/Volumes/${VOLUME_NAME}/${BONUS_DIR_NAME}\"\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-bonusdesigns-dmg\"\n\nif test -d \"${SCRATCH_DIR}\"\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf \"${SCRATCH_DIR}\"\nfi\nmkdir -p \"${SCRATCH_DIR}\"\n\necho \"Packaging Bonus Designs...\"\npushd \"${SCRATCH_DIR}\"\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -ov -scrub -size 128m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach ${DMG_TEMP_NAME}.dmg\n\n# create directory\necho \"DMG_DIR is ${DMG_DIR}\"\n#mkdir -pv \"${DMG_DIR}\"\npushd \"/Volumes/${VOLUME_NAME}\"\nmkdir \"${BONUS_DIR_NAME}\"\npopd\n\n# copy READ ME to dmg (we use PBXCP to copy the rtfd)\necho \"Copying ${READ_ME_FILE} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${READ_ME_FILE}\" \"${DMG_DIR}\"\n\n# set READ ME's extension to be hidden\necho \"Setting ${READ_ME}.rtfd extension to be hidden...\"\n/Developer/Tools/SetFile -a E \"${DMG_DIR}/${READ_ME}.rtfd\"\n\n# add .webloc file to dmg\nWEBLOC_PATH=\"${DMG_DIR}/Check for Updates.webloc\"\n\necho '<?xml version=\"1.0\" encoding=\"UTF-8\"?>' > \"$WEBLOC_PATH\"\necho '<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">' >> \"$WEBLOC_PATH\"\necho '<plist version=\"1.0\">' >> \"$WEBLOC_PATH\"\necho '<dict>' >> \"$WEBLOC_PATH\"\necho '    <key>URL</key>' >> \"$WEBLOC_PATH\"\necho \"    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=4&amp;check=1</string>\" >> \"$WEBLOC_PATH\"\necho '</dict>' >> \"$WEBLOC_PATH\"\necho '</plist>' >> \"$WEBLOC_PATH\"\n\n# copy Designs to dmg\necho \"Copying Designs marked BONUS...\"\npushd \"${DESIGNS_DIR}\"\nfor i in *\ndo\n\tif [ -e \"${i}/BONUS\" ];\n    \tthen\n        \t# copy to DMG \n        \techo \"BONUS DESIGN: PBXCp \\\"$i\\\" ${DMG_DIR}\"\n\n        \t${PBXCP} \\\n\t\t\t-exclude .DS_Store \\\n\t\t\t-exclude CVS \\\n\t\t\t-exclude .svn \\\n\t\t\t-exclude BONUS \\\n\t\t\t-resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${DMG_DIR}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DMG_DIR}/${i}/Info.plist\"\n\n   \telse\n        \techo \"--------------  Not including $i\"\n    \tfi\ndone\npopd\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach \"${DMG_TEMP_NAME}.dmg\" | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach \"$DEV\"\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert \"${DMG_TEMP_NAME}.dmg\" -format UDZO -o \"${DMG_FINAL_NAME}.dmg\"\nrm \"${DMG_TEMP_NAME}.dmg\"\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes \"${DMG_FINAL_NAME}.dmg\"\n\n# install license agreement (there isn't one for bonus designs as of 11/6/2007)\n#echo \"Installing License Agreement...\"\n#hdiutil unflatten ${DMG_FINAL_NAME}.dmg\n#/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n#/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\n#hdiutil flatten ${DMG_FINAL_NAME}.dmg\n#rm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox Bonus Designs are waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
@@ -5849,7 +5849,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/trunk/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/trunk/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
+			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
