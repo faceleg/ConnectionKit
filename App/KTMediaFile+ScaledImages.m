@@ -420,10 +420,17 @@
     OBPRECONDITION(settings);
     
     
-    // CropToSize operations are already sorted
+    // CropToSize operations are already pretty much sorted
     KTMediaScalingOperation behavior = [settings behavior];
     if (behavior == KTCropToSize)
     {
+        [self cacheImageDimensionsIfNeeded];
+        NSSize size = [self dimensions];
+        if (size.width <= [settings size].width && size.height <= [settings size].height)
+        {
+            settings = [KTImageScalingSettings settingsWithScaleFactor:1.0];
+        }
+        
         return settings;
     }
     

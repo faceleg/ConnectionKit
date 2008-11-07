@@ -60,7 +60,7 @@
         
         
         // Remove the infinite edge pixels if needed
-        if (opaqueEdges && [settings behavior] != KTCropToSize) // CropToSize will do the crop anyway in a sec
+        if (opaqueEdges)
         {
             CIVector *cropRect = [CIVector vectorWithX:0.0 Y:0.0 Z:finalW W:finalH];
             result = [result imageByCroppingToRectangle:cropRect];
@@ -72,7 +72,6 @@
 	if ([settings behavior] == KTCropToSize)
 	{
 		result = [result imageByCroppingToSize:CGSizeMake([settings size].width, [settings size].height)
-                                    withinRect:CGRectMake(0.0, 0.0, finalW, finalH)
                                      alignment:[settings alignment]];
 	}
 	 
