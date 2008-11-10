@@ -6,6 +6,23 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
+
+
+
+
+// WE ARE CURRENTLY NOT USING THIS BUT MAY WANT TO LATER FOR STALENESS INDICATORS.
+
+
+
+
+
+
+
+
+
+
+
+
 #import <Cocoa/Cocoa.h>
 
 

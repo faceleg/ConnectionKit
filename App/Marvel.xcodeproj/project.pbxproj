@@ -246,7 +246,6 @@
 		277560360CA5228B00D8A412 /* KTParsedKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KTParsedKeyPath.h */; settings = {ATTRIBUTES = (); }; };
 		277560370CA5228B00D8A412 /* KTParsedKeyPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KTParsedKeyPath.m */; };
 		2775612E0CA718C200D8A412 /* KTWebViewComponentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */; settings = {ATTRIBUTES = (); }; };
-		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -874,6 +873,7 @@
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE82F0390E777491003A0110 /* TigerStuff.bundle */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
+		CE8D51330EC8BC8B0026F560 /* KTTransferController+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0EDC10D0C556600B7555A /* KTTransferController+Media.m */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
 		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
 		CE8E83500917EFE2001DC88D /* designCoverRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834C0917EFE2001DC88D /* designCoverRight.png */; };
@@ -4559,7 +4559,6 @@
 				2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */,
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				27969F110CF5DCBC00C03F45 /* NSString+Publishing.h in Headers */,
-				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
 				272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */,
 				27F0F3A40D0F46AC00B7555A /* KTExternalMediaFile.h in Headers */,
 				2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */,
@@ -6106,6 +6105,7 @@
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTTransferController.m in Sources */,
+				CE8D51330EC8BC8B0026F560 /* KTTransferController+Media.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1307,7 +1307,10 @@ if ([self where] == kGeneratingRemoteExport) {
                 NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
                 OBASSERT(path);
                 
-                NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+				NSStringEncoding enc = 0;
+				NSError *err = nil;
+                NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:&enc error:&err];
+				
                 if (CSS)
                 {
                     [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
@@ -1322,7 +1325,7 @@ if ([self where] == kGeneratingRemoteExport) {
                 }
                 else
                 {
-                    NSLog(@"Unable to read in image replacement CSS from %@", path);
+                    NSLog(@"Unable to read in image replacement CSS from %@ .... err = %@", path, err);
                 }
             }
             
