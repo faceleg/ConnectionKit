@@ -153,33 +153,6 @@
 	}
 }
 
-//- (KTOldMediaManager *)oldMediaManager
-//{
-//    return myOldMediaManager;
-//}
-//
-//- (void)setOldMediaManager:(KTOldMediaManager *)aMediaManager
-//{
-//    [aMediaManager retain];
-//    [myOldMediaManager release];
-//    myOldMediaManager = aMediaManager;
-//}
-
-//- (NSMutableArray *)peerContexts
-//{
-//	return myPeerContexts;
-//}
-
-//- (void)setPeerContexts:(NSMutableArray *)aMutableArray
-//{
-//	@synchronized ( myPeerContexts )
-//	{
-//		[aMutableArray retain];
-//		[myPeerContexts release];
-//		myPeerContexts = aMutableArray;
-//	}
-//}
-
 - (KTTransferController *)remoteTransferController
 {
     return myRemoteTransferController;

@@ -746,7 +746,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
                            withObject:thumbnailHTML
-                        waitUntilDone:NO];
+                        waitUntilDone:YES];
 }
 
 - (void)_startGeneratingQuickLookThumbnailWithHTML:(NSString *)thumbnailHTML

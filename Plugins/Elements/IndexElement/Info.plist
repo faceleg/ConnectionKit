@@ -36,6 +36,12 @@
 	<dict>
 		<key>maxItems</key>
 		<integer>10</integer>
+		<key>enableMaxItems</key>
+		<true/>
+		<key>includeSummaries</key>
+		<false/>
+		<key>maxSummaryCharacters</key>
+		<integer>1000</integer>
 	</dict>
 	<key>KTPluginName</key>
 	<string>Index</string>
