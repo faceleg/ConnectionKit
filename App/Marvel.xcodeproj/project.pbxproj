@@ -981,13 +981,6 @@
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = AmazonSupport;
 		};
-		27E6300A0EC306800044ED36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = Connection;
-		};
 		27E6300C0EC306800044ED36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
@@ -1001,13 +994,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
-		};
-		27E630100EC306800044ED36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 790FF0CC0ACCE4B7004B4021;
-			remoteInfo = "KTLog Viewer";
 		};
 		27E630120EC306800044ED36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3026,10 +3012,8 @@
 		27E630010EC306800044ED36 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				27E6300B0EC306800044ED36 /* Connection.app */,
 				27E6300D0EC306800044ED36 /* Connection.framework */,
 				27E6300F0EC306800044ED36 /* UnitTest.octest */,
-				27E630110EC306800044ED36 /* KTLog Viewer.app */,
 				27E630130EC306800044ED36 /* DropletHelper.app */,
 				27E630150EC306800044ED36 /* DropletLauncher */,
 			);
@@ -5061,13 +5045,6 @@
 			remoteRef = 27E62FF80EC3060A0044ED36 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		27E6300B0EC306800044ED36 /* Connection.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Connection.app;
-			remoteRef = 27E6300A0EC306800044ED36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		27E6300D0EC306800044ED36 /* Connection.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -5080,13 +5057,6 @@
 			fileType = wrapper.cfbundle;
 			path = UnitTest.octest;
 			remoteRef = 27E6300E0EC306800044ED36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		27E630110EC306800044ED36 /* KTLog Viewer.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "KTLog Viewer.app";
-			remoteRef = 27E630100EC306800044ED36 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		27E630130EC306800044ED36 /* DropletHelper.app */ = {
