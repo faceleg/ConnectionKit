@@ -606,8 +606,11 @@ but the only trick is -- how to display a highlight?
 	}
 	else if (URL)
 	{
-		NSString *urlString = @"";
-		if ([[URL scheme] isEqualToString:@"applewebdata"])
+		NSURL *relativeURL = [URL URLRelativeToURL:[[[self webViewController] page] URL]];
+		NSString *relativePath = [relativeURL relativePath];
+        
+        NSString *urlString = @"";
+        if ([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator])
 		{
 			KTPage *linkedPage = [[[self document] documentInfo] pageWithPreviewURLPath:[URL path]];
 			if (nil != linkedPage)
