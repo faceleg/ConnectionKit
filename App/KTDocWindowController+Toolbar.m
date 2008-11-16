@@ -175,6 +175,7 @@ TO DO:
 			{
                 [toolbarItem setTarget:[self document]];
             }
+            else
 			{
                 [toolbarItem setTarget:nil];
             }

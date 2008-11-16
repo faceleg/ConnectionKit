@@ -57,22 +57,6 @@
  */
 - (KTPage *)root { return [[self documentInfo] root]; }
 
-#pragma mark ivar accessors (not stored objects)
-
-- (BOOL)connectionsAreConnected
-{
-	if ( [[myExportTransferController connection] isConnected]
-		 || [[myLocalTransferController connection] isConnected]
-		 || [[myRemoteTransferController connection] isConnected] )
-	{
-		return YES;
-	} 
-	else
-	{
-		return NO;
-	}
-}
-
 #pragma mark -
 #pragma mark Managers
 
@@ -108,72 +92,6 @@
 
 #pragma mark -
 #pragma mark Publishing
-
-- (KTTransferController *)exportTransferController
-{
-    return myExportTransferController; 
-}
-
-- (void)setExportTransferController:(KTTransferController *)anExportTransferController
-{
-	if ( nil != myExportTransferController )
-	{
-		[self removeWindowController:myExportTransferController];
-	}
-	
-    [anExportTransferController retain];
-    [myExportTransferController release];
-    myExportTransferController = anExportTransferController;
-	
-	if ( nil != myExportTransferController )
-	{
-		[self addWindowController:myExportTransferController];
-	}
-}
-
-- (KTTransferController *)localTransferController
-{
-    return myLocalTransferController;
-}
-
-- (void)setLocalTransferController:(KTTransferController *)aLocalTransferController
-{
-	if ( nil != myLocalTransferController )
-	{
-		[self removeWindowController:myLocalTransferController];
-	}
-	
-    [aLocalTransferController retain];
-    [myLocalTransferController release];
-    myLocalTransferController = aLocalTransferController;
-	
-	if ( nil != myLocalTransferController )
-	{
-		[self addWindowController:myLocalTransferController];
-	}
-}
-
-- (KTTransferController *)remoteTransferController
-{
-    return myRemoteTransferController;
-}
-
-- (void)setRemoteTransferController:(KTTransferController *)aRemoteTransferController
-{
-	if ( nil != myRemoteTransferController )
-	{
-		[self removeWindowController:myRemoteTransferController];
-	}
-	
-    [aRemoteTransferController retain];
-    [myRemoteTransferController release];
-    myRemoteTransferController = aRemoteTransferController;
-	
-	if ( nil != myRemoteTransferController )
-	{
-		[self addWindowController:myRemoteTransferController];
-	}
-}
 
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)anHTMLInspectorController
 {

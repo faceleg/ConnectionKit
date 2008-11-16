@@ -39,12 +39,13 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo
+- (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
 {
 	[super init];
 	if ( nil != self )
 	{
 		myDocumentInfo = [aDocumentInfo retain];
+        myOnlyPublishChanges = publishChanges;
 	}
 	
 	return self;
@@ -65,6 +66,8 @@
 {
 	return myDocumentInfo;
 }
+
+- (BOOL)onlyPublishChanges { return myOnlyPublishChanges; }
 
 - (id <AbstractConnectionProtocol>)connection
 {

@@ -665,25 +665,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self document] setDisplaySmallPageIcons:!value];
 }
 
-/*!	We need to define export here so it can be validated by the doc window controller.
-*/
-- (IBAction)export:(id)sender
-{
-	[[self document] export:sender];
-}
-- (IBAction)exportAgain:(id)sender
-{
-	[[self document] exportAgain:sender];
-}
-- (IBAction)saveToHost:(id)sender
-{
-	[[self document] saveToHost:sender];
-}
-- (IBAction)saveAllToHost:(id)sender
-{
-	[[self document] saveAllToHost:sender];
-}
-
 - (IBAction)reloadOutline:(id)sender
 {
 	[[[self siteOutlineController] siteOutline] reloadData];
@@ -1395,42 +1376,6 @@ from representedObject */
 		}
     }
 	
-	// "Sync Page with Host" saveToHost:
-	else if ( itemAction == @selector(saveToHost:) || itemAction == @selector(saveAllToHost:) )
-	{
-		BOOL canSave = NO;
-		
-		KTHostProperties *hostProperties = [[self document] valueForKeyPath:@"documentInfo.hostProperties"];
-		
-		if ([[hostProperties valueForKey:@"remoteHosting"] intValue])
-		{
-			NSString *hostName = [hostProperties valueForKey:@"hostName"];
-			canSave = (nil != hostName);
-		}
-		if ([[hostProperties valueForKey:@"localHosting"] intValue])
-		{
-			canSave = YES;	// I think we can always sync 
-		}
-		
-		return canSave;
-		
-	}
-	
-	// "Export Site..." export:
-	else if ( itemAction == @selector(export:)  || itemAction == @selector(doExport:))	// export requires you to be set for remote hosting
-    {
-		return YES;
-    }
-	
-	// "Export Site Again" exportAgain:
-	else if ( itemAction == @selector(exportAgain:) )	// export requires you to be set for remote hosting
-    {
-		// to work, we need an existing transfer controller and storage path.
-		KTTransferController *exportController = [[self document] exportTransferController];
-		NSString *storagePath = [exportController storagePath];
-		return (nil != storagePath);
-    }
-	
 	// Window menu
 	// "Show Inspector" toggleInfoShown:
 	
@@ -1551,27 +1496,6 @@ from representedObject */
 		BOOL result = [[self webViewController] validateCreateLinkItem:toolbarItem title:&label];
 		[toolbarItem setLabel:label];
 		return result;
-	}
-	else if ( [toolbarItem action] == @selector(saveToHost:) )
-	{
-		// same logic as menu validation
-		BOOL canSave = NO;
-		
-		NSManagedObject *hostProperties = [[self document] valueForKeyPath:@"documentInfo.hostProperties"];
-
-		// commenting out -- this makes it slow.the //NSDictionary *dict = [hostProperties dictionary];	// need a real dictionary
-		
-		if ([[hostProperties valueForKey:@"remoteHosting"] intValue])
-		{
-			NSString *hostName = [hostProperties valueForKey:@"hostName"];
-			canSave = (nil != hostName);
-		}
-		if ([[hostProperties valueForKey:@"localHosting"] intValue])
-		{
-			canSave = YES;	// I think we can always sync 
-		}
-				
-		return canSave;
 	}
 	
     return YES;
@@ -1865,40 +1789,6 @@ from representedObject */
 	{
 		[self updateEditMenuItems];
 	}
-}
-
-- (void)alertDidEndForWindowClosingWithTransfersInProgress:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSAlertFirstButtonReturn)
-    {
-		NSLog(@"terminating transfers");
-        
-        // Terminate connections
-        [[[self document] exportTransferController] terminateConnection];
-        [[[self document] localTransferController] terminateConnection];
-        [[[self document] remoteTransferController] terminateConnection];
-        
-		[[self window] performClose:nil];
-	}
-}
-
-- (BOOL)windowShouldClose:(id)sender
-{
-	//see if there are any transfers in progress
-	if ([[self document] connectionsAreConnected]) {
-		NSAlert *cancelUpload = [NSAlert alertWithMessageText:NSLocalizedString(@"Publishing in Progress", @"Window Will Close")
-												defaultButton:NSLocalizedString(@"Finish", @"Window will close")
-											  alternateButton:NSLocalizedString(@"Ignore", @"Window will close")
-												  otherButton:nil
-									informativeTextWithFormat:NSLocalizedString(@"Files are currently getting published to your host. Would you like to finish the publishing first?", @"Window will close")];
-		[cancelUpload setAlertStyle:NSWarningAlertStyle];
-		[cancelUpload beginSheetModalForWindow:[self window]
-								 modalDelegate:self
-								didEndSelector:@selector(alertDidEndForWindowClosingWithTransfersInProgress:returnCode:contextInfo:)
-								   contextInfo:nil];
-		return NO;
-	}
-	return YES;
 }
 
 - (void)windowWillClose:(NSNotification *)notification;
@@ -2329,6 +2219,37 @@ from representedObject */
 - (void)handleEvent:(DOMEvent *)event;
 {
 	LOG((@"event= %@", event));
+}
+
+#pragma mark -
+#pragma mark Publishing
+
+- (IBAction)publishSiteChanges:(id)sender
+{
+    KTTransferController *controller = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+                                                                       onlyPublishChanges:YES];
+    [controller startUploading];
+    
+    // FIXME: must -release the controller later
+}
+
+- (IBAction)publishEntireSite:(id)sender
+{
+    KTTransferController *controller = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+                                                                       onlyPublishChanges:NO];
+    [controller startUploading];
+    
+    // FIXME: must -release the controller later
+}
+
+- (IBAction)exportSite:(id)sender
+{
+    
+}
+
+- (IBAction)exportSiteAgain:(id)sender
+{
+    // TODO: Either self or KTDocument needs an ivar storing the last export location
 }
 
 #pragma mark -

@@ -224,12 +224,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
         [root setTitleText:defaultRootPageTitleText];
-        
-        
-        
-        [self setLocalTransferController:nil];		// make sure to clear old settings after we have some host properties
-        [self setRemoteTransferController:nil];
-        [self setExportTransferController:nil];
      }
 	
 	
@@ -246,10 +240,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [self setDocumentInfo:nil];
     
     [myMediaManager release];
-	
-    [self setLocalTransferController:nil];
-    [self setRemoteTransferController:nil];
-    [self setExportTransferController:nil];
 	
 	[myStalenessManager stopObservingAllPages];
 	[myStalenessManager release];
@@ -858,158 +848,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[self undoManager] removeAllActions];
 }
 
-- (IBAction)saveToHost:(id)sender
-{
-	[self cleanupBeforePublishing];
-	
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
-	int local = [hostProperties integerForKey:@"localHosting"];
-	int remote = [hostProperties integerForKey:@"remoteHosting"];
-	
-	if (local && remote)
-	{
-//	FIXME:	We are temporarily changing from allowing both remote and local to an and/or situation
-		if (nil == myRemoteTransferController)
-		{
-			KTTransferController *remoteTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																								 where:kGeneratingRemote] autorelease];
-			[self setRemoteTransferController:remoteTC];
-		}
-		[myRemoteTransferController uploadStaleAssets];
-	}
-	else if (local)
-	{
-		if (nil == myLocalTransferController)
-		{
-			KTTransferController *localTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																								where:kGeneratingLocal] autorelease];
-			[self setLocalTransferController:localTC];
-		}
-		[myLocalTransferController uploadStaleAssets];
-	}
-	else if (remote)
-	{
-		if (nil == myRemoteTransferController)
-		{
-			KTTransferController *remoteTC = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																								 where:kGeneratingRemote] autorelease];
-			[self setRemoteTransferController:remoteTC];
-		}
-		[myRemoteTransferController uploadStaleAssets];
-	}
-}
-
-- (IBAction)saveAllToHost:(id)sender
-{
-	[self cleanupBeforePublishing];
-	
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
-	if ([[hostProperties valueForKey:@"localHosting"] intValue])
-	{
-		if (nil == myLocalTransferController)
-		{
-			KTTransferController *local = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																							  where:kGeneratingLocal] autorelease];
-			[self setLocalTransferController:local];
-		}
-		[myLocalTransferController uploadEverything];
-	}		
-	
-	if ([[hostProperties valueForKey:@"remoteHosting"] intValue])
-	{
-		if (nil == myRemoteTransferController)
-		{
-			KTTransferController *remote = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																							   where:kGeneratingRemote] autorelease];
-			[self setRemoteTransferController:remote];
-		}
-		[myRemoteTransferController uploadEverything];
-	}
-}
-
-/*!	Export. Only enabled if we have a remote setup.  Takes the site, published as if it were remote, and saves it somewhere.
- */
-
-- (IBAction)exportAgain:(id)sender
-{
-	[self cleanupBeforePublishing];
-	
-	[myExportTransferController uploadEverything];
-}
-
-- (void)doExport
-{
-	NSString *suggestedPath = nil;
-	if (nil == myExportTransferController)
-	{
-		KTTransferController *export = [[[KTTransferController alloc] initWithAssociatedDocument:self
-																						   where:kGeneratingRemoteExport] autorelease];
-		[self setExportTransferController:export];
-	}
-	else
-	{
-		// We keep the old path as the suggested place, for easy replacement.
-		suggestedPath = [[[myExportTransferController storagePath] copy] autorelease];
-		// Exists already, so clear the path actually used.  
-	}
-	[myExportTransferController uploadEverythingToSuggestedPath:suggestedPath];	// ASYNC!
-	
-}
-
-- (IBAction)export:(id)sender
-{
-	[self cleanupBeforePublishing];
-	[self setExportTransferController:nil];
-	[self doExport];
-	/*
-	 if (0 == [[[self hostProperties] objectForKey:@"remoteHosting"] intValue])
-	 {
-	 NSAlert *messageAlert = [[[NSAlert alloc] init] autorelease];
-	 
-	 [messageAlert setAlertStyle:NSInformationalAlertStyle];
-	 [messageAlert setMessageText:NSLocalizedString(@"Remote Hosting Required for Export",@"")];
-	 
-	 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	 NSString *sitesPath = nil;
-	 BOOL homeDirectory = (HOMEDIR == [[[self hostProperties] objectForKey:@"localSharedMatrix"] intValue]);
-	 if (homeDirectory)
-	 {
-	 sitesPath = [[NSWorkspace sharedWorkspace] userSitesDirectory];
-	 }
-	 else
-	 {
-	 sitesPath = [defaults objectForKey:@"ApacheDocRoot"];
-	 }
-	 
-	 [messageAlert setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"Your website is currently configured to be published only on this computer. After you publish, you can retrieve the files from the following directory:\n\n  %@",@""),sitesPath]];
-	 
-	 [messageAlert addButtonWithTitle:NSLocalizedString(@"Cancel",@"Cancel")];
-	 
-	 [messageAlert beginSheetModalForWindow:[[self windowController] window] modalDelegate:nil didEndSelector:nil contextInfo:nil];
-	 }
-	 else
-	 {
-	 NSString *remoteSiteURL = [[self hostProperties] remoteSiteURL];
-	 if ( (nil == remoteSiteURL) || [remoteSiteURL isEqualToString:@""] || (NSNotFound != [remoteSiteURL rangeOfString:@"?"].location) )
-	 {
-	 [[self confirmWithWindow:[[self windowController] window]
-	 silencingKey:@"ShutUpNoHostExportWarning"
-	 canCancel:YES
-	 OKButton:NSLocalizedString(@"Export",@"Export confirmation button")
-	 silence:nil
-	 title:[NSString stringWithFormat:NSLocalizedString(@"Incomplete Host Setup",@"Title for confirmation alert")]
-	 format:NSLocalizedString(@"In order to properly export your site, you need to specify the URL where it will be published. (RSS data will be incorrect unless the published URL is specified.)",@"Warning about exporting")]
-	 
-	 doExport:sender];
-	 }
-	 else
-	 {
-	 [self doExport:sender];
-	 }			
-	 }*/
-}
-
-
 - (IBAction)setupHost:(id)sender
 {
 	KTHostSetupController* sheetController
@@ -1132,12 +970,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[self setValue:hostProperties forKeyPath:@"documentInfo.hostProperties"];
 
 		// For diagnostics, log the value of the host properties
-		NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
-
-		[self setLocalTransferController:nil];		// clear old settings after we have changed host properties
-		[self setRemoteTransferController:nil];
-		[self setExportTransferController:nil];
-		
+		NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
 		
 		// Mark designs and media as stale (pages are handled automatically)
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];

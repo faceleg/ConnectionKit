@@ -55,10 +55,6 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTDocWindowController		*myDocWindowController;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
-	KTTransferController		*myLocalTransferController;
-	KTTransferController		*myRemoteTransferController;
-	KTTransferController		*myExportTransferController;
-					
 	
 	// UI
 	BOOL	myShowDesigns;						// accessor in category method
@@ -95,10 +91,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 
 - (IBAction)setupHost:(id)sender;
-- (IBAction)export:(id)sender;
-- (IBAction)exportAgain:(id)sender;
-- (IBAction)saveToHost:(id)sender;
-- (IBAction)saveAllToHost:(id)sender;
 
 // Controller chain
 - (KTDocWindowController *)windowController;
@@ -144,16 +136,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (NSThread *)thread;
 - (void)setThread:(NSThread *)thread;
-
-// export/upload
-
-- (KTTransferController *)exportTransferController;
-- (void)setExportTransferController:(KTTransferController *)anExportTransferController;
-
-- (KTTransferController *)localTransferController;
-- (KTTransferController *)remoteTransferController;
-
-- (BOOL)connectionsAreConnected;
 
 // support
 

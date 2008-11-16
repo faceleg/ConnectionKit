@@ -16,14 +16,18 @@
 
 @interface KTTransferController : NSObject 
 {
-	KTDocumentInfo					*myDocumentInfo;
+	KTDocumentInfo	*myDocumentInfo;
+    BOOL            myOnlyPublishChanges;
+    
 	id <AbstractConnectionProtocol>	myConnection;
 }
 
-- (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo;
+- (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
 
 // Accessors
 - (KTDocumentInfo *)documentInfo;
+- (BOOL)onlyPublishChanges;
+
 - (id <AbstractConnectionProtocol>)connection;
 
 // Uploading
@@ -32,11 +36,11 @@
 
 
 // old API
-- (id)initWithAssociatedDocument:(KTDocument *)aDocument where:(int)aWhere;
-- (void)uploadStaleAssets;
-- (void)uploadEverything;
-- (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath;
-- (NSString *)storagePath;
-- (void)terminateConnection;
+//- (id)initWithAssociatedDocument:(KTDocument *)aDocument where:(int)aWhere;
+//- (void)uploadStaleAssets;
+//- (void)uploadEverything;
+//- (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath;
+//- (NSString *)storagePath;
+//- (void)terminateConnection;
 
 @end

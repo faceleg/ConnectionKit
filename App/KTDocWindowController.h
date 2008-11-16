@@ -128,9 +128,14 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)setWebViewController:(KTDocWebViewController *)controller;
 
 
+#pragma mark Publishing
+- (IBAction)publishSiteChanges:(id)sender;
+- (IBAction)publishEntireSite:(id)sender;
+- (IBAction)exportSite:(id)sender;
+- (IBAction)exportSiteAgain:(id)sender;
 
 
-
+#pragma mark Other
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
 
 // Getters
