@@ -245,6 +245,8 @@
 				<string>id</string>
 				<key>publishSiteChanges</key>
 				<string>id</string>
+				<key>publishSiteFromToolbar</key>
+				<string>NSToolbarItem</string>
 				<key>reloadOutline</key>
 				<string>id</string>
 				<key>remove</key>
