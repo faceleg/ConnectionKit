@@ -41,6 +41,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+
+@interface WebView (WebKitSecretsIKnow)
+- (void)_setCatchesDelegateExceptions:(BOOL)f;
+@end
+
+
 @interface KTDocWebViewController (Internal)
 - (void)_loadWebViewTextSizeMultiplier;
 @end
@@ -159,6 +165,16 @@
     
     // Text size
     [self _loadWebViewTextSizeMultiplier];
+    
+    
+    // By default, WebKit catches and logs any exceptions in delegate methods.
+    // For beta builds though, we want any exceptions to be reported back to Karelia via our feedback reporter
+#ifdef VARIANT_BETA
+    if ([aWebView respondsToSelector:@selector(_setCatchesDelegateExceptions:)])
+    {
+        [aWebView _setCatchesDelegateExceptions:NO];
+    }
+#endif
 }
 
 /*  Support method to set the webview text size from document info.
@@ -757,85 +773,77 @@
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id<WebPolicyDecisionListener>)listener
 {
-	// To stop WebKit swallowing any exceptions which occur in this method.
-    @try
-	{
-		NSURL *URL = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
-		
-        
-        // Links by page ID open get selected in the Site Outline and therby the webview
-        NSURL *relativeURL = [URL URLRelativeToURL:[[self page] URL]];
-		NSString *relativePath = [relativeURL relativePath];
-        
-		if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
-            [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
-		{
-			KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativePath];
-			if (!thePage)
-			{
-				[KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
-											silencingKey:@"shutUpFakeURL"
-												   title:NSLocalizedString(@"Non-Page Link",@"title of alert")
-												  format:NSLocalizedString
-					(@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
-					[URL path]];
-				[listener ignore];
-			}
-			else
-			{
-				[[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
-				[listener use];	// it's been loaded for us I think
-			}
-		}
-        
-        
-        // Open normal links in the user's browser
-		else if ([[URL scheme] isEqualToString:@"http"])
-		{
-			int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
-			switch (navigationType)
-			{
-				case WebNavigationTypeOther:
-				case WebNavigationTypeFormSubmitted:
-				case WebNavigationTypeBackForward:
-				case WebNavigationTypeReload:
-				case WebNavigationTypeFormResubmitted:
-					[listener use];
-					break;
-					
-				case WebNavigationTypeLinkClicked:
-				default:
-					// load with user's preferred browser:
-					[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
-					// don't continue loading this url in our view:
-					[listener ignore];
-			}
-		}
-        
-        // file:// URLs
-		else if ([[URL scheme] isEqualToString:@"file"] )
-		{
-			if ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] == WebNavigationTypeOther)
-			{
-				[listener use];
-			}
-			else
-			{
-				[listener ignore];
-			}
-		}
-        
-        // Fallback
-		else
+    NSURL *URL = [actionInformation objectForKey:@"WebActionOriginalURLKey"];
+    
+    
+    // Links by page ID open get selected in the Site Outline and therby the webview
+    NSURL *relativeURL = [URL URLRelativeToURL:[[self page] URL]];
+    NSString *relativePath = [relativeURL relativePath];
+    
+    if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
+        [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
+    {
+        KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativePath];
+        if (!thePage)
         {
-			// do the default stuff for other schemes:
-			[listener use];
-		}
-	}
-	@catch (NSException *exception)
-	{
-		[NSApp reportException:exception];
-	}
+            [KSSilencingConfirmSheet alertWithWindow:[[self webView] window]
+                                        silencingKey:@"shutUpFakeURL"
+                                               title:NSLocalizedString(@"Non-Page Link",@"title of alert")
+                                              format:NSLocalizedString
+             (@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
+             [URL path]];
+            [listener ignore];
+        }
+        else
+        {
+            [[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
+            [listener use];	// it's been loaded for us I think
+        }
+    }
+    
+    
+    // Open normal links in the user's browser
+    else if ([[URL scheme] isEqualToString:@"http"])
+    {
+        int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+        switch (navigationType)
+        {
+            case WebNavigationTypeOther:
+            case WebNavigationTypeFormSubmitted:
+            case WebNavigationTypeBackForward:
+            case WebNavigationTypeReload:
+            case WebNavigationTypeFormResubmitted:
+                [listener use];
+                break;
+                
+            case WebNavigationTypeLinkClicked:
+            default:
+                // load with user's preferred browser:
+                [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+                // don't continue loading this url in our view:
+                [listener ignore];
+        }
+    }
+    
+    // file:// URLs
+    else if ([[URL scheme] isEqualToString:@"file"] )
+    {
+        if ([[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] == WebNavigationTypeOther)
+        {
+            [listener use];
+        }
+        else
+        {
+            [listener ignore];
+        }
+    }
+    
+    // Fallback
+    else
+    {
+        // do the default stuff for other schemes:
+        [listener use];
+    }
 }
 
 /*	Supplements the above method to hande "open in new window" URLs.
