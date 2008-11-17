@@ -190,7 +190,7 @@
 		NSSet *myIgnoredKeys = [NSSet setWithObjects:
                                 @"master",
                                 @"rootDocumentInfo",
-                                @"parent",
+                                @"parent", @"archivePages",
                                 @"childIndex",
                                 @"plugins",
                                 @"documentInfo",
