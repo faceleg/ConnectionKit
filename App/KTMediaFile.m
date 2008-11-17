@@ -157,9 +157,29 @@
 			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
 		}
 		
-		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+		
+        // BUGSID:36975 Occasionally we may receive a file with no sensible extension. e.g "test. 123"
+        // Must handle this sensibly
         NSString *pathExtension = [[sourceFilename pathExtension] lowercaseString];
-		NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:pathExtension];
+        NSString *preferredFilename;
+        
+        NSString *pathExtensionUTI = [NSString UTIForFilenameExtension:pathExtension];
+        if ([pathExtensionUTI isEqualToUTI:[self fileType]])
+        {
+            NSString *fileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+            preferredFilename = [fileName stringByAppendingPathExtension:pathExtension];
+        }
+        else
+        {
+            preferredFilename = [sourceFilename legalizedWebPublishingFileName];
+            
+            NSString *extension = [NSString filenameExtensionForUTI:[self fileType]];
+            if (extension && ![extension isEqualToString:@""])
+            {
+                preferredFilename = [preferredFilename stringByAppendingPathExtension:extension];
+            }
+        }
+        
         
         NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
 		NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
