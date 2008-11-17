@@ -27,6 +27,7 @@
 #define TOOLBAR_PUBLISH NSLocalizedStringWithDefaultValue(@"TOOLBAR_PUBLISH", nil, [NSBundle mainBundle], @"Publish", @"")
 #define PALETTE_PUBLISH NSLocalizedStringWithDefaultValue(@"PALETTE_PUBLISH", nil, [NSBundle mainBundle], @"Publish Changes", @"")
 #define TOOLTIP_PUBLISH NSLocalizedStringWithDefaultValue(@"TOOLTIP_PUBLISH", nil, [NSBundle mainBundle], @"Send changes to your ISP.", @"tooltip")
+#define TOOLBAR_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"TOOLBAR_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Publish All", @"")
 
 #define TOOLBAR_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"TOOLBAR_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")
 #define PALETTE_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"PALETTE_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")

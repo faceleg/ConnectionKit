@@ -1482,6 +1482,12 @@ from representedObject */
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
+    else if ([toolbarItem action] == @selector(publishSiteFromToolbar:))
+    {
+        // FIXME: This is slow. You can jab the option key quickly without the toolbar updating
+        [toolbarItem setLabel:
+         ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
+    }
     else if ( [toolbarItem action] == @selector(toggleDesignsShown:) )
     {
         return YES;
@@ -2240,6 +2246,20 @@ from representedObject */
     [controller startUploading];
     
     // FIXME: must -release the controller later
+}
+
+/*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed
+ */
+- (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
+{
+    if ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask)
+    {
+        [self publishEntireSite:sender];
+    }
+    else
+    {
+        [self publishSiteChanges:sender];
+    }
 }
 
 - (IBAction)exportSite:(id)sender
