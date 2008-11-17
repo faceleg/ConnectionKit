@@ -1482,9 +1482,9 @@ from representedObject */
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
+    // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases
     else if ([toolbarItem action] == @selector(publishSiteFromToolbar:))
     {
-        // FIXME: This is slow. You can jab the option key quickly without the toolbar updating
         [toolbarItem setLabel:
          ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
     }
