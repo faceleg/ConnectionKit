@@ -47,11 +47,6 @@
 @end
 
 
-@interface KTDocWebViewController (Internal)
-- (void)_loadWebViewTextSizeMultiplier;
-@end
-
-
 #pragma mark -
 
 
@@ -163,10 +158,6 @@
     [newWebView setUIDelegate:[self windowController]];
     
     
-    // Text size
-    [self _loadWebViewTextSizeMultiplier];
-    
-    
     // By default, WebKit catches and logs any exceptions in delegate methods.
     // For beta builds though, we want any exceptions to be reported back to Karelia via our feedback reporter
 #ifdef VARIANT_BETA
@@ -175,21 +166,6 @@
         [aWebView _setCatchesDelegateExceptions:NO];
     }
 #endif
-}
-
-/*  Support method to set the webview text size from document info.
- */
-- (void)_loadWebViewTextSizeMultiplier
-{
-    if ([self document])
-    {
-        float multiplier = [[[self document] documentInfo] floatForKey:@"textSizeMultiplier"];
-        if (multiplier < 0.01)
-        {
-            multiplier = [[NSUserDefaults standardUserDefaults] floatForKey:@"textSizeMultiplier"];	// put into a sane range
-        }
-        [[self webView] setTextSizeMultiplier:multiplier];
-    }
 }
 
 #pragma mark -
