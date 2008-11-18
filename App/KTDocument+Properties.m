@@ -336,11 +336,6 @@
 	{
 		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
 	}
-    
-    
-    // WebView text size
-    float textSize = [[[[self windowController] webViewController] webView] textSizeMultiplier];
-    [[self documentInfo] setFloat:textSize forKey:@"textSizeMultiplier"];
 }
 
 #pragma mark -

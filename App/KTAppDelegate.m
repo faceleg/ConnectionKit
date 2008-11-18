@@ -413,7 +413,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		@"sandvox.Aqua",		@"designBundleIdentifier",
 		
 		[NSMutableArray array],					@"keywords",
-		[NSNumber numberWithFloat:1.0],			@"textSizeMultiplier",
 		[NSDictionary
 			dictionaryWithObjectsAndKeys:
 			[NSNumber numberWithInt:0], @"localHosting",
