@@ -2134,7 +2134,7 @@ from representedObject */
                     {
                         // Insert the page where indicated
                         [aCollection addPage:newPage];
-                        if (anIndex != NSOutlineViewDropOnItemIndex)
+                        if (anIndex != NSOutlineViewDropOnItemIndex && [aCollection collectionSortOrder] == KTCollectionUnsorted)
                         {
                             [newPage moveToIndex:anIndex];
                         }
