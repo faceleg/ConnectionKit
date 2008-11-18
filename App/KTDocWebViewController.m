@@ -189,8 +189,6 @@
                                                  selector:@selector(documentDidChange:)
                                                      name:NSManagedObjectContextObjectsDidChangeNotification
                                                    object:[[self document] managedObjectContext]];
-        
-        [self _loadWebViewTextSizeMultiplier];
     }
 }
 
