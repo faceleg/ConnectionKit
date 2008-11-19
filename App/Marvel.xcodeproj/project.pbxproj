@@ -4994,20 +4994,20 @@
 			);
 			projectRoot = "";
 			targets = (
+				3C96ADE10CA06FB900C5249F /* UpdateVersion */,
 				8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */,
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
+				3CD5B7840DCA668D006EE4D9 /* BuildAndDeploySymbols */,
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
-				3C96ADE10CA06FB900C5249F /* UpdateVersion */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
-				3CD5B7840DCA668D006EE4D9 /* BuildAndDeploySymbols */,
 			);
 		};
 /* End PBXProject section */
