@@ -4,4 +4,4 @@ function twitterCallback[[=uniqueID]](obj)
 	twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
 }
 </script>
-<script type="text/javascript" src="http://twitter.com/statuses/[[if friendsTimeline]]friends[[else]]user[[endif]]_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
+<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
