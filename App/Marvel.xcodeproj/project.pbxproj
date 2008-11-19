@@ -170,6 +170,18 @@
 			name = UpdateShared;
 			productName = "Shared-UpdateToT";
 		};
+		3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3CE4E1A10ED4A739008DD114 /* Build configuration list for PBXAggregateTarget "PackageAndDeployDesignKit" */;
+			buildPhases = (
+				3CE4E19A0ED4A6DE008DD114 /* ShellScript */,
+			);
+			dependencies = (
+				3CE4E1A00ED4A6F3008DD114 /* PBXTargetDependency */,
+			);
+			name = PackageAndDeployDesignKit;
+			productName = PackageAndDeployDesignKit;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -1414,6 +1426,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E;
 			remoteInfo = "Shared-UpdateToT";
+		};
+		3CE4E19F0ED4A6F3008DD114 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
+			remoteInfo = UpdateVersion;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5002,6 +5021,7 @@
 				3CD5B7840DCA668D006EE4D9 /* BuildAndDeploySymbols */,
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
+				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
@@ -5766,6 +5786,20 @@
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE Shared ToT FOR RELEASE BUILDS\n###\n\nSHARED_PATH=${SRCROOT}/../../Shared\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Shared with ToT ...\"\ncd ${SHARED_PATH}\n${SVN_PATH} update\necho \"... finished syncing Shared\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
+		3CE4E19A0ED4A6DE008DD114 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox SDK\"\n\n${SRCROOT}/../Tools/package-designkit\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			showEnvVarsInLog = 0;
+		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -6317,6 +6351,11 @@
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
 			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
+		};
+		3CE4E1A00ED4A6F3008DD114 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
+			targetProxy = 3CE4E19F0ED4A6F3008DD114 /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6936,6 +6975,28 @@
 			};
 			name = Debug;
 		};
+		3CE4E19C0ED4A6DE008DD114 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = PackageAndDeployDesignKit;
+			};
+			name = Debug;
+		};
+		3CE4E19D0ED4A6DE008DD114 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PackageAndDeployDesignKit;
+			};
+			name = Release;
+		};
+		3CE4E19E0ED4A6DE008DD114 /* ReleaseSymbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PackageAndDeployDesignKit;
+			};
+			name = ReleaseSymbols;
+		};
 		CE15C2BD0E75CA0F00755113 /* ReleaseSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7304,6 +7365,16 @@
 				3CE2B2B90D7F1DD900E2711E /* Debug */,
 				3CE2B2B80D7F1DD900E2711E /* Release */,
 				CE15C2C40E75CA0F00755113 /* ReleaseSymbols */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3CE4E1A10ED4A739008DD114 /* Build configuration list for PBXAggregateTarget "PackageAndDeployDesignKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CE4E19C0ED4A6DE008DD114 /* Debug */,
+				3CE4E19D0ED4A6DE008DD114 /* Release */,
+				3CE4E19E0ED4A6DE008DD114 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
