@@ -3,13 +3,11 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.5.2
+SANDVOX_VERSION = 1.5.3b1
 
 // the SLA variant to wrap around the .dmg [BETA,RELEASE]
 // Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
-PRODUCT_VARIANT = RELEASE
-
-
+PRODUCT_VARIANT = BETA
 
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2008-12-15 11:59:59 -0800\"'
@@ -26,5 +24,3 @@ IMEDIA_REVISION = 671
 
 // note:  RIGHT NOW WE HAVE BAD PROBLEMS RUNNING A RELEASE BUILD IF IT IS != OMNI_FORCE_ASSERTIONS
 OMNI_DEBUG_CURRENT_SETTING = OMNI_FORCE_ASSERTIONS
-
-

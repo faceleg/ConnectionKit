@@ -177,7 +177,7 @@
 				3CE4E19A0ED4A6DE008DD114 /* ShellScript */,
 			);
 			dependencies = (
-				3CE4E1A00ED4A6F3008DD114 /* PBXTargetDependency */,
+				3C3D54F50ED4D3C800EFC7ED /* PBXTargetDependency */,
 			);
 			name = PackageAndDeployDesignKit;
 			productName = PackageAndDeployDesignKit;
@@ -1070,6 +1070,13 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DownloadIndex;
 		};
+		3C3D54F40ED4D3C800EFC7ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
+			remoteInfo = UpdateVersion;
+		};
 		3C42DDAA0D64C8B3004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
@@ -1426,13 +1433,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E;
 			remoteInfo = "Shared-UpdateToT";
-		};
-		3CE4E19F0ED4A6F3008DD114 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			remoteInfo = UpdateVersion;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5797,7 +5797,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox SDK\"\n\n${SRCROOT}/../Tools/package-designkit\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Design Kit\"\n\n${SRCROOT}/../Tools/package-designkit\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
@@ -6197,6 +6197,11 @@
 			name = DownloadIndex;
 			targetProxy = 3C1D06CA0D5D67DA00782A95 /* PBXContainerItemProxy */;
 		};
+		3C3D54F50ED4D3C800EFC7ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
+			targetProxy = 3C3D54F40ED4D3C800EFC7ED /* PBXContainerItemProxy */;
+		};
 		3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SiteMapElement;
@@ -6351,11 +6356,6 @@
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
 			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
-		};
-		3CE4E1A00ED4A6F3008DD114 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3CE4E19F0ED4A6F3008DD114 /* PBXContainerItemProxy */;
 		};
 		CE2556D60D3432DA003A5B5E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6985,6 +6985,7 @@
 		};
 		3CE4E19D0ED4A6DE008DD114 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = PackageAndDeployDesignKit;
 			};
@@ -6992,6 +6993,7 @@
 		};
 		3CE4E19E0ED4A6DE008DD114 /* ReleaseSymbols */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = PackageAndDeployDesignKit;
 			};
