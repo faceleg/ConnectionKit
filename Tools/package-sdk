@@ -21,7 +21,7 @@ echo "APPNAME is ${APPNAME}"
 APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
 APPNAMELOWER=`echo "$APPNAMENOSPACES" | tr '[A-Z]' '[a-z]'`
 
-PBXCP="${SRCROOT}/../../../Shared/trunk/Tools/pbxcp"
+PBXCP="${SRCROOT}/../../Shared/Tools/pbxcp"
 
 PLUGINS_DIR="${SRCROOT}/../Plugins"
 XCODE_DIR="${SRCROOT}/../XCode"
@@ -310,8 +310,8 @@ DSA_FILE_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}-${SVN_VERSION}.dsa"
 
 # ------- DSA File Creation
 
-SIGN_UPDATE_PATH="${SRCROOT}/../../../Shared/trunk/Security/sign_update.rb"
-DSA_PRIV_PEM_PATH="${SRCROOT}/../../../Shared/trunk/Security/dsa_priv.pem"
+SIGN_UPDATE_PATH="${SRCROOT}/../../Shared/Security/sign_update.rb"
+DSA_PRIV_PEM_PATH="${SRCROOT}/../../Shared/Security/dsa_priv.pem"
 
 DSA=`ruby "${SIGN_UPDATE_PATH}" "${DISTRO_PATH}" "${DSA_PRIV_PEM_PATH}"`
 echo "$DSA" > $DSA_FILE_PATH

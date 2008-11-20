@@ -1,78 +1,133 @@
 #!/bin/bash
 
-#
-# created by TJT 2/25/2006
-#
+# we base the PackageAndDeployDesignKit target on Sandvox.xcconfig through the Xcode UI
+# this brings in SVN_VERSION and PRODUCT_VARIANT
 
-### CHANGE PROJECT_ROOT TO MATCH YOUR LOCAL CONFIGURATION ###
-KIT_ROOT=/Users/ttalbot/Code/sandvox/trunk/DesignKit
-SLA_FILE=${KIT_ROOT}/../Other/SLAs/SLA-DesignKit
+echo ""
+echo "Gathering resources for packaging Sandvox Design Kit ..."
+echo "SVN_VERSION is ${SVN_VERSION}"
 
-# the dmg names that we'll use
-DMG_TEMP_NAME="temp"
-DMG_FINAL_NAME="SandvoxDesignKit"
-VOLUME_NAME="SandvoxDesignKit"
+if [ "${SVN_VERSION}" == "" ]
+then
+	echo ""
+	echo "No SVN_VERSION. Cannot deploy. Exiting..."
+	exit 1
+fi
+
+# the script phase itself brings in APPNAME
+echo "APPNAME is ${APPNAME}"
+
+APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
+APPNAMELOWER=`echo "$APPNAMENOSPACES" | tr '[A-Z]' '[a-z]'`
+APPNAMEZIP="${APPNAMENOSPACES}.zip"
+
+PBXCP="${SRCROOT}/../../Shared/Tools/pbxcp"
+
+DESIGNKIT_DIR="${SRCROOT}/../Developer/${APPNAMENOSPACES}"
 
 # the directory we'll do our work in
-SCRATCH_DIR=/tmp/build-designkit-dmg
+SCRATCH_DIR="/private/tmp/build-${APPNAMELOWER}-dmg"
 
-if test -d ${KIT_ROOT}
+if test -d "${SCRATCH_DIR}"
 then
-    if test -d ${SCRATCH_DIR}
-    then
-        echo "Removing scratch directory..."
-        rm -rf ${SCRATCH_DIR}
-    fi
-    mkdir -p ${SCRATCH_DIR}
-
-    echo "Packaging Design Kit..."
-    pushd ${SCRATCH_DIR}
-
-# create an initial disk image (2 MB)
-    echo "Creating initial disk image..."
-    hdiutil create -size 2m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg
-    
-# mount the dmg
-    echo "Mounting initial disk image..."
-    hdiutil attach ${DMG_TEMP_NAME}.dmg
-
-# copy DesignKit to dmg
-    echo "Copying ${KIT_ROOT} to disk image..."
-    /System/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp \
-        -exclude .DS_Store \
-        -exclude CVS \
-        -exclude .svn \
-        -resolve-src-symlinks \
-        "${KIT_ROOT}" "/Volumes/${VOLUME_NAME}"
-
-# obtain device information
-    echo "Gathering device information..."
-    DEVS=$(hdiutil attach ${DMG_TEMP_NAME}.dmg | cut -f 1)
-    DEV=$(echo $DEVS | cut -f 1 -d ' ')
-
-# unmount the dmg
-    echo "Unmounting initial disk image..."
-    hdiutil detach $DEV
-
-# compress and convert to read-only
-# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1
-    echo "Converting disk image to read-only..."
-    hdiutil convert ${DMG_TEMP_NAME}.dmg -format UDZO -o ${DMG_FINAL_NAME}.dmg
-    rm ${DMG_TEMP_NAME}.dmg
-
-# install license agreement
-    echo "Installing License Agreement..."
-    hdiutil unflatten ${DMG_FINAL_NAME}.dmg
-    DeRez ${SLA_FILE} > sla.r
-    Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg
-    hdiutil flatten ${DMG_FINAL_NAME}.dmg
-    rm sla.r
-
-    popd
-    echo "Packaging Complete!"
-    echo "Your Sandvox Design Kit is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
-else
-    echo "Did not find Design Kit! ${KIT_ROOT}"
-    echo "Check paths."
-    exit 0
+	echo "Removing old scratch directory..."
+	rm -rf "${SCRATCH_DIR}"
 fi
+mkdir -p "${SCRATCH_DIR}"
+
+echo "Packaging ${APPNAME}..."
+
+# copy DESIGNKIT_DIR to /tmp using pbxcp to get rid of junk
+echo "... copying ${DESIGNKIT_DIR} to ${SCRATCH_DIR}"
+${PBXCP} \
+	-exclude .DS_Store \
+	-exclude CVS \
+	-exclude .svn \
+	-exclude *.pbxuser \
+	-exclude *.perspective* \
+	-exclude BUNDLED_SDK \
+	-resolve-src-symlinks \
+	"${DESIGNKIT_DIR}" "${SCRATCH_DIR}"
+
+pushd "${SCRATCH_DIR}"
+
+# add Mac update check .url
+UPDATE_URL_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}/Check for Newer Version.url"
+
+echo '[InternetShortcut]' > "${UPDATE_URL_PATH}"
+echo "URL=http://launch.karelia.com/changelog.php?rn=1&version=${SVN_VERSION}&product=6&check=1" >> "${UPDATE_URL_PATH}"
+echo '' >> "${UPDATE_URL_PATH}"
+
+# zip up DESIGNKIT_DIR into /tmp
+echo "... zipping ${APPNAMENOSPACES}"
+zip -r ${APPNAMENOSPACES} ${APPNAMENOSPACES}
+
+popd
+
+echo "Packaging Complete!"
+echo ""
+echo "Your ${APPNAME} is waiting for you at ${SCRATCH_DIR}/${APPNAMEZIP}"
+echo ""
+
+
+echo "Deploying..."
+echo ""
+
+# upload it to ...domains/designerskit.karelia.com/DesignKit.zip
+
+SERVER_PATH="/home/19590/domains/designerskit.karelia.com"
+BACKUP_SERVER_PATH="/home/kareliasw/dh.karelia.com"
+
+UPLOAD_PATH="${SERVER_PATH}/${APPNAMEZIP}"
+BACKUP_UPLOAD_PATH="${BACKUP_SERVER_PATH}/${APPNAMEZIP}"
+
+# ------- Server Info
+
+# SCP assumes public key login through Karelia's (mt) account
+SCP_LOGIN="serveradmin%karelia.com@s19590.gridserver.com"
+BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
+
+DISTRO_PATH="${SCRATCH_DIR}/${APPNAMEZIP}"
+EMAIL_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}-msg.txt"
+
+# if we don't have a distro ready, exit
+if test -r ${DISTRO_PATH}
+then
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
+	echo ""
+	echo "Uploading ${DISTRO_PATH} ..."
+	echo "... to ${BACKUP_UPLOAD_PATH}"
+	scp "${DISTRO_PATH}" "${BACKUP_SCP_LOGIN}:${BACKUP_UPLOAD_PATH}"
+else
+	echo ""
+	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
+	exit 1
+fi
+
+# email engineering
+echo ""
+echo "Emailing URL to engineering ..."
+
+echo "" > $EMAIL_PATH
+echo "Greetings!" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "A new ${APPNAME} is now available at:" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+###echo "<http://designerskit.karelia.com/${APPNAMEZIP}>" >> $EMAIL_PATH
+echo "<https://ssl.karelia.com/designkit.html>" >> $EMAIL_PATH
+
+echo "" >> $EMAIL_PATH
+echo "If requested, please download and verify this release." >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+echo "Thanks!" >> $EMAIL_PATH
+echo "" >> $EMAIL_PATH
+
+mail -s "New ${APPNAME} Now Available" engineering@karelia.com < ${EMAIL_PATH}
+
+echo ""
+echo "${APPNAME} deployment completed."
+
+exit 0
