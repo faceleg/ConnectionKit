@@ -10,7 +10,7 @@
 #import <Connection/Connection.h>
 #import "KSSingletonWindowController.h"
 
-@class KTHostProperties, AbstractConnection;
+@class KTHostProperties;
 
 enum { DOT_MAC = 0, UNUSED_NOW, OTHER_ISP };
 enum { WEBDAV = 0, FTP, DOTMAC };
@@ -103,7 +103,7 @@ NO LONGER	save
 	IBOutlet NSTextView *oIntroductionTextView;
 	IBOutlet NSTextView *oSummaryTextView;
 
-	AbstractConnection *myTestConnection;
+	CKAbstractConnection *myTestConnection;
 	NSColor *myConnectionStatusColor;
 	NSMutableArray *myTrail;
 	NSMutableData *myConnectionData;
@@ -147,8 +147,8 @@ NO LONGER	save
 - (NSURLConnection *)downloadTestConnection;
 - (void)setDownloadTestConnection:(NSURLConnection *)aDownloadTestConnection;
 
-- (AbstractConnection *)testConnection;
-- (void)setTestConnection:(AbstractConnection *)aTestConnection;
+- (CKAbstractConnection *)testConnection;
+- (void)setTestConnection:(CKAbstractConnection *)aTestConnection;
 
 - (int)testState;
 - (void)setTestState:(int)aTestState;

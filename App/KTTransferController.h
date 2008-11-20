@@ -19,7 +19,7 @@
 	KTDocumentInfo	*myDocumentInfo;
     BOOL            myOnlyPublishChanges;
     
-	id <AbstractConnectionProtocol>	myConnection;
+	id <CKConnection>	myConnection;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
@@ -28,7 +28,7 @@
 - (KTDocumentInfo *)documentInfo;
 - (BOOL)onlyPublishChanges;
 
-- (id <AbstractConnectionProtocol>)connection;
+- (id <CKConnection>)connection;
 
 // Uploading
 - (void)startUploading;

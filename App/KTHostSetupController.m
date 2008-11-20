@@ -47,7 +47,7 @@ TO DO:
 #import "NTSUTaskController.h"
 
 #import <AddressBook/AddressBook.h>
-#import <Connection/Connection.h> // for AbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
+#import <Connection/Connection.h> // for CKAbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
 
 #import <Security/Security.h>
 #import <sys/sysctl.h>
@@ -354,7 +354,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 
 // delegate method for the open panel
-- (void)connectionOpenPanel:(ConnectionOpenPanel *)panel didSendBadPasswordToHost:(NSString *)host
+- (void)connectionOpenPanel:(CKConnectionOpenPanel *)panel didSendBadPasswordToHost:(NSString *)host
 {
 	[self setValue:[NSNumber numberWithBool:YES] forKey:@"browseHasBadPassword"];
 }
@@ -393,12 +393,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	
 	// show the ConnectionOpenPanel
 	NSError *err = nil;
-	id <AbstractConnectionProtocol>con = [AbstractConnection connectionWithName:[self valueForKey:@"protocol"]
-																		   host:[self valueForKey:@"hostName"]
-																		   port:[[self valueForKey:@"port"] description]
-																	   username:username
-																	   password:password
-																		  error:&err];
+	id <CKConnection>con = [CKAbstractConnection connectionWithName:[self valueForKey:@"protocol"]
+                                                               host:[self valueForKey:@"hostName"]
+                                                               port:[[self valueForKey:@"port"] description]
+                                                           username:username
+                                                           password:password
+                                                              error:&err];
 	if (!con)
 	{
 		if (err)
@@ -408,7 +408,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		return;
 	}
 	[con setName:@"Browse Host"];
-	ConnectionOpenPanel *choose = [[ConnectionOpenPanel connectionOpenPanel:con] retain];
+	CKConnectionOpenPanel *choose = [[CKConnectionOpenPanel connectionOpenPanel:con] retain];
 	[choose setCanChooseDirectories:YES];
 	[choose setCanChooseFiles:NO];
 	[choose setCanCreateDirectories:NO];	 // Disable creating directories since that confuses people with doc root.
@@ -427,7 +427,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	
 }
 
-- (void)browseHostPathDidEnd:(ConnectionOpenPanel *)choose returnCode:(int)returnCode contextInfo:(id)info
+- (void)browseHostPathDidEnd:(CKConnectionOpenPanel *)choose returnCode:(int)returnCode contextInfo:(id)info
 {
 	if (returnCode == NSOKButton)
 	{
@@ -927,13 +927,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 		
 	NSError *err = nil;
-	id <AbstractConnectionProtocol> connection
-		= [AbstractConnection connectionWithName:[[self properties] valueForKey:@"protocol"]
-											host:[[self properties] valueForKey:@"hostName"]
-											port:[[[self properties] valueForKey:@"port"] description]
-										username:[[self properties] valueForKey:@"userName"]
-										password:password
-										   error:&err];
+	id <CKConnection> connection = [CKAbstractConnection connectionWithName:[[self properties] valueForKey:@"protocol"]
+                                                                       host:[[self properties] valueForKey:@"hostName"]
+                                                                       port:[[[self properties] valueForKey:@"port"] description]
+                                                                   username:[[self properties] valueForKey:@"userName"]
+                                                                   password:password
+                                                                      error:&err];
 	if (!connection)
 	{
 		if (err)
@@ -962,7 +961,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[myTestConnection connect];
 }
 
-- (BOOL)connection:(id <AbstractConnectionProtocol>)con authorizeConnectionToHost:(NSString *)host message:(NSString *)message
+- (BOOL)connection:(id <CKConnection>)con authorizeConnectionToHost:(NSString *)host message:(NSString *)message
 {
 	if (NSRunAlertPanel(NSLocalizedString(@"Authorize Connection?", "connection delegate"), 
 						message, 
@@ -998,7 +997,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	We've connected.  Now try to create and upload a test file.
 */
-- (void)connection:(id <AbstractConnectionProtocol>)con didConnectToHost:(NSString *)host
+- (void)connection:(id <CKConnection>)con didConnectToHost:(NSString *)host
 {
 //	NSLog(@"Cancelling timeout test, didConnectToHost");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1059,7 +1058,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 /*	Called when the current directory changes.
  *	This can be when first connecting, or after a manual dir change.
  */
-- (void)connection:(id <AbstractConnectionProtocol>)con didChangeToDirectory:(NSString *)dirPath
+- (void)connection:(id <CKConnection>)con didChangeToDirectory:(NSString *)dirPath
 {
 	LOG((@"= %@%@", NSStringFromSelector(_cmd), dirPath));
 	
@@ -1081,7 +1080,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	We've uploaded.  Now try to download.
 */
-- (void)connection:(id <AbstractConnectionProtocol>)con uploadDidFinish:(NSString *)remotePath
+- (void)connection:(id <CKConnection>)con uploadDidFinish:(NSString *)remotePath
 {
 //	NSLog(@"Cancelling timeout test, uploadDidFinish");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1133,7 +1132,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to biophony.
 */
-- (void)connection:(id <AbstractConnectionProtocol>)con didDeleteFile:(NSString *)path
+- (void)connection:(id <CKConnection>)con didDeleteFile:(NSString *)path
 {
 //	NSLog(@"Cancelling timeout test, didDeleteFile");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1177,7 +1176,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setConnectionStatus:NSLocalizedString(@"Unable to download the test file from the server. You may have your host's URL Format misconfigured.", @"status message for test connection")];
 }
 
-- (void)connection:(id <AbstractConnectionProtocol>)con didReceiveError:(NSError *)error
+- (void)connection:(id <CKConnection>)con didReceiveError:(NSError *)error
 {
 //	NSLog(@"Cancelling timeout test, didReceiveError");
 	LOG((@"= %@%@", NSStringFromSelector(_cmd), error));
@@ -1217,7 +1216,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	We've disconnected.  No need for action here.
 */
-- (void)connection:(id <AbstractConnectionProtocol>)con didDisconnectFromHost:(NSString *)host
+- (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host
 {
 	NSLog(@"= %@%@", NSStringFromSelector(_cmd), host);
 	if (myDidSuccessfullyDownloadTestFile)
@@ -1235,7 +1234,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self disconnectConnection];
 }
 
-- (void)connectionDidSendBadPassword:(id <AbstractConnectionProtocol>)con
+- (void)connectionDidSendBadPassword:(id <CKConnection>)con
 {
 //	NSLog(@"Cancelling timeout test, connectionDidSendBadPassword");
 	[self disconnectConnection];
@@ -1492,11 +1491,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
     myTestState = aTestState;
 }
 
-- (AbstractConnection *)testConnection
+- (CKAbstractConnection *)testConnection
 {
     return myTestConnection;
 }
-- (void)setTestConnection:(AbstractConnection *)aTestConnection
+- (void)setTestConnection:(CKAbstractConnection *)aTestConnection
 {
     [aTestConnection retain];
     [myTestConnection autorelease];			// let test connection finish its business

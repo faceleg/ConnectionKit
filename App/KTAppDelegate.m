@@ -518,8 +518,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// debugging domains -- we have to set default values to get them to show up in the table.
 	NSArray *domains = [NSArray arrayWithObjects:
-		ControllerDomain, TransportDomain, StateMachineDomain, ParsingDomain, ProtocolDomain, ConnectionDomain, /* ThreadingDomain, */
-		/* StreamDomain, */ InputStreamDomain, OutputStreamDomain, /* SSLDomain, */ QueueDomain, KTMediaLogDomain, nil];
+		ControllerDomain, CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
+		/* StreamDomain, */ CKInputStreamDomain, CKOutputStreamDomain, /* SSLDomain, */ CKQueueDomain, KTMediaLogDomain, nil];
 	
 	NSEnumerator *theEnum = [domains objectEnumerator];
 	NSString *aDomain;

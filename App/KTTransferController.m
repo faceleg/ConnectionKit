@@ -69,7 +69,7 @@
 
 - (BOOL)onlyPublishChanges { return myOnlyPublishChanges; }
 
-- (id <AbstractConnectionProtocol>)connection
+- (id <CKConnection>)connection
 {
 	return myConnection;
 }

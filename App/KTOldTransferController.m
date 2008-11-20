@@ -94,7 +94,7 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import <Connection/AbstractConnection.h>
+#import <Connection/CKAbstractConnection.h>
 #import <Connection/FileConnection.h>
 #import <Connection/EMKeychainItem.h>
 #import <Connection/EMKeychainProxy.h>
@@ -288,7 +288,7 @@ static NSArray *sReservedNames = nil;
 }
 
 // Since we lazily instantiate, this is really just used internally.
-- (void)setConnection:(id <AbstractConnectionProtocol>)connection
+- (void)setConnection:(id <CKConnection>)connection
 {
 	if (connection != myConnection)
 	{
@@ -302,7 +302,7 @@ static NSArray *sReservedNames = nil;
 
 /*!	Lazily instantiate the connection object, so we don't force a keychain access until it's needed
 */
-- (id <AbstractConnectionProtocol>)connection
+- (id <CKConnection>)connection
 {
 	@synchronized ( myConnection )
 	{
@@ -360,7 +360,7 @@ static NSArray *sReservedNames = nil;
 				}
 				else
 				{
-					myConnection = [[AbstractConnection connectionWithName:protocol
+					myConnection = [[CKAbstractConnection connectionWithName:protocol
 																	  host:hostName
 																	  port:port
 																  username:userName
@@ -854,7 +854,7 @@ static NSArray *sReservedNames = nil;
 		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 			
 		//force the connection creation on  the main thread
-		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
+		[(CKAbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		mySuspended = YES;
 
 		myKeepPublishing = YES;
@@ -1036,7 +1036,7 @@ if ([self where] == kGeneratingRemoteExport) {
 		[[[KTInfoWindowController sharedControllerWithoutLoading] window] orderOut:self];
 		
 
-		[(AbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
+		[(CKAbstractConnection *)[self connection] setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 		
 		mySuspended = YES;
 		
@@ -1439,7 +1439,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	return [NSHelpManager gotoHelpAnchor:helpString];
 }
 
-- (id <AbstractConnectionProtocol>)transferControllerNeedsConnection:(CKTransferController *)controller createIfNeeded:(BOOL)aCreate
+- (id <CKConnection>)transferControllerNeedsConnection:(CKTransferController *)controller createIfNeeded:(BOOL)aCreate
 {
 	if (aCreate)
 	{

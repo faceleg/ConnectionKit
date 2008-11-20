@@ -13,14 +13,14 @@
 
 @class KTDocument;
 
-@protocol GrowlApplicationBridgeDelegate, AbstractConnectionProtocol;
+@protocol GrowlApplicationBridgeDelegate, CKConnection;
 
 
 @interface KTTransferController : NSWindowController <GrowlApplicationBridgeDelegate>
 {
 	KTDocument *myAssociatedDocumentWeakRef;	// don't use document method; that implies a window controller - NSDocument relationship.
 	
-	id <AbstractConnectionProtocol> myConnection;
+	id <CKConnection> myConnection;
 	CKTransferController *myController;
 	
 	NSString *myDocumentRoot;
@@ -76,8 +76,8 @@
 - (NSString *)storagePath;
 //- (void)setStoragePath:(NSString *)aStoragePath;
 
-- (void)setConnection:(id <AbstractConnectionProtocol>)connection;
-- (id <AbstractConnectionProtocol>)connection;
+- (void)setConnection:(id <CKConnection>)connection;
+- (id <CKConnection>)connection;
 - (void)terminateConnection;
 
 - (IBAction)finishTransferAndCloseSheet:(id)sender;
