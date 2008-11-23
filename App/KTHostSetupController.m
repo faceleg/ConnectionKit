@@ -395,7 +395,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSError *err = nil;
 	id <CKConnection>con = [CKAbstractConnection connectionWithName:[self valueForKey:@"protocol"]
                                                                host:[self valueForKey:@"hostName"]
-                                                               port:[[self valueForKey:@"port"] description]
+                                                               port:[self valueForKey:@"port"]
                                                            username:username
                                                            password:password
                                                               error:&err];
@@ -929,7 +929,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSError *err = nil;
 	id <CKConnection> connection = [CKAbstractConnection connectionWithName:[[self properties] valueForKey:@"protocol"]
                                                                        host:[[self properties] valueForKey:@"hostName"]
-                                                                       port:[[[self properties] valueForKey:@"port"] description]
+                                                                       port:[[self properties] valueForKey:@"port"]
                                                                    username:[[self properties] valueForKey:@"userName"]
                                                                    password:password
                                                                       error:&err];
