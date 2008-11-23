@@ -997,7 +997,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	We've connected.  Now try to create and upload a test file.
 */
-- (void)connection:(id <CKConnection>)con didConnectToHost:(NSString *)host
+- (void)connection:(id <CKConnection>)con didConnectToHost:(NSString *)host error:(NSError *)error;
 {
 //	NSLog(@"Cancelling timeout test, didConnectToHost");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1058,7 +1058,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 /*	Called when the current directory changes.
  *	This can be when first connecting, or after a manual dir change.
  */
-- (void)connection:(id <CKConnection>)con didChangeToDirectory:(NSString *)dirPath
+- (void)connection:(id <CKConnection>)con didChangeToDirectory:(NSString *)dirPath error:(NSError *)error
 {
 	LOG((@"= %@%@", NSStringFromSelector(_cmd), dirPath));
 	
@@ -1080,7 +1080,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	We've uploaded.  Now try to download.
 */
-- (void)connection:(id <CKConnection>)con uploadDidFinish:(NSString *)remotePath
+- (void)connection:(id <CKConnection>)con uploadDidFinish:(NSString *)remotePath error:(NSError *)error
 {
 //	NSLog(@"Cancelling timeout test, uploadDidFinish");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1132,7 +1132,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 /*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to biophony.
 */
-- (void)connection:(id <CKConnection>)con didDeleteFile:(NSString *)path
+- (void)connection:(id <CKConnection>)con didDeleteFile:(NSString *)path error:(NSError *)error
 {
 //	NSLog(@"Cancelling timeout test, didDeleteFile");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
