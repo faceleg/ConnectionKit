@@ -92,12 +92,12 @@ static NSArray *sAltStrings = nil;
 
 - (NSString *) badgePreludeString
 {
-	return LocalizedStringInThisBundle(@"Created with", @"string that goes before badgeLinkString, for badge");
+	return LocalizedStringInThisBundle(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
 }
 
 - (NSString *) badgeLinkString
 {
-	return LocalizedStringInThisBundle(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created by' regardless of language.");
+	return LocalizedStringInThisBundle(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created with' regardless of language.");
 }
 
 
@@ -132,7 +132,7 @@ static NSArray *sAltStrings = nil;
 	if (nil == myBadgeAltString)
 	{
 		NSString *blurb = [self generateBlurbVariant:0];
-		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created by Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
+		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
 		[self setBadgeAltString:altString];
 	}
 	return myBadgeAltString;		// don't want to calculate all the time.  Same for a document?
