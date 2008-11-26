@@ -19,9 +19,9 @@
 
 
 @interface KTHTMLParser (IndexPrivate)
-- (NSString *)summaryForPage:(KTPage *)page;
-- (NSString *)summaryForCollection:(KTPage *)page;
-- (NSString *)summaryForContentOfPage:(KTPage *)page;
+- (NSString *)summaryForPage:(KTPage *)page truncation:(unsigned)truncation;
+- (NSString *)summaryForCollection:(KTPage *)page truncation:(unsigned)truncation;
+- (NSString *)summaryForContentOfPage:(KTPage *)page truncation:(unsigned)truncation;
 @end
 
 
@@ -74,7 +74,8 @@
 	if (parameters && ([parameters count] == 2 || [parameters count] == 3))
 	{
 		KTPage *page = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
-		result = [self summaryForPage:page];
+        unsigned truncation = [[[self cache] valueForKeyPath:[parameters objectAtIndex:1]] unsignedIntValue];
+        result = [self summaryForPage:page truncation:truncation];
 		
 		// The template can specify that the HTML should be escaped suitably for an RSS feed
 		if ([parameters count] == 3)
@@ -82,33 +83,39 @@
 			result = [result stringByEscapingHTMLEntities];
 		}
 	}
+	else
+	{
+		NSLog(@"target: usage [[summary page truncation (escapeHTML)]]");
+		
+	}
+	
 	
 	return result;
 }
 
 /*	Generates the summary for the page taking into account its type
  */
-- (NSString *)summaryForPage:(KTPage *)page
+- (NSString *)summaryForPage:(KTPage *)page truncation:(unsigned)truncation
 {
 	if ([page isCollection])
 	{
-		return [self summaryForCollection:page];
+		return [self summaryForCollection:page truncation:truncation];
 	}
 	else
 	{
-		return [self summaryForContentOfPage:page];
+		return [self summaryForContentOfPage:page truncation:truncation];
 	}
 }
 
 /*	Collections are a bit trickier to handle than pages. -summaryOfPage will call through to here automatically.
  */
-- (NSString *)summaryForCollection:(KTPage *)page
+- (NSString *)summaryForCollection:(KTPage *)page truncation:(unsigned)truncation
 {
 	NSString *result = nil;
 	switch ([page collectionSummaryType])
 	{
 		case KTSummarizeAutomatic:
-			result = [self summaryForContentOfPage:page];
+			result = [self summaryForContentOfPage:page truncation:truncation];
 			break;
 		
 		case KTSummarizeRecentList:
@@ -122,7 +129,7 @@
 		{
 			result = @"";
 			KTPage *firstChild = [[page sortedChildren] firstObjectKS];
-			if (firstChild) result = [self summaryForContentOfPage:firstChild];
+			if (firstChild) result = [self summaryForContentOfPage:firstChild truncation:truncation];
 			break;
 		}
 		
@@ -131,7 +138,7 @@
 			result = @"";
 			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
 			KTPage *recentChild = [children firstObjectKS];
-			if (recentChild) result = [self summaryForContentOfPage:recentChild];
+			if (recentChild) result = [self summaryForContentOfPage:recentChild truncation:truncation];
 			break;
 		}
 		
@@ -145,12 +152,13 @@
 /*	Generates a summary of a page WITHOUT considering its type.
  *	Support method used by -summaryOfPage and -summaryOfCollection:
  */
-- (NSString *)summaryForContentOfPage:(KTPage *)page
+- (NSString *)summaryForContentOfPage:(KTPage *)page truncation:(unsigned)truncation
 {
 	// Create a text block object to handle truncation etc.
 	KTSummaryWebViewTextBlock *textBlock = [[KTSummaryWebViewTextBlock alloc] initWithParser:self];
 	[textBlock setHTMLSourceObject:page];
 	[textBlock setHTMLSourceKeyPath:[page summaryHTMLKeyPath]];
+    [textBlock setTruncateCharacters:truncation];
 	
 	NSString *result = [textBlock innerHTML];
 	

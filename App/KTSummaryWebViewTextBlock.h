@@ -12,7 +12,12 @@
 
 @interface KTSummaryWebViewTextBlock : KTHTMLTextBlock
 {
+    unsigned    myTruncateCharacters;
 }
+
+// Accessors
+- (unsigned)truncateCharacters;
+- (void)setTruncateCharacters:(unsigned)truncation;
 
 - (NSString *)innerEditingHTML;
 

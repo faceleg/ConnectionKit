@@ -30,6 +30,10 @@
 
 - (KTPage *)page { return [self HTMLSourceObject]; }
 
+- (unsigned)truncateCharacters { return myTruncateCharacters; }
+
+- (void)setTruncateCharacters:(unsigned)truncation { myTruncateCharacters = truncation; }
+
 #pragma mark -
 
 /*	When the user starts editing a truncated piece of text, we need to, um, untruncate it
@@ -133,7 +137,7 @@
 	}
 	else
 	{
-		result = [page summaryHTMLWithTruncation:[[page parent] integerForKey:@"collectionTruncateCharacters"]];
+		result = [page summaryHTMLWithTruncation:[self truncateCharacters]];
 	}
 	
 	if (!result) result = @"";

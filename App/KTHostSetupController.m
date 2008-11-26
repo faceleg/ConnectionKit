@@ -961,6 +961,30 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[myTestConnection connect];
 }
 
+
+/*  Authenticates the connection from the user's entered credentials
+ */
+- (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    NSString *password = nil;
+	
+	BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
+	
+	if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
+	{
+		password = [self password];
+	}
+    
+	NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
+                                                               password:password
+                                                            persistence:NSURLCredentialPersistenceNone];
+    
+    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+    [credential release];
+}
+
+
+// TODOL: Remove this method
 - (BOOL)connection:(id <CKConnection>)con authorizeConnectionToHost:(NSString *)host message:(NSString *)message
 {
 	if (NSRunAlertPanel(NSLocalizedString(@"Authorize Connection?", "connection delegate"), 
