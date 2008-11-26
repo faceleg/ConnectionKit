@@ -125,6 +125,23 @@
 }
 
 #pragma mark -
+#pragma mark HTML
+
+/*  Supplements the -maxItems property stored in our element by returning 0 if the user has disabled the maximum
+ */
+- (unsigned)maxItems
+{
+    unsigned result = 0;
+    
+    if ([[self delegateOwner] boolForKey:@"enableMaxItems"])
+    {
+        result = [[self delegateOwner] integerForKey:@"maxItems"];
+    }
+    
+    return result;
+}
+
+#pragma mark -
 #pragma mark Link Source Delegate
 
 - (IBAction)clear:(id)sender
