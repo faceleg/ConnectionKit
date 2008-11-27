@@ -13,6 +13,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTDocumentInfo.h"
 #import "KTMediaFileUpload.h"
+#import "KTMediaFile.h"
 #import "KTPage.h"
 
 #import "NSObject+Karelia.h"
@@ -28,6 +29,7 @@
 
 @interface KTTransferController (Private)
 - (void)uploadPage:(KTAbstractPage *)page;
+- (void)uploadMedia:(KTMediaFileUpload *)media;
 @end
 
 
@@ -46,6 +48,8 @@
 	{
 		myDocumentInfo = [aDocumentInfo retain];
         myOnlyPublishChanges = publishChanges;
+        
+        myUploadedMedia = [[NSMutableSet alloc] init];
 	}
 	
 	return self;
@@ -55,6 +59,7 @@
 {
 	[myDocumentInfo release];
 	OBASSERT(!myConnection);	// TODO: Gracefully close connection
+    [myUploadedMedia release];
 	
 	[super dealloc];
 }
@@ -72,6 +77,15 @@
 - (id <CKConnection>)connection
 {
 	return myConnection;
+}
+
+/*  The root directory that all content goes into
+ */
+- (NSString *)storagePath   // TODO: Can anyone think of a better name?
+{
+	KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+    NSString *result = [[hostProperties valueForKey:@"docRoot"] stringByAppendingPathComponent:[hostProperties valueForKey:@"KTHostProperties"]];
+    return result;
 }
 
 #pragma mark -
@@ -142,7 +156,7 @@
 			KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
 			if (upload)
 			{
-				[self addParsedMediaFileUpload:upload];
+				[self uploadMedia:upload];
 			}
 		}
 		
@@ -197,6 +211,38 @@
 	}
 }
 
+#pragma mark media
+
+/*  Adds the media file to the upload queue (if it's not already in it)
+ */
+- (void)uploadMedia:(KTMediaFileUpload *)media
+{
+    if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    {
+        NSString *sourcePath = [media valueForKeyPath:@"file.currentPath"];
+        NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+        if (sourcePath && uploadPath)
+        {
+            [[self connection] uploadFile:sourcePath toFile:uploadPath];
+            // TODO: Create directories, set permissions etc.
+            
+            
+            // Record that we're uploading the object
+            [myUploadedMedia addObject:media];
+        }
+    }
+}
+
+/*  Upload the media if needed
+ */
+- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+{
+   if (![self onlyPublishChanges] || [upload boolForKey:@"isStale"])
+   {
+       [self uploadMedia:upload];
+   }
+}
+
 #pragma mark -
 #pragma mark Old API
 
@@ -221,13 +267,6 @@
 	ISDEPRECATEDAPI;
 	RAISE_EXCEPTION(@"Old API Exception", @"you need to intercept this and rewrite it", nil);
 }
-- (NSString *)storagePath
-{
-	ISDEPRECATEDAPI;
-	RAISE_EXCEPTION(@"Old API Exception", @"you need to intercept this and rewrite it", nil);
-	return nil;
-}
-
 - (void)terminateConnection
 {
 	ISDEPRECATEDAPI;

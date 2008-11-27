@@ -20,6 +20,8 @@
     BOOL            myOnlyPublishChanges;
     
 	id <CKConnection>	myConnection;
+    
+    NSMutableSet    *myUploadedMedia;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
@@ -33,6 +35,7 @@
 // Uploading
 - (void)startUploading;
 
+- (NSString *)storagePath;
 
 
 // old API
@@ -40,7 +43,6 @@
 //- (void)uploadStaleAssets;
 //- (void)uploadEverything;
 //- (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath;
-//- (NSString *)storagePath;
 //- (void)terminateConnection;
 
 @end
