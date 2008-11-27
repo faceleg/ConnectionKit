@@ -13,17 +13,22 @@
 @class KTPage;
 
 @interface KTDocWebViewController (Private)
+
+- (void)setWebViewLoading:(BOOL)isLoading;
+
 - (BOOL)hideWebView;
 
-- (void)loadPageIntoSourceCodeTextView:(KTPage *)page;
 
 // Editing
 - (void)setCurrentTextEditingBlock:(KTHTMLTextBlock *)textBlock;
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
+
 @end
 
 
 @interface KTDocWebViewController (LoadingPrivate)
 - (void)init_webViewLoading;
 - (void)dealloc_webViewLoading;
+
+- (void)loadPageIntoSourceCodeTextView:(KTPage *)page;
 @end

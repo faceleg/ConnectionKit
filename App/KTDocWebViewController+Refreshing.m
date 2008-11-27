@@ -409,6 +409,9 @@
 	NSURL *pageURL = [page URL];
     if (![pageURL scheme] || ![pageURL host]) pageURL = nil;
     
+    // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse the request.
+    [self setWebViewLoading:YES];
+    
 	// Load the HTML into the webview
     [[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:pageURL];
 }
