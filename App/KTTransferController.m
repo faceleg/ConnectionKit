@@ -22,6 +22,7 @@
 
 #import "KSPlugin.h"
 #import "KSThreadProxy.h"
+#import "KSUtilities.h"
 
 #import "Debug.h"
 #import "Registration.h"
@@ -74,9 +75,96 @@
 
 - (BOOL)onlyPublishChanges { return myOnlyPublishChanges; }
 
+#pragma mark -
+#pragma mark Connection
+
+/*  Simple accessor for the connection. If we haven't started uploading yet, or have finished, it returns nil.
+ *  The -startUploading method is responsible for creating and storing the connection.
+ */
 - (id <CKConnection>)connection
 {
 	return myConnection;
+}
+
+- (void)connect
+{
+    KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+    
+    NSString *password = nil;
+    NSString *hostName = [hostProperties valueForKey:@"hostName"];
+    NSString *userName = [hostProperties valueForKey:@"userName"];
+    NSString *protocol = [hostProperties valueForKey:@"protocol"];
+    
+    NSNumber *port = [hostProperties valueForKey:@"port"];
+    
+    NSError *err = nil;
+    
+    if (hostName &&
+        userName &&
+        ![userName isEqualToString:@""] &&
+        ![hostName isEqualToString:@""] &&
+        !([hostName hasSuffix:@"idisk.mac.com"] && [protocol isEqualToString:@".Mac"]) &&   // WebDAV to idisk should take this branch and get password
+        !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
+    {
+        [[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
+                                                                                               withUsername:userName 
+                                                                                                       path:nil 
+                                                                                                       port:[port intValue] 
+                                                                                                   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+        [[EMKeychainProxy sharedProxy] setLogsErrors:NO];
+        if ( nil == keychainItem )
+        {
+            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);
+        }
+        
+        password = [keychainItem password];
+    }
+    
+    myConnection = [[CKAbstractConnection connectionWithName:protocol
+                                                        host:hostName
+                                                        port:port
+                                                    username:userName
+                                                    password:password
+                                                       error:&err] retain];
+    
+    [myConnection setDelegate:self];
+    [myConnection connect];
+}
+
+/*  Authenticate the connection
+ *  // TODO: Possibly we don't need this method and could eventually rely on just the initial authentication credentials
+ */
+- (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+    
+    NSString *password = nil;
+    NSString *userName = [hostProperties valueForKey:@"userName"];
+    NSString *protocol = [hostProperties valueForKey:@"protocol"];
+
+        
+    if (userName && ![userName isEqualToString:@""])
+    {
+        [[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:[connection host]
+                                                                                               withUsername:userName 
+                                                                                                       path:nil 
+                                                                                                       port:[connection port] 
+                                                                                                   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
+        [[EMKeychainProxy sharedProxy] setLogsErrors:NO];
+        if ( nil == keychainItem )
+        {
+            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", [connection host], userName);
+        }
+        
+        password = [keychainItem password];
+    }
+    
+    
+    NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:userName password:password persistence:NSURLCredentialPersistenceNone];
+    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+    [credential release];
 }
 
 /*  The root directory that all content goes into
@@ -93,9 +181,10 @@
 
 - (void)startUploading
 {
-	// TODO: Create connection
-	
-	
+	// Create connection
+    [self connect];
+    
+    
 	// In demo mode, only publish the home page
 	NSArray *pagesToParse;
 	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
