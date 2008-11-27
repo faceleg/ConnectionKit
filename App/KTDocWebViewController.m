@@ -813,12 +813,23 @@
         int navigationType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
         switch (navigationType)
         {
-            case WebNavigationTypeOther:
             case WebNavigationTypeFormSubmitted:
             case WebNavigationTypeBackForward:
             case WebNavigationTypeReload:
             case WebNavigationTypeFormResubmitted:
                 [listener use];
+                break;
+            
+            case WebNavigationTypeOther:
+                // Only allow the request if we're loading a page. BUGSID:26693 this stops meta tags refreshing the page
+                if ([self isWebViewLoading])
+                {
+                    [listener use];
+                }
+                else
+                {
+                    [listener ignore];
+                }
                 break;
                 
             case WebNavigationTypeLinkClicked:
@@ -856,7 +867,7 @@
 - (void)webView:(WebView *)sender decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
 														 request:(NSURLRequest *)request
 													newFrameName:(NSString *)frameName
-												decisionListener:(id < WebPolicyDecisionListener >)listener
+												decisionListener:(id <WebPolicyDecisionListener>)listener
 {
 	// Open the URL in the user's web browser
 	[listener ignore];

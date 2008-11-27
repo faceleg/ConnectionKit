@@ -205,7 +205,6 @@
 		2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */; };
 		2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721E0EF0E9E0CBD00A458B2 /* KTDocViewController.m */; };
 		2721E19B0E9E597300A458B2 /* KTDocumentControllerChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E19A0E9E597300A458B2 /* KTDocumentControllerChain.h */; settings = {ATTRIBUTES = (); }; };
-		272321320D48013F0075F31F /* KTDocWebViewController+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321310D48013F0075F31F /* KTDocWebViewController+Private.h */; settings = {ATTRIBUTES = (); }; };
 		272321A00D48A7690075F31F /* action12.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2723219F0D48A7690075F31F /* action12.tiff */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
@@ -4596,7 +4595,6 @@
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
 				270A41710D46A216002E998A /* KTMediaFile+ScaledImages.h in Headers */,
 				270A41F70D46B6F9002E998A /* KTScaledImageProperties.h in Headers */,
-				272321320D48013F0075F31F /* KTDocWebViewController+Private.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
 				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
 				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
