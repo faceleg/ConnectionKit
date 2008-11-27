@@ -585,8 +585,14 @@
             else if ([infoRequested isEqualToString:@"MIMEType"])
             {
                 NSString *MIMEType = [NSString MIMETypeForUTI:[mediaFile fileType]];
-				result = [MIMEType stringByEscapingHTMLEntities];
-				if (!result) result = @"";
+				
+                // Some MIME types are not known to the system. If so, fall back to raw data
+                if (!MIMEType || [MIMEType isEqualToString:@""])
+                {
+                    MIMEType = @"application/octet-stream";
+                }
+                
+                result = [MIMEType stringByEscapingHTMLEntities];
             }
             else if ([infoRequested isEqualToString:@"dataLength"])
             {
