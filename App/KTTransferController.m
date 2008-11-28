@@ -34,6 +34,7 @@
 
 - (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (void)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+- (void)createDirectory:(NSString *)remotePath recursive:(BOOL)recursive;
 @end
 
 
@@ -307,9 +308,6 @@
 		if (RSSString)
 		{			
 			// Now that we have page contents in unicode, clean up to the desired character encoding.
-			// MAYBE DO THIS TOO IF WE USE SOMETHING OTHER THAN UTF8
-			// rssString = [rssString stringByEscapingCharactersOutOfCharset:[aPage valueForKeyPath:@"master.charset"]];		
-			// FIXME: If we specify UTF8 here, won't that get us in trouble?  Should we use other encodings, like of site?
 			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 			OBASSERT(RSSData);
 			
@@ -368,7 +366,8 @@
 	{
 		[[self connection] deleteFile:remotePath];
 	}
-		
+	
+    [self createDirectory:[remotePath stringByDeletingLastPathComponent] recursive:YES];
 	[[self connection] uploadFile:[localURL path] toFile:remotePath];
 }
 
@@ -383,7 +382,25 @@
 		[[self connection] deleteFile:remotePath];
 	}
     
-	[[self connection] uploadFromData:data toFile:remotePath];
+	[self createDirectory:[remotePath stringByDeletingLastPathComponent] recursive:YES];
+    [[self connection] uploadFromData:data toFile:remotePath];
+}
+
+// TODO: This could be a hell of a lot more efficient. There's no need to recursively recreate directories for every single upload
+- (void)createDirectory:(NSString *)remotePath recursive:(BOOL)recursive
+{
+    OBPRECONDITION(remotePath);
+    
+    if (recursive)
+    {
+        NSString *parentDirectory = [remotePath stringByDeletingLastPathComponent];
+        if (![parentDirectory isEqualToString:@"/"])
+        {
+            [self createDirectory:parentDirectory recursive:YES];
+        }
+    }
+    
+    [[self connection] createDirectory:remotePath];
 }
 
 @end
