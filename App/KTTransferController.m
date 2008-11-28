@@ -249,13 +249,10 @@
 			}
 		}
 		
-		
+		// Don't publish drafts or special pages with no direct content
 		if ([(KTPage *)page pageOrParentDraft] || ![(KTPage *)page shouldPublishHTMLTemplate]) return;
 	}
 			
-	
-	// TODO: return if the page isn't stale and we've been requested to publish changes
-	
 	
 	// Generate HTML data
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
@@ -268,7 +265,28 @@
 	OBASSERT(pageData);
 	
 	
-	// Upload page data
+	// Don't upload if the page isn't stale and we've been requested to only publish changes
+	if ([self onlyPublishChanges])
+    {
+        // The digest has to ignore the app version string
+        NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
+                                   [[self documentInfo] appNameVersion]];
+        NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
+        
+        NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
+        NSData *publishedDataDigest = [page publishedDataDigest];
+        NSString *publishedPath = [page publishedPath];
+        
+        if (publishedDataDigest &&
+            (!publishedPath || [uploadPath isEqualToString:publishedPath]) &&   // 1.5.1 and earlier didn't store -publishedPath
+            [publishedDataDigest isEqualToData:digest])
+        {
+            return;
+        }
+    }
+    
+    
+    // Upload page data
     NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
 	if (fullUploadPath)
     {
