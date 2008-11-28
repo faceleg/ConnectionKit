@@ -37,12 +37,4 @@
 
 - (NSString *)storagePath;
 
-
-// old API
-//- (id)initWithAssociatedDocument:(KTDocument *)aDocument where:(int)aWhere;
-//- (void)uploadStaleAssets;
-//- (void)uploadEverything;
-//- (void)uploadEverythingToSuggestedPath:(NSString *)aSuggestedPath;
-//- (void)terminateConnection;
-
 @end
