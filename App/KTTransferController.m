@@ -31,6 +31,9 @@
 @interface KTTransferController (Private)
 - (void)uploadPage:(KTAbstractPage *)page;
 - (void)uploadMedia:(KTMediaFileUpload *)media;
+
+- (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (void)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 @end
 
 
@@ -290,8 +293,7 @@
     NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
 	if (fullUploadPath)
     {
-		[[self connection] uploadFromData:pageData toFile:fullUploadPath];
-		// TODO: Create directories, set permissions etc.
+		[self uploadData:pageData toPath:fullUploadPath];
 	}
 
 
@@ -313,7 +315,7 @@
 			
 			NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
 			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[[self connection] uploadFromData:RSSData toFile:RSSUploadPath];
+			[self uploadData:RSSData toPath:RSSUploadPath];
 		}
 	}
 }
@@ -326,13 +328,11 @@
 {
     if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
     {
-        NSString *sourcePath = [media valueForKeyPath:@"file.currentPath"];
+        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
         NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
         if (sourcePath && uploadPath)
         {
-            [[self connection] uploadFile:sourcePath toFile:uploadPath];
-            // TODO: Create directories, set permissions etc.
-            
+            [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];            
             
             // Record that we're uploading the object
             [myUploadedMedia addObject:media];
@@ -348,6 +348,42 @@
    {
        [self uploadMedia:upload];
    }
+}
+
+#pragma mark support
+
+/*	Use these methods instead of asking the connection directly. They will handle creating the appropriate directories and
+ *  delete the existing file first if needed.
+ *  // TODO: Recursively create directories
+ *  // TODO: Set permissions
+ */
+- (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+	OBPRECONDITION(localURL);
+    OBPRECONDITION([localURL isFileURL]);
+    OBPRECONDITION(remotePath);
+    
+    
+    if ([[[self documentInfo] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
+	{
+		[[self connection] deleteFile:remotePath];
+	}
+		
+	[[self connection] uploadFile:[localURL path] toFile:remotePath];
+}
+
+- (void)uploadData:(NSData *)data toPath:(NSString *)remotePath
+{
+	OBPRECONDITION(data);
+    OBPRECONDITION(remotePath);
+  
+    
+    if ([[[self documentInfo] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
+	{
+		[[self connection] deleteFile:remotePath];
+	}
+    
+	[[self connection] uploadFromData:data toFile:remotePath];
 }
 
 #pragma mark -
