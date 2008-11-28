@@ -35,6 +35,6 @@
 // Uploading
 - (void)startUploading;
 
-- (NSString *)storagePath;
+- (NSString *)baseRemotePath;
 
 @end

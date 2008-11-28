@@ -170,12 +170,12 @@
     [credential release];
 }
 
-/*  The root directory that all content goes into
+/*  The root directory that all content goes into. For normal publishing this is "documentRoot/subfolder"
  */
-- (NSString *)storagePath   // TODO: Can anyone think of a better name?
+- (NSString *)baseRemotePath
 {
 	KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
-    NSString *result = [[hostProperties valueForKey:@"docRoot"] stringByAppendingPathComponent:[hostProperties valueForKey:@"KTHostProperties"]];
+    NSString *result = [[hostProperties valueForKey:@"docRoot"] stringByAppendingPathComponent:[hostProperties valueForKey:@"subFolder"]];
     return result;
 }
 
@@ -290,7 +290,7 @@
     
     
     // Upload page data
-    NSString *fullUploadPath = [[self storagePath] stringByAppendingPathComponent:uploadPath];
+    NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
 	if (fullUploadPath)
     {
 		[self uploadData:pageData toPath:fullUploadPath];
@@ -329,7 +329,7 @@
     if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
     {
         NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
-        NSString *uploadPath = [[self storagePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
         if (sourcePath && uploadPath)
         {
             [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];            
