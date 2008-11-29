@@ -362,7 +362,7 @@
 	
 	
 	// Upload the design's resources
-	NSEnumerator *resourcesEnumerator = [[design resourceFiles] objectEnumerator];  // TODO: Shouldn't -resourceFiles return NSURLs?
+	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];  // TODO: Shouldn't -resourceFiles return NSURLs?
 	NSString *aResource;
 	while (aResource = [resourcesEnumerator nextObject])
 	{

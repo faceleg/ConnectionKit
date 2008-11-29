@@ -16,7 +16,7 @@
 {
     @protected
     NSImage *myThumbnail;
-	NSSet	*myResourceFiles;
+	NSSet	*myResourceFileURLs;
 	
 	BOOL myFontsLoaded;
 }
@@ -54,7 +54,7 @@
 - (void) loadLocalFontsIfNeeded;
 
 // Resource data
-- (NSSet *)resourceFiles;
+- (NSSet *)resourceFileURLs;
 - (NSData *)dataForResourceAtPath:(NSString *)path MIMEType:(NSString **)mimeType error:(NSError **)error;
 - (NSData *)mainCSSData;
 

@@ -86,7 +86,7 @@
 - (void)dealloc
 {
     [myThumbnail release];
-	[myResourceFiles release];
+	[myResourceFileURLs release];
 	
     [super dealloc];
 }
@@ -298,18 +298,18 @@
 #pragma mark -
 #pragma mark Resource data
 
-/*	The full paths of all resource files that are to be uploaded when publishing the design
+/*	The URLs of all resource files that are to be uploaded when publishing the design
  */
-- (NSSet *)resourceFiles
+- (NSSet *)resourceFileURLs
 {
-	if (!myResourceFiles)
+	if (!myResourceFileURLs)
 	{
-		NSMutableSet *resourceFiles = [[NSMutableSet alloc] init];
+		NSMutableSet *buffer = [[NSMutableSet alloc] init];
 		NSArray *extraIgnoredFiles = [[[self bundle] infoDictionary] objectForKey:@"KTIgnoredResources"];
 		
 		// Run through all files in the bundle
-		NSString *myPath = [[self bundle] bundlePath];
-		NSEnumerator *resourcesEnumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:myPath] objectEnumerator];
+		NSString *designBundlePath = [[self bundle] bundlePath];
+		NSEnumerator *resourcesEnumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:designBundlePath] objectEnumerator];
 		NSString *aFilename;
 		
 		while (aFilename = [resourcesEnumerator nextObject])
@@ -336,28 +336,29 @@
 			
 			
 			// Locate the full path and add to the list if of a suitable type
-			NSString *filePath = [myPath stringByAppendingPathComponent:aFilename];
-			NSString *UTI = [NSString UTIForFileAtPath:filePath];
+            NSString *resourceFilePath = [designBundlePath stringByAppendingPathComponent:aFilename];
+			NSURL *resourceFileURL = [NSURL fileURLWithPath:resourceFilePath];
+			NSString *UTI = [NSString UTIForFileAtPath:resourceFilePath];
 			if ([NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeImage] ||
 				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypePlainText] ||
 				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeRTF])
 			{
-				OBASSERT(filePath);
-                [resourceFiles addObject:filePath];
+				OBASSERT(resourceFileURL);
+                [buffer addObject:resourceFileURL];
 			}
 		}
 		
 		
 		// Ignore the thumbnail
-		[resourceFiles removeObjectIgnoringNil:[[self bundle] pathForImageResource:@"thumbnail"]];
+		[buffer removeObjectIgnoringNil:[[self bundle] pathForImageResource:@"thumbnail"]];
 		
 		
 		// Tidy up
-		myResourceFiles = [resourceFiles copy];
-		[resourceFiles release];
+		myResourceFileURLs = [buffer copy];
+		[buffer release];
 	}
 	
-	return myResourceFiles;
+	return myResourceFileURLs;
 }
 
 /*	Returns the full data of the specified resource.
