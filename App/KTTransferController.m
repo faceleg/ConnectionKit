@@ -11,11 +11,16 @@
 
 #import "KTAbstractElement+Internal.h"
 #import "KTAbstractPage+Internal.h"
+#import "KTDesign.h"
 #import "KTDocumentInfo.h"
-#import "KTMediaFileUpload.h"
-#import "KTMediaFile.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 
+#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
+#import "KTMediaFileUpload.h"
+
+#import "NSBundle+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -30,7 +35,11 @@
 
 @interface KTTransferController (Private)
 - (void)uploadPage:(KTAbstractPage *)page;
-- (void)uploadMedia:(KTMediaFileUpload *)media;
+
+- (void)uploadDesign;
+- (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath;
+
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
 - (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (void)uploadData:(NSData *)data toPath:(NSString *)remotePath;
@@ -181,7 +190,7 @@
 }
 
 #pragma mark -
-#pragma mark Uploading
+#pragma mark Content Generation
 
 - (void)startUploading
 {
@@ -224,12 +233,16 @@
 	}
 	
 	
-	
+	// Upload design
+    [[self proxyForThread:nil] uploadDesign];
 	
 	
 	
 	[pool release];
 }
+
+#pragma mark -
+#pragma mark Pages
 
 - (void)uploadPage:(KTAbstractPage *)page
 {
@@ -249,7 +262,7 @@
 			KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
 			if (upload)
 			{
-				[self uploadMedia:upload];
+				[self uploadMediaIfNeeded:upload];
 			}
 		}
 		
@@ -318,22 +331,118 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Design
+
+- (void)uploadDesign
+{
+    KTMaster *master = [[[self documentInfo] root] master];
+    
+    
+    // Upload the design if its published version is different to the current one
+    KTDesign *design = [master design];
+    if ([[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
+    {
+        return;
+    }
+    
+    
+	// Master CSS. Inform of the banner image (if there is one) & graphical text.
+	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
+	
+	KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
+	if (bannerImage)
+	{
+		[self uploadMediaIfNeeded:bannerImage];
+	}
+    
+    
+    
+    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+	
+	
+	// Upload the design's resources
+	NSEnumerator *resourcesEnumerator = [[design resourceFiles] objectEnumerator];  // TODO: Shouldn't -resourceFiles return NSURLs?
+	NSString *aResource;
+	while (aResource = [resourcesEnumerator nextObject])
+	{
+		NSString *filename = [aResource lastPathComponent];
+        NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
+
+        
+        // If there's any graphical text we have to append it to the main CSS ourself
+        if ([filename isEqualToString:@"main.css"] && [[self graphicalTextBlocks] count] > 0)
+        {
+            [self _uploadMainCSSAndGraphicalText:[NSURL fileURLWithPath:aResource] remoteDesignDirectoryPath:remoteDesignDirectoryPath];
+        }
+        else
+        {
+            [self uploadContentsOfURL:[NSURL fileURLWithPath:aResource] toPath:uploadPath];
+        }
+	}
+}
+
+- (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath
+{
+    NSMutableString *mainCSS = [NSMutableString stringWithContentsOfURL:mainCSSFileURL];
+    
+    // Add on CSS for each block
+    NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
+    NSEnumerator *textBlocksEnumerator = [graphicalTextBlocks keyEnumerator];
+    NSString *aGraphicalTextID;
+    while (aGraphicalTextID = [textBlocksEnumerator nextObject])
+    {
+        KTHTMLTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
+        KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
+        
+        NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
+        OBASSERT(path);
+        
+        NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+        if (CSS)
+        {
+            [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
+            [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
+            [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
+            
+            NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
+            NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
+            [CSS replace:@"_URL_" with:mediaPath];
+            
+            [mainCSS appendString:CSS];
+        }
+        else
+        {
+            NSLog(@"Unable to read in image replacement CSS from %@", path);
+        }
+    }
+    
+    
+    // Upload the CSS
+    NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
+                                                          allowLossyConversion:YES];
+    [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+}
+
 #pragma mark media
 
 /*  Adds the media file to the upload queue (if it's not already in it)
  */
-- (void)uploadMedia:(KTMediaFileUpload *)media
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
 {
-    if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    if (![self onlyPublishChanges] || [media boolForKey:@"isStale"])
     {
-        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
-        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-        if (sourcePath && uploadPath)
+        if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
         {
-            [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];            
-            
-            // Record that we're uploading the object
-            [myUploadedMedia addObject:media];
+            NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
+            NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+            if (sourcePath && uploadPath)
+            {
+                [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];            
+                
+                // Record that we're uploading the object
+                [myUploadedMedia addObject:media];
+            }
         }
     }
 }
@@ -342,17 +451,13 @@
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
-   if (![self onlyPublishChanges] || [upload boolForKey:@"isStale"])
-   {
-       [self uploadMedia:upload];
-   }
+   [self uploadMediaIfNeeded:upload];
 }
 
 #pragma mark support
 
 /*	Use these methods instead of asking the connection directly. They will handle creating the appropriate directories and
  *  delete the existing file first if needed.
- *  // TODO: Recursively create directories
  *  // TODO: Set permissions
  */
 - (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
