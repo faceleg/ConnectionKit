@@ -24,6 +24,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "KSPlugin.h"
 #import "KSThreadProxy.h"
@@ -362,8 +363,8 @@
 	
 	
 	// Upload the design's resources
-	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];  // TODO: Shouldn't -resourceFiles return NSURLs?
-	NSString *aResource;
+	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
+	NSURL *aResource;
 	while (aResource = [resourcesEnumerator nextObject])
 	{
 		NSString *filename = [aResource lastPathComponent];
@@ -373,11 +374,11 @@
         // If there's any graphical text we have to append it to the main CSS ourself
         if ([filename isEqualToString:@"main.css"] && [[self graphicalTextBlocks] count] > 0)
         {
-            [self _uploadMainCSSAndGraphicalText:[NSURL fileURLWithPath:aResource] remoteDesignDirectoryPath:remoteDesignDirectoryPath];
+            [self _uploadMainCSSAndGraphicalText:aResource remoteDesignDirectoryPath:remoteDesignDirectoryPath];
         }
         else
         {
-            [self uploadContentsOfURL:[NSURL fileURLWithPath:aResource] toPath:uploadPath];
+            [self uploadContentsOfURL:aResource toPath:uploadPath];
         }
 	}
 }
