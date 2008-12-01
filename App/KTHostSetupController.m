@@ -962,29 +962,44 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 
 
-/*  Authenticates the connection from the user's entered credentials
+/*  Authenticate the connection from the user's entered credentials. If this fails, end the test.
  */
 - (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-    NSString *password = nil;
-	
-	BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
-	
-	if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
+    if ([challenge previousFailureCount] == 0)
 	{
-		password = [self password];
+		NSString *password = nil;
+		
+		BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
+		
+		if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
+		{
+			password = [self password];
+		}
+		
+		NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
+																   password:password
+																persistence:NSURLCredentialPersistenceNone];
+		
+		[[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+		[credential release];
 	}
-    
-	NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
-                                                               password:password
-                                                            persistence:NSURLCredentialPersistenceNone];
-    
-    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-    [credential release];
+	else
+	{
+		[[challenge sender] cancelAuthenticationChallenge:challenge];
+		
+		[self disconnectConnection];
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
+		NSLog(@"= %@", NSStringFromSelector(_cmd));
+		
+		[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Password was not accepted.", @"status message for test connection")];
+		[self setConnectionStatusColor:[NSColor redColor]];
+		[self setConnectionStatus:NSLocalizedString(@"Unable to connect; the password was not accepted for your account. Please go back and review your account information.", @"status message for test connection")];
+	}
 }
 
 
-// TODOL: Remove this method
+// TODO: Remove this method
 - (BOOL)connection:(id <CKConnection>)con authorizeConnectionToHost:(NSString *)host message:(NSString *)message
 {
 	if (NSRunAlertPanel(NSLocalizedString(@"Authorize Connection?", "connection delegate"), 
@@ -1256,18 +1271,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[self setConnectionStatus:NSLocalizedString(@"Errors encountered, test failed. Please go back and check your settings.", @"status message for test connection")];
 	}
 	[self disconnectConnection];
-}
-
-- (void)connectionDidSendBadPassword:(id <CKConnection>)con
-{
-//	NSLog(@"Cancelling timeout test, connectionDidSendBadPassword");
-	[self disconnectConnection];
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
-	NSLog(@"= %@", NSStringFromSelector(_cmd));
-
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Password was not accepted.", @"status message for test connection")];
-	[self setConnectionStatusColor:[NSColor redColor]];
-	[self setConnectionStatus:NSLocalizedString(@"Unable to connect; the password was not accepted for your account. Please go back and review your account information.", @"status message for test connection")];
 }
 
 // Allow the timeout value to come from NSUserDefaults as some peoples connections could be slow
