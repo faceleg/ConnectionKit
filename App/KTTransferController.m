@@ -338,7 +338,7 @@
 - (void)uploadDesign
 {
     KTMaster *master = [[[self documentInfo] root] master];
-    
+    return;
     
     // Upload the design if its published version is different to the current one
     KTDesign *design = [master design];

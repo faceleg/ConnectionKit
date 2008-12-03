@@ -353,10 +353,52 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self doNext:sender];
 }
 
-// delegate method for the open panel
-- (void)connectionOpenPanel:(CKConnectionOpenPanel *)panel didSendBadPasswordToHost:(NSString *)host
+#pragma mark -
+#pragma mark Authentication Support
+
+/*  Support method that will first attempt to authenticate the connection. After that it gives up.
+ */
+- (void)handleAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-	[self setValue:[NSNumber numberWithBool:YES] forKey:@"browseHasBadPassword"];
+    if ([challenge previousFailureCount] == 0)
+	{
+		NSString *password = nil;
+		
+		BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
+		
+		if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
+		{
+			password = [self password];
+		}
+		
+		NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
+																   password:password
+																persistence:NSURLCredentialPersistenceNone];
+		
+		[[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+		[credential release];
+	}
+	else
+	{
+		[[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+	}
+}
+
+#pragma mark -
+#pragma mark ConnectionOpenPanel
+
+// delegate method for the open panel
+- (void)connectionOpenPanel:(CKConnectionOpenPanel *)panel didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+	if ([challenge previousFailureCount] == 0)
+    {
+        [self handleAuthenticationChallenge:challenge];
+    }
+    else
+    {
+        [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+        [self setValue:[NSNumber numberWithBool:YES] forKey:@"browseHasBadPassword"];
+    }
 }
 
 - (IBAction)browseHostToSelectPath:(id)sender
@@ -908,7 +950,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 #pragma mark -
 #pragma mark Test Connection
 
-- (void) startTestConnection:(id)bogus
+- (void)startTestConnection:(id)bogus
 {
 	LOG((@"start test connection"));
 	myDidSuccessfullyDownloadTestFile = NO;
@@ -917,21 +959,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setConnectionProgress:@""];
 
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
-	NSString *password = nil;
-	
-	BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
-	
-	if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
-	{
-		password = [self password];
-	}
 		
 	NSError *err = nil;
 	id <CKConnection> connection = [CKAbstractConnection connectionWithName:[[self properties] valueForKey:@"protocol"]
                                                                        host:[[self properties] valueForKey:@"hostName"]
                                                                        port:[[self properties] valueForKey:@"port"]
-                                                                   username:[[self properties] valueForKey:@"userName"]
-                                                                   password:password
+                                                                   username:nil
+                                                                   password:nil
                                                                       error:&err];
 	if (!connection)
 	{
@@ -950,7 +984,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self performSelector:@selector(actuallyConnect:) withObject:nil afterDelay:0.0];
 }
 
-- (void) actuallyConnect:(id)bogus
+- (void)actuallyConnect:(id)bogus
 {
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection... ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
 
@@ -968,21 +1002,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
     if ([challenge previousFailureCount] == 0)
 	{
-		NSString *password = nil;
-		
-		BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
-		
-		if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
-		{
-			password = [self password];
-		}
-		
-		NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
-																   password:password
-																persistence:NSURLCredentialPersistenceNone];
-		
-		[[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-		[credential release];
+		[self handleAuthenticationChallenge:challenge];
 	}
 	else
 	{
