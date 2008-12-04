@@ -338,7 +338,6 @@
 - (void)uploadDesign
 {
     KTMaster *master = [[[self documentInfo] root] master];
-    return;
     
     // Upload the design if its published version is different to the current one
     KTDesign *design = [master design];
@@ -348,9 +347,6 @@
     }
     
     
-	// Master CSS. Inform of the banner image (if there is one) & graphical text.
-	NSString *masterCSS = [master masterCSSForPurpose:kGeneratingRemote];
-	
 	KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
 	if (bannerImage)
 	{
@@ -369,17 +365,8 @@
 	{
 		NSString *filename = [aResource lastPathComponent];
         NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
-
-        
-        // If there's any graphical text we have to append it to the main CSS ourself
-        if ([filename isEqualToString:@"main.css"] && [[self graphicalTextBlocks] count] > 0)
-        {
-            [self _uploadMainCSSAndGraphicalText:aResource remoteDesignDirectoryPath:remoteDesignDirectoryPath];
-        }
-        else
-        {
-            [self uploadContentsOfURL:aResource toPath:uploadPath];
-        }
+        [self uploadContentsOfURL:aResource toPath:uploadPath];
+        // TODO: Append banner CSS and graphical text to the main.css file
 	}
 }
 
