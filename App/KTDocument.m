@@ -241,9 +241,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     [myMediaManager release];
 	
-	[myStalenessManager stopObservingAllPages];
-	[myStalenessManager release];
-	
 	// release context
 	[myManagedObjectContext release]; myManagedObjectContext = nil;
     
@@ -553,15 +550,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
-	//LOG((@"KTDocument -close"));
-	// NB: [self windowController] is nil by the time we get here...
-
+	
 	/// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
 	// tell info window to release inspector views and object controllers
-	if ( [self isEqual:[[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument]] )
+	if ([[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument] == self)
 	{
 		// close info window
-		[[KTInfoWindowController sharedControllerWithoutLoading] clearAll];
+		[[KTInfoWindowController sharedController] clearAll];
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
