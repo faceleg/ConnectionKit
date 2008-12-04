@@ -16,12 +16,12 @@
 
 - (KTHTMLParserMasterCache *)cache;
 
-- (NSString *)resourceFilePath:(NSString *)resourceFile relativeToPage:(KTAbstractPage *)page;
+- (NSString *)resourceFilePath:(NSURL *)resourceFile relativeToPage:(KTAbstractPage *)page;
 
 // Delegate
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)didParseTextBlock:(KTHTMLTextBlock *)textBlock;
 - (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
-- (void)didEncounterResourceFile:(NSString *)resourcePath;
+- (void)didEncounterResourceFile:(NSURL *)resourceURL;
 
 @end

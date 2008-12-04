@@ -49,7 +49,7 @@
 	else
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePath:globalCSSFile relativeToPage:[self currentPage]] title:nil media:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePath:[NSURL fileURLWithPath:globalCSSFile] relativeToPage:[self currentPage]] title:nil media:nil]];
 	}
 	
 			
@@ -71,10 +71,11 @@
 	NSString *aCSSFile;
 	while (aCSSFile = [pluginCSSEnumerator nextObject])
 	{
-		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePath:aCSSFile relativeToPage:[self currentPage]] title:nil media:nil]];
+		NSURL *CSSURL = [NSURL fileURLWithPath:aCSSFile];
+        [stylesheetLines addObject:[self stylesheetLink:[self resourceFilePath:CSSURL relativeToPage:[self currentPage]] title:nil media:nil]];
 		
 		// Tell the delegate
-		[self didEncounterResourceFile:aCSSFile];
+		[self didEncounterResourceFile:CSSURL];
 	}
 	
 	

@@ -80,7 +80,7 @@ typedef enum {
 
 
 @interface NSObject (KTHTMLParserDelegate)
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath;
+- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock;
 @end

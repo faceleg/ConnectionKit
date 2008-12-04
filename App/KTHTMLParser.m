@@ -198,12 +198,12 @@
 	}
 }
 
-- (void)didEncounterResourceFile:(NSString *)resourcePath
+- (void)didEncounterResourceFile:(NSURL *)resourceURL
 {
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didEncounterResourceFile:)])
 	{
-		[delegate HTMLParser:self didEncounterResourceFile:resourcePath];
+		[delegate HTMLParser:self didEncounterResourceFile:resourceURL];
 	}
 }
 
@@ -490,36 +490,6 @@
 	return string;
 }
 
-/*	Support method that returns the path to the resource dependent of our HTML generation purpose.
- */
-- (NSString *)resourceFilePath:(NSString *)resourceFile relativeToPage:(KTAbstractPage *)page
-{
-	NSString *result;
-	switch ([self HTMLGenerationPurpose])
-	{
-		case kGeneratingPreview:
-			result = [[NSURL fileURLWithPath:resourceFile] absoluteString];
-			break;
-		
-		case kGeneratingQuickLookPreview:
-			result = [[BDAlias aliasWithPath:resourceFile] quickLookPseudoTag];
-			break;
-			
-		default:
-		{
-			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
-			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceFile lastPathComponent]];
-			result = [resourceFileURL stringRelativeToURL:[page URL]];
-			break;
-		}
-	}
-		
-	// Tell the delegate
-	[self didEncounterResourceFile:resourceFile];
-
-	return result;
-}
-
 #pragma mark media & resources
 
 - (NSString *)mediainfoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)scanner
@@ -654,11 +624,41 @@
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:resourceFilePath relativeToPage:[self currentPage]];
+            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[self currentPage]];
         }
     }
     
     return result;
+}
+
+/*	Support method that returns the path to the resource dependent of our HTML generation purpose.
+ */
+- (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
+{
+	NSString *result;
+	switch ([self HTMLGenerationPurpose])
+	{
+		case kGeneratingPreview:
+			result = [resourceURL absoluteString];
+			break;
+            
+		case kGeneratingQuickLookPreview:
+			result = [[BDAlias aliasWithPath:[resourceURL path]] quickLookPseudoTag];
+			break;
+			
+		default:
+		{
+			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
+			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
+			result = [resourceFileURL stringRelativeToURL:[page URL]];
+			break;
+		}
+	}
+    
+	// Tell the delegate
+	[self didEncounterResourceFile:resourceURL];
+    
+	return result;
 }
 
 - (NSString *)rsspathWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner

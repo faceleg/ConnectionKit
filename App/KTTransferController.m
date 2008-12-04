@@ -126,7 +126,6 @@
 }
 
 /*  Authenticate the connection
- *  // TODO: Possibly we don't need this method and could eventually rely on just the initial authentication credentials
  */
 - (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
@@ -459,10 +458,10 @@
     }
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath // TODO: Should the parser use URLs?
+- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
 {
-	OBPRECONDITION(resourcePath);
-    [self uploadResourceIfNeeded:[NSURL fileURLWithPath:resourcePath]];
+	OBPRECONDITION(resourceURL);
+    [self uploadResourceIfNeeded:resourceURL];
 }
 
 #pragma mark -
