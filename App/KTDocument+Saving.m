@@ -244,10 +244,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
 {
-	// we restrict writableTypes to our main document type
-	// so that the persistence framework does not allow the user to pick
-	// a persistence store format and confuse the app
-	return [NSArray arrayWithObject:@"KTDocument"];
+	// we restrict writableTypes to our main document type so that the persistence framework does
+    // not allow the user to pick a persistence store format and confuse the app.
+    //
+    // BUGSID:37280 If you don't specify a string the document framework recognises, hidden file extensions won't work right
+	return [NSArray arrayWithObject:kKTDocumentType];
 }
 
 #pragma mark -
