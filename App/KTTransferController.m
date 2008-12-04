@@ -14,7 +14,7 @@
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
 #import "KTMaster+Internal.h"
-#import "KTPage.h"
+#import "KTPage+Internal.h"
 
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
@@ -42,6 +42,8 @@
 
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
+- (void)uploadResourceIfNeeded:(NSURL *)resourceURL;
+
 - (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (void)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 - (void)createDirectory:(NSString *)remotePath recursive:(BOOL)recursive;
@@ -65,6 +67,7 @@
         myOnlyPublishChanges = publishChanges;
         
         myUploadedMedia = [[NSMutableSet alloc] init];
+        myUploadedResources = [[NSMutableSet alloc] init];
 	}
 	
 	return self;
@@ -75,6 +78,7 @@
 	[myDocumentInfo release];
 	OBASSERT(!myConnection);	// TODO: Gracefully close connection
     [myUploadedMedia release];
+    [myUploadedResources release];
 	
 	[super dealloc];
 }
@@ -104,42 +108,17 @@
 {
     KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
     
-    NSString *password = nil;
     NSString *hostName = [hostProperties valueForKey:@"hostName"];
-    NSString *userName = [hostProperties valueForKey:@"userName"];
     NSString *protocol = [hostProperties valueForKey:@"protocol"];
     
     NSNumber *port = [hostProperties valueForKey:@"port"];
     
     NSError *err = nil;
-    
-    if (hostName &&
-        userName &&
-        ![userName isEqualToString:@""] &&
-        ![hostName isEqualToString:@""] &&
-        !([hostName hasSuffix:@"idisk.mac.com"] && [protocol isEqualToString:@".Mac"]) &&   // WebDAV to idisk should take this branch and get password
-        !([protocol isEqualToString:@"SFTP"] && [hostProperties boolForKey:@"usePublicKey"]))
-    {
-        [[EMKeychainProxy sharedProxy] setLogsErrors:YES];
-        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
-                                                                                               withUsername:userName 
-                                                                                                       path:nil 
-                                                                                                       port:[port intValue] 
-                                                                                                   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
-        [[EMKeychainProxy sharedProxy] setLogsErrors:NO];
-        if ( nil == keychainItem )
-        {
-            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", hostName, userName);
-        }
-        
-        password = [keychainItem password];
-    }
-    
     myConnection = [[CKAbstractConnection connectionWithName:protocol
                                                         host:hostName
                                                         port:port
-                                                    username:userName
-                                                    password:password
+                                                    username:nil
+                                                    password:nil
                                                        error:&err] retain];
     
     [myConnection setDelegate:self];
@@ -312,8 +291,26 @@
 	}
 
 
-	// TODO: Ask the delegate for any extra resource files
-
+	// Ask the delegate for any extra resource files that the parser didn't catch
+    if ([page isKindOfClass:[KTPage class]])
+    {
+        NSMutableSet *resources = [[NSMutableSet alloc] init];
+        [(KTPage *)page makeComponentsPerformSelector:@selector(addResourcesToSet:forPage:) 
+                                           withObject:resources 
+                                             withPage:(KTPage *)page 
+                                            recursive:NO];
+        
+        NSEnumerator *resourcesEnumerator = [resources objectEnumerator];
+        NSString *aResourcePath;
+        while (aResourcePath = [resourcesEnumerator nextObject])
+        {
+            [self uploadResourceIfNeeded:[NSURL fileURLWithPath:aResourcePath]];
+        }
+        
+        [resources release];
+    }
+	
+	
 
 	// Generate and publish RSS feed if needed
 	if ([page isKindOfClass:[KTPage class]] && [page boolForKey:@"collectionSyndicate"] && [(KTPage *)page collectionCanSyndicate])
@@ -412,7 +409,8 @@
     [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
 }
 
-#pragma mark media
+#pragma mark -
+#pragma mark Media
 
 /*  Adds the media file to the upload queue (if it's not already in it)
  */
@@ -442,7 +440,33 @@
    [self uploadMediaIfNeeded:upload];
 }
 
-#pragma mark support
+#pragma mark -
+#pragma mark Resources
+
+- (void)uploadResourceIfNeeded:(NSURL *)resourceURL
+{
+    resourceURL = [resourceURL absoluteURL];    // Ensures hashing and -isEqual: work right
+    
+    if (![myUploadedResources containsObject:resourceURL])
+    {
+        NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+        NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[resourceURL lastPathComponent]];
+        
+        [self uploadContentsOfURL:resourceURL toPath:resourceRemotePath];
+        
+        [myUploadedResources addObject:resourceURL];
+    }
+}
+
+- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSString *)resourcePath // TODO: Should the parser use URLs?
+{
+	OBPRECONDITION(resourcePath);
+    [self uploadResourceIfNeeded:[NSURL fileURLWithPath:resourcePath]];
+}
+
+#pragma mark -
+#pragma mark Uploading Support
 
 /*	Use these methods instead of asking the connection directly. They will handle creating the appropriate directories and
  *  delete the existing file first if needed.

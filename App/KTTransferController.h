@@ -22,6 +22,7 @@
 	id <CKConnection>	myConnection;
     
     NSMutableSet    *myUploadedMedia;
+    NSMutableSet    *myUploadedResources;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
