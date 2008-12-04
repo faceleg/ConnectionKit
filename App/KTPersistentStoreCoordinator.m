@@ -58,22 +58,6 @@
 	[super unlock];
 }
 
-
 #endif
-
-- (BOOL)removePersistentStore:(id)store error:(NSError **)error
-{
-    
-    @try
-    {
-        [NSException raise:@"-removePS::" format:@"-removePS::"];
-    }
-    @catch (NSException *exception)
-    {
-        NSLog(@"-removePS:: called\n%@", [exception userInfo]);
-    }
-    
-    return [super removePersistentStore:store error:error];
-}
 
 @end
