@@ -237,10 +237,6 @@
     }
     
     NSString *url = [[aPage URL] absoluteString];
-	if (![url hasPrefix:[siteURL absoluteString]])
-	{
-		return;	// an external link not in this site
-	}
 	
 	if ([aPage excludedFromSiteMap])	// excluded checkbox checked, or it's an unpublished draft
 	{
