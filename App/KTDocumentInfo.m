@@ -238,8 +238,11 @@
     
     NSString *url = [[aPage URL] absoluteString];
 	
-	if ([aPage excludedFromSiteMap])	// excluded checkbox checked, or it's an unpublished draft
+	BOOL excluded = [aPage excludedFromSiteMap];
+//	NSLog(@"%@ exclude? %d", url, excluded);
+	if (excluded)	// excluded checkbox checked, or it's an unpublished draft
 	{
+//		NSLog(@"...so I'm skipping this");
 		return;	// addBool1 is indicator to EXCLUDE from a sitemap.
 	}
 	
