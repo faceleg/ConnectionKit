@@ -45,11 +45,6 @@
 //#import <ThirdParty.h>
 
 
-@interface LinkPageDelegate ( Private )
-- (NSString *)absolutePathAllowingIndexPage:(BOOL)aCanHaveIndexPage;
-@end
-
-
 @implementation LinkPageDelegate
 
 #pragma mark -
@@ -209,11 +204,6 @@
 	}
 }
 
-- (NSString *)urlAllowingIndexPage:(BOOL)aCanHaveIndexPage  // for feeds, we return the URL of the site if it's not an iframe
-{
-	return [self absolutePathAllowingIndexPage:aCanHaveIndexPage];
-}
-
 #pragma mark -
 #pragma mark Summary
 
@@ -272,18 +262,6 @@
 - (BOOL)openInNewWindow
 {
 	return (newWindowLink == [[self delegateOwner] integerForKey:@"linkType"]);
-}
-
-- (NSString *)absolutePathAllowingIndexPage:(BOOL)aCanHaveIndexPage		// "override" KTPage to be the external URL
-{
-	if (iframeLink == [[self delegateOwner] integerForKey:@"linkType"])
-	{
-		return nil;
-	}
-	else
-	{
-		return [[self delegateOwner] wrappedValueForKey:@"linkURL"];	// return external URL when path or localPath are requested
-	}
 }
 
 #pragma mark -
