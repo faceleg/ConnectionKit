@@ -435,12 +435,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	
 	// show the ConnectionOpenPanel
 	NSError *err = nil;
-	id <CKConnection>con = [CKAbstractConnection connectionWithName:[self valueForKey:@"protocol"]
-                                                               host:[self valueForKey:@"hostName"]
-                                                               port:[self valueForKey:@"port"]
-                                                           username:username
-                                                           password:password
-                                                              error:&err];
+	id <CKConnection>con = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[self valueForKey:@"protocol"]
+                                                                                          host:[self valueForKey:@"hostName"]
+                                                                                          port:[self valueForKey:@"port"]
+                                                                                          user:username
+                                                                                      password:password
+                                                                                         error:&err];
 	if (!con)
 	{
 		if (err)
@@ -961,12 +961,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
 		
 	NSError *err = nil;
-	id <CKConnection> connection = [CKAbstractConnection connectionWithName:[[self properties] valueForKey:@"protocol"]
-                                                                       host:[[self properties] valueForKey:@"hostName"]
-                                                                       port:[[self properties] valueForKey:@"port"]
-                                                                   username:nil
-                                                                   password:nil
-                                                                      error:&err];
+	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[[self properties] valueForKey:@"protocol"]
+                                                                                                  host:[[self properties] valueForKey:@"hostName"]
+                                                                                                  port:[[self properties] valueForKey:@"port"]
+                                                                                                  user:nil
+                                                                                              password:nil
+                                                                                                 error:&err];
 	if (!connection)
 	{
 		if (err)

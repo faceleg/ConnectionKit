@@ -113,14 +113,10 @@
     
     NSNumber *port = [hostProperties valueForKey:@"port"];
     
-    NSError *err = nil;
-    myConnection = [[CKAbstractConnection connectionWithName:protocol
-                                                        host:hostName
-                                                        port:port
-                                                    username:nil
-                                                    password:nil
-                                                       error:&err] retain];
-    
+    myConnection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
+                                                                                  host:hostName
+                                                                                  port:port];
+    [myConnection retain];
     [myConnection setDelegate:self];
     [myConnection connect];
 }
@@ -139,15 +135,15 @@
     if (userName && ![userName isEqualToString:@""])
     {
         [[EMKeychainProxy sharedProxy] setLogsErrors:YES];
-        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:[connection host]
+        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:[[connection URL] host]
                                                                                                withUsername:userName 
                                                                                                        path:nil 
-                                                                                                       port:[connection port] 
+                                                                                                       port:[(CKAbstractConnection *)connection port] 
                                                                                                    protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
         [[EMKeychainProxy sharedProxy] setLogsErrors:NO];
         if ( nil == keychainItem )
         {
-            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", [connection host], userName);
+            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", [[connection URL] host], userName);
         }
         
         password = [keychainItem password];
