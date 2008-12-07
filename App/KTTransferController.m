@@ -44,9 +44,11 @@
 
 - (void)uploadResourceIfNeeded:(NSURL *)resourceURL;
 
-- (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (void)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-- (void)createDirectory:(NSString *)remotePath recursive:(BOOL)recursive;
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+- (CKTransferRecord *)createDirectory:(NSString *)remotePath;
+
+- (CKTransferRecord *)rootTransferRecord;
 @end
 
 
@@ -77,6 +79,7 @@
 {
 	[myDocumentInfo release];
 	OBASSERT(!myConnection);	// TODO: Gracefully close connection
+    [_rootTransferRecord release];
     [myUploadedMedia release];
     [myUploadedResources release];
 	
@@ -467,7 +470,7 @@
  *  delete the existing file first if needed.
  *  // TODO: Set permissions
  */
-- (void)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);
@@ -479,11 +482,14 @@
 		[[self connection] deleteFile:remotePath];
 	}
 	
-    [self createDirectory:[remotePath stringByDeletingLastPathComponent] recursive:YES];
-	[[self connection] uploadFile:[localURL path] toFile:remotePath];
+    [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+	CKTransferRecord *result = [[self connection] uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    [CKTransferRecord mergeRecord:result withRoot:[self rootTransferRecord]];
+    return result;
+    
 }
 
-- (void)uploadData:(NSData *)data toPath:(NSString *)remotePath
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
@@ -494,25 +500,62 @@
 		[[self connection] deleteFile:remotePath];
 	}
     
-	[self createDirectory:[remotePath stringByDeletingLastPathComponent] recursive:YES];
-    [[self connection] uploadFromData:data toFile:remotePath];
+	[self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+    CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    [CKTransferRecord mergeRecord:result withRoot:[self rootTransferRecord]];
+    return result;
 }
 
-// TODO: This could be a hell of a lot more efficient. There's no need to recursively recreate directories for every single upload
-- (void)createDirectory:(NSString *)remotePath recursive:(BOOL)recursive
+/*  Creates the specified directory including any parent directories that haven't already been queued for creation.
+ *  Returns a CKTransferRecord used to represent the directory during publishing.
+ */
+- (CKTransferRecord *)createDirectory:(NSString *)remotePath
 {
     OBPRECONDITION(remotePath);
     
-    if (recursive)
+    
+    CKTransferRecord *root = [self rootTransferRecord];
+    if ([[root path] isEqualToString:remotePath]) return root;
+    
+    
+    // Ensure the parent directory is created first
+    NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
+    CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
+    
+    
+    // Create the directory if it hasn't been already
+    CKTransferRecord *result = nil;
+    int i;
+    for (i = 0; i < [[parent contents] count]; i++)
     {
-        NSString *parentDirectory = [remotePath stringByDeletingLastPathComponent];
-        if (![parentDirectory isEqualToString:@"/"])
+        CKTransferRecord *aRecord = [[parent contents] objectAtIndex:i];
+        if ([[aRecord path] isEqualToString:remotePath])
         {
-            [self createDirectory:parentDirectory recursive:YES];
+            result = aRecord;
+            break;
         }
     }
     
-    [[self connection] createDirectory:remotePath];
+    if (!result)
+    {
+        [[self connection] createDirectory:remotePath];
+        result = [CKTransferRecord recordWithName:[remotePath lastPathComponent] size:0];
+        [parent addContent:result];
+    }
+    
+    return result;
+}
+
+/*  Create the root record if needed
+ */
+- (CKTransferRecord *)rootTransferRecord
+{
+    if (!_rootTransferRecord)
+    {
+        _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
+    }
+    
+    return _rootTransferRecord;
 }
 
 @end

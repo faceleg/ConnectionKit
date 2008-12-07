@@ -20,6 +20,7 @@
     BOOL            myOnlyPublishChanges;
     
 	id <CKConnection>	myConnection;
+    CKTransferRecord    *_rootTransferRecord;
     
     NSMutableSet    *myUploadedMedia;
     NSMutableSet    *myUploadedResources;
