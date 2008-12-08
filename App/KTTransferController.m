@@ -1504,6 +1504,20 @@ if ([self where] == kGeneratingRemoteExport) {
 	return NO;
 }
 
+- (NSString *)localPublishedString
+{
+	NSString *result = nil;
+	if ([[self connection] name] == @"File")
+	{
+		result = NSLocalizedString(@"The site has been published to this computer.", "Transfer Controller");
+	}
+	else
+	{
+		result =[NSString stringWithFormat:NSLocalizedString(@"The site has been published to %@.", "Transfer Controller"),
+				 [[self connection] host]]
+	}
+	return result;
+}
 
 - (void)transferControllerDidFinish:(CKTransferController *)controller returnCode:(CKTransferControllerStatus)code
 {
@@ -1599,9 +1613,7 @@ if ([self where] == kGeneratingRemoteExport) {
 			}
 			else
 			{
-// TODO: Properly internationalize this sentence; it will require re-localization.  See case 32158.
-				NSString *message = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"The site has been published to", "Transfer Controller"), [[self connection] host]];
-				[myController setStatusMessage:message];
+				[myController setStatusMessage:[self localPublishedString]];
 			}
 		}
 		
@@ -1631,7 +1643,7 @@ if ([self where] == kGeneratingRemoteExport) {
 				if ( ![[NSApplication sharedApplication] isActive] )
 				{
 					[GrowlApplicationBridge notifyWithTitle:NSLocalizedString(@"Publishing Complete", @"Growl notification")
-												description:[NSString stringWithFormat:NSLocalizedString(@"Your site has been published to %@", @"Growl notification"), [[self connection] host]]
+												description:[self localPublishedString]
 										   notificationName:NSLocalizedString(@"Publishing Complete", @"Growl notification")
 												   iconData:nil
 												   priority:1
