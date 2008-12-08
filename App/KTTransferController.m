@@ -368,15 +368,9 @@
 {
     KTMaster *master = [[[self documentInfo] root] master];
     
-    // Upload the design if its published version is different to the current one
-    KTDesign *design = [master design];
-    if ([[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
-    {
-        return;
-    }
     
-    
-	KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
+    // Upload banner image if needed
+    KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
 	if (bannerImage)
 	{
 		[self uploadMediaIfNeeded:bannerImage];
@@ -384,7 +378,16 @@
     
     
     
-    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+   // Upload the design if its published version is different to the current one
+    KTDesign *design = [master design];
+    if ([self onlyPublishChanges] &&
+        [[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
+    {
+        return;
+    }
+    
+    
+	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
 	
 	
 	// Upload the design's resources
