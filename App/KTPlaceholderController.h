@@ -11,7 +11,21 @@
 
 @class QTMovieView;
 
+@interface KTColorTextFieldAnimation: NSAnimation
+{
+	NSColor *myStartColor;
+	NSColor *myEndColor;
+	NSTextField *myTextField;
+}
+- (id) initWithStartColor:(NSColor *)aStartColor endColor:(NSColor *)anEndColor textField:(NSTextField *)aTextField;
+
+@end
+
+
 @interface KTPlaceholderController : KSSingletonWindowController {
+
+	KTColorTextFieldAnimation *myAnimation1;
+	KTColorTextFieldAnimation *myAnimation2;
 
 	IBOutlet NSButton *oHighLink;
 	IBOutlet NSButton *oLowLink;
