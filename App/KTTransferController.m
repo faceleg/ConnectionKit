@@ -219,6 +219,33 @@
 	[pool release];
 }
 
+/*  Called when a transfer we are observing finishes. Mark its corresponding object non-stale and
+ *  stop observation.
+ */
+- (void)transferRecordDidFinish:(NSNotification *)notification
+{
+    CKTransferRecord *transferRecord = [notification object];
+    
+    id object = [transferRecord propertyForKey:@"object"];
+    if (object)
+    {
+        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
+        if (digest)
+        {
+            [object setPublishedDataDigest:digest];
+            [object setPublishedPath:[transferRecord propertyForKey:@"path"]];
+        }
+        else
+        {
+            [object setBool:NO forKey:@"isStale"];
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:CKTransferRecordTransferDidFinishNotification
+                                                  object:transferRecord];
+}
+
 #pragma mark -
 #pragma mark Pages
 
@@ -249,6 +276,7 @@
 	}
 			
 	
+    
 	// Generate HTML data
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
@@ -258,17 +286,20 @@
 	NSStringEncoding encoding = [charset encodingFromCharset];
 	NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
 	OBASSERT(pageData);
-	
+    
+    
+    
+    // Generate data digest. It has to ignore the app version string
+    NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
+                               [[self documentInfo] appNameVersion]];
+    NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
+    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
+    
+    
 	
 	// Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
-        // The digest has to ignore the app version string
-        NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
-                                   [[self documentInfo] appNameVersion]];
-        NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
-        
-        NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
         NSData *publishedDataDigest = [page publishedDataDigest];
         NSString *publishedPath = [page publishedPath];
         
@@ -281,11 +312,14 @@
     }
     
     
-    // Upload page data
+    // Upload page data. Store the page and its digest with the record for processing later
     NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
 	if (fullUploadPath)
     {
-		[self uploadData:pageData toPath:fullUploadPath];
+		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
+        [transferRecord setProperty:page forKey:@"object"];
+        [transferRecord setProperty:digest forKey:@"dataDigest"];
+        [transferRecord setProperty:uploadPath forKey:@"path"];
 	}
 
 
@@ -422,7 +456,9 @@
             NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
             if (sourcePath && uploadPath)
             {
-                [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];            
+                // Upload the media. Store the media object with the transfer record for processing later
+                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+                [transferRecord setProperty:media forKey:@"object"];
                 
                 // Record that we're uploading the object
                 [myUploadedMedia addObject:media];
@@ -482,9 +518,18 @@
 		[[self connection] deleteFile:remotePath];
 	}
 	
-    [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+    // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
+    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
 	CKTransferRecord *result = [[self connection] uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    [CKTransferRecord mergeRecord:result withRoot:[self rootTransferRecord]];
+    [result setName:[remotePath lastPathComponent]];
+    [parent addContent:result];
+    
+    // Wait for the upload to finish so we can mark it non-stale
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(transferRecordDidFinish:)
+                                                 name:CKTransferRecordTransferDidFinishNotification
+                                               object:result];
+    
     return result;
     
 }
@@ -500,9 +545,16 @@
 		[[self connection] deleteFile:remotePath];
 	}
     
-	[self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-    CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    [CKTransferRecord mergeRecord:result withRoot:[self rootTransferRecord]];
+	CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+	CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    [result setName:[remotePath lastPathComponent]];
+    [parent addContent:result];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(transferRecordDidFinish:)
+                                                 name:CKTransferRecordTransferDidFinishNotification
+                                               object:result];
+    
     return result;
 }
 
