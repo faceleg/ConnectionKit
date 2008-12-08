@@ -766,13 +766,14 @@
                                               format:NSLocalizedString
              (@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
              [URL path]];
-            [listener ignore];
         }
         else
         {
             [[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
-            [listener use];	// it's been loaded for us I think
         }
+        
+        // We don't want the webview to try and load it
+        [listener ignore];
     }
     
     
