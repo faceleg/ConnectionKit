@@ -1514,7 +1514,7 @@ if ([self where] == kGeneratingRemoteExport) {
 	else
 	{
 		result =[NSString stringWithFormat:NSLocalizedString(@"The site has been published to %@.", "Transfer Controller"),
-				 [[self connection] host]]
+				 [[self connection] host]];
 	}
 	return result;
 }
