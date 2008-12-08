@@ -19,6 +19,40 @@
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
+
+
+@implementation KTColorTextFieldAnimation
+
+- (id) initWithStartColor:(NSColor *)aStartColor endColor:(NSColor *)anEndColor textField:(NSTextField *)aTextField;
+{
+	if ((self = [super initWithDuration:2.0 animationCurve:NSAnimationLinear]) != nil) {
+		[self setAnimationBlockingMode:NSAnimationNonblocking];
+		[self setFrameRate:30];
+		myStartColor = [aStartColor retain];
+		myEndColor = [anEndColor retain];
+		myTextField = [aTextField retain];
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+	[myStartColor release];
+	[myEndColor release];
+	[myTextField release];
+	[super dealloc];
+}
+
+- (void)setCurrentProgress:(NSAnimationProgress)progress
+{
+	NSColor *newColor = [myStartColor blendedColorWithFraction:progress ofColor:myEndColor];
+	// NSLog(@"%@ %.3f %@", self, progress, newColor);
+	[myTextField setTextColor:newColor];
+	[myTextField setNeedsDisplay:YES];
+}
+
+@end
+
 @implementation KTPlaceholderController
 
 - (id)init
@@ -29,6 +63,9 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 - (void)dealloc
 {
+	[myAnimation1 release];
+	[myAnimation2 release];
+	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
@@ -125,15 +162,32 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
 	[oLowLink setAttributedTitle:attrString];
 	
-	// LATER -- FOR VARIATIONS.  Get the localized strings collected though.
-//	[oDemoNotification setStringValue:NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
-//	[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults integerForKey:@"coinFlip"] == 2)		// serve up half the users with a rounded colorful button.
+	{
+		[oDemoNotification setStringValue:NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
+	}
+	else
+	{
+		[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
+	}
+	myAnimation1 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor blackColor] endColor:[NSColor redColor] textField:oDemoNotification];
+	myAnimation2 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor redColor] endColor:[NSColor blackColor] textField:oDemoNotification];
+	
+	[myAnimation1 setDelegate:self];
+	[myAnimation2 setDelegate:self];
+	[myAnimation1 startAnimation];
 	
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
 }
 
+- (void)animationDidEnd:(NSAnimation *)animation
+{
+	if (animation == myAnimation1) [myAnimation2 performSelector:@selector(startAnimation) withObject:nil afterDelay:0.0];
+	if (animation == myAnimation2) [myAnimation1 performSelector:@selector(startAnimation) withObject:nil afterDelay:0.0];
+}
 - (IBAction) disclose:(id)sender;
 {
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
