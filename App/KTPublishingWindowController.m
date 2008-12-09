@@ -8,6 +8,8 @@
 
 #import "KTPublishingWindowController.h"
 
+#import <Connection/Connection.h>
+
 
 @implementation KTPublishingWindowController
 
@@ -31,6 +33,11 @@
     // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
     
+    // Outline view uses special cell class
+    NSCell *cell = [[CKTransferProgressCell alloc] initTextCell:@""];
+    [oTransferDetailsTableColumn setDataCell:cell];
+    [cell release];
+    
     // Start progress indicator
     [oProgressIndicator startAnimation:self];
 }
@@ -38,6 +45,13 @@
 - (KTTransferController *)transferController;
 {
     return _transferController;
+}
+
+/*  There's no point allowing the user to select items in the publishing sheet.
+ */
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+{
+    return NO;
 }
 
 @end

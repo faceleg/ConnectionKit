@@ -17,6 +17,7 @@
     IBOutlet NSTextField            *oMessageLabel;
     IBOutlet NSProgressIndicator    *oProgressIndicator;
     IBOutlet NSButton               *oFirstButton;
+    IBOutlet NSTableColumn          *oTransferDetailsTableColumn;
     
     
     @private

@@ -91,6 +91,8 @@
 				<string>NSTextField</string>
 				<key>oProgressIndicator</key>
 				<string>NSProgressIndicator</string>
+				<key>oTransferDetailsTableColumn</key>
+				<string>NSTableColumn</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindowController</string>
