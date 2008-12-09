@@ -183,7 +183,8 @@ NSString *KTMediaLogDomain = @"Media";
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		// BUGSID:37319 This is a bit of a hack to stop movie thumbnail intermediates being GC'd and breaking KVO.
-        if ([[aMediaFile valueForKeyPath:@"scalingProperties.containers"] count] == 0)
+        if (![aMediaFile isKindOfClass:[KTInDocumentMediaFile class]] ||
+            [[aMediaFile valueForKeyPath:@"scalingProperties.containers"] count] == 0)
         {
             [[self managedObjectContext] deleteObject:aMediaFile];
         }
