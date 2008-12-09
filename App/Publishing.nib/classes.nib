@@ -87,6 +87,8 @@
 			<dict>
 				<key>oFirstButton</key>
 				<string>NSButton</string>
+				<key>oInformativeTextLabel</key>
+				<string>NSTextField</string>
 				<key>oMessageLabel</key>
 				<string>NSTextField</string>
 				<key>oProgressIndicator</key>

@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTTransferController;
+@class KTTransferController, CKTransferRecord;
 
 
 @interface KTPublishingWindowController : NSWindowController
 {
     IBOutlet NSTextField            *oMessageLabel;
+    IBOutlet NSTextField            *oInformativeTextLabel;
     IBOutlet NSProgressIndicator    *oProgressIndicator;
     IBOutlet NSButton               *oFirstButton;
     IBOutlet NSTableColumn          *oTransferDetailsTableColumn;
@@ -22,9 +23,11 @@
     
     @private
     KTTransferController    *_transferController;
+    CKTransferRecord        *_currentTransfer;
 }
 
 - (id)initWithTransferController:(KTTransferController *)transferController;
 - (KTTransferController *)transferController;
 
+- (CKTransferRecord *)currentTransfer;
 @end
