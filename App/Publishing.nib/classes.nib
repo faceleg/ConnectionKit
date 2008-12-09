@@ -79,6 +79,11 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>firstButtonAction</key>
+				<string>NSButton</string>
+			</dict>
 			<key>CLASS</key>
 			<string>KTPublishingWindowController</string>
 			<key>LANGUAGE</key>

@@ -7,12 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTTransferController.h"
 
 
 @class KTTransferController, CKTransferRecord;
 
 
-@interface KTPublishingWindowController : NSWindowController
+@interface KTPublishingWindowController : NSWindowController <KTTransferControllerDelegate>
 {
     IBOutlet NSTextField            *oMessageLabel;
     IBOutlet NSTextField            *oInformativeTextLabel;
@@ -24,7 +25,10 @@
     @private
     KTTransferController    *_transferController;
     CKTransferRecord        *_currentTransfer;
+    BOOL                    _didFail;
 }
+
+- (IBAction)firstButtonAction:(NSButton *)sender;
 
 - (id)initWithTransferController:(KTTransferController *)transferController;
 - (KTTransferController *)transferController;

@@ -12,22 +12,29 @@
 
 
 @class KTDocument, KTDocumentInfo;
+@protocol KTTransferControllerDelegate;
 
 
 @interface KTTransferController : NSObject 
 {
-	KTDocumentInfo	*myDocumentInfo;
-    BOOL            myOnlyPublishChanges;
+	KTDocumentInfo	*_documentInfo;
+    BOOL            _onlyPublishChanges;
+    
+    id <KTTransferControllerDelegate>   _delegate;
     
 	id <CKConnection>	myConnection;
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    NSMutableSet    *myUploadedMedia;
-    NSMutableSet    *myUploadedResources;
+    NSMutableSet    *_uploadedMedia;
+    NSMutableSet    *_uploadedResources;
 }
 
 - (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
+
+// Delegate
+- (id <KTTransferControllerDelegate>)delegate;
+- (void)setDelegate:(id <KTTransferControllerDelegate>)delegate;
 
 // Accessors
 - (KTDocumentInfo *)documentInfo;
@@ -41,3 +48,10 @@
 - (NSString *)baseRemotePath;
 
 @end
+
+
+@protocol KTTransferControllerDelegate
+- (void)transferController:(KTTransferController *)transferController didFailWithError:(NSError *)error;
+@end
+
+

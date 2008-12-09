@@ -70,11 +70,11 @@
 	[super init];
 	if ( nil != self )
 	{
-		myDocumentInfo = [aDocumentInfo retain];
-        myOnlyPublishChanges = publishChanges;
+		_documentInfo = [aDocumentInfo retain];
+        _onlyPublishChanges = publishChanges;
         
-        myUploadedMedia = [[NSMutableSet alloc] init];
-        myUploadedResources = [[NSMutableSet alloc] init];
+        _uploadedMedia = [[NSMutableSet alloc] init];
+        _uploadedResources = [[NSMutableSet alloc] init];
 	}
 	
 	return self;
@@ -82,25 +82,32 @@
 
 - (void)dealloc
 {
-	[myDocumentInfo release];
+	[_documentInfo release];
 	OBASSERT(!myConnection);	// TODO: Gracefully close connection
     [_baseTransferRecord release];
     [_rootTransferRecord release];
-    [myUploadedMedia release];
-    [myUploadedResources release];
+    [_uploadedMedia release];
+    [_uploadedResources release];
 	
 	[super dealloc];
 }
+
+#pragma mark -
+#pragma mark Delegate
+
+- (id <KTTransferControllerDelegate>)delegate { return _delegate; }
+
+- (void)setDelegate:(id <KTTransferControllerDelegate>)delegate { _delegate = delegate; }
 
 #pragma mark -
 #pragma mark Accessors
 
 - (KTDocumentInfo *)documentInfo
 {
-	return myDocumentInfo;
+	return _documentInfo;
 }
 
-- (BOOL)onlyPublishChanges { return myOnlyPublishChanges; }
+- (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
 
 #pragma mark -
 #pragma mark Connection
@@ -187,6 +194,42 @@
    }
 }
 
+/*  We either ignore the error and continue or fail and inform the delegate
+ */
+- (void)connection:(id <CKConnection>)con didReceiveError:(NSError *)error;
+{
+    if (con != [self connection]) return;
+    
+    
+    
+    if ([[error userInfo] objectForKey:ConnectionDirectoryExistsKey]) 
+	{
+		return; //don't alert users to the fact it already exists, silently fail
+	}
+	else if ([error code] == 550 || [[[error userInfo] objectForKey:@"protocol"] isEqualToString:@"createDirectory:"] )
+	{
+		return;
+	}
+	else if ([con isKindOfClass:NSClassFromString(@"WebDAVConnection")] && 
+			 ([[[error userInfo] objectForKey:@"directory"] isEqualToString:@"/"] || [error code] == 409 || [error code] == 204 || [error code] == 404))
+	{
+		// web dav returns a 409 if we try to create / .... which is fair enough!
+		// web dav returns a 204 if a file to delete is missing.
+		// 404 if the file to delete doesn't exist
+		
+		return;
+	}
+	else if ([error code] == kSetPermissions) // File connection set permissions failed ... ignore this (why?)
+	{
+		return;
+	}
+	else
+	{
+		[con forceDisconnect];
+        [[self delegate] transferController:self didFailWithError:error];
+	}
+}
+
 /*  The root directory that all content goes into. For normal publishing this is "documentRoot/subfolder"
  */
 - (NSString *)baseRemotePath
@@ -261,7 +304,7 @@
     CKTransferRecord *transferRecord = [notification object];
     
     id object = [transferRecord propertyForKey:@"object"];
-    if (object)
+    if (object && ![transferRecord error])
     {
         NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
         if (digest)
@@ -502,7 +545,7 @@
 {
     if (![self onlyPublishChanges] || [media boolForKey:@"isStale"])
     {
-        if (![myUploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+        if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
         {
             NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
             NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
@@ -513,7 +556,7 @@
                 [transferRecord setProperty:media forKey:@"object"];
                 
                 // Record that we're uploading the object
-                [myUploadedMedia addObject:media];
+                [_uploadedMedia addObject:media];
             }
         }
     }
@@ -533,7 +576,7 @@
 {
     resourceURL = [resourceURL absoluteURL];    // Ensures hashing and -isEqual: work right
     
-    if (![myUploadedResources containsObject:resourceURL])
+    if (![_uploadedResources containsObject:resourceURL])
     {
         NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
         NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
@@ -541,7 +584,7 @@
         
         [self uploadContentsOfURL:resourceURL toPath:resourceRemotePath];
         
-        [myUploadedResources addObject:resourceURL];
+        [_uploadedResources addObject:resourceURL];
     }
 }
 

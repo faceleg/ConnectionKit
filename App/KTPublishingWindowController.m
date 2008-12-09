@@ -18,6 +18,7 @@
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
         _transferController = [transferController retain];
+        [transferController setDelegate:self];
         
         // Get notified when transfers start or end
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -39,6 +40,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [_currentTransfer release];
+    [_transferController setDelegate:nil];
     [_transferController release];
     
     [super dealloc];
@@ -65,11 +67,42 @@
 }
 
 #pragma mark -
-#pragma mark Accessors
+#pragma mark Actions
+
+- (IBAction)firstButtonAction:(NSButton *)sender
+{
+    if (_didFail)
+    {
+        [NSApp endSheet:[self window]];
+        [[self window] orderOut:self];
+    }
+    else
+    {
+        // TODO: Stop the transfer and close the sheet
+    }
+}
+
+#pragma mark -
+#pragma mark Transfer Controller
 
 - (KTTransferController *)transferController;
 {
     return _transferController;
+}
+
+- (void)transferController:(KTTransferController *)transferController didFailWithError:(NSError *)error
+{
+    _didFail = YES;
+    
+    [oMessageLabel setStringValue:NSLocalizedString(@"Publishing failed.", @"Upload message text")];
+    
+    [oInformativeTextLabel setTextColor:[NSColor redColor]];
+    NSString *errorDescription = [error localizedDescription];
+    if (errorDescription) [oInformativeTextLabel setStringValue:errorDescription];
+    
+    [oProgressIndicator stopAnimation:self];
+    
+    [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
 }
 
 #pragma mark -
