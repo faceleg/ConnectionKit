@@ -38,6 +38,7 @@
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
+#import "KTPublishingWindowController.h"
 #import "KTToolbars.h"
 #import "KTTransferController.h"
 #import "KTHTMLTextBlock.h"
@@ -2232,20 +2233,42 @@ from representedObject */
 
 - (IBAction)publishSiteChanges:(id)sender
 {
-    KTTransferController *controller = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
-                                                                       onlyPublishChanges:YES];
-    [controller startUploading];
+    // Start publishing
+    KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+                                                                               onlyPublishChanges:YES];
+    [transferController startUploading];
     
-    // FIXME: must -release the controller later
+    // Bring up UI
+    NSWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    [transferController release];
+    
+    [NSApp beginSheet:[windowController window]
+       modalForWindow:[self window]
+        modalDelegate:nil
+       didEndSelector:nil
+          contextInfo:NULL];
+    
+    // FIXME: must -release the window controller later
 }
 
 - (IBAction)publishEntireSite:(id)sender
 {
-    KTTransferController *controller = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
-                                                                       onlyPublishChanges:NO];
-    [controller startUploading];
+    // Start publishing
+    KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+                                                                               onlyPublishChanges:NO];
+    [transferController startUploading];
     
-    // FIXME: must -release the controller later
+    // Bring up UI
+    NSWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    [transferController release];
+    
+    [NSApp beginSheet:[windowController window]
+       modalForWindow:[self window]
+        modalDelegate:nil
+       didEndSelector:nil
+          contextInfo:NULL];
+    
+    // FIXME: must -release the window controller later
 }
 
 /*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed

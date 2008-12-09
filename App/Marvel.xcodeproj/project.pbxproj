@@ -300,6 +300,9 @@
 		27ACADB60D589C8C004732D0 /* Z.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACADB50D589C8C004732D0 /* Z.png */; };
 		27AD539B0D6B3E8700883550 /* KTHTMLParser+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD539A0D6B3E8700883550 /* KTHTMLParser+CSS.m */; };
 		27AD53A60D6B40C300883550 /* KTHTMLParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* KTHTMLParser+Private.h */; };
+		27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */; };
+		27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */; };
+		27AE758D0EEE9D8000409D80 /* Publishing.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27AE758C0EEE9D8000409D80 /* Publishing.nib */; };
 		27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B17DAB0CA80A9E00187918 /* KTWebViewComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */; settings = {ATTRIBUTES = (); }; };
@@ -1654,6 +1657,9 @@
 		27ACADB50D589C8C004732D0 /* Z.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Z.png; sourceTree = "<group>"; };
 		27AD539A0D6B3E8700883550 /* KTHTMLParser+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+CSS.m"; sourceTree = "<group>"; };
 		27AD53A40D6B40C300883550 /* KTHTMLParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTHTMLParser+Private.h"; sourceTree = "<group>"; };
+		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
+		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
+		27AE758C0EEE9D8000409D80 /* Publishing.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Publishing.nib; sourceTree = "<group>"; };
 		27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFile.h; sourceTree = "<group>"; };
 		27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
@@ -2969,6 +2975,44 @@
 			name = "Code Injection";
 			sourceTree = "<group>";
 		};
+		27AE74710EEDE68600409D80 /* Host Properties */ = {
+			isa = PBXGroup;
+			children = (
+				3C202D7807DFC30800DE4994 /* KTHostArrayController.h */,
+				3C202D7907DFC30800DE4994 /* KTHostArrayController.m */,
+				3C202D7A07DFC30800DE4994 /* KTHostSetupController.h */,
+				3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */,
+				CEAE1667084530C1007025D4 /* KTHostProperties.h */,
+				CEAE1668084530C1007025D4 /* KTHostProperties.m */,
+				79B7310E0A33BF9A008F7F58 /* KTHost.h */,
+				79B7310F0A33BF9A008F7F58 /* KTHost.m */,
+			);
+			name = "Host Properties";
+			sourceTree = "<group>";
+		};
+		27AE74720EEDE6AD00409D80 /* Publishing */ = {
+			isa = PBXGroup;
+			children = (
+				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
+				3CBDE9100EBA65D20059C56C /* KTTransferController.h */,
+				3CBDE9110EBA65D20059C56C /* KTTransferController.m */,
+				3C202D6107DFC18600DE4994 /* KTOldTransferController.h */,
+				27F0EDC00D0C556600B7555A /* KTOldTransferController+Internal.h */,
+				3C202D6207DFC18600DE4994 /* KTOldTransferController.m */,
+				27F0EDC10D0C556600B7555A /* KTOldTransferController+Media.m */,
+				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
+				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
+				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
+				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
+				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
+				277EE9200CFD8CFF005617FE /* KTStalenessManager.h */,
+				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
+				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
+				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
+			);
+			name = Publishing;
+			sourceTree = "<group>";
+		};
 		27DB80770C84658200E29C38 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -3232,27 +3276,8 @@
 		3C202D5B07DFC13D00DE4994 /* Remote Transfer */ = {
 			isa = PBXGroup;
 			children = (
-				3CBDE9100EBA65D20059C56C /* KTTransferController.h */,
-				3CBDE9110EBA65D20059C56C /* KTTransferController.m */,
-				3C202D6107DFC18600DE4994 /* KTOldTransferController.h */,
-				27F0EDC00D0C556600B7555A /* KTOldTransferController+Internal.h */,
-				3C202D6207DFC18600DE4994 /* KTOldTransferController.m */,
-				27F0EDC10D0C556600B7555A /* KTOldTransferController+Media.m */,
-				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
-				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
-				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
-				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
-				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
-				3C202D7807DFC30800DE4994 /* KTHostArrayController.h */,
-				3C202D7907DFC30800DE4994 /* KTHostArrayController.m */,
-				3C202D7A07DFC30800DE4994 /* KTHostSetupController.h */,
-				3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */,
-				CEAE1667084530C1007025D4 /* KTHostProperties.h */,
-				CEAE1668084530C1007025D4 /* KTHostProperties.m */,
-				79B7310E0A33BF9A008F7F58 /* KTHost.h */,
-				79B7310F0A33BF9A008F7F58 /* KTHost.m */,
-				277EE9200CFD8CFF005617FE /* KTStalenessManager.h */,
-				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
+				27AE74720EEDE6AD00409D80 /* Publishing */,
+				27AE74710EEDE68600409D80 /* Host Properties */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
@@ -4806,6 +4831,7 @@
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
 				3CBDE90A0EBA65810059C56C /* KTDesign+KTTransferController.h in Headers */,
 				3CBDE9120EBA65D20059C56C /* KTTransferController.h in Headers */,
+				27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5509,6 +5535,7 @@
 				27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */,
 				27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */,
 				27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */,
+				27AE758D0EEE9D8000409D80 /* Publishing.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6148,6 +6175,7 @@
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTTransferController.m in Sources */,
+				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
