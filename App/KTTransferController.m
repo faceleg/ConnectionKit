@@ -13,6 +13,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
+#import "KTHostProperties.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
 
@@ -21,6 +22,7 @@
 #import "KTMediaFileUpload.h"
 
 #import "NSBundle+KTExtensions.h"
+#import "NSData+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -35,6 +37,8 @@
 
 
 @interface KTTransferController (Private)
+- (void)uploadGoogleSiteMapIfNeeded;
+
 - (void)uploadPage:(KTAbstractPage *)page;
 
 - (void)uploadDesign;
@@ -47,6 +51,7 @@
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
+- (void)pingURL:(NSURL *)URL;
 
 - (CKTransferRecord *)rootTransferRecord;
 @end
@@ -158,6 +163,28 @@
     [credential release];
 }
 
+/*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
+ */
+- (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
+{
+   if ([[self documentInfo] boolForKey:@"generateGoogleSitemap"])
+   {
+       NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+       NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
+       
+       NSString *pingURLString = [[NSString alloc] initWithFormat:
+                                  @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
+                                  [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
+                                  
+       NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
+       [pingURLString release];
+       
+       [self pingURL:pingURL];
+       [pingURL release];
+       
+   }
+}
+
 /*  The root directory that all content goes into. For normal publishing this is "documentRoot/subfolder"
  */
 - (NSString *)baseRemotePath
@@ -214,8 +241,13 @@
 	// Upload design
     [[self proxyForThread:nil] uploadDesign];
 	
+	// Upload sitemap if the site has one
+    [[self proxyForThread:nil] uploadGoogleSiteMapIfNeeded];
 	
-	
+    
+    // Once everything is uploaded, disconnect
+    [[(NSObject *)[self connection] proxyForThread:nil] disconnect];
+    
 	[pool release];
 }
 
@@ -244,6 +276,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:CKTransferRecordTransferDidFinishNotification
                                                   object:transferRecord];
+}
+
+/*  Uploads the site map if the site has the option enabled
+ */
+- (void)uploadGoogleSiteMapIfNeeded
+{
+    if ([[self documentInfo] boolForKey:@"generateGoogleSitemap"])
+    {
+        NSString *sitemapXML = [[self documentInfo] googleSiteMapXMLString];
+        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSData *gzipped = [siteMapData compressGzip];
+        
+        NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
+        [self uploadData:gzipped toPath:siteMapPath];
+    }
 }
 
 #pragma mark -
@@ -611,6 +658,18 @@
     }
     
     return _rootTransferRecord;
+}
+
+/*  Sends a GET request to the URL but does nothing with the result.
+ */
+- (void)pingURL:(NSURL *)URL
+{
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:URL
+                                                  cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                              timeoutInterval:10.0];
+    
+    [NSURLConnection connectionWithRequest:request delegate:nil];
+    [request release];
 }
 
 @end
