@@ -84,6 +84,7 @@
 {
 	[myDocumentInfo release];
 	OBASSERT(!myConnection);	// TODO: Gracefully close connection
+    [_baseTransferRecord release];
     [_rootTransferRecord release];
     [myUploadedMedia release];
     [myUploadedResources release];
@@ -164,6 +165,7 @@
 }
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
+ *  // TODO: Don't ping the server if we're exporting
  */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
@@ -648,6 +650,18 @@
     return result;
 }
 
+/*  Sends a GET request to the URL but does nothing with the result.
+ */
+- (void)pingURL:(NSURL *)URL
+{
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:URL
+                                                  cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                              timeoutInterval:10.0];
+    
+    [NSURLConnection connectionWithRequest:request delegate:nil];
+    [request release];
+}
+
 /*  Create the root record if needed
  */
 - (CKTransferRecord *)rootTransferRecord
@@ -660,16 +674,18 @@
     return _rootTransferRecord;
 }
 
-/*  Sends a GET request to the URL but does nothing with the result.
+/*  The transfer record corresponding to -baseRemotePath
  */
-- (void)pingURL:(NSURL *)URL
+- (CKTransferRecord *)baseTransferRecord
 {
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:URL
-                                                  cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                              timeoutInterval:10.0];
+    if (!_baseTransferRecord)
+    {
+        _baseTransferRecord = [CKTransferRecord recordForFullPath:[self baseRemotePath]
+                                                         withRoot:[self rootTransferRecord]];
+        [_baseTransferRecord retain];
+    }
     
-    [NSURLConnection connectionWithRequest:request delegate:nil];
-    [request release];
+    return _baseTransferRecord;
 }
 
 @end

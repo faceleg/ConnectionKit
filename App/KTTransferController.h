@@ -21,6 +21,7 @@
     
 	id <CKConnection>	myConnection;
     CKTransferRecord    *_rootTransferRecord;
+    CKTransferRecord    *_baseTransferRecord;
     
     NSMutableSet    *myUploadedMedia;
     NSMutableSet    *myUploadedResources;
