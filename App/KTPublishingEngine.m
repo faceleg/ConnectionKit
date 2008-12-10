@@ -22,7 +22,9 @@
 #import "KTMediaFileUpload.h"
 
 #import "NSBundle+KTExtensions.h"
+#import "NSBundle+Karelia.h"
 #import "NSData+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -79,6 +81,11 @@
         
         _uploadedMedia = [[NSMutableSet alloc] init];
         _uploadedResources = [[NSMutableSet alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(transferRecordDidFinish:)
+                                                     name:CKTransferRecordTransferDidFinishNotification
+                                                   object:nil];
 	}
 	
 	return self;
@@ -86,6 +93,8 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 	// The connection etc. should already have been shut down
     OBASSERT(!_connection);
     OBASSERT(!_baseTransferRecord);
@@ -121,11 +130,8 @@
     _hasStarted = YES;
     
     
-    // Setup root transfer record
+    // Setup connection and transfer records
     _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
-    
-    
-    // Create connection
     [self connect];
     
     
@@ -149,11 +155,14 @@
 
 - (void)cancel
 {
-    [[self connection] forceDisconnect];
-    [self didFinish];
+    if ([self hasStarted] && ![self hasFinished])
+    {
+        [[self connection] forceDisconnect];
+        [self didFinish];
+    }
 }
 
-/*  Called once we've finished, either because of -cancel or publishing was successful.
+/*  Called once we've finished, regardless of success.
  */
 - (void)didFinish
 {
@@ -247,6 +256,7 @@
  */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
+    // Ping google about the sitemap if there is one
     if ([[self documentInfo] boolForKey:@"generateGoogleSitemap"])
     {
         NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
@@ -263,6 +273,14 @@
         [pingURL release];
         
     }
+    
+    
+    // Record the app version published with
+    NSManagedObject *hostProperties = [[self documentInfo] hostProperties];
+    [hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
+    [hostProperties setValue:[[NSBundle mainBundle] buildVersion] forKey:@"publishedAppBuildVersion"];
+    
+    
     
     [self didFinish];
     [[self delegate] publishingEngineDidFinish:self];   // TODO: Should we wait until the ping is over before sending this?
@@ -355,25 +373,38 @@
 - (void)transferRecordDidFinish:(NSNotification *)notification
 {
     CKTransferRecord *transferRecord = [notification object];
-    
     id object = [transferRecord propertyForKey:@"object"];
-    if (object && ![transferRecord error])
+    
+    if (object &&
+        ![transferRecord error] &&
+        [self hasStarted] &&
+        ![self hasFinished] &&
+        [transferRecord root] == [self rootTransferRecord])
     {
-        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
-        if (digest)
+        if ([object isKindOfClass:[KTPage class]])
         {
-            [object setPublishedDataDigest:digest];
+            // Record the digest and path of the page published
+            [object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
             [object setPublishedPath:[transferRecord propertyForKey:@"path"]];
+        }
+        else if ([object isKindOfClass:[KTDesign class]])
+        {
+            // Record the version of the design published
+            NSManagedObjectContext *moc = [[self documentInfo] managedObjectContext];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", [(KTDesign *)object identifier]];
+            
+            NSArray *designPublishingInfo = [moc objectsWithEntityName:@"DesignPublishingInfo"
+                                                             predicate:predicate
+                                                                 error:NULL];
+            
+            [designPublishingInfo setValue:[(KTDesign *)object marketingVersion] forKey:@"versionLastPublished"];
         }
         else
         {
+            // It's probably a simple media object. Mark it non-stale.
             [object setBool:NO forKey:@"isStale"];
         }
     }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:CKTransferRecordTransferDidFinishNotification
-                                                  object:transferRecord];
 }
 
 /*  Uploads the site map if the site has the option enabled
@@ -532,10 +563,13 @@
     }
     
     
+    // Create the design directory
 	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-	
-	
-	// Upload the design's resources
+	CKTransferRecord *designTransferRecord = [self createDirectory:remoteDesignDirectoryPath];
+    [designTransferRecord setProperty:design forKey:@"object"];
+    
+    
+    // Upload the design's resources
 	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
 	NSURL *aResource;
 	while (aResource = [resourcesEnumerator nextObject])

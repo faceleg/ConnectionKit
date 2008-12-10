@@ -487,8 +487,6 @@
 		3CB5E2B3080303C7006BB008 /* links.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A9080303C7006BB008 /* links.png */; };
 		3CB5E2B6080303C7006BB008 /* qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AC080303C7006BB008 /* qmark.png */; };
 		3CB5E2B7080303C7006BB008 /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AD080303C7006BB008 /* design.icns */; };
-		3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
-		3CBDE90A0EBA65810059C56C /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; };
 		3CBDE9120EBA65D20059C56C /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
@@ -1578,8 +1576,6 @@
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
-		273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDesign+KTTransferController.h"; sourceTree = "<group>"; };
-		273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+KTTransferController.m"; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
@@ -3006,8 +3002,6 @@
 				27F0EDC00D0C556600B7555A /* KTOldTransferController+Internal.h */,
 				3C202D6207DFC18600DE4994 /* KTOldTransferController.m */,
 				27F0EDC10D0C556600B7555A /* KTOldTransferController+Media.m */,
-				273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */,
-				273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
 				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
@@ -4835,7 +4829,6 @@
 				CE01A8250EAFD63600BDF264 /* KSWebViewController.h in Headers */,
 				CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */,
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
-				3CBDE90A0EBA65810059C56C /* KTDesign+KTTransferController.h in Headers */,
 				3CBDE9120EBA65D20059C56C /* KTPublishingEngine.h in Headers */,
 				27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */,
 			);
@@ -6181,7 +6174,6 @@
 				CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */,
 				CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */,
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
-				3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTPublishingEngine.m in Sources */,
 				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
 			);
