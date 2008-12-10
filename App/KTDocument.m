@@ -726,14 +726,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-	OFF((@"asking to KTDocument to validate toolbar item: %@ %@", [toolbarItem itemIdentifier], NSStringFromSelector([toolbarItem action]) ));
-	
-	if ( kGeneratingPreview != [[self windowController] publishingMode] )
-	{
-		return NO; // how can toolbars be doing anything if we're publishing?
-	}	
-	
-    // Enable the Edit Raw HTML for blocks of editable HTML, or if the selected pagelet or page is HTML.
+	// Enable the Edit Raw HTML for blocks of editable HTML, or if the selected pagelet or page is HTML.
 	if ( [toolbarItem action] == @selector(editRawHTMLInSelectedBlock:) )
 	{
 		if ([self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock.DOMNode"]) return YES;

@@ -50,6 +50,4 @@
 - (KTMediaManager *)mediaManager;
 - (NSUndoManager *)undoManager;
 
-- (BOOL)documentIsPublishing;
-
 @end

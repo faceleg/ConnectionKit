@@ -127,13 +127,6 @@
 	}
 }
 
-/*!	A non-zero means we are publishing it somewhere; zero means shown locally in the preview window.
-enum { kGeneratingPreview, kGeneratingLocal, kGeneratingRemote, kGeneratingRemoteExport };
-*/
-- (KTHTMLGenerationPurpose)publishingMode { return myPublishingMode; }
-
-- (void)setPublishingMode:(KTHTMLGenerationPurpose)aPublishingMode { myPublishingMode = aPublishingMode; }
-
 - (NSString *)webViewTitle
 {
     return myWebViewTitle;

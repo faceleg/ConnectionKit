@@ -108,25 +108,11 @@ void dumpBacktrace(unsigned int startFrameNumber)
 	[super close];
 }
 
-// Private override, this is hit downstream from NSapplication sendEvent in Tiger when you change the key window.
-- (void)_setFrameNeedsDisplay:(BOOL)fp8;
-{
-	if ( [[self windowController] publishingMode] != kGeneratingPreview )
-	{
-		OFF((@"_setFrameNeedsDisplay ignored"));
-		return;
-	}
-	[super _setFrameNeedsDisplay:fp8];
-}
-
+/*  In addition to the webview's usual event handling, we want to pass it some additional info.
+ *  This is disabled whenever there's a sheet covering the window.
+ */
 - (void)sendEvent:(NSEvent *)anEvent
 {
-	if ( [[self windowController] publishingMode] != kGeneratingPreview )
-	{
-		OFF((@"ignoring event:%@", anEvent));
-		return;
-	}
-
 	NSEventType type = [anEvent type];
 	if (type == NSLeftMouseDown)
 	{
@@ -137,24 +123,40 @@ void dumpBacktrace(unsigned int startFrameNumber)
 		{
 			if ([anEvent clickCount] == 1)
 			{
-				BOOL cont = [((KTWebView *)oWebKitView) earlySingleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+				BOOL cont = YES;
+                if (![self attachedSheet])
+                {
+                    cont = [((KTWebView *)oWebKitView) earlySingleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+                }
 				if (cont)
 				{
 					// let webview handle it
 					[super sendEvent:anEvent];
-					// now we get a chance to process
-					[((KTWebView *)oWebKitView) singleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+					
+                    // now we get a chance to process
+                    if (![self attachedSheet])
+                    {
+                        [((KTWebView *)oWebKitView) singleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+                    }
 				}
 			}
 			else if ([anEvent clickCount] == 2)
 			{
-				BOOL cont = [((KTWebView *)oWebKitView) earlyDoubleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+				BOOL cont = YES;
+                if (![self attachedSheet])
+                {
+                    cont = [((KTWebView *)oWebKitView) earlyDoubleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+                }
 				if (cont)
 				{
 					// let webview handle it
 					[super sendEvent:anEvent];
+                    
 					// now we get a chance to process
-					[((KTWebView *)oWebKitView) doubleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+                    if (![self attachedSheet])
+                    {
+                        [((KTWebView *)oWebKitView) doubleClickAtCoordinates:mouseLoc modifierFlags:[anEvent modifierFlags]];
+                    }
 				}
 			}
 			else	// triple click or whatever .. just let it be processed normally

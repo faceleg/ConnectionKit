@@ -111,11 +111,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSButton *myBuyNowButton;
     
     
-    // Publishing
-    KTHTMLGenerationPurpose         myPublishingMode;
-    //KTPublishingWindowController    *myPublishingSheet;
-	
-    
     // Controller Chain
     NSMutableArray  *_childControllers;
 }
@@ -270,9 +265,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
-
-- (KTHTMLGenerationPurpose)publishingMode;
-- (void)setPublishingMode:(KTHTMLGenerationPurpose)aPublishingMode;
 
 - (NSString *)webViewTitle;
 - (void)setWebViewTitle:(NSString *)aWebViewTitle;

@@ -1453,14 +1453,7 @@ from representedObject */
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-	OFF((@"asking to validate toolbar item: %@", [toolbarItem itemIdentifier]));
-	
-	if ( kGeneratingPreview != [self publishingMode] )
-	{
-		return NO; // how can toolbars be doing anything if we're publishing?
-	}	
-	
-    if ( [toolbarItem action] == @selector(addPage:) )
+	if ( [toolbarItem action] == @selector(addPage:) )
     {
         return YES;
     }
@@ -1785,17 +1778,6 @@ from representedObject */
 		[[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(windowSize)
 												  forKey:@"DefaultDocumentWindowContentSize"];
     }
-}
-
-/*!	Window has become main, so we might have changed documents.  Make sure the global windows are current.
-*/
-- (void)windowDidBecomeMain:(NSNotification *)notification;
-{
-	///only update menus, which will query document contents, if we're in normal mode
-	if ( kGeneratingPreview == [self publishingMode] )
-	{
-		[self updateEditMenuItems];
-	}
 }
 
 - (void)windowWillClose:(NSNotification *)notification;

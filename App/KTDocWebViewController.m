@@ -998,45 +998,7 @@
 	else if (requestURL)
 	{
 		NSString *relativePath = [requestURL relativePath];
-		if ([relativePath hasPrefix:[NSString stringWithFormat:@"/%@", [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]]])
-		{
-			switch ([[self windowController] publishingMode])
-			{
-				case kGeneratingPreview:
-				{
-
-					 NSMutableString *substituted = [NSMutableString stringWithString:[requestURL absoluteString]];
-					 [substituted replaceOccurrencesOfString:@"applewebdata://" 
-												  withString:[NSString stringWithFormat:@"media:/%@/", [[[self document] documentInfo] siteID]]
-													 options:NSLiteralSearch 
-													   range:NSMakeRange(0,[substituted length])];
-					 
-					 // OLDER WEBKIT:
-					 // right: converts a string like this: applewebdata://71C3B191-A2A9-4589-8BAE-8A1F8CD1DE02/_Media/placeholder_large.jpeg
-					 // to this:               media:/11D16F2645B64AB190E6/71C3B191-A2A9-4589-8BAE-8A1F8CD1DE02/_Media/placeholder_large.jpeg
-					 //
-					 // NEWER WEBKIT (JAN 2007):
-					 //                applewebdata://81CA4F1D-BDC9-40B6-A71C-D124FD4EEB13/_Media/placeholder_large.jpeg
-					 //to media:/F46E731F6A6A442D8E67/242AABE8-4F4F-4F83-8121-09632B149AF7/_Media/placeholder_large.jpeg      
-					 
-//					NSString *requestURLString = [requestURL absoluteString];
-//					NSRange whereMedia = [requestURLString rangeOfString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]];
-//					NSString *substitutedBAD = [NSString stringWithFormat:@"media:/%@%@",
-//						[[self document] documentID],
-//						[requestURLString substringFromIndex:NSMaxRange(whereMedia)]];
-					// WRONG - it forms url like this:  media:/11D16F2645B64AB190E6/placeholder_large.jpeg
-					
-					
-					//NSLog(@"intercepted URL: %@", [requestURL absoluteString]);
-					NSURL *substituteURL = [NSURL URLWithUnescapedString:substituted];
-					//NSLog(@"substituting URL: %@", [substituteURL absoluteString]);
-					return [NSURLRequest requestWithURL:substituteURL];
-				}
-				default:
-					break;
-			}
-		}
-		else if ([[requestURL scheme] isEqualToString:@"svxmedia"])
+		if ([[requestURL scheme] isEqualToString:@"svxmedia"])
 		{
 			NSURLRequest *result = request; 
 			

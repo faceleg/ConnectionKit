@@ -112,13 +112,4 @@
 	myDelegateOwner = anObject;
 }
 
-/*  Plugins aren't allowed access to KTDocument or KTDocWindowController.
- *  This method allows them access to the publishing status.
- */
-- (BOOL)documentIsPublishing
-{
-    KTHTMLGenerationPurpose status = [[[self document] windowController] publishingMode]; 
-    return (status != kGeneratingPreview && status != kGeneratingQuickLookPreview);
-}
-
 @end
