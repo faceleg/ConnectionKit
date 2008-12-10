@@ -60,7 +60,11 @@
 
 
 @protocol KTTransferControllerDelegate
-- (void)transferController:(KTPublishingEngine *)transferController didFailWithError:(NSError *)error;
+- (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
+- (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
+
+- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine;
+- (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error;
 @end
 
 

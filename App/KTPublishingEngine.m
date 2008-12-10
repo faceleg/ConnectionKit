@@ -235,6 +235,12 @@
     [credential release];
 }
 
+- (void)connection:(id <CKConnection>)con upload:(NSString *)remotePath progressedTo:(NSNumber *)percent;
+{
+    // Just pass on a simplified version of the message to our delegate
+    if (![self hasFinished]) [[self delegate] publishingEngineDidUpdateProgress:self];
+}
+
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  *  // TODO: Don't ping the server if we're exporting.
  *  // TODO: Don't process the sitemap if the connection failed.
@@ -291,7 +297,7 @@
 	else
 	{
 		[con forceDisconnect];
-        [[self delegate] transferController:self didFailWithError:error];
+        [[self delegate] publishingEngine:self didFailWithError:error];
 	}
 }
 
@@ -333,6 +339,9 @@
     
     // Once everything is uploaded, disconnect
     [[(NSObject *)[self connection] proxyForThread:nil] disconnect];
+    
+    // Inform the delegate
+    [[(NSObject *)[self delegate] proxyForThread:nil] publishingEngineDidFinishGeneratingContent:self];
     
 	[pool release];
 }

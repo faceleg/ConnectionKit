@@ -82,7 +82,20 @@
     return _transferController;
 }
 
-- (void)transferController:(KTPublishingEngine *)transferController didFailWithError:(NSError *)error
+/*  Once we know how much to upload, the progress bar can become determinate
+ */
+- (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine
+{
+    [oProgressIndicator setIndeterminate:NO];
+}
+
+- (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine
+{
+    
+    [oProgressIndicator setDoubleValue:[[engine rootTransferRecord] progress]];
+}
+
+- (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
 {
     _didFail = YES;
     
