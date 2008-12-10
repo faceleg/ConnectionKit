@@ -13,7 +13,7 @@
 
 @implementation KTPublishingWindowController
 
-- (id)initWithTransferController:(KTTransferController *)transferController
+- (id)initWithTransferController:(KTPublishingEngine *)transferController
 {
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
@@ -77,12 +77,12 @@
 #pragma mark -
 #pragma mark Transfer Controller
 
-- (KTTransferController *)transferController;
+- (KTPublishingEngine *)transferController;
 {
     return _transferController;
 }
 
-- (void)transferController:(KTTransferController *)transferController didFailWithError:(NSError *)error
+- (void)transferController:(KTPublishingEngine *)transferController didFailWithError:(NSError *)error
 {
     _didFail = YES;
     

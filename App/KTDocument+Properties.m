@@ -10,7 +10,6 @@
 
 #import "Debug.h"
 
-#import "KTTransferController.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocumentInfo.h"

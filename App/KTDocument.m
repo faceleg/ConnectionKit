@@ -62,7 +62,7 @@
 #import "KTPage+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
-#import "KTTransferController.h"
+#import "KTPublishingEngine.h"
 #import "KTUtilities.h"
 
 #import "NSApplication+Karelia.h"
@@ -109,8 +109,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setClosing:(BOOL)aFlag;
 
-- (void)setLocalTransferController:(KTTransferController *)aLocalTransferController;
-- (void)setRemoteTransferController:(KTTransferController *)aRemoteTransferController;
+- (void)setLocalTransferController:(KTPublishingEngine *)aLocalTransferController;
+- (void)setRemoteTransferController:(KTPublishingEngine *)aRemoteTransferController;
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end

@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTTransferController.h"
+#import "KTPublishingEngine.h"
 
 
-@class KTTransferController, CKTransferRecord;
+@class KTPublishingEngine, CKTransferRecord;
 
 
 @interface KTPublishingWindowController : NSWindowController <KTTransferControllerDelegate>
@@ -23,15 +23,15 @@
     
     
     @private
-    KTTransferController    *_transferController;
+    KTPublishingEngine    *_transferController;
     CKTransferRecord        *_currentTransfer;
     BOOL                    _didFail;
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
 
-- (id)initWithTransferController:(KTTransferController *)transferController;
-- (KTTransferController *)transferController;
+- (id)initWithTransferController:(KTPublishingEngine *)transferController;
+- (KTPublishingEngine *)transferController;
 
 - (CKTransferRecord *)currentTransfer;
 

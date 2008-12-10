@@ -6,7 +6,7 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTTransferController.h"
+#import "KTPublishingEngine.h"
 #import "NSString+Publishing.h"
 
 #import "KTAbstractElement+Internal.h"
@@ -36,7 +36,7 @@
 #import "Registration.h"
 
 
-@interface KTTransferController (Private)
+@interface KTPublishingEngine (Private)
 
 - (void)didFinish;
 
@@ -64,7 +64,7 @@
 #pragma mark -
 
 
-@implementation KTTransferController
+@implementation KTPublishingEngine
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -117,7 +117,11 @@
 
 - (void)start
 {
-	// Setup root transfer record
+	if ([self hasStarted]) return;
+    _hasStarted = YES;
+    
+    
+    // Setup root transfer record
     _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
     
     
@@ -153,11 +157,23 @@
  */
 - (void)didFinish
 {
+    _hasFinished = YES;
+    
     [_connection setDelegate:nil];
     [_connection release]; _connection = nil;
     
     [_baseTransferRecord release];  _baseTransferRecord = nil;
     [_rootTransferRecord release];  _rootTransferRecord = nil;
+}
+
+- (BOOL)hasStarted
+{
+    return _hasStarted;
+}
+
+- (BOOL)hasFinished
+{
+    return _hasFinished;
 }
 
 #pragma mark -
@@ -732,6 +748,7 @@
     {
         _baseTransferRecord = [CKTransferRecord recordForFullPath:[self baseRemotePath]
                                                          withRoot:[self rootTransferRecord]];
+        OBASSERT(_baseTransferRecord);
         [_baseTransferRecord retain];
     }
     

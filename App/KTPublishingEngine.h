@@ -15,10 +15,13 @@
 @protocol KTTransferControllerDelegate;
 
 
-@interface KTTransferController : NSObject 
+@interface KTPublishingEngine : NSObject 
 {
 	KTDocumentInfo	*_documentInfo;
     BOOL            _onlyPublishChanges;
+    
+    BOOL    _hasStarted;
+    BOOL    _hasFinished;
     
     id <KTTransferControllerDelegate>   _delegate;
     
@@ -43,6 +46,8 @@
 // Control
 - (void)start;
 - (void)cancel;
+- (BOOL)hasStarted;
+- (BOOL)hasFinished;
 
 // Connection
 - (id <CKConnection>)connection;
@@ -55,7 +60,7 @@
 
 
 @protocol KTTransferControllerDelegate
-- (void)transferController:(KTTransferController *)transferController didFailWithError:(NSError *)error;
+- (void)transferController:(KTPublishingEngine *)transferController didFailWithError:(NSError *)error;
 @end
 
 

@@ -489,8 +489,8 @@
 		3CB5E2B7080303C7006BB008 /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AD080303C7006BB008 /* design.icns */; };
 		3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D840B0D099C4200057448 /* KTDesign+KTTransferController.m */; };
 		3CBDE90A0EBA65810059C56C /* KTDesign+KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D840A0D099C4200057448 /* KTDesign+KTTransferController.h */; };
-		3CBDE9120EBA65D20059C56C /* KTTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTTransferController.h */; };
-		3CBDE9130EBA65D20059C56C /* KTTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTTransferController.m */; };
+		3CBDE9120EBA65D20059C56C /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTPublishingEngine.h */; };
+		3CBDE9130EBA65D20059C56C /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
 		3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */; };
 		3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD6B0EE0BFA380600B9287E /* ThirdParty.h */; settings = {ATTRIBUTES = (); }; };
@@ -1970,8 +1970,8 @@
 		3CB5E2A9080303C7006BB008 /* links.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = links.png; sourceTree = "<group>"; };
 		3CB5E2AC080303C7006BB008 /* qmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qmark.png; sourceTree = "<group>"; };
 		3CB5E2AD080303C7006BB008 /* design.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = design.icns; sourceTree = "<group>"; };
-		3CBDE9100EBA65D20059C56C /* KTTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTransferController.h; sourceTree = "<group>"; };
-		3CBDE9110EBA65D20059C56C /* KTTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTransferController.m; sourceTree = "<group>"; };
+		3CBDE9100EBA65D20059C56C /* KTPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingEngine.h; sourceTree = "<group>"; };
+		3CBDE9110EBA65D20059C56C /* KTPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
 		3CBFD396093C45930057668A /* KTSiteOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineView.m; sourceTree = "<group>"; };
 		3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../imedia/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3000,8 +3000,8 @@
 				27AE75C60EEEB12D00409D80 /* error.png */,
 				27AE75C70EEEB12D00409D80 /* finished.png */,
 				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
-				3CBDE9100EBA65D20059C56C /* KTTransferController.h */,
-				3CBDE9110EBA65D20059C56C /* KTTransferController.m */,
+				3CBDE9100EBA65D20059C56C /* KTPublishingEngine.h */,
+				3CBDE9110EBA65D20059C56C /* KTPublishingEngine.m */,
 				3C202D6107DFC18600DE4994 /* KTOldTransferController.h */,
 				27F0EDC00D0C556600B7555A /* KTOldTransferController+Internal.h */,
 				3C202D6207DFC18600DE4994 /* KTOldTransferController.m */,
@@ -4836,7 +4836,7 @@
 				CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */,
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
 				3CBDE90A0EBA65810059C56C /* KTDesign+KTTransferController.h in Headers */,
-				3CBDE9120EBA65D20059C56C /* KTTransferController.h in Headers */,
+				3CBDE9120EBA65D20059C56C /* KTPublishingEngine.h in Headers */,
 				27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6182,7 +6182,7 @@
 				CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */,
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9060EBA657D0059C56C /* KTDesign+KTTransferController.m in Sources */,
-				3CBDE9130EBA65D20059C56C /* KTTransferController.m in Sources */,
+				3CBDE9130EBA65D20059C56C /* KTPublishingEngine.m in Sources */,
 				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

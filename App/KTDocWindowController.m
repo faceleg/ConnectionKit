@@ -40,7 +40,7 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTPublishingWindowController.h"
 #import "KTToolbars.h"
-#import "KTTransferController.h"
+#import "KTPublishingEngine.h"
 #import "KTHTMLTextBlock.h"
 
 #import "NSArray+Karelia.h"
@@ -2234,7 +2234,7 @@ from representedObject */
 - (IBAction)publishSiteChanges:(id)sender
 {
     // Start publishing
-    KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+    KTPublishingEngine *transferController = [[KTPublishingEngine alloc] initWithDocumentInfo:[[self document] documentInfo]
                                                                                onlyPublishChanges:YES];
     [transferController start];
     
@@ -2249,7 +2249,7 @@ from representedObject */
 - (IBAction)publishEntireSite:(id)sender
 {
     // Start publishing
-    KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
+    KTPublishingEngine *transferController = [[KTPublishingEngine alloc] initWithDocumentInfo:[[self document] documentInfo]
                                                                                onlyPublishChanges:NO];
     [transferController start];
     
