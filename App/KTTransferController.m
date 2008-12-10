@@ -37,6 +37,11 @@
 
 
 @interface KTTransferController (Private)
+
+- (void)didFinish;
+
+- (void)connect;
+
 - (void)uploadGoogleSiteMapIfNeeded;
 
 - (void)uploadPage:(KTAbstractPage *)page;
@@ -53,7 +58,6 @@
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
 - (void)pingURL:(NSURL *)URL;
 
-- (CKTransferRecord *)rootTransferRecord;
 @end
 
 
@@ -82,11 +86,13 @@
 
 - (void)dealloc
 {
-	[_documentInfo release];
-	OBASSERT(!myConnection);	// TODO: Gracefully close connection
-    [_baseTransferRecord release];
-    [_rootTransferRecord release];
-    [_uploadedMedia release];
+	// The connection etc. should already have been shut down
+    OBASSERT(!_connection);
+    OBASSERT(!_baseTransferRecord);
+    OBASSERT(!_rootTransferRecord);
+    
+    [_documentInfo release];
+	[_uploadedMedia release];
     [_uploadedResources release];
 	
 	[super dealloc];
@@ -102,23 +108,65 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTDocumentInfo *)documentInfo
-{
-	return _documentInfo;
-}
+- (KTDocumentInfo *)documentInfo { return _documentInfo; }
 
 - (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
+
+#pragma mark -
+#pragma mark Overall flow control
+
+- (void)start
+{
+	// Setup root transfer record
+    _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
+    
+    
+    // Create connection
+    [self connect];
+    
+    
+	// In demo mode, only publish the home page
+	NSArray *pagesToParse;
+	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
+	{
+		pagesToParse = [KTAbstractPage allPagesInManagedObjectContext:[[self documentInfo] managedObjectContext]];
+	}
+	else
+	{
+		pagesToParse = [NSArray arrayWithObject:[[self documentInfo] root]];
+	}
+	
+	
+	// Parsing every page is a long process so do it on a background thread
+	[NSThread detachNewThreadSelector:@selector(threadedGenerateContentFromPages:)
+							 toTarget:self
+						   withObject:pagesToParse];
+}
+
+- (void)cancel
+{
+    [[self connection] forceDisconnect];
+    [self didFinish];
+}
+
+/*  Called once we've finished, either because of -cancel or publishing was successful.
+ */
+- (void)didFinish
+{
+    [_connection setDelegate:nil];
+    [_connection release]; _connection = nil;
+    
+    [_baseTransferRecord release];  _baseTransferRecord = nil;
+    [_rootTransferRecord release];  _rootTransferRecord = nil;
+}
 
 #pragma mark -
 #pragma mark Connection
 
 /*  Simple accessor for the connection. If we haven't started uploading yet, or have finished, it returns nil.
- *  The -startUploading method is responsible for creating and storing the connection.
+ *  The -connect method is responsible for creating and storing the connection.
  */
-- (id <CKConnection>)connection
-{
-	return myConnection;
-}
+- (id <CKConnection>)connection { return _connection; }
 
 - (void)connect
 {
@@ -129,12 +177,12 @@
     
     NSNumber *port = [hostProperties valueForKey:@"port"];
     
-    myConnection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
+    _connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
                                                                                   host:hostName
                                                                                   port:port];
-    [myConnection retain];
-    [myConnection setDelegate:self];
-    [myConnection connect];
+    [_connection retain];
+    [_connection setDelegate:self];
+    [_connection connect];
 }
 
 /*  Authenticate the connection
@@ -172,7 +220,8 @@
 }
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
- *  // TODO: Don't ping the server if we're exporting
+ *  // TODO: Don't ping the server if we're exporting.
+ *  // TODO: Don't process the sitemap if the connection failed.
  */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
@@ -241,30 +290,6 @@
 
 #pragma mark -
 #pragma mark Content Generation
-
-- (void)startUploading
-{
-	// Create connection
-    [self connect];
-    
-    
-	// In demo mode, only publish the home page
-	NSArray *pagesToParse;
-	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
-	{
-		pagesToParse = [KTAbstractPage allPagesInManagedObjectContext:[[self documentInfo] managedObjectContext]];
-	}
-	else
-	{
-		pagesToParse = [NSArray arrayWithObject:[[self documentInfo] root]];
-	}
-	
-	
-	// Parsing every page is a long process so do it on a background thread
-	[NSThread detachNewThreadSelector:@selector(threadedGenerateContentFromPages:)
-							 toTarget:self
-						   withObject:pagesToParse];
-}
 
 /*	Public method that parses each page in the site and uploads what's needed
  */
@@ -470,7 +495,7 @@
     
     
     
-   // Upload the design if its published version is different to the current one
+    // Upload the design if its published version is different to the current one
     KTDesign *design = [master design];
     if ([self onlyPublishChanges] &&
         [[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
@@ -619,12 +644,6 @@
     [result setName:[remotePath lastPathComponent]];
     [parent addContent:result];
     
-    // Wait for the upload to finish so we can mark it non-stale
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(transferRecordDidFinish:)
-                                                 name:CKTransferRecordTransferDidFinishNotification
-                                               object:result];
-    
     return result;
     
 }
@@ -644,11 +663,6 @@
 	CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
     [parent addContent:result];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(transferRecordDidFinish:)
-                                                 name:CKTransferRecordTransferDidFinishNotification
-                                               object:result];
     
     return result;
 }
@@ -705,23 +719,16 @@
     [request release];
 }
 
-/*  Create the root record if needed
- */
-- (CKTransferRecord *)rootTransferRecord
-{
-    if (!_rootTransferRecord)
-    {
-        _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
-    }
-    
-    return _rootTransferRecord;
-}
+#pragma mark -
+#pragma mark Transfer Records
+
+- (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
 
 /*  The transfer record corresponding to -baseRemotePath
  */
 - (CKTransferRecord *)baseTransferRecord
 {
-    if (!_baseTransferRecord)
+    if (!_baseTransferRecord && [self rootTransferRecord])
     {
         _baseTransferRecord = [CKTransferRecord recordForFullPath:[self baseRemotePath]
                                                          withRoot:[self rootTransferRecord]];

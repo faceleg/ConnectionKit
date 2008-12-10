@@ -71,15 +71,7 @@
 
 - (IBAction)firstButtonAction:(NSButton *)sender
 {
-    if (_didFail)
-    {
-        [NSApp endSheet:[self window]];
-        [[self window] orderOut:self];
-    }
-    else
-    {
-        // TODO: Stop the transfer and close the sheet
-    }
+    [self endSheet];
 }
 
 #pragma mark -
@@ -148,6 +140,33 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
     return NO;
+}
+
+#pragma mark -
+#pragma mark Presentation
+
+- (void)beginSheetModalForWindow:(NSWindow *)window
+{
+    [self retain];  // Ensures we're not accidentally deallocated during presentation. Will release later
+    
+    [NSApp beginSheet:[self window]
+       modalForWindow:window
+        modalDelegate:nil
+       didEndSelector:nil
+          contextInfo:NULL];
+}
+
+/*  Outside code shouldn't need to call this, we should handle it ourselves from clicking
+ *  the Close or Stop button.
+ */
+- (void)endSheet;
+{
+    [[self transferController] cancel];
+    
+    [NSApp endSheet:[self window]];
+    [[self window] orderOut:self];
+    
+    [self release]; // To balance the -retain when beginning the sheet.
 }
 
 @end

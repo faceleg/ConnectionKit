@@ -73,7 +73,6 @@ extern NSString *gInfoWindowAutoSaveName;
     RYZImagePopUpButton             *myAddCollectionPopUpButton;    // constructed via toolbar code
 	
 	// WEBVIEW STUFF ....
-	int								myPublishingMode;
 	NSString						*myWebViewTitle;
 	@public
 	BOOL							myHasSavedVisibleRect;
@@ -111,6 +110,11 @@ extern NSString *gInfoWindowAutoSaveName;
 	
 	NSButton *myBuyNowButton;
     
+    
+    // Publishing
+    KTHTMLGenerationPurpose         myPublishingMode;
+    //KTPublishingWindowController    *myPublishingSheet;
+	
     
     // Controller Chain
     NSMutableArray  *_childControllers;
@@ -267,8 +271,8 @@ extern NSString *KTSelectedDOMRangeKey;
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
 
-- (int)publishingMode;
-- (void)setPublishingMode:(int)aPublishingMode;
+- (KTHTMLGenerationPurpose)publishingMode;
+- (void)setPublishingMode:(KTHTMLGenerationPurpose)aPublishingMode;
 
 - (NSString *)webViewTitle;
 - (void)setWebViewTitle:(NSString *)aWebViewTitle;

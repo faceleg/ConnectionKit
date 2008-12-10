@@ -2236,19 +2236,14 @@ from representedObject */
     // Start publishing
     KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
                                                                                onlyPublishChanges:YES];
-    [transferController startUploading];
+    [transferController start];
     
     // Bring up UI
-    NSWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
     [transferController release];
     
-    [NSApp beginSheet:[windowController window]
-       modalForWindow:[self window]
-        modalDelegate:nil
-       didEndSelector:nil
-          contextInfo:NULL];
-    
-    // FIXME: must -release the window controller later
+    [windowController beginSheetModalForWindow:[self window]];
+    [windowController release];
 }
 
 - (IBAction)publishEntireSite:(id)sender
@@ -2256,19 +2251,14 @@ from representedObject */
     // Start publishing
     KTTransferController *transferController = [[KTTransferController alloc] initWithDocumentInfo:[[self document] documentInfo]
                                                                                onlyPublishChanges:NO];
-    [transferController startUploading];
+    [transferController start];
     
     // Bring up UI
-    NSWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
     [transferController release];
     
-    [NSApp beginSheet:[windowController window]
-       modalForWindow:[self window]
-        modalDelegate:nil
-       didEndSelector:nil
-          contextInfo:NULL];
-    
-    // FIXME: must -release the window controller later
+    [windowController beginSheetModalForWindow:[self window]];
+    [windowController release];
 }
 
 /*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed

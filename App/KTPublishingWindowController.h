@@ -34,4 +34,9 @@
 - (KTTransferController *)transferController;
 
 - (CKTransferRecord *)currentTransfer;
+
+// Presentation
+- (void)beginSheetModalForWindow:(NSWindow *)window;
+- (void)endSheet;
+
 @end

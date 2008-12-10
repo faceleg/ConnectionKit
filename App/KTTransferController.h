@@ -22,7 +22,7 @@
     
     id <KTTransferControllerDelegate>   _delegate;
     
-	id <CKConnection>	myConnection;
+	id <CKConnection>	_connection;
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
@@ -40,12 +40,16 @@
 - (KTDocumentInfo *)documentInfo;
 - (BOOL)onlyPublishChanges;
 
+// Control
+- (void)start;
+- (void)cancel;
+
+// Connection
 - (id <CKConnection>)connection;
-
-// Uploading
-- (void)startUploading;
-
 - (NSString *)baseRemotePath;
+
+- (CKTransferRecord *)rootTransferRecord;
+- (CKTransferRecord *)baseTransferRecord;
 
 @end
 
