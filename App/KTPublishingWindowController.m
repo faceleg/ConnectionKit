@@ -95,6 +95,13 @@
     [oProgressIndicator setDoubleValue:[[engine rootTransferRecord] progress]];
 }
 
+/*  We're done publishing, close the window.
+ */
+- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine
+{
+    [self endSheet];
+}
+
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
 {
     _didFail = YES;
@@ -130,6 +137,8 @@
         [text release];
     }
 }
+
+// FIXME: These 2 methods are getting called for ALL transfers. You'll see weird things if there are 2 documents publishing at the same time
 
 - (void)transferDidBegin:(NSNotification *)notification
 {
@@ -174,7 +183,10 @@
  */
 - (void)endSheet;
 {
-    [[self transferController] cancel];
+    if (![[self transferController] hasFinished])
+    {
+        [[self transferController] cancel];
+    }
     
     [NSApp endSheet:[self window]];
     [[self window] orderOut:self];

@@ -247,22 +247,25 @@
  */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
-   if ([[self documentInfo] boolForKey:@"generateGoogleSitemap"])
-   {
-       NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-       NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
-       
-       NSString *pingURLString = [[NSString alloc] initWithFormat:
-                                  @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                  [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
-                                  
-       NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
-       [pingURLString release];
-       
-       [self pingURL:pingURL];
-       [pingURL release];
-       
-   }
+    if ([[self documentInfo] boolForKey:@"generateGoogleSitemap"])
+    {
+        NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+        NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
+        
+        NSString *pingURLString = [[NSString alloc] initWithFormat:
+                                   @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
+                                   [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
+        
+        NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
+        [pingURLString release];
+        
+        [self pingURL:pingURL];
+        [pingURL release];
+        
+    }
+    
+    [self didFinish];
+    [[self delegate] publishingEngineDidFinish:self];   // TODO: Should we wait until the ping is over before sending this?
 }
 
 /*  We either ignore the error and continue or fail and inform the delegate
