@@ -23,15 +23,15 @@
     
     
     @private
-    KTPublishingEngine    *_transferController;
+    KTPublishingEngine    *_publishingEngine;
     CKTransferRecord        *_currentTransfer;
     BOOL                    _didFail;
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
 
-- (id)initWithTransferController:(KTPublishingEngine *)transferController;
-- (KTPublishingEngine *)transferController;
+- (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
+- (KTPublishingEngine *)publishingEngine;
 
 - (CKTransferRecord *)currentTransfer;
 

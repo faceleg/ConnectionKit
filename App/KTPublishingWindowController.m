@@ -65,12 +65,12 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithTransferController:(KTPublishingEngine *)transferController
+- (id)initWithPublishingEngine:(KTPublishingEngine *)engine
 {
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
-        _transferController = [transferController retain];
-        [transferController setDelegate:self];
+        _publishingEngine = [engine retain];
+        [engine setDelegate:self];
         
         // Get notified when transfers start or end
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -92,8 +92,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [_currentTransfer release];
-    [_transferController setDelegate:nil];
-    [_transferController release];
+    [_publishingEngine setDelegate:nil];
+    [_publishingEngine release];
     
     [super dealloc];
 }
@@ -129,9 +129,9 @@
 #pragma mark -
 #pragma mark Transfer Controller
 
-- (KTPublishingEngine *)transferController;
+- (KTPublishingEngine *)publishingEngine;
 {
-    return _transferController;
+    return _publishingEngine;
 }
 
 /*  Once we know how much to upload, the progress bar can become determinate
@@ -273,9 +273,9 @@
  */
 - (void)endSheet;
 {
-    if (![[self transferController] hasFinished])
+    if (![[self publishingEngine] hasFinished])
     {
-        [[self transferController] cancel];
+        [[self publishingEngine] cancel];
     }
     
     [NSApp endSheet:[self window]];

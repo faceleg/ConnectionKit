@@ -2221,7 +2221,7 @@ from representedObject */
     [transferController start];
     
     // Bring up UI
-    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:transferController];
     [transferController release];
     
     [windowController beginSheetModalForWindow:[self window]];
@@ -2236,7 +2236,7 @@ from representedObject */
     [transferController start];
     
     // Bring up UI
-    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithTransferController:transferController];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:transferController];
     [transferController release];
     
     [windowController beginSheetModalForWindow:[self window]];

@@ -173,8 +173,13 @@
     [_connection setDelegate:nil];
     [_connection release]; _connection = nil;
     
+    // Need KVO notifications otherwise the publishing window will be observing a dealloced transfer record
+    [self willChangeValueForKey:@"baseTransferRecord"];
+    [self willChangeValueForKey:@"rootTransferRecord"];
     [_baseTransferRecord release];  _baseTransferRecord = nil;
     [_rootTransferRecord release];  _rootTransferRecord = nil;
+    [self didChangeValueForKey:@"baseTransferRecord"];
+    [self didChangeValueForKey:@"rootTransferRecord"];
 }
 
 - (BOOL)hasStarted
