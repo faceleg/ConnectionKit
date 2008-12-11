@@ -14,6 +14,7 @@
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
+#import "KTHTMLTextBlock.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
 
@@ -58,6 +59,9 @@
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
+- (unsigned long)remoteFilePermissions;
+- (unsigned long)remoteDirectoryPermissions;
+
 - (void)pingURL:(NSURL *)URL;
 
 @end
@@ -135,6 +139,9 @@
     // Setup connection and transfer records
     _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
     [self connect];
+    
+    
+    // TODO: Create document root and subfolder on the server
     
     
 	// In demo mode, only publish the home page
@@ -582,9 +589,11 @@
 	while (aResource = [resourcesEnumerator nextObject])
 	{
 		NSString *filename = [aResource lastPathComponent];
-        NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
-        [self uploadContentsOfURL:aResource toPath:uploadPath];
-        // TODO: Append banner CSS and graphical text to the main.css file
+        if (![filename isEqualToString:@"main.css"])    // We handle uploading CSS separately
+        {
+            NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
+            [self uploadContentsOfURL:aResource toPath:uploadPath];
+        }
 	}
 }
 
@@ -628,6 +637,18 @@
     NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
                                                           allowLossyConversion:YES];
     [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+}
+
+/*	Upload graphical text media
+ */
+- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
+{
+	KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
+	if (media)
+	{
+		//[self addGraphicalTextBlock:textBlock];
+		[self uploadMediaIfNeeded:media];
+	}
 }
 
 #pragma mark -
@@ -713,6 +734,9 @@
     [result setName:[remotePath lastPathComponent]];
     [parent addContent:result];
     
+    // Also set permissions for the file
+    [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+    
     return result;
     
 }
@@ -732,6 +756,8 @@
 	CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
     [parent addContent:result];
+    
+    [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
     
     return result;
 }
@@ -768,13 +794,54 @@
     
     if (!result)
     {
-        [[self connection] createDirectory:remotePath];
+        // This code should not set permissions for the document root or its parent directories as the
+        // document root is created before this code gets called
+        [[self connection] createDirectory:remotePath permissions:[self remoteDirectoryPermissions]];
         result = [CKTransferRecord recordWithName:[remotePath lastPathComponent] size:0];
         [parent addContent:result];
     }
     
     return result;
 }
+
+/*  The POSIX permissions that should be applied to files and folders on the server.
+ */
+
+- (unsigned long)remoteFilePermissions
+{
+    unsigned long result = 0;
+    
+    NSString *perms = [[NSUserDefaults standardUserDefaults] stringForKey:@"pagePermissions"];
+    if (perms)
+    {
+        if (![perms hasPrefix:@"0"])
+        {
+            perms = [NSString stringWithFormat:@"0%@", perms];
+        }
+        char *num = (char *)[perms UTF8String];
+        unsigned int p;
+        sscanf(num,"%o",&p);
+        result = p;
+    }
+    
+    // Fall back
+    if (result == 0)
+    {
+        result = 0644;
+    }
+
+    
+    return result;
+}
+
+- (unsigned long)remoteDirectoryPermissions
+{
+    unsigned long result = ([self remoteFilePermissions] | 0111);
+    return result;
+}
+
+#pragma mark -
+#pragma mark Ping
 
 /*  Sends a GET request to the URL but does nothing with the result.
  */
