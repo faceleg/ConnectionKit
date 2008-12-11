@@ -8,10 +8,62 @@
 
 #import "KTPublishingWindowController.h"
 
+#import "KTDocumentInfo.h"
+#import "KTHostProperties.h"
+
+#import "NSApplication+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+
 #import <Connection/Connection.h>
+#import <Growl/Growl.h>
 
 
 @implementation KTPublishingWindowController
+
+#pragma mark -
+#pragma mark Growl Support
+
++ (void)initialize
+{
+    // Bit of a hack until we have a proper growl controller
+    [GrowlApplicationBridge setGrowlDelegate:(id)[KTPublishingWindowController class]];
+}
+
++ (NSDictionary *)registrationDictionaryForGrowl
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	NSArray *strings = [NSArray arrayWithObjects:
+                        NSLocalizedString(@"Publishing Complete", @"Growl notification"), 
+                        NSLocalizedString(@"Export Complete", @"Growl notification"), nil];
+	[dict setObject:strings
+			 forKey:GROWL_NOTIFICATIONS_ALL];
+	[dict setObject:strings
+			 forKey:GROWL_NOTIFICATIONS_DEFAULT];
+	return dict;
+}
+
++ (NSString *)applicationNameForGrowl
+{
+	return [NSApplication applicationName];
+}
+
+/*  If the user clicks a notification with a URL, open it.
+ */
++ (void)growlNotificationWasClicked:(id)clickContext
+{
+	if (clickContext && [clickContext isKindOfClass:[NSString class]])
+	{
+		NSURL *URL = [[NSURL alloc] initWithString:clickContext];
+        if (URL)
+		{
+			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+			[URL release];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark Init & Dealloc
 
 - (id)initWithTransferController:(KTPublishingEngine *)transferController
 {
@@ -99,6 +151,44 @@
  */
 - (void)publishingEngineDidFinish:(KTPublishingEngine *)engine
 {
+    // Post Growl notification
+    if ([engine isExporting])
+    {
+        [GrowlApplicationBridge notifyWithTitle:NSLocalizedString(@"Export Complete", "Growl notification")
+                                    description:NSLocalizedString(@"Your site has been exported", "Growl notification")
+                               notificationName:NSLocalizedString(@"Export Complete", "Growl notification")
+                                       iconData:nil
+                                       priority:1
+                                       isSticky:NO
+                                   clickContext:nil];
+    }
+    else
+    {
+        NSURL *siteURL = [[[engine documentInfo] hostProperties] siteURL];
+        
+        NSString *descriptionText;
+        if ([[[engine connection] URL] isFileURL])
+        {
+            descriptionText = NSLocalizedString(@"The site has been published to this computer.", "Transfer Controller");
+        }
+        else
+        {
+            descriptionText = [NSString stringWithFormat:
+                               NSLocalizedString(@"The site has been published to %@.", "Transfer Controller"),
+                               [siteURL absoluteString]];
+        }
+        
+        [GrowlApplicationBridge notifyWithTitle:NSLocalizedString(@"Publishing Complete", @"Growl notification")
+                                    description:descriptionText
+                               notificationName:NSLocalizedString(@"Publishing Complete", @"Growl notification")
+                                       iconData:nil
+                                       priority:1
+                                       isSticky:NO
+                                   clickContext:[siteURL absoluteString]];
+    }
+    
+    
+    
     [self endSheet];
 }
 

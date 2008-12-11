@@ -121,6 +121,8 @@
 
 - (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
 
+- (BOOL)isExporting { return NO; }  // TODO: Make this work!
+
 #pragma mark -
 #pragma mark Overall flow control
 

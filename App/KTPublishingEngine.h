@@ -42,6 +42,7 @@
 // Accessors
 - (KTDocumentInfo *)documentInfo;
 - (BOOL)onlyPublishChanges;
+- (BOOL)isExporting;
 
 // Control
 - (void)start;
