@@ -1337,19 +1337,26 @@ from representedObject */
 	}
 	
 	// Site menu items
-    else if ( itemAction == @selector(addPage:) )
+    else if (itemAction == @selector(addPage:))
     {
         return YES;
     }
-    else if ( itemAction == @selector(addPagelet:) )
+    else if (itemAction == @selector(addPagelet:))
     {
 		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
 		return ([selectedPage sidebarChangeable]);
     }
-	else if ( itemAction == @selector(addCollection:) )
+	else if (itemAction == @selector(addCollection:))
     {
         return YES;
     }	
+    else if (itemAction == @selector(exportSiteAgain:))
+    {
+        NSString *exportPath = [[[self document] documentInfo] lastExportDirectoryPath];
+        return (exportPath != nil && [exportPath isAbsolutePath]);
+    }
+    
+    // Other
     else if ( itemAction == @selector(group:) )
     {
         return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
@@ -2268,9 +2275,10 @@ from representedObject */
     
     
     // TODO: Prompt the user for site URL if needed.
+    NSString *exportDirectoryPath = [[[self document] documentInfo] lastExportDirectoryPath];
     
-    [savePanel beginSheetForDirectory:nil
-                                 file:nil
+    [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
+                                 file:[exportDirectoryPath lastPathComponent]
                        modalForWindow:[self window]
                         modalDelegate:self
                        didEndSelector:@selector(exportSiteSavePanelDidEnd:returnCode:contextInfo:)
@@ -2280,7 +2288,25 @@ from representedObject */
 
 - (IBAction)exportSiteAgain:(id)sender
 {
-    // TODO: Either self or KTDocument needs an ivar storing the last export location
+    NSString *exportDirectoryPath = [[[self document] documentInfo] lastExportDirectoryPath];
+    if (exportDirectoryPath)
+    {
+        // Start publishing
+        KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
+                                                                exportDirectory:[NSURL fileURLWithPath:exportDirectoryPath]];
+        [publishingEngine start];
+        
+        // Bring up UI
+        KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
+        [publishingEngine release];
+        
+        [windowController beginSheetModalForWindow:[self window]];
+        [windowController release];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 - (void)exportSiteSavePanelDidEnd:(NSSavePanel *)savePanel returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -2291,17 +2317,9 @@ from representedObject */
     // The old sheet must be ordered out before the new publishing one can appear
     [savePanel orderOut:self];
     
-    // Start publishing
-    KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
-                                                            exportDirectory:[savePanel URL]];
-    [publishingEngine start];
-    
-    // Bring up UI
-    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
-    [publishingEngine release];
-    
-    [windowController beginSheetModalForWindow:[self window]];
-    [windowController release];
+    // Store the path and kick off exporting
+    [[[self document] documentInfo] setLastExportDirectoryPath:[savePanel filename]];
+    [self exportSiteAgain:self];
 }
 
 #pragma mark -

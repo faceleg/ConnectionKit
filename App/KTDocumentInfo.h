@@ -27,12 +27,11 @@ typedef enum {
 } KTCopyMediaType;
 
 
-@class KTPage,KTHostProperties;
+@class KTPage, KTHostProperties;
 
 @interface KTDocumentInfo : KTManagedObject 
 
 - (NSString *)siteID;
-- (KTHostProperties *)hostProperties;
 
 // Pages
 - (KTPage *)root;
@@ -59,5 +58,10 @@ typedef enum {
 
 // Google sitemap
 - (NSString *)googleSiteMapXMLString;
+
+// Publishing
+- (KTHostProperties *)hostProperties;
+- (NSString *)lastExportDirectoryPath;
+- (void)setLastExportDirectoryPath:(NSString *)path;
 
 @end

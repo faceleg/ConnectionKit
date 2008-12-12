@@ -86,8 +86,6 @@
 
 - (NSString *)siteID { return [self wrappedValueForKey:@"siteID"]; }
 
-- (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }
-
 - (KTCopyMediaType)copyMediaOriginals { return [self wrappedIntegerForKey:@"copyMediaOriginals"]; }
 
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy
@@ -313,6 +311,22 @@
     
 	return result;
 }
+
+#pragma mark -
+#pragma mark Publishing
+
+- (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }
+
+- (NSString *)lastExportDirectoryPath
+{
+    return [self valueForUndefinedKey:@"lastExportDirectoryPath"];
+}
+
+- (void)setLastExportDirectoryPath:(NSString *)path
+{
+    [self setValue:path forUndefinedKey:@"lastExportDirectoryPath"];
+}
+
 
 #pragma mark -
 #pragma mark Quick Look
