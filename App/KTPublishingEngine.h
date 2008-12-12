@@ -7,65 +7,15 @@
 //
 
 
-#import <Cocoa/Cocoa.h>
-#import <Connection/Connection.h>
+#import "KTExportEngine.h"
 
 
-@class KTDocument, KTDocumentInfo;
-@protocol KTTransferControllerDelegate;
-
-
-@interface KTPublishingEngine : NSObject 
+@interface KTPublishingEngine : KTExportEngine 
 {
-	KTDocumentInfo	*_documentInfo;
-    BOOL            _onlyPublishChanges;
-    
-    BOOL    _hasStarted;
-    BOOL    _hasFinished;
-    
-    id <KTTransferControllerDelegate>   _delegate;
-    
-	id <CKConnection>	_connection;
-    CKTransferRecord    *_rootTransferRecord;
-    CKTransferRecord    *_baseTransferRecord;
-    
-    NSMutableSet    *_uploadedMedia;
-    NSMutableSet    *_uploadedResources;
+	BOOL    _onlyPublishChanges;
 }
 
-- (id)initWithDocumentInfo:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
-
-// Delegate
-- (id <KTTransferControllerDelegate>)delegate;
-- (void)setDelegate:(id <KTTransferControllerDelegate>)delegate;
-
-// Accessors
-- (KTDocumentInfo *)documentInfo;
+- (id)initWithSite:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
 - (BOOL)onlyPublishChanges;
-- (BOOL)isExporting;
-
-// Control
-- (void)start;
-- (void)cancel;
-- (BOOL)hasStarted;
-- (BOOL)hasFinished;
-
-// Connection
-- (id <CKConnection>)connection;
-- (NSString *)baseRemotePath;
-
-- (CKTransferRecord *)rootTransferRecord;
-- (CKTransferRecord *)baseTransferRecord;
 
 @end
-
-
-@protocol KTTransferControllerDelegate
-- (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
-- (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
-
-- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine;
-- (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error;
-@end
-
-

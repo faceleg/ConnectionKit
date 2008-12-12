@@ -13,7 +13,7 @@
 @class KTPublishingEngine, CKTransferRecord;
 
 
-@interface KTPublishingWindowController : NSWindowController <KTTransferControllerDelegate>
+@interface KTPublishingWindowController : NSWindowController <KTPublishingEngineDelegate>
 {
     IBOutlet NSTextField            *oMessageLabel;
     IBOutlet NSTextField            *oInformativeTextLabel;

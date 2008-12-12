@@ -2216,13 +2216,13 @@ from representedObject */
 - (IBAction)publishSiteChanges:(id)sender
 {
     // Start publishing
-    KTPublishingEngine *transferController = [[KTPublishingEngine alloc] initWithDocumentInfo:[[self document] documentInfo]
-                                                                               onlyPublishChanges:YES];
-    [transferController start];
+    KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+                                                                 onlyPublishChanges:YES];
+    [publishingEngine start];
     
     // Bring up UI
-    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:transferController];
-    [transferController release];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
+    [publishingEngine release];
     
     [windowController beginSheetModalForWindow:[self window]];
     [windowController release];
@@ -2231,13 +2231,13 @@ from representedObject */
 - (IBAction)publishEntireSite:(id)sender
 {
     // Start publishing
-    KTPublishingEngine *transferController = [[KTPublishingEngine alloc] initWithDocumentInfo:[[self document] documentInfo]
-                                                                               onlyPublishChanges:NO];
-    [transferController start];
+    KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+                                                                 onlyPublishChanges:NO];
+    [publishingEngine start];
     
     // Bring up UI
-    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:transferController];
-    [transferController release];
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
+    [publishingEngine release];
     
     [windowController beginSheetModalForWindow:[self window]];
     [windowController release];
