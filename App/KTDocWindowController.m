@@ -2216,7 +2216,7 @@ from representedObject */
 - (IBAction)publishSiteChanges:(id)sender
 {
     // Start publishing
-    KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+    KTExportEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:YES];
     [publishingEngine start];
     
@@ -2231,7 +2231,7 @@ from representedObject */
 - (IBAction)publishEntireSite:(id)sender
 {
     // Start publishing
-    KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+    KTExportEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:NO];
     [publishingEngine start];
     
@@ -2257,14 +2257,49 @@ from representedObject */
     }
 }
 
+/*  Puts up a sheet for the user to pick an export location, then starts up the publishing engine.
+ */
 - (IBAction)exportSite:(id)sender
 {
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    [savePanel setCanCreateDirectories:YES];
+    [savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
+    [savePanel setDelegate:self];
+    
+    
+    // TODO: Prompt the user for site URL if needed.
+    
+    [savePanel beginSheetForDirectory:nil
+                                 file:nil
+                       modalForWindow:[self window]
+                        modalDelegate:self
+                       didEndSelector:@selector(exportSiteSavePanelDidEnd:returnCode:contextInfo:)
+                          contextInfo:nil];
     
 }
 
 - (IBAction)exportSiteAgain:(id)sender
 {
     // TODO: Either self or KTDocument needs an ivar storing the last export location
+}
+
+- (void)exportSiteSavePanelDidEnd:(NSSavePanel *)savePanel returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    if (returnCode != NSOKButton) return;
+    
+    
+    // Start publishing
+    KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
+                                                            exportDirectory:[savePanel URL]];
+    [publishingEngine start];
+    
+    // Bring up UI
+    KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
+    [publishingEngine release];
+    
+    [savePanel orderOut:self];  // The old sheet must be ordered out before the new publishing one can appear
+    [windowController beginSheetModalForWindow:[self window]];
+    [windowController release];
 }
 
 #pragma mark -

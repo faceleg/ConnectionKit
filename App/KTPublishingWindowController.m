@@ -65,7 +65,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithPublishingEngine:(KTPublishingEngine *)engine
+- (id)initWithPublishingEngine:(KTExportEngine *)engine
 {
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
@@ -129,7 +129,7 @@
 #pragma mark -
 #pragma mark Publishing Engine
 
-- (KTPublishingEngine *)publishingEngine;
+- (KTExportEngine *)publishingEngine;
 {
     return _publishingEngine;
 }
