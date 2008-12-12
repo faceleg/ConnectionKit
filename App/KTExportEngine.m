@@ -278,9 +278,8 @@
 	
 	while (aPage = [pagesEnumerator nextObject])
 	{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		[[self proxyForThread:nil] uploadPage:aPage];
-		[pool release];
+        usleep(200000);
 	}
 	
 	

@@ -2288,6 +2288,9 @@ from representedObject */
     if (returnCode != NSOKButton) return;
     
     
+    // The old sheet must be ordered out before the new publishing one can appear
+    [savePanel orderOut:self];
+    
     // Start publishing
     KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
                                                             exportDirectory:[savePanel URL]];
@@ -2297,7 +2300,6 @@ from representedObject */
     KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
     [publishingEngine release];
     
-    [savePanel orderOut:self];  // The old sheet must be ordered out before the new publishing one can appear
     [windowController beginSheetModalForWindow:[self window]];
     [windowController release];
 }
