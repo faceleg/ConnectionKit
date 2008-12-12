@@ -127,21 +127,27 @@
 }
 
 #pragma mark -
-#pragma mark Transfer Controller
+#pragma mark Publishing Engine
 
 - (KTPublishingEngine *)publishingEngine;
 {
     return _publishingEngine;
 }
 
+- (BOOL)isExporting
+{
+    BOOL result = ![[self publishingEngine] isKindOfClass:[KTPublishingEngine class]];
+    return result;
+}
+
 /*  Once we know how much to upload, the progress bar can become determinate
  */
-- (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine
+- (void)publishingEngineDidFinishGeneratingContent:(KTExportEngine *)engine
 {
     [oProgressIndicator setIndeterminate:NO];
 }
 
-- (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine
+- (void)publishingEngineDidUpdateProgress:(KTExportEngine *)engine
 {
     
     [oProgressIndicator setDoubleValue:[[engine rootTransferRecord] progress]];
@@ -149,10 +155,10 @@
 
 /*  We're done publishing, close the window.
  */
-- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine
+- (void)publishingEngineDidFinish:(KTExportEngine *)engine
 {
     // Post Growl notification
-    if ([engine isExporting])
+    if ([self isExporting])
     {
         [GrowlApplicationBridge notifyWithTitle:NSLocalizedString(@"Export Complete", "Growl notification")
                                     description:NSLocalizedString(@"Your site has been exported", "Growl notification")
@@ -164,7 +170,7 @@
     }
     else
     {
-        NSURL *siteURL = [[[engine documentInfo] hostProperties] siteURL];
+        NSURL *siteURL = [[[engine site] hostProperties] siteURL];
         
         NSString *descriptionText;
         if ([[[engine connection] URL] isFileURL])
@@ -192,7 +198,7 @@
     [self endSheet];
 }
 
-- (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
+- (void)publishingEngine:(KTExportEngine *)engine didFailWithError:(NSError *)error
 {
     _didFail = YES;
     

@@ -32,6 +32,7 @@
 
 - (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
 - (KTPublishingEngine *)publishingEngine;
+- (BOOL)isExporting;
 
 - (CKTransferRecord *)currentTransfer;
 
