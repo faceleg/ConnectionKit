@@ -103,16 +103,6 @@
 	return [self transientValueForKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
 }
 
-- (NSString *)lastSelectedRows
-{
-	return [self wrappedValueForKey:@"lastSelectedRows"];
-}
-
-- (void)setLastSelectedRows:(NSString *)value
-{
-	[self setWrappedValue:value forKey:@"lastSelectedRows"];
-}
-
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers
 {
 	[self setTransientValue:identifiers forKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
@@ -126,6 +116,31 @@
 - (void)setMetadata:(NSDictionary *)metadata
 {
 	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
+}
+
+#pragma mark -
+#pragma mark UI
+
+- (NSRect)documentWindowContentRect
+{
+	NSString *rectAsString = [self wrappedValueForKey:@"documentWindowContentRect"];
+	NSRect result = (rectAsString) ? NSRectFromString(rectAsString) : NSZeroRect;
+	return result;
+}
+
+- (void)setDocumentWindowContentRect:(NSRect)rect
+{
+	[self setWrappedValue:NSStringFromRect(rect) forKey:@"documentWindowContentRect"];
+}
+
+- (NSString *)lastSelectedRows
+{
+	return [self wrappedValueForKey:@"lastSelectedRows"];
+}
+
+- (void)setLastSelectedRows:(NSString *)value
+{
+	[self setWrappedValue:value forKey:@"lastSelectedRows"];
 }
 
 #pragma mark -

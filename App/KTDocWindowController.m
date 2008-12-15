@@ -182,12 +182,26 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
+	
+	
+	// Restore the window's previous frame, if available
+	NSRect contentRect = [[[self document] documentInfo] documentWindowContentRect];
+	if (!NSEqualRects(contentRect, NSZeroRect))
+	{
+		NSWindow *window = [self window];
+		[window setFrame:[window frameRectForContentRect:contentRect] display:YES];
+		// -constrainFrameRect:toScreen: will automatically stop the window going offscreen for us.
+	}
+	
+	
 	// Setup binding
 	[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
+	
 	
 	// Now let the webview and the site outline initialize themselves.
 	[self webViewDidLoad];
 	[self linkPanelDidLoad];
+	
 	
 	// Early on, window-related stuff
 	NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];

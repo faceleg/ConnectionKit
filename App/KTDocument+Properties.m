@@ -256,19 +256,6 @@
 	[self updateDefaultDocumentProperty:@"displayCodeInjectionWarnings"];
 }
 
-- (NSRect)documentWindowContentRect
-{
-	NSString *rectAsString = [[self documentInfo] valueForKey:@"documentWindowContentRect"];
-	if (rectAsString)
-	{
-		return NSRectFromString(rectAsString);
-	}
-	else
-	{
-		return NSZeroRect;
-	}
-}
-
 #pragma mark support
 
 /*	Support method for whenever the user changes a view property of the document.
@@ -315,26 +302,10 @@
 	
 	
 	// Window size
-	BOOL saveContentRect = NO;
-	NSRect currentContentRect = NSZeroRect;
-	NSRect storedContentRect = [self documentWindowContentRect];
 	NSWindow *window = [[self windowController] window];
-	if ( nil != window )
+	if (window)
 	{
-		NSRect frame = [window frame];
-		currentContentRect = [window contentRectForFrameRect:frame];
-		if ( !NSEqualRects(currentContentRect, NSZeroRect) )
-		{
-			if ( !NSEqualRects(currentContentRect, storedContentRect) )
-			{
-				saveContentRect = YES;
-			}
-		}
-	}
-	
-	if (saveContentRect)	// store content rect, if needed
-	{
-		[[self documentInfo] setValue:NSStringFromRect(currentContentRect) forKey:@"documentWindowContentRect"];
+		[[self documentInfo] setDocumentWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
 }
 

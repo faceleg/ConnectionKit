@@ -42,9 +42,6 @@ typedef enum {
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
 
-- (NSString *)lastSelectedRows;
-- (void)setLastSelectedRows:(NSString *)value;
-
 - (NSSet *)requiredBundlesIdentifiers;
 - (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
 
@@ -52,6 +49,12 @@ typedef enum {
 - (void)setMetadata:(NSDictionary *)metadata;
 
 - (NSString *)appNameVersion;
+
+// UI
+- (NSRect)documentWindowContentRect;
+- (void)setDocumentWindowContentRect:(NSRect)rect;
+- (NSString *)lastSelectedRows;
+- (void)setLastSelectedRows:(NSString *)value;
 
 // Site menu
 - (NSArray *)pagesInSiteMenu;

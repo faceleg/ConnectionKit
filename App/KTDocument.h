@@ -184,8 +184,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)displaySmallPageIcons;
 - (void)setDisplaySmallPageIcons:(BOOL)value;
 
-- (NSRect)documentWindowContentRect;
-
 @end
 
 

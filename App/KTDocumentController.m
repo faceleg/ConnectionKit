@@ -502,31 +502,7 @@
 											   display:displayDocument
 												 error:outError];
 	
-	// Set documents, such as sample sites, which live inside the application, as read-only.
-	if ([document isKindOfClass:[KTDocument class]])
-	{		
-		// restore window position, if available
-		NSRect contentRect = [document documentWindowContentRect];
-		if ( !NSEqualRects(contentRect, NSZeroRect) )
-		{
-			NSWindow *window = [[document windowController] window];
-			NSRect frameRect = [window frameRectForContentRect:contentRect];
-
-			frameRect.size.width = MAX(frameRect.size.width, 800.0);
-			frameRect.size.height = MAX(frameRect.size.height, 200.0);
-
-			NSRect screenRect = [[window screen] visibleFrame];
-			
-			// make sure width and height will fit on screen
-			if (frameRect.size.width > screenRect.size.width) frameRect.size.width = screenRect.size.width;
-			if (frameRect.size.height > screenRect.size.height) frameRect.size.height = screenRect.size.height;
-			// Make sure window's upper right will fit on screen by moving to lower/left if needed
-			if (NSMaxX(frameRect) > NSMaxX(screenRect) || NSMinX(frameRect) < NSMinX(screenRect)) frameRect.origin.x = screenRect.origin.x;
-			if (NSMaxY(frameRect) > NSMaxY(screenRect) || NSMinY(frameRect) < NSMinY(screenRect)) frameRect.origin.y = screenRect.origin.y;
-			[window setFrame:frameRect display:YES];
-		}		
-	}
-	else if ([document isKindOfClass:[KTPluginInstaller class]])
+	if ([document isKindOfClass:[KTPluginInstaller class]])
 	{
 		/// once we've created this "document" we don't want it hanging around
 		[document performSelector:@selector(close)
