@@ -190,6 +190,7 @@
     [_connection setDelegate:nil];
     [_connection release]; _connection = nil;
     
+    
     // Need KVO notifications otherwise the publishing window will be observing a dealloced transfer record
     [self willChangeValueForKey:@"baseTransferRecord"];
     [self willChangeValueForKey:@"rootTransferRecord"];
@@ -197,6 +198,11 @@
     [_rootTransferRecord release];  _rootTransferRecord = nil;
     [self didChangeValueForKey:@"baseTransferRecord"];
     [self didChangeValueForKey:@"rootTransferRecord"];
+    
+    
+    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    [undoManager removeAllActions];
 }
 
 - (BOOL)hasStarted
