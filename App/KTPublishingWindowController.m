@@ -103,8 +103,16 @@
     [super windowDidLoad];
     
     // There's a minimum of localized text in this nib, so we're handling it in entirely in code
-    [oMessageLabel setStringValue:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
-    [oInformativeTextLabel setStringValue:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
+    if ([self isExporting])
+    {
+        [oMessageLabel setStringValue:NSLocalizedString(@"Exporting…", @"Publishing sheet title")];
+        [oInformativeTextLabel setStringValue:NSLocalizedString(@"Preparing to export…", @"Uploading progress info")];
+    }
+    else
+    {
+        [oMessageLabel setStringValue:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
+        [oInformativeTextLabel setStringValue:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
+    }
     
     // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
