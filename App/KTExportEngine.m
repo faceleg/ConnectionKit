@@ -21,6 +21,7 @@
 #import "KTMediaFileUpload.h"
 
 #import "NSString+Publishing.h"
+#import "NSBundle+KTExtensions.h"
 
 #import "NSData+Karelia.h"
 #import "NSObject+Karelia.h"

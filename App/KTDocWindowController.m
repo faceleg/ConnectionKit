@@ -28,6 +28,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWindow.h"
 #import "KTElementPlugin.h"
+#import "KTExportSavePanelController.h"
 #import "KTHostProperties.h"
 #import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
@@ -2278,6 +2279,9 @@ from representedObject */
     }
 }
 
+#pragma mark -
+#pragma mark Site Export
+
 /*  Puts up a sheet for the user to pick an export location, then starts up the publishing engine.
  */
 - (IBAction)exportSite:(id)sender
@@ -2285,10 +2289,21 @@ from representedObject */
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setCanCreateDirectories:YES];
     [savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
-    [savePanel setDelegate:self];
     
     
-    // TODO: Prompt the user for site URL if needed.
+    // Prompt the user for the site's URL if they haven't been through the HSA.
+    KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
+    if (![hostProperties siteURL] ||
+        (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
+    {
+        KTExportSavePanelController *controller = 
+            [[KTExportSavePanelController alloc] initWithSiteURL:[hostProperties siteURL]];   // We'll release it when the panel closes
+        
+        [savePanel setDelegate:controller];
+        [savePanel setAccessoryView:[controller view]];
+    }
+    
+    
     NSString *exportDirectoryPath = [[[self document] documentInfo] lastExportDirectoryPath];
     
     [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
@@ -2325,7 +2340,26 @@ from representedObject */
 
 - (void)exportSiteSavePanelDidEnd:(NSSavePanel *)savePanel returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+    // If there was a controller created for the panel, get rid of it
+    KTExportSavePanelController *controller = [savePanel delegate];
+    if (controller)
+    {
+        OBASSERT([controller isKindOfClass:[KTExportSavePanelController class]]);
+        
+        // Store the new site URL
+        if (returnCode == NSOKButton)
+        {
+            KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
+			[hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
+            [[[[self document] documentInfo] root] recursivelyInvalidateURL:YES];
+        }
+        
+        [savePanel setDelegate:nil];
+        [controller release];
+    }
+    
     if (returnCode != NSOKButton) return;
+    
     
     
     // The old sheet must be ordered out before the new publishing one can appear
