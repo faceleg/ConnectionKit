@@ -71,6 +71,19 @@
 			<string>NSTableView</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KTLinkSourceView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>pasteLink</key>
@@ -93,19 +106,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KTDocViewController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTLinkSourceView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -536,6 +536,54 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancel</key>
+				<string>id</string>
+				<key>continueOpening</key>
+				<string>id</string>
+				<key>findSelectedMediaFile</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTMissingMediaController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oMediaArrayController</key>
+				<string>NSArrayController</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSApplication</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>WebView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSManagedObjectContext</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
 			<key>CLASS</key>
 			<string>KSEmailAddressComboBox</string>
 			<key>LANGUAGE</key>
@@ -700,54 +748,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KSLicensedAppDelegate</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>cancel</key>
-				<string>id</string>
-				<key>continueOpening</key>
-				<string>id</string>
-				<key>findSelectedMediaFile</key>
-				<string>id</string>
-				<key>showHelp</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>KTMissingMediaController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>oMediaArrayController</key>
-				<string>NSArrayController</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSApplication</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSApplication</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>WebView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSManagedObjectContext</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
