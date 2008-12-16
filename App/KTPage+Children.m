@@ -94,17 +94,14 @@
 	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[parent sortedChildren]];
 	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:self];
 	
-	// Check that we were actually found.  Mystery case 34642, or 34974.  
-	if ( (NSNotFound != whereSelfInParent) && (index < [newSortedChildren count]) && (index < [newSortedChildren count]) )
+	// Check that we were actually found.  Mystery case 34642.  
+	if (whereSelfInParent != NSNotFound && index <= [newSortedChildren count])
 	{
 		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
 		[KTPage setCollectionIndexForPages:newSortedChildren];
 		
-		// Invalidate our parent's sortedChildren cache if it is manually sorted
-		if ([parent collectionSortOrder] == KTCollectionUnsorted)
-		{
-			[parent invalidateSortedChildrenCache];
-		}
+		// Invalidate our parent's sortedChildren cache
+		[parent invalidateSortedChildrenCache];
 	}
 	else
 	{
