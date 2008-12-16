@@ -2289,6 +2289,7 @@ from representedObject */
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setCanCreateDirectories:YES];
     [savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
+    [savePanel setPrompt:NSLocalizedString(@"Export", @"button title")];
     
     
     // Prompt the user for the site's URL if they haven't been through the HSA.
