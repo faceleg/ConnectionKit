@@ -23,7 +23,8 @@
 {
 @private
     KTDocumentInfo	*_documentInfo;
-    NSString        *_exportDirectoryPath;
+    NSString        *_documentRootPath;
+    NSString        *_subfolderPath;    // nil if there is no subfolder
     
     BOOL    _hasStarted;
     BOOL    _hasFinished;
@@ -38,7 +39,9 @@
     NSMutableSet    *_uploadedResources;
 }
 
-- (id)initWithSite:(KTDocumentInfo *)site exportDirectory:(NSURL *)exportDirectoryURL;
+- (id)initWithSite:(KTDocumentInfo *)site
+  documentRootPath:(NSString *)docRoot
+     subfolderPath:(NSString *)subfolder;
 
 // Delegate
 - (id <KTPublishingEngineDelegate>)delegate;
@@ -46,6 +49,9 @@
 
 // Accessors
 - (KTDocumentInfo *)site;
+- (NSString *)documentRootPath;
+- (NSString *)subfolderPath;
+- (NSString *)baseRemotePath;
 
 // Control
 - (void)start;
@@ -55,7 +61,6 @@
 
 // Connection
 - (id <CKConnection>)connection;
-- (NSString *)baseRemotePath;
 
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
@@ -75,7 +80,6 @@
 
 
 @interface KTExportEngine (SubclassSupport)
-- (id)initWithSite:(KTDocumentInfo *)site;
 - (id <CKConnection>)createConnection;
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;

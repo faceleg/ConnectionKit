@@ -41,7 +41,11 @@
 {
 	OBPRECONDITION(site);
     
-    if (self = [super initWithSite:site])
+    KTHostProperties *hostProperties = [site hostProperties];
+    NSString *docRoot = [hostProperties valueForKey:@"docRoot"];
+    NSString *subfolder = [hostProperties valueForKey:@"subFolder"];
+    
+    if (self = [super initWithSite:site documentRootPath:docRoot subfolderPath:subfolder])
 	{
 		_onlyPublishChanges = publishChanges;
         
@@ -82,6 +86,7 @@
     id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
                                                                                               host:hostName
                                                                                               port:port];
+    
     return result;
 }
 
@@ -149,15 +154,6 @@
     
         
     [super connection:con didDisconnectFromHost:host];
-}
-
-/*  The root directory that all content goes into. For normal publishing this is "documentRoot/subfolder"
- */
-- (NSString *)baseRemotePath
-{
-	KTHostProperties *hostProperties = [[self site] hostProperties];
-    NSString *result = [[hostProperties valueForKey:@"docRoot"] stringByAppendingPathComponent:[hostProperties valueForKey:@"subFolder"]];
-    return result;
 }
 
 #pragma mark -

@@ -2322,7 +2322,8 @@ from representedObject */
     {
         // Start publishing
         KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
-                                                                exportDirectory:[NSURL fileURLWithPath:exportDirectoryPath]];
+                                                               documentRootPath:exportDirectoryPath
+                                                                  subfolderPath:nil];
         [publishingEngine start];
         
         // Bring up UI

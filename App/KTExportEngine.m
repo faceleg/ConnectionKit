@@ -70,15 +70,27 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithSite:(KTDocumentInfo *)site exportDirectory:(NSURL *)exportDirectoryURL
+/*  Subfolder can be either nil (there isn't one), or a path relative to the doc root. Exporting
+ *  never uses a subfolder, but full-on publishing can.
+ */
+- (id)initWithSite:(KTDocumentInfo *)site
+  documentRootPath:(NSString *)docRoot
+     subfolderPath:(NSString *)subfolder
 {
 	OBPRECONDITION(site);
-    OBPRECONDITION(exportDirectoryURL);
-    OBPRECONDITION([exportDirectoryURL isFileURL]);
+    OBPRECONDITION(docRoot);
+    OBPRECONDITION([docRoot isAbsolutePath]);
+    OBPRECONDITION(!subfolder || ![subfolder isAbsolutePath]);
     
-    if (self = [self initWithSite:site])
+    if (self = [super init])
 	{
-		_exportDirectoryPath = [[exportDirectoryURL path] copy];
+		_documentInfo = [site retain];
+        
+        _uploadedMedia = [[NSMutableSet alloc] init];
+        _uploadedResources = [[NSMutableSet alloc] init];
+        
+        _documentRootPath = [docRoot copy];
+        _subfolderPath = [subfolder copy];
 	}
 	
 	return self;
@@ -92,7 +104,8 @@
     OBASSERT(!_rootTransferRecord);
     
     [_documentInfo release];
-	[_exportDirectoryPath release];
+	[_documentRootPath release];
+    [_subfolderPath release];
     [_uploadedMedia release];
     [_uploadedResources release];
 	
@@ -111,6 +124,18 @@
 
 - (KTDocumentInfo *)site { return _documentInfo; }
 
+- (NSString *)documentRootPath { return _documentRootPath; }
+
+- (NSString *)subfolderPath { return _subfolderPath; }
+    
+/*  Combines doc root and subfolder to get the directory that all content goes into
+ */
+- (NSString *)baseRemotePath
+{
+    NSString *result = [[self documentRootPath] stringByAppendingPathComponent:[self subfolderPath]];
+    return result;
+}
+
 #pragma mark -
 #pragma mark Overall flow control
 
@@ -121,14 +146,15 @@
     
     
     // Setup connection and transfer records
-    _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self baseRemotePath]] retain];
+    _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self documentRootPath]] retain];
     [self startConnection];
     
     
-    // TODO: Create document root and subfolder on the server
+    // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
+    _baseTransferRecord = [[self createDirectory:[self baseRemotePath]] retain];
     
     
-	// In demo mode, only publish the home page
+    // In demo mode, only publish the home page
 	NSArray *pagesToParse;
 	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
 	{
@@ -260,13 +286,6 @@
 
 #pragma mark -
 #pragma mark Content Generation
-
-/*  The root directory that all content goes into. For normal publishing this is "documentRoot/subfolder"
- */
-- (NSString *)baseRemotePath
-{
-    return _exportDirectoryPath;
-}
 
 /*	Public method that parses each page in the site and uploads what's needed
  */
@@ -637,7 +656,7 @@
     
     if (!result)
     {
-        // This code should not set permissions for the document root or its parent directories as the
+        // This code will not set permissions for the document root or its parent directories as the
         // document root is created before this code gets called
         [[self connection] createDirectory:remotePath permissions:[self remoteDirectoryPermissions]];
         result = [CKTransferRecord recordWithName:[remotePath lastPathComponent] size:0];
@@ -692,15 +711,7 @@
  */
 - (CKTransferRecord *)baseTransferRecord
 {
-    if (!_baseTransferRecord && [self rootTransferRecord])
-    {
-        _baseTransferRecord = [CKTransferRecord recordForFullPath:[self baseRemotePath]
-                                                         withRoot:[self rootTransferRecord]];
-        OBASSERT(_baseTransferRecord);
-        [_baseTransferRecord retain];
-    }
-    
-    return _baseTransferRecord;
+   return _baseTransferRecord;
 }
 
 @end
@@ -711,28 +722,16 @@
 
 @implementation KTExportEngine (SubclassSupport)
 
-/*  Designated Initializer. Don't call it directly, it's for subclasses that don't export to a local path
- */
-- (id)initWithSite:(KTDocumentInfo *)site;
-{
-    OBPRECONDITION(site);
-    
-    if (self = [super init])
-	{
-		_documentInfo = [site retain];
-        
-        _uploadedMedia = [[NSMutableSet alloc] init];
-        _uploadedResources = [[NSMutableSet alloc] init];
-	}
-	
-	return self;
-}
-
 /*  Designed for easy subclassing, this method creates the connection but does not store or connect it
  */
 - (id <CKConnection>)createConnection
 {
-    return [[[CKFileConnection alloc] init] autorelease];
+    id <CKConnection> result = [[[CKFileConnection alloc] init] autorelease];
+    
+    // Create site directory
+    [result createDirectory:[self baseRemotePath]];
+    
+    return result;
 }
 
 /*  Slightly messy support methid that allows KTPublishingEngine to reject publishing non-stale pages
