@@ -2,7 +2,7 @@
 //  KTAppDelegate.h
 //  Sandvox
 //
-//  Copyright (c) 2004-2006, Karelia Software. All rights reserved.
+//  Copyright (c) 2004-2008, Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -21,37 +21,16 @@
 #import <Cocoa/Cocoa.h>
 #import "KSLicensedAppDelegate.h"
 
+
 extern BOOL gWantToCatchSystemExceptions;
 
-typedef enum {
-    KTCutMenuItemTitle,
-	KTCutPageMenuItemTitle,
-	KTCutPagesMenuItemTitle
-} KTCutMenuItemTitleType;
-
-typedef enum {
-    KTCopyMenuItemTitle,
-	KTCopyPageMenuItemTitle,
-	KTCopyPagesMenuItemTitle
-} KTCopyMenuItemTitleType;
-
-typedef enum {
-	KTDeleteCollectionMenuItemTitle,
-    KTDeletePageMenuItemTitle,
-	KTDeletePagesMenuItemTitle
-} KTDeletePagesMenuItemTitleType;
-
-typedef enum {
-	KTCreateLinkMenuItemTitle,
-	KTEditLinkMenuItemTitle,
-	KTCreateLinkDisabledMenuItemTitle
-} KTCreateLinkMenuItemTitleType;
-
+// application-wide, so leaving control with AppDelegate
 typedef enum {
 	KTShowInfoMenuItemTitle,
 	KTHideInfoMenuItemTitle
 } KTDisplayInfoMenuItemTitleType;
 
+// application-wide, so leaving control with AppDelegate
 typedef enum {
 	KTShowMediaMenuItemTitle,
 	KTHideMediaMenuItemTitle
@@ -59,26 +38,7 @@ typedef enum {
 
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 
-#define CUT_MENUITEM_TITLE					NSLocalizedString(@"Cut", "Cut MenuItem")
-#define CUT_PAGE_MENUITEM_TITLE				NSLocalizedString(@"Cut Page", "Cut Page MenuItem")
-#define CUT_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Cut Pages", "Cut Pages MenuItem")
-
-#define COPY_MENUITEM_TITLE					NSLocalizedString(@"Copy", "Copy MenuItem")
-#define COPY_PAGE_MENUITEM_TITLE			NSLocalizedString(@"Copy Page", "Copy Page MenuItem")
-#define COPY_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Copy Pages", "Copy Pages MenuItem")
-
-#define DELETE_COLLECTION_MENUITEM_TITLE	NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")
-#define DELETE_PAGE_MENUITEM_TITLE			NSLocalizedString(@"Delete Page", "Delete Page MenuItem")
-#define DELETE_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")
-
-#define CREATE_LINK_MENUITEM_TITLE			NSLocalizedString(@"Create Link...", "Create Link... MenuItem")
-#define EDIT_LINK_MENUITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... MenuItem")
-
-#define CREATE_LINK_TOOLBARITEM_TITLE		NSLocalizedString(@"Create Link...", "Create Link... ToolbarItem")
-#define EDIT_LINK_TOOLBARITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... ToolbarItem")
-
-@class KTDocument, KTDocumentController, KTPrefsController, KTFeedbackReporter;
-
+@class KTDocument, KTDocumentController;
 @interface KTAppDelegate : KSLicensedAppDelegate
 {
     // IBOutlets
@@ -199,14 +159,14 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 // methods to allow current document to update menus
-- (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
-- (void)setCutPagesMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
-- (void)setCopyMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
-- (void)setCopyPagesMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
-- (void)setDeletePagesMenuItemTitle:(KTDeletePagesMenuItemTitleType)aKTDeletePagesMenuItemTitleType;
-
-- (void)setCreateLinkMenuItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
-- (void)setCreateLinkToolbarItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
+//- (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
+//- (void)setCutPagesMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
+//- (void)setCopyMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
+//- (void)setCopyPagesMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
+//- (void)setDeletePagesMenuItemTitle:(KTDeletePagesMenuItemTitleType)aKTDeletePagesMenuItemTitleType;
+//
+//- (void)setCreateLinkMenuItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
+//- (void)setCreateLinkToolbarItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
 
 - (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
 - (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType;

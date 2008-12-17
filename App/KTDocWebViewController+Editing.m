@@ -451,7 +451,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	
 	
 	// update Cut, Copy, Paste menuitems
-	[[self windowController] updateEditMenuItems];
+	//[[self windowController] updateEditMenuItems];
 }
 
 #pragma mark -

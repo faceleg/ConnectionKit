@@ -53,6 +53,10 @@
 #import "Debug.h"
 
 
+#define CREATE_LINK_MENUITEM_TITLE			NSLocalizedString(@"Create Link...", "Create Link... MenuItem")
+#define EDIT_LINK_MENUITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... MenuItem")
+
+
 typedef enum {
     WebKitEditableLinkDefaultBehavior = 0,
     WebKitEditableLinkAlwaysLive,

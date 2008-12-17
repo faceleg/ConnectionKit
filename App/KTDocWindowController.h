@@ -13,6 +13,19 @@
 #import "KTHTMLParser.h"
 
 
+#define CUT_MENUITEM_TITLE					NSLocalizedString(@"Cut", "Cut MenuItem")
+#define CUT_PAGE_MENUITEM_TITLE				NSLocalizedString(@"Cut Page", "Cut Page MenuItem")
+#define CUT_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Cut Pages", "Cut Pages MenuItem")
+
+#define COPY_MENUITEM_TITLE					NSLocalizedString(@"Copy", "Copy MenuItem")
+#define COPY_PAGE_MENUITEM_TITLE			NSLocalizedString(@"Copy Page", "Copy Page MenuItem")
+#define COPY_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Copy Pages", "Copy Pages MenuItem")
+
+#define DELETE_COLLECTION_MENUITEM_TITLE	NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")
+#define DELETE_PAGE_MENUITEM_TITLE			NSLocalizedString(@"Delete Page", "Delete Page MenuItem")
+#define DELETE_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")
+
+
 @class CIFilter;
 @class KSBorderlessWindow;
 @class KTInlineImageElement;
@@ -148,7 +161,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)setStatusField:(NSString *)string;
 - (NSString *)status;
 
-- (void)updateEditMenuItems;
+//- (void)updateEditMenuItems;
 - (void) updateBuyNow:(NSNotification *)aNotification;
 
 // Actions

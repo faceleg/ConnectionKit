@@ -81,13 +81,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)showDesigns:(BOOL)inShow;
 - (void)showStatusBar:(BOOL)inShow;
 
-- (BOOL)validateCopyPagesItem:(id <NSValidatedUserInterfaceItem>)item;
-- (BOOL)validateCutPagesItem:(id <NSValidatedUserInterfaceItem>)item;
-
-- (void)updateCutMenuItem;
-- (void)updateCopyMenuItem;
-- (void)updateDeletePagesMenuItem;
-
 + (NSSet *)windowTitleKeyPaths;
 
 @end
@@ -1129,7 +1122,7 @@ from representedObject */
 {
 	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
-	
+		
 	// File menu handled by KTDocument
 		
 	// Edit menu
@@ -1137,25 +1130,35 @@ from representedObject */
 	// "Cut" cut:
 	if (itemAction == @selector(cut:))
 	{
-		return [self validateCutPagesItem:menuItem];
+		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] documentInfo] root]])
+		{
+			return YES;
+		}
 	}
 	
 	// "Cut Page(s)" cutPages:
 	else if (itemAction == @selector(cutPages:))
 	{
-		return [self validateCutPagesItem:menuItem];
+		LOG((@"ERROR: cutPages: validated but shouldn't exist!"));
+		return NO;
 	}
 	
 	// "Copy" copy:
 	else if (itemAction == @selector(copy:))
 	{
-		return [self validateCopyPagesItem:menuItem];
+		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		if (selectedPages && [selectedPages count] > 0)
+		{
+			return YES;
+		}
 	}	
 	
 	// "Copy Page(s)" copyPages:
 	else if (itemAction == @selector(copyPages:))
 	{
-		return [self validateCopyPagesItem:menuItem];
+		LOG((@"ERROR: copyPages: validated but shouldn't exist!"));
+		return NO;
 	}
 	
 	// "Paste" paste:
@@ -1467,7 +1470,6 @@ from representedObject */
 	else
 	{
 		return YES;
-
 	}
     
     return YES;
@@ -1523,34 +1525,6 @@ from representedObject */
     return YES;
 }
 
-- (BOOL)validateCopyPagesItem:(id <NSValidatedUserInterfaceItem>)item
-{
-	BOOL result = NO;
-	
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if (selectedPages && [selectedPages count] > 0)
-	{
-		result = YES;
-	}
-	
-	return result;
-}
-
-/*	The item is enabled if at least 1 page is selected, and none of them is the home page
- */
-- (BOOL)validateCutPagesItem:(id <NSValidatedUserInterfaceItem>)item
-{
-	BOOL result = NO;
-	
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] documentInfo] root]])
-	{
-		result = YES;
-	}
-	
-	return result;
-}
-
 #pragma mark -
 #pragma mark Selection
 
@@ -1597,104 +1571,7 @@ from representedObject */
 		[self setSelectedInlineImageElement:nil];
 	}
 	
-	[self updateEditMenuItems];
-}
-
-- (void)updateEditMenuItems
-{
-	[self updateCutMenuItem];
-	[self updateCopyMenuItem];
-	[self updateDeletePagesMenuItem];
-}
-
-- (void)updateCutMenuItem
-{
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if ([selectedPages count])
-	{
-		
-		NSResponder *firstResponder = [[self window] firstResponder];
-		// Is the first responder other than the outline view, or no pages selected? Fix the title.
-		
-		if ( (firstResponder != [[self siteOutlineController] siteOutline]) || ([selectedPages count] == 0) )
-		{
-			[[NSApp delegate] setCutMenuItemTitle:KTCutMenuItemTitle];
-		}
-		else if ( [selectedPages count] > 1 )
-		{
-			[[NSApp delegate] setCutMenuItemTitle:KTCutPagesMenuItemTitle];
-		}
-		else if ( [selectedPages count] == 1 )
-		{
-			[[NSApp delegate] setCutMenuItemTitle:KTCutPageMenuItemTitle];
-		}
-		
-		// set alternate menu item, default is Cut Page
-		if ( [selectedPages count] > 1 )
-		{
-			[[NSApp delegate] setCutPagesMenuItemTitle:KTCutPagesMenuItemTitle];
-		}
-		else
-		{
-			[[NSApp delegate] setCutPagesMenuItemTitle:KTCutPageMenuItemTitle];
-		}
-	}
-}
-
-- (void)updateCopyMenuItem
-{
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if ([selectedPages count])
-	{
-		NSResponder *firstResponder = [[self window] firstResponder];
-		// Is the first responder other than this window, or no pages selected? Fix the title.
-		
-		if ( (firstResponder != [[self siteOutlineController] siteOutline]) || ([selectedPages count] == 0) )
-		{
-			[[NSApp delegate] setCopyMenuItemTitle:KTCopyMenuItemTitle];
-		}
-		else if ( [selectedPages count] > 1 )
-		{
-			[[NSApp delegate] setCopyMenuItemTitle:KTCopyPagesMenuItemTitle];
-		}
-		else if ( [selectedPages count] == 1 )
-		{
-			[[NSApp delegate] setCopyMenuItemTitle:KTCopyPageMenuItemTitle];
-		}
-		
-		// set alternate menu item, default is Cut Page
-		if ( [selectedPages count] > 1 )
-		{
-			[[NSApp delegate] setCopyPagesMenuItemTitle:KTCopyPagesMenuItemTitle];
-		}
-		else
-		{
-			[[NSApp delegate] setCopyPagesMenuItemTitle:KTCopyPageMenuItemTitle];
-		}
-	}
-}
-
-- (void)updateDeletePagesMenuItem
-{
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-	if ([selectedPages count])
-	{
-		if ( [selectedPages count] > 1 )
-		{
-			[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeletePagesMenuItemTitle];
-		}
-		else
-		{
-			if ( [(KTPage *)[selectedPages objectAtIndex:0] isCollection] )
-			{
-				[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeleteCollectionMenuItemTitle];
-			}
-			else
-			{
-				[[NSApp delegate] setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
-			}
-		}
-	}
+	//[self updateEditMenuItems];
 }
 
 #pragma mark -

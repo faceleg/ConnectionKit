@@ -2,7 +2,7 @@
 //  KTAppDelegate.m
 //  Marvel
 //
-//  Copyright (c) 2004-2005 Biophony, LLC. All rights reserved.
+//  Copyright (c) 2004-2008 Karelia Software. All rights reserved.
 //
 
 /*
@@ -665,10 +665,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		myKTDidAwake = YES;	// turn this on now so we can load a nib from here
 		
 		
-		// tweak any menus that need tweaking
-		[self setCutMenuItemTitle:KTCutMenuItemTitle];
-		[self setCopyMenuItemTitle:KTCopyMenuItemTitle];
-		[self setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
+//		// tweak any menus that need tweaking
+//		[self setCutMenuItemTitle:KTCutMenuItemTitle];
+//		[self setCopyMenuItemTitle:KTCopyMenuItemTitle];
+//		[self setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
 				
 		//NSImage *globe = [NSImage imageNamed:@"globe"];
 		//NSImage *trans = [NSImage imageNamed:@"trans16"];
@@ -1824,143 +1824,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #pragma mark -
 #pragma mark Support
-
-/*! changes title of oCutMenuItem to match aKTCutMenuItemTitleType */
-- (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType
-{
-	switch ( aKTCutMenuItemTitleType )
-	{
-		case KTCutMenuItemTitle:
-			[oCutMenuItem setTitle:CUT_MENUITEM_TITLE];
-			break;
-		case KTCutPageMenuItemTitle:
-			[oCutMenuItem setTitle:CUT_PAGE_MENUITEM_TITLE];
-			break;
-		case KTCutPagesMenuItemTitle:
-			[oCutMenuItem setTitle:CUT_PAGES_MENUITEM_TITLE];
-			break;
-		default:
-			[oCutMenuItem setTitle:CUT_MENUITEM_TITLE];
-			break;
-	}
-	//LOG((@"Cut is now %@", [oCutMenuItem title]));
-}
-
-/*! changes title of oCutPagesMenuItem to match aKTCutMenuItemTitleType */
-- (void)setCutPagesMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType
-{
-	switch ( aKTCutMenuItemTitleType )
-	{
-		case KTCutPageMenuItemTitle:
-			[oCutPagesMenuItem setTitle:CUT_PAGE_MENUITEM_TITLE];
-			break;
-		case KTCutPagesMenuItemTitle:
-			[oCutPagesMenuItem setTitle:CUT_PAGES_MENUITEM_TITLE];
-			break;
-		default:
-			[oCutPagesMenuItem setTitle:CUT_PAGE_MENUITEM_TITLE];
-			break;
-	}
-	//LOG((@"Cut Page(s) is now %@", [oCutPagesMenuItem title]));
-}
-
-/*! changes title of oCopyMenuItem to match aKTCopyMenuItemTitleType */
-- (void)setCopyMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType
-{
-	switch ( aKTCopyMenuItemTitleType )
-	{
-		case KTCopyMenuItemTitle:
-			[oCopyMenuItem setTitle:COPY_MENUITEM_TITLE];
-			break;
-		case KTCopyPageMenuItemTitle:
-			[oCopyMenuItem setTitle:COPY_PAGE_MENUITEM_TITLE];
-			break;
-		case KTCopyPagesMenuItemTitle:
-			[oCopyMenuItem setTitle:COPY_PAGES_MENUITEM_TITLE];
-			break;
-		default:
-			[oCopyMenuItem setTitle:COPY_MENUITEM_TITLE];
-			break;
-	}
-	//LOG((@"Copy is now %@", [oCopyMenuItem title]));
-}
-
-/*! changes title of oCopyPagesMenuItem to match aKTCopyMenuItemTitleType */
-- (void)setCopyPagesMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType
-{
-	switch ( aKTCopyMenuItemTitleType )
-	{
-		case KTCopyPageMenuItemTitle:
-			[oCopyPagesMenuItem setTitle:COPY_PAGE_MENUITEM_TITLE];
-			break;
-		case KTCopyPagesMenuItemTitle:
-			[oCopyPagesMenuItem setTitle:COPY_PAGES_MENUITEM_TITLE];
-			break;
-		default:
-			[oCopyPagesMenuItem setTitle:COPY_PAGE_MENUITEM_TITLE];
-			break;
-	}
-	//LOG((@"Copy Page(s) is now %@", [oCopyPagesMenuItem title]));
-}
-
-/*! changes title of oDeletePagesMenuItem to match aKTDeletePagesMenuItemTitleType */
-- (void)setDeletePagesMenuItemTitle:(KTDeletePagesMenuItemTitleType)aKTDeletePagesMenuItemTitleType
-{
-	switch ( aKTDeletePagesMenuItemTitleType )
-	{
-		case KTDeleteCollectionMenuItemTitle:
-			[oDeletePagesMenuItem setTitle:DELETE_COLLECTION_MENUITEM_TITLE];
-			break;
-		case KTDeletePageMenuItemTitle:
-			[oDeletePagesMenuItem setTitle:DELETE_PAGE_MENUITEM_TITLE];
-			break;
-		case KTDeletePagesMenuItemTitle:
-			[oDeletePagesMenuItem setTitle:DELETE_PAGES_MENUITEM_TITLE];
-			break;
-		default:
-			[oDeletePagesMenuItem setTitle:DELETE_PAGE_MENUITEM_TITLE];
-			break;
-	}
-	//LOG((@"Delete Page(s) is now %@", [oDeletePagesMenuItem title]));
-}
-
-// these two Create Link methods could be combined
-- (void)setCreateLinkMenuItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType
-{
-	switch ( aKTCreateLinkMenuItemTitleType )
-	{
-		case KTCreateLinkMenuItemTitle:
-			[oCreateLinkMenuItem setTitle:CREATE_LINK_MENUITEM_TITLE];
-			break;
-		case KTEditLinkMenuItemTitle:
-			[oCreateLinkMenuItem setTitle:EDIT_LINK_MENUITEM_TITLE];
-			break;
-		case KTCreateLinkDisabledMenuItemTitle:
-		default:
-			[oCreateLinkMenuItem setTitle:CREATE_LINK_MENUITEM_TITLE];
-			break;
-	}
-}
-
-- (void)setCreateLinkToolbarItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType
-{
-	NSToolbar *toolbar = [[[[self currentDocument] windowController] window] toolbar];
-	NSToolbarItem *toolbarItem = [toolbar itemWithIdentifier:@"showLinkPanel:"];
-	
-	switch ( aKTCreateLinkMenuItemTitleType )
-	{
-		case KTEditLinkMenuItemTitle:
-			[toolbarItem setLabel:TOOLBAR_EDIT_LINK];
-			[toolbarItem setToolTip:TOOLTIP_EDIT_LINK];
-			break;
-		case KTCreateLinkDisabledMenuItemTitle:
-		case KTCreateLinkMenuItemTitle:
-		default:
-			[toolbarItem setLabel:TOOLBAR_CREATE_LINK];
-			[toolbarItem setToolTip:TOOLTIP_CREATE_LINK];
-			break;
-	}
-}
 
 
 - (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType
