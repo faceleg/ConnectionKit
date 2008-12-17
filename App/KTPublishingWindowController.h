@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTPublishingEngine.h"
+#import "KTRemotePublishingEngine.h"
 
 
-@class KTExportEngine, CKTransferRecord;
+@class KTPublishingEngine, CKTransferRecord;
 
 
 @interface KTPublishingWindowController : NSWindowController <KTPublishingEngineDelegate>
@@ -23,15 +23,15 @@
     
     
     @private
-    KTExportEngine      *_publishingEngine;
+    KTPublishingEngine      *_publishingEngine;
     CKTransferRecord    *_currentTransfer;
     BOOL                _didFail;
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
 
-- (id)initWithPublishingEngine:(KTExportEngine *)engine;
-- (KTExportEngine *)publishingEngine;
+- (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
+- (KTPublishingEngine *)publishingEngine;
 - (BOOL)isExporting;
 
 - (CKTransferRecord *)currentTransfer;

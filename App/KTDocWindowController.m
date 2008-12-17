@@ -41,7 +41,7 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTPublishingWindowController.h"
 #import "KTToolbars.h"
-#import "KTPublishingEngine.h"
+#import "KTRemotePublishingEngine.h"
 #import "KTHTMLTextBlock.h"
 
 #import "NSArray+Karelia.h"
@@ -2123,7 +2123,7 @@ from representedObject */
 - (IBAction)publishSiteChanges:(id)sender
 {
     // Start publishing
-    KTExportEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+    KTPublishingEngine *publishingEngine = [[KTRemotePublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:YES];
     [publishingEngine start];
     
@@ -2138,7 +2138,7 @@ from representedObject */
 - (IBAction)publishEntireSite:(id)sender
 {
     // Start publishing
-    KTExportEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
+    KTPublishingEngine *publishingEngine = [[KTRemotePublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:NO];
     [publishingEngine start];
     
@@ -2207,7 +2207,7 @@ from representedObject */
     if (exportDirectoryPath)
     {
         // Start publishing
-        KTExportEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
+        KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                documentRootPath:exportDirectoryPath
                                                                   subfolderPath:nil];
         [publishingEngine start];

@@ -30,7 +30,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTDocumentInfo, KTMediaManager, KTPublishingEngine, KTStalenessManager;
+@class KTDocumentInfo, KTMediaManager, KTRemotePublishingEngine, KTStalenessManager;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 

@@ -65,7 +65,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithPublishingEngine:(KTExportEngine *)engine
+- (id)initWithPublishingEngine:(KTPublishingEngine *)engine
 {
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
@@ -137,25 +137,25 @@
 #pragma mark -
 #pragma mark Publishing Engine
 
-- (KTExportEngine *)publishingEngine;
+- (KTPublishingEngine *)publishingEngine;
 {
     return _publishingEngine;
 }
 
 - (BOOL)isExporting
 {
-    BOOL result = ![[self publishingEngine] isKindOfClass:[KTPublishingEngine class]];
+    BOOL result = ![[self publishingEngine] isKindOfClass:[KTRemotePublishingEngine class]];
     return result;
 }
 
 /*  Once we know how much to upload, the progress bar can become determinate
  */
-- (void)publishingEngineDidFinishGeneratingContent:(KTExportEngine *)engine
+- (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine
 {
     [oProgressIndicator setIndeterminate:NO];
 }
 
-- (void)publishingEngineDidUpdateProgress:(KTExportEngine *)engine
+- (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine
 {
     
     [oProgressIndicator setDoubleValue:[[engine rootTransferRecord] progress]];
@@ -163,7 +163,7 @@
 
 /*  We're done publishing, close the window.
  */
-- (void)publishingEngineDidFinish:(KTExportEngine *)engine
+- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine
 {
     // Post Growl notification
     if ([self isExporting])
@@ -206,7 +206,7 @@
     [self endSheet];
 }
 
-- (void)publishingEngine:(KTExportEngine *)engine didFailWithError:(NSError *)error
+- (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
 {
     _didFail = YES;
     
