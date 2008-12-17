@@ -393,6 +393,7 @@
 	if (fullUploadPath)
     {
 		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
+        OBASSERT(transferRecord);
         
         if (digest)
         {
@@ -587,6 +588,24 @@
 	OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
+    
+    
+    // Is the URL actually a directory? If so, upload its contents
+    BOOL isDirectory = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory] && isDirectory)
+    {
+        NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
+        NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
+        NSString *aSubPath;
+        while (aSubPath = [subpathsEnumerator nextObject])
+        {
+            NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
+            NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
+            [self uploadContentsOfURL:aURL toPath:aRemotePath];
+        }
+        
+        return nil;
+    }
     
     
     // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name

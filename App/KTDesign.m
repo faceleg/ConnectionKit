@@ -339,9 +339,10 @@
             NSString *resourceFilePath = [designBundlePath stringByAppendingPathComponent:aFilename];
 			NSURL *resourceFileURL = [NSURL fileURLWithPath:resourceFilePath];
 			NSString *UTI = [NSString UTIForFileAtPath:resourceFilePath];
-			if ([NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeImage] ||
-				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypePlainText] ||
-				[NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeRTF])
+			if ([UTI conformsToUTI:(NSString *)kUTTypeImage] ||
+				[UTI conformsToUTI:(NSString *)kUTTypePlainText] ||
+				[UTI conformsToUTI:(NSString *)kUTTypeRTF] ||
+                [UTI isEqualToUTI:(NSString *)kUTTypeFolder])
 			{
 				OBASSERT(resourceFileURL);
                 [buffer addObject:resourceFileURL];
