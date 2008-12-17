@@ -36,6 +36,9 @@
 #import "Registration.h"
 
 
+#define KTParsingInterval 0.1
+
+
 @interface KTPublishingEngine (Private)
 
 - (void)didFinish;
@@ -44,7 +47,9 @@
 
 - (void)uploadGoogleSiteMapIfNeeded;
 
-- (void)uploadPage:(KTAbstractPage *)page;
+- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
+- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
+- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
 
 - (void)uploadDesign;
 - (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath;
@@ -152,26 +157,15 @@
     _baseTransferRecord = [[self createDirectory:[self baseRemotePath]] retain];
     
     
-    // In demo mode, only publish the home page
-	NSArray *pagesToParse;
-	if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
-	{
-		pagesToParse = [KTAbstractPage allPagesInManagedObjectContext:[[self site] managedObjectContext]];
-	}
-	else
-	{
-		pagesToParse = [NSArray arrayWithObject:[[self site] root]];
-	}
-	
-	
-	// Parsing every page is a long process so do it on a background thread
-	[NSThread detachNewThreadSelector:@selector(threadedGenerateContentFromPages:)
-							 toTarget:self
-						   withObject:pagesToParse];
+    // Start by publishing the home page
+    [self performSelector:@selector(parseAndUploadPageIfNeeded:)
+               withObject:[[self site] root]
+               afterDelay:KTParsingInterval];
 }
 
 - (void)cancel
 {
+    // TODO: End parsing of pages etc as well
     if ([self hasStarted] && ![self hasFinished])
     {
         [[self connection] forceDisconnect];
@@ -266,39 +260,7 @@
 }
 
 #pragma mark -
-#pragma mark Content Generation
-
-/*	Public method that parses each page in the site and uploads what's needed
- */
-- (void)threadedGenerateContentFromPages:(NSArray *)pages
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
-	KTAbstractPage *aPage;
-	
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		[[self proxyForThread:nil] uploadPage:aPage];
-        usleep(200000);
-	}
-	
-	
-	// Upload design
-    [[self proxyForThread:nil] uploadDesign];
-	
-	// Upload sitemap if the site has one
-    [[self proxyForThread:nil] uploadGoogleSiteMapIfNeeded];
-	
-    
-    // Once everything is uploaded, disconnect
-    [[(NSObject *)[self connection] proxyForThread:nil] disconnect];
-    
-    // Inform the delegate
-    [[(NSObject *)[self delegate] proxyForThread:nil] publishingEngineDidFinishGeneratingContent:self];
-    
-	[pool release];
-}
+#pragma mark Site Map
 
 /*  Uploads the site map if the site has the option enabled
  */
@@ -318,7 +280,74 @@
 #pragma mark -
 #pragma mark Pages
 
-- (void)uploadPage:(KTAbstractPage *)page
+/*  Semi-public method that parses the page, uploading HTML, media, resources etc. as needed.
+ *  It then moves onto the next page after a short delay
+ */
+- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page
+{
+    [self _parseAndUploadPageIfNeeded:page];
+    
+    
+    // Continue onto the next page if the app is licensed
+    if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
+	{
+        KTAbstractPage *nextPage = nil;
+        
+        
+        // First try to publish any children or archive pages
+        if ([page isKindOfClass:[KTPage class]])
+        {
+            NSArray *children = [(KTPage *)page sortedChildren];
+            if ([children count] > 0)
+            {
+                nextPage = [children objectAtIndex:0];
+            }
+            else
+            {
+                NSArray *archives = [(KTPage *)page sortedArchivePages];
+                if ([archives count] > 0)
+                {
+                    nextPage = [children objectAtIndex:0];
+                }
+            }
+        }
+        
+        
+        // If there are no children, we have to search up the tree
+        if (!nextPage)
+        {
+            nextPage = [self _pageToPublishAfterPageExcludingChildren:page];
+        }
+        
+        
+        if (nextPage)
+        {
+            [self performSelector:@selector(parseAndUploadPageIfNeeded:)
+                       withObject:nextPage
+                       afterDelay:KTParsingInterval];
+            
+            return;
+        }
+    }
+    
+    
+    // Pages are finished, move onto the next
+    
+    // Upload design
+    [self uploadDesign];
+    
+    // Upload sitemap if the site has one
+    [self uploadGoogleSiteMapIfNeeded];
+    
+    
+    // Once everything is uploaded, disconnect
+    [[self connection] disconnect];
+    
+    // Inform the delegate
+    [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+}
+
+- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page
 {
 	OBASSERT([NSThread isMainThread]);
 	
@@ -417,6 +446,29 @@
 			[self uploadData:RSSData toPath:RSSUploadPath];
 		}
 	}
+}
+
+/*  Support method for determining which page to publish next. Only searches UP the tree.
+ */
+- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page
+{
+    OBPRECONDITION(page);
+    
+    KTPage *result = nil;
+    
+    KTPage *parent = [page parent];
+    NSArray *siblings = [parent sortedChildren];
+    unsigned nextIndex = [siblings indexOfObjectIdenticalTo:page] + 1;
+    if (nextIndex < [siblings count])
+    {
+        result = [siblings objectAtIndex:nextIndex];
+    }
+    else if (parent)
+    {
+        result = [self _pageToPublishAfterPageExcludingChildren:parent];
+    }
+    
+    return result;
 }
 
 #pragma mark -
