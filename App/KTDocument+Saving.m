@@ -305,13 +305,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                     error:outError];
                 OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
             }
-            @catch (NSException *exception) 
+            @finally
             {
-                // Recover from an exception as best as possible and then rethrow the exception so it goes the exception reporter mechanism
-                [self recoverBackupFile:backupPath toURL:absoluteURL];
-                @throw;
+                if (!result && backupPath)
+                {
+                    // There was an error saving, recover from it
+                    [self recoverBackupFile:backupPath toURL:absoluteURL];
+                }
             }
-            
             
             if (result)
             {
@@ -320,11 +321,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                 {
                     [[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
                 }
-            }
-            else
-            {
-                // There was an error saving, recover from it
-                [self recoverBackupFile:backupPath toURL:absoluteURL];
             }
             
             break;
@@ -379,7 +375,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  */
 - (void)recoverBackupFile:(NSString *)backupPath toURL:(NSURL *)saveURL
 {
-	// Dump the failed save
+	OBPRECONDITION(backupPath);
+    
+    // Dump the failed save
 	NSString *savePath = [saveURL path];
 	BOOL result = [[NSFileManager defaultManager] removeFileAtPath:savePath handler:nil];
 	
@@ -391,7 +389,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	if (!result)
 	{
-		NSLog(@"Could not recover backup file:\n%@\nafter Save As operation failed for URL:\n%@", backupPath, [saveURL path]);
+		NSLog(@"Could not recover backup file: %@\nafter Save As operation failed for URL: %@", backupPath, [saveURL absoluteString]);
 	}
 }
 
