@@ -62,6 +62,9 @@
 // Connection
 - (id <CKConnection>)connection;
 
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
 

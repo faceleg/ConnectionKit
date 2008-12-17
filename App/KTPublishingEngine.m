@@ -156,6 +156,38 @@
     [super connection:con didDisconnectFromHost:host];
 }
 
+/*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
+ */
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+	OBPRECONDITION(localURL);
+    OBPRECONDITION([localURL isFileURL]);
+    OBPRECONDITION(remotePath);
+    
+    
+    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
+	{
+		[[self connection] deleteFile:remotePath];
+	}
+	
+    return [super uploadContentsOfURL:localURL toPath:remotePath];
+    
+}
+
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
+{
+	OBPRECONDITION(data);
+    OBPRECONDITION(remotePath);
+    
+    
+    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
+	{
+		[[self connection] deleteFile:remotePath];
+	}
+    
+	return [super uploadData:data toPath:remotePath];
+}
+
 #pragma mark -
 #pragma mark Content Generation
 

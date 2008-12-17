@@ -53,8 +53,6 @@
 
 - (void)uploadResourceIfNeeded:(NSURL *)resourceURL;
 
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
 - (unsigned long)remoteFilePermissions;
 - (unsigned long)remoteDirectoryPermissions;
@@ -581,8 +579,8 @@
 #pragma mark -
 #pragma mark Uploading Support
 
-/*	Use these methods instead of asking the connection directly. They will handle creating the appropriate directories and
- *  delete the existing file first if needed.
+/*	Use these methods instead of asking the connection directly. They will handle creating the
+ *  appropriate directories first if needed.
  */
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
@@ -591,11 +589,6 @@
     OBPRECONDITION(remotePath);
     
     
-    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
-	{
-		[[self connection] deleteFile:remotePath];
-	}
-	
     // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
     CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
 	CKTransferRecord *result = [[self connection] uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
@@ -615,12 +608,7 @@
     OBPRECONDITION(remotePath);
     
     
-    if ([[[self site] hostProperties] boolForKey:@"deletePagesWhenPublishing"])
-	{
-		[[self connection] deleteFile:remotePath];
-	}
-    
-	CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
 	CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
     [parent addContent:result];
