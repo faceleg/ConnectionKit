@@ -202,7 +202,8 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)deletePagelets:(id)sender;
 
 - (IBAction)duplicate:(id)sender;
-- (IBAction)duplicatePages:(id)sender;
+- (IBAction)duplicateSelectedPages:(id)sender;
+- (KTPage *)duplicatePage:(KTPage *)page;
 - (IBAction)duplicatePagelets:(id)sender;
 - (IBAction)duplicateViaContextualMenu:(id)sender;
 @end

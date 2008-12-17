@@ -874,13 +874,11 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	[[[self document] managedObjectContext] unlock];
 }
 
-#pragma mark duplicate
+#pragma mark -
+#pragma mark Duplicate
 
 // duplicate does a copy/paste at once, within the same document, using a private pboard
 // the trick here is that we need to use new uniqueIDs, new titles, etc.
-
-NSString *kKTDuplicatePagesPasteboard = @"KTDuplicatePagesPasteboard";
-NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 
 - (IBAction)duplicate:(id)sender
 {
@@ -890,7 +888,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	}
 	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
 	{
-		[self duplicatePages:sender];
+		[self duplicateSelectedPages:sender];
 	}
  }
 
@@ -899,7 +897,7 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	id selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
     if ( [selectionClassName isEqualToString:[KTPage className]] )
     {
-        [self duplicatePages:sender];
+        [self duplicateSelectedPages:sender];
     }
     else if ( [selectionClassName isEqualToString:[KTPagelet className]] )
     {
@@ -907,13 +905,15 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
     } 
 }
 
-- (IBAction)duplicatePages:(id)sender
+/*  Duplicates the selected pages in the Site Outline
+ */
+- (IBAction)duplicateSelectedPages:(id)sender
 {
-	// figure out our selection
+	// Figure out our selection
 	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
+    if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
-        // copy was sent from a contextual menuitem, get the selection from the context
+        // Duplicate was sent from a contextual menuitem, get the selection from the context
         id context = [sender representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
         OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
@@ -921,54 +921,44 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
     }
 	
 	
-	// Don't duplicate root
-	if ([selectedPages containsRoot])
+	// Don't allow duplicating root - Why not? Mike.
+	if ([selectedPages count] == 0 || [selectedPages containsRoot])
     {
         NSBeep();
         return;
     }
-	
-	
-	if ([selectedPages count] > 0)
-	{
-		// Don't let the user see the shenanigans
-		[[self window] disableFlushWindow];
-		
-		
-		// Select into the first available collection
-		KTPage *parentOfFirstSelectedItem = [(KTPage *)[selectedPages firstObjectKS] parent];
-		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:parentOfFirstSelectedItem]];
-		
-		
-		// Do the duplication
-		NSArray *archivedPages = [selectedPages valueForKey:@"pasteboardRepresentation"];
-		NSArray *newPages = [self pastePagesFromArchive:archivedPages toParent:parentOfFirstSelectedItem];
-		
-		
-		// Select the new pages
-		[[self siteOutlineController] setSelectedObjects:[NSSet setWithArray:newPages]];
-		
-		
-		// Label the Undo menu item
-		if ([selectedPages count] > 1)
-		{
-			[[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Pages", "Duplicate Pages MenuItem")];
-		}
-		else
-		{
-			[[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Page", "Duplicate Page MenuItem")];
-		}
-		
-						
-		// Reveal ourselves
-		[[self window] enableFlushWindow];
-	}
+    
+    
+    // Duplicate each page
+    NSEnumerator *pagesEnumerator = [selectedPages objectEnumerator];
+    KTPage *aPage;
+    NSMutableArray *newPages = [[NSMutableArray alloc] initWithCapacity:[selectedPages count]];
+    while (aPage = [pagesEnumerator nextObject])
+    {
+        [newPages addObject:[self duplicatePage:aPage]];
+    }
+    
+    
+    // Select the new pages
+    [[self siteOutlineController] setSelectedObjects:newPages];
+    [newPages release];
+    
+    
+    // Label the Undo menu item
+    if ([selectedPages count] > 1)
+    {
+        [[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Pages", "Duplicate Pages MenuItem")];
+    }
+    else
+    {
+        [[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Page", "Duplicate Page MenuItem")];
+    }
 }
 
 - (IBAction)duplicatePagelets:(id)sender
 {
     // currently assumes there is only one pagelet to be deleted
-    
+/*    
     KTPagelet *selectedPagelet = nil;
     
     if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
@@ -1016,7 +1006,30 @@ NSString *kKTDuplicatePageletsPasteboard = @"KTDuplicatePageletsPasteboard";
 	else
 	{
 		LOG((@"-deletePagelets: no recognizable object selected!"));
-	}
+	}*/
+}
+
+/*  Duplicates the specified page. Does NOT manage selection in the site outline. Returns the duplicate copy
+ */
+- (KTPage *)duplicatePage:(KTPage *)page
+{
+    OBPRECONDITION(page);
+    OBPRECONDITION(![page isRoot]);
+    
+    
+    id archive = [page pasteboardRepresentation];
+    
+    KTPage *parent = [page parent];
+    KTPage *result = [KTPage pageWithPasteboardRepresentation:archive parent:parent];
+    
+    // For unordered collections, the duplicate should appear just after the original
+    if ([parent collectionSortOrder] == KTCollectionUnsorted)
+    {
+        unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:page] + 1;
+        [result moveToIndex:index];
+    }
+    
+    return result;
 }
 
 @end
