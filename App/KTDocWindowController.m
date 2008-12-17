@@ -1135,6 +1135,10 @@ from representedObject */
 		{
 			return YES;
 		}
+		else
+		{
+			return NO;
+		}
 	}
 	
 	// "Cut Page(s)" cutPages:
@@ -1151,6 +1155,10 @@ from representedObject */
 		if (selectedPages && [selectedPages count] > 0)
 		{
 			return YES;
+		}
+		else
+		{
+			return NO;
 		}
 	}	
 	
