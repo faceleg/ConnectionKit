@@ -41,8 +41,10 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "KTPublishingWindowController.h"
 #import "KTToolbars.h"
-#import "KTRemotePublishingEngine.h"
 #import "KTHTMLTextBlock.h"
+
+#import "KTRemotePublishingEngine.h"
+#import "KTExportEngine.h"
 
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
@@ -2207,9 +2209,9 @@ from representedObject */
     if (exportDirectoryPath)
     {
         // Start publishing
-        KTPublishingEngine *publishingEngine = [[KTPublishingEngine alloc] initWithSite:[[self document] documentInfo]
-                                                               documentRootPath:exportDirectoryPath
-                                                                  subfolderPath:nil];
+        KTPublishingEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
+                                                                   documentRootPath:exportDirectoryPath
+                                                                      subfolderPath:nil];
         [publishingEngine start];
         
         // Bring up UI

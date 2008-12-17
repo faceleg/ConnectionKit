@@ -179,30 +179,6 @@
     }
 }
 
-/*  Called once we've finished, regardless of success.
- */
-- (void)didFinish
-{
-    _hasFinished = YES;
-    
-    [_connection setDelegate:nil];
-    [_connection release]; _connection = nil;
-    
-    
-    // Need KVO notifications otherwise the publishing window will be observing a dealloced transfer record
-    [self willChangeValueForKey:@"baseTransferRecord"];
-    [self willChangeValueForKey:@"rootTransferRecord"];
-    [_baseTransferRecord release];  _baseTransferRecord = nil;
-    [_rootTransferRecord release];  _rootTransferRecord = nil;
-    [self didChangeValueForKey:@"baseTransferRecord"];
-    [self didChangeValueForKey:@"rootTransferRecord"];
-    
-    
-    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
-    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
-    [undoManager removeAllActions];
-}
-
 - (BOOL)hasStarted
 {
     return _hasStarted;
@@ -284,6 +260,7 @@
 	else
 	{
 		[con forceDisconnect];
+        [self didFinish];
         [[self delegate] publishingEngine:self didFailWithError:error];
 	}
 }
@@ -772,6 +749,30 @@
             [_uploadedMedia addObject:media];
         }
     }
+}
+
+/*  Called once we've finished, regardless of success.
+ */
+- (void)didFinish
+{
+    _hasFinished = YES;
+    
+    [_connection setDelegate:nil];
+    [_connection release]; _connection = nil;
+    
+    
+    // Need KVO notifications otherwise the publishing window will be observing a dealloced transfer record
+    [self willChangeValueForKey:@"baseTransferRecord"];
+    [self willChangeValueForKey:@"rootTransferRecord"];
+    [_baseTransferRecord release];  _baseTransferRecord = nil;
+    [_rootTransferRecord release];  _rootTransferRecord = nil;
+    [self didChangeValueForKey:@"baseTransferRecord"];
+    [self didChangeValueForKey:@"rootTransferRecord"];
+    
+    
+    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    [undoManager removeAllActions];
 }
 
 @end

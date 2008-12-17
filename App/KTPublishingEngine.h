@@ -86,5 +86,6 @@
 - (id <CKConnection>)createConnection;
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
+- (void)didFinish;
 @end
 
