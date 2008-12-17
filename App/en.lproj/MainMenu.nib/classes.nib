@@ -71,19 +71,6 @@
 			<string>NSTableView</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>KTLinkSourceView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>pasteLink</key>
@@ -106,6 +93,19 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KTDocViewController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTLinkSourceView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -220,6 +220,8 @@
 				<key>duplicatePagelets</key>
 				<string>id</string>
 				<key>duplicatePages</key>
+				<string>id</string>
+				<key>duplicateSelectedPages</key>
 				<string>id</string>
 				<key>duplicateViaContextualMenu</key>
 				<string>id</string>
@@ -404,6 +406,14 @@
 			<string>KSViewController</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KTCodeInjectionSplitView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>RBSplitView</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>checkForUpdates</key>
@@ -430,14 +440,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTCodeInjectionSplitView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>RBSplitView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -536,6 +538,14 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
+			<key>CLASS</key>
+			<string>KSEmailAddressComboBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSComboBox</string>
+		</dict>
+		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>cancel</key>
@@ -558,38 +568,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindowController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSApplication</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSApplication</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>WebView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSManagedObjectContext</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSEmailAddressComboBox</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSComboBox</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -748,6 +726,30 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KSLicensedAppDelegate</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSApplication</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>WebView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSManagedObjectContext</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
