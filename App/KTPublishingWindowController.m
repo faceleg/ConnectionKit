@@ -280,6 +280,9 @@
         modalDelegate:nil
        didEndSelector:nil
           contextInfo:NULL];
+    
+    // Ready to start
+    [[self publishingEngine] start];
 }
 
 /*  Outside code shouldn't need to call this, we should handle it ourselves from clicking

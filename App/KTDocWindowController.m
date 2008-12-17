@@ -85,6 +85,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 + (NSSet *)windowTitleKeyPaths;
 
+- (BOOL)shouldPublish;
 @end
 
 
@@ -2124,10 +2125,12 @@ from representedObject */
 
 - (IBAction)publishSiteChanges:(id)sender
 {
+    if (![self shouldPublish]) return;
+    
+    
     // Start publishing
     KTPublishingEngine *publishingEngine = [[KTRemotePublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:YES];
-    [publishingEngine start];
     
     // Bring up UI
     KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
@@ -2139,10 +2142,12 @@ from representedObject */
 
 - (IBAction)publishEntireSite:(id)sender
 {
+    if (![self shouldPublish]) return;
+    
+    
     // Start publishing
     KTPublishingEngine *publishingEngine = [[KTRemotePublishingEngine alloc] initWithSite:[[self document] documentInfo]
                                                                  onlyPublishChanges:NO];
-    [publishingEngine start];
     
     // Bring up UI
     KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
@@ -2164,6 +2169,48 @@ from representedObject */
     {
         [self publishSiteChanges:sender];
     }
+}
+
+/*  Disallow publishing if the user hasn't been through host setup yet
+ */
+- (BOOL)shouldPublish
+{
+    BOOL result = ([[[[self document] documentInfo] hostProperties] siteURL] != nil);
+    
+    if (!result)
+    {
+        // Tell the user why
+        NSAlert *alert = [[NSAlert alloc] init];    // Will be released when it ends
+        [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
+        [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
+        [alert addButtonWithTitle:TOOLBAR_SETUP_HOST];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
+        
+        [alert beginSheetModalForWindow:[self window]
+                          modalDelegate:self
+                         didEndSelector:@selector(setupHostBeforePublishingAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:NULL];
+    }
+    
+    return result;
+}
+
+- (void)setupHostBeforePublishingAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    // Another sheet is probably about to appear, so order out the alert early
+    [[alert window] orderOut:self];
+    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        [[self document] setupHost:self];
+    }
+    else if (returnCode == NSAlertThirdButtonReturn)
+    {
+        [self exportSite:self];
+    }
+    
+    [alert release];
 }
 
 #pragma mark -
@@ -2212,7 +2259,6 @@ from representedObject */
         KTPublishingEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
                                                                    documentRootPath:exportDirectoryPath
                                                                       subfolderPath:nil];
-        [publishingEngine start];
         
         // Bring up UI
         KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
