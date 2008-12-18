@@ -12,6 +12,7 @@
 #import "KTDesign.h"
 #import "KTDocumentInfo.h"
 #import "KTHostProperties.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -288,6 +289,18 @@
     else
     {
         [super uploadResourceFiles];
+    }
+}
+
+- (void)uploadDesign
+{
+    // When publishing changes, only upload the design if its published version is different to the current one
+    KTMaster *master = [[[self site] root] master];
+    KTDesign *design = [master design];
+    if (![self onlyPublishChanges] ||
+        ![[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
+    {
+        [super uploadDesign];
     }
 }
 

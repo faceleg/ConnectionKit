@@ -48,7 +48,6 @@
 - (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
 
-- (void)uploadDesign;
 - (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath;
 
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
@@ -255,6 +254,21 @@
 #pragma mark -
 #pragma mark Pages
 
+/*  Uploads the site map if the site has the option enabled
+ */
+- (void)uploadGoogleSiteMapIfNeeded
+{
+    if ([[self site] boolForKey:@"generateGoogleSitemap"])
+    {
+        NSString *sitemapXML = [[self site] googleSiteMapXMLString];
+        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSData *gzipped = [siteMapData compressGzip];
+        
+        NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
+        [self uploadData:gzipped toPath:siteMapPath];
+    }
+}
+
 /*  Semi-public method that parses the page, uploading HTML, media, resources etc. as needed.
  *  It then moves onto the next page after a short delay
  */
@@ -308,11 +322,19 @@
     
     // Pages are finished, move onto the next
     
-    // Upload design
+    // Upload banner image and design
+    KTMaster *master = [[[self site] root] master];
+    KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
+	if (bannerImage)
+	{
+		[self uploadMediaIfNeeded:bannerImage];
+	}
     [self uploadDesign];
+    
     
     // Upload resources
     [self uploadResourceFiles];
+    
     
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
@@ -320,6 +342,7 @@
     
     // Once everything is uploaded, disconnect
     [[self connection] disconnect];
+    
     
     // Inform the delegate
     [[self delegate] publishingEngineDidFinishGeneratingContent:self];
@@ -454,25 +477,7 @@
 
 - (void)uploadDesign
 {
-    KTMaster *master = [[[self site] root] master];
-    
-    
-    // Upload banner image if needed
-    KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
-	if (bannerImage)
-	{
-		[self uploadMediaIfNeeded:bannerImage];
-	}
-    
-    
-    
-    // TODO: Upload the design if its published version is different to the current one
-    KTDesign *design = [master design];
-    /*if ([self onlyPublishChanges] &&
-        [[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
-    {
-        return;
-    }*/
+    KTDesign *design = [[[[self site] root] master] design];
     
     
     // Create the design directory
@@ -555,6 +560,26 @@
 - (NSSet *)uploadedMedia
 {
     return [[_uploadedMedia copy] autorelease];
+}
+
+/*  Adds the media file to the upload queue (if it's not already in it)
+ */
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
+{
+    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    {
+        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
+        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+        if (sourcePath && uploadPath)
+        {
+            // Upload the media. Store the media object with the transfer record for processing later
+            CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+            [transferRecord setProperty:media forKey:@"object"];
+            
+            // Record that we're uploading the object
+            [_uploadedMedia addObject:media];
+        }
+    }
 }
 
 /*  Upload the media if needed
@@ -798,41 +823,6 @@
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 {
     return YES;
-}
-
-/*  Adds the media file to the upload queue (if it's not already in it)
- */
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
-    {
-        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
-        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-        if (sourcePath && uploadPath)
-        {
-            // Upload the media. Store the media object with the transfer record for processing later
-            CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-            [transferRecord setProperty:media forKey:@"object"];
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-        }
-    }
-}
-
-/*  Uploads the site map if the site has the option enabled
- */
-- (void)uploadGoogleSiteMapIfNeeded
-{
-    if ([[self site] boolForKey:@"generateGoogleSitemap"])
-    {
-        NSString *sitemapXML = [[self site] googleSiteMapXMLString];
-        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        NSData *gzipped = [siteMapData compressGzip];
-        
-        NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        [self uploadData:gzipped toPath:siteMapPath];
-    }
 }
 
 /*  Called once we've finished, regardless of success.

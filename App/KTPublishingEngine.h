@@ -70,10 +70,15 @@
 
 // Media
 - (NSSet *)uploadedMedia;
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
 // Resources
 - (NSSet *)resourceFiles;
 - (void)uploadResourceFiles;
+
+// Design
+- (void)uploadDesign;
+
 
 @end
 
@@ -92,8 +97,6 @@
 - (id <CKConnection>)createConnection;
 
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
-- (void)uploadGoogleSiteMapIfNeeded;
 
 - (void)didFinish;
 @end
