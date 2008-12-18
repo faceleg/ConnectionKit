@@ -275,7 +275,7 @@
 /*  This method gets called once all pages, media and designs have been processed. If there's nothing
  *  queued to be uploaded at this point, we want to cancel and tell the user
  */
-- (void)uploadGoogleSiteMapIfNeeded
+- (void)uploadResourceFiles
 {
     if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
     {
@@ -287,7 +287,7 @@
     }
     else
     {
-        [super uploadGoogleSiteMapIfNeeded];
+        [super uploadResourceFiles];
     }
 }
 

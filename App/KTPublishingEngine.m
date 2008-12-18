@@ -53,7 +53,7 @@
 
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
-- (void)uploadResourceIfNeeded:(NSURL *)resourceURL;
+- (void)addResourceFile:(NSURL *)resourceURL;
 
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
 - (unsigned long)remoteFilePermissions;
@@ -87,7 +87,7 @@
 		_documentInfo = [site retain];
         
         _uploadedMedia = [[NSMutableSet alloc] init];
-        _uploadedResources = [[NSMutableSet alloc] init];
+        _resourceFiles = [[NSMutableSet alloc] init];
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
@@ -107,7 +107,7 @@
 	[_documentRootPath release];
     [_subfolderPath release];
     [_uploadedMedia release];
-    [_uploadedResources release];
+    [_resourceFiles release];
 	
 	[super dealloc];
 }
@@ -311,6 +311,9 @@
     // Upload design
     [self uploadDesign];
     
+    // Upload resources
+    [self uploadResourceFiles];
+    
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
     
@@ -398,7 +401,7 @@
         NSString *aResourcePath;
         while (aResourcePath = [resourcesEnumerator nextObject])
         {
-            [self uploadResourceIfNeeded:[NSURL fileURLWithPath:aResourcePath]];
+            [self addResourceFile:[NSURL fileURLWithPath:aResourcePath]];
         }
         
         [resources release];
@@ -562,33 +565,45 @@
 }
 
 #pragma mark -
-#pragma mark Resources
+#pragma mark Resource Files
 
-- (NSSet *)uploadedResources
+- (NSSet *)resourceFiles
 {
-    return [[_uploadedResources copy] autorelease];
+    return [[_resourceFiles copy] autorelease];
 }
 
-- (void)uploadResourceIfNeeded:(NSURL *)resourceURL
+- (void)addResourceFile:(NSURL *)resourceURL
 {
     resourceURL = [resourceURL absoluteURL];    // Ensures hashing and -isEqual: work right
     
-    if (![_uploadedResources containsObject:resourceURL])
+    if (![_resourceFiles containsObject:resourceURL])
     {
-        NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-        NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[resourceURL lastPathComponent]];
-        
-        [self uploadContentsOfURL:resourceURL toPath:resourceRemotePath];
-        
-        [_uploadedResources addObject:resourceURL];
+        [_resourceFiles addObject:resourceURL];
     }
 }
 
 - (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
 {
 	OBPRECONDITION(resourceURL);
-    [self uploadResourceIfNeeded:resourceURL];
+    [self addResourceFile:resourceURL];
+}
+
+/*  Takes all the queued up resource files and uploads them. KTRemotePublishingEngine uses this as
+ *  the cut-in point for if there are no changes to publish.
+ */
+- (void)uploadResourceFiles
+{
+    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+    
+    NSEnumerator *resourcesEnumerator = [[self resourceFiles] objectEnumerator];
+    NSURL *aResource;
+    while (aResource = [resourcesEnumerator nextObject])
+    {
+        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[aResource lastPathComponent]];
+    
+        [self uploadContentsOfURL:aResource toPath:resourceRemotePath];
+    }
 }
 
 #pragma mark -

@@ -36,7 +36,7 @@
     CKTransferRecord    *_baseTransferRecord;
     
     NSMutableSet    *_uploadedMedia;
-    NSMutableSet    *_uploadedResources;
+    NSMutableSet    *_resourceFiles;
 }
 
 - (id)initWithSite:(KTDocumentInfo *)site
@@ -72,7 +72,8 @@
 - (NSSet *)uploadedMedia;
 
 // Resources
-- (NSSet *)uploadedResources;
+- (NSSet *)resourceFiles;
+- (void)uploadResourceFiles;
 
 @end
 
