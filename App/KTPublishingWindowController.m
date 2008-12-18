@@ -9,6 +9,7 @@
 #import "KTPublishingWindowController.h"
 
 #import "KTDocumentInfo.h"
+#import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 
 #import "NSApplication+Karelia.h"
@@ -213,7 +214,22 @@
     // If publishing changes and there are none, it fails with a fake error message
     if ([[error domain] isEqualToString:@"NothingToPublish fake error domain"])
     {
+        KTDocWindowController *windowController = [_modalWindow windowController];
+        OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
+        
         [self endSheet];  // Act like the user cancelled
+        
+        // Put up an alert explaining why and let the window controller deal with it
+        NSAlert *alert = [[NSAlert alloc] init];    // The window controller will release it
+        [alert setMessageText:NSLocalizedString(@"No changes need publishing.", @"message for progress window")];
+        [alert setInformativeText:NSLocalizedString(@"Sandvox has detected that no content has changed since the site was last published. Publish All will upload all content, regardless of whether it has changed or not.", "alert info text")];
+        [alert addButtonWithTitle:NSLocalizedString(@"OK", @"change cancel button to ok")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Publish All", @"")];
+        
+        [alert beginSheetModalForWindow:[windowController window]
+                          modalDelegate:windowController
+                         didEndSelector:@selector(noChangesToPublishAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:NULL];
     }
     else
     {
@@ -281,7 +297,10 @@
 
 - (void)beginSheetModalForWindow:(NSWindow *)window
 {
+    OBASSERT(!_modalWindow);    // You shouldn't be able to make the window modal twice
+    
     [self retain];  // Ensures we're not accidentally deallocated during presentation. Will release later
+    _modalWindow = window;  // Weak ref
     
     [NSApp beginSheet:[self window]
        modalForWindow:window
@@ -302,6 +321,9 @@
     {
         [[self publishingEngine] cancel];
     }
+    
+    OBASSERT(_modalWindow);
+    _modalWindow = nil;
     
     [NSApp endSheet:[self window]];
     [[self window] orderOut:self];

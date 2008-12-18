@@ -24,8 +24,10 @@
     
     @private
     KTPublishingEngine      *_publishingEngine;
-    CKTransferRecord    *_currentTransfer;
-    BOOL                _didFail;
+    CKTransferRecord        *_currentTransfer;
+    BOOL                    _didFail;
+    
+    NSWindow    *_modalWindow;  // Weak ref
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;

@@ -2213,6 +2213,17 @@ from representedObject */
     [alert release];
 }
 
+- (void)noChangesToPublishAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [alert release];    // It was retained by the publishing window controller
+    
+    if (returnCode == NSAlertSecondButtonReturn)
+    {
+        [[alert window] orderOut:self]; // Another sheet's about to appear
+        [self publishEntireSite:self];
+    }
+}
+
 #pragma mark -
 #pragma mark Site Export
 
