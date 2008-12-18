@@ -714,8 +714,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
         result = [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
         
-        [result setProperty:master forKey:@"object"];
-        [result setProperty:digest forKey:@"dataDigest"];
+        if (digest)
+        {
+            [result setProperty:master forKey:@"object"];
+            [result setProperty:digest forKey:@"dataDigest"];
+        }
     }
     
     

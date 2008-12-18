@@ -24,12 +24,6 @@
 #pragma mark -
 #pragma mark Growl Support
 
-+ (void)initialize
-{
-    // Bit of a hack until we have a proper growl controller
-    [GrowlApplicationBridge setGrowlDelegate:(id)[KTPublishingWindowController class]];
-}
-
 + (NSDictionary *)registrationDictionaryForGrowl
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -165,6 +159,10 @@
  */
 - (void)publishingEngineDidFinish:(KTPublishingEngine *)engine
 {
+    // Setup Growl
+    [GrowlApplicationBridge setGrowlDelegate:(id)[KTPublishingWindowController class]];
+    
+    
     // Post Growl notification
     if ([self isExporting])
     {
