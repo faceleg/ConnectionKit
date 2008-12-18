@@ -159,10 +159,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)cancel
 {
-    // TODO: End parsing of pages etc as well
     if ([self hasStarted] && ![self hasFinished])
     {
+        // End page parsing
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        
+        // Disconnect connection
         [[self connection] forceDisconnect];
+        
+        // Mark self as finished
         [self didFinish];
     }
 }
