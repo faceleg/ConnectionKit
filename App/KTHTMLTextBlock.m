@@ -226,6 +226,19 @@
 	return result;
 }
 
+- (NSString *)graphicalTextCSSID
+{
+    NSString *result = nil;
+    
+    NSString *mediaID = [[[self graphicalTextMedia] file] valueForKey:@"uniqueID"];
+    if (mediaID)
+    {
+        result = [@"graphical-text-" stringByAppendingString:mediaID];
+    }
+    
+    return result;
+}
+
 /*	Returns nil if there is no graphical text in use
  */
 - (NSString *)graphicalTextPreviewStyle
@@ -307,7 +320,7 @@
 			}
 			else
 			{
-				[buffer appendFormat:@" id=\"graphical-text-%@\" class=\"replaced\"", [[[self graphicalTextMedia] file] valueForKey:@"uniqueID"]];
+				[buffer appendFormat:@" id=\"%@\" class=\"replaced\"", [self graphicalTextCSSID]];
 			}
 		}
 	}

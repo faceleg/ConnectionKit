@@ -19,4 +19,7 @@
 #pragma mark CSS
 - (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
+- (NSData *)publishedDesignCSSDigest;
+- (void)setPublishedDesignCSSDigest:(NSData *)digest;
+
 @end

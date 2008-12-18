@@ -75,6 +75,7 @@
 - (NSString *)graphicalTextCode;
 - (void)setGraphicalTextCode:(NSString *)code;
 - (KTMediaContainer *)graphicalTextMedia;
+- (NSString *)graphicalTextCSSID;
 
 #pragma mark HTML
 - (NSString *)innerHTML;

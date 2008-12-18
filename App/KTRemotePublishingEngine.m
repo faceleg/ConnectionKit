@@ -305,7 +305,7 @@
     }
 }
 
-- (void)uploadDesign
+- (void)uploadDesignIfNeeded
 {
     // When publishing changes, only upload the design if its published version is different to the current one
     KTMaster *master = [[[self site] root] master];
@@ -313,7 +313,7 @@
     if (![self onlyPublishChanges] ||
         ![[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
     {
-        [super uploadDesign];
+        [super uploadDesignIfNeeded];
     }
 }
 

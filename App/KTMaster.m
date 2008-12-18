@@ -572,6 +572,16 @@
 	return result;
 }
 
+- (NSData *)publishedDesignCSSDigest
+{
+    return [self valueForUndefinedKey:@"publishedDesignCSSDigest"];
+}
+
+- (void)setPublishedDesignCSSDigest:(NSData *)digest
+{
+    [self setValue:digest forUndefinedKey:@"publishedDesignCSSDigest"];
+}
+
 #pragma mark -
 #pragma mark Media
 

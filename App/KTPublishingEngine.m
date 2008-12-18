@@ -24,6 +24,7 @@
 #import "NSBundle+KTExtensions.h"
 
 #import "NSData+Karelia.h"
+#import "NSMutableDictionary+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -50,10 +51,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
 - (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
-
-- (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath;
-
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
 - (void)addResourceFile:(NSURL *)resourceURL;
 
@@ -90,6 +87,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _uploadedMedia = [[NSMutableSet alloc] init];
         _resourceFiles = [[NSMutableSet alloc] init];
+        _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
@@ -110,6 +108,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_subfolderPath release];
     [_uploadedMedia release];
     [_resourceFiles release];
+    [_graphicalTextBlocks release];
 	
 	[super dealloc];
 }
@@ -414,7 +413,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             [self uploadMediaIfNeeded:bannerImage];
         }
-        [self uploadDesign];
+        
+        [self uploadDesignIfNeeded];
+        [self uploadMainCSSIfNeeded];
         
         
         // Upload resources
@@ -608,7 +609,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark -
 #pragma mark Design
 
-- (void)uploadDesign
+- (void)uploadDesignIfNeeded
 {
     KTDesign *design = [[[[self site] root] master] design];
     
@@ -633,17 +634,35 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 }
 
-- (void)_uploadMainCSSAndGraphicalText:(NSURL *)mainCSSFileURL remoteDesignDirectoryPath:(NSString *)remoteDesignDirectoryPath
+- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
 {
-    NSMutableString *mainCSS = [NSMutableString stringWithContentsOfURL:mainCSSFileURL];
+    KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
+	if (media)
+	{
+		[self uploadMediaIfNeeded:media];
+        [_graphicalTextBlocks addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
+    }
+}
+
+/*  KTRemotePublishingEngine uses digest to only upload this if it's changed
+ */
+- (void)uploadMainCSSIfNeeded
+{
+    // Load up the CSS from the design
+    KTDesign *design = [[[[self site] root] master] design];
+    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];            OBASSERT(mainCSSPath);
+    NSMutableString *mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];    OBASSERT(mainCSS);
     
-    // Add on CSS for each block
-    NSDictionary *graphicalTextBlocks = [self graphicalTextBlocks];
-    NSEnumerator *textBlocksEnumerator = [graphicalTextBlocks keyEnumerator];
-    NSString *aGraphicalTextID;
-    while (aGraphicalTextID = [textBlocksEnumerator nextObject])
+    
+    
+    // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
+    NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:nil];
+    
+    NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
+    KTHTMLTextBlock *aTextBlock;
+    while (aTextBlock = [graphicalTextBlocksEnumerator nextObject])
     {
-        KTHTMLTextBlock *aTextBlock = [graphicalTextBlocks objectForKey:aGraphicalTextID];
         KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
         
         NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
@@ -652,7 +671,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
         if (CSS)
         {
-            [CSS replace:@"_UNIQUEID_" with:aGraphicalTextID];
+            [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
             [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
             [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
             
@@ -669,22 +688,28 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     
     
-    // Upload the CSS
+    
+    // Upload the CSS if needed
     NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
                                                           allowLossyConversion:YES];
-    [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+    
+    if ([self shouldUploadMainCSSData:mainCSSData])
+    {
+        NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+        [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+    }
 }
 
-/*	Upload graphical text media
+/*  KTRemotePublishingEngine overrides this to manage staleness
  */
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData;
+{
+    return YES;
+}
+
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
 {
-	KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
-	if (media)
-	{
-		//[self addGraphicalTextBlock:textBlock];
-		[self uploadMediaIfNeeded:media];
-	}
+	[self addGraphicalTextBlock:textBlock];
 }
 
 #pragma mark -

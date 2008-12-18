@@ -23,7 +23,7 @@ enum {
 };
 
 
-@class KTDocumentInfo, KTAbstractPage, KTMediaFileUpload;
+@class KTDocumentInfo, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -45,6 +45,8 @@ enum {
     
     NSMutableSet    *_uploadedMedia;
     NSMutableSet    *_resourceFiles;
+    
+    NSMutableDictionary *_graphicalTextBlocks;
 }
 
 - (id)initWithSite:(KTDocumentInfo *)site
@@ -106,7 +108,11 @@ enum {
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
 // Design
-- (void)uploadDesign;
+- (void)uploadDesignIfNeeded;
+
+- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)uploadMainCSSIfNeeded;
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData;
 
 // Resources
 - (NSSet *)resourceFiles;
