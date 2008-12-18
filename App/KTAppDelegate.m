@@ -597,8 +597,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)dealloc
 {
-	[myDocumentController release]; myDocumentController = nil;
-
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
@@ -1377,14 +1375,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// Force imedia browser to load just so we can get RBSplitView loaded
 	[iMediaBrowser class];
-	
-	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
-	myDocumentController = [[KTDocumentController alloc] init];
-    
+	    
     NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
     if ( interval < 5 ) interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
     if ( interval > 5*60 ) interval = 60.0;
-    [myDocumentController setAutosavingDelay:interval];
+	
+	KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
+    [sharedDocumentController setAutosavingDelay:interval];
     
 			 
 	// Try to check immediately so we have right info for initialization

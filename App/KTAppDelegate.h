@@ -38,7 +38,7 @@ typedef enum {
 
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 
-@class KTDocument, KTDocumentController;
+@class KTDocument;
 @interface KTAppDelegate : KSLicensedAppDelegate
 {
     // IBOutlets
@@ -77,9 +77,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
 	
-    // ivars
-	KTDocumentController	*myDocumentController;
-	
+    // ivars	
     BOOL myApplicationIsLaunching;
 	
 	BOOL myKTDidAwake;
