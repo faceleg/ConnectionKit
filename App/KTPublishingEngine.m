@@ -236,8 +236,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)failWithError:(NSError *)error;
 {
-    [[self connection] forceDisconnect];
-    [self didFinish];
+    [self cancel];
     [[self delegate] publishingEngine:self didFailWithError:error];
 }
 
@@ -356,78 +355,88 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page
 {
-    [self _parseAndUploadPageIfNeeded:page];
-    
-    
-    // Continue onto the next page if the app is licensed
-    if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
-	{
-        KTAbstractPage *nextPage = nil;
+    // Generally this method is called from -performSelector:afterDelay: so do our own exception reporting
+    @try
+    {
+        
+        [self _parseAndUploadPageIfNeeded:page];
         
         
-        // First try to publish any children or archive pages
-        if ([page isKindOfClass:[KTPage class]])
+        // Continue onto the next page if the app is licensed
+        if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
         {
-            NSArray *children = [(KTPage *)page sortedChildren];
-            if ([children count] > 0)
+            KTAbstractPage *nextPage = nil;
+            
+            
+            // First try to publish any children or archive pages
+            if ([page isKindOfClass:[KTPage class]])
             {
-                nextPage = [children objectAtIndex:0];
-            }
-            else
-            {
-                NSArray *archives = [(KTPage *)page sortedArchivePages];
-                if ([archives count] > 0)
+                NSArray *children = [(KTPage *)page sortedChildren];
+                if ([children count] > 0)
                 {
                     nextPage = [children objectAtIndex:0];
                 }
+                else
+                {
+                    NSArray *archives = [(KTPage *)page sortedArchivePages];
+                    if ([archives count] > 0)
+                    {
+                        nextPage = [children objectAtIndex:0];
+                    }
+                }
+            }
+            
+            
+            // If there are no children, we have to search up the tree
+            if (!nextPage)
+            {
+                nextPage = [self _pageToPublishAfterPageExcludingChildren:page];
+            }
+            
+            
+            if (nextPage)
+            {
+                [self performSelector:@selector(parseAndUploadPageIfNeeded:)
+                           withObject:nextPage
+                           afterDelay:KTParsingInterval];
+                
+                return;
             }
         }
         
         
-        // If there are no children, we have to search up the tree
-        if (!nextPage)
+        // Pages are finished, move onto the next
+        
+        // Upload banner image and design
+        KTMaster *master = [[[self site] root] master];
+        KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
+        if (bannerImage)
         {
-            nextPage = [self _pageToPublishAfterPageExcludingChildren:page];
+            [self uploadMediaIfNeeded:bannerImage];
         }
+        [self uploadDesign];
         
         
-        if (nextPage)
-        {
-            [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                       withObject:nextPage
-                       afterDelay:KTParsingInterval];
-            
-            return;
-        }
+        // Upload resources
+        [self uploadResourceFiles];
+        
+        
+        // Upload sitemap if the site has one
+        [self uploadGoogleSiteMapIfNeeded];
+        
+        
+        // Once everything is uploaded, disconnect
+        [[self connection] disconnect];
+        
+        
+        // Inform the delegate
+        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
     }
-    
-    
-    // Pages are finished, move onto the next
-    
-    // Upload banner image and design
-    KTMaster *master = [[[self site] root] master];
-    KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
-	if (bannerImage)
-	{
-		[self uploadMediaIfNeeded:bannerImage];
-	}
-    [self uploadDesign];
-    
-    
-    // Upload resources
-    [self uploadResourceFiles];
-    
-    
-    // Upload sitemap if the site has one
-    [self uploadGoogleSiteMapIfNeeded];
-    
-    
-    // Once everything is uploaded, disconnect
-    [[self connection] disconnect];
-    
-    
-    // Inform the delegate
-    [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+    @catch (NSException *exception)
+    {
+        [NSApp reportException:exception];
+        @throw;
+    }
 }
 
 - (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page
@@ -771,11 +780,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-	CKTransferRecord *result = [[self connection] uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+	
+    id <CKConnection> connection = [self connection];
+    OBASSERT(connection);
+    CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
+    
     [parent addContent:result];
     
-    [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+    [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
     
     return result;
 }
