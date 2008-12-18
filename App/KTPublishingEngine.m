@@ -36,6 +36,9 @@
 #import "Registration.h"
 
 
+NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
+
+
 #define KTParsingInterval 0.1
 
 
@@ -77,9 +80,9 @@
      subfolderPath:(NSString *)subfolder
 {
 	OBPRECONDITION(site);
-    OBPRECONDITION(docRoot);
-    OBPRECONDITION([docRoot isAbsolutePath]);
+    if (docRoot && ![docRoot isEqualToString:@""]) OBPRECONDITION([docRoot isAbsolutePath]);
     OBPRECONDITION(!subfolder || ![subfolder isAbsolutePath]);
+// FIXME: Providing a relative path needs to be better handled elsewhere in the system
     
     if (self = [super init])
 	{
@@ -274,9 +277,15 @@
     [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
 
+/*	Just pass on a simplified version of these 2 messages to our delegate
+ */
+- (void)connection:(id <CKConnection>)con uploadDidBegin:(NSString *)remotePath;
+{
+	[[self delegate] publishingEngine:self didBeginUploadToPath:remotePath];
+}
+
 - (void)connection:(id <CKConnection>)con upload:(NSString *)remotePath progressedTo:(NSNumber *)percent;
 {
-    // Just pass on a simplified version of the message to our delegate
     if (![self hasFinished])
     {
         [[self delegate] publishingEngineDidUpdateProgress:self];

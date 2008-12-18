@@ -2903,6 +2903,8 @@
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
 			isa = PBXGroup;
 			children = (
+				277EE9200CFD8CFF005617FE /* KTStalenessManager.h */,
+				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
 				3CF941C00D623BBA00B1C83D /* KTStoredDictionary.h */,
 				3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */,
 				3CF941C40D623BC600B1C83D /* KTStoredArray.h */,
@@ -3017,8 +3019,6 @@
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
 				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
-				277EE9200CFD8CFF005617FE /* KTStalenessManager.h */,
-				277EE9210CFD8CFF005617FE /* KTStalenessManager.m */,
 				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
 				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
 				279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */,

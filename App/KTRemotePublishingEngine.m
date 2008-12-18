@@ -18,6 +18,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSBundle+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
@@ -101,12 +102,13 @@
     {
         [[challenge sender] cancelAuthenticationChallenge:challenge];
         
-        NSError *error = [challenge error];
-        if (!error)
-        {
-            error = // TODO: Fill me in!
-        }
-        [self failWithError:error];
+        NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+											 code:KTPublishingEngineErrorAuthenticationFailed
+							 localizedDescription:NSLocalizedString(@"Authentication failed.", @"Publishing engine authentication error")
+					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")
+								  underlyingError:[challenge error]];
+        
+		[self failWithError:error];
         return;
     }
     
@@ -125,7 +127,14 @@
     else
     {
         [[challenge sender] cancelAuthenticationChallenge:challenge];
-        [self failWithError:nil];   // TODO: Fill me in!
+        
+		NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+											 code:KTPublishingEngineErrorNoCredentialForAuthentication
+							 localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
+					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
+								  underlyingError:[challenge error]];
+        
+		[self failWithError:error];
     }
 }
 
@@ -285,7 +294,9 @@
     if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
     {
         // Fake an error that the window controller will use to close itself
-        NSError *error = [NSError errorWithDomain:@"NothingToPublish fake error domain" code:0 userInfo:nil];
+        NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+											 code:KTPublishingEngineNothingToPublish
+										 userInfo:nil];
         [self failWithError:error];
     }
     else

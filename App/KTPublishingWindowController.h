@@ -24,7 +24,6 @@
     
     @private
     KTPublishingEngine      *_publishingEngine;
-    CKTransferRecord        *_currentTransfer;
     BOOL                    _didFail;
     
     NSWindow    *_modalWindow;  // Weak ref
@@ -35,8 +34,6 @@
 - (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
 - (KTPublishingEngine *)publishingEngine;
 - (BOOL)isExporting;
-
-- (CKTransferRecord *)currentTransfer;
 
 // Presentation
 - (void)beginSheetModalForWindow:(NSWindow *)window;

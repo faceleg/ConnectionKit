@@ -72,17 +72,6 @@
     {
         _publishingEngine = [engine retain];
         [engine setDelegate:self];
-        
-        // Get notified when transfers start or end
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(transferDidBegin:)
-                                                     name:CKTransferRecordTransferDidBeginNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(transferDidFinish:)
-                                                     name:CKTransferRecordTransferDidFinishNotification
-                                                   object:nil];
     }
     
     return self;
@@ -92,7 +81,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_currentTransfer release];
     [_publishingEngine setDelegate:nil];
     [_publishingEngine release];
     
@@ -147,6 +135,17 @@
 {
     BOOL result = ![[self publishingEngine] isKindOfClass:[KTRemotePublishingEngine class]];
     return result;
+}
+
+- (void)publishingEngine:(KTPublishingEngine *)engine didBeginUploadToPath:(NSString *)remotePath;
+{
+    NSString *format = ([self isExporting]) ?
+						NSLocalizedString(@"Exporting “%@”", @"Upload information") :
+						NSLocalizedString(@"Uploading “%@”", @"Upload information");
+	
+	NSString *text = [[NSString alloc] initWithFormat:format, [remotePath lastPathComponent]];
+	[oInformativeTextLabel setStringValue:text];
+	[text release];
 }
 
 /*  Once we know how much to upload, the progress bar can become determinate
@@ -212,7 +211,7 @@
     _didFail = YES;
     
     // If publishing changes and there are none, it fails with a fake error message
-    if ([[error domain] isEqualToString:@"NothingToPublish fake error domain"])
+    if ([[error domain] isEqualToString:KTPublishingEngineErrorDomain] && [error code] == KTPublishingEngineNothingToPublish)
     {
         KTDocWindowController *windowController = [_modalWindow windowController];
         OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
@@ -242,43 +241,6 @@
         [oProgressIndicator stopAnimation:self];
         
         [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
-    }
-}
-
-#pragma mark -
-#pragma mark Current Transfer
-
-- (CKTransferRecord *)currentTransfer { return _currentTransfer; }
-
-- (void)setCurrentTransfer:(CKTransferRecord *)transferRecord
-{
-    [transferRecord retain];
-    [_currentTransfer release];
-    _currentTransfer = transferRecord;
-    
-    if (transferRecord && [transferRecord name])
-    {
-        NSString *text = [[NSString alloc] initWithFormat:
-                          NSLocalizedString(@"Uploading “%@”", @"Upload information"),
-                          [transferRecord name]];
-        [oInformativeTextLabel setStringValue:text];
-        [text release];
-    }
-}
-
-// FIXME: These 2 methods are getting called for ALL transfers. You'll see weird things if there are 2 documents publishing at the same time
-
-- (void)transferDidBegin:(NSNotification *)notification
-{
-    [self setCurrentTransfer:[notification object]];
-}
-
-- (void)transferDidFinish:(NSNotification *)notification
-{
-    CKTransferRecord *transferRecord = [notification object];
-    if (transferRecord == [self currentTransfer])
-    {
-        [self setCurrentTransfer:nil];
     }
 }
 

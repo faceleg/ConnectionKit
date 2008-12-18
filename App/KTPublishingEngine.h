@@ -15,6 +15,14 @@
 #import <Connection/Connection.h>
 
 
+extern NSString *KTPublishingEngineErrorDomain;
+enum {
+	KTPublishingEngineErrorAuthenticationFailed,
+	KTPublishingEngineErrorNoCredentialForAuthentication,
+	KTPublishingEngineNothingToPublish,
+};
+
+
 @class KTDocumentInfo, KTAbstractPage, KTMediaFileUpload;
 @protocol KTPublishingEngineDelegate;
 
@@ -68,6 +76,7 @@
 
 
 @protocol KTPublishingEngineDelegate
+- (void)publishingEngine:(KTPublishingEngine *)engine didBeginUploadToPath:(NSString *)remotePath;
 - (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
 - (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
 
