@@ -102,9 +102,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     // The connection etc. should already have been shut down
     OBASSERT(!_connection);
-    OBASSERT(!_baseTransferRecord);
-    OBASSERT(!_rootTransferRecord);
     
+    [_baseTransferRecord release];
+    [_rootTransferRecord release];
     [_documentInfo release];
 	[_documentRootPath release];
     [_subfolderPath release];
@@ -225,8 +225,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_connection setDelegate:nil];
     [_connection release]; _connection = nil;
-    
-    [self setRootTransferRecord:nil];
     
     
     // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
@@ -791,6 +789,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     CKTransferRecord *root = [self rootTransferRecord];
+    OBASSERT(root);
     if ([[root path] isEqualToString:remotePath]) return root;
     
     
