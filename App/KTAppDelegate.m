@@ -1744,17 +1744,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	return !prefersPNG;
 }
 
-//- (BOOL)shouldAutosave
-//{
-//	//return [[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"];
-//	return YES;
-//}
-
-//- (BOOL)shouldBackup
-//{
-//	return [[NSUserDefaults standardUserDefaults] boolForKey:@"BackupWhenSaving"];
-//}
-
 - (BOOL)shouldBackupOnOpening
 {
 	return ( KTBackupOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);

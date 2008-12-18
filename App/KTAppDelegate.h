@@ -42,32 +42,19 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 @interface KTAppDelegate : KSLicensedAppDelegate
 {
     // IBOutlets
-    IBOutlet NSMenuItem     *oToggleAddressBarMenuItem;
-    IBOutlet NSMenuItem     *oToggleStatusBarMenuItem;
-    IBOutlet NSMenuItem     *oToggleEditingControlsMenuItem;
-    IBOutlet NSMenuItem     *oToggleInfoMenuItem;
-    IBOutlet NSMenuItem     *oToggleMediaMenuItem;
-	IBOutlet NSMenuItem		*oToggleSiteOutlineMenuItem;
-    IBOutlet NSMenuItem     *oToggleSmallPageIconsMenuItem;
-	IBOutlet NSMenuItem     *oMakeTextLargerMenuItem;
-   	IBOutlet NSMenuItem     *oMakeTextSmallerMenuItem;
-   	IBOutlet NSMenuItem     *oMakeTextNormalMenuItem;
+    IBOutlet NSMenuItem     *oToggleInfoMenuItem; // used
+    IBOutlet NSMenuItem     *oToggleMediaMenuItem; // used
 	
-	IBOutlet NSMenuItem		*oSaveMenuItem;
-	
-	IBOutlet NSMenuItem		*oCutMenuItem;
-	IBOutlet NSMenuItem		*oCutPagesMenuItem;
-	IBOutlet NSMenuItem		*oCopyMenuItem;
-	IBOutlet NSMenuItem		*oCopyPagesMenuItem;
-	
-	IBOutlet NSMenuItem		*oDeletePagesMenuItem;
-	IBOutlet NSMenuItem		*oDeletePageletsMenuItem;
-	
-	IBOutlet NSMenuItem		*oDuplicateMenuItem;
-		
-	IBOutlet NSMenuItem		*oCreateLinkMenuItem;
+	// Pro menu items
 	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
-
+	IBOutlet NSMenuItem		*oEditRawHTMLMenuItem;
+	IBOutlet NSMenuItem		*oFindSeparator;
+	IBOutlet NSMenuItem		*oFindSubmenu;
+	
+	IBOutlet NSMenuItem		*oCodeInjectionMenuItem;
+	IBOutlet NSMenuItem		*oCodeInjectionLevelMenuItem;
+	IBOutlet NSMenuItem		*oCodeInjectionSeparator;
+	
     IBOutlet NSMenuItem		*oAdvancedMenu;		// the main submenu
 	
 	// below are outlets of items on that menu
@@ -77,44 +64,16 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oSourceViewMenuItem;
 	IBOutlet NSMenuItem		*oDOMViewMenuItem;
 	IBOutlet NSMenuItem		*oRSSViewMenuItem;
-	
-	// Menus needing network connection (or nearby items in help menu)
 	IBOutlet NSMenuItem		*oValidateSourceViewMenuItem;
-	IBOutlet NSMenuItem		*oBuyRegisterSandvoxMenuItem;
-	IBOutlet NSMenuItem		*oSetupHostMenuItem;
-	IBOutlet NSMenuItem		*oExportSiteMenuItem;
-	IBOutlet NSMenuItem		*oExportSiteAgainMenuItem;
-	IBOutlet NSMenuItem		*oPublishChangesMenuItem;
-	IBOutlet NSMenuItem		*oPublishEntireSiteMenuItem;
-	
-	IBOutlet NSMenuItem		*oCheckForUpdatesMenuItem;
-	IBOutlet NSMenuItem		*oJoinListMenuItem;
+
+	// do we need this?
 	IBOutlet NSMenuItem		*oInstallPluginsMenuItem;
 	
-	IBOutlet NSMenuItem		*oEditRawHTMLMenuItem;
-	IBOutlet NSMenuItem		*oFindSubmenu;
-	IBOutlet NSMenuItem		*oFindSeparator;
-	
-	IBOutlet NSMenuItem		*oCodeInjectionMenuItem;
-	IBOutlet NSMenuItem		*oCodeInjectionLevelMenuItem;
-	IBOutlet NSMenuItem		*oCodeInjectionSeparator;
-	IBOutlet NSMenuItem		*oViewPublishedSiteMenuItem;
-	
-	IBOutlet NSMenuItem		*oSandvoxHelpMenuItem;
-	IBOutlet NSMenuItem		*oSandvoxQuickStartMenuItem;
-	IBOutlet NSMenuItem		*oVideoIntroductionMenuItem;
-	IBOutlet NSMenuItem		*oReleaseNotesMenuItem;
-	IBOutlet NSMenuItem		*oAcknowledgementsMenuItem;
-	IBOutlet NSMenuItem		*oSendFeedbackMenuItem;
-	IBOutlet NSMenuItem		*oProductPageMenuItem;
-
-
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;
     IBOutlet NSMenu			*oAddCollectionMenu;
     IBOutlet NSMenu			*oAddPageletMenu;
 	
-
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
 	
@@ -158,16 +117,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (IBAction)reloadDebugTable:(id)sender;
 
-// methods to allow current document to update menus
-//- (void)setCutMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
-//- (void)setCutPagesMenuItemTitle:(KTCutMenuItemTitleType)aKTCutMenuItemTitleType;
-//- (void)setCopyMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
-//- (void)setCopyPagesMenuItemTitle:(KTCopyMenuItemTitleType)aKTCopyMenuItemTitleType;
-//- (void)setDeletePagesMenuItemTitle:(KTDeletePagesMenuItemTitleType)aKTDeletePagesMenuItemTitleType;
-//
-//- (void)setCreateLinkMenuItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
-//- (void)setCreateLinkToolbarItemTitle:(KTCreateLinkMenuItemTitleType)aKTCreateLinkMenuItemTitleType;
-
+// methods to allow current document to update application-wide menus
 - (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
 - (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType;
 
