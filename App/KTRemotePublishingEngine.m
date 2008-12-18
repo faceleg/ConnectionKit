@@ -91,38 +91,42 @@
     return result;
 }
 
-/*  Authenticate the connection
+/*  Use the password we have stored in the keychain corresponding to the challenge's protection space
+ *  and the host properties' username.
+ *  If the password cannot be retrieved, fail with an error saying why
  */
 - (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
-    KTHostProperties *hostProperties = [[self site] hostProperties];
-    
-    NSString *password = nil;
-    NSString *userName = [hostProperties valueForKey:@"userName"];
-    NSString *protocol = [hostProperties valueForKey:@"protocol"];
-
-        
-    if (userName && ![userName isEqualToString:@""])
+    if ([challenge previousFailureCount] > 0)
     {
-        [[EMKeychainProxy sharedProxy] setLogsErrors:YES];
-        EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:[[connection URL] host]
-                                                                                               withUsername:userName 
-                                                                                                       path:nil 
-                                                                                                       port:[(CKAbstractConnection *)connection port] 
-                                                                                                   protocol:[KSUtilities SecProtocolTypeForProtocol:protocol]];
-        [[EMKeychainProxy sharedProxy] setLogsErrors:NO];
-        if ( nil == keychainItem )
-        {
-            NSLog(@"warning: publisher did not find keychain item for server %@, user %@", [[connection URL] host], userName);
-        }
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
         
-        password = [keychainItem password];
+        NSError *error = [challenge error];
+        if (!error)
+        {
+            error = // TODO: Fill me in!
+        }
+        [self failWithError:error];
+        return;
     }
     
     
-    NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:userName password:password persistence:NSURLCredentialPersistenceNone];
-    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-    [credential release];
+    KTHostProperties *hostProperties = [[self site] hostProperties];
+    NSString *userName = [hostProperties valueForKey:@"userName"];
+    
+    NSURLCredential *credential = [[[NSURLCredentialStorage sharedCredentialStorage]
+                                    credentialsForProtectionSpace:[challenge protectionSpace]]
+                                   objectForKey:userName];
+    
+    if (credential && [credential hasPassword] && [credential password])    // Fetching it from the keychain might fail
+    {
+        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+    }
+    else
+    {
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
+        [self failWithError:nil];   // TODO: Fill me in!
+    }
 }
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
@@ -280,11 +284,9 @@
 {
     if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
     {
-        [self didFinish];
-        
         // Fake an error that the window controller will use to close itself
         NSError *error = [NSError errorWithDomain:@"NothingToPublish fake error domain" code:0 userInfo:nil];
-        [[self delegate] publishingEngine:self didFailWithError:error];
+        [self failWithError:error];
     }
     else
     {

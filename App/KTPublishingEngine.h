@@ -59,26 +59,9 @@
 - (BOOL)hasStarted;
 - (BOOL)hasFinished;
 
-// Connection
-- (id <CKConnection>)connection;
-
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-
+// Tranfer records
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
-
-// Media
-- (NSSet *)uploadedMedia;
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
-
-// Resources
-- (NSSet *)resourceFiles;
-- (void)uploadResourceFiles;
-
-// Design
-- (void)uploadDesign;
-
 
 @end
 
@@ -94,10 +77,31 @@
 
 
 @interface KTPublishingEngine (SubclassSupport)
+
+// Control
+- (void)didFinish;
+- (void)failWithError:(NSError *)error;
+
+// Connection
+- (id <CKConnection>)connection;
 - (id <CKConnection>)createConnection;
 
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+
+// Pages
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 
-- (void)didFinish;
+// Media
+- (NSSet *)uploadedMedia;
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
+
+// Design
+- (void)uploadDesign;
+
+// Resources
+- (NSSet *)resourceFiles;
+- (void)uploadResourceFiles;
+
 @end
 

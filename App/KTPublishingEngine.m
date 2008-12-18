@@ -176,6 +176,71 @@
 }
 
 #pragma mark -
+#pragma mark Transfer Records
+
+- (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
+
+/*  Also has the side-effect of updating the base transfer record
+ */
+- (void)setRootTransferRecord:(CKTransferRecord *)rootRecord
+{
+    [rootRecord retain];
+    [_rootTransferRecord release];
+    _rootTransferRecord = rootRecord;
+    
+    // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
+    [self willChangeValueForKey:@"baseTransferRecord"]; // Automatic KVO-notifications are used for rootTransferRecord
+    [_baseTransferRecord release];
+    _baseTransferRecord = (rootRecord) ? [[self createDirectory:[self baseRemotePath]] retain] : nil;
+    [self didChangeValueForKey:@"baseTransferRecord"];
+}
+
+/*  The transfer record corresponding to -baseRemotePath. There is no decdicated setter method, use
+ *  -setRootTransferRecord: instead to generate a new baseTransferRecord.
+ */
+- (CKTransferRecord *)baseTransferRecord
+{
+   return _baseTransferRecord;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation KTPublishingEngine (SubclassSupport)
+
+#pragma mark -
+#pragma mark Overall flow control
+
+/*  Called once we've finished, regardless of success.
+ */
+- (void)didFinish
+{
+    _hasFinished = YES;
+    
+    [_connection setDelegate:nil];
+    [_connection release]; _connection = nil;
+    
+    [self setRootTransferRecord:nil];
+    
+    
+    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    [undoManager removeAllActions];
+}
+
+/*  Call this method if something went wrong. The delegate will be alerted, and the engine halted
+ */
+- (void)failWithError:(NSError *)error;
+{
+    [[self connection] forceDisconnect];
+    [self didFinish];
+    [[self delegate] publishingEngine:self didFailWithError:error];
+}
+
+#pragma mark -
 #pragma mark Connection
 
 /*  Simple accessor for the connection. If we haven't started uploading yet, or have finished, it returns nil.
@@ -188,6 +253,18 @@
     _connection = [[self createConnection] retain];
     [_connection setDelegate:self];
     [_connection connect];
+}
+
+/*  Designed for easy subclassing, this method creates the connection but does not store or connect it
+ */
+- (id <CKConnection>)createConnection
+{
+    id <CKConnection> result = [[[CKFileConnection alloc] init] autorelease];
+    
+    // Create site directory
+    [result createDirectory:[self baseRemotePath]];
+    
+    return result;
 }
 
 /*  Exporting shouldn't require any authentication
@@ -245,9 +322,7 @@
 	}
 	else
 	{
-		[con forceDisconnect];
-        [self didFinish];
-        [[self delegate] publishingEngine:self didFailWithError:error];
+		[self failWithError:error];
 	}
 }
 
@@ -392,9 +467,9 @@
     {
         return;
     }
-        
-        
-        
+    
+    
+    
     // Upload page data. Store the page and its digest with the record for processing later
     NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
 	if (fullUploadPath)
@@ -470,6 +545,48 @@
     }
     
     return result;
+}
+
+/*  Slightly messy support methid that allows KTPublishingEngine to reject publishing non-stale pages
+ */
+- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
+{
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Media
+
+- (NSSet *)uploadedMedia
+{
+    return [[_uploadedMedia copy] autorelease];
+}
+
+/*  Adds the media file to the upload queue (if it's not already in it)
+ */
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
+{
+    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    {
+        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
+        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+        if (sourcePath && uploadPath)
+        {
+            // Upload the media. Store the media object with the transfer record for processing later
+            CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+            [transferRecord setProperty:media forKey:@"object"];
+            
+            // Record that we're uploading the object
+            [_uploadedMedia addObject:media];
+        }
+    }
+}
+
+/*  Upload the media if needed
+ */
+- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+{
+    [self uploadMediaIfNeeded:upload];
 }
 
 #pragma mark -
@@ -555,41 +672,6 @@
 }
 
 #pragma mark -
-#pragma mark Media
-
-- (NSSet *)uploadedMedia
-{
-    return [[_uploadedMedia copy] autorelease];
-}
-
-/*  Adds the media file to the upload queue (if it's not already in it)
- */
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
-    {
-        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
-        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-        if (sourcePath && uploadPath)
-        {
-            // Upload the media. Store the media object with the transfer record for processing later
-            CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-            [transferRecord setProperty:media forKey:@"object"];
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-        }
-    }
-}
-
-/*  Upload the media if needed
- */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
-{
-    [self uploadMediaIfNeeded:upload];
-}
-
-#pragma mark -
 #pragma mark Resource Files
 
 - (NSSet *)resourceFiles
@@ -626,7 +708,7 @@
     while (aResource = [resourcesEnumerator nextObject])
     {
         NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[aResource lastPathComponent]];
-    
+        
         [self uploadContentsOfURL:aResource toPath:resourceRemotePath];
     }
 }
@@ -768,78 +850,6 @@
 {
     unsigned long result = ([self remoteFilePermissions] | 0111);
     return result;
-}
-
-#pragma mark -
-#pragma mark Transfer Records
-
-- (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
-
-/*  Also has the side-effect of updating the base transfer record
- */
-- (void)setRootTransferRecord:(CKTransferRecord *)rootRecord
-{
-    [rootRecord retain];
-    [_rootTransferRecord release];
-    _rootTransferRecord = rootRecord;
-    
-    // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
-    [self willChangeValueForKey:@"baseTransferRecord"]; // Automatic KVO-notifications are used for rootTransferRecord
-    [_baseTransferRecord release];
-    _baseTransferRecord = (rootRecord) ? [[self createDirectory:[self baseRemotePath]] retain] : nil;
-    [self didChangeValueForKey:@"baseTransferRecord"];
-}
-
-/*  The transfer record corresponding to -baseRemotePath. There is no decdicated setter method, use
- *  -setRootTransferRecord: instead to generate a new baseTransferRecord.
- */
-- (CKTransferRecord *)baseTransferRecord
-{
-   return _baseTransferRecord;
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation KTPublishingEngine (SubclassSupport)
-
-/*  Designed for easy subclassing, this method creates the connection but does not store or connect it
- */
-- (id <CKConnection>)createConnection
-{
-    id <CKConnection> result = [[[CKFileConnection alloc] init] autorelease];
-    
-    // Create site directory
-    [result createDirectory:[self baseRemotePath]];
-    
-    return result;
-}
-
-/*  Slightly messy support methid that allows KTPublishingEngine to reject publishing non-stale pages
- */
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-{
-    return YES;
-}
-
-/*  Called once we've finished, regardless of success.
- */
-- (void)didFinish
-{
-    _hasFinished = YES;
-    
-    [_connection setDelegate:nil];
-    [_connection release]; _connection = nil;
-    
-    [self setRootTransferRecord:nil];
-    
-    
-    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
-    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
-    [undoManager removeAllActions];
 }
 
 @end
