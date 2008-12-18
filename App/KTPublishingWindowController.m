@@ -210,15 +210,23 @@
 {
     _didFail = YES;
     
-    [oMessageLabel setStringValue:NSLocalizedString(@"Publishing failed.", @"Upload message text")];
-    
-    [oInformativeTextLabel setTextColor:[NSColor redColor]];
-    NSString *errorDescription = [error localizedDescription];
-    if (errorDescription) [oInformativeTextLabel setStringValue:errorDescription];
-    
-    [oProgressIndicator stopAnimation:self];
-    
-    [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
+    // If publishing changes and there are none, it fails with a fake error message
+    if ([[error domain] isEqualToString:@"NothingToPublish fake error domain"])
+    {
+        [self endSheet];  // Act like the user cancelled
+    }
+    else
+    {
+        [oMessageLabel setStringValue:NSLocalizedString(@"Publishing failed.", @"Upload message text")];
+        
+        [oInformativeTextLabel setTextColor:[NSColor redColor]];
+        NSString *errorDescription = [error localizedDescription];
+        if (errorDescription) [oInformativeTextLabel setStringValue:errorDescription];
+        
+        [oProgressIndicator stopAnimation:self];
+        
+        [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
+    }
 }
 
 #pragma mark -

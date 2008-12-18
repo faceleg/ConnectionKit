@@ -41,11 +41,8 @@
 
 @interface KTPublishingEngine (Private)
 
-- (void)didFinish;
-
 - (void)startConnection;
-
-- (void)uploadGoogleSiteMapIfNeeded;
+- (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
 - (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
 - (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
@@ -149,12 +146,8 @@
     
     
     // Setup connection and transfer records
-    _rootTransferRecord = [[CKTransferRecord rootRecordWithPath:[self documentRootPath]] retain];
     [self startConnection];
-    
-    
-    // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
-    _baseTransferRecord = [[self createDirectory:[self baseRemotePath]] retain];
+    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[self documentRootPath]]];
     
     
     // Start by publishing the home page
@@ -257,24 +250,6 @@
         [self didFinish];
         [[self delegate] publishingEngine:self didFailWithError:error];
 	}
-}
-
-#pragma mark -
-#pragma mark Site Map
-
-/*  Uploads the site map if the site has the option enabled
- */
-- (void)uploadGoogleSiteMapIfNeeded
-{
-    if ([[self site] boolForKey:@"generateGoogleSitemap"])
-    {
-        NSString *sitemapXML = [[self site] googleSiteMapXMLString];
-        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        NSData *gzipped = [siteMapData compressGzip];
-        
-        NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        [self uploadData:gzipped toPath:siteMapPath];
-    }
 }
 
 #pragma mark -
@@ -574,6 +549,11 @@
 #pragma mark -
 #pragma mark Media
 
+- (NSSet *)uploadedMedia
+{
+    return [[_uploadedMedia copy] autorelease];
+}
+
 /*  Upload the media if needed
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
@@ -583,6 +563,11 @@
 
 #pragma mark -
 #pragma mark Resources
+
+- (NSSet *)uploadedResources
+{
+    return [[_uploadedResources copy] autorelease];
+}
 
 - (void)uploadResourceIfNeeded:(NSURL *)resourceURL
 {
@@ -680,6 +665,7 @@
     
     // Ensure the parent directory is created first
     NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
+    OBASSERT(![parentDirectoryPath isEqualToString:remotePath]);
     CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
     
     
@@ -749,7 +735,23 @@
 
 - (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
 
-/*  The transfer record corresponding to -baseRemotePath
+/*  Also has the side-effect of updating the base transfer record
+ */
+- (void)setRootTransferRecord:(CKTransferRecord *)rootRecord
+{
+    [rootRecord retain];
+    [_rootTransferRecord release];
+    _rootTransferRecord = rootRecord;
+    
+    // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
+    [self willChangeValueForKey:@"baseTransferRecord"]; // Automatic KVO-notifications are used for rootTransferRecord
+    [_baseTransferRecord release];
+    _baseTransferRecord = (rootRecord) ? [[self createDirectory:[self baseRemotePath]] retain] : nil;
+    [self didChangeValueForKey:@"baseTransferRecord"];
+}
+
+/*  The transfer record corresponding to -baseRemotePath. There is no decdicated setter method, use
+ *  -setRootTransferRecord: instead to generate a new baseTransferRecord.
  */
 - (CKTransferRecord *)baseTransferRecord
 {
@@ -803,6 +805,21 @@
     }
 }
 
+/*  Uploads the site map if the site has the option enabled
+ */
+- (void)uploadGoogleSiteMapIfNeeded
+{
+    if ([[self site] boolForKey:@"generateGoogleSitemap"])
+    {
+        NSString *sitemapXML = [[self site] googleSiteMapXMLString];
+        NSData *siteMapData = [sitemapXML dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSData *gzipped = [siteMapData compressGzip];
+        
+        NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
+        [self uploadData:gzipped toPath:siteMapPath];
+    }
+}
+
 /*  Called once we've finished, regardless of success.
  */
 - (void)didFinish
@@ -812,14 +829,7 @@
     [_connection setDelegate:nil];
     [_connection release]; _connection = nil;
     
-    
-    // Need KVO notifications otherwise the publishing window will be observing a dealloced transfer record
-    [self willChangeValueForKey:@"baseTransferRecord"];
-    [self willChangeValueForKey:@"rootTransferRecord"];
-    [_baseTransferRecord release];  _baseTransferRecord = nil;
-    [_rootTransferRecord release];  _rootTransferRecord = nil;
-    [self didChangeValueForKey:@"baseTransferRecord"];
-    [self didChangeValueForKey:@"rootTransferRecord"];
+    [self setRootTransferRecord:nil];
     
     
     // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes

@@ -68,6 +68,11 @@
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
 
+// Media
+- (NSSet *)uploadedMedia;
+
+// Resources
+- (NSSet *)uploadedResources;
 
 @end
 
@@ -84,8 +89,11 @@
 
 @interface KTPublishingEngine (SubclassSupport)
 - (id <CKConnection>)createConnection;
+
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
+- (void)uploadGoogleSiteMapIfNeeded;
+
 - (void)didFinish;
 @end
 

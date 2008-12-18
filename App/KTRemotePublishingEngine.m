@@ -272,6 +272,25 @@
     }
 }
 
+/*  This method gets called once all pages, media and designs have been processed. If there's nothing
+ *  queued to be uploaded at this point, we want to cancel and tell the user
+ */
+- (void)uploadGoogleSiteMapIfNeeded
+{
+    if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
+    {
+        [self didFinish];
+        
+        // Fake an error that the window controller will use to close itself
+        NSError *error = [NSError errorWithDomain:@"NothingToPublish fake error domain" code:0 userInfo:nil];
+        [[self delegate] publishingEngine:self didFailWithError:error];
+    }
+    else
+    {
+        [super uploadGoogleSiteMapIfNeeded];
+    }
+}
+
 #pragma mark -
 #pragma mark Ping
 
