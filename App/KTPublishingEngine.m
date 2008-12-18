@@ -646,12 +646,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
  */
-- (void)uploadMainCSSIfNeeded
+- (CKTransferRecord *)uploadMainCSSIfNeeded
 {
+    CKTransferRecord *result = nil;
+    
+    
     // Load up the CSS from the design
-    KTDesign *design = [[[[self site] root] master] design];
+    KTMaster *master = [[[self site] root] master];
+    KTDesign *design = [master design];
     NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];            OBASSERT(mainCSSPath);
     NSMutableString *mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];    OBASSERT(mainCSS);
+    
+    
+    
+    // Append banner CSS
+    NSString *bannerCSS = [master bannerCSSForPurpose:kGeneratingRemote];
+    if (bannerCSS) [mainCSS appendString:bannerCSS];
     
     
     
@@ -696,8 +706,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([self shouldUploadMainCSSData:mainCSSData])
     {
         NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-        [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+        result = [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
     }
+    
+    
+    return result;
 }
 
 /*  KTRemotePublishingEngine overrides this to manage staleness

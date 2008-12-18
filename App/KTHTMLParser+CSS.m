@@ -88,7 +88,7 @@
 	}
 	
 	
-	NSString *masterCSS = [[page master] masterCSSForPurpose:[self HTMLGenerationPurpose]];
+	NSString *masterCSS = [[page master] bannerCSSForPurpose:[self HTMLGenerationPurpose]];
     if (masterCSS)
     {
         // For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external

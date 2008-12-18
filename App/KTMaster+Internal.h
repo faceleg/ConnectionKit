@@ -16,9 +16,10 @@
 - (void)setDesign:(KTDesign *)design;
 - (void)setDesignBundleIdentifier:(NSString *)identifier;
 
-#pragma mark CSS
-- (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
+#pragma mark Banner
+- (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
+#pragma mark CSS
 - (NSData *)publishedDesignCSSDigest;
 - (void)setPublishedDesignCSSDigest:(NSData *)digest;
 

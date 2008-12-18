@@ -35,8 +35,6 @@
 
 
 @interface KTMaster (Private)
-- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose;
-
 - (KTMediaManager *)mediaManager;
 
 - (void)generatePlaceholderImage;
@@ -381,7 +379,7 @@
 	return result;
 }
 
-- (NSString *)bannerCSS:(KTHTMLGenerationPurpose)generationPurpose
+- (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
 {
 	NSString *result = nil;
 	
@@ -401,7 +399,7 @@
         }
         else
         {
-            NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[self designDirectoryURL]];
+            NSURL *masterCSSURL = [NSURL URLWithString:@"main.css" relativeToURL:[self designDirectoryURL]];
             NSURL *mediaURL = [[[banner file] defaultUpload] URL];
             bannerURLString = [mediaURL stringRelativeToURL:masterCSSURL];
         }
@@ -552,25 +550,6 @@
 
 #pragma mark -
 #pragma mark CSS
-
-- (NSString *)masterCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
-{
-	NSString *result = nil;
-	NSMutableString *buffer = [[[NSMutableString alloc] init] autorelease];
-	
-	
-	// If the user has specified a custom banner and the design supports it, load it in
-	NSString *bannerCSS = [self bannerCSS:generationPurpose];
-	if (bannerCSS) [buffer appendString:bannerCSS];
-	
-	
-	// Tidy up
-	if (![buffer isEqualToString:@""])
-	{
-		result = [NSString stringWithString:buffer];
-	}
-	return result;
-}
 
 - (NSData *)publishedDesignCSSDigest
 {

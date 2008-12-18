@@ -111,7 +111,7 @@ enum {
 - (void)uploadDesignIfNeeded;
 
 - (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
-- (void)uploadMainCSSIfNeeded;
+- (CKTransferRecord *)uploadMainCSSIfNeeded;
 - (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData;
 
 // Resources
