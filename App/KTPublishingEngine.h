@@ -112,7 +112,7 @@ enum {
 
 - (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
 - (CKTransferRecord *)uploadMainCSSIfNeeded;
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData;
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest;
 
 // Resources
 - (NSSet *)resourceFiles;

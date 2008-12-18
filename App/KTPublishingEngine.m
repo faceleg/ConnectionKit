@@ -667,7 +667,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
     NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:nil];
+    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
     
     NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
     KTHTMLTextBlock *aTextBlock;
@@ -703,10 +703,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
                                                           allowLossyConversion:YES];
     
-    if ([self shouldUploadMainCSSData:mainCSSData])
+    NSData *digest = nil;
+    if ([self shouldUploadMainCSSData:mainCSSData digest:&digest])
     {
         NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
         result = [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+        
+        [result setProperty:master forKey:@"object"];
+        [result setProperty:digest forKey:@"dataDigest"];
     }
     
     
@@ -715,8 +719,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  KTRemotePublishingEngine overrides this to manage staleness
  */
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData;
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest
 {
+    if (outDigest) *outDigest = nil;
     return YES;
 }
 

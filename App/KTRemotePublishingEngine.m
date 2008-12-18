@@ -237,6 +237,10 @@
             
             [designPublishingInfo setValue:[(KTDesign *)object marketingVersion] forKey:@"versionLastPublished"];
         }
+        else if ([object isKindOfClass:[KTMaster class]])
+        {
+            [object setPublishedDesignCSSDigest:[transferRecord propertyForKey:@"dataDigest"]];
+        }
         else
         {
             // It's probably a simple media object. Mark it non-stale.
@@ -305,6 +309,9 @@
     }
 }
 
+#pragma mark -
+#pragma mark Design
+
 - (void)uploadDesignIfNeeded
 {
     // When publishing changes, only upload the design if its published version is different to the current one
@@ -315,6 +322,25 @@
     {
         [super uploadDesignIfNeeded];
     }
+}
+
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest
+{
+    BOOL result = YES;
+    
+    NSData *digest = [mainCSSData sha1Digest];
+    NSData *publishedDigest = [[[[self site] root] master] publishedDesignCSSDigest];
+    
+    if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])
+    {
+        result = NO;
+    }
+    else if (digest)
+    {
+        *outDigest = digest;
+    }
+    
+    return result;
 }
 
 #pragma mark -
