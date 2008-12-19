@@ -41,6 +41,7 @@
 - (void)beginSheetModalForWindow:(NSWindow *)window;
 - (void)endSheet;
 
+- (NSView *)accessoryView;
 - (IBAction)toggleExpanded:(id)sender;
 - (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag;
 

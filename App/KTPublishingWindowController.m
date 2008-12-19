@@ -116,7 +116,7 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 	[[self window] setFrameAutosaveName:@"KTPublishingWindow"];
 	
 	// remember our accessory size since setHidden: collapses y to 0
-	_accessoryHeight = [oAccessoryView bounds].size.height;
+	_accessoryHeight = [[self accessoryView] bounds].size.height;
 	
 	// show expanded view?
 	BOOL shouldExpand = [[NSUserDefaults standardUserDefaults] boolForKey:@"ExpandPublishingWindow"];
@@ -277,13 +277,15 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 }
 
 #pragma mark -
-#pragma mark Window
+#pragma mark Disclosure Button
+
+- (NSView *)accessoryView { return oAccessoryView; }
 
 - (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)proposedFrameSize
 {
 	// if the accessory view is hidden, don't resize vertically
 	
-	if ( ![oAccessoryView isHidden] )
+	if ( ![[self accessoryView] isHidden] )
 	{
 		return proposedFrameSize;
 	}
@@ -300,9 +302,9 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 	// if the window is resized, track the accessory view's change in height
 	// (not called if window is being resized via -setFrame:display:animate:)
 	
-	if ( ![oAccessoryView isHidden] )
+	if ( ![[self accessoryView] isHidden] )
 	{
-		_accessoryHeight = [oAccessoryView bounds].size.height;
+		_accessoryHeight = [[self accessoryView] bounds].size.height;
 	}
 }
 
@@ -310,7 +312,7 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 {
 	NSRect windowFrame = [[self window] frame];
 	
-	if ( showFlag && [oAccessoryView isHidden] )
+	if ( showFlag && [[self accessoryView] isHidden] )
 	{
 		// expand
 		if ( animateFlag )
@@ -319,7 +321,7 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 		}
 		else
 		{
-			[oAccessoryView setHidden:NO];
+			[[self accessoryView] setHidden:NO];
 		}
 		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
 									 windowFrame.origin.y - _accessoryHeight - kWindowResizeOffset,
@@ -327,10 +329,10 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 									 windowFrame.size.height + _accessoryHeight + kWindowResizeOffset);
 		[[self window] setFrame:newFrame display:YES animate:animateFlag];
 	}
-	else if ( !showFlag && ![oAccessoryView isHidden] )
+	else if ( !showFlag && ![[self accessoryView] isHidden] )
 	{
 		// collapse
-		[oAccessoryView setHidden:YES];
+		[[self accessoryView] setHidden:YES];
 		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
 									 windowFrame.origin.y + _accessoryHeight + kWindowResizeOffset,
 									 windowFrame.size.width,
@@ -343,14 +345,14 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 {
 	// once the window resizes, we unhide the accessory view and adjust its size
 	
-	[oAccessoryView setHidden:NO];
+	[[self accessoryView] setHidden:NO];
 
-	NSRect accessoryFrame = [oAccessoryView frame];
+	NSRect accessoryFrame = [[self accessoryView] frame];
 	NSRect newFrame = NSMakeRect(accessoryFrame.origin.x, 
 								 accessoryFrame.origin.y, 
 								 accessoryFrame.size.width, 
 								 accessoryFrame.size.height - kWindowResizeOffset);
-	[oAccessoryView setFrame:newFrame];
+	[[self accessoryView] setFrame:newFrame];
 }
 
 #pragma mark -
