@@ -107,6 +107,10 @@
     
     // Start progress indicator
     [oProgressIndicator startAnimation:self];
+	
+	// preserve window size
+	[self setShouldCascadeWindows:NO];
+	[[self window] setFrameAutosaveName:@"KTPublishingWindow"];
 }
 
 #pragma mark -
