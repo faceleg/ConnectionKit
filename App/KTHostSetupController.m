@@ -960,19 +960,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
 		
-	NSError *err = nil;
 	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[[self properties] valueForKey:@"protocol"]
                                                                                                   host:[[self properties] valueForKey:@"hostName"]
-                                                                                                  port:[[self properties] valueForKey:@"port"]
-                                                                                                 error:&err];
-	if (!connection)
-	{
-		if (err)
-		{
-			[[self window] presentError:err];
-		}
-		return;
-	}
+                                                                                                  port:[[self properties] valueForKey:@"port"]];
+	OBASSERT(connection);
+    if (!connection) return;
+    
 	[connection setName:@"Host Setup Test"];
 	[self setTestConnection:connection];
 	[connection setDelegate:self];
