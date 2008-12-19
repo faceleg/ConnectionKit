@@ -964,8 +964,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[[self properties] valueForKey:@"protocol"]
                                                                                                   host:[[self properties] valueForKey:@"hostName"]
                                                                                                   port:[[self properties] valueForKey:@"port"]
-                                                                                                  user:nil
-                                                                                              password:nil
                                                                                                  error:&err];
 	if (!connection)
 	{
