@@ -157,10 +157,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[self documentRootPath]]];
     
     
-    // Start by publishing the home page
-    [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-               withObject:[[self site] root]
-               afterDelay:KTParsingInterval];
+    // Start by publishing the home page if setting up connection was successful
+    if (![self hasFinished])
+    {
+        [self performSelector:@selector(parseAndUploadPageIfNeeded:)
+                   withObject:[[self site] root]
+                   afterDelay:KTParsingInterval];
+    }
 }
 
 - (void)cancel
