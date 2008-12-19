@@ -112,8 +112,11 @@
 		
 		
         // For diagnostics, log the value of the host properties
-		KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
-		NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"] )
+		{
+			KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
+		}
 	}
     
     return result;

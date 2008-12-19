@@ -958,7 +958,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[self setValue:hostProperties forKeyPath:@"documentInfo.hostProperties"];
 
 		// For diagnostics, log the value of the host properties
-		NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"] )
+		{
+			NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
+		}
 		
 		// Mark designs and media as stale (pages are handled automatically)
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];

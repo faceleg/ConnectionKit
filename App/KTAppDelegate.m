@@ -502,6 +502,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether the Publishing window is expanded, showing the outline view
 		[NSNumber numberWithBool:NO], @"ExpandPublishingWindow",
+										 
+		/// whether we NSLog() the hostProperties dictionary upon document open/change
+		[NSNumber numberWithBool:NO], @"LogHostInfoToConsole",
 				
 		nil];
 	
