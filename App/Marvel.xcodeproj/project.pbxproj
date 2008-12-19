@@ -1798,8 +1798,6 @@
 		3C202D3407DFC0F000DE4994 /* KTDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocument.m; sourceTree = "<group>"; };
 		3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+SplitViews.m"; sourceTree = "<group>"; };
 		3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Toolbar.m"; sourceTree = "<group>"; };
-		3C202D6107DFC18600DE4994 /* KTOldTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOldTransferController.h; sourceTree = "<group>"; };
-		3C202D6207DFC18600DE4994 /* KTOldTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOldTransferController.m; sourceTree = "<group>"; };
 		3C202D7807DFC30800DE4994 /* KTHostArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHostArrayController.h; sourceTree = "<group>"; };
 		3C202D7907DFC30800DE4994 /* KTHostArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHostArrayController.m; sourceTree = "<group>"; };
 		3C202D7A07DFC30800DE4994 /* KTHostSetupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHostSetupController.h; sourceTree = "<group>"; };
@@ -3014,8 +3012,6 @@
 				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
 				3CBDE9100EBA65D20059C56C /* KTRemotePublishingEngine.h */,
 				3CBDE9110EBA65D20059C56C /* KTRemotePublishingEngine.m */,
-				3C202D6107DFC18600DE4994 /* KTOldTransferController.h */,
-				3C202D6207DFC18600DE4994 /* KTOldTransferController.m */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
 				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
