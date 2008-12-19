@@ -26,7 +26,7 @@
     @private
     KTPublishingEngine      *_publishingEngine;
     BOOL                    _didFail;
-	NSSize					_accessorySize;
+	float					_accessoryHeight;
     
     NSWindow    *_modalWindow;  // Weak ref
 }

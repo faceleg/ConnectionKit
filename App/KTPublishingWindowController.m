@@ -19,6 +19,9 @@
 #import <Growl/Growl.h>
 
 
+const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accessory view
+
+
 @implementation KTPublishingWindowController
 
 #pragma mark -
@@ -113,7 +116,7 @@
 	[[self window] setFrameAutosaveName:@"KTPublishingWindow"];
 	
 	// remember our accessory size since setHidden: collapses y to 0
-	_accessorySize = [oAccessoryView bounds].size;
+	_accessoryHeight = [oAccessoryView bounds].size.height;
 	
 	// show expanded view?
 	BOOL shouldExpand = [[NSUserDefaults standardUserDefaults] boolForKey:@"ExpandPublishingWindow"];
@@ -276,11 +279,30 @@
 #pragma mark -
 #pragma mark Window
 
-- (void)windowDidResize:(NSNotification *)notification
+- (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)proposedFrameSize
 {
+	// if the accessory view is hidden, don't resize vertically
+	
 	if ( ![oAccessoryView isHidden] )
 	{
-		_accessorySize = [oAccessoryView bounds].size;
+		return proposedFrameSize;
+	}
+	else
+	{
+		NSSize currentFrameSize = [window frame].size;
+		return NSMakeSize(proposedFrameSize.width, 
+						  currentFrameSize.height);
+	}
+}
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+	// if the window is resized, track the accessory view's change in height
+	// (not called if window is being resized via -setFrame:display:animate:)
+	
+	if ( ![oAccessoryView isHidden] )
+	{
+		_accessoryHeight = [oAccessoryView bounds].size.height;
 	}
 }
 
@@ -293,7 +315,6 @@
 		// expand
 		if ( animateFlag )
 		{
-			// we delay this so we don't have to watch it animate scoller size
 			[self performSelector:@selector(showAccessoryView) withObject:nil afterDelay:0.0];
 		}
 		else
@@ -301,9 +322,9 @@
 			[oAccessoryView setHidden:NO];
 		}
 		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
-									 windowFrame.origin.y - _accessorySize.height,
+									 windowFrame.origin.y - _accessoryHeight - kWindowResizeOffset,
 									 windowFrame.size.width,
-									 windowFrame.size.height + _accessorySize.height);
+									 windowFrame.size.height + _accessoryHeight + kWindowResizeOffset);
 		[[self window] setFrame:newFrame display:YES animate:animateFlag];
 	}
 	else if ( !showFlag && ![oAccessoryView isHidden] )
@@ -311,16 +332,25 @@
 		// collapse
 		[oAccessoryView setHidden:YES];
 		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
-									 windowFrame.origin.y + _accessorySize.height,
+									 windowFrame.origin.y + _accessoryHeight + kWindowResizeOffset,
 									 windowFrame.size.width,
-									 windowFrame.size.height - _accessorySize.height);
+									 windowFrame.size.height - _accessoryHeight - kWindowResizeOffset);
 		[[self window] setFrame:newFrame display:YES animate:animateFlag];
 	}
 }
 
 - (void)showAccessoryView
 {
+	// once the window resizes, we unhide the accessory view and adjust its size
+	
 	[oAccessoryView setHidden:NO];
+
+	NSRect accessoryFrame = [oAccessoryView frame];
+	NSRect newFrame = NSMakeRect(accessoryFrame.origin.x, 
+								 accessoryFrame.origin.y, 
+								 accessoryFrame.size.width, 
+								 accessoryFrame.size.height - kWindowResizeOffset);
+	[oAccessoryView setFrame:newFrame];
 }
 
 #pragma mark -
