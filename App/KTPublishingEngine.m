@@ -81,7 +81,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Case 38052: We want the doc root to be an absolute path
     if (!docRoot) docRoot = @"/";
     if (![docRoot isAbsolutePath]) docRoot = [@"/" stringByAppendingString:docRoot];
-    OBASSERT(docRoot)
+    OBASSERT(docRoot);
     OBASSERT([docRoot isAbsolutePath]);
     
     OBPRECONDITION(!subfolder || ![subfolder isAbsolutePath]);
