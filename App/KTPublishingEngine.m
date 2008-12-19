@@ -819,8 +819,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
     CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-	CKTransferRecord *result = [[self connection] uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
+    
+    id <CKConnection> connection = [self connection];
+    OBASSERT(connection);
+    CKTransferRecord *result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
+    
     [parent addContent:result];
     
     // Also set permissions for the file
