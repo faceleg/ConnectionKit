@@ -111,6 +111,14 @@
 	// preserve window size
 	[self setShouldCascadeWindows:NO];
 	[[self window] setFrameAutosaveName:@"KTPublishingWindow"];
+	
+	// remember our accessory size since setHidden: collapses y to 0
+	_accessorySize = [oAccessoryView bounds].size;
+	
+	// show expanded view?
+	BOOL shouldExpand = [[NSUserDefaults standardUserDefaults] boolForKey:@"ExpandPublishingWindow"];
+	[oExpandButton setState:shouldExpand];
+	[self showAccessoryView:shouldExpand animate:NO];
 }
 
 #pragma mark -
@@ -120,6 +128,15 @@
 {
     [self endSheet];
 }
+
+- (IBAction)toggleExpanded:(id)sender
+{
+	BOOL shouldExpand = [sender state];
+	
+	[[NSUserDefaults standardUserDefaults] setBool:shouldExpand forKey:@"ExpandPublishingWindow"];
+	[self showAccessoryView:shouldExpand animate:YES];
+}
+
 
 #pragma mark -
 #pragma mark Publishing Engine
@@ -254,6 +271,56 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
     return NO;
+}
+
+#pragma mark -
+#pragma mark Window
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+	if ( ![oAccessoryView isHidden] )
+	{
+		_accessorySize = [oAccessoryView bounds].size;
+	}
+}
+
+- (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag
+{
+	NSRect windowFrame = [[self window] frame];
+	
+	if ( showFlag && [oAccessoryView isHidden] )
+	{
+		// expand
+		if ( animateFlag )
+		{
+			// we delay this so we don't have to watch it animate scoller size
+			[self performSelector:@selector(showAccessoryView) withObject:nil afterDelay:0.0];
+		}
+		else
+		{
+			[oAccessoryView setHidden:NO];
+		}
+		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
+									 windowFrame.origin.y - _accessorySize.height,
+									 windowFrame.size.width,
+									 windowFrame.size.height + _accessorySize.height);
+		[[self window] setFrame:newFrame display:YES animate:animateFlag];
+	}
+	else if ( !showFlag && ![oAccessoryView isHidden] )
+	{
+		// collapse
+		[oAccessoryView setHidden:YES];
+		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
+									 windowFrame.origin.y + _accessorySize.height,
+									 windowFrame.size.width,
+									 windowFrame.size.height - _accessorySize.height);
+		[[self window] setFrame:newFrame display:YES animate:animateFlag];
+	}
+}
+
+- (void)showAccessoryView
+{
+	[oAccessoryView setHidden:NO];
 }
 
 #pragma mark -

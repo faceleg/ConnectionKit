@@ -20,11 +20,13 @@
     IBOutlet NSProgressIndicator    *oProgressIndicator;
     IBOutlet NSButton               *oFirstButton;
     IBOutlet NSTableColumn          *oTransferDetailsTableColumn;
-    
+	IBOutlet NSButton				*oExpandButton;
+    IBOutlet NSView					*oAccessoryView; // currently the scrollview around the outline
     
     @private
     KTPublishingEngine      *_publishingEngine;
     BOOL                    _didFail;
+	NSSize					_accessorySize;
     
     NSWindow    *_modalWindow;  // Weak ref
 }
@@ -38,5 +40,8 @@
 // Presentation
 - (void)beginSheetModalForWindow:(NSWindow *)window;
 - (void)endSheet;
+
+- (IBAction)toggleExpanded:(id)sender;
+- (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag;
 
 @end

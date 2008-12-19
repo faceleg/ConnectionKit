@@ -6,14 +6,6 @@
 	<array>
 		<dict>
 			<key>CLASS</key>
-			<string>NSOutlineView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTableView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>NSApplication</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -83,6 +75,8 @@
 			<dict>
 				<key>firstButtonAction</key>
 				<string>NSButton</string>
+				<key>toggleExpanded</key>
+				<string>id</string>
 			</dict>
 			<key>CLASS</key>
 			<string>KTPublishingWindowController</string>
@@ -90,6 +84,10 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>oAccessoryView</key>
+				<string>NSView</string>
+				<key>oExpandButton</key>
+				<string>NSButton</string>
 				<key>oFirstButton</key>
 				<string>NSButton</string>
 				<key>oInformativeTextLabel</key>
@@ -103,6 +101,14 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSOutlineView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

@@ -499,6 +499,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether we use secure NSTemporaryDirectory() or ~/Library/Caches/ for upload cache
 		[NSNumber numberWithBool:NO], @"DisableSecureUploadCache",
+										 
+		/// whether the Publishing window is expanded, showing the outline view
+		[NSNumber numberWithBool:NO], @"ExpandPublishingWindow",
 				
 		nil];
 	
