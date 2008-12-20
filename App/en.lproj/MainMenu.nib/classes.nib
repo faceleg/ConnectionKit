@@ -352,6 +352,19 @@
 			<string>NSResponder</string>
 		</dict>
 		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>imagePickerCancelled</key>
+				<string>id</string>
+				<key>imagePickerSet</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
 			<key>CLASS</key>
 			<string>KSAlert</string>
 			<key>LANGUAGE</key>
@@ -365,19 +378,6 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KSViewController</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>imagePickerCancelled</key>
-				<string>id</string>
-				<key>imagePickerSet</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -406,14 +406,6 @@
 			<string>KSViewController</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>KTCodeInjectionSplitView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>RBSplitView</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>checkForUpdates</key>
@@ -440,6 +432,14 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTCodeInjectionSplitView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>RBSplitView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -538,38 +538,6 @@
 			<string>NSObject</string>
 		</dict>
 		<dict>
-			<key>CLASS</key>
-			<string>KSEmailAddressComboBox</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSComboBox</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>cancel</key>
-				<string>id</string>
-				<key>continueOpening</key>
-				<string>id</string>
-				<key>findSelectedMediaFile</key>
-				<string>id</string>
-				<key>showHelp</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>KTMissingMediaController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>oMediaArrayController</key>
-				<string>NSArrayController</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
-		</dict>
-		<dict>
 			<key>ACTIONS</key>
 			<dict>
 				<key>editRawHTMLInSelectedBlock</key>
@@ -600,8 +568,6 @@
 				<string>id</string>
 				<key>showTranscriptWindow</key>
 				<string>id</string>
-				<key>toggleLogAllContextChanges</key>
-				<string>id</string>
 				<key>toggleMediaBrowserShown</key>
 				<string>id</string>
 			</dict>
@@ -611,8 +577,6 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
-				<key>oAcknowledgementsMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oAddCollectionMenu</key>
 				<string>NSMenu</string>
 				<key>oAddPageMenu</key>
@@ -621,25 +585,11 @@
 				<string>NSMenu</string>
 				<key>oAdvancedMenu</key>
 				<string>NSMenuItem</string>
-				<key>oBuyRegisterSandvoxMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oCheckForUpdatesMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oCodeInjectionLevelMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oCodeInjectionMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oCodeInjectionSeparator</key>
-				<string>NSMenuItem</string>
-				<key>oCopyMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oCopyPagesMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oCreateLinkMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oCutMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oCutPagesMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oDOMViewMenuItem</key>
 				<string>NSMenuItem</string>
@@ -647,17 +597,7 @@
 				<string>NSPanel</string>
 				<key>oDebugTable</key>
 				<string>NSTableView</string>
-				<key>oDeletePageletsMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oDeletePagesMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oDuplicateMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oEditRawHTMLMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oExportSiteAgainMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oExportSiteMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oFindSeparator</key>
 				<string>NSMenuItem</string>
@@ -665,37 +605,9 @@
 				<string>NSMenuItem</string>
 				<key>oInstallPluginsMenuItem</key>
 				<string>NSMenuItem</string>
-				<key>oJoinListMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oMakeTextLargerMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oMakeTextNormalMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oMakeTextSmallerMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oOpenSampleSiteMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oPasteAsMarkupMenuItem</key>
 				<string>NSMenuItem</string>
-				<key>oProductPageMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oPublishChangesMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oPublishEntireSiteMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oRSSViewMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oReleaseNotesMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oSandvoxHelpMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oSandvoxQuickStartMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oSaveMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oSendFeedbackMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oSetupHostMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oSourceViewMenuItem</key>
 				<string>NSMenuItem</string>
@@ -703,29 +615,47 @@
 				<string>NSMenuItem</string>
 				<key>oStandardViewWithoutStylesMenuItem</key>
 				<string>NSMenuItem</string>
-				<key>oToggleAddressBarMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oToggleEditingControlsMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oToggleInfoMenuItem</key>
 				<string>NSMenuItem</string>
 				<key>oToggleMediaMenuItem</key>
 				<string>NSMenuItem</string>
-				<key>oToggleSiteOutlineMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oToggleSmallPageIconsMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oToggleStatusBarMenuItem</key>
-				<string>NSMenuItem</string>
 				<key>oValidateSourceViewMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oVideoIntroductionMenuItem</key>
-				<string>NSMenuItem</string>
-				<key>oViewPublishedSiteMenuItem</key>
 				<string>NSMenuItem</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KSLicensedAppDelegate</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSEmailAddressComboBox</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSComboBox</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancel</key>
+				<string>id</string>
+				<key>continueOpening</key>
+				<string>id</string>
+				<key>findSelectedMediaFile</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTMissingMediaController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oMediaArrayController</key>
+				<string>NSArrayController</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
