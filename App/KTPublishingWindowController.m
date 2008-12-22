@@ -69,6 +69,19 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
     {
         _publishingEngine = [engine retain];
         [engine setDelegate:self];
+		
+		
+		// There's a minimum of localized text in this nib, so we're handling it in entirely in code
+		if ([self isExporting])
+		{
+			[self setMessageText:NSLocalizedString(@"Exporting…", @"Publishing sheet title")];
+			[self setInformativeText:NSLocalizedString(@"Preparing to export…", @"Uploading progress info")];
+		}
+		else
+		{
+			[self setMessageText:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
+			[self setInformativeText:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
+		}
     }
     
     return self;
@@ -80,6 +93,9 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
     
     [_publishingEngine setDelegate:nil];
     [_publishingEngine release];
+	
+	[_messageText release];
+	[_informativeText release];
     
     [super dealloc];
 }
@@ -87,18 +103,12 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-    // There's a minimum of localized text in this nib, so we're handling it in entirely in code
-    if ([self isExporting])
-    {
-        [oMessageLabel setStringValue:NSLocalizedString(@"Exporting…", @"Publishing sheet title")];
-        [oInformativeTextLabel setStringValue:NSLocalizedString(@"Preparing to export…", @"Uploading progress info")];
-    }
-    else
-    {
-        [oMessageLabel setStringValue:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
-        [oInformativeTextLabel setStringValue:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
-    }
+	
+	
+	// Load text into the message and info text labels
+	[oMessageLabel setStringValue:[self messageText]];
+	[oInformativeTextLabel setStringValue:[self informativeText]];
+	
     
     // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
@@ -162,7 +172,7 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 						NSLocalizedString(@"Uploading “%@”", @"Upload information");
 	
 	NSString *text = [[NSString alloc] initWithFormat:format, [remotePath lastPathComponent]];
-	[oInformativeTextLabel setStringValue:text];
+	[self setInformativeText:text];
 	[text release];
 }
 
@@ -254,11 +264,11 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
     }
     else
     {
-        [oMessageLabel setStringValue:NSLocalizedString(@"Publishing failed.", @"Upload message text")];
+        [self setMessageText:NSLocalizedString(@"Publishing failed.", @"Upload message text")];
         
         [oInformativeTextLabel setTextColor:[NSColor redColor]];
         NSString *errorDescription = [error localizedDescription];
-        if (errorDescription) [oInformativeTextLabel setStringValue:errorDescription];
+        [self setInformativeText:errorDescription];
         
         [oProgressIndicator stopAnimation:self];
         
@@ -395,3 +405,37 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation KTPublishingWindowController (KSAlert)
+
+/*	Eventually these methods ought to be split out into a decent KSAlert class.
+ */
+
+- (NSString *)messageText { return _messageText; }
+
+- (void)setMessageText:(NSString *)text
+{
+	text = [text copy];
+	[_messageText release];
+	_messageText = text;
+	
+	[oMessageLabel setStringValue:(text ? text : @"")];
+}
+
+- (NSString *)informativeText { return _informativeText; }
+
+- (void)setInformativeText:(NSString *)text
+{
+	text = [text copy];
+	[_informativeText release];
+	_informativeText = text;
+	
+	[oInformativeTextLabel setStringValue:(text ? text : @"")];
+}
+
+@end
+

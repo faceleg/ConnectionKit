@@ -29,6 +29,11 @@
 	float					_accessoryHeight;
     
     NSWindow    *_modalWindow;  // Weak ref
+	
+	
+	// KSAlert
+	NSString	*_messageText;
+	NSString	*_informativeText;
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
@@ -46,3 +51,12 @@
 - (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag;
 
 @end
+
+
+@interface KTPublishingWindowController (KSAlert)
+- (NSString *)messageText;
+- (void)setMessageText:(NSString *)text;
+- (NSString *)informativeText;
+- (void)setInformativeText:(NSString *)text;
+@end
+
