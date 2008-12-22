@@ -366,17 +366,23 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
 		
+		NSURLCredential *credential;
 		if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
 		{
 			password = [self password];
+			credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
+													  password:password
+												   persistence:NSURLCredentialPersistenceNone];
+			[credential autorelease];
+		}
+		else
+		{
+			credential = [challenge proposedCredential];
 		}
 		
-		NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:[[self properties] valueForKey:@"userName"]
-																   password:password
-																persistence:NSURLCredentialPersistenceNone];
+		
 		
 		[[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-		[credential release];
 	}
 	else
 	{
