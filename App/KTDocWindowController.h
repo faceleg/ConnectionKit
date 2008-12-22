@@ -142,7 +142,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 #pragma mark Publishing
 - (IBAction)publishSiteChanges:(id)sender;
-- (IBAction)publishEntireSite:(id)sender;
+- (IBAction)publishSiteAll:(id)sender;
 - (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
 - (IBAction)exportSite:(id)sender;
 - (IBAction)exportSiteAgain:(id)sender;

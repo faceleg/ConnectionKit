@@ -2140,7 +2140,7 @@ from representedObject */
     [windowController release];
 }
 
-- (IBAction)publishEntireSite:(id)sender
+- (IBAction)publishSiteAll:(id)sender
 {
     if (![self shouldPublish]) return;
     
@@ -2163,7 +2163,7 @@ from representedObject */
 {
     if ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask)
     {
-        [self publishEntireSite:sender];
+        [self publishSiteAll:sender];
     }
     else
     {
@@ -2220,7 +2220,7 @@ from representedObject */
     if (returnCode == NSAlertSecondButtonReturn)
     {
         [[alert window] orderOut:self]; // Another sheet's about to appear
-        [self publishEntireSite:self];
+        [self publishSiteAll:self];
     }
 }
 
