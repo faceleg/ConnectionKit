@@ -403,6 +403,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
   forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
 			 error:(NSError **)outError 
 {
+	OBPRECONDITION(inURL);
+	OBPRECONDITION([inURL isFileURL]);
+	
 	// We don't support any of the other save ops here.
 	OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
 	
@@ -473,6 +476,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)saveOperation
 					  error:(NSError **)outError
 {
+	OBPRECONDITION(inURL);
+	OBPRECONDITION([inURL isFileURL]);
+	
+	
 	// REGISTRATION -- be annoying if it looks like the registration code was bypassed
 	if ( ((0 == gRegistrationWasChecked) && random() < (LONG_MAX / 10) ) )
 	{
