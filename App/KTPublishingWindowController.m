@@ -19,7 +19,7 @@
 #import <Growl/Growl.h>
 
 
-const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accessory view
+const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom of window when collapsed
 
 
 @implementation KTPublishingWindowController
@@ -113,23 +113,38 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
     // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
     
+	
     // Outline view uses special cell class
     NSCell *cell = [[CKTransferProgressCell alloc] initTextCell:@""];
     [oTransferDetailsTableColumn setDataCell:cell];
     [cell release];
     
+	
     // Start progress indicator
     [oProgressIndicator startAnimation:self];
 	
-	// preserve window size
-	[self setShouldCascadeWindows:NO];
-	[[self window] setFrameAutosaveName:@"KTPublishingWindow"];
 	
-	// remember our accessory size since setHidden: collapses y to 0
-	_accessoryHeight = [[self accessoryView] bounds].size.height;
+	// Restore window size
+	NSSize windowSize = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]);
+	
+	NSRect contentRect = [[self window] contentRectForFrameRect:[[self window] frame]];
+	NSSize minSize = [[self window] minSize];
+	NSSize maxSize = [[self window] maxSize];
+	
+	if (windowSize.width >= minSize.width && windowSize.width <= maxSize.width)
+	{
+		contentRect.size.width = windowSize.width;
+	}
+	if (windowSize.height >= minSize.height && windowSize.height <= maxSize.height)
+	{
+		contentRect.size.height = windowSize.height;
+	}
+	
+	[[self window] setFrame:[[self window] frameRectForContentRect:contentRect] display:YES];
+	
 	
 	// show expanded view?
-	BOOL shouldExpand = [[NSUserDefaults standardUserDefaults] boolForKey:@"ExpandPublishingWindow"];
+	BOOL shouldExpand = [[NSUserDefaults standardUserDefaults] boolForKey:@"PublishingWindowShowsAccessory"];
 	[oExpandButton setState:shouldExpand];
 	[self showAccessoryView:shouldExpand animate:NO];
 }
@@ -141,15 +156,6 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 {
     [self endSheet];
 }
-
-- (IBAction)toggleExpanded:(id)sender
-{
-	BOOL shouldExpand = [sender state];
-	
-	[[NSUserDefaults standardUserDefaults] setBool:shouldExpand forKey:@"ExpandPublishingWindow"];
-	[self showAccessoryView:shouldExpand animate:YES];
-}
-
 
 #pragma mark -
 #pragma mark Publishing Engine
@@ -289,80 +295,77 @@ const float kWindowResizeOffset = 20.0; // "gap" between Stop button and accesso
 #pragma mark -
 #pragma mark Disclosure Button
 
+- (IBAction)toggleExpanded:(id)sender
+{
+	BOOL shouldExpand = [sender state];
+	
+	[[NSUserDefaults standardUserDefaults] setBool:shouldExpand forKey:@"ExpandPublishingWindow"];
+	[self showAccessoryView:shouldExpand animate:YES];
+}
+
 - (NSView *)accessoryView { return oAccessoryView; }
 
 - (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)proposedFrameSize
 {
 	// if the accessory view is hidden, don't resize vertically
+	NSSize result = proposedFrameSize;
 	
-	if ( ![[self accessoryView] isHidden] )
-	{
-		return proposedFrameSize;
-	}
-	else
+	if ([[self accessoryView] isHidden])
 	{
 		NSSize currentFrameSize = [window frame].size;
-		return NSMakeSize(proposedFrameSize.width, 
-						  currentFrameSize.height);
+		result = NSMakeSize(proposedFrameSize.width, currentFrameSize.height);
 	}
+	
+	return result;
 }
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	// if the window is resized, track the accessory view's change in height
-	// (not called if window is being resized via -setFrame:display:animate:)
-	
-	if ( ![[self accessoryView] isHidden] )
+	// Store in the defaults
+	NSSize windowSize = [[self window] frame].size;
+	if ([[self accessoryView] isHidden])
 	{
-		_accessoryHeight = [[self accessoryView] bounds].size.height;
+		NSSize oldWindowSize = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]);
+		windowSize.height = oldWindowSize.height;
 	}
+	[[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(windowSize) forKey:@"PublishingWindowSize"];
 }
 
 - (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag
 {
-	NSRect windowFrame = [[self window] frame];
+	NSWindow *window = [self window];
+	NSRect windowFrame = [window contentRectForFrameRect:[window frame]];
 	
-	if ( showFlag && [[self accessoryView] isHidden] )
+	if (showFlag)
 	{
 		// expand
-		if ( animateFlag )
-		{
-			[self performSelector:@selector(showAccessoryView) withObject:nil afterDelay:0.0];
-		}
-		else
-		{
-			[[self accessoryView] setHidden:NO];
-		}
-		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
-									 windowFrame.origin.y - _accessoryHeight - kWindowResizeOffset,
-									 windowFrame.size.width,
-									 windowFrame.size.height + _accessoryHeight + kWindowResizeOffset);
-		[[self window] setFrame:newFrame display:YES animate:animateFlag];
+		float height = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]).height;
+		if (height < [window minSize].height) height = 417.0;
+		
+		NSRect newContentFrame = NSMakeRect(windowFrame.origin.x,
+											windowFrame.origin.y + (windowFrame.size.height - height),
+											windowFrame.size.width,
+											height);
+		[window setFrame:[window frameRectForContentRect:newContentFrame] display:YES animate:animateFlag];
+		
+		[[self accessoryView] setHidden:NO];
+		[[self accessoryView] setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	}
-	else if ( !showFlag && ![[self accessoryView] isHidden] )
+	else
 	{
 		// collapse
+		[[self accessoryView] setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];	// Keep it fixed in place
 		[[self accessoryView] setHidden:YES];
-		NSRect newFrame = NSMakeRect(windowFrame.origin.x,
-									 windowFrame.origin.y + _accessoryHeight + kWindowResizeOffset,
-									 windowFrame.size.width,
-									 windowFrame.size.height - _accessoryHeight - kWindowResizeOffset);
-		[[self window] setFrame:newFrame display:YES animate:animateFlag];
+		
+		NSRect newContentFrame = NSMakeRect(windowFrame.origin.x,
+											windowFrame.origin.y + (windowFrame.size.height - 139.0),
+											windowFrame.size.width,
+											139.0);	// Cheating and hardcoding for now
+		[window setFrame:[window frameRectForContentRect:newContentFrame] display:YES animate:animateFlag];
 	}
-}
-
-- (void)showAccessoryView
-{
-	// once the window resizes, we unhide the accessory view and adjust its size
 	
-	[[self accessoryView] setHidden:NO];
-
-	NSRect accessoryFrame = [[self accessoryView] frame];
-	NSRect newFrame = NSMakeRect(accessoryFrame.origin.x, 
-								 accessoryFrame.origin.y, 
-								 accessoryFrame.size.width, 
-								 accessoryFrame.size.height - kWindowResizeOffset);
-	[[self accessoryView] setFrame:newFrame];
+	
+	[[NSUserDefaults standardUserDefaults] setBool:showFlag forKey:@"PublishingWindowShowsAccessory"];
 }
 
 #pragma mark -
