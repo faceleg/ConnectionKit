@@ -1471,12 +1471,6 @@ from representedObject */
         }
     }
 
-	else if ( itemAction == @selector(validateSource:) )
-	{
-		[menuItem setState:(KTHTMLValidationView == [[self webViewController] viewType]) ? NSOnState : NSOffState];
-		return [KSNetworkNotifier isNetworkAvailable];
-	}	
-	
 	// DEFAULT: let webKit handle it
 	else
 	{

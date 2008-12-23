@@ -457,6 +457,7 @@
 		if (!isValid)		// not valid -- load the page, give them a way out!
 		{
 			[self setViewType:KTHTMLValidationView];
+			[self setWebViewLoading:YES];	//  Otherwise, the WebViewPolicyDelegate will refuse the request.
 			[[[self webView] mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
                                                             MIMEType:@"text/html"
                                                     textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
