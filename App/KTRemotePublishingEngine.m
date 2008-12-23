@@ -14,6 +14,7 @@
 #import "KTHostProperties.h"
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
+#import "KTURLCredentialStorage.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -116,9 +117,8 @@
     KTHostProperties *hostProperties = [[self site] hostProperties];
     NSString *userName = [hostProperties valueForKey:@"userName"];
     
-    NSURLCredential *credential = [[[NSURLCredentialStorage sharedCredentialStorage]
-                                    credentialsForProtectionSpace:[challenge protectionSpace]]
-                                   objectForKey:userName];
+    NSURLCredential *credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:userName
+																					  protectionSpace:[challenge protectionSpace]];
     
     if (credential && [credential hasPassword] && [credential password])    // Fetching it from the keychain might fail
     {
