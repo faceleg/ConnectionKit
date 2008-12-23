@@ -140,14 +140,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)setWebViewController:(KTDocWebViewController *)controller;
 
 
-#pragma mark Publishing
-- (IBAction)publishSiteChanges:(id)sender;
-- (IBAction)publishSiteAll:(id)sender;
-- (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
-- (IBAction)exportSite:(id)sender;
-- (IBAction)exportSiteAgain:(id)sender;
-
-
 #pragma mark Other
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
 
@@ -313,3 +305,17 @@ extern NSString *KTSelectedDOMRangeKey;
 - (void)setAddCollectionPopUpButton:(RYZImagePopUpButton *)anAddCollectionPopUpButton;
 
 @end
+
+
+@interface KTDocWindowController (Publishing)
+
+- (IBAction)publishSiteChanges:(id)sender;
+- (IBAction)publishSiteAll:(id)sender;
+- (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
+
+- (IBAction)exportSite:(id)sender;
+- (IBAction)exportSiteAgain:(id)sender;
+
+@end
+
+

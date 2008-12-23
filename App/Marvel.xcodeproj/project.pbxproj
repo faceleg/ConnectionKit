@@ -236,6 +236,9 @@
 		27534C950C99C15A00AC7220 /* KTDocWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27534C930C99C15A00AC7220 /* KTDocWebViewController.m */; };
 		2753688B0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */; };
 		275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756662E0F00760800878A05 /* KTURLCredentialStorage.m */; };
+		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
+		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
+		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
@@ -1598,6 +1601,9 @@
 		2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Refreshing.m"; sourceTree = "<group>"; };
 		2756662D0F00760800878A05 /* KTURLCredentialStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLCredentialStorage.h; sourceTree = "<group>"; };
 		2756662E0F00760800878A05 /* KTURLCredentialStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLCredentialStorage.m; sourceTree = "<group>"; };
+		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
+		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
+		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
@@ -2879,6 +2885,22 @@
 			name = Scripts;
 			sourceTree = "<group>";
 		};
+		275666F10F015E9900878A05 /* Publishing UI */ = {
+			isa = PBXGroup;
+			children = (
+				27AE75C60EEEB12D00409D80 /* error.png */,
+				27AE75C70EEEB12D00409D80 /* finished.png */,
+				2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */,
+				2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */,
+				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
+				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
+				2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */,
+				2797B4BD0EF6E65E00F91398 /* KTURLFormatter.m */,
+				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
+			);
+			name = "Publishing UI";
+			sourceTree = "<group>";
+		};
 		275E067A0DDA0F1A0072567F /* Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -3009,29 +3031,22 @@
 			name = "Host Properties";
 			sourceTree = "<group>";
 		};
-		27AE74720EEDE6AD00409D80 /* Publishing */ = {
+		27AE74720EEDE6AD00409D80 /* Publishing Engine */ = {
 			isa = PBXGroup;
 			children = (
-				27AE75C60EEEB12D00409D80 /* error.png */,
-				27AE75C70EEEB12D00409D80 /* finished.png */,
-				27AE758C0EEE9D8000409D80 /* Publishing.nib */,
 				3CBDE9100EBA65D20059C56C /* KTRemotePublishingEngine.h */,
 				3CBDE9110EBA65D20059C56C /* KTRemotePublishingEngine.m */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
 				27969F0F0CF5DCBC00C03F45 /* NSString+Publishing.h */,
 				27969F100CF5DCBC00C03F45 /* NSString+Publishing.m */,
-				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
-				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
 				279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */,
 				279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */,
-				2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */,
-				2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */,
-				2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */,
-				2797B4BD0EF6E65E00F91398 /* KTURLFormatter.m */,
 				2797B71C0EF91E2B00F91398 /* KTExportEngine.h */,
 				2797B71D0EF91E2B00F91398 /* KTExportEngine.m */,
+				275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */,
+				275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */,
 			);
-			name = Publishing;
+			name = "Publishing Engine";
 			sourceTree = "<group>";
 		};
 		27DB80770C84658200E29C38 /* Inspector */ = {
@@ -3071,6 +3086,7 @@
 				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
 				3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */,
 				3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */,
+				2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -3297,7 +3313,8 @@
 		3C202D5B07DFC13D00DE4994 /* Remote Transfer */ = {
 			isa = PBXGroup;
 			children = (
-				27AE74720EEDE6AD00409D80 /* Publishing */,
+				27AE74720EEDE6AD00409D80 /* Publishing Engine */,
+				275666F10F015E9900878A05 /* Publishing UI */,
 				27AE74710EEDE68600409D80 /* Host Properties */,
 			);
 			name = "Remote Transfer";
@@ -4856,6 +4873,7 @@
 				2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */,
 				2797B4BE0EF6E65E00F91398 /* KTURLFormatter.h in Headers */,
 				2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */,
+				275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6206,6 +6224,8 @@
 				2797B4BF0EF6E65E00F91398 /* KTURLFormatter.m in Sources */,
 				2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */,
 				275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */,
+				275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */,
+				2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
