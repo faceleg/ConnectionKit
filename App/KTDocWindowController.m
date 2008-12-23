@@ -459,8 +459,14 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return result;
 }
 
-// Overridden to stop the document appearing edited to the user
-- (void)setDocumentEdited:(BOOL)flag { }
+// Overridden to stop the document appearing edited to the user when using autosave
+- (void)setDocumentEdited:(BOOL)flag
+{
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"])
+	{
+		[super setDocumentEdited:flag];
+	}
+}
 
 #pragma mark -
 #pragma mark Missing Media

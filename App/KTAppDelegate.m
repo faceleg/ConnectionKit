@@ -323,7 +323,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
-		//[NSNumber numberWithBool:YES],			@"AutosaveDocuments",
+		[NSNumber numberWithBool:NO],			@"AutosaveDocuments",	// FIXME: We're disabling autosave for the 1.6 alphas/betas
 		//[NSNumber numberWithBool:YES],			@"BackupWhenSaving",
 		//[NSNumber numberWithDouble:600.0],		@"BackupTimeInterval",
 
@@ -1381,14 +1381,19 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// Force imedia browser to load just so we can get RBSplitView loaded
 	[iMediaBrowser class];
-	    
-    NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
-    if ( interval < 5 ) interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
-    if ( interval > 5*60 ) interval = 60.0;
 	
-	KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-    [sharedDocumentController setAutosavingDelay:interval];
     
+	// Autosave frequency
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"])
+	{
+		NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
+		if ( interval < 5 ) interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
+		if ( interval > 5*60 ) interval = 60.0;
+
+		KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
+		[sharedDocumentController setAutosavingDelay:interval];
+	}
+	
 			 
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];

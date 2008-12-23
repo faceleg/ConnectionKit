@@ -117,14 +117,6 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>NSApplication</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>KSViewController</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -133,6 +125,14 @@
 				<key>view</key>
 				<string>NSView</string>
 			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSResponder</string>
 		</dict>
@@ -352,19 +352,6 @@
 			<string>NSResponder</string>
 		</dict>
 		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>imagePickerCancelled</key>
-				<string>id</string>
-				<key>imagePickerSet</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
 			<key>CLASS</key>
 			<string>KSAlert</string>
 			<key>LANGUAGE</key>
@@ -378,6 +365,19 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>KSViewController</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>imagePickerCancelled</key>
+				<string>id</string>
+				<key>imagePickerSet</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -443,19 +443,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>NSWindow</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>RoundedBox</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSBox</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -536,14 +536,6 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSEmailAddressComboBox</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSComboBox</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -634,28 +626,12 @@
 			<string>KSLicensedAppDelegate</string>
 		</dict>
 		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>cancel</key>
-				<string>id</string>
-				<key>continueOpening</key>
-				<string>id</string>
-				<key>findSelectedMediaFile</key>
-				<string>id</string>
-				<key>showHelp</key>
-				<string>id</string>
-			</dict>
 			<key>CLASS</key>
-			<string>KTMissingMediaController</string>
+			<string>KSEmailAddressComboBox</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>oMediaArrayController</key>
-				<string>NSArrayController</string>
-			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
+			<string>NSComboBox</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -680,6 +656,30 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>cancel</key>
+				<string>id</string>
+				<key>continueOpening</key>
+				<string>id</string>
+				<key>findSelectedMediaFile</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTMissingMediaController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oMediaArrayController</key>
+				<string>NSArrayController</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
