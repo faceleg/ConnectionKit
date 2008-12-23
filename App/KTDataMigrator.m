@@ -920,7 +920,13 @@
     
     
     // Run through attributes, copying those that still remain.
-    [self migrateMatchingAttributesFromObject:oldDocInfo toObject:newDocInfo];
+	NSMutableSet *attributes = [[self matchingAttributesFromObject:oldDocInfo toObject:newDocInfo] mutableCopy];
+	[attributes removeObject:@"documentWindowContentRect"];
+    [self migrateAttributes:attributes fromObject:oldDocInfo toObject:newDocInfo];
+	
+	
+	// Migrate document window manually. Case 37844
+	[newDocInfo setWrappedValue:[oldDocInfo valueForKey:@"documentWindowContentRect"] forKey:@"documentWindowContentRect"];
     
     
     // Migrate host properties
