@@ -1383,6 +1383,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[iMediaBrowser class];
 	
     
+	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
+	myDocumentController = [[KTDocumentController alloc] init];
+    
+    
 	// Autosave frequency
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"])
 	{
