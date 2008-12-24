@@ -51,8 +51,8 @@ typedef enum {
 - (NSString *)appNameVersion;
 
 // UI
-- (NSRect)documentWindowContentRect;
-- (void)setDocumentWindowContentRect:(NSRect)rect;
+- (NSRect)docWindowContentRect;
+- (void)setDocWindowContentRect:(NSRect)rect;
 - (NSString *)lastSelectedRows;
 - (void)setLastSelectedRows:(NSString *)value;
 

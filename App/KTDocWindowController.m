@@ -184,16 +184,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [super windowDidLoad];
 	
 	
-	// Restore the window's previous frame, if available
-	NSRect contentRect = [[[self document] documentInfo] documentWindowContentRect];
-	if (!NSEqualRects(contentRect, NSZeroRect))
-	{
-		NSWindow *window = [self window];
-		[window setFrame:[window frameRectForContentRect:contentRect] display:YES];
-		// -constrainFrameRect:toScreen: will automatically stop the window going offscreen for us.
-	}
-	
-	
 	// Setup binding
 	[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
 	
@@ -217,6 +207,16 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self setToolbars:[NSMutableDictionary dictionary]];
 	[self makeDocumentToolbar];
 	[self updatePopupButtonSizesSmall:[[self document] displaySmallPageIcons]];
+	
+	
+	// Restore the window's previous frame, if available. Always do this after loading toolbar to make rect consistent
+	NSRect contentRect = [[[self document] documentInfo] docWindowContentRect];
+	if (!NSEqualRects(contentRect, NSZeroRect))
+	{
+		NSWindow *window = [self window];
+		[window setFrame:[window frameRectForContentRect:contentRect] display:YES];
+		// -constrainFrameRect:toScreen: will automatically stop the window going offscreen for us.
+	}
 	
 	
 	// Design Chooser bindings

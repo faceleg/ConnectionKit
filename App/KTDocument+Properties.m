@@ -305,7 +305,7 @@
 	NSWindow *window = [[self windowController] window];
 	if (window)
 	{
-		[[self documentInfo] setDocumentWindowContentRect:[window contentRectForFrameRect:[window frame]]];
+		[[self documentInfo] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
 }
 
