@@ -1384,7 +1384,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
     
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
-	myDocumentController = [[KTDocumentController alloc] init];
+	[[[KTDocumentController alloc] init] release];
     
     
 	// Autosave frequency
