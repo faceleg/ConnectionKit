@@ -119,16 +119,16 @@
 #pragma mark -
 #pragma mark UI
 
-- (NSRect)documentWindowContentRect
+- (NSRect)docWindowContentRect
 {
-	NSString *rectAsString = [self wrappedValueForKey:@"documentWindowContentRect"];
+	NSString *rectAsString = [self valueForKey:@"documentWindowContentRect"];
 	NSRect result = (rectAsString) ? NSRectFromString(rectAsString) : NSZeroRect;
 	return result;
 }
 
-- (void)setDocumentWindowContentRect:(NSRect)rect
+- (void)setDocWindowContentRect:(NSRect)rect
 {
-	[self setWrappedValue:NSStringFromRect(rect) forKey:@"documentWindowContentRect"];
+	[self setValue:NSStringFromRect(rect) forKey:@"documentWindowContentRect"];
 }
 
 - (NSString *)lastSelectedRows
