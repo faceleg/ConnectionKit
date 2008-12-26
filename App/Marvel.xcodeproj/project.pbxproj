@@ -5716,7 +5716,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../../Shared/App/*.[hm]\n\n";
+			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm] ${SRCROOT}/../../Shared/App/*.[hm] ${SRCROOT}/../../Shared/AppKit/*.[hm] ${SRCROOT}/../../Shared/Foundation/*.[hm] ${SRCROOT}/../../Shared/Imported/*.[hm] ${SRCROOT}/../../Shared/WebKit/*.[hm]\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
