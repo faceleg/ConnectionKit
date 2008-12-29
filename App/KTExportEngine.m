@@ -39,4 +39,15 @@
     [super start];
 }
 
+- (void)createConnection
+{
+    id <CKConnection> result = [[CKFileConnection alloc] init];
+    [self setConnection:result];
+	
+    // Create site directory
+    [result createDirectory:[self baseRemotePath]];
+	
+	[result release];
+}
+
 @end

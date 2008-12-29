@@ -273,17 +273,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [connection connect];
 }
 
-/*  Designed for easy subclassing, this method creates the connection but does not store or connect it
+/*  Subclasses should override to create a connection and call -setConection: with it.
  */
 - (void)createConnection
 {
-    id <CKConnection> result = [[CKFileConnection alloc] init];
-    [self setConnection:result];
-	
-    // Create site directory
-    [result createDirectory:[self baseRemotePath]];
-	
-	[result release];
+    SUBCLASSMUSTIMPLEMENT;
 }
 
 /*  Exporting shouldn't require any authentication
