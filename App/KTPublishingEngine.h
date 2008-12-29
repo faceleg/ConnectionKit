@@ -95,7 +95,8 @@ enum {
 
 // Connection
 - (id <CKConnection>)connection;
-- (id <CKConnection>)createConnection;
+- (void)setConnection:(id <CKConnection>)connection;
+- (void)createConnection;
 
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;

@@ -77,7 +77,7 @@
 #pragma mark -
 #pragma mark Connection
 
-- (id <CKConnection>)createConnection
+- (void)createConnection
 {
     KTHostProperties *hostProperties = [[self site] hostProperties];
     
@@ -90,7 +90,7 @@
                                                                                               host:hostName
                                                                                               port:port];
     
-    return result;
+    [self setConnection:result];
 }
 
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space

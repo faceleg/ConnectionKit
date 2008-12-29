@@ -46,7 +46,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @interface KTPublishingEngine (Private)
 
-- (void)startConnection;
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
 - (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
@@ -154,7 +153,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Setup connection and transfer records
-    [self startConnection];
+    [self createConnection];
     [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[self documentRootPath]]];
     
     
@@ -262,23 +261,29 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (id <CKConnection>)connection { return _connection; }
 
-- (void)startConnection
+- (void)setConnection:(id <CKConnection>)connection
 {
-    _connection = [[self createConnection] retain];
-    [_connection setDelegate:self];
-    [_connection connect];
+    [connection retain];
+	
+	[_connection setDelegate:nil];
+	[_connection release];
+	_connection = connection;
+    
+	[connection setDelegate:self];
+    [connection connect];
 }
 
 /*  Designed for easy subclassing, this method creates the connection but does not store or connect it
  */
-- (id <CKConnection>)createConnection
+- (void)createConnection
 {
-    id <CKConnection> result = [[[CKFileConnection alloc] init] autorelease];
-    
+    id <CKConnection> result = [[CKFileConnection alloc] init];
+    [self setConnection:result];
+	
     // Create site directory
     [result createDirectory:[self baseRemotePath]];
-    
-    return result;
+	
+	[result release];
 }
 
 /*  Exporting shouldn't require any authentication

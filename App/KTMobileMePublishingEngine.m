@@ -13,9 +13,11 @@
 
 @implementation KTMobileMePublishingEngine
 
-- (id <CKConnection>)createConnection
+- (void)createConnection
 {
-	return [[[CKDotMacConnection alloc] init] autorelease];
+	id <CKConnection> connection = [[CKDotMacConnection alloc] init];
+	[self setConnection:connection];
+	[connection release];
 }
 
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space
