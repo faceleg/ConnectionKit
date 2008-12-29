@@ -15,6 +15,7 @@
 #import "KTHTMLTextBlock.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
+#import "KTTranscriptController.h"
 
 #import "KTMediaContainer.h"
 #import "KTMediaFile.h"
@@ -343,6 +344,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	{
 		[self failWithError:error];
 	}
+}
+
+- (void)connection:(id <CKConnection>)connection appendStringToTranscript:(NSAttributedString *)transcript
+{
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:transcript];
 }
 
 #pragma mark -

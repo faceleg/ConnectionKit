@@ -988,7 +988,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
-	[myTestConnection setTranscript:[[KTTranscriptController sharedControllerWithoutLoading] textStorage]];
 	[myTestConnection connect];
 }
 
@@ -1307,6 +1306,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setConnectionStatusColor:[NSColor redColor]];
 	[self setConnectionStatus:NSLocalizedString(@"Timed out, unable to complete tests.", @"status message for test connection")];
 	[self disconnectConnection];
+}
+
+- (void)connection:(id <CKConnection>)connection appendStringToTranscript:(NSAttributedString *)transcript
+{
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:transcript];
 }
 
 #pragma mark -
