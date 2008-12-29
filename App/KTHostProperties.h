@@ -22,8 +22,6 @@
 
 
 @interface KTHostProperties : KTManagedObject
-{
-}
 
 - (BOOL)remoteSiteURLIsValid;
 - (NSString *)globalBaseURLUsingHome:(BOOL)inHome;
@@ -35,7 +33,10 @@
 - (NSString *)remoteSiteURL;
 - (NSString *)uploadURL;
 
+// Sane API starts here
 - (NSURL *)siteURL;
+- (NSString *)documentRoot;
+- (NSString *)subfolder;
 
 - (NSURL *)resourcesDirectoryURL;
 - (NSURL *)URLForResourceFile:(NSString *)filename;

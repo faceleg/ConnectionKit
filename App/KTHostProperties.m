@@ -17,6 +17,7 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 #import "debug.h"
 
@@ -401,6 +402,42 @@ to be verified.
         result = [NSURL URLWithString:URLString];
     }
     return result;
+}
+
+/*	These 2 methods retrieve the right doc root and subfolder based on local or remote publishing
+ */
+
+- (NSString *)documentRoot
+{
+	if ([self integerForKey:@"localHosting"])
+	{
+		if ([self integerForKey:@"localSharedMatrix"] == 1)
+		{
+			return [[NSUserDefaults standardUserDefaults] objectForKey:@"ApacheDocRoot"];
+		}
+		else
+		{
+			return [[NSWorkspace sharedWorkspace] userSitesDirectory];
+		}
+		
+		return [self valueForKey:@"localSubFolder"];
+	}
+	else
+	{
+		return [self valueForKey:@"docRoot"];
+	}
+}
+
+- (NSString *)subfolder
+{
+	if ([self integerForKey:@"localHosting"])
+	{
+		return [self valueForKey:@"localSubFolder"];
+	}
+	else
+	{
+		return [self valueForKey:@"subFolder"];
+	}
 }
 
 #pragma mark -

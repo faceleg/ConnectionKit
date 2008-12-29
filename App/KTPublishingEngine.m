@@ -273,11 +273,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [connection connect];
 }
 
-/*  Subclasses should override to create a connection and call -setConection: with it.
+/*  Subclasses should override to create a connection and call -setConection: with it. By default we use a file connection
  */
 - (void)createConnection
 {
-    SUBCLASSMUSTIMPLEMENT;
+    id <CKConnection> result = [[CKFileConnection alloc] init];
+    [self setConnection:result];
+	[result release];
 }
 
 /*  Exporting shouldn't require any authentication

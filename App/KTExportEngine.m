@@ -41,13 +41,10 @@
 
 - (void)createConnection
 {
-    id <CKConnection> result = [[CKFileConnection alloc] init];
-    [self setConnection:result];
+    [super createConnection];
 	
     // Create site directory
-    [result createDirectory:[self baseRemotePath]];
-	
-	[result release];
+    [[self connection] createDirectory:[self baseRemotePath]];
 }
 
 @end

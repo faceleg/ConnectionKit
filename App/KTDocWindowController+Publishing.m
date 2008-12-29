@@ -17,6 +17,7 @@
 #import "KTHostProperties.h"
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
+#import "KTRemotePublishingEngine.h"
 #import "KTToolbars.h"
 
 #import "NSObject+Karelia.h"
@@ -114,7 +115,11 @@
 {
 	Class result = [KTRemotePublishingEngine class];
 	
-	if ([[[[[self document] documentInfo] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
+	if ([[[[self document] documentInfo] hostProperties] integerForKey:@"localHosting"])
+	{
+		result = [KTLocalPublishingEngine class];
+	}
+	else if ([[[[[self document] documentInfo] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 	{
 		result = [KTMobileMePublishingEngine class];
 	}

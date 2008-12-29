@@ -167,7 +167,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 
 - (BOOL)isExporting
 {
-    BOOL result = ![[self publishingEngine] isKindOfClass:[KTRemotePublishingEngine class]];
+    BOOL result = ![[self publishingEngine] isKindOfClass:[KTLocalPublishingEngine class]];
     return result;
 }
 

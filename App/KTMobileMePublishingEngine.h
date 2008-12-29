@@ -6,9 +6,9 @@
 //  Copyright 2008 Karelia Software. All rights reserved.
 //
 
-#import "KTRemotePublishingEngine.h"
+#import "KTLocalPublishingEngine.h"
 
 
-@interface KTMobileMePublishingEngine : KTRemotePublishingEngine
+@interface KTMobileMePublishingEngine : KTLocalPublishingEngine
 
 @end

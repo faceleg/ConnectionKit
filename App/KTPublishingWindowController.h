@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTRemotePublishingEngine.h"
+#import "KTLocalPublishingEngine.h"
 
 
 @class KTPublishingEngine, CKTransferRecord;
