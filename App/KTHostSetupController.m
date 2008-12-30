@@ -1308,9 +1308,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self disconnectConnection];
 }
 
-- (void)connection:(id <CKConnection>)connection appendStringToTranscript:(NSAttributedString *)transcript
+- (void)connection:(id <CKConnection>)connection appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
-	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:transcript];
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:
+	 [[connection class] attributedStringForString:string transcript:transcript]];
 }
 
 #pragma mark -
