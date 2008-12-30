@@ -105,6 +105,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)awakeFromNib
 {
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+	[KSEmailAddressComboBox setWillIncludeNames:NO];
+
 	// Correct the spacing of the custom labels form
 	NSSize spacing = [oCustomLabelsForm intercellSpacing];
 	spacing.height = 4;
@@ -122,22 +125,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 	if (isNewObject)
 	{
-		// Figure out e-mail address
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		NSString *address = [defaults objectForKey:@"KSEmailAddress"];
-		if (nil != address)
-		{
-			unsigned int whereSpace = [address rangeOfString:@" "].location;
-			if (NSNotFound != whereSpace)
-			{
-				address = [address substringToIndex:whereSpace];
-			}
-		}
-		else
-		{
-			address = @"";
-		}
-		[element setValue:address forKey:@"address"];
 		
 		// Set up default bunch of fields
 		NSString *language = [[[self page] master] language];
