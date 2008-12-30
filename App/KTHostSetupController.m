@@ -409,43 +409,16 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction)browseHostToSelectPath:(id)sender
 {
-	NSString *username = [self valueForKey:@"userName"];
-	NSString *password = nil;
-
-	BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
-	
-	if (!([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"] || isSFTPWithPublicKey))
-	{
-		password = [self password];
-	}
-
-	
-	[self setValue:[NSNumber numberWithBool:NO] forKey:@"browseHasBadPassword"];
-		
-	if (!username) // we could be sftp authorized_keys so no password is required
-	{
-		// we need to display the enter account details
-		if (username)
-		{
-			[oBrowseHostUsername setStringValue:username];
-		}
-		if (password)
-		{
-			[oBrowseHostPassword setStringValue:password];
-		}
-		[oBrowseHostAccountPanel center];
-		[NSApp runModalForWindow:oBrowseHostAccountPanel];
-		[oBrowseHostAccountPanel makeKeyAndOrderFront:self];
-		return;
-	}
+	NSString *protocol = [self valueForKey:@"protocol"];
+	NSString *host = [self valueForKey:@"hostName"];
 	
 	// show the ConnectionOpenPanel
 	NSError *err = nil;
-	id <CKConnection>con = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[self valueForKey:@"protocol"]
-                                                                                          host:[self valueForKey:@"hostName"]
+	id <CKConnection>con = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
+                                                                                          host:host
                                                                                           port:[self valueForKey:@"port"]
-                                                                                          user:username
-                                                                                      password:password
+                                                                                          user:nil
+                                                                                      password:nil
                                                                                          error:&err];
 	if (!con)
 	{
@@ -466,7 +439,16 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[[self window] makeFirstResponder:nil];		// unfocus text field so binding will work
 
 		
-	[choose beginSheetForDirectory:nil	/// ALWAYS start with default  [self valueForKey:@"docRoot"]
+	// Connect at the chosen document root if possible. iDisk is odd though and CANNOT connect at the root dir
+	NSString *documentRoot = [self valueForKey:@"docRoot"];
+	if ([host isEqualToStringCaseInsensitive:@"idisk.mac.com"] &&
+		[protocol isEqualToString:@"WebDAV"] &&
+		(!documentRoot || [documentRoot isEqualToString:@""] || [documentRoot isEqualToString:@"/"]))
+	{
+		documentRoot = [@"/" stringByAppendingString:[self valueForKey:@"userName"]];
+	}
+	
+	[choose beginSheetForDirectory:documentRoot
 							  file:nil
 					modalForWindow:[self window]
 					 modalDelegate:self
