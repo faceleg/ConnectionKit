@@ -270,7 +270,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	_connection = connection;
     
 	[connection setDelegate:self];
-    [connection connect];
 }
 
 /*  Subclasses should override to create a connection and call -setConection: with it. By default we use a file connection
@@ -809,8 +808,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
-    
-    // Is the URL actually a directory? If so, upload its contents
+	
+	// Is the URL actually a directory? If so, upload its contents
     BOOL isDirectory = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory] && isDirectory)
     {
@@ -833,6 +832,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
+	if (![connection isConnected]) [connection connect];	// Ensure we're connected
     CKTransferRecord *result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
     
@@ -855,6 +855,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
+    if (![connection isConnected]) [connection connect];	// Ensure we're connected
     CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
