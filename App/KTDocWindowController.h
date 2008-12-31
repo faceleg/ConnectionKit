@@ -42,6 +42,7 @@
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
+@class KSPlaceholderTextView;
 
 extern NSString *gInfoWindowAutoSaveName;
 
@@ -66,6 +67,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSTokenField						*oKeywordsField;
 	IBOutlet KSPopUpButton	*oFileExtensionPopup;
 	IBOutlet KSPopUpButton	*oCollectionIndexExtensionButton;
+	IBOutlet KSPlaceholderTextView *oDescriptionTextView;
 		
 	
 	// Uploading TO HOOK UP
@@ -164,6 +166,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)addCollection:(id)sender;
 - (IBAction)group:(id)sender;
 - (IBAction)remove:(id)sender;
+- (IBAction)descriptionWarning:(id)sender;
 
 - (IBAction)toggleDesignsShown:(id)sender;
 

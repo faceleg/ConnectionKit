@@ -31,6 +31,11 @@
             SUPERCLASS = NSTextField;
         },
                 {
+            CLASS = KSPlaceholderTextView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextView;
+        },
+                {
             CLASS = KSPopUpButton;
             LANGUAGE = ObjC;
             OUTLETS =             {
@@ -95,7 +100,6 @@
                 {
             ACTIONS =             {
                 addCollection = id;
-                addMediaFile = id;
                 addPage = id;
                 addPagelet = id;
                 clearLinkDestination = id;
@@ -110,33 +114,33 @@
                 deletePagelets = id;
                 deletePages = id;
                 deleteViaContextualMenu = id;
+                descriptionWarning = id;
                 duplicate = id;
                 duplicatePagelets = id;
-                duplicatePages = id;
+                duplicateSelectedPages = id;
                 duplicateViaContextualMenu = id;
+                exportSite = id;
+                exportSiteAgain = id;
                 finishLinkPanel = id;
                 group = id;
-                normalView = id;
                 paste = id;
-                pasteLink = id;
                 pastePagelets = id;
                 pastePages = id;
                 pasteViaContextualMenu = id;
+                publishSiteAll = id;
+                publishSiteChanges = id;
+                publishSiteFromToolbar = id;
                 reloadOutline = id;
                 remove = id;
-                selectWebViewViewType = id;
                 showLinkPanel = id;
                 toggleDesignsShown = id;
-                updateWebView = id;
-                validateSource = id;
                 windowHelp = id;
             };
             CLASS = KTDocWindowController;
             LANGUAGE = ObjC;
             OUTLETS =             {
-                mySelectedBlockItem = id;
-                oBuyMarvelBadge = AMRollOverButton;
                 oCollectionIndexExtensionButton = KSPopUpButton;
+                oDescriptionTextView = KSPlaceholderTextView;
                 oDesignBackButton = NSButton;
                 oDesignCloseButton = NSButton;
                 oDesignForwardButton = NSButton;
@@ -147,7 +151,6 @@
                 oDocumentController = NSObjectController;
                 oFileExtensionPopup = KSPopUpButton;
                 oKeywordsField = NSTokenField;
-                oLatestNewsBadge = AMRollOverButton;
                 oLinkControlsBox = RoundedBox;
                 oLinkDestinationField = NSTextField;
                 oLinkLocalPageField = NSTextField;
@@ -156,23 +159,12 @@
                 oLinkView = KTLinkSourceView;
                 oMessageTextField = NSTextField;
                 oMessageWindow = KSBorderlessWindow;
-                oModalImage = NSImageView;
-                oModalPanel = NSPanel;
-                oModalProgress = NSProgressIndicator;
-                oModalStatus = NSTextField;
                 oPageNameField = NSTextField;
-                oPageSelectionController = NSArrayController;
                 oSidebarSplitView = RBSplitView;
-                oSiteOutline = NSOutlineView;
-                oSiteOutlineController = KTDocSiteOutlineController;
-                oSourceScrollView = NSScrollView;
-                oSourceTextView = NSTextView;
                 oSplitDragView = NSImageView;
                 oStatusBar = NTBoxView;
                 oStatusBarField = NSTextField;
-                oUpdateMarvelBadge = AMRollOverButton;
                 oWebView = WebView;
-                oWebViewController = KTDocWebViewController;
                 siteOutlineController = KTDocSiteOutlineController;
                 webViewController = KTDocWebViewController;
             };

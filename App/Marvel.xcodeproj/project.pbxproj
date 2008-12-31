@@ -559,7 +559,7 @@
 		3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		795D666309D356C6005F166D /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = 795D666209D356C6005F166D /* target.png */; };
-		795F0360098F0293000202D5 /* upload_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 795F035F098F0293000202D5 /* upload_warning.png */; };
+		795F0360098F0293000202D5 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 795F035F098F0293000202D5 /* warning.png */; };
 		796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */; };
 		79755CF9096BAF7E00F0E4CA /* KTTransfer.nib in Resources */ = {isa = PBXBuildFile; fileRef = 79755CF2096BAF7E00F0E4CA /* KTTransfer.nib */; };
 		798634F4094E763F003B2653 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 798634F2094E763F003B2653 /* remove.png */; };
@@ -964,28 +964,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		270B5E500F0AB64700F6E076 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
 		};
 		270B5E520F0AB64700F6E076 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
 			remoteInfo = DropletHelper;
 		};
 		270B5E540F0AB64700F6E076 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
 			remoteInfo = DropletLauncher;
 		};
 		274339ED0D77339B00164FA5 /* PBXContainerItemProxy */ = {
@@ -2040,7 +2040,7 @@
 		3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+KTExtensions.m"; sourceTree = "<group>"; };
 		7788DA0506752A1600599AAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		795D666209D356C6005F166D /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target.png; sourceTree = "<group>"; };
-		795F035F098F0293000202D5 /* upload_warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_warning.png; sourceTree = "<group>"; };
+		795F035F098F0293000202D5 /* warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warning.png; sourceTree = "<group>"; };
 		796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPulsatingOverlay.h; sourceTree = "<group>"; };
 		796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPulsatingOverlay.m; sourceTree = "<group>"; };
 		79755CF3096BAF7E00F0E4CA /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KTTransfer.nib; sourceTree = "<group>"; };
@@ -3490,7 +3490,7 @@
 				795D666209D356C6005F166D /* target.png */,
 				CE91721109D51E530003310B /* target_set.png */,
 				CEC25E250997DC0F00335E28 /* diamondplate.png */,
-				795F035F098F0293000202D5 /* upload_warning.png */,
+				795F035F098F0293000202D5 /* warning.png */,
 				79EC3C020973CECD00FE7D50 /* upload_complete.png */,
 				CED86ED909522E20000D78F9 /* karelia.png */,
 				798634F2094E763F003B2653 /* remove.png */,
@@ -5486,7 +5486,7 @@
 				79EC3C030973CECD00FE7D50 /* upload_complete.png in Resources */,
 				CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */,
 				CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */,
-				795F0360098F0293000202D5 /* upload_warning.png in Resources */,
+				795F0360098F0293000202D5 /* warning.png in Resources */,
 				CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */,
 				795D666309D356C6005F166D /* target.png in Resources */,
 				CE91721209D51E530003310B /* target_set.png in Resources */,
