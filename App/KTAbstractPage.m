@@ -46,11 +46,17 @@
 #pragma mark -
 #pragma mark Initialisation
 
+
 + (void)initialize
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	
-	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionWarningIsVisible"];
 	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
+	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCountdown"];
+
+	
+	
+	
+	
 	[pool release];
 }
 
@@ -132,20 +138,22 @@
 	return result;
 }
 
+
 #pragma mark -
 #pragma mark meta description
 
 #define MAX_META_DESCRIPTION_LENGTH 156
+
+- (int) metaDescriptionCountdown
+{
+	int len = [[self valueForKey:@"metaDescription"] length];
+	return MAX_META_DESCRIPTION_LENGTH - len;
+}
+
+
 #define META_DESCRIPTION_WARNING_ZONE 10
 
-/*
-- (NSString *)metaDescription { return [self wrappedValueForKey:@"metaDescription"]; }
 
-- (void) setMetaDescription:(NSString *)desc
-{
-	[self setWrappedValue:desc forKey:@"metaDescription"];
-}
-*/
 
 - (NSColor *)metaDescriptionCharCountColor
 {
@@ -160,14 +168,8 @@
 	
 //	NSLog(@"%d make it %.2f red", len, howRed);
 	
-	NSColor *newColor = [[NSColor blackColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	NSColor *newColor = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
 	return newColor;
-}
-// For bindings.  We can edit title if we aren't root;
-- (BOOL)metaDescriptionWarningIsVisible
-{
-	int len = [[self valueForKey:@"metaDescription"] length];
-	return (len > MAX_META_DESCRIPTION_LENGTH);
 }
 
 

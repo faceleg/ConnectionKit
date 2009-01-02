@@ -245,10 +245,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[oDescriptionTextView setPlaceholderString:NSLocalizedString(
 															 @"Optional summary of page. Used by search engines.",
 															 "Page <meta> description placeholder text. [THIS SHOULD BE A SHORT STRING!]")];
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-											 selector:@selector(descriptionDidProcessEditing:)
-												 name:NSTextStorageDidProcessEditingNotification
-											   object:[oDescriptionTextView textStorage]];
 	
 	
 	// Prepare the collection index.html popup
@@ -2065,19 +2061,6 @@ from representedObject */
 #pragma mark -
 #pragma mark Description
 
-- (void)descriptionDidProcessEditing:(NSNotification *)notification
-{
-	int len = [[notification object] length];	// object is a textStorage
-//	NSLog(@"len = %d", len);
-}
-
-- (IBAction)descriptionWarning:(id)sender
-{
-	[[NSApp delegate] showHelpPage:@"Description"];
-}
-
-
-	
 #pragma mark -
 #pragma mark Support
 

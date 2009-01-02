@@ -169,7 +169,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)addCollection:(id)sender;
 - (IBAction)group:(id)sender;
 - (IBAction)remove:(id)sender;
-- (IBAction)descriptionWarning:(id)sender;
 
 - (IBAction)toggleDesignsShown:(id)sender;
 
