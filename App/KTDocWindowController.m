@@ -1438,6 +1438,22 @@ from representedObject */
 		}
     }
 	
+	// "Visit Published Site" visitPublishedSite:
+	else if ( itemAction == @selector(visitPublishedSite:) ) 
+	{
+		NSURL *siteURL = [[[[self document] documentInfo] hostProperties] siteURL];
+		return ( (nil != siteURL)
+				&& ![[siteURL host] hasSuffix:@"example.com/"] );
+	}
+	
+	// "Visit Published Page" visitPublishedPage:
+	else if ( itemAction == @selector(visitPublishedPage:) ) 
+	{
+		NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
+		return ( (nil != pageURL)
+				&& ![[pageURL host] hasSuffix:@"example.com/"] );
+	}
+	
 	// Window menu
 	// "Show Inspector" toggleInfoShown:
 	

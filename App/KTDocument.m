@@ -774,22 +774,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		return [self hasValidSnapshot];
 	}
 	
-	// Site menu
-	// "Visit Published Site" visitPublishedSite:
-	else if ( [menuItem action] == @selector(visitPublishedSite:) ) 
-	{
-		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-		return ( (nil != siteURL)
-				 && ![[siteURL host] hasSuffix:@"example.com/"] );
-	}
-	
-	else if ( [menuItem action] == @selector(visitPublishedPage:) ) 
-	{
-		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-		return ( (nil != siteURL)
-				&& ![[siteURL host] hasSuffix:@"example.com/"] );
-	}
-	
+	// Site menu	
 	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
 	{
 		// Yes if:  we are in a block of editable HTML, or if the selected pagelet or page is HTML.
