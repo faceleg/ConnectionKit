@@ -9,7 +9,10 @@ function verifyAndSubmit[[=uniqueID]](form) {
 	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
 
 	checkEmail = form.e.value;
-	if (checkEmail=='[[=&delegate.contactField.defaultString]]' || checkEmail.indexOf('@') < 0)
+	if (checkEmail=='[[=&delegate.contactField.defaultString]]'
+		|| checkEmail.indexOf('@') < 0
+		|| checkEmail.lastIndexOf('.') < checkEmail.indexOf('@')
+		|| checkEmail == form.e.title)
 	{
 		var message = "[["Email address is missing.  Message cannot be sent.]]";
 		theResults.className = 'contactError';
