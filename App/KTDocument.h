@@ -98,7 +98,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)isClosing;
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
-- (IBAction)viewPublishedSite:(id)sender;
 
 // Editing
 

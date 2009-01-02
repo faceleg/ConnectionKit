@@ -56,6 +56,7 @@
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWindow+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 #import "NTBoxView.h"
 #import "KSProgressPanel.h"
@@ -592,6 +593,24 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
+}
+
+- (IBAction)visitPublishedSite:(id)sender
+{
+	NSURL *siteURL = [[[[self document] documentInfo] root] URL];
+	if (siteURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
+	}
+}
+
+- (IBAction)visitPublishedPage:(id)sender
+{
+	NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
+	if (pageURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
+	}
 }
 
 #pragma mark -

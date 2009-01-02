@@ -72,7 +72,7 @@
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSWorkspace+Karelia.h"
+//#import "NSWorkspace+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
@@ -775,12 +775,19 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	// Site menu
-	// "View Published Site" viewPublishedSite:
-	else if ( [menuItem action] == @selector(viewPublishedSite:) ) 
+	// "Visit Published Site" visitPublishedSite:
+	else if ( [menuItem action] == @selector(visitPublishedSite:) ) 
 	{
 		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
 		return ( (nil != siteURL)
 				 && ![[siteURL host] hasSuffix:@"example.com/"] );
+	}
+	
+	else if ( [menuItem action] == @selector(visitPublishedPage:) ) 
+	{
+		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+		return ( (nil != siteURL)
+				&& ![[siteURL host] hasSuffix:@"example.com/"] );
 	}
 	
 	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
@@ -929,15 +936,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	else
 	{
 		NSLog(@"Cannot commit editing to edit HTML");
-	}
-}
-
-- (IBAction)viewPublishedSite:(id)sender
-{
-	NSURL *siteURL = [[[self documentInfo] root] URL];
-	if (siteURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
 	}
 }
 
