@@ -157,6 +157,23 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     [self endSheet];
 }
 
+// we need to implement these pass-through actions here for proper menu validation
+- (IBAction)visitPublishedSite:(id)sender
+{
+	KTDocWindowController *windowController = [_modalWindow windowController];
+	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
+
+	[windowController visitPublishedSite:sender];
+}
+
+- (IBAction)visitPublishedPage:(id)sender
+{
+	KTDocWindowController *windowController = [_modalWindow windowController];
+	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
+
+	[windowController visitPublishedPage:sender];
+}
+
 #pragma mark -
 #pragma mark Publishing Engine
 
@@ -406,6 +423,17 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     
     [self release]; // To balance the -retain when beginning the sheet.
 }
+
+#pragma mark -
+#pragma mark Validation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	KTDocWindowController *windowController = [_modalWindow windowController];
+	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
+	
+	return [windowController validateMenuItem:menuItem];
+}	
 
 @end
 
