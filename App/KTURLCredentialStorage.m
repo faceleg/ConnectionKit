@@ -47,9 +47,12 @@
 																									   port:[space port] 
 																								   protocol:[KSUtilities SecProtocolTypeForProtocol:[space protocol]]];
 		
-		result = [[[NSURLCredential alloc] initWithUser:[keychainItem username]
-											   password:[keychainItem password]
-											persistence:NSURLCredentialPersistencePermanent] autorelease];
+		if (keychainItem)
+		{
+			result = [NSURLCredential credentialWithUser:[keychainItem username]
+												password:[keychainItem password]
+											 persistence:NSURLCredentialPersistencePermanent];
+		}
 	}
 	
 	return result;
