@@ -11,6 +11,7 @@
 #import "KTDocumentInfo.h"
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
+#import "KTExportEngine.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSWorkspace+Karelia.h"
@@ -184,7 +185,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 
 - (BOOL)isExporting
 {
-    BOOL result = ![[self publishingEngine] isKindOfClass:[KTLocalPublishingEngine class]];
+    BOOL result = [[self publishingEngine] isKindOfClass:[KTExportEngine class]];
     return result;
 }
 
