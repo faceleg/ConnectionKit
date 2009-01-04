@@ -832,7 +832,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
-	if (![connection isConnected]) [connection connect];	// Ensure we're connected
+	[connection connect];	// Ensure we're connected
     CKTransferRecord *result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
     [result setName:[remotePath lastPathComponent]];
     
@@ -855,7 +855,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
     id <CKConnection> connection = [self connection];
     OBASSERT(connection);
-    if (![connection isConnected]) [connection connect];	// Ensure we're connected
+    [connection connect];	// Ensure we're connected
     CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
