@@ -14,7 +14,6 @@
 #import "KSSilencingConfirmSheet.h"
 #import "KSTextField.h"
 #import "KSNetworkNotifier.h"
-#import "KSValidateCharFormatter.h"
 #import "KT.h"
 #import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAbstractIndex.h"
@@ -28,6 +27,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWindow.h"
 #import "KTElementPlugin.h"
+#import "KTHostProperties.h"
 #import "KTIndexPlugin.h"
 #import "KTInfoWindowController.h"
 #import "KTInlineImageElement.h"
@@ -135,7 +135,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // disconnect UI delegates
     [oDesignsSplitView setDelegate:nil];
 	[oDocumentController unbind:@"contentObject"];
-	[oKeywordsField unbind:@"value"];			// balance out the bind in code here too?
     [oDocumentController setContent:nil];
     [oSidebarSplitView setDelegate:nil];
 
@@ -162,7 +161,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	[oDocumentController unbind:@"contentObject"];
     [oDocumentController setContent:nil];
-	[oKeywordsField unbind:@"value"];			// balance out the bind in code here too?
 }
 
 - (void)selectionDealloc
@@ -211,6 +209,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	
+	// Controller chain
+	[self addChildController:oPageDetailsController];
+	
 	// Design Chooser bindings
 	[oDesignsView bind:@"selectedDesign"
 			  toObject:[self siteOutlineController]
@@ -230,37 +231,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// UI setup of box views
 	[oStatusBar setDrawsFrame:YES];
 	[oStatusBar setBorderMask:NTBoxTop];
-	
-	[oDetailPanel setDrawsFrame:YES];
-	[oDetailPanel setBorderMask:(NTBoxRight | NTBoxBottom)];
-	
-	NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
-	NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
-							   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
-	[oPageNameField setFormatter:formatter];
-	
-	
-	NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
-	[oDescriptionTextView setFont:font];
-	[oDescriptionTextView setPlaceholderString:NSLocalizedString(
-															 @"Optional summary of page. Used by search engines.",
-															 "Page <meta> description placeholder text. [THIS SHOULD BE A SHORT STRING!]")];
-	
-	
-	// Prepare the collection index.html popup
-	[oCollectionIndexExtensionButton bind:@"defaultValue"
-								 toObject:[self siteOutlineController]
-							  withKeyPath:@"selection.defaultIndexFileName"
-								  options:nil];
-	
-	[oCollectionIndexExtensionButton setMenuTitle:NSLocalizedString(@"Index file name",
-																	"Popup menu title for setting the index.html file's extensions")];
-	
-	[oFileExtensionPopup bind:@"defaultValue"
-					 toObject:[self siteOutlineController]
-				  withKeyPath:@"selection.defaultFileExtension"
-					  options:nil];
-	
 	
 	
 	// Link Popup in address bar
@@ -297,12 +267,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 											   object:nil];
 	[self updateBuyNow:nil];	// update them now
 	
-	/// turn off undo within the cell to avoid exception
-	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
-	/// this still leaves the setting of keywords for the page undo'able, it's
-	/// just now that typing inside the field is now not undoable
-	[[oKeywordsField cell] setAllowsUndo:NO];
-	
 	
 	
 	[self showInfo:[[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayInfo"]];
@@ -332,6 +296,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark -
 #pragma mark Controller Chain
+
+- (id <KTDocumentControllerChain>)parentController { return [self document]; }
 
 - (NSArray *)childControllers { return [[_childControllers copy] autorelease]; }
 
@@ -387,7 +353,43 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_childControllers removeAllObjects];
 }
 
-#pragma mark Individual controllers
+/*	We observe notifications from the document's undo manager
+ */
+- (void)setDocument:(NSDocument *)document
+{
+	// Throw away any existing plugin Inspector manager we might have otherwise it will attempt to access an invalid
+	// managed object context later.
+	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
+	
+	
+	// Stop notifications from old doc
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter removeObserver:self
+								  name:NSUndoManagerWillCloseUndoGroupNotification
+								object:[[self document] undoManager]];
+    
+    
+    // Default behaviour
+	[super setDocument:document];
+	
+	
+	// Alert sub-controllers to the change
+    [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
+	
+	
+	// Observe new document
+    if (document)
+    {
+        [notificationCenter addObserver:self
+                               selector:@selector(undoManagerWillCloseUndoGroup:)
+                                   name:NSUndoManagerWillCloseUndoGroupNotification
+                                 object:[document undoManager]];
+    }
+}
+
+- (KTDocWindowController *)windowController { return self; }
+
+#pragma mark individual controllers
 
 - (KTDocSiteOutlineController *)siteOutlineController { return siteOutlineController; }
 
@@ -1752,7 +1754,6 @@ from representedObject */
 
 	[oDesignsView unbind:@"selectedDesign"];
 	[oDocumentController unbind:@"contentObject"];
-	[oKeywordsField unbind:@"value"];			// balance out the bind in code
 	
 	[[self siteOutlineController] setContent:nil];
 	[self setSiteOutlineController:nil];
@@ -1812,47 +1813,6 @@ from representedObject */
 	}
 	return result;
 }
-
-#pragma mark -
-#pragma mark Controller Chain
-
-- (id <KTDocumentControllerChain>)parentController { return [self document]; }
-
-/*	We observe notifications from the document's undo manager
- */
-- (void)setDocument:(NSDocument *)document
-{
-	// Throw away any existing plugin Inspector manager we might have otherwise it will attempt to access an invalid
-	// managed object context later.
-	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
-	
-	
-	// Stop notifications from old doc
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter removeObserver:self
-								  name:NSUndoManagerWillCloseUndoGroupNotification
-								object:[[self document] undoManager]];
-    
-    
-    // Default behaviour
-	[super setDocument:document];
-	
-	
-	// Alert sub-controllers to the change
-    [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
-	
-	
-	// Observe new document
-    if (document)
-    {
-        [notificationCenter addObserver:self
-                               selector:@selector(undoManagerWillCloseUndoGroup:)
-                                   name:NSUndoManagerWillCloseUndoGroupNotification
-                                 object:[document undoManager]];
-    }
-}
-
-- (KTDocWindowController *)windowController { return self; }
 
 #pragma mark -
 #pragma mark Undo
@@ -2073,9 +2033,6 @@ from representedObject */
 {
 	[[self pageCodeInjectionController] showWindow:sender];
 }
-
-#pragma mark -
-#pragma mark Description
 
 #pragma mark -
 #pragma mark Support

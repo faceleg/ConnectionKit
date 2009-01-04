@@ -54,6 +54,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet WebView					*oWebView;
 	IBOutlet KTDocWebViewController		*webViewController;     // Weak ref
 	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
+	IBOutlet KTDocViewController		*oPageDetailsController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
 	// Status bar below the webview
@@ -61,20 +62,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSImageView			*oSplitDragView;
 	IBOutlet NSTextField			*oStatusBarField;	// URL pointed to, expand size to left of visible item(s) below
 	
-	// Detail panel for page titles & keywords
-	IBOutlet NTBoxView							*oDetailPanel;
-	IBOutlet NSTextField						*oPageNameField;
-	IBOutlet NSTokenField						*oKeywordsField;
-	IBOutlet KSPopUpButton	*oFileExtensionPopup;
-	IBOutlet KSPopUpButton	*oCollectionIndexExtensionButton;
-	IBOutlet KSPlaceholderTextView *oDescriptionTextView;
-		
-	
-	// Uploading TO HOOK UP
-	//	IBOutlet NSProgressIndicator    *oUploadStatusIndicator;	// upload status
-	//	IBOutlet NSTextField			*oUploadStatusText;
-	
-    //  Navigation bar above the webview
+	//  Navigation bar above the webview
 	IBOutlet RBSplitSubview			*oDesignsSplitPane;
     IBOutlet KTDesignPickerView		*oDesignsView;
     IBOutlet NSButton				*oDesignBackButton;
@@ -125,7 +113,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	
 	NSButton *myBuyNowButton;
     
-    
+@private
     // Controller Chain
     NSMutableArray  *_childControllers;
 }

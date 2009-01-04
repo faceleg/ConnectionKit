@@ -193,6 +193,8 @@
 		270A41F80D46B6F9002E998A /* KTScaledImageProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */; };
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
+		270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */; };
+		270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -992,7 +994,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		274339ED0D77339B00164FA5 /* PBXContainerItemProxy */ = {
@@ -1559,6 +1561,8 @@
 		270A41F60D46B6F9002E998A /* KTScaledImageProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageProperties.m; sourceTree = "<group>"; };
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
+		270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsController.h; sourceTree = "<group>"; };
+		270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsController.m; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
 		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
@@ -2727,6 +2731,8 @@
 			children = (
 				272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */,
 				272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */,
+				270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */,
+				270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */,
 			);
 			name = "Page Details";
 			sourceTree = "<group>";
@@ -4881,6 +4887,7 @@
 				2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */,
 				275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */,
 				27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */,
+				270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6234,6 +6241,7 @@
 				275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */,
 				2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */,
 				27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */,
+				270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
