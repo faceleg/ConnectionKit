@@ -1295,6 +1295,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	 [[connection class] attributedStringForString:string transcript:transcript]];
 }
 
+- (void)connectionOpenPanel:(CKConnectionOpenPanel *)panel appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
+{
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:
+	 [CKAbstractConnection attributedStringForString:string transcript:transcript]];
+}
+
 #pragma mark -
 #pragma mark Derived Accessors
 
