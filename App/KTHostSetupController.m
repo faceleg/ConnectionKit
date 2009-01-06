@@ -360,9 +360,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
  */
 - (void)handleAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
+    NSURLCredential *credential = nil;
+    
     if ([challenge previousFailureCount] == 0)
 	{
-		NSURLCredential *credential;
 		if ([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 		{
 			credential = [challenge proposedCredential];
@@ -372,18 +373,31 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *user = [[self properties] valueForKey:@"userName"];
 			
 			BOOL isSFTPWithPublicKey = [[[self properties] valueForKey:@"protocol"] isEqualToString:@"SFTP"] && [[[self properties] valueForKey:@"usePublicKey"] intValue] == NSOnState;
-			NSString *password = (isSFTPWithPublicKey) ? nil : [self password];
-			
-			credential = [NSURLCredential credentialWithUser:user
-													password:password
-												 persistence:NSURLCredentialPersistenceNone];
+			if (isSFTPWithPublicKey)
+            {
+                credential = [NSURLCredential credentialWithUser:user
+                                                        password:nil
+                                                     persistence:NSURLCredentialPersistenceNone];
+            }
+            else
+            {
+                NSString *password = [self password];
+                if (password)   // Need this check otherwise we effectively tell SFTP to use public key auth
+                {
+                    credential = [NSURLCredential credentialWithUser:user
+                                                            password:password
+                                                         persistence:NSURLCredentialPersistenceNone];
+                }
+            }
 		}
-		
-		
-		OBASSERT(credential);
-		[[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
 	}
-	else
+	
+    
+    if (credential)
+    {
+        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+    }
+    else
 	{
 		[[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
 	}
