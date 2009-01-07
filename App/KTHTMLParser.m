@@ -724,7 +724,7 @@
         }
     }
         
-	return result;
+	return [result stringByEscapingHTMLEntities];
 }
 
 @end
