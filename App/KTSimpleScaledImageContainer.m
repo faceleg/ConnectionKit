@@ -8,7 +8,6 @@
 
 #import "KTSimpleScaledImageContainer.h"
 
-#import "KTMediaFile+ScaledImages.h"
 #import "NSManagedObject+KTExtensions.h"
 
 

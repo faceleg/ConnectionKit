@@ -137,6 +137,28 @@
 	return result;
 }
 
+/*	Locates the KTMediaContainer object with the specified identifier. Returns nil if none is found.
+ */
+- (KTMediaFile *)mediaFileWithIdentifier:(NSString *)identifier
+{
+	OBPRECONDITION(identifier);
+    
+    
+	// Fetch first possible match
+    NSFetchRequest *fetchRequest =
+    [[[self class] managedObjectModel] fetchRequestFromTemplateWithName:@"MediaFileWithIdentifier"
+                                                   substitutionVariable:identifier forKey:@"IDENTIFIER"];
+    [fetchRequest setFetchLimit:1];
+    
+    NSError *error = nil;
+    NSArray *matches = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    if (!matches) {
+        [[self document] presentError:error];
+    }
+    
+    return [matches firstObjectKS];
+}
+
 #pragma mark -
 #pragma mark Creating/Locating MediaFiles
 

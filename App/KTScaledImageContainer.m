@@ -7,7 +7,6 @@
 //
 
 #import "KTScaledImageContainer.h"
-#import "KTMediaFile+ScaledImages.h"
 #import "KTMediaManager.h"
 #import "KTScaledImageProperties.h"
 
@@ -33,7 +32,7 @@
 /*	When a ScaledImageContainer is first created it has no MediaFile attached. When this method is called
  *	for the first time we create a MediaFile. After that, we regularly check to see if the MediaFile needs updating.
  */
-- (KTMediaFile *)file
+- (KTMediaFile *)X_file
 {
 	KTMediaFile *result = [super file];
 	
@@ -77,22 +76,6 @@
 - (KTMediaFile *)generateMediaFile
 {
 	KTMediaFile *result = nil;
-    
-    KTMediaFile *sourceFile = [[self valueForKey:@"sourceMedia"] file];
-    NSDictionary *latestProperties = [self latestProperties];
-    if (latestProperties)
-    {
-        NSDictionary *canonicalProperties = [sourceFile canonicalImagePropertiesForProperties:latestProperties];
-        
-        result = sourceFile;
-        if ([sourceFile propertiesRequireScaling:canonicalProperties])
-        {
-            KTScaledImageProperties *generatedProperties = [sourceFile scaledImageWithProperties:canonicalProperties];
-            [self setValue:generatedProperties forKey:@"generatedProperties"];
-            result = [generatedProperties valueForKey:@"destinationFile"];
-        }
-    }
-    
     return result;
 }
 
@@ -107,36 +90,7 @@
  */
 - (BOOL)fileNeedsRegenerating
 {
-    // If the settings have changed, or we have no media file, generate one.
-    BOOL result = YES;
-    
-    KTScaledImageProperties *oldPropertiesObject = [self valueForKey:@"generatedProperties"];
-    
-    
-    // Where did the media come from?
-    KTMediaFile *sourceFile = [oldPropertiesObject valueForKey:@"sourceFile"];
-    if (!sourceFile) sourceFile = [[self valueForKey:@"sourceMedia"] file];
-    
-    
-    if (sourceFile)
-    {
-        NSDictionary *newProperties = [sourceFile canonicalImagePropertiesForProperties:[self latestProperties]];
-        OBASSERT(newProperties);
-        
-        NSDictionary *oldProperties = [oldPropertiesObject scalingProperties];
-        if (oldProperties)
-        {
-            // So are the new properties different enough from the old to necessitate regeneration?
-            result = [[self class] _fileNeedsGenerating:newProperties :oldProperties];
-        }
-        else
-        {
-            result = [sourceFile propertiesRequireScaling:newProperties];
-        }
-    }
-    
-    
-    return result;
+    return NO;
 }
 
 + (BOOL)_fileNeedsGenerating:(NSDictionary *)newProperties :(NSDictionary *)oldProperties

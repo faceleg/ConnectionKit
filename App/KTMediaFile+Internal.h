@@ -14,6 +14,8 @@
 
 #import "KTPasteboardArchiving.h"
 
+#import "CIImage+Karelia.h"
+
 
 @class KTImageScalingSettings;
 
@@ -23,6 +25,12 @@
 + (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 
 - (NSString *)preferredFileName;
+
+- (NSURL *)URLForImageScaledToSize:(NSSize)size
+							  mode:(KSImageScalingMode)scalingMode
+						sharpening:(float)sharpening
+						  fileType:(NSString *)UTI;
+- (NSURL *)URLForImageScalingProperties:(NSDictionary *)properties;
 
 @end
 

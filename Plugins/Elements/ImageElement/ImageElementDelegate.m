@@ -221,10 +221,6 @@
 	KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
 	[result addObjectIgnoringNil:[image identifier]];
 	
-	// Scaled image
-	KTMediaContainer *scaledImage = [image imageToFitSize:[self boundingImageBox]];
-	[result addObjectIgnoringNil:[scaledImage identifier]];
-	
 	return result;
 }
 
@@ -398,10 +394,9 @@
 	NSArray *result = nil;
 	
 	KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
-	KTMediaContainer *enclosure = [image imageToFitSize:[self boundingImageBox]];
-	if (enclosure)
+	if (image)
 	{
-		result = [NSArray arrayWithObject:enclosure];
+		result = [NSArray arrayWithObject:image];
 	}
 	
 	return result;

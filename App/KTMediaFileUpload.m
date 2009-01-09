@@ -83,4 +83,14 @@
     return result;
 }
 
+- (NSDictionary *)scalingProperties
+{
+	return [self transientValueForKey:@"scalingProperties" persistentArchivedDataKey:@"scalingPropertiesData"];
+}
+
+- (void)setScalingProperties:(NSDictionary *)properties
+{
+	[self setTransientValue:properties forKey:@"scalingProperties" persistentArchivedDataKey:@"scalingPropertiesData"];
+}
+
 @end

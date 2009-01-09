@@ -32,8 +32,8 @@
 [[if documentInfo.googleSiteVerification]]
 		[[=documentInfo.googleSiteVerification]]
 [[endif]]
-[[if parser.HTMLGenerationPurpose]][[if master.scaledFavicon]]
-		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.scaledFavicon]]" />
+[[if parser.HTMLGenerationPurpose]][[if master.favicon]]
+		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.favicon sizeName:faviconImage]]" />
 [[endif2]][[endif]]
 [[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />

@@ -19,7 +19,7 @@
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
-#import "KTMediaFile.h"
+#import "KTMediaFile+Internal.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -355,52 +355,28 @@
 	[self didChangeValueForKey:@"bannerImage"];
 }
 
-/*  Provides the banner image already scaled correctly.
- */
-- (KTMediaContainer *)scaledBanner
-{
-    KTMediaContainer *result = nil;
-	
-	// If the user has specified a custom banner and the design supports it, load it in
-	KTMediaContainer *banner = [self bannerImage];
-	if ([[banner file] currentPath])
-	{
-		if ([[self design] allowsBannerSubstitution])
-		{
-			// Scale the banner
-			KTImageScalingSettings *scalingSettings = [[self design] imageScalingSettingsForUse:@"bannerImage"];
-			NSDictionary *scalingProperties =
-            [NSDictionary dictionaryWithObject:scalingSettings forKey:@"scalingBehavior"];
-			result = [banner scaledImageWithProperties:scalingProperties];
-		}
-	}
-	
-	
-	return result;
-}
-
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
 {
 	NSString *result = nil;
 	
 	// If the user has specified a custom banner and the design supports it, load it in
-	KTMediaContainer *banner = [self scaledBanner];
+	KTMediaContainer *banner = [self bannerImage];
 	if (banner)
 	{
+		NSDictionary *scalingProperties = [[self design] imageScalingPropertiesForUse:@"bannerImage"];
+		OBASSERT(scalingProperties);
+		
 		// Find the right path
         NSString *bannerURLString = nil;
         if (generationPurpose == kGeneratingPreview)
         {
-            NSString *bannerPath = [[banner file] currentPath];
-            if (bannerPath)
-            {
-                bannerURLString = [NSURL fileURLStringWithPath:bannerPath];
-            }
+            bannerURLString = [[[banner file] URLForImageScalingProperties:scalingProperties] absoluteString];
         }
         else
         {
-            NSURL *masterCSSURL = [NSURL URLWithString:@"main.css" relativeToURL:[self designDirectoryURL]];
-            NSURL *mediaURL = [[[banner file] defaultUpload] URL];
+            // FIXME: Update this to new image scaling system
+			NSURL *masterCSSURL = [NSURL URLWithString:@"main.css" relativeToURL:[self designDirectoryURL]];
+            NSURL *mediaURL = [[[banner file] uploadForScalingProperties:scalingProperties] URL];
             bannerURLString = [mediaURL stringRelativeToURL:masterCSSURL];
         }
         
@@ -492,16 +468,6 @@
 	[self didChangeValueForKey:@"favicon"];
 }
 
-- (KTMediaContainer *)scaledFavicon
-{
-    KTMediaContainer *unscaledFavicon = [self favicon];
-    NSDictionary *properties = [[self design] imageScalingPropertiesForUse:@"faviconImage"];
-    OBASSERT(properties);
-    
-    KTMediaContainer *result = [unscaledFavicon scaledImageWithProperties:properties];
-    return result;
-}
-
 /*	If anyone tries to clear the favicon, actually reset it to the default instead
  */
 - (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
@@ -582,11 +548,8 @@
 	NSMutableSet *result = [NSMutableSet set];
 	
 	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
-    [result addObjectIgnoringNil:[[self scaledBanner] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
-	[result addObjectIgnoringNil:[[[self logoImage] imageToFitSize:NSMakeSize(200.0, 128.0)] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
-    [result addObjectIgnoringNil:[[self scaledFavicon] identifier]];
 	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
 	
 	return result;

@@ -404,6 +404,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithFloat:0.3],			@"KTSharpeningFactor",
 		[NSNumber numberWithFloat:0.7],			@"KTPreferredJPEGQuality",
 		[NSNumber numberWithBool:NO],			@"KTPrefersPNGFormat",
+										 
 		[NSNumber numberWithBool:YES],			@"KTHaloscanTrackbacks",	// KTHaloscanID is nil initially
 		
 		[NSNumber numberWithBool:NO],			@"ShowSearchPaths",			// NSLog where items are searched for

@@ -94,6 +94,14 @@
 
 @end
 
+@interface QTMovie (iMediaHack)
+- (NSImage *)betterPosterImage;
+@end
+
+
+#pragma mark -
+
+
 @implementation VideoElementDelegate
 
 #pragma mark awake
@@ -235,15 +243,49 @@
 #pragma mark -
 #pragma mark Media Storage
 
+- (void)_updateThumbnail:(KTMediaContainer *)mediaContainer
+{
+	NSString *moviePath = [[mediaContainer file] currentPath];
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+								moviePath, QTMovieFileNameAttribute,
+								[NSNumber numberWithBool:NO], QTMovieOpenAsyncOKAttribute,
+								nil];
+	
+	NSError *error = nil;
+	QTMovie *movie = [[QTMovie alloc] initWithAttributes:attributes error:&error];
+	
+	NSImage *posterImage = nil;
+	if (movie)
+	{
+		posterImage = [movie betterPosterImage]; 
+	}
+	
+	// Handle a missing thumbnail, like when we have a .wmv file
+	if (!posterImage || NSEqualSizes(NSZeroSize, [posterImage size]) )
+	{
+		NSString *quickTimePath = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"com.apple.quicktimeplayer"];
+		if (quickTimePath)
+		{
+			posterImage = [[NSWorkspace sharedWorkspace] iconForFile:quickTimePath];
+		}
+		else
+		{
+			posterImage = [NSImage imageNamed:@"NSDefaultApplicationIcon"];	// last resort!
+		}
+	}
+	
+	
+	KTMediaContainer *posterImageMedia = [[self mediaManager] mediaContainerWithImage:posterImage];
+	[[self delegateOwner] setValue:posterImageMedia forKey:@"posterImage"];
+}
+
 - (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
 	// When setting the video load it to get dimensions etc. & update poster image
 	if ([key isEqualToString:@"video"])
 	{
 		[self loadMovie];
-		
-		KTMediaContainer *posterImage = [value imageWithScaleFactor:1.0];
-		[[self delegateOwner] setValue:posterImage forKey:@"posterImage"];
+		[self _updateThumbnail:value];
 	}
     else if ([key isEqualToString:@"remoteURL"])
     {

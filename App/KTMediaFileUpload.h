@@ -24,9 +24,10 @@
 @class KTPage;
 
 @interface KTMediaFileUpload : NSManagedObject <KTWebPaths>
-{
-}
 
 - (NSString *)pathRelativeToSite;
+
+- (NSDictionary *)scalingProperties;
+- (void)setScalingProperties:(NSDictionary *)properties;
 
 @end

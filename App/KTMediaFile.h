@@ -22,8 +22,6 @@
 
 @class KTMediaManager, KTPage, KTMediaFileUpload;
 @interface KTMediaFile : NSManagedObject
-{	
-}
 
 + (NSString *)entityName;
 
@@ -41,6 +39,8 @@
 
 - (KTMediaFileUpload *)defaultUpload;
 - (KTMediaFileUpload *)uploadForPath:(NSString *)path;
+- (KTMediaFileUpload *)uploadForScalingProperties:(NSDictionary *)scalingProps;
+
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 
 

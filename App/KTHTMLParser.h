@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
+
 #import "KTTemplateParser.h"
 
 
@@ -33,7 +33,8 @@ typedef enum {
 
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTHTMLTextBlock;
 @class KTAbstractPage;
-@class KTMediaFile;
+@class KTMediaContainer, KTMediaFile;
+
 
 @interface KTHTMLParser : KTTemplateParser
 {
@@ -58,14 +59,22 @@ typedef enum {
 - (void)setLiveDataFeeds:(BOOL)flag;
 
 // Functions
-- (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile;
-- (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile;
-
 - (NSString *)pathToObject:(id)anObject;
 
 // Prebuilt templates
 + (NSString *)calloutContainerTemplateHTML;
 - (NSString *)calloutContainerTemplateHTML;
+
+@end
+
+
+@interface KTHTMLParser (Media)
+
+- (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingSettings;
+
+- (NSString *)pathToMedia:(KTMediaFile *)media scalingProperties:(NSDictionary *)scalingProps;
+- (NSString *)widthStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps;
+- (NSString *)heightStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps;
 
 @end
 

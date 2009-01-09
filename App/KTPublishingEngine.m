@@ -18,8 +18,9 @@
 #import "KTTranscriptController.h"
 
 #import "KTMediaContainer.h"
-#import "KTMediaFile.h"
+#import "KTMediaFile+Internal.h"
 #import "KTMediaFileUpload.h"
+#import "KTImageScalingURLProtocol.h"
 
 #import "NSString+Publishing.h"
 #import "NSBundle+KTExtensions.h"
@@ -429,7 +430,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         // Upload banner image and design
         KTMaster *master = [[[self site] root] master];
-        KTMediaFileUpload *bannerImage = [[[master scaledBanner] file] defaultUpload];
+		NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
+        KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
         if (bannerImage)
         {
             [self uploadMediaIfNeeded:bannerImage];
@@ -585,7 +587,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-/*  Slightly messy support methid that allows KTPublishingEngine to reject publishing non-stale pages
+/*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages
  */
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 {
@@ -604,27 +606,54 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
 {
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    CKTransferRecord *transferRecord = nil;
+	
+	if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
     {
-        NSString *sourcePath = [[media valueForKey:@"file"] currentPath];
-        NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-        if (sourcePath && uploadPath)
-        {
-            // Upload the media. Store the media object with the transfer record for processing later
-            CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-            [transferRecord setProperty:media forKey:@"object"];
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-        }
-    }
+        KTMediaFile *mediaFile = [media valueForKey:@"file"];
+		NSString *sourcePath = [mediaFile currentPath];
+		if (sourcePath)
+		{
+			NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+			OBASSERT(uploadPath);
+			
+			NSDictionary *scalingProperties = [media scalingProperties];
+			if (scalingProperties)
+			{
+				NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[mediaFile URLForImageScalingProperties:scalingProperties]];
+				[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:sourcePath]];
+				NSData *data = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:NULL error:NULL];
+				if (data)
+				{
+					transferRecord = [self uploadData:data toPath:uploadPath];
+				}
+			}
+			else
+			{
+				// Upload the media. Store the media object with the transfer record for processing later
+				transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+			}
+		}
+	}
+	
+	
+	if (transferRecord)
+	{
+		[transferRecord setProperty:media forKey:@"object"];
+		
+		// Record that we're uploading the object
+		[_uploadedMedia addObject:media];
+	}
 }
-
+				
 /*  Upload the media if needed
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
-    [self uploadMediaIfNeeded:upload];
+    if (upload)
+	{
+		[self uploadMediaIfNeeded:upload];
+	}
 }
 
 #pragma mark -

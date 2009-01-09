@@ -9,14 +9,13 @@
 #import "KTHTMLParserMasterCache.h"
 
 #import "KTDocumentInfo.h"
-#import "KTMaster.h"
 #import "KTPage+Internal.h"
 #import "KTArchivePage.h"
 #import "KTHostProperties.h"
-#import "KTMediaContainer.h"
-#import "KTMediaFile.h"
+#import "KTImageScalingURLProtocol.h"
 
 #import "BDAlias+QuickLook.h"
+#import "CIImage+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSURL+Karelia.h"
@@ -490,120 +489,7 @@
 	return string;
 }
 
-#pragma mark media & resources
-
-- (NSString *)mediainfoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)scanner
-{
-	NSString *result = @"";
-	
-	// Build the parameters dictionary
-	NSDictionary *parameters = [KTHTMLParser parametersDictionaryWithString:inRestOfTag];
-	
-	
-	// Which MediaContainer is requested?
-	NSString *mediaKeyPath = [parameters objectForKey:@"media"];
-	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath];
-	
-	
-	if ([parameters objectForKey:@"sizeToFit"])
-	{
-		NSSize imageSize = [[[self cache] valueForKeyPath:[parameters objectForKey:@"sizeToFit"]] sizeValue];
-		media = [media imageToFitSize:imageSize];
-	}
-	
-	
-    if (media)
-    {
-        // What information is desired?
-        KTMediaFile *mediaFile = [media file];
-        if (mediaFile)
-        {
-            KTMediaFileUpload *upload = nil;
-            
-            NSString *infoRequested = [parameters objectForKey:@"info"];
-            if ([infoRequested isEqualToString:@"path"])
-            {
-                switch ([self HTMLGenerationPurpose])
-                {
-                    case kGeneratingPreview:
-                    {
-                        NSString *path = [mediaFile currentPath];
-                        if (path) result = [[NSURL fileURLWithPath:path] absoluteString];
-                        break;
-                    }
-                        
-                    case kGeneratingQuickLookPreview:
-                        result = [mediaFile quickLookPseudoTag];
-                        break;
-                        
-                    default:
-                    {
-                        upload = [mediaFile defaultUpload];
-                        result = [[upload URL] stringRelativeToURL:[[self currentPage] URL]];
-                        break;
-                    }
-                }
-            }
-            else if ([infoRequested isEqualToString:@"width"])
-            {
-                result = [self widthStringOfMediaFile:mediaFile];
-            }
-            else if ([infoRequested isEqualToString:@"height"])
-            {
-                result = [self heightStringOfMediaFile:mediaFile];
-            }
-            else if ([infoRequested isEqualToString:@"MIMEType"])
-            {
-                NSString *MIMEType = [NSString MIMETypeForUTI:[mediaFile fileType]];
-				
-                // Some MIME types are not known to the system. If so, fall back to raw data
-                if (!MIMEType || [MIMEType isEqualToString:@""])
-                {
-                    MIMEType = @"application/octet-stream";
-                }
-                
-                result = [MIMEType stringByEscapingHTMLEntities];
-            }
-            else if ([infoRequested isEqualToString:@"dataLength"])
-            {
-                NSString *path = [mediaFile currentPath];
-                if (path)
-                {
-                    NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:NO];
-                    NSString *fileSize = [[fileAttributes objectForKey:NSFileSize] stringValue];
-                    if (fileSize) result = fileSize;
-                }
-            }
-            
-            
-            // The delegate may want to know
-            [self didEncounterMediaFile:mediaFile upload:upload];
-        }
-    }
-	
-	
-    // In the worst case, an empty string should be returned.
-    OBASSERTSTRING(result, ([NSString stringWithFormat:@"[[mediainfo %@]] is returning nil", inRestOfTag]));    
-	return result;
-}
-
-- (NSString *)widthStringOfMediaFile:(KTMediaFile *)mediaFile
-{
-    [mediaFile cacheImageDimensionsIfNeeded];
-    
-    NSNumber *width = [mediaFile valueForKey:@"width"];
-    NSString *result = (width) ? [width stringValue] : @"";
-    return result;
-}
-
-- (NSString *)heightStringOfMediaFile:(KTMediaFile *)mediaFile
-{
-    [mediaFile cacheImageDimensionsIfNeeded];
-    
-    NSNumber *height = [mediaFile valueForKey:@"height"];
-    NSString *result = (height) ? [height stringValue] : @"";
-    return result;
-}
+#pragma mark resources
 
 // Following parameters:  (1) key-value path to media or mediaImage object
 // Should call resourcePathRelativeTo: and return the result.

@@ -112,7 +112,9 @@
     
     
     // Set our page's thumbnail to match the file's Finder icon
-    [page setThumbnail:[value imageWithScaleFactor:1.0]];
+	NSImage *finderIcon = [[NSWorkspace sharedWorkspace] iconForFile:[[value file] currentPath]];
+	KTMediaContainer *iconMedia = [[self mediaManager] mediaContainerWithImage:finderIcon];
+    [page setThumbnail:iconMedia];
     
     
     

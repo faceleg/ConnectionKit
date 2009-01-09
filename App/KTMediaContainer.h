@@ -47,14 +47,6 @@ typedef enum {
 - (BDAlias *)sourceAlias;
 - (void)setSourceAlias:(BDAlias *)alias;	// Only the media manager should do this
 
-// Scaled images
-- (KTMediaContainer *)scaledImageWithProperties:(NSDictionary *)properties;
-									 
-- (KTMediaContainer *)imageWithScaleFactor:(float)scaleFactor;
-- (KTMediaContainer *)imageToFitSize:(NSSize)size;
-- (KTMediaContainer *)imageCroppedToSize:(NSSize)size alignment:(NSImageAlignment)alignment;
-- (KTMediaContainer *)imageStretchedToSize:(NSSize)size;
-
 - (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
 										  forPlugin:(KTAbstractElement *)plugin;
 

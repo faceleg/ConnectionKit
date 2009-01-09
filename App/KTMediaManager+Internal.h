@@ -43,6 +43,7 @@
 
 // Queries
 - (NSArray *)externalMediaFiles;
+- (KTMediaFile *)mediaFileWithIdentifier:(NSString *)identifier;
 
 // MediaFile creation/re-use
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path;

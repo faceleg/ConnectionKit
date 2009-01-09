@@ -10,7 +10,6 @@
 #import "KTScaledImageProperties.h"
 
 #import "KTAbstractElement+Internal.h"
-#import "KTMediaFile+ScaledImages.h"
 #import "KTDesign.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster+Internal.h"

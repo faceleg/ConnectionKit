@@ -6,19 +6,24 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTMediaFile.h"
+#import "KTMediaFile+Internal.h"
 #import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 
+#import "KTDocumentInfo.h"
+#import "KTImageScalingSettings.h"
+#import "KTImageScalingURLProtocol.h"
 #import "KTMediaManager.h"
 #import "KTMediaPersistentStoreCoordinator.h"
 #import "KTMediaFileUpload.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 #import "BDAlias.h"
 #import <QTKit/QTKit.h>
@@ -30,6 +35,7 @@
 @interface KTMediaFile (Private)  
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
+- (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate;
 @end
 
 
@@ -196,21 +202,10 @@
 {
 	OBPRECONDITION(path);
     
-    KTMediaFileUpload *result = nil;
-	
+    
 	// Search for an existing upload
-	NSSet *uploads = [self valueForKey:@"uploads"];
-	NSEnumerator *uploadsEnumerator = [uploads objectEnumerator];
-	KTMediaFileUpload *anUpload;
-	
-	while (anUpload = [uploadsEnumerator nextObject])
-	{
-		if ([[anUpload pathRelativeToSite] isEqualToString:path])
-		{
-			result = anUpload;
-			break;
-		}
-	}
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pathRelativeToSite == %@", path];
+	KTMediaFileUpload *result = [self _anyUploadMatchingPredicate:predicate];
 	
 	
 	// If none was found, create a new upload
@@ -219,6 +214,74 @@
 		result = [self insertUploadToPath:path];
 	}
 	
+	
+	return result;
+}
+
+- (KTMediaFileUpload *)uploadForScalingProperties:(NSDictionary *)scalingProps
+{
+	KTMediaFileUpload *result = nil;
+	
+	if (scalingProps)
+	{
+		// Load the scaled image
+		NSString *path = [self currentPath];
+		if (path)
+		{
+			NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[self URLForImageScalingProperties:scalingProps]];
+			[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
+			
+			NSURLResponse *URLResponse = nil;
+			NSData *imageData = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:&URLResponse error:NULL];
+			if (imageData && URLResponse)
+			{
+				NSString *fileType = [NSString UTIForMIMEType:[URLResponse MIMEType]];
+				
+				
+				// Look for an existing upload
+				NSMutableDictionary *fullScalingProps = [scalingProps mutableCopy];
+				[fullScalingProps setObject:fileType forKey:@"fileType"];
+				[fullScalingProps setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTPreferredJPEGQuality"] forKey:@"compression"];
+				if (![scalingProps objectForKey:@"sharpeningFactor"]) [fullScalingProps setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTSharpeningFactor"] forKey:@"sharpeningFactor"];
+				
+				
+				NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", fullScalingProps];
+				
+				result = [self _anyUploadMatchingPredicate:predicate];
+				
+				
+				// If not, create our own
+				if (!result)
+				{
+					NSString *sourceFilename = nil;
+					if ([self isKindOfClass:[KTInDocumentMediaFile class]])
+					{
+						sourceFilename = [self valueForKey:@"sourceFilename"];
+					}
+					else
+					{
+						sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
+					}
+					
+					NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+					NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[NSString filenameExtensionForUTI:fileType]];
+					
+					NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
+					NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
+					
+					NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
+					result = [self insertUploadToPath:uploadPath];
+					[result setScalingProperties:fullScalingProps];
+				}
+				
+				[fullScalingProps release];
+			}
+		}
+	}
+	else
+	{
+		result = [self defaultUpload];
+	}
 	
 	return result;
 }
@@ -269,6 +332,27 @@
 	
 	// Tidy up
 	[fetchRequest release];
+	return result;
+}
+
+- (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate
+{
+	OBPRECONDITION(predicate);
+    
+    
+	// Search for an existing upload
+	NSSet *uploads = [self valueForKey:@"uploads"];
+	NSEnumerator *uploadsEnumerator = [uploads objectEnumerator];
+	KTMediaFileUpload *result;
+	
+	while (result = [uploadsEnumerator nextObject])
+	{
+		if ([predicate evaluateWithObject:result])
+		{
+			break;
+		}
+	}
+	
 	return result;
 }
 
@@ -449,6 +533,78 @@
 	// Create an NSImage from the scaled image
 	NSString *result = [bestMatch currentPath];
 	return result;
+}
+
+#pragma mark -
+#pragma mark Scaling
+
+- (NSURL *)URLForImageScaledToSize:(NSSize)size mode:(KSImageScalingMode)scalingMode sharpening:(float)sharpening fileType:(NSString *)UTI
+{
+	NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
+											  host:[[[[self mediaManager] document] documentInfo] siteID]
+											  path:[@"/" stringByAppendingPathComponent:[self valueForKey:@"uniqueID"]]];
+	
+	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
+	[query setObject:NSStringFromSize(size) forKey:@"size"];
+	[query setObject:[NSString stringWithFormat:@"%i", scalingMode] forKey:@"mode"];
+	if (UTI) [query setObject:UTI forKey:@"filetype"];
+	[query setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTPreferredJPEGQuality"] forKey:@"compression"];
+	
+	if (!sharpening) sharpening = [[NSUserDefaults standardUserDefaults] floatForKey:@"KTSharpeningFactor"];
+	[query setObject:[NSString stringWithFormat:@"%f", sharpening] forKey:@"sharpen"];
+	
+	
+	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:query];
+	[query release];
+	[baseURL release];
+	
+	return result;
+}
+
+/*	Generates one of the special x-sandvox-image URLs we use for previewing scaled images.
+ *	Returns a file URL if properties is nil
+ */
+- (NSURL *)URLForImageScalingProperties:(NSDictionary *)properties
+{
+	if (properties)
+	{
+		KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
+		
+		KSImageScalingMode mode;
+		switch ([settings behavior])
+		{
+			case KTScaleToSize:
+				mode = KSImageScalingModeAspectFit;
+				break;
+			case KTStretchToSize:
+				mode = KSImageScalingModeFill;
+				break;
+			case KTCropToSize:
+				mode = [settings alignment] + 11;
+				break;
+			default:
+				OBASSERT_NOT_REACHED("Unknown scaling behaviour");
+				break;
+		}
+		
+		NSURL *result = [self URLForImageScaledToSize:[settings size]
+												 mode:mode
+										   sharpening:[properties floatForKey:@"sharpeningFactor"]
+											 fileType:[properties objectForKey:@"fileType"]];
+		
+		return result;
+	}
+	else
+	{
+		NSURL *result = nil;
+		NSString *path = [self currentPath];
+		if (path)
+		{
+			result = [NSURL fileURLWithPath:path];
+		}
+		
+		return result;	
+	}
 }
 
 @end

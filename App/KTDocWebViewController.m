@@ -23,9 +23,10 @@
 #import "KTDocument.h"
 #import "KTDocumentInfo.h"
 
-#import "KTMediaManager.h"
-#import "KTMediaContainer.h"
-#import "KTMediaFile.h"
+#import "KTImageScalingURLProtocol.h"
+#import "KTMediaManager+Internal.h"
+#import "KTScaledImageContainer.h"
+#import "KTMediaFile+Internal.h"
 
 #import "NSImage+Karelia.h"
 #import "CIImage+Karelia.h"
@@ -978,49 +979,64 @@
 		   fromDataSource:(WebDataSource *)dataSource
 {
 	NSURL *requestURL = [request URL];
+	NSMutableURLRequest *result = [[request mutableCopy] autorelease];
 	
     
 	if ([requestURL isEqual:[request mainDocumentURL]])
     {
         // Force webkit to reload subresources all the time. BUGSID:35835
-        request = [[request mutableCopy] autorelease];
-        [(NSMutableURLRequest *)request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        [result setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     }
     else if ([requestURL hasNetworkLocation] &&
         ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] &&
-        ![[requestURL scheme] isEqualToString:@"svxmedia"])
+        ![[requestURL scheme] isEqualToString:@"svxmedia"] &&
+		![[requestURL scheme] isEqualToString:KTImageScalingURLProtocolScheme])
 	{
 		LOG((@"webView:resource:willSendRequest:%@ ....Forcing to ONLY load from any cache", requestURL));
 		
-		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
-		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
-		return mutableRequest;
+		[result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
+		return result;
 	}
 	else if (requestURL)
 	{
 		NSString *relativePath = [requestURL relativePath];
 		if ([[requestURL scheme] isEqualToString:@"svxmedia"])
 		{
-			NSURLRequest *result = request; 
-			
-			// find our media container from the URL
+			// Find the media container from the URL
 			NSString *requestURLString = [requestURL absoluteString];
 			NSString *mediaIdentifier = [requestURLString lastPathComponent];
 			
 			KTMediaContainer *mediaContainer = [[[self document] mediaManager] mediaContainerWithIdentifier:mediaIdentifier];
-			KTMediaFile *mediaFile = [mediaContainer file];
-			NSString *path = [mediaFile currentPath];
-			if (path)
+			
+			if ([mediaContainer isKindOfClass:[KTScaledImageContainer class]])
 			{
-				NSURL *substituteURL = [NSURL fileURLWithPath:path];
-				result = [NSURLRequest requestWithURL:substituteURL];
+				KTMediaFile *mediaFile = [[mediaContainer valueForKey:@"sourceMedia"] file];
+				NSURL *URL = [mediaFile URLForImageScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
+				[result setURL:[URL absoluteURL]];	// WebKit can't seem to handle a relative URL here.
+				
+				NSString *path = [mediaFile currentPath];
+				if (path) [result setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
 			}
 			else
 			{
-				LOG((@"error: could not find media container for %@", requestURL));
+				// Redirect to the source media
+				KTMediaFile *mediaFile = [mediaContainer file];
+				NSString *path = [mediaFile currentPath];
+				if (path) [result setURL:[NSURL fileURLWithPath:path]];
 			}
 			
 			return result;
+		}
+		else if ([[[result URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme])
+		{
+			// To work right, the URL request needs to be modified to point to the media on disk
+			NSString *mediaID = [[result URL] lastPathComponent];
+			KTMediaFile *media = [[[[self windowController] document] mediaManager] mediaFileWithIdentifier:mediaID];
+			NSString *path = [media currentPath];
+			if (path)
+			{
+				[result setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
+			}
 		}
 		else
 		{
@@ -1032,14 +1048,13 @@
 		if ([relativePath hasPrefix:[NSString stringWithFormat:@"/%@", [design remotePath]]])
 		{
 			NSURL *URL = [NSURL fileURLWithPath:[[design bundle] pathForResource:@"main" ofType:@"css"]];
-			NSURLRequest *result = [NSURLRequest requestWithURL:URL cachePolicy:[request cachePolicy] timeoutInterval:[request timeoutInterval]];
+			[result setURL:URL];
 			return result;
 		}
 	}
 	
-	// if not a Media URL and not kGeneratingPreview,
-	// just return the original request
-	return request;
+	// If not a Media URL
+	return result;
 }
 
 - (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
