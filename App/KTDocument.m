@@ -279,7 +279,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	NSString *result;
     
     NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-	if (!siteURL || [[siteURL host] isEqualToString:@"example.com"])
+	if (!siteURL)
 	{
 		result = @""; // show placeholder in UI
 	}
