@@ -122,6 +122,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     
 	
     // Start progress indicator
+	[oProgressIndicator setUsesThreadedAnimation:YES];
     [oProgressIndicator startAnimation:self];
 	
 	
