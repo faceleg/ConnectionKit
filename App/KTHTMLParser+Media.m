@@ -61,6 +61,13 @@
 	}
 	
 	
+	// Big hack to stop CK dying during particularly long parses
+	if ([self HTMLGenerationPurpose] == kGeneratingRemote)
+	{
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
+	}
+	
+	
     // In the worst case, an empty string should be returned.
     OBASSERTSTRING(result, ([NSString stringWithFormat:@"[[mediainfo %@]] is returning nil", inRestOfTag]));    
 	return result;
