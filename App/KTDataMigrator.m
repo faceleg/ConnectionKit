@@ -36,6 +36,8 @@
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import <QTKit/QTKit.h>
+
 #import "Debug.h"
 
 
@@ -102,6 +104,11 @@
 
 
 @implementation KTDataMigrator
+
++ (void)initialize
+{
+	[QTMovie class];	// Ensure QTMovie has been sent its own +initialize message on the main thread
+}
 
 /*  Provides a lookup table for converting old plugin identifiers to new.
  */
