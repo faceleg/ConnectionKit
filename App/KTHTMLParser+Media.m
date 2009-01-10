@@ -154,24 +154,15 @@
 {
     NSString *result = nil;
 	
-	if (scalingProps)
+	
+	// Build canonical scaling props
+	if (scalingProps) scalingProps = [mediaFile canonicalImageScalingPropertiesForProperties:scalingProps];
+	
+	
+	KTImageScalingSettings *scalingSettings = [scalingProps objectForKey:@"scalingBehavior"];
+	if (scalingProps && [scalingSettings behavior] == KTStretchToSize)
 	{
-		if ([self HTMLGenerationPurpose] != kGeneratingPreview)
-		{
-			NSString *path = [mediaFile currentPath];
-			if (path)
-			{
-				NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[mediaFile URLForImageScalingProperties:scalingProps]];
-				[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
-				NSData *imageData = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:NULL error:NULL];
-				if (imageData)
-				{
-					CIImage *image = [[CIImage alloc] initWithData:imageData];
-					result = [[NSNumber numberWithFloat:[image extent].size.width] stringValue];
-					[image release];
-				}
-			}
-		}
+		result = [[NSNumber numberWithFloat:([scalingSettings size].width)] stringValue];
 	}
 	else
 	{
@@ -188,24 +179,15 @@
 {
     NSString *result = nil;
 	
-	if (scalingProps)
+	
+	// Build canonical scaling props
+	if (scalingProps) scalingProps = [mediaFile canonicalImageScalingPropertiesForProperties:scalingProps];
+	
+	
+	KTImageScalingSettings *scalingSettings = [scalingProps objectForKey:@"scalingBehavior"];
+	if (scalingProps && [scalingSettings behavior] == KTStretchToSize)
 	{
-		if ([self HTMLGenerationPurpose] != kGeneratingPreview)
-		{
-			NSString *path = [mediaFile currentPath];
-			if (path)
-			{
-				NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[mediaFile URLForImageScalingProperties:scalingProps]];
-				[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
-				NSData *imageData = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:NULL error:NULL];
-				if (imageData)
-				{
-					CIImage *image = [[CIImage alloc] initWithData:imageData];
-					result = [[NSNumber numberWithFloat:[image extent].size.height] stringValue];
-					[image release];
-				}
-			}
-		}
+		result = [[NSNumber numberWithFloat:([scalingSettings size].height)] stringValue];
 	}
 	else
 	{
