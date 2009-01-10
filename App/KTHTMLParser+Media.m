@@ -61,14 +61,7 @@
 	}
 	
 	
-	// Big hack to stop CK dying during particularly long parses
-	if ([self HTMLGenerationPurpose] == kGeneratingRemote)
-	{
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
-	}
-	
-	
-    // In the worst case, an empty string should be returned.
+	// In the worst case, an empty string should be returned.
     OBASSERTSTRING(result, ([NSString stringWithFormat:@"[[mediainfo %@]] is returning nil", inRestOfTag]));    
 	return result;
 }
@@ -140,6 +133,9 @@
 		default:
 		{
 			KTMediaFileUpload *upload = [media uploadForScalingProperties:scalingProps];
+			
+			// Big hack to stop CK dying during particularly long parses
+			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
 			
 			// The delegate may want to know
 			[self didEncounterMediaFile:media upload:upload];
