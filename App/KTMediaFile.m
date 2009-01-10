@@ -371,35 +371,7 @@
 }
 
 #pragma mark -
-#pragma mark Other
-
-+ (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize
-{
-	// Figure the approrpriate scaling factor
-	float scale1 = desiredSize.width / sourceSize.width;
-	float scale2 = desiredSize.height / sourceSize.height;
-	
-	float scaleFactor;
-	if (scale2 < scale1) {
-		scaleFactor = scale2; 
-	} else {
-		scaleFactor = scale1;
-	}
-	
-	return scaleFactor;
-}
-
-+ (NSSize)sizeOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize
-{
-	// Scale the source image down, being sure to round the figures
-	float scaleFactor = [self scaleFactorOfSize:sourceSize toFitSize:desiredSize];
-	
-	float width = roundf(scaleFactor * sourceSize.width);
-	float height = roundf(scaleFactor * sourceSize.height);
-	NSSize result = NSMakeSize(width, height);
-	
-	return result;
-}
+#pragma mark Images
 
 - (NSSize)dimensions
 {
@@ -471,68 +443,12 @@
     }
 }
 
-- (float)imageScaleFactorToFitSize:(NSSize)desiredSize;
-{
-	return [KTInDocumentMediaFile scaleFactorOfSize:[self dimensions] toFitSize:desiredSize];
-}
-
-- (NSSize)imageSizeToFitSize:(NSSize)desiredSize
-{
-	NSSize result = [KTInDocumentMediaFile sizeOfSize:[self dimensions] toFitSize:desiredSize];
-	return result;
-}
-
-/*	Similar to imageScaleFactorToFitSize: but ONLY takes into account the width
- */
-- (float)imageScaleFactorToFitWidth:(float)width
-{
-	NSSize sourceSize = [self dimensions];
-	float result = width / sourceSize.width;
-	return result;
-}
-
-- (float)imageScaleFactorToFitHeight:(float)height;
-{
-	NSSize sourceSize = [self dimensions];
-	float result = height / sourceSize.height;
-	return result;
-}
-
 /*	Used by the Missing Media sheet. Assumes that the underlying filesystem object no longer exists so attempts
  *	to retrieve a 128x128 pixel version from the scaled images.
  */
 - (NSString *)bestExistingThumbnail
 {
 	return nil;     // Cheating for the moment and assuming no thumbnails
-    
-    // Get the list of our scaled images by scale factor
-	NSArray *sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"scaleFactor" ascending:YES];
-	NSArray *scaledImages = [[[self valueForKey:@"scaledImages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
-	
-	if ([scaledImages count] == 0) {
-		return nil;
-	}
-	
-	// What scale factor would we like?
-	float scaleFactor = [self imageScaleFactorToFitSize:NSMakeSize(128.0, 128.0)];
-	
-	// Run through the list of scaled images. Bail if a good one is found
-	NSEnumerator *scaledImagesEnumerator = [scaledImages objectEnumerator];
-	KTMediaFile *bestMatch;
-	while (bestMatch = [scaledImagesEnumerator nextObject])
-	{
-		if ([bestMatch floatForKey:@"scaleFactor"] >= scaleFactor) {
-			break;
-		}
-	}
-	if (!bestMatch)
-	{
-		bestMatch = [scaledImages lastObject];
-	}
-	
-	// Create an NSImage from the scaled image
-	NSString *result = [bestMatch currentPath];
-	return result;
 }
 
 #pragma mark -

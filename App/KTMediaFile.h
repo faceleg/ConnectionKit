@@ -44,19 +44,10 @@
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 
 
-// Should be deprecated
-+ (float)scaleFactorOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize;
-+ (NSSize)sizeOfSize:(NSSize)sourceSize toFitSize:(NSSize)desiredSize;
-
 // all return NSZeroSize if not an image
 - (NSSize)dimensions;
 - (void)cacheImageDimensions;
 - (void)cacheImageDimensionsIfNeeded;
-
-- (float)imageScaleFactorToFitSize:(NSSize)desiredSize;
-- (NSSize)imageSizeToFitSize:(NSSize)desiredSize;
-- (float)imageScaleFactorToFitWidth:(float)width;
-- (float)imageScaleFactorToFitHeight:(float)height;
 
 
 // Error Recovery
