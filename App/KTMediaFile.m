@@ -482,10 +482,24 @@
  */
 - (NSURL *)URLForImageScalingProperties:(NSDictionary *)properties
 {
+	// Grab canonical version if possible
 	if (properties)
 	{
-		KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
+		properties = [self canonicalImageScalingPropertiesForProperties:properties];
+	}
+	
+	
+	// Is any scaling actually required?
+	KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
+	if (!settings || ([settings behavior] == KTScaleByFactor && [settings scaleFactor] == 1.0))
+	{
+		properties = nil;
+	}
 		
+	
+	// Generate a scaled URL only if requested
+	if (properties)
+	{
 		KSImageScalingMode mode;
 		switch ([settings behavior])
 		{
@@ -521,6 +535,151 @@
 		
 		return result;	
 	}
+}
+
+#pragma mark canonical
+
+/*	Takes some properties and makes them suitable for the media system to search and generate images with.
+ *  Returns scaleFactor = 1.0 if the settings will result in no change to the image.
+ */ 
+- (NSDictionary *)canonicalImageScalingPropertiesForProperties:(NSDictionary *)properties
+{
+	OBPRECONDITION(properties);
+    
+    
+    NSMutableDictionary *buffer = [properties mutableCopy];
+	
+	
+	// Figure the canonical scaling specification
+	KTImageScalingSettings *specifiedScalingSettings = [properties objectForKey:@"scalingBehavior"];
+    OBASSERT(specifiedScalingSettings);
+    KTImageScalingSettings *canonicalScalingSettings = [self canonicalImageScalingSettingsForSettings:specifiedScalingSettings];
+    [buffer setObject:canonicalScalingSettings forKey:@"scalingBehavior"];
+    
+    
+    // Unless the requested scaling will result in no change, figure out what to apply for the other settings
+    if ([canonicalScalingSettings behavior] == KTScaleByFactor && [canonicalScalingSettings scaleFactor] == 1.0)
+    {
+        // For GIF images, when no scaling is required, we logically want to maintain the file format
+        if ([[self fileType] conformsToUTI:(NSString *)kUTTypeGIF])
+        {
+            [buffer setObject:(NSString *)kUTTypeGIF forKey:@"fileType"];
+        }
+    }
+    else
+    {
+        // Ensure there is a compression setting
+        NSNumber *compression = [properties objectForKey:@"compression"];
+        if (KSISNULL(compression))
+        {
+            compression = [[NSUserDefaults standardUserDefaults] objectForKey:@"KTPreferredJPEGQuality"];
+            [buffer setObject:compression forKey:@"compression"];
+        }
+        
+        
+        // Ensure there is a sharpening factor
+        NSNumber *sharpening = [properties objectForKey:@"sharpeningFactor"];
+        if (KSISNULL(sharpening))
+        {
+            sharpening = [NSNumber numberWithFloat:
+                          [[NSUserDefaults standardUserDefaults] floatForKey:@"KTSharpeningFactor"]];
+            [buffer setObject:sharpening forKey:@"sharpeningFactor"];
+        }
+    }
+    
+    
+    // If there is still no set file type, we can oftentimes know it by looking at if the image has an alpha component
+    if (![buffer objectForKey:@"fileType"])
+    {
+        BOOL preferPNGFormat = [[NSUserDefaults standardUserDefaults] boolForKey:@"KTPrefersPNGFormat"];
+        NSNumber *hasAlphaComponent = [self valueForKey:@"hasAlphaComponent"];
+        
+        if (preferPNGFormat || (hasAlphaComponent && [hasAlphaComponent boolValue]))
+        {
+            [buffer setObject:(NSString *)kUTTypePNG forKey:@"fileType"];
+        }
+        else if (hasAlphaComponent)
+        {
+            [buffer setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
+        }
+    }
+    
+    
+    // Double-check there are compression and sharpening settings
+    NSNumber *compression = [buffer objectForKey:@"compression"];
+    if (KSISNULL(compression))
+    {
+        [buffer setObject:[NSNumber numberWithInt:0] forKey:@"compression"];
+    }
+    NSNumber *sharpening = [buffer objectForKey:@"sharpeningFactor"];
+    if (KSISNULL(sharpening))
+    {
+        [buffer setObject:[NSNumber numberWithInt:0] forKey:@"sharpeningFactor"];
+    }
+	
+	
+	// Tidy up
+	NSDictionary *result = [[buffer copy] autorelease];
+    [buffer release];
+    OBPOSTCONDITION(result);
+	return result;
+}
+
+/*  Support method to handle the scaling aspect of the previous method.
+ */
+- (KTImageScalingSettings *)canonicalImageScalingSettingsForSettings:(KTImageScalingSettings *)settings
+{
+    OBPRECONDITION(settings);
+    
+    
+    // CropToSize operations are already pretty much sorted
+    KTMediaScalingOperation behavior = [settings behavior];
+    if (behavior == KTCropToSize)
+    {
+        [self cacheImageDimensionsIfNeeded];
+        NSSize size = [self dimensions];
+        if (size.width <= [settings size].width && size.height <= [settings size].height)
+        {
+            settings = [KTImageScalingSettings settingsWithScaleFactor:1.0];
+        }
+        
+        return settings;
+    }
+    
+    
+    // Scale by a factor of 1.0 is already sorted
+    if (behavior == KTScaleByFactor && [settings scaleFactor] == 1.0)
+    {
+        return settings;
+    }
+    
+    
+    // Convert wishy washy behaviours (scaleByFactor, scaleToSize) to a definite stretch operation
+    if (behavior != KTStretchToSize)
+    {
+        // But first make sure that we have valid image dimension informatiom
+        [self cacheImageDimensionsIfNeeded];
+		
+        
+        
+        NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
+        NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
+        
+        settings = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:roundedSize];
+    }
+	
+    
+    // We should now have a simple stretchToFit operation.
+    // Double-check that it is not equivalent to a scale by 1.0 operation
+    OBASSERT([settings behavior] == KTStretchToSize);
+    if (NSEqualSizes([settings size], [self dimensions]))
+    {
+        settings = [KTImageScalingSettings settingsWithScaleFactor:1.0];
+    }
+    
+	
+    OBPOSTCONDITION(settings);
+	return settings;
 }
 
 @end

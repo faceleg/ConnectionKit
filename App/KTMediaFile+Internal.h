@@ -26,11 +26,15 @@
 
 - (NSString *)preferredFileName;
 
+// Scaling
 - (NSURL *)URLForImageScaledToSize:(NSSize)size
 							  mode:(KSImageScalingMode)scalingMode
 						sharpening:(float)sharpening
 						  fileType:(NSString *)UTI;
 - (NSURL *)URLForImageScalingProperties:(NSDictionary *)properties;
+
+- (NSDictionary *)canonicalImageScalingPropertiesForProperties:(NSDictionary *)properties;
+- (KTImageScalingSettings *)canonicalImageScalingSettingsForSettings:(KTImageScalingSettings *)settings;
 
 @end
 

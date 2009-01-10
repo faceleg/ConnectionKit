@@ -73,7 +73,7 @@
 	return result;
 }
 
-- (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingSettings
+- (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingProperties
 {
 	OBPRECONDITION(infoString);
 	OBPRECONDITION(media);
@@ -87,15 +87,15 @@
 	{
 		if ([infoString isEqualToString:@"path"])
 		{
-			result = [self pathToMedia:mediaFile scalingProperties:scalingSettings];
+			result = [self pathToMedia:mediaFile scalingProperties:scalingProperties];
 		}
 		else if ([infoString isEqualToString:@"width"])
 		{
-			result = [self widthStringForMediaFile:mediaFile scalingProperties:scalingSettings];
+			result = [self widthStringForMediaFile:mediaFile scalingProperties:scalingProperties];
 		}
 		else if ([infoString isEqualToString:@"height"])
 		{
-			result = [self heightStringForMediaFile:mediaFile scalingProperties:scalingSettings];
+			result = [self heightStringForMediaFile:mediaFile scalingProperties:scalingProperties];
 		}
 		else if ([infoString isEqualToString:@"MIMEType"])
 		{
