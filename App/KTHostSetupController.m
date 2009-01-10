@@ -1305,14 +1305,16 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (void)connection:(id <CKConnection>)connection appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
-	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:
-	 [[connection class] attributedStringForString:string transcript:transcript]];
+	string = [string stringByAppendingString:@"\n"];
+	NSAttributedString *attributedString = [[connection class] attributedStringForString:string transcript:transcript];
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
 - (void)connectionOpenPanel:(CKConnectionOpenPanel *)panel appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
-	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:
-	 [CKAbstractConnection attributedStringForString:string transcript:transcript]];
+	string = [string stringByAppendingString:@"\n"];
+	NSAttributedString *attributedString = [CKAbstractConnection attributedStringForString:string transcript:transcript];
+	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
 #pragma mark -
