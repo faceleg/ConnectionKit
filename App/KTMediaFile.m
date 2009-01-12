@@ -236,17 +236,7 @@
 		if (path)
 		{
 			NSString *fileType = [scalingProps objectForKey:@"fileType"];
-            
-            // We may not know the image type yet. If so cache the alpha and try again
-            if (!fileType)
-            {
-                [self cacheHasAlphaComponentIfNeeded];
-                scalingProps = [self canonicalImageScalingPropertiesForProperties:scalingProps];
-                fileType = [scalingProps objectForKey:@"fileType"];
-            }
-            
-            	
-			if (fileType)
+            if (fileType)
             {
                 // Look for an existing upload
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", scalingProps];
@@ -622,23 +612,41 @@
     }
     
     
+    
     // If there is still no set file type, we can oftentimes know it by looking at if the image has an alpha component
     if (![buffer objectForKey:@"fileType"])
     {
         BOOL preferPNGFormat = [[NSUserDefaults standardUserDefaults] boolForKey:@"KTPrefersPNGFormat"];
-        NSNumber *hasAlphaComponent = [self valueForKey:@"hasAlphaComponent"];
+        NSNumber *hasAlphaComponent = [self hasAlphaComponent];
         
         if (preferPNGFormat || (hasAlphaComponent && [hasAlphaComponent boolValue]))
         {
             [buffer setObject:(NSString *)kUTTypePNG forKey:@"fileType"];
         }
-        else if (hasAlphaComponent)
+        else if (hasAlphaComponent) // Therefore [hasAlphaComponent boolValue]==NO and prefers JPEG
         {
             [buffer setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
+        }
+        else
+        {
+            [self cacheHasAlphaComponentIfNeeded];
+            hasAlphaComponent = [self hasAlphaComponent];
+            if (hasAlphaComponent)
+            {
+                if ([hasAlphaComponent boolValue])
+                {
+                    [buffer setObject:(NSString *)kUTTypePNG forKey:@"fileType"];
+                }
+                else
+                {
+                    [buffer setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
+                }
+            }
         }
     }
     
     
+                    
     // Double-check there are compression and sharpening settings
     NSNumber *compression = [buffer objectForKey:@"compression"];
     if (KSISNULL(compression))

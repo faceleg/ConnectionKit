@@ -62,6 +62,7 @@ static NSURLCache *_sharedCache;
 		NSDictionary *query = [[request URL] queryDictionary];
 		if ([query objectForKey:@"size"] &&
 			[query objectForKey:@"mode"] &&
+            [query objectForKey:@"filetype"] &&
 			[query objectForKey:@"compression"] &&
 			[query objectForKey:@"sharpen"])
 		{
