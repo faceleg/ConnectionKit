@@ -32,6 +32,7 @@
 						sharpening:(float)sharpening
 						  fileType:(NSString *)UTI;
 - (NSURL *)URLForImageScalingProperties:(NSDictionary *)properties;
+- (NSURLRequest *)URLRequestForImageScalingProperties:(NSDictionary *)properties;
 
 - (NSDictionary *)canonicalImageScalingPropertiesForProperties:(NSDictionary *)properties;
 - (KTImageScalingSettings *)canonicalImageScalingSettingsForSettings:(KTImageScalingSettings *)settings;

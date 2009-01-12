@@ -149,7 +149,8 @@
 - (KTMediaFileUpload *)defaultUpload
 {
 	// Create a MediaFileUpload object if needed
-	KTMediaFileUpload *result = [[self valueForKey:@"uploads"] anyObject];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == nil"];
+	KTMediaFileUpload *result = [self _anyUploadMatchingPredicate:predicate];
 	
 	if (!result || [result isDeleted])
 	{
@@ -559,6 +560,19 @@
 		
 		return result;	
 	}
+}
+
+- (NSURLRequest *)URLRequestForImageScalingProperties:(NSDictionary *)properties
+{
+    NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:[self URLForImageScalingProperties:properties]];
+    
+    NSString *path = [self currentPath];
+    if (path)
+    {
+        [result setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
+    }
+    
+    return result;
 }
 
 #pragma mark canonical
