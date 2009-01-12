@@ -96,85 +96,103 @@ static NSURLCache *_sharedCache;
 #pragma mark -
 #pragma mark Loading
 
+- (void)_startLoadingUncached
+{
+    NSURL *URL = [[self request] URL];
+	
+	
+	// Construct image scaling properties dictionary from the URL
+    NSDictionary *URLQuery = [URL queryDictionary];
+    
+    NSSize scaledSize = NSSizeFromString([URLQuery objectForKey:@"size"]);
+    KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
+    
+    
+    // Scale the image
+    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:[[self request] scaledImageSourceURL]];
+    CIImage *scaledImage = [sourceImage imageByScalingToSize:CGSizeMake(scaledSize.width, scaledSize.height)
+                                                        mode:scalingMode
+                                                 opaqueEdges:YES];
+    
+    
+    // Sharpen if needed
+    float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
+    if (sharpeningFactor)
+    {
+        scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
+    }
+    
+    
+    // Convert back to bitmap
+    NSImage *finalImage = [scaledImage toNSImageBitmap];
+    OBASSERT(finalImage);
+    [sourceImage release];
+    
+    
+    // Figure out the file type
+    NSString *UTI = [URLQuery objectForKey:@"filetype"];
+    if (!UTI) UTI = [finalImage preferredFormatUTI];
+    
+    
+    // Convert to data
+    NSData *imageData = [finalImage representationForUTI:UTI];
+    OBASSERT(imageData);
+    
+    
+    // Construct new cached response
+    NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL
+                                                        MIMEType:[NSString MIMETypeForUTI:UTI]
+                                           expectedContentLength:[imageData length]
+                                                textEncodingName:nil];
+    
+    [[self client] URLProtocol:self
+            didReceiveResponse:response
+            cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
+    
+    [[self client] URLProtocol:self didLoadData:imageData];
+    
+    
+    // Cache result
+    NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
+	[[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
+    
+    
+    // Tidy up
+    [[self client] URLProtocolDidFinishLoading:self];
+	
+    [cachedResponse release];
+    [response release];
+}
+
 - (void)startLoading
 {
-	NSURL *URL = [[self request] URL];
-	
-	
 	// Is the request already cached?
 	NSCachedURLResponse *cachedResponse = [[[self class] sharedScaledImageCache] cachedResponseForRequest:[self request]];
 	NSData *imageData = [cachedResponse data];
 	
 	
-	if (!imageData)
+	if (imageData)
 	{
-		// Construct image scaling properties dictionary from the URL
-		NSDictionary *URLQuery = [URL queryDictionary];
-		
-		NSSize scaledSize = NSSizeFromString([URLQuery objectForKey:@"size"]);
-		KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
-		
-		
-		// Scale the image
-		CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:[[self request] scaledImageSourceURL]];
-		CIImage *scaledImage = [sourceImage imageByScalingToSize:CGSizeMake(scaledSize.width, scaledSize.height)
-															mode:scalingMode
-													 opaqueEdges:YES];
-		
-		
-		// Sharpen if needed
-		float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
-		if (sharpeningFactor)
-		{
-			scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
-		}
-		
-		
-		// Convert back to bitmap
-		NSImage *finalImage = [scaledImage toNSImageBitmap];
-		OBASSERT(finalImage);
-		[sourceImage release];
-		
-		
-		// Figure out the file type
-		NSString *UTI = [URLQuery objectForKey:@"filetype"];
-		if (!UTI) UTI = [finalImage preferredFormatUTI];
-		
-		
-		// Convert to data
-		imageData = [finalImage representationForUTI:UTI];
-		OBASSERT(imageData);
-		
-		
-		// Construct new cached response
-		NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL
-															MIMEType:[NSString MIMETypeForUTI:UTI]
-											   expectedContentLength:[imageData length]
-													textEncodingName:nil];
-		
-		cachedResponse = [[[NSCachedURLResponse alloc] initWithResponse:response data:imageData] autorelease];
-		[response release];
+		[[self client] URLProtocol:self
+                didReceiveResponse:[cachedResponse response]
+                cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
+        
+        
+        
+        [[self client] URLProtocol:self didLoadData:[cachedResponse data]];
+        [[self client] URLProtocolDidFinishLoading:self];
+    }
+    else
+    {
+        [self performSelector:@selector(_startLoadingUncached) withObject:nil afterDelay:0.0];
 	}
-	
-	
-	// Now we have the data, can send callbacks to the client
-	[[self client] URLProtocol:self
-			didReceiveResponse:[cachedResponse response]
-			cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
-	
-	
-	
-	[[self client] URLProtocol:self didLoadData:[cachedResponse data]];
-	[[self client] URLProtocolDidFinishLoading:self];
-	
-	
-	// Re-cache the data to place it at the top of the cache agai
-	[[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
 }
 
 - (void)stopLoading
 {
-	// Nothing we can really do, but we must implement this method
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_startLoadingUncached) object:nil];
+    
+    // Nothing we can really do, but we must implement this method
 }
 
 @end

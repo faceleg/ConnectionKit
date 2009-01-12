@@ -134,9 +134,6 @@
 		{
 			KTMediaFileUpload *upload = [media uploadForScalingProperties:scalingProps];
 			
-			// Big hack to stop CK dying during particularly long parses
-			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
-			
 			// The delegate may want to know
 			[self didEncounterMediaFile:media upload:upload];
 			

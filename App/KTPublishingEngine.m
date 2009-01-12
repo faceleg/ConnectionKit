@@ -237,9 +237,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     _hasFinished = YES;
     
-    [_connection setDelegate:nil];
-    [_connection release]; _connection = nil;
-    
+    [self setConnection:nil];
     
     // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
     NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
@@ -416,7 +414,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             }
             
             
-            if (nextPage)
+            if (nextPage && ![self hasFinished])
             {
                 [self performSelector:@selector(parseAndUploadPageIfNeeded:)
                            withObject:nextPage

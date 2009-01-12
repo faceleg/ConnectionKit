@@ -20,6 +20,7 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 
+#import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
@@ -221,62 +222,62 @@
 - (KTMediaFileUpload *)uploadForScalingProperties:(NSDictionary *)scalingProps
 {
 	KTMediaFileUpload *result = nil;
-	
-	if (scalingProps)
+    
+    
+    // Canonical scaling props
+    if (scalingProps) scalingProps = [self canonicalImageScalingPropertiesForProperties:scalingProps];
+    
+    
+	KTImageScalingSettings *scalingSettings = [scalingProps objectForKey:@"scalingBehavior"];
+	if (scalingProps && !([scalingSettings behavior] == KTScaleByFactor && [scalingSettings scaleFactor] == 1.0))
 	{
 		// Load the scaled image
 		NSString *path = [self currentPath];
 		if (path)
 		{
-			NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[self URLForImageScalingProperties:scalingProps]];
-			[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:path]];
-			
-			NSURLResponse *URLResponse = nil;
-			NSData *imageData = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:&URLResponse error:NULL];
-			if (imageData && URLResponse)
-			{
-				NSString *fileType = [NSString UTIForMIMEType:[URLResponse MIMEType]];
-				
-				
-				// Look for an existing upload
-				NSMutableDictionary *fullScalingProps = [scalingProps mutableCopy];
-				[fullScalingProps setObject:fileType forKey:@"fileType"];
-				[fullScalingProps setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTPreferredJPEGQuality"] forKey:@"compression"];
-				if (![scalingProps objectForKey:@"sharpeningFactor"]) [fullScalingProps setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTSharpeningFactor"] forKey:@"sharpeningFactor"];
-				
-				
-				NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", fullScalingProps];
-				
-				result = [self _anyUploadMatchingPredicate:predicate];
-				
-				
-				// If not, create our own
-				if (!result)
-				{
-					NSString *sourceFilename = nil;
-					if ([self isKindOfClass:[KTInDocumentMediaFile class]])
-					{
-						sourceFilename = [self valueForKey:@"sourceFilename"];
-					}
-					else
-					{
-						sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
-					}
-					
-					NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
-					NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[NSString filenameExtensionForUTI:fileType]];
-					
-					NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
-					NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
-					
-					NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
-					result = [self insertUploadToPath:uploadPath];
-					[result setScalingProperties:fullScalingProps];
-				}
-				
-				[fullScalingProps release];
-			}
-		}
+			NSString *fileType = [scalingProps objectForKey:@"fileType"];
+            
+            // We may not know the image type yet. If so cache the alpha and try again
+            if (!fileType)
+            {
+                [self cacheHasAlphaComponentIfNeeded];
+                scalingProps = [self canonicalImageScalingPropertiesForProperties:scalingProps];
+                fileType = [scalingProps objectForKey:@"fileType"];
+            }
+            
+            	
+			if (fileType)
+            {
+                // Look for an existing upload
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", scalingProps];
+                result = [self _anyUploadMatchingPredicate:predicate];
+                
+                
+                // If not, create our own
+                if (!result)
+                {
+                    NSString *sourceFilename = nil;
+                    if ([self isKindOfClass:[KTInDocumentMediaFile class]])
+                    {
+                        sourceFilename = [self valueForKey:@"sourceFilename"];
+                    }
+                    else
+                    {
+                        sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
+                    }
+                    
+                    NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+                    NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[NSString filenameExtensionForUTI:fileType]];
+                    
+                    NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
+                    NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
+                    
+                    NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
+                    result = [self insertUploadToPath:uploadPath];
+                    [result setScalingProperties:scalingProps];
+                }
+            }
+        }
 	}
 	else
 	{
