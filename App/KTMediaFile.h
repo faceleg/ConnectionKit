@@ -49,6 +49,11 @@
 - (void)cacheImageDimensions;
 - (void)cacheImageDimensionsIfNeeded;
 
+// Alpha
+- (NSNumber *)hasAlphaComponent;
+- (void)setHasAlphaComponent:(NSNumber *)flag;    // Only the media system should call this
+- (void)cacheHasAlphaComponent;
+- (void)cacheHasAlphaComponentIfNeeded;
 
 // Error Recovery
 - (NSString *)bestExistingThumbnail;

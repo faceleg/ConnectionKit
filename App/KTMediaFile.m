@@ -452,6 +452,39 @@
 }
 
 #pragma mark -
+#pragma mark Alpha
+
+- (NSNumber *)hasAlphaComponent { return [self wrappedValueForKey:@"hasAlphaComponent"]; }
+
+- (void)setHasAlphaComponent:(NSNumber *)flag
+{
+    [self setWrappedValue:flag forKey:@"hasAlphaComponent"];
+}
+
+- (void)cacheHasAlphaComponent
+{
+    NSNumber *result = nil;
+    
+    NSString *path = [self currentPath];
+    if (path)
+    {
+        NSImage *image = [[NSImage alloc] initWithContentsOfFile:path];
+        if (image)
+        {
+            result = [NSNumber numberWithBool:[image hasAlphaComponent]];
+            [image release];
+        }
+    }
+    
+    [self setHasAlphaComponent:result];
+}
+
+- (void)cacheHasAlphaComponentIfNeeded;
+{
+    if (![self hasAlphaComponent]) [self cacheHasAlphaComponent];
+}
+
+#pragma mark -
 #pragma mark Scaling
 
 - (NSURL *)URLForImageScaledToSize:(NSSize)size mode:(KSImageScalingMode)scalingMode sharpening:(float)sharpening fileType:(NSString *)UTI
