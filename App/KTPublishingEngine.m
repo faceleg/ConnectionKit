@@ -32,6 +32,7 @@
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "KSSimpleURLConnection.h"
 #import "KSPlugin.h"
 #import "KSThreadProxy.h"
 
@@ -616,22 +617,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 			NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
 			OBASSERT(uploadPath);
 			
-			NSDictionary *scalingProperties = [media scalingProperties];
-			if (scalingProperties)
-			{
-				NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:[mediaFile URLForImageScalingProperties:scalingProperties]];
-				[URLRequest setScaledImageSourceURL:[NSURL fileURLWithPath:sourcePath]];
-				NSData *data = [NSURLConnection sendSynchronousRequest:URLRequest returningResponse:NULL error:NULL];
-				if (data)
-				{
-					transferRecord = [self uploadData:data toPath:uploadPath];
-				}
-			}
-			else
-			{
-				// Upload the media. Store the media object with the transfer record for processing later
+			NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
+            NSURL *URL = [URLRequest URL];
+            
+            if ([URL isFileURL])
+            {
+                // Upload the media. Store the media object with the transfer record for processing later
 				transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
 			}
+            else
+            {
+                NSData *data = [NSURLConnection sendSynchronousRequest:URLRequest mode:NSDefaultRunLoopMode returningResponse:NULL error:NULL];
+                if (data) transferRecord = [self uploadData:data toPath:uploadPath];
+            }
 		}
 	}
 	

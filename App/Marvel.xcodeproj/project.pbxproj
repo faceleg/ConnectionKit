@@ -330,6 +330,8 @@
 		27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */; };
 		27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C059B40E7299850033A715 /* Elements+Pasteboard.h */; };
 		27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C059B50E7299850033A715 /* Elements+Pasteboard.m */; };
+		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
+		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
 		27CD65380CE1F32E00919E41 /* KTMediaFile+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
@@ -1703,6 +1705,8 @@
 		27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTRemotePublishingEngine.m; sourceTree = "<group>"; };
 		27C059B40E7299850033A715 /* Elements+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Elements+Pasteboard.h"; sourceTree = "<group>"; };
 		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
+		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
+		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
 		27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+Internal.h"; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
@@ -3747,6 +3751,8 @@
 				3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */,
 				3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */,
 				3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */,
+				27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */,
+				27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -4891,6 +4897,7 @@
 				27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */,
 				270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */,
 				2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */,
+				27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6246,6 +6253,7 @@
 				270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */,
 				2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */,
 				2774E39A0F16D9EF0085A4D8 /* KTHTMLParser+Media.m in Sources */,
+				27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
