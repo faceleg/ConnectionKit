@@ -238,7 +238,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         NSURL *siteURL = [[[engine site] hostProperties] siteURL];
         
         NSString *descriptionText;
-        if ([[[engine connection] URL] isFileURL])
+        if ([[[[engine connection] request] URL] isFileURL])
         {
             descriptionText = NSLocalizedString(@"The site has been published to this computer.", "Transfer Controller");
         }

@@ -426,23 +426,17 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *host = [self valueForKey:@"hostName"];
 	
 	// show the ConnectionOpenPanel
-	NSError *err = nil;
-	id <CKConnection>con = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
-                                                                                          host:host
-                                                                                          port:[self valueForKey:@"port"]
-                                                                                          user:nil
-                                                                                      password:nil
-                                                                                         error:&err];
-	if (!con)
+	CKConnectionRequest *connectionRequest = [[CKConnectionRegistry sharedConnectionRegistry] connectionRequestForName:protocol
+                                                                                                                  host:host
+                                                                                                                  port:[self valueForKey:@"port"]];
+    
+    CKConnectionOpenPanel *choose = [(CKConnectionOpenPanel *)[CKConnectionOpenPanel alloc] initWithRequest:connectionRequest];
+    if (!choose)
 	{
-		if (err)
-		{
-			[[self window] presentError:err];
-		}
 		return;
 	}
-	[con setName:@"Browse Host"];
-	CKConnectionOpenPanel *choose = [[CKConnectionOpenPanel connectionOpenPanel:con] retain];
+	
+    
 	[choose setCanChooseDirectories:YES];
 	[choose setCanChooseFiles:NO];
 	[choose setCanCreateDirectories:NO];	 // Disable creating directories since that confuses people with doc root.
