@@ -26,55 +26,55 @@
 
 //- (void)awakeFromFetch
 //{
-//	TJT((@"awakeFromFetch:%@", [self managedObjectDescription]));
+//	OFF((@"awakeFromFetch:%@", [self managedObjectDescription]));
 //	[super awakeFromFetch];
 //}
 //
 //- (void)awakeFromInsert
 //{
-//	TJT((@"awakeFromInsert:%@", [self managedObjectDescription]));
+//	OFF((@"awakeFromInsert:%@", [self managedObjectDescription]));
 //	[super awakeFromInsert];
 //}
 //
 //- (void)didTurnIntoFault
 //{
-//	TJT((@"didTurnIntoFault:%@", [self managedObjectDescription]));
+//	OFF((@"didTurnIntoFault:%@", [self managedObjectDescription]));
 //	[super didTurnIntoFault];
 //}
 //
 //- (void)dealloc
 //{
-//	TJT((@"dealloc:%@", [self managedObjectDescription]));
+//	OFF((@"dealloc:%@", [self managedObjectDescription]));
 //	[super dealloc];
 //}
 //
 //- (void)willSave
 //{
-//	TJT((@"willSave:%@", [self managedObjectDescription]));
+//	OFF((@"willSave:%@", [self managedObjectDescription]));
 //	[super willSave];
 //}
 //
 //- (void)didSave
 //{
-//	TJT((@"didSave:%@", [self managedObjectDescription]));
+//	OFF((@"didSave:%@", [self managedObjectDescription]));
 //	[super didSave];
 //}
 //
 //- (id)retain
 //{
-//	TJT((@"retain:%@", [self managedObjectDescription]));
+//	OFF((@"retain:%@", [self managedObjectDescription]));
 //	return [super retain];
 //}
 //
 //- (oneway void)release
 //{
-//	TJT((@"release:%@", [self managedObjectDescription]));
+//	OFF((@"release:%@", [self managedObjectDescription]));
 //	[super release];
 //}
 //
 //- (id)autorelease
 //{
-//	TJT((@"autorelease:%@", [self managedObjectDescription]));
+//	OFF((@"autorelease:%@", [self managedObjectDescription]));
 //	return [super autorelease];
 //}
 

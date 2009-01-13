@@ -21,14 +21,14 @@
 		return nil;
 	}
 	
-	TJT((@"init KTUndoManager"));
+	OFF((@"init KTUndoManager"));
 	
 	return self;
 }
 
 - (void)dealloc
 {
-	TJT((@"dealloc KTUndoManager"));
+	OFF((@"dealloc KTUndoManager"));
 	[self setDocument:nil];
 	[super dealloc];
 }
@@ -47,7 +47,7 @@
 
 - (void)removeAllActions
 {
-	TJT((@"undo: removing all actions"));
+	OFF((@"undo: removing all actions"));
 	[super removeAllActions];
 }
 
@@ -55,48 +55,48 @@
 {
 	if ( [target isManagedObject] )
 	{
-		TJT((@"undo: removing all actions with target: %@", [target managedObjectDescription]));
+		OFF((@"undo: removing all actions with target: %@", [target managedObjectDescription]));
 	}
 	else
 	{
-		TJT((@"undo: removing all actions with target: %@", target));
+		OFF((@"undo: removing all actions with target: %@", target));
 	}
 	[super removeAllActionsWithTarget:target];
 }
 
 - (void)setActionName:(NSString *)actionName
 {
-	TJT((@"undo: setting action name to %@", actionName));
+	OFF((@"undo: setting action name to %@", actionName));
 	[super setActionName:actionName];
 }
 
 - (void)setLevelsOfUndo:(unsigned)anInt
 {
-	TJT((@"undo: setting levels of undo to %i", anInt));
+	OFF((@"undo: setting levels of undo to %i", anInt));
 	[super setLevelsOfUndo:anInt];
 }
 
 - (void)disableUndoRegistration
 {
-	TJT((@"undo: disabling undo registration"));
+	OFF((@"undo: disabling undo registration"));
 	[super disableUndoRegistration];
 }
 
 - (void)enableUndoRegistration
 {
-	TJT((@"undo: enabling undo registration"));
+	OFF((@"undo: enabling undo registration"));
 	[super enableUndoRegistration];
 }
 
 - (void)beginUndoGrouping
 {
-	TJT((@"undo: begin undo group"));
+	OFF((@"undo: begin undo group"));
 	[super beginUndoGrouping];
 }
 
 - (void)endUndoGrouping
 {
-	TJT((@"undo: end undo group"));
+	OFF((@"undo: end undo group"));
 	[super endUndoGrouping];
 }
 
@@ -104,11 +104,11 @@
 {
 	if ( [target isManagedObject] )
 	{
-		TJT((@"undo: registering undo (%@) with target %@", NSStringFromSelector(aSelector), [target managedObjectDescription]));
+		OFF((@"undo: registering undo (%@) with target %@", NSStringFromSelector(aSelector), [target managedObjectDescription]));
 	}
 	else
 	{
-		TJT((@"undo: registering undo (%@) with target %@", NSStringFromSelector(aSelector), target));
+		OFF((@"undo: registering undo (%@) with target %@", NSStringFromSelector(aSelector), target));
 	}
 	
 	[super registerUndoWithTarget:target selector:aSelector object:anObject];
@@ -118,11 +118,11 @@
 {
 	if ( [target isManagedObject] )
 	{
-		TJT((@"undo: prepareWithInvocationTarget: %@", [target managedObjectDescription]));
+		OFF((@"undo: prepareWithInvocationTarget: %@", [target managedObjectDescription]));
 	}
 	else
 	{
-		TJT((@"undo: prepareWithInvocationTarget: %@", target));
+		OFF((@"undo: prepareWithInvocationTarget: %@", target));
 	}
 	
 	return [super prepareWithInvocationTarget:target];
@@ -130,16 +130,16 @@
 
 - (void)undoNestedGroup
 {
-	TJT((@"======================= UNDO ======================="));
-	//TJT((@"cancelling autosave timers..."));
+	OFF((@"======================= UNDO ======================="));
+	//OFF((@"cancelling autosave timers..."));
 	//[[self document] cancelAndInvalidateAutosaveTimers];
 	[super undoNestedGroup];
 }
 
 - (void)redo
 {
-	TJT((@"======================= REDO ======================="));
-	//TJT((@"cancelling autosave timers..."));
+	OFF((@"======================= REDO ======================="));
+	//OFF((@"cancelling autosave timers..."));
 	//[[self document] cancelAndInvalidateAutosaveTimers];
 	[super redo];
 }

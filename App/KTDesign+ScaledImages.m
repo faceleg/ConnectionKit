@@ -46,7 +46,7 @@
 	NSDictionary *typeInfo = [[self defaultMediaUses] objectForKey:anImageName];
 	if ( nil == typeInfo )
 	{
-		TJT((@"imageForKey:%@ unknown key!", anImageName));
+		OFF((@"imageForKey:%@ unknown key!", anImageName));
 		return nil;
 	}
 	return typeInfo;

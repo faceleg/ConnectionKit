@@ -171,7 +171,6 @@
 - (NSSet *)requiredMediaIdentifiers
 {
 	NSString *richTextHTML = [[self delegateOwner] valueForKey:@"richTextHTML"];
-	TJT((@"scanning block for identifiers: \n%@", richTextHTML));
 	NSSet *result = [KTMediaContainer mediaContainerIdentifiersInHTML:richTextHTML];
 	
 	return result;
