@@ -18,15 +18,15 @@
 			name = UpdateDesigns;
 			productName = UpdateDesigns;
 		};
-		3C3E75FA0F1C5F42002E3A9A /* UpdateLicenses */ = {
+		3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateLicenses" */;
+			buildConfigurationList = 3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateInvalidLicenses" */;
 			buildPhases = (
 				3C3E75F90F1C5F42002E3A9A /* ShellScript */,
 			);
 			dependencies = (
 			);
-			name = UpdateLicenses;
+			name = UpdateInvalidLicenses;
 			productName = UpdateLicenses;
 		};
 		3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */ = {
@@ -1170,7 +1170,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3C3E75FA0F1C5F42002E3A9A /* UpdateLicenses */;
+			remoteGlobalIDString = 3C3E75FA0F1C5F42002E3A9A;
 			remoteInfo = UpdateLicenses;
 		};
 		3C42DDAA0D64C8B3004F35FD /* PBXContainerItemProxy */ = {
@@ -5150,7 +5150,7 @@
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
 				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
-				3C3E75FA0F1C5F42002E3A9A /* UpdateLicenses */,
+				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
@@ -6367,7 +6367,7 @@
 		};
 		3C3E76450F1C6B7A002E3A9A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3C3E75FA0F1C5F42002E3A9A /* UpdateLicenses */;
+			target = 3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */;
 			targetProxy = 3C3E76440F1C6B7A002E3A9A /* PBXContainerItemProxy */;
 		};
 		3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */ = {
@@ -7447,7 +7447,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateLicenses" */ = {
+		3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateInvalidLicenses" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C3E75FB0F1C5F42002E3A9A /* Debug */,
