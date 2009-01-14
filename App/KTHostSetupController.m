@@ -415,8 +415,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
     }
     else
     {
-        [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
         [self setValue:[NSNumber numberWithBool:YES] forKey:@"browseHasBadPassword"];
+        [panel closePanel:nil];
     }
 }
 

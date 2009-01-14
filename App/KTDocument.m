@@ -53,6 +53,7 @@
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
+#import "KTHTMLTextBlock.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
@@ -779,7 +780,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		// Yes if:  we are in a block of editable HTML, or if the selected pagelet or page is HTML.
 		
-		if ([self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock.DOMNode"]) return YES;
+		if ([[[[self windowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
 		
 		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
 		if (nil != selPagelet)
