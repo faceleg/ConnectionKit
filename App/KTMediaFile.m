@@ -525,7 +525,7 @@
 	// Generate a scaled URL only if requested
 	if (properties)
 	{
-		KSImageScalingMode mode;
+		KSImageScalingMode mode = KSImageScalingModeAspectFit; // use most common value to avoid warning
 		switch ([settings behavior])
 		{
 			case KTScaleToSize:
@@ -535,7 +535,7 @@
 				mode = KSImageScalingModeFill;
 				break;
 			case KTCropToSize:
-				mode = [settings alignment] + 11;
+				mode = [settings alignment] + 11;  // what the heck is this?
 				break;
 			default:
 				OBASSERT_NOT_REACHED("Unknown scaling behaviour");
