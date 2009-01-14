@@ -64,6 +64,13 @@
 #pragma mark Placeholder
 - (KTMediaContainer *)placeholderImage;
 
+#pragma mark Comments
+- (BOOL)wantsHaloscan;
+- (void)setWantsHaloscan:(BOOL)aBool;
+
+- (BOOL)wantsJSKit;
+- (void)setWantsJSKit:(BOOL)aBool;
+
 @end
 
 

@@ -664,6 +664,28 @@
     }
 }
 
+#pragma mark Comments
+
+- (BOOL)wantsHaloscan
+{
+	return [[self valueForUndefinedKey:@"wantsHaloscan"] boolValue];
+}
+
+- (void)setWantsHaloscan:(BOOL)aBool
+{
+	[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsHaloscan"];
+}
+
+- (BOOL)wantsJSKit
+{
+	return [[self valueForUndefinedKey:@"wantsJSKit"] boolValue];
+}
+
+- (void)setWantsJSKit:(BOOL)aBool
+{
+	[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsJSKit"];
+}
+
 @end
 
 
