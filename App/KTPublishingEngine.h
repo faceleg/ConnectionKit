@@ -23,14 +23,14 @@ enum {
 };
 
 
-@class KTDocumentInfo, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock;
+@class KTSite, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock;
 @protocol KTPublishingEngineDelegate;
 
 
 @interface KTPublishingEngine : NSObject
 {
 @private
-    KTDocumentInfo	*_documentInfo;
+    KTSite	*_site;
     NSString        *_documentRootPath;
     NSString        *_subfolderPath;    // nil if there is no subfolder
     
@@ -49,7 +49,7 @@ enum {
     NSMutableDictionary *_graphicalTextBlocks;
 }
 
-- (id)initWithSite:(KTDocumentInfo *)site
+- (id)initWithSite:(KTSite *)site
   documentRootPath:(NSString *)docRoot
      subfolderPath:(NSString *)subfolder;
 
@@ -58,7 +58,7 @@ enum {
 - (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate;
 
 // Accessors
-- (KTDocumentInfo *)site;
+- (KTSite *)site;
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;

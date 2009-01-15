@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTAbstractElement, KTDocument, KTDocumentInfo, KTManagedObject, KTAbstractPage, KTPage;
+@class KTAbstractElement, KTDocument, KTSite, KTManagedObject, KTAbstractPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
 
@@ -59,8 +59,8 @@
 // returns corresponding KTDocument via sharedDocumentController
 // (document must be open and on-screen)
 
-// return context's DocumentInfo
-- (KTDocumentInfo *)documentInfo;
+// return context's Site
+- (KTSite *)site;
 
 // returns KTManagedObject in context matching criteria 
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray;

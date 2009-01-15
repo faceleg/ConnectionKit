@@ -12,7 +12,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLParser.h"
 #import "KTManagedObject.h"

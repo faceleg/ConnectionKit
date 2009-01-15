@@ -10,7 +10,7 @@
 
 [[if delegate.type==2]]
 	<script type="text/javascript">
-var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.documentInfo.hostProperties.resourcesDirectoryURL]][[else2]][[=delegate.previewResourceDirectory]][[endif2]]";
+var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.site.hostProperties.resourcesDirectoryURL]][[else2]][[=delegate.previewResourceDirectory]][[endif2]]";
 var theme = "[[=&delegate.theme]]";
 var countRequest = false;
 var pcWidth = "[[=delegate.width]]";

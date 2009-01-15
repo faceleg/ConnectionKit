@@ -1,5 +1,5 @@
 //
-//  KTDocumentInfo.h
+//  KTSite.h
 //  Sandvox
 //
 //  Copyright (c) 2005-2008, Karelia Software. All rights reserved.
@@ -29,7 +29,7 @@ typedef enum {
 
 @class KTPage, KTHostProperties;
 
-@interface KTDocumentInfo : KTManagedObject 
+@interface KTSite : KTManagedObject 
 
 - (NSString *)siteID;
 

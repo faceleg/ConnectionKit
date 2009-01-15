@@ -28,7 +28,7 @@
 #import "Macros.h"
 
 // Document
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 // Core Data
 #import "KTManagedObject.h"

@@ -12,7 +12,7 @@
 
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
@@ -52,9 +52,9 @@
 
 #pragma mark .... relationships
 
-/*  This method is no longer public, just there for backwards-compatibility. Use -documentInfo instead.
+/*  This method is no longer public, just there for backwards-compatibility. Use -site instead.
  */
-- (KTPage *)root { return [[self documentInfo] root]; }
+- (KTPage *)root { return [[self site] root]; }
 
 #pragma mark -
 #pragma mark Managers
@@ -77,17 +77,7 @@
 #pragma mark -
 #pragma mark Other
 
-- (KTDocumentInfo *)documentInfo
-{
-    return myDocumentInfo;
-}
-
-- (void)setDocumentInfo:(KTDocumentInfo *)aDocumentInfo
-{
-    [aDocumentInfo retain];
-    [myDocumentInfo release];
-    myDocumentInfo = aDocumentInfo;
-}
+- (KTSite *)site { return _site; }
 
 #pragma mark -
 #pragma mark Publishing
@@ -206,23 +196,23 @@
 {
 	// Selected pages
 	NSIndexSet *outlineSelectedRowIndexSet = [[[[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
-	[[self documentInfo] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
+	[[self site] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
 	
 	
 	// Source Outline width
 	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
-	[[self documentInfo] setInteger:width forKey:@"sourceOutlineSize"];
+	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
 	
 	
 	// Icon size
-	[[self documentInfo] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
+	[[self site] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
 	
 	
 	// Window size
 	NSWindow *window = [[self windowController] window];
 	if (window)
 	{
-		[[self documentInfo] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
+		[[self site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
 }
 
@@ -232,7 +222,7 @@
 - (id)wrappedInheritedValueForKey:(NSString *)aKey
 {
 	OFF((@"WARNING: wrappedInheritedValueForKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
-    id result = [[self documentInfo] valueForKey:aKey];
+    id result = [[self site] valueForKey:aKey];
 	if ( nil == result )
 	{
 		result = [[NSUserDefaults standardUserDefaults] objectForKey:aKey];
@@ -240,11 +230,11 @@
 		{
 			// for now, we're going to specialize support for known entities
 			// in the model that we want to be inheritied.
-			KTDocumentInfo *documentInfo = [self documentInfo];
-//				[documentInfo lockPSCAndMOC];
-			[documentInfo setPrimitiveValue:result forKey:aKey];
-//				[self refreshObjectInAllOtherContexts:(KTManagedObject *)documentInfo];
-//				[documentInfo unlockPSCAndMOC];
+			KTSite *site = [self site];
+//				[site lockPSCAndMOC];
+			[site setPrimitiveValue:result forKey:aKey];
+//				[self refreshObjectInAllOtherContexts:(KTManagedObject *)site];
+//				[site unlockPSCAndMOC];
 		}
 	}
 	return result;
@@ -254,7 +244,7 @@
 {
 	OFF((@"WARNING: setWrappedInheritedValue:forKey: %@ is being called on KTDocument -- is this a property stored in defaults?", aKey));
 
-	[[self documentInfo] setValue:aValue forKey:aKey];
+	[[self site] setValue:aValue forKey:aKey];
 	
 	// we only want to be storing property values in defaults
 	// for now, we're going to specialize support for known entities

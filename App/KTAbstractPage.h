@@ -31,12 +31,11 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTDocumentInfo, KTMaster;
+@class KTSite, KTMaster;
 @class KTHTMLParser;
 
+
 @interface KTAbstractPage : KTAbstractElement
-{
-}
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
@@ -49,7 +48,7 @@ KTCollectionPathStyle;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
 
-- (KTDocumentInfo *)documentInfo;
+- (KTSite *)site;
 
 - (KTMaster *)master;
 

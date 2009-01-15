@@ -11,7 +11,7 @@
 
 #import "KTAbstractPage+Internal.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTExportEngine.h"
 #import "KTExportSavePanelController.h"
 #import "KTHostProperties.h"
@@ -41,7 +41,7 @@
     
     // Start publishing
 	Class publishingEngineClass = [self publishingEngineClass];
-    KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] documentInfo]
+    KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
 																	onlyPublishChanges:YES];
     
     // Bring up UI
@@ -59,7 +59,7 @@
     
     // Start publishing
     Class publishingEngineClass = [self publishingEngineClass];
-    KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] documentInfo]
+    KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
 																	onlyPublishChanges:NO];
     
     // Bring up UI
@@ -88,7 +88,7 @@
  */
 - (BOOL)shouldPublish
 {
-    BOOL result = ([[[[self document] documentInfo] hostProperties] siteURL] != nil);
+    BOOL result = ([[[[self document] site] hostProperties] siteURL] != nil);
     
     if (!result)
     {
@@ -115,11 +115,11 @@
 {
 	Class result = [KTRemotePublishingEngine class];
 	
-	if ([[[[self document] documentInfo] hostProperties] integerForKey:@"localHosting"])
+	if ([[[[self document] site] hostProperties] integerForKey:@"localHosting"])
 	{
 		result = [KTLocalPublishingEngine class];
 	}
-	else if ([[[[[self document] documentInfo] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
+	else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 	{
 		result = [KTMobileMePublishingEngine class];
 	}
@@ -169,7 +169,7 @@
     
     
     // Prompt the user for the site's URL if they haven't been through the HSA.
-    KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
+    KTHostProperties *hostProperties = [[[self document] site] hostProperties];
     if (![hostProperties siteURL] ||
         (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
     {
@@ -181,7 +181,7 @@
     }
     
     
-    NSString *exportDirectoryPath = [[[self document] documentInfo] lastExportDirectoryPath];
+    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
     
     [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
                                  file:[exportDirectoryPath lastPathComponent]
@@ -194,11 +194,11 @@
 
 - (IBAction)exportSiteAgain:(id)sender
 {
-    NSString *exportDirectoryPath = [[[self document] documentInfo] lastExportDirectoryPath];
+    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
     if (exportDirectoryPath)
     {
         // Start publishing
-        KTPublishingEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] documentInfo]
+        KTPublishingEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] site]
                                                                    documentRootPath:exportDirectoryPath
                                                                       subfolderPath:nil];
         
@@ -226,9 +226,9 @@
         // Store the new site URL
         if (returnCode == NSOKButton)
         {
-            KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
+            KTHostProperties *hostProperties = [[[self document] site] hostProperties];
 			[hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
-            [[[[self document] documentInfo] root] recursivelyInvalidateURL:YES];
+            [[[[self document] site] root] recursivelyInvalidateURL:YES];
         }
         
         [savePanel setDelegate:nil];
@@ -243,7 +243,7 @@
     [savePanel orderOut:self];
     
     // Store the path and kick off exporting
-    [[[self document] documentInfo] setLastExportDirectoryPath:[savePanel filename]];
+    [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
     [self exportSiteAgain:self];
 }
 

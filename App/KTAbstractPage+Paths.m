@@ -17,7 +17,7 @@
 #import "Debug.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTMaster.h"
 
@@ -198,7 +198,7 @@
 	
 	if ([self isCollection])
 	{
-		NSString *indexFileName = [[[self documentInfo] hostProperties] valueForKey:@"htmlIndexBaseName"];
+		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
 		OBASSERT([self fileExtension]);
 		result = [indexFileName stringByAppendingPathExtension:[self fileExtension]];
 	}
@@ -223,7 +223,7 @@
 {
 	NSString *result = nil;
     
-    KTDocumentInfo *site = [self documentInfo];
+    KTSite *site = [self site];
 	if (site)
 	{
         result = [[site hostProperties] valueForKey:@"htmlIndexBaseName"];
@@ -239,7 +239,7 @@
 	
 	if ([self isCollection])
 	{
-		NSString *archivesFileName = [[[self documentInfo] hostProperties] valueForKey:@"archivesBaseName"];
+		NSString *archivesFileName = [[[self site] hostProperties] valueForKey:@"archivesBaseName"];
 		OBASSERT([self fileExtension]);
 		result = [archivesFileName stringByAppendingPathExtension:[self fileExtension]];
 	}
@@ -298,7 +298,7 @@
 	NSString *customPath = [self customPathRelativeToSite];
 	if (customPath)
 	{
-		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+		NSURL *siteURL = [[[self site] hostProperties] siteURL];
 		result = [NSURL URLWithString:customPath relativeToURL:siteURL];
 	}
 	else
@@ -306,7 +306,7 @@
 		if ([self isRoot])
 		{
 			// Root is a sepcial case where we just supply the site URL
-			result = [[[self documentInfo] hostProperties] siteURL];
+			result = [[[self site] hostProperties] siteURL];
             
             // The siteURL may not include index.html, so we have to guarantee it here
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])

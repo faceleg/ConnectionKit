@@ -20,7 +20,7 @@
 #import "KTDocWindow.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
@@ -559,7 +559,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	
 	
-	[self setSelectedLevel:[[myAssociatedDocument documentInfo] root]];
+	[self setSelectedLevel:[[myAssociatedDocument site] root]];
 	
 	// Manually synchronize the language popup and field
 	NSString *languageCode = [[[self selectedLevel] master] valueForKey:@"language"];

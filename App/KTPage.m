@@ -112,7 +112,7 @@
 	
 	if ( nil != root )
 	{
-		[root setValue:[aDocument documentInfo] forKey:@"documentInfo"];	// point to yourself
+		[root setValue:[aDocument site] forKey:@"site"];	// point to yourself
 		
 		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
 		[root setBool:YES forKey:@"isCollection"];	// root is automatically a collection
@@ -145,7 +145,7 @@
 	
 	// Attach to parent & other relationships
 	[result setValue:[parent master] forKey:@"master"];
-	[result setValue:[parent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
+	[result setValue:[parent valueForKeyPath:@"site"] forKey:@"site"];
 	[parent addPage:result];	// Must use this method to correctly maintain ordering
 	
 	return result;

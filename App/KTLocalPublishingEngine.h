@@ -15,7 +15,7 @@
 	BOOL    _onlyPublishChanges;
 }
 
-- (id)initWithSite:(KTDocumentInfo *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
+- (id)initWithSite:(KTSite *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
 - (BOOL)onlyPublishChanges;
 
 @end

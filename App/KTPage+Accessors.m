@@ -13,7 +13,7 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
 #import "KTDesign.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocumentController.h"
 #import "KTMediaContainer.h"
 #import "KTPersistentStoreCoordinator.h"
@@ -134,7 +134,7 @@
 	// This may also affect the site menu
 	if ([self includeInSiteMenu])
 	{
-		[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
+		[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 	}
 	
 	// And the index
@@ -208,7 +208,7 @@
 - (void)setIncludeInSiteMenu:(BOOL)include;
 {
 	[self setWrappedBool:include forKey:@"includeInSiteMenu"];
-	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
+	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 }
 
 - (NSString *)menuTitle { return [self wrappedValueForKey:@"menuTitle"]; }

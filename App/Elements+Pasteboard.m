@@ -193,7 +193,7 @@
                                 @"parent", @"archivePages",
                                 @"childIndex",
                                 @"plugins",
-                                @"documentInfo",
+                                @"site",
                                 @"thumbnailMediaIdentifier", @"customSiteOutlineIconIdentifier",
                                 @"isStale",
                                 @"publishedPath", nil];

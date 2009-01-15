@@ -11,7 +11,7 @@
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
@@ -722,7 +722,7 @@
     OBASSERT(oldRoot);
     
     // Migrate simple properties from Root to the Master
-    KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
+    KTSite *newDocInfo = [[self newDocument] site];
     KTPage *newRoot = [newDocInfo root];
     KTMaster *newMaster = [newRoot master];
     
@@ -916,13 +916,13 @@
 - (BOOL)migrateDocumentInfo:(NSError **)error
 {
 	// Retrieve document infos
-    NSArray *docInfos = [[self oldManagedObjectContext] allObjectsWithEntityName:@"DocumentInfo" error:error];
+    NSArray *docInfos = [[self oldManagedObjectContext] allObjectsWithEntityName:@"Site" error:error];
     if (!docInfos) return NO;
     
     NSManagedObject *oldDocInfo = [docInfos firstObjectKS];
     OBASSERT(oldDocInfo);
     
-    KTDocumentInfo *newDocInfo = [[self newDocument] documentInfo];
+    KTSite *newDocInfo = [[self newDocument] site];
     OBASSERT(newDocInfo);
     
     
@@ -933,7 +933,7 @@
     
     // Migrate host properties
     KTStoredDictionary *oldHostProperties = [oldDocInfo valueForKey:@"hostProperties"];
-    KTHostProperties *newHostProperties = [[[self newDocument] documentInfo] hostProperties];
+    KTHostProperties *newHostProperties = [[[self newDocument] site] hostProperties];
     [newHostProperties setValuesForKeysWithDictionary:[oldHostProperties dictionary]];
     
     

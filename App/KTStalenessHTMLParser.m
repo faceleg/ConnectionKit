@@ -9,7 +9,7 @@
 #import "KTStalenessHTMLParser.h"
 #import "KTHTMLParser+Private.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHTMLTextBlock.h"
 #import "NSScanner+Karelia.h"
 
@@ -57,7 +57,7 @@
 				[scanner scanUpToString:@"\"" intoString:&aPagePreviewPath];
 				
 				// Figure the page corresponding to the path and inform the delegate
-				KTPage *page = [[[self currentPage] documentInfo] pageWithPreviewURLPath:aPagePreviewPath];
+				KTPage *page = [[[self currentPage] site] pageWithPreviewURLPath:aPagePreviewPath];
 				if (page)
 				{
 					[self didEncounterKeyPath:@"URL" ofObject:page];
