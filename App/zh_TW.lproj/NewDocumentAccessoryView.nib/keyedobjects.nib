@@ -777,7 +777,7 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>45</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -789,11 +789,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>45</integer>
+					<integer>12</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>12</integer>
+					<integer>10</integer>
 				</dict>
 			</array>
 		</dict>
@@ -820,23 +820,23 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>29</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -850,7 +850,15 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>12</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>59</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -862,15 +870,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>12</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>59</integer>
+					<integer>10</integer>
 				</dict>
 			</array>
 		</dict>
@@ -908,12 +908,12 @@
 				</dict>
 			</array>
 		</dict>
-		<string>Custom View</string>
+		<string>File's Owner</string>
+		<string>Static Text (Home page type:)</string>
+		<string>Application</string>
 		<string>Menu (OtherViews)</string>
 		<string>Popup Button</string>
-		<string>Static Text (Home page type:)</string>
-		<string>File's Owner</string>
-		<string>Application</string>
+		<string>Custom View</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -942,7 +942,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>9</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>12</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>59</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -958,19 +970,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>12</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>59</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>9</integer>
+					<integer>10</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1016,14 +1016,14 @@
 				</dict>
 			</array>
 		</dict>
-		<integer>6</integer>
+		<integer>15</integer>
+		<integer>27</integer>
+		<integer>7</integer>
+		<integer>-3</integer>
 		<integer>20</integer>
 		<integer>11</integer>
 		<integer>9</integer>
-		<integer>7</integer>
-		<integer>27</integer>
-		<integer>-3</integer>
-		<integer>15</integer>
+		<integer>6</integer>
 		<dict>
 			<key>$class</key>
 			<dict>
