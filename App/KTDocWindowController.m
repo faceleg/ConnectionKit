@@ -303,6 +303,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)addChildController:(KTDocViewController *)controller
 {
+    OBPRECONDITION(controller);
     OBPRECONDITION(![controller parentController]); // The controller shouldn't already have a parent
     
     
