@@ -14,7 +14,7 @@
 #import "KTDocumentInfo.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 #import "KTPage.h"
 
 #import "KSPlugin.h"
@@ -133,14 +133,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)setHomePage:(KTPage *)page
 {
     [[self homePage] removeObserver:self forKeyPath:@"master.favicon"];
-    [[self homePage] removeObserver:self forKeyPath:@"master.hasCodeInjection"];
+    [[self homePage] removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
     
     [page retain];
     [myHomePage release];
     myHomePage = page;
     
     [[self homePage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
-    [[self homePage] addObserver:self forKeyPath:@"master.hasCodeInjection" options:0 context:NULL];
+    [[self homePage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
 }
 
 - (void)addPagesObject:(KTPage *)page
@@ -229,7 +229,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		keyPaths = [[NSSet alloc] initWithObjects:@"titleHTML",
 					@"isStale",
-					@"hasCodeInjection",
+					@"codeInjection.hasCodeInjection",
 					@"isDraft",
 					@"customSiteOutlineIcon",
 					@"index", nil];
@@ -561,10 +561,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[cell setDraft:isDraft];
 		
 		// Code Injection
-		[cell setHasCodeInjection:[page hasCodeInjection]];
+		[cell setHasCodeInjection:[[page codeInjection] hasCodeInjection]];
 		if ([page isRoot] && ![cell hasCodeInjection])
 		{
-			[cell setHasCodeInjection:[[page master] hasCodeInjection]];
+			[cell setHasCodeInjection:[[[page master] codeInjection] hasCodeInjection]];
 		}
 		
 		// Home page is drawn slightly differently

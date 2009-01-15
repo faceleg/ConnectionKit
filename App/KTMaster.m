@@ -6,7 +6,7 @@
 //  Copyright 2007 Karelia Software. All rights reserved.
 //
 
-#import "KTMaster.h"
+#import "KTMaster+Internal.h"
 
 #import "KT.h"
 #import "KTAppDelegate.h"
@@ -46,22 +46,6 @@
 #pragma mark -
 #pragma mark Initialization
 
-+ (void)initialize
-{
-	// Site Outline
-	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
-											@"codeInjectionBodyTag",
-											@"codeInjectionBodyTagEnd",
-											@"codeInjectionBodyTagStart",
-											@"codeInjectionEarlyHead",
-											@"codeInjectionHeadArea", nil]
-		triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
-	
-	
-	//[self setKeys:[NSArray arrayWithObject:@"designPublishingInfo"]
-	//	triggerChangeNotificationsForDependentKey:@"design"];
-}
-
 - (void)awakeFromInsert
 {
 	[super awakeFromInsert];
@@ -79,6 +63,12 @@
 	
 	// Timestamp
 	[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
+    
+    
+    // Code Injection
+    KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"MasterCodeInjection"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
 - (void)awakeFromFetch
@@ -528,6 +518,14 @@
 }
 
 #pragma mark -
+#pragma mark Site Outline
+
+- (KTCodeInjection *)codeInjection
+{
+    return [self wrappedValueForKey:@"codeInjection"];
+}
+
+#pragma mark -
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager
@@ -553,34 +551,6 @@
 	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
 	
 	return result;
-}
-
-#pragma mark -
-#pragma mark Code Injection
-
-- (BOOL)hasCodeInjection
-{
-	NSString *aCodeInjection;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBeforeHTML"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTag"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTagEnd"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTagStart"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionEarlyHead"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionHeadArea"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	return NO;
 }
 
 #pragma mark -

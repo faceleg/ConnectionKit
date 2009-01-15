@@ -10,6 +10,9 @@
 #import "KTMaster.h"
 
 
+@class KTCodeInjection;
+
+
 @interface KTMaster (Internal)
 
 - (KTDesign *)design;
@@ -22,5 +25,8 @@
 #pragma mark CSS
 - (NSData *)publishedDesignCSSDigest;
 - (void)setPublishedDesignCSSDigest:(NSData *)digest;
+
+#pragma mark Site Outline
+- (KTCodeInjection *)codeInjection;
 
 @end

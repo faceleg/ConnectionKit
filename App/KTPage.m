@@ -67,16 +67,6 @@
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
     
 	
-	// Site Outline
-	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
-											@"codeInjectionBodyTag",
-											@"codeInjectionBodyTagEnd",
-											@"codeInjectionBodyTagStart",
-											@"codeInjectionEarlyHead",
-											@"codeInjectionHeadArea", nil]
-		triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
-	
-	
 	// this is so we get notification of updaates to any properties that affect index type.
 	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
 	[self setKeys:[NSArray arrayWithObjects:
@@ -213,7 +203,8 @@
 - (void)awakeFromInsert
 {
 	[super awakeFromInsert];
-		
+	
+	
 	// attributes
 	NSDate *now = [NSDate date];
 	[self setValue:now forKey:@"creationDate"];
@@ -224,6 +215,12 @@
     {
         [self setValue:maxTitles forKey:@"collectionSummaryMaxPages"];
     }
+    
+    
+    // Code Injection
+    KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"PageCodeInjection"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert

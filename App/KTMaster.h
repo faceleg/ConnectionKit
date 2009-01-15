@@ -27,8 +27,6 @@
 @class KTMediaContainer;
 
 @interface KTMaster : KTManagedObject 
-{
-}
 
 - (NSString *)siteTitleText;
 - (void)setSiteTitleHTML:(NSString *)value;
@@ -57,8 +55,6 @@
 
 #pragma mark Language
 - (NSString *)language;
-
-- (BOOL)hasCodeInjection;
 
 #pragma mark Placeholder
 - (KTMediaContainer *)placeholderImage;

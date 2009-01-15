@@ -573,29 +573,9 @@
 	return result;
 }
 
-- (BOOL)hasCodeInjection
+- (KTCodeInjection *)codeInjection
 {
-	NSString *aCodeInjection;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBeforeHTML"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTag"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTagEnd"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionBodyTagStart"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionEarlyHead"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	aCodeInjection = [self valueForKey:@"codeInjectionHeadArea"];
-	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
-	
-	return NO;
+    return [self wrappedValueForKey:@"codeInjection"];
 }
 
 #pragma mark -
