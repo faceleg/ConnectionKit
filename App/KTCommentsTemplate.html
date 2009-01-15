@@ -28,7 +28,7 @@
 [[else4]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable Haloscan comments you need to enter your ID into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable Haloscan comments you need to enter your Haloscan ID into the Site Inspector]]</p>
 									</div>
 [[endif5]]
 [[endif4]]
@@ -39,10 +39,23 @@
 									<script src="http://js-kit.com/comments.js"></script>
 									[[else4]]
 									<div class="comments">
-									[[`JS-Kit Comments]]
+										<p>[[`JS-Kit Comments]]</p>
+									</div>
 									[[endif4]]
 [[endif3]]
 
 									<!-- comments -->
+[[endif2]]
+[[endif]]
+
+[[if allowComments]]
+[[if master.wantsJSKit]]
+[[else2]]
+[[if master.wantsHaloscan]]
+[[else3]]
+									<div class="comments">
+										<p style="color:red;">[[`To enable comments you need to choose a provider in the Site Inspector]]</p>
+									</div>
+[[endif3]]
 [[endif2]]
 [[endif]]
