@@ -444,11 +444,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithInt:0], @"collectionMaxIndexItems",
 								@"", @"headerImageDescription",
 
-		@"", @"insertPrelude",
-		@"", @"insertHead",
-		@"", @"insertBody",
-		@"", @"insertEndBody",
-		
 		[NSNumber numberWithBool:YES], @"propagateInsertPrelude",
 		[NSNumber numberWithBool:YES], @"propagateInsertHead",
 		[NSNumber numberWithBool:YES], @"propagateInsertBody",
