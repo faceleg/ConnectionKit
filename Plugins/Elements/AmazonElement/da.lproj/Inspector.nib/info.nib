@@ -6,8 +6,6 @@
 	<string>58 8 356 240 0 0 1680 1028 </string>
 	<key>IBEditorPositions</key>
 	<dict>
-		<key>227</key>
-		<string>58 253 203 111 0 0 1680 1028 </string>
 		<key>356</key>
 		<string>58 253 189 111 0 0 1680 1028 </string>
 		<key>7</key>
@@ -20,7 +18,7 @@
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBSystem Version</key>
-	<string>9F33</string>
+	<string>9G55</string>
 	<key>IBUsesTextArchiving</key>
 	<true/>
 	<key>targetFramework</key>
