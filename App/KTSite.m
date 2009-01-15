@@ -334,12 +334,12 @@
 
 - (NSString *)lastExportDirectoryPath
 {
-    return [self valueForUndefinedKey:@"lastExportDirectoryPath"];
+    return [self wrappedValueForKey:@"lastExportDirectoryPath"];
 }
 
 - (void)setLastExportDirectoryPath:(NSString *)path
 {
-    [self setValue:path forUndefinedKey:@"lastExportDirectoryPath"];
+    [self setWrappedValue:path forKey:@"lastExportDirectoryPath"];
 }
 
 
