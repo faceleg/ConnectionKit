@@ -73,7 +73,7 @@
 
 - (NSString *)domainNameDashes
 {
-	NSString *result = @"";
+	NSString *result = @"host-not-yet-set";	// we need to have some string here for the ID
     
     NSURL *siteURL = [self siteURL];
     if (siteURL)

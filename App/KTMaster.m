@@ -191,7 +191,7 @@
 - (NSString *)defaultCopyrightHTML
 {
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"copyrightHTML" language:[self valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"<p>Parting Words (copyright, contact information, etc.)</p>", @"Default text for page bottom")];
+		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"Parting Words (copyright, contact information, etc.)", @"Default text for page bottom")];
 	return result;
 }
 
