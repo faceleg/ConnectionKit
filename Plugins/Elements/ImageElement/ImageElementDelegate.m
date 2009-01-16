@@ -389,7 +389,7 @@
 #pragma mark -
 #pragma mark RSS Feed
 
-- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page
+- (NSArray *)XpageWillReturnFeedEnclosures:(KTPage *)page
 {
 	NSArray *result = nil;
 	
