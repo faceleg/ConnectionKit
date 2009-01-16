@@ -342,7 +342,6 @@
 		27E3F8340D9C34B000A64154 /* KTDataMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */; };
 		27E4CFF20EC30B6F000E85DD /* KSSilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE00EC30B6F000E85DD /* KSSilencingWarningSheet.nib */; };
 		27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */; };
-		27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */; };
 		27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */; };
 		27E4CFF60EC30B6F000E85DD /* KSFeedback.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE80EC30B6F000E85DD /* KSFeedback.nib */; };
 		27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */; };
@@ -5511,7 +5510,6 @@
 				CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */,
 				27E4CFF20EC30B6F000E85DD /* KSSilencingWarningSheet.nib in Resources */,
 				27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */,
-				27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */,
 				27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */,
 				27E4CFF60EC30B6F000E85DD /* KSFeedback.nib in Resources */,
 				27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */,
