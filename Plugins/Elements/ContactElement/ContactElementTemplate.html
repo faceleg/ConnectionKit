@@ -201,7 +201,7 @@ function dofocus[[=uniqueID]](anInput) {
 [[endForEach]]
 	</p>
 [[endif2]]
-	
+	<div class="hidden">
 		<!-- CSS URL -->
 		<input type="hidden" name="a" id="contact[[=uniqueID]]-a" value="[[=&delegate.CSSURLs]]" />
 		<!-- Site Title -->
@@ -213,6 +213,7 @@ function dofocus[[=uniqueID]](anInput) {
 		<!-- Copy to sender -->
 		<input type="hidden" name="c" id="contact[[=uniqueID]]-c" value="yes" />
 		[[endif2]]
+	</div>
 </form>
 <div style='text-align:center;' id="contact[[=uniqueID]]-results"></div>
 
