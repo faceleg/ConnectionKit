@@ -150,6 +150,14 @@
             CLASS = NSWindow;
             LANGUAGE = ObjC;
             SUPERCLASS = NSResponder;
+        },
+                {
+            ACTIONS =             {
+                hideWindow = id;
+            };
+            CLASS = NSWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
         }
     );
     IBVersion = 1;
