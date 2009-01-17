@@ -1027,7 +1027,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	myRemotePath = [dirPath copy];
 	// Upload file ... same as in connection:didConnectToHost:
 	NSString *remoteFile = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
-	[myTestConnection uploadFile:myTemporaryTestFilePath toFile:remoteFile];
+	[myTestConnection uploadFile:myTemporaryTestFilePath toFile:remoteFile checkRemoteExistence:NO delegate:nil];
 	
 	if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 	{
