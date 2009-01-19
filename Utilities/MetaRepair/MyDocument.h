@@ -3,7 +3,7 @@
 //  MetaRepair
 //
 //  Created by Terrence Talbot on 11/29/07.
-//  Copyright Karelia Software 2007 . All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 

@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 05/03/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	A subclass of TrimmedStringFormatter. The standard trimming
 //	behaviour is extended. The formatter tests if the entered string

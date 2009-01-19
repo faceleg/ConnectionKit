@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 10/01/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Category on NSURL for retrieving Amazon information from a URL.
 

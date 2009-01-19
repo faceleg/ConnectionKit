@@ -2,7 +2,7 @@
 //  FlickrPageletDelegate.m
 //  FlickrPagelet
 //
-//  Copyright (c) 2006-2008, Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:

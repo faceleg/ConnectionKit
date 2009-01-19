@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 10/01/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Represents an Amazon list as viewed in the Inspector. Contains an array of
 //	products (APAutomaticListProduct) and the various properties of the list.
