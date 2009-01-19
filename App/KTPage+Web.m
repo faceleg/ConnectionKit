@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Dan Wood on 8/9/05.
-//  Copyright (c) 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPage+Internal.h"

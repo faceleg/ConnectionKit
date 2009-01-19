@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/17/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "NSDocumentController+KTExtensions.h"

@@ -2,7 +2,7 @@
 //  KTHTMLParser.m
 //  KTComponents
 //
-//  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTHTMLParser+Private.h"

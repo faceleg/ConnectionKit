@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 07/12/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

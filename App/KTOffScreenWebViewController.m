@@ -2,7 +2,7 @@
 //  KTOffScreenWebViewController.m
 //  KTComponents
 //
-//  Copyright (c) 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 // Some of this logic is adapted from techniques courtesy of xenon of colloquy,

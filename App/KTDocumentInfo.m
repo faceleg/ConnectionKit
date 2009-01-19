@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/21/05.
-//  Copyright 2005 Karelia Software. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDocumentInfo.h"

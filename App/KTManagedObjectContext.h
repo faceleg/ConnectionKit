@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 11/14/06.
-//  Copyright 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

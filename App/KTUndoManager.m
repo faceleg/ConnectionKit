@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 5/1/06.
-//  Copyright 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTUndoManager.h"

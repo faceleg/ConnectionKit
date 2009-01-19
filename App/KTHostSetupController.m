@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/10/04.
-//  Copyright 2004 Biophony, LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 /*
@@ -1131,7 +1131,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[myTestConnection deleteFile:file];
 }
 
-/*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to biophony.
+/*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to our server.
 */
 - (void)connection:(id <AbstractConnectionProtocol>)con didDeleteFile:(NSString *)path
 {

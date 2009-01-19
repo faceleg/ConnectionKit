@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 24/09/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //
 //	Represents an object that was parsed with an HTML template to form a portion of a page's HTML.

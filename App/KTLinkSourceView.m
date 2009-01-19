@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Greg Hulands on 20/03/06.
-//  Copyright 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTLinkSourceView.h"

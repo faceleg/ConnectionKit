@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 10/20/04.
-//  Copyright 2004 Biophony, LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDraggingInfo.h"
