@@ -98,6 +98,10 @@
         }
         
         result = [buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIIUnderlineCharacterSet]];
+		if ([result hasSuffix:@"_"])
+		{
+			result = [result substringWithRange:NSMakeRange(0,[result length]-1)];
+		}
     }
     
     return result;
