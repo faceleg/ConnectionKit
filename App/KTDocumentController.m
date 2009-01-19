@@ -157,14 +157,21 @@
 	NSView *view = [oNewDocAccessoryView superview];		// we want this to be ABOVE the accessory view.
 	[view addSubview:helpButton];
 	
-	NSSet *pagePlugins = [KTElementPlugin pagePlugins];
+    
+    // Offer all available page types except External Link and File Download. BUGSID:38542
+	NSMutableSet *pagePlugins = [[KTElementPlugin pagePlugins] mutableCopy];
+    [pagePlugins removeObject:[KSPlugin pluginWithIdentifier:@"sandvox.DownloadElement"]];
+    [pagePlugins removeObject:[KSPlugin pluginWithIdentifier:@"sandvox.LinkElement"]];
+    
 	[KTElementPlugin addPlugins:pagePlugins
 						 toMenu:[oNewDocHomePageTypePopup menu]
 						 target:nil
 						 action:nil
 					  pullsDown:NO
 					  showIcons:YES smallIcons:YES smallText:NO];
-	
+	[pagePlugins release];
+    
+    
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
 	if (saveResult == NSFileHandlingPanelCancelButton) {
 		if (outError)
