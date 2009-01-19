@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 02/03/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Cocoa bindings don't play well with our product tables since
 //	we need one cell to display multiple properties of an object.

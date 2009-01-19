@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 02/03/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import "APProductsArrayController.h"

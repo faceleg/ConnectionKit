@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 02/01/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	A subclass of APAmazonProduct can load its product details from Amazon
 //	Posts NSNotifcations whenever any product properties change
