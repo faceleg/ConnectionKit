@@ -1093,7 +1093,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSURLRequest *theRequest
 		=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:fullURLString]
 							 cachePolicy:NSURLRequestReloadIgnoringCacheData
-						 timeoutInterval:10.0];
+						 timeoutInterval:20.0];
 	// create the connection with the request and start loading the data
 	[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
 	NSURLConnection *theConnection=[NSURLConnection connectionWithRequest:theRequest delegate:self];
@@ -2215,7 +2215,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSURLRequest *theRequest
 				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
 									 cachePolicy:NSURLRequestReloadIgnoringCacheData
-								 timeoutInterval:10.0];
+								 timeoutInterval:20.0];
 				// create the connection with the request and start loading the data
 				theConnection=[NSURLConnection connectionWithRequest:theRequest delegate:self];
 			}

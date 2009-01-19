@@ -44,7 +44,7 @@
 	[[oWebView mainFrame] loadRequest:
 	 [NSURLRequest requestWithURL:[self URLToLoad]
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
-				  timeoutInterval:10.0]];
+				  timeoutInterval:20.0]];
     
 	[[self window] setTitle:NSLocalizedString(@"Sandvox Release Notes", "Release Notes Window Title")];
     [[self window] setFrameAutosaveName:@"ReleaseNotesWindow"];    
