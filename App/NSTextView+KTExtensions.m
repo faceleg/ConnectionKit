@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 4/13/07.
-//  Copyright (c) 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 // Based on the guts of UKSyntaxColoredTextDocument by Uli K.

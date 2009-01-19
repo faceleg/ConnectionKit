@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/2/08.
-//  Copyright 2008 Karelia Software. All rights reserved.
+//  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDocSiteOutlineController.h"

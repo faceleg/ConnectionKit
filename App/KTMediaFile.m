@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 05/11/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTMediaFile+Internal.h"

@@ -2,7 +2,7 @@
 //  KTAppDelegate.m
 //  Marvel
 //
-//  Copyright (c) 2004-2008 Karelia Software. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 /*

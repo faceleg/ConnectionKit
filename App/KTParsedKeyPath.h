@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 22/09/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //
 //	Represents a keypath that was parsed while building a page's HTML.

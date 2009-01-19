@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 4/15/08.
-//  Copyright 2008 Karelia Software. All rights reserved.
+//  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
 // works in conjunction with KTDocWebViewController+Refreshing.m refreshWebViewComponent:

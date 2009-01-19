@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 16/09/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //
 //	This portion of the webview controller handles the loading and updating of content inside the webview.

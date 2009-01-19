@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 05/12/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Provides access to various paths and URLs describing how to get to the page.
 //	All methods have 1 of 3 prefixes:

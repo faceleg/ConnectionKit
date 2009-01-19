@@ -2,7 +2,7 @@
 //  KTDocWindowController+Toolbar.m
 //  Marvel
 //
-//  Copyright (c) 2004-2005 Biophony, LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 /*
@@ -43,7 +43,7 @@ TO DO:
 
 @end
 
-// NB: there's about two-thirds the work here to make this a separate controller for BiophonyAppKit
+// NB: there's about two-thirds the work here to make this a separate controller
 //  it needs a way to define views that aren't app specific, should all be doable via xml
 //  for "standard" controls, like an RYZImagePopUpButton
 

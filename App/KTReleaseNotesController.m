@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/6/06.
-//  Copyright 2006 Biophony LLC. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 #import <Cocoa/Cocoa.h>
 #import "KTReleaseNotesController.h"

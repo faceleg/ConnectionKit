@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 23/10/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTMaster.h"
