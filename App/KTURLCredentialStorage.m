@@ -30,11 +30,7 @@
 	// Query the standard API first
 	NSURLCredential *result = [[[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:space] objectForKey:user];
 	
-	if (!result &&
-		![[space protocol] isEqualToString:@"http"] &&
-		![[space protocol] isEqualToString:@"https"] &&
-		![[space protocol] isEqualToString:@"ftp"] &&
-		![[space protocol] isEqualToString:@"ftps"])
+	if (!result)
 	{
 		OBASSERT(user);
 		OBASSERT(![user isEqualToString:@""]);

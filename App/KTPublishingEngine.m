@@ -494,6 +494,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
+    
+    if ([self hasFinished]) return; // Engine may be cancelled mid-parse. If so, go no further.
 	
 	NSString *charset = [[masterPage master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];
@@ -647,7 +649,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
-    if (upload)
+    // It's possible for the connection to be cancelled mid-parse. If so, just ignore the media
+    if (upload && ![self hasFinished])
 	{
 		[self uploadMediaIfNeeded:upload];
 	}
