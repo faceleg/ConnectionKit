@@ -8,7 +8,7 @@ echo "assembling help out of the cleaned up help in ~/wiki.working"
 FILESOURCE=~/wikidownload/wiki.working
 
 
-HELPDEST="${SANDVOXTRUNK}/App/Sandvox Help"
+HELPDEST="${SANDVOXCURRENT}/App/Sandvox Help"
 
 # we put the help files into "z" folder so they are all together
 HELPFILEDEST=${HELPDEST}/z
