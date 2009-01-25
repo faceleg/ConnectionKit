@@ -14,6 +14,7 @@
 #import "KTSite.h"
 #import "KTExportEngine.h"
 #import "KTExportSavePanelController.h"
+#import "KTHostSetupWindowController.h"
 #import "KTHostProperties.h"
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
@@ -245,6 +246,17 @@
     // Store the path and kick off exporting
     [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
     [self exportSiteAgain:self];
+}
+
+#pragma mark -
+#pragma mark Host Setup
+
+/*  This overrides KTDocument's implementation
+ */
+- (IBAction)setupHost:(id)sender
+{
+    NSWindowController *controller = [[KTHostSetupWindowController alloc] initWithWindowNibName:@"ConnectionTest"];
+    [NSApp beginSheet:[controller window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:NULL];
 }
 
 @end
