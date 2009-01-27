@@ -354,8 +354,8 @@
 {
 	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];
 	NSDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
-	? [self wrappedValueForKey:@"lastModificationDate"]
-	: [self wrappedValueForKey:@"creationDate"];
+	? [self valueForKey:@"lastModificationDate"]
+	: [self valueForKey:@"creationDate"];
 	
 	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
 	[formatter setDateStyle:aStyle]; 
