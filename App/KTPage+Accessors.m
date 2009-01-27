@@ -128,9 +128,6 @@
 	}
 	
 	
-	// By toggling draft status, the site structure must have changed
-	[self postSiteStructureDidChangeNotification];
-	
 	// This may also affect the site menu
 	if ([self includeInSiteMenu])
 	{

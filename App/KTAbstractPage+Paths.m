@@ -340,8 +340,6 @@
 	[self willChangeValueForKey:@"URL"];
 	[self setPrimitiveValue:nil forKey:@"URL"];
 	
-	[self postSiteStructureDidChangeNotification];
-	
 	[self didChangeValueForKey:@"URL"];
 }
 

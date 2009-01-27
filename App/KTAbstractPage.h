@@ -34,13 +34,12 @@ KTCollectionPathStyle;
 @class KTDocumentInfo, KTMaster;
 @class KTHTMLParser;
 
+
 @interface KTAbstractPage : KTAbstractElement
-{
-}
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
-+ (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC;
++ (id)pageWithUniqueID:(NSString *)pageID inManagedObjectContext:(NSManagedObjectContext *)MOC;
 
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 
@@ -68,9 +67,6 @@ KTCollectionPathStyle;
 - (NSData *)publishedDataDigest;
 - (void)setPublishedDataDigest:(NSData *)digest;
 
-
-// Notifications
-- (void)postSiteStructureDidChangeNotification;
 
 @end
 

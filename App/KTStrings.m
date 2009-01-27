@@ -62,7 +62,6 @@ NSString *kKTDesignExtension = @"svxDesign";
 NSString *kKTDesignChangedNotification = @"kKTDesignChangedNotification";
 NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
 NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
-NSString *kKTSiteStructureDidChangeNotification = @"KTSiteStructureDidChangeNotification";
 
 // Site Publication
 NSString *kKTDefaultMediaPath = @"_Media";

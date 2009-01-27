@@ -120,17 +120,6 @@
 #pragma mark -
 #pragma mark Title
 
-/*	We supplement superclass behaviour by implementing page-specific actions
- */
-- (void)setTitleHTML:(NSString *)value
-{
-	[super setTitleHTML:value];
-	
-	
-	// The site structure has changed as a result of this
-	[self postSiteStructureDidChangeNotification];
-}
-
 // For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle
 {
@@ -273,17 +262,6 @@
 - (void)setPublishedDataDigest:(NSData *)digest
 {
     [self setValue:digest forUndefinedKey:@"publishedDataDigest"];
-}
-
-#pragma mark -
-#pragma mark Notifications
-
-/*	A convenience method for posting the kKTSiteStructureDidChangeNotification
- */
-- (void)postSiteStructureDidChangeNotification;
-{
-	KTDocumentInfo *site = [self valueForKey:@"documentInfo"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTSiteStructureDidChangeNotification object:site];
 }
 
 @end

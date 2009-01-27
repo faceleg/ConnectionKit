@@ -120,7 +120,6 @@ extern NSString *kKTDesignExtension;
 extern NSString *kKTDesignChangedNotification;
 extern NSString *kKTInfoWindowMayNeedRefreshingNotification; // not currently used
 extern NSString *kKTItemSelectedNotification;
-extern NSString *kKTSiteStructureDidChangeNotification;
 
 // Site Outline
 extern NSString *kKTSelectedObjectsKey;
