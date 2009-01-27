@@ -953,6 +953,7 @@
 		CEBCFEFE0DB909E4001BF0DF /* arrow_grey_up.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */; };
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
+		CEC378F70F2FBC1A004CC936 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
 		CEC3B5130BA9107A006DA002 /* KTTranscript.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3B5120BA9107A006DA002 /* KTTranscript.nib */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
@@ -6288,6 +6289,7 @@
 				2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */,
 				2774E39A0F16D9EF0085A4D8 /* KTHTMLParser+Media.m in Sources */,
 				27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */,
+				CEC378F70F2FBC1A004CC936 /* KSPluginInstallerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
