@@ -75,11 +75,6 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 	[[self pageDetailsPanel] setBorderMask:(NTBoxRight | NTBoxBottom)];
 	
 	
-	// Meta description field needs the right font
-	NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
-	[oMetaDescriptionField setFont:font];
-	
-	
 	// Observe changes to the meta description and fake an initial observation
 	[oPagesController addObserver:self
 					   forKeyPath:@"selection.metaDescription"
@@ -194,10 +189,9 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 
 /*	Sent when the user is typing in the meta description box.
  */
-- (void)textDidChange:(NSNotification *)aNotification
+- (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	NSText *text = [aNotification object];	OBASSERT(text);
-	NSString *newMetaDescription = [text string]; // Do NOT try to modify this string!
+	NSString *newMetaDescription = [(NSTextField *)[aNotification object] stringValue]; // Do NOT try to modify this string!
 	[self metaDescriptionDidChangeToValue:newMetaDescription];
 }
  

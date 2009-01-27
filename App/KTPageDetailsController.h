@@ -19,7 +19,6 @@
 	IBOutlet NSTokenField			*oKeywordsField;
 	IBOutlet KSPopUpButton			*oFileExtensionPopup;
 	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
-	IBOutlet NSTextView				*oMetaDescriptionField;
 	
 	IBOutlet NSObjectController	*oPagesController;
 	
