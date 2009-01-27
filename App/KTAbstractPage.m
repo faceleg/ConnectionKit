@@ -127,41 +127,6 @@
 	return result;
 }
 
-
-#pragma mark -
-#pragma mark meta description
-
-#define MAX_META_DESCRIPTION_LENGTH 156
-
-- (int) metaDescriptionCountdown
-{
-	int len = [[self valueForKey:@"metaDescription"] length];
-	return MAX_META_DESCRIPTION_LENGTH - len;
-}
-
-
-#define META_DESCRIPTION_WARNING_ZONE 10
-
-
-
-- (NSColor *)metaDescriptionCharCountColor
-{
-	// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
-	// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
-	int len = [[self valueForKey:@"metaDescription"] length];
-	int bottom = MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE + 1;	// 147
-	int howBad = len - bottom;
-	howBad = MAX(howBad, 0);
-	howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
-	float howRed = 0.1 * howBad;
-	
-//	NSLog(@"%d make it %.2f red", len, howRed);
-	
-	NSColor *newColor = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
-	return newColor;
-}
-
-
 #pragma mark -
 #pragma mark HTML
 
@@ -235,6 +200,19 @@
 {
     SUBCLASSMUSTIMPLEMENT;
     return YES;
+}
+
+#pragma mark -
+#pragma mark Meta tags
+
+- (NSString *)metaDescription
+{
+	return [self valueForUndefinedKey:@"metaDescription"];
+}
+
+- (void)setMetaDescription:(NSString *)description
+{
+	[self setValue:description forUndefinedKey:@"metaDescription"];
 }
 
 #pragma mark -

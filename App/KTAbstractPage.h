@@ -60,6 +60,10 @@ KTCollectionPathStyle;
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 - (BOOL)isXHTML;
 
+// Meta tags
+- (NSString *)metaDescription;
+- (void)setMetaDescription:(NSString *)description;
+
 // Staleness
 - (BOOL)isStale;
 - (void)setIsStale:(BOOL)stale;
