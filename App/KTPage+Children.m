@@ -449,7 +449,7 @@
             result = [parentPath indexPathByAddingIndex:index];
         }
 	}
-	else
+	else if ([self isRoot])
 	{
 		result = [NSIndexPath indexPathWithIndex:0];
 	}
