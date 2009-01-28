@@ -954,6 +954,8 @@
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
 		CEC378F70F2FBC1A004CC936 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
+		CEC3796D0F2FD004004CC936 /* SlideshowPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC3796C0F2FD004004CC936 /* SlideshowPlay.png */; };
+		CEC37B490F2FDEA3004CC936 /* LeopardStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27E630310EC306940044ED36 /* LeopardStuff.bundle */; };
 		CEC3B5130BA9107A006DA002 /* KTTranscript.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3B5120BA9107A006DA002 /* KTTranscript.nib */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
@@ -1530,6 +1532,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
+		};
+		CEC37A620F2FDCC2004CC936 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = LeopardStuff;
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2578,6 +2587,7 @@
 		CEBCFEFA0DB909E4001BF0DF /* arrow_grey_down.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_down.pdf; sourceTree = "<group>"; };
 		CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_up.pdf; sourceTree = "<group>"; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
+		CEC3796C0F2FD004004CC936 /* SlideshowPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SlideshowPlay.png; sourceTree = "<group>"; };
 		CEC3B5120BA9107A006DA002 /* KTTranscript.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KTTranscript.nib; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
@@ -3497,6 +3507,7 @@
 		3C202F0A07E0126400DE4994 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CEC3796C0F2FD004004CC936 /* SlideshowPlay.png */,
 				CEBCFD100DB9067A001BF0DF /* Unused-Experimental */,
 				CE7230E90D85D5BB00E9C592 /* syringe.tiff */,
 				CEBCFD130DB90690001BF0DF /* NSImageNamed Replacements */,
@@ -4946,6 +4957,7 @@
 				270B641E0F0ED64100F6E076 /* PBXTargetDependency */,
 				27E4D4530EC30D04000E85DD /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
+				CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5442,6 +5454,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC37B490F2FDEA3004CC936 /* LeopardStuff.bundle in Resources */,
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				CE9DFF5409FD4E6A00007D04 /* DebugTable.nib in Resources */,
 				3C202E8807E00EE800DE4994 /* HostSetup.nib in Resources */,
@@ -5625,6 +5638,7 @@
 				27AE758D0EEE9D8000409D80 /* Publishing.nib in Resources */,
 				27AE75C80EEEB12D00409D80 /* error.png in Resources */,
 				27AE75C90EEEB12D00409D80 /* finished.png in Resources */,
+				CEC3796D0F2FD004004CC936 /* SlideshowPlay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6516,6 +6530,11 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+		};
+		CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LeopardStuff;
+			targetProxy = CEC37A620F2FDCC2004CC936 /* PBXContainerItemProxy */;
 		};
 		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
