@@ -186,29 +186,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
 {
-// TODO: load a dictionary from the 
-	NSArray *designs = nil; // [nil objectForKey:@"Designs"];
-	NSImage *designImage = [NSImage imageNamed:@"designPlaceholder"];
-	float scaleFactor = [controller scaleFactor];
-	
-	NSMutableArray *list = [NSMutableArray array];
-	
-	//  install (bool), icon (image), title, InfoHTML,
-	NSEnumerator *theEnum = [designs objectEnumerator];
-	NSDictionary *theDict;
-
-	while ((theDict = [theEnum nextObject]) != nil)
-	{
-		NSMutableDictionary *adjustedDict = [controller adjustedDictionaryFromDictionary:theDict
-																			 placeholder:designImage
-																					size:NSMakeSize(100.0 * scaleFactor,65.0 * scaleFactor)
-																				  radius:scaleFactor * 6.0];
-		if (adjustedDict)
-		{
-			[list addObject:adjustedDict];
-		}
-	}
-	return list;
+	return nil;
 }
 
 
