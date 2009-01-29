@@ -289,7 +289,11 @@
 	
 	NSNumber *viewport = [[self bundle] objectForInfoDictionaryKey:@"viewport"];
 	if (viewport) {
-		result = [viewport unsignedIntValue];
+		unsigned probablyResult = [viewport unsignedIntValue];
+		if (probablyResult > 100)
+		{
+			result = probablyResult;
+		}
 	}
 	
 	return result;
