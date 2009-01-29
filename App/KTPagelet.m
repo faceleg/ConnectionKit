@@ -203,13 +203,6 @@
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
 
-/*!	Pass on messages to set modification data of a pagelet to its containing page, who really cares
- */
-- (void)setLastModificationDate:(NSDate *)value 
-{
-	[[self page] setWrappedValue:value forKey:@"lastModificationDate"];
-}
-
 #pragma mark -
 #pragma mark Page
 

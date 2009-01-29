@@ -310,6 +310,32 @@
 }
 
 #pragma mark -
+#pragma mark Dates
+
+/*  When updating one of the plug-in's properties, also update the modification date
+ */
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    [super setValue:value forUndefinedKey:key];
+    
+    
+    static NSSet *excludedKeys;
+    if (!excludedKeys)
+    {
+        excludedKeys = [[NSSet alloc] initWithObjects:
+                        @"shouldUpdateFileNameWhenTitleChanges",
+                        @"metaDescription",
+                        @"publishedDataDigest",
+                        nil];
+    }
+    
+    if (![excludedKeys containsObject:key])
+    {
+        [self setValue:[NSDate date] forKey:@"lastModificationDate"];
+    }
+}
+
+#pragma mark -
 #pragma mark Master
 
 - (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
