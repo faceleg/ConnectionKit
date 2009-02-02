@@ -230,14 +230,18 @@
     
     
 	KTImageScalingSettings *scalingSettings = [scalingProps objectForKey:@"scalingBehavior"];
-	if (scalingProps && !([scalingSettings behavior] == KTScaleByFactor && [scalingSettings scaleFactor] == 1.0))
+	NSString *fileType = [scalingProps objectForKey:@"fileType"];
+    
+    if (scalingProps &&
+            !([scalingSettings behavior] == KTScaleByFactor &&
+              [scalingSettings scaleFactor] == 1.0 &&
+              [fileType isEqualToString:[self fileType]]))
 	{
 		// Load the scaled image
 		NSString *path = [self currentPath];
 		if (path)
 		{
-			NSString *fileType = [scalingProps objectForKey:@"fileType"];
-            if (fileType)
+			if (fileType)
             {
                 // Look for an existing upload
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", scalingProps];
