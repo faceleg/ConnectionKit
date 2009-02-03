@@ -67,6 +67,13 @@
     return result;
 }
 
+- (KTMediaFile *)sourceMediaFile
+{
+    KTMediaFile *result = [[self valueForKey:@"sourceMedia"] sourceMediaFile];
+    if (!result) result = [super sourceMediaFile];
+    return result;
+}
+
 - (NSDictionary *)latestProperties
 {
 	SUBCLASSMUSTIMPLEMENT;

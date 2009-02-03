@@ -1010,7 +1010,7 @@
 			
 			if ([mediaContainer isKindOfClass:[KTScaledImageContainer class]])
 			{
-				KTMediaFile *mediaFile = [[mediaContainer valueForKey:@"sourceMedia"] file];
+				KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
 				NSURL *URL = [mediaFile URLForImageScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
 				[result setURL:[URL absoluteURL]];	// WebKit can't seem to handle a relative URL here.
 				

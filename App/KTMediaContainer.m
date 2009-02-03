@@ -242,6 +242,15 @@
 
 - (KTMediaFile *)file { return [self wrappedValueForKey:@"file"]; }
 
+/*  Compatibility method for scaled image containers. We just return our file, but subclasses
+ *  search up their hierarchy looking for the topmost file
+ */
+- (KTMediaFile *)sourceMediaFile
+{
+    KTMediaFile *result = [self file];
+    return result;
+}
+
 #pragma mark -
 #pragma mark Scaled Images
 
