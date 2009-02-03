@@ -9,7 +9,7 @@
 #import "KTDocViewController.h"
 
 
-@class NTBoxView, KSPopUpButton;
+@class NTBoxView, KSPopUpButton, KTPageDetailsBoxView;
 
 
 @interface KTPageDetailsController : KTDocViewController
@@ -20,7 +20,9 @@
 	IBOutlet KSPopUpButton			*oFileExtensionPopup;
 	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
 	
-	IBOutlet NSObjectController	*oPagesController;
+	IBOutlet KTPageDetailsBoxView	*oBoxView;
+	
+	IBOutlet NSObjectController		*oPagesController;
 	
 @private
 	NSNumber	*_metaDescriptionCountdown;

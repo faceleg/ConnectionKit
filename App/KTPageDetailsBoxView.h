@@ -14,4 +14,6 @@
 
 }
 
+- (void) rebindSubviewPlaceholdersAccordingToSize;
+
 @end

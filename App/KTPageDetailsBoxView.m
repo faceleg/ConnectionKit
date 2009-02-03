@@ -102,19 +102,17 @@
 	
 }
 
-- (void)viewDidEndLiveResize
+- (void) rebindSubviewPlaceholdersAccordingToSize;
 {
-	[super viewDidEndLiveResize];
-	
 	// Redo placeholder text for the summary field
 	
 	NSView *field = [self viewWithTag:2];
 	OBASSERT(field);
 	NSRect frame = [field frame];
 	int sizeOfField = frame.size.height;
-		
-	NSString *longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, long placeholder");
-	NSString *longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, long placeholder");
+	
+	NSString *longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, longer placeholder");
+	NSString *longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, longer placeholder");
 	NSString *shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
 	NSString *shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");
 	
@@ -135,7 +133,7 @@
 		[field unbind:NSValueBinding];
 		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 	}
-
+	
 	// Now do it all over for the tags field
 	
 	field = [self viewWithTag:5];
@@ -143,8 +141,8 @@
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
-	longMultiple  = NSLocalizedString(@"Optional words describing these pages, separated by “,”", @"multiple items selected, long placeholder");
-	longNull      = NSLocalizedString(@"Optional words describing this page, separated by “,”", @"null keywords available, long placeholder");
+	longMultiple  = NSLocalizedString(@"Optional words describing pages, separated by “,”", @"multiple items selected, longer placeholder");
+	longNull      = NSLocalizedString(@"Optional words describing this page, separated by “,”", @"null keywords available, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Optional words", @"multiple items selected, very short placeholder");
 	shortNull     = NSLocalizedString(@"Optional words", @"null keywords available, very short placeholder");
 	
@@ -165,6 +163,14 @@
 		[field unbind:NSValueBinding];
 		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 	}
+	
+}
+
+// This is actually redundant since the RBSplitView gets a live update.  
+- (void)viewDidEndLiveResize
+{
+	[super viewDidEndLiveResize];
+	[self rebindSubviewPlaceholdersAccordingToSize];
 }
 
 

@@ -16,6 +16,8 @@
 #import "NSCharacterSet+Karelia.h"
 #import "NSObject+Karelia.h"
 
+#import "KTPageDetailsBoxView.h"
+#import <iMediaBrowser/RBSplitView.h>
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 
@@ -194,5 +196,19 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 	NSString *newMetaDescription = [(NSTextField *)[aNotification object] stringValue]; // Do NOT try to modify this string!
 	[self metaDescriptionDidChangeToValue:newMetaDescription];
 }
- 
+
+#pragma mark -
+#pragma mark RBSplitView delegate methods
+
+- (void)didAdjustSubviews:(RBSplitView*)sender;
+{
+	[oBoxView rebindSubviewPlaceholdersAccordingToSize];
+}
+
+- (BOOL)splitView:(RBSplitView*)sender shouldHandleEvent:(NSEvent*)theEvent inDivider:(unsigned int)divider betweenView:(RBSplitSubview*)leading andView:(RBSplitSubview*)trailing;
+{
+	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
+	return YES;
+}
+
 @end

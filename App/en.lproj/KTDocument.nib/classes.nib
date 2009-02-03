@@ -187,11 +187,11 @@
             CLASS = KTPageDetailsController;
             LANGUAGE = ObjC;
             OUTLETS =             {
+                oBoxView = KTPageDetailsBoxView;
                 oCollectionFileNameField = NSTextField;
                 oCollectionIndexExtensionButton = KSPopUpButton;
                 oFileExtensionPopup = KSPopUpButton;
                 oKeywordsField = NSTokenField;
-                oMetaDescriptionField = NSTextView;
                 oPageFileNameField = NSTextField;
                 oPagesController = NSObjectController;
             };
