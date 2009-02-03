@@ -16,32 +16,6 @@
 
 @implementation KTPageDetailsBoxView
 
-/*
-- (void)resizeSubviewsWithOldSize:(NSSize)oldSize;
-{
-	NSLog(@"resizeSubviewsWithOldSize: %@", NSStringFromSize(oldSize));
-	
-	[super resizeSubviewsWithOldSize:oldSize];
-	
-}
-*/
-
-
-
-- (NSString *)maskAsString:(int)mask
-{
-	if (mask == 0) return @"NotSizable";
-	
-	NSMutableString *buf = [NSMutableString string];
-	if (mask & NSViewMaxYMargin)	[buf appendString:@"MaxY|"];
-	if (mask & NSViewHeightSizable) [buf appendString:@"HeightSizable|"];
-	if (mask & NSViewMinYMargin)	[buf appendString:@"MinY|"];
-	if (mask & NSViewMaxXMargin)	[buf appendString:@"MaxX|"];
-	if (mask & NSViewWidthSizable)	[buf appendString:@"WidthSizable|"];
-	if (mask & NSViewMinXMargin)	[buf appendString:@"MinX|"];
-	if (![buf isEqualToString:@""])	[buf deleteCharactersInRange:NSMakeRange([buf length]-1,1)];
-	return buf;
-}
 
 /*
  
@@ -71,7 +45,7 @@
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldBoundsSize
 {
-	NSLog(@"resizeWithOldSuperviewSize: %@", NSStringFromSize(oldBoundsSize));
+//	NSLog(@"resizeWithOldSuperviewSize: %@", NSStringFromSize(oldBoundsSize));
 	[super resizeWithOldSuperviewSize:oldBoundsSize];
 	
 	NSView *bottommost = [self viewWithTag:6];
@@ -100,34 +74,6 @@
 	frame.size.height = sizeOfDescField;
 	[field setFrame:frame];
 	
-//	NSLog(@"desc bindings: %@", [field exposedBindings]);
-	NSLog(@"desc value binding: %@", [field infoForBinding:@"value"]);
-	
-	NSString *descLongMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, long placeholder");
-	NSString *descLongNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, long placeholder");
-	NSString *descShortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, short placeholder");
-	NSString *descShortNull     = NSLocalizedString(@"Optional summary", @"null summary available, short placeholder");
-	
-	NSString *desiredMultiPlaceholder = (sizeOfDescField < (16 * 3) ? descShortMultiple : descLongMultiple);
-	NSString *desiredNullPlaceholder  = (sizeOfDescField < (16 * 3) ? descShortNull : descLongNull);
-	
-	NSDictionary *infoForBinding = [field infoForBinding:NSValueBinding];
-	NSDictionary *bindingOptions = [infoForBinding valueForKey:NSOptionsKey];
-	NSString *bindingKeyPath = [infoForBinding valueForKey:NSObservedKeyPathKey];
-	id observedObject = [infoForBinding valueForKey:NSObservedObjectKey];
-
-	NSLog(@"currentMultipleValuesPlaceholderBindingOption = %@", [bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption]);
-	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:desiredMultiPlaceholder])
-	{
-//		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-//		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
-//		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
-//		
-//		[field unbind:NSContentValuesBinding];
-//		[field bind:NSContentValuesBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
-	}
-	
-
 	// Countdown field
 	newBottom = newBottom - 11 - 2;
 	field = [self viewWithTag:3];
@@ -153,42 +99,73 @@
 	frame.size.height = spaceToDivide - sizeOfDescField;
 	[field setFrame:frame];
 	
-//	NSLog(@"tags bindings: %@", [field exposedBindings]);
-	NSLog(@"tags value binding: %@", [field infoForBinding:@"value"]);
-
-	NSString *tagsLongMultiple  = NSLocalizedString(@"Optional words describing these pages, separated by “,”", @"multiple items selected, long placeholder");
-	NSString *tagsLongNull      = NSLocalizedString(@"Optional words describing this page, separated by “,”", @"null keywords available, long placeholder");
-	NSString *tagsShortMultiple = NSLocalizedString(@"Optional words", @"multiple items selected, short placeholder");
-	NSString *tagsShortNull     = NSLocalizedString(@"Optional words", @"null keywords available, short placeholder");
 	
-	// I should set the null / multiple values placeholder for the tags field....
-	// and the multiple values and null value placeholder for the desc field
-	// NSMultipleValuesPlaceholderBindingOption
-	// NSNullPlaceholderBindingOption
-	/*
-	 
-	 [errorNameFormCell bind:NSValueBinding
-	 toObject:lookerUpperObjectController
-	 withKeyPath:@"content.errorName"
-	 options:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The headers do not define a name for this error.",  @"Error name nil placeholder") forKey:NSNullPlaceholderBindingOption]];
-
-	*/
-	
-/*	NSArray *subviews = [self subviews];
-	NSEnumerator *enumerator = [subviews objectEnumerator];
-	NSView *subview;
-
-	while ((subview = [enumerator nextObject]) != nil)
-	{
-		int autoresizingMask = [subview autoresizingMask];
-		NSLog(@"subview = %@ %d %@, %@ '%@'", [subview class], [subview tag], NSStringFromRect([subview frame]), [self maskAsString:autoresizingMask],
-			  ([subview respondsToSelector:@selector(stringValue)] ? [subview stringValue] : @"")
-		);
-	}
-*/	
 }
 
+- (void)viewDidEndLiveResize
+{
+	[super viewDidEndLiveResize];
+	
+	// Redo placeholder text for the summary field
+	
+	NSView *field = [self viewWithTag:2];
+	OBASSERT(field);
+	NSRect frame = [field frame];
+	int sizeOfField = frame.size.height;
+		
+	NSString *longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, long placeholder");
+	NSString *longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, long placeholder");
+	NSString *shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
+	NSString *shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");
+	
+	NSString *desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
+	NSString *desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
+	
+	NSDictionary *infoForBinding	= [field infoForBinding:NSValueBinding];
+	NSDictionary *bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	NSString *bindingKeyPath		= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	id observedObject				= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:desiredMultiPlaceholder])
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
+		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
+		
+		[field unbind:NSValueBinding];
+		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
 
+	// Now do it all over for the tags field
+	
+	field = [self viewWithTag:5];
+	OBASSERT(field);
+	frame = [field frame];
+	sizeOfField = frame.size.height;
+	
+	longMultiple  = NSLocalizedString(@"Optional words describing these pages, separated by “,”", @"multiple items selected, long placeholder");
+	longNull      = NSLocalizedString(@"Optional words describing this page, separated by “,”", @"null keywords available, long placeholder");
+	shortMultiple = NSLocalizedString(@"Optional words", @"multiple items selected, very short placeholder");
+	shortNull     = NSLocalizedString(@"Optional words", @"null keywords available, very short placeholder");
+	
+	desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
+	desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
+	
+	infoForBinding	= [field infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:desiredMultiPlaceholder])
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
+		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
+		
+		[field unbind:NSValueBinding];
+		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+}
 
 
 @end
