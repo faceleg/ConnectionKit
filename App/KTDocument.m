@@ -590,7 +590,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(id)contextInfo
 {
-	LOGMETHOD;
+	//LOGMETHOD;
 	
 	
 	// In order to inform the delegate, we will have to send this callback at some point
