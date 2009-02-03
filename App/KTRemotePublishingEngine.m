@@ -78,6 +78,7 @@
                 
                 [self failWithError:error];
             }
+        }
 	}
 	else
     {
