@@ -22,10 +22,14 @@
 
 @interface NSString (KTExtensions)
 
++ (NSString *)formattedFileSizeWithBytes:(NSNumber *)filesize;
+
 - (NSString *)domainName;
 - (BOOL)looksLikeValidHost;
 
 - (NSString *)annotatedAtOffset:(unsigned int)anOffset;
+
+- (NSString *)stringByAdjustingHTMLForPublishing;
 
 @end
 
