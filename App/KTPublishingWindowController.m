@@ -412,10 +412,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
  */
 - (void)endSheet;
 {
-    if (![[self publishingEngine] hasFinished])
-    {
-        [[self publishingEngine] cancel];
-    }
+    [[self publishingEngine] cancel];
     
     OBASSERT(_modalWindow);
     _modalWindow = nil;

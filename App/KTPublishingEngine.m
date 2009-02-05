@@ -54,6 +54,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
 
+// Media
+- (void)queuePendingMedia:(KTMediaFileUpload *)media;
+- (void)dequeuePendingMedia;
+
+// Resources
 - (void)addResourceFile:(NSURL *)resourceURL;
 
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
@@ -94,6 +99,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		_documentInfo = [site retain];
         
         _uploadedMedia = [[NSMutableSet alloc] init];
+        _pendingMediaUploads = [[NSMutableArray alloc] init];
         _resourceFiles = [[NSMutableSet alloc] init];
         _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
@@ -114,7 +120,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_documentInfo release];
 	[_documentRootPath release];
     [_subfolderPath release];
+    
+    OBASSERT([_pendingMediaUploads count] == 0);
+    [_pendingMediaUploads release];
+    OBASSERT(!_currentPendingMediaConnection);
     [_uploadedMedia release];
+    
     [_resourceFiles release];
     [_graphicalTextBlocks release];
 	
@@ -150,8 +161,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)start
 {
-	if ([self hasStarted]) return;
-    _hasStarted = YES;
+	if ([self status] != KTPublishingEngineStatusNotStarted) return;
+    _status = KTPublishingEngineStatusParsing;
     
     
     // Setup connection and transfer records
@@ -160,7 +171,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Start by publishing the home page if setting up connection was successful
-    if (![self hasFinished])
+    if ([self status] <= KTPublishingEngineStatusUploading)
     {
         [self performSelector:@selector(parseAndUploadPageIfNeeded:)
                    withObject:[[self site] root]
@@ -170,10 +181,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)cancel
 {
-    if ([self hasStarted] && ![self hasFinished])
+    if ([self status] > KTPublishingEngineStatusNotStarted && [self status] <= KTPublishingEngineStatusUploading)
     {
-        // End page parsing
+        // End page parsing and media URL connections
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        
+        if ([_pendingMediaUploads count] > 0)
+        {
+            [_currentPendingMediaConnection cancel];
+            [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
+            [_pendingMediaUploads removeAllObjects];
+        }
+            
         
         // Disconnect connection
         [[self connection] forceDisconnect];
@@ -183,15 +202,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (BOOL)hasStarted
-{
-    return _hasStarted;
-}
-
-- (BOOL)hasFinished
-{
-    return _hasFinished;
-}
+- (KTPublishingEngineStatus)status { return _status; }
 
 #pragma mark -
 #pragma mark Transfer Records
@@ -236,7 +247,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)didFinish
 {
-    _hasFinished = YES;
+    _status = KTPublishingEngineStatusFinished;
     
     [self setConnection:nil];
     
@@ -297,7 +308,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)connection:(id <CKConnection>)con upload:(NSString *)remotePath progressedTo:(NSNumber *)percent;
 {
-    if (![self hasFinished])
+    if ([self status] <= KTPublishingEngineStatusUploading)
     {
         [[self delegate] publishingEngineDidUpdateProgress:self];
     }
@@ -415,7 +426,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             }
             
             
-            if (nextPage && ![self hasFinished])
+            if (nextPage && [self status] <= KTPublishingEngineStatusUploading)
             {
                 [self performSelector:@selector(parseAndUploadPageIfNeeded:)
                            withObject:nextPage
@@ -449,12 +460,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         [self uploadGoogleSiteMapIfNeeded];
         
         
-        // Once everything is uploaded, disconnect
-        [[self connection] disconnect];
-        
-        
-        // Inform the delegate
-        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+        // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
+        if ([_pendingMediaUploads count] == 0)
+        {
+            [[self connection] disconnect]; // Once everything is uploaded, disconnect
+            
+            _status = KTPublishingEngineStatusUploading;
+            [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+        }
+        else
+        {
+            _status = KTPublishingEngineStatusLoadingMedia;
+        }
     }
     @catch (NSException *exception)
     {
@@ -495,7 +512,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
     
-    if ([self hasFinished]) return; // Engine may be cancelled mid-parse. If so, go no further.
+    if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.
 	
 	NSString *charset = [[masterPage master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];
@@ -608,40 +625,35 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
 {
-    CKTransferRecord *transferRecord = nil;
-	
-	if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
     {
         KTMediaFile *mediaFile = [media valueForKey:@"file"];
 		NSString *sourcePath = [mediaFile currentPath];
 		if (sourcePath)
 		{
-			NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-			OBASSERT(uploadPath);
-			
-			NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
-            NSURL *URL = [URLRequest URL];
+			NSURL *URL = [mediaFile URLForImageScalingProperties:[media scalingProperties]];
+            OBASSERT(URL);
+            
             
             if ([URL isFileURL])
             {
                 // Upload the media. Store the media object with the transfer record for processing later
-				transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+				NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+                OBASSERT(uploadPath);
+                
+                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+                [transferRecord setProperty:media forKey:@"object"];
 			}
             else
             {
-                NSData *data = [NSURLConnection sendSynchronousRequest:URLRequest mode:NSDefaultRunLoopMode returningResponse:NULL error:NULL];
-                if (data) transferRecord = [self uploadData:data toPath:uploadPath];
+                // Asynchronously load the data and then upload it
+                [self queuePendingMedia:media];
             }
+            
+            
+            // Record that we're uploading the object
+            [_uploadedMedia addObject:media];
 		}
-	}
-	
-	
-	if (transferRecord)
-	{
-		[transferRecord setProperty:media forKey:@"object"];
-		
-		// Record that we're uploading the object
-		[_uploadedMedia addObject:media];
 	}
 }
 				
@@ -650,10 +662,69 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
     // It's possible for the connection to be cancelled mid-parse. If so, just ignore the media
-    if (upload && ![self hasFinished])
+    if (upload && [self status] <= KTPublishingEngineStatusUploading)
 	{
 		[self uploadMediaIfNeeded:upload];
 	}
+}
+
+- (void)queuePendingMedia:(KTMediaFileUpload *)media
+{
+    [_pendingMediaUploads addObject:media];
+    
+    // Kick off processing if this is the first item on the queue
+    if ([_pendingMediaUploads count] == 1)
+    {
+        [self dequeuePendingMedia];
+    }
+}
+
+- (void)dequeuePendingMedia
+{
+    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
+    KTMediaFile *mediaFile = [media valueForKey:@"file"];
+    NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
+    OBASSERT(URLRequest);
+    _currentPendingMediaConnection = [[KSSimpleURLConnection alloc] initWithRequest:URLRequest delegate:self];
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response
+{
+    OBPRECONDITION(connection == _currentPendingMediaConnection);
+    
+    
+    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
+    NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+    OBASSERT(uploadPath);
+    
+    CKTransferRecord *transferRecord = [self uploadData:data toPath:uploadPath];
+    [transferRecord setProperty:media forKey:@"object"];
+    
+    // Tidy up after the connection
+    [self connection:connection didFailWithError:nil];
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
+{
+    OBPRECONDITION(connection == _currentPendingMediaConnection);
+    [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
+    
+    
+    // Remove from the queue and start the next item if available
+    [_pendingMediaUploads removeObjectAtIndex:0];
+    if ([_pendingMediaUploads count] > 0)
+    {
+        [self dequeuePendingMedia];
+    }
+    else if ([self status] == KTPublishingEngineStatusLoadingMedia)
+    {
+        // If all content has been generated and there's no more media to load, queue the final
+        // disconnect command and inform the delegate
+        [[self connection] disconnect];
+        
+        _status = KTPublishingEngineStatusUploading;
+        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+    }
 }
 
 #pragma mark -
