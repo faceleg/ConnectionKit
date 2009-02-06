@@ -301,7 +301,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
-		[NSNumber numberWithBool:NO],			@"AutosaveDocuments",	// FIXME: We're disabling autosave for the 1.6 alphas/betas
+		[NSNumber numberWithBool:YES],			@"AutosaveDocuments",
 		//[NSNumber numberWithBool:YES],			@"BackupWhenSaving",
 		//[NSNumber numberWithDouble:600.0],		@"BackupTimeInterval",
 
