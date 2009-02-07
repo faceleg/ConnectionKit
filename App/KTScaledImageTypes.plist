@@ -52,22 +52,16 @@
 	</dict>
 	<key>KTPageletMedia</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>500</integer>
 		<key>maxWidth</key>
 		<integer>200</integer>
 	</dict>
 	<key>KTPageMedia</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>640</integer>
 		<key>maxWidth</key>
 		<integer>640</integer>
 	</dict>
 	<key>KTSidebarPageMedia</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>320</integer>
 		<key>maxWidth</key>
 		<integer>320</integer>
 	</dict>
@@ -118,8 +112,6 @@
 	</dict>
 	<key>sidebarImage</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>500</integer>
 		<key>maxWidth</key>
 		<integer>200</integer>
 		<key>tag</key>
@@ -129,8 +121,6 @@
 	</dict>
 	<key>sidebarThumbnailImage</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>500</integer>
 		<key>maxWidth</key>
 		<integer>72</integer>
 		<key>New item</key>
