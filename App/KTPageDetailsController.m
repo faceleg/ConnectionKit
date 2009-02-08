@@ -163,16 +163,30 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 {
 	NSColor *result = nil;
 	
-	// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
-	// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
-	int howBad = META_DESCRIPTION_WARNING_ZONE - [[self metaDescriptionCountdown] intValue];
-	howBad = MAX(howBad, 0);
-	howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
-	float howRed = 0.1 * howBad;
-	
-	//	NSLog(@"%d make it %.2f red", len, howRed);
-	
-	result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	int remaining = [[self metaDescriptionCountdown] intValue];
+
+	if (remaining > META_DESCRIPTION_WARNING_ZONE * 3 )
+	{
+		result = [NSColor clearColor];
+	}
+	else if (remaining > META_DESCRIPTION_WARNING_ZONE * 2 )
+	{
+		float howGray = (float) ( remaining - (META_DESCRIPTION_WARNING_ZONE * 2) ) / META_DESCRIPTION_WARNING_ZONE;
+		result = [[NSColor grayColor] blendedColorWithFraction:howGray ofColor:[NSColor clearColor]];
+	}
+	else
+	{
+		// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
+		// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
+		int howBad = META_DESCRIPTION_WARNING_ZONE - remaining;
+		howBad = MAX(howBad, 0);
+		howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
+		float howRed = 0.1 * howBad;
+		
+		//	NSLog(@"%d make it %.2f red", len, howRed);
+		
+		result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	}
 	
 	return result;
 }

@@ -17,9 +17,11 @@
 [[if codeInjectionEarlyHead]]
 [[=codeInjectionEarlyHead]]
 [[endif]]
-		<title>
-			[[=&comboTitleText]]
-		</title>
+[[if windowTitle]]
+		<title>[[=&windowTitle]]</title>
+[[else]]
+		<title>[[=&comboTitleText]]</title>
+[[endif]]
 [[if master.author]]
 		<meta name="author" content="[[=&master.author]]" />
 [[endif]]

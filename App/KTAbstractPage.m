@@ -215,6 +215,16 @@
 	[self setValue:description forUndefinedKey:@"metaDescription"];
 }
 
+- (NSString *)windowTitle
+{
+	return [self valueForUndefinedKey:@"windowTitle"];
+}
+
+- (void)setWindowTitle:(NSString *)wTitle
+{
+	[self setValue:wTitle forUndefinedKey:@"setWindowTitle"];
+}
+
 #pragma mark -
 #pragma mark Staleness
 

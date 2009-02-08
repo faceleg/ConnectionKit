@@ -324,6 +324,7 @@
     {
         excludedKeys = [[NSSet alloc] initWithObjects:
                         @"shouldUpdateFileNameWhenTitleChanges",
+                        @"windowTitle",
                         @"metaDescription",
                         @"publishedDataDigest",
                         nil];
