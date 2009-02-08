@@ -118,8 +118,25 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 #pragma mark -
 #pragma mark Meta Description
 
-/*	The countdown is typed as NSNumber, but since this is for bindings, it could also be a placeholder
- *  such as NSMultipleValuesMarker.
+/*  This code manages the meta description field in the Page Details panel. It's a tad complicated,
+ *  so here's how it works:
+ *
+ *  For the really simple stuff, you can bind directly to the object controller responsible for the
+ *  Site Outline selection. i.e. The meta description field is bound this way. Its contents are
+ *  saved back to the model ater the user ends editing
+ *
+ *  To complicate matters, we have a countdown label. This is derived from whatever is currently
+ *  entered into the description field. It does NOT map directly to what is in the model. The
+ *  countdown label is bound directly to the -metaDescriptionCountdown property of
+ *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCountdown:
+ *  This property is an NSNumber as it needs to return NSMultipleValuesMarker sometimes. We update
+ *  the countdown in response to either:
+ *
+ *      A)  The selection/model changing. This is detected by observing the Site Outline controller's
+ *          selection.metaDescription property
+ *      B)  The user editing the meta description field. This is detected through NSControl's
+ *          delegate methods. We do NOT store these changes into the model immediately as this would
+ *          conflict with the user's expectations of how undo/redo should work.
  */
 
 - (NSNumber *)metaDescriptionCountdown { return _metaDescriptionCountdown; }
