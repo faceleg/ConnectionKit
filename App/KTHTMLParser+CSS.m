@@ -91,17 +91,11 @@
 	NSString *masterCSS = [[page master] bannerCSSForPurpose:[self HTMLGenerationPurpose]];
     if (masterCSS)
     {
-        // For Quick Look and previewing the master-specific stylesheet should be inline. When publishing it is external
+        // For Quick Look and previewing the master-specific stylesheet should be inline.
+        // When publishing it is lumped into main.css
         if ([self HTMLGenerationPurpose] == kGeneratingPreview || [self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
         {
             [stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", masterCSS]];
-        }
-        else
-        {
-            NSURL *masterCSSURL = [NSURL URLWithString:@"master.css" relativeToURL:[[page master] designDirectoryURL]];
-            NSString *relativeMasterCSSPath = [masterCSSURL stringRelativeToURL:[[self currentPage] URL]];
-            
-            [stylesheetLines addObject:[self stylesheetLink:relativeMasterCSSPath title:nil media:nil]];
         }
 	}
     
