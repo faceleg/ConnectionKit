@@ -87,14 +87,6 @@ static NSURLCache *_sharedCache;
 }
 
 #pragma mark -
-#pragma mark Init
-/*
-- (id)initWithRequest:(NSURLRequest *)request cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id <NSURLProtocolClient>)client
-{
-	
-}*/
-
-#pragma mark -
 #pragma mark Loading
 
 - (void)_startLoadingUncached
@@ -130,12 +122,11 @@ static NSURLCache *_sharedCache;
     [sourceImage release];
     
     
-    // Figure out the file type
-    NSString *UTI = [URLQuery objectForKey:@"filetype"];
-    if (!UTI) UTI = [finalImage preferredFormatUTI];
-    
     
     // Convert to data
+    NSString *UTI = [URLQuery objectForKey:@"filetype"];
+    OBASSERT(UTI);
+    
     NSData *imageData = [finalImage representationForUTI:UTI];
     OBASSERT(imageData);
     
