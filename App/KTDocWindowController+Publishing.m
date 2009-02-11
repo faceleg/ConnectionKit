@@ -164,7 +164,8 @@
 {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setCanCreateDirectories:YES];
-    [savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
+    //[savePanel setMessage:NSLocalizedString(@"Please create a folder to contain your site.", @"prompt for exporting a website to a folder")];
+    [savePanel setNameFieldLabel:NSLocalizedString(@"Export To:", @"save panel name field label. You must keep it short!")];
     [savePanel setPrompt:NSLocalizedString(@"Export", @"button title")];
     
     
