@@ -153,7 +153,7 @@
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
-	longMultiple  = NSLocalizedString(@"Title of window for selected pages; Use %P %T %A as placeholders.", @"multiple items selected, longer placeholder");
+	longMultiple  = NSLocalizedString(@"Titles of browser window for selected pages. (Duplicates are discouraged.)", @"multiple items selected, longer placeholder");
 	longNull      = NSLocalizedString(@"Custom title of window for page", @"null summary available, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Custom titles", @"multiple items selected, very short placeholder");
 	shortNull     = NSLocalizedString(@"Custom title", @"null summary available, very short placeholder");
@@ -182,7 +182,7 @@
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
-	longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, longer placeholder");
+	longMultiple  = NSLocalizedString(@"Optional summaries. (Duplicates are discouraged.)", @"multiple items selected, longer placeholder");
 	longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
 	shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");

@@ -431,10 +431,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	if ([[self siteOutlineController] selectedPage])
 	{
+		KTPage *selPage = [[self siteOutlineController] selectedPage];
+		NSString *titleString = [selPage windowTitle];
+		if (nil == titleString || [titleString isEqualToString:@""])
+		{
+			titleString = [selPage comboTitleText];
+		}
+		
 		return [NSString stringWithFormat:@"%@ %C %@",
 			displayName,
 			0x2014,	// em dash
-			[[[self siteOutlineController] selectedPage] comboTitleText]];
+			titleString];
 	}
 	return displayName;
 }
@@ -464,6 +471,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		result = [[NSSet alloc] initWithObjects:@"selection.master.siteTitleHTML",
 												@"selection.master.author",
+												@"selection.windowTitle",
 												@"selection.titleText", nil];
 	}
 	
