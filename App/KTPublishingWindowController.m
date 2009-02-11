@@ -259,8 +259,18 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     }
     
     
-    
-    [self endSheet];
+    // Keep the sheet open if command-option is held down as a debugging aid. BUGSID:38342
+    unsigned eventModifierFlags = [[NSApp currentEvent] modifierFlags];
+    if ((eventModifierFlags & NSCommandKeyMask) && (eventModifierFlags & NSCommandKeyMask))
+    {
+        [self setMessageText:NSLocalizedString(@"Publishing finished.", @"Upload message text")];
+        [self setInformativeText:nil];
+        [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
+    }
+    else
+    {
+        [self endSheet];
+    }
 }
 
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
