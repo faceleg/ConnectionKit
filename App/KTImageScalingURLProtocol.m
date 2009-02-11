@@ -16,6 +16,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import <QuartzCore/CoreImage.h>
+
 
 NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 
@@ -116,19 +118,78 @@ static NSURLCache *_sharedCache;
     }
     
     
-    // Convert back to bitmap
-    NSImage *finalImage = [scaledImage toNSImageBitmap];
+    // Ensure we have a graphics context big enough to render into
+    static CGContextRef graphicsContext;
+    static CIContext *coreImageContext;
+    if (!graphicsContext)
+    {
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+    
+        graphicsContext = CGBitmapContextCreate(NULL,
+                                                640, 640,
+                                                8,
+                                                640 * 4,
+                                                CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
+                                                kCGImageAlphaPremultipliedLast);
+        OBASSERT(graphicsContext);
+        CGColorSpaceRelease(colorSpace);
+        
+        coreImageContext = [CIContext contextWithCGContext:graphicsContext // Need to cache a CI context from this too
+                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
+        [coreImageContext retain];
+    }
+    
+    CGRect neededContextRect = [scaledImage extent];
+    size_t currentContextWidth = CGBitmapContextGetWidth(graphicsContext);
+    size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
+    
+    if (currentContextWidth < neededContextRect.size.width || currentContextHeight < neededContextRect.size.height)
+    {
+        CGContextRelease(graphicsContext);
+        
+        size_t newContextWidth = MAX(currentContextWidth, (size_t)ceilf(neededContextRect.size.width));
+        size_t newContextHeight = MAX(currentContextHeight, (size_t)ceilf(neededContextRect.size.height));
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+        
+        graphicsContext = CGBitmapContextCreate(NULL,
+                                                newContextWidth, newContextHeight,
+                                                8,
+                                                newContextWidth * 4,
+                                                CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
+                                                kCGImageAlphaPremultipliedLast);
+        OBASSERT(graphicsContext);
+        CGColorSpaceRelease(colorSpace);
+
+        [coreImageContext release]; // Need to cache a CI context from this too
+        coreImageContext = [CIContext contextWithCGContext:graphicsContext
+                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
+        [coreImageContext retain];
+    }
+    
+    
+    // Render a CGImage
+    CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
     OBASSERT(finalImage);
     [sourceImage release];
-    
     
     
     // Convert to data
     NSString *UTI = [URLQuery objectForKey:@"filetype"];
     OBASSERT(UTI);
     
-    NSData *imageData = [finalImage representationForUTI:UTI];
-    OBASSERT(imageData);
+    NSMutableData *imageData = [[NSMutableData alloc] init];
+    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)imageData,
+                                                                              (CFStringRef)UTI,
+                                                                              1,
+                                                                              NULL);
+    
+    CGImageDestinationAddImage(imageDestination,
+                               finalImage,
+                               (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
+    CGImageRelease(finalImage);
+    
+    OBASSERT(CGImageDestinationFinalize(imageDestination));
+    CFRelease(imageDestination);
     
     
     // Construct new cached response
@@ -146,6 +207,7 @@ static NSURLCache *_sharedCache;
     
     // Cache result
     NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
+    [imageData release];
 	[[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
     
     
