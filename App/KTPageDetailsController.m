@@ -20,10 +20,12 @@
 #import <iMediaBrowser/RBSplitView.h>
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
+static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 
 
 @interface KTPageDetailsController (Private)
 - (void)metaDescriptionDidChangeToValue:(id)value;
+- (void)windowTitleDidChangeToValue:(id)value;
 @end
 
 
@@ -38,11 +40,13 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 + (void)initialize
 {
 	[self setKey:@"metaDescriptionCountdown" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
+	[self setKey:@"windowTitleCountdown" triggersChangeNotificationsForDependentKey:@"windowTitleCharCountColor"];
 }
 	
 - (void)dealloc
 {
 	[_metaDescriptionCountdown release];
+	[_windowTitleCountdown release];
 	[super dealloc];
 }
 
@@ -57,6 +61,7 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 	if (!aView)
 	{
 		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
+		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
 	}
 	
 	[super setView:aView];
@@ -83,6 +88,11 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 						  options:NSKeyValueObservingOptionNew
 						  context:sMetaDescriptionObservationContext];
 	[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+	[oPagesController addObserver:self
+					   forKeyPath:@"selection.windowTitle"
+						  options:NSKeyValueObservingOptionNew
+						  context:sWindowTitleObservationContext];
+	[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
 	
 	
 	/// turn off undo within the cell to avoid exception
@@ -137,6 +147,8 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
  *      B)  The user editing the meta description field. This is detected through NSControl's
  *          delegate methods. We do NOT store these changes into the model immediately as this would
  *          conflict with the user's expectations of how undo/redo should work.
+ *
+ * This countdown behavior is reflected similarly with the windowTitle property.
  */
 
 - (NSNumber *)metaDescriptionCountdown { return _metaDescriptionCountdown; }
@@ -146,6 +158,15 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 	[countdown retain];
 	[_metaDescriptionCountdown release];
 	_metaDescriptionCountdown = countdown;
+}
+
+- (NSNumber *)windowTitleCountdown { return _windowTitleCountdown; }
+
+- (void)setWindowTitleCountdown:(NSNumber *)countdown
+{
+	[countdown retain];
+	[_windowTitleCountdown release];
+	_windowTitleCountdown = countdown;
 }
 
 #define MAX_META_DESCRIPTION_LENGTH 156
@@ -208,11 +229,84 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 	return result;
 }
 
+
+#define MAX_WINDOW_TITLE_LENGTH 65
+
+/*	Called in response to a change of selection.windowTitle or the user typing
+ *	We update our own countdown property in response
+ */
+- (void)windowTitleDidChangeToValue:(id)value
+{
+	if (value)
+	{
+		if ([value isSelectionMarker])
+		{
+			value = nil;
+		}
+		else
+		{
+			OBASSERT([value isKindOfClass:[NSString class]]);
+			value = [NSNumber numberWithInt:(MAX_WINDOW_TITLE_LENGTH - [value length])];
+		}
+	}
+	else
+	{
+		value = [NSNumber numberWithInt:MAX_WINDOW_TITLE_LENGTH];
+	}
+	
+	[self setWindowTitleCountdown:value];
+}
+
+#define WINDOW_TITLE_WARNING_ZONE 10
+- (NSColor *)windowTitleCharCountColor
+{
+	NSColor *result = nil;
+	
+	int remaining = [[self windowTitleCountdown] intValue];
+	
+	if (remaining > WINDOW_TITLE_WARNING_ZONE * 3 )
+	{
+		result = [NSColor clearColor];
+	}
+	else if (remaining > WINDOW_TITLE_WARNING_ZONE * 2 )
+	{
+		float howGray = (float) ( remaining - (WINDOW_TITLE_WARNING_ZONE * 2) ) / WINDOW_TITLE_WARNING_ZONE;
+		result = [[NSColor grayColor] blendedColorWithFraction:howGray ofColor:[NSColor clearColor]];
+	}
+	else
+	{
+		// black under MAX_WINDOW_TITLE_LENGTH - WINDOW_TITLE_WARNING_ZONE,
+		// then progressively more red until MAX_WINDOW_TITLE_LENGTH and beyond
+		int howBad = WINDOW_TITLE_WARNING_ZONE - remaining;
+		howBad = MAX(howBad, 0);
+		howBad = MIN(howBad, WINDOW_TITLE_WARNING_ZONE);
+		float howRed = 0.1 * howBad;
+		
+		//	NSLog(@"%d make it %.2f red", len, howRed);
+		
+		result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	}
+	
+	return result;
+}
+
+
+
+
+
+
+
+
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == sMetaDescriptionObservationContext)
 	{
 		[self metaDescriptionDidChangeToValue:[object valueForKeyPath:keyPath]];
+	}
+	else if (context == sWindowTitleObservationContext)
+	{
+		[self windowTitleDidChangeToValue:[object valueForKeyPath:keyPath]];
 	}
 	else
 	{
@@ -224,8 +318,16 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
  */
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	NSString *newMetaDescription = [(NSTextField *)[aNotification object] stringValue]; // Do NOT try to modify this string!
-	[self metaDescriptionDidChangeToValue:newMetaDescription];
+	NSTextField *textField = (NSTextField *) [aNotification object];
+	NSString *newValue = [textField stringValue]; // Do NOT try to modify this string!
+	if (textField == oWindowTitleField)
+	{
+		[self windowTitleDidChangeToValue:newValue];
+	}
+	else if (textField == oMetaDescriptionField)
+	{
+		[self metaDescriptionDidChangeToValue:newValue];
+	}
 }
 
 #pragma mark -

@@ -14,6 +14,9 @@
 
 @interface KTPageDetailsController : KTDocViewController
 {
+	IBOutlet NSTextField			*oWindowTitleField;
+	IBOutlet NSTextField			*oMetaDescriptionField;
+
 	IBOutlet NSTextField			*oPageFileNameField;
 	IBOutlet NSTextField			*oCollectionFileNameField;
 	IBOutlet NSTokenField			*oKeywordsField;
@@ -26,11 +29,13 @@
 	
 @private
 	NSNumber	*_metaDescriptionCountdown;
+	NSNumber	*_windowTitleCountdown;
 }
 
 - (NTBoxView *)pageDetailsPanel;
 
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;
+- (NSNumber *)windowTitleCountdown;
 
 @end
