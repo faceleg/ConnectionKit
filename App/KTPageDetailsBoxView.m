@@ -147,19 +147,16 @@
 	NSString *bindingKeyPath;
 	id observedObject;
 	
-	// The window title field
+	// The window title field ... only re-bind the multiple values placeholder; null value is handled by KTPageDetailsController to be the combo title text.
 
 	field = [self viewWithTag:2];	OBASSERT(field);
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
 	longMultiple  = NSLocalizedString(@"Titles of browser window for selected pages. (Duplicates are discouraged.)", @"multiple items selected, longer placeholder");
-	longNull      = NSLocalizedString(@"Custom title of window for page", @"null summary available, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Custom titles", @"multiple items selected, very short placeholder");
-	shortNull     = NSLocalizedString(@"Custom title", @"null summary available, very short placeholder");
 	
 	desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
-	desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
 	
 	infoForBinding	= [field infoForBinding:NSValueBinding];
 	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
@@ -170,7 +167,6 @@
 	{
 		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
 		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
-		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
 		
 		[field unbind:NSValueBinding];
 		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];

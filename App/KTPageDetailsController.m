@@ -21,11 +21,13 @@
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
+static NSString *sTitleTextObservationContext = @"-titleText observation context";
 
 
 @interface KTPageDetailsController (Private)
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
+- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
 @end
 
 
@@ -93,6 +95,13 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 						  options:NSKeyValueObservingOptionNew
 						  context:sWindowTitleObservationContext];
 	[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
+
+	[oPagesController addObserver:self
+					   forKeyPath:@"selection.titleText"
+						  options:NSKeyValueObservingOptionNew
+						  context:sTitleTextObservationContext];
+	[self resetPlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
+	
 	
 	
 	/// turn off undo within the cell to avoid exception
@@ -224,7 +233,31 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 	return result;
 }
 
-
+- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText
+{
+	NSLog(@"resetPlaceholderToComboTitleText: %@", comboTitleText);
+	
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
+			
+	// The Window Title field ... re-bind the null placeholder.
+		
+	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
+		
+		[oWindowTitleField unbind:NSValueBinding];
+		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+}
 
 /*	Called in response to a change of selection.windowTitle or the user typing
  *	We update our own countdown property in response
@@ -281,12 +314,6 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 
 
 
-
-
-
-
-
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == sMetaDescriptionObservationContext)
@@ -296,6 +323,10 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 	else if (context == sWindowTitleObservationContext)
 	{
 		[self windowTitleDidChangeToValue:[object valueForKeyPath:keyPath]];
+	}
+	else if (context == sTitleTextObservationContext)
+	{
+		[self resetPlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
 	}
 	else
 	{
