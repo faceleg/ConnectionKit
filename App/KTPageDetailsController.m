@@ -169,7 +169,6 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 	_windowTitleCountdown = countdown;
 }
 
-#define MAX_META_DESCRIPTION_LENGTH 156
 
 /*	Called in response to a change of selection.metaDescription or the user typing
  *	We update our own countdown property in response
@@ -185,52 +184,47 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 		else
 		{
 			OBASSERT([value isKindOfClass:[NSString class]]);
-			value = [NSNumber numberWithInt:(MAX_META_DESCRIPTION_LENGTH - [value length])];
+			value = [NSNumber numberWithInt:[value length]];
 		}
 	}
 	else
 	{
-		value = [NSNumber numberWithInt:MAX_META_DESCRIPTION_LENGTH];
+		value = [NSNumber numberWithInt:0];
 	}
 	
 	[self setMetaDescriptionCountdown:value];
 }
 
 #define META_DESCRIPTION_WARNING_ZONE 10
+#define MAX_META_DESCRIPTION_LENGTH 156
+
 - (NSColor *)metaDescriptionCharCountColor
 {
-	NSColor *result = nil;
+	int charCount = [[self metaDescriptionCountdown] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
 	
-	int remaining = [[self metaDescriptionCountdown] intValue];
-
-	if (remaining > META_DESCRIPTION_WARNING_ZONE * 3 )
+	if (0 == charCount)
 	{
 		result = [NSColor clearColor];
 	}
-	else if (remaining > META_DESCRIPTION_WARNING_ZONE * 2 )
+	else if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice light gray
 	{
-		float howGray = (float) ( remaining - (META_DESCRIPTION_WARNING_ZONE * 2) ) / META_DESCRIPTION_WARNING_ZONE;
-		result = [[NSColor grayColor] blendedColorWithFraction:howGray ofColor:[NSColor clearColor]];
+		;
 	}
-	else
+	else if (remaining >= 0 )							// get closer to black-red
 	{
-		// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
-		// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
-		int howBad = META_DESCRIPTION_WARNING_ZONE - remaining;
-		howBad = MAX(howBad, 0);
-		howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
-		float howRed = 0.1 * howBad;
-		
-		//	NSLog(@"%d make it %.2f red", len, howRed);
-		
-		result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+		float howRed = (float) remaining / META_DESCRIPTION_WARNING_ZONE;
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
 	}
-	
+	else		// overflow: pure red.
+	{
+		result = [NSColor redColor];
+	}	
 	return result;
 }
 
 
-#define MAX_WINDOW_TITLE_LENGTH 65
 
 /*	Called in response to a change of selection.windowTitle or the user typing
  *	We update our own countdown property in response
@@ -246,47 +240,42 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 		else
 		{
 			OBASSERT([value isKindOfClass:[NSString class]]);
-			value = [NSNumber numberWithInt:(MAX_WINDOW_TITLE_LENGTH - [value length])];
+			value = [NSNumber numberWithInt:[value length]];
 		}
 	}
 	else
 	{
-		value = [NSNumber numberWithInt:MAX_WINDOW_TITLE_LENGTH];
+		value = [NSNumber numberWithInt:0];
 	}
 	
 	[self setWindowTitleCountdown:value];
 }
 
-#define WINDOW_TITLE_WARNING_ZONE 10
+#define MAX_WINDOW_TITLE_LENGTH 65
+#define WINDOW_TITLE_WARNING_ZONE 8
 - (NSColor *)windowTitleCharCountColor
 {
-	NSColor *result = nil;
+	int charCount = [[self windowTitleCountdown] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	int remaining = MAX_WINDOW_TITLE_LENGTH - charCount;
 	
-	int remaining = [[self windowTitleCountdown] intValue];
-	
-	if (remaining > WINDOW_TITLE_WARNING_ZONE * 3 )
+	if (0 == charCount)
 	{
 		result = [NSColor clearColor];
 	}
-	else if (remaining > WINDOW_TITLE_WARNING_ZONE * 2 )
+	else if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
 	{
-		float howGray = (float) ( remaining - (WINDOW_TITLE_WARNING_ZONE * 2) ) / WINDOW_TITLE_WARNING_ZONE;
-		result = [[NSColor grayColor] blendedColorWithFraction:howGray ofColor:[NSColor clearColor]];
+		;
 	}
-	else
+	else if (remaining >= 0 )							// get closer to black-red
 	{
-		// black under MAX_WINDOW_TITLE_LENGTH - WINDOW_TITLE_WARNING_ZONE,
-		// then progressively more red until MAX_WINDOW_TITLE_LENGTH and beyond
-		int howBad = WINDOW_TITLE_WARNING_ZONE - remaining;
-		howBad = MAX(howBad, 0);
-		howBad = MIN(howBad, WINDOW_TITLE_WARNING_ZONE);
-		float howRed = 0.1 * howBad;
-		
-		//	NSLog(@"%d make it %.2f red", len, howRed);
-		
-		result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+		float howRed = (float) remaining / WINDOW_TITLE_WARNING_ZONE;
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
 	}
-	
+	else		// overflow: pure red.
+	{
+		result = [NSColor redColor];
+	}	
 	return result;
 }
 

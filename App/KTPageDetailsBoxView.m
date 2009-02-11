@@ -65,7 +65,7 @@
 	int topOfTitleField = bottomOfTopmost - 2;
 	const int kSpaceBetweenResizableFields = 20;
 	int spaceToDivide = topOfTitleField - topOfBottommost - (2 * kSpaceBetweenResizableFields);
-	int sizeOfField = spaceToDivide / 3;		// will round down
+	int sizeOfField = MIN(spaceToDivide / 3, 62);		// Try to get a third, but no more than 4 lines for title tag.
 
 	NSView *field;
 	NSRect frame;
@@ -96,6 +96,9 @@
 	[field setFrame:frame];
 	
 	// Desc Resizable Field
+	spaceToDivide -= sizeOfField;		// keep track of what's left
+	sizeOfField = spaceToDivide / 2;	// will round down
+	
 	newBottom = newBottom-sizeOfField - 2;	// we want gap of 2 between field and label above
 	field = [self viewWithTag:5];
 	OBASSERT(field);
@@ -113,7 +116,7 @@
 	[field setFrame:frame];
 	
 	// Tags resizable field
-	sizeOfField = spaceToDivide - (2 * sizeOfField);		// take what's left for last field
+	sizeOfField = spaceToDivide - sizeOfField;		// take what's left for last field
 	
 	newBottom = newBottom - sizeOfField - 2;
 	field = [self viewWithTag:7];
