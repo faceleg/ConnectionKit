@@ -106,7 +106,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			{
 				(void) [fm removeFileAtPath:destPath handler:nil];
 			}
-			BOOL copied = [fm copyPath:sourcePath toPath:destPath handler:nil];
+			BOOL copied = [fm movePath:sourcePath toPath:destPath handler:nil];
 			if (copied)
 			{
 				[successURLs addObject:url];
