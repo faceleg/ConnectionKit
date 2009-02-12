@@ -616,6 +616,92 @@
     }
 }
 
+#pragma mark -
+#pragma mark Comments
+
+// TODO: this is kind of hacky, for Sandvox 2 all should be combined
+// into the fewest, flexible attributes possible
+- (KTCommentsProvider)commentsProvider
+{
+	return (KTCommentsProvider)[[self valueForUndefinedKey:@"commentsProvider"] intValue];
+}
+
+- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
+{
+	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", nil];
+	[self willChangeValuesForKeys:keys];
+	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
+	[self didChangeValuesForKeys:keys];
+	
+	// for backward compatibility with 1.5.4
+	if ( KTCommentsProviderJSKit == aKTCommentsProvider )
+	{
+		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsJSKit"];
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
+	}
+	else if ( KTCommentsProviderHaloscan == aKTCommentsProvider )
+	{
+		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
+	}	
+}
+
+- (BOOL)wantsDisqus
+{
+	//return [[self valueForUndefinedKey:@"wantsDisqus"] boolValue];
+	return (KTCommentsProviderDisqus == [self commentsProvider]);
+}
+
+- (void)setWantsDisqus:(BOOL)aBool
+{
+	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsDisqus"];
+	[self setCommentsProvider:KTCommentsProviderDisqus];
+}
+
+- (NSString *)disqusShortName
+{
+	return [self valueForUndefinedKey:@"disqusShortName"];
+}
+
+- (void)setDisqusShortName:(NSString *)aString
+{
+	[self setValue:aString forUndefinedKey:@"disqusShortName"];
+}
+
+- (BOOL)wantsHaloscan
+{
+	//return [[self valueForUndefinedKey:@"wantsHaloscan"] boolValue];
+	return (KTCommentsProviderHaloscan == [self commentsProvider]);
+}
+
+- (void)setWantsHaloscan:(BOOL)aBool
+{
+	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsHaloscan"];
+	[self setCommentsProvider:KTCommentsProviderHaloscan];
+}
+
+- (BOOL)wantsJSKit
+{
+	//return [[self valueForUndefinedKey:@"wantsJSKit"] boolValue];
+	return (KTCommentsProviderJSKit == [self commentsProvider]);
+}
+
+- (void)setWantsJSKit:(BOOL)aBool
+{
+	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsJSKit"];
+	[self setCommentsProvider:KTCommentsProviderJSKit];
+}
+
+- (NSString *)JSKitModeratorEmail
+{
+	return [self valueForUndefinedKey:@"JSKitModeratorEmail"];
+}
+
+- (void)setJSKitModeratorEmail:(NSString *)aString
+{
+	[self setValue:aString forUndefinedKey:@"JSKitModeratorEmail"];
+}
+
 @end
 
 

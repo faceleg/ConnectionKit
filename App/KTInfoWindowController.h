@@ -122,6 +122,8 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 - (IBAction)movePageletUp:(id)sender;
 - (IBAction)movePageletDown:(id)sender;
 
+- (IBAction)chooseCommentsProvider:(id)sender;
+
 /*! returns undoManager of associatedDocument */
 - (NSUndoManager *)undoManager;
 

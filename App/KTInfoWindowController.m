@@ -887,6 +887,15 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 }
 
 #pragma mark -
+#pragma mark Comments
+
+- (IBAction)chooseCommentsProvider:(id)sender
+{
+	KTCommentsProvider provider = [sender selectedTag];
+	[[self selectedLevel] setValue:[NSNumber numberWithInt:provider] forKey:@"commentsProvider"];
+}
+
+#pragma mark -
 #pragma mark Media
 
 - (IBAction)chooseBannerImagePath:(id)sender;
