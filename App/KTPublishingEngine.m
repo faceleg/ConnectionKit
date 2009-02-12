@@ -181,7 +181,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)cancel
 {
-    if ([self status] > KTPublishingEngineStatusNotStarted && [self status] <= KTPublishingEngineStatusUploading)
+    if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
         // End page parsing and media URL connections
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -426,7 +426,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             }
             
             
-            if (nextPage && [self status] <= KTPublishingEngineStatusUploading)
+            if (nextPage)
             {
                 [self performSelector:@selector(parseAndUploadPageIfNeeded:)
                            withObject:nextPage
@@ -661,8 +661,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
-    // It's possible for the connection to be cancelled mid-parse. If so, just ignore the media
-    if (upload && [self status] <= KTPublishingEngineStatusUploading)
+    // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
+    if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
 	{
 		[self uploadMediaIfNeeded:upload];
 	}
