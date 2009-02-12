@@ -102,7 +102,7 @@
 	
 	
 	// Convert any pages into their id-only representation
-	NSEnumerator *keysEnumerator = [[NSDictionary dictionaryWithDictionary:buffer] keyEnumerator];
+	NSEnumerator *keysEnumerator = [extensibleProperties keyEnumerator];
 	id aKey;
 	while (aKey = [keysEnumerator nextObject])
 	{
@@ -110,7 +110,7 @@
 		if (![anObject conformsToProtocol:@protocol(NSCoding)])
 		{
 			id <NSCoding> pasteboardRep = [anObject IDOnlyPasteboardRepresentation];
-			[buffer setObject:pasteboardRep forKey:aKey];
+			[buffer setValue:pasteboardRep forKey:aKey];    // pasteboardRep may be nil for some media containers
 		}
 	}
 	
