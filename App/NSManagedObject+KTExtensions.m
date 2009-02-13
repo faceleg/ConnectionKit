@@ -447,7 +447,7 @@
 													  
 			if (error) {
 				[NSException raise:NSInternalInconsistencyException
-							format:@"The persistant property list data for key \"%@\" is invalid", key];
+							format:@"The persistant property list data for key “%@” is invalid", key];
 			}
 													  
             [self setPrimitiveValue:result forKey:key];
@@ -474,7 +474,7 @@
 	}
 	
 	if (error) {
-		[NSException raise:NSInvalidArgumentException format:@"The value for key \"%@\" is not a valid property list", key];
+		[NSException raise:NSInvalidArgumentException format:@"The value for key “%@” is not a valid property list", key];
 	}
 													
 	[self setTransientValue:value forKey:key andPersistentData:data forKey:plistKey];

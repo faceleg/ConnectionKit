@@ -46,7 +46,7 @@
 	NSAttributedString *attr = [NSAttributedString attributedStringWithURL:[NSURL fileURLWithPath:aPath] documentAttributes:dict];
 	if ( nil == attr )
 	{
-		return [NSString stringWithFormat:NSLocalizedString(@"Unable to read document \"%@\".", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
+		return [NSString stringWithFormat:NSLocalizedString(@"Unable to read document “%@”.", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
 	}
 
 	NSString *snippet = [attr standardSnippet];

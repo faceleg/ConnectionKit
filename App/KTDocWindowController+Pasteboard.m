@@ -850,7 +850,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 			[[selectedPagelet page] removePagelet:selectedPagelet];
 			
             // delete it from the context
-            LOG((@"deleting pagelet \"%@\" from context", [selectedPagelet valueForKey:@"pluginIdentifier"]));
+            LOG((@"deleting pagelet “%@” from context", [selectedPagelet valueForKey:@"pluginIdentifier"]));
             [context deleteObject:selectedPagelet];
             
             // close undo group

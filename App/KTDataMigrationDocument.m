@@ -60,7 +60,7 @@
 {
     NSString *filename = [[NSFileManager defaultManager] displayNameAtPath:[[self fileURL] path]];
     NSString *message = [NSString stringWithFormat:
-                         NSLocalizedString(@"Upgrading document \"%@.\"","document upgrade message text"), filename];
+                         NSLocalizedString(@"Upgrading document “%@.”","document upgrade message text"), filename];
     [messageTextField setStringValue:message];
     
     
@@ -69,7 +69,7 @@
     filename = [[NSFileManager defaultManager] displayNameAtPath:path];
     
     message = [NSString stringWithFormat:
-               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as \"%@.\"","document upgrade informative text"),
+               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format. A backup of the original document will be saved as “%@.”","document upgrade informative text"),
                filename];
     [informativeTextField setStringValue:message];
     

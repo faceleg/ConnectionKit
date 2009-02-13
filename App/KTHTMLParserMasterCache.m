@@ -144,8 +144,8 @@
 {
 	OBASSERTSTRING(key, @"Attempt to override a nil key in the parser cache");
 	OBASSERTSTRING(override, @"Attempt to override parser cache key with nil value");
-	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser cache override key", key);
-	NSAssert1(![myOverrides objectForKey:key], @"The key \"%@\" is already in overidden", key);
+	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"“%@” is not a valid parser cache override key", key);
+	NSAssert1(![myOverrides objectForKey:key], @"The key “%@” is already in overidden", key);
 	
 	KTHTMLParserCache *overrideCache = [[KTHTMLParserCache alloc] initWithProxyObject:override];
 	[myOverrides setObject:overrideCache forKey:key];

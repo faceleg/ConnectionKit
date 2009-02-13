@@ -135,8 +135,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
 	OBASSERTSTRING(key, @"Attempt to override a nil key");
 	OBASSERTSTRING(override, @"Attempt to override parser key with nil value");
-	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"\"%@\" is not a valid parser override key", key);
-	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key \"%@\" is already overidden", key);
+	NSAssert1(([key rangeOfString:@"."].location == NSNotFound), @"“%@” is not a valid parser override key", key);
+	NSAssert1(![[self _keyOverrides] objectForKey:key], @"The key “%@” is already overidden", key);
 	
 	[[self _keyOverrides] setObject:override forKey:key];
 }

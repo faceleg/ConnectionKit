@@ -170,7 +170,7 @@
 					}
 					else
 					{
-						//LOG((@"disallowing drop directly onto \"%@\" since it's not a collection", [proposedParent fileName]));
+						//LOG((@"disallowing drop directly onto “%@” since it's not a collection", [proposedParent fileName]));
 						return NSDragOperationNone;
 					}
 				}
@@ -272,7 +272,7 @@
 				}
 				else
 				{
-					//LOG((@"disallowing drop directly onto \"%@\" since it's not a collection", [proposedParent fileName]));
+					//LOG((@"disallowing drop directly onto “%@” since it's not a collection", [proposedParent fileName]));
 					return NSDragOperationNone;
 				}
 			}
@@ -331,7 +331,7 @@
 						}
 						else
 						{
-							LOG((@"atempting alphasort with title \"%@\"", title));
+							LOG((@"atempting alphasort with title “%@”", title));
 						}
 						
 						// only allow drop at proposedOrdering
@@ -510,7 +510,7 @@
 					}
 					else
 					{
-						LOG((@"atempting alphasort with title \"%@\"", title));
+						LOG((@"atempting alphasort with title “%@”", title));
 					}
 					
 					// only allow drop at proposedOrdering
