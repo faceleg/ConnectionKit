@@ -34,16 +34,23 @@
 [[endif4]]
 [[endif3]]
 [[if master.wantsJSKit]]
+[[if master.JSKitModeratorEmail]]
 									[[if HTMLGenerationPurpose]]
 									<div class="js-kit-comments" path="[[=&URL]]" permalink="[[=&URL]]"></div>
-									[[else4]]
+									[[else5]]
 									<div class="comments">
 										<p>[[`JS-Kit Comments]]</p>
 									</div>
-									[[endif4]]
-[[endif3]]
-
+									[[endif5]]
+[[else4]]
+[[if HTMLGenerationPurpose==0]]
+									<div class="comments">
+										<p style="color:red;">[[`To enable JS-Kit comments you need to enter your email address into the Site Inspector]]</p>
+									</div>
+[[endif5]]
+[[endif4]]
 									<!-- comments -->
+[[endif3]]
 [[endif2]]
 [[endif]]
 
