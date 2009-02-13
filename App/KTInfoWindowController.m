@@ -10,6 +10,7 @@
 #import "KTInfoWindowController.h"
 
 #import "Debug.h"
+#import "KSEmailAddressComboBox.h"
 #import "KSPathInfoField.h"
 #import "KSSmallDatePicker.h"
 #import "KT.h"
@@ -98,19 +99,16 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (id)init
 {
+	// need to set these options before loading the nib
+	[KSEmailAddressComboBox setWillIncludeNames:NO];
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+	
 	if (self = [super initWithWindowNibName:@"Info"])
 	{
 		mySelectedSegmentIndex = SEGMENT_NONE;	// uninititialized
 	}
 	return self;
 }
-
-//+ (void) initialize
-//{
-//}
-
-
-
 
 #pragma mark awake
 
