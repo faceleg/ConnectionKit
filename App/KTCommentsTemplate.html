@@ -28,7 +28,7 @@
 [[else4]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable Haloscan comments you need to enter your Haloscan ID into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable Haloscan comments, enter your Haloscan ID into the Site Inspector]]</p>
 									</div>
 [[endif5]]
 [[endif4]]
@@ -45,12 +45,29 @@
 [[else4]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable JS-Kit comments you need to enter your email address into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable JS-Kit comments, enter your moderator email address into the Site Inspector]]</p>
 									</div>
 [[endif5]]
 [[endif4]]
-									<!-- comments -->
 [[endif3]]
+[[if master.wantsDisqus]]
+[[if master.disqusShortName]]
+									[[if HTMLGenerationPurpose]]
+									<div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js"></script><noscript><a href="http://[[=&%master.disqusShortName]].disqus.com/?url=ref">View the discussion thread.</a></noscript>
+									[[else5]]
+									<div class="comments">
+										<p>[[`Disqus Comments]]</p>
+									</div>
+									[[endif5]]
+[[else4]]
+[[if HTMLGenerationPurpose==0]]
+									<div class="comments">
+										<p style="color:red;">[[`To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector]]</p>
+									</div>
+[[endif5]]
+[[endif4]]
+[[endif3]]
+									<!-- comments -->
 [[endif2]]
 [[endif]]
 
@@ -58,7 +75,7 @@
 [[if master.commentsProvider==0]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable comments you need to choose a provider in the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable comments, please choose a Weblog Comments provider in the Site Inspector]]</p>
 									</div>
 [[endif3]]
 [[endif2]]

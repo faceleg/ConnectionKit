@@ -643,7 +643,12 @@
 	{
 		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
 		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}	
+	}
+	else
+	{
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
+	}
 }
 
 - (BOOL)wantsDisqus

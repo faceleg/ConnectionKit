@@ -185,13 +185,32 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if master.wantsJSKit]]
 		<script src="http://js-kit.com/comments.js"></script>
 [[endif2]]
+[[if master.wantsDisqus]]
+		<script type="text/javascript">
+		//<![CDATA[
+		(function() {
+				var links = document.getElementsByTagName('a');
+				var query = '?';
+				for(var i = 0; i < links.length; i++) {
+					if(links[i].href.indexOf('#disqus_thread') >= 0) {
+						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+					}
+				}
+				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/get_num_replies.js' + query + '"></' + 'script>');
+			})();
+		//]]>
+		</script>
+[[endif2]]
 [[endif]]
+
 [[if codeInjectionBodyTagEnd]]
 [[=codeInjectionBodyTagEnd]]
 [[endif]]
+
 [[if master.codeInjectionBodyTagEnd]]
 [[=master.codeInjectionBodyTagEnd]]
 [[endif]]
+
 [[if parser.HTMLGenerationPurpose==10]]
 <!-- Quick Look preview sticky-note -->
 	<style type="text/css">
@@ -257,5 +276,6 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 	</div>
 <!-- /Quick Look preview sticky-note -->
 [[endif]]
+
 	</body>
 </html>
