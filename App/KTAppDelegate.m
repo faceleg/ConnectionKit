@@ -90,8 +90,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // NSLocalizedString(@"Other Posts About This", "String_On_Page_Template - description of trackbacks")
 // NSLocalizedString(@"Trackback", "String_On_Page_Template - text for trackback link")
 // NSLocalizedString(@"To enable Haloscan comments you need to enter your Haloscan ID into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"To enable JS-Kit comments you need to enter your email address into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"To enable Disqus comments you need to enter the Disqus short name of the site into the Site Inspector", "Prompt in webview")
 // NSLocalizedString(@"To enable comments you need to choose a provider in the Site Inspector", "Prompt in webview")
-
 
 
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!
