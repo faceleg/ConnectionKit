@@ -51,9 +51,9 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if javascriptURLPath]]
 <script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
 [[endif]]
+[[if HTMLGenerationPurpose]]
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
-[[if HTMLGenerationPurpose]]
 <script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
 [[endif3]]
 [[endif2]]
@@ -180,6 +180,9 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if HTMLGenerationPurpose]]
 [[if documentInfo.googleAnalyticsCode]]
 [[=documentInfo.googleAnalyticsCode]]
+[[endif2]]
+[[if master.wantsJSKit]]
+		<script src="http://js-kit.com/comments.js"></script>
 [[endif2]]
 [[endif]]
 [[if codeInjectionBodyTagEnd]]
