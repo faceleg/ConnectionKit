@@ -51,9 +51,11 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if javascriptURLPath]]
 <script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
 [[endif]]
+[[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
 [[if HTMLGenerationPurpose]]
 <script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
+[[endif3]]
 [[endif2]]
 [[endif]]
 [[extraheaders]]
