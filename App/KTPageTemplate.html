@@ -75,7 +75,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if codeInjectionBodyTagStart]]
 [[=codeInjectionBodyTagStart]]
 [[endif]]
-		<div id="page-container" class="[[=&cssClassName]]">
+		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
 			<div id="page">
 				<div id="page-top" class="[[if master.logoImage]]has-logo[[else]]no-logo[[endif]]">
 					<div id="title">
