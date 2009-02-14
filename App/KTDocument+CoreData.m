@@ -50,9 +50,8 @@
 		// set up KTManagedObjectContext as our context
 		myManagedObjectContext = [[KTManagedObjectContext alloc] init];
 		
-		// ALWAYS set merge policy of context to "on-disk trumps in-memory"
-		// TODO: is setting this policy necessary or proper if we have only one context?
-		//[myManagedObjectContext setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+		// We want the standard document-like behaviour where anything in memory is preferred
+		[myManagedObjectContext setMergePolicy:NSOverwriteMergePolicy];
 		
 		NSManagedObjectModel *model = [self managedObjectModel];
 		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
