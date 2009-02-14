@@ -42,7 +42,7 @@ function dofocus[[=uniqueID]](anInput) {
 [[endif2]]
 [[endforeach]]
 
-<form class="contactElement" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
+<form class="contactElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
 		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
 		<div class="hidden">
 			<label for="contact[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
