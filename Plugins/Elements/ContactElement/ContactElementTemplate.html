@@ -76,7 +76,7 @@ function dofocus[[=uniqueID]](anInput) {
 	
 [[if aField.type==2]]
 			<!-- text area -->
-			<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[=&aField.defaultString]]</textarea>
+			<textarea class="fullWidth" id="contact[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[if aField.defaultString]][[=&aField.defaultString]][[endif6]]</textarea>
 	
 [[else5]]
 [[if aField.type==4]]
