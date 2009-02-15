@@ -431,7 +431,6 @@
 		3C26FAC80898777500FCC13F /* 32favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C26FAC70898777500FCC13F /* 32favicon.png */; };
 		3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FE01096F198E00702991 /* KTReleaseNotesController.m */; };
 		3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */; };
-		3C2EA6D00819F95500C35FCD /* KTDocument+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */; };
 		3C382D610E98170600113137 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3C382D600E98170600113137 /* dsa_pub.pem */; };
 		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; settings = {ATTRIBUTES = (); }; };
 		3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */; };
@@ -1909,7 +1908,6 @@
 		3C27FE01096F198E00702991 /* KTReleaseNotesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTReleaseNotesController.m; sourceTree = "<group>"; };
 		3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAcknowledgmentsController.h; sourceTree = "<group>"; };
 		3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAcknowledgmentsController.m; sourceTree = "<group>"; };
-		3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+CoreData.m"; sourceTree = "<group>"; };
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
@@ -3373,7 +3371,6 @@
 				3C682B110D622F1D00B4D485 /* KTSite.m */,
 				3C202D3307DFC0F000DE4994 /* KTDocument.h */,
 				3C202D3407DFC0F000DE4994 /* KTDocument.m */,
-				3C2EA6CF0819F95500C35FCD /* KTDocument+CoreData.m */,
 				3CA9B30D0804643200C3053B /* KTDocument+Properties.m */,
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
@@ -6047,7 +6044,6 @@
 				3C4328E107F7DC9800DD0D92 /* KTDocWindowController+SplitViews.m in Sources */,
 				3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */,
 				3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */,
-				3C2EA6D00819F95500C35FCD /* KTDocument+CoreData.m in Sources */,
 				CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */,
 				CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */,
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
@@ -6968,7 +6964,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};
@@ -6993,7 +6989,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
@@ -7232,7 +7228,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = ReleaseSymbols;
 		};

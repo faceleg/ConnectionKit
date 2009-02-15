@@ -73,8 +73,8 @@
 	if ([self isDeleted])
 	{
 		NSString *filename = [self committedValueForKey:@"filename"];
-		NSString *sourcePath = [[[[self mediaManager] document] mediaPath] stringByAppendingPathComponent:filename];
-		NSString *destinationPath = [[[[self mediaManager] document] temporaryMediaPath] stringByAppendingPathComponent:filename];
+		NSString *sourcePath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
+		NSString *destinationPath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
 			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));
@@ -116,7 +116,7 @@
 	
 	
 	// Only bother if there is actually a file to move
-	NSString *sourcePath = [[doc temporaryMediaPath] stringByAppendingPathComponent:filename];
+	NSString *sourcePath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
 	if (![fileManager fileExistsAtPath:sourcePath])
 	{
 		KTLog(KTMediaLogDomain,
@@ -128,7 +128,7 @@
 	
 	
 	// Make sure the destination is available
-	NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
+	NSString *destinationPath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
 	if ([fileManager fileExistsAtPath:destinationPath])
 	{
 		KTLog(KTMediaLogDomain,
@@ -158,17 +158,15 @@
 - (NSString *)_currentPath
 {
 	NSString *result = nil;
-	
-	KTDocument *document = [[self mediaManager] document];
-	
+		
 	// Figure out proper values for these two
 	if ([self isTemporaryObject])
 	{
-		result = [[document temporaryMediaPath] stringByAppendingPathComponent:[self filename]];
+		result = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]];
 	}
 	else
 	{
-		result = [[document mediaPath] stringByAppendingPathComponent:[self filename]];
+		result = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:[self filename]];
 	}
 	
     return result;
