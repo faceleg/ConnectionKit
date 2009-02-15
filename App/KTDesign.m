@@ -2,7 +2,7 @@
 //  KTDesign.m
 //  Marvel
 //
-//  Copyright (c) 2004-2005 Biophony, LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 
@@ -289,7 +289,11 @@
 	
 	NSNumber *viewport = [[self bundle] objectForInfoDictionaryKey:@"viewport"];
 	if (viewport) {
-		result = [viewport unsignedIntValue];
+		unsigned probablyResult = [viewport unsignedIntValue];
+		if (probablyResult > 100)
+		{
+			result = probablyResult;
+		}
 	}
 	
 	return result;

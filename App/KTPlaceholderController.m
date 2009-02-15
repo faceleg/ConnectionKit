@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 10/16/06.
-//  Copyright 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPlaceholderController.h"
@@ -82,6 +82,16 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 		case NO_NETWORK:	newBottom = NSMaxY([oDisclosureBottom frame]);		break;
 	}
 	
+	if (LICENSED == windowState)
+	{
+		[myAnimation1 stopAnimation];
+		[myAnimation2 stopAnimation];
+	}
+	else
+	{
+		[myAnimation1 startAnimation];
+	}
+
 	NSWindow *window = [self window];
 	NSRect windowFrame = [window frame];
 	NSRect contentFrame = [NSWindow contentRectForFrameRect:windowFrame styleMask:[window styleMask]];
@@ -143,8 +153,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsAvailableNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
-
-	[self updateLicenseStatus:nil];
 		
 	NSMutableAttributedString *attrString = [[[oHighLink attributedTitle] mutableCopyWithZone:[oHighLink zone]] autorelease];
 	NSRange range = NSMakeRange(0,[attrString length]);
@@ -176,8 +184,9 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	
 	[myAnimation1 setDelegate:self];
 	[myAnimation2 setDelegate:self];
-	[myAnimation1 startAnimation];
-	
+
+	[self updateLicenseStatus:nil];
+
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];

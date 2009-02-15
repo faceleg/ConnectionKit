@@ -2,7 +2,7 @@
 //  KT.h
 //  Sandvox
 //
-//  Copyright (c) 2004-2008, Karelia Software. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -120,7 +120,6 @@ extern NSString *kKTDesignExtension;
 extern NSString *kKTDesignChangedNotification;
 extern NSString *kKTInfoWindowMayNeedRefreshingNotification; // not currently used
 extern NSString *kKTItemSelectedNotification;
-extern NSString *kKTSiteStructureDidChangeNotification;
 
 // Site Outline
 extern NSString *kKTSelectedObjectsKey;

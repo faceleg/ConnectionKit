@@ -2,7 +2,7 @@
 //  KTAbstractPage.h
 //  Sandvox
 //
-//  Copyright (c) 2008, Karelia Software. All rights reserved.
+//  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -39,7 +39,7 @@ KTCollectionPathStyle;
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
-+ (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC;
++ (id)pageWithUniqueID:(NSString *)pageID inManagedObjectContext:(NSManagedObjectContext *)MOC;
 
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 
@@ -60,6 +60,10 @@ KTCollectionPathStyle;
 - (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 - (BOOL)isXHTML;
 
+// Meta tags
+- (NSString *)metaDescription;
+- (void)setMetaDescription:(NSString *)description;
+
 // Staleness
 - (BOOL)isStale;
 - (void)setIsStale:(BOOL)stale;
@@ -67,9 +71,6 @@ KTCollectionPathStyle;
 - (NSData *)publishedDataDigest;
 - (void)setPublishedDataDigest:(NSData *)digest;
 
-
-// Notifications
-- (void)postSiteStructureDidChangeNotification;
 
 @end
 

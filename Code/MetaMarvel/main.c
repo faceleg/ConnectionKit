@@ -3,7 +3,7 @@
 //  MetaMarvel
 //
 //  Created by Terrence Talbot on 3/24/06.
-//  Copyright (c) 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
 

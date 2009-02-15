@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 8/31/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDataMigrator.h"

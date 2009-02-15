@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 19/12/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 
@@ -24,7 +24,7 @@
 #import "KTWebKitCompatibility.h"
 
 #import "KTMediaManager+Internal.h"
-#import "KTMediaContainer.h"
+#import "KTScaledImageContainer.h"
 #import "KTGraphicalTextMediaContainer.h"
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
@@ -457,11 +457,12 @@
 						else
 						{
 							KTAbstractPage *page = [[self parser] currentPage];
-							KTMediaFileUpload *upload = [[mediaContainer file] defaultUpload];
+							KTMediaFile *mediaFile = [mediaContainer file];
+                            KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
 							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
 							
 							// Tell the parser's delegate
-							[[self parser] didEncounterMediaFile:[upload valueForKey:@"file"] upload:upload];
+							[[self parser] didEncounterMediaFile:mediaFile upload:upload];
 						}
 					}
 					

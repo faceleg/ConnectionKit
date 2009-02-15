@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 3/9/06.
-//  Copyright 2006 Biophony LLC. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 //
 // THIS IS A PSEUDO-DOCUMENT TO HANDLE OPENING OF PLUGINS.... IT COPIES THEM TO THE APP SUPPORT DIR.

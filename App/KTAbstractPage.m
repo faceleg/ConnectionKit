@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 28/02/2008.
-//  Copyright 2008 Karelia Software. All rights reserved.
+//  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTAbstractPage.h"
@@ -120,58 +120,12 @@
 #pragma mark -
 #pragma mark Title
 
-/*	We supplement superclass behaviour by implementing page-specific actions
- */
-- (void)setTitleHTML:(NSString *)value
-{
-	[super setTitleHTML:value];
-	
-	
-	// The site structure has changed as a result of this
-	[self postSiteStructureDidChangeNotification];
-}
-
 // For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle
 {
 	BOOL result = ![self isRoot];
 	return result;
 }
-
-
-#pragma mark -
-#pragma mark meta description
-
-#define MAX_META_DESCRIPTION_LENGTH 156
-
-- (int) metaDescriptionCountdown
-{
-	int len = [[self valueForKey:@"metaDescription"] length];
-	return MAX_META_DESCRIPTION_LENGTH - len;
-}
-
-
-#define META_DESCRIPTION_WARNING_ZONE 10
-
-
-
-- (NSColor *)metaDescriptionCharCountColor
-{
-	// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
-	// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
-	int len = [[self valueForKey:@"metaDescription"] length];
-	int bottom = MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE + 1;	// 147
-	int howBad = len - bottom;
-	howBad = MAX(howBad, 0);
-	howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
-	float howRed = 0.1 * howBad;
-	
-//	NSLog(@"%d make it %.2f red", len, howRed);
-	
-	NSColor *newColor = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
-	return newColor;
-}
-
 
 #pragma mark -
 #pragma mark HTML
@@ -249,6 +203,19 @@
 }
 
 #pragma mark -
+#pragma mark Meta tags
+
+- (NSString *)metaDescription
+{
+	return [self valueForUndefinedKey:@"metaDescription"];
+}
+
+- (void)setMetaDescription:(NSString *)description
+{
+	[self setValue:description forUndefinedKey:@"metaDescription"];
+}
+
+#pragma mark -
 #pragma mark Staleness
 
 - (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
@@ -273,17 +240,6 @@
 - (void)setPublishedDataDigest:(NSData *)digest
 {
     [self setValue:digest forUndefinedKey:@"publishedDataDigest"];
-}
-
-#pragma mark -
-#pragma mark Notifications
-
-/*	A convenience method for posting the kKTSiteStructureDidChangeNotification
- */
-- (void)postSiteStructureDidChangeNotification;
-{
-	KTSite *site = [self valueForKey:@"site"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTSiteStructureDidChangeNotification object:site];
 }
 
 @end

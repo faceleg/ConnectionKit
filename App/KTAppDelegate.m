@@ -2,7 +2,7 @@
 //  KTAppDelegate.m
 //  Marvel
 //
-//  Copyright (c) 2004-2008 Karelia Software. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 /*
@@ -186,29 +186,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
 {
-// TODO: load a dictionary from the 
-	NSArray *designs = nil; // [nil objectForKey:@"Designs"];
-	NSImage *designImage = [NSImage imageNamed:@"designPlaceholder"];
-	float scaleFactor = [controller scaleFactor];
-	
-	NSMutableArray *list = [NSMutableArray array];
-	
-	//  install (bool), icon (image), title, InfoHTML,
-	NSEnumerator *theEnum = [designs objectEnumerator];
-	NSDictionary *theDict;
-
-	while ((theDict = [theEnum nextObject]) != nil)
-	{
-		NSMutableDictionary *adjustedDict = [controller adjustedDictionaryFromDictionary:theDict
-																			 placeholder:designImage
-																					size:NSMakeSize(100.0 * scaleFactor,65.0 * scaleFactor)
-																				  radius:scaleFactor * 6.0];
-		if (adjustedDict)
-		{
-			[list addObject:adjustedDict];
-		}
-	}
-	return list;
+	return nil;
 }
 
 
@@ -520,7 +498,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// debugging domains -- we have to set default values to get them to show up in the table.
 	NSArray *domains = [NSArray arrayWithObjects:
-		ControllerDomain, CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
+		/*ControllerDomain,*/ CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
 		/* StreamDomain, */ CKInputStreamDomain, CKOutputStreamDomain, /* SSLDomain, */ CKQueueDomain, KTMediaLogDomain, nil];
 	
 	NSEnumerator *theEnum = [domains objectEnumerator];

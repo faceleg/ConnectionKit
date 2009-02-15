@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/25/05.
-//  Copyright (c) 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTHostProperties.h"
@@ -73,7 +73,7 @@
 
 - (NSString *)domainNameDashes
 {
-	NSString *result = @"";
+	NSString *result = @"host-not-yet-set";	// we need to have some string here for the ID
     
     NSURL *siteURL = [self siteURL];
     if (siteURL)
@@ -98,6 +98,10 @@
         }
         
         result = [buffer stringByRemovingCharactersNotInSet:[NSCharacterSet alphanumericASCIIUnderlineCharacterSet]];
+		if ([result hasSuffix:@"_"])
+		{
+			result = [result substringWithRange:NSMakeRange(0,[result length]-1)];
+		}
     }
     
     return result;

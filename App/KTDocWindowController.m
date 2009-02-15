@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/4/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDocWindowController.h"
@@ -1831,6 +1831,10 @@ from representedObject */
 
 - (void)undoManagerWillCloseUndoGroup:(NSNotification *)notification
 {
+	// I have disabled this code for now as it forces any text editing to record undo operations
+	// character-by-character. Mike.
+	
+	/*
 	NSUndoManager *undoManager = [notification object];
 	
 	// When ending the top level undo group, record the selected pages
@@ -1849,7 +1853,7 @@ from representedObject */
 		}
 		
 		[[undoManager prepareWithInvocationTarget:self] undo_selectPages:selectedPages scrollPoint:scrollPoint];
-	}
+	}*/
 }
 
 #pragma mark -

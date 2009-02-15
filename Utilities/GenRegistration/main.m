@@ -3,7 +3,7 @@
 //  GenRegistration
 //
 //  Created by Dan Wood on 10/27/05.
-//  Copyright Biophony LLC 2005 . All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

@@ -3,7 +3,7 @@
 //  LeopardQuartzComposerTester
 //
 //  Created by Mike on 28/10/2007.
-//  Copyright Karelia Software 2007. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

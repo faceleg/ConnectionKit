@@ -2,7 +2,7 @@
 //  KTPagelet.m
 //  KTComponents
 //
-//  Copyright (c) 2004-2005 Biophony LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPagelet+Internal.h"
@@ -202,13 +202,6 @@
 - (BOOL)showBorder { return [self wrappedBoolForKey:@"showBorder"]; }
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
-
-/*!	Pass on messages to set modification data of a pagelet to its containing page, who really cares
- */
-- (void)setLastModificationDate:(NSDate *)value 
-{
-	[[self page] setWrappedValue:value forKey:@"lastModificationDate"];
-}
 
 #pragma mark -
 #pragma mark Page

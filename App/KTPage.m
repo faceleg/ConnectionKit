@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 3/10/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPage+Internal.h"
@@ -304,6 +304,32 @@
 			[self setValue:date forKey:@"creationDate"];
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Dates
+
+/*  When updating one of the plug-in's properties, also update the modification date
+ */
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    [super setValue:value forUndefinedKey:key];
+    
+    
+    static NSSet *excludedKeys;
+    if (!excludedKeys)
+    {
+        excludedKeys = [[NSSet alloc] initWithObjects:
+                        @"shouldUpdateFileNameWhenTitleChanges",
+                        @"metaDescription",
+                        @"publishedDataDigest",
+                        nil];
+    }
+    
+    if (![excludedKeys containsObject:key])
+    {
+        [self setValue:[NSDate date] forKey:@"lastModificationDate"];
+    }
 }
 
 #pragma mark -

@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Dan Wood on 8/9/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPage.h"
@@ -127,9 +127,6 @@
 		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
 	}
 	
-	
-	// By toggling draft status, the site structure must have changed
-	[self postSiteStructureDidChangeNotification];
 	
 	// This may also affect the site menu
 	if ([self includeInSiteMenu])
@@ -354,8 +351,8 @@
 {
 	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];
 	NSDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
-	? [self wrappedValueForKey:@"lastModificationDate"]
-	: [self wrappedValueForKey:@"creationDate"];
+	? [self valueForKey:@"lastModificationDate"]
+	: [self valueForKey:@"creationDate"];
 	
 	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
 	[formatter setDateStyle:aStyle]; 

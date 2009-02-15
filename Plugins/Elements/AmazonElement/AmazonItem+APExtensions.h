@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 29/01/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Simple extension to the AmazonItem class to provide convenience
 //	methods for retrieving a product's creator and release date.

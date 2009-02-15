@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/6/06.
-//  Copyright 2006 Biophony LLC. All rights reserved.
+//  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 #import <Cocoa/Cocoa.h>
 #import "KTReleaseNotesController.h"
@@ -44,7 +44,7 @@
 	[[oWebView mainFrame] loadRequest:
 	 [NSURLRequest requestWithURL:[self URLToLoad]
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
-				  timeoutInterval:10.0]];
+				  timeoutInterval:20.0]];
     
 	[[self window] setTitle:NSLocalizedString(@"Sandvox Release Notes", "Release Notes Window Title")];
     [[self window] setFrameAutosaveName:@"ReleaseNotesWindow"];    

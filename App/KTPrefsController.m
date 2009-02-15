@@ -2,7 +2,7 @@
 //  KTPrefsController.m
 //  Marvel
 //
-//  Copyright (c) 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 // $Id$

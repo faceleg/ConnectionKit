@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 7/20/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDesignPickerView.h"

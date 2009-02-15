@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 02/01/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Represents a general Amazon product as the user will see it in the Inspector.
 //	When using -setProductDetailsFromAmazonItem: calling -loadThumbnail will download

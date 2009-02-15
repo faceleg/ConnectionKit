@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 12/12/2008.
-//  Copyright 2008 Karelia Software. All rights reserved.
+//  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTPublishingEngine.h"
@@ -276,7 +276,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)createConnection
 {
-    id <CKConnection> result = [[CKFileConnection alloc] init];
+    id <CKConnection> result = nil; // FIXME: [[CKFileConnection alloc] init];
     [self setConnection:result];
 	[result release];
 }
@@ -336,7 +336,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		
 		return;
 	}
-	else if ([error code] == kSetPermissions) // File connection set permissions failed ... ignore this (why?)
+	else if (NO) // [error code] == kSetPermissions) // File connection set permissions failed ... ignore this (why?)
 	{
 		return;
 	}
@@ -494,6 +494,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
+    
+    if ([self hasFinished]) return; // Engine may be cancelled mid-parse. If so, go no further.
 	
 	NSString *charset = [[masterPage master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];
@@ -647,7 +649,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
-    if (upload)
+    // It's possible for the connection to be cancelled mid-parse. If so, just ignore the media
+    if (upload && ![self hasFinished])
 	{
 		[self uploadMediaIfNeeded:upload];
 	}

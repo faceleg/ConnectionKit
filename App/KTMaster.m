@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 23/10/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTMaster+Internal.h"
@@ -181,7 +181,7 @@
 - (NSString *)defaultCopyrightHTML
 {
 	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"copyrightHTML" language:[self valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"<p>Parting Words (copyright, contact information, etc.)</p>", @"Default text for page bottom")];
+		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"Parting Words (copyright, contact information, etc.)", @"Default text for page bottom")];
 	return result;
 }
 

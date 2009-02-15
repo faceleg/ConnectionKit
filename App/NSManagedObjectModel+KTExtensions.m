@@ -3,7 +3,7 @@
 //  ModelTester
 //
 //  Created by Terrence Talbot on 2/28/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "NSManagedObjectModel+KTExtensions.h"

@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/10/04.
-//  Copyright 2004 Biophony, LLC. All rights reserved.
+//  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
 /*
@@ -1137,7 +1137,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSURLRequest *theRequest
 		=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:fullURLString]
 							 cachePolicy:NSURLRequestReloadIgnoringCacheData
-						 timeoutInterval:10.0];
+						 timeoutInterval:20.0];
 	// create the connection with the request and start loading the data
 	[NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
 	NSURLConnection *theConnection=[NSURLConnection connectionWithRequest:theRequest delegate:self];
@@ -1175,7 +1175,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[myTestConnection deleteFile:file];
 }
 
-/*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to biophony.
+/*!	File was deleted.  We have passed the test.  Now save this marker, also maybe upload host info to our server.
 */
 - (void)connection:(id <CKConnection>)con didDeleteFile:(NSString *)path error:(NSError *)error
 {
@@ -2261,7 +2261,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSURLRequest *theRequest
 				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
 									 cachePolicy:NSURLRequestReloadIgnoringCacheData
-								 timeoutInterval:10.0];
+								 timeoutInterval:20.0];
 				// create the connection with the request and start loading the data
 				theConnection=[NSURLConnection connectionWithRequest:theRequest delegate:self];
 			}

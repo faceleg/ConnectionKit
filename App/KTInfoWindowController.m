@@ -4,7 +4,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/4/05.
-//  Copyright 2005 Biophony LLC. All rights reserved.
+//  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTInfoWindowController.h"

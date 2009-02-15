@@ -310,6 +310,7 @@
 		2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B71D0EF91E2B00F91398 /* KTExportEngine.m */; };
 		2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */; };
 		2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */; };
+		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
 		279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C59B05908A9B8E70076C6DC /* 13x13_empty.png */; };
 		279FF2BE0EF27699009F6A16 /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */; };
 		279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */; };
@@ -6324,6 +6325,7 @@
 				27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */,
 				2777DDFA0F24F946001F1176 /* KTHostSetupWindowController.m in Sources */,
 				2777DDFE0F24F961001F1176 /* KTConnectionTest.m in Sources */,
+				279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 12/20/07.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
 #import "KTDesign.h"

@@ -3,7 +3,7 @@
 //  Amazon List
 //
 //  Created by Mike on 03/02/2007.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	Controls the Inspector interface of the pagelet. Its function is
 //	to ensure the Inspector looks right to the user and to kick off loading of the
