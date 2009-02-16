@@ -111,8 +111,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setClosing:(BOOL)aFlag;
 
-- (void)setLocalTransferController:(KTLocalPublishingEngine *)aLocalTransferController;
-- (void)setRemoteTransferController:(KTLocalPublishingEngine *)aRemoteTransferController;
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
@@ -233,10 +231,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)dealloc
 {
-	// no more notifications
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-				
-    [_site release];
+	[_site release];
     
     [myMediaManager release];
 	
@@ -898,7 +893,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	
-	// CRITICAL: we need to signal -writeToURL: that we're closing
+	// CRITICAL: we need to signal to the media manager that we're closing
 	[self setClosing:YES];
 	
 	

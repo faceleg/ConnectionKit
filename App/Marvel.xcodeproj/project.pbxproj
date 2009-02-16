@@ -1045,7 +1045,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* LeopardStuff */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = LeopardStuff;
 		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
