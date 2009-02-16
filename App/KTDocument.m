@@ -871,10 +871,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(id)contextInfo
 {
-	LOGMETHOD;
+	//LOGMETHOD;
 	
-	
-	// In order to inform the delegate, we will have to send this callback at some point
+    
+    // In order to inform the delegate, we will have to send this callback at some point
 	NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:shouldCloseSelector];
 	NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
 	[callback setTarget:delegate];
@@ -908,6 +908,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self windowController] closeLinkPanel];
 	}
 	
+	
+    // Switch to standard document behaviour here if autosave is disabled
+	if ([[NSDocumentController sharedDocumentController] autosavingDelay] == 0)
+    {
+        return [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
+    }
+    
+    
+    
 	
 	// Garbage collect media. Killing plugin inspector views early is a bit of a hack to stop it accessing
     // any garbage collected media.
