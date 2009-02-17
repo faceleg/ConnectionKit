@@ -202,7 +202,7 @@
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
 	<key>SUFeedURL</key>
-	<string>http://launch.karelia.com/alphacast.php</string>
+	<string>http://launch.karelia.com/appcast.php</string>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT}</string>
 	<key>SUIncludeProfile</key>
