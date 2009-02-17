@@ -620,6 +620,21 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 }
 
+- (IBAction)submitSiteToDirectory:(id)sender;
+{
+	NSURL *siteURL = [[[[self document] documentInfo] root] URL];
+	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
+	parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+		[siteURL absoluteString], @"url",
+			gRegistrationString, @"reg",
+							  nil]];
+	
+	if (submissionURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:submissionURL];
+	}
+}
+
 #pragma mark -
 #pragma mark Other
 
@@ -1461,6 +1476,12 @@ from representedObject */
 	{
 		NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
 		return (nil != pageURL);
+	}
+
+	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
+	{
+		NSURL *siteURL = [[[[self document] documentInfo] hostProperties] siteURL];
+		return (nil != siteURL);
 	}
 	
 	// Window menu
