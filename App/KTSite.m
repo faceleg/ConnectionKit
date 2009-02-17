@@ -96,16 +96,6 @@
 	[[NSUserDefaults standardUserDefaults] setInteger:copy forKey:@"copyMediaOriginals"];
 }
 
-- (NSSet *)requiredBundlesIdentifiers
-{
-	return [self transientValueForKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
-}
-
-- (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers
-{
-	[self setTransientValue:identifiers forKey:@"requiredBundlesIdentifiers" persistentArchivedDataKey:@"requiredBundlesData"];
-}
-
 - (NSDictionary *)metadata
 {
 	return [self transientValueForKey:@"metadata" persistentPropertyListKey:@"metadataData"];

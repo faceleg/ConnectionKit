@@ -293,26 +293,26 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return _managedObjectContext;
 }
 
+/*  Called whenever a document is opened *and* when a new document is first saved.
+ */
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)URL
                                            ofType:(NSString *)fileType
                                modelConfiguration:(NSString *)configuration
                                      storeOptions:(NSDictionary *)storeOptions
                                             error:(NSError **)outError
 {
-	BOOL result = YES;
-	
-	//LOGMETHOD;
-	
-    // NB: called whenever a document is opened *and* when a document is first saved
-    // so, because of the order of operations, we have to store metadata here, too
+	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
+	OBPRECONDITION([[storeCoordinator persistentStores] count] == 0);   // This method should only be called the once
+    
+    
+    BOOL result = YES;
 	
 	/// and we compute the sqlite URL here for both read and write
 	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
 	
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
-	NSPersistentStoreCoordinator *psc = [[self managedObjectContext] persistentStoreCoordinator];
-	result = (nil != [psc addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+	result = (nil != [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
 									   configuration:nil
 												 URL:storeURL
 											 options:nil
@@ -329,71 +329,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 														error:outError]);
 	}
 	
-	
-	
-	if ( result )
-    {
-        // handle datastore open, grab site and root
-        if ( nil == [self site] )
-        {
-			// fetch and set site
-            KTSite *site = [[self managedObjectContext] site];
-            if ( (nil != site) && [site isKindOfClass:[KTSite class]] )
-            {
-                _site = [site retain];
-                result = YES;
-            }
-            else
-            {
-                result = NO;
-            }
-            
-			// if we're good, fetch and set root and root's document
-			if ( result )
-			{
-				KTPage *root = [[self managedObjectContext] root];
-				if ( (nil != root) && [root isKindOfClass:[KTPage class]] )
-				{
-					result = YES;
-				}
-				else
-				{
-					result = NO;
-				}
-			}
-            
-            // if we're good, make sure all our required bundles have been loaded
-            if ( result )
-            {
-                NSEnumerator *e = [[[self site] requiredBundlesIdentifiers] objectEnumerator];
-                NSString *bundleIdentifier;
-                while ( bundleIdentifier  = [e nextObject] )
-                {
-                    NSBundle *bundle = [[KSPlugin pluginWithIdentifier:bundleIdentifier] bundle];
-                    if ( nil != bundle )
-                    {
-                        // NB: bundles without delegates may not have a principal class
-                        if ( Nil != [bundle principalClassIncludingOtherLoadedBundles:YES] )
-                        {
-                            [bundle load];
-                        }
-                    }
-                    else
-                    {
-                        NSLog(@"unable to locate required plugin: %@", bundleIdentifier);
-                    }
-                }
-            }
-        }
-		
-		/// this should be active for document open and save, but not migration
-        //		// store metadata if it doesn't exist yet
-        //		NSDictionary *metadata = [psc metadataForPersistentStore:theStore];
-        //		if ( nil == [metadata valueForKey:kKTMetadataModelVersionKey] )
-        //		{
-        //			result = [self setMetadataForStoreAtURL:storeURL error:error];
-        //		}
-    }
 	
 	return result;
 }
@@ -415,8 +350,21 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	// Should only be called the once
     BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
     
+    
+    // Grab the site object
     if (result)
 	{
+        _site = [[[self managedObjectContext] site] retain];
+        if (!_site)
+        {
+            if (outError) *outError = nil;  // TODO: Return a proper error object
+            result = NO;
+        }
+    }
+    
+    
+    if (result)
+    {
 		// Load up document display properties
 		[self setDisplaySmallPageIcons:[[self site] boolForKey:@"displaySmallPageIcons"]];
 		
