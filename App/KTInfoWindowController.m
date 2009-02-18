@@ -893,19 +893,13 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (IBAction)chooseCommentsProvider:(id)sender
 {
 	KTCommentsProvider provider = [sender selectedTag];
-	
-	// FIXME: disable Disqus for beta 1
-	// remove once Disqus is working
-	if ( KTCommentsProviderDisqus == provider )
-	{
-		provider = KTCommentsProviderNone;
-		[oCommentsProviderPopup selectItemWithTag:provider];
-	}
-	
 	[[[self selectedLevel] master] setCommentsProvider:provider];
-	
-	// remove once Disqus is working
-	[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderDisqus]] setEnabled:NO];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if ( KTCommentsProviderDisqus == [menuItem tag] ) return NO;
+	return YES;
 }
 
 #pragma mark -
