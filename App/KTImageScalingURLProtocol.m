@@ -119,8 +119,6 @@ static NSURLCache *_sharedCache;
                                                         mode:scalingMode
                                                  opaqueEdges:YES];
     OBASSERT(scaledImage);
-    [scaledImage retain];   // Otherwise releasing sourceImage might deallocate scaledImage
-    [sourceImage release];
     
     
     // Sharpen if needed
@@ -142,7 +140,7 @@ static NSURLCache *_sharedCache;
                                                 640, 640,
                                                 8,
                                                 640 * 4,
-                                                CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
+                                                colorSpace,
                                                 kCGImageAlphaPremultipliedLast);
         OBASSERT(graphicsContext);
         CGColorSpaceRelease(colorSpace);
@@ -168,7 +166,7 @@ static NSURLCache *_sharedCache;
                                                 newContextWidth, newContextHeight,
                                                 8,
                                                 newContextWidth * 4,
-                                                CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
+                                                colorSpace,
                                                 kCGImageAlphaPremultipliedLast);
         OBASSERT(graphicsContext);
         CGColorSpaceRelease(colorSpace);
@@ -183,7 +181,6 @@ static NSURLCache *_sharedCache;
     // Render a CGImage
     CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
     OBASSERT(finalImage);
-    [scaledImage release];
     
     
     // Convert to data
@@ -199,10 +196,12 @@ static NSURLCache *_sharedCache;
     CGImageDestinationAddImage(imageDestination,
                                finalImage,
                                (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
-    CGImageRelease(finalImage);
     
     OBASSERT(CGImageDestinationFinalize(imageDestination));
     CFRelease(imageDestination);
+    CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
+    [sourceImage release];
+    
     
     
     // Construct new cached response
@@ -220,15 +219,16 @@ static NSURLCache *_sharedCache;
     
     // Cache result
     NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
+    [response release];
     [imageData release];
+    
 	[[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
+    [cachedResponse release];
     
     
     // Tidy up
     [[self client] URLProtocolDidFinishLoading:self];
 	
-    [cachedResponse release];
-    [response release];
 }
 
 - (void)startLoading
