@@ -92,12 +92,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
 
-// Spotlight
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
-
-
 // Document URLs etc.
-+ (NSString *)defaultStoreType;
 + (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI;
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;

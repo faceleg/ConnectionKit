@@ -335,9 +335,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
 {
-	// we want to limit the store type to only the default
-	// otherwise Cocoa will put up an accessory view in the save panel
-	return [[self class] defaultStoreType];
+	return NSSQLiteStoreType;
 }
 
 #pragma mark -
@@ -385,185 +383,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 
 #pragma mark -
-#pragma mark Metadata
-
-/*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL
-						   error:(NSError **)outError
-{
-	//LOGMETHOD;
-	
-	BOOL result = NO;
-	NSManagedObjectContext *context = [self managedObjectContext];
-	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
-    
-	@try
-	{
-		id theStore = [coordinator persistentStoreForURL:aStoreURL];
-		if ( nil != theStore )
-		{
-			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
-			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
-			
-			// remove old keys that might have been in use by older versions of Sandvox
-			[metadata removeObjectForKey:(NSString *)kMDItemDescription];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
-			
-			// set ALL of our metadata for this store
-			
-			//  kMDItemAuthors
-			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
-			if ( (nil == author) || [author isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
-			}
-			else
-			{
-				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
-			}
-			
-			//  kMDItemCreator (Sandvox is the creator of this site document)
-			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
-            
-			// kMDItemKind
-			[metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
-			
-			/// we're going to fault every page, use a local pool to release them quickly
-			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-			
-			//  kMDItemNumberOfPages
-			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
-			unsigned int pageCount = 0;
-			if ( nil != pages )
-			{
-				pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
-			}
-			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
-			
-			//  kMDItemTextContent (free-text account of content)
-			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
-			if ( nil == subtitle )
-			{
-				subtitle = @"";
-			}
-			subtitle = [subtitle stringByConvertingHTMLToPlainText];
-			
-			// add unique page titles
-			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
-			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
-			unsigned int i;
-			for ( i=0; i<[pageTitles count]; i++ )
-			{
-				NSString *pageTitle = [pageTitles objectAtIndex:i];
-				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
-				if ( nil != pageTitle )
-				{
-					[textContent appendFormat:@" %@", pageTitle];
-				}
-			}
-            
-			// spotlightHTML as part of textContent
-			for ( i=0; i<[pages count]; i++ )
-			{
-				KTPage *page = [pages objectAtIndex:i];
-				NSString *spotlightText = [page spotlightHTML];
-				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
-				{
-					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
-					[textContent appendFormat:@" %@", spotlightText];
-				}
-			}
-			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
-			
-			//  kMDItemKeywords (keywords of all pages)
-			NSMutableSet *keySet = [NSMutableSet set];
-			for (i=0; i<[pages count]; i++)
-			{
-				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
-			}
-            
-			if ( (nil == keySet) || ([keySet count] == 0) )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemKeywords];
-			}
-			else
-			{
-				[metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
-			}
-			[localPool release];
-			
-			//  kMDItemTitle
-			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
-			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
-			}
-			else
-			{
-				siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
-				[metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
-			}
-			
-			// custom attributes
-			
-			//  kKTMetadataModelVersionKey
-			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
-			
-			// kKTMetadataAppCreatedVersionKey should only be set once
-			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
-			{
-				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
-			}
-			
-			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
-			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
-			
-			// replace the metadata in the store with our updates
-			// NB: changes to metadata through this method are not pushed to disk until the document is saved
-			[coordinator setMetadata:metadata forPersistentStore:theStore];
-			
-			result = YES;
-		}
-		else
-		{
-			NSLog(@"error: unable to setMetadataForStoreAtURL:%@ (no persistent store)", [aStoreURL path]);
-			NSString *path = [aStoreURL path];
-			NSString *reason = [NSString stringWithFormat:@"(%@ is not a valid persistent store.)", path];
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-												code:134070 // NSPersistentStoreOperationError
-											userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-													  reason, NSLocalizedDescriptionKey,
-													  nil]];
-			}
-			result = NO;
-		}
-	}
-	@catch (NSException * e)
-	{
-		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
-		if (outError)
-		{
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-											code:134070 // NSPersistentStoreOperationError
-										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-												  [aStoreURL path], @"path",
-												  [e name], @"name",
-												  [e reason], NSLocalizedDescriptionKey,
-												  nil]];
-		}
-		result = NO;
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Public Functions
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
@@ -576,13 +395,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     return result;
-}
-
-+ (NSString *)defaultStoreType
-{
-	// options are NSSQLiteStoreType, NSXMLStoreType, NSBinaryStoreType, or NSInMemoryStoreType
-	// also, be sure to set (and match) Store Type in application target properties
-	return NSSQLiteStoreType;
 }
 
 #pragma mark -
@@ -600,29 +412,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
 	{
-		// Figure the filename
-		NSString *filename = @"datastore";
-		NSString *defaultStoreType = [KTDocument defaultStoreType];
-		if ([defaultStoreType isEqualToString:NSSQLiteStoreType])
-		{
-			filename = [filename stringByAppendingPathExtension:@"sqlite3"];
-		}
-		else if ([defaultStoreType isEqualToString:NSXMLStoreType])
-		{
-			filename = [filename stringByAppendingPathExtension:@"xml"];
-		}
-		else if ([defaultStoreType isEqualToString:NSBinaryStoreType])
-		{
-			filename = [filename stringByAppendingPathExtension:@"bplist"];
-		}
-		else
-		{
-			filename = [filename stringByAppendingPathExtension:@"unknownType"];
-		}
-		
-		
-		// Build the URL
-		result = [inURL URLByAppendingPathComponent:filename isDirectory:NO];
+		result = [inURL URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
 	}
 	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
@@ -754,6 +544,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
 }
 
+// TODO: Is this method strictly necessary? Seems kinda hackish to me
 - (void)processPendingChangesAndClearChangeCount
 {
 	LOGMETHOD;
