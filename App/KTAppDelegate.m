@@ -706,7 +706,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable];
+		// FIXME: disabling this for beta 1
+		return NO;
+		//return [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(showReleaseNotes:))
 	{
@@ -741,6 +743,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		//}
 		return YES;	// OK regardless
 	}
+
 	return YES;
 }
 
@@ -984,7 +987,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
 	
 	KSProgressPanel *progressPanel = nil;
     @try
