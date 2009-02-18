@@ -53,16 +53,18 @@ enum { SEGMENT_NONE = -1, SEGMENT_SITE, SEGMENT_PAGE, SEGMENT_SELECTION };
 	IBOutlet NSTextField		*oPageMenuTitleField;
 	
 
-	IBOutlet NSPopUpButton			*oIndexPopup;
-	IBOutlet NSPopUpButton			*oSortPopup;
-	IBOutlet NSPopUpButton			*oCollectionStylePopup;
-	BOOL							myIgnoreCollectionStyleChanges;
+	IBOutlet NSPopUpButton		*oIndexPopup;
+	IBOutlet NSPopUpButton		*oSortPopup;
+	IBOutlet NSPopUpButton		*oCollectionStylePopup;
+	BOOL						myIgnoreCollectionStyleChanges;
 
-	IBOutlet NSPopUpButton			*oLanguagePopup;
-	IBOutlet NSTextField			*oLanguageCodeField;
+	IBOutlet NSPopUpButton		*oLanguagePopup;
+	IBOutlet NSTextField		*oLanguageCodeField;
 	
-	IBOutlet NSTextView				*oGoogleVerificationExplanationTextView;
-	IBOutlet NSTextView				*oGoogleAnalyticsExplanationTextView;
+	IBOutlet NSTextView			*oGoogleVerificationExplanationTextView;
+	IBOutlet NSTextView			*oGoogleAnalyticsExplanationTextView;
+	
+	IBOutlet NSPopUpButton		*oCommentsProviderPopup;
 
 	int mySelectedSegmentIndex;
 	

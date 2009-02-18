@@ -132,6 +132,8 @@
 				<string>NSPopUpButton</string>
 				<key>oCollectionView</key>
 				<string>NSView</string>
+				<key>oCommentsProviderPopup</key>
+				<string>NSPopUpButton</string>
 				<key>oCustomIndexView</key>
 				<string>NSView</string>
 				<key>oDividerView</key>
