@@ -1164,7 +1164,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // UI
-    [[self windowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
+    [[self mainWindowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
     
         
     // Do the save in the background
@@ -1188,7 +1188,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [fileType release];
     
     // UI
-    [[self windowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
+    [[self mainWindowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
     
     // Perform callback. Does nothing if callback is nil
     [callback setArgument:&didSave atIndex:3];
@@ -1232,7 +1232,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
 		
 		// confirm with silencing confirm sheet
-		[[self confirmWithWindow:[[self windowController] window]
+		[[self confirmWithWindow:[[self mainWindowController] window]
 					silencingKey:@"SilenceSaveDocumentSnapshot"
 					   canCancel:YES 
 						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")

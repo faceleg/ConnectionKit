@@ -1148,7 +1148,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                             if (nil != previouslyOpenDocument)
                             {
                                 // remove its window controller
-                                NSWindowController *windowController = [previouslyOpenDocument windowController];
+                                NSWindowController *windowController = [previouslyOpenDocument mainWindowController];
                                 if (nil != windowController)
                                 {
                                     [previouslyOpenDocument removeWindowController:windowController];
@@ -1522,15 +1522,15 @@ IMPLEMENTATION NOTES & CAUTIONS:
     // position on screen
     if ( nil != currentDocument && [currentDocument isKindOfClass:[KTDocument class]] )
     {
-        NSWindow *currentWindow = [[currentDocument windowController] window];
+        NSWindow *currentWindow = [[currentDocument mainWindowController] window];
         NSRect currentFrame = [currentWindow frame];
         NSPoint currentTopLeft = NSMakePoint(currentFrame.origin.x,(currentFrame.origin.y+currentFrame.size.height));
         NSPoint newTopLeft = [currentWindow cascadeTopLeftFromPoint:currentTopLeft];
-        [[[newDocument windowController] window] setFrameTopLeftPoint:newTopLeft];
+        [[[newDocument mainWindowController] window] setFrameTopLeftPoint:newTopLeft];
     }
     else
     {
-        [[[newDocument windowController] window] center];
+        [[[newDocument mainWindowController] window] center];
     }
 	    
     return newDocument;    

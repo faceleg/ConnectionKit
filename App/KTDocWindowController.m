@@ -297,7 +297,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Controller Chain
 
-- (id <KTDocumentControllerChain>)parentController { return [self document]; }
+- (id <KTDocumentControllerChain>)parentController { return nil; }
 
 - (NSArray *)childControllers { return [[_childControllers copy] autorelease]; }
 

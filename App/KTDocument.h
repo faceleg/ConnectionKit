@@ -35,7 +35,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
 
-@interface KTDocument : NSDocument <KTDocumentControllerChain>
+@interface KTDocument : NSDocument //<KTDocumentControllerChain>
 {
 @private
 	
@@ -102,7 +102,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (IBAction)setupHost:(id)sender;
 
 // Controller chain
-- (KTDocWindowController *)windowController;
+- (KTDocWindowController *)mainWindowController;
 
 - (BOOL)isClosing;
 

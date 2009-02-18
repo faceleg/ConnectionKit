@@ -383,21 +383,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 
 #pragma mark -
-#pragma mark Public Functions
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-    BOOL result = [super automaticallyNotifiesObserversForKey:key];
-    
-    if ([key isEqualToString:@"windowController"])
-    {
-        result = NO;
-    }
-    
-    return result;
-}
-
-#pragma mark -
 #pragma mark Document paths
 
 /*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
@@ -469,7 +454,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark Controller Chain
 
 /*! return the single KTDocWindowController associated with this document */
-- (KTDocWindowController *)windowController
+- (KTDocWindowController *)mainWindowController
 {
 	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
 	return myDocWindowController;
@@ -499,12 +484,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
 		// cleanup
 
-		[[self windowController] selectionDealloc];
+		[[self mainWindowController] selectionDealloc];
 		
 		// suspend webview updating
 		//[[[self windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];
 		//[NSObject cancelPreviousPerformRequestsWithTarget:[[self windowController] webViewController] selector:@selector(doDelayedRefreshWebViewOnMainThread) object:nil];
-		[[self windowController] setSelectedPagelet:nil];
+		[[self mainWindowController] setSelectedPagelet:nil];
 		
 		// suspend outline view updating
 		///[[self windowController] siteOutlineDeallocSupport];
@@ -618,8 +603,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	
 	// Stop editing
-	BOOL result = [[[self windowController] webViewController] commitEditing];
-	if (result) result = [[[self windowController] window] makeFirstResponder:nil];
+	BOOL result = [[[self mainWindowController] webViewController] commitEditing];
+	if (result) result = [[[self mainWindowController] window] makeFirstResponder:nil];
 	
 	if (!result)
 	{
@@ -637,9 +622,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	
 	// Close link panel
-	if ([[[self windowController] linkPanel] isVisible])
+	if ([[[self mainWindowController] linkPanel] isVisible])
 	{
-		[[self windowController] closeLinkPanel];
+		[[self mainWindowController] closeLinkPanel];
 	}
 	
 	
@@ -654,7 +639,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	// Garbage collect media. Killing plugin inspector views early is a bit of a hack to stop it accessing
     // any garbage collected media.
-    [[[self windowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
+    [[[self mainWindowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
 	[[self mediaManager] garbageCollect];
 	
 	
@@ -754,9 +739,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	// Enable the Edit Raw HTML for blocks of editable HTML, or if the selected pagelet or page is HTML.
 	if ( [toolbarItem action] == @selector(editRawHTMLInSelectedBlock:) )
 	{
-		if ([self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock.DOMNode"]) return YES;
+		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
 		
-		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
+		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
 		if (nil != selPagelet)
 		{
 			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
@@ -764,7 +749,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 				return YES;
 			}
 		}
-		KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
+		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
 		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
 		{
 			return YES;
@@ -804,9 +789,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		// Yes if:  we are in a block of editable HTML, or if the selected pagelet or page is HTML.
 		
-		if ([[[[self windowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
+		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
 		
-		KTPagelet *selPagelet = [[self windowController] selectedPagelet];
+		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
 		if (nil != selPagelet)
 		{
 			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
@@ -814,7 +799,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 				return YES;
 			}
 		}
-		KTPage *selPage = [[[self windowController] siteOutlineController] selectedPage];
+		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
 		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
 		{
 			return YES;
@@ -831,10 +816,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)cleanupBeforePublishing
 {
-	[[[self windowController] webViewController] commitEditing];
+	[[[self mainWindowController] webViewController] commitEditing];
 	if (nil == gRegistrationString)
 	{
-		[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
+		[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
 	}
 	
 	// Make sure both localHosting and remoteHosting are set to true
@@ -847,7 +832,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	// force the current page to be the selection, deselecting any inline image.
 	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification
-	object:[[[self windowController] siteOutlineController] selectedPage]];
+	object:[[[self mainWindowController] siteOutlineController] selectedPage]];
 	
 	// no undo after publishing
 	[[self undoManager] removeAllActions];
@@ -860,7 +845,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// LEAKING ON PURPOSE, THIS WILL BE AUTORELEASED IN setupHostSheetDidEnd:
 	
 	[NSApp beginSheet:[sheetController window]
-	   modalForWindow:[[self windowController] window]
+	   modalForWindow:[[self mainWindowController] window]
 	modalDelegate:self
 	   didEndSelector:@selector(setupHostSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:sheetController];
@@ -896,7 +881,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	BOOL result = [[[self windowController] webViewController] commitEditing];
+	BOOL result = [[[self mainWindowController] webViewController] commitEditing];
 
 	if (result)
 	{
@@ -909,7 +894,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		{
 			isRawHTML = YES;
 			sourceKeyPath = @"html";	// raw HTML
-			KTPagelet *selPagelet = [[self windowController] selectedPagelet];
+			KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
 			if (nil != selPagelet)
 			{
 				if (![@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
@@ -924,7 +909,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			
 			if (nil == sourceObject)	// no appropriate pagelet selected, try page
 			{
-				sourceObject = [[[self windowController] siteOutlineController] selectedPage];
+				sourceObject = [[[self mainWindowController] siteOutlineController] selectedPage];
 				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
 				{
 					sourceObject = nil;		// no, don't try to edit a non-rich text
@@ -1004,7 +989,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)warnThatHostUsesCharset:(NSString *)hostCharset
 {
-	[KSSilencingConfirmSheet alertWithWindow:[[self windowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
+	[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
 }
 
 #pragma mark -
@@ -1012,7 +997,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)mayAddScreenshotsToAttachments;
 {
-	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
+	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
 	return (window && [window isVisible]);
 }
 
@@ -1024,7 +1009,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 {
 	
-	NSWindow *window = [[[[NSApp delegate] currentDocument] windowController] window];
+	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
 	NSImage *snapshot = [window snapshotShowingBorder:NO];
 	if ( nil != snapshot )
 	{
