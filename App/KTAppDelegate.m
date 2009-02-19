@@ -1068,7 +1068,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
                                                             "Message while checking documents.")];
             
             // figure out if we should create or open document(s)
-            BOOL openLastOpened = [defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"];
+            BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
+                                   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
             
             NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
             
