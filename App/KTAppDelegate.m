@@ -522,12 +522,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_4
-	// Already defined in Leopard
-	gMainThread = [NSThread currentThread];
-#endif
-	
-	[self registerDefaults];
+    [self registerDefaults];
 	
 	[pool release];
 }
