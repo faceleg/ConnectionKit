@@ -30,7 +30,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTSite, KTMediaManager, KTLocalPublishingEngine, KTStalenessManager;
+@class KTSite, KTMediaManager, KTLocalPublishingEngine;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
@@ -49,9 +49,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTSite                  *_site;                   // accessor in category method
 	
 	KTMediaManager				*myMediaManager;
-	
-    KTStalenessManager			*myStalenessManager;
-	
+		
 	KTDocWindowController		*myDocWindowController;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
@@ -121,7 +119,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @interface KTDocument (Properties)
 
 - (KTMediaManager *)mediaManager;
-- (KTStalenessManager *)stalenessManager;
 
 - (NSThread *)thread;
 - (void)setThread:(NSThread *)thread;

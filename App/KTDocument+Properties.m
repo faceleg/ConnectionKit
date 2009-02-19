@@ -50,28 +50,12 @@
     _thread = thread;
 }
 
-#pragma mark .... relationships
-
-/*  This method is no longer public, just there for backwards-compatibility. Use -site instead.
- */
-- (KTPage *)root { return [[self site] root]; }
-
 #pragma mark -
 #pragma mark Managers
 
 - (KTMediaManager *)mediaManager
 {
 	return myMediaManager;
-}
-
-- (KTStalenessManager *)stalenessManager
-{
-	/*if (!myStalenessManager)
-	{
-		myStalenessManager = [[KTStalenessManager alloc] initWithDocument:self];
-	}*/
-	
-	return myStalenessManager;
 }
 
 #pragma mark -
