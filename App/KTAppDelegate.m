@@ -206,34 +206,17 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 
-- (void) checkRegistrationString:(NSString *)aString	// if not specified, looks in hidden path
+- (void)checkRegistrationString:(NSString *)aString	// if not specified, looks in hidden path
 {
 	BOOL wasNil = (nil == gRegistrationString);
 
 	[super checkRegistrationString:aString];
-	
-	if (wasNil && gRegistrationString != nil)
-	{
-		// we are now registered, let's set all open docs as stale
-		NSEnumerator *e = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
-		KTDocument *cur;
-		
-		while ( (cur = [e nextObject]) )
-		{
-			if ([cur isKindOfClass:[KTDocument class]])	// make sure it's a KSDocument
-			{
-				////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because app is newly registered", NSStringFromSelector(_cmd)));
-				///	TODO:	Make this happen again.
-				//[[cur root] markStale:kStaleFamily];
-			}
-		}
-	}
 }
 
 
 /*!	Needs to be done on initialization, and after resetStandardUserDefaults is called
 */
-+ (void) registerDefaults
++ (void)registerDefaults
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
