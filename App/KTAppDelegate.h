@@ -80,7 +80,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
     // ivars	
     BOOL myApplicationIsLaunching;
 	
-	BOOL myKTDidAwake;
 	BOOL myAppIsTerminating;
 	
 	NSPoint myCascadePoint;
@@ -95,8 +94,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (KTDocument *)currentDocument;
 
-- (IBAction)openSampleDocument:(id)sender;
-
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;
 
@@ -104,7 +101,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)showTranscriptWindow:(id)sender;
-- (IBAction)showAvailableMedia:(id)sender;
 - (IBAction)showAvailableDesigns:(id)sender;
 
 - (IBAction)showProductPage:(id)sender;

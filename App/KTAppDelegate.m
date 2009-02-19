@@ -205,15 +205,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 
-
-- (void)checkRegistrationString:(NSString *)aString	// if not specified, looks in hidden path
-{
-	BOOL wasNil = (nil == gRegistrationString);
-
-	[super checkRegistrationString:aString];
-}
-
-
 /*!	Needs to be done on initialization, and after resetStandardUserDefaults is called
 */
 + (void)registerDefaults
@@ -527,7 +518,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[defaults synchronize];
 }	
 
-// TODO: make sure that everything used with wrappedInheritedValueForKey gets mentioned here!
 + (void)initialize
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -551,7 +541,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		myCascadePoint = NSMakePoint(100, 100);
 
         myApplicationIsLaunching = YES;
-		myKTDidAwake = NO;
 		myAppIsTerminating = NO;
 	}
     return self;
@@ -616,45 +605,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		*outPro = (int)NO;
 	}
 	return result;
-}
-
-
-- (void)awakeFromNib
-{
-	if ( !myKTDidAwake )
-	{
-		myKTDidAwake = YES;	// turn this on now so we can load a nib from here
-		
-		
-//		// tweak any menus that need tweaking
-//		[self setCutMenuItemTitle:KTCutMenuItemTitle];
-//		[self setCopyMenuItemTitle:KTCopyMenuItemTitle];
-//		[self setDeletePagesMenuItemTitle:KTDeletePageMenuItemTitle];
-				
-		//NSImage *globe = [NSImage imageNamed:@"globe"];
-		//NSImage *trans = [NSImage imageNamed:@"trans16"];
-		
-		//[oValidateSourceViewMenuItem setImage:globe];
-		//[oBuyRegisterSandvoxMenuItem setImage:globe];
-		//[oSetupHostMenuItem setImage:globe];
-		//[oExportSiteMenuItem setImage:trans];
-		//[oExportSiteAgainMenuItem setImage:trans];
-		//[oPublishChangesMenuItem setImage:globe];
-		//[oPublishEntireSiteMenuItem setImage:globe];
-		//[oProductPageMenuItem setImage:globe];
-		//[oVideoIntroductionMenuItem setImage:globe];
-		//[oInstallPluginsMenuItem setImage:globe];
-		//[oCheckForUpdatesMenuItem setImage:globe];
-
-		//[oViewPublishedSiteMenuItem setImage:globe];
-		
-		// TODO: if we load from the net -- ???? -- then set this on
-		// [oReleaseNotesMenuItem setImage:globe];
-		//[oAcknowledgementsMenuItem setImage:trans];
-		//[oSendFeedbackMenuItem setImage:globe];
-		//[oJoinListMenuItem setImage:globe];
-	}
-	[super awakeFromNib];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -922,7 +872,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
     }
 }
 
-- (void)checkQuartzExtreme:(id)bogus
+- (void)checkQuartzExtreme
 {
 	// check Quartz Extreme compatibility
 	BOOL qcEnabled = CGDisplayUsesOpenGLAcceleration(kCGDirectMainDisplay);
@@ -1197,7 +1147,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
         
 		// QE check AFTER the welcome message
-		[self performSelector:@selector(checkQuartzExtreme:) withObject:nil afterDelay:0.0];
+		[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
 
 	}
 	@finally
@@ -1252,7 +1202,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 
-- (void) alertAndQuit
+- (void)alertAndQuit
 {
 	NSRunCriticalAlertPanel(
 							@"This version of Sandvox has expired.",
@@ -1264,7 +1214,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[NSApp terminate:nil];
 	
 }
-- (void) warnOrQuitIfExpiring
+- (void)warnOrQuitIfExpiring
 {	
 	unsigned char km[16];
 	GetKeys((void *)km);
@@ -1424,13 +1374,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 }
 	
-
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
-{
-    return NO;
-}
-
-
 // Font Panel capabilities -- restrict what effects we can do.
 /// put back in effects that people might want.
 - (unsigned int)validModesForFontPanel:(NSFontPanel *)fontPanel
@@ -1457,27 +1400,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #pragma mark -
 #pragma mark IBActions
-
-- (IBAction)openSampleDocument:(id)sender
-{
-	NSURL *fileURL = [sender representedObject];
-	
-	if ( (nil != fileURL) && [fileURL isKindOfClass:[NSURL class]] )
-	{
-		NSError *localError = nil;
-		[[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
-		
-//		if ( nil != sample )
-//		{
-//			[sample setReadOnly:YES];
-//		}
-		
-		if ( nil != localError )
-		{
-			[NSApp presentError:localError];
-		}
-	}
-}
 
 - (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL
 {
@@ -1541,33 +1463,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
     [[KTTranscriptController sharedController] showWindow:sender];
 	
 	// Clear the transcript if option key was down.  Just a quick hack...
-	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
+	if ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask)
 	{
 		[[KTTranscriptController sharedController] clearTranscript:nil];
 	}
-}
-
-- (IBAction)showAvailableMedia:(id)sender
-{
-	/// disabling for 1.2.1 unless we figure out a non-crashing media inspector
-	if ( 1 ) return; 
-	
-//	if ( nil == oDebugMediaPanel )
-//	{
-//		[NSBundle loadNibNamed:@"MediaInspector" owner:self];
-//	}
-//	[oDebugMediaObjectController setContent:self];
-//	[oDebugMediaPanel setFrameUsingName:@"Media Inspector"];
-//	[oDebugMediaPanel orderFront:nil];
-}
-
-- (IBAction)hideAvailableMedia:(id)sender
-{
-	/// disabling for 1.2.1 unless we figure out a non-crashing media inspector
-	if ( 1 ) return; 
-
-//	[oDebugMediaObjectController setContent:nil];
-//	[oDebugMediaPanel orderOut:nil];
 }
 
 - (IBAction)showProductPage:(id)sender
