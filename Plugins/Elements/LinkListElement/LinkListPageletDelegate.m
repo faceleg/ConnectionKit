@@ -167,8 +167,8 @@
     
 	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	int numberURLsNeeded = isCreatingPagelet ? 1 : 2;		// drag to pagelet, just one link is fine. Drag to sidebar, you need >=2 to otherwise it should be an external page.
-	if (webLocations && [webLocations count] >= numberURLsNeeded)
+	// Only allow creating a link list pagelet from a drag to pagelet area
+	if (isCreatingPagelet && webLocations && [webLocations count] >= 1)
 	{
 		result = KTSourcePriorityReasonable;
 	}
