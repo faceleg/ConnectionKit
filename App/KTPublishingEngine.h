@@ -5,10 +5,17 @@
 //  Created by Mike on 12/12/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
-//
-//  KTExportEngine provides the publishing functionality for exporting an entire site to a
-//  specified directory using CKFileConnection. Its subclass KTPublishingEngine adds to
-//  this by offering staleness management and other connection protocols.
+
+
+/*  KTPublishingEngine is an abstract class that provides the general publishing functionality.
+ *  It has 2 concrete subclasses, both of which publish to the local file system:
+ *
+ *      A)  KTExportEngine provides support for simply exporting an entire site.
+ *
+ *      B)  KTLocalPublishingEngine adds support for staleness management and pinging a server etc.
+ *          after publishing is complete. KTLocalPublishingEngine has further subclasses to support
+ *          remote publishing.
+ */
 
 
 #import <Cocoa/Cocoa.h>

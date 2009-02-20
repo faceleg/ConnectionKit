@@ -59,6 +59,19 @@
 #pragma mark Placeholder
 - (KTMediaContainer *)placeholderImage;
 
+#pragma mark Comments
+- (KTCommentsProvider)commentsProvider;
+- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
+
+- (BOOL)wantsDisqus;
+- (void)setWantsDisqus:(BOOL)aBool;
+
+- (BOOL)wantsHaloscan;
+- (void)setWantsHaloscan:(BOOL)aBool;
+
+- (BOOL)wantsJSKit;
+- (void)setWantsJSKit:(BOOL)aBool;
+
 @end
 
 

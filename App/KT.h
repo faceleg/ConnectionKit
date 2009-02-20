@@ -24,6 +24,14 @@
 // as the class will have the wrong bundle. Code in Sandvox.app should always just use standard NSLocalized* macros.
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
+// Description Forthcoming (corresponds to pop-up tags in Info.nib)
+typedef enum {
+	KTCommentsProviderNone = 0,
+	KTCommentsProviderHaloscan,
+	KTCommentsProviderJSKit,
+	KTCommentsProviderDisqus
+} KTCommentsProvider;
+
 // Description Forthcoming
 typedef enum {
     KTCollectionSortUnspecified = -1,		// used internally

@@ -1,13 +1,14 @@
 [[if !=disableComments]]
 [[if allowComments]]
-									<!-- Haloscan comments -->
+									<!-- comments -->
+[[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
 									<div class="comments">
 										<p>
-											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=uniqueID]]'); </script></a>[[else4]][[`Comment]][[endif4]]
+											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=uniqueID]]'); </script></a>[[else5]][[`Haloscan Comments]][[endif5]]
 [[if master.supportTrackbacks]]
 											<script type="text/javascript">document.write(' | ');</script>
-											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=uniqueID]]'); </script></a>[[else5]][[`Trackback]][[endif5]]
+											[[if HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=uniqueID]]'); </script></a>[[else6]][[`Trackback]][[endif6]]
 	<!-- Begin trackback -->
 	<!-- Auto Discovery RDF Code
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -21,16 +22,42 @@
 	</rdf:RDF>
 	-->
 	<!-- End trackback -->
-[[endif4]]
+[[endif5]]
 										</p>
 									</div> <!-- /comments -->
+[[else4]]
+[[if HTMLGenerationPurpose==0]]
+									<div class="comments">
+										<p style="color:red;">[[`To enable Haloscan comments you need to enter your Haloscan ID into the Site Inspector]]</p>
+									</div>
+[[endif5]]
+[[endif4]]
+[[endif3]]
+[[if master.wantsJSKit]]
+									[[if HTMLGenerationPurpose]]
+									<div class="js-kit-comments" path="[[=&URL]]" permalink="[[=&URL]]"></div>
+									<script src="http://js-kit.com/comments.js"></script>
+									[[else4]]
+									<div class="comments">
+										<p>[[`JS-Kit Comments]]</p>
+									</div>
+									[[endif4]]
+[[endif3]]
+
+									<!-- comments -->
+[[endif2]]
+[[endif]]
+
+[[if allowComments]]
+[[if master.wantsJSKit]]
+[[else2]]
+[[if master.wantsHaloscan]]
 [[else3]]
 [[if HTMLGenerationPurpose==0]]
 									<div class="comments">
-										<p style="color:red;">[[`To enable comments you need to enter your Haloscan ID into the Site Inspector]]</p>
+										<p style="color:red;">[[`To enable comments you need to choose a provider in the Site Inspector]]</p>
 									</div>
 [[endif4]]
 [[endif3]]
-									<!-- Haloscan comments -->
 [[endif2]]
 [[endif]]
