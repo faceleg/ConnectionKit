@@ -96,8 +96,29 @@
         
         [self pingURL:pingURL];
         [pingURL release];
-        
     }
+	
+	
+	// ping JS-Kit
+	KTMaster *master = [[[self site] root] master];
+	if ( nil != master )
+	{
+		if ( [master wantsJSKit] && (nil != [master JSKitModeratorEmail]) )
+		{
+			NSURL *siteURL = [[[self site] hostProperties] siteURL];
+			
+			NSString *pingURLString = [[NSString alloc] initWithFormat:
+									   @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@",
+									   [[master JSKitModeratorEmail] URLQueryEncodedString:YES],
+									   [[siteURL absoluteString] URLQueryEncodedString:YES]];
+			
+			NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
+			[pingURLString release];
+			
+			[self pingURL:pingURL];
+			[pingURL release];
+		}
+	}
     
     
     // Record the app version published with

@@ -388,7 +388,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// Generate the first icon in queue
 	if ([myCustomIconGenerationQueue count] > 0)
 	{
-		[self beginGeneratingCustomIconForPage:[myCustomIconGenerationQueue firstObjectKS]];
+		[self beginGeneratingCustomIconForPage:[myCustomIconGenerationQueue objectAtIndex:0]];
 	}
 }
 

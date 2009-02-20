@@ -240,6 +240,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)resetPageObservation
 {
+    // Cancel any pending icons
+    [myCustomIconGenerationQueue removeAllObjects];
+    
+    // Home page
 	[self setHomePage:nil];
     
     // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc

@@ -3504,8 +3504,8 @@
 		3C202F0107E0122F00DE4994 /* HTML,text,js */ = {
 			isa = PBXGroup;
 			children = (
-				271568660D5B2EE100A91E58 /* KTElementTemplate.html */,
 				3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */,
+				277026730E1E645200407CD1 /* KTCommentsTemplate.html */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE2622A60A35E7C2009467ED /* preview.mp4 */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
@@ -3520,10 +3520,10 @@
 				3C202F0407E0124E00DE4994 /* MultipleSelection.html */,
 				CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */,
 				CE1B90460B5EF68C0051B380 /* Empty.html */,
-				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
-				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
 				2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */,
-				277026730E1E645200407CD1 /* KTCommentsTemplate.html */,
+				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
+				271568660D5B2EE100A91E58 /* KTElementTemplate.html */,
+				2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */,
 			);
 			name = "HTML,text,js";
 			sourceTree = "<group>";

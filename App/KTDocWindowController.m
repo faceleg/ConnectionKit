@@ -1122,7 +1122,7 @@ from representedObject */
 	{
 		KTPage *parent = [object parent];
 		[parent removePage:object]; // this might be better done with a delete rule in the model
-		LOG((@"deleting page \"%@\" from context", [object fileName]));
+		LOG((@"deleting page “%@” from context", [object fileName]));
 		[context deleteObject:object];
 	}
 	

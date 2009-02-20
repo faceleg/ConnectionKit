@@ -66,11 +66,18 @@
 - (BOOL)wantsDisqus;
 - (void)setWantsDisqus:(BOOL)aBool;
 
+- (NSString *)disqusShortName;
+- (void)setDisqusShortName:(NSString *)aString;
+
+
 - (BOOL)wantsHaloscan;
 - (void)setWantsHaloscan:(BOOL)aBool;
 
 - (BOOL)wantsJSKit;
 - (void)setWantsJSKit:(BOOL)aBool;
+
+- (NSString *)JSKitModeratorEmail;
+- (void)setJSKitModeratorEmail:(NSString *)aString;
 
 @end
 

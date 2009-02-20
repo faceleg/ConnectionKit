@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-//	LocalizedStringInThisBundle(@"\"Live\" page loading is disabled from the preferences", "placeholder message")
+//	LocalizedStringInThisBundle(@"“Live” page loading is disabled from the preferences", "placeholder message")
 //	LocalizedStringInThisBundle(@"No URL specified", "placeholder message")
 //	LocalizedStringInThisBundle(@"Use the Inspector to set the URL and title of this page.", "placeholder message")
 

@@ -94,10 +94,6 @@ void dumpBacktrace(unsigned int startFrameNumber)
 */
 
 
-@interface NSWindow ( PrivateHack )
-- (void)_setFrameNeedsDisplay:(BOOL)fp8;
-@end
-
 
 @implementation KTDocWindow
 

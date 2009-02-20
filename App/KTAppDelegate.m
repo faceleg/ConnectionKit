@@ -85,13 +85,22 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <Sparkle/Sparkle.h>
 
 // Triggers to localize for the Comment/trackback stuff
+// NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
 
+// Haloscan
+// NSLocalizedString(@"To enable Haloscan comments, enter your Haloscan ID into the Site Inspector", "Prompt in webview")
 // NSLocalizedString(@"Comment", "String_On_Page_Template -- text for link on a blog posting")
 // NSLocalizedString(@"Other Posts About This", "String_On_Page_Template - description of trackbacks")
 // NSLocalizedString(@"Trackback", "String_On_Page_Template - text for trackback link")
-// NSLocalizedString(@"To enable Haloscan comments you need to enter your Haloscan ID into the Site Inspector", "Prompt in webview")
-// NSLocalizedString(@"To enable comments you need to choose a provider in the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"Haloscan Comments", "String_On_Page_Template -- text for link on a blog posting")
 
+// JS-Kit
+// NSLocalizedString(@"To enable JS-Kit comments, enter your moderator email address into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"JS-Kit Comments", "String_On_Page_Template -- text for link on a blog posting")
+
+// Disqus
+// NSLocalizedString(@"To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"Disqus Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!

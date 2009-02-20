@@ -109,6 +109,9 @@ static NSURLCache *_sharedCache;
                                                         mode:scalingMode
                                                  opaqueEdges:YES];
     
+    [scaledImage retain];   // Otherwise releasing sourceImage might deallocate scaledImage
+    [sourceImage release];
+    
     
     // Sharpen if needed
     float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
@@ -170,7 +173,7 @@ static NSURLCache *_sharedCache;
     // Render a CGImage
     CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
     OBASSERT(finalImage);
-    [sourceImage release];
+    [scaledImage release];
     
     
     // Convert to data

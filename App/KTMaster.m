@@ -613,18 +613,21 @@
 	{
 		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
 		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}	
+	}
+	else
+	{
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
+		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
+	}
 }
 
 - (BOOL)wantsDisqus
 {
-	//return [[self valueForUndefinedKey:@"wantsDisqus"] boolValue];
 	return (KTCommentsProviderDisqus == [self commentsProvider]);
 }
 
 - (void)setWantsDisqus:(BOOL)aBool
 {
-	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsDisqus"];
 	[self setCommentsProvider:KTCommentsProviderDisqus];
 }
 
@@ -640,25 +643,21 @@
 
 - (BOOL)wantsHaloscan
 {
-	//return [[self valueForUndefinedKey:@"wantsHaloscan"] boolValue];
 	return (KTCommentsProviderHaloscan == [self commentsProvider]);
 }
 
 - (void)setWantsHaloscan:(BOOL)aBool
 {
-	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsHaloscan"];
 	[self setCommentsProvider:KTCommentsProviderHaloscan];
 }
 
 - (BOOL)wantsJSKit
 {
-	//return [[self valueForUndefinedKey:@"wantsJSKit"] boolValue];
 	return (KTCommentsProviderJSKit == [self commentsProvider]);
 }
 
 - (void)setWantsJSKit:(BOOL)aBool
 {
-	//[self setValue:[NSNumber numberWithBool:aBool] forUndefinedKey:@"wantsJSKit"];
 	[self setCommentsProvider:KTCommentsProviderJSKit];
 }
 
