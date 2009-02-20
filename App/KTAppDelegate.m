@@ -125,8 +125,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (void)warnExpiring:(id)bogus;
 
-- (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL;
-
 @end
 
 
@@ -695,10 +693,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		(void)[alert runModal];
 		
 		// reopen the document
-//		[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-//																			   display:YES
-//																				 error:nil];
-		[self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]];
+		[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
+																			   display:YES
+																				 error:nil];
 		
 		return;
 	}
@@ -729,10 +726,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	
 	// open reverted document
-//	[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-//																		   display:YES
-//																			 error:nil];
-	[self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]];
+	[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
+																		   display:YES
+																			 error:nil];
 }
 
 
@@ -1395,48 +1391,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #pragma mark -
 #pragma mark IBActions
-
-- (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL
-{
-	OBPRECONDITION(aURL);
-	OBPRECONDITION([aURL scheme]);
-    // before we do *anything*, grab currentDocument to see if we already have a window on-screen
-    KTDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
-
-    //  now, open newly saved document
-    NSError *localError = nil;
-    KTDocument *newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aURL
-                                                                                                     display:YES
-                                                                                                       error:&localError];
-    
-    // clean up if it didn't work out
-    if ( nil == newDocument )
-    {
-        if ( nil != localError )
-        {
-            [NSApp presentError:localError];
-        }
-        
-        return nil;
-    }
-    
-    // position on screen
-    if ( nil != currentDocument && [currentDocument isKindOfClass:[KTDocument class]] )
-    {
-        NSWindow *currentWindow = [[currentDocument mainWindowController] window];
-        NSRect currentFrame = [currentWindow frame];
-        NSPoint currentTopLeft = NSMakePoint(currentFrame.origin.x,(currentFrame.origin.y+currentFrame.size.height));
-        NSPoint newTopLeft = [currentWindow cascadeTopLeftFromPoint:currentTopLeft];
-        [[[newDocument mainWindowController] window] setFrameTopLeftPoint:newTopLeft];
-    }
-    else
-    {
-        [[[newDocument mainWindowController] window] center];
-    }
-	    
-    return newDocument;    
-}
-
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
