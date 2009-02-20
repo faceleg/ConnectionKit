@@ -50,7 +50,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	
 	KTMediaManager				*myMediaManager;
 		
-	KTDocWindowController		*myDocWindowController;
+	KTDocWindowController		*_mainWindowController;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	

@@ -453,20 +453,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Controller Chain
 
-/*! return the single KTDocWindowController associated with this document */
-- (KTDocWindowController *)mainWindowController
-{
-	//OBASSERTSTRING(nil != myDocWindowController, @"windowController should not be nil");
-	return myDocWindowController;
-}
+- (KTDocWindowController *)mainWindowController { return _mainWindowController; }
 
 /*!	Force KTDocument to use a custom subclass of NSWindowController
  */
 - (void)makeWindowControllers
 {
-    KTDocWindowController *controller = [[[KTDocWindowController alloc] init] autorelease];
-    [self addWindowController:controller];
-	myDocWindowController = [controller retain]; // released in removeWindowController:
+    _mainWindowController = [[KTDocWindowController alloc] init];
+    [self addWindowController:_mainWindowController];
 }
 
 - (void)addWindowController:(NSWindowController *)windowController
@@ -498,7 +492,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[(KTDocWindowController *)windowController documentControllerDeallocSupport];
 		
 		// balance retain in makeWindowControllers
-		[myDocWindowController release]; myDocWindowController = nil;
+		[_mainWindowController release]; _mainWindowController = nil;
 	}
     else if ( [windowController isEqual:myHTMLInspectorController] )
     {
@@ -508,11 +502,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
     [super removeWindowController:windowController];
 }
-
-/*  The document is the end of the chain    */
-- (id <KTDocumentControllerChain>)parentController { return nil; }
-
-- (KTDocument *)document { return self; }
 
 #pragma mark -
 #pragma mark Changes
@@ -552,7 +541,17 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
 	
-	/// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
+	[[[self mainWindowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
+	
+	
+	// Close link panel
+	if ([[[self mainWindowController] linkPanel] isVisible])
+	{
+		[[self mainWindowController] closeLinkPanel];
+	}
+	
+    
+    /// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
 	// tell info window to release inspector views and object controllers
 	if ([[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument] == self)
 	{
@@ -582,97 +581,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[super close];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];
-}
-
-
-/*	Called when the user goes to close the document.
- *	By default, if there are unsaved changes NSDocument prompts the user, but we just want to go ahead and save.
- */
-- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(id)contextInfo
-{
-	//LOGMETHOD;
-	
-    
-    // In order to inform the delegate, we will have to send this callback at some point
-	NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:shouldCloseSelector];
-	NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
-	[callback setTarget:delegate];
-	[callback setSelector:shouldCloseSelector];
-	[callback setArgument:&self atIndex:2];
-	[callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
-	
-	
-	// Stop editing
-	BOOL result = [[[self mainWindowController] webViewController] commitEditing];
-	if (result) result = [[[self mainWindowController] window] makeFirstResponder:nil];
-	
-	if (!result)
-	{
-		[self setClosing:NO];
-        
-        [callback setArgument:&result atIndex:3];
-		[callback invoke];
-        
-		return;
-	}
-	
-	
-	// CRITICAL: we need to signal to the media manager that we're closing
-	[self setClosing:YES];
-	
-	
-	// Close link panel
-	if ([[[self mainWindowController] linkPanel] isVisible])
-	{
-		[[self mainWindowController] closeLinkPanel];
-	}
-	
-	
-    // Switch to standard document behaviour here if autosave is disabled
-	if ([[NSDocumentController sharedDocumentController] autosavingDelay] == 0)
-    {
-        return [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
-    }
-    
-    
-    
-	
-	// Garbage collect media. Killing plugin inspector views early is a bit of a hack to stop it accessing
-    // any garbage collected media.
-    [[[self mainWindowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
-	[[self mediaManager] garbageCollect];
-	
-	
-	
-	// Is there actually anything to be saved?
-	if ([self isDocumentEdited])
-	{
-        // Go for it, save the document!
-        [self saveToURL:[self fileURL]
-                 ofType:[self fileType]
-       forSaveOperation:NSSaveOperation
-               delegate:self
-        didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
-            contextInfo:[callback retain]];		// Our callback method will release it
-	}
-	else
-	{
-		// If there are no changes, we can go ahead with the default NSDocument behavior
-		[super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
-	}
-}
-
-/*	Callback used by above method.
- */
-- (void)document:(NSDocument *)document didSaveWhileClosing:(BOOL)didSaveSuccessfully contextInfo:(void  *)contextInfo
-{
-	[self setClosing:didSaveSuccessfully];
-    
-    NSInvocation *callback = [(NSInvocation *)contextInfo autorelease];	// It was retained at the start
-	
-	// Let the delegate know if the save was successful or not
-	[callback setArgument:&didSaveSuccessfully atIndex:3];
-	[callback invoke];
 }
 
 - (BOOL)isClosing { return _closing; }
