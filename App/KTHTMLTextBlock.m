@@ -457,7 +457,7 @@
 						else
 						{
 							KTAbstractPage *page = [[self parser] currentPage];
-							KTMediaFile *mediaFile = [mediaContainer file];
+							KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
                             KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
 							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
 							
