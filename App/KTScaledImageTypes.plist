@@ -34,8 +34,6 @@
 	</dict>
 	<key>inTextLargeImage</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>1000</integer>
 		<key>maxWidth</key>
 		<integer>490</integer>
 		<key>tag</key>
@@ -45,8 +43,6 @@
 	</dict>
 	<key>inTextMediumImage</key>
 	<dict>
-		<key>maxHeight</key>
-		<integer>1000</integer>
 		<key>maxWidth</key>
 		<integer>320</integer>
 		<key>tag</key>
@@ -137,6 +133,15 @@
 		<integer>500</integer>
 		<key>maxWidth</key>
 		<integer>72</integer>
+		<key>New item</key>
+		<dict>
+			<key>maxPixels</key>
+			<integer>320</integer>
+			<key>tag</key>
+			<string>medium</string>
+			<key>upload</key>
+			<true/>
+		</dict>
 		<key>tag</key>
 		<string>sidebarthumb</string>
 		<key>upload</key>

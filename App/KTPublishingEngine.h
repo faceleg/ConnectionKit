@@ -22,8 +22,18 @@ enum {
 	KTPublishingEngineNothingToPublish,
 };
 
+typedef enum {
+    KTPublishingEngineStatusNotStarted,
+    KTPublishingEngineStatusParsing,        // Pages are being parsed one-by-one
+    KTPublishingEngineStatusLoadingMedia,   // Parsing has finished, but there is still media to load
+    KTPublishingEngineStatusUploading,      // All content has been generated, just waiting for queued uploads now
+    KTPublishingEngineStatusFinished,
+} KTPublishingEngineStatus;
 
-@class KTSite, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock;
+
+@class KTSite, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock, KSSimpleURLConnection;
+
+
 @protocol KTPublishingEngineDelegate;
 
 
@@ -34,18 +44,18 @@ enum {
     NSString        *_documentRootPath;
     NSString        *_subfolderPath;    // nil if there is no subfolder
     
-    BOOL    _hasStarted;
-    BOOL    _hasFinished;
-    
-    id <KTPublishingEngineDelegate>   _delegate;
+    KTPublishingEngineStatus            _status;
+    id <KTPublishingEngineDelegate>     _delegate;
     
 	id <CKConnection>	_connection;
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    NSMutableSet    *_uploadedMedia;
-    NSMutableSet    *_resourceFiles;
+    NSMutableSet            *_uploadedMedia;
+    NSMutableArray          *_pendingMediaUploads;
+    KSSimpleURLConnection   *_currentPendingMediaConnection;
     
+    NSMutableSet        *_resourceFiles;
     NSMutableDictionary *_graphicalTextBlocks;
 }
 
@@ -66,8 +76,7 @@ enum {
 // Control
 - (void)start;
 - (void)cancel;
-- (BOOL)hasStarted;
-- (BOOL)hasFinished;
+- (KTPublishingEngineStatus)status;
 
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;

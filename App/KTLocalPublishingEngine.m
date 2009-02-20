@@ -154,8 +154,8 @@
     
     if (object &&
         ![transferRecord error] &&
-        [self hasStarted] &&
-        ![self hasFinished] &&
+        [self status] > KTPublishingEngineStatusNotStarted &&
+        [self status] < KTPublishingEngineStatusFinished &&
         [transferRecord root] == [self rootTransferRecord])
     {
         if ([object isKindOfClass:[KTPage class]])
