@@ -176,7 +176,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypes
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     return [NSArray arrayWithObjects:
             kNetNewsWireString,	// from NetNewsWire
@@ -198,7 +198,7 @@
 	return 1;	// can't find any multiplicity
 }
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)index
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
@@ -233,6 +233,8 @@
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+
 {
     BOOL result = NO;
     
@@ -240,7 +242,7 @@
     NSString *feedTitle= nil;
 	NSString *pageURLString = nil;
     
-    NSArray *orderedTypes = [self supportedPasteboardTypes];
+    NSArray *orderedTypes = [self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
     
 	
     NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];

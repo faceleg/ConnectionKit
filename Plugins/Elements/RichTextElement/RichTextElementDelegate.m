@@ -261,7 +261,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypes
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     return [NSArray arrayWithObjects:
             NSFilenamesPboardType,
@@ -276,7 +276,7 @@
     return 1;
 }
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
     
 	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]])
@@ -319,11 +319,13 @@
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+
 {
     BOOL result = NO;
     NSString *filePath= nil;
     
-    NSArray *orderedTypes = [self supportedPasteboardTypes];
+    NSArray *orderedTypes = [self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
     
     
     NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];

@@ -467,7 +467,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypes
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
 	return [KSWebLocation webLocationPasteboardTypes];
 }
@@ -477,11 +477,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     return 1;
 }
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)dragIndex
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
     KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard
 													  readWeblocFiles:YES
 													   ignoreFileURLs:YES];
 	
@@ -499,7 +499,8 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex;
+                             atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     BOOL result = NO;
     

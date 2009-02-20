@@ -421,7 +421,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypes
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     return [NSArray arrayWithObjects:
             WebArchivePboardType,	// drags from safari, includes links and such
@@ -438,7 +438,7 @@
     return 1;
 }
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex;
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
     [pboard types];
     
@@ -479,9 +479,11 @@
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+
 {
 	BOOL result = [NSImage populateDictionary:aDictionary
-                    orderedImageTypesAccepted:[self supportedPasteboardTypes]
+                    orderedImageTypesAccepted:[self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet]
                                fromPasteboard:pasteboard
                                         index:dragIndex];
     return result;

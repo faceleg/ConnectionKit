@@ -41,7 +41,7 @@
 }
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet
++ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isCreatingPagelet
 {
     NSMutableSet *result = [NSMutableSet set];
 	
@@ -49,7 +49,7 @@
     Class anElementClass;
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
-		NSArray *acceptedTypes = [anElementClass supportedPasteboardTypes];
+		NSArray *acceptedTypes = [anElementClass supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
         [result addObjectsFromArray:acceptedTypes];
     }
 	
@@ -91,12 +91,12 @@
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
 		// for each dataSource, see if it will handle what's on the pboard
-        NSArray *acceptedTypes = [anElementClass supportedPasteboardTypes];
+        NSArray *acceptedTypes = [anElementClass supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
         
         if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
         {
             // yep, so get the rating and see if it's better than our current bestRating
-            KTSourcePriority rating = [anElementClass priorityForItemOnPasteboard:[draggingInfo draggingPasteboard] atIndex:anIndex];
+            KTSourcePriority rating = [anElementClass priorityForItemOnPasteboard:[draggingInfo draggingPasteboard] atIndex:anIndex creatingPagelet:isCreatingPagelet];
             if (rating >= bestRating)
             {
                 secondBestRating = bestRating;
