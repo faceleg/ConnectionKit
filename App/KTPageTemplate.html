@@ -17,9 +17,11 @@
 [[if codeInjectionEarlyHead]]
 [[=codeInjectionEarlyHead]]
 [[endif]]
-		<title>
-			[[=&comboTitleText]]
-		</title>
+[[if windowTitle]]
+		<title>[[=&windowTitle]]</title>
+[[else]]
+		<title>[[=&comboTitleText]]</title>
+[[endif]]
 [[if master.author]]
 		<meta name="author" content="[[=&master.author]]" />
 [[endif]]
@@ -178,13 +180,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[=site.googleAnalyticsCode]]
 [[endif2]]
 [[endif]]
-[[if master.codeInjectionBodyTagEnd]]
-[[=master.codeInjectionBodyTagEnd]]
-[[endif]]
 [[if codeInjectionBodyTagEnd]]
 [[=codeInjectionBodyTagEnd]]
 [[endif]]
-
+[[if master.codeInjectionBodyTagEnd]]
+[[=master.codeInjectionBodyTagEnd]]
+[[endif]]
 [[if parser.HTMLGenerationPurpose==10]]
 <!-- Quick Look preview sticky-note -->
 	<style type="text/css">
@@ -250,8 +251,5 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 	</div>
 <!-- /Quick Look preview sticky-note -->
 [[endif]]
-	
-	
-
 	</body>
 </html>

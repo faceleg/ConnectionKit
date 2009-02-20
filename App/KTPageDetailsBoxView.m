@@ -18,16 +18,18 @@
 
 
 /*
- 
-		NSTextField 1 {{8, 458}, {136, 14}}, MinY|WidthSizable 'Description'			stick to top
+14		NSTextField 1 = Window Title
 | 2px
-?		NSTextField 2 {{10, 311}, {130, 144}}, HeightSizable|MinY|WidthSizable ''		resizable according space avaialble
-| 2px
-11px	NSTextField 3 {{7, 275}, {136, 11}}, MaxY|MinY|MinX '156 remaining'			stick to bottom of above
+?       NSTexField 2 - window title field
 | 4px
-14px	NSTextField 4 {{7, 240}, {136, 14}}, MaxY|MinY|WidthSizable 'Tags'				then Tags
+		NSTextField 3 {{8, 458}, {136, 14}}, MinY|WidthSizable 'Description'			stick to top
+	&   NSTExtField 4 -- countdown .... 11 Px tall, 3 px from below.
 | 2px
-???		NSTokenField 5 {{10, 53}, {130, 300}}, HeightSizable|WidthSizable ''			Then this according to how much space we have
+?		NSTextField 5 {{10, 311}, {130, 144}}, HeightSizable|MinY|WidthSizable ''		resizable according space avaialble
+| 4px
+14px	NSTextField 6 {{7, 240}, {136, 14}}, MaxY|MinY|WidthSizable 'Tags'				then Tags
+| 2px
+???		NSTokenField 7 {{10, 53}, {130, 300}}, HeightSizable|WidthSizable ''			Then this according to how much space we have
 | 8px
  
  Then everything else stuck to the bottom
@@ -43,12 +45,16 @@
  
  */
 
+
+
+
+
 - (void)resizeWithOldSuperviewSize:(NSSize)oldBoundsSize
 {
 //	NSLog(@"resizeWithOldSuperviewSize: %@", NSStringFromSize(oldBoundsSize));
 	[super resizeWithOldSuperviewSize:oldBoundsSize];
 	
-	NSView *bottommost = [self viewWithTag:6];
+	NSView *bottommost = [self viewWithTag:8];
 	OBASSERT(bottommost);
 	int topOfBottommost = NSMaxY([bottommost frame]);
 	
@@ -56,73 +62,135 @@
 	OBASSERT(topmost);
 	int bottomOfTopmost = NSMinY([topmost frame]);
 	
-	int topOfDescField = bottomOfTopmost - 2;
-	const int kSpaceBetweenTwoResizableFields = 37;
-	int spaceToDivide = topOfDescField - topOfBottommost - kSpaceBetweenTwoResizableFields;
-	int sizeOfDescField = spaceToDivide / 2;		// will round down
+	int topOfTitleField = bottomOfTopmost - 2;
+	const int kSpaceBetweenResizableFields = 20;
+	int spaceToDivide = topOfTitleField - topOfBottommost - (2 * kSpaceBetweenResizableFields);
+	int sizeOfField = spaceToDivide / 3;		// will round down
 
 	NSView *field;
 	NSRect frame;
 	int newBottom;
-	
-	// Desc Resizable Field
-	newBottom = bottomOfTopmost-sizeOfDescField;
+
+	// Window Title Resizable Field
+	newBottom = bottomOfTopmost-sizeOfField;
 	field = [self viewWithTag:2];
 	OBASSERT(field);
 	frame = [field frame];
 	frame.origin.y = newBottom;
-	frame.size.height = sizeOfDescField;
+	frame.size.height = sizeOfField;
 	[field setFrame:frame];
-	
-	// Countdown field
-	newBottom = newBottom - 11 - 2;
+
+	// Description label
+	newBottom = newBottom - 14 - 4;		// field is 14 pixels high and we want 4 px gap
 	field = [self viewWithTag:3];
 	OBASSERT(field);
 	frame = [field frame];
 	frame.origin.y = newBottom;
 	[field setFrame:frame];
 	
+	// Countdown field ... next to Description label
+	field = [self viewWithTag:4];
+	OBASSERT(field);
+	frame = [field frame];
+	frame.origin.y = newBottom+ 1;		// just one pixel up from the 14-pixel one
+	[field setFrame:frame];
+	
+	// Desc Resizable Field
+	newBottom = newBottom-sizeOfField - 2;	// we want gap of 2 between field and label above
+	field = [self viewWithTag:5];
+	OBASSERT(field);
+	frame = [field frame];
+	frame.origin.y = newBottom;
+	frame.size.height = sizeOfField;
+	[field setFrame:frame];
+	
 	// Tag label
 	newBottom = newBottom - 14 - 4;
-	field = [self viewWithTag:4];
+	field = [self viewWithTag:6];
 	OBASSERT(field);
 	frame = [field frame];
 	frame.origin.y = newBottom;
 	[field setFrame:frame];
 	
 	// Tags resizable field
-	newBottom = topOfBottommost + 8;
-	field = [self viewWithTag:5];
+	sizeOfField = spaceToDivide - (2 * sizeOfField);		// take what's left for last field
+	
+	newBottom = newBottom - sizeOfField - 2;
+	field = [self viewWithTag:7];
 	OBASSERT(field);
 	frame = [field frame];
 	frame.origin.y = newBottom;
-	frame.size.height = spaceToDivide - sizeOfDescField;
+	frame.size.height = sizeOfField;
 	[field setFrame:frame];
-	
-	
 }
 
 - (void) rebindSubviewPlaceholdersAccordingToSize;
 {
 	// Redo placeholder text for the summary field
 	
-	NSView *field = [self viewWithTag:2];
-	OBASSERT(field);
-	NSRect frame = [field frame];
-	int sizeOfField = frame.size.height;
+	NSView *field;
+	NSRect frame;
+	int sizeOfField;
 	
-	NSString *longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, longer placeholder");
-	NSString *longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, longer placeholder");
-	NSString *shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
-	NSString *shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");
+	NSString *longMultiple;
+	NSString *longNull;
+	NSString *shortMultiple;
+	NSString *shortNull;
+	NSString *desiredMultiPlaceholder;
+	NSString *desiredNullPlaceholder;
 	
-	NSString *desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
-	NSString *desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
 	
-	NSDictionary *infoForBinding	= [field infoForBinding:NSValueBinding];
-	NSDictionary *bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
-	NSString *bindingKeyPath		= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
-	id observedObject				= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	// The window title field
+
+	field = [self viewWithTag:2];	OBASSERT(field);
+	frame = [field frame];
+	sizeOfField = frame.size.height;
+	
+	longMultiple  = NSLocalizedString(@"Title of window for selected pages; Use %P %T %A as placeholders.", @"multiple items selected, longer placeholder");
+	longNull      = NSLocalizedString(@"Custom title of window for page", @"null summary available, longer placeholder");
+	shortMultiple = NSLocalizedString(@"Custom titles", @"multiple items selected, very short placeholder");
+	shortNull     = NSLocalizedString(@"Custom title", @"null summary available, very short placeholder");
+	
+	desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
+	desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
+	
+	infoForBinding	= [field infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:desiredMultiPlaceholder])
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
+		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
+		
+		[field unbind:NSValueBinding];
+		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+
+	// The summary field
+
+	field = [self viewWithTag:5];	OBASSERT(field);
+	frame = [field frame];
+	sizeOfField = frame.size.height;
+	
+	longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, longer placeholder");
+	longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, longer placeholder");
+	shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
+	shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");
+	
+	desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
+	desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
+	
+	infoForBinding	= [field infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
 	
 	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:desiredMultiPlaceholder])
 	{
@@ -136,8 +204,7 @@
 	
 	// Now do it all over for the tags field
 	
-	field = [self viewWithTag:5];
-	OBASSERT(field);
+	field = [self viewWithTag:7];	OBASSERT(field);
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	

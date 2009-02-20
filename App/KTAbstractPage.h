@@ -63,6 +63,8 @@ KTCollectionPathStyle;
 // Meta tags
 - (NSString *)metaDescription;
 - (void)setMetaDescription:(NSString *)description;
+- (NSString *)windowTitle;
+- (void)setWindowTitle:(NSString *)wTitle;
 
 // Staleness
 - (BOOL)isStale;

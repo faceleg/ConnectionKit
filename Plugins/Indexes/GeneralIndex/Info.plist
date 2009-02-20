@@ -39,6 +39,33 @@
 	<key>KTPresets</key>
 	<array>
 		<dict>
+			<key>KTPreferredPageBundleIdentifier</key>
+			<string>sandvox.HTMLElement</string>
+			<key>KTPluginPriority</key>
+			<integer>9</integer>
+			<key>KTPresetTitle</key>
+			<string>Collection with Raw HTML</string>
+			<key>KTPresetUntitled</key>
+			<string>Raw HTML</string>
+			<key>KTPageSettings</key>
+			<dict>
+				<key>collectionHyperlinkPageTitles</key>
+				<true/>
+				<key>collectionMaxIndexItems</key>
+				<integer>0</integer>
+				<key>collectionShowNavigationArrows</key>
+				<false/>
+				<key>collectionShowPermanentLink</key>
+				<false/>
+				<key>collectionSortOrder</key>
+				<integer>0</integer>
+				<key>collectionSummaryType</key>
+				<integer>1</integer>
+				<key>collectionSyndicate</key>
+				<false/>
+			</dict>
+		</dict>
+		<dict>
 			<key>KTPageSettings</key>
 			<dict>
 				<key>collectionHyperlinkPageTitles</key>

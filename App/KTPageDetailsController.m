@@ -118,8 +118,25 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 #pragma mark -
 #pragma mark Meta Description
 
-/*	The countdown is typed as NSNumber, but since this is for bindings, it could also be a placeholder
- *  such as NSMultipleValuesMarker.
+/*  This code manages the meta description field in the Page Details panel. It's a tad complicated,
+ *  so here's how it works:
+ *
+ *  For the really simple stuff, you can bind directly to the object controller responsible for the
+ *  Site Outline selection. i.e. The meta description field is bound this way. Its contents are
+ *  saved back to the model ater the user ends editing
+ *
+ *  To complicate matters, we have a countdown label. This is derived from whatever is currently
+ *  entered into the description field. It does NOT map directly to what is in the model. The
+ *  countdown label is bound directly to the -metaDescriptionCountdown property of
+ *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCountdown:
+ *  This property is an NSNumber as it needs to return NSMultipleValuesMarker sometimes. We update
+ *  the countdown in response to either:
+ *
+ *      A)  The selection/model changing. This is detected by observing the Site Outline controller's
+ *          selection.metaDescription property
+ *      B)  The user editing the meta description field. This is detected through NSControl's
+ *          delegate methods. We do NOT store these changes into the model immediately as this would
+ *          conflict with the user's expectations of how undo/redo should work.
  */
 
 - (NSNumber *)metaDescriptionCountdown { return _metaDescriptionCountdown; }
@@ -163,16 +180,30 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 {
 	NSColor *result = nil;
 	
-	// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
-	// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
-	int howBad = META_DESCRIPTION_WARNING_ZONE - [[self metaDescriptionCountdown] intValue];
-	howBad = MAX(howBad, 0);
-	howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
-	float howRed = 0.1 * howBad;
-	
-	//	NSLog(@"%d make it %.2f red", len, howRed);
-	
-	result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	int remaining = [[self metaDescriptionCountdown] intValue];
+
+	if (remaining > META_DESCRIPTION_WARNING_ZONE * 3 )
+	{
+		result = [NSColor clearColor];
+	}
+	else if (remaining > META_DESCRIPTION_WARNING_ZONE * 2 )
+	{
+		float howGray = (float) ( remaining - (META_DESCRIPTION_WARNING_ZONE * 2) ) / META_DESCRIPTION_WARNING_ZONE;
+		result = [[NSColor grayColor] blendedColorWithFraction:howGray ofColor:[NSColor clearColor]];
+	}
+	else
+	{
+		// black under MAX_META_DESCRIPTION_LENGTH - META_DESCRIPTION_WARNING_ZONE,
+		// then progressively more red until MAX_META_DESCRIPTION_LENGTH and beyond
+		int howBad = META_DESCRIPTION_WARNING_ZONE - remaining;
+		howBad = MAX(howBad, 0);
+		howBad = MIN(howBad, META_DESCRIPTION_WARNING_ZONE);
+		float howRed = 0.1 * howBad;
+		
+		//	NSLog(@"%d make it %.2f red", len, howRed);
+		
+		result = [[NSColor grayColor] blendedColorWithFraction:howRed ofColor:[NSColor redColor]];
+	}
 	
 	return result;
 }
