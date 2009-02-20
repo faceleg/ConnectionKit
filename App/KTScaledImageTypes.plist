@@ -23,8 +23,8 @@
 		<string>top</string>
 		<key>behavior</key>
 		<string>CropToRect</string>
-		<key>fileExtension</key>
-		<string>ico</string>
+		<key>fileType</key>
+		<string>com.microsoft.ico</string>
 		<key>maxHeight</key>
 		<integer>32</integer>
 		<key>maxWidth</key>

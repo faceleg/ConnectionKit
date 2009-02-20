@@ -223,6 +223,8 @@
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
+		272C27E50F4F2CD9004CE81E /* KTPageDetailsBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C27E30F4F2CD9004CE81E /* KTPageDetailsBoxView.h */; };
+		272C27E60F4F2CD9004CE81E /* KTPageDetailsBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C27E40F4F2CD9004CE81E /* KTPageDetailsBoxView.m */; };
 		272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */; };
 		272FBCCA0D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */; };
 		2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1619,6 +1621,8 @@
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
+		272C27E30F4F2CD9004CE81E /* KTPageDetailsBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsBoxView.h; sourceTree = "<group>"; };
+		272C27E40F4F2CD9004CE81E /* KTPageDetailsBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsBoxView.m; sourceTree = "<group>"; };
 		272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaContainers.m"; sourceTree = "<group>"; };
 		272FBCC90D40102C00FCC189 /* KTSiteOutlineDataSource+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTSiteOutlineDataSource+Icons.m"; sourceTree = "<group>"; };
 		2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTemplateParser.h; sourceTree = "<group>"; };
@@ -2764,6 +2768,8 @@
 		272321DB0D48B5A70075F31F /* Page Details */ = {
 			isa = PBXGroup;
 			children = (
+				272C27E30F4F2CD9004CE81E /* KTPageDetailsBoxView.h */,
+				272C27E40F4F2CD9004CE81E /* KTPageDetailsBoxView.m */,
 				272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */,
 				272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */,
 				270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */,
@@ -4955,6 +4961,7 @@
 				27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */,
 				2777DDF90F24F946001F1176 /* KTHostSetupWindowController.h in Headers */,
 				2777DDFD0F24F961001F1176 /* KTConnectionTest.h in Headers */,
+				272C27E50F4F2CD9004CE81E /* KTPageDetailsBoxView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6332,6 +6339,7 @@
 				2777DDFA0F24F946001F1176 /* KTHostSetupWindowController.m in Sources */,
 				2777DDFE0F24F961001F1176 /* KTConnectionTest.m in Sources */,
 				279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */,
+				272C27E60F4F2CD9004CE81E /* KTPageDetailsBoxView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
