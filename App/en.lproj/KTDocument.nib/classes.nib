@@ -192,8 +192,10 @@
                 oCollectionIndexExtensionButton = KSPopUpButton;
                 oFileExtensionPopup = KSPopUpButton;
                 oKeywordsField = NSTokenField;
+                oMetaDescriptionField = NSTextField;
                 oPageFileNameField = NSTextField;
                 oPagesController = NSObjectController;
+                oWindowTitleField = NSTextField;
             };
             SUPERCLASS = KTDocViewController;
         },

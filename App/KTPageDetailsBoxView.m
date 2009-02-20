@@ -65,7 +65,7 @@
 	int topOfTitleField = bottomOfTopmost - 2;
 	const int kSpaceBetweenResizableFields = 20;
 	int spaceToDivide = topOfTitleField - topOfBottommost - (2 * kSpaceBetweenResizableFields);
-	int sizeOfField = spaceToDivide / 3;		// will round down
+	int sizeOfField = MIN(spaceToDivide / 3, 62);		// Try to get a third, but no more than 4 lines for title tag.
 
 	NSView *field;
 	NSRect frame;
@@ -96,6 +96,9 @@
 	[field setFrame:frame];
 	
 	// Desc Resizable Field
+	spaceToDivide -= sizeOfField;		// keep track of what's left
+	sizeOfField = spaceToDivide / 2;	// will round down
+	
 	newBottom = newBottom-sizeOfField - 2;	// we want gap of 2 between field and label above
 	field = [self viewWithTag:5];
 	OBASSERT(field);
@@ -113,7 +116,7 @@
 	[field setFrame:frame];
 	
 	// Tags resizable field
-	sizeOfField = spaceToDivide - (2 * sizeOfField);		// take what's left for last field
+	sizeOfField = spaceToDivide - sizeOfField;		// take what's left for last field
 	
 	newBottom = newBottom - sizeOfField - 2;
 	field = [self viewWithTag:7];
@@ -144,19 +147,16 @@
 	NSString *bindingKeyPath;
 	id observedObject;
 	
-	// The window title field
+	// The window title field ... only re-bind the multiple values placeholder; null value is handled by KTPageDetailsController to be the combo title text.
 
 	field = [self viewWithTag:2];	OBASSERT(field);
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
-	longMultiple  = NSLocalizedString(@"Title of window for selected pages; Use %P %T %A as placeholders.", @"multiple items selected, longer placeholder");
-	longNull      = NSLocalizedString(@"Custom title of window for page", @"null summary available, longer placeholder");
+	longMultiple  = NSLocalizedString(@"Titles of browser window for selected pages. (Duplicates are discouraged.)", @"multiple items selected, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Custom titles", @"multiple items selected, very short placeholder");
-	shortNull     = NSLocalizedString(@"Custom title", @"null summary available, very short placeholder");
 	
 	desiredMultiPlaceholder = (sizeOfField < (45) ? shortMultiple : longMultiple);
-	desiredNullPlaceholder  = (sizeOfField < (45) ? shortNull : longNull);
 	
 	infoForBinding	= [field infoForBinding:NSValueBinding];
 	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
@@ -167,7 +167,6 @@
 	{
 		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
 		[newBindingOptions setObject:desiredMultiPlaceholder forKey:NSMultipleValuesPlaceholderBindingOption];
-		[newBindingOptions setObject:desiredNullPlaceholder forKey:NSNullPlaceholderBindingOption];
 		
 		[field unbind:NSValueBinding];
 		[field bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
@@ -179,7 +178,7 @@
 	frame = [field frame];
 	sizeOfField = frame.size.height;
 	
-	longMultiple  = NSLocalizedString(@"Optional summaries. (Setting the same text for multiple pages is discouraged.)", @"multiple items selected, longer placeholder");
+	longMultiple  = NSLocalizedString(@"Optional summaries. (Duplicates are discouraged.)", @"multiple items selected, longer placeholder");
 	longNull      = NSLocalizedString(@"Optional summary of page. Used by search engines.", @"null summary available, longer placeholder");
 	shortMultiple = NSLocalizedString(@"Optional summaries", @"multiple items selected, very short placeholder");
 	shortNull     = NSLocalizedString(@"Optional summary", @"null summary available, very short placeholder");

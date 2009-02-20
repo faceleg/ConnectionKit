@@ -52,6 +52,8 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	
 	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
 	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCountdown"];
+	[self setKey:@"windowTitle" triggersChangeNotificationsForDependentKey:@"windowTitleCharCountColor"];
+	[self setKey:@"windowTitle" triggersChangeNotificationsForDependentKey:@"windowTitleCountdown"];
 
 	
 	
@@ -222,7 +224,7 @@
 
 - (void)setWindowTitle:(NSString *)wTitle
 {
-	[self setValue:wTitle forUndefinedKey:@"setWindowTitle"];
+	[self setValue:wTitle forUndefinedKey:@"windowTitle"];
 }
 
 #pragma mark -
