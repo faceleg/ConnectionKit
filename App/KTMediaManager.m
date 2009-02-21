@@ -60,6 +60,7 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	// Set up our MOC
 	myMOC = [[NSManagedObjectContext alloc] init];
+    [myMOC setMergePolicy:NSOverwriteMergePolicy];
 	
     KTMediaPersistentStoreCoordinator *mediaPSC = [[KTMediaPersistentStoreCoordinator alloc] initWithManagedObjectModel:
 												   [[self class] managedObjectModel]];
