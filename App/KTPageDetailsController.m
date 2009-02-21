@@ -235,8 +235,6 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText
 {
-	NSLog(@"resetPlaceholderToComboTitleText: %@", comboTitleText);
-	
 	NSDictionary *infoForBinding;
 	NSDictionary *bindingOptions;
 	NSString *bindingKeyPath;

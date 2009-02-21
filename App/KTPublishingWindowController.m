@@ -176,6 +176,14 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	[windowController visitPublishedPage:sender];
 }
 
+- (IBAction)submitSiteToDirectory:(id)sender;
+{
+	KTDocWindowController *windowController = [_modalWindow windowController];
+	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
+	
+	[windowController submitSiteToDirectory:sender];
+}
+
 #pragma mark -
 #pragma mark Publishing Engine
 

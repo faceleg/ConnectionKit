@@ -150,6 +150,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)visitPublishedSite:(id)sender;
 - (IBAction)visitPublishedPage:(id)sender;
+- (IBAction)submitSiteToDirectory:(id)sender;
 
 - (IBAction)windowHelp:(id)sender;
 - (IBAction)addPage:(id)sender;

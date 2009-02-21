@@ -96,7 +96,18 @@ static NSURLCache *_sharedCache;
     NSURL *URL = [[self request] URL];
 	
 	
-	// Construct image scaling properties dictionary from the URL
+	// Load the image from disk
+    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:[[self request] scaledImageSourceURL]];
+    if(!sourceImage)
+    {
+        [[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain
+                                                                             code:NSURLErrorResourceUnavailable
+                                                                         userInfo:nil]];
+        return;
+    }
+    
+    
+    // Construct image scaling properties dictionary from the URL
     NSDictionary *URLQuery = [URL queryDictionary];
     
     NSSize scaledSize = NSSizeFromString([URLQuery objectForKey:@"size"]);
@@ -104,11 +115,10 @@ static NSURLCache *_sharedCache;
     
     
     // Scale the image
-    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:[[self request] scaledImageSourceURL]];
     CIImage *scaledImage = [sourceImage imageByScalingToSize:CGSizeMake(scaledSize.width, scaledSize.height)
                                                         mode:scalingMode
                                                  opaqueEdges:YES];
-    
+    OBASSERT(scaledImage);
     [scaledImage retain];   // Otherwise releasing sourceImage might deallocate scaledImage
     [sourceImage release];
     

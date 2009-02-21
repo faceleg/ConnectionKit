@@ -604,6 +604,8 @@
 				<string>id</string>
 				<key>showLinkPanel</key>
 				<string>id</string>
+				<key>submitSiteToDirectory</key>
+				<string>id</string>
 				<key>toggleDesignsShown</key>
 				<string>id</string>
 				<key>updateWebView</key>

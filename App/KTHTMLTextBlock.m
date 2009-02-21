@@ -203,7 +203,8 @@
 	KTMediaContainer *result = nil;
 	
 	NSString *graphicalTextCode = [self graphicalTextCode];
-	if (graphicalTextCode)
+    NSString *innerHTML = [self innerHTML];
+	if (graphicalTextCode && innerHTML && ![innerHTML isEqualToString:@""])
 	{
 		KTPage *page = (KTPage *)[[self parser] currentPage];		OBASSERT(page);
 		KTMaster *master = [page master];
@@ -215,7 +216,7 @@
 			{
 				// Generate the image
 				KTMediaManager *mediaManager = [page mediaManager];
-				result = [mediaManager graphicalTextWithString:[[self innerHTML] stringByConvertingHTMLToPlainText]
+				result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
 														design:design
 										  imageReplacementCode:graphicalTextCode
 														  size:[master floatForKey:@"graphicalTitleSize"]];
