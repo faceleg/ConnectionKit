@@ -234,6 +234,7 @@ static NSURLCache *_sharedCache;
 	}
     @catch (NSException *exception)
     {
+        [[self client] URLProtocol:self didFailWithError:[NSError errorWithLocalizedDescription:[exception reason]]];
         [NSApp performSelectorOnMainThread:@selector(reportException:) withObject:exception waitUntilDone:NO];
     }
 }
