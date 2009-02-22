@@ -12,6 +12,7 @@
 
 #import "CIImage+Karelia.h"
 #import "NSApplication+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
