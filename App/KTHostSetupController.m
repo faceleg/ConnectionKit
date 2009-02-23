@@ -1119,7 +1119,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
 		
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-		[self uploadTestFileAtPath:dirPath];
+		[self uploadTestFileAtPath:@""];
 	}
 }
 
