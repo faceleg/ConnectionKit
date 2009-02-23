@@ -490,7 +490,8 @@
 											  path:[@"/" stringByAppendingPathComponent:[self valueForKey:@"uniqueID"]]];
 	
 	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
-	[query setObject:NSStringFromSize(size) forKey:@"size"];
+	
+    if (!NSEqualSizes(size, NSZeroSize)) [query setObject:NSStringFromSize(size) forKey:@"size"];
 	[query setObject:[NSString stringWithFormat:@"%i", scalingMode] forKey:@"mode"];
 	if (UTI) [query setObject:UTI forKey:@"filetype"];
 	[query setFloat:[[NSUserDefaults standardUserDefaults] floatForKey:@"KTPreferredJPEGQuality"] forKey:@"compression"];
@@ -520,7 +521,9 @@
 	
 	// Is any scaling actually required?
 	KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
-	if (!settings || ([settings behavior] == KTScaleByFactor && [settings scaleFactor] == 1.0))
+	if (!properties || ([settings behavior] == KTScaleByFactor &&
+                        [settings scaleFactor] == 1.0 &&
+                        [[properties objectForKey:@"fileType"] isEqualToString:[self fileType]]))
 	{
 		properties = nil;
 	}
@@ -539,10 +542,9 @@
 				mode = KSImageScalingModeFill;
 				break;
 			case KTCropToSize:
-				mode = [settings alignment] + 11;  // what the heck is this?
+				mode = [settings alignment] + 11;  // +11 converts from KTMediaScalingOperation to KSImageScalingMode
 				break;
 			default:
-				OBASSERT_NOT_REACHED("Unknown scaling behaviour");
 				break;
 		}
 		
