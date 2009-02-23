@@ -27,6 +27,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 - (void)_startLoadingUncached;
 - (NSData *)_loadImageAtURL:(NSURL *)sourceURL scaledToSize:(NSSize)size type:(NSString *)fileType;
 - (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType;
+- (NSData *)_loadFaviconFromURL:(NSURL *)URL;
 @end
 
 
@@ -139,23 +140,38 @@ static NSURLCache *_sharedCache;
         NSURL *URL = [[self request] URL];
         NSData *imageData = nil;
         
+        
+        
         // Construct image scaling properties dictionary from the URL
         NSDictionary *URLQuery = [URL queryDictionary];
         
         NSURL *sourceURL = [[self request] scaledImageSourceURL];
         OBASSERT(sourceURL);
         
+        
+        
+        // There are three possible ways to render the result
+        //  A) Scale with CoreImage
+        //  B) Convert without scaling using CGImageDestination/Source
+        //  C) Create a favicon representation
         NSString *UTI = [URLQuery objectForKey:@"filetype"];
         OBASSERT(UTI);
-        
-        NSString *size = [URLQuery objectForKey:@"size"];
-        if (size)
+        if ([UTI isEqualToString:(NSString *)kUTTypeICO])
         {
-            imageData = [self _loadImageAtURL:sourceURL scaledToSize:NSSizeFromString(size) type:UTI];
+            // This is a little bit of a hack as it ignores size info, and purely creates a favicon
+            imageData = [self _loadFaviconFromURL:sourceURL];
         }
         else
         {
-            imageData = [self _loadImageAtURL:sourceURL convertToType:UTI];
+            NSString *size = [URLQuery objectForKey:@"size"];
+            if (size)
+            {
+                imageData = [self _loadImageAtURL:sourceURL scaledToSize:NSSizeFromString(size) type:UTI];
+            }
+            else
+            {
+                imageData = [self _loadImageAtURL:sourceURL convertToType:UTI];
+            }
         }
         
         OBASSERT(imageData);
@@ -175,12 +191,14 @@ static NSURLCache *_sharedCache;
         [[self client] URLProtocol:self didLoadData:imageData];
         
         
+        
         // Cache result
         NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
         [response release];
         
         [[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
         [cachedResponse release];
+        
         
         
         // Tidy up
@@ -334,6 +352,14 @@ static NSURLCache *_sharedCache;
     CFRelease(imageDestination);
     CFRelease(imageSource);
     
+    return result;
+}
+
+- (NSData *)_loadFaviconFromURL:(NSURL *)URL
+{
+    NSImage *sourceImage = [[NSImage alloc] initWithContentsOfURL:URL];
+    NSData *result = [sourceImage faviconRepresentation];
+    [sourceImage release];
     return result;
 }
 

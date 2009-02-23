@@ -51,6 +51,7 @@
 - (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
 - (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
 - (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+- (NSData *)faviconRepresentation;
 
 
 @end
