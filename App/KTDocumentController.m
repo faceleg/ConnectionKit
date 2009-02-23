@@ -110,7 +110,10 @@
     NSError *error = nil;
     if (![self openUntitledDocumentAndDisplay:YES error:&error])
     {
-        if (error) [self presentError:error];
+        if (![[error domain] isEqualToString:NSCocoaErrorDomain] || [error code] != NSUserCancelledError)
+        {
+            [self presentError:error];
+        }
     }
 }
 
@@ -173,11 +176,9 @@
     
     
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
-	if (saveResult == NSFileHandlingPanelCancelButton) {
-		if (outError)
-		{
-			*outError = nil;	// Otherwise we crash
-		}
+	if (saveResult == NSFileHandlingPanelCancelButton)
+    {
+		if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 		return nil;
 	}
     
