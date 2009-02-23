@@ -261,6 +261,9 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[oStackView setDataSource:self];		// ready to hook up UI, not before!
 	
 	[oTabSegmentedControl setFocusRingType: NSFocusRingTypeNone];	// don't draw focus since it's truncated top/sides
+	
+	// FIXME: disable Disqus for beta 1
+	[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderDisqus]] setEnabled:NO];
 }
 
 - (IBAction) languageChosen:(id)sender;
@@ -890,7 +893,13 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (IBAction)chooseCommentsProvider:(id)sender
 {
 	KTCommentsProvider provider = [sender selectedTag];
-	[[self selectedLevel] setValue:[NSNumber numberWithInt:provider] forKey:@"commentsProvider"];
+	[[[self selectedLevel] master] setCommentsProvider:provider];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if ( KTCommentsProviderDisqus == [menuItem tag] ) return NO;
+	return YES;
 }
 
 #pragma mark -
