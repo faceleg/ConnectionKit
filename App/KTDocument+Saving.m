@@ -515,7 +515,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
-	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL UTI:nil];
+	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
 	
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
@@ -608,7 +608,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             else
             {
                 OBASSERT([NSThread currentThread] == [self thread]);
-                result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL UTI:nil]
+                result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                                   error:&error];
             }
         }
@@ -659,11 +659,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	// Migrate the main document store
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
+	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
 	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
     OBASSERT(storeCoordinator);
 	
-	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL UTI:nil];
+	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL type:nil];
     OBASSERT(oldDataStoreURL);
     
     id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];

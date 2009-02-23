@@ -308,7 +308,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
  *	You can pass in nil to use the default UTI for new documents.
  */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
 {
 	OBPRECONDITION(inURL);
 	
