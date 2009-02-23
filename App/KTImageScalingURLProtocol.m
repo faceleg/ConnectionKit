@@ -12,6 +12,7 @@
 
 #import "CIImage+Karelia.h"
 #import "NSApplication+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
@@ -234,6 +235,7 @@ static NSURLCache *_sharedCache;
 	}
     @catch (NSException *exception)
     {
+        [[self client] URLProtocol:self didFailWithError:[NSError errorWithLocalizedDescription:[exception reason]]];
         [NSApp performSelectorOnMainThread:@selector(reportException:) withObject:exception waitUntilDone:NO];
     }
 }
