@@ -91,7 +91,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(docRoot);
     OBASSERT([docRoot isAbsolutePath]);
     
-    OBPRECONDITION(!subfolder || ![subfolder isAbsolutePath]);
+    OBASSERTSTRING(!subfolder || ![subfolder isAbsolutePath], subfolder);
     
     
     if (self = [super init])

@@ -33,14 +33,16 @@ typedef enum {
 
 
 @protocol KTDataSource
-+ (NSArray *)supportedPasteboardTypes;
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
+
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)index;
-
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex;
+                             atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+
 @end
 
 

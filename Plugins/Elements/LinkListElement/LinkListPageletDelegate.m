@@ -138,7 +138,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypes
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     return [NSArray arrayWithObjects:
             @"WebURLsWithTitlesPboardType",
@@ -161,13 +161,14 @@
 	return 1;	// can't find any multiplicity
 }
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pasteboard atIndex:(unsigned)index
++ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
     int result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
-	if (webLocations && [webLocations count] > 0)
+	// Only allow creating a link list pagelet from a drag to pagelet area
+	if (isCreatingPagelet && webLocations && [webLocations count] >= 1)
 	{
 		result = KTSourcePriorityReasonable;
 	}
@@ -177,7 +178,9 @@
 
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex;
+                             atIndex:(unsigned)dragIndex
+				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+
 {
     BOOL result = NO;
     
