@@ -1019,7 +1019,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 
 // Support method to now upload the test file
-- (void) uploadTestFileAtPath:(NSString *)dirPath
+- (void)uploadTestFileAtPath:(NSString *)dirPath
 {
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to upload a test file... ", @"status message for test connection")];
 	
@@ -1119,7 +1119,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
 		
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-		[self uploadTestFileAtPath:@""];
+		[self uploadTestFileAtPath:([dirPath isAbsolutePath] ? dirPath : @"")];
 	}
 }
 
