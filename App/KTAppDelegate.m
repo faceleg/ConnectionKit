@@ -125,15 +125,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 @end
 
 
-@interface KTAppDelegate ( Private )
+@interface KTAppDelegate ()
 
-- (void)setMenuItemPro:(NSMenuItem *)aMenuItem;
-
-- (NSMutableDictionary *)dataModelForPlugin:(NSBundle *)aPlugin;
-- (void)connectToHomeBase:(NSTimer *)aTimer;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
+#endif
 
 @end
 
@@ -665,83 +663,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	return YES;
 }
-
-- (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath
-{
-	OBPRECONDITION(aDocument);
-	OBPRECONDITION(aPath);
-	// hang on to paths
-	NSString *documentPath = [[[[aDocument fileURL] path] copy] autorelease];
-	NSString *documentDirectory = [documentPath stringByDeletingLastPathComponent];
-	NSString *documentName = [documentPath lastPathComponent];
-	NSString *snapshotPath = [[aDocument snapshotURL] path];
-	NSString *snapshotDirectory = [snapshotPath stringByDeletingLastPathComponent];
-	
-	// close document
-	[aDocument close];
-	
-	// perform file operations using Workspace
-	NSArray *files = nil;
-	int tag = 0;
-	
-	// recycle document
-	files = [NSArray arrayWithObject:[documentPath lastPathComponent]];
-	BOOL didMoveDocumentToTrash = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
-																				  source:documentDirectory
-																			 destination:nil
-																				   files:files 
-																					 tag:&tag];
-	if ( !didMoveDocumentToTrash )
-	{
-		// alert the user
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Revert Failed", "alert: revert failed")
-										 defaultButton:NSLocalizedString(@"OK", "OK Button")
-									   alternateButton:nil 
-										   otherButton:nil 
-							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to put the current version of the document in the Trash before reverting. This is done as a safety precaution. The document will not be reverted. Please check the Trash for any problems or remove the document at %@ manually.",
-																		 "alert: could not Trash document"), documentPath];
-		
-		(void)[alert runModal];
-		
-		// reopen the document
-		[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-																			   display:YES
-																				 error:nil];
-		
-		return;
-	}
-	
-	// copy snapshot to document location
-	NSString *destPath = [documentDirectory stringByAppendingPathComponent:[snapshotPath lastPathComponent]];
-	BOOL didRevert = [[NSFileManager defaultManager] copyPath:snapshotPath toPath:destPath handler:nil];
-
-	// OLD WAY -- PROBLEMATIC
-//	files = [NSArray arrayWithObject:[snapshotPath lastPathComponent]];
-//	BOOL didRevert = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceCopyOperation 
-//																	source:snapshotDirectory
-//															   destination:documentDirectory
-//																	 files:files 
-//																	   tag:&tag];
-	if ( !didRevert )
-	{
-		// alert the user
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Revert Failed", "alert: revert failed")
-										 defaultButton:NSLocalizedString(@"OK", "OK Button")
-									   alternateButton:nil 
-										   otherButton:nil 
-							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to revert using the current snapshot. Please drag the document %@ out of the Trash and reopen it to continue using it. Please also check that the directory %@ is readable.",
-																		 "alert: could not revert document"), documentName, [snapshotDirectory stringByDeletingLastPathComponent]];
-		
-		(void)[alert runModal];
-		return;
-	}
-	
-	// open reverted document
-	[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-																		   display:YES
-																			 error:nil];
-}
-
 
 // Exceptions specific to Sandvox
 // BETA: I've commented some of those out that we want to hear about. Mike.
@@ -1568,17 +1489,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	bool prefersPNG = [defaults boolForKey:@"KTPrefersPNGFormat"];
 	return !prefersPNG;
 }
-
-- (BOOL)shouldBackupOnOpening
-{
-	return ( KTBackupOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
-}
-
-- (BOOL)shouldSnapshotOnOpening
-{
-	return ( KTSnapshotOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
-}
-
 
 #pragma mark -
 #pragma mark Debug Methods

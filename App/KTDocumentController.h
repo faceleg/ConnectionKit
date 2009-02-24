@@ -16,9 +16,6 @@
 	// New docs
 	IBOutlet NSView			*oNewDocAccessoryView;
 	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
-	
-    @private
-	NSMutableArray *myDocumentsAwaitingBackup;
 }
 
 - (IBAction)showDocumentPlaceholderWindow:(id)sender;

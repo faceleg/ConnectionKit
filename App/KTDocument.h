@@ -158,23 +158,5 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)isSaving;
 
-#pragma mark Snapshots
-- (IBAction)saveDocumentSnapshot:(id)sender;
-- (void)saveSnapshotWithDelegate:(id)delegate didSaveSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
-- (BOOL)saveSnapshot:(NSError **)error;
-
-- (IBAction)revertDocumentToSnapshot:(id)sender;
-
-+ (NSURL *)snapshotsDirectoryURL;
-- (NSURL *)snapshotDirectoryURL;
-- (NSURL *)snapshotURL;
-
-- (BOOL)hasValidSnapshot;
-- (NSDate *)lastSnapshotDate;
-
-#pragma mark Backup
-- (NSURL *)backupURL;
-- (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error;
-
 @end
 

@@ -686,12 +686,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		return YES;
 	}
 	
-	// "Revert to Snapshot..." revertDocumentToSnapshot:
-	else if ( [menuItem action] == @selector(revertDocumentToSnapshot:) ) 
-	{
-		return [self hasValidSnapshot];
-	}
-	
 	// Site menu	
 	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
 	{
