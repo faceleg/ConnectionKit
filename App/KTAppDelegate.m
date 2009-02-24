@@ -707,7 +707,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	else if (action == @selector(showPluginWindow:))
 	{
 		// FIXME: disabling this for beta 1
-		return [NSUserName() isEqualToString:@"dwood"] && [KSNetworkNotifier isNetworkAvailable];
+		return ([NSUserName() isEqualToString:@"dwood"]  || [NSUserName() isEqualToString:@"ttalbot"] || [NSUserName() isEqualToString:@"mabdullah"])
+		
+		&& [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(showReleaseNotes:))
 	{
