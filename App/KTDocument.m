@@ -308,7 +308,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     BOOL result = YES;
 	
 	/// and we compute the sqlite URL here for both read and write
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
+	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
 	
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
@@ -388,7 +388,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
  *	You can pass in nil to use the default UTI for new documents.
  */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
 {
 	OBPRECONDITION(inURL);
 	

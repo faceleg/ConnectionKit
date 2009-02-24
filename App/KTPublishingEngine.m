@@ -85,13 +85,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
 	OBPRECONDITION(site);
     
-    // Case 38052: We want the doc root to be an absolute path
-    if (!docRoot) docRoot = @"/";
-    if (![docRoot isAbsolutePath]) docRoot = [@"/" stringByAppendingString:docRoot];
+    if (!docRoot) docRoot = @"";    // We need a string that can receive -stringByAppendingPathComponent: messages
     OBASSERT(docRoot);
-    OBASSERT([docRoot isAbsolutePath]);
-    
-    OBASSERTSTRING(!subfolder || ![subfolder isAbsolutePath], subfolder);
     
     
     if (self = [super init])
@@ -977,7 +972,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     CKTransferRecord *root = [self rootTransferRecord];
     OBASSERT(root);
-    if ([[root path] isEqualToString:remotePath]) return root;
+    if ([[self documentRootPath] isEqualToString:remotePath]) return root;
     
     
     // Ensure the parent directory is created first
@@ -992,7 +987,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     for (i = 0; i < [[parent contents] count]; i++)
     {
         CKTransferRecord *aRecord = [[parent contents] objectAtIndex:i];
-        if ([[aRecord path] isEqualToString:remotePath])
+        if ([[aRecord name] isEqualToString:[remotePath lastPathComponent]])
         {
             result = aRecord;
             break;

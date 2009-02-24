@@ -110,7 +110,10 @@
     NSError *error = nil;
     if (![self openUntitledDocumentAndDisplay:YES error:&error])
     {
-        if (error) [self presentError:error];
+        if (![[error domain] isEqualToString:NSCocoaErrorDomain] || [error code] != NSUserCancelledError)
+        {
+            [self presentError:error];
+        }
     }
 }
 
@@ -173,11 +176,9 @@
     
     
 	int saveResult = [savePanel runModalForDirectory:nil file:nil];
-	if (saveResult == NSFileHandlingPanelCancelButton) {
-		if (outError)
-		{
-			*outError = nil;	// Otherwise we crash
-		}
+	if (saveResult == NSFileHandlingPanelCancelButton)
+    {
+		if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
 		return nil;
 	}
     
@@ -403,15 +404,19 @@
  */
 - (NSString *)typeForContentsOfURL:(NSURL *)inAbsoluteURL error:(NSError **)outError
 {
-    NSString *result;
+    NSString *result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
     
-    if ([inAbsoluteURL isFileURL] && [[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL])
+    if ([inAbsoluteURL isFileURL])
     {
-        result = kKTDocumentUTI_ORIGINAL;
-    }
-    else
-    {
-        result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
+        BOOL fileIsDirectory = YES;
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[inAbsoluteURL path] isDirectory:&fileIsDirectory];
+                           
+        if (fileExists &&
+            [[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL] &&
+            !fileIsDirectory)
+        {
+            result = kKTDocumentUTI_ORIGINAL;
+        }
     }
     
     return result;
@@ -427,18 +432,20 @@
 	}	
 	
 	NSString *requestedPath = [absoluteURL path];
-	NSString *UTI = [NSString UTIForFileAtPath:requestedPath];
+    NSString *fileType = [self typeForContentsOfURL:absoluteURL error:outError];
 	
-	// are we opening a KTDocument (and not a sample site)?
-	if ( ([UTI conformsToUTI:kKTDocumentUTI] || [UTI conformsToUTI:kKTDocumentUTI_ORIGINAL])
-		 && ![requestedPath hasPrefix:[[NSBundle mainBundle] bundlePath]] )
+	// are we opening a KTDocument?
+	if (fileType && ([fileType isEqualToString:kKTDocumentType] || [fileType isEqualToString:kKTDocumentUTI_ORIGINAL]))
 	{		
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
 		{
-			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL UTI:UTI];
-			metadata = [KTPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL error:outError];
+			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
+                                                                    type:([fileType isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
+            
+			metadata = [KTPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL
+                                                                                 error:outError];
 		}
 		@catch (NSException *exception)
 		{
