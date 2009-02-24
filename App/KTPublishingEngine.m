@@ -972,12 +972,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     CKTransferRecord *root = [self rootTransferRecord];
     OBASSERT(root);
-    if ([[self documentRootPath] isEqualToString:remotePath]) return root;
+    if ([[self documentRootPath] isEqualToPOSIXPath:remotePath]) return root;
     
     
     // Ensure the parent directory is created first
     NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
-    OBASSERT(![parentDirectoryPath isEqualToString:remotePath]);
+    OBASSERT(![parentDirectoryPath isEqualToPOSIXPath:remotePath]);
     CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
     
     

@@ -230,7 +230,7 @@
         NSString *publishedPath = [page publishedPath];
         
         if (publishedDataDigest &&
-            (!publishedPath || [uploadPath isEqualToString:publishedPath]) &&   // 1.5.1 and earlier didn't store -publishedPath
+            (!publishedPath || [uploadPath isEqualToPOSIXPath:publishedPath]) &&   // 1.5.1 and earlier didn't store -publishedPath
             [publishedDataDigest isEqualToData:digest])
         {
             return NO;
