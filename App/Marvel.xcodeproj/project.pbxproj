@@ -928,6 +928,7 @@
 		CE9475390823013F00CE8E0C /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9475380823013F00CE8E0C /* Mask.jpg */; };
 		CE99F4E90F37B66200A55B06 /* KTPageDetailsBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE99F4E70F37B66200A55B06 /* KTPageDetailsBoxView.h */; };
 		CE99F4EA0F37B66200A55B06 /* KTPageDetailsBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE99F4E80F37B66200A55B06 /* KTPageDetailsBoxView.m */; };
+		CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE9C56AD0F55E55D00E46592 /* checkmark.tiff */; };
 		CE9CAB4D0BCEC566001BF9F7 /* serverlogistics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */; };
 		CE9DFF4C09FD4E5900007D04 /* MediaInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C728BF008EC7AD800BADA0A /* MediaInspector.nib */; };
 		CE9DFF5409FD4E6A00007D04 /* DebugTable.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E7A07E00EE800DE4994 /* DebugTable.nib */; };
@@ -2523,6 +2524,7 @@
 		CE9475380823013F00CE8E0C /* Mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mask.jpg; sourceTree = "<group>"; };
 		CE99F4E70F37B66200A55B06 /* KTPageDetailsBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsBoxView.h; sourceTree = "<group>"; };
 		CE99F4E80F37B66200A55B06 /* KTPageDetailsBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsBoxView.m; sourceTree = "<group>"; };
+		CE9C56AD0F55E55D00E46592 /* checkmark.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = checkmark.tiff; path = ../../Shared/Graphics/checkmark.tiff; sourceTree = SOURCE_ROOT; };
 		CE9CAB480BCEC566001BF9F7 /* dreamhost.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dreamhost.gif; sourceTree = "<group>"; };
 		CE9CAB490BCEC566001BF9F7 /* liveoak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liveoak.png; sourceTree = "<group>"; };
 		CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = serverlogistics.jpg; sourceTree = "<group>"; };
@@ -3510,6 +3512,7 @@
 				CEC3796C0F2FD004004CC936 /* SlideshowPlay.png */,
 				CEBCFD100DB9067A001BF0DF /* Unused-Experimental */,
 				CE7230E90D85D5BB00E9C592 /* syringe.tiff */,
+				CE9C56AD0F55E55D00E46592 /* checkmark.tiff */,
 				CEBCFD130DB90690001BF0DF /* NSImageNamed Replacements */,
 				CE9CAB500BCEC56D001BF9F7 /* HostSetup */,
 				CE6FFB78088EEFD100AD0154 /* DesignPicker */,
@@ -5639,6 +5642,7 @@
 				27AE75C80EEEB12D00409D80 /* error.png in Resources */,
 				27AE75C90EEEB12D00409D80 /* finished.png in Resources */,
 				CEC3796D0F2FD004004CC936 /* SlideshowPlay.png in Resources */,
+				CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
