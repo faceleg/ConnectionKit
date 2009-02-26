@@ -950,6 +950,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// Mark designs and media as stale (pages are handled automatically)
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
 		[designs setValue:nil forKey:@"versionLastPublished"];
+        
+        [[[[self documentInfo] root] master] setPublishedDesignCSSDigest:nil];
 		
 		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
 		[media setBool:YES forKey:@"isStale"];
