@@ -133,7 +133,7 @@
 {
 	KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
 	if ([webLocations count] > dragIndex)
 	{

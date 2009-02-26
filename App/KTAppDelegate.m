@@ -195,6 +195,28 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	return nil;
 }
 
+- (NSArray *) convertTypesIntoNames:(NSArray *)types;
+{
+	NSDictionary *lookup = [NSDictionary dictionaryWithObjectsAndKeys:
+							NSLocalizedString(@"All types", @"all plugin types, for 'show:' popup menu"), @"",
+							NSLocalizedString(@"Pages/Pagelets", @"plugin type for 'show:' popup menu"), @"Element",
+							NSLocalizedString(@"Designs", @"plugin type for 'show:' popup menu"), @"Design",
+							nil];
+	NSMutableArray *result = [NSMutableArray array];
+	NSEnumerator *enumerator = [types objectEnumerator];
+	NSString *aTypeString;
+	
+	while ((aTypeString = [enumerator nextObject]) != nil)
+	{
+		NSString *newTypeString = [lookup objectForKey:aTypeString];
+		if (!newTypeString)
+		{
+			newTypeString = aTypeString;		// fall back to raw type, untranslated :-(
+		}
+		[result addObject:newTypeString];
+	}
+	return result;
+}
 
 - (int) the16BitPrime
 {
@@ -624,8 +646,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
-		// FIXME: disabling this for beta 1
-		return [NSUserName() isEqualToString:@"dwood"] && [KSNetworkNotifier isNetworkAvailable];
+		return [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(showReleaseNotes:))
 	{
