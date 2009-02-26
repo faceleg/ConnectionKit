@@ -642,7 +642,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
-		return [[self currentDocument] validateMenuItem:menuItem];
+		return [[[NSDocumentController sharedDocumentController] currentDocument] validateMenuItem:menuItem];
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
@@ -1330,15 +1330,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-- (KTDocument *)currentDocument
-{
-	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
-    return [[NSDocumentController sharedDocumentController] currentDocument];
-}
-
-#pragma mark -
 #pragma mark IBActions
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
@@ -1350,7 +1341,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 */
 - (IBAction)saveWindowSize:(id)sender
 {
-    NSWindow *window = [[[[self currentDocument] windowControllers] objectAtIndex:0] window];
+    NSWindow *window = [[[[NSDocumentController sharedDocumentController] windowControllers] objectAtIndex:0] window];
     NSSize contentSize = [[window contentView] frame].size;
     [[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(contentSize)
                                               forKey:@"DefaultDocumentWindowContentSize"];
@@ -1409,7 +1400,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	[[self currentDocument] editRawHTMLInSelectedBlock:sender];
+	[[NSDocumentController sharedDocumentController] editRawHTMLInSelectedBlock:sender];
 }
 
 - (IBAction) openHigh:(id)sender

@@ -92,8 +92,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 + (BOOL) coreImageAccelerated;
 + (BOOL) fastEnoughProcessor;
 
-- (KTDocument *)currentDocument;
-
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;
 
