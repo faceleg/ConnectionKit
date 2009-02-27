@@ -94,5 +94,9 @@
 	<string>template</string>
 	<key>NSPrincipalClass</key>
 	<string>AmazonListDelegate</string>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
 </dict>
 </plist>

@@ -127,19 +127,20 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	
 	
 	// Restore window size
-	NSSize windowSize = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]);
+	float storedWidth = [[NSUserDefaults standardUserDefaults] floatForKey:@"PublishingWindowWidth"];
+    float storedHeight = [[NSUserDefaults standardUserDefaults] floatForKey:@"PublishingWindowExpandedHeight"];
 	
 	NSRect contentRect = [[self window] contentRectForFrameRect:[[self window] frame]];
 	NSSize minSize = [[self window] minSize];
 	NSSize maxSize = [[self window] maxSize];
 	
-	if (windowSize.width >= minSize.width && windowSize.width <= maxSize.width)
+	if (storedWidth >= minSize.width && storedWidth <= maxSize.width)
 	{
-		contentRect.size.width = windowSize.width;
+		contentRect.size.width = storedWidth;
 	}
-	if (windowSize.height >= minSize.height && windowSize.height <= maxSize.height)
+	if (storedHeight >= minSize.height && storedHeight <= maxSize.height)
 	{
-		contentRect.size.height = windowSize.height;
+		contentRect.size.height = storedHeight;
 	}
 	
 	[[self window] setFrame:[[self window] frameRectForContentRect:contentRect] display:YES];
@@ -359,13 +360,13 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 - (void)windowDidResize:(NSNotification *)notification
 {
 	// Store in the defaults
-	NSSize windowSize = [[self window] frame].size;
-	if ([[self accessoryView] isHidden])
+	NSSize windowSize = [[self window] contentRectForFrameRect:[[self window] frame]].size;
+    
+	[[NSUserDefaults standardUserDefaults] setFloat:windowSize.width forKey:@"PublishingWindowWidth"];
+	if (![[self accessoryView] isHidden])
 	{
-		NSSize oldWindowSize = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]);
-		windowSize.height = oldWindowSize.height;
+		[[NSUserDefaults standardUserDefaults] setFloat:windowSize.height forKey:@"PublishingWindowExpandedHeight"];
 	}
-	[[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(windowSize) forKey:@"PublishingWindowSize"];
 }
 
 - (void)showAccessoryView:(BOOL)showFlag animate:(BOOL)animateFlag
@@ -376,7 +377,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	if (showFlag)
 	{
 		// expand
-		float height = NSSizeFromString([[NSUserDefaults standardUserDefaults] stringForKey:@"PublishingWindowSize"]).height;
+		float height = [[NSUserDefaults standardUserDefaults] floatForKey:@"PublishingWindowExpandedHeight"];
 		if (height < [window minSize].height) height = 417.0;
 		
 		NSRect newContentFrame = NSMakeRect(windowFrame.origin.x,
