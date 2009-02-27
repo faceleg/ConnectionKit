@@ -870,7 +870,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
 		[designs setValue:nil forKey:@"versionLastPublished"];
         
-        [[[[self documentInfo] root] master] setPublishedDesignCSSDigest:nil];
+        [[[[self site] root] master] setPublishedDesignCSSDigest:nil];
 		
 		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
 		[media setBool:YES forKey:@"isStale"];
