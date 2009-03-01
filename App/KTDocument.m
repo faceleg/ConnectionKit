@@ -331,6 +331,37 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return NSSQLiteStoreType;
 }
 
+- (void)setFileURL:(NSURL *)absoluteURL
+{
+    NSURL *oldURL = [[self fileURL] copy];
+    [super setFileURL:absoluteURL];
+    
+    
+    if (oldURL)
+    {
+        // Also reset the persistent stores' DB connection if needed
+        NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
+        OBASSERT([[PSC persistentStores] count] <= 1);
+        NSPersistentStore *store = [PSC persistentStoreForURL:[[self class] datastoreURLForDocumentURL:oldURL type:nil]];
+        if (store)
+        {
+            NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+            [PSC setURL:newStoreURL forPersistentStore:store];
+        }
+        
+        PSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
+        OBASSERT([[PSC persistentStores] count] <= 1);
+        store = [PSC persistentStoreForURL:[KTMediaManager mediaStoreURLForDocumentURL:oldURL]];
+        if (store)
+        {
+            NSURL *newStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:absoluteURL];
+            [PSC setURL:newStoreURL forPersistentStore:store];
+        }
+        
+        [oldURL release];
+    }
+}
+
 #pragma mark -
 #pragma mark Undo Support
 
