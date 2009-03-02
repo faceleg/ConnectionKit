@@ -701,6 +701,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
 {
+    if (error)
+    {
+        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
+    }
+    
+    
     OBPRECONDITION(connection == _currentPendingMediaConnection);
     [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
     
