@@ -450,7 +450,7 @@
 				
 				NSRunInformationalAlertPanelRelativeToWindow(
                                                              NSLocalizedString(@"HTML is Valid",@"Title of results alert"),
-                                                             NSLocalizedString(@"The validator returned the following status message:\n\t%@",@""),
+                                                             NSLocalizedString(@"The validator returned the following status message:\n\n%@",@""),
                                                              nil,nil,nil, [[self view] window], explanation);
 			}
 		}
