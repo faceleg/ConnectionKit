@@ -86,8 +86,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	NSPoint myCascadePoint;
 }
 
-- (IBAction) openHigh:(id)sender;
-- (IBAction) openLow:(id)sender;
+- (IBAction) openScreencastLargeSize:(id)sender;
+- (IBAction) openScreencastSmallSize:(id)sender;
 
 + (void) registerDefaults;
 + (BOOL) coreImageAccelerated;
