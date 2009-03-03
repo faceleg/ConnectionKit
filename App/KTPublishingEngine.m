@@ -162,7 +162,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Setup connection and transfer records
     [self createConnection];
-    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[self documentRootPath]]];
+    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] standardizedPOSIXPath]]];
     
     
     // Start by publishing the home page if setting up connection was successful
@@ -701,6 +701,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
 {
+    if (error)
+    {
+        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
+    }
+    
+    
     OBPRECONDITION(connection == _currentPendingMediaConnection);
     [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
     
@@ -970,14 +976,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(remotePath);
     
     
-    CKTransferRecord *root = [self rootTransferRecord];
-    OBASSERT(root);
-    if ([[self documentRootPath] isEqualToPOSIXPath:remotePath]) return root;
+    if ([remotePath isEqualToString:@"/"] || [remotePath isEqualToString:@""]) // The root for absolute and relative paths
+    {
+        return [self rootTransferRecord];
+    }
     
     
     // Ensure the parent directory is created first
     NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
-    OBASSERT(![parentDirectoryPath isEqualToPOSIXPath:remotePath]);
+    OBASSERT(![parentDirectoryPath isEqualToString:[remotePath standardizedPOSIXPath]]);
     CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
     
     
