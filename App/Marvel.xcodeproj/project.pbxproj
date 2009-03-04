@@ -929,6 +929,9 @@
 		CE9475390823013F00CE8E0C /* Mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9475380823013F00CE8E0C /* Mask.jpg */; };
 		CE99F4E90F37B66200A55B06 /* KTPageDetailsBoxView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE99F4E70F37B66200A55B06 /* KTPageDetailsBoxView.h */; };
 		CE99F4EA0F37B66200A55B06 /* KTPageDetailsBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE99F4E80F37B66200A55B06 /* KTPageDetailsBoxView.m */; };
+		CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9B4B3E0F5E0C650052134C /* MiniProgressGradient.png */; };
+		CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */; };
+		CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */; };
 		CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE9C56AD0F55E55D00E46592 /* checkmark.tiff */; };
 		CE9CAB4D0BCEC566001BF9F7 /* serverlogistics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */; };
 		CE9DFF4C09FD4E5900007D04 /* MediaInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C728BF008EC7AD800BADA0A /* MediaInspector.nib */; };
@@ -2525,6 +2528,9 @@
 		CE9475380823013F00CE8E0C /* Mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Mask.jpg; sourceTree = "<group>"; };
 		CE99F4E70F37B66200A55B06 /* KTPageDetailsBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsBoxView.h; sourceTree = "<group>"; };
 		CE99F4E80F37B66200A55B06 /* KTPageDetailsBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsBoxView.m; sourceTree = "<group>"; };
+		CE9B4B3E0F5E0C650052134C /* MiniProgressGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MiniProgressGradient.png; sourceTree = "<group>"; };
+		CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKDockProgressIndicator.h; sourceTree = "<group>"; };
+		CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKDockProgressIndicator.m; sourceTree = "<group>"; };
 		CE9C56AD0F55E55D00E46592 /* checkmark.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = checkmark.tiff; path = ../../Shared/Graphics/checkmark.tiff; sourceTree = SOURCE_ROOT; };
 		CE9CAB480BCEC566001BF9F7 /* dreamhost.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dreamhost.gif; sourceTree = "<group>"; };
 		CE9CAB490BCEC566001BF9F7 /* liveoak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liveoak.png; sourceTree = "<group>"; };
@@ -4474,6 +4480,8 @@
 				CE01A71B0EAFD63600BDF264 /* RYZImagePopUpButton.m */,
 				CE01A71C0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h */,
 				CE01A71D0EAFD63600BDF264 /* RYZImagePopUpButtonCell.m */,
+				CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */,
+				CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */,
 			);
 			path = Imported;
 			sourceTree = "<group>";
@@ -4517,6 +4525,7 @@
 		CE22E5E40D7C73C00055D8E9 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CE9B4B3E0F5E0C650052134C /* MiniProgressGradient.png */,
 				CE01A8290EAFD65E00BDF264 /* help.mini.png */,
 				CE01A82A0EAFD65E00BDF264 /* help.small.png */,
 			);
@@ -4932,6 +4941,7 @@
 				2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */,
 				27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */,
 				CE99F4E90F37B66200A55B06 /* KTPageDetailsBoxView.h in Headers */,
+				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5643,6 +5653,7 @@
 				27AE75C90EEEB12D00409D80 /* finished.png in Resources */,
 				CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */,
 				CE14D01B0F589686008BE2AD /* SlideshowPlay.tiff in Resources */,
+				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6308,6 +6319,7 @@
 				27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */,
 				CEC378F70F2FBC1A004CC936 /* KSPluginInstallerController.m in Sources */,
 				CE99F4EA0F37B66200A55B06 /* KTPageDetailsBoxView.m in Sources */,
+				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
