@@ -39,8 +39,8 @@
 - (IBAction) doNew:(id)sender;
 - (IBAction) doOpen:(id)sender;
 - (IBAction) openLicensing:(id)sender;
-- (IBAction) openHigh:(id)sender;
-- (IBAction) openLow:(id)sender;
+- (IBAction) openScreencastLargeSize:(id)sender;
+- (IBAction) openScreencastSmallSize:(id)sender;
 - (IBAction) disclose:(id)sender;
 
 @end

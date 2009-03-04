@@ -268,6 +268,36 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>downloadSelectedPlugins</key>
+				<string>id</string>
+				<key>showHelp</key>
+				<string>id</string>
+				<key>showWindowForNewVersions</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KSPluginInstallerController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oArrayController</key>
+				<string>NSArrayController</string>
+				<key>oProgress</key>
+				<string>NSProgressIndicator</string>
+				<key>oSpecialLabel</key>
+				<string>NSTextField</string>
+				<key>oTable</key>
+				<string>KSPluginTableView</string>
+				<key>oTopItems</key>
+				<string>NSView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KSSingletonWindowController</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
 				<key>bold</key>
 				<string>id</string>
 				<key>chooseTheme</key>
@@ -461,6 +491,14 @@
 		<dict>
 			<key>CLASS</key>
 			<string>NSOutlineView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTableView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSPluginTableView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
@@ -734,6 +772,10 @@
 				<key>openLow</key>
 				<string>id</string>
 				<key>openSampleDocument</key>
+				<string>id</string>
+				<key>openScreencastLargeSize</key>
+				<string>id</string>
+				<key>openScreencastSmallSize</key>
 				<string>id</string>
 				<key>orderFrontPreferencesPanel</key>
 				<string>id</string>

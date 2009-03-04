@@ -652,11 +652,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
-	else if (action == @selector(openHigh:))
+	else if (action == @selector(openScreencastLargeSize:))
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
-	else if (action == @selector(openLow:))
+	else if (action == @selector(openScreencastSmallSize:))
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
@@ -1403,7 +1403,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[[NSDocumentController sharedDocumentController] editRawHTMLInSelectedBlock:sender];
 }
 
-- (IBAction) openHigh:(id)sender
+- (IBAction) openScreencastLargeSize:(id)sender
 {
 	NSURL *url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_1024.mov"];
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
@@ -1424,7 +1424,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 }
 
-- (IBAction) openLow:(id)sender
+- (IBAction) openScreencastSmallSize:(id)sender
 {
 	NSURL *url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_640.mov"];
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )

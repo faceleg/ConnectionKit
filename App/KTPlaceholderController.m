@@ -223,14 +223,25 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:sender afterDelay:0.0];
 }
 
-- (IBAction) openHigh:(id)sender;
+- (IBAction) openScreencastLargeSize:(id)sender;
 {
-	[[NSApp delegate] openHigh:nil];
+	[[NSApp delegate] openScreencastLargeSize:nil];
 }
 
-- (IBAction) openLow:(id)sender;
+- (IBAction) openHigh:(id)sender;		// LEGACY -- BACKWARD COMPATIBLE IF NIBS ARE NOT LOCALIZED YET
 {
-	[[NSApp delegate] openLow:nil];
+	[[NSApp delegate] openScreencastLargeSize:nil];
 }
+
+- (IBAction) openScreencastSmallSize:(id)sender;
+{
+	[[NSApp delegate] openScreencastSmallSize:nil];
+}
+
+- (IBAction) openLow:(id)sender;	// LEGACY -- BACKWARD COMPATIBLE IF NIBS ARE NOT LOCALIZED YET
+{
+	[[NSApp delegate] openScreencastSmallSize:nil];
+}
+
 
 @end

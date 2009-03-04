@@ -1825,7 +1825,7 @@ from representedObject */
 			// Only allow shrinking if we're N pixels moved over, making it kind of hard to shrink.
 			if (proposedFrameSize.width < minimumWidths ) // && proposedFrameSize.width > minimumWidths - 100)
 			{
-				result = NSMakeSize(currentWidth, proposedFrameSize.height);
+				result = NSMakeSize(minimumWidths, proposedFrameSize.height);
 				// Slightly smaller than minimum, don't let it shrink to that size.
 			}
 		}

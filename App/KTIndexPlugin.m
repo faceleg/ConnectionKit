@@ -65,23 +65,26 @@
 		
 		while (nil != (presetDict = [presetEnum nextObject]) )
 		{
-			int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
-			id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
-			if (nil != priorityID)
+			if (nil == [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"])	// do not add presets that specify a preset bundle identifier to this list, like the Raw HTML index
 			{
-				priority = [priorityID intValue];
-			} 
-			if (priority > 0	// don't add zero-priority items to menu!
-				&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
-			{
-				NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-				NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
-				
-				NSMutableDictionary *newPreset = [NSMutableDictionary dictionaryWithDictionary:presetDict];
-				[newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
-				
-				[dictOfPresets setObject:[NSDictionary dictionaryWithDictionary:newPreset]
-								  forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
+				int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
+				id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
+				if (nil != priorityID)
+				{
+					priority = [priorityID intValue];
+				} 
+				if (priority > 0	// don't add zero-priority items to menu!
+					&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
+				{
+					NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+					NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+					
+					NSMutableDictionary *newPreset = [NSMutableDictionary dictionaryWithDictionary:presetDict];
+					[newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
+					
+					[dictOfPresets setObject:[NSDictionary dictionaryWithDictionary:newPreset]
+									  forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
+				}
 			}
 		}
 	}

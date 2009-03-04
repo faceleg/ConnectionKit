@@ -269,6 +269,7 @@
 		
 		// Now build up the task
 		NSString *png2IcoPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"png2ico"];
+		OBASSERT(png2IcoPath);
 		NSString *outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"favicon.ico"];
         
 		// Argument array.  If there is no 32-pixel image, then array will end with path to 16.
