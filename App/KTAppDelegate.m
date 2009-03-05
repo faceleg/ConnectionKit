@@ -466,8 +466,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		/// whether CKTransferController should set up a parallel verification connection
 		[NSNumber numberWithBool:NO], @"ConnectionVerifiesTransfers",
 										 
-		/// how frequently documents are autosaved as int (converted to NSTimeInternal (double))
-		[NSNumber numberWithInt:60], @"AutosaveFrequency",
+                                         
+		// How frequently documents are autosaved in seconds. Autosave is off on debug builds for
+        // as they raise an exception.
+#if DEBUG
+        [NSNumber numberWithInt:0], @"AutosaveFrequency",
+#else
+        [NSNumber numberWithInt:60], @"AutosaveFrequency",
+#endif
 										 
 		/// whether CKTransferController sets permissions on uploads
 		[NSNumber numberWithBool:YES], @"ConnectionSetsPermissions",
@@ -1240,10 +1246,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
     
 	// Autosave frequency
     NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
-    if (interval < 5)       interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
-    if (interval > 5 * 60)  interval = 60.0;
-
-    KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
+    if (interval > 5 * 60)  interval = 60.0;    // if the number is wildly out of range, go back to our default of 60
+    if (interval > 0.0 && interval < 20.0) interval = 60.0;
+    
+    NSDocumentController *sharedDocumentController = [NSDocumentController sharedDocumentController];
     [sharedDocumentController setAutosavingDelay:interval];
 	
 			 
