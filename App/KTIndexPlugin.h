@@ -20,6 +20,7 @@
 					 pullsDown:(BOOL)isPullDown
 					 showIcons:(BOOL)showIcons
 					smallIcons:(BOOL)smallIcons
-					 smallText:(BOOL)smallText;
+					 smallText:(BOOL)smallText
+			 allowNewPageTypes:(BOOL)allowNewPageTypes;
 
 @end

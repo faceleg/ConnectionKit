@@ -42,6 +42,7 @@
 					 showIcons:(BOOL)showIcons
 					smallIcons:(BOOL)smallIcons
 					 smallText:(BOOL)smallText
+			 allowNewPageTypes:(BOOL)allowNewPageTypes
 {
     if ( isPullDown ) {
         // if it's a pulldown, we need to add an empty menu item at the top of the menu
@@ -65,7 +66,7 @@
 		
 		while (nil != (presetDict = [presetEnum nextObject]) )
 		{
-			if (nil == [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"])	// do not add presets that specify a preset bundle identifier to this list, like the Raw HTML index
+			if (allowNewPageTypes || nil == [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"])	// do not add presets that specify a preset bundle identifier to this list, like the Raw HTML index
 			{
 				int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
 				id priorityID = [presetDict objectForKey:@"KTPluginPriority"];

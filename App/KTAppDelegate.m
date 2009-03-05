@@ -1084,7 +1084,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 									   target:nil
 									   action:@selector(addCollection:)
 									pullsDown:NO
-									showIcons:YES smallIcons:NO smallText:NO];
+									showIcons:YES smallIcons:NO smallText:NO allowNewPageTypes:YES];
 		
         [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 		//[self buildSampleSitesMenu];

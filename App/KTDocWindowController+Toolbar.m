@@ -277,7 +277,7 @@ TO DO:
 												   action:@selector(addCollection:)
 												pullsDown:YES
 												showIcons:YES smallIcons:NO
-												smallText:YES];
+												smallText:YES allowNewPageTypes:YES];
                     [toolbarItem setView:myAddCollectionPopUpButton];
                     [toolbarItem setMinSize:[[myAddCollectionPopUpButton cell] minimumSize]];
                     [toolbarItem setMaxSize:[[myAddCollectionPopUpButton cell] maximumSize]];
@@ -289,7 +289,7 @@ TO DO:
 												   action:@selector(addCollection:)
 												pullsDown:NO
 												showIcons:NO smallIcons:NO
-												smallText:YES];
+												smallText:YES allowNewPageTypes:YES];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
 					[mItem setTitle: [toolbarItem label]];
