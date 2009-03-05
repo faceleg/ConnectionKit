@@ -3026,6 +3026,25 @@
 			name = Media;
 			sourceTree = "<group>";
 		};
+		278849800F5FF0C400C70629 /* Site */ = {
+			isa = PBXGroup;
+			children = (
+				3C682B100D622F1600B4D485 /* KTSite.h */,
+				3C682B110D622F1D00B4D485 /* KTSite.m */,
+			);
+			name = Site;
+			sourceTree = "<group>";
+		};
+		278849810F5FF0D300C70629 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				276503160EAD26AB00461A0E /* KTMaster+Internal.h */,
+				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
+				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
+			);
+			name = Master;
+			sourceTree = "<group>";
+		};
 		278B96440F27F918002F3C54 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -3220,12 +3239,10 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3C951FF70D762D9C009FCAC9 /* Release Configuration */,
-				3C951FF20D762D87009FCAC9 /* Common Headers */,
 				3C202D1707DFC06B00DE4994 /* Application */,
-				3C202D3207DFC0BF00DE4994 /* Document */,
-				27409DFC0DEC685300C2387E /* Data Migration */,
-				3C5A736E0BF7B67300776464 /* Core Data */,
+				3C202D3207DFC0BF00DE4994 /* Documents */,
+				278849800F5FF0C400C70629 /* Site */,
+				278849810F5FF0D300C70629 /* Master */,
 				275E067A0DDA0F1A0072567F /* Elements */,
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CD0D85780100AEF4B5 /* Document UI */,
@@ -3240,6 +3257,10 @@
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				27A832830D92D8CC005FF13D /* Code Injection */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
+				3C951FF70D762D9C009FCAC9 /* Release Configuration */,
+				3C951FF20D762D87009FCAC9 /* Common Headers */,
+				27409DFC0DEC685300C2387E /* Data Migration */,
+				3C5A736E0BF7B67300776464 /* Core Data */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
 				3C5A73EB0BF7BAB200776464 /* Support */,
 				27E31BC10D4B795C00895DA1 /* Plugins */,
@@ -3369,12 +3390,10 @@
 			name = Application;
 			sourceTree = "<group>";
 		};
-		3C202D3207DFC0BF00DE4994 /* Document */ = {
+		3C202D3207DFC0BF00DE4994 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
 				27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */,
-				3C682B100D622F1600B4D485 /* KTSite.h */,
-				3C682B110D622F1D00B4D485 /* KTSite.m */,
 				3C202D3307DFC0F000DE4994 /* KTDocument.h */,
 				3C202D3407DFC0F000DE4994 /* KTDocument.m */,
 				3CA9B30D0804643200C3053B /* KTDocument+Properties.m */,
@@ -3384,7 +3403,7 @@
 				2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */,
 				2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */,
 			);
-			name = Document;
+			name = Documents;
 			sourceTree = "<group>";
 		};
 		3C202D5B07DFC13D00DE4994 /* Remote Transfer */ = {
@@ -3909,13 +3928,10 @@
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
 				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
-				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
-				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
 				3C682B2A0D622FF800B4D485 /* KTPersistentStoreCoordinator.h */,
 				3C682B2B0D622FFD00B4D485 /* KTPersistentStoreCoordinator.m */,
 				27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */,
 				27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */,
-				276503160EAD26AB00461A0E /* KTMaster+Internal.h */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
