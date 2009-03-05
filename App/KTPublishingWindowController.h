@@ -10,7 +10,8 @@
 #import "KTLocalPublishingEngine.h"
 
 
-@class KTPublishingEngine, CKTransferRecord;
+@class KTPublishingEngine, CKTransferRecord, UKDockProgressIndicator;
+
 
 
 @interface KTPublishingWindowController : NSWindowController <KTPublishingEngineDelegate>
@@ -29,7 +30,7 @@
     
     NSWindow    *_modalWindow;  // Weak ref
 	
-	
+	UKDockProgressIndicator *_dockProgress;
 	// KSAlert
 	NSString	*_messageText;
 	NSString	*_informativeText;

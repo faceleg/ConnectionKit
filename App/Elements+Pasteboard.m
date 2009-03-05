@@ -91,8 +91,8 @@
 	return [NSSet setWithObjects:@"root", [self extensiblePropertiesDataKey], @"uniqueID", nil];
 }
 
-/*	We return a dictionary of our properties. However, media and page objects stored weakly by their ID must
- *	be converted to special NSCoder-compatible types.
+/*	We return a dictionary of our properties. However, media and page objects stored weakly by their
+ *  ID must be converted to special NSCoder-compatible types.
  */
 - (id <NSCoding>)pasteboardRepresentation
 {
@@ -115,7 +115,7 @@
 	}
 	
 	
-	// Add in all attributes and keys from the model. Ignor transient properties.
+	// Add in all attributes and keys from the model. Ignore transient properties.
 	NSArray *propertyKeys = [[[self entity] propertiesByNameOfClass:[NSPropertyDescription class]
 										 includeTransientProperties:NO] allKeys];
 	NSDictionary *properties = [self dictionaryWithValuesForKeys:propertyKeys];
@@ -130,7 +130,7 @@
 	}
 	
 	
-	// Ignore keys us or our subclasses don't want archived
+	// Ignore keys we don't want archived
 	NSSet *ignoredKeys = [[self class] keysToIgnoreForPasteboardRepresentation];
 	[buffer removeObjectsForKeys:[ignoredKeys allObjects]];
 	

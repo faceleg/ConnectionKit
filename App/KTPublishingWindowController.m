@@ -18,6 +18,7 @@
 
 #import <Connection/Connection.h>
 #import <Growl/Growl.h>
+#import "UKDockProgressIndicator.h"
 
 
 const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom of window when collapsed
@@ -83,6 +84,11 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 			[self setMessageText:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
 			[self setInformativeText:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
 		}
+		
+		_dockProgress = [[UKDockProgressIndicator alloc] init];
+		[_dockProgress setMinValue:0.0];
+		[_dockProgress setMaxValue:100.0];
+		[_dockProgress setHidden:YES];		// keep hidden for now
     }
     
     return self;
@@ -94,6 +100,8 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     
     [_publishingEngine setDelegate:nil];
     [_publishingEngine release];
+	[_dockProgress setHidden:YES];
+	[_dockProgress release];
 	
 	[_messageText release];
 	[_informativeText release];
@@ -219,8 +227,12 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 
 - (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine
 {
-    
-    [oProgressIndicator setDoubleValue:[[engine rootTransferRecord] progress]];
+	double progress = [[engine rootTransferRecord] progress];
+	if (![oProgressIndicator isIndeterminate])
+	{
+		[oProgressIndicator setDoubleValue:progress];
+		[_dockProgress setDoubleValue:progress];
+	}
 }
 
 /*  We're done publishing, close the window.
@@ -229,7 +241,8 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 {
     // Setup Growl
     [GrowlApplicationBridge setGrowlDelegate:(id)[KTPublishingWindowController class]];
-    
+	[_dockProgress setHidden:YES];
+   
     
     // Post Growl notification
     if ([self isExporting])
@@ -315,6 +328,8 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         [self setInformativeText:errorDescription];
         
         [oProgressIndicator stopAnimation:self];
+		[_dockProgress setHidden:YES];
+
         
         [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
     }
