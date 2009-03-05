@@ -12,7 +12,6 @@
 #import "KTAppDelegate.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"

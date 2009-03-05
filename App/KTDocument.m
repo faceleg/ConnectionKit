@@ -142,15 +142,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Set up managed object context
 		_managedObjectContext = [[KTManagedObjectContext alloc] init];
-		[_managedObjectContext setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
+		[[self managedObjectContext] setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
 		
 		NSManagedObjectModel *model = [[self class] managedObjectModel];
 		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
 		[PSC setDocument:self];
-		[_managedObjectContext setPersistentStoreCoordinator:PSC];
+		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
-        [super setUndoManager:[_managedObjectContext undoManager]];
+        [super setUndoManager:[[self managedObjectContext] undoManager]];
         
         
         // Init UI accessors

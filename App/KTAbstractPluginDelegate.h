@@ -20,9 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
 
-// this class essentially defines an informal plugin delegatae protocol
-
-@class KTDocument;
+// this class essentially defines an informal plugin delegate protocol
 
 @interface KTAbstractPluginDelegate : NSObject
 {

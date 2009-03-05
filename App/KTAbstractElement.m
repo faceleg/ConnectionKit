@@ -146,24 +146,29 @@
 
 - (id)delegate
 {
-	if (!myDelegate && [self document]) // HACK: We don't want to load up the delegate during a Save As operation
+	if (!myDelegate) 
 	{
-		Class delegateClass = [[[self plugin] bundle] principalClass];
-        if (delegateClass)
+		// HACK: We don't want to load up the delegate during a Save As operation
+        KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+        if (PSC && [PSC isKindOfClass:[KTPersistentStoreCoordinator class]] && [PSC document])
         {
-            // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
-            if (!myDelegate)
+            Class delegateClass = [[[self plugin] bundle] principalClass];
+            if (delegateClass)
             {
-                myDelegate = [[delegateClass alloc] init];
-                OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
-                
-                [myDelegate setDelegateOwner:self];
-                
-                
-                // Let the delegate know that it's awoken
-                if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
+                // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
+                if (!myDelegate)
                 {
-                    [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isTemporaryObject]];
+                    myDelegate = [[delegateClass alloc] init];
+                    OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
+                    
+                    [myDelegate setDelegateOwner:self];
+                    
+                    
+                    // Let the delegate know that it's awoken
+                    if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
+                    {
+                        [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isTemporaryObject]];
+                    }
                 }
             }
         }
