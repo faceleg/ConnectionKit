@@ -82,7 +82,6 @@
 #import <iMediaBrowser/iMediaBrowser.h> // External frameworks
 
 #import "Debug.h"                       // Debugging
-#import "KTManagedObjectContext.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "Registration.h"                // Licensing
@@ -141,7 +140,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set up managed object context
-		_managedObjectContext = [[KTManagedObjectContext alloc] init];
+		_managedObjectContext = [[NSManagedObjectContext alloc] init];
 		[[self managedObjectContext] setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
 		
 		NSManagedObjectModel *model = [[self class] managedObjectModel];

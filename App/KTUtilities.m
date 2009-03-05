@@ -29,7 +29,6 @@
 #import "KT.h"
 #import "KTAbstractElement.h"		// for the benefit of L'izedStringInKTComponents macro
 #import "KTAbstractHTMLPlugin.h"
-#import "KTManagedObjectContext.h"
 #import "NSApplication+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -80,7 +79,7 @@
 	}
 	
 	//==//NSManagedObjectContext *result = [[NSManagedObjectContext alloc] init];
-	NSManagedObjectContext *result = [[KTManagedObjectContext alloc] init];
+	NSManagedObjectContext *result = [[NSManagedObjectContext alloc] init];
 	[result setPersistentStoreCoordinator:coordinator];
 	
 	[coordinator release];
