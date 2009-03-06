@@ -28,6 +28,9 @@
 {
     
     [super windowDidLoad];
+	
+	[[self window] setTitle:NSLocalizedString(@"Publishing Transcript", "window title")];
+	[[self window] setFrameAutosaveName:@"transcript"];
     
 	NSTextStorage *textStorage = [oLog textStorage];
 	[textStorage setDelegate:self];		// get notified when text changes
