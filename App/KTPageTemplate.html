@@ -179,12 +179,15 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endBody]]
 
 [[if HTMLGenerationPurpose]]
+
 [[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
 [[endif2]]
+[[if !=disableComments]]
+[[if allowComments]]
 [[if master.wantsJSKit]]
 		<script src="http://js-kit.com/comments.js"></script>
-[[endif2]]
+[[endif4]]
 [[if master.wantsDisqus]]
 		<script type="text/javascript">
 		//<![CDATA[
@@ -200,6 +203,8 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			})();
 		//]]>
 		</script>
+[[endif4]]
+[[endif3]]
 [[endif2]]
 [[endif]]
 

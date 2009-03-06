@@ -233,7 +233,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 								pullsDown:NO
 								showIcons:NO
 							   smallIcons:NO
-								smallText:YES];
+								smallText:YES allowNewPageTypes:NO];
 	
 	// Last item: custom
 	[[oCollectionStylePopup menu] addItem:[NSMenuItem separatorItem]];
