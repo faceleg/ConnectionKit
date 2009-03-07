@@ -24,7 +24,7 @@
 @interface KTHostProperties : KTManagedObject
 
 - (BOOL)remoteSiteURLIsValid;
-- (NSString *)globalBaseURLUsingHome:(BOOL)inHome;
+- (NSString *)globalBaseURLUsingHome:(BOOL)inHome allowNull:(BOOL)allowNull;
 - (NSString *)globalSiteURL;
 - (NSString *)localHostNameOrAddress;
 - (NSString *)localPublishingRoot;
