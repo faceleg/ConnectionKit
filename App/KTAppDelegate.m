@@ -513,6 +513,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether the Publishing window is expanded, showing the outline view
 		[NSNumber numberWithBool:NO], @"ExpandPublishingWindow",
+        
+        // See case 39953 & KTExportEngine.m
+        [NSNumber numberWithBool:YES], @"ExportShouldReplaceExistingFile",
 										 
 		/// whether we NSLog() the hostProperties dictionary upon document open/change
 		[NSNumber numberWithBool:NO], @"LogHostInfoToConsole",
