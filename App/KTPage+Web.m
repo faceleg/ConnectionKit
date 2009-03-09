@@ -21,6 +21,8 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSObject+Karelia.h"
+
 
 #import <WebKit/WebKit.h>
 
@@ -200,6 +202,15 @@
 	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
 
 	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
+	
+	// if wantsJSKit comments, use transitional doc type (or worse, if already known)
+	if ( defaultDocType > KTXHTMLTransitionalDocType )
+	{
+		if ( ![self disableComments] && [self boolForKey:@"allowComments"] && [[self master] wantsJSKit] )
+		{
+			defaultDocType = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
+		}
+	}
 	
 	NSString *result = nil;
 	switch (defaultDocType)
