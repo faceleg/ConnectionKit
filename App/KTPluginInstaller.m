@@ -92,12 +92,12 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 		if ([sourcePath isEqualToString:destPath] || [sourcePath isEqualToString:altDestPath])
 		{
-			NSLog(@"Not copying; already %@ is already installed.", sourcePath);
+			NSLog(@"Not moving; already %@ is already installed.", sourcePath);
 			[errorURLs addObject:url];
 		}
 		else if ([sourcePath hasPrefix:destFolder])
 		{
-			NSLog(@"Not copying; %@ is already living in %@", sourcePath, destFolder);
+			NSLog(@"Not moving; %@ is already living in %@", sourcePath, destFolder);
 		}
 		else
 		{
@@ -106,14 +106,17 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			{
 				(void) [fm removeFileAtPath:destPath handler:nil];
 			}
-			BOOL copied = [fm movePath:sourcePath toPath:destPath handler:nil];
-			if (copied)
+			
+			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath];
+
+			BOOL copiedOrMoved = shouldMove ? [fm movePath:sourcePath toPath:destPath handler:nil] : [fm copyPath:sourcePath toPath:destPath handler:nil];
+			if (copiedOrMoved)
 			{
 				[successURLs addObject:url];
 			}
 			else
 			{
-				NSLog(@"Unable to copy %@ to %@", sourcePath, destPath);
+				NSLog(@"Unable to %@ %@ to %@", (shouldMove ? @"move" : @"copy"), sourcePath, destPath);
 				[errorURLs addObject:url];
 			}
 		}
