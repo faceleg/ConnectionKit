@@ -228,6 +228,22 @@
 }
 
 #pragma mark -
+#pragma mark Comments
+
+/*  JS-Kit continue to be insane and demand a unique ID for each page, which they refer to as a path
+ *  We want it to be the path relative to the site, so that you can publish to a staging site
+ *  temporarily and have it work. But we THEN have to stick in a preceding slash to keep JSKit happy.
+ *  http://wiki.js-kit.com/Admin-Guide#Importantattributes
+ */
+- (NSString *)JSKitCommentsPath
+{
+    NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+    NSString *pathRelativeToSite = [[self URL] stringRelativeToURL:siteURL];
+    NSString *result = [@"/" stringByAppendingString:pathRelativeToSite];
+    return [result stringByEscapingHTMLEntities];
+}
+
+#pragma mark -
 #pragma mark Staleness
 
 - (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }
