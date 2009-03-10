@@ -837,11 +837,14 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			{
 				// These are styles that really we don't want.  It's just too much precision.  Hopefully nobody disagrees with this!
 				sIgnoreStyles = [[NSSet alloc] initWithObjects:
-					@"word-wrap", @"margin-top", 
-					@"margin-right", @"margin-bottom", @"margin-left", @"letter-spacing", 
-					@"margin", @"min-height", @"border-collapse", @"border-spacing", 
-					@"font-variant",  @"line-height", @"text-indent", @"text-transform",
-					@"orphans", @"widows", @"word-spacing", 
+				//	@"word-wrap", @"margin-top", 
+				//	@"margin-right", @"margin-bottom", @"margin-left", @"letter-spacing", 
+				//	@"margin", @"min-height", @"border-collapse", @"border-spacing", 
+				//	@"font-variant",  @"line-height", @"text-indent", @"text-transform",
+				//	@"orphans", @"widows", @"word-spacing", 
+								 
+				// You know, I'm going to take all these out.  Let's give everybody enough rope to hang themselves if that's what they really want :-)
+								 
 					nil];
 			}
 			
