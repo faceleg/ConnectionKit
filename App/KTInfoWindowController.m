@@ -262,8 +262,8 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	[oTabSegmentedControl setFocusRingType: NSFocusRingTypeNone];	// don't draw focus since it's truncated top/sides
 	
-	// FIXME: disable Disqus for beta 1
-	[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderDisqus]] setEnabled:NO];
+	// FIXME: disable Disqus for 1.6 beta
+	//[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderDisqus]] setEnabled:NO];
 }
 
 - (IBAction) languageChosen:(id)sender;
@@ -898,7 +898,8 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	if ( KTCommentsProviderDisqus == [menuItem tag] ) return NO;
+	// Disable Disqus for 1.6 beta
+	//if ( KTCommentsProviderDisqus == [menuItem tag] ) return NO;
 	return YES;
 }
 

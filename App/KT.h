@@ -29,7 +29,8 @@ typedef enum {
 	KTCommentsProviderNone = 0,
 	KTCommentsProviderHaloscan,
 	KTCommentsProviderJSKit,
-	KTCommentsProviderDisqus
+	KTCommentsProviderDisqus,
+	KTCommentsProviderIntenseDebate
 } KTCommentsProvider;
 
 // Description Forthcoming

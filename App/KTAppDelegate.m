@@ -102,6 +102,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // NSLocalizedString(@"To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector", "Prompt in webview")
 // NSLocalizedString(@"Disqus Comments", "String_On_Page_Template -- text for link on a blog posting")
 
+// Intense Debtate
+// NSLocalizedString(@"To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"IntenseDebate Comments", "String_On_Page_Template -- text for link on a blog posting")
+
 
 // Enable this to get an Apple Design Awards Build, pre-licensed.  ALSO DEFINE AN EXPIRATION, DUDE!
 // (this is a non-expiring, worldwide, pro license)
