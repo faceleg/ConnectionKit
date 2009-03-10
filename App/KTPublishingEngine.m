@@ -587,8 +587,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     KTPage *result = nil;
     
+    // Buld the list of siblings
     KTPage *parent = [page parent];
-    NSArray *siblings = [parent sortedChildren];
+    NSArray *siblings = [[parent sortedChildren] arrayByAddingObjectsFromArray:[parent sortedArchivePages]];
+    
+    // Search for the next sibling. If none is found, publish the parent.
     unsigned nextIndex = [siblings indexOfObjectIdenticalTo:page] + 1;
     if (nextIndex < [siblings count])
     {
