@@ -240,7 +240,7 @@
     NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
     NSString *pathRelativeToSite = [[self URL] stringRelativeToURL:siteURL];
     NSString *result = [@"/" stringByAppendingString:pathRelativeToSite];
-    return [result stringByEscapingHTMLEntities];
+    return result;
 }
 
 #pragma mark -
