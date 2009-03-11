@@ -528,6 +528,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:NO], @"JSKitReverseOrder",
 		[NSNumber numberWithBool:NO], @"JSKitDisableAvatars",
 		[NSNumber numberWithBool:NO], @"JSKitDisableThreading",
+		[NSNumber numberWithBool:NO], @"JSKitShowCount",
 				
 		nil];
 	
