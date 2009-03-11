@@ -16,6 +16,7 @@
 - (void)createConnection
 {
 	id <CKConnection> connection = [[CKDotMacConnection alloc] initWithUser:nil];
+    OBASSERT(connection);
 	[self setConnection:connection];
 	[connection release];
 }
