@@ -17,22 +17,25 @@
  */
 - (void)start
 {
-    NSString *exportPath = [self baseRemotePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:exportPath])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"ExportShouldReplaceExistingFile"])
     {
-        if (![[NSFileManager defaultManager] removeFileAtPath:exportPath handler:nil])
+        NSString *exportPath = [self baseRemotePath];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:exportPath])
         {
-            // We can't continue because the pesky file can't be removed
-            [self didFinish];
-            
-            NSError *error = [NSError errorWithLocalizedDescription:
-                              [NSString stringWithFormat:
-                               NSLocalizedString(@"The site could not be exported. Could not remove the existing file at:\r%@",
-                                                 @"Export error"),
-                               exportPath]];
-            
-            [[self delegate] publishingEngine:self didFailWithError:error];
-            return;
+            if (![[NSFileManager defaultManager] removeFileAtPath:exportPath handler:nil])
+            {
+                // We can't continue because the pesky file can't be removed
+                [self didFinish];
+                
+                NSError *error = [NSError errorWithLocalizedDescription:
+                                  [NSString stringWithFormat:
+                                   NSLocalizedString(@"The site could not be exported. Could not remove the existing file at:\r%@",
+                                                     @"Export error"),
+                                   exportPath]];
+                
+                [[self delegate] publishingEngine:self didFailWithError:error];
+                return;
+            }
         }
     }
     

@@ -191,25 +191,18 @@
 - (NSString *)localHostNameOrAddress
 {
 	NSString * hostName = [self valueForKey:@"localHostName"];
-/*
- No longer doing -- no home base dict.
-	if (nil == hostName || [hostName isEqualToString:@""])
-	{
-		hostName = [[[NSApp delegate] homeBaseDict] valueForKey:@"REMOTE_ADDR"];
-	}
-*/
 	return hostName;
 }
 
 /*!	Support method.  Calculate URL up to the home directory (if specified), as seen from the outside world
 */
-- (NSString *)globalBaseURLUsingHome:(BOOL)inHome
+- (NSString *)globalBaseURLUsingHome:(BOOL)inHome allowNull:(BOOL)allowNull;
 {
 	NSMutableString *result = nil;
 	NSString *hostName = [self localHostNameOrAddress];
-	if (nil != hostName)
+	if (nil != hostName || allowNull)
 	{
-		result = [NSMutableString stringWithFormat:@"http://%@/", hostName];
+		result = [NSMutableString stringWithFormat:@"http://%@/", hostName];		// if null we may get (null)
 		if (inHome)
 		{
 			[result appendFormat:@"~%@/", NSUserName()];
@@ -224,7 +217,7 @@
 {
 	NSMutableString *result = nil;
 	BOOL homeDirectory = (HOMEDIR == [[self valueForKey:@"localSharedMatrix"] intValue]);
-	NSString *baseURL = [self globalBaseURLUsingHome:homeDirectory];
+	NSString *baseURL = [self globalBaseURLUsingHome:homeDirectory allowNull:NO];
 	if (nil != baseURL)
 	{
 		result = [NSMutableString stringWithString:baseURL];

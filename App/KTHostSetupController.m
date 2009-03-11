@@ -71,7 +71,7 @@ NSString *KTHostConnectionTimeoutValueKey = @"connectionTimeoutValue";
 - (NSString *)passwordFromKeychain;
 - (void)setKeychainPassword:(NSString *)aPassword;
 - (void) tryToReachLocalHost:(BOOL)aStartStopFlag;
-- (NSString *)globalBaseURLUsingHome:(BOOL)inHome;
+- (NSString *)globalBaseURLUsingHome:(BOOL)inHome allowNull:(BOOL)allowNull;;
 - (void) startTestConnection:(id)bogus;
 - (void)disconnectConnection;
 - (NSString *)testFileUploadPath;
@@ -1320,9 +1320,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	return [[self properties] localURL];
 }
 
-- (NSString *)globalBaseURLUsingHome:(BOOL)inHome
+- (NSString *)globalBaseURLUsingHome:(BOOL)inHome  allowNull:(BOOL)allowNull;
 {
-	return [[self properties] globalBaseURLUsingHome:inHome];
+	return [[self properties] globalBaseURLUsingHome:inHome  allowNull:allowNull];
 }
 
 - (NSString *)globalSiteURL
@@ -2124,7 +2124,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (aStartStopFlag)
 	{
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		[self setLocalHostVerifiedStatus:LOCALHOST_UNVERIFIED];
+		if ([self localHostVerifiedStatus] != LOCALHOST_REACHABLE)
+		{
+			[self setLocalHostVerifiedStatus:LOCALHOST_UNVERIFIED];
+		}
 
 		NSFileManager *fm = [NSFileManager defaultManager];
 
@@ -2253,7 +2256,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		NSURLConnection *theConnection = nil;
 		if (nil != homeBaseURL)
 		{
-			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
+			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory  allowNull:YES] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
 			if (nil != testURL)
 			{
 				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL URLQueryEncodedString:YES]];
@@ -2364,6 +2367,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			else if (resultCode >= 200 && resultCode < 300)
 			{
 				[self setLocalHostVerifiedStatus:LOCALHOST_REACHABLE];	// YEAY, WE GOT IT!!!!
+				
+				if (nil == [self valueForKey:@"localHostName"])
+				{
+					[self setValue:[root objectForKey:@"REMOTE_ADDR"] forKey:@"localHostName"];
+				}
 			}
 			else	// Couldn't figure out what to do with this status code, leave unverified
 			{
