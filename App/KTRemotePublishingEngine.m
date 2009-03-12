@@ -22,6 +22,7 @@
 
 - (void)createConnection
 {
+    // Build the request object
     KTHostProperties *hostProperties = [[self site] hostProperties];
     
     NSString *hostName = [hostProperties valueForKey:@"hostName"];
@@ -29,9 +30,16 @@
     
     NSNumber *port = [hostProperties valueForKey:@"port"];
     
-    id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:protocol
-                                                                                              host:hostName
-                                                                                              port:port];
+    CKMutableConnectionRequest *request = [[[CKConnectionRegistry sharedConnectionRegistry] connectionRequestForName:protocol
+                                                                                                                host:hostName 
+                                                                                                                port:port] mutableCopy];
+    
+    [request setFTPDataConnectionType:[[NSUserDefaults standardUserDefaults] stringForKey:@"FTPDataConnectionType"]];   // Nil by default
+    
+    
+    // Create connection object
+    id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithRequest:request];
+    [request release];
     
     [self setConnection:result];
 }

@@ -598,7 +598,7 @@
 
 - (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
 {
-	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", nil];
+	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", @"wantsIntenseDebate", nil];
 	[self willChangeValuesForKeys:keys];
 	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
 	[self didChangeValuesForKeys:keys];
@@ -619,6 +619,26 @@
 		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
 		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
 	}
+}
+
+- (BOOL)wantsIntenseDebate
+{
+	return (KTCommentsProviderIntenseDebate == [self commentsProvider]);
+}
+
+- (void)setWantsIntenseDebate:(BOOL)aBool
+{
+	[self setCommentsProvider:KTCommentsProviderIntenseDebate];
+}
+
+- (NSString *)IntenseDebateAccountID
+{
+	return [self valueForUndefinedKey:@"IntenseDebateAccountID"];
+}
+
+- (void)setIntenseDebateAccountID:(NSString *)aString
+{
+	[self setValue:aString forUndefinedKey:@"IntenseDebateAccountID"];
 }
 
 - (BOOL)wantsDisqus

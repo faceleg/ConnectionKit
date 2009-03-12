@@ -36,7 +36,7 @@
 [[if master.wantsJSKit]]
 [[if master.JSKitModeratorEmail]]
 									[[if HTMLGenerationPurpose]]
-									<div class="js-kit-comments" path="[[=&URL]]" permalink="[[=&URL]]" style="float: left;"></div>
+									<div class="js-kit-comments" path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
 									[[else5]]
 									<div class="comments">
 										<p>[[`JS-Kit Comments]]</p>
@@ -56,7 +56,7 @@
 									<div id="disqus_thread">
 										<script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js">
 											var disqus_url = "[[=&URL]]"; 
-											var disqus_title ="[[=&titleText]]";
+											var disqus_title = "[[=&titleText]]";
 										</script>
 									</div>
 									[[else5]]
@@ -72,6 +72,31 @@
 [[endif5]]
 [[endif4]]
 [[endif3]]
+[[if master.wantsIntenseDebate]]
+[[if master.IntenseDebateAccountID]]
+									[[if HTMLGenerationPurpose]]
+									<script>
+										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
+										var idcomments_post_id = "[[=&commentsID]]";
+										var idcomments_post_url = "[[=&URL]]";
+										var idcomments_post_title = "[[=&titleText]]";
+									</script>
+									<span id="IDCommentsPostTitle" style="display:none"></span>
+									<script type="text/javascript" src="http://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
+									[[else5]]
+									<div class="comments">
+										<p>[[`IntenseDebate Comments]]</p>
+									</div>
+									[[endif5]]
+[[else4]]
+[[if HTMLGenerationPurpose==0]]
+									<div class="comments">
+										<p style="color:red;">[[`To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector]]</p>
+									</div>
+[[endif5]]
+[[endif4]]
+[[endif3]]
+
 									<!-- comments -->
 [[endif2]]
 [[endif]]
