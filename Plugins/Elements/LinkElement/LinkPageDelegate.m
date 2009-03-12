@@ -53,7 +53,7 @@
 + (void)initialize
 {
 	// Register our custom value transformer
-	NSValueTransformer *transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:iframeLink]];
+	NSValueTransformer *transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInt:kIframeLink]];
 	[NSValueTransformer setValueTransformer:transformer forName:@"ExternalPageLinkTypeIsPageWithinPage"];
 	[transformer release];
 }
@@ -84,7 +84,7 @@
 		
 		// Make full page as appropriate
 		int linkType = [[self delegateOwner] integerForKey:@"linkType"];
-		if (linkType == plainLink || linkType == newWindowLink) {
+		if (linkType == kPlainLink || linkType == kNewWindowLink) {
 			[[self delegateOwner] setPluginHTMLIsFullPage:YES];
 		}
 		else {
@@ -94,7 +94,7 @@
 	
 	KTPage *page = [self delegateOwner];
 	int linkType = [page integerForKey:@"linkType"];
-	BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
+	BOOL linkTypeIsPageWithinPage = (linkType != kPlainLink && linkType != kNewWindowLink);
 	[page setDisableComments:!linkTypeIsPageWithinPage];
 	[page setSidebarChangeable:linkTypeIsPageWithinPage];
 	[page setFileExtensionIsEditable:linkTypeIsPageWithinPage];
@@ -140,7 +140,7 @@
 	if ([key isEqualToString:@"linkType"])
 	{
 		LinkPageType linkType = [value intValue];
-		BOOL linkTypeIsPageWithinPage = (linkType != plainLink && linkType != newWindowLink);
+		BOOL linkTypeIsPageWithinPage = (linkType != kPlainLink && linkType != kNewWindowLink);
 		
 		[[self delegateOwner] setPluginHTMLIsFullPage:!linkTypeIsPageWithinPage];
 		[[self delegateOwner] setDisableComments:!linkTypeIsPageWithinPage];
@@ -154,7 +154,7 @@
 	else if ([key isEqualToString:@"linkURL"])
 	{
 		LinkPageType linkType = [plugin integerForKey:@"linkType"];
-		if (linkType == plainLink || linkType == newWindowLink)
+		if (linkType == kPlainLink || linkType == kNewWindowLink)
 		{
 			[(KTPage *)plugin setCustomPathRelativeToSite:value];
 		}
@@ -241,7 +241,7 @@
 {
 	NSString *result = nil;
 	
-	if ([[self delegateOwner] integerForKey:@"linkType"] == iframeLink)
+	if ([[self delegateOwner] integerForKey:@"linkType"] == kIframeLink)
 	{
 		result = @"delegate.summary";
 	}
@@ -251,7 +251,7 @@
 
 - (BOOL)summaryHTMLIsEditable
 {
-    BOOL result = ([[self delegateOwner] integerForKey:@"linkType"] != iframeLink);
+    BOOL result = ([[self delegateOwner] integerForKey:@"linkType"] != kIframeLink);
     return result;
 }
 
@@ -261,7 +261,7 @@
 /*	We are overriding KTPage's default behaviour to force links to be in a new target */
 - (BOOL)openInNewWindow
 {
-	return (newWindowLink == [[self delegateOwner] integerForKey:@"linkType"]);
+	return (kNewWindowLink == [[self delegateOwner] integerForKey:@"linkType"]);
 }
 
 #pragma mark -

@@ -108,8 +108,8 @@
 	
 	if (hyperlink)
 	{
-		NSString *path = [self pathToObject:hyperlink];
-		[result setHyperlink:path];
+		[result setHyperlinkString:[self pathToObject:hyperlink]];
+		[result setTargetString:[self targetStringForPage:hyperlink]];
 	}
 	
 	

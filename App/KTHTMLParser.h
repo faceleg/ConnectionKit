@@ -65,6 +65,8 @@ typedef enum {
 + (NSString *)calloutContainerTemplateHTML;
 - (NSString *)calloutContainerTemplateHTML;
 
+- (NSString *)targetStringForPage:(id) aDestPage;
+
 @end
 
 

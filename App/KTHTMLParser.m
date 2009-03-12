@@ -270,18 +270,12 @@
 #pragma mark -
 #pragma mark Functions
 
-- (NSString *)targetWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+- (NSString *)targetStringForPage:(id) aDestPage
 {
-	if (NSNotFound != [inRestOfTag rangeOfString:@" "].location)
-	{
-		NSLog(@"target: usage [[ target otherPage.keyPath ]]");
-		return @"";
-	}
-	
-	// If linking to an External Link page set to "open in new window," force the link to open in a new window
 	BOOL openInNewWindow = NO;
-	id targetPageDelegate = [[[self cache] valueForKeyPath:inRestOfTag] delegate];
-	if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)]) {
+	id targetPageDelegate = [aDestPage delegate];
+	if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)])
+	{
 		openInNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
 	}
 	
@@ -293,6 +287,19 @@
 	{
 		return @"";
 	}
+}
+
+- (NSString *)targetWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	if (NSNotFound != [inRestOfTag rangeOfString:@" "].location)
+	{
+		NSLog(@"target: usage [[ target otherPage.keyPath ]]");
+		return @"";
+	}
+	
+	// If linking to an External Link page set to "open in new window," force the link to open in a new window
+	id targetPage = [[self cache] valueForKeyPath:inRestOfTag];
+	return [self targetStringForPage:targetPage];
 }
 
 - (NSString *)cssWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
