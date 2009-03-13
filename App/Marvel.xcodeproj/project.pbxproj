@@ -5982,7 +5982,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.5\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for ALPHA, we remove everything but en\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.5\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for ALPHA, we remove everything but en\n# find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
