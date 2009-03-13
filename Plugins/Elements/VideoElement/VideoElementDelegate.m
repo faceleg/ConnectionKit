@@ -741,7 +741,31 @@ After deflating starting at byte 8, you get:
 															 name:QTMovieLoadStateDidChangeNotification object:movie];
 			}
 			
-			OBASSERT_NOT_REACHED("Took out some old 1.5 code here, which TT and MGA thought unused.");
+			// OBASSERT_NOT_REACHED("Took out some old 1.5 code here, which TT and MGA thought unused.");
+			// DJW: I got here by entering an external URL of a .mov file into the inspector.
+			
+/* This is the code that was taken out. I'lll leave it commented out for now since -documentIsPublishing is gone.
+			
+			// I don't know if we will EVER get to this point.  However, when I force it to happen,
+			// it seems to be OK.  The idea is that if we are getting here for the first time 
+			// when publishing, wait until we get the information we need.
+			if ([self documentIsPublishing])
+			{
+				BOOL doContinue = YES;	// if we get a zero, I think that means we ran out of events so stop
+				while (doContinue && (nil == [[self delegateOwner] objectForKey:@"movieSize"]))
+				{
+					//NSLog(@"Starting RunLoop waiting for %p size = %@", movie, [[self pluginProperties] objectForKey:@"movieSize"]);
+					doContinue = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate: [NSDate dateWithTimeIntervalSinceNow:3.0] ];
+					//NSLog(@"%d Ended RunLoop waiting for %p size = %@", doContinue, movie, [[self pluginProperties] objectForKey:@"movieSize"]);
+				}
+				if (!doContinue)	// I don't think I'll ever get this but just in case.
+				{
+					NSLog(@"waiting for movie data to load; gave up.  Please report this to support@karelia.com");
+				}
+			}	
+*/
+			
+			
 		}
 	}
 	else	// No movie?  Maybe it's flash -- get dimensions now.
