@@ -73,7 +73,21 @@
             <dt>Graphical</dt>
 
             <dd>Displays the number of page views using a fancy graphical style. There are plenty of options to choose here!</dd>
-        </dl>
+        </dl><a name="What_to_do_if_the_page_counter_never_gets_incremented" id="What_to_do_if_the_page_counter_never_gets_incremented"></a>
+
+        <h2><span class="mw-headline">What to do if the page counter never gets incremented</span></h2>
+
+        <p>If the page counter is stuck (usually at zero), it may be that the URL that you have told people to go visit (e.g. example.com) is not the same as the URL that you have told Sandvox about from the <a href="Host_Setup_Assistant.html" title="Host Setup Assistant">Host Setup Assistant</a> for incrementing the counter (e.g. <b>www.</b>example.com). The counter increments a number according to the URL that you registered with Sandvox (the URL Format plus subfolder you specified); this is not necessarily the same URL that somebody may visit in their browser.</p>
+
+        <p>If this is an issue, you should set up the URL correctly within Sandvox, and re-publish.</p><a name="Caution" id="Caution"></a>
+
+        <h2><span class="mw-headline">Caution</span></h2>
+
+        <p>Each page in your website that holds the page counter holds a separate entry in our database of page accesses, keyed by the actual URL.</p>
+
+        <p>If you change the URL where your site is published (e.g. getting a new domain name, or switching among the "homepage.mac.com", "web.mac.com", or "web.me.com" styles for MobileMe, the page counter will start freshly at zero.</p>
+
+        <p>If your page is re-visited by the same visitor, it may be cached in the his/her browser, and thus not register as a new page view. This method of page view counting, thus, is fairly useful, but not entirely accurate. Other page-counter techniques such as viewing log files provided by your <a href="Host.html" title="Host">host</a>, or installing <a href="Google_Integration.html#Analytics" title="Google Integration">Google Analytics</a>, may be useful as well.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
