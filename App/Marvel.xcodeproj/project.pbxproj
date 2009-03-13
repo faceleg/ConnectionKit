@@ -2438,6 +2438,8 @@
 		CE2232B70869F47200341BAF /* rss_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_on.png; sourceTree = "<group>"; };
 		CE2232B80869F47200341BAF /* rss_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_off.png; sourceTree = "<group>"; };
 		CE2234A10869F76800341BAF /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
+		CE23262B0F6ACAF0001F7361 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
+		CE23262E0F6ACAF8001F7361 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE2622A60A35E7C2009467ED /* preview.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = preview.mp4; sourceTree = "<group>"; };
@@ -6606,6 +6608,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				27E4CFE50EC30B6F000E85DD /* en */,
+				CE23262B0F6ACAF0001F7361 /* zh_CN */,
+				CE23262E0F6ACAF8001F7361 /* fr */,
 			);
 			name = KSPluginInstaller.nib;
 			sourceTree = "<group>";

@@ -55,7 +55,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 	if (0 == [myURLs count] && !myProgressPanel)
 	{
         myProgressPanel = [[KSProgressPanel alloc] init];
-        [myProgressPanel setMessageText:@"Installing Plugins..."];
+        [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins...", @"")];
         [myProgressPanel setInformativeText:nil];
         [myProgressPanel setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
         
@@ -132,11 +132,11 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 		NSString *message = nil;
 		if ([successURLs count] > 1)
 		{
-			message = NSLocalizedString(@"Plugins Installed",@"Alert Message Title, multiple plugins were installed");
+			message = NSLocalizedString(@"Plug-ins Installed",@"Alert Message Title, multiple plug-ins were installed");
 		}
 		else
 		{
-			message = NSLocalizedString(@"Plugin Installed",@"Alert Message Title, only one plugin was installed");
+			message = NSLocalizedString(@"Plug-in Installed",@"Alert Message Title, only one plug-in was installed");
 
 		}
 		NSMutableString *pluginList = [NSMutableString string];
@@ -147,7 +147,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}
-		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plugins were installed:\n\n%@\nPlease re-launch Sandvox to make use of newly installed plugins.",@"result of installation"), pluginList];
+		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plug-ins were installed:\n\n%@\nPlease re-launch Sandvox to make use of newly installed plug-ins.",@"result of installation"), pluginList];
 			
 		NSAlert *alert = [NSAlert alertWithMessageText:message defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:information];
 		
@@ -165,11 +165,11 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 		NSString *message = nil;
 		if ([errorURLs count] > 1)
 		{
-			message = NSLocalizedString(@"Error Installing Plugins",@"Alert Message Title, error installing multiple plugins");
+			message = NSLocalizedString(@"Error Installing Plug-ins",@"Alert Message Title, error installing multiple plug-ins");
 		}
 		else
 		{
-			message = NSLocalizedString(@"Error Installing Plugin",@"Alert Message Title, error installing one plugin");
+			message = NSLocalizedString(@"Error Installing Plug-in",@"Alert Message Title, error installing one plugin");
 			
 		}
 		NSMutableString *pluginList = [NSMutableString string];
@@ -180,7 +180,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}
-		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plugins could not be installed:\n\n%@",@"result of installation"), pluginList];
+		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plug-ins could not be installed:\n\n%@",@"result of installation"), pluginList];
 		
 		NSAlert *alert = [NSAlert alertWithMessageText:message defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:information];
 		

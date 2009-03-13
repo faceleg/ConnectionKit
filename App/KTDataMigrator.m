@@ -679,7 +679,7 @@
 			{
 				*error = [NSError errorWithDomain:kKTDataMigrationErrorDomain
 											 code:KareliaError
-							 localizedDescription:[NSString stringWithFormat:@"No plugin found with the identifier %@", pluginIdentifier]];
+							 localizedDescription:[NSString stringWithFormat:NSLocalizedString(@"No plug-in found with the identifier %@", @""), pluginIdentifier]];
 			}
             [pool release];
 			return NO;

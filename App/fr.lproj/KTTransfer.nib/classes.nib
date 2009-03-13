@@ -1,24 +1,57 @@
 {
-    IBClasses = (
-        {
-            ACTIONS = {"" = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = KSCircularProgressCell; LANGUAGE = ObjC; SUPERCLASS = NSCell; }, 
-        {
-            ACTIONS = {cancelTransfer = id; hideTransfer = id; }; 
-            CLASS = KTTransferController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                myConnection = id; 
-                oBadSiteURL = NSImageView; 
-                oExportPanelAccessoryView = NSView; 
-                oExportURL = NSTextField; 
-            }; 
-            SUPERCLASS = NSWindowController; 
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSViewController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                view = NSView;
+            };
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = KTExportSavePanelController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oSiteURLField = NSTextField;
+            };
+            SUPERCLASS = KSViewController;
+        },
+                {
+            CLASS = KTURLFormatter;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSFormatter;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

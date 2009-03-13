@@ -155,7 +155,7 @@
             if (!myDelegate)
             {
                 myDelegate = [[delegateClass alloc] init];
-                OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
+                OBASSERTSTRING(myDelegate, @"plug-in delegate cannot be nil!");
                 
                 [myDelegate setDelegateOwner:self];
                 

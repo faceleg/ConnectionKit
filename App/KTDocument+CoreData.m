@@ -213,7 +213,7 @@
                     }
                     else
                     {
-                        NSLog(@"unable to locate required plugin: %@", bundleIdentifier);
+                        NSLog(@"unable to locate required plug-in: %@", bundleIdentifier);
                     }
                 }
             }
