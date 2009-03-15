@@ -135,6 +135,11 @@
 - (NSURL *)URL		// the URL where this design comes from
 {
 	NSString *urlString = [[self bundle] objectForInfoDictionaryKey:@"url"];
+	if (nil == urlString)
+	{
+		urlString = [[self bundle] objectForInfoDictionaryKey:@"URL"];
+	}
+
 	return (nil != urlString) ? [NSURL URLWithUnescapedString:urlString] : nil;
 }
 
