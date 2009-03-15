@@ -39,6 +39,7 @@
     
     // Create connection object
     id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithRequest:request];
+    OBASSERT(result);
     [request release];
     
     [self setConnection:result];

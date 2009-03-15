@@ -43,19 +43,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>UnifiedTableButton</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSButton</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>KTAbstractPluginDelegate</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>AmazonListDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>KTAbstractPluginDelegate</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -75,19 +75,19 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>AmazonListDelegate</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>NarrowPopUpButton</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>NSPopUpButton</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>AmazonIDFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>KSTrimFirstLineFormatter</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -101,14 +101,6 @@
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
 			<string>DNDArrayController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>AmazonIDFormatter</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>KSTrimFirstLineFormatter</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>

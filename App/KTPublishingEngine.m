@@ -284,6 +284,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)createConnection
 {
     id <CKConnection> result = nil; // FIXME: [[CKFileConnection alloc] init];
+    OBASSERT(result);
     [self setConnection:result];
 	[result release];
 }
@@ -314,8 +315,23 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
-    [self didFinish];
-    [[self delegate] publishingEngineDidFinish:self];
+    // Case 39234: It looks like ConnectionKit is sending this delegate method in the event of the
+    // data connection closing (or it might even be the command connection), probably due to a
+    // period of inactivity. In such a case, it's really not a cause to consider publishing
+    // finished! To see if I am right on this, we will log that such a scenario occurred for now.
+    // Mike.
+    
+    OBASSERT([self connection]);                
+    
+    if (![[self connection] isConnected])
+    {
+        [self didFinish];
+        [[self delegate] publishingEngineDidFinish:self];
+    }
+    else
+    {
+        NSLog(@"%@ delegate method received, but -[CKConnection isConnected] still returns YES", NSStringFromSelector(_cmd));
+    }
 }
 
 /*  We either ignore the error and continue or fail and inform the delegate

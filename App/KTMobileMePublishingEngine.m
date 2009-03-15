@@ -13,6 +13,14 @@
 
 @implementation KTMobileMePublishingEngine
 
+- (void)createConnection
+{
+	id <CKConnection> connection = [[CKDotMacConnection alloc] initWithUser:nil];
+    OBASSERT(connection);
+	[self setConnection:connection];
+	[connection release];
+}
+
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space
  *  and the host properties' username.
  *  If the password cannot be retrieved, fail with an error saying why

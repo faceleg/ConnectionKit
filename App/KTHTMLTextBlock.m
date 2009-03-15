@@ -78,7 +78,8 @@
 	[myDOMNode release];
 	[myHTMLTag release];
 	[myGraphicalTextCode release];
-	[myHyperlink release];
+	[myHyperlinkString release];
+	[myTargetString release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
     [myParser release];
@@ -134,17 +135,27 @@
 	myHTMLTag = tag;
 }
 
-- (NSString *)hyperlink { return myHyperlink; }
+- (NSString *)hyperlinkString { return myHyperlinkString; }
 
-- (void)setHyperlink:(NSString *)hyperlink
+- (void)setHyperlinkString:(NSString *)hyperlinkString
 {
-	// We can't have a hyperlink and be editable at the same time
+	// We can't have a hyperlinkString and be editable at the same time
 	if ([self isEditable]) [self setEditable:NO];
 	
-	hyperlink = [hyperlink copy];
-	[myHyperlink release];
-	myHyperlink = hyperlink;
+	hyperlinkString = [hyperlinkString copy];
+	[myHyperlinkString release];
+	myHyperlinkString = hyperlinkString;
 }
+
+- (NSString *)targetString { return myTargetString; }
+
+- (void)setTargetString:(NSString *)targetString
+{
+	targetString = [targetString copy];
+	[myTargetString release];
+	myTargetString = targetString;
+}
+
 
 - (id)HTMLSourceObject { return myHTMLSourceObject; }
 
@@ -333,11 +344,10 @@
 	
 	
 	// Place a hyperlink if required
-	if ([self hyperlink])
+	if ([self hyperlinkString])
 	{
-		[buffer appendFormat:@"<a href=\"%@\">", [self hyperlink]];
+		[buffer appendFormat:@"<a %@href=\"%@\">", [self targetString], [self hyperlinkString]];
 	}
-	
 	
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
@@ -364,7 +374,7 @@
 	{
 		[buffer appendString:@"</span>"];
 	}
-	if ([self hyperlink]) [buffer appendString:@"</a>"];
+	if ([self hyperlinkString]) [buffer appendString:@"</a>"];
 	[buffer appendFormat:@"</%@>", [self HTMLTag]];
 	
 	

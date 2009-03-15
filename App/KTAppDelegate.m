@@ -86,6 +86,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 // Triggers to localize for the Comment/trackback stuff
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
+// NSLocalizedString(@"Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 // Haloscan
 // NSLocalizedString(@"To enable Haloscan comments, enter your Haloscan ID into the Site Inspector", "Prompt in webview")
@@ -483,6 +484,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 										 
 		/// whether we NSLog() the hostProperties dictionary upon document open/change
 		[NSNumber numberWithBool:NO], @"LogHostInfoToConsole",
+										 
+		[NSNumber numberWithBool:NO], @"JSKitReverseOrder",
+		[NSNumber numberWithBool:NO], @"JSKitDisableAvatars",
+		[NSNumber numberWithBool:NO], @"JSKitDisableThreading",
+		[NSNumber numberWithBool:NO], @"JSKitShowCount",
 				
 		nil];
 	

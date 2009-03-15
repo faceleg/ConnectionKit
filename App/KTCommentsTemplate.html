@@ -36,7 +36,12 @@
 [[if master.wantsJSKit]]
 [[if master.JSKitModeratorEmail]]
 									[[if HTMLGenerationPurpose]]
-									<div class="js-kit-comments" path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
+									[[if userDefaults.JSKitShowCount]]
+									<div class="comments">
+									<span class="js-kit-comments-count" path="/[[=&commentsID]]">0</span> [[`Comments]]
+									</div>
+									[[endif6]]
+									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif6]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif6]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif6]] path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
 									[[else5]]
 									<div class="comments">
 										<p>[[`JS-Kit Comments]]</p>

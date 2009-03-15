@@ -29,7 +29,8 @@
 	BOOL			myHasSpanIn;
 	NSString		*myHTMLTag;
 	NSString		*myGraphicalTextCode;
-	NSString		*myHyperlink;
+	NSString		*myHyperlinkString;
+	NSString		*myTargetString;
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
@@ -64,8 +65,11 @@
 - (NSString *)HTMLTag;
 - (void)setHTMLTag:(NSString *)tag;
 
-- (NSString *)hyperlink;
-- (void)setHyperlink:(NSString *)hyperlink;
+- (NSString *)hyperlinkString;
+- (void)setHyperlinkString:(NSString *)hyperlinkString;
+
+- (NSString *)targetString;
+- (void)setTargetString:(NSString *)targetString;
 
 - (id)HTMLSourceObject;
 - (void)setHTMLSourceObject:(id)object;
