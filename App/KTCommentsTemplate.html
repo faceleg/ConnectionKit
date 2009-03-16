@@ -1,5 +1,10 @@
 [[if !=disableComments]]
 [[if allowComments]]
+[[if self==parser.currentPage]]
+THIS [[=self.titleHTML]] IS THE PAGE ITSELF:   [[=parser.currentPage.titleHTML]] (so show the comments!)
+[[else3]]
+THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleHTML]] (Do not show the commments)
+[[endif3]]
 									<!-- comments -->
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
