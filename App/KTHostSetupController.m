@@ -2632,8 +2632,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //							nil, nil, nil);
 //			NSLog(@"Could not set password -- status = %d", result);
 //		}
-		
+
+#ifdef DEBUG
+		[[EMKeychainProxy sharedProxy] setLogsErrors:YES];
+#else
 		[[EMKeychainProxy sharedProxy] setLogsErrors:NO];
+#endif
 		EMInternetKeychainItem *keychainItem = [[EMKeychainProxy sharedProxy] internetKeychainItemForServer:hostName
 																							   withUsername:userName 
 																									   path:nil 
