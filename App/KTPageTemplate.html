@@ -179,18 +179,17 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endBody]]
 
 [[if HTMLGenerationPurpose]]
-
 [[if documentInfo.googleAnalyticsCode]]
 [[=documentInfo.googleAnalyticsCode]]
 [[endif2]]
 [[if !=disableComments]]
-[[if allowComments]]
 [[if master.wantsJSKit]]
-		<script type="text/javascript" src="http://js-kit.com/comments.js"></script>
-[[if userDefaults.JSKitShowCount]]
+[[if self.isCollection]]
 		<script type="text/javascript" src="http://js-kit.com/comments-count.js"></script>
-[[endif5]]
+[[else4]]
+		<script type="text/javascript" src="http://js-kit.com/comments.js"></script>
 [[endif4]]
+[[endif3]]
 [[if master.wantsDisqus]]
 		<script type="text/javascript">
 		//<![CDATA[
@@ -206,7 +205,6 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			})();
 		//]]>
 		</script>
-[[endif4]]
 [[endif3]]
 [[endif2]]
 [[endif]]

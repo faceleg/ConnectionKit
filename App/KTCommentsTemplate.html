@@ -1,10 +1,5 @@
 [[if !=disableComments]]
 [[if allowComments]]
-[[if self==parser.currentPage]]
-THIS [[=self.titleHTML]] IS THE PAGE ITSELF:   [[=parser.currentPage.titleHTML]] (so show the comments!)
-[[else3]]
-THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleHTML]] (Do not show the commments)
-[[endif3]]
 									<!-- comments -->
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
@@ -41,12 +36,13 @@ THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleH
 [[if master.wantsJSKit]]
 [[if master.JSKitModeratorEmail]]
 									[[if HTMLGenerationPurpose]]
-									[[if userDefaults.JSKitShowCount]]
+									[[if self==parser.currentPage]]
+									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
+									[[else6]]
 									<div class="comments">
-									<span class="js-kit-comments-count" path="/[[=&commentsID]]">0</span> [[`Comments]]
+										<p><a href="[[=&URL]]"><span class="js-kit-comments-count" path="/[[=&commentsID]]">0</span> [[`Comments]]</a></p>
 									</div>
 									[[endif6]]
-									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif6]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif6]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif6]] path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
 									[[else5]]
 									<div class="comments">
 										<p>[[`JS-Kit Comments]]</p>
@@ -63,12 +59,18 @@ THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleH
 [[if master.wantsDisqus]]
 [[if master.disqusShortName]]
 									[[if HTMLGenerationPurpose]]
+									[[if self==parser.currentPage]]
 									<div id="disqus_thread">
 										<script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js">
 											var disqus_url = "[[=&URL]]"; 
 											var disqus_title = "[[=&titleText]]";
 										</script>
 									</div>
+									[[else6]]
+									<div class="comments">
+										<p><a href="[[=&URL]]#disqus_thread">View Comments</a></p>
+									</div>
+									[[endif6]]
 									[[else5]]
 									<div class="comments">
 										<p>[[`Disqus Comments]]</p>
@@ -85,7 +87,8 @@ THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleH
 [[if master.wantsIntenseDebate]]
 [[if master.IntenseDebateAccountID]]
 									[[if HTMLGenerationPurpose]]
-									<script>
+									[[if self==parser.currentPage]]
+									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
 										var idcomments_post_id = "[[=&commentsID]]";
 										var idcomments_post_url = "[[=&URL]]";
@@ -93,6 +96,14 @@ THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleH
 									</script>
 									<span id="IDCommentsPostTitle" style="display:none"></span>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
+									[[else6]]
+									<script type="text/javascript">
+										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
+										var idcomments_post_id = "[[=&commentsID]]";
+										var idcomments_post_url = "[[=&URL]]";
+									</script>
+									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
+									[[endif6]]
 									[[else5]]
 									<div class="comments">
 										<p>[[`IntenseDebate Comments]]</p>
@@ -106,7 +117,6 @@ THIS [[=self.titleHTML]]  IS NOT THE CURRENT PAGE:  [[=parser.currentPage.titleH
 [[endif5]]
 [[endif4]]
 [[endif3]]
-
 									<!-- comments -->
 [[endif2]]
 [[endif]]
