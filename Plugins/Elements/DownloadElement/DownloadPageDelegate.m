@@ -65,7 +65,17 @@
 		[[self delegateOwner] setBool:NO forKey:@"includeSidebar"];
 	}
 	
-	[(KTPage *)[self delegateOwner] setFileExtensionIsEditable:NO];	// Transient property, so must set it each time
+    KTPage *page = [self delegateOwner];        // Somehow, some users have download pagelets
+    if ([page isKindOfClass:[KTPage class]])    // (case 38904)
+    {
+        [page setFileExtensionIsEditable:NO];	// Transient property, so must set it each time
+    }
+    else if (page && [page isKindOfClass:[KTPagelet class]])
+    {
+        NSLog(@"Deleting unwanted Download PAGELET");
+        [[(KTPagelet *)page page] removePagelet:(KTPagelet *)page];
+        [[page managedObjectContext] deleteObject:page];
+    }
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
