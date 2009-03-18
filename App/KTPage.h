@@ -138,10 +138,18 @@
 - (KTPage *)previousPage;
 - (KTPage *)nextPage;
 
+
 // RSS Feed
 - (BOOL)collectionCanSyndicate;
+- (BOOL)collectionSyndicate;
+- (void)setCollectionSyndicate:(BOOL)syndicate;
+
+- (NSString *)RSSFileName;
+- (void)setRSSFileName:(NSString *)file;
 - (NSURL *)feedURL;
+
 - (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;
+
 
 // Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;

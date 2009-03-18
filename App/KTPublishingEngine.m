@@ -590,7 +590,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
     
 	// Generate and publish RSS feed if needed
-	if ([page isKindOfClass:[KTPage class]] && [page boolForKey:@"collectionSyndicate"] && [(KTPage *)page collectionCanSyndicate])
+	if ([page isKindOfClass:[KTPage class]] &&
+        [(KTPage *)page collectionSyndicate] &&
+        [(KTPage *)page collectionCanSyndicate])
 	{
 		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
 		if (RSSString)
