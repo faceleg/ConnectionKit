@@ -237,7 +237,7 @@
  */
 - (NSString *)commentsID
 {
-    NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+    NSURL *siteURL = [[[self site] hostProperties] siteURL];
     NSString *result = [[self URL] stringRelativeToURL:siteURL];
     return result;
 }
