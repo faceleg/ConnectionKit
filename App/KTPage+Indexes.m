@@ -20,6 +20,7 @@
 #import "NSCharacterSet+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSURL+Karelia.h"
 #import "NSXMLElement+Karelia.h"
@@ -239,9 +240,12 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	return result;
 }
 
+/*  The pages that will go into the RSS feed. This is just -pagesInIndex, sorted chronologically
+ */
 - (NSArray *)sortedReverseChronoChildrenInIndex
 {
-	NSArray *result = [self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
+	NSArray *sortDescriptors = [NSSortDescriptor reverseChronologicalSortDescriptors];
+    NSArray *result = [[self pagesInIndex] sortedArrayUsingDescriptors:sortDescriptors];
 	return result;
 }
 
