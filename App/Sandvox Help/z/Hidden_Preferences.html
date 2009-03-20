@@ -94,14 +94,6 @@ defaults delete com.karelia.Sandvox metaRobots
         </dl>
 
         <dl>
-            <dt>File Extension</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox fileExtension "<span class="prefValue">html</span>"</code></dd>
-
-            <dd>The extension given to all HTML files once <a href="Publishing_Your_Site.html" title="Publish">published</a>. You might use "php" or "htm" instead.</dd>
-        </dl>
-
-        <dl>
             <dt>Site resources path</dt>
 
             <dd><code>defaults write com.karelia.Sandvox DefaultResourcesPath "<span class="prefValue">svx_resources</span>"</code></dd>
@@ -157,6 +149,14 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd>If you are <a href="Publishing_Your_Site.html" title="Publish">publishing</a> to your computer, and <b>not</b> to your Home Directory, this sets the folder that Sandvox will publish to. Useful if you have multiple copies of Apache or an alternative webserver installed.</dd>
         </dl>
 
+        <dl>
+            <dt>Replace existing files when exporting</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ExportShouldReplaceExistingFile -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Exporting a site overwrites any existing file in that location, exactly like saving a document in any Mac OS X application. Sandvox 1.5 didn't strictly conform to this and would only overwrite individual files as they were exported. Set this hidden preference to <code>NO</code> to revert back to the 1.5 behaviour.</dd>
+        </dl>
+
         <div id="LoadLocalFonts">
             <dl>
                 <dt>Load fonts bundled in designs</dt>
@@ -183,6 +183,26 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd><code>defaults write com.karelia.Sandvox LocalHostVerifyTimeout <span class="prefValue">5</span></code></dd>
 
             <dd>The time in seconds our server will attempt to contact you if you choose to <a href="Publishing_Your_Site.html" title="Publish">publish</a> to your own computer.</dd>
+        </dl>
+
+        <dl>
+            <dt>FTP data connection type</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox FTPDataConnectionType "<span class="prefValue">Active</span>"</code></dd>
+
+            <dd>
+                Normally, Sandvox will attempt to determine the best data connection type available on your connection. For some rare cases this isn't good enough, and you can force Sandvox to use a specific type. The choices available are:
+
+                <ul>
+                    <li>Active</li>
+
+                    <li>Passive</li>
+
+                    <li>Extended Passive</li>
+
+                    <li>Extended Active</li>
+                </ul>
+            </dd>
         </dl>
 
         <dl>
@@ -257,7 +277,27 @@ defaults delete com.karelia.Sandvox metaRobots
 
         <p>Normal image sharpening is accomplished from the <a href="Preferences.html" title="Preferences">Preferences</a> window. To adjust the amount of sharpening is done for Favicons, use the following command.</p>
 
-        <p><code>defaults write com.karelia.Sandvox KTFaviconSharpeningFactor <span class="prefValue">1.0</span></code></p><a name="Application_Behavior" id="Application_Behavior"></a>
+        <p><code>defaults write com.karelia.Sandvox KTFaviconSharpeningFactor <span class="prefValue">1.0</span></code></p>
+
+        <p>You can set the initial value of image linking using the following:</p>
+
+        <dl>
+            <dt>Whether to turn on the "Link To" checkbox</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shouldIncludeLink -bool <span class="prefValue">NO</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Initially link an image to its original-sized version</dt>
+        </dl>
+
+        <p><code>defaults write com.karelia.Sandvox linkImageToOriginal -bool <span class="prefValue">YES</span></code></p>
+
+        <dl>
+            <dt>Whether a dragged in image should be linked to externally (rather than being included in the document)</dt>
+        </dl>
+
+        <p><code>defaults write com.karelia.Sandvox preferExternalImage -bool <span class="prefValue">YES</span></code></p><a name="Application_Behavior" id="Application_Behavior"></a>
 
         <h2><span class="mw-headline">Application Behavior</span></h2>
 
@@ -468,7 +508,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox TitleSeparator " <span class="prefValue">|</span> "</code></dd>
 
-            <dd>The string used to separate items in the Sandvox titlebar and <a href="Browser_Window_Title.html" title="Browser Window Title">Browser Window Title</a>.</dd>
+            <dd>The string used to separate items in the Sandvox titlebar and <a href="Window_Title.html" title="Browser Window Title">Browser Window Title</a>.</dd>
         </dl>
 
         <dl>
@@ -495,7 +535,11 @@ defaults delete com.karelia.Sandvox metaRobots
             <dt>For your custom installation, the password used to decrypt the email address</dt>
 
             <dd><code>defaults write com.karelia.Sandvox mailmePassword "<span class="prefValue">MY_PASSWORD</span>"</code></dd>
-        </dl><a name="Syntax_Coloring" id="Syntax_Coloring"></a>
+        </dl>
+
+        <div class="warning">
+            <p>The Contact Form service is provided by Karelia as a courtesy only. Karelia cannot and does not guarantee the delivery of email through its relay, any spam filters, or other third party systems.</p>
+        </div><a name="Syntax_Coloring" id="Syntax_Coloring"></a>
 
         <h2><span class="mw-headline">Syntax Coloring</span></h2>
 

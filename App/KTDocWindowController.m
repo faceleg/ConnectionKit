@@ -1037,7 +1037,7 @@ from representedObject */
 		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
 		collectionPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
 	}
-	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plugin to group the pages into");
+	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plug-in to group the pages into");
 	
 	
 	NSBundle *collectionBundle = [collectionPlugin bundle];

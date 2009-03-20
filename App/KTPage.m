@@ -184,7 +184,7 @@
 	OBPRECONDITION(nil != aParent);
 
 	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
-	OBASSERTSTRING((nil != plugin), @"drag dictionary does not have a real plugin");
+	OBASSERTSTRING((nil != plugin), @"drag dictionary does not have a real plug-in");
 	
 	id page = [self insertNewPageWithParent:aParent plugin:plugin];
 	

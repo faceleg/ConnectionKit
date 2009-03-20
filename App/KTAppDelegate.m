@@ -159,14 +159,14 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSString *plugins = [KSPlugin generateReportOfPluginsWithFileExtensions:extensions thirdPartyPluginsOnly:YES];
 	if (![plugins isEqualToString:@""])
 	{
-		[result appendFormat:@"\nAdditional Plugins:\n%@\n", plugins];
+		[result appendFormat:@"\nAdditional Plug-ins:\n%@\n", plugins];		// DO NOT LOCALIZE
 	}
 
 	// Call the following method on KTDesign to get the right plugin path
 	NSString *designs = [KTDesign generateReportOfPluginsWithFileExtension:kKTDesignExtension thirdPartyPluginsOnly:YES];
 	if (![designs isEqualToString:@""])
 	{
-		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];
+		[result appendFormat:@"\nAdditional Designs:\n%@\n", designs];	// DO NOT LOCALIZE
 	}
 	
 	
@@ -911,7 +911,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 		// load plugins
-        [progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plugins.")];
+        [progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
         
         
 		// build menus
@@ -1157,9 +1157,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (void)alertAndQuit
 {
 	NSRunCriticalAlertPanel(
-							@"This version of Sandvox has expired.",
-							@"This version of Sandvox is no longer functional. Please contact Karelia Software for an update.", 
-							@"Quit",
+							NSLocalizedString(@"This version of Sandvox has expired.", @""),
+							NSLocalizedString(@"This version of Sandvox is no longer functional. Please contact Karelia Software for an update.", @""), 
+							NSLocalizedString(@"Quit", @"Button Title"),
 							nil,
 							nil
 							);
@@ -1172,9 +1172,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0)
 	{
 		NSRunCriticalAlertPanel(
-								@"This version of Sandvox has expired.",
-								@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", 
-								@"Check for Updates",
+								NSLocalizedString(@"This version of Sandvox has expired.", @""),
+								NSLocalizedString(@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", @""), 
+								NSLocalizedString(@"Check for Updates", @"Button title"),
 								nil,
 								nil
 								);

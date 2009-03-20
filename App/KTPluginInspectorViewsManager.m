@@ -215,7 +215,7 @@
 }
 
 /*	Instantiates the nib as per normal but then also figures out which objects are the inspector view and object controller.
- *	Also then hooks up the object controller to the plugin.
+ *	Also then hooks up the object controller to the plug-in.
  */
 - (BOOL)instantiatePluginNibWithOwner:(id)owner plugin:(id <KTInspectorPlugin>)plugin
 					  topLevelObjects:(NSArray **)topLevelObjects
