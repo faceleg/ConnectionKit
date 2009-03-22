@@ -41,6 +41,7 @@
 	
 	
 	// Always include the global sandvox CSS.
+	
 	if ([self HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] quicklookDataForFile:@"Contents/Resources/sandvox.css"];
@@ -51,16 +52,9 @@
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
 		[stylesheetLines addObject:[self stylesheetLink:[self resourceFilePath:[NSURL fileURLWithPath:globalCSSFile] relativeToPage:[self currentPage]] title:nil media:nil]];
 	}
+		
+	// Ask the page and its components for extra general-purpose CSS files required
 	
-			
-	// Then the base design's CSS file.
-	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
-	[stylesheetLines addObject:[self stylesheetLink:mainCSS
-											  title:[[self design] title]
-											  media:nil]];
-	
-	
-	// Ask the page and its components for extra CSS files required
 	NSMutableSet *pluginCSSFiles = [NSMutableSet set];
 	[page makeComponentsPerformSelector:@selector(addCSSFilePathToSet:forPage:)
 							 withObject:pluginCSSFiles
@@ -79,7 +73,25 @@
 	}
 	
 	
+	// Then the base design's CSS file -- the most specific
+	
+	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
+	[stylesheetLines addObject:[self stylesheetLink:mainCSS
+											  title:[[self design] title]
+											  media:nil]];
+	
+	
+	// design's print.css but not for Quick Look
+	
+	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
+	{
+		NSString *printCSS = [self pathToDesignFile:@"print.css"];
+		if (printCSS) [stylesheetLines addObject:[self stylesheetLink:printCSS title:nil media:@"print"]];
+	}
+	
+	
 	// If we're in preview mode include additional editing CSS
+	
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
@@ -87,6 +99,7 @@
 		[stylesheetLines addObject:[self stylesheetLink:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil media:nil]];
 	}
 	
+	// For preview/quicklook mode, the banner CSS
 	
 	NSString *masterCSS = [[page master] bannerCSSForPurpose:[self HTMLGenerationPurpose]];
     if (masterCSS)
@@ -99,14 +112,6 @@
         }
 	}
     
-	
-	// Don't bother to include print.css for Quick Look
-	if ([self HTMLGenerationPurpose] != kGeneratingQuickLookPreview)
-	{
-		NSString *printCSS = [self pathToDesignFile:@"print.css"];
-		if (printCSS) [stylesheetLines addObject:[self stylesheetLink:printCSS title:nil media:@"print"]];
-	}
-	
 	
 	// Tidy up
 	NSString *result = [stylesheetLines componentsJoinedByString:@"\n"];
