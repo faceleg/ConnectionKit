@@ -995,8 +995,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[media setBool:YES forKey:@"isStale"];
         
         
-        // All page URLs are now invalid
+        // All page and sitemap URLs are now invalid
         [[[self documentInfo] root] recursivelyInvalidateURL:YES];
+        [self willChangeValueForKey:@"publishedSitemapURL"];
+        [self didChangeValueForKey:@"publishedSitemapURL"];
 		
 		
 		
