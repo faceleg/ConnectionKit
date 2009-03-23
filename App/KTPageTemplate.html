@@ -17,10 +17,10 @@
 [[if codeInjectionEarlyHead]]
 [[=codeInjectionEarlyHead]]
 [[endif]]
-[[if windowTitle]]
-		<title>[[=&windowTitle]]</title>
+[[if parser.currentPage.windowTitle]]
+		<title>[[=&parser.currentPage.windowTitle]]</title>
 [[else]]
-		<title>[[=&comboTitleText]]</title>
+		<title>[[=&parser.currentPage.comboTitleText]]</title>
 [[endif]]
 [[if master.author]]
 		<meta name="author" content="[[=&master.author]]" />
@@ -29,7 +29,7 @@
 		<meta name="keywords" content="[[=&keywordsList]]" />
 [[endif]]
 [[if metaDescription]]
-		<meta name="description" content="[[=&metaDescription]]" />
+		<meta name="description" content="[[=&parser.currentPage.metaDescription]]" />
 [[endif]]
 		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />
 		<meta name="generator" content="[[=&site.appNameVersion]]" />
@@ -43,7 +43,7 @@
 [[if feedURL]]
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
 [[endif]]
-		<link rel="canonical" href="[[=&URL]]" />
+		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 [[if parser.includeStyling]][[stylesheet]][[endif]]
 <!--
 Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>

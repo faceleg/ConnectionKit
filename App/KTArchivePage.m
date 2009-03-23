@@ -69,7 +69,7 @@
 #pragma mark -
 #pragma mark Title
 
-/*  Wen updating the page title, also update filename to match
+/*  When updating the page title, also update filename to match
  */
 - (void)setTitleHTML:(NSString *)value
 {
@@ -107,6 +107,28 @@
     }
     
     [self setTitleText:archiveTitle];
+}
+
+
+/*  Overridden to append date info onto the end
+ */
+
+- (NSString *)windowTitle
+{
+    NSString *result = [[[self parent] windowTitle] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    return result;
+}
+
+- (NSString *)comboTitleText
+{
+    NSString *result = [[[self parent] comboTitleText] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    return result;
+}
+
+- (NSString *)metaDescription
+{
+    NSString *result = [[[self parent] metaDescription] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    return result;
 }
 
 #pragma mark -

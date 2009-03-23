@@ -15,10 +15,10 @@ EXPIRY_TIMESTAMP = '@\"2009-01-30 11:59:59 -0800\"'
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 1146
+CK_REVISION = HEAD
 
 // iMedia
-IMEDIA_REVISION = 678
+IMEDIA_REVISION = HEAD
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
