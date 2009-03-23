@@ -177,24 +177,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)cancel
 {
+    // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
-        // End page parsing and media URL connections
-        [NSObject cancelPreviousPerformRequestsWithTarget:self];
-        
-        if ([_pendingMediaUploads count] > 0)
-        {
-            [_currentPendingMediaConnection cancel];
-            [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-            [_pendingMediaUploads removeAllObjects];
-        }
-            
-        
-        // Disconnect connection
-        [[self connection] forceDisconnect];
-        
-        // Mark self as finished
-        [self didFinish];
+        [self engineDidPublish:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
     }
 }
 
@@ -239,25 +225,51 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark -
 #pragma mark Overall flow control
 
-/*  Called once we've finished, regardless of success.
+/*  Call this method once publishing has ended, whether it be successfully or not.
+ *  This method is responsible for cleaning up after publishing, and informing the delegate.
  */
-- (void)didFinish
+- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
 {
+    OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
+    
+    
+    // In the event of failure, end page parsing and media URL connections
+    if (!didPublish)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        
+        if ([_pendingMediaUploads count] > 0)
+        {
+            [_currentPendingMediaConnection cancel];
+            [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
+            [_pendingMediaUploads removeAllObjects];
+        }
+        
+        // Disconnect connection
+        [[self connection] forceDisconnect];
+    }
+    
+    
+    
     _status = KTPublishingEngineStatusFinished;
     
     [self setConnection:nil];
     
+    
+    // Inform the delegate
+    if (didPublish)
+    {
+        [[self delegate] publishingEngineDidFinish:self];
+    }
+    else
+    {
+        [[self delegate] publishingEngine:self didFailWithError:error];
+    }
+    
+    
     // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
     NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
     [undoManager removeAllActions];
-}
-
-/*  Call this method if something went wrong. The delegate will be alerted, and the engine halted
- */
-- (void)failWithError:(NSError *)error;
-{
-    [self cancel];
-    [[self delegate] publishingEngine:self didFailWithError:error];
 }
 
 #pragma mark -
@@ -311,26 +323,25 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-/*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
- */
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
+    OBPRECONDITION(con == [self connection]);
+    OBPRECONDITION(con);
+    
+    
     // Case 39234: It looks like ConnectionKit is sending this delegate method in the event of the
     // data connection closing (or it might even be the command connection), probably due to a
     // period of inactivity. In such a case, it's really not a cause to consider publishing
     // finished! To see if I am right on this, we will log that such a scenario occurred for now.
     // Mike.
     
-    OBASSERT([self connection]);                
-    
-    if (![[self connection] isConnected])
+    if ([self status] == KTPublishingEngineStatusUploading && ![con isConnected])
     {
-        [self didFinish];
-        [[self delegate] publishingEngineDidFinish:self];
+        [self engineDidPublish:YES error:nil];
     }
     else
     {
-        NSLog(@"%@ delegate method received, but -[CKConnection isConnected] still returns YES", NSStringFromSelector(_cmd));
+        NSLog(@"%@ delegate method received, but connection still appears to be publishing", NSStringFromSelector(_cmd));
     }
 }
 
@@ -365,7 +376,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 	else
 	{
-		[self failWithError:error];
+		[self engineDidPublish:NO error:error];
 	}
 }
 
@@ -475,10 +486,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
         if ([_pendingMediaUploads count] == 0)
         {
-            [[self connection] disconnect]; // Once everything is uploaded, disconnect
-            
             _status = KTPublishingEngineStatusUploading;
             [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+            
+            [[self connection] disconnect]; // Once everything is uploaded, disconnect
         }
         else
         {
@@ -741,10 +752,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         // If all content has been generated and there's no more media to load, queue the final
         // disconnect command and inform the delegate
-        [[self connection] disconnect];
-        
         _status = KTPublishingEngineStatusUploading;
         [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+        
+        [[self connection] disconnect];
     }
 }
 

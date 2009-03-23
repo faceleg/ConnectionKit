@@ -79,55 +79,58 @@
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  */
-- (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
+- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
 {
-    // Ping google about the sitemap if there is one
-    if ([[self site] boolForKey:@"generateGoogleSitemap"])
+    if (didPublish)
     {
-        NSURL *siteURL = [[[self site] hostProperties] siteURL];
-        NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
+        // Ping google about the sitemap if there is one
+        if ([[self site] boolForKey:@"generateGoogleSitemap"])
+        {
+            NSURL *siteURL = [[[self site] hostProperties] siteURL];
+            NSURL *sitemapURL = [siteURL URLByAppendingPathComponent:@"sitemap.xml.gz" isDirectory:NO];
+            
+            NSString *pingURLString = [[NSString alloc] initWithFormat:
+                                       @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
+                                       [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
+            
+            NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
+            [pingURLString release];
+            
+            [self pingURL:pingURL];
+            [pingURL release];
+        }
         
-        NSString *pingURLString = [[NSString alloc] initWithFormat:
-                                   @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                   [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
         
-        NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
-        [pingURLString release];
+        // ping JS-Kit
+        KTMaster *master = [[[self site] root] master];
+        if ( nil != master )
+        {
+            if ( [master wantsJSKit] && (nil != [master JSKitModeratorEmail]) )
+            {
+                NSURL *siteURL = [[[self site] hostProperties] siteURL];
+                
+                NSString *pingURLString = [[NSString alloc] initWithFormat:
+                                           @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@",
+                                           [[master JSKitModeratorEmail] URLQueryEncodedString:YES],
+                                           [[siteURL absoluteString] URLQueryEncodedString:YES]];
+                
+                NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
+                [pingURLString release];
+                
+                [self pingURL:pingURL];
+                [pingURL release];
+            }
+        }
         
-        [self pingURL:pingURL];
-        [pingURL release];
+        
+        // Record the app version published with
+        NSManagedObject *hostProperties = [[self site] hostProperties];
+        [hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
+        [hostProperties setValue:[[NSBundle mainBundle] buildVersion] forKey:@"publishedAppBuildVersion"];
     }
-	
-	
-	// ping JS-Kit
-	KTMaster *master = [[[self site] root] master];
-	if ( nil != master )
-	{
-		if ( [master wantsJSKit] && (nil != [master JSKitModeratorEmail]) )
-		{
-			NSURL *siteURL = [[[self site] hostProperties] siteURL];
-			
-			NSString *pingURLString = [[NSString alloc] initWithFormat:
-									   @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@",
-									   [[master JSKitModeratorEmail] URLQueryEncodedString:YES],
-									   [[siteURL absoluteString] URLQueryEncodedString:YES]];
-			
-			NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
-			[pingURLString release];
-			
-			[self pingURL:pingURL];
-			[pingURL release];
-		}
-	}
     
     
-    // Record the app version published with
-    NSManagedObject *hostProperties = [[self site] hostProperties];
-    [hostProperties setValue:[[NSBundle mainBundle] marketingVersion] forKey:@"publishedAppVersion"];
-    [hostProperties setValue:[[NSBundle mainBundle] buildVersion] forKey:@"publishedAppBuildVersion"];
-    
-        
-    [super connection:con didDisconnectFromHost:host];
+    [super engineDidPublish:didPublish error:error];
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
@@ -261,7 +264,7 @@
         NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
 											 code:KTPublishingEngineNothingToPublish
 										 userInfo:nil];
-        [self failWithError:error];
+        [self engineDidPublish:NO error:error];
     }
     else
     {

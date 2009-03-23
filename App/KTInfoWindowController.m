@@ -261,10 +261,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[oStackView setDataSource:self];		// ready to hook up UI, not before!
 	
 	[oTabSegmentedControl setFocusRingType: NSFocusRingTypeNone];	// don't draw focus since it's truncated top/sides
-	
-	// FIXME: disable Disqus and IntenseDebate for 1.6 betas
-	[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderDisqus]] setEnabled:NO];
-	[[oCommentsProviderPopup itemAtIndex:[oCommentsProviderPopup indexOfItemWithTag:KTCommentsProviderIntenseDebate]] setEnabled:NO];
 }
 
 - (IBAction) languageChosen:(id)sender;
@@ -895,14 +891,6 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 {
 	KTCommentsProvider provider = [sender selectedTag];
 	[[[self selectedLevel] master] setCommentsProvider:provider];
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-	// FIXME: disable Disqus and IntenseDebate for 1.6 betas
-	if ( KTCommentsProviderDisqus == [menuItem tag] ) return NO;
-	if ( KTCommentsProviderIntenseDebate == [menuItem tag] ) return NO;
-	return YES;
 }
 
 #pragma mark -

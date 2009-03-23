@@ -407,7 +407,12 @@
 	
     // Figure out the URL to use
 	NSURL *pageURL = [page URL];
-    if (![pageURL scheme] || ![pageURL host]) pageURL = nil;
+    if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
+        ![pageURL host] ||          // info if the scheme is something crazy like fttp:
+        !([[pageURL scheme] isEqualToString:@"http"] || [[pageURL scheme] isEqualToString:@"https"]))
+    {
+        pageURL = nil;
+    }
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse the request.
     [self setWebViewLoading:YES];

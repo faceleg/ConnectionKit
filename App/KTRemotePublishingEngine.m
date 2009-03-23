@@ -85,7 +85,7 @@
                               localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
                                           underlyingError:[challenge error]];
                 
-                [self failWithError:error];
+                [self engineDidPublish:NO error:error];
             }
         }
 	}
@@ -99,7 +99,7 @@
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
-		[self failWithError:error];
+		[self engineDidPublish:NO error:error];
     }
 }
 
