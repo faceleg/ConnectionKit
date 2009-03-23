@@ -223,7 +223,7 @@
         // FIXME: we should load up the properties from a KTPreset
         [root setBool:NO forKey:@"includeTimestamp"];
         [root setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];
-        [root setBool:NO forKey:@"collectionSyndicate"];
+        [root setCollectionSyndicate:NO];
         [root setInteger:0 forKey:@"collectionMaxIndexItems"];
         [root setBool:NO forKey:@"collectionShowPermanentLink"];
         [root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		

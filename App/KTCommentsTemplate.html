@@ -37,10 +37,10 @@
 [[if master.JSKitModeratorEmail]]
 									[[if HTMLGenerationPurpose]]
 									[[if self==parser.currentPage]]
-									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="/[[=&commentsID]]" permalink="[[=&URL]]"></div>
+									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="[[=&JSKitPath]]" permalink="[[=&URL]]"></div>
 									[[else6]]
 									<div class="comments">
-										<p><a href="[[=&URL]]"><span class="js-kit-comments-count" path="/[[=&commentsID]]">0</span> [[`Comments]]</a></p>
+										<p><a href="[[=&URL]]"><span class="js-kit-comments-count" path="[[=&JSKitPath]]">0</span> [[`Comments]]</a></p>
 									</div>
 									[[endif6]]
 									[[else5]]
@@ -90,7 +90,7 @@
 									[[if self==parser.currentPage]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
-										var idcomments_post_id = "[[=&commentsID]]";
+										var idcomments_post_id = "[[=&URL]]";
 										var idcomments_post_url = "[[=&URL]]";
 										var idcomments_post_title = "[[=&titleText]]";
 									</script>
@@ -99,7 +99,7 @@
 									[[else6]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
-										var idcomments_post_id = "[[=&commentsID]]";
+										var idcomments_post_id = "[[=&URL]]";
 										var idcomments_post_url = "[[=&URL]]";
 									</script>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>

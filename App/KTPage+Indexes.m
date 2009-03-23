@@ -21,6 +21,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSURL+Karelia.h"
 #import "NSXMLElement+Karelia.h"
 
 
@@ -195,15 +196,44 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	// && ([self boolForKey:@"collectionGenerateAtom"] || [self boolForKey:@"collectionGenerateRSS"]) ;
 }
 
+- (BOOL)collectionSyndicate { return [self wrappedBoolForKey:@"collectionSyndicate"]; }
+
+- (void)setCollectionSyndicate:(BOOL)syndicate
+{
+    [self setWrappedBool:syndicate forKey:@"collectionSyndicate"];
+    
+    // For Sandvox 1.6 and onwards, once the user makes a definitive decision, finalise the filename
+    // Until then, we stick with the default Sandvox 1.5 + earlier name. case 40230.
+    if (![self valueForUndefinedKey:@"RSSFileName"])
+    {
+        [self setRSSFileName:(syndicate ? @"index.rss" : [self RSSFileName])];
+    }
+}
+
+- (NSString *)RSSFileName
+{
+    NSString *result = [self valueForUndefinedKey:@"RSSFileName"];
+    if (!result)
+    {
+        // We don't want to upset existing RSS feeds, so stick to default filename for those
+        result = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+    }
+    
+    return result;
+}
+
+- (void)setRSSFileName:(NSString *)file
+{
+    [self setValue:file forUndefinedKey:@"RSSFileName"];
+}
+
 - (NSURL *)feedURL
 {
 	NSURL *result = nil;
 	
-	if ([self boolForKey:@"collectionSyndicate"] && [self collectionCanSyndicate])
+	if ([self collectionSyndicate] && [self collectionCanSyndicate])
 	{
-		NSString *feedFileName = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-		NSURL *pageURL = [self URL];
-		result = [NSURL URLWithString:feedFileName relativeToURL:pageURL];
+		result = [[self URL] URLByAppendingPathComponent:[self RSSFileName] isDirectory:NO];
 	}
 	
 	return result;

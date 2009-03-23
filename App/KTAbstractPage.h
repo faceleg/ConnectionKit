@@ -67,7 +67,7 @@ KTCollectionPathStyle;
 - (void)setWindowTitle:(NSString *)wTitle;
 
 // Comments
-- (NSString *)commentsID;
+- (NSString *)JSKitPath;
 
 // Staleness
 - (BOOL)isStale;

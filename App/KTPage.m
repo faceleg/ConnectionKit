@@ -135,8 +135,8 @@
 	
 	
 	// Create the page
-	KTPage *result =
-		[NSEntityDescription insertNewObjectForEntityForName:@"Page" inManagedObjectContext:[parent managedObjectContext]];
+	KTPage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
+                                                   inManagedObjectContext:[parent managedObjectContext]];
 	
 	
 	// Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.

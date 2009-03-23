@@ -965,7 +965,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		if (menuItemViewType == KTRSSSourceView || menuItemViewType == KTRSSView)
 		{
 			KTPage *page = [self page];
-			if (![page collectionCanSyndicate] || ![page boolForKey:@"collectionSyndicate"]) {
+			if (![page collectionCanSyndicate] || ![page collectionSyndicate]) {
 				result = NO;
 			}
 		}
