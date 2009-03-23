@@ -3,16 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>843 340 356 240 0 0 1920 1178 </string>
+	<string>69 60 356 240 0 0 1680 1028 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>5</key>
-		<string>842 789 320 126 0 0 1920 1178 </string>
+		<string>705 638 275 186 0 0 1680 1028 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
 	<key>IBLastKnownRelativeProjectPath</key>
-	<string>../../IndexPagelet.xcodeproj</string>
+	<string>../IndexElement.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
 	<key>IBOpenObjects</key>
@@ -20,9 +20,7 @@
 		<integer>5</integer>
 	</array>
 	<key>IBSystem Version</key>
-	<string>9D34</string>
-	<key>IBUsesTextArchiving</key>
-	<true/>
+	<string>9G55</string>
 	<key>targetFramework</key>
 	<string>IBCocoaFramework</string>
 </dict>

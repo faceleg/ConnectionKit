@@ -239,22 +239,22 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>134</integer>
+				<integer>132</integer>
 			</dict>
 			<key>NSClassName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>132</integer>
+				<integer>130</integer>
 			</dict>
 			<key>NSExtension</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>133</integer>
+				<integer>131</integer>
 			</dict>
 			<key>NSFrameSize</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>131</integer>
+				<integer>129</integer>
 			</dict>
 			<key>NSNextResponder</key>
 			<dict>
@@ -264,7 +264,7 @@
 			<key>NSSubviews</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>120</integer>
+				<integer>128</integer>
 			</dict>
 			<key>NSvFlags</key>
 			<integer>2</integer>
@@ -1968,19 +1968,7 @@ Sandvox</string>
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>99</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>100</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>118</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>46</integer>
+					<integer>89</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1988,7 +1976,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>40</integer>
+					<integer>118</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1996,15 +1984,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>97</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>52</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>89</integer>
+					<integer>33</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2012,15 +1992,19 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>33</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>94</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>98</integer>
+					<integer>46</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>97</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2032,38 +2016,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>121</integer>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>4</integer>
-			</dict>
-			<key>NSClassName</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>119</integer>
-			</dict>
-		</dict>
-		<string>NSApplication</string>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>69</integer>
-			</dict>
-			<key>NS.objects</key>
-			<array>
-				<dict>
-					<key>CF$UID</key>
-					<integer>86</integer>
+					<integer>133</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2071,15 +2024,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>33</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>46</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>27</integer>
+					<integer>99</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2087,15 +2032,11 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>121</integer>
+					<integer>100</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>79</integer>
+					<integer>98</integer>
 				</dict>
 			</array>
 		</dict>
@@ -2103,19 +2044,19 @@ Sandvox</string>
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>130</integer>
+				<integer>127</integer>
 			</dict>
 			<key>NSCell</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>123</integer>
+				<integer>120</integer>
 			</dict>
 			<key>NSEnabled</key>
 			<true/>
 			<key>NSFrame</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>122</integer>
+				<integer>119</integer>
 			</dict>
 			<key>NSNextResponder</key>
 			<dict>
@@ -2135,7 +2076,7 @@ Sandvox</string>
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>129</integer>
+				<integer>126</integer>
 			</dict>
 			<key>NSBackgroundColor</key>
 			<dict>
@@ -2149,22 +2090,22 @@ Sandvox</string>
 			<key>NSContents</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>124</integer>
+				<integer>121</integer>
 			</dict>
 			<key>NSControlView</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>121</integer>
+				<integer>118</integer>
 			</dict>
 			<key>NSSupport</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>125</integer>
+				<integer>122</integer>
 			</dict>
 			<key>NSTextColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>126</integer>
+				<integer>123</integer>
 			</dict>
 		</dict>
 		<string>勾選的話，連至 Sandvox 網站的連結將會是匿名的。若取消勾選，連結將會包含代碼，僅供 Karelia 使用，可協助我們感謝最佳的連結來源。</string>
@@ -2198,12 +2139,12 @@ Sandvox</string>
 			<key>NSColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>128</integer>
+				<integer>125</integer>
 			</dict>
 			<key>NSColorName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>127</integer>
+				<integer>124</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>6</integer>
@@ -2245,6 +2186,52 @@ Sandvox</string>
 			<key>$classname</key>
 			<string>NSTextField</string>
 		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>69</integer>
+			</dict>
+			<key>NS.objects</key>
+			<array>
+				<dict>
+					<key>CF$UID</key>
+					<integer>86</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>40</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>33</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>46</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>27</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>52</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>118</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>79</integer>
+				</dict>
+			</array>
+		</dict>
 		<string>{250, 273}</string>
 		<string>NSView</string>
 		<string>NSResponder</string>
@@ -2259,6 +2246,19 @@ Sandvox</string>
 			<key>$classname</key>
 			<string>NSCustomView</string>
 		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>4</integer>
+			</dict>
+			<key>NSClassName</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>134</integer>
+			</dict>
+		</dict>
+		<string>NSApplication</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -2282,18 +2282,6 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>86</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>11</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>11</integer>
 				</dict>
 				<dict>
@@ -2306,18 +2294,6 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>86</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>11</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>86</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>11</integer>
 				</dict>
 				<dict>
@@ -2327,6 +2303,14 @@ Sandvox</string>
 				<dict>
 					<key>CF$UID</key>
 					<integer>86</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>11</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2342,11 +2326,27 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>11</integer>
+					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
 					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>86</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>86</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>86</integer>
 				</dict>
 			</array>
 		</dict>
@@ -2360,23 +2360,7 @@ Sandvox</string>
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>99</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>100</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>118</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>46</integer>
+					<integer>89</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2384,7 +2368,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>40</integer>
+					<integer>118</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2392,15 +2376,7 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>97</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>52</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>89</integer>
+					<integer>33</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2408,15 +2384,23 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>33</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>94</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>98</integer>
+					<integer>46</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>97</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2428,11 +2412,27 @@ Sandvox</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>133</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>121</integer>
+					<integer>40</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>99</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>52</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>100</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>98</integer>
 				</dict>
 			</array>
 		</dict>
@@ -2522,26 +2522,26 @@ Sandvox</string>
 				</dict>
 			</array>
 		</dict>
-		<string>File's Owner</string>
-		<string>Button Cell-2</string>
-		<string>Button Cell (Created with
-Sandvox)</string>
-		<string>Application</string>
-		<string>Bevel Button (sandvox_castle_top)</string>
-		<string>Check Box (Open link in new window)</string>
-		<string>Bevel Button (sandvox_bucket_white)</string>
-		<string>Pagelet Controller</string>
-		<string>Button Cell-3</string>
-		<string>Check Box (Anonymous Referral)</string>
 		<string>Button Cell-4</string>
-		<string>Bevel Button (sandvox_icon_white)</string>
+		<string>Check Box (Open link in new window)</string>
+		<string>Static Text (If checked, the link to the Sandvox website will be anonymous. If unchecked, the link will include a code, usable only by Karelia, that will help us thank our best referrers.)</string>
+		<string>Pagelet Controller</string>
 		<string>Bevel Button (sandvox_castle_white)</string>
+		<string>Bevel Button (sandvox_icon_white)</string>
 		<string>Button Cell-1</string>
-		<string>Button Cell</string>
+		<string>Bevel Button (sandvox_castle_top)</string>
+		<string>Bevel Button (sandvox_bucket)</string>
+		<string>File's Owner</string>
+		<string>Button Cell-3</string>
 		<string>Matrix</string>
 		<string>View</string>
-		<string>Bevel Button (sandvox_bucket)</string>
-		<string>Static Text (If checked, the link to the Sandvox website will be anonymous. If unchecked, the link will include a code, usable only by Karelia, that will help us thank our best referrers.)</string>
+		<string>Application</string>
+		<string>Bevel Button (sandvox_bucket_white)</string>
+		<string>Button Cell-2</string>
+		<string>Check Box (Anonymous Referral)</string>
+		<string>Button Cell (Created with
+Sandvox)</string>
+		<string>Button Cell</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -2570,51 +2570,7 @@ Sandvox)</string>
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>85</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>99</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>45</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>118</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>97</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>40</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>33</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>94</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>121</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>26</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>32</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2622,15 +2578,11 @@ Sandvox)</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>79</integer>
+					<integer>39</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>100</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>46</integer>
+					<integer>32</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2638,35 +2590,19 @@ Sandvox)</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>97</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>133</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>60</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>27</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>52</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>89</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>51</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>98</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>86</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>39</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -2674,7 +2610,71 @@ Sandvox)</string>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
+					<integer>40</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>52</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>98</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>89</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>79</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>27</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>85</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>51</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>45</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>94</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>46</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>26</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>86</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>99</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>33</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>100</integer>
 				</dict>
 			</array>
 		</dict>
@@ -2796,33 +2796,33 @@ Sandvox)</string>
 				</dict>
 			</array>
 		</dict>
-		<integer>117</integer>
-		<integer>102</integer>
-		<integer>112</integer>
-		<integer>-3</integer>
-		<integer>100</integer>
-		<integer>81</integer>
-		<integer>83</integer>
-		<integer>99</integer>
 		<integer>96</integer>
-		<integer>113</integer>
-		<integer>111</integer>
-		<integer>133</integer>
 		<integer>110</integer>
-		<integer>129</integer>
-		<integer>103</integer>
-		<integer>84</integer>
-		<integer>132</integer>
-		<integer>65</integer>
-		<integer>85</integer>
-		<integer>88</integer>
-		<integer>98</integer>
-		<integer>118</integer>
-		<integer>101</integer>
-		<integer>89</integer>
 		<integer>109</integer>
-		<integer>5</integer>
+		<integer>111</integer>
+		<integer>132</integer>
 		<integer>97</integer>
+		<integer>100</integer>
+		<integer>-3</integer>
+		<integer>65</integer>
+		<integer>5</integer>
+		<integer>81</integer>
+		<integer>88</integer>
+		<integer>101</integer>
+		<integer>98</integer>
+		<integer>129</integer>
+		<integer>85</integer>
+		<integer>117</integer>
+		<integer>118</integer>
+		<integer>112</integer>
+		<integer>99</integer>
+		<integer>84</integer>
+		<integer>113</integer>
+		<integer>133</integer>
+		<integer>89</integer>
+		<integer>102</integer>
+		<integer>83</integer>
+		<integer>103</integer>
 		<dict>
 			<key>$class</key>
 			<dict>

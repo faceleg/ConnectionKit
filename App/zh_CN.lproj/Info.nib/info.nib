@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>154 280 356 240 0 0 1152 746 </string>
+	<string>135 271 356 240 0 0 1152 746 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>1225</key>
@@ -36,7 +36,7 @@
 	<key>IBFramework Version</key>
 	<string>446.1</string>
 	<key>IBLastKnownRelativeProjectPath</key>
-	<string>../../Marvel.xcodeproj</string>
+	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
 	<key>IBSystem Version</key>

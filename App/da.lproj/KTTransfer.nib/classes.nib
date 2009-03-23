@@ -9,24 +9,48 @@
             SUPERCLASS = NSObject;
         },
                 {
-            CLASS = KSCircularProgressCell;
+            CLASS = KSViewController;
             LANGUAGE = ObjC;
-            SUPERCLASS = NSCell;
+            OUTLETS =             {
+                view = NSView;
+            };
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = KTExportSavePanelController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oSiteURLField = NSTextField;
+            };
+            SUPERCLASS = KSViewController;
+        },
+                {
+            CLASS = KTURLFormatter;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSFormatter;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
         },
                 {
             ACTIONS =             {
-                cancelTransfer = id;
-                hideTransfer = id;
+                imagePickerCancelled = id;
+                imagePickerSet = id;
             };
-            CLASS = KTTransferController;
+            CLASS = NSObject;
             LANGUAGE = ObjC;
-            OUTLETS =             {
-                myConnection = id;
-                oBadSiteURL = NSImageView;
-                oExportPanelAccessoryView = NSView;
-                oExportURL = NSTextField;
-            };
-            SUPERCLASS = NSWindowController;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
         }
     );
     IBVersion = 1;
