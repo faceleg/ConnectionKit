@@ -156,6 +156,7 @@ multi-line comment etc. or it'll lose color.
 		// Replace the range with our recolored part:
 		[vString addAttributes: vStyles range: NSMakeRange( 0, [vString length] )];
 		[[self textStorage] replaceCharactersInRange: range withAttributedString: vString];
+		[[self textStorage] fixFontAttributeInRange:range];
 		
 	NS_HANDLER
 
