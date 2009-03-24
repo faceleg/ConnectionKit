@@ -1,297 +1,171 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>IBClasses</key>
-	<array>
-		<dict>
-			<key>CLASS</key>
-			<string>KSEmailAddressComboBox</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSComboBox</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSManagedObjectContext</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSSingletonWindowController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTStackView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>dataSource</key>
-				<string>id</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSLabel</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSApplication</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>chooseBannerImagePath</key>
-				<string>id</string>
-				<key>chooseCommentsProvider</key>
-				<string>id</string>
-				<key>chooseFaviconPath</key>
-				<string>id</string>
-				<key>chooseLogoImagePath</key>
-				<string>id</string>
-				<key>choosePageThumbnail</key>
-				<string>id</string>
-				<key>clearBannerImage</key>
-				<string>id</string>
-				<key>clearFavicon</key>
-				<string>id</string>
-				<key>clearLogoImage</key>
-				<string>id</string>
-				<key>languageChosen</key>
-				<string>id</string>
-				<key>movePageletDown</key>
-				<string>id</string>
-				<key>movePageletUp</key>
-				<string>id</string>
-				<key>openHaloscan</key>
-				<string>id</string>
-				<key>resetPageThumbnail</key>
-				<string>id</string>
-				<key>windowHelp</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>KTInfoWindowController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myCurrentSelection</key>
-				<string>id</string>
-				<key>oBannerPathInfoField</key>
-				<string>KSPathInfoField</string>
-				<key>oCollectionStylePopup</key>
-				<string>NSPopUpButton</string>
-				<key>oCollectionView</key>
-				<string>NSView</string>
-				<key>oCommentsProviderPopup</key>
-				<string>NSPopUpButton</string>
-				<key>oCustomIndexView</key>
-				<string>NSView</string>
-				<key>oDividerView</key>
-				<string>NSView</string>
-				<key>oFaviconImageView</key>
-				<string>KTImageView</string>
-				<key>oFillerView</key>
-				<string>NSView</string>
-				<key>oGoogleAnalyticsExplanationTextView</key>
-				<string>NSTextView</string>
-				<key>oGoogleVerificationExplanationTextView</key>
-				<string>NSTextView</string>
-				<key>oHelpBottomView</key>
-				<string>NSView</string>
-				<key>oIndexPopup</key>
-				<string>NSPopUpButton</string>
-				<key>oInfoWindowController</key>
-				<string>NSObjectController</string>
-				<key>oLanguageCodeField</key>
-				<string>NSTextField</string>
-				<key>oLanguagePopup</key>
-				<string>NSPopUpButton</string>
-				<key>oLogoPathInfoField</key>
-				<string>KSPathInfoField</string>
-				<key>oNothingView</key>
-				<string>NSView</string>
-				<key>oPageController</key>
-				<string>NSController</string>
-				<key>oPageDetailsHeaderView</key>
-				<string>NSView</string>
-				<key>oPageMenuTitleField</key>
-				<string>NSTextField</string>
-				<key>oPageView</key>
-				<string>NSView</string>
-				<key>oPageletDetailsHeaderView</key>
-				<string>NSView</string>
-				<key>oPageletGeneralView</key>
-				<string>NSView</string>
-				<key>oPanel</key>
-				<string>NSPanel</string>
-				<key>oProRequiredView</key>
-				<string>NSView</string>
-				<key>oSegmentsView</key>
-				<string>NSView</string>
-				<key>oSiteTabView</key>
-				<string>NSTabView</string>
-				<key>oSiteView</key>
-				<string>NSView</string>
-				<key>oSortPopup</key>
-				<string>NSPopUpButton</string>
-				<key>oStackView</key>
-				<string>KTStackView</string>
-				<key>oTabSegmentedControl</key>
-				<string>NSSegmentedControl</string>
-				<key>oThumbImageView</key>
-				<string>KTImageView</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>KSSingletonWindowController</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSPathInfoField</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSTextView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSText</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>hideWindow</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>NSWindowController</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key></key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>imagePickerCancelled</key>
-				<string>id</string>
-				<key>imagePickerSet</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>NSObject</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>pickSomeone</key>
-				<string>id</string>
-				<key>removeImage</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>KTImageView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>delegate</key>
-				<string>id</string>
-				<key>oDelegateController</key>
-				<string>NSObjectController</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSImageView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSSmallDatePicker</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSDatePicker</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSCell</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>NSWindow</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSResponder</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KSEdgeSnapWindow</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSPanel</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
-			<string>KTPlaceholderBindingTextField</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSTextField</string>
-		</dict>
-	</array>
-	<key>IBVersion</key>
-	<string>1</string>
-</dict>
-</plist>
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSEdgeSnapWindow;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSPanel;
+        },
+                {
+            CLASS = KSEmailAddressComboBox;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSComboBox;
+        },
+                {
+            CLASS = KSLabel;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KSPathInfoField;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KSSingletonWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSWindowController;
+        },
+                {
+            CLASS = KSSmallDatePicker;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSDatePicker;
+        },
+                {
+            ACTIONS =             {
+                pickSomeone = id;
+                removeImage = id;
+            };
+            CLASS = KTImageView;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                delegate = id;
+                oDelegateController = NSObjectController;
+            };
+            SUPERCLASS = NSImageView;
+        },
+                {
+            ACTIONS =             {
+                chooseBannerImagePath = id;
+                chooseCommentsProvider = id;
+                chooseFaviconPath = id;
+                chooseLogoImagePath = id;
+                choosePageThumbnail = id;
+                clearBannerImage = id;
+                clearFavicon = id;
+                clearLogoImage = id;
+                languageChosen = id;
+                movePageletDown = id;
+                movePageletUp = id;
+                openHaloscan = id;
+                resetPageThumbnail = id;
+                windowHelp = id;
+            };
+            CLASS = KTInfoWindowController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myCurrentSelection = id;
+                oBannerPathInfoField = KSPathInfoField;
+                oCollectionStylePopup = NSPopUpButton;
+                oCollectionView = NSView;
+                oCommentsProviderPopup = NSPopUpButton;
+                oCustomIndexView = NSView;
+                oDividerView = NSView;
+                oFaviconImageView = KTImageView;
+                oFillerView = NSView;
+                oGoogleAnalyticsExplanationTextView = NSTextView;
+                oGoogleVerificationExplanationTextView = NSTextView;
+                oHelpBottomView = NSView;
+                oIndexPopup = NSPopUpButton;
+                oInfoWindowController = NSObjectController;
+                oLanguageCodeField = NSTextField;
+                oLanguagePopup = NSPopUpButton;
+                oLogoPathInfoField = KSPathInfoField;
+                oNothingView = NSView;
+                oPageController = NSController;
+                oPageDetailsHeaderView = NSView;
+                oPageMenuTitleField = NSTextField;
+                oPageView = NSView;
+                oPageletDetailsHeaderView = NSView;
+                oPageletGeneralView = NSView;
+                oPanel = NSPanel;
+                oProRequiredView = NSView;
+                oSegmentsView = NSView;
+                oSiteTabView = NSTabView;
+                oSiteView = NSView;
+                oSortPopup = NSPopUpButton;
+                oStackView = KTStackView;
+                oTabSegmentedControl = NSSegmentedControl;
+                oThumbImageView = KTImageView;
+            };
+            SUPERCLASS = KSSingletonWindowController;
+        },
+                {
+            CLASS = KTPlaceholderBindingTextField;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KTStackView;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                dataSource = id;
+            };
+            SUPERCLASS = NSView;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSManagedObjectContext;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSTextView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSText;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSWindow;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            ACTIONS =             {
+                hideWindow = id;
+            };
+            CLASS = NSWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        }
+    );
+    IBVersion = 1;
+}
