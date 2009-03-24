@@ -86,9 +86,9 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 		}
 		
 		_dockProgress = [[UKDockProgressIndicator alloc] init];
+		[_dockProgress setHidden:YES];		// keep hidden for now
 		[_dockProgress setMinValue:0.0];
 		[_dockProgress setMaxValue:100.0];
-		[_dockProgress setHidden:YES];		// keep hidden for now
     }
     
     return self;
@@ -100,7 +100,6 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     
     [_publishingEngine setDelegate:nil];
     [_publishingEngine release];
-	[_dockProgress setHidden:YES];
 	[_dockProgress release];
 	
 	[_messageText release];
