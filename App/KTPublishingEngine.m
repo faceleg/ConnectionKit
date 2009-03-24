@@ -335,7 +335,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // finished! To see if I am right on this, we will log that such a scenario occurred for now.
     // Mike.
     
-    if ([self status] == KTPublishingEngineStatusUploading && ![con isConnected])
+    if ([self status] == KTPublishingEngineStatusUploading &&
+        ![con isConnected] &&
+        [[(CKAbstractQueueConnection *)con commandQueue] count] == 0)
     {
         [self engineDidPublish:YES error:nil];
     }
