@@ -601,7 +601,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 			OBASSERT(RSSData);
 			
-			NSString *RSSFilename = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+			NSString *RSSFilename = [(KTPage *)page RSSFileName];
 			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
 			[self uploadData:RSSData toPath:RSSUploadPath];
 		}
