@@ -1,114 +1,212 @@
-{
-    IBClasses =     (
-                {
-            ACTIONS =             {
-                "" = id;
-            };
-            CLASS = FirstResponder;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            CLASS = KSLabel;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTextField;
-        },
-                {
-            CLASS = KSSingletonWindowController;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSWindowController;
-        },
-                {
-            CLASS = KSTrimFirstLineFormatter;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSFormatter;
-        },
-                {
-            CLASS = KTBackgroundTabView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTabView;
-        },
-                {
-            ACTIONS =             {
-                browseHostToSelectPath = id;
-                createNewConfiguration = id;
-                doCancel = id;
-                doCreateNewHost = id;
-                doCustomizeHost = id;
-                doDotMacConfigure = id;
-                doGetDotMacAccount = id;
-                doNext = id;
-                doOK = id;
-                doPrevious = id;
-                doSharingConfigure = id;
-                doVerifyHomePageURL = id;
-                doVerifySetupURL = id;
-                openPreferredHost = id;
-                settingUpDotMacPersnalDomains = id;
-                windowHelp = id;
-            };
-            CLASS = KTHostSetupController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oApacheLabel = NSTextField;
-                oBrowseHostAccountPanel = NSPanel;
-                oBrowseHostPassword = NSTextField;
-                oBrowseHostUsername = NSTextField;
-                oDotMacLabel = NSTextField;
-                oDotMacSetupLink = NSButton;
-                oGetDotMacButton = NSButton;
-                oHostTypeMatrix = NSMatrix;
-                oIntroductionTextView = NSTextView;
-                oLocalHostErrorString = NSTextField;
-                oMainObjectController = NSObjectController;
-                oNextButton = NSButton;
-                oPasswordField = NSTextField;
-                oPortField = NSTextField;
-                oPreviousButton = NSButton;
-                oStepLabel = NSTextField;
-                oSummaryTextView = NSTextView;
-                oTabView = KTBackgroundTabView;
-            };
-            SUPERCLASS = KSSingletonWindowController;
-        },
-                {
-            CLASS = NSApplication;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = NSCell;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            CLASS = NSManagedObjectContext;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            ACTIONS =             {
-                imagePickerCancelled = id;
-                imagePickerSet = id;
-            };
-            CLASS = NSObject;
-            LANGUAGE = ObjC;
-        },
-                {
-            CLASS = NSTextView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSText;
-        },
-                {
-            CLASS = NSView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = NSWindow;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        }
-    );
-    IBVersion = 1;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>KSLabel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSApplication</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>hideWindow</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>imagePickerCancelled</key>
+				<string>id</string>
+				<key>imagePickerSet</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSManagedObjectContext</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSSingletonWindowController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSResponder</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key></key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSCell</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSTrimFirstLineFormatter</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSFormatter</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>browseHostToSelectPath</key>
+				<string>id</string>
+				<key>createNewConfiguration</key>
+				<string>id</string>
+				<key>doCancel</key>
+				<string>id</string>
+				<key>doCreateNewHost</key>
+				<string>id</string>
+				<key>doCustomizeHost</key>
+				<string>id</string>
+				<key>doDotMacConfigure</key>
+				<string>id</string>
+				<key>doGetDotMacAccount</key>
+				<string>id</string>
+				<key>doNext</key>
+				<string>id</string>
+				<key>doOK</key>
+				<string>id</string>
+				<key>doPrevious</key>
+				<string>id</string>
+				<key>doSharingConfigure</key>
+				<string>id</string>
+				<key>doVerifyHomePageURL</key>
+				<string>id</string>
+				<key>doVerifySetupURL</key>
+				<string>id</string>
+				<key>openPreferredHost</key>
+				<string>id</string>
+				<key>settingUpDotMacPersnalDomains</key>
+				<string>id</string>
+				<key>windowHelp</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>KTHostSetupController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oApacheLabel</key>
+				<string>NSTextField</string>
+				<key>oBrowseHostAccountPanel</key>
+				<string>NSPanel</string>
+				<key>oBrowseHostPassword</key>
+				<string>NSTextField</string>
+				<key>oBrowseHostUsername</key>
+				<string>NSTextField</string>
+				<key>oDotMacLabel</key>
+				<string>NSTextField</string>
+				<key>oDotMacSetupLink</key>
+				<string>NSButton</string>
+				<key>oGetDotMacButton</key>
+				<string>NSButton</string>
+				<key>oHostTypeMatrix</key>
+				<string>NSMatrix</string>
+				<key>oIntroductionTextView</key>
+				<string>NSTextView</string>
+				<key>oLocalHostErrorString</key>
+				<string>NSTextField</string>
+				<key>oMainObjectController</key>
+				<string>NSObjectController</string>
+				<key>oNextButton</key>
+				<string>NSButton</string>
+				<key>oPasswordField</key>
+				<string>NSTextField</string>
+				<key>oPortField</key>
+				<string>NSTextField</string>
+				<key>oPreviousButton</key>
+				<string>NSButton</string>
+				<key>oStepLabel</key>
+				<string>NSTextField</string>
+				<key>oSummaryTextView</key>
+				<string>NSTextView</string>
+				<key>oTabView</key>
+				<string>KTBackgroundTabView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KSSingletonWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSTextView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSText</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTBackgroundTabView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTabView</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>
