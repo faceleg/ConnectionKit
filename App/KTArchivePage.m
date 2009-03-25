@@ -103,11 +103,11 @@
 - (void)updateTitle
 {
     // Give the archive a decent title
-    NSString *monthDescription = [self dateDescription];
+    NSString *dateDescription = [self dateDescription];
 	
     NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@",
                               NSLocalizedString(@"Archive", "Part of an archive's page title"),
-                              monthDescription];
+                              dateDescription];
     
     NSString *collectionTitle = [[self parent] titleText];
     if (collectionTitle && ![collectionTitle isEqualToString:@""])
