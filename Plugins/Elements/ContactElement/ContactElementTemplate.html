@@ -11,7 +11,8 @@ function verifyAndSubmit[[=uniqueID]](form) {
 	checkEmail = form.e.value;
 	if (checkEmail=='[[=&delegate.contactField.defaultString]]'
 		|| checkEmail.indexOf('@') < 0
-		|| checkEmail.lastIndexOf('.') < checkEmail.indexOf('@')
+		|| checkEmail.lastIndexOf('.') < (checkEmail.indexOf('@') + 1)
+		|| checkEmail.lastIndexOf('.') >= (checkEmail.length - 2)
 		|| checkEmail == form.e.title)
 	{
 		var message = "[["Email address is missing.  Message cannot be sent.]]";
