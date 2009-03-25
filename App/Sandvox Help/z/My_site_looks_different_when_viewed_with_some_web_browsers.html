@@ -69,7 +69,15 @@
 
                 <li>Add the new PNG image to your site in place of the original.</li>
             </ol>
-        </div><a name="Graphical_Text" id="Graphical_Text"></a>
+        </div><a name="Page_text_styled_one_way_in_Firefox.2C_not_bold_in_Safari" id="Page_text_styled_one_way_in_Firefox.2C_not_bold_in_Safari"></a>
+
+        <h2><span class="mw-headline">Page text styled one way in Firefox, not bold in Safari</span></h2>
+
+        <p>Let's say for example that some text is bold in Firefox but not Safari. Look for a stray &lt;b&gt; tag in your raw HTML text. It must have a corresponding closing &lt;/b&gt; tag or you will see different results in different browsers.</p>
+
+        <p>Safari ignores the unmatched tag, so nothing becomes bold.</p>
+
+        <p>Firefox makes everything on the page bold from that point on until it find a closing &lt;/b&gt; tag. If it never finds the tag, the entire page will appear to be bold in Firefox, but plain text in Safari.</p><a name="Graphical_Text" id="Graphical_Text"></a>
 
         <h2><span class="mw-headline">Graphical Text</span></h2>
 
