@@ -39,8 +39,18 @@
 
 - (NSString *)dateDescription
 {
+	// set up a formatter since descriptionWithCalendarFormat:timeZone:locale: may not match site locale
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	[dateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
+
+	// find our locale from the site itself
+	NSString *language = [[self master] valueForKey:@"language"];
+	NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:language] autorelease];
+	[dateFormatter setLocale:locale];
+	
 	NSDate *date = [self valueForKey:@"archiveStartDate"];
-	NSString *result = [date descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
+	NSString *result = [dateFormatter stringFromDate:date];
 	return result;
 }
 
@@ -93,9 +103,8 @@
 - (void)updateTitle
 {
     // Give the archive a decent title
-    NSDate *monthStart = [self valueForKey:@"archiveStartDate"];
-    NSString *monthDescription = [monthStart descriptionWithCalendarFormat:@"%B %Y" timeZone:nil locale:nil];
-    
+    NSString *monthDescription = [self dateDescription];
+	
     NSString *archiveTitle = [NSString stringWithFormat:@"%@ %@",
                               NSLocalizedString(@"Archive", "Part of an archive's page title"),
                               monthDescription];
