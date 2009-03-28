@@ -2,6 +2,10 @@ textarea.fullWidth, input.fullWidth, select.fullWidth {
 	width:96%;
 	margin:4px 0;
 }
+textarea.fullWidth, select.fullWidth {
+	margin: 4px 1px
+}
+
 form.contactElement input.submit {
 	width:auto;
 	display:block;

@@ -2472,6 +2472,9 @@
 		CE39C9A40D36BFF700364557 /* CyberDuck.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CyberDuck.icns; sourceTree = "<group>"; };
 		CE39C9A70D36C7C300364557 /* Transmit.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Transmit.icns; sourceTree = "<group>"; };
 		CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_media.png; sourceTree = "<group>"; };
+		CE4447150F783D1A0090B704 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
+		CE4447160F783D2B0090B704 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
+		CE4447170F783D5F0090B704 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLInspectorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
 		CE44E01E0BD0047400479A8E /* HTMLEditor.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = HTMLEditor.nib; sourceTree = "<group>"; };
@@ -6021,7 +6024,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.5\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for BETA, we remove everything but en\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# our original list from 1.2\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/it\\.|/ja\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# our current list for 1.6\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/da\\.|/de\\.|/fr\\.|/zh_CN\\.|/zh_TW\\.' | xargs rm -rf\n\n# for BETA, we remove everything but en\n# find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */ = {
@@ -6650,6 +6653,9 @@
 				27E4CFE50EC30B6F000E85DD /* en */,
 				CE23262B0F6ACAF0001F7361 /* zh_CN */,
 				CE23262E0F6ACAF8001F7361 /* fr */,
+				CE4447150F783D1A0090B704 /* zh_TW */,
+				CE4447160F783D2B0090B704 /* da */,
+				CE4447170F783D5F0090B704 /* de */,
 			);
 			name = KSPluginInstaller.nib;
 			sourceTree = "<group>";

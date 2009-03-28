@@ -1177,11 +1177,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	{
 		// Looks like no text, but make sure there aren't other useful tags in there
 		NSString *outerHTML = [self outerHTML];
-		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed"].location;
-		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img"].location;
-		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object"].location;
-		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script"].location;
-		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe"].location;
+		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed" options:NSCaseInsensitiveSearch].location;
+		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img" options:NSCaseInsensitiveSearch].location;
+		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object" options:NSCaseInsensitiveSearch].location;
+		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script" options:NSCaseInsensitiveSearch].location;
+		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe" options:NSCaseInsensitiveSearch].location;
 		
 		result = hasEmbed || hasImage || hasObject || hasScript || hasIframe;
 	}

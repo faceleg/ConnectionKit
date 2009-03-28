@@ -246,7 +246,7 @@
 			<key>NSSubviews</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>75</integer>
+				<integer>61</integer>
 			</dict>
 			<key>NSvFlags</key>
 			<integer>2</integer>
@@ -469,7 +469,6 @@
 			<key>$classes</key>
 			<array>
 				<string>NSCustomResource</string>
-				<string>%NSCustomResource</string>
 				<string>NSObject</string>
 			</array>
 			<key>$classname</key>
@@ -657,7 +656,6 @@
 				<string>NSPopUpButtonCell</string>
 				<string>NSMenuItemCell</string>
 				<string>NSButtonCell</string>
-				<string>%NSButtonCell</string>
 				<string>NSActionCell</string>
 				<string>NSCell</string>
 				<string>NSObject</string>
@@ -796,22 +794,6 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>37</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>22</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>61</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>11</integer>
 				</dict>
 				<dict>
@@ -820,11 +802,27 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>44</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>22</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>37</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>62</integer>
 				</dict>
 			</array>
 		</dict>
@@ -832,19 +830,37 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>74</integer>
+				<integer>40</integer>
+			</dict>
+			<key>NS.objects</key>
+			<array>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>62</integer>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>75</integer>
 			</dict>
 			<key>NSCell</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>63</integer>
+				<integer>64</integer>
 			</dict>
 			<key>NSEnabled</key>
 			<true/>
 			<key>NSFrame</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>62</integer>
+				<integer>63</integer>
 			</dict>
 			<key>NSNextResponder</key>
 			<dict>
@@ -864,12 +880,12 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>73</integer>
+				<integer>74</integer>
 			</dict>
 			<key>NSBackgroundColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>65</integer>
+				<integer>66</integer>
 			</dict>
 			<key>NSCellFlags</key>
 			<integer>67239424</integer>
@@ -878,12 +894,12 @@
 			<key>NSContents</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>64</integer>
+				<integer>65</integer>
 			</dict>
 			<key>NSControlView</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>61</integer>
+				<integer>62</integer>
 			</dict>
 			<key>NSSupport</key>
 			<dict>
@@ -893,7 +909,7 @@
 			<key>NSTextColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>70</integer>
+				<integer>71</integer>
 			</dict>
 		</dict>
 		<string>HTML 類型：</string>
@@ -901,22 +917,22 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>69</integer>
+				<integer>70</integer>
 			</dict>
 			<key>NSCatalogName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>66</integer>
+				<integer>67</integer>
 			</dict>
 			<key>NSColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>68</integer>
+				<integer>69</integer>
 			</dict>
 			<key>NSColorName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>67</integer>
+				<integer>68</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>6</integer>
@@ -927,7 +943,7 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>69</integer>
+				<integer>70</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>3</integer>
@@ -949,22 +965,22 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>69</integer>
+				<integer>70</integer>
 			</dict>
 			<key>NSCatalogName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>66</integer>
+				<integer>67</integer>
 			</dict>
 			<key>NSColor</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>72</integer>
+				<integer>73</integer>
 			</dict>
 			<key>NSColorName</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>71</integer>
+				<integer>72</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>6</integer>
@@ -974,7 +990,7 @@
 			<key>$class</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>69</integer>
+				<integer>70</integer>
 			</dict>
 			<key>NSColorSpace</key>
 			<integer>3</integer>
@@ -998,7 +1014,6 @@
 			<key>$classes</key>
 			<array>
 				<string>NSTextField</string>
-				<string>%NSTextField</string>
 				<string>NSControl</string>
 				<string>NSView</string>
 				<string>NSResponder</string>
@@ -1006,24 +1021,6 @@
 			</array>
 			<key>$classname</key>
 			<string>NSTextField</string>
-		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>40</integer>
-			</dict>
-			<key>NS.objects</key>
-			<array>
-				<dict>
-					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>61</integer>
-				</dict>
-			</array>
 		</dict>
 		<string>{250, 35}</string>
 		<dict>
@@ -1066,11 +1063,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
+					<integer>2</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>22</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
 					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1078,23 +1083,15 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>22</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>22</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>11</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>22</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>22</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1112,23 +1109,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>10</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>37</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>22</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>61</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>10</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1140,7 +1125,19 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>22</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>37</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>62</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1191,14 +1188,14 @@
 			</array>
 		</dict>
 		<string>File's Owner</string>
-		<string>NSPopUpButton</string>
-		<string>NSMenuItem</string>
-		<string>PopUpList</string>
-		<string>NSTextField1</string>
 		<string>View</string>
+		<string>NSPopUpButton</string>
 		<string>NSMenuItem1</string>
 		<string>Element Controller</string>
+		<string>PopUpList</string>
+		<string>NSMenuItem</string>
 		<string>NSMenuItem2</string>
+		<string>NSTextField1</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1231,27 +1228,15 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>11</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>10</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>37</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>22</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>61</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>9</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>11</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1263,7 +1248,19 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>22</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>37</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>62</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1318,15 +1315,15 @@
 			</array>
 		</dict>
 		<integer>1</integer>
-		<integer>41</integer>
-		<integer>43</integer>
-		<integer>42</integer>
-		<integer>46</integer>
-		<integer>53</integer>
 		<integer>6</integer>
+		<integer>41</integer>
+		<integer>53</integer>
 		<integer>44</integer>
 		<integer>5</integer>
+		<integer>42</integer>
+		<integer>43</integer>
 		<integer>45</integer>
+		<integer>46</integer>
 		<dict>
 			<key>$class</key>
 			<dict>

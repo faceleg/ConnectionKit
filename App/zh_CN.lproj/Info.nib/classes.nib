@@ -7,6 +7,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = KSEdgeSnapWindow; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
         {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {CLASS = KSPathInfoField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
@@ -25,6 +26,7 @@
         {
             ACTIONS = {
                 chooseBannerImagePath = id; 
+                chooseCommentsProvider = id; 
                 chooseFaviconPath = id; 
                 chooseLogoImagePath = id; 
                 choosePageThumbnail = id; 
@@ -45,6 +47,7 @@
                 oBannerPathInfoField = KSPathInfoField; 
                 oCollectionStylePopup = NSPopUpButton; 
                 oCollectionView = NSView; 
+                oCommentsProviderPopup = NSPopUpButton; 
                 oCustomIndexView = NSView; 
                 oDividerView = NSView; 
                 oFaviconImageView = KTImageView; 
@@ -97,7 +100,13 @@
         }, 
         {CLASS = NSTextView; LANGUAGE = ObjC; SUPERCLASS = NSText; }, 
         {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
-        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
+        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {
+            ACTIONS = {hideWindow = id; }; 
+            CLASS = NSWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSResponder; 
+        }
     ); 
     IBVersion = 1; 
 }

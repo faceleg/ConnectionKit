@@ -14,6 +14,8 @@
                 openHigh = id; 
                 openLicensing = id; 
                 openLow = id; 
+                openScreencastLargeSize = id; 
+                openScreencastSmallSize = id; 
             }; 
             CLASS = KTPlaceholderController; 
             LANGUAGE = ObjC; 
@@ -36,7 +38,13 @@
             LANGUAGE = ObjC; 
         }, 
         {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
-        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }
+        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
+        {
+            ACTIONS = {hideWindow = id; }; 
+            CLASS = NSWindowController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSResponder; 
+        }
     ); 
     IBVersion = 1; 
 }

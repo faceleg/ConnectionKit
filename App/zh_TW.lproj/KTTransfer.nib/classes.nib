@@ -1,50 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>IBClasses</key>
-	<array>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>cancelTransfer</key>
-				<string>id</string>
-				<key>hideTransfer</key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>KTPublishingEngine</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>myConnection</key>
-				<string>id</string>
-				<key>oBadSiteURL</key>
-				<string>NSImageView</string>
-				<key>oExportPanelAccessoryView</key>
-				<string>NSView</string>
-				<key>oExportURL</key>
-				<string>NSTextField</string>
-			</dict>
-			<key>SUPERCLASS</key>
-			<string>NSWindowController</string>
-		</dict>
-		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key></key>
-				<string>id</string>
-			</dict>
-			<key>CLASS</key>
-			<string>FirstResponder</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSObject</string>
-		</dict>
-	</array>
-	<key>IBVersion</key>
-	<string>1</string>
-</dict>
-</plist>
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSViewController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                view = NSView;
+            };
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = KTExportSavePanelController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oSiteURLField = NSTextField;
+            };
+            SUPERCLASS = KSViewController;
+        },
+                {
+            CLASS = KTURLFormatter;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSFormatter;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        }
+    );
+    IBVersion = 1;
+}
