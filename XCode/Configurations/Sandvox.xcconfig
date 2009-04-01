@@ -7,10 +7,10 @@ SANDVOX_VERSION = 2.0d1
 
 // the SLA variant to wrap around the .dmg [BETA,RELEASE]
 // Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
-PRODUCT_VARIANT = BETA
+PRODUCT_VARIANT = RELEASE
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2009-01-30 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2009-06-15 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 

@@ -811,8 +811,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Load up the CSS from the design
     KTMaster *master = [[[self site] root] master];
     KTDesign *design = [master design];
-    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];            OBASSERT(mainCSSPath);
-    NSMutableString *mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];    OBASSERT(mainCSS);
+    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
+    
+    NSMutableString *mainCSS;
+    if (mainCSSPath)
+    {
+        mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];
+    }
+    else
+    {
+        mainCSS = [[NSMutableString alloc] init];
+    }
+    OBASSERT(mainCSS);
     
     
     
