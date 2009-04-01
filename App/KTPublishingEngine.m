@@ -510,11 +510,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	OBASSERT([NSThread isMainThread]);
 	
 	
-    // Bail early if the page is not for publishing
-	NSString *uploadPath = [page uploadPath];
-	if (!uploadPath) return;
-	
-	if ([page isKindOfClass:[KTPage class]])
+    if ([page isKindOfClass:[KTPage class]])
 	{
 		// This is currently a special case to make sure Download Page media is published
 		// We really ought to generalise this feature if any other plugins actually need it
@@ -532,7 +528,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
     
     
-    // Generate HTML data
+    
+    // Bail early if the page is not for publishing. This MUST come after testing if the page is a
+    // File Download, as they have no upload path, but still need to process media. Case 40515.
+	NSString *uploadPath = [page uploadPath];
+	if (!uploadPath) return;
+    
+    
+	
+	// Generate HTML data
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
 	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
