@@ -1,49 +1,82 @@
-{
-    IBClasses =     (
-                {
-            ACTIONS =             {
-                "" = id;
-            };
-            CLASS = FirstResponder;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            ACTIONS =             {
-                clear = id;
-            };
-            CLASS = IndexPageletDelegate;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oLinkView = KTLinkSourceView;
-            };
-            SUPERCLASS = KTAbstractPluginDelegate;
-        },
-                {
-            CLASS = KSLabel;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTextField;
-        },
-                {
-            CLASS = KTAbstractPluginDelegate;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                myDelegateOwner = id;
-            };
-            SUPERCLASS = NSObject;
-        },
-                {
-            CLASS = KTLinkSourceView;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                delegate = id;
-            };
-            SUPERCLASS = NSView;
-        },
-                {
-            CLASS = NSObject;
-            LANGUAGE = ObjC;
-        }
-    );
-    IBVersion = 1;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>KTLinkSourceView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>delegate</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KTAbstractPluginDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>myDelegateOwner</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>KSLabel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSTextField</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key></key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>clear</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>IndexPageletDelegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>oLinkView</key>
+				<string>KTLinkSourceView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>KTAbstractPluginDelegate</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

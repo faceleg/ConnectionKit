@@ -6,7 +6,7 @@
     <meta name="keywords" content="file, name, filename, names, filenames, title, titles, link, links, url, urls, address, addresses, page, pages, page's, 2, byte, bytes, 2byte, 2-byte, 2bytes, 2-bytes, character, characters, code, codes, coding, encode, encoding, long, charset, charsets,slug,slugs, SEO, search engine, google, listing" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>File Name</title>
+    <title>File Name and Extension</title>
     <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
     <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
 </head>
@@ -23,9 +23,9 @@
     </div>
 
     <div id="mainbox">
-        <h1 class="firstHeading">File Name</h1>
+        <h1 class="firstHeading">File Name and Extension</h1>
 
-        <p>The file name of a <a href="Page.html" title="Page">page</a> is the name of the HTML file produced when you <a href="Publishing_Your_Site.html" title="Publish">publish</a> the site. As is universally true for web pages and sites, file names are limited to allow the use of only the following characters:</p>
+        <p>The full name that a <a href="Page.html" title="Page">page</a>'s HTML is <a href="Publishing_Your_Site.html" title="Publish">published</a> under consists of the file name, with a file extension tacked on. As is universally true for web pages and sites, file names are limited to allow the use of only the following characters:</p>
 
         <ul>
             <li>ASCII letters (A-Z, a-z)</li>
@@ -35,15 +35,15 @@
             <li>underscores and hyphens</li>
         </ul>
 
-        <p>This is because many <a href="Host.html" title="Host">hosts</a> have issues with file names using characters other than these.</p><a name="Setting_File_Names" id="Setting_File_Names"></a>
+        <p>This is because many <a href="Host.html" title="Host">hosts</a> have issues with file names using characters other than these.</p><a name="File_Name" id="File_Name"></a>
 
-        <h2><span class="mw-headline">Setting File Names</span></h2>
+        <h2><span class="mw-headline">File Name</span></h2>
 
         <p>Sandvox automatically sets a <a href="Page.html" title="Page">page</a>'s file name from its <a href="Page_Title.html" title="Page Title">title</a>. The file name is the <a href="Page_Title.html" title="Page Title">page title</a> with any characters not in the list above removed and with spaces replaced by underlines. So for example, if you title a page <b>Is my site great?</b> Sandvox will provide <b>Is_my_site_great</b> as the file name.</p>
 
         <p>If the <a href="Page_Title.html" title="Page Title">page title</a> consists solely of characters not in the list (for example a title in Japanese), Sandvox sets the file name to be a random-looking, unique string of letters and numbers.</p>
 
-        <p>If you change the title of the page, the automatically generated file name will also update itself to match the page title. Once that page has been <a href="Publishing_Your_Site.html" title="Publish">published</a>, however, the name <i>no longer changes automatically</i>. This allows you to update a title without losing any links to that <a href="Publishing_Your_Site.html" title="Publish">published</a> page.</p>
+        <p>If you change the title of the page, the automatically generated file name will also update itself to match the page title. Once that page has been <a href="Publishing_Your_Site.html" title="Publish">published</a>, however, the name <i>no longer changes automatically</i>. This allows you to update a title without losing any links to that <a href="Publishing_Your_Site.html" title="Publish">published</a> page. (You may change the file name after publication, but keep in mind that there may be links to the old page with the old file name; this fill will still exist on your <a href="Host.html" title="Host">host</a>.)</p>
 
         <p>You can also set a <a href="Page.html" title="Page">page</a>'s file name manually yourself. There are several advantages for this:</p>
 
@@ -67,7 +67,19 @@
             </ol>
         </div>
 
-        <p>You cannot change the file name of a site's <a href="Home_Page.html" title="Home Page">Home Page</a>. If you could and did, web browsers would not be able to properly locate the <a href="Home_Page.html" title="Home Page">Home Page</a> when visiting the site.</p>
+        <p>You cannot change the file name of a site's <a href="Home_Page.html" title="Home Page">Home Page</a>. If you could and did, web browsers would not be able to properly locate the <a href="Home_Page.html" title="Home Page">Home Page</a> when visiting the site.</p><a name="File_Extensions" id="File_Extensions"></a>
+
+        <h2><span class="mw-headline">File Extensions</span></h2>
+
+        <p>Normally, all pages are <a href="Publishing_Your_Site.html" title="Publish">published</a> with a file extension of <b>html</b>. You might want to change this for:</p>
+
+        <ul>
+            <li>Compatibility with an unusual web server</li>
+
+            <li>Constructing a special page type like <a href="Using_PHP_with_Sandvox.html" title="PHP">PHP</a>.</li>
+        </ul>
+
+        <p>A page's file extension can be changed, like the file name, from the bottom of the <a href="Page_Details.html" title="Page Details">Page Details</a> area.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -83,7 +95,7 @@
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=File_Name.html">Let us know.</a>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=File_Name_and_Extension.html">Let us know.</a>
     </div>
 </body>
 </html>

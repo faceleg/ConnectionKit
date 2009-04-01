@@ -163,11 +163,17 @@ defaults delete com.karelia.Sandvox metaRobots
 
                 <dd><code>defaults write com.karelia.Sandvox LoadLocalFonts -bool <span class="prefValue">NO</span></code></dd>
 
-                <dd>This should be used when the loading of fonts stored in design bundles, used for <a href="Graphical_Text.html" title="Graphical Text">graphical text</a>, needs to be turned off. (In version 1.5 this is when you have major <a href="Diagnosing_Keychain_Problems.html" title="Diagnosing Keychain Problems">keychain issues</a> in Leopard.) If you wish to use fonts embedded in a design, and you have turned this option off, you can dig into the actual design packages inside the Sandvox application package. Control-click (or right-click) on the Sandvox application and choose "Show Package Contents," then open the "Contents" and then "Designs" folder. Choose the desired design and choose "Show Package Contents" on <i>that</i>. Any special font files will be in that folder. Just double-click a font file to launch Font Book to install it.</dd>
+                <dd>This should be used when the loading of fonts stored in design bundles, used for <a href="Graphical_Text.html" title="Graphical Text">graphical text</a>, needs to be turned off. (This is when you have major <a href="Diagnosing_Keychain_Problems.html" title="Diagnosing Keychain Problems">keychain issues</a> in Leopard.) If you wish to use fonts embedded in a design, and you have turned this option off, you can dig into the actual design packages inside the Sandvox application package. Control-click (or right-click) on the Sandvox application and choose "Show Package Contents," then open the "Contents" and then "Designs" folder. Choose the desired design and choose "Show Package Contents" on <i>that</i>. Any special font files will be in that folder. Just double-click a font file to launch Font Book to install it.</dd>
             </dl>
         </div><a name="Connections" id="Connections"></a>
 
         <h2><span class="mw-headline">Connections</span></h2>
+
+        <dl>
+            <dt>Display connection information when Sandvox is launched</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox LogHostInfoToConsole -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
 
         <dl>
             <dt>Connection timeout length</dt>
@@ -248,14 +254,6 @@ defaults delete com.karelia.Sandvox metaRobots
         </dl>
 
         <dl>
-            <dt>RSS Filename</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox RSSFileName "<span class="prefValue">index.xml</span>"</code></dd>
-
-            <dd>The filename of any RSS feeds that Sandvox generates.</dd>
-        </dl>
-
-        <dl>
             <dt>Generate enclosure links to original images in RSS feeds</dt>
 
             <dd><code>defaults write com.karelia.Sandvox RSSFeedEnclosuresAreOriginal -bool <span class="prefValue">YES</span></code></dd>
@@ -269,6 +267,36 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd><code>defaults write com.karelia.Sandvox allowCalloutsInIndex -bool <span class="prefValue">NO</span></code></dd>
 
             <dd>Normally callouts from a page are shown when that content is shown its enclosing index, such as in a weblog. If you do not wish to show callouts in this context, set this option to NO.</dd>
+        </dl><a name="Comments" id="Comments"></a>
+
+        <h2><span class="mw-headline">Comments</span></h2>
+
+        <p>To accommodate some of the many options available for <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a>, we have provided access using hidden preferences.</p>
+
+        <dl>
+            <dt>Whether lists comments in reverse chronological order</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitReverseOrder -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to hide avatars from comment postings</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitDisableAvatars -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to disable threading of comments</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitDisableThreading -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to ask JS-Kit to send a confirmation email to the moderator address chosen in the Site Inspector</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitConfirmModeratorViaEmail -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Requests a moderator confirmation email from <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a> after each successful publishing of a site. You typically only want to turn this on temporarily until any problems with moderation are resolved and then turn it off again.</dd>
         </dl><a name="Images" id="Images"></a>
 
         <h2><span class="mw-headline">Images</span></h2>
@@ -277,7 +305,9 @@ defaults delete com.karelia.Sandvox metaRobots
 
         <p>Normal image sharpening is accomplished from the <a href="Preferences.html" title="Preferences">Preferences</a> window. To adjust the amount of sharpening is done for Favicons, use the following command.</p>
 
-        <p><code>defaults write com.karelia.Sandvox KTFaviconSharpeningFactor <span class="prefValue">1.0</span></code></p>
+        <dl>
+            <dd><code>defaults write com.karelia.Sandvox KTFaviconSharpeningFactor <span class="prefValue">1.0</span></code></dd>
+        </dl>
 
         <p>You can set the initial value of image linking using the following:</p>
 
@@ -289,15 +319,15 @@ defaults delete com.karelia.Sandvox metaRobots
 
         <dl>
             <dt>Initially link an image to its original-sized version</dt>
-        </dl>
 
-        <p><code>defaults write com.karelia.Sandvox linkImageToOriginal -bool <span class="prefValue">YES</span></code></p>
+            <dd><code>defaults write com.karelia.Sandvox linkImageToOriginal -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
 
         <dl>
             <dt>Whether a dragged in image should be linked to externally (rather than being included in the document)</dt>
-        </dl>
 
-        <p><code>defaults write com.karelia.Sandvox preferExternalImage -bool <span class="prefValue">YES</span></code></p><a name="Application_Behavior" id="Application_Behavior"></a>
+            <dd><code>defaults write com.karelia.Sandvox preferExternalImage -bool <span class="prefValue">YES</span></code></dd>
+        </dl><a name="Application_Behavior" id="Application_Behavior"></a>
 
         <h2><span class="mw-headline">Application Behavior</span></h2>
 

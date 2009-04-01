@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTAppDelegate.h"
+#import "KTArchivePage.h"
 #import "KTDesignPlaceholder.h"
 #import "KTDocument.h"
 #import "KTSite.h"
@@ -503,6 +504,15 @@
 #pragma mark Language
 
 - (NSString *)language { return [self wrappedValueForKey:@"language"]; }
+
+- (void)setLanguage:(NSString *)language
+{
+    [self setWrappedValue:language forKey:@"language"];
+    
+    // Also update archive page titles to match
+    NSArray *archivePages = [KTArchivePage allPagesInManagedObjectContext:[self managedObjectContext]];
+    [archivePages makeObjectsPerformSelector:@selector(updateTitle)];
+}
 
 #pragma mark -
 #pragma mark CSS

@@ -25,33 +25,19 @@
     <div id="mainbox">
         <h1 class="firstHeading">Moving a Sandvox document to another computer</h1>
 
-        <p>Moving a site for editing to another computer requires careful attention. Because a Sandvox <a href="Document.html" title="Document">document</a> is actually a package of files, how you copy it depends on whether that package includes copies of media files you have inserted or not.</p>
+        <p>Moving a site for editing to another computer requires careful attention. Because a Sandvox <a href="Document.html" title="Document">document</a> is actually a package of files, how you copy it depends on whether that package includes merely aliases to, or full copies of, all media files you have included in that <a href="Document.html" title="Document">document</a>. (See the “<a href="Media.html" title="Media">Media</a>” article for full details about these <a href="Document.html" title="Document">document</a> settings.)</p><a name="Discussion" id="Discussion"></a>
 
-        <p>What you need to do depends on how the "<i>keep media originals with document</i>" setting (see the "<a href="Media.html" title="Media">Media</a>" article for details) was set for the site when you <b>first</b> began working on it. (Please note: Changing this setting after the site has been created will not effectively change the way the site needs to be copied in order to move it. Use the method below that suits the way the setting was originally selected.)</p>
+        <h2><span class="mw-headline">Discussion</span></h2>
 
-        <div class="bordimg">
-            <div class="center">
-                <div class="floatnone">
-                    <span><img alt="" src="img/8/87/InspectorKeepMediaOriginals.jp2" width="200" height="48" /></span>
-                </div>
-            </div>
-        </div>
+        <p>If the media preferences of your document are set to “Automatic” or “Reference all files”, this means that Sandvox uses “aliases” for common locations when it brings in media. For example, if you bring in a photo from your iPhoto collection, Sandvox recognizes that it’s from iPhoto and just stores an alias to that photo, rather than copying the photo into the document.</p>
 
-        <dl>
-            <dt>Copy all files</dt>
+        <p>So, if you were to then move that document to another computer, the alias would only work if you have the exact same set up on that other computer, meaning, your account, or home folder, had the same name, and you had iPhoto set up on that computer and that computer’s iPhoto had the same photo in it, named exactly the same thing. If everything is not an exact match, Sandvox will show a&nbsp;? in place of the photo on the other machine when you open the document.</p>
 
-            <dd>If you've been using "Copy all files," moving your site is easy. Simply copy the document to the new computer; everything should remain intact.</dd>
+        <p>Using aliases for media is a convenience and results in smaller document sizes, since Sandvox doesn't need to maintain its own copy.</p>
 
-            <dt>Automatic</dt>
+        <p>However, if want to move your Sandvox .svxSite document(s) between machines, DO NOT use Automatic. The chances of you having everything set up as an exact match on the other machine are probably pretty small.</p>
 
-            <dd>The name of your Home Folder <b>must</b> be the same on both machines. Copy the document and any <a href="Media.html" title="Media">media</a> files used from the Pictures, Movies and Music folders to the new computer.</dd>
-
-            <dt>Reference all files</dt>
-
-            <dd>The name of your Home Folder <b>must</b> be the same on both machines. Copy the document and all <a href="Media.html" title="Media">media</a> files used to the new computer.</dd>
-        </dl>
-
-        <p>Of course once you have finished the move, it is a good idea to check through the site on the new computer to make sure no <a href="Media.html" title="Media">media</a> files are missing.</p>
+        <p>Instead, use “Copy all files.” Just open your document and use the <a href="Site_Inspector.html" title="Site Inspector">Site Inspector</a> → <a href="Media.html" title="Media">Media</a> to change that pop-up to Copy all files. This will make Sandvox copy all media into the document during the next save. You can then take the document to another machine and not worry about references to other files.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>

@@ -250,10 +250,10 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[[oGoogleAnalyticsExplanationTextView enclosingScrollView] setDrawsBackground:NO];
 	[[[oGoogleAnalyticsExplanationTextView enclosingScrollView] contentView] setCopiesOnScroll:NO];
 	
-	
 	// Force initial layout of tab view
 	BOOL preventWindowAnimation = [self preventWindowAnimation];
 	[self setPreventWindowAnimation:YES];
+	[oSiteTabView selectTabViewItemWithIdentifier:@"properties"];
 	[self tabView:oSiteTabView didSelectTabViewItem:[oSiteTabView selectedTabViewItem]];
 	[self setPreventWindowAnimation:preventWindowAnimation];
 

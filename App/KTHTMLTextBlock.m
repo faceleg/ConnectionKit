@@ -557,6 +557,9 @@
 	if ([self isFieldEditor])
 	{
 		// Let's try this .. we seem to get just a <br /> inside a node when the text is removed.  Let me try just removing that.
+		
+		// Here is really where we might want to remove any <p> paragraphs and separate multiple paragraphs by <br /> .... this would be to 'repair' old sites where we had paragraphs in the footer
+		
 		DOMNodeList *list = [[self DOMNode] childNodes];
 		if ([list length] == 1)
 		{
