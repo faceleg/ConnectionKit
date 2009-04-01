@@ -110,9 +110,10 @@
                 NSURL *siteURL = [[[self site] hostProperties] siteURL];
                 
                 NSString *pingURLString = [[NSString alloc] initWithFormat:
-                                           @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@",
+                                           @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@&confirmviaemail=%@",
                                            [[master JSKitModeratorEmail] URLQueryEncodedString:YES],
-                                           [[siteURL absoluteString] URLQueryEncodedString:YES]];
+                                           [[siteURL absoluteString] URLQueryEncodedString:YES],
+										   ([[NSUserDefaults standardUserDefaults] boolForKey:@"JSKitConfirmModeratorViaEmail"] ? @"YES" : @"NO")];
                 
                 NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
                 [pingURLString release];

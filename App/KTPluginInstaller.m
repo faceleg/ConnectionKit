@@ -76,7 +76,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 	NSEnumerator *enumerator = [myURLs objectEnumerator];
 	NSURL *url;
 	NSMutableArray *errorURLs   = [NSMutableArray array];		// queue up BAD copies
-	NSMutableArray *successURLs = [NSMutableArray array];		// queue up GOOD copies
+	NSMutableArray *successURLs = [NSMutableArray array];		// queue up GOOD copies.  URLs of *destination* now.
 
 	while ((url = [enumerator nextObject]) != nil)
 	{
@@ -112,7 +112,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			BOOL copiedOrMoved = shouldMove ? [fm movePath:sourcePath toPath:destPath handler:nil] : [fm copyPath:sourcePath toPath:destPath handler:nil];
 			if (copiedOrMoved)
 			{
-				[successURLs addObject:url];
+				[successURLs addObject:[NSURL fileURLWithPath:destPath]];
 			}
 			else
 			{
