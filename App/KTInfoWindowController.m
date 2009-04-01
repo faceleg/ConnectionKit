@@ -131,17 +131,27 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		}
 	}
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(mainWindowChanged:)
+											 selector:@selector(windowDidBecomeValidForInspection:)
 												 name:NSWindowDidBecomeMainNotification
 											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(windowDidBecomeValidForInspection:)
+												 name:NSWindowDidEndSheetNotification
+											   object:nil];
+    
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateSelectedItemForInspector:)
 												 name:kKTItemSelectedNotification
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(anyWindowWillClose:)
+											 selector:@selector(windowWillBecomeInvalidForInspection:)
 												 name:NSWindowWillCloseNotification
+											   object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(windowWillBecomeInvalidForInspection:)
+												 name:NSWindowWillBeginSheetNotification
 											   object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -347,9 +357,11 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[super dealloc];
 }
 
-- (void)clearAll		// see also anyWindowWillClose, dealloc
+/*  Support method semi-hacked into place for 1.6.1+
+ */
+- (void)clearAllButKeepWindowOpen
 {
-	[self clearObjectControllers];
+    [self clearObjectControllers];
     [self setAssociatedDocument:nil];
     [self setSelectedPagelet:nil];
     [self setSelectedLevel:nil];
@@ -357,13 +369,20 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
     [self setPageInspectorView:nil];
 	[self setCurrentSelection:nil];
 	[self setupViewStackFor:nil selectLevel:NO];
-	
+}
+
+- (void)clearAll		// see also anyWindowWillClose, dealloc
+{
+	[self clearAllButKeepWindowOpen];
 	[[self window] orderOut:nil];
 }
 
 #pragma mark notifications
 
-- (void)mainWindowChanged:(NSNotification *)notification
+/*  Called when a window starts being suitable for inspection. Generally because it has become the
+ *  main window, but possibly also because the sheet covering it was closed.
+ */
+- (void)windowDidBecomeValidForInspection:(NSNotification *)notification
 {
 	id object = [notification object];
 	if ([object isKindOfClass:[KTDocWindow class]])
@@ -381,18 +400,15 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	[oStackView reloadSubviews];
 }
 
-- (void)anyWindowWillClose:(NSNotification *)aNotification
+/*  Called when a window stops being suitable for inspection. Generally because it is about to close,
+ *  but also if a sheet is being presented
+ */
+- (void)windowWillBecomeInvalidForInspection:(NSNotification *)aNotification
 {
-	if ([[aNotification object] isKindOfClass:[KTDocWindow class]])
+	NSWindow *window = [aNotification object];
+    if ([window isKindOfClass:[KTDocWindow class]])
 	{
-		[self clearObjectControllers];				/// these are pretty much from clearAll
-		[self setAssociatedDocument:nil];
-		[self setSelectedPagelet:nil];
-		[self setSelectedLevel:nil];
-		[self setSelectionInspectorView:nil];
-		[self setPageInspectorView:nil];
-		[self setCurrentSelection:nil];
-		[self setupViewStackFor:nil selectLevel:NO];
+		[self clearAllButKeepWindowOpen];
 	}
 }
 
@@ -400,7 +416,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 {
     NSWindowController *controller = [mainWindow windowController];
 	KTDocument *document = (KTDocument *)[controller document];
-	if ( document != myAssociatedDocument )
+	if ( document != [self associatedDocument] )
 	{
 		[self setAssociatedDocument:document];
 		[self setupViewStackFor:[[[document windowController] siteOutlineController] selectedPage] selectLevel:NO];
@@ -426,7 +442,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (void)objectsDidChange:(NSNotification *)aNotification
 {
 	NSManagedObjectContext *context = [aNotification object];
-	if ( (nil != context) && [context isEqual:[myAssociatedDocument managedObjectContext]] )
+	if ( (nil != context) && [context isEqual:[[self associatedDocument] managedObjectContext]] )
 	{
 		NSSet *deletedObjects = [[aNotification userInfo] valueForKey:NSDeletedObjectsKey];
 		if ( nil != deletedObjects )
@@ -553,11 +569,11 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	
 	[self window];	// make sure window is loaded
 
-	if (!myAssociatedDocument) return;
+	if (![self associatedDocument]) return;
 	
 	
 	
-	[self setSelectedLevel:[[myAssociatedDocument documentInfo] root]];
+	[self setSelectedLevel:[[[self associatedDocument] documentInfo] root]];
 	
 	// Manually synchronize the language popup and field
 	NSString *languageCode = [[[self selectedLevel] master] valueForKey:@"language"];
@@ -619,7 +635,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 				[self updateCollectionStylePopup];
 			}
 			// load the appropriate inspector view
-			NSView *inspectorView = [[[myAssociatedDocument windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
+			NSView *inspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -676,7 +692,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 						
 //			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
-			NSView *pageletInspectorView = [[[myAssociatedDocument windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
+			NSView *pageletInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -695,7 +711,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 		{
-			NSView *pluginInspectorView = [[[myAssociatedDocument windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
+			NSView *pluginInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			[self setSelectionInspectorView:pluginInspectorView];
 
 			[oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_PAGE];
@@ -1201,9 +1217,9 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		result = [myCurrentSelection managedObjectContext];
 	}
 	
-	if ( (nil == result) && (nil != myAssociatedDocument) )
+	if ( (nil == result) && [self associatedDocument] )
 	{
-		result = [myAssociatedDocument managedObjectContext];
+		result = [[self associatedDocument] managedObjectContext];
 	}
 	
 	if ( nil == result )
