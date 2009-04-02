@@ -823,7 +823,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (mainCSSPath)
     {
         NSError *error;
-        mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath options:0 error:&error];
+        mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error];
         if (!mainCSS)
         {
             NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [error debugDescription]);
