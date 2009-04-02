@@ -815,7 +815,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Load up the CSS from the design
-    KTMaster *master = [[[self site] root] master];
+    KTMaster *master = [[[self site] root] master];     OBASSERT(master);
     KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
     NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
     
@@ -829,6 +829,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [error debugDescription]);
         }
     }
+    else
+    {
+        NSLog(@"main.css file could not be located in design: %@", [[design bundle] bundlePath]);
+    }
+    
     if (!mainCSS) mainCSS = [[NSMutableString alloc] init];
     
     
