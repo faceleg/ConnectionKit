@@ -15,6 +15,8 @@
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSScanner+Karelia.h"
+#import "NSURL+Karelia.h"
+
 #import "Debug.h"
 
 
@@ -393,13 +395,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
 								{
-									toAppend = [toAppend URLQueryEncodedString:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
 									toAppend = [toAppend stringByEscapingHTMLEntities];
 								}
 								else	// HTML escape first
 								{
 									toAppend = [toAppend stringByEscapingHTMLEntities];
-									toAppend = [toAppend URLQueryEncodedString:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
 								}
 								
 							}
@@ -407,7 +409,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (NSNotFound != urlEncodeLocation)
 								{
-									toAppend = [toAppend URLQueryEncodedString:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
 								}
 								if (NSNotFound != htmlEscapeLocation)
 								{

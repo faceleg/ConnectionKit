@@ -231,7 +231,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// Parse the code to get the finished HTML
 	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[[[self delegateOwner] valueForKey:@"username"] URLQueryEncodedString:YES]
+						    withString:[[[self delegateOwner] valueForKey:@"username"] stringByAddingPercentEscapesForURLQuery:YES]
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
@@ -248,7 +248,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 		}
 		
 		[result replaceOccurrencesOfString:@"#ONLINE#" 
-							  withString:[onlineImagePath URLQueryEncodedString:YES]
+							  withString:[onlineImagePath stringByAddingPercentEscapesForURLQuery:YES]
 								 options:NSLiteralSearch 
 								   range:NSMakeRange(0,[result length])];
 	}

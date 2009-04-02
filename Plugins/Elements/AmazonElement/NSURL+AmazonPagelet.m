@@ -81,7 +81,7 @@
 	// If we still have nothing try decoding the URL
 	if (!result)
 	{
-		NSString *query = [[self query] URLQueryDecodedString];
+		NSString *query = [[self query] stringByReplacingPercentEscapesForURLQuery];
 		pathComponents = [query pathComponents];
 		
 		result = [pathComponents searchPathComponentsForASIN];

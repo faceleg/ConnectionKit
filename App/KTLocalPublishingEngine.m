@@ -91,7 +91,7 @@
             
             NSString *pingURLString = [[NSString alloc] initWithFormat:
                                        @"http://www.google.com/webmasters/tools/ping?sitemap=%@",
-                                       [[sitemapURL absoluteString] URLQueryEncodedString:YES]];
+                                       [[sitemapURL absoluteString] stringByAddingPercentEscapesForURLQuery:YES]];
             
             NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
             [pingURLString release];
@@ -111,8 +111,8 @@
                 
                 NSString *pingURLString = [[NSString alloc] initWithFormat:
                                            @"http://js-kit.com/api/isv/site-bind?email=%@&site=%@&confirmviaemail=%@",
-                                           [[master JSKitModeratorEmail] URLQueryEncodedString:YES],
-                                           [[siteURL absoluteString] URLQueryEncodedString:YES],
+                                           [[master JSKitModeratorEmail] stringByAddingPercentEscapesForURLQuery:YES],
+                                           [[siteURL absoluteString] stringByAddingPercentEscapesForURLQuery:YES],
 										   ([[NSUserDefaults standardUserDefaults] boolForKey:@"JSKitConfirmModeratorViaEmail"] ? @"YES" : @"NO")];
                 
                 NSURL *pingURL = [[NSURL alloc] initWithString:pingURLString];
