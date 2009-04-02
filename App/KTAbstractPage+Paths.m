@@ -442,7 +442,10 @@
 	else
 	{
 		OBASSERT([self fileExtension]);
-		result = [result stringByAppendingPathExtension:[self fileExtension]];
+        if (![result isEqualToString:@""])  // appending to an empty string logs a warning. case 40704
+        {
+            result = [result stringByAppendingPathExtension:[self fileExtension]];
+        }
 	}
 	
 	return result;
