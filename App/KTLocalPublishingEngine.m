@@ -183,7 +183,7 @@
         [self status] < KTPublishingEngineStatusFinished &&
         [transferRecord root] == [self rootTransferRecord])
     {
-        if ([object isKindOfClass:[KTPage class]])
+        if ([object isKindOfClass:[KTAbstractPage class]])
         {
             // Record the digest and path of the page published
             [object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
