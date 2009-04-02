@@ -325,6 +325,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)connection:(id <CKConnection>)con didDisconnectFromHost:(NSString *)host;
 {
+    if (![self connection]) return; // we've already finished in which case
+    
     OBPRECONDITION(con == [self connection]);
     OBPRECONDITION(con);
     
