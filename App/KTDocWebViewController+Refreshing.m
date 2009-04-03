@@ -26,7 +26,7 @@
 #import "KTHTMLTextBlock.h"
 #import "WebViewEditingHelperClasses.h"
 
-#import "NSMutableDictionary+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
 

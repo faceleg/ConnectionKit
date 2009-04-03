@@ -244,7 +244,11 @@
 			if (fileType)
             {
                 // Look for an existing upload
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == %@", scalingProps];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                          @"scalingProperties == %@ AND pathRelativeToSite != %@",
+                                          scalingProps,
+                                          [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]];
+                
                 result = [self _anyUploadMatchingPredicate:predicate];
                 
                 
@@ -261,15 +265,19 @@
                         sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
                     }
                     
-                    NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
-                    NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[NSString filenameExtensionForUTI:fileType]];
-                    
-                    NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
-                    NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
-                    
-                    NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
-                    result = [self insertUploadToPath:uploadPath];
-                    [result setScalingProperties:scalingProps];
+                    // Case 40782. A nil sourceFilename gives a path of "_Media" wreaking havoc when publishing
+                    if (sourceFilename || [sourceFilename isEqualToString:@""]) 
+                    { 
+                        NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
+                        NSString *preferredFilename = [preferredFileName stringByAppendingPathExtension:[NSString filenameExtensionForUTI:fileType]];
+                        
+                        NSString *mediaDirectoryPath = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"];
+                        NSString *preferredUploadPath = [mediaDirectoryPath stringByAppendingPathComponent:preferredFilename];
+                        
+                        NSString *uploadPath = [self uniqueUploadPath:preferredUploadPath];
+                        result = [self insertUploadToPath:uploadPath];
+                        [result setScalingProperties:scalingProps];
+                    }
                 }
             }
         }

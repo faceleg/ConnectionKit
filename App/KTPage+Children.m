@@ -11,8 +11,8 @@
 
 #import "KTSite.h"
 
+#import "NSArray+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableArray+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 

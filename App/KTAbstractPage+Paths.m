@@ -22,7 +22,7 @@
 #import "KTMaster.h"
 
 #import "NSManagedObject+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
+#import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
@@ -442,7 +442,10 @@
 	else
 	{
 		OBASSERT([self fileExtension]);
-		result = [result stringByAppendingPathExtension:[self fileExtension]];
+        if (![result isEqualToString:@""])  // appending to an empty string logs a warning. case 40704
+        {
+            result = [result stringByAppendingPathExtension:[self fileExtension]];
+        }
 	}
 	
 	return result;

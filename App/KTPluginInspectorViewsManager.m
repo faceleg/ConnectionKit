@@ -8,8 +8,8 @@
 
 #import "KTPluginInspectorViewsManager.h"
 
+#import "NSDictionary+Karelia.h"
 #import "NSException+Karelia.h"
-#import "NSMutableDictionary+Karelia.h"
 #import "NSObject+Karelia.h"
 
 

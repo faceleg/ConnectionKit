@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C4A185B0D5F9BFB009476BF /* DiggPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* DiggPageletDelegate.m */; };
 		3C4A185F0D5F9C07009476BF /* digg.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185C0D5F9C07009476BF /* digg.icns */; };
-		3C4A18600D5F9C07009476BF /* digg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185D0D5F9C07009476BF /* digg.png */; };
+		3C4A18600D5F9C07009476BF /* digglogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185D0D5F9C07009476BF /* digglogo.png */; };
 		3C4A18610D5F9C07009476BF /* DiggPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185E0D5F9C07009476BF /* DiggPageletTemplate.html */; };
 		3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A187D0D5F9E25009476BF /* Localizable.strings */; };
 		3C4A188B0D5F9EAC009476BF /* DiggPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18890D5F9EAC009476BF /* DiggPagelet.nib */; };
@@ -26,7 +26,7 @@
 		3C4A18590D5F9BFB009476BF /* DiggPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggPageletDelegate.h; sourceTree = "<group>"; };
 		3C4A185A0D5F9BFB009476BF /* DiggPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggPageletDelegate.m; sourceTree = "<group>"; };
 		3C4A185C0D5F9C07009476BF /* digg.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = digg.icns; sourceTree = "<group>"; };
-		3C4A185D0D5F9C07009476BF /* digg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = digg.png; sourceTree = "<group>"; };
+		3C4A185D0D5F9C07009476BF /* digglogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = digglogo.png; sourceTree = "<group>"; };
 		3C4A185E0D5F9C07009476BF /* DiggPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DiggPageletTemplate.html; sourceTree = "<group>"; };
 		3C4A18620D5F9D67009476BF /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C4A18630D5F9D67009476BF /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -99,7 +99,7 @@
 			children = (
 				3C4A18890D5F9EAC009476BF /* DiggPagelet.nib */,
 				3C4A185C0D5F9C07009476BF /* digg.icns */,
-				3C4A185D0D5F9C07009476BF /* digg.png */,
+				3C4A185D0D5F9C07009476BF /* digglogo.png */,
 				3C4A185E0D5F9C07009476BF /* DiggPageletTemplate.html */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -221,7 +221,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C4A185F0D5F9C07009476BF /* digg.icns in Resources */,
-				3C4A18600D5F9C07009476BF /* digg.png in Resources */,
+				3C4A18600D5F9C07009476BF /* digglogo.png in Resources */,
 				3C4A18610D5F9C07009476BF /* DiggPageletTemplate.html in Resources */,
 				3C4A187F0D5F9E25009476BF /* Localizable.strings in Resources */,
 				3C4A188B0D5F9EAC009476BF /* DiggPagelet.nib in Resources */,

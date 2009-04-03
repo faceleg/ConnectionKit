@@ -17,11 +17,11 @@
 #import "KTDocument.h"
 
 #import "NSArray+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableDictionary+Karelia.h"
 
 #import "KSThreadProxy.h"
 

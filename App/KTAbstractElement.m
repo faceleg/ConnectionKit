@@ -25,7 +25,6 @@
 #import "NSImage+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
 #import "NSObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"

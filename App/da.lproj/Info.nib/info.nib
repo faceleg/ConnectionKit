@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>69 10 356 240 0 0 1680 1028 </string>
+	<string>302 29 356 240 0 0 1920 1178 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>1225</key>
@@ -23,7 +23,7 @@
 		<key>169</key>
 		<string>707 727 270 58 0 0 1680 1028 </string>
 		<key>258</key>
-		<string>707 443 270 437 0 0 1680 1028 </string>
+		<string>848 555 270 437 0 0 1920 1178 </string>
 		<key>356</key>
 		<string>707 724 270 62 0 0 1680 1028 </string>
 		<key>821</key>
@@ -39,6 +39,10 @@
 	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>258</integer>
+	</array>
 	<key>IBSystem Version</key>
 	<string>9G55</string>
 	<key>targetFramework</key>
