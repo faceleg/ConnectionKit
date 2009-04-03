@@ -14,7 +14,7 @@
 
 #import "NSTextView+KTExtensions.h"
 
-#import "NSArray+Karelia.h"
+#import "NSColor+Karelia.h"
 #import "NSScanner+Karelia.h"
 
 @interface NSTextView ( Private )
@@ -100,10 +100,10 @@ multi-line comment etc. or it'll lose color.
 			NSString*   vComponentType = [vCurrComponent objectForKey: @"Type"];
 			NSString*   vComponentName = [vCurrComponent objectForKey: @"Name"];
 			NSString*   vColorKeyName = [@"SyntaxColoring:Color:" stringByAppendingString: vComponentName];
-			NSColor*	vColor = [[vPrefs arrayForKey: vColorKeyName] colorValue];
+			NSColor*	vColor = [NSColor colorWithArray:[vPrefs arrayForKey:vColorKeyName]];
 			
 			if( !vColor )
-				vColor = [[vCurrComponent objectForKey: @"Color"] colorValue];
+				vColor = [NSColor colorWithArray:[vCurrComponent objectForKey: @"Color"]];
 			
 			if( [vComponentType isEqualToString: @"BlockComment"] )
 			{
