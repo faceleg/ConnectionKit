@@ -26,8 +26,8 @@
 #import "NSString+KTExtensions.h"
 
 #import "NSData+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
-#import "NSMutableDictionary+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
