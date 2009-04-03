@@ -479,25 +479,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         [self uploadMainCSSIfNeeded];
         
         
-        // Upload resources
-        [self uploadResourceFiles];
-        
-        
-        // Upload sitemap if the site has one
-        [self uploadGoogleSiteMapIfNeeded];
-        
-        
-        // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
-        if ([_pendingMediaUploads count] == 0)
+        // Upload resources. KTLocalPublishingEngine & subclasses use this point to bail out if
+        // there are no changes to publish
+        if ([self uploadResourceFiles])
         {
-            _status = KTPublishingEngineStatusUploading;
-            [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+            // Upload sitemap if the site has one
+            [self uploadGoogleSiteMapIfNeeded];
             
-            [[self connection] disconnect]; // Once everything is uploaded, disconnect
-        }
-        else
-        {
-            _status = KTPublishingEngineStatusLoadingMedia;
+            
+            // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
+            if ([_pendingMediaUploads count] == 0)
+            {
+                _status = KTPublishingEngineStatusUploading;
+                [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+                
+                [[self connection] disconnect]; // Once everything is uploaded, disconnect
+            }
+            else
+            {
+                _status = KTPublishingEngineStatusLoadingMedia;
+            }
         }
     }
     @catch (NSException *exception)
@@ -937,9 +938,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 }
 
 /*  Takes all the queued up resource files and uploads them. KTRemotePublishingEngine uses this as
- *  the cut-in point for if there are no changes to publish.
+ *  the cut-in point for if there are no changes to publish. Return NO to signify publishing should
+ *  not continue.
  */
-- (void)uploadResourceFiles
+- (BOOL)uploadResourceFiles
 {
     NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
     NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
@@ -952,6 +954,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         [self uploadContentsOfURL:aResource toPath:resourceRemotePath];
     }
+    
+    return YES;
 }
 
 #pragma mark -

@@ -130,7 +130,7 @@ typedef enum {
 
 // Resources
 - (NSSet *)resourceFiles;
-- (void)uploadResourceFiles;
+- (BOOL)uploadResourceFiles;
 
 @end
 

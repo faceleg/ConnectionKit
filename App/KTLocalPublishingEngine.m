@@ -257,7 +257,7 @@
 /*  This method gets called once all pages, media and designs have been processed. If there's nothing
  *  queued to be uploaded at this point, we want to cancel and tell the user
  */
-- (void)uploadResourceFiles
+- (BOOL)uploadResourceFiles
 {
     if ([self onlyPublishChanges] && [[[self baseTransferRecord] contents] count] == 0)
     {
@@ -266,10 +266,11 @@
 											 code:KTPublishingEngineNothingToPublish
 										 userInfo:nil];
         [self engineDidPublish:NO error:error];
+        return NO;
     }
     else
     {
-        [super uploadResourceFiles];
+        return [super uploadResourceFiles];
     }
 }
 
