@@ -25,7 +25,7 @@
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSSet+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
+#import "NSSet+Karelia.h"
 
 #import "Debug.h"
 

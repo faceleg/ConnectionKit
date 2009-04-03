@@ -25,7 +25,7 @@
 #import "NSScanner+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
+#import "NSSet+Karelia.h"
 
 
 @interface KTMediaContainer (Private)

@@ -776,8 +776,8 @@
 		CE01A7E70EAFD63600BDF264 /* NSIndexSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6E30EAFD63600BDF264 /* NSIndexSet+Karelia.m */; };
 		CE01A7E80EAFD63600BDF264 /* NSInvocation+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6E40EAFD63600BDF264 /* NSInvocation+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7E90EAFD63600BDF264 /* NSInvocation+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6E50EAFD63600BDF264 /* NSInvocation+Karelia.m */; };
-		CE01A7EE0EAFD63600BDF264 /* NSMutableSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6EA0EAFD63600BDF264 /* NSMutableSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE01A7EF0EAFD63600BDF264 /* NSMutableSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6EB0EAFD63600BDF264 /* NSMutableSet+Karelia.m */; };
+		CE01A7EE0EAFD63600BDF264 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6EA0EAFD63600BDF264 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7EF0EAFD63600BDF264 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6EB0EAFD63600BDF264 /* NSSet+Karelia.m */; };
 		CE01A7F00EAFD63600BDF264 /* NSObject+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6EC0EAFD63600BDF264 /* NSObject+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7F10EAFD63600BDF264 /* NSObject+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6ED0EAFD63600BDF264 /* NSObject+Karelia.m */; };
 		CE01A7F20EAFD63600BDF264 /* NSScanner+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6EE0EAFD63600BDF264 /* NSScanner+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2320,8 +2320,8 @@
 		CE01A6E30EAFD63600BDF264 /* NSIndexSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6E40EAFD63600BDF264 /* NSInvocation+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6E50EAFD63600BDF264 /* NSInvocation+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Karelia.m"; sourceTree = "<group>"; };
-		CE01A6EA0EAFD63600BDF264 /* NSMutableSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableSet+Karelia.h"; sourceTree = "<group>"; };
-		CE01A6EB0EAFD63600BDF264 /* NSMutableSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableSet+Karelia.m"; sourceTree = "<group>"; };
+		CE01A6EA0EAFD63600BDF264 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+Karelia.h"; sourceTree = "<group>"; };
+		CE01A6EB0EAFD63600BDF264 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6EC0EAFD63600BDF264 /* NSObject+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6ED0EAFD63600BDF264 /* NSObject+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6EE0EAFD63600BDF264 /* NSScanner+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Karelia.h"; sourceTree = "<group>"; };
@@ -4417,8 +4417,8 @@
 				CE01A6E30EAFD63600BDF264 /* NSIndexSet+Karelia.m */,
 				CE01A6E40EAFD63600BDF264 /* NSInvocation+Karelia.h */,
 				CE01A6E50EAFD63600BDF264 /* NSInvocation+Karelia.m */,
-				CE01A6EA0EAFD63600BDF264 /* NSMutableSet+Karelia.h */,
-				CE01A6EB0EAFD63600BDF264 /* NSMutableSet+Karelia.m */,
+				CE01A6EA0EAFD63600BDF264 /* NSSet+Karelia.h */,
+				CE01A6EB0EAFD63600BDF264 /* NSSet+Karelia.m */,
 				CE01A6EC0EAFD63600BDF264 /* NSObject+Karelia.h */,
 				CE01A6ED0EAFD63600BDF264 /* NSObject+Karelia.m */,
 				CE01A6EE0EAFD63600BDF264 /* NSScanner+Karelia.h */,
@@ -4890,7 +4890,7 @@
 				CE01A7E40EAFD63600BDF264 /* NSIndexPath+Karelia.h in Headers */,
 				CE01A7E60EAFD63600BDF264 /* NSIndexSet+Karelia.h in Headers */,
 				CE01A7E80EAFD63600BDF264 /* NSInvocation+Karelia.h in Headers */,
-				CE01A7EE0EAFD63600BDF264 /* NSMutableSet+Karelia.h in Headers */,
+				CE01A7EE0EAFD63600BDF264 /* NSSet+Karelia.h in Headers */,
 				CE01A7F00EAFD63600BDF264 /* NSObject+Karelia.h in Headers */,
 				CE01A7F20EAFD63600BDF264 /* NSScanner+Karelia.h in Headers */,
 				CE01A7F40EAFD63600BDF264 /* NSString+Karelia.h in Headers */,
@@ -6264,7 +6264,7 @@
 				CE01A7E50EAFD63600BDF264 /* NSIndexPath+Karelia.m in Sources */,
 				CE01A7E70EAFD63600BDF264 /* NSIndexSet+Karelia.m in Sources */,
 				CE01A7E90EAFD63600BDF264 /* NSInvocation+Karelia.m in Sources */,
-				CE01A7EF0EAFD63600BDF264 /* NSMutableSet+Karelia.m in Sources */,
+				CE01A7EF0EAFD63600BDF264 /* NSSet+Karelia.m in Sources */,
 				CE01A7F10EAFD63600BDF264 /* NSObject+Karelia.m in Sources */,
 				CE01A7F30EAFD63600BDF264 /* NSScanner+Karelia.m in Sources */,
 				CE01A7F50EAFD63600BDF264 /* NSString+Karelia.m in Sources */,

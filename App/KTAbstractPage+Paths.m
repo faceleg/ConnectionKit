@@ -22,7 +22,7 @@
 #import "KTMaster.h"
 
 #import "NSManagedObject+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
+#import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 

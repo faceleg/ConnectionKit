@@ -17,7 +17,7 @@
 #import "NSBundle+KTExtensions.h"
 #import "NSImage+Karelia.h"
 #import "NSImage+KTExtensions.h"
-#import "NSMutableSet+Karelia.h"
+#import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
