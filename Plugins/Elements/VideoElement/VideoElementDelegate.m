@@ -43,7 +43,6 @@
 
 #import "VideoElementDelegate.h"
 
-#import "NSMutableSet+Karelia.h"
 #import "SandvoxPlugin.h"
 #import <QTKit/QTKit.h>
 #include <zlib.h>
