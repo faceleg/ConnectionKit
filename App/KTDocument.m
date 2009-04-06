@@ -672,23 +672,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[self mediaManager] garbageCollect];
 	
 	
-	
-	// Is there actually anything to be saved?
-	if ([self isDocumentEdited])
-	{
-        // Go for it, save the document!
-        [self saveToURL:[self fileURL]
-                 ofType:[self fileType]
-       forSaveOperation:NSSaveOperation
-               delegate:self
-        didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
-            contextInfo:[callback retain]];		// Our callback method will release it
-	}
-	else
-	{
-		// If there are no changes, we can go ahead with the default NSDocument behavior
-		[super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
-	}
+	// Go for it, save the document!
+    // We used to only do this if there were changes, but as the undo manager delays reporting to
+    // until the end of the event loop, -isDocumentEdited may not be accurate. case 40879
+    [self saveToURL:[self fileURL]
+             ofType:[self fileType]
+   forSaveOperation:NSSaveOperation
+           delegate:self
+    didSaveSelector:@selector(document:didSaveWhileClosing:contextInfo:)
+        contextInfo:[callback retain]];		// Our callback method will release it
 }
 
 /*	Callback used by above method.
