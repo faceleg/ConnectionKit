@@ -167,6 +167,22 @@
 }
 
 #pragma mark -
+#pragma mark RSS feed attachment
+
+- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page
+{
+	NSArray *result = nil;
+	
+	KTMediaContainer *downloadMedia = [[self delegateOwner] valueForKey:@"downloadMedia"];
+	if (downloadMedia)
+	{
+		result = [NSArray arrayWithObject:downloadMedia];
+	}
+	
+	return result;
+}
+
+#pragma mark -
 #pragma mark Media Storage
 
 - (NSSet *)requiredMediaIdentifiers
