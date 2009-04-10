@@ -389,15 +389,18 @@
 #pragma mark -
 #pragma mark RSS Feed
 
-- (NSArray *)XpageWillReturnFeedEnclosures:(KTPage *)page
+- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page
 {
 	NSArray *result = nil;
 	
-	KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
-	if (image)
-	{
-		result = [NSArray arrayWithObject:image];
-	}
+	if ([[self delegateOwner] boolForKey:@"linkImageToOriginal"])
+    {
+        KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
+        if (image)
+        {
+            result = [NSArray arrayWithObject:image];
+        }
+    }
 	
 	return result;
 }
