@@ -300,10 +300,8 @@
     {
         result = NO;
     }
-    else if (digest)
-    {
-        *outDigest = digest;
-    }
+    
+    if (digest) *outDigest = digest;
     
     return result;
 }
