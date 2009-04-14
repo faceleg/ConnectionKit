@@ -2514,7 +2514,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *iToolsMember = nil;
 	NSString *iToolsPassword = nil;
 	
-	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword])
+	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
 	{
 		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")]];
 		[self setValue:nil forKey:@"userName"];
