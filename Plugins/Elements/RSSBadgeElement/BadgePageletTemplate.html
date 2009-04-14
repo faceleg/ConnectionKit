@@ -1,7 +1,6 @@
 <div class="rssBadge">
 [[if collection]]
-[[if collection.collectionSyndicate]]
-[[if collection.collectionCanSyndicate]]
+[[if collection.collectionSyndicate && collection.collectionCanSyndicate]]
 [[if delegate.useLargeIconLayout]]
 	<div class="largeRSSBadgeIcon">
 		<a class="imageLink"
@@ -14,25 +13,24 @@
 				title="[['To subscribe to this feed, drag or copy/paste this link to an RSS feed reader application.]]">[[=&label]]</a>
 		</p>
 	</div>
-[[else4]]
+[[else3]]
 	<p>
 [[if iconPosition==1]]
 		<a class="imageLink"
 			href="[[rsspath collection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS feed reader application.]]"><img
 			class="smallRSSBadgeIcon smallRSSBadgeIconLeft" src="[[resourcepath delegate.feedIconResourcePath]]" alt="RSS" /></a>
-[[endif5]]
+[[endif4]]
 		<a href="[[rsspath collection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS feed reader application.]]">[[=&label]]</a>
-[[if iconPosition==1]][[else5]]
+[[if iconPosition==1]][[else4]]
 		<a class="imageLink"
 			href="[[rsspath collection]]"
 			title="[['To subscribe to this feed, drag or copy/paste this link to an RSS feed reader application.]]"><img
 			class="smallRSSBadgeIcon smallRSSBadgeIconRight"
 			src="[[resourcepath delegate.feedIconResourcePath]]" alt="RSS" /></a>
-[[endif5]]
-	</p>
 [[endif4]]
+	</p>
 [[endif3]]
 [[else2]]
 <p>[['The chosen collection has no RSS feed.  Please use the Inspector to set it to generate an RSS feed and have an index.]]</p>
