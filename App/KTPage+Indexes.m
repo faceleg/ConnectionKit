@@ -138,6 +138,28 @@
 	[self setValue:nil forKey:@"pagesInIndex"];
 }
 
+- (BOOL)pagesInIndexAllowComments
+{
+	BOOL result = NO;
+	
+	if ( [self isCollection] )
+	{
+		NSArray *pages = [self pagesInIndex];
+		int i;
+		for ( i=0; i<[pages count]; i++ )
+		{
+			KTPage *page = [pages objectAtIndex:i];
+			if ( [page wrappedBoolForKey:@"allowComments"] )
+			{
+				result = YES;
+				break;
+			}
+		}
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Navigation Arrows
 
