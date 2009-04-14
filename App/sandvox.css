@@ -20,7 +20,6 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 /* JS-Kit hacks */
 
-.js-kit-comments * { clear: none!important; }						/* get rid of JS-Kit's destructive clearing */
-.js-kit-comments .js-commentFieldLabel { clear:left !important; }	/* restore the clear that's actually needed */
-* html .js-kit-comments  {width:90%;}								/* keep IE6 reasonably happy */
-
+.js-kit-comments * { clear: none!important; }
+.js-kit-comments .js-commentFieldLabel { clear:left !important; }
+* html .js-kit-comments  {width:90%;}
