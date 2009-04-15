@@ -521,7 +521,7 @@
 	// <span class="in"> tags need to become blocks when beginning editing
 	if ([self isFieldEditor] && ![self hasSpanIn])
 	{
-		[[self DOMNode] setAttribute:@"style" :@"display:block;"];
+		[[self DOMNode] setAttribute:@"style" value:@"display:block;"];
 	}
 	
 	
@@ -623,7 +623,7 @@
 		if ([self graphicalTextCode] && [self isFieldEditor] && ![self hasSpanIn])
 		{
 			DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
-			[node setAttribute:@"style" :[self graphicalTextPreviewStyle]];
+			[node setAttribute:@"style" value:[self graphicalTextPreviewStyle]];
 		}
 		
 		
@@ -743,7 +743,7 @@
 		// Ban inserts of <img> elements into non-importsGraphics text.
 		if (![self importsGraphics])
 		{
-			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node :DOM_SHOW_ELEMENT :nil :NO];
+			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
 			DOMNode *aNode = [it nextNode];
 			while (nil != aNode)
 			{
@@ -784,7 +784,7 @@
 		[imageElement setSrc:[[mediaContainer URIRepresentation] absoluteString]];
 		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
 		
-		[node replaceChild:imageElement :div];
+		[node replaceChild:imageElement oldChild:div];
 	}
 	else
 	{
@@ -800,7 +800,7 @@
 		[anchor setHref:[[mediaContainer URIRepresentation] absoluteString]];
 		[anchor appendChild:imageElement];
 		
-		[node replaceChild:anchor :div];	
+		[node replaceChild:anchor oldChild:div];	
 	}
 }
 

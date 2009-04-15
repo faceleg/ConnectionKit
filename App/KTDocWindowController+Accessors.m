@@ -36,7 +36,7 @@
 	if (nil != mySelectedInlineImageElement)
 	{
 		// deselect previous outline
-		[((DOMHTMLElement *)[mySelectedInlineImageElement DOMNode]) setAttribute:@"style" :@"outline:none;"];
+		[((DOMHTMLElement *)[mySelectedInlineImageElement DOMNode]) setAttribute:@"style" value:@"outline:none;"];
 	}
 	
 	if (mySelectedInlineImageElement != anElement && nil != anElement)

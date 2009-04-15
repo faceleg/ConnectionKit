@@ -166,7 +166,7 @@
                     // Let the delegate know that it's awoken
                     if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
                     {
-                        [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isTemporaryObject]];
+                        [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
                     }
                 }
             }

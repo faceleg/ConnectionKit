@@ -1118,13 +1118,13 @@
 			// store style
 			[self setSavedPageletStyle:[aSelectedPageletHTMLElement getAttribute:@"style"]];
 			[aSelectedPageletHTMLElement setAttribute:@"style"
-													 :[NSString stringWithFormat:@"outline:auto 1px #d8b300; background:url(%@);", hatchURL]];	// yellow
+                                                value:[NSString stringWithFormat:@"outline:auto 1px #d8b300; background:url(%@);", hatchURL]];	// yellow
 		}
 		else
 		{
 			// use saved style
 			[aSelectedPageletHTMLElement setAttribute:@"style"
-													 :[self savedPageletStyle]];
+                                                value:[self savedPageletStyle]];
 		}
 	}		
 }

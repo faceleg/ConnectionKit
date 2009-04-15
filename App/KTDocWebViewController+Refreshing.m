@@ -335,10 +335,10 @@
 	}
 
 	DOMHTMLDocument *document = (DOMHTMLDocument *)[[[self webView] mainFrame] DOMDocument];
-	DOMNode *imported = [document importNode:loadedBody :YES];
+	DOMNode *imported = [document importNode:loadedBody deep:YES];
 	
 	// I have to turn off the script nodes from actually executing
-	DOMNodeIterator *it = [document createNodeIterator:imported :DOM_SHOW_ELEMENT :[ScriptNodeFilter sharedFilter] :NO];
+	DOMNodeIterator *it = [document createNodeIterator:imported whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
 	DOMHTMLScriptElement *subNode;
 		
 	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
