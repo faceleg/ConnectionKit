@@ -19,6 +19,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSBundle+Karelia.h"
+#import "NSData+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
@@ -223,7 +224,7 @@
     NSString *versionString = [NSString stringWithFormat:@"<meta name=\"generator\" content=\"%@\" />",
                                [[self site] appNameVersion]];
     NSString *versionFreeHTML = [HTML stringByReplacing:versionString with:@"<meta name=\"generator\" content=\"Sandvox\" />"];
-    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] sha1Digest];
+    NSData *digest = [[versionFreeHTML dataUsingEncoding:encoding allowLossyConversion:YES] SHA1HashDigest];
     
     
 	
@@ -293,7 +294,7 @@
 {
     BOOL result = YES;
     
-    NSData *digest = [mainCSSData sha1Digest];
+    NSData *digest = [mainCSSData SHA1HashDigest];
     NSData *publishedDigest = [[[[self site] root] master] publishedDesignCSSDigest];
     
     if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])

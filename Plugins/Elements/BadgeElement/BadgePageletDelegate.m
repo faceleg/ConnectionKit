@@ -105,7 +105,7 @@ static NSArray *sAltStrings = nil;
 - (NSString *) generateBlurbVariant:(int)aVariant
 {
 	NSString *seedString = [[[self page] documentInfo] URIRepresentationString];
-	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] sha1Digest];
+	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1HashDigest];
 	unsigned char *bytes = (unsigned char *)[hashData bytes];
 	// we have a nice 20-byte hash .... now to boil this down to a very small number!
 	
