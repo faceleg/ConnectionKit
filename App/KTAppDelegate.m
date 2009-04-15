@@ -741,7 +741,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		if ( [reason hasPrefix:@"_registerUndoObject"] )
 		{
 			LOG((@"caught _registerUndoObject exception, resetting undoManager"));
-			KTDocument *document = [self currentDocument];
+			KTDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
 			[[document undoManager] removeAllActions];
 			return NO;
 		}
@@ -750,7 +750,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		if ( NSNotFound != [reason rangeOfString:@"undo was called with too many nested undo groups"].location )
 		{
 			LOG((@"caught undo called with too many nested undo groups exception, resetting undoManager"));
-			KTDocument *document = [self currentDocument];
+			KTDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
 			[[document undoManager] removeAllActions];
 			return NO;
 		}

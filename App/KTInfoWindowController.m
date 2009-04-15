@@ -635,11 +635,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 				[self updateCollectionStylePopup];
 			}
 			// load the appropriate inspector view
-<<<<<<< .working
-			NSView *inspectorView = [[[myAssociatedDocument mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
-=======
-			NSView *inspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
->>>>>>> .merge-right.r9622
+			NSView *inspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -696,11 +692,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 						
 //			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
-<<<<<<< .working
-			NSView *pageletInspectorView = [[[myAssociatedDocument mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
-=======
-			NSView *pageletInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
->>>>>>> .merge-right.r9622
+			NSView *pageletInspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -719,11 +711,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 		{
-<<<<<<< .working
-			NSView *pluginInspectorView = [[[myAssociatedDocument mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
-=======
-			NSView *pluginInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
->>>>>>> .merge-right.r9622
+			NSView *pluginInspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			[self setSelectionInspectorView:pluginInspectorView];
 
 			[oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_PAGE];

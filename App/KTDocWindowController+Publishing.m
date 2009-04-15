@@ -93,7 +93,7 @@
     
     if (result)
     {
-        KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
+        KTHostProperties *hostProperties = [[[self document] site] hostProperties];
         BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
         BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
         
