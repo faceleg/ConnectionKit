@@ -566,7 +566,6 @@
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
-	if ( nil == result ) result = @"";
 	return result;
 }
 
