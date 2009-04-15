@@ -208,7 +208,7 @@
 	KTInDocumentMediaFile *result = nil;
 	
 	// See if there is already a MediaFile with the same data
-	NSArray *similarMediaFiles = [self inDocumentMediaFilesWithDigest:[data partiallyDigestString]];
+	NSArray *similarMediaFiles = [self inDocumentMediaFilesWithDigest:[KTInDocumentMediaFile mediaFileDigestFromData:data]];
 	
 	NSEnumerator *mediaFilesEnumerator = [similarMediaFiles objectEnumerator];
 	KTInDocumentMediaFile *aMediaFile;
@@ -312,7 +312,7 @@
 	
 	
 	// Search the DB for matching digests. This gives us a rough set of results.
-	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[NSData partiallyDigestStringFromContentsOfFile:path]];
+	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[KTInDocumentMediaFile mediaFileDigestFromContentsOfFile:path]];
 	if ([similarMedia count] > 0)
 	{
 		NSEnumerator *matchEnumerator = [similarMedia objectEnumerator];

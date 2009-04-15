@@ -29,6 +29,9 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation KTInDocumentMediaFile
 
 #pragma mark -
@@ -39,7 +42,7 @@
 	id result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
 	
 	[result setValue:[path lastPathComponent] forKey:@"filename"];
-	[result setValue:[NSData partiallyDigestStringFromContentsOfFile:path] forKey:@"digest"];
+	[result setValue:[self mediaFileDigestFromContentsOfFile:path] forKey:@"digest"];
 	
 	return result;
 }
@@ -211,6 +214,43 @@
 /*  Little hack to make missing media sheet work
  */
 - (id)alias { return nil; }
+
+#pragma mark -
+#pragma mark Digest
+
+#define DIGESTDATALENGTH 8192
+
++ (NSString *)mediaFileDigestFromData:(NSData *)data
+{
+    unsigned int length = [data length];
+	unsigned int lengthToDigest = MIN(length, (unsigned int)DIGESTDATALENGTH);
+	NSData *firstPart = [data subdataWithRange:NSMakeRange(0,lengthToDigest)];
+	NSString *digest = [firstPart sha1DigestString];
+	NSString *result = [NSString stringWithFormat:@"%@-%x", digest, length];
+	return result;
+}
+
++ (NSString *)mediaFileDigestFromContentsOfFile:(NSString *)path
+{
+    NSString *result = @"";
+	id fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
+	if (fileHandle)
+	{
+		NSData *data = [fileHandle readDataOfLength:DIGESTDATALENGTH];
+		NSString *digest = [data sha1DigestString];
+		
+		[fileHandle closeFile];
+		
+		// Get file length
+		NSDictionary *attr = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
+		NSNumber *fileSizeNum = [attr objectForKey:NSFileSize];
+		long long fileSize = [fileSizeNum longLongValue];
+		result = [NSString stringWithFormat:@"%@-%llx", digest, fileSize];
+	}
+	return result;
+}
+
+- (NSString *)digest { return [self wrappedValueForKey:@"digest"]; }
 
 #pragma mark -
 #pragma mark Errors

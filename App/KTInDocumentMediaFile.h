@@ -14,8 +14,7 @@
 
 
 @interface KTInDocumentMediaFile : KTMediaFile
-{
-	
-}
-
++ (NSString *)mediaFileDigestFromData:(NSData *)data;
++ (NSString *)mediaFileDigestFromContentsOfFile:(NSString *)path;
+- (NSString *)digest;
 @end

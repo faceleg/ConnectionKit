@@ -42,6 +42,8 @@
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
 	NSString			*myExplanation;
+	
+	NSTimeInterval		myLastEditTime;				// keep track of keystroke/replace changes to not lose search/replaces
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?

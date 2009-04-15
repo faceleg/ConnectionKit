@@ -138,6 +138,28 @@
 	[self setValue:nil forKey:@"pagesInIndex"];
 }
 
+- (BOOL)pagesInIndexAllowComments
+{
+	BOOL result = NO;
+	
+	if ( [self isCollection] )
+	{
+		NSArray *pages = [self pagesInIndex];
+		int i;
+		for ( i=0; i<[pages count]; i++ )
+		{
+			KTPage *page = [pages objectAtIndex:i];
+			if ( [page wrappedBoolForKey:@"allowComments"] )
+			{
+				result = YES;
+				break;
+			}
+		}
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Navigation Arrows
 
@@ -234,7 +256,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	
 	if ([self collectionSyndicate] && [self collectionCanSyndicate])
 	{
-		result = [[self URL] URLByAppendingPathComponent:[self RSSFileName] isDirectory:NO];
+		result = [NSURL URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
 	}
 	
 	return result;

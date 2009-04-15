@@ -15,10 +15,6 @@
 	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>258</integer>
-	</array>
 	<key>IBSystem Version</key>
 	<string>9G55</string>
 	<key>targetFramework</key>

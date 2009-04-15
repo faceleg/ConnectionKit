@@ -827,7 +827,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error];
         if (!mainCSS)
         {
-            NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [error debugDescription]);
+            NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [[error debugDescription] condenseWhiteSpace]);
+            
+            NSLog(@"Attempting deprecated -initWithContentsOfFile: method instead");
+            mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];
+            if (!mainCSS)
+            {
+                NSLog(@"And that didn't work either!");
+            }
         }
     }
     else
