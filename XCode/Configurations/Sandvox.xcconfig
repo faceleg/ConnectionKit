@@ -15,7 +15,7 @@ EXPIRY_TIMESTAMP = '@\"2009-06-30 11:59:59 -0800\"'
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 1209
+CK_REVISION = 1211
 
 // iMedia
 IMEDIA_REVISION = 708
