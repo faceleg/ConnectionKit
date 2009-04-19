@@ -18,47 +18,4 @@
   (passing nil for table name means use Localizable as table name)\
   or use LocalizedStringInThisBundle() defined in KT.h\
   genstrings -s LocalizedStringInThisBundle to pick up use of custom macro\
-updating localizations for plugins must currently be done by hand\
-\
-
-\b Coding Guidelines\
-  editing\
-
-\b0     editor uses tabs\
-    tab width 4\
-    indent width 4\
-    wrap lines\
-    indent wrapped lines by 6\
-
-\b   classes/objects\
-
-\b0     constants set off with a k, kConstantString, kPDefaultZone\
-    static set off with an s, sClassVariable\
-    outlets set off with an o, oTextField\
-    instance variables set off with my, myInstanceVariable (rather than using m (confusing) or _ (verboten))\
-    keys in dictionaries are generally lowerCaseInterCaps to mirror key value coding\
-    arrays are designated with pluralized nouns, e.g. items instead of itemArray\
-    header imports generally follow the pattern:\
-      #import "MyClass.h"\
-      #import "ProjectClass(es).h"\
-      #import <FrameworkClass(es).h>\
-
-\b   methods\
-
-\b0     fooWithBar:	the method is expected to create a foo object or return an existing one\
-    fooForBar:		implies that an existing object in a dictionary-like arangement will be returned\
-    fooFromBar:	a straight conversion from one type to another\
-     \
-  \
-
-\b Maxims:\
-
-\b0   If the code doesn't look right, it probably isn't.\
-  When the interface is visually correct, you should be able to just sense it. (turn aqua guides off. trust the force.)\
-   \
-Launch Time Performance Guidelines:\
-http://developer.apple.com/documentation/Performance/Conceptual/LaunchTime/index.html#//apple_ref/doc/uid/10000148i\
-\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf0 DYLD_FRAMEWORK_PATH = /path/to/sandvox/trunk/Frameworks/WebKit\
-}
+updating localizations for plugins must currently be done by hand}
