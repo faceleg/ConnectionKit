@@ -282,7 +282,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     
     // Keep the sheet open if command-option is held down as a debugging aid. BUGSID:38342
     unsigned eventModifierFlags = [[NSApp currentEvent] modifierFlags];
-    if ((eventModifierFlags & NSCommandKeyMask) && (eventModifierFlags & NSCommandKeyMask))
+    if ((eventModifierFlags & NSCommandKeyMask) && (eventModifierFlags & NSAlternateKeyMask))
     {
         [self setMessageText:NSLocalizedString(@"Publishing finished.", @"Upload message text")];
         [self setInformativeText:nil];
