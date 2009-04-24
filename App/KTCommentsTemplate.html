@@ -35,7 +35,7 @@
 [[endif3]]
 [[if master.wantsJSKit]]
 [[if master.JSKitModeratorEmail]]
-									[[if parser.HTMLGenerationPurpose]]
+									[[if parser.isPublishing]]
 									[[if self==parser.currentPage]]
 									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="[[=&JSKitPath]]" permalink="[[=&URL]]"></div>
 									[[else6]]
@@ -58,7 +58,7 @@
 [[endif3]]
 [[if master.wantsDisqus]]
 [[if master.disqusShortName]]
-									[[if parser.HTMLGenerationPurpose]]
+									[[if parser.isPublishing]]
 									[[if self==parser.currentPage]]
 									<div id="disqus_thread">
 										<script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js">
@@ -86,7 +86,7 @@
 [[endif3]]
 [[if master.wantsIntenseDebate]]
 [[if master.IntenseDebateAccountID]]
-									[[if parser.HTMLGenerationPurpose]]
+									[[if parser.isPublishing]]
 									[[if self==parser.currentPage]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";

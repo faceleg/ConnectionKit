@@ -115,6 +115,12 @@
 
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose { myHTMLGenerationPurpose = purpose; }
 
+- (BOOL)isPublishing
+{
+    BOOL result = ([self HTMLGenerationPurpose] != kGeneratingPreview && [self HTMLGenerationPurpose] != kGeneratingQuickLookPreview);
+    return result;
+}
+
 - (BOOL)includeStyling { return myIncludeStyling; }
 
 - (void)setIncludeStyling:(BOOL)includeStyling { myIncludeStyling = includeStyling; }

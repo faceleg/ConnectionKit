@@ -1,4 +1,4 @@
-[[if parser.HTMLGenerationPurpose]]				[[comment Code Injection here is only for publishing]]
+[[if parser.isPublishing]]				[[comment Code Injection here is only for publishing]]
 [[if master.codeInjectionBeforeHTML]]
 [[=master.codeInjectionBeforeHTML]]
 [[endif2]]
@@ -52,7 +52,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if javascriptURLPath]]
 <script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
 [[endif]]
-[[if parser.HTMLGenerationPurpose]]
+[[if parser.isPublishing]]
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
 <script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
@@ -180,7 +180,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 		</div> <!-- specific body type -->
 [[endBody]]
 
-[[if parser.HTMLGenerationPurpose]]
+[[if parser.isPublishing]]
 [[if documentInfo.googleAnalyticsCode]]
 [[=documentInfo.googleAnalyticsCode]]
 [[endif2]]
