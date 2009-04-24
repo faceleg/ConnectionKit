@@ -53,7 +53,6 @@
 #import "KTDocumentInfo.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
-#import "KTHTMLTextBlock.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
@@ -63,6 +62,7 @@
 #import "KTPage+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
+#import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
 #import "KTUtilities.h"
 
@@ -909,8 +909,19 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		BOOL isRawHTML = NO;
 		KTHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
 		id sourceObject = [textBlock HTMLSourceObject];
-		id sourceKeyPath = [textBlock HTMLSourceKeyPath];
-		
+        
+        NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
+		if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
+        {
+            KTPage *page = sourceObject;
+            if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
+            {
+                sourceKeyPath = @"customSummaryHTML";
+            }
+        }
+        
+        
+        // Fallback for non-text blocks
 		if (!textBlock)
 		{
 			isRawHTML = YES;
@@ -945,7 +956,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		if (sourceObject)
 		{
-
+            
 			[self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
 		}
 	}
