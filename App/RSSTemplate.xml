@@ -14,11 +14,11 @@
 		<generator>[[=&documentInfo.appNameVersion]]</generator>
 [[if master.logoImage]]
 		<image>
-			<url>[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]</url>
+			<url>[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]</url>
 			<title>[[=&master.headerImageDescription]]</title>
 			<link>[[=&URL]]</link>
-			<width>[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]</width>
-			<height>[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]</height>
+			<width>[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]</width>
+			<height>[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]</height>
 		</image>
 [[endif]]
 [[foreach sortedReverseChronoChildrenInIndex item]]

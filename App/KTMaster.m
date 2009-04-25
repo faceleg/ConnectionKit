@@ -428,8 +428,6 @@
 	[self didChangeValueForKey:@"logoImage"];
 }
 
-- (NSSize)logoImageMaxSize	{ return NSMakeSize(200.0, 128.0); }
-
 #pragma mark -
 #pragma mark Favicon
 

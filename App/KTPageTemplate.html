@@ -82,10 +82,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if isRoot]]
 [[if master.logoImage]]
 						<span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
+							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
 							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
-							width="[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
-							height="[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]" /></span>
+							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span>
 [[endif2]]
 [[if master.headerImageHidesH1]]
 						<h1 class="hidden">[[=master.siteTitleHTML]]</h1>
@@ -95,10 +95,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[else]]
 [[if master.logoImage]]
 						<a class="imageLink" href="[[path documentInfo.root]]"><span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
+							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
 							alt="[[=&master.headerImageDescription]]"
-							width="[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
-							height="[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]" /></span></a>
+							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
 [[endif2]]
 [[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path documentInfo.root]]">[[=master.siteTitleHTML]]</a></h1>
