@@ -398,16 +398,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
-- (NSString *)mediaPath
+- (NSURL *)mediaDirectoryURL;
 {
-	/// This used to be done from [self fileURL] but that doesn't work when making the very first save
+	/// This could be calculated from [self fileURL], but that doesn't work when making the very first save
 	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
 	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-	NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
-	NSURL *docURL = [[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath];
-	NSString *result = [[KTDocument mediaURLForDocumentURL:docURL] path];
+	NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
 	
-	[docURL release];
+    NSURL *result = [[self class] mediaURLForDocumentURL:docURL];
 	return result;
 }
 
@@ -443,8 +441,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
 		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-		NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
-		docURL = [[[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath] autorelease];
+		docURL = [storeURL URLByDeletingLastPathComponent];
 	}
 	
 	NSString *result = [[KTDocument siteURLForDocumentURL:docURL] path];

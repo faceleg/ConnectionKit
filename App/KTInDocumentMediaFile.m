@@ -76,7 +76,7 @@
 	if ([self isDeleted])
 	{
 		NSString *filename = [self committedValueForKey:@"filename"];
-		NSString *sourcePath = [[[[self mediaManager] document] mediaPath] stringByAppendingPathComponent:filename];
+		NSString *sourcePath = [[[[[self mediaManager] document] mediaDirectoryURL] path] stringByAppendingPathComponent:filename];
 		NSString *destinationPath = [[[[self mediaManager] document] temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
@@ -131,7 +131,7 @@
 	
 	
 	// Make sure the destination is available
-	NSString *destinationPath = [[doc mediaPath] stringByAppendingPathComponent:filename];
+	NSString *destinationPath = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:filename];
 	if ([fileManager fileExistsAtPath:destinationPath])
 	{
 		KTLog(KTMediaLogDomain,
@@ -171,7 +171,7 @@
 	}
 	else
 	{
-		result = [[document mediaPath] stringByAppendingPathComponent:[self filename]];
+		result = [[[document mediaDirectoryURL] path] stringByAppendingPathComponent:[self filename]];
 	}
 	
     return result;

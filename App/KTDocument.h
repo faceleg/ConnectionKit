@@ -82,7 +82,8 @@ extern NSString *KTDocumentWillSaveNotification;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)inURL;
-- (NSString *)mediaPath;
+
+- (NSURL *)mediaDirectoryURL;
 - (NSString *)temporaryMediaPath;
 - (NSString *)siteDirectoryPath;
 
