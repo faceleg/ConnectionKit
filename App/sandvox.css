@@ -23,3 +23,10 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 .js-kit-comments * { clear: none!important; }
 .js-kit-comments .js-commentFieldLabel { clear:left !important; }
 * html .js-kit-comments  {width:90%;}
+
+/* Disqus correction to prevent overflow scroll bars in some designs */
+#dsq-content { overflow:hidden; }
+#dsq-content .dsq-auth-header { width: auto!important; }
+#dsq-content .dsq-by { margin: 4px 6px 0px 0px; }
+#dsq-content .dsq-by a, #dsq-content .dsq-by a:hover { border: 0px none; }
+#dsq-content h3 { margin:0px; }
