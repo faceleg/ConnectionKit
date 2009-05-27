@@ -111,7 +111,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 					<div id="sitemenu-container">
 [[if documentInfo.pagesInSiteMenu]]
 						<div id="sitemenu">
-							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
+							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a rel="nofollow" href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
 							<div id="sitemenu-content">
 								<ul>
 [[forEach documentInfo.pagesInSiteMenu toplink]]
@@ -141,7 +141,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						<div id="sidebar">
 					  		<div id="sidebar-top"></div>
 							<div id="sidebar-content">
-								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
+								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
 [[forEach sidebarPagelets aPagelet]]
 								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTML]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="k-[[=aPagelet.uniqueID]]">
 
@@ -172,7 +172,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
 						[[textblock property:master.copyrightHTML flags:"block"]]
-						<div class="hidden">[[`backToTopTitleHTML]]<a href="#title">[[`backToTopLinkHTML]]</a></div>
+						<div class="hidden">[[`backToTopTitleHTML]]<a rel="nofollow" href="#title">[[`backToTopLinkHTML]]</a></div>
 					</div>
 				</div> <!-- page-bottom -->
 			</div> <!-- container -->
