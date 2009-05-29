@@ -38,7 +38,7 @@
 {
 	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
 	[KSEmailAddressComboBox setWillIncludeNames:NO];
-	self = [super initWithWindowNibName:@"Prefs"];
+	self = [super init];
     if (self)
 	{
 		
@@ -162,6 +162,8 @@
 
 - (void)windowDidLoad
 {
+	[super windowDidLoad];
+
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 	NSUserDefaults *defaults = [controller defaults];
 

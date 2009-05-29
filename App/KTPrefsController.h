@@ -7,27 +7,22 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KSSingletonWindowController.h"
+#import "KSPrefsController.h"
 
 @class KSEmailAddressComboBox;
 
-// TODO: Descend from KSPrefsController (after we are ready to do another round of localization and nib-rebuilding)
-@interface KTPrefsController : KSSingletonWindowController
+@interface KTPrefsController : KSPrefsController
 {
 	IBOutlet NSImageView *oCompressionSample;
 	IBOutlet NSObjectController *oObjectController;
-	IBOutlet KSEmailAddressComboBox *oAddressComboBox;
 
-	int mySparkleOption;
-	
 	NSImage *mySampleImage;
-
 }
 
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) checkForUpdates:(id)sender;
 - (IBAction) emailComboChanged:(id)sender;
 
-enum { kSparkleNone = 0, kSparkleRelease, kSparkleBeta }; 
 
 
 @end

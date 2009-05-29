@@ -1,45 +1,96 @@
 {
-    IBClasses = (
-        {
-            ACTIONS = {"" = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {CLASS = KSEmailAddressComboBox; LANGUAGE = ObjC; SUPERCLASS = NSComboBox; }, 
-        {CLASS = KSLabel; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
-        {
-            CLASS = KSSingletonWindowController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSWindowController; 
-        }, 
-        {
-            ACTIONS = {checkForUpdates = id; emailComboChanged = id; windowHelp = id; }; 
-            CLASS = KTPrefsController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                oAddressComboBox = KSEmailAddressComboBox; 
-                oCompressionSample = NSImageView; 
-                oObjectController = NSObjectController; 
-            }; 
-            SUPERCLASS = KSSingletonWindowController; 
-        }, 
-        {CLASS = NSApplication; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
-        {CLASS = NSCell; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = NSManagedObjectContext; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {
-            ACTIONS = {imagePickerCancelled = id; imagePickerSet = id; }; 
-            CLASS = NSObject; 
-            LANGUAGE = ObjC; 
-        }, 
-        {CLASS = NSView; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
-        {CLASS = NSWindow; LANGUAGE = ObjC; SUPERCLASS = NSResponder; }, 
-        {
-            ACTIONS = {showWindow = id; }; 
-            CLASS = NSWindowController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSResponder; 
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSEmailAddressComboBox;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSComboBox;
+        },
+                {
+            CLASS = KSLabel;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            ACTIONS =             {
+                checkForUpdates = id;
+                emailComboChanged = id;
+                windowHelp = id;
+            };
+            CLASS = KSPrefsController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oAddressComboBox = KSEmailAddressComboBox;
+            };
+            SUPERCLASS = KSSingletonWindowController;
+        },
+                {
+            CLASS = KSSingletonWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSWindowController;
+        },
+                {
+            ACTIONS =             {
+                checkForUpdates = id;
+                emailComboChanged = id;
+                windowHelp = id;
+            };
+            CLASS = KTPrefsController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oCompressionSample = NSImageView;
+                oObjectController = NSObjectController;
+            };
+            SUPERCLASS = KSPrefsController;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSManagedObjectContext;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSWindow;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            ACTIONS =             {
+                showWindow = id;
+            };
+            CLASS = NSWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }
