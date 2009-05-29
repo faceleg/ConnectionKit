@@ -395,13 +395,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (urlEncodeLocation < htmlEscapeLocation)	// URL Encode first
 								{
-									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 									toAppend = [toAppend stringByEscapingHTMLEntities];
 								}
 								else	// HTML escape first
 								{
 									toAppend = [toAppend stringByEscapingHTMLEntities];
-									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 								}
 								
 							}
@@ -409,7 +409,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							{
 								if (NSNotFound != urlEncodeLocation)
 								{
-									toAppend = [toAppend stringByAddingPercentEscapesForURLQuery:YES];
+									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
 								}
 								if (NSNotFound != htmlEscapeLocation)
 								{

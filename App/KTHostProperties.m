@@ -176,7 +176,7 @@
 	NSString *subFolder = [self valueForKey:@"localSubFolder"];
 	if (nil != subFolder && ![subFolder isEqualToString:@""])
 	{
-		[result appendString:[subFolder stringByAddingPercentEscapesForURLQuery:YES]];
+		[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 		if (![result hasSuffix:@"/"])		// make sure it ends with /
 		{
 			[result appendString:@"/"];
@@ -224,7 +224,7 @@
 		NSString *subFolder = [self valueForKey:@"localSubFolder"];
 		if (nil != subFolder && ![subFolder isEqualToString:@""])
 		{
-			[result appendString:[subFolder stringByAddingPercentEscapesForURLQuery:YES]];
+			[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 			if (![result hasSuffix:@"/"])		// make sure it ends with /
 			{
 				[result appendString:@"/"];

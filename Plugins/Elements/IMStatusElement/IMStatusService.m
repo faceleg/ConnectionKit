@@ -201,7 +201,7 @@
 	
 	// Parse the code to get the finished HTML
 	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[username stringByAddingPercentEscapesForURLQuery:YES]
+						    withString:[username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
