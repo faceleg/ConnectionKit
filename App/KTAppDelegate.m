@@ -1175,7 +1175,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                             [filesNotFound addObject:path];
                             continue;
                         }				
-                        
+// FIXME ... this is not localized properly. We should have it "Opening %@..." to account for other language styles.
                         NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
                         [progressPanel setMessageText:message];
                         [progressPanel setIcon:[NSImage imageNamed:@"document"]];
