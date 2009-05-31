@@ -381,27 +381,22 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 	// Change our -currentTextEditingBlock if needed
 	WebView *theWebview = [notification object];
 	DOMRange *selectedDOMRange = [theWebview selectedDOMRange];
-	DOMHTMLElement *selectableDOMElement = [[selectedDOMRange startContainer] firstSelectableParentNode];
-	KTHTMLTextBlock *currentTextBlock = [self currentTextEditingBlock];
+	DOMNode *selectedDOMNode = [selectedDOMRange startContainer];
 	
-	if (selectableDOMElement)
-	{
-		if ([[self windowController] isEditableElement:selectableDOMElement])
-		{
-			if (!currentTextBlock || [currentTextBlock DOMNode] != selectableDOMElement)
-			{
-				KTHTMLTextBlock *newBlock = [[self mainWebViewComponent] textBlockForDOMNode:selectableDOMElement];
-				
-				[self setCurrentTextEditingBlock:newBlock];
-			}
-		}
-		else
-		{
-			[self setCurrentTextEditingBlock:nil];
-		}
-	}
-	
-	
+    /// Case 41716: Relying on -firstSelectableParentNode doesn't handle all edge cases. Better to go straight to the text block API which can handle them
+    /// I don't quite understand why the flow of this code only calls -setCurrentTextEditingBlock: if a valid block was found, but it's what the old code did and fails assertions otherwise. As far as I can find editing does all the right things still
+    if (selectedDOMNode)
+    {
+        KTHTMLTextBlock *newBlock = [[self mainWebViewComponent] textBlockForDOMNode:selectedDOMNode];
+        if (newBlock)
+        {
+            if (![[self windowController] isEditableElement:[newBlock DOMNode]]) newBlock = nil;
+            [self setCurrentTextEditingBlock:newBlock];
+        }
+    }
+    
+    
+    
 	
 	NSView *documentView = [[[theWebview mainFrame] frameView] documentView];
 	Class WebHTMLView = NSClassFromString(@"WebHTMLView");
