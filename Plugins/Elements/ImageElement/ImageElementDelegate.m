@@ -348,7 +348,7 @@
 	}
 	
     KTImageScalingSettings *scalingSettings = [scalingProperties objectForKey:@"scalingBehavior"];
-    NSSize result = [scalingSettings size];
+    NSSize result = scalingSettings ? [scalingSettings size] : NSZeroSize;
 	return result;
 }
 

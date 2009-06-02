@@ -256,6 +256,7 @@
 	if (movie)
 	{
 		posterImage = [movie betterPosterImage]; 
+		[movie release];
 	}
 	
 	// Handle a missing thumbnail, like when we have a .wmv file
@@ -467,9 +468,9 @@ After deflating starting at byte 8, you get:
 				z.next_out = (Bytef *)[outputData bytes];
 				z.avail_out = dataLength - 8;
 		
-				int status = inflateInit((z_streamp)&z);
-				status = inflate(&z, Z_FINISH);
-				status = inflateEnd((z_streamp)&z);
+				(void) inflateInit((z_streamp)&z);
+				(void) inflate(&z, Z_FINISH);
+				(void) inflateEnd((z_streamp)&z);
 				
 				myBytePointer = (char *)[outputData bytes];
 			}
