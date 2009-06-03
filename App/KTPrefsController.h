@@ -19,11 +19,5 @@
 	NSImage *mySampleImage;
 }
 
-- (IBAction) windowHelp:(id)sender;
-- (IBAction) checkForUpdates:(id)sender;
-- (IBAction) emailComboChanged:(id)sender;
-
-
-
 @end
 

@@ -1519,6 +1519,13 @@
 			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
 			remoteInfo = DropletLauncher;
 		};
+		CE372E480FD71B5D00F52202 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteInfo = Framework;
+		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -4954,6 +4961,7 @@
 				27E4D4530EC30D04000E85DD /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */,
+				CE372E490FD71B5D00F52202 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6522,6 +6530,11 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+		};
+		CE372E490FD71B5D00F52202 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = CE372E480FD71B5D00F52202 /* PBXContainerItemProxy */;
 		};
 		CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

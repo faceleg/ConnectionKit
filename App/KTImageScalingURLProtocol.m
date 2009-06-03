@@ -318,7 +318,7 @@ static NSURLCache *_sharedCache;
 	NSArray *identifiers = NSMakeCollectable(CGImageDestinationCopyTypeIdentifiers());
 	[identifiers autorelease];
 	
-    OBASSERT([ containsObject:fileType]);
+    OBASSERT([identifiers containsObject:fileType]);
     
     NSMutableData *result = [NSMutableData data];
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
