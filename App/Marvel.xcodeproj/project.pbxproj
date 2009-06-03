@@ -1001,6 +1001,41 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
+		2775332D0FD73C8E008DC704 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteInfo = Framework;
+		};
+		2775332F0FD73C8E008DC704 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteInfo = UnitTest;
+		};
+		277533310FD73C8E008DC704 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteInfo = DropletHelper;
+		};
+		277533330FD73C8E008DC704 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteInfo = DropletLauncher;
+		};
+		277533350FD73CAB008DC704 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteInfo = Framework;
+		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
@@ -1491,41 +1526,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
-		CE372E0B0FD71A5300F52202 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
-			remoteInfo = Framework;
-		};
-		CE372E0D0FD71A5300F52202 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00;
-			remoteInfo = UnitTest;
-		};
-		CE372E0F0FD71A5300F52202 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
-			remoteInfo = DropletHelper;
-		};
-		CE372E110FD71A5300F52202 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
-			remoteInfo = DropletLauncher;
-		};
-		CE372E480FD71B5D00F52202 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
-			remoteInfo = Framework;
-		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1898,7 +1898,7 @@
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
-		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/trunk/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/tags/1.2.1/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2974,6 +2974,17 @@
 				276503710EAD2FFB00461A0E /* KTAbstractElement+Internal.m */,
 			);
 			name = Element;
+			sourceTree = "<group>";
+		};
+		277533260FD73C8E008DC704 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2775332E0FD73C8E008DC704 /* Connection.framework */,
+				277533300FD73C8E008DC704 /* UnitTest.octest */,
+				277533320FD73C8E008DC704 /* DropletHelper.app */,
+				277533340FD73C8E008DC704 /* DropletLauncher */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
@@ -4523,17 +4534,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CE372E040FD71A5300F52202 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE372E0C0FD71A5300F52202 /* Connection.framework */,
-				CE372E0E0FD71A5300F52202 /* UnitTest.octest */,
-				CE372E100FD71A5300F52202 /* DropletHelper.app */,
-				CE372E120FD71A5300F52202 /* DropletLauncher */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE6FFB78088EEFD100AD0154 /* DesignPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -4958,10 +4958,10 @@
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
+				277533360FD73CAB008DC704 /* PBXTargetDependency */,
 				27E4D4530EC30D04000E85DD /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */,
-				CE372E490FD71B5D00F52202 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5043,7 +5043,7 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE372E040FD71A5300F52202 /* Products */;
+					ProductGroup = 277533260FD73C8E008DC704 /* Products */;
 					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 				},
 				{
@@ -5183,6 +5183,34 @@
 			fileType = wrapper.cfbundle;
 			path = CollectionArchive.svxElement;
 			remoteRef = 274339ED0D77339B00164FA5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2775332E0FD73C8E008DC704 /* Connection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Connection.framework;
+			remoteRef = 2775332D0FD73C8E008DC704 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		277533300FD73C8E008DC704 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = 2775332F0FD73C8E008DC704 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		277533320FD73C8E008DC704 /* DropletHelper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DropletHelper.app;
+			remoteRef = 277533310FD73C8E008DC704 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		277533340FD73C8E008DC704 /* DropletLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DropletLauncher;
+			remoteRef = 277533330FD73C8E008DC704 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		27E62FF90EC3060A0044ED36 /* AmazonSupport.framework */ = {
@@ -5407,34 +5435,6 @@
 			fileType = wrapper.cfbundle;
 			path = SandvoxQuickLook.qlgenerator;
 			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE372E0C0FD71A5300F52202 /* Connection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Connection.framework;
-			remoteRef = CE372E0B0FD71A5300F52202 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE372E0E0FD71A5300F52202 /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = CE372E0D0FD71A5300F52202 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE372E100FD71A5300F52202 /* DropletHelper.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DropletHelper.app;
-			remoteRef = CE372E0F0FD71A5300F52202 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE372E120FD71A5300F52202 /* DropletLauncher */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = DropletLauncher;
-			remoteRef = CE372E110FD71A5300F52202 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE99831A0D614DD700F2DD12 /* MetaSandvox.mdimporter */ = {
@@ -6341,6 +6341,11 @@
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
 		};
+		277533360FD73CAB008DC704 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = 277533350FD73CAB008DC704 /* PBXContainerItemProxy */;
+		};
 		27E4D4510EC30CEE000E85DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
@@ -6530,11 +6535,6 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
-		};
-		CE372E490FD71B5D00F52202 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Framework;
-			targetProxy = CE372E480FD71B5D00F52202 /* PBXContainerItemProxy */;
 		};
 		CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
