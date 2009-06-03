@@ -278,16 +278,16 @@
 			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
 			[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
 			[menuItem setImage:image];
-			if (image)	// test for non-nil to avoid "The receiver in the message expression is 'nil' and results in the returned value (of type 'NSSize') to be garbage or otherwise undefined"
-			{
-				[style setMinimumLineHeight:[image size].height];
-			}
+			
+			float imageHeight = image ? [image size].height : 0.0;	// test for non-nil to avoid "The receiver in the message expression is 'nil' and results in the returned value (of type 'NSSize') to be garbage or otherwise undefined"
+
+			[style setMinimumLineHeight:imageHeight];
 			
 			NSFont *titleFont = [NSFont menuFontOfSize:(smallText ? [NSFont smallSystemFontSize] : [NSFont systemFontSize])];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 										titleFont, NSFontAttributeName,
 										style, NSParagraphStyleAttributeName,
-										[NSNumber numberWithFloat:((([image size].height-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
+										[NSNumber numberWithFloat:(((imageHeight-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
 										nil];
 			NSAttributedString *titleString = [[[NSAttributedString alloc] initWithString:pluginName attributes:attributes] autorelease];
 			[menuItem setAttributedTitle:titleString];
