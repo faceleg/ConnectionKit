@@ -472,8 +472,7 @@ clickedOnPagelet:
 								   title:NSLocalizedString(@"Cannot Select Pagelet From This Page",@"alert title (capitalized)")
 								  format:NSLocalizedString(@"The item you clicked on, %@, is copied from %@. Please select that page to edit this pagelet.",@""),
 					desc, containingPageDescription]
-					selectOwnerPageAndPageletRetainedElement:((DOMHTMLElement *)[pageletElement retain])];
-				
+					selectOwnerPageAndPageletRetainedElement:((DOMHTMLElement *)[pageletElement retain])];	// leaking on purpose
 				//				[KSSilencingConfirmSheet alertWithWindow:[self window]
 				//											silencingKey:@"ShutUpCantSelect"
 				//													 title:NSLocalizedString(@"Cannot Select Pagelet from This Page", @"")

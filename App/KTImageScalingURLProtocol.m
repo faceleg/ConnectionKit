@@ -281,7 +281,7 @@ static NSURLCache *_sharedCache;
         [coreImageContext retain];
     }
     
-    CGRect neededContextRect = [scaledImage extent];
+    CGRect neededContextRect = scaledImage ? [scaledImage extent] : CGRectZero;
     size_t currentContextWidth = CGBitmapContextGetWidth(graphicsContext);
     size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
     
@@ -315,7 +315,10 @@ static NSURLCache *_sharedCache;
     
     
     // Convert to data
-    OBASSERT([(NSArray *)CGImageDestinationCopyTypeIdentifiers() containsObject:fileType]);
+	NSArray *identifiers = NSMakeCollectable(CGImageDestinationCopyTypeIdentifiers());
+	[identifiers autorelease];
+	
+    OBASSERT([ containsObject:fileType]);
     
     NSMutableData *result = [NSMutableData data];
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,

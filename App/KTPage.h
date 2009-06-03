@@ -33,7 +33,7 @@
 {
 	@private
     // these ivars are only set if the page is root
-	BOOL myIsNewPage;
+	BOOL myIsNewPage;		// accessor is in category
 }
 
 // Awake

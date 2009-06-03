@@ -29,8 +29,8 @@
 	NSManagedObjectContext	*myOldManagedObjectContext;
 	NSURL					*myOldStoreURL;
     
-    NSURL       *myNewDocumentURL;
-    KTDocument  *myNewDocument;
+    NSURL       *myMigratedDocumentURL;
+    KTDocument  *myMigratedDocument;
     
     unsigned    myCountOfPagesToMigrate;
     unsigned    myCountOfPagesMigrated;
@@ -38,7 +38,7 @@
 }
 
 + (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
-+ (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
++ (NSString *)getNewPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
 
 // Init
 - (id)initWithDocumentURL:(NSURL *)docURL;

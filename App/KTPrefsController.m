@@ -114,9 +114,6 @@
 {
 	[super windowDidLoad];
 
-	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-	NSUserDefaults *defaults = [controller defaults];
-
 	[controller addObserver:self forKeyPath:@"values.KTPreferredJPEGQuality" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTSharpeningFactor" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTPrefersPNGFormat" options:(NSKeyValueObservingOptionNew) context:nil];
