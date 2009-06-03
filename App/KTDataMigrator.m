@@ -112,7 +112,7 @@
 
 /*  Provides a lookup table for converting old plugin identifiers to new.
  */
-+ (NSString *)getNewPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier
++ (NSString *)currentPluginIdentifierForOldIdentifier:(NSString *)oldIdentifier
 {
     OBPRECONDITION(oldIdentifier);
     
@@ -154,7 +154,7 @@
     }
     
     NSString *result = [sPluginIdentifiers objectForKey:oldIdentifier];
-	[[result retain] autorelease];		// Clang was complaining "Method returns an Objective-C object with a +0 retain count (non-owning reference)"
+		// Clang warning?  Why?
     if (!result) result = oldIdentifier;
     
     OBPOSTCONDITION(result);
@@ -471,7 +471,7 @@
     }
     
     NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
-    NSString *newRootPluginIdentifier = [[self class] getNewPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
+    NSString *newRootPluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:oldRootPluginIdentifier];
     KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
     
     KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI rootPlugin:newRootPlugin error:outError];
@@ -671,7 +671,7 @@
         
         // Insert a new child page of the right type.
         NSString *pluginIdentifier = [aChildPage valueForKey:@"pluginIdentifier"];
-        pluginIdentifier = [[self class] getNewPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
+        pluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:pluginIdentifier];
         KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
         
         if (!plugin)
@@ -804,7 +804,7 @@
     NSManagedObject *anOldPagelet;
     while (anOldPagelet = [oldPageletsEnumerator nextObject])
     {
-        NSString *pageletIdentifier = [[self class] getNewPluginIdentifierForOldPluginIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
+        NSString *pageletIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
         KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
         KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
         

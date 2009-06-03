@@ -38,7 +38,7 @@
 }
 
 + (NSString *)renamedFileName:(NSString *)originalFileNameWithExtension modelVersion:(NSString *)aVersion;
-+ (NSString *)getNewPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier;
++ (NSString *)currentPluginIdentifierForOldIdentifier:(NSString *)oldIdentifier;
 
 // Init
 - (id)initWithDocumentURL:(NSURL *)docURL;
