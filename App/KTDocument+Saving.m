@@ -886,8 +886,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         
         NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
         [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
-        [webViewWindow release];
-#warning Are we releasing this object we don't own on purpose? Seems a little odd. If this is in purpose, please make a comment to that effect.
+        [webViewWindow release];    // we allocate the window object when creating it but never autorelease. It stays attached to the webview until we release it here
         
         
         // Remove the lock. In the event that loading the webview timed out, it will still be locked.
