@@ -48,8 +48,8 @@
 - (NSManagedObjectModel *)oldManagedObjectModel;
 - (NSManagedObjectContext *)oldManagedObjectContext;
 
-- (NSURL *)newDocumentURL;
-- (KTDocument *)newDocument;
+- (NSURL *)migratedDocumentURL;
+- (KTDocument *)migratedDocument;
 
 - (unsigned)countOfPagesToMigrate;
 - (unsigned)countOfPagesMigrated;

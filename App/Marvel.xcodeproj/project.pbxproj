@@ -1005,35 +1005,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		2775332F0FD73C8E008DC704 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
 		};
 		277533310FD73C8E008DC704 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
 			remoteInfo = DropletHelper;
 		};
 		277533330FD73C8E008DC704 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
 			remoteInfo = DropletLauncher;
 		};
 		277533350FD73CAB008DC704 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
