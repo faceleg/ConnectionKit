@@ -2,6 +2,9 @@
 // include SVN_VERSION (the first step in any Sandvox build)
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
+// Snow Leopard will default to building with GCC 4.2 which is Tiger-incompatible.
+GCC_VERSION = 4.0
+
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 1.6.3b1
 
@@ -15,10 +18,10 @@ EXPIRY_TIMESTAMP = '@\"2009-07-17 11:59:59 -0800\"'
 // Release builds checkout and use these specific revisions
 
 // ConnectionKit
-CK_REVISION = 1237
+CK_REVISION = 1238
 
 // iMedia
-IMEDIA_REVISION = 715
+IMEDIA_REVISION = 716
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
