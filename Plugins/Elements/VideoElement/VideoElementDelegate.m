@@ -931,12 +931,15 @@ After deflating starting at byte 8, you get:
 {
 	NSArray *result = nil;
 	
-	KTMediaContainer *video = [[self delegateOwner] valueForKey:@"video"];
-	if (video)
-	{
-		result = [NSArray arrayWithObject:video];
-	}
-	
+	if ([[self delegateOwner] integerForKey:@"movieSource"] == 0)
+    {
+        KTMediaContainer *video = [[self delegateOwner] valueForKey:@"video"];
+        if ([[video file] currentPath])
+        {
+            result = [NSArray arrayWithObject:video];
+        }
+    }
+    
 	return result;
 }
 
