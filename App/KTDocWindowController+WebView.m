@@ -1197,7 +1197,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		else
 		{
 			[oLinkLocalPageField setStringValue:@""];
-			[oLinkDestinationField setStringValue:[theLinkString stringByReplacingURLQueryPercentEscapes]];
+			[oLinkDestinationField setStringValue:theLinkString];	// we were unescaping this -- wrong!
 		}
 		[oLinkLocalPageField setHidden:!localLink];
 		[oLinkDestinationField setHidden:localLink];
