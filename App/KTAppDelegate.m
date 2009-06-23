@@ -198,12 +198,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	return result;
 }
 
-
-- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
-{
-	return nil;
-}
-
 - (NSArray *) convertTypesIntoNames:(NSArray *)types;
 {
 	NSDictionary *lookup = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1788,6 +1782,23 @@ IMPLEMENTATION NOTES & CAUTIONS:
 - (BOOL)shouldSnapshotOnOpening
 {
 	return ( KTSnapshotOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
+}
+
+- (IBAction)showPluginWindow:(id)sender;
+{
+	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - only showing new updates.
+	{
+		[[KSPluginInstallerController sharedController] showWindowForNewVersions:sender];
+	}
+	else	// normal
+	{
+		[[KSPluginInstallerController sharedController] showWindow:sender];
+	}
+}
+
+- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
+{
+	return nil;
 }
 
 

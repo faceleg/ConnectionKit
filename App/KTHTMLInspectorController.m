@@ -200,6 +200,7 @@ initial syntax coloring.
 				source = [source stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
 			}
 			[self setSourceCode:source];
+			[NSTextView startRecordingFontChanges];
 		}
 	}
 

@@ -20,7 +20,7 @@
 #import "Registration.h"
 #import <Cocoa/Cocoa.h>
 #import "KSLicensedAppDelegate.h"
-
+#import "KSPluginInstallerController.h"
 
 extern BOOL gWantToCatchSystemExceptions;
 
@@ -86,6 +86,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	NSPoint myCascadePoint;
 }
 
+- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller;
+
 - (IBAction) openScreencastLargeSize:(id)sender;
 - (IBAction) openScreencastSmallSize:(id)sender;
 
@@ -114,6 +116,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)toggleMediaBrowserShown:(id)sender;
 
 - (IBAction)reloadDebugTable:(id)sender;
+
+- (IBAction)showPluginWindow:(id)sender;
 
 // methods to allow current document to update application-wide menus
 - (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
