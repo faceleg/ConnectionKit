@@ -1,15 +1,37 @@
+LIBPNG is needed.
+
+** Even though it's installed in the system (At least Snow Leopard)
+** I can't seem to make it work with the system version
+
 Download libpng from:
 
 http://www.libpng.org/pub/png/libpng.html
+
+Build universal for 32-bit PPC and i386.  Not doing 64-bit for now.
+
+./configure  CFLAGS="-O -arch i386 -arch ppc" CXXFLAGS="-O -arch i386 -arch ppc"  LDFLAGS="-arch i386 -arch ppc" --disable-dependency-tracking
+make
+sudo make install
+
+
+Verify that it's fat
+lipo -info /usr/local/lib/libpng.a
+
+
 
 
 
 
 Statically link in /usr/local/lib/libpng.a
 
+Now build libpng
+There is no configure so I have to do this manually
+
+
 I just modified the resulting line that actually got executed by the makefile.  I took out the -lpng and added the .a path
 
-g++ -W -Wall -O2 -finline-functions -g -o png2ico png2ico.cpp /usr/local/lib/libpng.a -lz -lm
+g++ -o png2ico png2ico.cpp /usr/local/lib/libpng.a -lz -lm
+g++ $(CPPFLAGS) $(DEBUG) -o $@ $< /usr/local/lib/libpng.a -lz -lm
 
 
 Verify that this does not link to libpng.dylib:
@@ -19,6 +41,34 @@ png2ico:
         /usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.0.0)
         /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 71.1.1)
 	
+
+
+
+
+
+To make this universal:
+
+First build it with this as the CPP flags:
+
+-arch i386
+move to png2ico.i386
+
+then -arch ppc
+move to png2ico.ppc
+
+
+Hmm, why am I getting it ppc7400 ?
+Maybe try doing this under Tiger?
+
+
+
+lipo -create png2ico.i386 png2ico.ppc -output png2ico
+
+
+
+
+
+
 	
 
 
