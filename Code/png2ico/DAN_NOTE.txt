@@ -3,6 +3,9 @@ LIBPNG is needed.
 ** Even though it's installed in the system (At least Snow Leopard)
 ** I can't seem to make it work with the system version
 
+The version I'm using is 1.2.37 (an important security fix)
+
+
 Download libpng from:
 
 http://www.libpng.org/pub/png/libpng.html
@@ -43,6 +46,8 @@ png2ico:
 	
 
 
+Unfortunately I was unable to build a ppc variation ("-arch ppc") from Snow Leopard Intel.
+It kept being ppc7400. So I built a regular version over on Tiger (ppc)
 
 
 
@@ -62,7 +67,7 @@ Maybe try doing this under Tiger?
 
 
 
-lipo -create png2ico.i386 png2ico.ppc -output png2ico
+	lilipo -create png2ico.i386 png2ico.ppc -output png2ico
 
 
 
