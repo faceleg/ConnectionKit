@@ -5871,7 +5871,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nEXECUTABLE=\"${PROJECT_DIR}/../Code/png2ico/png2ico\"\nEXECUTABLES_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\"\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n${PBXCP} \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
