@@ -977,41 +977,50 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
+    
+    CKTransferRecord *result = nil;
+    
 	
-	// Is the URL actually a directory? If so, upload its contents
-    BOOL isDirectory = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory] && isDirectory)
+	BOOL isDirectory = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
-        NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
-        NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
-        NSString *aSubPath;
-        while (aSubPath = [subpathsEnumerator nextObject])
+        // Is the URL actually a directory? If so, upload its contents
+        if (isDirectory)
         {
-            NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
-            NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
-            [self uploadContentsOfURL:aURL toPath:aRemotePath];
+            NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
+            NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
+            NSString *aSubPath;
+            while (aSubPath = [subpathsEnumerator nextObject])
+            {
+                NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
+                NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
+                [self uploadContentsOfURL:aURL toPath:aRemotePath];
+            }
         }
-        
-        return nil;
+        else
+        {
+            // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
+            CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+            
+            id <CKConnection> connection = [self connection];
+            OBASSERT(connection);
+            [connection connect];	// Ensure we're connected
+            result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
+            [result setName:[remotePath lastPathComponent]];
+            
+            [parent addContent:result];
+            
+            // Also set permissions for the file
+            [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+        }
+    }
+    else
+    {
+        NSLog(@"Not uploading contents of %@ as it does not exist", [localURL path]);
     }
     
     
-    // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
-    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-    
-    id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-	[connection connect];	// Ensure we're connected
-    CKTransferRecord *result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    [result setName:[remotePath lastPathComponent]];
-    
-    [parent addContent:result];
-    
-    // Also set permissions for the file
-    [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
-    
-    return result;
-    
+    return result;    
 }
 
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
