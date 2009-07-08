@@ -1038,9 +1038,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
     
-    [parent addContent:result];
+    if (result)
+    {
+        [parent addContent:result];
     
-    [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
+        [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
+    }
+    else
+    {
+        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+    }
     
     return result;
 }
