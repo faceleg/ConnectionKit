@@ -16,9 +16,21 @@
 - (void)createConnection
 {
 	id <CKConnection> connection = [[CKDotMacConnection alloc] initWithUser:nil];
-    OBASSERT(connection);
-	[self setConnection:connection];
-	[connection release];
+    if (connection)
+    {
+        [self setConnection:connection];
+        [connection release];
+    }
+    else
+    {
+        NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+											 code:KTPublishingEngineErrorNoCredentialForAuthentication
+							 localizedDescription:NSLocalizedString(@"MobileMe username could not be found.", @"Publishing engine authentication error")
+					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
+								  underlyingError:nil];
+        
+        [self engineDidPublish:NO error:error];
+    }
 }
 
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space
@@ -53,7 +65,7 @@
         
 		NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
 											 code:KTPublishingEngineErrorNoCredentialForAuthentication
-							 localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
+							 localizedDescription:NSLocalizedString(@"MobileMe password could not be found.", @"Publishing engine authentication error")
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
