@@ -1490,6 +1490,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
     return NO;
 }
 
+// By default, NSApplication assumes it can quit if no documents have unsaved changes. We need to implement this to alert every document it is about to close and needs to run the media GC etc.
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+    [[NSDocumentController sharedDocumentController] closeAllDocumentsWithDelegate:nil didCloseAllSelector:nil contextInfo:NULL];
+    return NSTerminateNow;
+}
+
 
 // Font Panel capabilities -- restrict what effects we can do.
 /// put back in effects that people might want.
