@@ -117,7 +117,7 @@ echo "A new ${APPNAME} is now available at:" >> $EMAIL_PATH
 echo "" >> $EMAIL_PATH
 
 ###echo "<http://designerskit.karelia.com/${APPNAMEZIP}>" >> $EMAIL_PATH
-echo "<https://ssl.karelia.com/designkit.html>" >> $EMAIL_PATH
+echo "<https://secure.karelia.com/designkit.html>" >> $EMAIL_PATH
 
 echo "" >> $EMAIL_PATH
 echo "If requested, please download and verify this release." >> $EMAIL_PATH
