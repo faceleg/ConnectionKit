@@ -3202,9 +3202,9 @@
 				27409DFC0DEC685300C2387E /* Data Migration */,
 				3C5A736E0BF7B67300776464 /* Core Data */,
 				275E067A0DDA0F1A0072567F /* Elements */,
+				27DB80770C84658200E29C38 /* Inspector */,
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CD0D85780100AEF4B5 /* Document UI */,
-				27DB80770C84658200E29C38 /* Inspector */,
 				278CDCCE0E83DB2000477D3A /* Text Editing */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
 				3C5A73830BF7B8F200776464 /* Index */,
@@ -5708,7 +5708,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://ssl.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
