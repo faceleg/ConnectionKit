@@ -1,11 +1,11 @@
-CPPFLAGS=-W -Wall -O2 -finline-functions -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk
+CPPFLAGS=-W -Wall -O2 -finline-functions -arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include
 #CPPFLAGS=-O0 -W -Wall
 DEBUG=-g
 
 all: png2ico
 
 png2ico: png2ico.cpp
-	g++ $(CPPFLAGS) $(DEBUG) -o $@ $< /usr/local/lib/libpng.a -lz -lm
+	g++ $(CPPFLAGS) $(DEBUG) -o $@ $< /usr/local/lib/libpng.a -lz -lm -lc
 
 doc/png2ico.txt: doc/png2ico.1
 	man $< |sed  -e $$'s/.\b\\(.\\)/\\1/g' -e 's/\(.*\)/\1'$$'\r/' >$@
