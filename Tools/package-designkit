@@ -75,7 +75,7 @@ echo ""
 
 # upload it to ...domains/designerskit.karelia.com/DesignKit.zip
 
-SERVER_PATH="/home/19590/domains/designerskit.karelia.com"
+SERVER_PATH="/home/karelia.com/domains/designerskit.karelia.com"
 BACKUP_SERVER_PATH="/home/kareliasw/dh.karelia.com"
 
 UPLOAD_PATH="${SERVER_PATH}/${APPNAMEZIP}"
@@ -84,7 +84,7 @@ BACKUP_UPLOAD_PATH="${BACKUP_SERVER_PATH}/${APPNAMEZIP}"
 # ------- Server Info
 
 # SCP assumes public key login through Karelia's (mt) account
-SCP_LOGIN="serveradmin%karelia.com@s19590.gridserver.com"
+SCP_LOGIN="karelia.com@secure.karelia.com"
 BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
 
 DISTRO_PATH="${SCRATCH_DIR}/${APPNAMEZIP}"
