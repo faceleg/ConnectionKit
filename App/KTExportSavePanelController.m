@@ -37,16 +37,21 @@
 
 /*  We don't actually care about the filename, but the URL field must contain a valid http or https URL.
  */
-- (BOOL)panel:(NSSavePanel *)openPanel isValidFilename:(NSString *)filename
+- (NSString *)panel:(id)sender userEnteredFilename:(NSString *)filename confirmed:(BOOL)okFlag;
 {
-	BOOL result = NO;
+	NSString *result = filename;
     
-    NSURL *URL = [self siteURL];
-    if (URL && [URL scheme])
+    if (okFlag)
     {
-        if ([[URL scheme] isEqualToString:@"http"] || [[URL scheme] isEqualToString:@"https"])
+        result = nil;
+        
+        NSURL *URL = [self siteURL];
+        if (URL && [URL scheme])
         {
-            result = YES;
+            if ([[URL scheme] isEqualToString:@"http"] || [[URL scheme] isEqualToString:@"https"])
+            {
+                result = filename;
+            }
         }
     }
     
