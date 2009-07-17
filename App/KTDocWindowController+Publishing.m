@@ -89,6 +89,7 @@
 - (BOOL)shouldPublish
 {
     BOOL result = [[self webViewController] commitEditing];
+    [[self siteOutlineController] commitEditing];
     
     if (result)
     {
