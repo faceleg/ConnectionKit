@@ -1172,6 +1172,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //	NSLog(@"Queuing timeout test from testConnectionDidFinishLoading");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 	NSString *file = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
+	
+	[self setConnectionData:[NSMutableData data]];		// HACK -- TO KEEP THE NEXT BUTTON FROM ENABLING WHILE WE ARE DELETING.
+
 	[myTestConnection deleteFile:file];
 }
 
@@ -1181,6 +1184,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 //	NSLog(@"Cancelling timeout test, didDeleteFile");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
+
+	[self setConnectionData:nil];		// HACK -- TO KEEP THE NEXT BUTTON FROM ENABLING WHILE WE ARE DELETING.
 
 	NSLog(@"= %@%@", NSStringFromSelector(_cmd), path);
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
