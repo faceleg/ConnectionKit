@@ -238,7 +238,14 @@
         if (returnCode == NSOKButton)
         {
             KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
-			[hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
+            [hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
+            
+            // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
+            if (![hostProperties siteURL])
+            {
+                [hostProperties setValue:nil forKey:@"localHosting"];
+            }
+            
             [[[[self document] documentInfo] root] recursivelyInvalidateURL:YES];
         }
         
