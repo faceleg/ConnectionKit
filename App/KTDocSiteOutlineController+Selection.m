@@ -78,7 +78,7 @@
 	
 	while (aPage = [selectionEnumerator nextObject])
 	{
-		if (![collapsingItem containsDescendant:aPage])
+		if (![aPage isDescendantOfPage:collapsingItem])
 		{
 			shouldSelectCollapsingItem = NO;
 			break;

@@ -388,7 +388,7 @@
 	return result;
 }
 
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant
+- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
 {
 	if ( ![self hasChildren] )
 	{
@@ -416,6 +416,21 @@
 	
 	return NO;
 }
+
+- (BOOL)isDescendantOfPage:(KTPage *)aPotentialAncestor;
+{
+	KTPage *parent = [self parent];
+	if (nil == parent)		// we are at the root node, so it can't be descended from the given node
+	{
+		return NO;
+	}
+	if (aPotentialAncestor == parent)
+	{
+		return YES;
+	}
+	return [parent isDescendantOfPage:aPotentialAncestor];
+}
+
 
 /*	Returns the page's index path relative to root parent. i.e. the DocumentInfo object.
  *	This means every index starts with 0 to signify root.
