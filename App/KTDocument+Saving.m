@@ -47,6 +47,10 @@
 #import "Debug.h"
 
 
+#include <sys/param.h>
+#include <sys/mount.h>
+
+
 NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
@@ -147,36 +151,58 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         mySaveOperationCount++;
         
         
+        // Test if the filesystem is writable before actually trying. #43307
+        struct statfs statfs_info;
+        int success = statfs([[[absoluteURL path] stringByDeletingLastPathComponent] fileSystemRepresentation],
+                             &statfs_info);
         
-        // When writing to the doc's URL, we only support Save and Autosave
-        if ([[[absoluteURL path] stringByResolvingSymlinksInPath] isEqualToString:[[[self fileURL] path] stringByResolvingSymlinksInPath]])
-        {                                           
-            NSSaveOperationType realSaveOp = (saveOperation == NSAutosaveOperation) ? NSAutosaveOperation : NSSaveOperation;
-            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:realSaveOp error:outError];
-        }
-        
-        
-        // -writeToURL: only supports the Save and SaveAs operations. Instead,
-        // we fake SaveTo operations by doing a standard Save operation and then
-        // copying the resultant file to the destination.
-        else if (saveOperation == NSSaveToOperation)
+        if (success == 0 && statfs_info.f_flags & MNT_RDONLY)
         {
-            result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
-            OBASSERT(result || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+            NSString *errorDescription = [[NSString alloc] initWithFormat:
+                                          NSLocalizedString(@"The document could not be saved as “%@”. The volume is read only.", "file save error"),
+                                          [absoluteURL lastPathComponent]];
             
-            if (result)
-            {
-                result = [self copyDocumentToURL:absoluteURL recycleExistingFiles:NO error:outError];
-            }
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                            code:NSFileWriteInvalidFileNameError
+                            localizedDescription:errorDescription
+                     localizedRecoverySuggestion:NSLocalizedString(@"Try saving the file to another volume.", "file save error")
+                                 underlyingError:nil];
+            
+            [errorDescription release];
         }
-        
-        
-        // Anything else passes through normally
         else
         {
-            result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+            // When writing to the doc's URL, we only support Save and Autosave
+            if ([[[absoluteURL path] stringByResolvingSymlinksInPath] isEqualToString:[[[self fileURL] path] stringByResolvingSymlinksInPath]])
+            {                                           
+                NSSaveOperationType realSaveOp = (saveOperation == NSAutosaveOperation) ? NSAutosaveOperation : NSSaveOperation;
+                result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:realSaveOp error:outError];
+            }
+            
+            
+            // -writeToURL: only supports the Save and SaveAs operations. Instead,
+            // we fake SaveTo operations by doing a standard Save operation and then
+            // copying the resultant file to the destination.
+            else if (saveOperation == NSSaveToOperation)
+            {
+                result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
+                OBASSERT(result || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+                
+                if (result)
+                {
+                    result = [self copyDocumentToURL:absoluteURL recycleExistingFiles:NO error:outError];
+                }
+            }
+            
+            
+            // Anything else passes through normally
+            else
+            {
+                result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+            }
+            OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         }
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+        
         
         // Unmark -isSaving as YES if applicable
         mySaveOperationCount--;
