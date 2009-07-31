@@ -47,6 +47,7 @@ KTCollectionPathStyle;
 - (KTPage *)parent;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
+- (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
 
 - (KTDocumentInfo *)documentInfo;
 
