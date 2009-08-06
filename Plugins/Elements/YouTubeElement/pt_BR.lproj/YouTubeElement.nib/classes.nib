@@ -1,0 +1,47 @@
+{
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSTrimFirstLineFormatter;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSFormatter;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSTextFieldCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSActionCell;
+        },
+                {
+            ACTIONS =             {
+                chooseMovieFile = id;
+                openHomePage = id;
+                openVideoSource = id;
+                openYouTubeURL = id;
+                resetColors = id;
+            };
+            CLASS = YouTubeElementDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oHomePageButton = NSButton;
+                oVideoSourceButton = NSButton;
+                videoSizeSlider = NSSlider;
+            };
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            CLASS = YouTubeVideoIDFormatter;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KSTrimFirstLineFormatter;
+        }
+    );
+    IBVersion = 1;
+}

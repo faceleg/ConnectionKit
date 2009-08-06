@@ -1,0 +1,97 @@
+{
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSNoCascadeWindow;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSWindow;
+        },
+                {
+            CLASS = KSPlaceholderTextView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextView;
+        },
+                {
+            CLASS = KSSingletonWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSWindowController;
+        },
+                {
+            ACTIONS =             {
+                showHelp = id;
+            };
+            CLASS = KTCodeInjectionController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oBodyEndTextView = KSPlaceholderTextView;
+                oBodySplitView = KTCodeInjectionSplitView;
+                oBodyStartTextView = KSPlaceholderTextView;
+                oBodyTagTextField = NSTextField;
+                oCodeInjectionDescriptionLabel = NSTextField;
+                oEarlyHeadTextView = KSPlaceholderTextView;
+                oHeadSplitView = KTCodeInjectionSplitView;
+                oHeadTextView = KSPlaceholderTextView;
+                oObjectController = NSObjectController;
+                oPreludeTextView = KSPlaceholderTextView;
+                oTabView = NSTabView;
+            };
+            SUPERCLASS = KSSingletonWindowController;
+        },
+                {
+            CLASS = KTCodeInjectionSplitView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = RBSplitView;
+        },
+                {
+            CLASS = NSApplication;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSManagedObjectContext;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            ACTIONS =             {
+                imagePickerCancelled = id;
+                imagePickerSet = id;
+            };
+            CLASS = NSObject;
+            LANGUAGE = ObjC;
+        },
+                {
+            CLASS = NSTextView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSText;
+        },
+                {
+            CLASS = NSView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            CLASS = NSWindow;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        },
+                {
+            ACTIONS =             {
+                hideWindow = id;
+            };
+            CLASS = NSWindowController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSResponder;
+        }
+    );
+    IBVersion = 1;
+}

@@ -1,0 +1,33 @@
+{
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTAbstractPlugin;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegate = id;
+            };
+            SUPERCLASS = KTManagedObject;
+        },
+                {
+            CLASS = KTElement;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPlugin;
+        },
+                {
+            CLASS = KTManagedObject;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSManagedObject;
+        },
+                {
+            CLASS = NSManagedObject;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        }
+    );
+    IBVersion = 1;
+}
