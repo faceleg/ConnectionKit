@@ -864,8 +864,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
         OBASSERT(path);
+        NSURL *url = [NSURL fileURLWithPath:path];
         
-        NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+        NSError *textFileError;
+        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
+                                                       fallbackEncoding:NSUTF8StringEncoding
+                                                                  error:&textFileError];
         if (CSS)
         {
             [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
@@ -880,7 +884,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            NSLog(@"Unable to read in image replacement CSS from %@", path);
+            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
+                  url,
+                  [[textFileError debugDescription] condenseWhiteSpace]);
         }
     }
     
