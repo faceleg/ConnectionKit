@@ -181,11 +181,12 @@
     
     // Prompt the user for the site's URL if they haven't been through the HSA.
     KTHostProperties *hostProperties = [[[self document] documentInfo] hostProperties];
-    if (![hostProperties siteURL] ||
-        (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
+    //if (![hostProperties siteURL] ||
+    //    (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
     {
         KTExportSavePanelController *controller = 
-		[[KTExportSavePanelController alloc] initWithSiteURL:[hostProperties siteURL]];   // We'll release it when the panel closes
+		[[KTExportSavePanelController alloc] initWithSiteURL:[hostProperties siteURL]
+                                                 documentURL:[[self document] fileURL]];   // we'll release it when the panel closes
         
         [savePanel setDelegate:controller];
         [savePanel setAccessoryView:[controller view]];

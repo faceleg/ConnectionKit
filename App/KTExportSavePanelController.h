@@ -12,9 +12,12 @@
 @interface KTExportSavePanelController : KSViewController
 {
     IBOutlet NSTextField    *oSiteURLField;
+    
+  @private
+    NSURL   *_documentURL;
 }
 
-- (id)initWithSiteURL:(NSURL *)URL;
+- (id)initWithSiteURL:(NSURL *)URL documentURL:(NSURL *)docURL;
 - (NSURL *)siteURL;
 
 @end
