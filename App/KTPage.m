@@ -355,15 +355,12 @@
 	{
 		NSSet *children = [self children];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTAbstractPage *aPage;
+		KTPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
-			OBASSERT(![aPage isDescendantOfPage:self]); // lots of assertions for #44139
+			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
             OBASSERT(aPage != self);
-            if ([aPage isKindOfClass:[KTPage class]])
-            {
-                OBASSERT(![[(KTPage *)aPage children] containsObject:self]);
-            }
+            OBASSERT(![[aPage children] containsObject:self]);
             
             [aPage recursivelyInvalidateURL:YES];
 		}
