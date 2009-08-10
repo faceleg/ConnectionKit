@@ -69,7 +69,7 @@
 
 	if (nil != aDOMElement)
 	{
-		DOMNodeIterator *it = [doc createNodeIterator:aDOMElement :DOM_SHOW_ELEMENT :[EditableNodeFilter sharedFilter] :YES];
+		DOMNodeIterator *it = [doc createNodeIterator:aDOMElement whatToShow:DOM_SHOW_ELEMENT filter:[EditableNodeFilter sharedFilter] expandEntityReferences:YES];
 		DOMHTMLElement *element;
 		
 		// Collect the elements into an array for processing later, since the loop messes with the DOM
@@ -171,8 +171,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 						(hasSpan ? @"true" : @"false"),
 						(hasParagraph ? @"true" : @"false")];
 					
-					[a setAttribute:@"onclick" :jsFunction];
-					[a setAttribute:@"style" :@"float:none; width:13px; height:14px; border:none; text-decoration:none;"];	// ??also?? position:absolute;
+					[a setAttribute:@"onclick" value:jsFunction];
+					[a setAttribute:@"style" value:@"float:none; width:13px; height:14px; border:none; text-decoration:none;"];	// ??also?? position:absolute;
 					
 					DOMHTMLImageElement *img = (DOMHTMLImageElement *)[doc createElement:@"IMG"];
 					
@@ -180,7 +180,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 					NSURL *imageURL = [NSURL fileURLWithPath:addImagePath];
 					[img setSrc:[imageURL absoluteString]];
 					[img setAlt:NSLocalizedString(@"Add Element", @"alt text for + button in HTML view")];
-					[img setAttribute:@"style" :@"border:none;"];	// ??also?? position:absolute;
+					[img setAttribute:@"style" value:@"border:none;"];	// ??also?? position:absolute;
 					[img setClassName:kKTInternalImageClassName];
 					
 					DOMText *zeroWidthSpace = [doc createTextNode:[NSString stringWithUnichar:0x200b]];
@@ -188,7 +188,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 					(void) [a appendChild:img];
 					(void) [a appendChild:zeroWidthSpace];
 					
-					[[element parentNode] replaceChild:a :element];
+					[[element parentNode] replaceChild:a oldChild:element];
 					
 				}
 				else	// delete optional element

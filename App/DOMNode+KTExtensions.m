@@ -290,7 +290,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine
 {
-	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self :DOM_SHOW_TEXT :nil :YES];
+	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
 	DOMNode *subNode;
 	NSMutableString *buf = [NSMutableString string];
 	
@@ -320,7 +320,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 */
 - (void)makeSingleLine;
 {
-	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self :DOM_SHOW_TEXT :nil :YES];
+	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
 	DOMNode *subNode;
 	
 	
@@ -372,7 +372,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 */	
 	
 	// also remove graphics and unlink anchors & paragraphs from a single line
-	it = [[self ownerDocument] createNodeIterator:self :DOM_SHOW_ELEMENT :nil :YES];
+	it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:YES];
 	
 	while ((subNode = [it nextNode]))
 	{
@@ -511,7 +511,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 - (void)removeAnyDescendentElementsNamed:(NSString *)elementName
 {
 	elementName = [elementName uppercaseString];
-	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self :DOM_SHOW_ELEMENT :nil :YES];
+	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:YES];
 	DOMNode *subNode;
 	NSMutableArray *nodesToUnlink = [NSMutableArray array];
 	
@@ -548,7 +548,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	if (aSpan)
 	{
 		DOMHTMLElement *span = (DOMHTMLElement *)[doc createElement:@"SPAN"];
-		[span setAttribute:@"class" :@"in"];
+		[span setAttribute:@"class" value:@"in"];
 	
 		[span appendChild:text];
 		[element appendChild:span];
@@ -645,7 +645,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			
 			if (replaced != child)	// changed?  Replace!
 			{
-				[self replaceChild:replaced :child];
+				[self replaceChild:replaced oldChild:child];
 			}
 			// Point to the sibling to process, which we already fetched
 			child = next;
@@ -682,7 +682,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	// to undo insertBefore::, we remove the newChild
 	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent removeChild:newChild];
 	
-	return [parent insertBefore:newChild :refChild];	
+	return [parent insertBefore:newChild refChild:refChild];	
 }
 
 + (DOMNode *)node:(DOMNode *)parent removeChild:(DOMNode *)child
@@ -897,7 +897,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		if (![newStyleText isEqualToString:@""])
 		{
 			// Replace style string with new string
-			[self setAttribute:@"style" :newStyleText];
+			[self setAttribute:@"style" value:newStyleText];
 		}
 		else
 		{
@@ -976,7 +976,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 				DOMNode *aChild = [childNodes item:i];
 				[newPRE appendChildren:[aChild childNodes]];
 			}
-			[[self parentNode] replaceChild:newPRE :self];
+			[[self parentNode] replaceChild:newPRE oldChild:self];
 			result = newPRE;
 		}
 	}

@@ -1572,8 +1572,8 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 	
 	// no, we have a selection, do some range checking
-	short startToStart = [selectedDOMRange compareBoundaryPoints:DOM_START_TO_START :dragCaretDOMRange];
-	short endToEnd = [selectedDOMRange compareBoundaryPoints:DOM_END_TO_END :dragCaretDOMRange];
+	short startToStart = [selectedDOMRange compareBoundaryPoints:DOM_START_TO_START sourceRange:dragCaretDOMRange];
+	short endToEnd = [selectedDOMRange compareBoundaryPoints:DOM_END_TO_END sourceRange:dragCaretDOMRange];
 	// -1 = A is before B
 	//	 1 = A is after B
 	
