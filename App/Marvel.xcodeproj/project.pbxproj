@@ -5035,9 +5035,10 @@
 			isa = PBXProject;
 			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				en,
+				English,
 				ja,
 				fr,
 				de,
@@ -5048,6 +5049,7 @@
 				es,
 				German,
 				pt_BR,
+				en,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Marvel */;
 			projectDirPath = "";
