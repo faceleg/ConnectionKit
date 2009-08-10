@@ -98,13 +98,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (NSImage *)_quickLookThumbnail;
 - (NSString *)quickLookPreviewHTML;
 
-// Snapshots
-- (void)_saveDocumentSnapshotWithDelegate:(id)delegate didSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo;
-- (BOOL)createSnapshotDirectoryIfNeeded:(NSError **)outError;
-
-// Backups (inc. Snapshots)
-- (BOOL)prepareToBackupToURL:(NSURL *)URL error:(NSError **)outError;
-
 @end
 
 
@@ -127,7 +120,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
-    BOOL result = NO;		// We have to supply an Error if we are going to return NO....
+    // Mark -isSaving as YES;
+    mySaveOperationCount++;
     
     
     if ([self isSaving])
@@ -212,6 +206,13 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         mySaveOperationCount--;
     }
     
+    BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+    OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+    
+    
+    // Unmark -isSaving as YES if applicable
+    mySaveOperationCount--;
+    
     
 	return result;
 }
@@ -219,12 +220,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 - (BOOL)isSaving
 {
     return (mySaveOperationCount > 0);
-}
-
-- (BOOL)keepBackupFile
-{
-	// we tie this standard NSDocument method to a user default
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"CreateBackupFileWhenSaving"];
 }
 
 #pragma mark -
@@ -294,19 +289,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
 	BOOL result = NO;
     
-    // We're only interested in special behaviour for Save As operations
     switch (saveOperation)
     {
-        case NSSaveOperation:
-        case NSAutosaveOperation:
-            result = [self writeToURL:absoluteURL       // Stops NSPersistentDocument locking the store in the background
-                               ofType:typeName
-                     forSaveOperation:NSSaveOperation 
-                  originalContentsURL:[self fileURL]
-                                error:outError];
-            
-            break;
-            
         case NSSaveAsOperation:
         {
             // We'll need a path for various operations below
@@ -357,6 +341,21 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         }
             
             
+            
+        // NSDocument attempts to write a copy of the document out at a temporary location.
+        // Core Data cannot support this, so we override it to save directly.
+        case NSSaveOperation:
+            result = [self writeToURL:absoluteURL
+                               ofType:typeName
+                     forSaveOperation:saveOperation 
+                  originalContentsURL:[self fileURL]
+                                error:outError];
+            
+            break;
+        
+            
+            
+        // Other save types are fine to go through the regular channels
         default:
             result = [super writeSafelyToURL:absoluteURL 
                                       ofType:typeName 
@@ -426,14 +425,16 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Write To URL
 
-/*	Called when creating a new document and when performing saveDocumentAs:
+/*	The low level NSDocument method responsible for actually getting a document onto disk
  */
 - (BOOL)writeToURL:(NSURL *)inURL 
 			ofType:(NSString *)inType 
   forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
 			 error:(NSError **)outError 
 {
-	OBPRECONDITION(inURL);
+	OBPRECONDITION([NSThread currentThread] == [self thread]);
+    
+    OBPRECONDITION(inURL);
 	OBPRECONDITION([inURL isFileURL]);
 	
 	// We don't support any of the other save ops here.
@@ -444,17 +445,15 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
     // Kick off thumbnail generation
-    [[self proxyForThread:[self thread]] startGeneratingQuickLookThumbnail];
+    [self startGeneratingQuickLookThumbnail];
     
     
     
     // Prepare to save the context
-    KTDocument *docProxy = ([NSThread currentThread] == [self thread]) ? [self retain] : [[KSThreadProxy alloc] initWithTarget:self];
-    result = [docProxy prepareToWriteToURL:inURL
-                                    ofType:inType
-                          forSaveOperation:saveOperation
-                                     error:outError];
-    [docProxy release];
+    result = [self prepareToWriteToURL:inURL
+                                ofType:inType
+                      forSaveOperation:saveOperation
+                                 error:outError];
     OBASSERT(result || !outError || (nil != *outError));    // make sure we didn't return NO with an empty error
 	
     
@@ -462,20 +461,17 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if (result)
 	{
 		// Generate Quick Look preview HTML
-        KTDocument *docProxy = ([NSThread currentThread] == [self thread]) ? [self retain] : [[KSThreadProxy alloc] initWithTarget:self thread:[self thread]];
-        NSString *quickLookPreviewHTML = [docProxy quickLookPreviewHTML];
+        NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
         
         
         // Save the context
-		result = [docProxy writeMOCToURL:inURL
+		result = [self writeMOCToURL:inURL
                               ofType:inType
                     forSaveOperation:saveOperation
                  originalContentsURL:inOriginalContentsURL
                                error:outError];
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 		
-        [docProxy release];
-        
         
         // Write out Quick Look preview
         if (result && quickLookPreviewHTML)
@@ -506,7 +502,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)saveOperation
 					  error:(NSError **)outError
 {
-	OBPRECONDITION(inURL);
+	OBASSERT([NSThread currentThread] == [self thread]);
+    
+    OBPRECONDITION(inURL);
 	OBPRECONDITION([inURL isFileURL]);
 	
 	
@@ -542,8 +540,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	// Make sure we have a persistent store coordinator properly set up
-	OBASSERT([NSThread currentThread] == [self thread]);
-    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
 	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
 	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
 	
@@ -569,7 +566,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     // Set metadata
     if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
     {
-        OBASSERT([NSThread currentThread] == [self thread]);
         if (![self setMetadataForStoreAtURL:persistentStoreURL error:outError])
         {
 			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -588,7 +584,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Record display properties
-    OBASSERT([NSThread currentThread] == [self thread]);
     [managedObjectContext processPendingChanges];
     [[managedObjectContext undoManager] disableUndoRegistration];
     [self copyDocumentDisplayPropertiesToModel];
@@ -597,7 +592,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Move external media in-document if the user requests it
-    OBASSERT([NSThread currentThread] == [self thread]);
     KTSite *docInfo = [self site];
     if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
     {
@@ -615,7 +609,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				error:(NSError **)outError;
 
 {
-	BOOL result = YES;
+	OBASSERT([NSThread currentThread] == [self thread]);
+    
+    
+    BOOL result = YES;
 	NSError *error = nil;
 	
 	
@@ -639,7 +636,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             }
             else
             {
-                OBASSERT([NSThread currentThread] == [self thread]);
                 result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                                   error:&error];
             }
@@ -647,12 +643,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         
         if (result)	// keep going if OK
         {
-            OBASSERT([NSThread currentThread] == [self thread]);
             result = [managedObjectContext save:&error];
         }
         if (result)
         {
-            OBASSERT([NSThread currentThread] == [self thread]);
             result = [[[self mediaManager] managedObjectContext] save:&error];
         }
     }
@@ -1030,7 +1024,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
         
     // Save the thumbnail to disk
-    NSImage *thumbnail = [[self proxyForMainThread] _quickLookThumbnail];
+    NSImage *thumbnail = [[self proxyForThread:nil] _quickLookThumbnail];
     if (thumbnail)
     {
         NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"thumbnail.png" isDirectory:NO];
@@ -1155,350 +1149,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
     NSString *result = [parser parseTemplate];
     [parser release];
-    
-    return result;
-}
-
-#pragma mark -
-#pragma mark Autosave
-
-/*  Run the autosave on a background thread to avoid upsetting users
- */
-- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo
-{
-    // Prepare callback invocation
-    NSInvocation *callback = nil;
-    if (delegate)
-    {
-        NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:didAutosaveSelector];
-        NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
-        [callback setTarget:delegate];
-        [callback setSelector:didAutosaveSelector];
-        [callback setArgument:&self atIndex:2];
-        [callback setArgument:&contextInfo atIndex:4];	// Argument 3 will be set from the save result
-    }
-    
-    
-    // We only allow triggering an autosave on the main thread. i.e. ignore autosaves during migration
-    if (![NSThread isMainThread])
-    {
-        BOOL didSave = NO;
-        [callback setArgument:&didSave atIndex:3];
-        [callback invoke];
-        return;
-    }
-    
-    
-    // UI
-    [[self mainWindowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
-    
-        
-    // Do the save in the background
-    [NSThread detachNewThreadSelector:@selector(threadedAutosaveWithCallback:) toTarget:self withObject:callback];
-}
-
-- (void)threadedAutosaveWithCallback:(NSInvocation *)callback
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // Because we're a secondary thread, retain for duration of operation
-    NSURL *URL = [[self fileURL] retain];           
-    NSString *fileType = [[self fileType] copy];
-    
-    // Do the save
-    NSError *error;
-    BOOL didSave = [self saveToURL:URL ofType:fileType forSaveOperation:NSAutosaveOperation error:&error];
-    
-    // Tidy up
-    [URL release];
-    [fileType release];
-    
-    // UI
-    [[self mainWindowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
-    
-    // Perform callback. Does nothing if callback is nil
-    [callback setArgument:&didSave atIndex:3];
-    [callback performSelectorOnMainThread:@selector(invoke)
-                               withObject:nil
-                            waitUntilDone:NO];
-    
-    // Tidy up
-    [pool release];
-}
-
-/*  We override this accessor to always be nil. Otherwise, the doc architecture will assume our doc is the autosaved copy and delete it!
- */
-- (NSURL *)autosavedContentsFileURL { return nil; }
-- (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL { }
-
-#pragma mark -
-#pragma mark Save Snapshot
-
-- (IBAction)saveDocumentSnapshot:(id)sender
-{
-    [self saveSnapshotWithDelegate:nil didSaveSnapshotSelector:nil contextInfo:NULL];
-}
-
-/*  Handles the GUI-side of snapshots.
- *      1. If needed, asks the user if they want to replace the last snapshot
- *      2. Saves the snapshot
- *      3. Presents any error encountered during saving
- */
-- (void)saveSnapshotWithDelegate:(id)delegate didSaveSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo
-{
-    OBASSERT([NSThread isMainThread]);
-    
-    
-    if ([self hasValidSnapshot])
-	{
-		NSDate *snapshotDate = [self lastSnapshotDate];
-		NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-		
-		NSString *title = NSLocalizedString(@"Do you want to replace the last snapshot?", @"alert: replace snapshot title");		
-		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
-		
-		// confirm with silencing confirm sheet
-		[[self confirmWithWindow:[[self mainWindowController] window]
-					silencingKey:@"SilenceSaveDocumentSnapshot"
-					   canCancel:YES 
-						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")
-						 silence:nil 
-						   title:title
-						  format:message] _saveDocumentSnapshotWithDelegate:delegate didSnapshotSelector:selector contextInfo:contextInfo];
-	}
-	else
-	{
-		[self _saveDocumentSnapshotWithDelegate:delegate didSnapshotSelector:selector contextInfo:contextInfo];
-	}
-}
-
-
-/*  Support for the public version of this method; doesn't do any checks for existing snapshots
- */
-- (void)_saveDocumentSnapshotWithDelegate:(id)delegate didSnapshotSelector:(SEL)selector contextInfo:(void *)contextInfo
-{
-    // Do the save
-    NSError *error;
-    BOOL result = [self saveSnapshot:&error];
-    
-    
-    // Build callback
-    NSInvocation *callback = nil;
-    if (delegate && selector)
-    {
-        callback = [NSInvocation invocationWithSelector:selector target:delegate];
-        [callback setArgument:&self atIndex:2];
-        [callback setArgument:&result atIndex:3];
-        [callback setArgument:&contextInfo atIndex:4];
-    }
-    
-    
-    // Either present error, or inform delegate
-    if (result)
-    {
-        [callback invoke];
-    }
-    else
-    {
-        [self presentError:error
-            modalForWindow:[self windowForSheet]
-                  delegate:self
-        didPresentSelector:@selector(didPresentSaveSnapshotErrorWithRecovery:contextInfo:)
-               contextInfo:[callback retain]];  // Callback will be released later
-    }
-}
-
-- (void)didPresentSaveSnapshotErrorWithRecovery:(BOOL)didRecover contextInfo:(void *)contextInfo
-{
-    NSInvocation *callback = contextInfo;
-    [callback invoke];
-    [callback release];
-}
-
-/*  Performs the low-level business of snapshotting. No GUI.
- *  Moves old snapshot to the trash first if there is one
- */
-- (BOOL)saveSnapshot:(NSError **)outError
-{
-    NSURL *snapshotURL = [self snapshotURL];
-        
-    
-    // Save the document normally
-    BOOL result = [self saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSAutosaveOperation error:outError];
-    
-    
-    if (result)
-    {
-        // Disallow creating snapshot to the same location
-        NSString *destinationPath = [[snapshotURL path] stringByResolvingSymlinksInPath];
-        NSString *sourcePath = [[[self fileURL] path] stringByResolvingSymlinksInPath];
-        if ([destinationPath isEqualToString:sourcePath])
-        {
-            if (outError)
-            {
-                *outError = [NSError errorWithDomain:kKareliaErrorDomain
-                                                code:KareliaError
-                                localizedDescription:NSLocalizedString(@"A snapshot of the document could not be created as it is already a snapshot.", "alert message")
-                         localizedRecoverySuggestion:NSLocalizedString(@"Please close the document and then move it out of the Snapshots folder.", "alert info")
-                                     underlyingError:nil];
-            }
-            
-            return NO;
-        }
-            
-        
-        // Create snapshot directory
-        result = [self createSnapshotDirectoryIfNeeded:outError];
-        
-        
-        // Copy the doc to the snapshot location
-        if (result)
-        {
-            NSError *copyError = nil;
-            result = [self copyDocumentToURL:snapshotURL recycleExistingFiles:YES error:outError];
-            
-            if (!result && outError)
-            {
-                NSString *snapshotsDirectory = [[self snapshotDirectoryURL] path];
-                NSString *failureReason = [NSString stringWithFormat:
-                                           NSLocalizedString(@"Sandvox was unable to create a snapshot of this document. Please check that the folder %@ exists and is writeable.", "alert: could not remove prior snap"),
-                                           [snapshotsDirectory stringByAbbreviatingWithTildeInPath]];
-                
-                NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
-                                               failureReason, NSLocalizedRecoverySuggestionErrorKey,
-                                               copyError, NSUnderlyingErrorKey,
-                                               nil];
-                
-                *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
-            }
-        }
-    }
-    
-    return result;
-}
-
-#pragma mark -
-#pragma mark Revert To Snapshot
-
-/*  Handles the GUI portion of reverting a snapshot
- */
-- (IBAction)revertDocumentToSnapshot:(id)sender
-{
-	if (![self hasValidSnapshot])
-	{
-		// should never reach here if menu validation is working
-        NSBeep();
-		NSLog(@"Document %@ has no valid snapshot.", [self displayName]);
-	}
-	
-    
-	NSDate *snapshotDate = [self lastSnapshotDate];
-    NSString *dateString = [snapshotDate relativeFormatWithTimeAndStyle:NSDateFormatterMediumStyle];
-    
-    NSString *titleFormatString = NSLocalizedString(@"Do you want to revert to the most recently saved snapshot?", 
-                                                    "alert: revert to snapshot.");
-    NSString *title = [NSString stringWithFormat:titleFormatString, dateString];
-    
-    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The previous snapshot was saved %@. Your current changes will be lost.", "alert: changes will be lost. %@ is replaced by a date or day+time"), dateString];
-    
-    NSAlert *alert = [NSAlert alertWithMessageText:title 
-                                     defaultButton:NSLocalizedString(@"Revert", "Revert Button") 
-                                   alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
-                                       otherButton:nil
-                         informativeTextWithFormat:message];
-    
-    [alert beginSheetModalForWindow:[self windowForSheet]
-                      modalDelegate:self
-                     didEndSelector:@selector(shouldRevertToSnapshotAlertDidEnd:returnCode:contextInfo:)
-                        contextInfo:NULL];
-}
-
-- (void)shouldRevertToSnapshotAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-    if (returnCode == NSAlertDefaultReturn)
-    {
-        [[NSApp delegate] revertDocument:self toSnapshot:[[self snapshotURL] path]];
-    }
-}
-
-#pragma mark -
-#pragma mark Snapshot Support
-
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/    */
-+ (NSURL *)snapshotsDirectoryURL
-{
-    NSURL *appSupportURL = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]];
-    NSURL *result = [appSupportURL URLByAppendingPathComponent:@"Snapshots" isDirectory:YES];
-    return result;
-}
-
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
-- (NSURL *)snapshotDirectoryURL
-{
-	NSURL *result = [[[self class] snapshotsDirectoryURL] URLByAppendingPathComponent:[[self site] siteID]
-                                                                          isDirectory:YES];
-    return result;
-}
-
-/*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID>/<fileName>.svxSite */
-- (NSURL *)snapshotURL
-{
-    NSURL *result = [[self snapshotDirectoryURL] URLByAppendingPathComponent:[[self fileURL] lastPathComponent] isDirectory:NO];
-    return result;
-}
-
-- (BOOL)hasValidSnapshot
-{
-	BOOL result = NO;
-	
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *snapshotPath = [[self snapshotURL] path];
-	result = [fm fileExistsAtPath:snapshotPath];
-	result = result && [[NSFileManager defaultManager] isReadableFileAtPath:snapshotPath];
-	
-	return result;
-}
-
-- (NSDate *)lastSnapshotDate
-{
-	NSDate *result = nil;
-	
-	// grab date of last save
-	NSFileManager *fm = [NSFileManager defaultManager];
-	NSDictionary *attrs = [fm fileAttributesAtPath:[[self snapshotURL] path] traverseLink:YES];
-	
-	// try modDate then creationDate
-	result = [attrs valueForKey:NSFileModificationDate];
-	if ( nil == result )
-	{
-		result = [attrs valueForKey:NSFileCreationDate];
-	}
-	
-	return result;
-}
-
-- (BOOL)createSnapshotDirectoryIfNeeded:(NSError **)outError
-{
-	NSString *directoryPath = [[self snapshotDirectoryURL] path];
-	
-    NSError *localError = nil;
-    BOOL result = [KTUtilities createPathIfNecessary:directoryPath error:&localError];
-    
-    if (!result)
-	{
-		NSString *failureReason = [NSString stringWithFormat:
-                                   NSLocalizedString(@"Unable to create snapshot folder at %@.", "alert failure reason"),
-                                   [directoryPath stringByAbbreviatingWithTildeInPath]];
-        
-        NSDictionary *errorUserInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       NSLocalizedString(@"Snapshot Failed", "alert: snapshot failed"), NSLocalizedDescriptionKey,
-                                       failureReason, NSLocalizedRecoverySuggestionErrorKey,
-                                       localError, NSUnderlyingErrorKey,
-                                       nil];
-        
-        if (outError) *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError userInfo:errorUserInfo];
-    }
     
     return result;
 }

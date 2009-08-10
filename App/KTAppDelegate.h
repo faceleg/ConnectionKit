@@ -119,9 +119,4 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
 - (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType;
 
-// backups and snapshots
-- (BOOL)shouldBackupOnOpening;
-- (BOOL)shouldSnapshotOnOpening;
-- (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath;
-
 @end

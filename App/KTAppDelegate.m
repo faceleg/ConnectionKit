@@ -130,17 +130,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 @end
 
 
-@interface KTAppDelegate ( Private )
+@interface KTAppDelegate ()
 
-- (void)setMenuItemPro:(NSMenuItem *)aMenuItem;
-
-- (NSMutableDictionary *)dataModelForPlugin:(NSBundle *)aPlugin;
-- (void)connectToHomeBase:(NSTimer *)aTimer;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
-
-- (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL;
+#endif
 
 @end
 
@@ -306,7 +302,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
-		[NSNumber numberWithBool:YES],			@"AutosaveDocuments",
 		//[NSNumber numberWithBool:YES],			@"BackupWhenSaving",
 		//[NSNumber numberWithDouble:600.0],		@"BackupTimeInterval",
 
@@ -696,85 +691,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	return YES;
 }
-
-- (void)revertDocument:(KTDocument *)aDocument toSnapshot:(NSString *)aPath
-{
-	OBPRECONDITION(aDocument);
-	OBPRECONDITION(aPath);
-	// hang on to paths
-	NSString *documentPath = [[[[aDocument fileURL] path] copy] autorelease];
-	NSString *documentDirectory = [documentPath stringByDeletingLastPathComponent];
-	NSString *documentName = [documentPath lastPathComponent];
-	NSString *snapshotPath = [[aDocument snapshotURL] path];
-	NSString *snapshotDirectory = [snapshotPath stringByDeletingLastPathComponent];
-	
-	// close document
-	[aDocument close];
-	
-	// perform file operations using Workspace
-	NSArray *files = nil;
-	int tag = 0;
-	
-	// recycle document
-	files = [NSArray arrayWithObject:[documentPath lastPathComponent]];
-	BOOL didMoveDocumentToTrash = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
-																				  source:documentDirectory
-																			 destination:nil
-																				   files:files 
-																					 tag:&tag];
-	if ( !didMoveDocumentToTrash )
-	{
-		// alert the user
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Revert Failed", "alert: revert failed")
-										 defaultButton:NSLocalizedString(@"OK", "OK Button")
-									   alternateButton:nil 
-										   otherButton:nil 
-							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to put the current version of the document in the Trash before reverting. This is done as a safety precaution. The document will not be reverted. Please check the Trash for any problems or remove the document at %@ manually.",
-																		 "alert: could not Trash document"), documentPath];
-		
-		(void)[alert runModal];
-		
-		// reopen the document
-//		[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-//																			   display:YES
-//																				 error:nil];
-		[self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]];
-		
-		return;
-	}
-	
-	// copy snapshot to document location
-	NSString *destPath = [documentDirectory stringByAppendingPathComponent:[snapshotPath lastPathComponent]];
-	BOOL didRevert = [[NSFileManager defaultManager] copyPath:snapshotPath toPath:destPath handler:nil];
-
-	// OLD WAY -- PROBLEMATIC
-//	files = [NSArray arrayWithObject:[snapshotPath lastPathComponent]];
-//	BOOL didRevert = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceCopyOperation 
-//																	source:snapshotDirectory
-//															   destination:documentDirectory
-//																	 files:files 
-//																	   tag:&tag];
-	if ( !didRevert )
-	{
-		// alert the user
-		NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Revert Failed", "alert: revert failed")
-										 defaultButton:NSLocalizedString(@"OK", "OK Button")
-									   alternateButton:nil 
-										   otherButton:nil 
-							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to revert using the current snapshot. Please drag the document %@ out of the Trash and reopen it to continue using it. Please also check that the directory %@ is readable.",
-																		 "alert: could not revert document"), documentName, [snapshotDirectory stringByDeletingLastPathComponent]];
-		
-		(void)[alert runModal];
-		return;
-	}
-	
-	// open reverted document
-//	[[KTDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]
-//																		   display:YES
-//																			 error:nil];
-	[self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:documentPath]];
-}
-
 
 // Exceptions specific to Sandvox
 // BETA: I've commented some of those out that we want to hear about. Mike.
@@ -1330,15 +1246,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
     
     
 	// Autosave frequency
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"])
-	{
-		NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
-		if ( interval < 5 ) interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
-		if ( interval > 5*60 ) interval = 60.0;
+    NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
+    if (interval < 5)       interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
+    if (interval > 5 * 60)  interval = 60.0;
 
-		KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-		[sharedDocumentController setAutosavingDelay:interval];
-	}
+    KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
+    [sharedDocumentController setAutosavingDelay:interval];
 	
 			 
 	// Try to check immediately so we have right info for initialization
@@ -1434,48 +1347,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #pragma mark -
 #pragma mark IBActions
-
-- (KTDocument *)openDocumentWithContentsOfURL:(NSURL *)aURL
-{
-	OBPRECONDITION(aURL);
-	OBPRECONDITION([aURL scheme]);
-    // before we do *anything*, grab currentDocument to see if we already have a window on-screen
-    KTDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
-
-    //  now, open newly saved document
-    NSError *localError = nil;
-    KTDocument *newDocument = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aURL
-                                                                                                     display:YES
-                                                                                                       error:&localError];
-    
-    // clean up if it didn't work out
-    if ( nil == newDocument )
-    {
-        if ( nil != localError )
-        {
-            [NSApp presentError:localError];
-        }
-        
-        return nil;
-    }
-    
-    // position on screen
-    if ( nil != currentDocument && [currentDocument isKindOfClass:[KTDocument class]] )
-    {
-        NSWindow *currentWindow = [[currentDocument mainWindowController] window];
-        NSRect currentFrame = [currentWindow frame];
-        NSPoint currentTopLeft = NSMakePoint(currentFrame.origin.x,(currentFrame.origin.y+currentFrame.size.height));
-        NSPoint newTopLeft = [currentWindow cascadeTopLeftFromPoint:currentTopLeft];
-        [[[newDocument mainWindowController] window] setFrameTopLeftPoint:newTopLeft];
-    }
-    else
-    {
-        [[[newDocument mainWindowController] window] center];
-    }
-	    
-    return newDocument;    
-}
-
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
@@ -1645,16 +1516,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	bool prefersPNG = [defaults boolForKey:@"KTPrefersPNGFormat"];
 	return !prefersPNG;
-}
-
-- (BOOL)shouldBackupOnOpening
-{
-	return ( KTBackupOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
-}
-
-- (BOOL)shouldSnapshotOnOpening
-{
-	return ( KTSnapshotOnOpening == [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"]);
 }
 
 - (IBAction)showPluginWindow:(id)sender;

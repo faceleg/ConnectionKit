@@ -45,47 +45,7 @@
 #import "Registration.h"
 
 
-@interface KTDocumentController (Private)
-- (NSArray *)documentsAwaitingBackup;
-- (void)addDocumentAwaitingBackup:(KTDocument *)document;
-- (void)removeDocumentAwaitingBackup:(KTDocument *)document;
-@end
-
-
-#pragma mark -
-
-
 @implementation KTDocumentController
-
-#pragma mark -
-#pragma mark Init & Dealloc
-
-- (id)init
-{
-	if ( ![super init] )
-	{
-		return nil;
-	}
-	
-	myDocumentsAwaitingBackup = [[NSMutableArray alloc] initWithCapacity:1];
-    
-	return self;
-}
-
-- (void)dealloc
-{
-    NSEnumerator *documents = [[self documentsAwaitingBackup] objectEnumerator];
-    KTDocument *aDocument;
-    while (aDocument = [documents nextObject])
-    {
-        [self removeDocumentAwaitingBackup:aDocument];
-    }
-    
-    OBASSERT([myDocumentsAwaitingBackup count] == 0);
-    [myDocumentsAwaitingBackup release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Document placeholder window
@@ -528,29 +488,6 @@
 	return document;
 }
 
-/*  Disallow the user from opening a Sandvox document that is in the Snapshots directory
- */
-- (id)makeDocumentWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
-{
-    Class docClass = [self documentClassForType:typeName];
-    
-    if ([docClass isSubclassOfClass:[KTDocument class]] &&
-        [absoluteURL isSubpathOfURL:[docClass snapshotsDirectoryURL]])
-    {
-        if (outError)
-        {
-            *outError = [NSError errorWithDomain:kKareliaErrorDomain code:KareliaError
-                            localizedDescription:NSLocalizedString(@"Documents cannot be opened while in the Snapshots folder.", "alert message")
-                     localizedRecoverySuggestion:NSLocalizedString(@"Please move the document out of the Snapshots folder first.", "alert info")
-                                 underlyingError:nil];
-        }
-        
-        return nil;
-    }
-    
-    return [super makeDocumentWithContentsOfURL:absoluteURL ofType:typeName error:outError];
-}
-
 #pragma mark -
 #pragma mark Document List
 
@@ -597,14 +534,6 @@
     
     [[KTPlaceholderController sharedController] hideWindow:self];
 	[self synchronizeOpenDocumentsUserDefault];
-    
-    
-    // Backup the doc as needed if the user requested it
-    if ([document isKindOfClass:[KTDocument class]] &&
-        [[NSUserDefaults standardUserDefaults] boolForKey:@"BackupOnOpening"])
-    {
-        [self addDocumentAwaitingBackup:(KTDocument *)document];
-    }
 }
 
 /*	When a document is removed we don't want to reopen on launch, unless the close was part of the app quitting
@@ -612,13 +541,6 @@
 - (void)removeDocument:(NSDocument *)document
 {
 	[super removeDocument:document];
-    
-    // Stop backup monitoring if appropriate
-    if ([document isKindOfClass:[KTDocument class]])
-    {
-        [self removeDocumentAwaitingBackup:(KTDocument *)document];
-    }
-    
     
     if (![NSApp isTerminating])
 	{
@@ -661,73 +583,6 @@
 			[super noteNewRecentDocument:aDocument];
 		}
 	}
-}
-
-#pragma mark -
-#pragma mark Backups
-
-/*  We monitor documents in order to make a backup the first time a change will be saved
- */
-
-- (NSArray *)documentsAwaitingBackup
-{
-    return [[myDocumentsAwaitingBackup copy] autorelease];
-}
-
-- (void)addDocumentAwaitingBackup:(KTDocument *)document
-{
-    [myDocumentsAwaitingBackup addObject:document];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(documentAwaitingBackupWillSave:)
-                                                 name:KTDocumentWillSaveNotification
-                                               object:document];
-}
-
-- (void)removeDocumentAwaitingBackup:(KTDocument *)document
-{
-    unsigned index = [myDocumentsAwaitingBackup indexOfObjectIdenticalTo:document];
-    if (index != NSNotFound)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:KTDocumentWillSaveNotification
-                                                      object:document];
-        
-        [myDocumentsAwaitingBackup removeObjectAtIndex:index];
-    }
-}
-
-/*  The document's about to save. Make up the backup and then let the save continue
- */
-- (void)documentAwaitingBackupWillSave:(NSNotification *)notification
-{
-    KTDocument *document = [notification object];
-    OBASSERT(document);
-    
-    int backupOrSnapshotOnOpening = [[NSUserDefaults standardUserDefaults] integerForKey:@"BackupOnOpening"];
-    switch (backupOrSnapshotOnOpening)
-    {
-        case KTSnapshotOnOpening:
-        {
-            if (![document backupToURL:[document snapshotURL] error:NULL])
-            {
-                NSLog(@"warning: unable to create snapshot of document %@", [[document fileURL] path]);
-            }
-            break;
-        }
-        case KTBackupOnOpening:
-        {
-            if (![document backupToURL:[document backupURL] error:NULL])
-            {
-                NSLog(@"warning: unable to create backup of document %@", [[document fileURL] path]);
-            }			
-            break;
-        }
-        default:
-            break;
-    }
-    
-    [self removeDocumentAwaitingBackup:document];
 }
 
 @end

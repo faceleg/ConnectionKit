@@ -478,15 +478,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return result;
 }
 
-// Overridden to stop the document appearing edited to the user when using autosave
-- (void)setDocumentEdited:(BOOL)flag
-{
-	if (![[NSUserDefaults standardUserDefaults] boolForKey:@"AutosaveDocuments"])
-	{
-		[super setDocumentEdited:flag];
-	}
-}
-
 #pragma mark -
 #pragma mark Missing Media
 
@@ -622,7 +613,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)submitSiteToDirectory:(id)sender;
 {
-	NSURL *siteURL = [[[[self document] documentInfo] root] URL];
+	NSURL *siteURL = [[[[self document] site] root] URL];
 	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
 	parameters:[NSDictionary dictionaryWithObjectsAndKeys:
 		[siteURL absoluteString], @"url",
@@ -1480,7 +1471,7 @@ from representedObject */
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
 	{
-		NSURL *siteURL = [[[[self document] documentInfo] hostProperties] siteURL];
+		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
 		return (nil != siteURL);
 	}
 	
