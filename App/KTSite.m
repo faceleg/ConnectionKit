@@ -1,12 +1,12 @@
 //
-//  KTDocumentInfo.m
+//  KTSite.m
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/21/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005 Karelia Software. All rights reserved.
 //
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 #import "KT.h"
 #import "KTAppDelegate.h"
@@ -23,13 +23,13 @@
 #import "NSURL+Karelia.h"
 
 
-@interface KTDocumentInfo (Private)
+@interface KTSite (Private)
 - (NSArray *)_pagesInSiteMenu;
 + (NSArray *)_siteMenuSortDescriptors;
 @end
 
 
-@implementation KTDocumentInfo
+@implementation KTSite
 
 #pragma mark -
 #pragma mark Init
@@ -195,7 +195,7 @@
     // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child.
     // To fix, we need to delete such pages.
     static NSPredicate *orphansPredicate;
-    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == nil"] retain];
+    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == NIL"] retain];
     
     NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
     if ([orphanedPages count] > 0)
@@ -279,7 +279,7 @@
 	OBASSERT(levelFraction <= 1.0 && levelFraction > 0.0);
 	[entry setObject:[NSNumber numberWithFloat:levelFraction] forKey:@"priority"];
     
-	NSDate *lastModificationDate = [aPage valueForKey:@"lastModificationDate"];
+	NSDate *lastModificationDate = [aPage wrappedValueForKey:@"lastModificationDate"];
 	NSString *timestamp = [lastModificationDate descriptionWithCalendarFormat:@"%Y-%m-%dT%H:%M:%SZ" timeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"] locale:nil];
 	[entry setObject:timestamp forKey:@"lastmod"];
 	
@@ -334,12 +334,12 @@
 
 - (NSString *)lastExportDirectoryPath
 {
-    return [self valueForUndefinedKey:@"lastExportDirectoryPath"];
+    return [self wrappedValueForKey:@"lastExportDirectoryPath"];
 }
 
 - (void)setLastExportDirectoryPath:(NSString *)path
 {
-    [self setValue:path forUndefinedKey:@"lastExportDirectoryPath"];
+    [self setWrappedValue:path forKey:@"lastExportDirectoryPath"];
 }
 
 

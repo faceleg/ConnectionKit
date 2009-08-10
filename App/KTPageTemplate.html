@@ -32,10 +32,10 @@
 		<meta name="description" content="[[=&parser.currentPage.metaDescription]]" />
 [[endif]]
 		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />
-		<meta name="generator" content="[[=&documentInfo.appNameVersion]]" />
+		<meta name="generator" content="[[=&site.appNameVersion]]" />
 		<meta name="viewport" content="width=[[=master.design.viewport]]" />
-[[if documentInfo.googleSiteVerification]]
-		[[=documentInfo.googleSiteVerification]]
+[[if site.googleSiteVerification]]
+		[[=site.googleSiteVerification]]
 [[endif]]
 [[if parser.HTMLGenerationPurpose]][[if master.favicon]]
 		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.favicon sizeName:faviconImage]]" />
@@ -68,7 +68,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[=codeInjectionHeadArea]]
 [[endif]]
 	</head>
-	<body class="sandvox [[if includeSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&documentInfo.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
+	<body class="sandvox [[if includeSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
 [[if master.codeInjectionBodyTagStart]]
 [[=master.codeInjectionBodyTagStart]]
 [[endif]]
@@ -94,27 +94,27 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif2]]
 [[else]]
 [[if master.logoImage]]
-						<a class="imageLink" href="[[path documentInfo.root]]"><span id="logo-container"><img id="logo"
+						<a class="imageLink" href="[[path site.root]]"><span id="logo-container"><img id="logo"
 							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
 							alt="[[=&master.headerImageDescription]]"
 							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
 							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
 [[endif2]]
 [[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
-						<h1 class="hidden"><a href="[[path documentInfo.root]]">[[=master.siteTitleHTML]]</a></h1>
+						<h1 class="hidden"><a href="[[path site.root]]">[[=master.siteTitleHTML]]</a></h1>
 [[else2]]
-						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:documentInfo.root]]
+						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.root]]
 [[endif2]]
 [[endif]]
 						[[textblock property:master.siteSubtitleHTML flags:"line" tag:p graphicalTextCode:st]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
-[[if documentInfo.pagesInSiteMenu]]
+[[if site.pagesInSiteMenu]]
 						<div id="sitemenu">
 							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a rel="nofollow" href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
 							<div id="sitemenu-content">
 								<ul>
-[[forEach documentInfo.pagesInSiteMenu toplink]]
+[[forEach site.pagesInSiteMenu toplink]]
 
 [[if toplink==parser.currentPage]]
 									<li class="[[i]] [[eo]][[last]] currentPage">
@@ -181,8 +181,8 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endBody]]
 
 [[if parser.isPublishing]]
-[[if documentInfo.googleAnalyticsCode]]
-[[=documentInfo.googleAnalyticsCode]]
+[[if site.googleAnalyticsCode]]
+[[=site.googleAnalyticsCode]]
 [[endif2]]
 [[if !=disableComments]]
 [[if master.wantsJSKit]]
@@ -263,11 +263,11 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 		<table>
 			<tr>
 				<td class="quick-look-key">[['Published at]]</td>
-				<td class="quick-look-value"><a href="[[=&documentInfo.hostProperties.siteURL]]">[[=&documentInfo.hostProperties.siteURL]]</a></td>
+				<td class="quick-look-value"><a href="[[=&site.hostProperties.siteURL]]">[[=&site.hostProperties.siteURL]]</a></td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Last updated]]</td>
-				<td class="quick-look-value">[[=&documentInfo.currentDate]]</td>
+				<td class="quick-look-value">[[=&site.currentDate]]</td>
 			</tr>
 			[[if master.author]]<tr>
 				<td class="quick-look-key">[['Author]]</td>
@@ -279,7 +279,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Pages]]</td>
-				<td class="quick-look-value">[[=documentInfo.pageCount]]</td>
+				<td class="quick-look-value">[[=site.pageCount]]</td>
 			</tr>
 		</table>
 	</div>

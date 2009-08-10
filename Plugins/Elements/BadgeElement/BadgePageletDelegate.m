@@ -104,7 +104,7 @@ static NSArray *sAltStrings = nil;
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *) generateBlurbVariant:(int)aVariant
 {
-	NSString *seedString = [[[self page] documentInfo] URIRepresentationString];
+	NSString *seedString = [[[self page] site] URIRepresentationString];
 	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1HashDigest];
 	unsigned char *bytes = (unsigned char *)[hashData bytes];
 	// we have a nice 20-byte hash .... now to boil this down to a very small number!

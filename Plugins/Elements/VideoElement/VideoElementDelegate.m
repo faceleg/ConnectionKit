@@ -174,7 +174,7 @@
 	NSString *bundleResourcePath = [[self bundle] pathForResource:@"AC_QuickTime" ofType:@"js"];
 	if (bundleResourcePath)
 	{
-		NSURL *resourceURL = [[[[self page] documentInfo] hostProperties] URLForResourceFile:[bundleResourcePath lastPathComponent]];
+		NSURL *resourceURL = [[[[self page] site] hostProperties] URLForResourceFile:[bundleResourcePath lastPathComponent]];
 		NSString *relativePath = [resourceURL stringRelativeToURL:[aPage URL]];
 		
 		NSString *jsString = [NSString stringWithFormat:

@@ -125,7 +125,7 @@ static KTLinkConnector *_sharedConnector = nil;
 		
 		while (curWindow = [winEnum nextObject])
 		{
-			if ([[[curWindow windowController] document] documentInfo] != ui)
+			if ([[[curWindow windowController] document] site] != ui)
 			{
 				continue; // we only want to allow links to the same document
 			}

@@ -15,7 +15,7 @@
 #import "KTAppDelegate.h"
 #import "KSPlugin.h"
 #import "KTDocumentController.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
@@ -107,13 +107,13 @@
     if (result)
 	{
 		// Load up document display properties
-		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
+		[self setDisplaySmallPageIcons:[[self site] boolForKey:@"displaySmallPageIcons"]];
 		
 		
         // For diagnostics, log the value of the host properties
 		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"] )
 		{
-			KTHostProperties *hostProperties = [[self documentInfo] hostProperties];
+			KTHostProperties *hostProperties = [[self site] hostProperties];
 			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 		}
 	}
@@ -166,14 +166,14 @@
 	
 	if ( result )
     {
-        // handle datastore open, grab documentInfo and root
-        if ( nil == [self documentInfo] )
+        // handle datastore open, grab site and root
+        if ( nil == [self site] )
         {
-			// fetch and set documentInfo
-            KTDocumentInfo *documentInfo = [[self managedObjectContext] documentInfo];
-            if ( (nil != documentInfo) && [documentInfo isKindOfClass:[KTDocumentInfo class]] )
+			// fetch and set site
+            KTSite *site = [[self managedObjectContext] site];
+            if ( (nil != site) && [site isKindOfClass:[KTSite class]] )
             {
-                [self setDocumentInfo:documentInfo];
+                _site = [site retain];
                 result = YES;
             }
             else
@@ -198,7 +198,7 @@
             // if we're good, make sure all our required bundles have been loaded
             if ( result )
             {
-                NSEnumerator *e = [[[self documentInfo] requiredBundlesIdentifiers] objectEnumerator];
+                NSEnumerator *e = [[[self site] requiredBundlesIdentifiers] objectEnumerator];
                 NSString *bundleIdentifier;
                 while ( bundleIdentifier  = [e nextObject] )
                 {
@@ -261,7 +261,7 @@
 			// set ALL of our metadata for this store
 			
 			//  kMDItemAuthors
-			NSString *author = [[[[self documentInfo] root] master] valueForKey:@"author"];
+			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
 			if ( (nil == author) || [author isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
@@ -291,7 +291,7 @@
 			
 			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[self documentInfo] root] master] valueForKey:@"siteSubtitleHTML"];
+			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
 			if ( nil == subtitle )
 			{
 				subtitle = @"";
@@ -343,7 +343,7 @@
 			[localPool release];
 			
 			//  kMDItemTitle
-			NSString *siteTitle = [[[[self documentInfo] root] master] valueForKey:@"siteTitleHTML"];        
+			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];

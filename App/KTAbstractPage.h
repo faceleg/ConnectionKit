@@ -31,7 +31,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTDocumentInfo, KTMaster;
+@class KTSite, KTMaster;
 @class KTHTMLParser;
 
 
@@ -49,7 +49,7 @@ KTCollectionPathStyle;
 - (BOOL)isRoot;
 - (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
 
-- (KTDocumentInfo *)documentInfo;
+- (KTSite *)site;
 
 - (KTMaster *)master;
 

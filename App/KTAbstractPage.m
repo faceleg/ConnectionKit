@@ -9,7 +9,7 @@
 #import "KTAbstractPage.h"
 #import "KTPage.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTHTMLParser.h"
 
@@ -82,7 +82,7 @@
 	KTAbstractPage *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
 														   inManagedObjectContext:[aParent managedObjectContext]];
 	
-	[result setValue:[aParent valueForKey:@"documentInfo"] forKey:@"documentInfo"];
+	[result setValue:[aParent valueForKey:@"site"] forKey:@"site"];
 	
 	
 	// How the page is connected to its parent depends on the class type. KTPage needs special handling for the cache.
@@ -107,7 +107,7 @@
 
 - (BOOL)isRoot
 {
-	BOOL result = ((id)self == [[self documentInfo] root]);
+	BOOL result = ((id)self == [[self site] root]);
 	return result;
 }
 
@@ -125,7 +125,7 @@
 	return [parent isDescendantOfPage:aPotentialAncestor];
 }
 
-- (KTDocumentInfo *)documentInfo { return [self wrappedValueForKey:@"documentInfo"]; }
+- (KTSite *)site { return [self wrappedValueForKey:@"site"]; }
 
 - (KTMaster *)master
 {

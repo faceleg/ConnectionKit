@@ -8,7 +8,7 @@
 
 #import "KTMediaFileUpload.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
 #import "KTMediaPersistentStoreCoordinator.h"
@@ -32,7 +32,7 @@
 	OBASSERT([PSC isKindOfClass:[KTMediaPersistentStoreCoordinator class]]);
 	
 	KTDocument *document = [[PSC mediaManager] document];
-	KTHostProperties *hostProperties = [[document documentInfo] hostProperties];
+	KTHostProperties *hostProperties = [[document site] hostProperties];
 	NSURL *siteURL = [hostProperties siteURL];
 	
 	NSURL *result = [NSURL URLWithString:[self pathRelativeToSite] relativeToURL:siteURL];

@@ -9,7 +9,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KTAbstractElement+Internal.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
@@ -247,10 +247,10 @@
 	return nil;
 }
 
-- (KTDocumentInfo *)documentInfo
+- (KTSite *)site
 {
 	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"DocumentInfo"
+	NSArray *fetchedObjects = [self objectsWithEntityName:@"Site"
 												predicate:nil
 													error:&localError];
 	

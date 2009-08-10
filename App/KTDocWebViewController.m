@@ -21,7 +21,7 @@
 #import "KTWebViewComponent.h"
 #import "KTAppDelegate.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 #import "KTImageScalingURLProtocol.h"
 #import "KTMediaManager+Internal.h"
@@ -759,7 +759,7 @@
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
         [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
-        KTPage *thePage = [[[self document] documentInfo] pageWithPreviewURLPath:relativePath];
+        KTPage *thePage = [[[self document] site] pageWithPreviewURLPath:relativePath];
         if (!thePage)
         {
             [KSSilencingConfirmSheet alertWithWindow:[[self webView] window]

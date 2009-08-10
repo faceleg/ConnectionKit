@@ -9,7 +9,7 @@
 #import "KTPage.h"
 #import "KTArchivePage.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 #import "NSArray+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -264,7 +264,7 @@
 	[self invalidatePagesInIndexCache];
 	
 	// Also, the site menu may well have been affected
-	[[self valueForKey:@"documentInfo"] invalidatePagesInSiteMenuCache];
+	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 	
 	// For some collections, this change will have affected their thumbnail
 	[self generateCollectionThumbnail];
@@ -418,7 +418,7 @@
 }
 
 
-/*	Returns the page's index path relative to root parent. i.e. the DocumentInfo object.
+/*	Returns the page's index path relative to root parent. i.e. the Site object.
  *	This means every index starts with 0 to signify root.
  */
 - (NSIndexPath *)indexPath;

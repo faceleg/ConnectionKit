@@ -14,7 +14,7 @@
 #import "KTAppDelegate.h"
 #import "KTSiteOutlineDataSource.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocWindowController.h"
 #import "KTPage+Internal.h"
 #import "KTPulsatingOverlay.h"
@@ -135,7 +135,7 @@
 	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 	NSArray *allRows = [pboardData objectForKey:@"allRows"];
 	
-	id root = [[[self document] documentInfo] root];
+	id root = [[[self document] site] root];
 	id proposedParent;
 	if ( nil == item )
 	{
@@ -567,7 +567,7 @@
 			// but reposition the drop to be at the root level
 			// NB: we add 1 to account for the row taken up by "home"
 			[[self siteOutline] setDropItem:nil 
-					   dropChildIndex:([[[[(KTDocument *)[self document] documentInfo] root] children] count]+1)];
+					   dropChildIndex:([[[[(KTDocument *)[self document] site] root] children] count]+1)];
 			return NSDragOperationCopy;
 		}
 		else
@@ -595,7 +595,7 @@
 	
 	// The new page must be a child of something
 	KTPage *proposedParent = item;
-	if (!proposedParent) proposedParent = [[[self document] documentInfo] root];
+	if (!proposedParent) proposedParent = [[[self document] site] root];
 	
 	BOOL cameFromProgram = nil != [info draggingSource];
 	
@@ -641,7 +641,7 @@
 	id dropItem = item;
 	if ( nil == dropItem )
 	{
-		dropItem = [[[self document] documentInfo] root];
+		dropItem = [[[self document] site] root];
 		dropIndex = anIndex-1;
 	}
 	//LOG((@"accepting drop from external source on %@ at index %i", [dropItem fileName], dropIndex));

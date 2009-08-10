@@ -23,7 +23,7 @@
 #import "KTDesignPickerView.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindow.h"
 #import "KTElementPlugin.h"
@@ -200,7 +200,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
 	// Restore the window's previous frame, if available. Always do this after loading toolbar to make rect consistent
-	NSRect contentRect = [[[self document] documentInfo] docWindowContentRect];
+	NSRect contentRect = [[[self document] site] docWindowContentRect];
 	if (!NSEqualRects(contentRect, NSZeroRect))
 	{
 		NSWindow *window = [self window];
@@ -221,7 +221,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Split View
 	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
-	short sourceOutlineSize = [[[self document] documentInfo] integerForKey:@"sourceOutlineSize"];
+	short sourceOutlineSize = [[[self document] site] integerForKey:@"sourceOutlineSize"];
 	if ( sourceOutlineSize > 0)
 	{
 		[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
@@ -408,7 +408,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[siteOutlineController release];
 	siteOutlineController = controller;
 	
-	[controller setContent:[[[self document] documentInfo] root]];
+	[controller setContent:[[[self document] site] root]];
 	[controller setWindowController:self];
 	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
@@ -604,7 +604,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)visitPublishedSite:(id)sender
 {
-	NSURL *siteURL = [[[[self document] documentInfo] root] URL];
+	NSURL *siteURL = [[[[self document] site] root] URL];
 	if (siteURL)
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
@@ -796,7 +796,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		if (nil == targetPage)
 		{
 			// if nothing is selected, treat as if the root folder were selected
-			targetPage = [[[self document] documentInfo] root];
+			targetPage = [[[self document] site] root];
 		}
 		
 		KTPagelet *pagelet = [KTPagelet pageletWithPage:targetPage plugin:pageletPlugin];
@@ -1021,14 +1021,14 @@ from representedObject */
 	
 	
 	// It is not possible to make a group containing root
-	OBASSERTSTRING(![selectedPages containsObject:[[[self document] documentInfo] root]], @"Can't create a group containing root");
+	OBASSERTSTRING(![selectedPages containsObject:[[[self document] site] root]], @"Can't create a group containing root");
 	
 	
 	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
 	
 	// our group's parent will be the original parent of firstSelectedPage
 	KTPage *parentCollection = [(KTPage *)firstSelectedPage parent];
-	if ( (nil == parentCollection) || (nil == [[parentCollection documentInfo] root]) )
+	if ( (nil == parentCollection) || (nil == [[parentCollection site] root]) )
 	{
 		NSLog(@"Unable to create group: could not determine parent collection.");
 		return;
@@ -1135,7 +1135,7 @@ from representedObject */
 	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
 	if (nil == selectedParent)
 	{
-		selectedParent = [[(KTDocument *)[self document] documentInfo] root];
+		selectedParent = [[(KTDocument *)[self document] site] root];
 	}
 	
 	NSManagedObjectContext *context = [selectedParent managedObjectContext];
@@ -1185,7 +1185,7 @@ from representedObject */
 	if (itemAction == @selector(cut:))
 	{
 		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] documentInfo] root]])
+		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] site] root]])
 		{
 			return YES;
 		}
@@ -1432,20 +1432,20 @@ from representedObject */
     }	
     else if (itemAction == @selector(exportSiteAgain:))
     {
-        NSString *exportPath = [[[self document] documentInfo] lastExportDirectoryPath];
+        NSString *exportPath = [[[self document] site] lastExportDirectoryPath];
         return (exportPath != nil && [exportPath isAbsolutePath]);
     }
     
     // Other
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
 	else if ( itemAction == @selector(duplicate:) )
@@ -1460,14 +1460,14 @@ from representedObject */
 		else
 		{
 			// we're going to be duplicating a page or pages
-			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] documentInfo] root]] );
+			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
 		}
     }
 	
 	// "Visit Published Site" visitPublishedSite:
 	else if ( itemAction == @selector(visitPublishedSite:) ) 
 	{
-		NSURL *siteURL = [[[[self document] documentInfo] hostProperties] siteURL];
+		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
 		return (nil != siteURL);
 	}
 	
@@ -1563,17 +1563,17 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] documentInfo] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] documentInfo] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
     // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases
@@ -1588,7 +1588,7 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(duplicate:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] documentInfo] root]] );
+        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
     }
 	else if ([toolbarItem action] == @selector(showLinkPanel:))
 	{

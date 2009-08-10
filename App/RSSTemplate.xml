@@ -11,7 +11,7 @@
 		<language>[[=master.language]]</language>
 		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
-		<generator>[[=&documentInfo.appNameVersion]]</generator>
+		<generator>[[=&site.appNameVersion]]</generator>
 [[if master.logoImage]]
 		<image>
 			<url>[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]</url>

@@ -8,7 +8,7 @@
 
 #import "KTPublishingWindowController.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 #import "KTExportEngine.h"

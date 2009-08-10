@@ -243,7 +243,7 @@
 	KTMediaFileUpload *result = nil;
 	KTMediaFile *media = [[[self delegateOwner] valueForKey:@"downloadMedia"] file];
 	
-    NSURL *siteURL = [[[[self page] documentInfo] hostProperties] siteURL];
+    NSURL *siteURL = [[[[self page] site] hostProperties] siteURL];
     NSString *path = [[[self page] URL] stringRelativeToURL:siteURL];
     if (path)
     {

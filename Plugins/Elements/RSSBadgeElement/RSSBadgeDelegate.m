@@ -108,7 +108,7 @@
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [[self page] documentInfo];
+	return [[self page] site];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link

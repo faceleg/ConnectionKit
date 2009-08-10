@@ -8,7 +8,7 @@
 
 #import "KTRemotePublishingEngine.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTURLCredentialStorage.h"
 

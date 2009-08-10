@@ -235,7 +235,7 @@
 	BOOL compact = [[self delegateOwner] boolForKey:@"compact"];
 	
 	KTPage *thisPage = [self delegateOwner];
-	KTPage *root = [[thisPage documentInfo] root];
+	KTPage *root = [[thisPage site] root];
 	
 	if (showHome)
 	{

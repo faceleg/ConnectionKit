@@ -10,7 +10,7 @@
 #import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
 #import "KTMediaManager.h"
@@ -494,7 +494,7 @@
 - (NSURL *)URLForImageScaledToSize:(NSSize)size mode:(KSImageScalingMode)scalingMode sharpening:(float)sharpening fileType:(NSString *)UTI
 {
 	NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
-											  host:[[[[self mediaManager] document] documentInfo] siteID]
+											  host:[[[[self mediaManager] document] site] siteID]
 											  path:[@"/" stringByAppendingPathComponent:[self valueForKey:@"uniqueID"]]];
 	
 	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];

@@ -25,7 +25,7 @@
 
 
 @class KTDesign, KTAbstractHTMLPlugin;
-@class KTArchivePage, KTAbstractIndex, KTMaster;
+@class KTArchivePage, KTAbstractIndex, KTMaster, KTCodeInjection;
 @class WebView;
 @class KTMediaContainer;
 
@@ -89,7 +89,8 @@
 - (KTMediaContainer *)customSiteOutlineIcon;
 - (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon;
 
-- (BOOL)hasCodeInjection;
+- (KTCodeInjection *)codeInjection;
+
 @end
 
 

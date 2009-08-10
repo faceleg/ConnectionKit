@@ -8,7 +8,7 @@
 #import "KTHTMLParser+Private.h"
 #import "KTHTMLParserMasterCache.h"
 
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTPage+Internal.h"
 #import "KTArchivePage.h"
 #import "KTHostProperties.h"
@@ -476,7 +476,7 @@
 	
 		[[page managedObjectContext] makeAllPluginsPerformSelector:@selector(addSitewideTextToEndBody:forPage:)
 														withObject:string
-														  withPage:[[page documentInfo] root]];
+														  withPage:[[page site] root]];
 		
 
 		[page makeComponentsPerformSelector:@selector(addLevelTextToEndBody:forPage:) withObject:string withPage:page recursive:NO];
@@ -547,7 +547,7 @@
 			
 		default:
 		{
-			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] documentInfo] hostProperties];
+			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] site] hostProperties];
 			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
 			result = [resourceFileURL stringRelativeToURL:[page URL]];
 			break;

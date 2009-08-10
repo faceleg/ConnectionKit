@@ -11,7 +11,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHTMLTextBlock.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
@@ -80,7 +80,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 /*  Subfolder can be either nil (there isn't one), or a path relative to the doc root. Exporting
  *  never uses a subfolder, but full-on publishing can.
  */
-- (id)initWithSite:(KTDocumentInfo *)site
+- (id)initWithSite:(KTSite *)site
   documentRootPath:(NSString *)docRoot
      subfolderPath:(NSString *)subfolder
 {
@@ -92,7 +92,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (self = [super init])
 	{
-		_documentInfo = [site retain];
+		_site = [site retain];
         
         _uploadedMedia = [[NSMutableSet alloc] init];
         _pendingMediaUploads = [[NSMutableArray alloc] init];
@@ -113,7 +113,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_baseTransferRecord release];
     [_rootTransferRecord release];
-    [_documentInfo release];
+    [_site release];
 	[_documentRootPath release];
     [_subfolderPath release];
     
@@ -138,7 +138,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark -
 #pragma mark Simple Accessors
 
-- (KTDocumentInfo *)site { return _documentInfo; }
+- (KTSite *)site { return _site; }
 
 - (NSString *)documentRootPath { return _documentRootPath; }
 

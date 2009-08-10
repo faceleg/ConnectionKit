@@ -10,7 +10,7 @@
 
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
@@ -41,7 +41,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithSite:(KTDocumentInfo *)site onlyPublishChanges:(BOOL)publishChanges;
+- (id)initWithSite:(KTSite *)site onlyPublishChanges:(BOOL)publishChanges;
 {
 	OBPRECONDITION(site);
     

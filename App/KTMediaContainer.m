@@ -19,7 +19,7 @@
 #import "KTImageScalingSettings.h"
 #import "BDAlias.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 #import "NSString+Karelia.h"
 #import "NSScanner+Karelia.h"
@@ -66,7 +66,7 @@
 		KTDocument *aDoc;
 		while (aDoc = [docsEnumerator nextObject])
 		{
-			if ([aDoc isKindOfClass:[KTDocument class]] && [[[aDoc documentInfo] siteID] isEqualToString:docID])
+			if ([aDoc isKindOfClass:[KTDocument class]] && [[[aDoc site] siteID] isEqualToString:docID])
 			{
 				[matchingDocs addObject:aDoc];
 			}
@@ -223,7 +223,7 @@
 	KTDocument *document = [[self mediaManager] document];
 	
 	NSString *URLString = [NSString stringWithFormat:@"svxmedia://%@/%@",	
-													 [[document documentInfo] siteID],
+													 [[document site] siteID],
 													 [self identifier]];
 	
 	NSURL *result = [NSURL URLWithString:URLString];

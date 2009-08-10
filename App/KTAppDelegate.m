@@ -44,7 +44,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTDocumentController.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
@@ -187,7 +187,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
     if (document && [document isKindOfClass:[KTDocument class]])
     {
-        NSString *urlString = [[[[(KTDocument *)document documentInfo] hostProperties] siteURL] absoluteString];
+        NSString *urlString = [[[[(KTDocument *)document site] hostProperties] siteURL] absoluteString];
         if (urlString && ![urlString isEqualToString:@""])
         {
             [result appendFormat:@"\nURL:\n%@\n", urlString];
@@ -453,11 +453,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithInt:0], @"collectionMaxIndexItems",
 								@"", @"headerImageDescription",
 
-		@"", @"insertPrelude",
-		@"", @"insertHead",
-		@"", @"insertBody",
-		@"", @"insertEndBody",
-		
 		[NSNumber numberWithBool:YES], @"propagateInsertPrelude",
 		[NSNumber numberWithBool:YES], @"propagateInsertHead",
 		[NSNumber numberWithBool:YES], @"propagateInsertBody",

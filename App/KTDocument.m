@@ -50,7 +50,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
 #import "KTHostProperties.h"
@@ -177,15 +177,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (self)
     {
-        // Make a new documentInfo to store document properties
+        // Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
-        KTDocumentInfo *documentInfo = [NSEntityDescription insertNewObjectForEntityForName:@"DocumentInfo" inManagedObjectContext:context];
-        [self setDocumentInfo:documentInfo];
+        _site = [[NSEntityDescription insertNewObjectForEntityForName:@"Site" inManagedObjectContext:context] retain];
         
         NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
         if (docProperties)
         {
-            [documentInfo setValuesForKeysWithDictionary:docProperties];
+            [[self site] setValuesForKeysWithDictionary:docProperties];
         }
         
         
@@ -194,7 +193,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [[plugin bundle] load];
         KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
         OBASSERTSTRING((nil != root), @"root page is nil!");
-        [[self documentInfo] setValue:root forKey:@"root"];
+        [[self site] setValue:root forKey:@"root"];
         
         
         // Create the site Master object
@@ -238,7 +237,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	// rather than doing blanket removal
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 				
-    [self setDocumentInfo:nil];
+    [_site release];
     
     [myMediaManager release];
 	
@@ -256,7 +255,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*! returns root as a single page array, used in DebugTable bindings */
 - (NSArray *)rootAsArray
 {
-	return [NSArray arrayWithObject:[[self documentInfo] root]];
+	return [NSArray arrayWithObject:[[self site] root]];
 }
 
 #pragma mark -
@@ -279,7 +278,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	NSString *result;
     
-    NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
+    NSURL *siteURL = [[[self site] hostProperties] siteURL];
 	if (!siteURL)
 	{
 		result = @""; // show placeholder in UI
@@ -421,7 +420,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
 
 	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
-	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self documentInfo] siteID]];
+	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self site] siteID]];
 	
 	// Create the directory if needs be
 	if (![fileManager fileExistsAtPath:result])
@@ -841,7 +840,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	// Make sure both localHosting and remoteHosting are set to true
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"documentInfo.hostProperties"];
+	KTHostProperties *hostProperties = [self valueForKeyPath:@"site.hostProperties"];
 	if ([[hostProperties valueForKey:@"localHosting"] intValue] == 1 && 
 		[[hostProperties valueForKey:@"remoteHosting"] intValue] == 1)
 	{
@@ -859,7 +858,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (IBAction)setupHost:(id)sender
 {
 	KTHostSetupController* sheetController
-	= [[KTHostSetupController alloc] initWithHostProperties:[self valueForKeyPath:@"documentInfo.hostProperties"]];
+	= [[KTHostSetupController alloc] initWithHostProperties:[self valueForKeyPath:@"site.hostProperties"]];
 		// LEAKING ON PURPOSE, THIS WILL BE AUTORELEASED IN setupHostSheetDidEnd:
 	
 	[NSApp beginSheet:[sheetController window]
@@ -975,9 +974,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSUndoManager *undoManager = [self undoManager];
 		
 		//[undoManager beginUndoGrouping];
-		//KTStoredDictionary *hostProperties = [[self documentInfo] wrappedValueForKey:@"hostProperties"];
+		//KTStoredDictionary *hostProperties = [[self site] wrappedValueForKey:@"hostProperties"];
 		KTHostProperties *hostProperties = [sheetController properties];
-		[self setValue:hostProperties forKeyPath:@"documentInfo.hostProperties"];
+		[self setValue:hostProperties forKeyPath:@"site.hostProperties"];
 
 		// For diagnostics, log the value of the host properties
 		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"] )
@@ -996,7 +995,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // All page and sitemap URLs are now invalid
-        [[[self documentInfo] root] recursivelyInvalidateURL:YES];
+        [[[self site] root] recursivelyInvalidateURL:YES];
         [self willChangeValueForKey:@"publishedSitemapURL"];
         [self didChangeValueForKey:@"publishedSitemapURL"];
 		
@@ -1010,7 +1009,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSString *hostCharset = [hostProperties valueForKey:@"encoding"];
 		if ((nil != hostCharset) && ![hostCharset isEqualToString:@""])
 		{
-			NSString *rootCharset = [[[[self documentInfo] root] master] valueForKey:@"charset"];
+			NSString *rootCharset = [[[[self site] root] master] valueForKey:@"charset"];
 			if (![[hostCharset lowercaseString] isEqualToString:[rootCharset lowercaseString]])
 			{
 				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0];

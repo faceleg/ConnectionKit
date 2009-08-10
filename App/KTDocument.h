@@ -30,7 +30,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTDocumentInfo, KTMediaManager, KTLocalPublishingEngine, KTStalenessManager;
+@class KTSite, KTMediaManager, KTLocalPublishingEngine, KTStalenessManager;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
@@ -45,8 +45,8 @@ extern NSString *KTDocumentWillSaveNotification;
 	
     
     // KT
-    NSManagedObjectContext		*myManagedObjectContext;
-	KTDocumentInfo				*myDocumentInfo;			// accessor in category method
+    NSManagedObjectContext	*myManagedObjectContext;
+	KTSite                  *_site;                   // accessor in category method
 	
 	KTMediaManager				*myMediaManager;
 	
@@ -143,8 +143,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (id)wrappedInheritedValueForKey:(NSString *)aKey;
 //- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
-- (KTDocumentInfo *)documentInfo;
-- (void)setDocumentInfo:(KTDocumentInfo *)anObject;
+- (KTSite *)site;
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;

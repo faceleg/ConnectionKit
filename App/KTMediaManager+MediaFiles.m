@@ -12,7 +12,7 @@
 
 #import "KT.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 
 #import "NSArray+Karelia.h"
 #import "NSData+Karelia.h"
@@ -457,7 +457,7 @@
 	BOOL result = NO;	// The safest option so we use it as a fall back
 	
 	// If the user has requested the "automatic" or "reference" option we must consider the matter further
-	KTCopyMediaType copyingSetting = [[[self document] documentInfo] copyMediaOriginals];
+	KTCopyMediaType copyingSetting = [[[self document] site] copyMediaOriginals];
 	switch (copyingSetting)
 	{
 		case KTCopyMediaNone:

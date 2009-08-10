@@ -14,7 +14,7 @@
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTHTMLParser.h"
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
@@ -592,7 +592,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     // Move external media in-document if the user requests it
     OBASSERT([NSThread currentThread] == [self thread]);
-    KTDocumentInfo *docInfo = [self documentInfo];
+    KTSite *docInfo = [self site];
     if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
     {
         [[self mediaManager] moveApplicableExternalMediaInDocument];
@@ -768,7 +768,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
@@ -788,7 +788,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self documentInfo] root] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] root] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	NSWindow *window = [[NSWindow alloc]
@@ -966,7 +966,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
-    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self documentInfo] root]];
+    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
     [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
     NSString *result = [parser parseTemplate];
     [parser release];
@@ -1251,7 +1251,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 /*! returns ~/Library/Application Support/Sandvox/Snapshots/<siteID> */
 - (NSURL *)snapshotDirectoryURL
 {
-	NSURL *result = [[[self class] snapshotsDirectoryURL] URLByAppendingPathComponent:[[self documentInfo] siteID]
+	NSURL *result = [[[self class] snapshotsDirectoryURL] URLByAppendingPathComponent:[[self site] siteID]
                                                                           isDirectory:YES];
     return result;
 }

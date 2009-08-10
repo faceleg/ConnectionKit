@@ -17,7 +17,7 @@
 #import "KTDocWebViewController.h"
 #import "KTWebViewComponent.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTInfoWindowController.h"
 #import "KTLinkSourceView.h"
@@ -194,7 +194,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	}
 	else if ([entityName isEqualToString:@"Root"])
 	{
-		return [[[self document] documentInfo] root];	// don't need to look up object; it's the root
+		return [[[self document] site] root];	// don't need to look up object; it's the root
 	}
 	
 	// peform fetch
@@ -615,7 +615,7 @@ but the only trick is -- how to display a highlight?
         NSString *urlString = @"";
         if ([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator])
 		{
-			KTPage *linkedPage = [[[self document] documentInfo] pageWithPreviewURLPath:[URL path]];
+			KTPage *linkedPage = [[[self document] site] pageWithPreviewURLPath:[URL path]];
 			if (nil != linkedPage)
 			{
 				if ([linkedPage isRoot])
@@ -1069,7 +1069,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [[self document] documentInfo];
+	return [[self document] site];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link

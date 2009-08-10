@@ -208,7 +208,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	// We should never get here if the root page is in the selection
     OBASSERTSTRING((nil != selectedPages), @"selectedPages cannot be nil.");
     OBASSERTSTRING([selectedPages isKindOfClass:[NSArray class]], @"selectedPages must be an array.");
-    OBASSERTSTRING(![selectedPages containsObject:[[[self document] documentInfo] root]], @"Cannot cut the home page");
+    OBASSERTSTRING(![selectedPages containsObject:[[[self document] site] root]], @"Cannot cut the home page");
 	
 	
 	// Copy to the clipboard
@@ -771,7 +771,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	
     
     // The user shouldn't be able to try to delete root, but if so, beep and fail
-    if ([selectedPages containsObject:[[[self document] documentInfo] root]])
+    if ([selectedPages containsObject:[[[self document] site] root]])
     {
         NSBeep();
         return;

@@ -15,7 +15,7 @@
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
 #import "KTDocument.h"
-#import "KTDocumentInfo.h"
+#import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTMediaManager.h"
@@ -248,7 +248,7 @@
                                           error:outError];
         [result autorelease];
         
-        KTPage *root = [[result documentInfo] root];
+        KTPage *root = [[result site] root];
         KTMaster *master = [root master];
         
         

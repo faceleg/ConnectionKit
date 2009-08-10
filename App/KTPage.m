@@ -67,16 +67,6 @@
 	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
     
 	
-	// Site Outline
-	[self setKeys:[NSArray arrayWithObjects:@"codeInjectionBeforeHTML",
-											@"codeInjectionBodyTag",
-											@"codeInjectionBodyTagEnd",
-											@"codeInjectionBodyTagStart",
-											@"codeInjectionEarlyHead",
-											@"codeInjectionHeadArea", nil]
-		triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
-	
-	
 	// this is so we get notification of updaates to any properties that affect index type.
 	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
 	[self setKeys:[NSArray arrayWithObjects:
@@ -122,7 +112,7 @@
 	
 	if ( nil != root )
 	{
-		[root setValue:[aDocument documentInfo] forKey:@"documentInfo"];	// point to yourself
+		[root setValue:[aDocument site] forKey:@"site"];	// point to yourself
 		
 		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
 		[root setBool:YES forKey:@"isCollection"];	// root is automatically a collection
@@ -155,7 +145,7 @@
 	
 	// Attach to parent & other relationships
 	[result setValue:[parent master] forKey:@"master"];
-	[result setValue:[parent valueForKeyPath:@"documentInfo"] forKey:@"documentInfo"];
+	[result setValue:[parent valueForKeyPath:@"site"] forKey:@"site"];
 	[parent addPage:result];	// Must use this method to correctly maintain ordering
 	
 	return result;
@@ -213,7 +203,8 @@
 - (void)awakeFromInsert
 {
 	[super awakeFromInsert];
-		
+	
+	
 	// attributes
 	NSDate *now = [NSDate date];
 	[self setValue:now forKey:@"creationDate"];
@@ -224,6 +215,12 @@
     {
         [self setValue:maxTitles forKey:@"collectionSummaryMaxPages"];
     }
+    
+    
+    // Code Injection
+    KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"PageCodeInjection"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert
