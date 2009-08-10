@@ -534,44 +534,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
-- (void)setFileURL:(NSURL *)absoluteURL
-{
-    NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
-    if ([PSC respondsToSelector:@selector(setURL:forPersistentStore:)]) // supported on 10.5 and later
-    {
-        NSURL *oldURL = [[self fileURL] copy];
-        [super setFileURL:absoluteURL];
-        
-        
-        if (oldURL)
-        {
-            // Also reset the persistent stores' DB connection if needed
-            OBASSERT([[PSC persistentStores] count] <= 1);
-            id store = [PSC persistentStoreForURL:[[self class] datastoreURLForDocumentURL:oldURL type:nil]];
-            if (store)
-            {
-                NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-                [PSC performSelector:@selector(setURL:forPersistentStore:) withObject:newStoreURL withObject:store];
-            }
-            
-            PSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-            OBASSERT([[PSC persistentStores] count] <= 1);
-            store = [PSC persistentStoreForURL:[[self class] mediaStoreURLForDocumentURL:oldURL]];
-            if (store)
-            {
-                NSURL *newStoreURL = [[self class] mediaStoreURLForDocumentURL:absoluteURL];
-                [PSC performSelector:@selector(setURL:forPersistentStore:) withObject:newStoreURL withObject:store];
-            }
-            
-            [oldURL release];
-        }
-    }
-    else
-    {
-        [super setFileURL:absoluteURL];
-    }
-}
-
 #pragma mark -
 #pragma mark Controller Chain
 
@@ -995,7 +957,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
 		[designs setValue:nil forKey:@"versionLastPublished"];
         
-        [[[[self documentInfo] root] master] setPublishedDesignCSSDigest:nil];
+        [[[[self site] root] master] setPublishedDesignCSSDigest:nil];
 		
 		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
 		[media setBool:YES forKey:@"isStale"];

@@ -88,7 +88,6 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSIndexSet+Karelia.h"
 #import "NSInvocation+Karelia.h"
-#import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSSet+KTExtensions.h"

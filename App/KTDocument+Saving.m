@@ -120,101 +120,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
-    // Mark -isSaving as YES;
-    mySaveOperationCount++;
-    
-    
-    if ([self isSaving])
-    {
-        if (saveOperation == NSSaveOperation || saveOperation == NSAutosaveOperation)
-        {
-            // This can happen if there's an autosave request while we're still generating the Quick Look thumbnail.
-            // If so, saving the MOCs has been completed already so we can just go ahead and return YES.
-            result = YES;
-        }
-        else
-        {
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-												code:0
-								localizedDescription:NSLocalizedString(@"Another save operation is already in progress.",
-																	   "Saving error")];
-			}
-        }
-    }
-    else
-    {
-        // Mark -isSaving as YES;
-        mySaveOperationCount++;
-        
-        
-        // Test if the filesystem is writable before actually trying. #43307
-        struct statfs statfs_info;
-        int success = statfs([[[absoluteURL path] stringByDeletingLastPathComponent] fileSystemRepresentation],
-                             &statfs_info);
-        
-        if (success == 0 && statfs_info.f_flags & MNT_RDONLY)
-        {
-            NSString *errorDescription = [[NSString alloc] initWithFormat:
-                                          NSLocalizedString(@"The document could not be saved as “%@”. The volume is read only.", "file save error"),
-                                          [absoluteURL lastPathComponent]];
-            
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:NSFileWriteInvalidFileNameError
-                            localizedDescription:errorDescription
-                     localizedRecoverySuggestion:NSLocalizedString(@"Try saving the file to another volume.", "file save error")
-                                 underlyingError:nil];
-            
-            [errorDescription release];
-        }
-        else
-        {
-            // When writing to the doc's URL, we only support Save and Autosave
-            if ([[[absoluteURL path] stringByResolvingSymlinksInPath] isEqualToString:[[[self fileURL] path] stringByResolvingSymlinksInPath]])
-            {                                           
-                NSSaveOperationType realSaveOp = (saveOperation == NSAutosaveOperation) ? NSAutosaveOperation : NSSaveOperation;
-                result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:realSaveOp error:outError];
-            }
-            
-            
-            // -writeToURL: only supports the Save and SaveAs operations. Instead,
-            // we fake SaveTo operations by doing a standard Save operation and then
-            // copying the resultant file to the destination.
-            else if (saveOperation == NSSaveToOperation)
-            {
-                result = [super saveToURL:[self fileURL] ofType:[self fileType] forSaveOperation:NSSaveOperation error:outError];
-                OBASSERT(result || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-                
-                if (result)
-                {
-                    result = [self copyDocumentToURL:absoluteURL recycleExistingFiles:NO error:outError];
-                }
-            }
-            
-            
-            // Anything else passes through normally
-            else
-            {
-                result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-            }
-            OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-        }
-        
-        
-        // Unmark -isSaving as YES if applicable
-        mySaveOperationCount--;
-    }
-    
     BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
     OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
     
     
-    // Unmark -isSaving as YES if applicable
-    mySaveOperationCount--;
-    
-    
-	return result;
+    return result;
 }
 
 - (BOOL)isSaving

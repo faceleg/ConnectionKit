@@ -169,7 +169,8 @@
 	}
 	else
 	{
-		result = [[[document mediaDirectoryURL] path] stringByAppendingPathComponent:[self filename]];
+		KTDocument *doc = [[self mediaManager] document];
+        result = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:[self filename]];
 	}
 	
     return result;
