@@ -41,9 +41,6 @@ typedef enum {
 - (KTCopyMediaType)copyMediaOriginals;
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
 
-- (NSSet *)requiredBundlesIdentifiers;
-- (void)setRequiredBundlesIdentifiers:(NSSet *)identifiers;
-
 - (NSDictionary *)metadata;
 - (void)setMetadata:(NSDictionary *)metadata;
 

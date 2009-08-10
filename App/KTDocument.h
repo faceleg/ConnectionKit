@@ -30,12 +30,12 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTSite, KTMediaManager, KTLocalPublishingEngine, KTStalenessManager;
+@class KTSite, KTMediaManager, KTLocalPublishingEngine;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
 
-@interface KTDocument : NSDocument <KTDocumentControllerChain>
+@interface KTDocument : NSDocument //<KTDocumentControllerChain>
 {
 @private
 	
@@ -49,9 +49,7 @@ extern NSString *KTDocumentWillSaveNotification;
 	KTSite                  *_site;                   // accessor in category method
 	
 	KTMediaManager				*myMediaManager;
-	
-    KTStalenessManager			*myStalenessManager;
-	
+		
 	KTDocWindowController		*myDocWindowController;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
@@ -92,12 +90,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
 
-// Spotlight
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
-
-
 // Document URLs etc.
-+ (NSString *)defaultStoreType;
 + (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI;
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
@@ -112,7 +105,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (IBAction)setupHost:(id)sender;
 
 // Controller chain
-- (KTDocWindowController *)windowController;
+- (KTDocWindowController *)mainWindowController;
 
 - (BOOL)isClosing;
 
@@ -131,7 +124,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @interface KTDocument (Properties)
 
 - (KTMediaManager *)mediaManager;
-- (KTStalenessManager *)stalenessManager;
 
 - (NSThread *)thread;
 - (void)setThread:(NSThread *)thread;

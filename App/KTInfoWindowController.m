@@ -419,7 +419,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	if ( document != [self associatedDocument] )
 	{
 		[self setAssociatedDocument:document];
-		[self setupViewStackFor:[[[document windowController] siteOutlineController] selectedPage] selectLevel:NO];
+		[self setupViewStackFor:[[[document mainWindowController] siteOutlineController] selectedPage] selectLevel:NO];
 	}
 }
 
@@ -635,7 +635,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 				[self updateCollectionStylePopup];
 			}
 			// load the appropriate inspector view
-			NSView *inspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
+			NSView *inspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];	///[myCurrentSelection inspectorView];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -692,7 +692,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 						
 //			NSLog(@"Level = %p Page = %p Pagelet = %p", mySelectedLevel, [self selectedPage], mySelectedPagelet);
 			
-			NSView *pageletInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
+			NSView *pageletInspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			
 			// If needs to be pro, substitute with oProRequiredView
 			BOOL isProFeature = (9 == [[[myCurrentSelection plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
@@ -711,7 +711,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 		}
 		else if ([myCurrentSelection isKindOfClass:[KTPseudoElement class]])
 		{
-			NSView *pluginInspectorView = [[[[self associatedDocument] windowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
+			NSView *pluginInspectorView = [[[[self associatedDocument] mainWindowController] pluginInspectorViewsManager] inspectorViewForPlugin:myCurrentSelection];
 			[self setSelectionInspectorView:pluginInspectorView];
 
 			[oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_PAGE];
@@ -1557,7 +1557,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
  */
 - (KTDocSiteOutlineController *)siteOutlineController
 {
-	return [[[self associatedDocument] windowController] siteOutlineController];
+	return [[[self associatedDocument] mainWindowController] siteOutlineController];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "KTDocument.h"
 #import "NSDocument+KTExtensions.h"
 
+#import "KTAbstractElement+Internal.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocumentController.h"
@@ -87,6 +88,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 				error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
+
+// Metadata
+- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
 // Quick Look
 - (void)startGeneratingQuickLookThumbnail;
@@ -706,7 +710,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     if (![storeCoordinator migratePersistentStore:oldDataStore
 										    toURL:storeURL
 										  options:nil
-										 withType:[KTDocument defaultStoreType]
+										 withType:[self persistentStoreTypeForFileType:typeName]
 										    error:outError])
 	{
 		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -760,6 +764,185 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		[fileManager movePath:aPath toPath:destinationPath handler:nil];
 	}
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Metadata
+
+/*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
+- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL
+						   error:(NSError **)outError
+{
+	//LOGMETHOD;
+	
+	BOOL result = NO;
+	NSManagedObjectContext *context = [self managedObjectContext];
+	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
+    
+	@try
+	{
+		id theStore = [coordinator persistentStoreForURL:aStoreURL];
+		if ( nil != theStore )
+		{
+			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
+			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
+			
+			// remove old keys that might have been in use by older versions of Sandvox
+			[metadata removeObjectForKey:(NSString *)kMDItemDescription];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
+			
+			// set ALL of our metadata for this store
+			
+			//  kMDItemAuthors
+			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
+			if ( (nil == author) || [author isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
+			}
+			else
+			{
+				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+			}
+			
+			//  kMDItemCreator (Sandvox is the creator of this site document)
+			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+            
+			// kMDItemKind
+			[metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
+			
+			/// we're going to fault every page, use a local pool to release them quickly
+			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+			
+			//  kMDItemNumberOfPages
+			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+			unsigned int pageCount = 0;
+			if ( nil != pages )
+			{
+				pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+			}
+			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
+			
+			//  kMDItemTextContent (free-text account of content)
+			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
+			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
+			if ( nil == subtitle )
+			{
+				subtitle = @"";
+			}
+			subtitle = [subtitle stringByConvertingHTMLToPlainText];
+			
+			// add unique page titles
+			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
+			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
+			unsigned int i;
+			for ( i=0; i<[pageTitles count]; i++ )
+			{
+				NSString *pageTitle = [pageTitles objectAtIndex:i];
+				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
+				if ( nil != pageTitle )
+				{
+					[textContent appendFormat:@" %@", pageTitle];
+				}
+			}
+            
+			// spotlightHTML as part of textContent
+			for ( i=0; i<[pages count]; i++ )
+			{
+				KTPage *page = [pages objectAtIndex:i];
+				NSString *spotlightText = [page spotlightHTML];
+				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
+				{
+					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
+					[textContent appendFormat:@" %@", spotlightText];
+				}
+			}
+			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
+			
+			//  kMDItemKeywords (keywords of all pages)
+			NSMutableSet *keySet = [NSMutableSet set];
+			for (i=0; i<[pages count]; i++)
+			{
+				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
+			}
+            
+			if ( (nil == keySet) || ([keySet count] == 0) )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemKeywords];
+			}
+			else
+			{
+				[metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
+			}
+			[localPool release];
+			
+			//  kMDItemTitle
+			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
+			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
+			}
+			else
+			{
+				siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
+				[metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
+			}
+			
+			// custom attributes
+			
+			//  kKTMetadataModelVersionKey
+			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
+			
+			// kKTMetadataAppCreatedVersionKey should only be set once
+			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
+			{
+				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
+			}
+			
+			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
+			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
+			
+			// replace the metadata in the store with our updates
+			// NB: changes to metadata through this method are not pushed to disk until the document is saved
+			[coordinator setMetadata:metadata forPersistentStore:theStore];
+			
+			result = YES;
+		}
+		else
+		{
+			NSLog(@"error: unable to setMetadataForStoreAtURL:%@ (no persistent store)", [aStoreURL path]);
+			NSString *path = [aStoreURL path];
+			NSString *reason = [NSString stringWithFormat:@"(%@ is not a valid persistent store.)", path];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+												code:134070 // NSPersistentStoreOperationError
+											userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+													  reason, NSLocalizedDescriptionKey,
+													  nil]];
+			}
+			result = NO;
+		}
+	}
+	@catch (NSException * e)
+	{
+		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+											code:134070 // NSPersistentStoreOperationError
+										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												  [aStoreURL path], @"path",
+												  [e name], @"name",
+												  [e reason], NSLocalizedDescriptionKey,
+												  nil]];
+		}
+		result = NO;
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -1007,7 +1190,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // UI
-    [[self windowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
+    [[self mainWindowController] setStatusField:NSLocalizedString(@"Autosaving\\U2026", "Status: Autosaving...")];
     
         
     // Do the save in the background
@@ -1031,7 +1214,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [fileType release];
     
     // UI
-    [[self windowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
+    [[self mainWindowController] performSelectorOnMainThread:@selector(setStatusField:) withObject:nil waitUntilDone:YES];
     
     // Perform callback. Does nothing if callback is nil
     [callback setArgument:&didSave atIndex:3];
@@ -1075,7 +1258,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		NSString *message = [NSString stringWithFormat:NSLocalizedString(@"The older snapshot will be placed in the Trash.  It was saved %@.  ","alert: snapshot will be placed in trash.  %@ is a date or a day name like yesterday with a time."), dateString];
 		
 		// confirm with silencing confirm sheet
-		[[self confirmWithWindow:[[self windowController] window]
+		[[self confirmWithWindow:[[self mainWindowController] window]
 					silencingKey:@"SilenceSaveDocumentSnapshot"
 					   canCancel:YES 
 						OKButton:NSLocalizedString(@"Snapshot", "Snapshot Button")

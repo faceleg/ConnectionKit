@@ -50,28 +50,12 @@
     _thread = thread;
 }
 
-#pragma mark .... relationships
-
-/*  This method is no longer public, just there for backwards-compatibility. Use -site instead.
- */
-- (KTPage *)root { return [[self site] root]; }
-
 #pragma mark -
 #pragma mark Managers
 
 - (KTMediaManager *)mediaManager
 {
 	return myMediaManager;
-}
-
-- (KTStalenessManager *)stalenessManager
-{
-	/*if (!myStalenessManager)
-	{
-		myStalenessManager = [[KTStalenessManager alloc] initWithDocument:self];
-	}*/
-	
-	return myStalenessManager;
 }
 
 #pragma mark -
@@ -151,7 +135,7 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
 														object:self];
 														
-	[[self windowController] updatePopupButtonSizesSmall:aSmall];
+	[[self mainWindowController] updatePopupButtonSizesSmall:aSmall];
 	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
 }
 
@@ -195,12 +179,12 @@
 - (void)copyDocumentDisplayPropertiesToModel
 {
 	// Selected pages
-	NSIndexSet *outlineSelectedRowIndexSet = [[[[self windowController] siteOutlineController] siteOutline] selectedRowIndexes];
+	NSIndexSet *outlineSelectedRowIndexSet = [[[[self mainWindowController] siteOutlineController] siteOutline] selectedRowIndexes];
 	[[self site] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
 	
 	
 	// Source Outline width
-	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
+	float width = [[[[self mainWindowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
 	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
 	
 	
@@ -209,7 +193,7 @@
 	
 	
 	// Window size
-	NSWindow *window = [[self windowController] window];
+	NSWindow *window = [[self mainWindowController] window];
 	if (window)
 	{
 		[[self site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
