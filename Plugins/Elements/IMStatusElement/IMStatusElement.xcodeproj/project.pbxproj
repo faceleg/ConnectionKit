@@ -71,6 +71,9 @@
 		3C42E4770D64FCD1004F35FD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FD9610309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
+		CEB4FD9710309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FD9810309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -213,20 +216,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IMStatusElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* IMStatusElement */;
 			projectDirPath = "";
@@ -300,6 +303,7 @@
 				3C42E44A0D64FB9D004F35FD /* ja */,
 				3C42E44D0D64FBA6004F35FD /* zh_CN */,
 				3C42E4500D64FBB1004F35FD /* zh_TW */,
+				CEB4FD9710309DBC0054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -315,6 +319,7 @@
 				3C42E4490D64FB9D004F35FD /* ja */,
 				3C42E44C0D64FBA6004F35FD /* zh_CN */,
 				3C42E44F0D64FBB1004F35FD /* zh_TW */,
+				CEB4FD9610309DBC0054C9BE /* pt_BR */,
 			);
 			name = IMStatusPagelet.nib;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				3C42E44B0D64FB9D004F35FD /* ja */,
 				3C42E44E0D64FBA6004F35FD /* zh_CN */,
 				3C42E4510D64FBB1004F35FD /* zh_TW */,
+				CEB4FD9810309DBC0054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

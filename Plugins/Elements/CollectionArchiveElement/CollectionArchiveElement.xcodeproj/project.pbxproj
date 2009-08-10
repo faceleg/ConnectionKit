@@ -55,6 +55,8 @@
 		8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollectionArchive.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE9103290DAEB52D008D9144 /* CollectionArchive.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CollectionArchive.icns; sourceTree = "<group>"; };
+		CEB4FE6710309EC10054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE6810309EC10054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -187,20 +189,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "CollectionArchiveElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* RSSBadgeElement */;
 			projectDirPath = "";
@@ -268,6 +270,7 @@
 				3C42DDF70D64CB41004F35FD /* ja */,
 				3C42DDFA0D64CB4C004F35FD /* zh_CN */,
 				3C42DDFD0D64CB5B004F35FD /* zh_TW */,
+				CEB4FE6710309EC10054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				3C42DDF80D64CB41004F35FD /* ja */,
 				3C42DDFB0D64CB4C004F35FD /* zh_CN */,
 				3C42DDFE0D64CB5B004F35FD /* zh_TW */,
+				CEB4FE6810309EC10054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

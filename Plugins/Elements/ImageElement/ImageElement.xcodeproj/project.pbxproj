@@ -62,6 +62,9 @@
 		3C67C2A50D52762700116BA5 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Image.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Image.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FE1310309E6F0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/ImageElement.nib; sourceTree = "<group>"; };
+		CEB4FE1410309E6F0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE1510309E6F0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -200,20 +203,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "ImageElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
-				de,
 				da,
+				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ImageElement */;
 			projectDirPath = "";
@@ -282,6 +285,7 @@
 				3C67C2830D52756500116BA5 /* ja */,
 				3C67C2860D52756D00116BA5 /* zh_CN */,
 				3C67C2890D52757500116BA5 /* zh_TW */,
+				CEB4FE1310309E6F0054C9BE /* pt_BR */,
 			);
 			name = ImageElement.nib;
 			sourceTree = "<group>";
@@ -297,6 +301,7 @@
 				3C67C26C0D5274F500116BA5 /* ja */,
 				3C67C26F0D5274FE00116BA5 /* zh_CN */,
 				3C67C2720D52750700116BA5 /* zh_TW */,
+				CEB4FE1510309E6F0054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -312,6 +317,7 @@
 				3C67C29F0D52761800116BA5 /* ja */,
 				3C67C2A20D52761E00116BA5 /* zh_CN */,
 				3C67C2A50D52762700116BA5 /* zh_TW */,
+				CEB4FE1410309E6F0054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

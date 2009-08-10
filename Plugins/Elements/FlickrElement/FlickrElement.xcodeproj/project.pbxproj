@@ -57,6 +57,9 @@
 		8D5B49B6048680CD000E48DA /* Flickr.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Flickr.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE7230130D85D25800E9C592 /* flickr.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flickr.icns; sourceTree = "<group>"; };
+		CEB4FE3710309E910054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/FlickrPagelet.nib; sourceTree = "<group>"; };
+		CEB4FE3810309E910054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE3910309E910054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -190,20 +193,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "FlickrElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* FlickrElement */;
 			projectDirPath = "";
@@ -272,6 +275,7 @@
 				3C42E4B70D65030F004F35FD /* ja */,
 				3C42E4BA0D650318004F35FD /* zh_CN */,
 				3C42E4BD0D650321004F35FD /* zh_TW */,
+				CEB4FE3810309E910054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -287,6 +291,7 @@
 				3C42E4B60D65030F004F35FD /* ja */,
 				3C42E4B90D650318004F35FD /* zh_CN */,
 				3C42E4BC0D650321004F35FD /* zh_TW */,
+				CEB4FE3710309E910054C9BE /* pt_BR */,
 			);
 			name = FlickrPagelet.nib;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 				3C42E4B80D65030F004F35FD /* ja */,
 				3C42E4BB0D650318004F35FD /* zh_CN */,
 				3C42E4BE0D650321004F35FD /* zh_TW */,
+				CEB4FE3910309E910054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

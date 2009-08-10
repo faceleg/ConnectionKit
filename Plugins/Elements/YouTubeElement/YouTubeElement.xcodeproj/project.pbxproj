@@ -46,6 +46,9 @@
 		3C42E5E60D650A64004F35FD /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* YouTube.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTube.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FDC010309E1D0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FDC110309E1D0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB4FDC210309E1D0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120670D9055B700FCAC70 /* YouTube.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = YouTube.icns; sourceTree = "<group>"; };
 		CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YouTubeElementTemplate.html; sourceTree = "<group>"; };
 		CEF120CA0D90563E00FCAC70 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
@@ -204,20 +207,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "YouTubeElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* YouTubeElement */;
 			projectDirPath = "";
@@ -288,6 +291,7 @@
 				3C42E5BF0D6508C5004F35FD /* ja */,
 				3C42E5C10D6508CF004F35FD /* zh_CN */,
 				3C42E5C30D6508D8004F35FD /* zh_TW */,
+				CEB4FDC110309E1D0054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -303,6 +307,7 @@
 				CEF120E90D9056A800FCAC70 /* ja */,
 				CEF120EB0D9056B000FCAC70 /* zh_CN */,
 				CEF120ED0D9056B500FCAC70 /* zh_TW */,
+				CEB4FDC210309E1D0054C9BE /* pt_BR */,
 			);
 			name = YouTubeElement.nib;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				CEF120E80D9056A800FCAC70 /* ja */,
 				CEF120EA0D9056B000FCAC70 /* zh_CN */,
 				CEF120EC0D9056B500FCAC70 /* zh_TW */,
+				CEB4FDC010309E1D0054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

@@ -57,6 +57,9 @@
 		3C4A189A0D5F9F5C009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Digg.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Digg.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FE5710309EAE0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/DiggPagelet.nib; sourceTree = "<group>"; };
+		CEB4FE5810309EAE0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE5910309EAE0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -190,20 +193,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DiggElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* DiggElement */;
 			projectDirPath = "";
@@ -272,6 +275,7 @@
 				3C4A187A0D5F9E0A009476BF /* ja */,
 				3C4A187B0D5F9E12009476BF /* zh_CN */,
 				3C4A187C0D5F9E1A009476BF /* zh_TW */,
+				CEB4FE5810309EAE0054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -287,6 +291,7 @@
 				3C4A18860D5F9E5D009476BF /* ja */,
 				3C4A18870D5F9E66009476BF /* zh_CN */,
 				3C4A18880D5F9E6E009476BF /* zh_TW */,
+				CEB4FE5910309EAE0054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 				3C4A18900D5F9ECF009476BF /* ja */,
 				3C4A18910D5F9ED5009476BF /* zh_CN */,
 				3C4A18920D5F9EDA009476BF /* zh_TW */,
+				CEB4FE5710309EAE0054C9BE /* pt_BR */,
 			);
 			name = DiggPagelet.nib;
 			sourceTree = "<group>";

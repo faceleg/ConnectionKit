@@ -62,6 +62,9 @@
 		CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = ContactStrings.plist; sourceTree = "<group>"; };
 		CEA9AFE50A64227000855897 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CEA9AFE60A64227000855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB4FE9010309F070054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/ContactElement.nib; sourceTree = "<group>"; };
+		CEB4FE9110309F070054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE9210309F070054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEB5638D0A7AB7110081179A /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/ContactElement.nib; sourceTree = "<group>"; };
 		CEB5638E0A7AB7110081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEBCD9E60A5D941E0075DBB9 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -215,16 +218,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "ContactElement" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				en,
-				ja,
-				fr,
-				de,
-				zh_TW,
+				English,
 				da,
+				de,
+				es,
+				fr,
 				it,
+				ja,
+				pt_BR,
 				zh_CN,
+				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ContactElement */;
 			projectDirPath = "";
@@ -298,6 +305,7 @@
 				27F19AE40D4E4820000DB895 /* ja */,
 				27F19AE50D4E4825000DB895 /* zh_CN */,
 				27F19AE60D4E4829000DB895 /* zh_TW */,
+				CEB4FE9110309F070054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -313,6 +321,7 @@
 				CEB5638E0A7AB7110081179A /* de */,
 				CE1AD37C0A7E83E90083C01E /* it */,
 				CE55B0840AD19AF50091C8AE /* zh_CN */,
+				CEB4FE9210309F070054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -328,6 +337,7 @@
 				CEB5638D0A7AB7110081179A /* de */,
 				CE1AD37B0A7E83E90083C01E /* it */,
 				CE55B0830AD19AF50091C8AE /* zh_CN */,
+				CEB4FE9010309F070054C9BE /* pt_BR */,
 			);
 			name = ContactElement.nib;
 			sourceTree = "<group>";

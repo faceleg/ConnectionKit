@@ -68,6 +68,9 @@
 		CE0C33710DAEC97F00637083 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE0C33720DAEC98500637083 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE0C33730DAEC98B00637083 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FDC810309E280054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FDC910309E280054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB4FDCA10309E280054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/VideoElement.nib; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -209,20 +212,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "VideoElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* VideoElement */;
 			projectDirPath = "";
@@ -294,6 +297,7 @@
 				3C42E5BF0D6508C5004F35FD /* ja */,
 				3C42E5C10D6508CF004F35FD /* zh_CN */,
 				3C42E5C30D6508D8004F35FD /* zh_TW */,
+				CEB4FDC910309E280054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -309,6 +313,7 @@
 				3C42E5C00D6508C5004F35FD /* ja */,
 				3C42E5C20D6508CF004F35FD /* zh_CN */,
 				3C42E5C40D6508D8004F35FD /* zh_TW */,
+				CEB4FDCA10309E280054C9BE /* pt_BR */,
 			);
 			name = VideoElement.nib;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 				CE0C33710DAEC97F00637083 /* ja */,
 				CE0C33720DAEC98500637083 /* zh_CN */,
 				CE0C33730DAEC98B00637083 /* zh_TW */,
+				CEB4FDC810309E280054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

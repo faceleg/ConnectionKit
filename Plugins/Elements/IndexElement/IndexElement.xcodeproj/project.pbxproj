@@ -55,6 +55,9 @@
 		3C42E3D10D64F811004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Index.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Index.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FE1A10309E760054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/IndexPagelet.nib; sourceTree = "<group>"; };
+		CEB4FE1B10309E760054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE1C10309E760054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -187,20 +190,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IndexElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* IndexElement */;
 			projectDirPath = "";
@@ -268,6 +271,7 @@
 				3C42E3C40D64F7C3004F35FD /* ja */,
 				3C42E3C70D64F7D2004F35FD /* zh_CN */,
 				3C42E3CA0D64F7DB004F35FD /* zh_TW */,
+				CEB4FE1B10309E760054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -283,6 +287,7 @@
 				3C42E3C30D64F7C3004F35FD /* ja */,
 				3C42E3C60D64F7D2004F35FD /* zh_CN */,
 				3C42E3C90D64F7DB004F35FD /* zh_TW */,
+				CEB4FE1A10309E760054C9BE /* pt_BR */,
 			);
 			name = IndexPagelet.nib;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				3C42E3C50D64F7C3004F35FD /* ja */,
 				3C42E3C80D64F7D2004F35FD /* zh_CN */,
 				3C42E3CB0D64F7DB004F35FD /* zh_TW */,
+				CEB4FE1C10309E760054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

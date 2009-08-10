@@ -55,6 +55,9 @@
 		CE26CFED0E27DC1000827221 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE26CFEE0E27DC1F00827221 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE26CFEF0E27DC2300827221 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB4FEAF10309FD20054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FEB010309FD20054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/LinkPage.nib; sourceTree = "<group>"; };
+		CEB4FEB110309FD20054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -187,20 +190,21 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "LinkElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
+				"",
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* LinkElement */;
 			projectDirPath = "";
@@ -267,6 +271,7 @@
 				3CA901940D63D35F00815310 /* ja */,
 				3CA901960D63D36E00815310 /* zh_CN */,
 				3CA901980D63D37600815310 /* zh_TW */,
+				CEB4FEAF10309FD20054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				3CA901950D63D35F00815310 /* ja */,
 				3CA901970D63D36E00815310 /* zh_CN */,
 				3CA901990D63D37600815310 /* zh_TW */,
+				CEB4FEB010309FD20054C9BE /* pt_BR */,
 			);
 			name = LinkPage.nib;
 			sourceTree = "<group>";
@@ -297,6 +303,7 @@
 				CE26CFED0E27DC1000827221 /* fr */,
 				CE26CFEE0E27DC1F00827221 /* de */,
 				CE26CFEF0E27DC2300827221 /* da */,
+				CEB4FEB110309FD20054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

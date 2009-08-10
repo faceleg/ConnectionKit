@@ -119,6 +119,9 @@
 		8D5B49B6048680CD000E48DA /* Amazon.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FA30D85CE9A00E9C592 /* amazon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amazon.icns; sourceTree = "<group>"; };
+		CEB4FE7B10309ED30054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE7C10309ED30054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/Inspector.nib; sourceTree = "<group>"; };
+		CEB4FE7D10309ED30054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -354,20 +357,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "AmazonElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* AmazonElement */;
 			projectDirPath = "";
@@ -460,6 +463,7 @@
 				3C4A16FA0D5E7447009476BF /* ja */,
 				3C4A16FB0D5E744F009476BF /* zh_CN */,
 				3C4A16FC0D5E7456009476BF /* zh_TW */,
+				CEB4FE7B10309ED30054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -475,6 +479,7 @@
 				3C4A17040D5E7497009476BF /* ja */,
 				3C4A17050D5E74A1009476BF /* zh_CN */,
 				3C4A17060D5E74A8009476BF /* zh_TW */,
+				CEB4FE7D10309ED30054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 				3C4A17520D5E75FD009476BF /* ja */,
 				3C4A17530D5E7604009476BF /* zh_CN */,
 				3C4A17540D5E760E009476BF /* zh_TW */,
+				CEB4FE7C10309ED30054C9BE /* pt_BR */,
 			);
 			name = Inspector.nib;
 			sourceTree = "<group>";

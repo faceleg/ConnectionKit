@@ -75,6 +75,11 @@
 		3C5D6FEC0D65190100142BDD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/HTMLPage.nib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* HTML.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTML.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FE2D10309E890054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = pt_BR; path = pt_BR.lproj/EmptyHTML.html; sourceTree = "<group>"; };
+		CEB4FE2E10309E890054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/HTMLElement.nib; sourceTree = "<group>"; };
+		CEB4FE2F10309E890054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/HTMLPage.nib; sourceTree = "<group>"; };
+		CEB4FE3010309E890054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE3110309E890054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -209,20 +214,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "HTMLElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* HTMLElement */;
 			projectDirPath = "";
@@ -294,6 +299,7 @@
 				3C42E5210D650600004F35FD /* ja */,
 				3C42E5240D65060D004F35FD /* zh_CN */,
 				3C42E5270D650616004F35FD /* zh_TW */,
+				CEB4FE3010309E890054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				3C42E5200D650600004F35FD /* ja */,
 				3C42E5230D65060D004F35FD /* zh_CN */,
 				3C42E5260D650616004F35FD /* zh_TW */,
+				CEB4FE2E10309E890054C9BE /* pt_BR */,
 			);
 			name = HTMLElement.nib;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 				3C42E5220D650600004F35FD /* ja */,
 				3C42E5250D65060D004F35FD /* zh_CN */,
 				3C42E5280D650616004F35FD /* zh_TW */,
+				CEB4FE3110309E890054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -339,6 +347,7 @@
 				3C5D6FE70D6518EA00142BDD /* ja */,
 				3C5D6FE90D6518F600142BDD /* zh_CN */,
 				3C5D6FEB0D65190100142BDD /* zh_TW */,
+				CEB4FE2D10309E890054C9BE /* pt_BR */,
 			);
 			name = EmptyHTML.html;
 			sourceTree = "<group>";
@@ -354,6 +363,7 @@
 				3C5D6FE80D6518EA00142BDD /* ja */,
 				3C5D6FEA0D6518F600142BDD /* zh_CN */,
 				3C5D6FEC0D65190100142BDD /* zh_TW */,
+				CEB4FE2F10309E890054C9BE /* pt_BR */,
 			);
 			name = HTMLPage.nib;
 			sourceTree = "<group>";

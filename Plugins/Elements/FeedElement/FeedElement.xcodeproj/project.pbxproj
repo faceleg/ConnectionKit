@@ -55,6 +55,9 @@
 		3CA9FF770D63C3E700815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Feed.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Feed.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FE4010309E9A0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/FeedPagelet.nib; sourceTree = "<group>"; };
+		CEB4FE4110309E9A0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FE4210309E9A0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -187,20 +190,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "FeedElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* FeedElement */;
 			projectDirPath = "";
@@ -268,6 +271,7 @@
 				3CA9FF640D63C37E00815310 /* ja */,
 				3CA9FF670D63C38800815310 /* zh_CN */,
 				3CA9FF6A0D63C39200815310 /* zh_TW */,
+				CEB4FE4110309E9A0054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -283,6 +287,7 @@
 				3CA9FF630D63C37E00815310 /* ja */,
 				3CA9FF660D63C38800815310 /* zh_CN */,
 				3CA9FF690D63C39200815310 /* zh_TW */,
+				CEB4FE4010309E9A0054C9BE /* pt_BR */,
 			);
 			name = FeedPagelet.nib;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				3CA9FF650D63C37E00815310 /* ja */,
 				3CA9FF680D63C38800815310 /* zh_CN */,
 				3CA9FF6B0D63C39200815310 /* zh_TW */,
+				CEB4FE4210309E9A0054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

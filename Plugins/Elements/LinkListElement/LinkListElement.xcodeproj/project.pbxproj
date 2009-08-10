@@ -61,6 +61,9 @@
 		3CA900BD0D63CB4200815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* LinkList.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkList.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB4FDF310309E570054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FDF410309E570054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/LinkListPagelet.nib; sourceTree = "<group>"; };
+		CEB4FDF510309E570054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -197,20 +200,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "LinkListElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* LinkListElement */;
 			projectDirPath = "";
@@ -280,6 +283,7 @@
 				3CA900B10D63CB0400815310 /* ja */,
 				3CA900B40D63CB1100815310 /* zh_CN */,
 				3CA900B70D63CB1900815310 /* zh_TW */,
+				CEB4FDF310309E570054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -295,6 +299,7 @@
 				3CA900B20D63CB0400815310 /* ja */,
 				3CA900B50D63CB1100815310 /* zh_CN */,
 				3CA900B80D63CB1900815310 /* zh_TW */,
+				CEB4FDF410309E570054C9BE /* pt_BR */,
 			);
 			name = LinkListPagelet.nib;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				3CA900B30D63CB0400815310 /* ja */,
 				3CA900B60D63CB1100815310 /* zh_CN */,
 				3CA900B90D63CB1900815310 /* zh_TW */,
+				CEB4FDF510309E570054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

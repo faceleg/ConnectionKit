@@ -43,6 +43,9 @@
 		8D5B49B6048680CD000E48DA /* Twitter.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Twitter.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE9EDCB30E9ACDA0001FCF32 /* t.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = t.icns; sourceTree = "<group>"; };
+		CEB4FDD010309E320054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FDD110309E320054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB4FDD210309E320054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = pt_BR; path = pt_BR.lproj/Twitter.nib; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -180,20 +183,20 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "TwitterElement" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
-				en,
 				da,
 				de,
+				es,
 				fr,
 				it,
 				ja,
+				pt_BR,
 				zh_CN,
 				zh_TW,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* DiggElement */;
 			projectDirPath = "";
@@ -258,6 +261,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3C4A18740D5F9DD5009476BF /* en */,
+				CEB4FDD010309E320054C9BE /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -266,6 +270,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				27069F990E966E1F0041F149 /* en */,
+				CEB4FDD210309E320054C9BE /* pt_BR */,
 			);
 			name = Twitter.nib;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3C4A187E0D5F9E25009476BF /* en */,
+				CEB4FDD110309E320054C9BE /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
