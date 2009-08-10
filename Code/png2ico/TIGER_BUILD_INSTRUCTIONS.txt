@@ -1,0 +1,20 @@
+
+TJT did the following:
+
+1) downloaded latest libpng from http://www.libpng.org/pub/png/libpng.html
+
+2) in libpng directory, need to make sure we build fat and link against 10.4
+
+./configure  CFLAGS="-O -arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" CXXFLAGS="-O -arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" --disable-dependency-tracking
+
+make
+sudo make install
+
+3) in png2ico's Makefile, make sure same flags are included, also include includes dir for /usr/local
+
+CPPFLAGS=-W -Wall -O2 -finline-functions -arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include
+
+make clean
+make
+
+

@@ -329,6 +329,25 @@
 #pragma mark -
 #pragma mark HTML
 
+/*  For custom fields, generates an HTML input name based on the label, but does NOT unique it in any way
+ */
+- (NSString *)preferredInputName
+{
+    NSString *result = [self label];
+    
+    // If an empty string, replace with "XX"
+    if (!result || [result isEqualToString:@""]) {
+        result = @"XX";
+    }
+    
+    // If a single character, append an underscore
+    if ([result length] == 1) {
+        result = [result stringByAppendingString:@"_"];
+    }
+    
+    return result;
+}
+
 - (NSString *)inputName
 {
 	NSString *result = nil;
@@ -347,36 +366,25 @@
 		result = @"m";
 	}
 	else {
-		result = [self label];
-		
-		// If an empty string, replace with "XX"
-		if (!result || [result isEqualToString:@""]) {
-			result = @"XX";
-		}
-		
-		// If a single character, append an underscore
-		if ([result length] == 1) {
-			result = [result stringByAppendingString:@"_"];
-		}
+		NSString *preferredName = result = [self preferredInputName];
 		
 		// Ensure this is not a duplicate by appending a number if necessary
 		NSArray *fields = [[self owner] fields];
-		unsigned ourIndex = [fields indexOfObjectIdenticalTo:self];
-		NSArray *fieldsUpToUs = [fields subarrayWithRange:NSMakeRange(0, ourIndex)];
-		NSArray *inputNames = [fieldsUpToUs valueForKeyPath:@"inputName.lowercaseString"];
+        unsigned ourIndex = [fields indexOfObjectIdenticalTo:self];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"preferredInputName LIKE[c] %@", result];
+		NSArray *previousMatches = [[fields subarrayToIndex:ourIndex] filteredArrayUsingPredicate:predicate];
 		
-		NSString *possibleName = result;
-		int i = 1;
-		while ([inputNames containsObject:[possibleName lowercaseString]] ||
-			   [possibleName isEqualToStringCaseInsensitive:@"subject"] ||
-			   [possibleName isEqualToStringCaseInsensitive:@"message"])
+		int i = [previousMatches count];
+		while ([previousMatches count] > 0)
 		{
-			i++;
-			possibleName = [result stringByAppendingFormat:@"%i", i];
+			i ++;
+			result = [preferredName stringByAppendingFormat:@"%i", i];
+            
+            predicate = [NSPredicate predicateWithFormat:@"preferredInputName LIKE[c] %@", result];
+            previousMatches = [[fields subarrayToIndex:ourIndex] filteredArrayUsingPredicate:predicate];
 		}
-		
-		result = possibleName;
-	}
+    }
 	
 	OBPOSTCONDITION(result);
 	

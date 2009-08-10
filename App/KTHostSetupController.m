@@ -1027,7 +1027,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	myRemotePath = [dirPath copy];
 	// Upload file ... same as in connection:didConnectToHost:
 	NSString *remoteFile = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
-	[myTestConnection uploadFile:myTemporaryTestFilePath toFile:remoteFile];
+	[myTestConnection uploadFile:myTemporaryTestFilePath toFile:remoteFile checkRemoteExistence:NO delegate:nil];
 	
 	if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 	{
@@ -1172,6 +1172,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 //	NSLog(@"Queuing timeout test from testConnectionDidFinishLoading");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 	NSString *file = [myRemotePath stringByAppendingPathComponent:[[self testFileUploadPath] lastPathComponent]];
+	
+	[self setConnectionData:[NSMutableData data]];		// HACK -- TO KEEP THE NEXT BUTTON FROM ENABLING WHILE WE ARE DELETING.
+
 	[myTestConnection deleteFile:file];
 }
 
@@ -1181,6 +1184,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 //	NSLog(@"Cancelling timeout test, didDeleteFile");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
+
+	[self setConnectionData:nil];		// HACK -- TO KEEP THE NEXT BUTTON FROM ENABLING WHILE WE ARE DELETING.
 
 	NSLog(@"= %@%@", NSStringFromSelector(_cmd), path);
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
@@ -2259,7 +2264,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory  allowNull:YES] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
 			if (nil != testURL)
 			{
-				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL stringByAddingPercentEscapesForURLQuery:YES]];
+				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 
 				NSURLRequest *theRequest
 				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
@@ -2514,9 +2519,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *iToolsMember = nil;
 	NSString *iToolsPassword = nil;
 	
-	if (![[NSURLCredentialStorage sharedCredentialStorage] getDotMacAccountName:&iToolsMember password:&iToolsPassword] ||
-        [iToolsMember isEqualToString:@""] ||
-        [iToolsPassword isEqualToString:@""])
+	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
 	{
 		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")]];
 		[self setValue:nil forKey:@"userName"];

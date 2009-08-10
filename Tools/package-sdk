@@ -290,7 +290,7 @@ echo ""
 echo "Deploying..."
 echo ""
 
-SERVER_PATH="/home/19590/domains/karelia.com/MANUAL/${VARIANTLOWER}"
+SERVER_PATH="/home/karelia.com/MANUAL/${VARIANTLOWER}"
 BACKUP_SERVER_PATH="/home/kareliasw/dh.karelia.com/${VARIANTLOWER}"
 
 UPLOAD_PATH="${SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
@@ -299,7 +299,7 @@ BACKUP_UPLOAD_PATH="${BACKUP_SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
 # ------- Server Info
 
 # SCP assumes public key login through Karelia's (mt) account
-SCP_LOGIN="serveradmin%karelia.com@s19590.gridserver.com"
+SCP_LOGIN="karelia.com@secure.karelia.com"
 BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
 
 DISTRO_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg"
@@ -315,7 +315,7 @@ DSA_PRIV_PEM_PATH="${SRCROOT}/../../Shared/Security/dsa_priv.pem"
 
 DSA=`ruby "${SIGN_UPDATE_PATH}" "${DISTRO_PATH}" "${DSA_PRIV_PEM_PATH}"`
 echo "$DSA" > $DSA_FILE_PATH
-DSA_UPLOAD_PATH="/home/19590/domains/karelia.com/DSA"
+DSA_UPLOAD_PATH="/home/karelia.com/DSA"
 
 # if we don't have a distro ready, exit
 if test -r ${DISTRO_PATH}

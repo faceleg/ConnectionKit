@@ -36,6 +36,7 @@
 	return YES;
 }
 
+#warning Is this even used?
 - (KTPage *)commonParent
 {
 	KTPage *firstPage = [self firstObjectKS];
@@ -62,7 +63,7 @@
 		for ( i=0; i<[self count]; i++ )
 		{
 			KTPage *child = [self objectAtIndex:i];
-			if ( ![child isDeleted] && ![commonParent containsDescendant:child] )
+			if ( ![child isDeleted] && ![child isDescendantOfPage:commonParent] )
 			{
 				// we didn't find a common parent,
 				// back up one level and try again

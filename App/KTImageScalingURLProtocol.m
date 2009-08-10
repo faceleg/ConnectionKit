@@ -258,6 +258,7 @@ static NSURLCache *_sharedCache;
     {
         scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
     }
+    OBASSERT(scaledImage);
     
     
     // Ensure we have a graphics context big enough to render into
@@ -281,7 +282,7 @@ static NSURLCache *_sharedCache;
         [coreImageContext retain];
     }
     
-    CGRect neededContextRect = [scaledImage extent];
+    CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
     size_t currentContextWidth = CGBitmapContextGetWidth(graphicsContext);
     size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
     
@@ -315,7 +316,10 @@ static NSURLCache *_sharedCache;
     
     
     // Convert to data
-    OBASSERT([(NSArray *)CGImageDestinationCopyTypeIdentifiers() containsObject:fileType]);
+	NSArray *identifiers = (NSArray *)CGImageDestinationCopyTypeIdentifiers();
+	OBASSERT([identifiers containsObject:fileType]);
+    [identifiers release];
+	
     
     NSMutableData *result = [NSMutableData data];
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,

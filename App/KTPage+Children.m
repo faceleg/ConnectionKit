@@ -388,7 +388,7 @@
 	return result;
 }
 
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant
+- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
 {
 	if ( ![self hasChildren] )
 	{
@@ -416,6 +416,7 @@
 	
 	return NO;
 }
+
 
 /*	Returns the page's index path relative to root parent. i.e. the Site object.
  *	This means every index starts with 0 to signify root.

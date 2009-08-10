@@ -19,4 +19,6 @@
 
 - (void) setDesiredAttributes:(NSDictionary *)attr;
 
++ (void) startRecordingFontChanges;
+
 @end

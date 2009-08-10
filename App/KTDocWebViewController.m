@@ -918,20 +918,6 @@
 				[[self transitionFilter] setValue:destImage forKey:@"inputTargetImage"];
 			}
 		}
-		//		if ([defaults boolForKey:@"ShowSourceDrawer"])
-		{
-			WebDataSource *dataSource = [frame dataSource];
-			id <WebDocumentRepresentation>	representation = [dataSource representation];
-			NSString *source = nil;
-			if ([representation canProvideDocumentSource])
-			{
-				source = [representation documentSource];
-			}
-			if (nil == source)
-			{
-				source =  NSLocalizedString(@"No Source Available", @"Warning when we cannot load HTML source of a web page");
-			}
-		}
 		
 		[self processEditableElementsFromElement:[[frame DOMDocument] documentElement]];
 		

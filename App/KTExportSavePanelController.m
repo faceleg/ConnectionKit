@@ -8,18 +8,28 @@
 
 #import "KTExportSavePanelController.h"
 
+#import "NSURL+Karelia.h"
+
 
 @implementation KTExportSavePanelController
 
-- (id)initWithSiteURL:(NSURL *)URL
+- (id)initWithSiteURL:(NSURL *)URL documentURL:(NSURL *)docURL;
 {
     if (self = [self initWithNibNamed:@"KTTransfer" bundle:nil])
     {
+        _documentURL = [docURL copy];
+        
         [self view];    // Make sure the view is loaded
         [oSiteURLField setObjectValue:URL]; // Really this ought to be handled as an ivar
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [_documentURL release];
+    [super dealloc];
 }
 
 /*  Grabs the URL from the accessory view and gives it a http:// scheme if needed
@@ -37,20 +47,48 @@
 
 /*  We don't actually care about the filename, but the URL field must contain a valid http or https URL.
  */
-- (BOOL)panel:(NSSavePanel *)openPanel isValidFilename:(NSString *)filename
+- (NSString *)panel:(id)sender userEnteredFilename:(NSString *)filename confirmed:(BOOL)okFlag;
 {
-	BOOL result = NO;
+	NSSavePanel *panel = sender;
+    NSString *result = filename;
     
-    NSURL *URL = [self siteURL];
-    if (URL && [URL scheme])
+    if (okFlag)
     {
-        if ([[URL scheme] isEqualToString:@"http"] || [[URL scheme] isEqualToString:@"https"])
+        // Test the URL is valid
+        result = nil;
+        NSURL *siteURL = [self siteURL];
+        if (siteURL && [siteURL scheme])
         {
-            result = YES;
+            if ([[siteURL scheme] isEqualToString:@"http"] || [[siteURL scheme] isEqualToString:@"https"])
+            {
+                result = filename;
+            }
+        }
+        
+        if (!result) NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
+        
+        
+        // Don't allow the user to overwrite document or its contents
+        if (result)
+        {
+            NSURL *exportURL = [panel URL];
+            NSURL *docURL = _documentURL;
+            if ([docURL isSubpathOfURL:exportURL] || [exportURL isSubpathOfURL:docURL])
+            {
+                result = nil;
+                
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert setMessageText:NSLocalizedString(@"The site cannot be exported here as that would replace the document.", "Alert title")];
+                [alert setInformativeText:NSLocalizedString(@"Choose a different location or file name for the export.", "Alert info")];
+                
+                [alert beginSheetModalForWindow:panel
+                                  modalDelegate:nil
+                                 didEndSelector:NULL
+                                    contextInfo:NULL];
+            }
         }
     }
     
-    if (!result) NSBeep();  // You'd think so, but NSSavePanel doesn't do this for us
     return result;
 } 
 

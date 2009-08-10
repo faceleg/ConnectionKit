@@ -325,7 +325,7 @@
 		{
 			// Ignore any special files
 			if ([aFilename isEqualToStringCaseInsensitive:@"Info.plist"] ||
-				[aFilename isEqualToString:@"thumbnail.png"] ||
+				[[aFilename stringByDeletingPathExtension] isEqualToString:@"thumbnail"] ||
 				[aFilename hasPrefix:@"."]) {
 				continue;
 			}

@@ -348,7 +348,7 @@
 	}
 	
     KTImageScalingSettings *scalingSettings = [scalingProperties objectForKey:@"scalingBehavior"];
-    NSSize result = [scalingSettings size];
+    NSSize result = scalingSettings ? [scalingSettings size] : NSZeroSize;
 	return result;
 }
 
@@ -396,7 +396,7 @@
 	if ([[self delegateOwner] boolForKey:@"linkImageToOriginal"])
     {
         KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
-        if (image)
+        if ([[[image file] currentPath] length] > 0)
         {
             result = [NSArray arrayWithObject:image];
         }

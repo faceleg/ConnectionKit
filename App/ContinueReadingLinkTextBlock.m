@@ -8,7 +8,9 @@
 
 #import "ContinueReadingLinkTextBlock.h"
 
+#import "KTHTMLParser.h"
 #import "KTPage.h"
+
 #import "NSString+Karelia.h"
 
 
@@ -40,10 +42,19 @@
 
 - (NSString *)outerHTML
 {
-	NSString *result = [NSString stringWithFormat:@"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
-												  [self DOMNodeID],
-												  [self innerHTML]];
-	
+	NSString *result;
+    if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+    {
+		result = [NSString stringWithFormat:
+                  @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
+                  [self DOMNodeID],
+                  [self innerHTML]];
+	}
+    else
+    {
+        result = [NSString stringWithFormat:@"<span class=\"kLine\">\n%@\n</span>", [self innerHTML]];
+    }
+    
 	return result;
 }
 

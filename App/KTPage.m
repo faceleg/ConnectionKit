@@ -352,17 +352,22 @@
 	{
 		NSSet *children = [self children];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTAbstractPage *aPage;
+		KTPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
-			[aPage recursivelyInvalidateURL:YES];
+			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
+            OBASSERT(aPage != self);
+            OBASSERT(![[aPage children] containsObject:self]);
+            
+            [aPage recursivelyInvalidateURL:YES];
 		}
 		
 		NSSet *archives = [self valueForKey:@"archivePages"];
 		pageEnumerator = [archives objectEnumerator];
 		while (aPage = [pageEnumerator nextObject])
 		{
-			[aPage recursivelyInvalidateURL:YES];
+			OBASSERT(![aPage isKindOfClass:[KTPage class]]);
+            [aPage recursivelyInvalidateURL:YES];
 		}
 	}
 }

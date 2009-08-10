@@ -14,7 +14,7 @@
 #import "KSEmailAddressComboBox.h"
 #import "NSApplication+Karelia.h"
 
-static NSString *sCrashSubmitURLString = @"https://ssl.karelia.com/bugsubmit/KTCrashReporterSubmit.php";
+static NSString *sCrashSubmitURLString = @"https://secure.karelia.com/bugsubmit/KTCrashReporterSubmit.php";
 
 #define DELIVERY_ADDRESS        @"support@karelia.com"
 

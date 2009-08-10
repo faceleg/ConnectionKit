@@ -1,0 +1,29 @@
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                openDelicious = id;
+            };
+            CLASS = DeliciousPageletDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            ACTIONS =             {
+                "" = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegateOwner = id;
+            };
+            SUPERCLASS = NSObject;
+        }
+    );
+    IBVersion = 1;
+}

@@ -1,0 +1,35 @@
+{
+    IBClasses =     (
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSPathInfoField;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                delegate = id;
+            };
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSTextFieldCell;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSActionCell;
+        },
+                {
+            ACTIONS =             {
+                chooseMovieFile = id;
+            };
+            CLASS = VideoElementDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
+        }
+    );
+    IBVersion = 1;
+}

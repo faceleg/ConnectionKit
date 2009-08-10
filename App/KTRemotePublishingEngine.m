@@ -35,6 +35,7 @@
                                                                                                                 port:port] mutableCopy];
     
     [request setFTPDataConnectionType:[[NSUserDefaults standardUserDefaults] stringForKey:@"FTPDataConnectionType"]];   // Nil by default
+    //[request setSFTPLoggingLevel:1];
     
     
     // Create connection object

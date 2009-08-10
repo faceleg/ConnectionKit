@@ -1,0 +1,26 @@
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                badgeClicked = id;
+            };
+            CLASS = BadgePageletDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPluginDelegate;
+        },
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KTAbstractPluginDelegate;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegateOwner = id;
+            };
+            SUPERCLASS = NSObject;
+        }
+    );
+    IBVersion = 1;
+}

@@ -295,7 +295,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)createConnection
 {
-    id <CKConnection> result = nil; // FIXME: [[CKFileConnection alloc] init];
+    id <CKConnection> result = [[CKFileConnection alloc] init];
     OBASSERT(result);
     [self setConnection:result];
 	[result release];
@@ -374,7 +374,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		
 		return;
 	}
-	else if (NO) // [error code] == kSetPermissions) // File connection set permissions failed ... ignore this (why?)
+	else if ([error code] == kSetPermissions) // File connection set permissions failed ... ignore this (why?)
 	{
 		return;
 	}
@@ -864,8 +864,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
         OBASSERT(path);
+        NSURL *url = [NSURL fileURLWithPath:path];
         
-        NSMutableString *CSS = [NSMutableString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+        NSError *textFileError;
+        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
+                                                       fallbackEncoding:NSUTF8StringEncoding
+                                                                  error:&textFileError];
         if (CSS)
         {
             [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
@@ -880,7 +884,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            NSLog(@"Unable to read in image replacement CSS from %@", path);
+            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
+                  url,
+                  [[textFileError debugDescription] condenseWhiteSpace]);
         }
     }
     
@@ -977,41 +983,50 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
+    
+    CKTransferRecord *result = nil;
+    
 	
-	// Is the URL actually a directory? If so, upload its contents
-    BOOL isDirectory = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory] && isDirectory)
+	BOOL isDirectory = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
     {
-        NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
-        NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
-        NSString *aSubPath;
-        while (aSubPath = [subpathsEnumerator nextObject])
+        // Is the URL actually a directory? If so, upload its contents
+        if (isDirectory)
         {
-            NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
-            NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
-            [self uploadContentsOfURL:aURL toPath:aRemotePath];
+            NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
+            NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
+            NSString *aSubPath;
+            while (aSubPath = [subpathsEnumerator nextObject])
+            {
+                NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
+                NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
+                [self uploadContentsOfURL:aURL toPath:aRemotePath];
+            }
         }
-        
-        return nil;
+        else
+        {
+            // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
+            CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
+            
+            id <CKConnection> connection = [self connection];
+            OBASSERT(connection);
+            [connection connect];	// Ensure we're connected
+            result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
+            [result setName:[remotePath lastPathComponent]];
+            
+            [parent addContent:result];
+            
+            // Also set permissions for the file
+            [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+        }
+    }
+    else
+    {
+        NSLog(@"Not uploading contents of %@ as it does not exist", [localURL path]);
     }
     
     
-    // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
-    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-    
-    id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-	[connection connect];	// Ensure we're connected
-    CKTransferRecord *result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    [result setName:[remotePath lastPathComponent]];
-    
-    [parent addContent:result];
-    
-    // Also set permissions for the file
-    [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
-    
-    return result;
-    
+    return result;    
 }
 
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
@@ -1029,9 +1044,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(result);
     [result setName:[remotePath lastPathComponent]];
     
-    [parent addContent:result];
+    if (result)
+    {
+        [parent addContent:result];
     
-    [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
+        [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
+    }
+    else
+    {
+        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+    }
     
     return result;
 }

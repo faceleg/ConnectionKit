@@ -48,8 +48,8 @@
 - (void)setOldManagedObjectModel:(NSManagedObjectModel *)anOldManagedObjectModel;
 - (void)setOldManagedObjectContext:(NSManagedObjectContext *)anOldManagedObjectContext;
 - (void)setOldStoreURL:(NSURL *)aStoreURL;
-- (void)setNewDocumentURL:(NSURL *)URL;
-- (void)setNewDocument:(KTDocument *)document;
+- (void)setMigratedDocumentURL:(NSURL *)URL;
+- (void)setMigratedDocument:(KTDocument *)document;
 
 // Generic migration methods
 - (BOOL)_migrate:(NSError **)outError;
@@ -112,7 +112,7 @@
 
 /*  Provides a lookup table for converting old plugin identifiers to new.
  */
-+ (NSString *)newPluginIdentifierForOldPluginIdentifier:(NSString *)oldIdentifier
++ (NSString *)currentPluginIdentifierForOldIdentifier:(NSString *)oldIdentifier
 {
     OBPRECONDITION(oldIdentifier);
     
@@ -154,6 +154,7 @@
     }
     
     NSString *result = [sPluginIdentifiers objectForKey:oldIdentifier];
+		// Clang warning?  Why?
     if (!result) result = oldIdentifier;
     
     OBPOSTCONDITION(result);
@@ -172,15 +173,15 @@
     OBPRECONDITION([docURL isFileURL]);
     
     [self setOldStoreURL:docURL];
-    [self setNewDocumentURL:docURL];
+    [self setMigratedDocumentURL:docURL];
     
     return self;
 }
 
 - (void)dealloc
 {
-	[self setNewDocument:nil];
-    [self setNewDocumentURL:nil];
+	[self setMigratedDocument:nil];
+    [self setMigratedDocumentURL:nil];
     
 	[self setOldStoreURL:nil];
 	[self setOldManagedObjectContext:nil];
@@ -228,22 +229,22 @@
 	myOldStoreURL = aStoreURL;
 }
 
-- (NSURL *)newDocumentURL { return myNewDocumentURL; }
+- (NSURL *)migratedDocumentURL { return myMigratedDocumentURL; }
 
-- (void)setNewDocumentURL:(NSURL *)URL
+- (void)setMigratedDocumentURL:(NSURL *)URL
 {
     URL = [URL copy];
-    [myNewDocumentURL release];
-    myNewDocumentURL = URL;
+    [myMigratedDocumentURL release];
+    myMigratedDocumentURL = URL;
 }
 
-- (KTDocument *)newDocument { return myNewDocument; }
+- (KTDocument *)migratedDocument { return myMigratedDocument; }
 
-- (void)setNewDocument:(KTDocument *)document
+- (void)setMigratedDocument:(KTDocument *)document
 {
     [document retain];
-    [myNewDocument release];
-    myNewDocument = document;
+    [myMigratedDocument release];
+    myMigratedDocument = document;
 }
 
 - (unsigned)countOfPagesToMigrate { return myCountOfPagesToMigrate; }
@@ -285,11 +286,11 @@
     
     @try        // This means that you can call return and @finally code will still be called. Just make sure result is set.
     {
-        if (![self newDocumentURL] || ![[self newDocumentURL] isFileURL])
+        if (![self migratedDocumentURL] || ![[self migratedDocumentURL] isFileURL])
         {
             NSString *errorDescription = [NSString stringWithFormat:
                                           NSLocalizedString(@"Unable to upgrade document at path %@. Path does not appear to be a file.","Alert: Unable to upgrade document at path %@. Path does not appear to be a file."),
-                                          [[self newDocumentURL] absoluteString]];
+                                          [[self migratedDocumentURL] absoluteString]];
             
             NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadInvalidFileNameError localizedDescription:errorDescription];
             if (outError)
@@ -302,7 +303,7 @@
         
         
         // Check that we have a good path and we can write to it
-        if (![KTDataMigrator validatePathForNewStore:[[self newDocumentURL] path] error:outError])
+        if (![KTDataMigrator validatePathForNewStore:[[self migratedDocumentURL] path] error:outError])
         {
             result = NO;    return result;
         }
@@ -319,10 +320,10 @@
         
         
         // Save the new doc to the correct location
-        KTDocument *document = [self newDocument];
-        result = [document saveToURL:[self newDocumentURL] ofType:[document fileType] forSaveOperation:NSSaveAsOperation error:outError];
+        KTDocument *document = [self migratedDocument];
+        result = [document saveToURL:[self migratedDocumentURL] ofType:[document fileType] forSaveOperation:NSSaveAsOperation error:outError];
         
-        [self setNewDocument:nil];
+        [self setMigratedDocument:nil];
     }
     
     
@@ -470,7 +471,7 @@
     }
     
     NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
-    NSString *newRootPluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:oldRootPluginIdentifier];
+    NSString *newRootPluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:oldRootPluginIdentifier];
     KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
     
     KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI rootPlugin:newRootPlugin error:outError];
@@ -478,7 +479,7 @@
     {
         [[newDoc undoManager] disableUndoRegistration];
         
-        [self setNewDocument:newDoc];
+        [self setMigratedDocument:newDoc];
         [newDoc release];
     }
     else
@@ -577,7 +578,7 @@
     NSString *customSummary = [oldPage valueForKey:@"summaryHTML"];
     if (customSummary && ![customSummary isEqualToString:@""])
     {
-        customSummary = [[[self newDocument] mediaManager] importLegacyMediaFromString:customSummary
+        customSummary = [[[self migratedDocument] mediaManager] importLegacyMediaFromString:customSummary
                                                                    scalingSettingsName:@"inTextMediumImage"
                                                                             oldElement:oldPage
                                                                             newElement:newPage];
@@ -605,7 +606,7 @@
 	if (result)
 	{
 		// Thumbnail - do this after plugin properties to keep it up-to-date.
-		KTMediaContainer *thumbnail = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
+		KTMediaContainer *thumbnail = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"thumbnail" element:oldPage];
 		if (thumbnail)
 		{
 			[newPage setThumbnail:thumbnail];
@@ -670,7 +671,7 @@
         
         // Insert a new child page of the right type.
         NSString *pluginIdentifier = [aChildPage valueForKey:@"pluginIdentifier"];
-        pluginIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:pluginIdentifier];
+        pluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:pluginIdentifier];
         KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
         
         if (!plugin)
@@ -697,7 +698,7 @@
         
         
         // Save the migrated objects. Otherwise for really big sites a single final save uses too much memory
-        /*KTDocument *document = [self newDocument];
+        /*KTDocument *document = [self migratedDocument];
 		if (![document writeToURL:[document fileURL] ofType:[document fileType] forSaveOperation:NSSaveOperation originalContentsURL:[document fileURL] includeMetadata:NO error:error])
         {
             [pool release];
@@ -722,7 +723,7 @@
     OBASSERT(oldRoot);
     
     // Migrate simple properties from Root to the Master
-    KTSite *newDocInfo = [[self newDocument] site];
+    KTSite *newDocInfo = [[self migratedDocument] site];
     KTPage *newRoot = [newDocInfo root];
     KTMaster *newMaster = [newRoot master];
     
@@ -742,14 +743,14 @@
     
     
     // Migrate master media - logo, banner & favicon
-    KTMediaContainer *favicon = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"favicon" element:oldRoot];
+    KTMediaContainer *favicon = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"favicon" element:oldRoot];
     [newMaster setFavicon:favicon];
     
     // Migrate logo
-    KTMediaContainer *logo = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"headerImage" element:oldRoot];
+    KTMediaContainer *logo = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"headerImage" element:oldRoot];
     [newMaster setLogoImage:logo];
     
-    KTMediaContainer *banner = [[[self newDocument] mediaManager] mediaContainerWithMediaRefNamed:@"bannerImage" element:oldRoot];
+    KTMediaContainer *banner = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"bannerImage" element:oldRoot];
     [newMaster setBannerImage:banner];
     
     
@@ -803,7 +804,7 @@
     NSManagedObject *anOldPagelet;
     while (anOldPagelet = [oldPageletsEnumerator nextObject])
     {
-        NSString *pageletIdentifier = [[self class] newPluginIdentifierForOldPluginIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
+        NSString *pageletIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
         KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
         KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
         
@@ -922,7 +923,7 @@
     NSManagedObject *oldDocInfo = [docInfos firstObjectKS];
     OBASSERT(oldDocInfo);
     
-    KTSite *newDocInfo = [[self newDocument] site];
+    KTSite *newDocInfo = [[self migratedDocument] site];
     OBASSERT(newDocInfo);
     
     
@@ -933,7 +934,7 @@
     
     // Migrate host properties
     KTStoredDictionary *oldHostProperties = [oldDocInfo valueForKey:@"hostProperties"];
-    KTHostProperties *newHostProperties = [[[self newDocument] site] hostProperties];
+    KTHostProperties *newHostProperties = [[[self migratedDocument] site] hostProperties];
     [newHostProperties setValuesForKeysWithDictionary:[oldHostProperties dictionary]];
     
     

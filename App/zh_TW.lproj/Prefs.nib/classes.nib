@@ -19,6 +19,19 @@
             SUPERCLASS = NSTextField;
         },
                 {
+            ACTIONS =             {
+                checkForUpdates = id;
+                emailComboChanged = id;
+                windowHelp = id;
+            };
+            CLASS = KSPrefsController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                oAddressComboBox = KSEmailAddressComboBox;
+            };
+            SUPERCLASS = KSSingletonWindowController;
+        },
+                {
             CLASS = KSSingletonWindowController;
             LANGUAGE = ObjC;
             SUPERCLASS = NSWindowController;
@@ -32,11 +45,10 @@
             CLASS = KTPrefsController;
             LANGUAGE = ObjC;
             OUTLETS =             {
-                oAddressComboBox = KSEmailAddressComboBox;
                 oCompressionSample = NSImageView;
                 oObjectController = NSObjectController;
             };
-            SUPERCLASS = KSSingletonWindowController;
+            SUPERCLASS = KSPrefsController;
         },
                 {
             CLASS = NSApplication;

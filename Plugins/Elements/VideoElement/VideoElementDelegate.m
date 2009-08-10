@@ -49,7 +49,6 @@
 
 #import <KSPathInfoField.h>
 
-
 /*
  
  See http://www.gidforums.com/t-12525.html for lots of ideas on more embedding, like
@@ -257,6 +256,7 @@
 	if (movie)
 	{
 		posterImage = [movie betterPosterImage]; 
+		[movie release];
 	}
 	
 	// Handle a missing thumbnail, like when we have a .wmv file
@@ -468,9 +468,9 @@ After deflating starting at byte 8, you get:
 				z.next_out = (Bytef *)[outputData bytes];
 				z.avail_out = dataLength - 8;
 		
-				int status = inflateInit((z_streamp)&z);
-				status = inflate(&z, Z_FINISH);
-				status = inflateEnd((z_streamp)&z);
+				(void) inflateInit((z_streamp)&z);
+				(void) inflate(&z, Z_FINISH);
+				(void) inflateEnd((z_streamp)&z);
 				
 				myBytePointer = (char *)[outputData bytes];
 			}
@@ -873,11 +873,27 @@ After deflating starting at byte 8, you get:
 
 - (void)calculateMovieDimensions:(QTMovie *)aMovie
 {
-	NSSize movieSize = [[aMovie attributeForKey:QTMovieNaturalSizeAttribute] sizeValue];
-	if (NSEqualSizes(NSZeroSize, movieSize))
+	NSSize movieSize = NSZeroSize;
+	
+	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	if ([vtracks count] && [[vtracks objectAtIndex:0] respondsToSelector:@selector(apertureModeDimensionsForMode:)])
 	{
-		movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];
+		QTTrack* track = [vtracks objectAtIndex:0];
+		//get the dimensions 
+		
+		// I'm getting a warning of being both deprecated AND unavailable!  WTF?  Any way to work around this?
+		
+		movieSize = [track apertureModeDimensionsForMode:QTMovieApertureModeClean];		// 10.5 only, but it gives a proper value for anamorphic movies like from case 41222.
 	}
+	if (NSEqualSizes(movieSize, NSZeroSize))
+	{
+		movieSize = [[aMovie attributeForKey:QTMovieNaturalSizeAttribute] sizeValue];
+		if (NSEqualSizes(NSZeroSize, movieSize))
+		{
+			movieSize = [[aMovie attributeForKey:QTMovieCurrentSizeAttribute] sizeValue];
+		}
+	}
+	
 //	NSLog(@"Calculated size of %@ to %@", aMovie, NSStringFromSize(movieSize));
 	[self setMovieSize:movieSize];
 }
@@ -915,12 +931,15 @@ After deflating starting at byte 8, you get:
 {
 	NSArray *result = nil;
 	
-	KTMediaContainer *video = [[self delegateOwner] valueForKey:@"video"];
-	if (video)
-	{
-		result = [NSArray arrayWithObject:video];
-	}
-	
+	if ([[self delegateOwner] integerForKey:@"movieSource"] == 0)
+    {
+        KTMediaContainer *video = [[self delegateOwner] valueForKey:@"video"];
+        if ([[video file] currentPath])
+        {
+            result = [NSArray arrayWithObject:video];
+        }
+    }
+    
 	return result;
 }
 

@@ -200,6 +200,13 @@ REVISIONS:
 
 static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 
++ (void) startRecordingFontChanges;
+{
+	if (nil == sDefaultTextAttributesPerInstance)
+	{
+		sDefaultTextAttributesPerInstance = [[NSMutableDictionary alloc] init];
+	}
+}
 
 -(NSDictionary *) defaultTextAttributes
 {
@@ -239,23 +246,23 @@ static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 
 - (void) setDesiredAttributes:(NSDictionary *)attr;
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	NSFont *font = [attr objectForKey:NSFontAttributeName];
-	if (font)
+	if (sDefaultTextAttributesPerInstance)
 	{
-		// store in defaults for next time
-		[defaults setObject:[font fontName] forKey:@"HTMLViewFontName"];
-		[defaults setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:@"HTMLViewPointSize"];
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
-		// store in registry
-		if (nil == sDefaultTextAttributesPerInstance)
+		NSFont *font = [attr objectForKey:NSFontAttributeName];
+		if (font)
 		{
-			sDefaultTextAttributesPerInstance = [[NSMutableDictionary alloc] init];
+			// store in defaults for next time
+			[defaults setObject:[font fontName] forKey:@"HTMLViewFontName"];
+			[defaults setObject:[NSNumber numberWithFloat:[font pointSize]] forKey:@"HTMLViewPointSize"];
+			[defaults synchronize];
+		
+			// store in registry
+			NSString *keyForSelf = [NSString stringWithFormat:@"%p", self];
+			NSDictionary *newAttr = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+			[sDefaultTextAttributesPerInstance setObject:newAttr forKey:keyForSelf];
 		}
-		NSString *keyForSelf = [NSString stringWithFormat:@"%p", self];
-		NSDictionary *newAttr = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
-		[sDefaultTextAttributesPerInstance setObject:newAttr forKey:keyForSelf];
 	}
 }
 

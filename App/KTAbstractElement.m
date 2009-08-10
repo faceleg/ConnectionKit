@@ -153,12 +153,12 @@
         {
             Class delegateClass = [[[self plugin] bundle] principalClass];
             if (delegateClass)
-            {
+            {                
                 // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
                 if (!myDelegate)
                 {
                     myDelegate = [[delegateClass alloc] init];
-                    OBASSERTSTRING(myDelegate, @"plug-in delegate cannot be nil!");
+                    OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
                     
                     [myDelegate setDelegateOwner:self];
                     

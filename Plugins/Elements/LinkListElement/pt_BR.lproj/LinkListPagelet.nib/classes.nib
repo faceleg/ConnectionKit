@@ -1,0 +1,71 @@
+{
+    IBClasses =     (
+                {
+            CLASS = DNDArrayController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                tableView = NSTableView;
+            };
+            SUPERCLASS = NSArrayController;
+        },
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = KSLabel;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSTextField;
+        },
+                {
+            CLASS = KSUnifiedTableButton;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSButton;
+        },
+                {
+            CLASS = KTAbstractPlugin;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                myDelegate = id;
+            };
+            SUPERCLASS = KTManagedObject;
+        },
+                {
+            CLASS = KTManagedObject;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSManagedObject;
+        },
+                {
+            CLASS = KTPagelet;
+            LANGUAGE = ObjC;
+            SUPERCLASS = KTAbstractPlugin;
+        },
+                {
+            CLASS = LinkListArrayController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = DNDArrayController;
+        },
+                {
+            CLASS = LinkListInspectorController;
+            LANGUAGE = ObjC;
+            OUTLETS =             {
+                addLinkButton = NSButton;
+                removeLinkButton = NSButton;
+                tableButtonsBox = NTBoxView;
+            };
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NSManagedObject;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = NTBoxView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSView;
+        }
+    );
+    IBVersion = 1;
+}

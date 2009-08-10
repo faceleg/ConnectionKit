@@ -717,7 +717,8 @@
 	[[self siteOutline] selectRowIndexes:selectedRows byExtendingSelection:NO];
 	
 	// Record the Undo operation
-	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
+    // For reasons I cannot fathom, on Tiger this upsets the undo manager if you are dragging a freshly created page. Turning it off keeps things reasonably happy, but if you hit undo the page is deleted immediately, and hitting undo again raises an exception. It's definitely not ideal, but the best compromise I can find for now. (case 41296)
+	//[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
 	
 	return YES;
 }

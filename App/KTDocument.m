@@ -53,7 +53,6 @@
 #import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTHTMLInspectorController.h"
-#import "KTHTMLTextBlock.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
@@ -63,6 +62,7 @@
 #import "KTPage+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
+#import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
 #import "KTUtilities.h"
 
@@ -472,6 +472,53 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
+/*! Returns /path/to/document/Site/_Media
+ */
++ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL
+{
+	OBASSERT(inURL);
+	
+	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (NSURL *)mediaDirectoryURL;
+{
+	/// This could be calculated from [self fileURL], but that doesn't work when making the very first save
+	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
+	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
+	NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
+	
+    NSURL *result = [[self class] mediaURLForDocumentURL:docURL];
+	return result;
+}
+
+/*	Temporary media is stored in:
+ *	
+ *		Application Support -> Sandvox -> Temporary Media Files -> Document ID -> a file
+ *
+ *	This method returns the path to that directory, creating it if necessary.
+ */
+- (NSString *)temporaryMediaPath;
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
+
+	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
+	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self site] siteID]];
+	
+	// Create the directory if needs be
+	if (![fileManager fileExistsAtPath:result])
+	{
+		[fileManager createDirectoryPath:result attributes:nil];
+	}
+		
+	OBPOSTCONDITION(result);
+	return result;
+}
+
 - (NSString *)siteDirectoryPath;
 {
 	NSURL *docURL = [self fileURL];
@@ -480,8 +527,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
 		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-		NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
-		docURL = [[[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath] autorelease];
+		docURL = [storeURL URLByDeletingLastPathComponent];
 	}
 	
 	NSString *result = [[KTDocument siteURLForDocumentURL:docURL] path];
@@ -828,8 +874,19 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		BOOL isRawHTML = NO;
 		KTHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
 		id sourceObject = [textBlock HTMLSourceObject];
-		id sourceKeyPath = [textBlock HTMLSourceKeyPath];
-		
+        
+        NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
+		if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
+        {
+            KTPage *page = sourceObject;
+            if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
+            {
+                sourceKeyPath = @"customSummaryHTML";
+            }
+        }
+        
+        
+        // Fallback for non-text blocks
 		if (!textBlock)
 		{
 			isRawHTML = YES;
@@ -864,7 +921,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		if (sourceObject)
 		{
-
+            
 			[self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
 		}
 	}
@@ -906,8 +963,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[media setBool:YES forKey:@"isStale"];
         
         
-        // All page URLs are now invalid
+        // All page and sitemap URLs are now invalid
         [[[self site] root] recursivelyInvalidateURL:YES];
+        [self willChangeValueForKey:@"publishedSitemapURL"];
+        [self didChangeValueForKey:@"publishedSitemapURL"];
 		
 		
 		

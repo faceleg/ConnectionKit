@@ -142,7 +142,7 @@
 {
 	BOOL result = NO;
 	
-	if ( [self isCollection] )
+	if ( [self isCollection] && (nil != [self index]) )
 	{
 		NSArray *pages = [self pagesInIndex];
 		int i;

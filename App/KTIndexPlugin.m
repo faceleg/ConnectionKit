@@ -123,25 +123,28 @@
 		if (showIcons)
 		{
 			NSImage *image = [plugin pluginIcon];
+			float imageHeight = image ? [image size].height : 0.0;
 #ifdef DEBUG
 			if (nil == image)
 			{
 				NSLog(@"nil pluginIcon for %@", presetTitle);
 			}
 #endif
-			
-			[image setDataRetained:YES];	// allow image to be scaled.
-			[image setScalesWhenResized:YES];
-			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
-			[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
-			[menuItem setImage:image];
-			[style setMinimumLineHeight:[image size].height];
-			
+			if (image)
+			{
+				
+				[image setDataRetained:YES];	// allow image to be scaled.
+				[image setScalesWhenResized:YES];
+				// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
+				[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
+				[menuItem setImage:image];
+				[style setMinimumLineHeight:imageHeight];
+			}
 			NSFont *titleFont = [NSFont menuFontOfSize:(smallText ? [NSFont smallSystemFontSize] : [NSFont systemFontSize])];
 			NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 										titleFont, NSFontAttributeName,
 										style, NSParagraphStyleAttributeName,
-										[NSNumber numberWithFloat:((([image size].height-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
+										[NSNumber numberWithFloat:(((imageHeight-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
 										nil];
 			NSAttributedString *titleString = [[[NSAttributedString alloc] initWithString:presetTitle attributes:attributes] autorelease];
 			[menuItem setAttributedTitle:titleString];

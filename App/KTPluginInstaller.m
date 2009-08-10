@@ -52,6 +52,7 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 - (void)queueURL:(NSURL *)aURL		// cancel queued requests and queue up another one.
 {
+NSLog(@"%@", aURL);
 	if (0 == [myURLs count] && !myProgressPanel)
 	{
         myProgressPanel = [[KSProgressPanel alloc] init];

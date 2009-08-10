@@ -153,10 +153,22 @@
 				}
 			}
 		}
-		
-		
-		// Hook the text block up to its DOM node
-		[result setDOMNode:textBlockDOMElement];
+        
+        
+        if (result)
+        {
+            // Hook the text block up to its DOM node
+            [result setDOMNode:textBlockDOMElement];
+        }
+        else if (![self supercomponent])
+        {
+            // In very rare cases, the user will have pasted in HTML code that once was a valid editing block. If so, want to search the next level up. Case 41716.
+            DOMNode *parentNode = [textBlockDOMElement parentNode];
+            if (parentNode)
+            {
+                result = [self textBlockForDOMNode:parentNode];
+            }
+        }
 	}
 	
 	

@@ -131,7 +131,7 @@
 	
 	
 	// Make sure the destination is available
-	NSString *destinationPath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
+	NSString *destinationPath = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:filename];
 	if ([fileManager fileExistsAtPath:destinationPath])
 	{
 		KTLog(KTMediaLogDomain,
@@ -169,7 +169,8 @@
 	}
 	else
 	{
-		result = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:[self filename]];
+		KTDocument *doc = [[self mediaManager] document];
+        result = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:[self filename]];
 	}
 	
     return result;

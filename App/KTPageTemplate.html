@@ -1,4 +1,4 @@
-[[if HTMLGenerationPurpose]]				[[comment Code Injection here is only for publishing]]
+[[if parser.isPublishing]]				[[comment Code Injection here is only for publishing]]
 [[if master.codeInjectionBeforeHTML]]
 [[=master.codeInjectionBeforeHTML]]
 [[endif2]]
@@ -52,7 +52,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if javascriptURLPath]]
 <script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
 [[endif]]
-[[if HTMLGenerationPurpose]]
+[[if parser.isPublishing]]
 [[if master.wantsHaloscan]]
 [[if master.haloscanUserName]]
 <script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
@@ -82,10 +82,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if isRoot]]
 [[if master.logoImage]]
 						<span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
+							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
 							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
-							width="[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
-							height="[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]" /></span>
+							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span>
 [[endif2]]
 [[if master.headerImageHidesH1]]
 						<h1 class="hidden">[[=master.siteTitleHTML]]</h1>
@@ -95,10 +95,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[else]]
 [[if master.logoImage]]
 						<a class="imageLink" href="[[path site.root]]"><span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
+							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
 							alt="[[=&master.headerImageDescription]]"
-							width="[[mediainfo info:width media:master.logoImage sizeToFit:master.logoImageMaxSize]]"
-							height="[[mediainfo info:height media:master.logoImage sizeToFit:master.logoImageMaxSize]]" /></span></a>
+							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
 [[endif2]]
 [[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path site.root]]">[[=master.siteTitleHTML]]</a></h1>
@@ -111,7 +111,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 					<div id="sitemenu-container">
 [[if site.pagesInSiteMenu]]
 						<div id="sitemenu">
-							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
+							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a rel="nofollow" href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
 							<div id="sitemenu-content">
 								<ul>
 [[forEach site.pagesInSiteMenu toplink]]
@@ -141,7 +141,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						<div id="sidebar">
 					  		<div id="sidebar-top"></div>
 							<div id="sidebar-content">
-								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
+								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
 [[forEach sidebarPagelets aPagelet]]
 								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTML]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="k-[[=aPagelet.uniqueID]]">
 
@@ -172,7 +172,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
 						[[textblock property:master.copyrightHTML flags:"block"]]
-						<div class="hidden">[[`backToTopTitleHTML]]<a href="#title">[[`backToTopLinkHTML]]</a></div>
+						<div class="hidden">[[`backToTopTitleHTML]]<a rel="nofollow" href="#title">[[`backToTopLinkHTML]]</a></div>
 					</div>
 				</div> <!-- page-bottom -->
 			</div> <!-- container -->
@@ -180,14 +180,14 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 		</div> <!-- specific body type -->
 [[endBody]]
 
-[[if HTMLGenerationPurpose]]
+[[if parser.isPublishing]]
 [[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
 [[endif2]]
 [[if !=disableComments]]
 [[if master.wantsJSKit]]
 [[if pagesInIndexAllowComments]]
-		<script type="text/javascript" src="http://js-kit.com/comments-count.js"></script>
+        <div style="display:none;"><script type="text/javascript" src="http://js-kit.com/comments-count.js"></script></div>
 [[endif4]]
 [[if allowComments]]
 		<script type="text/javascript" src="http://js-kit.com/comments.js"></script>

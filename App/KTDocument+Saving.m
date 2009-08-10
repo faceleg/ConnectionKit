@@ -48,6 +48,10 @@
 #import "Debug.h"
 
 
+#include <sys/param.h>
+#include <sys/mount.h>
+
+
 NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
@@ -116,20 +120,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
-    // Mark -isSaving as YES;
-    mySaveOperationCount++;
-    
-    
-    
     BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
     OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
     
     
-    // Unmark -isSaving as YES if applicable
-    mySaveOperationCount--;
-    
-    
-	return result;
+    return result;
 }
 
 - (BOOL)isSaving
@@ -1006,7 +1001,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         
         NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
         [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
-        [webViewWindow release];
+        [webViewWindow release];    // we allocate the window object when creating it but never autorelease. It stays attached to the webview until we release it here
         
         
         // Remove the lock. In the event that loading the webview timed out, it will still be locked.

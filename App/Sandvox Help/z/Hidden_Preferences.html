@@ -5,10 +5,10 @@
 <head>
     <meta name="keywords" content="hidden, secret, preference, preferences, pref, prefs, default, defaults, user, index, indexes, indexing, index.html, terminal, robot, robots, robots.txt, delete, deleting, reset, resetting, plist, override, overriding, overridden, default, filename, file, name" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <title>Hidden Preferences</title>
     <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
     <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Hidden Preferences</title>
 </head>
 
 <body>
@@ -563,16 +563,16 @@ defaults delete com.karelia.Sandvox metaRobots
 
         <h2><span class="mw-headline">Contact Form</span></h2>
 
-        <p>You can change the service that Sandvox uses to send email from your website. Because some Sandvox users may have trouble receiving emails sent from the server normally used by Sandvox (server.karelia.com), we offer this alternative.</p>
+        <p>You can change the service that Sandvox uses to send email from your website. Because some Sandvox users may have trouble receiving emails sent from the server normally used by Sandvox (service.karelia.com), we offer this alternative.</p>
 
-        <p>You can switch to our alternate server by changing <i>both</i> of the "service2.karelia.com" URLs specified here. (Do not specify a new password.) Or, you can <a href="http://www.karelia.com/files/mailer_service.zip" class="external text" title="http://www.karelia.com/files/mailer_service.zip">download our PHP files</a> and install them on your own server — see the README file that comes with that download for instructions. Be sure to republish your website after changing any of these defaults.</p>
+        <p>You would need to <a href="http://www.karelia.com/files/mailer_service.zip" class="external text" title="http://www.karelia.com/files/mailer_service.zip">download our PHP files</a> and install them on your own server — see the README file that comes with that download for instructions. Be sure to republish your website after changing any of these defaults.</p>
 
         <dl>
             <dt>URLs of the form processor</dt>
 
-            <dd><code>defaults write com.karelia.Sandvox mailmeURL "<span class="prefValue">http://service2.karelia.com/mailme.php</span>"</code></dd>
+            <dd><code>defaults write com.karelia.Sandvox mailmeURL "<span class="prefValue">http://service.karelia.com/mailme.php</span>"</code></dd>
 
-            <dd><code>defaults write com.karelia.Sandvox mailmeAjaxURL "<span class="prefValue">http://service2.karelia.com/mailmeAjax.php</span>"</code></dd>
+            <dd><code>defaults write com.karelia.Sandvox mailmeAjaxURL "<span class="prefValue">http://service.karelia.com/mailmeAjax.php</span>"</code></dd>
 
             <dt>For your custom installation, the password used to decrypt the email address</dt>
 
@@ -853,7 +853,7 @@ defaults delete com.karelia.Sandvox metaRobots
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://docs.karelia.com/feedback.html?h=Sandvox&amp;p=Hidden_Preferences.html">Let us know.</a>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Hidden_Preferences.html">Let us know.</a>
     </div>
 </body>
 </html>

@@ -732,7 +732,7 @@
 		
         
         
-        NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];
+        NSSize suggestedSize = [settings scaledSizeForImageOfSize:[self dimensions]];   // Clang, we assert settings is non-nil above
         NSSize roundedSize = NSMakeSize(roundf(suggestedSize.width), roundf(suggestedSize.height));
         
         settings = [KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:roundedSize];

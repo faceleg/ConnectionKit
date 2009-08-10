@@ -20,14 +20,6 @@
 #import "KSAbstractBugReporter.h"
 #import <Sparkle/Sparkle.h>
 
-@interface KTPrefsController ( Private )
-
-- (int)sparkleOption;
-- (void)setSparkleOption:(int)aSparkleOption;
-
-@end
-
-
 
 @implementation KTPrefsController
 
@@ -36,9 +28,7 @@
 
 - (id)init
 {
-	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
-	[KSEmailAddressComboBox setWillIncludeNames:NO];
-	self = [super initWithWindowNibName:@"Prefs"];
+	self = [super init];
     if (self)
 	{
 		
@@ -54,8 +44,6 @@
 	[controller removeObserver:self forKeyPath:@"values.KTPreferredJPEGQuality"];
 	[controller removeObserver:self forKeyPath:@"values.KTSharpeningFactor"];
 	[controller removeObserver:self forKeyPath:@"values.KTPrefersPNGFormat"];
-
-	[self removeObserver:self forKeyPath:@"sparkleOption"];
 
 	[mySampleImage release];
 	
@@ -94,46 +82,8 @@
 	}
 	[oCompressionSample setImage:sharpenedImage];
 	
-	/// Don't blow away in 1.5, the cache isn't used anyway
-	// TODO: remove this code, make sure all prefs work
-//	// Blow away caches, but only if the keypath is real -- meaning the value actually changed.
-//	if (aBlowAway)
-//	{
-//		// Blow away the ENTIRE cache, of all documents ever opened.
-//		
-//		// Note that NSSearchPath.. and NSHomeDirectory return home directory path without resolving
-//		// symbolic links so they should match up.
-//		
-//		NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
-//		if ( [libraryPaths count] == 1 )
-//		{
-//			NSString *cachePath = [libraryPaths objectAtIndex:0];
-//			cachePath = [cachePath stringByAppendingPathComponent:[NSApplication applicationName]];
-//			cachePath = [cachePath stringByAppendingPathComponent:@"Sites"];
-//			cachePath = [cachePath stringByAppendingPathExtension:@"noindex"];
-//			
-//			// Double-check!
-//			if (![cachePath hasPrefix:NSHomeDirectory()]
-//				|| [cachePath isEqualToString:NSHomeDirectory()]
-//				|| [cachePath isEqualToString:@"/"]
-//				|| NSNotFound == [cachePath rangeOfString:@"Library/Caches"].location)
-//			{
-//				NSLog(@"Not removing image cache path from %@", cachePath);
-//			}
-//			else
-//			{
-//				NSFileManager *fm = [NSFileManager defaultManager];
-//				[fm removeFileAtPath:cachePath handler:nil];
-//				NSLog(@"Removed cache files from %@", cachePath);
-//			}
-//		}
-//	}	
 }
 
-- (IBAction) emailComboChanged:(id)sender;
-{
-	[oAddressComboBox saveSelectionToDefaults];
-}
 
 // Scale down if it's bigger than 150% of what will show.  That will allow us to drag in approximately sized
 // small images for an exact test.
@@ -162,38 +112,16 @@
 
 - (void)windowDidLoad
 {
+	[super windowDidLoad];
+
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-	NSUserDefaults *defaults = [controller defaults];
 
 	[controller addObserver:self forKeyPath:@"values.KTPreferredJPEGQuality" options:(NSKeyValueObservingOptionNew) context:nil];
+
 	[controller addObserver:self forKeyPath:@"values.KTSharpeningFactor" options:(NSKeyValueObservingOptionNew) context:nil];
 	[controller addObserver:self forKeyPath:@"values.KTPrefersPNGFormat" options:(NSKeyValueObservingOptionNew) context:nil];
 
-
-	// setup sparkeOption
-	if ([[[NSApp delegate] sparkleUpdater] automaticallyChecksForUpdates])
-	{
-		
-		NSString *feedType = [[defaults objectForKey:@"KSFeedType"] lowercaseString];
-		
-		if (nil == feedType || [feedType isEqualToString:@""] || [feedType isEqualToString:@"release"])
-		{
-			[self setSparkleOption:kSparkleRelease];
-		}
-		else
-		{
-			[self setSparkleOption:kSparkleBeta];	// SOME kind of special feed, overridden.
-		}
-	}
-	else
-	{
-		[self setSparkleOption:kSparkleNone];
-	}
-	
 	// Now start observing
-	
-	[self addObserver:self forKeyPath:@"sparkleOption" options:(NSKeyValueObservingOptionNew) context:nil];
-
 	
 	[oObjectController setContent:self];	
 
@@ -226,24 +154,7 @@
 
 	if ([aKeyPath isEqualToString:@"sparkleOption"])
 	{
-		int sparkleOption = [self sparkleOption];
-		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-		NSUserDefaults *defaults = [controller defaults];
-		
-		switch (sparkleOption)
-		{
-			case kSparkleNone:
-				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
-				break;
-			case kSparkleRelease:
-				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
-				[defaults removeObjectForKey:@"KSFeedType"];
-				break;
-			case kSparkleBeta:
-				[[[NSApp delegate] sparkleUpdater] setAutomaticallyChecksForUpdates:NO];
-				[defaults setObject:@"beta" forKey:@"KSFeedType"];
-				break;
-		}
+		[super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
 	}
 	else
 	{
@@ -251,25 +162,5 @@
 	}
 }
 
-- (IBAction) windowHelp:(id)sender
-{
-	[[NSApp delegate] showHelpPage:@"Preferences"];	// HELPSTRING
-}
-
-- (IBAction) checkForUpdates:(id)sender
-{
-	[[[NSApp delegate] sparkleUpdater] checkForUpdates:sender];
-}
-
-
-- (int)sparkleOption
-{
-    return mySparkleOption;
-}
-
-- (void)setSparkleOption:(int)aSparkleOption
-{
-    mySparkleOption = aSparkleOption;
-}
 
 @end

@@ -52,6 +52,7 @@ typedef enum {
 
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
 - (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
+- (BOOL)isPublishing;
 - (BOOL)includeStyling;
 - (void)setIncludeStyling:(BOOL)includeStyling;
 

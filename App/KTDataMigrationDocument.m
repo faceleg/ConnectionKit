@@ -143,7 +143,7 @@
     if (didMigrateSuccessfully)
     {
         [self close];
-        [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[dataMigrator newDocumentURL] display:YES error:NULL];
+        [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[dataMigrator migratedDocumentURL] display:YES error:NULL];
     }
     else
     {

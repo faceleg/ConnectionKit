@@ -25,7 +25,8 @@
 - (BOOL)separateInspectorSegment;
 
 // Hierarchy
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;
+- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
+- (BOOL)isDescendantOfPage:(KTPage *)aPotentialAncestor;
 
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(KTCollectionSortType)aSortType;

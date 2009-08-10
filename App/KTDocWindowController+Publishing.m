@@ -14,7 +14,6 @@
 #import "KTSite.h"
 #import "KTExportEngine.h"
 #import "KTExportSavePanelController.h"
-#import "KTHostSetupWindowController.h"
 #import "KTHostProperties.h"
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
@@ -90,10 +89,13 @@
 - (BOOL)shouldPublish
 {
     BOOL result = [[self webViewController] commitEditing];
+    [[self siteOutlineController] commitEditing];
+
+    result = ([[[[self document] site] hostProperties] siteURL] != nil);
     
     if (result)
     {
-        KTHostProperties *hostProperties = [[[self document] site] hostProperties];
+        KTHostProperties *hostProperties = [[[self site] documentInfo] hostProperties];
         BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
         BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
         
@@ -181,11 +183,12 @@
     
     // Prompt the user for the site's URL if they haven't been through the HSA.
     KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-    if (![hostProperties siteURL] ||
-        (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
+    //if (![hostProperties siteURL] ||
+    //    (![hostProperties boolForKey:@"localHosting"] && ![hostProperties boolForKey:@"remoteHosting"]))
     {
         KTExportSavePanelController *controller = 
-		[[KTExportSavePanelController alloc] initWithSiteURL:[hostProperties siteURL]];   // We'll release it when the panel closes
+		[[KTExportSavePanelController alloc] initWithSiteURL:[hostProperties siteURL]
+                                                 documentURL:[[self document] fileURL]];   // we'll release it when the panel closes
         
         [savePanel setDelegate:controller];
         [savePanel setAccessoryView:[controller view]];
@@ -238,7 +241,14 @@
         if (returnCode == NSOKButton)
         {
             KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-			[hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
+            [hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
+            
+            // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
+            if (![hostProperties siteURL])
+            {
+                [hostProperties setValue:nil forKey:@"localHosting"];
+            }
+            
             [[[[self document] site] root] recursivelyInvalidateURL:YES];
         }
         
@@ -256,17 +266,6 @@
     // Store the path and kick off exporting
     [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
     [self exportSiteAgain:self];
-}
-
-#pragma mark -
-#pragma mark Host Setup
-
-/*  This overrides KTDocument's implementation
- */
-- (IBAction)setupHost:(id)sender
-{
-    NSWindowController *controller = [[KTHostSetupWindowController alloc] initWithWindowNibName:@"ConnectionTest"];
-    [NSApp beginSheet:[controller window] modalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo:NULL];
 }
 
 @end

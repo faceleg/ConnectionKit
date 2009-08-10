@@ -184,12 +184,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	return result;
 }
 
-
-- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
-{
-	return nil;
-}
-
 - (NSArray *) convertTypesIntoNames:(NSArray *)types;
 {
 	NSDictionary *lookup = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -461,14 +455,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		/// whether CKTransferController should set up a parallel verification connection
 		[NSNumber numberWithBool:NO], @"ConnectionVerifiesTransfers",
 										 
-                                         
-		// How frequently documents are autosaved in seconds. Autosave is off on debug builds for
-        // as they raise an exception.
-#if DEBUG
-        [NSNumber numberWithInt:0], @"AutosaveFrequency",
-#else
-        [NSNumber numberWithInt:60], @"AutosaveFrequency",
-#endif
+		/// how frequently documents are autosaved as int (converted to NSTimeInternal (double))
+		[NSNumber numberWithInt:60], @"AutosaveFrequency",
 										 
 		/// whether CKTransferController sets permissions on uploads
 		[NSNumber numberWithBool:YES], @"ConnectionSetsPermissions",
@@ -508,7 +496,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	
 	// debugging domains -- we have to set default values to get them to show up in the table.
 	NSArray *domains = [NSArray arrayWithObjects:
-		/*ControllerDomain,*/ CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
+		ControllerDomain, CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
 		/* StreamDomain, */ CKInputStreamDomain, CKOutputStreamDomain, /* SSLDomain, */ CKQueueDomain, KTMediaLogDomain, nil];
 	
 	NSEnumerator *theEnum = [domains objectEnumerator];
@@ -741,7 +729,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		if ( [reason hasPrefix:@"_registerUndoObject"] )
 		{
 			LOG((@"caught _registerUndoObject exception, resetting undoManager"));
-			KTDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
+			KTDocument *document = [self currentDocument];
 			[[document undoManager] removeAllActions];
 			return NO;
 		}
@@ -750,7 +738,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		if ( NSNotFound != [reason rangeOfString:@"undo was called with too many nested undo groups"].location )
 		{
 			LOG((@"caught undo called with too many nested undo groups exception, resetting undoManager"));
-			KTDocument *document = [[NSDocumentController sharedDocumentController] currentDocument];
+			KTDocument *document = [self currentDocument];
 			[[document undoManager] removeAllActions];
 			return NO;
 		}
@@ -1011,7 +999,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
                             [filesNotFound addObject:path];
                             continue;
                         }				
-                        
+// FIXME ... this is not localized properly. We should have it "Opening %@..." to account for other language styles.
                         NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
                         [progressPanel setMessageText:message];
                         [progressPanel setIcon:[NSImage imageNamed:@"document"]];
@@ -1245,10 +1233,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
     
 	// Autosave frequency
     NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
-    if (interval > 5 * 60)  interval = 60.0;    // if the number is wildly out of range, go back to our default of 60
-    if (interval > 0.0 && interval < 20.0) interval = 60.0;
-    
-    NSDocumentController *sharedDocumentController = [NSDocumentController sharedDocumentController];
+    if (interval < 5)       interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
+    if (interval > 5 * 60)  interval = 60.0;
+
+    KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
     [sharedDocumentController setAutosavingDelay:interval];
 	
 			 
@@ -1506,6 +1494,24 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	bool prefersPNG = [defaults boolForKey:@"KTPrefersPNGFormat"];
 	return !prefersPNG;
 }
+
+- (IBAction)showPluginWindow:(id)sender;
+{
+	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - only showing new updates.
+	{
+		[[KSPluginInstallerController sharedController] showWindowForNewVersions:sender];
+	}
+	else	// normal
+	{
+		[[KSPluginInstallerController sharedController] showWindow:sender];
+	}
+}
+
+- (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller
+{
+	return nil;
+}
+
 
 #pragma mark -
 #pragma mark Debug Methods
