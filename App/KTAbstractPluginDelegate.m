@@ -62,11 +62,6 @@
 	return [[[self delegateOwner] plugin] bundle];
 }
 
-- (KTDocument *)document
-{
-	return [[self page] document];
-}
-
 - (NSManagedObjectContext *)managedObjectContext
 {
 	return [myDelegateOwner managedObjectContext];

@@ -16,7 +16,6 @@
 #import "KTSite.h"
 #import "KTDocumentController.h"
 #import "KTMediaContainer.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -212,9 +211,7 @@
 
 - (void)setMenuTitle:(NSString *)newTitle
 {
-	[[self document] willChangeValueForKey:@"siteMenu"];
 	[self setWrappedValue:newTitle forKey:@"menuTitle"];
-	[[self document] didChangeValueForKey:@"siteMenu"];
 }
 
 /*	The HTML to use for the Site Menu. Picks from -menuTitle or -titleText appropriately

@@ -47,22 +47,6 @@ void enableCoreDumps ()
 } // enableCoreDumps
 
 
-// courtesy http://www.cocoabuilder.com/archive/message/cocoa/2001/7/13/20754
-#define KeyShift	0x38
-#define KeyControl	0x3b
-#define KeyOption	0x3A
-#define KeyCommand	0x37
-#define KeyCapsLock	0x39
-#define KeySpace	0x31
-#define KeyTabs		0x30
-
-int IsKeyPressed(unsigned short key)
-{
-	unsigned char km[16];
-	GetKeys((void *)km);
-	return ((km[key>>3] >> (key & 7)) & 1) ? 1 : 0;
-}
-
 int main(int argc, char *argv[])
 {
 // pull in OmniObjectMeter iff DEBUG and OOM are set in Application Debug.xcconfig
@@ -72,7 +56,8 @@ int main(int argc, char *argv[])
 	#endif
 #endif
 	
-	if ( IsKeyPressed(KeyControl) || IsKeyPressed(KeyOption) ) /// be flexible; option easier to hit with double-click
+    UInt32 modifierKeys = GetCurrentEventKeyModifiers();
+    if ((modifierKeys & controlKey) || (modifierKeys & shiftKey))
 	{
 		NSBeep();
 		enableCoreDumps();

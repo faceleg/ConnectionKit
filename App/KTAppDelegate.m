@@ -112,16 +112,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // (this is a non-expiring, worldwide, pro license)
 // #define APPLE_DESIGN_AWARDS_KEY [@"Nccyr Qrfvta Njneqf Tnyvyrr Pnqv Ubc" rot13]
 
-// courtesy http://www.cocoabuilder.com/archive/message/cocoa/2001/7/13/20754
-#define KeyShift	0x38
-#define KeyControl	0x3b
-#define KeyOption	0x3A
-#define KeyCommand	0x37
-#define KeyCapsLock	0x39
-#define KeySpace	0x31
-#define KeyTabs		0x30
-
-
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
 @interface NSArray ( TableDataSource )
@@ -649,7 +639,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
 	else if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
-		return [[self currentDocument] validateMenuItem:menuItem];
+		return [[[NSDocumentController sharedDocumentController] currentDocument] validateMenuItem:menuItem];
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
@@ -1166,12 +1156,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 - (void)warnOrQuitIfExpiring
 {	
-	unsigned char km[16];
-	GetKeys((void *)km);
-	BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
-	
-	if ( !overrideKeyPressed &&
-		([[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0) )
+	if ((GetCurrentEventKeyModifiers() & optionKey) &&
+		[[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0)
 	{
 		NSRunCriticalAlertPanel(
 								NSLocalizedString(@"This version of Sandvox has expired.", @""),
@@ -1337,15 +1323,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-- (KTDocument *)currentDocument
-{
-	// NOTE: I took out the ivar to try to avoid too many retains. Just using doc controller now.
-    return [[NSDocumentController sharedDocumentController] currentDocument];
-}
-
-#pragma mark -
 #pragma mark IBActions
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender
@@ -1357,7 +1334,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 */
 - (IBAction)saveWindowSize:(id)sender
 {
-    NSWindow *window = [[[[self currentDocument] windowControllers] objectAtIndex:0] window];
+    NSWindow *window = [[[[NSDocumentController sharedDocumentController] windowControllers] objectAtIndex:0] window];
     NSSize contentSize = [[window contentView] frame].size;
     [[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(contentSize)
                                               forKey:@"DefaultDocumentWindowContentSize"];
@@ -1416,7 +1393,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	[[self currentDocument] editRawHTMLInSelectedBlock:sender];
+	[[NSDocumentController sharedDocumentController] editRawHTMLInSelectedBlock:sender];
 }
 
 - (IBAction) openScreencastLargeSize:(id)sender

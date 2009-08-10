@@ -24,7 +24,6 @@
 #import "KTPagelet+Internal.h"
 #import "KTPlaceholderController.h"
 #import "KTPluginInstaller.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -404,7 +403,7 @@
 			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
                                                                     type:([fileType isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
             
-			metadata = [KTPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL
+			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL
                                                                                  error:outError];
 		}
 		@catch (NSException *exception)

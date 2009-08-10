@@ -82,7 +82,6 @@
 #import <iMediaBrowser/iMediaBrowser.h> // External frameworks
 
 #import "Debug.h"                       // Debugging
-#import "KTManagedObjectContext.h"
 #import "KTPersistentStoreCoordinator.h"
 
 #import "Registration.h"                // Licensing
@@ -141,16 +140,16 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set up managed object context
-		_managedObjectContext = [[KTManagedObjectContext alloc] init];
-		[_managedObjectContext setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
+		_managedObjectContext = [[NSManagedObjectContext alloc] init];
+		[[self managedObjectContext] setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
 		
 		NSManagedObjectModel *model = [[self class] managedObjectModel];
 		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
 		[PSC setDocument:self];
-		[_managedObjectContext setPersistentStoreCoordinator:PSC];
+		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
-        [super setUndoManager:[_managedObjectContext undoManager]];
+        [super setUndoManager:[[self managedObjectContext] undoManager]];
         
         
         // Init UI accessors
@@ -329,6 +328,37 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
 {
 	return NSSQLiteStoreType;
+}
+
+- (void)setFileURL:(NSURL *)absoluteURL
+{
+    NSURL *oldURL = [[self fileURL] copy];
+    [super setFileURL:absoluteURL];
+    
+    
+    if (oldURL)
+    {
+        // Also reset the persistent stores' DB connection if needed
+        NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
+        OBASSERT([[PSC persistentStores] count] <= 1);
+        NSPersistentStore *store = [PSC persistentStoreForURL:[[self class] datastoreURLForDocumentURL:oldURL type:nil]];
+        if (store)
+        {
+            NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+            [PSC setURL:newStoreURL forPersistentStore:store];
+        }
+        
+        PSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
+        OBASSERT([[PSC persistentStores] count] <= 1);
+        store = [PSC persistentStoreForURL:[KTMediaManager mediaStoreURLForDocumentURL:oldURL]];
+        if (store)
+        {
+            NSURL *newStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:absoluteURL];
+            [PSC setURL:newStoreURL forPersistentStore:store];
+        }
+        
+        [oldURL release];
+    }
 }
 
 #pragma mark -
