@@ -227,7 +227,7 @@
 	{
 		// Write out the file
 		NSString *filename = [self uniqueInDocumentFilename:preferredFilename];
-		NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:filename];
+		NSString *destinationPath = [[self temporaryMediaPath] stringByAppendingPathComponent:filename];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
               ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from data named '%@'", filename]));
@@ -342,7 +342,7 @@
 - (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename
 {
 	// See if there's already a file there
-	NSString *proposedPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:filename];
+	NSString *proposedPath = [[self temporaryMediaPath] stringByAppendingPathComponent:filename];
 	BOOL result = !([[NSFileManager defaultManager] fileExistsAtPath:proposedPath]);
 	
 	// If there is an existing file, try to delete it. Log the operation for debugging purposes
@@ -377,7 +377,7 @@
 	// Figure out the filename and copy the file there
 	NSString *sourceFilename = [path lastPathComponent];
 	NSString *destinationFilename = [self uniqueInDocumentFilename:sourceFilename];
-	NSString *destinationPath = [[[self document] temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
+	NSString *destinationPath = [[self temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
 	
 	[self prepareTemporaryMediaDirectoryForFileNamed:destinationFilename];
 	if ([[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:self])

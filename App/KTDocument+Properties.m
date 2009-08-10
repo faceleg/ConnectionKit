@@ -41,13 +41,13 @@
  *  Normal documents are on the main thread, but data migration docs work in the background.
  */
 
-- (NSThread *)thread { return myThread; }
+- (NSThread *)thread { return _thread; }
 
 - (void)setThread:(NSThread *)thread
 {
     [thread retain];
-    [myThread release];
-    myThread = thread;
+    [_thread release];
+    _thread = thread;
 }
 
 #pragma mark .... relationships

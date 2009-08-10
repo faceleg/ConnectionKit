@@ -532,7 +532,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
 		
 		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument siteURLForDocumentURL:inURL] path] attributes:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument mediaURLForDocumentURL:inURL] path] attributes:nil];
+		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTMediaManager mediaURLForDocumentURL:inURL] path] attributes:nil];
 		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
 	}
 	
@@ -546,7 +546,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	if ([[storeCoordinator persistentStores] count] < 1)
 	{ 
 		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-																	 ofType:[KTDocument defaultStoreType]
+																	 ofType:inType
+                                                         modelConfiguration:nil
+                                                               storeOptions:nil
 																	  error:outError];
 		
 		OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -721,17 +723,17 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
     
 	// Migrate the media store
-	storeURL = [KTDocument mediaStoreURLForDocumentURL:URL];
+	storeURL = [KTMediaManager mediaStoreURLForDocumentURL:URL];
 	storeCoordinator = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
 	
-	NSURL *oldMediaStoreURL = [KTDocument mediaStoreURLForDocumentURL:originalContentsURL];
+	NSURL *oldMediaStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:originalContentsURL];
     OBASSERT(oldMediaStoreURL);
     id oldMediaStore = [storeCoordinator persistentStoreForURL:oldMediaStoreURL];
     OBASSERT(oldMediaStore);
     if (![storeCoordinator migratePersistentStore:oldMediaStore
 										    toURL:storeURL
 										  options:nil
-										 withType:[KTDocument defaultMediaStoreType]
+										 withType:[KTMediaManager defaultMediaStoreType]
 										    error:outError])
 	{
 		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -741,7 +743,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	// Copy/Move media files
 	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *newDocMediaPath = [[KTDocument mediaURLForDocumentURL:URL] path];
+	NSString *newDocMediaPath = [[KTMediaManager mediaURLForDocumentURL:URL] path];
 	
 	NSEnumerator *pathsEnumerator = [pathsToCopy objectEnumerator];
 	NSString *aPath;	NSString *destinationPath;

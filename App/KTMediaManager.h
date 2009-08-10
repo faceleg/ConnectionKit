@@ -35,9 +35,15 @@ extern NSString *KTMediaLogDomain;
 }
 
 // Basic Accesors
++ (NSString *)defaultMediaStoreType;
++ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
++ (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)inURL;
++ (NSManagedObjectModel *)managedObjectModel;
+
 - (KTDocument *)document;
 - (NSManagedObjectContext *)managedObjectContext;
-+ (NSManagedObjectModel *)managedObjectModel;
+- (NSString *)mediaPath;
+- (NSString *)temporaryMediaPath;
 
 @end
 

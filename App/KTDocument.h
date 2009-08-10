@@ -35,17 +35,17 @@ extern NSString *KTDocumentWillSaveNotification;
 @class KTAbstractElement, KTPage, KTElementPlugin;
 
 
-@interface KTDocument : NSPersistentDocument <KTDocumentControllerChain>
+@interface KTDocument : NSDocument <KTDocumentControllerChain>
 {
 @private
 	
 	// Standard document behaviour additions
-    BOOL        myIsClosing;
-    NSThread    *myThread;
+    BOOL        _closing;
+    NSThread    *_thread;
 	
     
     // KT
-    NSManagedObjectContext	*myManagedObjectContext;
+    NSManagedObjectContext	*_managedObjectContext;
 	KTSite                  *_site;                   // accessor in category method
 	
 	KTMediaManager				*myMediaManager;
@@ -74,10 +74,31 @@ extern NSString *KTDocumentWillSaveNotification;
     NSLock              *_quickLookThumbnailLock;
 }
 
-+ (NSString *)defaultStoreType;
-+ (NSString *)defaultMediaStoreType;
 
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
+// Init
+- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error;
+
+
+// Managing the Persistence Objects
++ (NSManagedObjectModel *)managedObjectModel;
+- (NSManagedObjectContext *)managedObjectContext;
+
+- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url
+                                           ofType:(NSString *)fileType
+                               modelConfiguration:(NSString *)configuration
+                                     storeOptions:(NSDictionary *)storeOptions
+                                            error:(NSError **)error;
+
+- (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
+
+
+// Spotlight
+- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
+
+
+// Document URLs etc.
++ (NSString *)defaultStoreType;
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL UTI:(NSString *)documentUTI;
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
@@ -86,9 +107,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSURL *)mediaDirectoryURL;
 - (NSString *)temporaryMediaPath;
 - (NSString *)siteDirectoryPath;
-
-
-- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error;
 
 
 - (IBAction)setupHost:(id)sender;
@@ -106,25 +124,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)mayAddScreenshotsToAttachments;
 
 - (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
-
-@end
-
-
-@interface KTDocument ( CoreData )
-
-//- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
-//										   ofType:(NSString *)fileType 
-//							   modelConfiguration:(NSString *)configuration 
-//									 storeOptions:(NSDictionary *)storeOptions 
-//											error:(NSError **)error
-
-// this method is deprecated in Leopard, but we must continue to use its signature for Tiger
-- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url 
-										   ofType:(NSString *)fileType 
-											error:(NSError **)error;
-
-// spotlight
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
 
 @end
 

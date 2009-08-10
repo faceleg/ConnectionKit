@@ -14,8 +14,11 @@
 #import "KTExternalMediaFile.h"
 #import "KTMediaContainer.h"
 #import "KTMediaPersistentStoreCoordinator.h"
+#import "KTSite.h"
 
+#import "NSApplication+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSFileManager+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
@@ -90,11 +93,7 @@ NSString *KTMediaLogDomain = @"Media";
 #pragma mark -
 #pragma mark Accessors
 
-- (KTDocument *)document { return myDocument; }
-
-/*	The Media Manager has its own private managed object context
- */
-- (NSManagedObjectContext *)managedObjectContext { return myMOC; }
++ (NSString *)defaultMediaStoreType { return NSXMLStoreType; }
 
 /*	Convenience method for accessing our MOC's associated MOM
  */
@@ -108,6 +107,71 @@ NSString *KTMediaLogDomain = @"Media";
 		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:mediaModelURL];
 	}
 	
+	return result;
+}
+
+- (KTDocument *)document { return myDocument; }
+
+/*	The Media Manager has its own private managed object context
+ */
+- (NSManagedObjectContext *)managedObjectContext { return myMOC; }
+
++ (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)docURL
+{
+	OBASSERT(docURL);
+	
+	NSURL *result = [docURL URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+/*! Returns /path/to/document/Site/_Media
+ */
++ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL
+{
+	OBASSERT(inURL);
+	
+	NSURL *result = [[KTDocument siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (NSString *)mediaPath
+{
+	/// This used to be done from [self fileURL] but that doesn't work when making the very first save
+	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
+	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
+	NSString *docPath = [[storeURL path] stringByDeletingLastPathComponent];
+	NSURL *docURL = [[NSURL alloc] initWithScheme:[storeURL scheme] host:[storeURL host] path:docPath];
+	NSString *result = [[[self class] mediaURLForDocumentURL:docURL] path];
+	
+	[docURL release];
+	return result;
+}
+
+/*	Temporary media is stored in:
+ *	
+ *		Application Support -> Sandvox -> Temporary Media Files -> Document ID -> a file
+ *
+ *	This method returns the path to that directory, creating it if necessary.
+ */
+- (NSString *)temporaryMediaPath;
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
+    
+	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
+	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[[self document] site] siteID]];
+	
+	// Create the directory if needs be
+	if (![fileManager fileExistsAtPath:result])
+	{
+		[fileManager createDirectoryPath:result attributes:nil];
+	}
+    
+	OBPOSTCONDITION(result);
 	return result;
 }
 
@@ -287,7 +351,7 @@ NSString *KTMediaLogDomain = @"Media";
 - (void)deleteTemporaryMediaFiles
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]);
-	NSString *tempMedia = [[self document] temporaryMediaPath];
+	NSString *tempMedia = [self temporaryMediaPath];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
 

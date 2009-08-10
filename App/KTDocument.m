@@ -66,25 +66,26 @@
 #import "KTLocalPublishingEngine.h"
 #import "KTUtilities.h"
 
-#import "NSApplication+Karelia.h"
+#import "NSApplication+Karelia.h"       // Karelia Cocoa additions
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
-//#import "NSWorkspace+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import <iMediaBrowser/iMediaBrowser.h>
+#import <iMediaBrowser/iMediaBrowser.h> // External frameworks
 
-#import "Debug.h"
+#import "Debug.h"                       // Debugging
+#import "KTManagedObjectContext.h"
+#import "KTPersistentStoreCoordinator.h"
 
-#import "Registration.h"
+#import "Registration.h"                // Licensing
 
 
 // Trigger Localization ... thes are loaded with the [[` ... ]] directive
@@ -110,8 +111,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setClosing:(BOOL)aFlag;
 
-- (void)setLocalTransferController:(KTLocalPublishingEngine *)aLocalTransferController;
-- (void)setRemoteTransferController:(KTLocalPublishingEngine *)aRemoteTransferController;
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
@@ -232,30 +231,388 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)dealloc
 {
-	// no more notifications
-	// TODO: FIXME: Chris Hanson indicates that we should be removing each specific observation
-	// rather than doing blanket removal
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-				
-    [_site release];
+	[_site release];
     
     [myMediaManager release];
 	
 	// release context
-	[myManagedObjectContext release]; myManagedObjectContext = nil;
+	[_managedObjectContext release];
     
-    [myThread release];
+    [_thread release];
 	
 	[super dealloc];
 }
 
 #pragma mark -
-#pragma mark Debug?
+#pragma mark Managing the Persistence Objects
 
-/*! returns root as a single page array, used in DebugTable bindings */
-- (NSArray *)rootAsArray
+/*	The first time the model is loaded, we need to give Fetched Properties sort descriptors.
+ */
++ (NSManagedObjectModel *)managedObjectModel
 {
-	return [NSArray arrayWithObject:[[self site] root]];
+	static NSManagedObjectModel *result;
+	
+	if (!result)
+	{
+		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
+		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
+        OBASSERT(componentsBundle);
+		
+        NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
+        OBASSERTSTRING(modelPath, [componentsBundle description]);
+        
+		NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+		OBASSERT(modelURL);
+		
+		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+	}
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+	if (!_managedObjectContext)
+	{
+		//LOGMETHOD;
+		
+		// set up KTManagedObjectContext as our context
+		_managedObjectContext = [[KTManagedObjectContext alloc] init];
+		[_managedObjectContext setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
+		
+		NSManagedObjectModel *model = [[self class] managedObjectModel];
+		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+		[PSC setDocument:self];
+		[_managedObjectContext setPersistentStoreCoordinator:PSC];
+		[PSC release];
+	}
+	
+	OBPOSTCONDITION(_managedObjectContext);
+	
+	return _managedObjectContext;
+}
+
+- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)URL
+                                           ofType:(NSString *)fileType
+                               modelConfiguration:(NSString *)configuration
+                                     storeOptions:(NSDictionary *)storeOptions
+                                            error:(NSError **)outError
+{
+	BOOL result = YES;
+	
+	//LOGMETHOD;
+	
+    // NB: called whenever a document is opened *and* when a document is first saved
+    // so, because of the order of operations, we have to store metadata here, too
+	
+	/// and we compute the sqlite URL here for both read and write
+	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL UTI:nil];
+	
+	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
+	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
+	NSPersistentStoreCoordinator *psc = [[self managedObjectContext] persistentStoreCoordinator];
+	result = (nil != [psc addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+									   configuration:nil
+												 URL:storeURL
+											 options:nil
+											   error:outError]);
+	
+	// Also configure media manager's store
+	if (result)
+	{
+		NSPersistentStoreCoordinator *mediaPSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
+		result = (nil != [mediaPSC addPersistentStoreWithType:NSXMLStoreType
+												configuration:nil
+														  URL:[KTMediaManager mediaStoreURLForDocumentURL:URL]
+													  options:nil
+														error:outError]);
+	}
+	
+	
+	
+	if ( result )
+    {
+        // handle datastore open, grab site and root
+        if ( nil == [self site] )
+        {
+			// fetch and set site
+            KTSite *site = [[self managedObjectContext] site];
+            if ( (nil != site) && [site isKindOfClass:[KTSite class]] )
+            {
+                _site = [site retain];
+                result = YES;
+            }
+            else
+            {
+                result = NO;
+            }
+            
+			// if we're good, fetch and set root and root's document
+			if ( result )
+			{
+				KTPage *root = [[self managedObjectContext] root];
+				if ( (nil != root) && [root isKindOfClass:[KTPage class]] )
+				{
+					result = YES;
+				}
+				else
+				{
+					result = NO;
+				}
+			}
+            
+            // if we're good, make sure all our required bundles have been loaded
+            if ( result )
+            {
+                NSEnumerator *e = [[[self site] requiredBundlesIdentifiers] objectEnumerator];
+                NSString *bundleIdentifier;
+                while ( bundleIdentifier  = [e nextObject] )
+                {
+                    NSBundle *bundle = [[KSPlugin pluginWithIdentifier:bundleIdentifier] bundle];
+                    if ( nil != bundle )
+                    {
+                        // NB: bundles without delegates may not have a principal class
+                        if ( Nil != [bundle principalClassIncludingOtherLoadedBundles:YES] )
+                        {
+                            [bundle load];
+                        }
+                    }
+                    else
+                    {
+                        NSLog(@"unable to locate required plugin: %@", bundleIdentifier);
+                    }
+                }
+            }
+        }
+		
+		/// this should be active for document open and save, but not migration
+        //		// store metadata if it doesn't exist yet
+        //		NSDictionary *metadata = [psc metadataForPersistentStore:theStore];
+        //		if ( nil == [metadata valueForKey:kKTMetadataModelVersionKey] )
+        //		{
+        //			result = [self setMetadataForStoreAtURL:storeURL error:error];
+        //		}
+    }
+	
+	return result;
+}
+
+- (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
+{
+	// we want to limit the store type to only the default
+	// otherwise Cocoa will put up an accessory view in the save panel
+	return [[self class] defaultStoreType];
+}
+
+#pragma mark -
+#pragma mark Document Content Management
+
+/*  Supplement the usual read behaviour by logging host properties and loading document display properties
+ */
+- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+	// Should only be called the once
+    BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
+    
+    if (result)
+	{
+		// Load up document display properties
+		[self setDisplaySmallPageIcons:[[self site] boolForKey:@"displaySmallPageIcons"]];
+		
+		
+        // For diagnostics, log the value of the host properties
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"])
+		{
+			KTHostProperties *hostProperties = [[self site] hostProperties];
+			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
+		}
+	}
+    
+    return result;
+}
+
+/*  Saving a document is somewhat complicated, so it's implemented in a dedicated category:
+ *  KTDocument+Saving.m
+ */
+
+#pragma mark -
+#pragma mark Metadata
+
+/*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
+- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL
+						   error:(NSError **)outError
+{
+	//LOGMETHOD;
+	
+	BOOL result = NO;
+	NSManagedObjectContext *context = [self managedObjectContext];
+	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
+    
+	@try
+	{
+		id theStore = [coordinator persistentStoreForURL:aStoreURL];
+		if ( nil != theStore )
+		{
+			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
+			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
+			
+			// remove old keys that might have been in use by older versions of Sandvox
+			[metadata removeObjectForKey:(NSString *)kMDItemDescription];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
+			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
+			
+			// set ALL of our metadata for this store
+			
+			//  kMDItemAuthors
+			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
+			if ( (nil == author) || [author isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
+			}
+			else
+			{
+				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+			}
+			
+			//  kMDItemCreator (Sandvox is the creator of this site document)
+			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+            
+			// kMDItemKind
+			[metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
+			
+			/// we're going to fault every page, use a local pool to release them quickly
+			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+			
+			//  kMDItemNumberOfPages
+			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+			unsigned int pageCount = 0;
+			if ( nil != pages )
+			{
+				pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+			}
+			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
+			
+			//  kMDItemTextContent (free-text account of content)
+			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
+			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
+			if ( nil == subtitle )
+			{
+				subtitle = @"";
+			}
+			subtitle = [subtitle stringByConvertingHTMLToPlainText];
+			
+			// add unique page titles
+			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
+			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
+			unsigned int i;
+			for ( i=0; i<[pageTitles count]; i++ )
+			{
+				NSString *pageTitle = [pageTitles objectAtIndex:i];
+				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
+				if ( nil != pageTitle )
+				{
+					[textContent appendFormat:@" %@", pageTitle];
+				}
+			}
+            
+			// spotlightHTML as part of textContent
+			for ( i=0; i<[pages count]; i++ )
+			{
+				KTPage *page = [pages objectAtIndex:i];
+				NSString *spotlightText = [page spotlightHTML];
+				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
+				{
+					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
+					[textContent appendFormat:@" %@", spotlightText];
+				}
+			}
+			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
+			
+			//  kMDItemKeywords (keywords of all pages)
+			NSMutableSet *keySet = [NSMutableSet set];
+			for (i=0; i<[pages count]; i++)
+			{
+				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
+			}
+            
+			if ( (nil == keySet) || ([keySet count] == 0) )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemKeywords];
+			}
+			else
+			{
+				[metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
+			}
+			[localPool release];
+			
+			//  kMDItemTitle
+			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
+			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
+			}
+			else
+			{
+				siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
+				[metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
+			}
+			
+			// custom attributes
+			
+			//  kKTMetadataModelVersionKey
+			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
+			
+			// kKTMetadataAppCreatedVersionKey should only be set once
+			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
+			{
+				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
+			}
+			
+			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
+			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
+			
+			// replace the metadata in the store with our updates
+			// NB: changes to metadata through this method are not pushed to disk until the document is saved
+			[coordinator setMetadata:metadata forPersistentStore:theStore];
+			
+			result = YES;
+		}
+		else
+		{
+			NSLog(@"error: unable to setMetadataForStoreAtURL:%@ (no persistent store)", [aStoreURL path]);
+			NSString *path = [aStoreURL path];
+			NSString *reason = [NSString stringWithFormat:@"(%@ is not a valid persistent store.)", path];
+			if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+												code:134070 // NSPersistentStoreOperationError
+											userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+													  reason, NSLocalizedDescriptionKey,
+													  nil]];
+			}
+			result = NO;
+		}
+	}
+	@catch (NSException * e)
+	{
+		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+											code:134070 // NSPersistentStoreOperationError
+										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												  [aStoreURL path], @"path",
+												  [e name], @"name",
+												  [e reason], NSLocalizedDescriptionKey,
+												  nil]];
+		}
+		result = NO;
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -273,33 +630,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-/*! returns publishSiteURL/sitemap.xml */
-- (NSString *)publishedSitemapURL
-{
-	NSString *result;
-    
-    NSURL *siteURL = [[[self site] hostProperties] siteURL];
-	if (!siteURL)
-	{
-		result = @""; // show placeholder in UI
-	}
-	else
-	{
-		NSURL *sitemapURL = [NSURL URLWithString:@"sitemap.xml.gz" relativeToURL:siteURL];
-        result = [sitemapURL absoluteString];
-	}
-	
-	return result;
-}
-
 + (NSString *)defaultStoreType
 {
 	// options are NSSQLiteStoreType, NSXMLStoreType, NSBinaryStoreType, or NSInMemoryStoreType
 	// also, be sure to set (and match) Store Type in application target properties
 	return NSSQLiteStoreType;
 }
-
-+ (NSString *)defaultMediaStoreType { return NSXMLStoreType; }
 
 #pragma mark -
 #pragma mark Document paths
@@ -370,16 +706,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	OBASSERT(inURL);
 	
 	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-+ (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)docURL
-{
-	OBASSERT(docURL);
-	
-	NSURL *result = [docURL URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
 	
 	OBPOSTCONDITION(result);
 	return result;
@@ -626,8 +952,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	//LOGMETHOD;
 	
-	
-	// In order to inform the delegate, we will have to send this callback at some point
+    
+    // In order to inform the delegate, we will have to send this callback at some point
 	NSMethodSignature *callbackSignature = [delegate methodSignatureForSelector:shouldCloseSelector];
 	NSInvocation *callback = [NSInvocation invocationWithMethodSignature:callbackSignature];
 	[callback setTarget:delegate];
@@ -651,7 +977,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	
-	// CRITICAL: we need to signal -writeToURL: that we're closing
+	// CRITICAL: we need to signal to the media manager that we're closing
 	[self setClosing:YES];
 	
 	
@@ -661,6 +987,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self windowController] closeLinkPanel];
 	}
 	
+	
+    // Switch to standard document behaviour here if autosave is disabled
+	if ([[NSDocumentController sharedDocumentController] autosavingDelay] == 0)
+    {
+        return [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
+    }
+    
+    
+    
 	
 	// Garbage collect media. Killing plugin inspector views early is a bit of a hack to stop it accessing
     // any garbage collected media.
@@ -692,9 +1027,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[callback invoke];
 }
 
-- (BOOL)isClosing { return myIsClosing; }
+- (BOOL)isClosing { return _closing; }
 
-- (void)setClosing:(BOOL)aFlag { myIsClosing = aFlag; }
+- (void)setClosing:(BOOL)aFlag { _closing = aFlag; }
 
 #pragma mark -
 #pragma mark Error Presentation
