@@ -394,6 +394,8 @@
 		27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */; settings = {ATTRIBUTES = (); }; };
 		27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */; };
 		27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */; };
+		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; };
+		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
@@ -1823,6 +1825,8 @@
 		27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExtensiblePluginPropertiesArchivedObject.h; sourceTree = "<group>"; };
 		27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensiblePluginPropertiesArchivedObject.m; sourceTree = "<group>"; };
 		27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractElement+Deprecated.m"; sourceTree = "<group>"; };
+		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
+		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4B7FDCFA73011CA2CEA /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -3795,6 +3799,8 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */,
+				27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */,
 				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
 				3CE79D880D6260D000FCEE6D /* NSArray+KTExtensions.m */,
 				3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */,
@@ -4942,6 +4948,7 @@
 				27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */,
 				272C27E50F4F2CD9004CE81E /* KTPageDetailsBoxView.h in Headers */,
 				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
+				27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6316,6 +6323,7 @@
 				279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */,
 				272C27E60F4F2CD9004CE81E /* KTPageDetailsBoxView.m in Sources */,
 				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
+				27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
