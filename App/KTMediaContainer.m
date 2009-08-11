@@ -28,7 +28,7 @@
 #import "NSSet+Karelia.h"
 
 
-@interface KTMediaContainer (Private)
+@interface KTMediaContainer ()
 
 - (KTSimpleScaledImageContainer *)existingImageWithProperties:(NSDictionary *)properties;
 - (KTSimpleScaledImageContainer *)_imageWithProperties:(NSDictionary *)properties;

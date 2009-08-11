@@ -60,7 +60,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 }
 
 
-@interface KTImageTextCell ( Private )
+@interface KTImageTextCell ()
 - (BOOL)useGradientHighlight;
 
 + (NSImage *)codeInjectionIcon;

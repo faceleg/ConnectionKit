@@ -48,7 +48,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 // selectedLevel = root
 
 
-@interface KTInfoWindowController ( Private )
+@interface KTInfoWindowController ()
 - (BOOL)preventWindowAnimation;
 - (void)setPreventWindowAnimation:(BOOL)flag;
 - (void)adjustWindow;

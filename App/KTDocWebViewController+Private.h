@@ -12,7 +12,7 @@
 
 @class KTPage;
 
-@interface KTDocWebViewController (Private)
+@interface KTDocWebViewController ()
 
 - (void)setWebViewLoading:(BOOL)isLoading;
 

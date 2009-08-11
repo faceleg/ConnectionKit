@@ -13,7 +13,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface APAmazonList (Private)
+@interface APAmazonList ()
 
 // Delegate
 - (void)sendLookupOperationsDidFinishCallback;

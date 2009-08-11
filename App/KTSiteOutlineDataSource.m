@@ -39,7 +39,7 @@
 NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
-@interface KTSiteOutlineDataSource (Private)
+@interface KTSiteOutlineDataSource ()
 + (NSSet *)mostSiteOutlineRefreshingKeyPaths;
 
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context;

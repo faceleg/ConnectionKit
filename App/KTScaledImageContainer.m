@@ -18,7 +18,7 @@
 #import "Debug.h"
 
 
-@interface KTScaledImageContainer (Private)
+@interface KTScaledImageContainer ()
 + (BOOL)_fileNeedsGenerating:(NSDictionary *)newProperties :(NSDictionary *)oldProperties;
 - (BOOL)validateScalingSettings:(NSError **)error;
 @end

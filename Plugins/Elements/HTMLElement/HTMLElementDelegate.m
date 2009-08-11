@@ -37,7 +37,7 @@
 #import "HTMLElementDelegate.h"
 
 
-@interface HTMLElementDelegate ( Private )
+@interface HTMLElementDelegate ()
 - (void)validateHTML;
 @end
 

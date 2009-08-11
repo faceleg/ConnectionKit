@@ -22,7 +22,7 @@
 
 #import "Registration.h"
 
-@interface KTHTMLInspectorController ( Private )
+@interface KTHTMLInspectorController ()
 
 
 -(NSDictionary*)	defaultTextAttributes;		// Style attributes dictionary for an NSAttributedString.

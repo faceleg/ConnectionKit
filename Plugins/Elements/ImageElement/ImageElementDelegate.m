@@ -53,7 +53,7 @@
 
 
 
-@interface ImageElementDelegate (Private)
+@interface ImageElementDelegate ()
 - (NSSize)boundingImageBox;
 @end
 

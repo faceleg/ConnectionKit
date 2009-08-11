@@ -74,7 +74,7 @@
 
  
 
-@interface VideoElementDelegate (Private)
+@interface VideoElementDelegate ()
 
 - (BOOL)attemptToGetSize:(NSSize *)outSize fromSWFData:(NSData *)data;
 

@@ -13,7 +13,7 @@
 #import "AmazonItem+APExtensions.h"
 
 
-@interface APAmazonProduct (Private)
+@interface APAmazonProduct ()
 - (void)postProductDidEndLoadingNotifcation;
 @end
 

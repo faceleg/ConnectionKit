@@ -28,7 +28,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 // LocalizedStringInThisBundle(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
 
 
-@interface AmazonListDelegate (Private)
+@interface AmazonListDelegate ()
 
 - (void)storeDidChangeTo:(AmazonStoreCountry)newStore;
 

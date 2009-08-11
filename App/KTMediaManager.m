@@ -34,7 +34,7 @@
 NSString *KTMediaLogDomain = @"Media";
 
 
-@interface KTMediaManager (Private)
+@interface KTMediaManager ()
 // GC
 - (void)garbageCollectMediaContainers;
 - (NSArray *)mediaFilesForDeletion;

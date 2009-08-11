@@ -20,7 +20,7 @@
 #import "Debug.h"
 
 
-@interface KTTemplateParser (Private)
+@interface KTTemplateParser ()
 
 // Child parsers
 - (void)setParentParser:(KTTemplateParser *)parser;

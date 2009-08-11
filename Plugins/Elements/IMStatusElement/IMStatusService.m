@@ -39,7 +39,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface IMStatusService (Private)
+@interface IMStatusService ()
 
 @end
 

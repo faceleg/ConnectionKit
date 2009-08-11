@@ -13,7 +13,7 @@
 #import "APAutomaticListProduct.h"
 
 
-@interface APProductAttributesCell (Private)
+@interface APProductAttributesCell ()
 
 - (KSVerticallyAlignedTextCell *)textDrawingCell;
 - (void)drawProductLoadingError:(NSError *)error withFrame:(NSRect)cellFrame inView:(NSView *)controlView;

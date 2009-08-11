@@ -47,7 +47,7 @@ typedef enum { digg5 = 0, digg10 = 2, digg15 = 4, digg20 = 6 } DeprecatedDiggNum
 // LocalizedStringInThisBundle(@"Digg example no.", "String_On_Page_Template - followed by a number")
 
 
-@interface DiggPageletDelegate (Private)
+@interface DiggPageletDelegate ()
 + (NSString *)diggCategoryString:(NSString *)basis;
 + (NSString *)diggUserOptionString:(DiggUserOption)option;
 @end

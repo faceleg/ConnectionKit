@@ -19,7 +19,7 @@
 
 #import "Registration.h"
 
-@interface KTCodeInjectionController (Private)
+@interface KTCodeInjectionController ()
 @end
 
 

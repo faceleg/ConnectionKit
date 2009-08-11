@@ -25,7 +25,7 @@
 @end
 
 
-@interface KTPluginInspectorViewsManager (Private)
+@interface KTPluginInspectorViewsManager ()
 + (NSMutableDictionary *)pluginNibsDictionary;
 
 - (void)loadNibFileForPlugin:(id <KTInspectorPlugin>)plugin;

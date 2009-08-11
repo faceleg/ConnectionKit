@@ -9,7 +9,7 @@
 #import "KTHTMLParserCache.h"
 
 
-@interface KTHTMLParserCache (Private)
+@interface KTHTMLParserCache ()
 // Cache
 - (id)cachedValueForKeyPath:(NSString *)keyPath;
 - (void)cacheValue:(id)value forKeyPath:(NSString *)keyPath;

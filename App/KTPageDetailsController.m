@@ -24,7 +24,7 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 static NSString *sTitleTextObservationContext = @"-titleText observation context";
 
 
-@interface KTPageDetailsController (Private)
+@interface KTPageDetailsController ()
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;

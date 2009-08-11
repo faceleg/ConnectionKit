@@ -15,7 +15,7 @@
 #import "NSSortDescriptor+Karelia.h"
 
 
-@interface KTStoredArray ( Private )
+@interface KTStoredArray ()
 - (NSArray *)items;
 @end
 

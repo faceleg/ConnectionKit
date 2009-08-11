@@ -11,7 +11,7 @@
 #import "KTTemplateParser.h"
 
 
-@interface KTHTMLParserMasterCache (Private)
+@interface KTHTMLParserMasterCache ()
 // Requested key paths
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object;
 @end

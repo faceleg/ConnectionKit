@@ -17,7 +17,7 @@
 #import "NSColor+Karelia.h"
 #import "NSScanner+Karelia.h"
 
-@interface NSTextView ( Private )
+@interface NSTextView ()
 
 -(NSDictionary*)	syntaxDefinitionDictionary;
 -(NSDictionary*)	defaultTextAttributes;

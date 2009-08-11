@@ -28,7 +28,7 @@
 #import "KSUtilities.h"
 
 
-@interface KTLocalPublishingEngine (Private)
+@interface KTLocalPublishingEngine ()
 - (void)pingURL:(NSURL *)URL;
 @end
 

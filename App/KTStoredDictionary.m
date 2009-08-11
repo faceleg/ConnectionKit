@@ -16,7 +16,7 @@
 #import "NSObject+KTExtensions.h"
 
 
-@interface KTStoredDictionary ( Private )
+@interface KTStoredDictionary ()
 - (NSArray *)entries;
 @end
 

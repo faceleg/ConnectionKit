@@ -22,7 +22,7 @@
 #import "NSURL+Karelia.h"
 
 
-@interface KTSite (Private)
+@interface KTSite ()
 - (NSArray *)_pagesInSiteMenu;
 + (NSArray *)_siteMenuSortDescriptors;
 @end

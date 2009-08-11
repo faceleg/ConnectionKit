@@ -19,7 +19,7 @@
 static NSString *kKTPseudoElementException = @"KTPseudoElementException";
 
 
-@interface KTPseudoElement (Private)
+@interface KTPseudoElement ()
 @end
 
 

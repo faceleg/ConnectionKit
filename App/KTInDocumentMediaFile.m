@@ -24,7 +24,7 @@
 #import "Debug.h"
 
 
-@interface KTInDocumentMediaFile (Private)
+@interface KTInDocumentMediaFile ()
 - (void)moveIntoDocument;
 @end
 

@@ -16,7 +16,7 @@
 #import "APAmazonList.h"
 
 
-@interface APInspectorController (Private)
+@interface APInspectorController ()
 
 - (void)initializeStoreSelectionPopupButton;
 - (void)prepareTableViews;

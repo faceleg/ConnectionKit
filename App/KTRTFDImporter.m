@@ -20,7 +20,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface KTRTFDImporter ( Private )
+@interface KTRTFDImporter ()
 - (NSString *)processDOMDocument:(DOMDocument *)aDOMDocument basePath:(NSString *)aBasePath requestor:(id)aRequestor;
 @end
 

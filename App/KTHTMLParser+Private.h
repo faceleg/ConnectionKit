@@ -10,7 +10,7 @@
 #import "KTHTMLParser.h"
 
 
-@interface KTHTMLParser (Private)
+@interface KTHTMLParser ()
 
 + (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
 

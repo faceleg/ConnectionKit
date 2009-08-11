@@ -79,7 +79,7 @@ Break
  */
 
 
-@interface YouTubeElementDelegate (Private)
+@interface YouTubeElementDelegate ()
 - (KTMediaContainer *)defaultThumbnail;
 @end
 

@@ -37,7 +37,7 @@
 #import "Debug.h"
 #import "Macros.h"
 
-@interface KTHTMLTextBlock (Private)
+@interface KTHTMLTextBlock ()
 
 + (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)element;
 

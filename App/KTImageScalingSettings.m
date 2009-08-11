@@ -9,7 +9,7 @@
 #import "KTImageScalingSettings.h"
 
 
-@interface KTImageScalingSettings (Private)
+@interface KTImageScalingSettings ()
 - (void)setBehavior:(KTMediaScalingOperation)behaviour;
 - (void)setSize:(NSSize)size;
 - (void)setScaleFactor:(float)scale;

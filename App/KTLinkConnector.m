@@ -38,7 +38,7 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 
 static KTLinkConnector *_sharedConnector = nil;
 
-@interface KTLinkConnector ( Private )
+@interface KTLinkConnector ()
 
 - (NSDate *)startTime;
 - (void)setStartTime:(NSDate *)aStartTime;

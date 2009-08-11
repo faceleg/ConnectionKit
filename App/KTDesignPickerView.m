@@ -127,7 +127,7 @@ static NSDictionary *sContributorLinkAttributes = nil;
 
 @end
 
-@interface KTDesignPickerView (Private)
+@interface KTDesignPickerView ()
 - (void)moveToNewPosition:(int)aNewPosition animationType:(int)animationType;
 - (void)clearTrackingRects;
 @end

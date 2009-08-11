@@ -35,7 +35,7 @@
 #import "NSURL+Karelia.h"
 
 
-@interface KTMaster (Private)
+@interface KTMaster ()
 - (KTMediaManager *)mediaManager;
 
 - (void)generatePlaceholderImage;

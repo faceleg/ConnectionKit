@@ -47,7 +47,7 @@
 #pragma mark -
 
 
-@interface KTDocSiteOutlineController (Private)
+@interface KTDocSiteOutlineController ()
 - (void)setSiteOutline:(NSOutlineView *)outlineView;
 
 - (NSSet *)pages;

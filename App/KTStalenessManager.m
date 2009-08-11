@@ -38,7 +38,7 @@
 #import "NSThread+Karelia.h"
 
 
-@interface KTStalenessManager (Private)
+@interface KTStalenessManager ()
 - (NSMutableDictionary *)nonStalePages;
 - (void)addNonStalePage:(KTAbstractPage *)page;
 - (void)removeNonStalePage:(KTAbstractPage *)page;

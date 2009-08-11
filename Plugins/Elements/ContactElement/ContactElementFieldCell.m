@@ -39,7 +39,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface ContactElementFieldCell (Private)
+@interface ContactElementFieldCell ()
 - (NSImageCell *)lockIconCell;
 @end
 

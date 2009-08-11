@@ -23,7 +23,7 @@
 NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 
 
-@interface KTImageScalingURLProtocol (Private)
+@interface KTImageScalingURLProtocol ()
 - (void)_startLoadingUncached;
 - (NSData *)_loadImageAtURL:(NSURL *)sourceURL scaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error;
 - (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType error:(NSError **)error;

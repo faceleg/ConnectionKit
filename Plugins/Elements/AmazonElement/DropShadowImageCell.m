@@ -11,7 +11,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface DropShadowImageCell (Private)
+@interface DropShadowImageCell ()
 - (void)drawShadowWithFrame:(NSRect)shadowFrame;
 @end
 

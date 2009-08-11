@@ -33,7 +33,7 @@
 #import "NSString+Karelia.h"
 
 
-@interface KTPage (Private)
+@interface KTPage ()
 - (BOOL)validateForInsertOrUpdate:(NSError **)error;
 @end
 

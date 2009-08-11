@@ -47,7 +47,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #define KTParsingInterval 0.1
 
 
-@interface KTPublishingEngine (Private)
+@interface KTPublishingEngine ()
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 

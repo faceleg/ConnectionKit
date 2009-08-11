@@ -170,7 +170,7 @@
 #pragma mark -
 
 
-@interface KTPage (Private)
+@interface KTPage ()
 + (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier;
 @end
 
@@ -301,7 +301,7 @@
 #pragma mark -
 
 
-@interface KTPagelet (Private)
+@interface KTPagelet ()
 + (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page
 						pluginIdentifier:(NSString *)pluginIdentifier
 								location:(KTPageletLocation)location;

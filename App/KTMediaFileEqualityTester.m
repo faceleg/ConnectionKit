@@ -12,7 +12,7 @@
 #import "NSObject+Karelia.h"
 
 
-@interface KTMediaFileEqualityTester (Private)
+@interface KTMediaFileEqualityTester ()
 - (NSFileHandle *)fileHandleForMediaFile:(KTInDocumentMediaFile *)mediaFile;
 @end
 

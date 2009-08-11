@@ -14,7 +14,7 @@
 #import "NSURL+AmazonPagelet.h"
 
 
-@interface APManualListProduct (Private)
+@interface APManualListProduct ()
 
 // Item Lookup
 - (void)setLastLoadError:(NSError *)error;

@@ -14,7 +14,7 @@
 #import "KTWebViewComponentProtocol.h"
 
 
-@interface KTAbstractIndex (Private) <KTWebViewComponent>
+@interface KTAbstractIndex () <KTWebViewComponent>
 @end
 
 

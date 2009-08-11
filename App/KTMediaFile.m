@@ -33,7 +33,7 @@
 
 
 
-@interface KTMediaFile (Private)  
+@interface KTMediaFile ()  
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 - (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate;

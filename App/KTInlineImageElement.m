@@ -24,7 +24,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface KTInlineImageElement ( Private )
+@interface KTInlineImageElement ()
 @end
 
 

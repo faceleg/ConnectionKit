@@ -69,7 +69,7 @@
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
-@interface KTDocWindowController (Private)
+@interface KTDocWindowController ()
 
 // Controller chain
 - (void)removeAllChildControllers;

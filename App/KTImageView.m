@@ -21,7 +21,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface KTImageView ( Private )
+@interface KTImageView ()
 //- (void)setFileName:(NSString *)aPath;
 //- (void)pickSomeoneWithNewCropper:(id)sender;
 - (id)delegateForSelector:(SEL)aSelector;

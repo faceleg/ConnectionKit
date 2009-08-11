@@ -55,7 +55,7 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactElementDelegate ( Private )
+@interface ContactElementDelegate ()
 
 - (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;

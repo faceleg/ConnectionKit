@@ -48,7 +48,7 @@ NSString *IMOfflineImageKey = @"offline";
 NSString *IMWantBorderKey = @"wantBorder";
 
 
-@interface IMStatusPageletDelegate (Private)
+@interface IMStatusPageletDelegate ()
 - (NSString *)onlineImagePath;
 - (NSString *)offlineImagePath;
 @end

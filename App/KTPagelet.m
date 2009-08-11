@@ -28,7 +28,7 @@
 #import "Registration.h"
 
 
-@interface KTPagelet (Private)
+@interface KTPagelet ()
 + (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location;
 - (NSSet *)allPagesThatInheritSidebarsFromPage:(KTPage *)page;
 @end
