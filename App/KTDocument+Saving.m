@@ -135,48 +135,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Save Panel
 
-- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation
-                                 delegate:(id)delegate
-                          didSaveSelector:(SEL)didSaveSelector
-                              contextInfo:(void *)contextInfo
-{
-    myLastSavePanelSaveOperation = saveOperation;
-    [super runModalSavePanelForSaveOperation:saveOperation
-                                    delegate:delegate
-                             didSaveSelector:didSaveSelector
-                                 contextInfo:contextInfo];
-}
-
-- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
-{
-	BOOL result = [super prepareSavePanel:savePanel];
-    
-    if (result)
-    {
-        switch (myLastSavePanelSaveOperation)
-        {
-            case NSSaveOperation:
-                [savePanel setTitle:NSLocalizedString(@"New Site","Save Panel Title")];
-                [savePanel setPrompt:NSLocalizedString(@"Create","Create Button")];
-                [savePanel setTreatsFilePackagesAsDirectories:NO];
-                [savePanel setCanSelectHiddenExtension:YES];
-                [savePanel setRequiredFileType:(NSString *)kKTDocumentExtension];
-                break;
-                
-            case NSSaveToOperation:
-                [savePanel setTitle:NSLocalizedString(@"Save a Copy As...", @"Save a Copy As...")];
-                [savePanel setNameFieldLabel:NSLocalizedString(@"Save Copy:", @"Save sheet name field label")];
-                
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return result;
-}
-
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
 {
 	// we restrict writableTypes to our main document type so that the persistence framework does
