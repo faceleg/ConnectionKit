@@ -72,10 +72,6 @@ extern NSString *KTDocumentWillSaveNotification;
 }
 
 
-// Init
-- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error;
-
-
 // Managing the Persistence Objects
 + (NSManagedObjectModel *)managedObjectModel;
 - (NSManagedObjectContext *)managedObjectContext;

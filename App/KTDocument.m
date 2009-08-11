@@ -60,6 +60,7 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
+#import "KTPagelet+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
@@ -176,12 +177,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (id)initWithType:(NSString *)type error:(NSError **)error
 {
- 	NOTYETIMPLEMENTED;
-    return nil;
-}
-    
-- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error
-{
 	self = [super initWithType:type error:error];
     
     if (self)
@@ -199,6 +194,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // make a new root
         // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
+        KTElementPlugin *plugin = [KSPlugin pluginWithIdentifier:@"sandvox.RichTextElement"];
+        OBASSERT(plugin);
         [[plugin bundle] load];
         KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
         OBASSERTSTRING((nil != root), @"root page is nil!");
@@ -233,7 +230,26 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
         [root setTitleText:defaultRootPageTitleText];
-     }
+        
+        
+        // Set the Favicon
+        NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
+        KTMediaContainer *faviconMedia = [[root mediaManager] mediaContainerWithPath:faviconPath];
+        [master setValue:[faviconMedia identifier] forKey:@"faviconMediaIdentifier"];
+        
+        
+        // Make the initial Sandvox badge
+        NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
+        if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
+        {
+            KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
+            if (badgePlugin)
+            {
+                KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
+                [pagelet setPrefersBottom:YES];
+            }
+        }
+    }
 	
 	
     return self;
