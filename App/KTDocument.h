@@ -40,7 +40,6 @@ extern NSString *KTDocumentWillSaveNotification;
 @private
 	
 	// Standard document behaviour additions
-    BOOL        _closing;
     NSThread    *_thread;
 	
     
@@ -105,8 +104,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 // Controller chain
 - (KTDocWindowController *)mainWindowController;
-
-- (BOOL)isClosing;
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 

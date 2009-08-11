@@ -289,9 +289,10 @@
  */
 - (BOOL)scaledImageContainersShouldGenerateMediaFiles;
 {
-    KTDocument *document = [self document];
-    BOOL result = ![document isSaving] && ![document isClosing];
-    return result;
+    
+    //KTDocument *document = [self document];
+    //BOOL result = ![document isSaving] && ![document isClosing];
+    return YES;
 }
 
 @end

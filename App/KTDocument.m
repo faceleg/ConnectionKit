@@ -106,9 +106,7 @@ NSString *KTDocumentDidChangeNotification = @"KTDocumentDidChange";
 NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
-@interface KTDocument (Private)
-
-- (void)setClosing:(BOOL)aFlag;
+@interface KTDocument ()
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
@@ -619,9 +617,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	LOGMETHOD;
     
     
-    [self setClosing:YES];
-	
-	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
+    // Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
 	
@@ -666,10 +662,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];
 }
-
-- (BOOL)isClosing { return _closing; }
-
-- (void)setClosing:(BOOL)aFlag { _closing = aFlag; }
 
 #pragma mark -
 #pragma mark Error Presentation
