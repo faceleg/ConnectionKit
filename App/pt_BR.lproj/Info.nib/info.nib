@@ -3,11 +3,33 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>111 148 356 240 0 0 1920 1178 </string>
+	<string>223 388 356 240 0 0 1440 878 </string>
 	<key>IBEditorPositions</key>
 	<dict>
+		<key>1225</key>
+		<string>610 610 270 64 0 0 1440 878 </string>
+		<key>1265</key>
+		<string>610 610 270 64 0 0 1440 878 </string>
+		<key>1270</key>
+		<string>610 562 320 128 0 0 1440 878 </string>
+		<key>129</key>
+		<string>334 579 320 203 0 0 1440 878 </string>
+		<key>165</key>
+		<string>609 626 272 43 0 0 1440 878 </string>
+		<key>168</key>
+		<string>371 492 346 328 0 0 1440 878 </string>
+		<key>169</key>
+		<string>585 615 320 58 0 0 1440 878 </string>
 		<key>258</key>
-		<string>848 555 270 437 0 0 1920 1178 </string>
+		<string>388 347 320 437 0 0 1440 878 </string>
+		<key>356</key>
+		<string>610 612 270 62 0 0 1440 878 </string>
+		<key>821</key>
+		<string>611 600 268 77 0 0 1440 878 </string>
+		<key>913</key>
+		<string>413 443 320 304 0 0 1440 878 </string>
+		<key>94</key>
+		<string>610 477 270 242 0 0 1440 878 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
@@ -15,8 +37,24 @@
 	<string>../Marvel.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>5</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>1270</integer>
+	</array>
 	<key>IBSystem Version</key>
 	<string>9J61</string>
+	<key>IBUserGuides</key>
+	<dict>
+		<key>129</key>
+		<dict>
+			<key>guideLocations</key>
+			<array>
+				<string>Vertical:101.000000</string>
+			</array>
+			<key>guidesLocked</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>targetFramework</key>
 	<string>IBCocoaFramework</string>
 </dict>
