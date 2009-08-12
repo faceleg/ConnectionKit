@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>369 270 356 240 0 0 1920 1178 </string>
+	<string>668 165 356 240 0 0 1440 878 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>5</key>
-		<string>850 639 270 325 0 0 1920 1178 </string>
+		<string>610 414 320 325 0 0 1440 878 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>489.0</string>
@@ -15,6 +15,10 @@
 	<string>../DiggElement.xcodeproj</string>
 	<key>IBOldestOS</key>
 	<integer>4</integer>
+	<key>IBOpenObjects</key>
+	<array>
+		<integer>5</integer>
+	</array>
 	<key>IBSystem Version</key>
 	<string>9J61</string>
 	<key>IBUsesTextArchiving</key>
