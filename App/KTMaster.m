@@ -16,7 +16,6 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
@@ -538,14 +537,8 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
-	OBASSERT(PSC);
-	
-	KTMediaManager *result = nil;
-	if ([PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
-	{
-		result = [[PSC document] mediaManager];
-	}
+	KTSite *site = [[[self valueForKey:@"pages"] anyObject] site];
+    KTMediaManager *result = [[site document] mediaManager];
 	return result;
 }
 

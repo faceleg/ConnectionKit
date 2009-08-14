@@ -125,7 +125,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (id)wrappedInheritedValueForKey:(NSString *)aKey;
 //- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
-- (KTSite *)site;
+@property(nonatomic, retain) KTSite *site;
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;

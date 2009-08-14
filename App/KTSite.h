@@ -27,11 +27,15 @@ typedef enum {
 } KTCopyMediaType;
 
 
-@class KTPage, KTHostProperties;
+@class KTDocument, KTPage, KTHostProperties;
 
-@interface KTSite : KTManagedObject 
+@interface KTSite : KTManagedObject
+{
+    KTDocument  *_document; // weak ref
+}
 
 - (NSString *)siteID;
+@property(nonatomic, assign) KTDocument *document;
 
 // Pages
 - (KTPage *)root;

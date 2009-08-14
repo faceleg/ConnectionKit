@@ -63,6 +63,17 @@
 
 - (KTSite *)site { return _site; }
 
+- (void)setSite:(KTSite *)site
+{
+    [_site setDocument:nil];    // Disassociate ourself from the site
+    
+    [site retain];
+    [_site release];
+    _site = site;
+    
+    [_site setDocument:self];
+}
+
 #pragma mark -
 #pragma mark Publishing
 

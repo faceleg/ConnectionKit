@@ -10,7 +10,6 @@
 
 #import "KTDocument.h"
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -160,13 +159,9 @@
 		{
 			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
 			
-			KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
-			if([PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
-			{
-				KTDocument *document = [PSC document];
-				NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
-				[result setValue:realObject forKey:aKey];
-			}
+			KTDocument *document = [[self valueForKey:@"site"] document];
+            NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
+            [result setValue:realObject forKey:aKey];
 		}
 	}
 	

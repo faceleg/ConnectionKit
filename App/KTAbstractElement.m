@@ -16,7 +16,6 @@
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
 #import "KTPage.h"
-#import "KTPersistentStoreCoordinator.h"
 
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"
@@ -147,27 +146,22 @@
 {
 	if (!myDelegate) 
 	{
-		// HACK: We don't want to load up the delegate during a Save As operation
-        KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
-        if (PSC && [PSC isKindOfClass:[KTPersistentStoreCoordinator class]] && [PSC document])
-        {
-            Class delegateClass = [[[self plugin] bundle] principalClass];
-            if (delegateClass)
-            {                
-                // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
-                if (!myDelegate)
+		Class delegateClass = [[[self plugin] bundle] principalClass];
+        if (delegateClass)
+        {                
+            // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
+            if (!myDelegate)
+            {
+                myDelegate = [[delegateClass alloc] init];
+                OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
+                
+                [myDelegate setDelegateOwner:self];
+                
+                
+                // Let the delegate know that it's awoken
+                if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
                 {
-                    myDelegate = [[delegateClass alloc] init];
-                    OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
-                    
-                    [myDelegate setDelegateOwner:self];
-                    
-                    
-                    // Let the delegate know that it's awoken
-                    if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
-                    {
-                        [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
-                    }
+                    [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
                 }
             }
         }
@@ -258,20 +252,6 @@
 - (NSString *)uniqueID 
 {
 	NSString *result = [self wrappedValueForKey:@"uniqueID"];
-	return result;
-}
-
-- (KTDocument *)document
-{
-	KTDocument *result = nil;
-    
-    KTPersistentStoreCoordinator *PSC =
-        (KTPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator];
-    if (PSC && [PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
-    {
-        result = [PSC document];
-    }
-    
 	return result;
 }
 

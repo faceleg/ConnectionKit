@@ -85,6 +85,8 @@
 
 - (NSString *)siteID { return [self wrappedValueForKey:@"siteID"]; }
 
+@synthesize document = _document;
+
 - (KTCopyMediaType)copyMediaOriginals { return [self wrappedIntegerForKey:@"copyMediaOriginals"]; }
 
 - (void)setCopyMediaOriginals:(KTCopyMediaType)copy

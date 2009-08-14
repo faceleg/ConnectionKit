@@ -83,7 +83,6 @@
 #import <iMediaBrowser/iMediaBrowser.h> // External frameworks
 
 #import "Debug.h"                       // Debugging
-#import "KTPersistentStoreCoordinator.h"
 
 #import "Registration.h"                // Licensing
 
@@ -143,8 +142,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self managedObjectContext] setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
 		
 		NSManagedObjectModel *model = [[self class] managedObjectModel];
-		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-		[PSC setDocument:self];
+		NSPersistentStoreCoordinator *PSC = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
 		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
@@ -183,7 +181,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
         // Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
-        _site = [[NSEntityDescription insertNewObjectForEntityForName:@"Site" inManagedObjectContext:context] retain];
+        
+        KTSite *site = [NSEntityDescription insertNewObjectForEntityForName:@"Site"
+                                                     inManagedObjectContext:context];
+        [self setSite:site];
         
         NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
         if (docProperties)
@@ -404,8 +405,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // Grab the site object
     if (result)
 	{
-        _site = [[[self managedObjectContext] site] retain];
-        if (!_site)
+        KTSite *site = [[[self managedObjectContext] site] retain];
+        [self setSite:site];
+        if (!site)
         {
             if (outError) *outError = nil;  // TODO: Return a proper error object
             result = NO;
