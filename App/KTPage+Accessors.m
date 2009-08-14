@@ -369,6 +369,11 @@
 	return result;
 }
 
++ (NSSet *)keyPathsForValuesAffectingTimestamp
+{
+    return [NSSet setWithObject:@"editableTimestamp"];
+}
+
 - (NSString *)timestamp
 {
 	NSDateFormatterStyle style = [[self master] timestampFormat];
@@ -390,6 +395,11 @@
 	
 #pragma mark -
 #pragma mark Thumbnail
+
++ (NSSet *)keyPathsForValuesAffectingThumbnail
+{
+    return [NSSet setWithObject:@"collectionSummaryType"];
+}
 
 - (KTMediaContainer *)thumbnail
 {

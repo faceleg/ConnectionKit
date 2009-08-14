@@ -33,14 +33,6 @@
 @implementation KTAbstractElement
 
 #pragma mark -
-#pragma mark Class Methods
-
-+ (void)initialize
-{
-	[self setKey:@"titleHTML" triggersChangeNotificationsForDependentKey:@"titleText"];
-}
-
-#pragma mark -
 #pragma mark Core Data
 
 /*!	Called when an object is done initializing; specifically, the bundle has been set.
@@ -273,6 +265,11 @@
 	[self setWrappedValue:value forKey:@"titleHTML"];
 }
 
++ (NSSet *)keyPathsForValuesAffectingTitleText
+{
+    return [NSSet setWithObject:@"titleHTML"];
+}
+
 - (NSString *)titleText	// get title, but without attributes
 {
 	NSString *html = [self titleHTML];
@@ -290,7 +287,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [[self document] mediaManager];
+	KTMediaManager *result = [[[self site] document] mediaManager];
 	return result;
 }
 

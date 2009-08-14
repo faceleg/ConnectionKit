@@ -51,21 +51,11 @@
 + (void)initialize
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-	[self setKey:@"root" triggersChangeNotificationsForDependentKey:@"isRoot"];
-	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
     
     // Title
                                 [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
     triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
-    
-    // Timestamp
-    [self setKey:@"editableTimestamp" triggersChangeNotificationsForDependentKey:@"timestamp"];
-    
-    // Collection
-	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
-	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
-    
+        
 	
 	// this is so we get notification of updaates to any properties that affect index type.
 	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
@@ -79,10 +69,6 @@
 		nil]
         triggerChangeNotificationsForDependentKey: @"indexPresetDictionary"];
 	
-	
-	
-	// Paths
-	[self setKey:@"customFileExtension" triggersChangeNotificationsForDependentKey:@"fileExtension"];
 	
 	
 	// Register transformers
@@ -99,6 +85,16 @@
 	[self performSelector:@selector(initialize_pagelets)];
 	
 	[pool release];
+}
+
++ (NSSet *)keyPathsForValuesAffectingIsRoot
+{
+    return [NSSet setWithObject:@"root"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSummaryHTML
+{
+    return [NSSet setWithObject:@"collectionSummaryType"];
 }
 
 + (NSString *)entityName { return @"Page"; }

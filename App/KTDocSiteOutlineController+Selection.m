@@ -38,6 +38,11 @@
 	return result;
 }
 
++ (NSSet *)keyPathsForValuesAffectingSelectedPage
+{
+    return [NSSet setWithObject:@"selectedPages"];
+}
+
 /*	Override to change the outline view's selection. This will eventually call super.
  */
 - (BOOL)setSelectedObjects:(NSArray *)objects

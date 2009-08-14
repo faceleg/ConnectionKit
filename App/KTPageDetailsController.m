@@ -39,12 +39,6 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void)initialize
-{
-	[self setKey:@"metaDescriptionCountdown" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
-	[self setKey:@"windowTitleCountdown" triggersChangeNotificationsForDependentKey:@"windowTitleCharCountColor"];
-}
-	
 - (void)dealloc
 {
 	[_metaDescriptionCountdown release];
@@ -233,6 +227,11 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	return result;
 }
 
++ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCharCountColor
+{
+    return [NSSet setWithObject:@"metaDescriptionCountdown"];
+}
+
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText
 {
 	NSDictionary *infoForBinding;
@@ -308,6 +307,11 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		result = [NSColor redColor];
 	}	
 	return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingWindowTitleCharCountColor
+{
+    return [NSSet setWithObject:@"windowTitleCountdown"];
 }
 
 

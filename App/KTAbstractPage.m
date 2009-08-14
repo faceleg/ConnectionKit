@@ -47,23 +47,6 @@
 #pragma mark Initialisation
 
 
-+ (void)initialize
-{
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	
-	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
-	[self setKey:@"metaDescription" triggersChangeNotificationsForDependentKey:@"metaDescriptionCountdown"];
-	[self setKey:@"windowTitle" triggersChangeNotificationsForDependentKey:@"windowTitleCharCountColor"];
-	[self setKey:@"windowTitle" triggersChangeNotificationsForDependentKey:@"windowTitleCountdown"];
-
-	
-	
-	
-	
-	[pool release];
-}
-
-
-
 /*	As above, but uses a predicate to narrow down to a particular ID
  */
 + (id)pageWithUniqueID:(NSString *)ID inManagedObjectContext:(NSManagedObjectContext *)MOC

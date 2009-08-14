@@ -73,11 +73,6 @@
 	}
 }
 
-+ (void)initialize
-{
-	[self setKey:@"selectedPages" triggersChangeNotificationsForDependentKey:@"selectedPage"];
-}
-
 #pragma mark -
 #pragma mark Init/Dealloc/Awake
 

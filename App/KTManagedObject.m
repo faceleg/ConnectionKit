@@ -159,9 +159,13 @@
 		{
 			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
 			
-			KTDocument *document = [[self valueForKey:@"site"] document];
-            NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
-            [result setValue:realObject forKey:aKey];
+            if ([self isKindOfClass:[KTAbstractElement class]])
+            {
+                KTDocument *document = [[self valueForKey:@"site"] document];
+                
+                NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
+                [result setValue:realObject forKey:aKey];
+            }
 		}
 	}
 	

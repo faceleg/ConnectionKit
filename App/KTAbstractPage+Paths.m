@@ -154,6 +154,11 @@
 	[self recursivelyInvalidateURL:NO];
 }
 
++ (NSSet *)keyPathsForValuesAffectingFileExtension
+{
+    return [NSSet setWithObject:@"customFileExtension"];
+}
+
 
 /*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
  *	By default, set to true. The File Download and External Link plugins use this to disable editing.
