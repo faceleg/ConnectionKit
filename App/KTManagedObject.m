@@ -159,13 +159,19 @@
 		{
 			KTExtensiblePluginPropertiesArchivedObject *archivedObject = (KTExtensiblePluginPropertiesArchivedObject *)anObject;
 			
-            if ([self isKindOfClass:[KTAbstractElement class]])
+            KTAbstractPage *page = nil;
+            if ([self respondsToSelector:@selector(page)])
             {
-                KTDocument *document = [[self valueForKey:@"site"] document];
-                
-                NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
-                [result setValue:realObject forKey:aKey];
+                page = [self performSelector:@selector(page)];
             }
+            else if ([self isKindOfClass:[KTAbstractPage class]])
+            {
+                page = self;
+            }
+            
+            KTDocument *document = [[page site] document];
+            NSManagedObject *realObject = [archivedObject realObjectInDocument:document];
+            [result setValue:realObject forKey:aKey];
 		}
 	}
 	
