@@ -7,8 +7,8 @@ USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Debug/Sandvox.app/Contents/PrivateHeaders
 BUNDLE_LOADER = $(SYMROOT)/Debug/Sandvox.app/Contents/MacOS/Sandvox
 
 // we're building for Tiger and above
-MACOSX_DEPLOYMENT_TARGET = 10.4
-SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk
+MACOSX_DEPLOYMENT_TARGET = 10.5
+SDKROOT = /Developer/SDKs/MacOSX10.5.sdk
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles

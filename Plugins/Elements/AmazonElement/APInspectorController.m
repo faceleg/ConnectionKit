@@ -164,7 +164,7 @@
 
 - (void)observeChangesToListSource
 {
-	[pluginController addObserver:self forKeyPath:@"selection.listSource" options:nil context:nil];
+	[pluginController addObserver:self forKeyPath:@"selection.listSource" options:0 context:nil];
 	
 	// We must retain the tab view items so that they are not deallocated when removed from the tab view
 	[productsTabViewItem retain];
@@ -229,22 +229,22 @@
 {
 	[pluginController addObserver:self
 					   forKeyPath:@"selection.delegate.automaticListCode"
-					      options:nil
+					      options:0
 						  context:nil];
 	
 	[pluginController addObserver:self
 					   forKeyPath:@"selection.maxNumberProducts"
-					      options:nil
+					      options:0
 						  context:nil];
 	
 	[pluginController addObserver:self
 					   forKeyPath:@"selection.delegate.automaticList.products"
-					      options:nil
+					      options:0
 						  context:nil];
 	
 	[pluginController addObserver:self
 					   forKeyPath:@"selection.delegate.automaticList.loadingData"
-					      options:nil
+					      options:0
 						  context:nil];
 }
 

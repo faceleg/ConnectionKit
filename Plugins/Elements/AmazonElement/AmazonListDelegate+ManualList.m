@@ -90,7 +90,7 @@
 	// Observe various keys of the product
 	[product addObserver:self
 			 forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]
-				 options:nil
+				 options:0
 				 context:nil];
 	
 	

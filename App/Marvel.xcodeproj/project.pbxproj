@@ -394,7 +394,7 @@
 		27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */; settings = {ATTRIBUTES = (); }; };
 		27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */; };
 		27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */; };
-		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; };
+		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };

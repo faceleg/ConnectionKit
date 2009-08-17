@@ -29,11 +29,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 
 @interface AmazonListDelegate ()
-
 - (void)storeDidChangeTo:(AmazonStoreCountry)newStore;
-
-- (void)loadAutomaticList;
-
 @end
 
 

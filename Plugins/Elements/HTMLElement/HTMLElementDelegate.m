@@ -37,11 +37,6 @@
 #import "HTMLElementDelegate.h"
 
 
-@interface HTMLElementDelegate ()
-- (void)validateHTML;
-@end
-
-
 @implementation HTMLElementDelegate
 
 #pragma mark awake
