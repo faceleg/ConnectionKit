@@ -7007,14 +7007,6 @@
 			};
 			name = Release;
 		};
-		3C3E75FD0F1C5F42002E3A9A /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateLicenses;
-			};
-			name = ReleaseSymbols;
-		};
 		3C5A77C60EB6E0880049B898 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -7030,14 +7022,6 @@
 				PRODUCT_NAME = PluginsSDK;
 			};
 			name = Release;
-		};
-		3C5A77C80EB6E0880049B898 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PluginsSDK;
-			};
-			name = ReleaseSymbols;
 		};
 		3C5A9A860D11E4DF0054058C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -7200,173 +7184,6 @@
 			};
 			name = Release;
 		};
-		3CE4E19E0ED4A6DE008DD114 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageAndDeployDesignKit;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2BD0E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = macosx10.5;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2BE0E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = Sandvox;
-				WRAPPER_EXTENSION = app;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2BF0E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = Sandvox;
-				SEPARATE_STRIP = NO;
-				STRIP_INSTALLED_PRODUCT = NO;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C00E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = DiskImage;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C10E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = DeployRelease;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C20E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageBonusDesigns;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C30E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateVersion;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C40E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateShared;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C50E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateDesigns;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C60E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = iMediaFramework;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C70E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = ConnectionFramework;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C80E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "ImageWebKitPlugin-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = ImageWebKitPlugin;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = NO;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2C90E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INFOPLIST_FILE = "MovieWebKitPlugin-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = MovieWebKitPlugin;
-				WRAPPER_EXTENSION = bundle;
-				ZERO_LINK = NO;
-			};
-			name = ReleaseSymbols;
-		};
-		CE15C2CA0E75CA0F00755113 /* ReleaseSymbols */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = DeploySymbols;
-			};
-			name = ReleaseSymbols;
-		};
 		CE16DC5B0D8711790077C779 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7472,170 +7289,153 @@
 			buildConfigurations = (
 				3C15B8600DC790A200DE9957 /* Debug */,
 				3C15B85F0DC790A200DE9957 /* Release */,
-				CE15C2C50E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateInvalidLicenses" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C3E75FB0F1C5F42002E3A9A /* Debug */,
 				3C3E75FC0F1C5F42002E3A9A /* Release */,
-				3C3E75FD0F1C5F42002E3A9A /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A77C60EB6E0880049B898 /* Debug */,
 				3C5A77C70EB6E0880049B898 /* Release */,
-				3C5A77C80EB6E0880049B898 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "iMedia-UpdateRevision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A9A870D11E4DF0054058C /* Debug */,
 				3C5A9A860D11E4DF0054058C /* Release */,
-				CE15C2C60E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C5A9A980D11E6A90054058C /* Build configuration list for PBXAggregateTarget "ConnectionKit-UpdateRevision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A9A970D11E68B0054058C /* Debug */,
 				3C5A9A960D11E68B0054058C /* Release */,
-				CE15C2C70E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C8883980BFCB4EE00921FA4 /* Build configuration list for PBXAggregateTarget "BuildAndPackageRelease" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C88839A0BFCB4EE00921FA4 /* Debug */,
 				3C8883990BFCB4EE00921FA4 /* Release */,
-				CE15C2C00E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C96ADE70CA06FD700C5249F /* Build configuration list for PBXAggregateTarget "UpdateVersion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C96ADE30CA06FB900C5249F /* Debug */,
 				3C96ADE20CA06FB900C5249F /* Release */,
-				CE15C2C30E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C9B65970BFA7F9E007A4871 /* Debug */,
 				3C9B65960BFA7F9E007A4871 /* Release */,
-				CE15C2BF0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3CA0FEE90D7615020093562D /* Build configuration list for PBXAggregateTarget "DeployRelease" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CA0FEE60D7614AC0093562D /* Debug */,
 				3CA0FEE50D7614AC0093562D /* Release */,
-				CE15C2C10E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3CA786E90DB546350014AD7E /* Build configuration list for PBXAggregateTarget "PackageBonusDesigns" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CA786E80DB546070014AD7E /* Debug */,
 				3CA786E70DB546070014AD7E /* Release */,
-				CE15C2C20E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3CD5B7880DCA66FB006EE4D9 /* Build configuration list for PBXAggregateTarget "BuildAndDeploySymbols" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CD5B7860DCA668E006EE4D9 /* Debug */,
 				3CD5B7850DCA668E006EE4D9 /* Release */,
-				CE15C2CA0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3CE2B2BA0D7F1DF700E2711E /* Build configuration list for PBXAggregateTarget "UpdateShared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CE2B2B90D7F1DD900E2711E /* Debug */,
 				3CE2B2B80D7F1DD900E2711E /* Release */,
-				CE15C2C40E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3CE4E1A10ED4A739008DD114 /* Build configuration list for PBXAggregateTarget "PackageAndDeployDesignKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CE4E19C0ED4A6DE008DD114 /* Debug */,
 				3CE4E19D0ED4A6DE008DD114 /* Release */,
-				3CE4E19E0ED4A6DE008DD114 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CE16DC5D0D8711790077C779 /* Build configuration list for PBXNativeTarget "MovieWebKitPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE16DC5C0D8711790077C779 /* Debug */,
 				CE16DC5B0D8711790077C779 /* Release */,
-				CE15C2C90E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CE3BC23D08575E2800576982 /* Build configuration list for PBXNativeTarget "Sandvox-ExecutableOnly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C0CFA3E085E3E9C009E3AD3 /* Debug */,
 				3C0CF98B085E3D50009E3AD3 /* Release */,
-				CE15C2BE0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C0CFA3F085E3E9C009E3AD3 /* Debug */,
 				3C0CF98C085E3D50009E3AD3 /* Release */,
-				CE15C2BD0E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CEF9D0B40D862B5200BD9895 /* Build configuration list for PBXNativeTarget "ImageWebKitPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CEF9D0B30D862B5100BD9895 /* Debug */,
 				CEF9D0B20D862B5100BD9895 /* Release */,
-				CE15C2C80E75CA0F00755113 /* ReleaseSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
