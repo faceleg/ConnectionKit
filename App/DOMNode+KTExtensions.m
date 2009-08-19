@@ -1090,7 +1090,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 {
 	NSString *comment = [self data];
 	comment = [comment stringByReplacing:@"--" with:@"- -"];	// don't allow any double-dashes!
-	return [NSString stringWithFormat:@"<!-- %@ -->", comment];
+	return [NSString stringWithFormat:@"<!--%@-->", comment];
 }
 
 @end
