@@ -106,13 +106,28 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 - (void)load;
 {
 	// Start loading
-    [[self secondaryWebViewController] setPage:[self page]];
+    SVWebViewController *webViewController = [self secondaryWebViewController];
+    NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
+    [webViewController setPage:[self page]];
+	
+	
+    // Clearly the webview is no longer in need of refreshing
+	[self setNeedsLoad:NO];
+    
+    
+    // The webview gets a limited amount of time to load synchronously in, and then we switch to asynchronous
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    while ([webViewController isLoading] && [synchronousLoadEndDate timeIntervalSinceNow] > 0)
+    {
+        [runLoop runUntilDate:[NSDate distantPast]];
+    }
+    
     
     // Switch to the loading view
-	[self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
-	
-	// Clearly the webview is no longer in need of refreshing
-	[self setNeedsLoad:NO];
+    if ([webViewController isLoading])
+    {
+        [self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
+    }
 }
 
 - (BOOL)needsLoad { return _needsLoad; }
