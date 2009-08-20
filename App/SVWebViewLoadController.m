@@ -130,6 +130,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     }
 }
 
+- (IBAction)updateWebView:(id)sender;
+{
+    [self setNeedsLoad:YES];
+}
+
 - (BOOL)needsLoad { return _needsLoad; }
 
 - (void)setNeedsLoad:(BOOL)flag

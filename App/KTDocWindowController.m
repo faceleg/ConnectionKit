@@ -2097,6 +2097,12 @@ from representedObject */
 	
 }
 
+// TODO: Rather than forward this on, make the controller part of the responder chain
+- (IBAction)updateWebView:(id)sender;
+{
+    [[self webContentAreaController] updateWebView:sender];
+}
+
 // the goal here will be to clear the HTML markup from the pasteboard before pasting,
 // if we can just get this to work!
 - (void)handleEvent:(DOMEvent *)event;

@@ -159,6 +159,8 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (IBAction)toggleDesignsShown:(id)sender;
 
+- (IBAction)updateWebView:(id)sender;
+
 - (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem;
 - (IBAction)reloadOutline:(id)sender;
 

@@ -60,4 +60,10 @@
 
 @synthesize webViewLoadController = _webViewController;
 
+- (IBAction)updateWebView:(id)sender;
+{
+    [[self viewControllers] makeObjectsPerformSelector:@selector(updateWebView:)
+                                            withObject:sender];
+}
+
 @end
