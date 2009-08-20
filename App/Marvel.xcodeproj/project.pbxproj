@@ -418,7 +418,6 @@
 		3C202DB807E00B9300DE4994 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB207E00B9300DE4994 /* IOKit.framework */; };
 		3C202DB907E00B9300DE4994 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB307E00B9300DE4994 /* QuickTime.framework */; };
 		3C202E8807E00EE800DE4994 /* HostSetup.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E7B07E00EE800DE4994 /* HostSetup.nib */; };
-		3C202E8907E00EE800DE4994 /* KTDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E7D07E00EE800DE4994 /* KTDocument.nib */; };
 		3C202E9507E00F5700DE4994 /* document.toolbar in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E9307E00F5700DE4994 /* document.toolbar */; };
 		3C202EAD07E0101100DE4994 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA407E0101100DE4994 /* Credits.html */; };
 		3C202EAF07E0101100DE4994 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA807E0101100DE4994 /* Localizable.strings */; };
@@ -440,6 +439,7 @@
 		3C26FAC80898777500FCC13F /* 32favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C26FAC70898777500FCC13F /* 32favicon.png */; };
 		3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FE01096F198E00702991 /* KTReleaseNotesController.m */; };
 		3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */; };
+		3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C301619103DE0580036A9D0 /* KTDocument.xib */; };
 		3C382D610E98170600113137 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3C382D600E98170600113137 /* dsa_pub.pem */; };
 		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; settings = {ATTRIBUTES = (); }; };
 		3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */; };
@@ -1920,6 +1920,7 @@
 		3C27FE01096F198E00702991 /* KTReleaseNotesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTReleaseNotesController.m; sourceTree = "<group>"; };
 		3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAcknowledgmentsController.h; sourceTree = "<group>"; };
 		3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAcknowledgmentsController.m; sourceTree = "<group>"; };
+		3C30161A103DE0580036A9D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTDocument.xib; sourceTree = "<group>"; };
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
@@ -3687,6 +3688,7 @@
 				3CF942070D62432500B1C83D /* InlineImageElement.nib */,
 				27AA102B0CDA06C6001D6B9B /* MissingMedia.nib */,
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
+				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				3C202E7D07E00EE800DE4994 /* KTDocument.nib */,
 				CECDC3E008287E920090F560 /* Info.nib */,
 				3C26D7980BC5ADA700FF874D /* CodeInjection.nib */,
@@ -5517,7 +5519,6 @@
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				CE9DFF5409FD4E6A00007D04 /* DebugTable.nib in Resources */,
 				3C202E8807E00EE800DE4994 /* HostSetup.nib in Resources */,
-				3C202E8907E00EE800DE4994 /* KTDocument.nib in Resources */,
 				3C202E9507E00F5700DE4994 /* document.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
@@ -5701,6 +5702,7 @@
 				277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */,
 				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
 				27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */,
+				3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6878,6 +6880,14 @@
 				CE018C830DB6DCFD003E008B /* es */,
 			);
 			name = CodeInjection.nib;
+			sourceTree = "<group>";
+		};
+		3C301619103DE0580036A9D0 /* KTDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C30161A103DE0580036A9D0 /* en */,
+			);
+			name = KTDocument.xib;
 			sourceTree = "<group>";
 		};
 		3CF942070D62432500B1C83D /* InlineImageElement.nib */ = {
