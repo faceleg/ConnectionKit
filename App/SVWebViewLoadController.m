@@ -24,7 +24,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 - (id)init;
 {
-    [super init];
+    [self initWithTabViewType:NSNoTabsNoBorder];
     
     
     // Create controllers
