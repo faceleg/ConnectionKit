@@ -31,16 +31,6 @@
     [super dealloc];
 }
 
-#pragma mark View
-
-- (void)setView:(NSView *)view
-{
-    [super setView:view];
-    
-    // FIXME: this is a hack to workaround IB2 not recognising @property IBOutlets
-    [self setTabView:(NSTabView *)view];
-}
-
 #pragma mark Pages
 
 - (NSArray *)selectedPages { return _selectedPages; }
