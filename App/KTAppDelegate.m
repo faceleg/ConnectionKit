@@ -1237,7 +1237,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
     if (interval > 5 * 60)  interval = 60.0;
 
     KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-    [sharedDocumentController setAutosavingDelay:interval];
+    //FIXME: switch back to setAutosavingDelay:interval when autosave is working again
+    [sharedDocumentController setAutosavingDelay:0];
 	
 			 
 	// Try to check immediately so we have right info for initialization
