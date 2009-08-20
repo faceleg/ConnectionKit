@@ -1887,7 +1887,6 @@
 		3C202DB107E00B9300DE4994 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		3C202DB207E00B9300DE4994 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		3C202DB307E00B9300DE4994 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ProjectNotes.rtf; sourceTree = "<group>"; };
 		3C202E7A07E00EE800DE4994 /* DebugTable.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DebugTable.nib; sourceTree = "<group>"; };
 		3C202E7C07E00EE800DE4994 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/HostSetup.nib; sourceTree = "<group>"; };
 		3C202E7E07E00EE800DE4994 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KTDocument.nib; sourceTree = "<group>"; };
@@ -3307,7 +3306,6 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
-				3C202DFB07E00E4400DE4994 /* ProjectNotes.rtf */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
