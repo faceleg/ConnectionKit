@@ -1,285 +1,297 @@
 {
     IBClasses =     (
-                {
-            ACTIONS =             {
-                "" = id;
-                getUpdatedApplication = id;
-                myAction = id;
-                showNewsWindow = id;
-                showRegistrationWindow = id;
-            };
-            CLASS = FirstResponder;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            CLASS = KSBorderlessWindow;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSWindow;
-        },
-                {
-            CLASS = KSLabel;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTextField;
-        },
-                {
-            CLASS = KSPopUpButton;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                mySelectedObject = id;
-            };
-            SUPERCLASS = NSPopUpButton;
-        },
-                {
-            CLASS = KSViewController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                view = NSView;
-            };
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = KTCollectionIndexFilenameButton;
-            LANGUAGE = ObjC;
-            SUPERCLASS = KSPopUpButton;
-        },
-                {
-            CLASS = KTDesignPickerBackground;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSView;
-        },
-                {
-            ACTIONS =             {
-                nextPage = id;
-                prevPage = id;
-            };
-            CLASS = KTDesignPickerView;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oNextButton = NSButton;
-                oPrevButton = NSButton;
-            };
-            SUPERCLASS = NSView;
-        },
-                {
-            CLASS = KTDocSiteOutlineController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oSiteOutline = NSOutlineView;
-                oWindowController = KTDocWindowController;
-                siteOutline = NSOutlineView;
-            };
-            SUPERCLASS = NSArrayController;
-        },
-                {
-            CLASS = KTDocViewController;
-            LANGUAGE = ObjC;
-            SUPERCLASS = KSViewController;
-        },
-                {
-            ACTIONS =             {
-                pasteLink = id;
-                pasteTextAsMarkup = id;
-                updateWebView = id;
-            };
-            CLASS = KTDocWebViewController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oSourceTextView = NSTextView;
-                webView = WebView;
-                windowController = KTDocWindowController;
-            };
-            SUPERCLASS = KTDocViewController;
-        },
-                {
-            CLASS = KTDocWindow;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oWebKitView = KTWebView;
-            };
-            SUPERCLASS = NSWindow;
-        },
-                {
-            ACTIONS =             {
-                addCollection = id;
-                addPage = id;
-                addPagelet = id;
-                clearLinkDestination = id;
-                copy = id;
-                copyPagelets = id;
-                copyPages = id;
-                copyViaContextualMenu = id;
-                cut = id;
-                cutPagelets = id;
-                cutPages = id;
-                cutViaContextualMenu = id;
-                deletePagelets = id;
-                deletePages = id;
-                deleteViaContextualMenu = id;
-                descriptionWarning = id;
-                duplicate = id;
-                duplicatePagelets = id;
-                duplicateSelectedPages = id;
-                duplicateViaContextualMenu = id;
-                exportSite = id;
-                exportSiteAgain = id;
-                finishLinkPanel = id;
-                group = id;
-                paste = id;
-                pastePagelets = id;
-                pastePages = id;
-                pasteViaContextualMenu = id;
-                publishSiteAll = id;
-                publishSiteChanges = id;
-                publishSiteFromToolbar = NSToolbarItem;
-                reloadOutline = id;
-                remove = id;
-                showLinkPanel = id;
-                toggleDesignsShown = id;
-                visitPublishedPage = id;
-                visitPublishedSite = id;
-                windowHelp = id;
-            };
-            CLASS = KTDocWindowController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oDesignBackButton = NSButton;
-                oDesignCloseButton = NSButton;
-                oDesignForwardButton = NSButton;
-                oDesignsSplitPane = RBSplitSubview;
-                oDesignsSplitView = RBSplitView;
-                oDesignsView = KTDesignPickerView;
-                oDocumentController = NSObjectController;
-                oLinkControlsBox = RoundedBox;
-                oLinkDestinationField = NSTextField;
-                oLinkLocalPageField = NSTextField;
-                oLinkOpenInNewWindowSwitch = NSButton;
-                oLinkPanel = KSBorderlessWindow;
-                oLinkView = KTLinkSourceView;
-                oMessageTextField = NSTextField;
-                oMessageWindow = KSBorderlessWindow;
-                oPageDetailsController = KTDocViewController;
-                oSidebarSplitView = RBSplitView;
-                oSplitDragView = NSImageView;
-                oStatusBar = NTBoxView;
-                oStatusBarField = NSTextField;
-                oWebView = WebView;
-                siteOutlineController = KTDocSiteOutlineController;
-                webViewController = KTDocWebViewController;
-            };
-            SUPERCLASS = NSWindowController;
-        },
-                {
-            CLASS = KTLinkSourceView;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                delegate = id;
-                myDelegate = id;
-            };
-            SUPERCLASS = NSView;
-        },
-                {
-            CLASS = KTPageDetailsBoxView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NTBoxView;
-        },
-                {
-            CLASS = KTPageDetailsController;
-            LANGUAGE = ObjC;
-            OUTLETS =             {
-                oBoxView = KTPageDetailsBoxView;
-                oCollectionFileNameField = NSTextField;
-                oCollectionIndexExtensionButton = KSPopUpButton;
-                oFileExtensionPopup = KSPopUpButton;
-                oKeywordsField = NSTokenField;
-                oMetaDescriptionField = NSTextField;
-                oPageFileNameField = NSTextField;
-                oPagesController = NSObjectController;
-                oWindowTitleField = NSTextField;
-            };
-            SUPERCLASS = KTDocViewController;
-        },
-                {
-            CLASS = KTSiteOutlineView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSOutlineView;
-        },
-                {
-            CLASS = KTWebView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = WebView;
-        },
-                {
-            CLASS = NSApplication;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = NSArrayController;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObjectController;
-        },
-                {
-            CLASS = NSCell;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            CLASS = NSManagedObjectContext;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSObject;
-        },
-                {
-            ACTIONS =             {
-                imagePickerCancelled = id;
-                imagePickerSet = id;
-            };
-            CLASS = NSObject;
-            LANGUAGE = ObjC;
-        },
-                {
-            CLASS = NSOutlineView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSTableView;
-        },
-                {
-            CLASS = NSTextView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSText;
-        },
-                {
-            CLASS = NSView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = NSWindow;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            ACTIONS =             {
-                hideWindow = id;
-            };
-            CLASS = NSWindowController;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSResponder;
-        },
-                {
-            CLASS = NTBoxView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSView;
-        },
-                {
-            CLASS = RoundedBox;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSBox;
-        },
-                {
-            CLASS = WebView;
-            LANGUAGE = ObjC;
-            SUPERCLASS = NSView;
-        }
+        {
+    ACTIONS =     {
+        "" = id;
+        getUpdatedApplication = id;
+        myAction = id;
+        showNewsWindow = id;
+        showRegistrationWindow = id;
+    };
+    CLASS = FirstResponder;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSObject;
+},
+        {
+    CLASS = KSBorderlessWindow;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSWindow;
+},
+        {
+    CLASS = KSLabel;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSTextField;
+},
+        {
+    CLASS = KSPopUpButton;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        mySelectedObject = id;
+    };
+    SUPERCLASS = NSPopUpButton;
+},
+        {
+    CLASS = KSTabViewController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSViewController;
+},
+        {
+    CLASS = KSViewController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        view = NSView;
+    };
+    SUPERCLASS = NSResponder;
+},
+        {
+    CLASS = KTCollectionIndexFilenameButton;
+    LANGUAGE = ObjC;
+    SUPERCLASS = KSPopUpButton;
+},
+        {
+    CLASS = KTDesignPickerBackground;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSView;
+},
+        {
+    ACTIONS =     {
+        nextPage = id;
+        prevPage = id;
+    };
+    CLASS = KTDesignPickerView;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oNextButton = NSButton;
+        oPrevButton = NSButton;
+    };
+    SUPERCLASS = NSView;
+},
+        {
+    CLASS = KTDocSiteOutlineController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oSiteOutline = NSOutlineView;
+        oWindowController = KTDocWindowController;
+        siteOutline = NSOutlineView;
+    };
+    SUPERCLASS = NSArrayController;
+},
+        {
+    CLASS = KTDocViewController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = KSViewController;
+},
+        {
+    ACTIONS =     {
+        pasteLink = id;
+        pasteTextAsMarkup = id;
+        updateWebView = id;
+    };
+    CLASS = KTDocWebViewController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oSourceTextView = NSTextView;
+        webView = WebView;
+        windowController = KTDocWindowController;
+    };
+    SUPERCLASS = KTDocViewController;
+},
+        {
+    CLASS = KTDocWindow;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oWebKitView = KTWebView;
+    };
+    SUPERCLASS = NSWindow;
+},
+        {
+    ACTIONS =     {
+        clearLinkDestination = id;
+        copy = id;
+        copyPagelets = id;
+        copyPages = id;
+        copyViaContextualMenu = id;
+        cut = id;
+        cutPagelets = id;
+        cutPages = id;
+        cutViaContextualMenu = id;
+        deletePagelets = id;
+        deletePages = id;
+        deleteViaContextualMenu = id;
+        duplicate = id;
+        duplicatePagelets = id;
+        duplicateSelectedPages = id;
+        duplicateViaContextualMenu = id;
+        exportSite = id;
+        exportSiteAgain = id;
+        finishLinkPanel = id;
+        paste = id;
+        pastePagelets = id;
+        pastePages = id;
+        pasteViaContextualMenu = id;
+        publishSiteAll = id;
+        publishSiteChanges = id;
+        publishSiteFromToolbar = id;
+        showLinkPanel = id;
+    };
+    CLASS = KTDocWindowController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oContentViewController = SVWebContentAreaController;
+        oDesignBackButton = NSButton;
+        oDesignCloseButton = NSButton;
+        oDesignForwardButton = NSButton;
+        oDesignsSplitPane = RBSplitSubview;
+        oDesignsSplitView = RBSplitView;
+        oDesignsView = KTDesignPickerView;
+        oDocumentController = NSObjectController;
+        oLinkControlsBox = RoundedBox;
+        oLinkDestinationField = NSTextField;
+        oLinkLocalPageField = NSTextField;
+        oLinkOpenInNewWindowSwitch = NSButton;
+        oLinkPanel = KSBorderlessWindow;
+        oLinkView = KTLinkSourceView;
+        oMessageTextField = NSTextField;
+        oMessageWindow = KSBorderlessWindow;
+        oPageDetailsController = KTDocViewController;
+        oSidebarSplitView = RBSplitView;
+        oSplitDragView = NSImageView;
+        oStatusBar = NTBoxView;
+        oStatusBarField = NSTextField;
+        oWebView = WebView;
+        siteOutlineController = KTDocSiteOutlineController;
+    };
+    SUPERCLASS = NSWindowController;
+},
+        {
+    CLASS = KTLinkSourceView;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        delegate = id;
+        myDelegate = id;
+    };
+    SUPERCLASS = NSView;
+},
+        {
+    CLASS = KTPageDetailsBoxView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NTBoxView;
+},
+        {
+    CLASS = KTPageDetailsController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        oBoxView = KTPageDetailsBoxView;
+        oCollectionFileNameField = NSTextField;
+        oCollectionIndexExtensionButton = KSPopUpButton;
+        oFileExtensionPopup = KSPopUpButton;
+        oKeywordsField = NSTokenField;
+        oMetaDescriptionField = NSTextField;
+        oPageFileNameField = NSTextField;
+        oPagesController = NSObjectController;
+        oWindowTitleField = NSTextField;
+    };
+    SUPERCLASS = KTDocViewController;
+},
+        {
+    CLASS = KTSiteOutlineView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSOutlineView;
+},
+        {
+    CLASS = KTWebView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = WebView;
+},
+        {
+    CLASS = NSApplication;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSResponder;
+},
+        {
+    CLASS = NSArrayController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSObjectController;
+},
+        {
+    CLASS = NSCell;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSObject;
+},
+        {
+    CLASS = NSManagedObjectContext;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSObject;
+},
+        {
+    ACTIONS =     {
+        imagePickerCancelled = id;
+        imagePickerSet = id;
+    };
+    CLASS = NSObject;
+    LANGUAGE = ObjC;
+},
+        {
+    CLASS = NSOutlineView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSTableView;
+},
+        {
+    CLASS = NSTextView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSText;
+},
+        {
+    CLASS = NSView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSResponder;
+},
+        {
+    CLASS = NSViewController;
+    LANGUAGE = ObjC;
+    OUTLETS =     {
+        view = NSView;
+    };
+    SUPERCLASS = NSResponder;
+},
+        {
+    CLASS = NSWindow;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSResponder;
+},
+        {
+    ACTIONS =     {
+        hideWindow = id;
+    };
+    CLASS = NSWindowController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSResponder;
+},
+        {
+    CLASS = NTBoxView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSView;
+},
+        {
+    CLASS = RoundedBox;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSBox;
+},
+        {
+    CLASS = SVDocContentViewController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = KSTabViewController;
+},
+        {
+    CLASS = SVWebContentAreaController;
+    LANGUAGE = ObjC;
+    SUPERCLASS = KSTabViewController;
+},
+        {
+    CLASS = WebView;
+    LANGUAGE = ObjC;
+    SUPERCLASS = NSView;
+}
     );
     IBVersion = 1;
 }

@@ -213,12 +213,7 @@
 		
         // Ensure we have a selection (case ID unknown), and that a -selectionDidChange: message got through (Snow Leopard problem)
 		[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-        if ([[[[self windowController] webViewController] pages] count] == 0)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
-                                                                object:[self siteOutline]];
-        }
-	}
+     }
 }
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }

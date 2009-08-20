@@ -121,11 +121,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Get rid of the site outline controller
 	[self setSiteOutlineController:nil];
 	
-	// release my copy of the window script object.
-	[[self webViewController] setWindowScriptObject:nil];
 	
-	
-	// Dispose of the controller chain
+    // Dispose of the controller chain
     [self removeAllChildControllers];
 	
     
@@ -179,7 +176,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
 	// Now let the webview and the site outline initialize themselves.
-	[self webViewDidLoad];
 	[self linkPanelDidLoad];
 	
 	
@@ -227,6 +223,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
 		[oSidebarSplitView adjustSubviews];
 	}
+    
+    
+    // Tie the web content area to the source list's selection
+    [[self webContentAreaController] bind:@"selectedPages"
+                                 toObject:[self siteOutlineController]
+                              withKeyPath:@"selectedObjects"
+                                  options:nil];
 	
 	// UI setup of box views
 	[oStatusBar setDrawsFrame:YES];
@@ -413,16 +416,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
 
-- (KTDocWebViewController *)webViewController { return webViewController; }
-
-- (void)setWebViewController:(KTDocWebViewController *)controller
-{
-	// Dispose of the old controller
-    if (webViewController) [self removeChildController:webViewController];
-    
-    webViewController = controller; // Weak ref since -childControllers retains it
-    [self addChildController:controller];
-}
+@synthesize webContentAreaController = oContentViewController;
 
 #pragma mark -
 #pragma mark Window Title
@@ -1581,13 +1575,6 @@ from representedObject */
     {
         return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
     }
-	else if ([toolbarItem action] == @selector(showLinkPanel:))
-	{
-		NSString *label;
-		BOOL result = [[self webViewController] validateCreateLinkItem:toolbarItem title:&label];
-		[toolbarItem setLabel:label];
-		return result;
-	}
 	
     return YES;
 }
@@ -1615,11 +1602,6 @@ from representedObject */
 		{
 			return;		// notification is coming from a different dom document, thus differnt svx document
 		}
-	}
-	
-	if ( ![[selectedObject document] isEqual:[self document]] )
-	{
-		return; // notification is coming from a different document
 	}
 	
 	if ( [selectedObject isKindOfClass:[KTInlineImageElement class]] )
@@ -1755,22 +1737,6 @@ from representedObject */
     }
     
     
-	if (![NSApp isTerminating])
-	{
-		// Empty out the windowScriptObject, remove the pointer to self to kill reference loop
-		// NOT WORKING THOUGH
-		
-		// Case 9274, kludge approach to Graham's suggestion
-		if ([[[self webViewController] windowScriptObject] retainCount] == 1)
-		{
-			[[self webViewController] setWindowScriptObject:nil];
-		}
-		else
-		{
-			[[[self webViewController] windowScriptObject] removeWebScriptKey:@"helper"];	// bugzilla # 6152 ... ought to release old value
-		}
-	}
-
 	[oDesignsView unbind:@"selectedDesign"];
 	[oDocumentController unbind:@"contentObject"];
 	

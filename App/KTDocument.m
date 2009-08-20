@@ -736,33 +736,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark UI validation
 
-- (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
-{
-	// Enable the Edit Raw HTML for blocks of editable HTML, or if the selected pagelet or page is HTML.
-	if ( [toolbarItem action] == @selector(editRawHTMLInSelectedBlock:) )
-	{
-		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
-		
-		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-		if (nil != selPagelet)
-		{
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-			{
-				return YES;
-			}
-		}
-		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
-		{
-			return YES;
-		}
-		
-		return NO;	// not one of the above conditions
-	}
-    return YES;
-}
-
-
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OFF((@"KTDocument validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
@@ -778,30 +751,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	else if ( [menuItem action] == @selector(saveDocumentTo:) )
 	{
 		return YES;
-	}
-	
-	// Site menu	
-	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
-	{
-		// Yes if:  we are in a block of editable HTML, or if the selected pagelet or page is HTML.
-		
-		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
-		
-		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-		if (nil != selPagelet)
-		{
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-			{
-				return YES;
-			}
-		}
-		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
-		{
-			return YES;
-		}
-		
-		return NO;	// not one of the above conditions
 	}
 	
 	return [super validateMenuItem:menuItem]; 

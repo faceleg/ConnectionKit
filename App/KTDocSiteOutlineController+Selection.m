@@ -67,9 +67,6 @@
 	// let interested parties know that selection changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
 														object:[selectedPages firstObjectKS]];
-	
-	// Refresh webview
-	[[[self windowController] webViewController] setPages:[NSSet setWithArray:selectedPages]];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.

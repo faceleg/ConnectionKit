@@ -303,15 +303,6 @@
 
 - (void)setTotalAnimationTime:(NSTimeInterval)aTotalAnimationTime { myTotalAnimationTime = aTotalAnimationTime; }
 
-- (WebScriptObject *)windowScriptObject { return myWindowScriptObject; }
-
-- (void)setWindowScriptObject:(WebScriptObject *)aWindowScriptObject
-{
-    [aWindowScriptObject retain];
-    [myWindowScriptObject release];
-    myWindowScriptObject = aWindowScriptObject;
-}
-
 #pragma mark -
 #pragma mark View Type
 
@@ -850,24 +841,6 @@
 
 #pragma mark -
 #pragma mark WebFrameLoadDelegate Methods
-
-- (void)webView:(WebView *)sender windowScriptObjectAvailable:(WebScriptObject *)aWindowScriptObject
-{
-	[self setWindowScriptObject:aWindowScriptObject];	// keep this around so we can clear the value later
-	
-	//related to webkit  bugzilla 6152 ... ggaren may work on it
-	
-	// work-around for retain loop: we make a proxy that doesn't retain self
-	// Only create the helper once, though.
-	//COMMENTING OUT CHECK FOR NOW -- PROBLEM WITH CONVERSE, removeWebScriptKey:@"helper", WE GOT A CRASH AFTER APPLYING THIS CHANGE.
-//	id currentHelper = [aWindowScriptObject valueForKey:@"helper"];
-//	if (nil == currentHelper || ![currentHelper isKindOfClass:[KTHelper class]])
-//	{
-		KTHelper *helper = [[KTHelper alloc] initWithWindowController:[self windowController]];
-		[aWindowScriptObject setValue:helper forKey:@"helper"];
-		[helper release];
-//	}
-}
 
 - (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame
 {

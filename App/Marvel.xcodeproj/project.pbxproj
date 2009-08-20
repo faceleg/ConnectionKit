@@ -237,6 +237,7 @@
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
+		27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -253,6 +254,14 @@
 		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
 		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
+		2759CC9B1039711200E2C046 /* SVWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebViewController.h */; };
+		2759CC9C1039711300E2C046 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebViewController.m */; };
+		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
+		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
+		2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD051039AC6000E2C046 /* KSTabViewController.h */; };
+		2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD061039AC6000E2C046 /* KSTabViewController.m */; };
+		2759CD441039B83900E2C046 /* SVWebViewLoadController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD421039B83900E2C046 /* SVWebViewLoadController.h */; };
+		2759CD451039B83900E2C046 /* SVWebViewLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD431039B83900E2C046 /* SVWebViewLoadController.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
@@ -306,6 +315,8 @@
 		2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B71D0EF91E2B00F91398 /* KTExportEngine.m */; };
 		2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */; };
 		2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */; };
+		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
+		279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */; };
 		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
 		279E7DB50F485DC800BAB391 /* LeopardStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27E630310EC306940044ED36 /* LeopardStuff.bundle */; };
 		279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C59B05908A9B8E70076C6DC /* 13x13_empty.png */; };
@@ -1624,6 +1635,7 @@
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewLoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -1639,6 +1651,14 @@
 		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
 		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
+		2759CC991039711200E2C046 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
+		2759CC9A1039711200E2C046 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
+		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
+		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
+		2759CD051039AC6000E2C046 /* KSTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSTabViewController.h; path = ../../Shared/AppKit/KSTabViewController.h; sourceTree = "<group>"; };
+		2759CD061039AC6000E2C046 /* KSTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSTabViewController.m; path = ../../Shared/AppKit/KSTabViewController.m; sourceTree = "<group>"; };
+		2759CD421039B83900E2C046 /* SVWebViewLoadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewLoadController.h; sourceTree = "<group>"; };
+		2759CD431039B83900E2C046 /* SVWebViewLoadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewLoadController.m; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
@@ -1694,6 +1714,8 @@
 		2797B71D0EF91E2B00F91398 /* KTExportEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportEngine.m; sourceTree = "<group>"; };
 		2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPlaceholder.h; sourceTree = "<group>"; };
 		2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPlaceholder.m; sourceTree = "<group>"; };
+		279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTabView+Karelia.h"; sourceTree = "<group>"; };
+		279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTabView+Karelia.m"; sourceTree = "<group>"; };
 		279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingEngine.h; sourceTree = "<group>"; };
 		279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingEngine.m; sourceTree = "<group>"; };
 		27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewEditingHelperClasses.h; sourceTree = "<group>"; };
@@ -2943,6 +2965,20 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
+		2759CC98103970FC00E2C046 /* 2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				2759CD421039B83900E2C046 /* SVWebViewLoadController.h */,
+				2759CD431039B83900E2C046 /* SVWebViewLoadController.m */,
+				2759CC991039711200E2C046 /* SVWebViewController.h */,
+				2759CC9A1039711200E2C046 /* SVWebViewController.m */,
+				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
+				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
+				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
+			);
+			name = 2.0;
+			sourceTree = "<group>";
+		};
 		275E067A0DDA0F1A0072567F /* Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -3424,6 +3460,7 @@
 		3C202DA507DFC4BA00DE4994 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
+				2759CC98103970FC00E2C046 /* 2.0 */,
 				2734297F0D1AC59200F76E71 /* General */,
 				273429800D1AC59B00F76E71 /* Refreshing */,
 				273429810D1AC5A300F76E71 /* Editing */,
@@ -3844,6 +3881,8 @@
 		3C5A730A0BF7AF7000776464 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				2759CD051039AC6000E2C046 /* KSTabViewController.h */,
+				2759CD061039AC6000E2C046 /* KSTabViewController.m */,
 				274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */,
 				274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */,
 				CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */,
@@ -4230,6 +4269,8 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */,
+				279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */,
 				CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */,
 				CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */,
 				CE01A6240EAFD63600BDF264 /* KSAbstractBugReporter.h */,
@@ -4942,6 +4983,11 @@
 				272C27E50F4F2CD9004CE81E /* KTPageDetailsBoxView.h in Headers */,
 				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
 				27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */,
+				2759CC9B1039711200E2C046 /* SVWebViewController.h in Headers */,
+				2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */,
+				2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */,
+				2759CD441039B83900E2C046 /* SVWebViewLoadController.h in Headers */,
+				279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5654,6 +5700,7 @@
 				CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */,
 				277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */,
 				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
+				27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6316,6 +6363,11 @@
 				272C27E60F4F2CD9004CE81E /* KTPageDetailsBoxView.m in Sources */,
 				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
 				27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */,
+				2759CC9C1039711300E2C046 /* SVWebViewController.m in Sources */,
+				2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */,
+				2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */,
+				2759CD451039B83900E2C046 /* SVWebViewLoadController.m in Sources */,
+				279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,8 +63,6 @@ typedef enum {
 	BOOL myWebViewIsLoading;
 	
 		
-	WebScriptObject					*myWindowScriptObject;
-	
 	KTWebViewViewType	myViewType;
 	
 	// Animation
@@ -128,8 +126,6 @@ typedef enum {
 - (NSTimeInterval)totalAnimationTime;
 - (void)setTotalAnimationTime:(NSTimeInterval)aTotalAnimationTime;
 
-- (WebScriptObject *)windowScriptObject;
-- (void)setWindowScriptObject:(WebScriptObject *)aWindowScriptObject;
 
 
 

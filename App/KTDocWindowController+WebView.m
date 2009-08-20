@@ -119,36 +119,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 @implementation KTDocWindowController (WebView)
 
-/*!	More initialization code specific to the webview, called from windowDidLoad
-*/
-
-- (void)webViewDidLoad
-{
-	WebView *webView = [[self webViewController] webView];
-    [webView setApplicationNameForUserAgent:[NSApplication applicationName]];
-	
-	[webView setPreferencesIdentifier:[NSApplication applicationName]];
-	if ([[webView preferences] respondsToSelector:@selector(setEditableLinkBehavior:)])
-	{
-		[[webView preferences] setEditableLinkBehavior:WebKitEditableLinkLiveWhenNotFocused];
-	}
-	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[webView setContinuousSpellCheckingEnabled:[defaults boolForKey:@"ContinuousSpellChecking"]];
-	// Set UI delegate -- we don't actually use the built-in methods, but we use our custom
-	// method for detecting clicks.
-	[webView setUIDelegate:self];				// WebUIDelegate
-	
-	/*
-	 // doesn't actually work yet
-	 DOMDocument *document = [[oWebView mainFrame] DOMDocument];
-	 [document addEventListener:@"mousedown"
-							   :self
-							   :YES];
-	 */
-	[self setStatusField:@""];
-}
-
 #pragma mark -
 #pragma mark Image Replacement
 

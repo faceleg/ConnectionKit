@@ -38,7 +38,7 @@
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTPluginInspectorViewsManager;
-@class KTDocViewController, KTDocWebViewController, KTDocSiteOutlineController;
+@class KTDocViewController, SVWebContentAreaController, KTDocWebViewController, KTDocSiteOutlineController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
@@ -51,8 +51,7 @@ extern NSString *gInfoWindowAutoSaveName;
 {
     IBOutlet RBSplitView				*oSidebarSplitView;
     IBOutlet RBSplitView				*oDesignsSplitView;
-	IBOutlet WebView					*oWebView;
-	IBOutlet KTDocWebViewController		*webViewController;     // Weak ref
+	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
 	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
 	IBOutlet KTDocViewController		*oPageDetailsController;
 	IBOutlet NSObjectController			*oDocumentController;
@@ -126,8 +125,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (KTDocSiteOutlineController *)siteOutlineController;
 - (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
 
-- (KTDocWebViewController *)webViewController;
-- (void)setWebViewController:(KTDocWebViewController *)controller;
+@property(nonatomic, readonly) SVWebContentAreaController *webContentAreaController;
 
 
 #pragma mark Other
@@ -231,8 +229,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)clearLinkDestination:(id)sender;
 
 - (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
-
-- (void)webViewDidLoad;
 
 - (id)itemForDOMNodeID:(NSString *)anID;
 
