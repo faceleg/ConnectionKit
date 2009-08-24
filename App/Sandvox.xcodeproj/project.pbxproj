@@ -5087,7 +5087,7 @@
 /* Begin PBXProject section */
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */;
+			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Sandvox" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -7583,7 +7583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */ = {
+		CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Sandvox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C0CFA3F085E3E9C009E3AD3 /* Debug */,
