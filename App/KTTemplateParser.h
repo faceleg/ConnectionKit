@@ -22,6 +22,7 @@
 
 
 @class KTHTMLParserMasterCache;
+@protocol KTTemplateParserDelegate;
 @interface KTTemplateParser : NSObject
 {
 	@private
@@ -48,8 +49,7 @@
 - (NSString *)template;
 - (id)component;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
+@property(nonatomic, assign) id <KTTemplateParserDelegate> delegate;
 
 // KVC Overrides
 - (NSSet *)overriddenKeys;
@@ -76,7 +76,8 @@
 @end
 
 
-@interface NSObject (Delegate)
+@protocol KTTemplateParserDelegate
+@optional
 - (void)parserDidStartTemplate:(KTTemplateParser *)parser;
 - (NSString *)parser:(KTTemplateParser *)parser didEndTemplate:(NSString *)result;
 - (void)parser:(KTTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;

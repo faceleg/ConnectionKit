@@ -157,6 +157,8 @@
 	myLiveDataFeeds = [[NSNumber alloc] initWithBool:flag];
 }
 
+@dynamic delegate;
+
 #pragma mark -
 #pragma mark Handy Keypaths
 
