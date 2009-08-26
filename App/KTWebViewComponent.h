@@ -11,14 +11,15 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "KTHTMLParser.h"
 
 #import "KTWebViewComponentProtocol.h"
 
 
-@class KTDocWebViewController, KTHTMLParser, KTHTMLTextBlock;
+@class KTDocWebViewController;
 
 
-@interface KTWebViewComponent : NSObject
+@interface KTWebViewComponent : NSObject <KTHTMLParserDelegate>
 {
 	KTHTMLParser	*myParser;
 	
