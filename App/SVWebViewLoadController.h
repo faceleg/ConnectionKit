@@ -40,8 +40,4 @@
 - (IBAction)updateWebView:(id)sender;
 - (void)loadIfNeeded;
 
-- (void)suspendLoading;
-- (void)resumeLoading;
-@property(nonatomic, readonly) BOOL loadingIsSuspended;
-
 @end
