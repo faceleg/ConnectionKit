@@ -309,7 +309,7 @@
 		if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:
-             @" id=\"%@\" class=\"%@\"",
+             @" id=\"%@\" class=\"%@\" contentEditable=\"true\"",
              [self DOMNodeID],
              ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
@@ -357,7 +357,7 @@
         NSString *CSSClassName = @"in";
         if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
 		{
-			[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
+			[buffer appendFormat:@" id=\"%@\" contentEditable=\"true\"", [self DOMNodeID]];
             CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
