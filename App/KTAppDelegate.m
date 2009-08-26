@@ -523,6 +523,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:NO], @"JSKitDisableAvatars",
 		[NSNumber numberWithBool:NO], @"JSKitDisableThreading",
 		[NSNumber numberWithBool:NO], @"JSKitConfirmModeratorViaEmail",
+        
+        /// whether we generate a QuickLook thumbnail during save, expressed in the negative for backwards compatibility
+        [NSNumber numberWithBool:NO], @"DisableQuickLookThumbnail",
 
 		nil];
 	

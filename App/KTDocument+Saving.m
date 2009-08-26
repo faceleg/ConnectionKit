@@ -437,11 +437,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	BOOL result = NO;
-	
+    
+    BOOL quickLookEnabled = ![[NSUserDefaults standardUserDefaults] boolForKey:@"DisableQuickLookThumbnail"];
 	
     // Kick off thumbnail generation
-    [[self proxyForThread:[self thread]] startGeneratingQuickLookThumbnail];
-    
+	if ( quickLookEnabled )
+    {
+        [[self proxyForThread:[self thread]] startGeneratingQuickLookThumbnail];
+    }
     
     
     // Prepare to save the context
@@ -459,7 +462,12 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	{
 		// Generate Quick Look preview HTML
         KTDocument *docProxy = ([NSThread currentThread] == [self thread]) ? [self retain] : [[KSThreadProxy alloc] initWithTarget:self thread:[self thread]];
-        NSString *quickLookPreviewHTML = [docProxy quickLookPreviewHTML];
+        
+        NSString *quickLookPreviewHTML = nil;
+        if ( quickLookEnabled )
+        {
+            quickLookPreviewHTML = [docProxy quickLookPreviewHTML];
+        }
         
         
         // Save the context
@@ -485,7 +493,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     }
     
     
-    if (result && _quickLookThumbnailWebView)
+    if ( result && quickLookEnabled && _quickLookThumbnailWebView )
     {
         [self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:outError];
 	}
