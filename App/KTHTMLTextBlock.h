@@ -41,7 +41,7 @@
 #pragma mark Accessors
 
 - (id)initWithParser:(KTHTMLParser *)parser;
-- (KTHTMLParser *)parser;
+//@property(nonatomic, retain, readonly) KTHTMLParser *parser;
 
 - (KTWebViewComponent *)webViewComponent;
 - (void)setWebViewComponent:(KTWebViewComponent *)component;
@@ -51,12 +51,10 @@
 - (void)setDOMNode:(DOMHTMLElement *)node;
 
 
-- (BOOL)isEditable;
-- (void)setEditable:(BOOL)flag;
-- (BOOL)isFieldEditor;
-- (void)setFieldEditor:(BOOL)flag;
-- (BOOL)isRichText;
-- (void)setRichText:(BOOL)flag;
+@property(nonatomic, getter=isEditable) BOOL editable;
+@property(nonatomic, setter=setRichText) BOOL isRichText;
+@property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
+
 - (BOOL)importsGraphics;
 - (void)setImportsGraphics:(BOOL)flag;
 - (BOOL)hasSpanIn;
