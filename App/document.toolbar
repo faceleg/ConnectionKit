@@ -9,6 +9,8 @@
 		<string>NSToolbarSeparatorItem</string>
 		<string>addCollectionPop:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
+        <string>chooseDesign:</string>
+		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>showLinkPanel:</string>
 		<string>toggleEditingControlsShown:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
@@ -184,6 +186,22 @@
 			<string>TOOLBAR_PUBLISH_ALL</string>
 			<key>paletteLabel</key>
 			<string>PALETTE_PUBLISH_ALL</string>
+			<key>target</key>
+			<string>windowcontroller</string>
+		</dict>
+        <dict>
+			<key>action</key>
+			<string>chooseDesign:</string>
+			<key>help</key>
+			<string>TOOLTIP_CHOOSE_DESIGN</string>
+			<key>identifier</key>
+			<string>chooseDesign:</string>
+			<key>image</key>
+			<string>toolbar_choose_design</string>
+			<key>label</key>
+			<string>TOOLBAR_CHOOSE_DESIGN</string>
+			<key>paletteLabel</key>
+			<string>PALETTE_CHOOSE_DESIGN</string>
 			<key>target</key>
 			<string>windowcontroller</string>
 		</dict>

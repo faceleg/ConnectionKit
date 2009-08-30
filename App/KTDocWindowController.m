@@ -40,6 +40,8 @@
 #import "KTToolbars.h"
 #import "KTHTMLTextBlock.h"
 
+#import "SVDesignChooserWindowController.h"
+
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
@@ -621,7 +623,25 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark -
-#pragma mark Other
+#pragma mark Design Chooser
+
+@synthesize designChooserWindowController = designChooserWindowController_;
+
+- (IBAction)chooseDesign:(id)sender
+{
+    [self showChooseDesignSheet:sender];
+}
+
+- (IBAction)showChooseDesignSheet:(id)sender
+{
+    if ( !designChooserWindowController_ )
+    {
+        designChooserWindowController_ = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
+        [[self document] addWindowController:designChooserWindowController_];
+    }
+    
+    [designChooserWindowController_ displayAsSheet];
+}
 
 - (IBAction)toggleDesignsShown:(id)sender
 {
@@ -633,6 +653,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// update UI
 	[self showDesigns:newValue];
 }
+
+#pragma mark -
+#pragma mark Other
 
 - (IBAction)toggleStatusBarShown:(id)sender
 {

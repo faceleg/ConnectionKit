@@ -410,6 +410,9 @@
 		27FA04750C82F66700793A6D /* KTAbstractElement+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA04730C82F66700793A6D /* KTAbstractElement+Deprecated.m */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
+		3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */; };
+		3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
+		3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
@@ -516,6 +519,12 @@
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
+		3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */; };
+		3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */; };
+		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };
+		3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */; };
+		3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */; };
+		3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */; };
 		3C6FB8BA083133FA00774785 /* KTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2707DFC0AA00DE4994 /* KTWebView.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
@@ -1577,9 +1586,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3CE2CA970D6D54D400B2D56B /* iMediaBrowser.framework in Copy Frameworks */,
-				3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */,
 				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
+				3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */,
+				3CE2CA970D6D54D400B2D56B /* iMediaBrowser.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -1590,6 +1599,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */,
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
 			);
 			name = "Copy Frameworks ALWAYS";
@@ -1869,6 +1879,8 @@
 		3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GeneralIndex.xcodeproj; path = ../Plugins/Indexes/GeneralIndex/GeneralIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BEB0D5D280500DE6F62 /* ListingIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ListingIndex.xcodeproj; path = ../Plugins/Indexes/ListingIndex/ListingIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PhotoGridIndex.xcodeproj; path = ../Plugins/Indexes/PhotoGridIndex/PhotoGridIndex.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C0B1D04104792B0002EE098 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVDesignChooser.xib; sourceTree = "<group>"; };
+		3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = ../../Shared/ThirdParty/BWToolkit/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
@@ -2034,6 +2046,12 @@
 		3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+KTExtensions.m"; sourceTree = "<group>"; };
 		3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KTExtensions.h"; sourceTree = "<group>"; };
 		3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KTExtensions.m"; sourceTree = "<group>"; };
+		3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignViewPrototype.xib; sourceTree = "<group>"; };
+		3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserWindowController.h; sourceTree = "<group>"; };
+		3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserWindowController.m; sourceTree = "<group>"; };
+		3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserViewController.h; sourceTree = "<group>"; };
+		3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserViewController.m; sourceTree = "<group>"; };
+		3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignChooserCollectionView.xib; sourceTree = "<group>"; };
 		3C728BF008EC7AD800BADA0A /* MediaInspector.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MediaInspector.nib; sourceTree = "<group>"; };
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
@@ -2723,6 +2741,7 @@
 				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
 				CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */,
 				CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */,
+				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3264,6 +3283,7 @@
 				3C951FF70D762D9C009FCAC9 /* Configuration */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Documents */,
+				3C0B1D53104798F5002EE098 /* Design Chooser */,
 				278849800F5FF0C400C70629 /* Site */,
 				278849810F5FF0D300C70629 /* Master */,
 				275E067A0DDA0F1A0072567F /* Elements */,
@@ -3391,6 +3411,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3C0B1D53104798F5002EE098 /* Design Chooser */ = {
+			isa = PBXGroup;
+			children = (
+				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
+				3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */,
+				3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */,
+				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
+				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
+				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
+				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
+			);
+			name = "Design Chooser";
+			sourceTree = "<group>";
+		};
 		3C0C021E0905883E00CFFE3E /* Testing Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3480,6 +3514,7 @@
 		3C202DC907E00BCC00DE4994 /* Third Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */,
 				3C3F547C0D625919004885E7 /* Connection.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
 				3C3F54900D625952004885E7 /* iMediaBrowser.framework */,
@@ -5009,6 +5044,8 @@
 				2790BD9E103E890600654665 /* SVDOMController.h in Headers */,
 				2790BDAF1040162000654665 /* SVTextBlockDOMController.h in Headers */,
 				2790BF0410459B3C00654665 /* SVBindableTextBlockDOMController.h in Headers */,
+				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
+				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5722,6 +5759,9 @@
 				3C9BC20E103DF9BA00D2CF47 /* KTTranscript.xib in Resources */,
 				3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */,
 				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
+				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
+				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
+				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6392,6 +6432,8 @@
 				2790BD9F103E890600654665 /* SVDOMController.m in Sources */,
 				2790BDB01040162000654665 /* SVTextBlockDOMController.m in Sources */,
 				2790BF0510459B3C00654665 /* SVBindableTextBlockDOMController.m in Sources */,
+				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
+				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6792,6 +6834,14 @@
 			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
+		3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C0B1D04104792B0002EE098 /* en */,
+			);
+			name = SVDesignChooser.xib;
+			sourceTree = "<group>";
+		};
 		3C202E7B07E00EE800DE4994 /* HostSetup.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7099,6 +7149,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"\"$(SRCROOT)/../../Shared/ThirdParty/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
@@ -7124,6 +7175,7 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"\"$(SRCROOT)/../../Shared/ThirdParty/BWToolkit\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";

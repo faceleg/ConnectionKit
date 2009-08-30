@@ -43,6 +43,7 @@
 @class KTCodeInjectionController;
 @class KTAbstractElement;
 @class KSPlaceholderTextView;
+@class SVDesignChooserWindowController;
 
 extern NSString *gInfoWindowAutoSaveName;
 
@@ -106,6 +107,9 @@ extern NSString *gInfoWindowAutoSaveName;
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;
+    
+    // Design Chooser
+    SVDesignChooserWindowController *designChooserWindowController_;
 
 
 	KTPluginInspectorViewsManager	*myPluginInspectorViewsManager;
@@ -157,6 +161,9 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)group:(id)sender;
 - (IBAction)remove:(id)sender;
 
+@property(retain) SVDesignChooserWindowController *designChooserWindowController;
+- (IBAction)chooseDesign:(id)sender;
+- (IBAction)showChooseDesignSheet:(id)sender;
 - (IBAction)toggleDesignsShown:(id)sender;
 
 - (IBAction)updateWebView:(id)sender;
