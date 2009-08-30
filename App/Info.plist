@@ -168,7 +168,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${SANDVOX_VERSION}</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION})</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
 	<key>CFBundleURLTypes</key>
