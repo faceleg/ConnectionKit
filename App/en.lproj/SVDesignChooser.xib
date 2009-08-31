@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="46"/>
+			<integer value="2"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -166,7 +166,7 @@
 						</object>
 						<object class="NSBox" id="736176585">
 							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">12</int>
+							<int key="NSvFlags">10</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSView" id="193037064">
 									<reference key="NSNextResponder" ref="736176585"/>
@@ -174,7 +174,7 @@
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSCustomView" id="461690650">
 											<reference key="NSNextResponder" ref="193037064"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">266</int>
 											<string key="NSFrame">{{-1, -1}, {625, 25}}</string>
 											<reference key="NSSuperview" ref="193037064"/>
 											<string key="NSClassName">MGScopeBar</string>
