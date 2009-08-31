@@ -443,6 +443,11 @@
 		3C26FAC80898777500FCC13F /* 32favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C26FAC70898777500FCC13F /* 32favicon.png */; };
 		3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FE01096F198E00702991 /* KTReleaseNotesController.m */; };
 		3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */; };
+		3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C2DA6E3104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h */; };
+		3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2DA6E4104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m */; };
+		3C2DA6EA104C7AAE0037D270 /* MGScopeBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C2DA6E5104C7AAE0037D270 /* MGScopeBar.h */; };
+		3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2DA6E6104C7AAE0037D270 /* MGScopeBar.m */; };
+		3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */; };
 		3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C301619103DE0580036A9D0 /* KTDocument.xib */; };
 		3C382D610E98170600113137 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3C382D600E98170600113137 /* dsa_pub.pem */; };
 		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; settings = {ATTRIBUTES = (); }; };
@@ -1935,6 +1940,11 @@
 		3C27FE01096F198E00702991 /* KTReleaseNotesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTReleaseNotesController.m; sourceTree = "<group>"; };
 		3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAcknowledgmentsController.h; sourceTree = "<group>"; };
 		3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAcknowledgmentsController.m; sourceTree = "<group>"; };
+		3C2DA6E3104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGRecessedPopUpButtonCell.h; path = ../../Shared/ThirdParty/MGScopeBar/MGRecessedPopUpButtonCell.h; sourceTree = SOURCE_ROOT; };
+		3C2DA6E4104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGRecessedPopUpButtonCell.m; path = ../../Shared/ThirdParty/MGScopeBar/MGRecessedPopUpButtonCell.m; sourceTree = SOURCE_ROOT; };
+		3C2DA6E5104C7AAE0037D270 /* MGScopeBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGScopeBar.h; path = ../../Shared/ThirdParty/MGScopeBar/MGScopeBar.h; sourceTree = SOURCE_ROOT; };
+		3C2DA6E6104C7AAE0037D270 /* MGScopeBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGScopeBar.m; path = ../../Shared/ThirdParty/MGScopeBar/MGScopeBar.m; sourceTree = SOURCE_ROOT; };
+		3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGScopeBarDelegateProtocol.h; path = ../../Shared/ThirdParty/MGScopeBar/MGScopeBarDelegateProtocol.h; sourceTree = SOURCE_ROOT; };
 		3C30161A103DE0580036A9D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTDocument.xib; sourceTree = "<group>"; };
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
@@ -3637,6 +3647,18 @@
 			name = Localized;
 			sourceTree = "<group>";
 		};
+		3C2DA6E0104C7A790037D270 /* MGScopeBar */ = {
+			isa = PBXGroup;
+			children = (
+				3C2DA6E5104C7AAE0037D270 /* MGScopeBar.h */,
+				3C2DA6E6104C7AAE0037D270 /* MGScopeBar.m */,
+				3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */,
+				3C2DA6E3104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h */,
+				3C2DA6E4104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m */,
+			);
+			name = MGScopeBar;
+			sourceTree = "<group>";
+		};
 		3C42DDA70D64C8B3004F35FD /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4433,6 +4455,7 @@
 		CE01A7050EAFD63600BDF264 /* Imported */ = {
 			isa = PBXGroup;
 			children = (
+				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
 				CE01A7060EAFD63600BDF264 /* AMRollOverButton.h */,
 				CE01A7070EAFD63600BDF264 /* AMRollOverButton.m */,
 				CE01A7080EAFD63600BDF264 /* AMRollOverButtonCell.h */,
@@ -4924,6 +4947,9 @@
 				2790BF0410459B3C00654665 /* SVBindableTextBlockDOMController.h in Headers */,
 				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
 				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
+				3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */,
+				3C2DA6EA104C7AAE0037D270 /* MGScopeBar.h in Headers */,
+				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6312,6 +6338,8 @@
 				2790BF0510459B3C00654665 /* SVBindableTextBlockDOMController.m in Sources */,
 				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
 				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
+				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
+				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
