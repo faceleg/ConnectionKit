@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="81"/>
+			<integer value="57"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1611,14 +1611,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">terminate:</string>
-						<reference key="source" ref="915795007"/>
-						<reference key="destination" ref="639243739"/>
-					</object>
-					<int key="connectionID">139</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">orderFrontStandardAboutPanel:</string>
 						<reference key="source" ref="915795007"/>
 						<reference key="destination" ref="267626028"/>
@@ -2544,6 +2536,14 @@
 						<reference key="destination" ref="890863307"/>
 					</object>
 					<int key="connectionID">1177</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">terminate:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="639243739"/>
+					</object>
+					<int key="connectionID">1178</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3891,7 +3891,7 @@
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="56.ImportedFromIB2"/>
-				<string key="57.IBEditorWindowLastContentRect">{{12, 792}, {253, 333}}</string>
+				<string key="57.IBEditorWindowLastContentRect">{{12, 403}, {253, 333}}</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="57.ImportedFromIB2"/>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4038,7 +4038,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1177</int>
+			<int key="maxID">1178</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4651,6 +4651,7 @@
 						<string key="addCollection:">id</string>
 						<string key="addPage:">id</string>
 						<string key="addPagelet:">id</string>
+						<string key="chooseDesign:">id</string>
 						<string key="clearLinkDestination:">id</string>
 						<string key="copy:">id</string>
 						<string key="copyPagelets:">id</string>
@@ -4680,9 +4681,11 @@
 						<string key="publishSiteFromToolbar:">NSToolbarItem</string>
 						<string key="reloadOutline:">id</string>
 						<string key="remove:">id</string>
+						<string key="showChooseDesignSheet:">id</string>
 						<string key="showLinkPanel:">id</string>
 						<string key="submitSiteToDirectory:">id</string>
 						<string key="toggleDesignsShown:">id</string>
+						<string key="updateWebView:">id</string>
 						<string key="visitPublishedPage:">id</string>
 						<string key="visitPublishedSite:">id</string>
 						<string key="windowHelp:">id</string>
@@ -4723,7 +4726,6 @@
 						<string key="duplicatePages:">id</string>
 						<string key="pasteLink:">id</string>
 						<string key="selectWebViewViewType:">id</string>
-						<string key="updateWebView:">id</string>
 						<string key="validateSource:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
@@ -4964,13 +4966,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTHTMLParser.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTImageView.h</string>
 					</object>
 				</object>
@@ -5171,9 +5166,25 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebContentAreaController</string>
 					<string key="superclassName">KSTabViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">updateWebView:</string>
+						<string key="NS.object.0">id</string>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebContentAreaController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVWebViewLoadController</string>
+					<string key="superclassName">KSTabViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">updateWebView:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVWebViewLoadController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -5241,6 +5252,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSUserInterfaceItemSearching.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSApplication</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSApplication+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6167,6 +6185,13 @@
 					<reference key="sourceIdentifier" ref="439371111"/>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSView+BWAdditions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSViewController</string>
 					<string key="superclassName">NSResponder</string>
 					<object class="NSMutableDictionary" key="outlets">
@@ -6198,6 +6223,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">BWToolkitFramework.framework/Headers/NSWindow+BWAdditions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6334,7 +6366,7 @@
 			<integer value="1050" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../Marvel.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../Sandvox.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 	</data>
 </archive>

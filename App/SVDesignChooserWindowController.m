@@ -79,6 +79,13 @@
     [NSApp endSheet:[self window]];    
 }
 
+- (void)terminate:(id)sender
+{
+    // in 10.6 we could use setPreventsApplicationTerminationWhenModal:NO instead
+    [self cancelSheet:sender];
+    [NSApp terminate:sender];
+}
+
 - (IBAction)cancelSheet:(id)sender
 {
     [NSApp endSheet:[self window]];
