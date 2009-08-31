@@ -32,6 +32,7 @@ IMEDIA_REVISION = 797
 // LLVM GCC 4.2
 GCC_VERSION = com.apple.compilers.llvmgcc42
 
+GCC_C_LANGUAGE_STANDARD = c99
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
