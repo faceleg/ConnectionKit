@@ -16,6 +16,7 @@
 #import "KTDocument.h"
 #import "NSArray+Karelia.h"
 #import "SVDesignChooserViewController.h"
+#import "MGScopeBar.h"
 
 
 @implementation SVDesignChooserWindowController
@@ -44,7 +45,10 @@
     [self bind:@"selectedDesign"
       toObject:[[[self document] mainWindowController] siteOutlineController]
    withKeyPath:@"selection.master.design"
-       options:nil];    
+       options:nil];
+    
+    [oScopeBar setDelegate:self];
+    [oScopeBar reloadData];
 }
 
 - (IBAction)chooseDesign:(id)sender
@@ -110,4 +114,35 @@
 }
 
 @synthesize viewController = viewController_;
+
+#pragma mark -
+#pragma mark MGScopeBarDelegate
+
+- (NSInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
+{
+    return 1;
+}
+
+- (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
+{
+    return [NSArray arrayWithObjects:@"All", @"Business", @"Personal", @"Kids", nil];
+}
+
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(NSInteger)groupNumber
+{
+    return @"Kind:";
+}
+
+- (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(NSInteger)groupNumber
+{
+    return MGRadioSelectionMode;
+}
+
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar 
+           titleOfItem:(NSString *)identifier 
+               inGroup:(NSInteger)groupNumber
+{
+    return identifier;
+}
+
 @end

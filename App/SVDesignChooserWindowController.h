@@ -7,12 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGScopeBarDelegateProtocol.h"
 
-@class SVDesignChooserViewController;
 @class KTDesign;
-@interface SVDesignChooserWindowController : NSWindowController 
+@class SVDesignChooserViewController;
+@interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
     SVDesignChooserViewController   *viewController_;
+    IBOutlet MGScopeBar             *oScopeBar;
     IBOutlet NSView                 *oTargetView;
     
     KTDesign                        *selectedDesign_;
