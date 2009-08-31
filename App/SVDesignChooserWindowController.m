@@ -29,7 +29,7 @@
     // pop the collection view into the window
     [oTargetView addSubview:[viewController_ view]];
     
-    // make sure we resize the viewController's view to match its super view
+    // make sure we resize the viewController's view to match its superview
     [[viewController_ view] setFrame:[oTargetView bounds]];
 }
 

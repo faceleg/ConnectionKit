@@ -68,7 +68,7 @@
 												<string>NeXT TIFF v4.0 pasteboard type</string>
 											</object>
 										</object>
-										<string key="NSFrame">{{18, 22}, {100, 65}}</string>
+										<string key="NSFrame">{{26, 27}, {100, 65}}</string>
 										<reference key="NSSuperview" ref="534627200"/>
 										<int key="NSViewLayerContentsRedrawPolicy">2</int>
 										<bool key="NSEnabled">YES</bool>
@@ -85,7 +85,7 @@
 									<object class="NSTextField" id="139715704">
 										<reference key="NSNextResponder" ref="534627200"/>
 										<int key="NSvFlags">268</int>
-										<string key="NSFrame">{{3, 7}, {130, 14}}</string>
+										<string key="NSFrame">{{11, 5}, {130, 14}}</string>
 										<reference key="NSSuperview" ref="534627200"/>
 										<int key="NSViewLayerContentsRedrawPolicy">2</int>
 										<bool key="NSEnabled">YES</bool>
@@ -114,12 +114,19 @@
 											</object>
 										</object>
 									</object>
+									<object class="NSCustomView" id="1007078808">
+										<reference key="NSNextResponder" ref="534627200"/>
+										<int key="NSvFlags">268</int>
+										<string key="NSFrame">{{22, 23}, {108, 73}}</string>
+										<reference key="NSSuperview" ref="534627200"/>
+										<string key="NSClassName">SVDesignChooserSelectionView</string>
+									</object>
 								</object>
-								<string key="NSFrameSize">{138, 90}</string>
+								<string key="NSFrameSize">{150, 100}</string>
 								<reference key="NSSuperview" ref="928935537"/>
 							</object>
 						</object>
-						<string key="NSFrame">{{17, 16}, {138, 90}}</string>
+						<string key="NSFrame">{{20, 20}, {150, 100}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -145,12 +152,12 @@
 						<bool key="NSTransparent">NO</bool>
 						<bool key="NSFullyTransparent">YES</bool>
 						<object class="NSColor" key="NSFillColor2">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC43MDk4MDAwMDUgMC44MzUzMDAwMjgzIDEgMC45NTk5OTk5Nzg1AA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4yNTA5ODA0MDcgMCAwLjE4NDMxMzcyOTQgMC43NQA</bytes>
 						</object>
 					</object>
 				</object>
-				<string key="NSFrameSize">{172, 124}</string>
+				<string key="NSFrameSize">{190, 140}</string>
 				<reference key="NSSuperview"/>
 				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
@@ -201,14 +208,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">transparent: selected</string>
-						<reference key="source" ref="928935537"/>
+						<string key="label">hidden: selected</string>
+						<reference key="source" ref="1007078808"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="928935537"/>
+							<reference key="NSSource" ref="1007078808"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">transparent: selected</string>
-							<string key="NSBinding">transparent</string>
+							<string key="NSLabel">hidden: selected</string>
+							<string key="NSBinding">hidden</string>
 							<string key="NSKeyPath">selected</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSValueTransformerName</string>
@@ -217,7 +224,7 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">13</int>
+					<int key="connectionID">16</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -262,8 +269,9 @@
 						<reference key="object" ref="928935537"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="145001884"/>
 							<reference ref="139715704"/>
+							<reference ref="145001884"/>
+							<reference ref="1007078808"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -295,6 +303,11 @@
 						<reference key="object" ref="652020249"/>
 						<reference key="parent" ref="139715704"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">14</int>
+						<reference key="object" ref="1007078808"/>
+						<reference key="parent" ref="928935537"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -310,6 +323,7 @@
 					<string>1.WindowOrigin</string>
 					<string>1.editorWindowContentRectSynchronizationRect</string>
 					<string>10.CustomClassName</string>
+					<string>14.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
@@ -320,12 +334,13 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{279, 632}, {172, 124}}</string>
+					<string>{{279, 616}, {190, 140}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>{628, 654}</string>
 					<string>{{357, 416}, {480, 272}}</string>
 					<string>SVDesignChooserViewBox</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -348,7 +363,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -508,12 +523,17 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">SVDesignChooserViewBox</string>
-					<string key="superclassName">NSBox</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<string key="className">SVDesignChooserSelectionView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="191490953">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDesignChooserViewController.h</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVDesignChooserViewBox</string>
+					<string key="superclassName">NSBox</string>
+					<reference key="sourceIdentifier" ref="191490953"/>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">

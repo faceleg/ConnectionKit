@@ -30,3 +30,6 @@
 
 @interface SVDesignChooserViewBox : NSBox
 @end
+
+@interface SVDesignChooserSelectionView : NSView
+@end

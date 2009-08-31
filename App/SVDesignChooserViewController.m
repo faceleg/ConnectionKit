@@ -50,16 +50,32 @@
 
 @implementation SVDesignChooserViewBox
 
-- (void)awakeFromNib
-{
-    // here's a little tip: boxType must be Custom and borderType must be Line
-    //[self setFillColor:[NSColor selectedControlColor]];
-    [self setFillColor:[NSColor alternateSelectedControlColor]];
-}
-
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    return nil; // don't allow any mouse clicks for subviews
+    return nil; // don't allow any mouse clicks for subviews (needed?)
+}
+
+@end
+
+@implementation SVDesignChooserSelectionView
+
+// view's hidden binding is bound to viewcontoller.selection (NSNegateBoolean)
+// so this only appears drawn around the selection
+- (void)drawRect:(NSRect)rect
+{
+    // do a very thick line in a dark color to frame what's underneath
+    NSBezierPath *lowlightPath = [NSBezierPath bezierPathWithRect:rect];
+    [lowlightPath setLineJoinStyle:NSRoundLineJoinStyle];
+    [lowlightPath setLineWidth:7.0];
+    [[NSColor blackColor] set];
+    [lowlightPath stroke];
+    
+    // do a thinner line in selectedControlColor to indicate selection
+    NSBezierPath *highlightPath = [NSBezierPath bezierPathWithRect:rect];
+    [highlightPath setLineWidth:6.0];
+    [highlightPath setLineJoinStyle:NSRoundLineJoinStyle];
+    [[NSColor alternateSelectedControlColor] set];
+    [highlightPath stroke];
 }
 
 @end

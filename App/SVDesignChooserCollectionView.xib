@@ -51,7 +51,7 @@
 							<object class="NSCollectionView" id="729702832">
 								<reference key="NSNextResponder" ref="741837519"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{248, 158}</string>
+								<string key="NSFrameSize">{233, 158}</string>
 								<reference key="NSSuperview" ref="741837519"/>
 								<string key="NSMinGridSize">{0, 0}</string>
 								<string key="NSMaxGridSize">{0, 0}</string>
@@ -69,7 +69,7 @@
 								<int key="NSDraggingSourceMaskForNonLocal">0</int>
 							</object>
 						</object>
-						<string key="NSFrame">{{1, 1}, {248, 158}}</string>
+						<string key="NSFrame">{{1, 1}, {233, 158}}</string>
 						<reference key="NSSuperview" ref="1051299331"/>
 						<reference key="NSNextKeyView" ref="729702832"/>
 						<reference key="NSDocView" ref="729702832"/>
@@ -81,8 +81,8 @@
 					</object>
 					<object class="NSScroller" id="802968732">
 						<reference key="NSNextResponder" ref="1051299331"/>
-						<int key="NSvFlags">-2147483392</int>
-						<string key="NSFrame">{{234, 1}, {15, 143}}</string>
+						<int key="NSvFlags">256</int>
+						<string key="NSFrame">{{234, 1}, {15, 144}}</string>
 						<reference key="NSSuperview" ref="1051299331"/>
 						<reference key="NSTarget" ref="1051299331"/>
 						<string key="NSAction">_doScroller:</string>
@@ -92,7 +92,7 @@
 					<object class="NSScroller" id="285298515">
 						<reference key="NSNextResponder" ref="1051299331"/>
 						<int key="NSvFlags">-2147483392</int>
-						<string key="NSFrame">{{1, 144}, {233, 15}}</string>
+						<string key="NSFrame">{{-100, -100}, {233, 15}}</string>
 						<reference key="NSSuperview" ref="1051299331"/>
 						<int key="NSsFlags">1</int>
 						<reference key="NSTarget" ref="1051299331"/>
@@ -103,7 +103,7 @@
 				<string key="NSFrameSize">{250, 160}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="741837519"/>
-				<int key="NSsFlags">562</int>
+				<int key="NSsFlags">18</int>
 				<reference key="NSVScroller" ref="802968732"/>
 				<reference key="NSHScroller" ref="285298515"/>
 				<reference key="NSContentView" ref="741837519"/>
