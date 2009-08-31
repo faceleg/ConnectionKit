@@ -38,8 +38,8 @@
 - (void)drawRect:(NSRect)rect
 {
     //[backgroundGradient_ drawInRect:[self bounds] angle:90.0];
-    [[NSColor colorWithCalibratedRed:0.079 green:0.079 blue:0.079 alpha:1.000] set];
-    [NSBezierPath fillRect:rect];
+    //[[NSColor colorWithCalibratedRed:0.079 green:0.079 blue:0.079 alpha:1.000] set];
+    //[NSBezierPath fillRect:rect];
 }
 
 - (void)dealloc
