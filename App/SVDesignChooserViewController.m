@@ -29,20 +29,22 @@
 
 - (void)awakeFromNib
 {
-    NSColor *startingColor = [NSColor darkGrayColor];
-    NSColor *endingColor = [NSColor blackColor];
-    backgroundGradient_ = [[NSGradient alloc] initWithStartingColor:startingColor
-                                                        endingColor:endingColor];    
+    //NSColor *startingColor = [NSColor darkGrayColor];
+    //NSColor *endingColor = [NSColor blackColor];
+    //backgroundGradient_ = [[NSGradient alloc] initWithStartingColor:startingColor
+    //                                                    endingColor:endingColor];    
 }
 
 - (void)drawRect:(NSRect)rect
 {
-    [backgroundGradient_ drawInRect:[self bounds] angle:90.0];
+    //[backgroundGradient_ drawInRect:[self bounds] angle:90.0];
+    [[NSColor colorWithCalibratedRed:0.079 green:0.079 blue:0.079 alpha:1.000] set];
+    [NSBezierPath fillRect:rect];
 }
 
 - (void)dealloc
 {
-    [backgroundGradient_ release];
+    //[backgroundGradient_ release];
     [super dealloc];
 }
 
