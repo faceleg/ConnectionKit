@@ -6,27 +6,32 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-//  A Text Box Controller is a special kind of DOM Controller that manages a block of editable text in the webview. Its aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM). You can even bind it to a model object (or object controller) like you would a standard Cocoa control.
-
-// Available bindings:
-//  value - should be bound an NSString which will be displayed as a single lump of text
-//  HTMLString - like NSTextView has an "attributedString" binding, so we have one for HTML
+//  Between them, SVTextBlock & SVWebViewController create a system like NSView & NSWindow for handling display and editing of text via the webview. SVTextBlock's main aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM).
 
 
-#import "SVDOMController.h"
+#import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 
 
-@interface SVTextBlockDOMController : SVDOMController
+@interface SVTextBlock : NSObject
 {
+  @private
+    DOMHTMLElement      *_element;
+    //SVWebViewController *_controller;   // weak ref
+    WebView             *_webView;
+    
     BOOL    _isRichText;
     BOOL    _isFieldEditor;
     
-    WebView     *_webView;
-    NSString    *_elementID;
+    BOOL    _isEditing;
 }
 
-- (id)initWithWebView:(WebView *)webView elementID:(NSString *)elementID;
+- (id)initWithDOMElement:(DOMHTMLElement *)element;// controller:(SVWebViewController *)controller;
 
+
+@property(nonatomic, retain, readonly) DOMHTMLElement *DOMElement;
+//@property(nonatomic, assign, readonly) SVWebViewController *webViewController;
+@property(nonatomic, retain) WebView *webView;  // only ever need to change if -DOMElement moves to a new webview
 
 // Returns whatever is entered into the text box right now. This is what gets used for the "value" binding. You want to use this rather than querying the DOM Element for its -innerHTML directly as it takes into account the presence of any inner tags like a <span class="in">
 @property(nonatomic, copy) NSString *HTMLString;
@@ -39,14 +44,20 @@
 @property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
 
 
+
+
+@end
+
+
+@interface SVTextBlock (Support)
+
 // Editing.
 // We follow the same pattern (and notifications) as NSText/NSTextView
 - (void)didChangeText;
-- (void)didBeginEditingText;
-- (void)didEndEditingText;
+- (void)didBeginEditingText;    // should be no need to call yourself, -didChangeText will call it for you
+- (BOOL)shouldEndEditing;   // provided for webview's delegate to signal when editing is done
 
 - (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector;
-
 
 @end
 

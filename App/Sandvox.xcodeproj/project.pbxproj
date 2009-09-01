@@ -309,10 +309,10 @@
 		278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */; settings = {ATTRIBUTES = (); }; };
 		2790BD9E103E890600654665 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BD9C103E890600654665 /* SVDOMController.h */; };
 		2790BD9F103E890600654665 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BD9D103E890600654665 /* SVDOMController.m */; };
-		2790BDAF1040162000654665 /* SVTextBlockDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVTextBlockDOMController.h */; };
-		2790BDB01040162000654665 /* SVTextBlockDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVTextBlockDOMController.m */; };
-		2790BF0410459B3C00654665 /* SVBindableTextBlockDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BF0210459B3C00654665 /* SVBindableTextBlockDOMController.h */; };
-		2790BF0510459B3C00654665 /* SVBindableTextBlockDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BF0310459B3C00654665 /* SVBindableTextBlockDOMController.m */; };
+		2790BDAF1040162000654665 /* SVTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVTextBlock.h */; };
+		2790BDB01040162000654665 /* SVTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVTextBlock.m */; };
+		2790BF0410459B3C00654665 /* SVBindableTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BF0210459B3C00654665 /* SVBindableTextBlock.h */; };
+		2790BF0510459B3C00654665 /* SVBindableTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BF0310459B3C00654665 /* SVBindableTextBlock.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KTURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */; };
@@ -1730,10 +1730,10 @@
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		2790BD9C103E890600654665 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		2790BD9D103E890600654665 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
-		2790BDAD1040162000654665 /* SVTextBlockDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBlockDOMController.h; sourceTree = "<group>"; };
-		2790BDAE1040162000654665 /* SVTextBlockDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBlockDOMController.m; sourceTree = "<group>"; };
-		2790BF0210459B3C00654665 /* SVBindableTextBlockDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBindableTextBlockDOMController.h; sourceTree = "<group>"; };
-		2790BF0310459B3C00654665 /* SVBindableTextBlockDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBindableTextBlockDOMController.m; sourceTree = "<group>"; };
+		2790BDAD1040162000654665 /* SVTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBlock.h; sourceTree = "<group>"; };
+		2790BDAE1040162000654665 /* SVTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBlock.m; sourceTree = "<group>"; };
+		2790BF0210459B3C00654665 /* SVBindableTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBindableTextBlock.h; sourceTree = "<group>"; };
+		2790BF0310459B3C00654665 /* SVBindableTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBindableTextBlock.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLFormatter.h; sourceTree = "<group>"; };
@@ -2909,10 +2909,10 @@
 				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
 				2790BD9C103E890600654665 /* SVDOMController.h */,
 				2790BD9D103E890600654665 /* SVDOMController.m */,
-				2790BDAD1040162000654665 /* SVTextBlockDOMController.h */,
-				2790BDAE1040162000654665 /* SVTextBlockDOMController.m */,
-				2790BF0210459B3C00654665 /* SVBindableTextBlockDOMController.h */,
-				2790BF0310459B3C00654665 /* SVBindableTextBlockDOMController.m */,
+				2790BDAD1040162000654665 /* SVTextBlock.h */,
+				2790BDAE1040162000654665 /* SVTextBlock.m */,
+				2790BF0210459B3C00654665 /* SVBindableTextBlock.h */,
+				2790BF0310459B3C00654665 /* SVBindableTextBlock.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -4945,8 +4945,8 @@
 				2759CD441039B83900E2C046 /* SVWebViewLoadController.h in Headers */,
 				279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */,
 				2790BD9E103E890600654665 /* SVDOMController.h in Headers */,
-				2790BDAF1040162000654665 /* SVTextBlockDOMController.h in Headers */,
-				2790BF0410459B3C00654665 /* SVBindableTextBlockDOMController.h in Headers */,
+				2790BDAF1040162000654665 /* SVTextBlock.h in Headers */,
+				2790BF0410459B3C00654665 /* SVBindableTextBlock.h in Headers */,
 				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
 				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
 				3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */,
@@ -6336,8 +6336,8 @@
 				2759CD451039B83900E2C046 /* SVWebViewLoadController.m in Sources */,
 				279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */,
 				2790BD9F103E890600654665 /* SVDOMController.m in Sources */,
-				2790BDB01040162000654665 /* SVTextBlockDOMController.m in Sources */,
-				2790BF0510459B3C00654665 /* SVBindableTextBlockDOMController.m in Sources */,
+				2790BDB01040162000654665 /* SVTextBlock.m in Sources */,
+				2790BF0510459B3C00654665 /* SVBindableTextBlock.m in Sources */,
 				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
 				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,

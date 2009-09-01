@@ -11,7 +11,7 @@
 #import "KTHTMLParser.h"
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
-#import "SVBindableTextBlockDOMController.h"
+#import "SVBindableTextBlock.h"
 
 #import "NSApplication+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -21,7 +21,8 @@
 - (void)loadPage:(KTPage *)page;
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
-@property(nonatomic, copy, readwrite) NSArray *textBlockControllers;
+@property(nonatomic, copy, readwrite) NSArray *textBlocks;
+@property(nonatomic, retain, readwrite) SVTextBlock *selectedTextBlock;
 
 @end
 
@@ -43,8 +44,8 @@
 {
     [_webView release];
     [_page release];
-    OBASSERT(!_textBlocks); [_textBlocks release];
-    [_textBlockControllers release];
+    OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
+    [_textBlocks release];
     
     [super dealloc];
 }
@@ -131,8 +132,8 @@
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
 	
-    OBASSERT(!_textBlocks);
-    _textBlocks = [[NSMutableArray alloc] init];
+    OBASSERT(!_HTMLTextBlocks);
+    _HTMLTextBlocks = [[NSMutableArray alloc] init];
     
 	NSString *pageHTML = [parser parseTemplate];
 	[parser release];
@@ -154,7 +155,7 @@
 
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock;
 {
-    if ([textBlock isEditable]) [_textBlocks addObject:textBlock];
+    if ([textBlock isEditable]) [_HTMLTextBlocks addObject:textBlock];
 }
 
 @synthesize loading = _isLoading;
@@ -164,11 +165,16 @@
 	if (frame == [sender mainFrame])
 	{
 		// Prepare controllers for each text block
-        NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_textBlocks count]];
-        for (KTHTMLTextBlock *aTextBlock in _textBlocks)
+        NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
+        DOMDocument *domDoc = [[self webView] mainFrameDocument];
+        
+        for (KTHTMLTextBlock *aTextBlock in _HTMLTextBlocks)
         {
             // Basic controller
-            SVTextBlockDOMController *aController = [[SVBindableTextBlockDOMController alloc] initWithWebView:[self webView] elementID:[aTextBlock DOMNodeID]];
+            DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
+            OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
+            
+            SVTextBlock *aController = [[SVBindableTextBlock alloc] initWithDOMElement:element];
             [aController setRichText:[aTextBlock isRichText]];
             [aController setFieldEditor:[aTextBlock isFieldEditor]];
             
@@ -182,8 +188,8 @@
                       options:nil];
         }
         
-        [self setTextBlockControllers:controllers];
-        [_textBlocks release], _textBlocks = nil;
+        [self setTextBlocks:controllers];
+        [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
         
         
         // Mark as loaded
@@ -195,6 +201,23 @@
 //  - window title
 
 #pragma mark Editing
+
+- (void)webViewDidChangeSelection:(NSNotification *)notification
+{
+    OBPRECONDITION([notification object] == [self webView]);
+	
+    [self setSelectedTextBlock:[self textBlockForDOMRange:[[self webView] selectedDOMRange]]];
+}
+
+- (BOOL)webView:(WebView *)aWebView shouldEndEditingInDOMRange:(DOMRange *)range
+{
+    OBPRECONDITION(aWebView == [self webView]);
+	
+    // Ask the text block if it wants to end editing
+    SVTextBlock *textBlock = [self textBlockForDOMRange:range];
+    BOOL result = (textBlock ? [textBlock shouldEndEditing] : YES);
+    return result;
+}
 
 /*	Called whenever the user tries to type something.
  *	We never allow a tab to be entered. (Although such a case never seems to occur)
@@ -219,8 +242,7 @@
 	OBPRECONDITION(aWebView == [self webView]);
 	
     // Pass on responsibility for handling the command
-    SVTextBlockDOMController *controller = [self controllerForSelection];
-    return [controller webView:aWebView doCommandBySelector:selector];
+    return [[self selectedTextBlock] webView:aWebView doCommandBySelector:selector];
 }
 
 /*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
@@ -231,22 +253,21 @@
 }
 
 // TODO: WebEditingDelegate:
-//  - (void)webViewDidChangeSelection:(NSNotification *)notification
 //  - (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 
 #pragma mark Text Blocks
 
-@synthesize textBlockControllers = _textBlockControllers;
+@synthesize textBlocks = _textBlocks;
 
-- (SVTextBlockDOMController *)controllerForDOMNode:(DOMNode *)node;
+- (SVTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 {
-    SVTextBlockDOMController *result = nil;
+    SVTextBlock *result = nil;
     DOMHTMLElement *editableElement = [node containingContentEditableElement];
     
     if (editableElement)
     {
         // Search each text block in turn for a match
-        for (result in [self textBlockControllers])
+        for (result in [self textBlocks])
         {
             if ([result DOMElement] == editableElement)
             {
@@ -258,23 +279,20 @@
         if (!result)
         {
             DOMNode *parent = [editableElement parentNode];
-            if (parent) result = [self controllerForDOMNode:parent];
+            if (parent) result = [self textBlockForDOMNode:parent];
         }
     }
     
     return result;
 }
 
-- (SVTextBlockDOMController *)controllerForDOMRange:(DOMRange *)range;
+- (SVTextBlock *)textBlockForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
-    return [self controllerForDOMNode:[range startContainer]];
+    return [self textBlockForDOMNode:[range startContainer]];
 }
 
-- (SVTextBlockDOMController *)controllerForSelection;
-{
-    return [self controllerForDOMRange:[[self webView] selectedDOMRange]];
-}
+@synthesize selectedTextBlock = _selectedTextBlock;
 
 @end
 

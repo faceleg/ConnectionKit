@@ -6,35 +6,61 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVTextBlockDOMController.h"
+#import "SVTextBlock.h"
 
 
-@implementation SVTextBlockDOMController
+@implementation SVTextBlock
 
-- (id)initWithWebView:(WebView *)webView elementID:(NSString *)elementID;
+- (id)init
 {
+    return [self initWithDOMElement:nil];
+}
+
+- (id)initWithDOMElement:(DOMHTMLElement *)element;
+{
+    OBPRECONDITION(element);
+    
     [super init];
     
-    _webView = [webView retain];
-    _elementID = [elementID copy];
+    _element = [element retain];
+    [self setWebView:[[[element ownerDocument] webFrame] webView]];
     
     return self;
 }
 
 - (void)dealloc
 {
-    [_webView release];
-    [_elementID release];
+    [self setWebView:nil];
+    [_element release];
     
     [super dealloc];
 }
 
-- (void)loadDOMElement
+#pragma mark WebView
+
+@synthesize DOMElement = _element;
+
+@synthesize webView = _webView;
+- (void)setWebView:(WebView *)webView
 {
-    DOMElement *element = [[[_webView mainFrame] DOMDocument] getElementById:_elementID];
-    if ([element isKindOfClass:[DOMHTMLElement class]])
+    // We monitor the webview for editing so as to mark ourself as editing if appropriate
+    if (_webView)
     {
-        [self setDOMElement:(DOMHTMLElement *)element];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:WebViewDidChangeNotification
+                                                      object:_webView];
+    }
+    
+    [webView retain];
+    [_webView release];
+    _webView = webView;
+    
+    if (webView)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(webViewDidChange:)
+                                                     name:WebViewDidChangeNotification
+                                                   object:webView];
     }
 }
 
@@ -80,10 +106,26 @@
 
 @synthesize isFieldEditor = _isFieldEditor;
 
+@end
+
+
+#pragma mark -
+
+
+@implementation SVTextBlock (Support)
+
 #pragma mark Editing
 
 - (void)didChangeText;
 {
+    // Notify that editing began if this is the case
+    if (!_isEditing)
+    {
+        _isEditing = YES;
+        [self didBeginEditingText];
+    }
+    
+    // Notify of the change
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
 }
 
@@ -92,9 +134,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification object:self];
 }
 
-- (void)didEndEditingText;
+- (BOOL)shouldEndEditing
 {
+    _isEditing = NO;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification object:self];
+}
+
+- (void)webViewDidChange:(NSNotification *)notification
+{
+    OBPRECONDITION([notification object] == [self webView]);
+    
+    
 }
 
 - (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector

@@ -6,15 +6,15 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBindableTextBlockDOMController.h"
+#import "SVBindableTextBlock.h"
 
 
-@interface SVBindableTextBlockDOMController ()
+@interface SVBindableTextBlock ()
 @property(nonatomic, copy) NSString *boundValue;
 @end
 
 
-@implementation SVBindableTextBlockDOMController
+@implementation SVBindableTextBlock
 
 #pragma mark Bindings/NSEditor
 
@@ -88,6 +88,16 @@
     }
     
     return YES;
+}
+
+- (BOOL)shouldEndEditing
+{
+    BOOL result = [super shouldEndEditing];
+    if (result)
+    {
+        result = [self commitEditing];
+    }
+    return result;
 }
 
 @end
