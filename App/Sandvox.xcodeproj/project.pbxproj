@@ -289,6 +289,8 @@
 		2775612E0CA718C200D8A412 /* KTWebViewComponentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */; settings = {ATTRIBUTES = (); }; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
+		277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F61DE104D95720099B186 /* SVContainerTextBlock.h */; };
+		277F61E1104D95730099B186 /* SVContainerTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F61DF104D95720099B186 /* SVContainerTextBlock.m */; };
 		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1709,6 +1711,8 @@
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
 		277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SlideshowPlay.tiff; sourceTree = "<group>"; };
+		277F61DE104D95720099B186 /* SVContainerTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContainerTextBlock.h; sourceTree = "<group>"; };
+		277F61DF104D95720099B186 /* SVContainerTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContainerTextBlock.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
 		2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTInDocumentMediaFile.h; sourceTree = "<group>"; };
 		2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInDocumentMediaFile.m; sourceTree = "<group>"; };
@@ -2913,6 +2917,8 @@
 				2790BDAE1040162000654665 /* SVTextBlock.m */,
 				2790BF0210459B3C00654665 /* SVBindableTextBlock.h */,
 				2790BF0310459B3C00654665 /* SVBindableTextBlock.m */,
+				277F61DE104D95720099B186 /* SVContainerTextBlock.h */,
+				277F61DF104D95720099B186 /* SVContainerTextBlock.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -4952,6 +4958,7 @@
 				3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */,
 				3C2DA6EA104C7AAE0037D270 /* MGScopeBar.h in Headers */,
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
+				277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6342,6 +6349,7 @@
 				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
+				277F61E1104D95730099B186 /* SVContainerTextBlock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
