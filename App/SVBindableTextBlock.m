@@ -82,13 +82,23 @@
     if (![editedValue isEqualToString:[self boundValue]])
     {
         NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-        id observerObject = [bindingInfo objectForKey:NSObservedObjectKey];
-        [observerObject setValue:editedValue
+        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+        [observedObject setValue:editedValue
                           forKey:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+    }
+    
+    // Tell controller we're done. It's an informal protocol that object may or may not implement
+    id observedObject = [[self infoForBinding:NSValueBinding] objectForKey:NSObservedObjectKey];
+    if ([observedObject respondsToSelector:@selector(objectDidEndEditing:)])
+    {
+        [observedObject objectDidEndEditing:self];
     }
     
     return YES;
 }
+
+#pragma mark Superclass Hooks
+// How we know that something changed and therefore binding needs to match
 
 - (BOOL)shouldEndEditing
 {
@@ -98,6 +108,18 @@
         result = [self commitEditing];
     }
     return result;
+}
+
+- (void)didBeginEditingText;
+{
+    [super didBeginEditingText];
+    
+    // Tell controller we're starting editing. It's an informal protocol that object may or may not implement
+    id observedObject = [[self infoForBinding:NSValueBinding] objectForKey:NSObservedObjectKey];
+    if ([observedObject respondsToSelector:@selector(objectDidBeginEditing:)])
+    {
+        [observedObject objectDidBeginEditing:self];
+    }
 }
 
 @end

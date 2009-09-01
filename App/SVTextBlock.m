@@ -139,6 +139,8 @@
     _isEditing = NO;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification object:self];
+    
+    return YES;
 }
 
 - (void)webViewDidChange:(NSNotification *)notification
