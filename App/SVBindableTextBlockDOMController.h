@@ -9,16 +9,13 @@
 //  Rather than clutter up the main class, we neatly derive a subclass that is designed for binding. It implements the NSEditor protocol and exposes a NSValueBinding binding.
 
 #import "SVTextBlockDOMController.h"
+#import "KSKeyValueBinding.h"
 
 
-@interface SVBindableTextBlockDOMController : SVTextBlockDOMController
+@interface SVBindableTextBlockDOMController : SVTextBlockDOMController <KSEditor>
 {
     NSString    *_boundValue;
 }
-
-// NSEditor
-- (void)discardEditing;
-- (BOOL)commitEditing;
 
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 
