@@ -9,7 +9,7 @@
 #import "KSWebViewController.h"
 
 
-@interface KTReleaseNotesController : KSWebViewController { }
+@interface KTReleaseNotesController : KSWebViewWindowController
 
 - (NSURL *)URLToLoad;
 

@@ -251,6 +251,8 @@
 		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
 		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
+		275A689B1050476500AE6E2A /* KSWebViewWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 275A68991050476500AE6E2A /* KSWebViewWindowController.h */; };
+		275A689C1050476500AE6E2A /* KSWebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275A689A1050476500AE6E2A /* KSWebViewWindowController.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
@@ -829,8 +831,6 @@
 		CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */; };
 		CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */; };
 		CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */; };
-		CE01A8250EAFD63600BDF264 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7230EAFD63600BDF264 /* KSWebViewController.h */; };
-		CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewController.m */; };
 		CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */; };
 		CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */; };
 		CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8290EAFD65E00BDF264 /* help.mini.png */; };
@@ -1640,6 +1640,8 @@
 		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
 		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
+		275A68991050476500AE6E2A /* KSWebViewWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewWindowController.h; sourceTree = "<group>"; };
+		275A689A1050476500AE6E2A /* KSWebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewWindowController.m; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
@@ -2373,8 +2375,6 @@
 		CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+Debugging.m"; sourceTree = "<group>"; };
 		CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+Karelia.m"; sourceTree = "<group>"; };
-		CE01A7230EAFD63600BDF264 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
-		CE01A7240EAFD63600BDF264 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
 		CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+Karelia.m"; sourceTree = "<group>"; };
 		CE01A8290EAFD65E00BDF264 /* help.mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.mini.png; sourceTree = "<group>"; };
@@ -4507,12 +4507,12 @@
 		CE01A71E0EAFD63600BDF264 /* WebKit */ = {
 			isa = PBXGroup;
 			children = (
+				275A68991050476500AE6E2A /* KSWebViewWindowController.h */,
+				275A689A1050476500AE6E2A /* KSWebViewWindowController.m */,
 				CE01A71F0EAFD63600BDF264 /* DOM+Debugging.h */,
 				CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */,
 				CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */,
 				CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */,
-				CE01A7230EAFD63600BDF264 /* KSWebViewController.h */,
-				CE01A7240EAFD63600BDF264 /* KSWebViewController.m */,
 				CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */,
 				CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */,
 			);
@@ -4942,7 +4942,6 @@
 				CE01A81F0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h in Headers */,
 				CE01A8210EAFD63600BDF264 /* DOM+Debugging.h in Headers */,
 				CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */,
-				CE01A8250EAFD63600BDF264 /* KSWebViewController.h in Headers */,
 				CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */,
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
 				3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */,
@@ -4958,6 +4957,7 @@
 				27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */,
 				CE99F4E90F37B66200A55B06 /* KTPageDetailsBoxView.h in Headers */,
 				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
+				275A689B1050476500AE6E2A /* KSWebViewWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6317,7 +6317,6 @@
 				CE01A8200EAFD63600BDF264 /* RYZImagePopUpButtonCell.m in Sources */,
 				CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */,
 				CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */,
-				CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */,
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */,
 				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
@@ -6336,6 +6335,7 @@
 				CEC378F70F2FBC1A004CC936 /* KSPluginInstallerController.m in Sources */,
 				CE99F4EA0F37B66200A55B06 /* KTPageDetailsBoxView.m in Sources */,
 				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
+				275A689C1050476500AE6E2A /* KSWebViewWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
