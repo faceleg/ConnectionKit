@@ -6,10 +6,10 @@
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
-#import "KSWebViewController.h"
+#import "KSWebViewWindowController.h"
 
 
-@interface KTReleaseNotesController : KSWebViewController { }
+@interface KTReleaseNotesController : KSWebViewWindowController { }
 
 - (NSURL *)URLToLoad;
 

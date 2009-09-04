@@ -6,26 +6,23 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "KSWebViewController.h"
 #import "KTHTMLParser.h"
 
 @class WebView, KTPage, SVTextBlock;
 
 
-@interface SVWebViewController : NSViewController <KTHTMLParserDelegate>
+@interface SVWebViewController : KSWebViewController <KTHTMLParserDelegate>
 {
-    WebView *_webView;
-    
     KTPage  *_page;
     BOOL    _isLoading;
     
     NSMutableArray  *_HTMLTextBlocks;
     NSArray         *_textBlocks;
     SVTextBlock     *_selectedTextBlock;
+    
+    NSArray *_contentObjects;
 }
-
-@property(nonatomic, retain) WebView *webView;
-
 
 // These should all be KVO-compliant
 @property(nonatomic, retain) KTPage *page;
@@ -42,5 +39,10 @@
 
 // Tracks what is selected in the webview in a KVO-compliant manner
 @property(nonatomic, retain, readonly) SVTextBlock *selectedTextBlock;
+
+
+#pragma mark Selectable Objects
+
+@property(nonatomic, copy, readonly) NSArray *contentObjects;
 
 @end

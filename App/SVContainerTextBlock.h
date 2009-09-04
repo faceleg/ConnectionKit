@@ -12,9 +12,16 @@
 #import "SVBindableTextBlock.h"
 
 
+@class SVContentObject;
+
+
 @interface SVContainerTextBlock : SVBindableTextBlock
 {
-
+    NSMutableSet    *_webContentItems;
 }
+
+- (NSSet *)webContentItems;
+- (void)addWebContentItem:(SVContentObject *)item;
+- (void)removeWebContentItem:(SVContentObject *)item;
 
 @end

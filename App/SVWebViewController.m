@@ -11,9 +11,9 @@
 #import "KTHTMLParser.h"
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
-#import "SVBindableTextBlock.h"
+#import "SVContainerTextBlock.h"
+#import "SVContentObject.h"
 
-#import "NSApplication+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -23,6 +23,8 @@
 
 @property(nonatomic, copy, readwrite) NSArray *textBlocks;
 @property(nonatomic, retain, readwrite) SVTextBlock *selectedTextBlock;
+
+@property(nonatomic, copy, readwrite) NSArray *contentObjects;
 
 @end
 
@@ -36,13 +38,11 @@
 
 - (id)init
 {
-    [super init];
-    return self;
+    return [self initWithNibName:@"WebView" bundle:nil];
 }
 
 - (void)dealloc
 {
-    [_webView release];
     [_page release];
     OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
     [_textBlocks release];
@@ -52,20 +52,6 @@
 
 #pragma mark View
 
-- (void)loadView
-{
-    WebView *webView = [[WebView alloc] init];
-    [self setView:webView];
-    [self setWebView:webView];
-    [webView release];
-}
-
-- (WebView *)webView
-{
-    [self view];    // make sure view is loaded first
-    return _webView;
-}
-
 - (void)setWebView:(WebView *)webView
 {
     // Tear down old delegates
@@ -74,13 +60,7 @@
     
     
     // Store new webview
-    [webView retain];
-    [_webView release];
-    _webView = webView;
-    
-    
-    // I don't know if it really benefits us having a custom user-agent, but seems a nice courtesy. Mike.
-    [webView setApplicationNameForUserAgent:[NSApplication applicationName]];
+    [super setWebView:webView];
     
     
     // Spell-checking
@@ -174,7 +154,8 @@
             DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
             OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
             
-            SVTextBlock *aController = [[SVBindableTextBlock alloc] initWithDOMElement:element];
+            Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVBindableTextBlock class]);
+            SVTextBlock *aController = [[textBlockClass alloc] initWithDOMElement:element];
             [aController setRichText:[aTextBlock isRichText]];
             [aController setFieldEditor:[aTextBlock isFieldEditor]];
             
@@ -190,6 +171,26 @@
         
         [self setTextBlocks:controllers];
         [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
+        
+        
+        
+        // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
+        NSArray *pagelets = [[[self page] sidebarPagelets] arrayByAddingObjectsFromArray:[[self page] callouts]];
+        NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
+        
+        for (KTPagelet *aPagelet in pagelets)
+        {
+            NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
+            DOMElement *element = [domDoc getElementById:pageletID];
+            
+            SVContentObject *object = [[SVContentObject alloc] initWithDOMElement:element];
+            
+            [contentObjects addObject:object];
+            [object release];
+        }
+        
+        [self setContentObjects:contentObjects];
+        [contentObjects release];
         
         
         // Mark as loaded
@@ -293,6 +294,10 @@
 }
 
 @synthesize selectedTextBlock = _selectedTextBlock;
+
+#pragma mark Content Objects
+
+@synthesize contentObjects = _contentObjects;
 
 @end
 

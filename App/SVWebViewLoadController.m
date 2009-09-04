@@ -76,7 +76,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 - (void)swapWebViewControllers
 {
-    // There's no way (or need) to change an individual controller, but we do swap them round after a load
+    // There's no way (or need) to change an individual controller, but we do swap them round after a load.
     [self willChangeValueForKey:@"primaryWebViewController"];
     [self willChangeValueForKey:@"secondaryWebViewController"];
     
@@ -105,9 +105,12 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 - (void)load;
 {
-	// Start loading
+	// Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the background. It will be removed again after has finished since the webview will be properly part of the view hierarchy
     SVWebViewController *webViewController = [self secondaryWebViewController];
+    
     NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
+    
+    [[webViewController webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     [webViewController setPage:[self page]];
 	
 	
@@ -123,7 +126,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     }
     
     
-    // Switch to the loading view
+    // Switch to the loading view.
     if ([webViewController isLoading])
     {
         [self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
@@ -174,6 +177,9 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             // The webview is done loading! swap 'em
             [self swapWebViewControllers];
             [self setSelectedViewController:[self primaryWebViewController]];
+            
+            // The webview is now part of the view hierarchy, so no longer needs to be explicity told it's window
+            [[[self primaryWebViewController] webView] setHostWindow:nil];
         }
     }
     else

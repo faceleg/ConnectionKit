@@ -262,6 +262,10 @@
 		2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD061039AC6000E2C046 /* KSTabViewController.m */; };
 		2759CD441039B83900E2C046 /* SVWebViewLoadController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD421039B83900E2C046 /* SVWebViewLoadController.h */; };
 		2759CD451039B83900E2C046 /* SVWebViewLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD431039B83900E2C046 /* SVWebViewLoadController.m */; };
+		275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */; };
+		275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */; };
+		275A697010508B5E00AE6E2A /* SVContentObjectOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 275A696E10508B5E00AE6E2A /* SVContentObjectOverlayView.h */; };
+		275A697110508B5E00AE6E2A /* SVContentObjectOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 275A696F10508B5E00AE6E2A /* SVContentObjectOverlayView.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
@@ -291,6 +295,9 @@
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F61DE104D95720099B186 /* SVContainerTextBlock.h */; };
 		277F61E1104D95730099B186 /* SVContainerTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F61DF104D95720099B186 /* SVContainerTextBlock.m */; };
+		27851910104FCF17009C8558 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2785190F104FCF17009C8558 /* WebView.xib */; };
+		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
+		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
 		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (); }; };
 		2786BE9B0CAD10780086F9E0 /* KTInDocumentMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */; };
 		2786BEE60CAD24980086F9E0 /* KTMediaManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BEE40CAD24980086F9E0 /* KTMediaManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -365,6 +372,10 @@
 		27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C059B50E7299850033A715 /* Elements+Pasteboard.m */; };
 		27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */; };
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
+		27C745C7104EA01B00FBA79D /* SVContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C7458C104E96CF00FBA79D /* SVContentObject.h */; };
+		27C745C8104EA01C00FBA79D /* SVContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7458D104E96CF00FBA79D /* SVContentObject.m */; };
+		27C74640104ECDA700FBA79D /* SVSelectionHandlesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */; };
+		27C74641104ECDA800FBA79D /* SVSelectionHandlesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */; };
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
@@ -872,8 +883,8 @@
 		CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */; };
 		CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */; };
 		CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */; };
-		CE01A8250EAFD63600BDF264 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7230EAFD63600BDF264 /* KSWebViewController.h */; };
-		CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewController.m */; };
+		CE01A8250EAFD63600BDF264 /* KSWebViewWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */; };
+		CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */; };
 		CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */; };
 		CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */; };
 		CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8290EAFD65E00BDF264 /* help.mini.png */; };
@@ -1682,6 +1693,10 @@
 		2759CD061039AC6000E2C046 /* KSTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSTabViewController.m; path = ../../Shared/AppKit/KSTabViewController.m; sourceTree = "<group>"; };
 		2759CD421039B83900E2C046 /* SVWebViewLoadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewLoadController.h; sourceTree = "<group>"; };
 		2759CD431039B83900E2C046 /* SVWebViewLoadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewLoadController.m; sourceTree = "<group>"; };
+		275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMNodeBoundsTracker.h; sourceTree = "<group>"; };
+		275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMNodeBoundsTracker.m; sourceTree = "<group>"; };
+		275A696E10508B5E00AE6E2A /* SVContentObjectOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentObjectOverlayView.h; sourceTree = "<group>"; };
+		275A696F10508B5E00AE6E2A /* SVContentObjectOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObjectOverlayView.m; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
@@ -1714,6 +1729,9 @@
 		277F61DE104D95720099B186 /* SVContainerTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContainerTextBlock.h; sourceTree = "<group>"; };
 		277F61DF104D95720099B186 /* SVContainerTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContainerTextBlock.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
+		2785190F104FCF17009C8558 /* WebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
+		2785197D104FD34A009C8558 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
+		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
 		2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTInDocumentMediaFile.h; sourceTree = "<group>"; };
 		2786BE990CAD10780086F9E0 /* KTInDocumentMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInDocumentMediaFile.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
@@ -1787,6 +1805,10 @@
 		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
 		27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjection.h; sourceTree = "<group>"; };
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
+		27C7458C104E96CF00FBA79D /* SVContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentObject.h; sourceTree = "<group>"; };
+		27C7458D104E96CF00FBA79D /* SVContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObject.m; sourceTree = "<group>"; };
+		27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSelectionHandlesView.h; sourceTree = "<group>"; };
+		27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSelectionHandlesView.m; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
@@ -2410,8 +2432,8 @@
 		CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+Debugging.m"; sourceTree = "<group>"; };
 		CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+Karelia.m"; sourceTree = "<group>"; };
-		CE01A7230EAFD63600BDF264 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
-		CE01A7240EAFD63600BDF264 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
+		CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewWindowController.h; sourceTree = "<group>"; };
+		CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewWindowController.m; sourceTree = "<group>"; };
 		CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+Karelia.m"; sourceTree = "<group>"; };
 		CE01A8290EAFD65E00BDF264 /* help.mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.mini.png; sourceTree = "<group>"; };
@@ -2901,16 +2923,11 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* 2.0 */ = {
+		2759CC98103970FC00E2C046 /* WebView content */ = {
 			isa = PBXGroup;
 			children = (
-				2759CD421039B83900E2C046 /* SVWebViewLoadController.h */,
-				2759CD431039B83900E2C046 /* SVWebViewLoadController.m */,
 				2759CC991039711200E2C046 /* SVWebViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebViewController.m */,
-				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
-				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
-				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
 				2790BD9C103E890600654665 /* SVDOMController.h */,
 				2790BD9D103E890600654665 /* SVDOMController.m */,
 				2790BDAD1040162000654665 /* SVTextBlock.h */,
@@ -2919,8 +2936,36 @@
 				2790BF0310459B3C00654665 /* SVBindableTextBlock.m */,
 				277F61DE104D95720099B186 /* SVContainerTextBlock.h */,
 				277F61DF104D95720099B186 /* SVContainerTextBlock.m */,
+				27C7458C104E96CF00FBA79D /* SVContentObject.h */,
+				27C7458D104E96CF00FBA79D /* SVContentObject.m */,
+				27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */,
+				27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */,
+				2785190F104FCF17009C8558 /* WebView.xib */,
+				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
+				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
+				275A696E10508B5E00AE6E2A /* SVContentObjectOverlayView.h */,
+				275A696F10508B5E00AE6E2A /* SVContentObjectOverlayView.m */,
 			);
-			name = 2.0;
+			name = "WebView content";
+			sourceTree = "<group>";
+		};
+		275A641410501CF800AE6E2A /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				2759CD421039B83900E2C046 /* SVWebViewLoadController.h */,
+				2759CD431039B83900E2C046 /* SVWebViewLoadController.m */,
+				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
+			);
+			name = Loading;
+			sourceTree = "<group>";
+		};
+		275A641510501D2900AE6E2A /* Other content */ = {
+			isa = PBXGroup;
+			children = (
+				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
+				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
+			);
+			name = "Other content";
 			sourceTree = "<group>";
 		};
 		275E067A0DDA0F1A0072567F /* Elements */ = {
@@ -3417,7 +3462,9 @@
 		3C202DA507DFC4BA00DE4994 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* 2.0 */,
+				2759CC98103970FC00E2C046 /* WebView content */,
+				275A641510501D2900AE6E2A /* Other content */,
+				275A641410501CF800AE6E2A /* Loading */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
 			name = WebView;
@@ -4495,12 +4542,14 @@
 		CE01A71E0EAFD63600BDF264 /* WebKit */ = {
 			isa = PBXGroup;
 			children = (
+				2785197D104FD34A009C8558 /* KSWebViewController.h */,
+				2785197E104FD34A009C8558 /* KSWebViewController.m */,
 				CE01A71F0EAFD63600BDF264 /* DOM+Debugging.h */,
 				CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */,
 				CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */,
 				CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */,
-				CE01A7230EAFD63600BDF264 /* KSWebViewController.h */,
-				CE01A7240EAFD63600BDF264 /* KSWebViewController.m */,
+				CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */,
+				CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */,
 				CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */,
 				CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */,
 			);
@@ -4927,7 +4976,7 @@
 				CE01A81F0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h in Headers */,
 				CE01A8210EAFD63600BDF264 /* DOM+Debugging.h in Headers */,
 				CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */,
-				CE01A8250EAFD63600BDF264 /* KSWebViewController.h in Headers */,
+				CE01A8250EAFD63600BDF264 /* KSWebViewWindowController.h in Headers */,
 				CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */,
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
 				3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */,
@@ -4959,6 +5008,11 @@
 				3C2DA6EA104C7AAE0037D270 /* MGScopeBar.h in Headers */,
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
 				277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */,
+				27C745C7104EA01B00FBA79D /* SVContentObject.h in Headers */,
+				27C74640104ECDA700FBA79D /* SVSelectionHandlesView.h in Headers */,
+				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
+				275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */,
+				275A697010508B5E00AE6E2A /* SVContentObjectOverlayView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5675,6 +5729,7 @@
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
 				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
+				27851910104FCF17009C8558 /* WebView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6316,7 +6371,7 @@
 				CE01A8200EAFD63600BDF264 /* RYZImagePopUpButtonCell.m in Sources */,
 				CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */,
 				CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */,
-				CE01A8260EAFD63600BDF264 /* KSWebViewController.m in Sources */,
+				CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */,
 				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */,
 				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
@@ -6350,6 +6405,11 @@
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 				277F61E1104D95730099B186 /* SVContainerTextBlock.m in Sources */,
+				27C745C8104EA01C00FBA79D /* SVContentObject.m in Sources */,
+				27C74641104ECDA800FBA79D /* SVSelectionHandlesView.m in Sources */,
+				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,
+				275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */,
+				275A697110508B5E00AE6E2A /* SVContentObjectOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
