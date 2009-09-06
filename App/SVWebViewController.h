@@ -8,11 +8,13 @@
 
 #import "KSWebViewController.h"
 #import "KTHTMLParser.h"
+#import "SVWebEditingOverlay.h"
+
 
 @class WebView, KTPage, SVTextBlock;
 
 
-@interface SVWebViewController : KSWebViewController <KTHTMLParserDelegate>
+@interface SVWebViewController : KSWebViewController <SVWebEditingOverlayDataSource, KTHTMLParserDelegate>
 {
     KTPage  *_page;
     BOOL    _isLoading;
@@ -21,7 +23,8 @@
     NSArray         *_textBlocks;
     SVTextBlock     *_selectedTextBlock;
     
-    NSArray *_contentObjects;
+    SVWebEditingOverlay *_editingOverlay;
+    NSArray             *_contentObjects;
 }
 
 // These should all be KVO-compliant
@@ -43,6 +46,7 @@
 
 #pragma mark Selectable Objects
 
+@property(nonatomic, retain) IBOutlet SVWebEditingOverlay *editingOverlayView;
 @property(nonatomic, copy, readonly) NSArray *contentObjects;
 
 @end

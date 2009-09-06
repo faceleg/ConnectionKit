@@ -43,6 +43,8 @@
 
 - (void)dealloc
 {
+    [self setEditingOverlayView:nil];   // needed to tear down data source
+    
     [_page release];
     OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
     [_textBlocks release];
@@ -50,7 +52,7 @@
     [super dealloc];
 }
 
-#pragma mark View
+#pragma mark Views
 
 - (void)setWebView:(WebView *)webView
 {
@@ -72,6 +74,18 @@
     // Delegation
     [webView setFrameLoadDelegate:self];
     [webView setEditingDelegate:self];
+}
+
+@synthesize editingOverlayView = _editingOverlay;
+- (void)setEditingOverlayView:(SVWebEditingOverlay *)overlay
+{
+    [[self editingOverlayView] setDataSource:nil];
+    
+    [overlay retain];
+    [_editingOverlay release];
+    _editingOverlay = overlay;
+    
+    [overlay setDataSource:self];
 }
 
 #pragma mark Loading
@@ -298,6 +312,22 @@
 #pragma mark Content Objects
 
 @synthesize contentObjects = _contentObjects;
+
+- (BOOL)webEditingView:(SVWebEditingOverlay *)view nodeIsSelectable:(DOMNode *)node;
+{
+    BOOL result = NO;
+    
+    for (SVContentObject *aContentObject in [self contentObjects])
+    {
+        if ([node isDescendantOfNode:[aContentObject DOMElement]])
+        {
+            result = YES;
+            break;
+        }
+    }
+    
+    return result;
+}
 
 @end
 

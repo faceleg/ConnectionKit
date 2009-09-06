@@ -32,4 +32,9 @@
     // Swallow mouse down events to stop them reaching the webview
 }
 
+- (void)cursorUpdate:(NSEvent *)event
+{
+    [super cursorUpdate:event];
+}
+
 @end
