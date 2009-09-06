@@ -8,7 +8,6 @@
 
 #import "SVContentObject.h"
 
-#import "SVContentObjectOverlayView.h"
 #import "SVSelectionHandlesView.h"
 
 
@@ -63,7 +62,7 @@
 
 - (void)loadView
 {
-    NSView *view = [[SVContentObjectOverlayView alloc] init];
+    NSView *view = [[NSView alloc] init];
     //[view setBoxType:NSBoxCustom];
     //[view setBorderColor:[NSColor selectedControlColor]];
     //[view setFillColor:[[NSColor redColor] colorWithAlphaComponent:0.5]];
@@ -76,6 +75,8 @@
  */
 - (void)updateView
 {
+    return;
+    
     NSView *overlay = [self view];
     NSView *overlayContainer = [self overlayContainerView];
     
