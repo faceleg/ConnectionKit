@@ -2735,6 +2735,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		271B497B105468AA008B698C /* Editing Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
+				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
+				27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */,
+				27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */,
+				271B485E1051C2F4008B698C /* SVWebEditingOverlay.h */,
+				271B485F1051C2F4008B698C /* SVWebEditingOverlay.m */,
+			);
+			name = "Editing Overlay";
+			sourceTree = "<group>";
+		};
 		2721E0ED0E9E0CA200A458B2 /* Controller Chain */ = {
 			isa = PBXGroup;
 			children = (
@@ -2923,7 +2936,7 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* WebView content */ = {
+		2759CC98103970FC00E2C046 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
 				2759CC991039711200E2C046 /* SVWebViewController.h */,
@@ -2938,15 +2951,9 @@
 				277F61DF104D95720099B186 /* SVContainerTextBlock.m */,
 				27C7458C104E96CF00FBA79D /* SVContentObject.h */,
 				27C7458D104E96CF00FBA79D /* SVContentObject.m */,
-				27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */,
-				27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */,
 				2785190F104FCF17009C8558 /* WebView.xib */,
-				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
-				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
-				271B485E1051C2F4008B698C /* SVWebEditingOverlay.h */,
-				271B485F1051C2F4008B698C /* SVWebEditingOverlay.m */,
 			);
-			name = "WebView content";
+			name = WebView;
 			sourceTree = "<group>";
 		};
 		275A641410501CF800AE6E2A /* Loading */ = {
@@ -3171,11 +3178,6 @@
 		27DF88CD0D85780100AEF4B5 /* Document UI */ = {
 			isa = PBXGroup;
 			children = (
-				2721E0ED0E9E0CA200A458B2 /* Controller Chain */,
-				27DF88CE0D85785D00AEF4B5 /* Window */,
-				3C5188A10D2F4DDC002D7414 /* Site Outline */,
-				3C202DA507DFC4BA00DE4994 /* WebView */,
-				272321DB0D48B5A70075F31F /* Page Details */,
 			);
 			name = "Document UI";
 			sourceTree = "<group>";
@@ -3245,6 +3247,11 @@
 				278849810F5FF0D300C70629 /* Master */,
 				275E067A0DDA0F1A0072567F /* Elements */,
 				2786BE970CAD10530086F9E0 /* Media */,
+				27DF88CE0D85785D00AEF4B5 /* Window */,
+				2721E0ED0E9E0CA200A458B2 /* Controller Chain */,
+				3C5188A10D2F4DDC002D7414 /* Site Outline */,
+				272321DB0D48B5A70075F31F /* Page Details */,
+				3C202DA507DFC4BA00DE4994 /* Web Content Area */,
 				27DF88CD0D85780100AEF4B5 /* Document UI */,
 				27DB80770C84658200E29C38 /* Inspector */,
 				278CDCCE0E83DB2000477D3A /* Text Editing */,
@@ -3459,15 +3466,16 @@
 			name = "Cocoa Extensions";
 			sourceTree = "<group>";
 		};
-		3C202DA507DFC4BA00DE4994 /* WebView */ = {
+		3C202DA507DFC4BA00DE4994 /* Web Content Area */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* WebView content */,
+				2759CC98103970FC00E2C046 /* WebView */,
+				271B497B105468AA008B698C /* Editing Overlay */,
 				275A641510501D2900AE6E2A /* Other content */,
 				275A641410501CF800AE6E2A /* Loading */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
-			name = WebView;
+			name = "Web Content Area";
 			sourceTree = "<group>";
 		};
 		3C202DC907E00BCC00DE4994 /* Third Party Frameworks */ = {
