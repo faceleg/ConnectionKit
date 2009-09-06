@@ -8,8 +8,22 @@
 
 #import "SVWebEditingOverlay.h"
 
+#import <Quartz/Quartz.h>
+
 
 @implementation SVWebEditingOverlay
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    [super initWithFrame:frameRect];
+    
+    // Create a CALayer for drawing
+    CALayer *layer = [[CALayer alloc] init];
+    [self setLayer:layer];
+    [self setWantsLayer:YES];
+    
+    return self;
+}
 
 - (void)dealloc
 {
