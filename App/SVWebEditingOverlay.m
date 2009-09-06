@@ -7,8 +7,8 @@
 //
 
 #import "SVWebEditingOverlay.h"
-
-#import <Quartz/Quartz.h>
+#import "SVSelectionBorder.h"
+#import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
 
 
 @implementation SVWebEditingOverlay
@@ -16,6 +16,8 @@
 - (id)initWithFrame:(NSRect)frameRect
 {
     [super initWithFrame:frameRect];
+    
+    _selection = [[NSMutableArray alloc] init];
     
     // Create a CALayer for drawing
     CALayer *layer = [[CALayer alloc] init];
@@ -28,17 +30,42 @@
 - (void)dealloc
 {
     [_webView release];
+    [_selection release];
     
     [super dealloc];
 }
 
-#pragma mark Accessors
+#pragma mark Basic Accessors
 
 @synthesize webView = _webView;
 
 @synthesize dataSource = _dataSource;
 
-#pragma mark Hit Testing
+#pragma mark Selection
+
+@synthesize selectedNodes = _selection;
+
+- (void)insertObject:(DOMNode *)node inSelectedNodesAtIndex:(NSUInteger)index;
+{
+    [_selection insertObject:node atIndex:index];
+    
+    // Create a layer corresponding to the node
+    NSRect nodeRect = [node boundingBox];
+    NSView *elementView = [[[[node ownerDocument] webFrame] frameView] documentView];
+    NSRect layerRect = [self convertRect:nodeRect fromView:elementView];
+    
+    CALayer *layer = [[SVSelectionBorder alloc] init];
+    [layer setFrame:NSRectToCGRect(layerRect)];
+    [[self layer] addSublayer:layer];
+    [layer release];
+}
+
+- (void)removeObjectFromSelectedNodesAtIndex:(NSUInteger)index;
+{
+    [_selection removeObjectAtIndex:index];
+}
+
+#pragma mark Event Handling
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {

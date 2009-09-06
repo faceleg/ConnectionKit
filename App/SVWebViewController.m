@@ -201,6 +201,9 @@
             
             [contentObjects addObject:object];
             [object release];
+            
+            
+            [[self editingOverlayView] insertObject:element inSelectedNodesAtIndex:0];
         }
         
         [self setContentObjects:contentObjects];

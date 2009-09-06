@@ -18,12 +18,19 @@
 @interface SVWebEditingOverlay : NSView
 {
   @private
-    WebView                         *_webView;
-    id <SVWebEditingOverlayDataSource> _dataSource;    // weak ref as you'd expect
+    WebView                             *_webView;
+    id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
+    
+    NSMutableArray  *_selection;
 }
 
 @property(nonatomic, retain) IBOutlet WebView *webView;
 @property(nonatomic, assign) id <SVWebEditingOverlayDataSource> dataSource;
+
+@property(nonatomic, copy, readonly) NSArray *selectedNodes;
+- (void)insertObject:(DOMNode *)node inSelectedNodesAtIndex:(NSUInteger)index;
+- (void)removeObjectFromSelectedNodesAtIndex:(NSUInteger)index;
+
 
 @end
 

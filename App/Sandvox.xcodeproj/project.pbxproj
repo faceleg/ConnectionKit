@@ -253,6 +253,8 @@
 		275341350C993D8600AC7220 /* KTHTMLParserMasterCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */; };
 		27534C950C99C15A00AC7220 /* KTDocWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27534C930C99C15A00AC7220 /* KTDocWebViewController.m */; };
 		2753688B0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */; };
+		2755279C10546D990037524C /* SVSelectionBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2755279A10546D990037524C /* SVSelectionBorder.h */; };
+		2755279D10546D990037524C /* SVSelectionBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755279B10546D990037524C /* SVSelectionBorder.m */; };
 		275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756662E0F00760800878A05 /* KTURLCredentialStorage.m */; };
 		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
 		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
@@ -1682,6 +1684,8 @@
 		27534C920C99C15A00AC7220 /* KTDocWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWebViewController.h; sourceTree = "<group>"; };
 		27534C930C99C15A00AC7220 /* KTDocWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWebViewController.m; sourceTree = "<group>"; };
 		2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Refreshing.m"; sourceTree = "<group>"; };
+		2755279A10546D990037524C /* SVSelectionBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSelectionBorder.h; sourceTree = "<group>"; };
+		2755279B10546D990037524C /* SVSelectionBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSelectionBorder.m; sourceTree = "<group>"; };
 		2756662D0F00760800878A05 /* KTURLCredentialStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLCredentialStorage.h; sourceTree = "<group>"; };
 		2756662E0F00760800878A05 /* KTURLCredentialStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLCredentialStorage.m; sourceTree = "<group>"; };
 		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
@@ -2738,12 +2742,16 @@
 		271B497B105468AA008B698C /* Editing Overlay */ = {
 			isa = PBXGroup;
 			children = (
+				27C7458C104E96CF00FBA79D /* SVContentObject.h */,
+				27C7458D104E96CF00FBA79D /* SVContentObject.m */,
 				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
 				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
 				27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */,
 				27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */,
 				271B485E1051C2F4008B698C /* SVWebEditingOverlay.h */,
 				271B485F1051C2F4008B698C /* SVWebEditingOverlay.m */,
+				2755279A10546D990037524C /* SVSelectionBorder.h */,
+				2755279B10546D990037524C /* SVSelectionBorder.m */,
 			);
 			name = "Editing Overlay";
 			sourceTree = "<group>";
@@ -2949,8 +2957,6 @@
 				2790BF0310459B3C00654665 /* SVBindableTextBlock.m */,
 				277F61DE104D95720099B186 /* SVContainerTextBlock.h */,
 				277F61DF104D95720099B186 /* SVContainerTextBlock.m */,
-				27C7458C104E96CF00FBA79D /* SVContentObject.h */,
-				27C7458D104E96CF00FBA79D /* SVContentObject.m */,
 				2785190F104FCF17009C8558 /* WebView.xib */,
 			);
 			name = WebView;
@@ -5021,6 +5027,7 @@
 				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
 				275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */,
 				271B48601051C2F4008B698C /* SVWebEditingOverlay.h in Headers */,
+				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6418,6 +6425,7 @@
 				275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */,
 				271B48611051C2F4008B698C /* SVWebEditingOverlay.m in Sources */,
 				271B489B1052CC9D008B698C /* SVContainerTextBlock.m in Sources */,
+				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
