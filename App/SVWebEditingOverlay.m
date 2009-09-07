@@ -71,5 +71,10 @@
     return result;
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    
+}
+
 @end
 
