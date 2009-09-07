@@ -17,12 +17,16 @@
 {
     [super initWithFrame:frameRect];
     
+    
+    // ivars
     _selection = [[NSMutableArray alloc] init];
+    
     
     // Create a CALayer for drawing
     CALayer *layer = [[CALayer alloc] init];
     [self setLayer:layer];
     [self setWantsLayer:YES];
+    
     
     return self;
 }
@@ -62,9 +66,19 @@
 - (NSView *)hitTest:(NSPoint)aPoint
 {
     // Does the point correspond to one of the selections? If so, target that.
+    CGPoint point = NSPointToCGPoint([self convertPointFromBase:aPoint]);
+    
+    for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
+    {
+        CALayer *hitLayer = [aLayer hitTest:point];
+        if (hitLayer)
+        {
+            return self;
+        }
+    }
     
     
-    // Otherwsie let our datasource decide.
+    // Otherwise let our datasource decide.
     NSView *result = [[self dataSource] editingOverlay:self hitTest:aPoint];
     if (!result) result = [super hitTest:aPoint];
     
@@ -73,7 +87,22 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    // Need to swallow mouse down events to stop them reaching the webview
+}
+
+#pragma mark Tracking Areas
+
+- (void)updateTrackingAreas
+{
+    // Ask each selection border to manage its own tracking area
+    [[self layer] updateTrackingAreasInView:self];
     
+    [super updateTrackingAreas];
+}
+
+- (void)cursorUpdate:(NSEvent *)event
+{
+    [[NSCursor openHandCursor] set];
 }
 
 @end

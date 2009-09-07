@@ -7,6 +7,7 @@
 //
 
 #import "SVSelectionBorder.h"
+#import "SVSelectionHandleLayer.h"
 
 #import "NSColor+Karelia.h"
 
@@ -23,15 +24,7 @@
 
 - (CALayer *)newSelectionHandle
 {
-    CALayer *result = [[CALayer alloc] init];
-    
-    [result setValue:[NSValue valueWithSize:NSMakeSize(7.0, 7.0)]
-          forKeyPath:@"bounds.size"];
-    
-    [result setBackgroundColor:CGColorGetConstantColor(kCGColorWhite)];
-    [result setBorderColor:CGColorGetConstantColor(kCGColorBlack)];
-    [result setBorderWidth:1.0];
-    
+    CALayer *result = [[SVSelectionHandleLayer alloc] init];
     [self addSublayer:result];
     
     return result;
@@ -125,5 +118,20 @@
     [super dealloc];
 }
 
+@end
+
+
+#pragma mark -
+
+
+@implementation CALayer (SVTrackingAreas)
+
+- (void)updateTrackingAreasInView:(NSView *)view
+{
+    [[self sublayers] makeObjectsPerformSelector:@selector(updateTrackingAreasInView:)
+                                      withObject:view];
+}
 
 @end
+
+

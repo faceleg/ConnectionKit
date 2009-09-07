@@ -34,9 +34,21 @@ enum SVSelectionResizeMask
     CALayer *_topSelectionHandle;
 }
 
+
+
 // Only the overlay view itself should call this
 //@property(nonatomic, assign) SVWebEditingOverlay *overlayView;
 
 //@property(nonatomic, readonly) CALayer *layer;
 
 @end
+
+
+#pragma mark -
+
+
+@interface CALayer (SVTrackingAreas)
+// The containing editing overlay view will call this as it needs to
+- (void)updateTrackingAreasInView:(NSView *)view;
+@end
+
