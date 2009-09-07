@@ -65,23 +65,31 @@
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
+    NSView *result = nil;
+    
+    
     // Does the point correspond to one of the selections? If so, target that.
-    CGPoint point = NSPointToCGPoint([self convertPointFromBase:aPoint]);
+    CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
     
     for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
     {
         CALayer *hitLayer = [aLayer hitTest:point];
         if (hitLayer)
         {
-            return self;
+            result = self;
+            break;
         }
     }
     
     
     // Otherwise let our datasource decide.
-    NSView *result = [[self dataSource] editingOverlay:self hitTest:aPoint];
-    if (!result) result = [super hitTest:aPoint];
+    if (!result)
+    {
+        result = [[self dataSource] editingOverlay:self hitTest:aPoint];
+        if (!result) result = [super hitTest:aPoint];
+    }
     
+    //NSLog(@"Hit Test: %@", result);
     return result;
 }
 
@@ -90,19 +98,33 @@
     // Need to swallow mouse down events to stop them reaching the webview
 }
 
-#pragma mark Tracking Areas
+#pragma mark Cursor
 
 - (void)updateTrackingAreas
 {
-    // Ask each selection border to manage its own tracking area
     [[self layer] updateTrackingAreasInView:self];
-    
     [super updateTrackingAreas];
 }
 
-- (void)cursorUpdate:(NSEvent *)event
+- (void)mouseEntered:(NSEvent *)theEvent
 {
     [[NSCursor openHandCursor] set];
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+    [[NSCursor arrowCursor] set];
+}
+
+- (void)mouseMoved:(NSEvent *)event
+{
+    // Does the point correspond to its tracking area? If so, target that.
+    NSTrackingArea *trackingArea = [event trackingArea];
+    NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
+    if ([self mouse:point inRect:[trackingArea rect]])
+    {
+        [[NSCursor openHandCursor] set];
+    }
 }
 
 @end

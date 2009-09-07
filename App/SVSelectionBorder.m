@@ -118,6 +118,26 @@
     [super dealloc];
 }
 
+- (CALayer *)hitTest:(CGPoint)thePoint
+{
+    CALayer *result = nil;
+    
+    // The default implementation assumes all sublayers are within our bounds. We know that all selection handles are at least partially outside.
+    CGPoint localPoint = [self convertPoint:thePoint fromLayer:[self superlayer]];
+    for (CALayer *aSublayer in [self sublayers])
+    {
+        result = [aSublayer hitTest:localPoint];
+        if (result) break;
+    }
+    
+    if (!result)
+    {
+        if ([self containsPoint:localPoint]) result = self;
+    }
+    
+    return result;
+}
+
 @end
 
 

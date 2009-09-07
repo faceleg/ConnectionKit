@@ -57,7 +57,7 @@
     }
     else if (!trackingArea)
     {
-        NSTrackingAreaOptions options = (NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow);
+        NSTrackingAreaOptions options = (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow);
         trackingArea = [[NSTrackingArea alloc] initWithRect:trackingRect
                                                     options:options
                                                       owner:view
