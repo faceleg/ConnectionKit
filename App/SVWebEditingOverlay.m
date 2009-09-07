@@ -29,15 +29,12 @@
 
 - (void)dealloc
 {
-    [_webView release];
     [_selection release];
     
     [super dealloc];
 }
 
 #pragma mark Basic Accessors
-
-@synthesize webView = _webView;
 
 @synthesize dataSource = _dataSource;
 
@@ -64,24 +61,12 @@
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    // TODO: How to handle a nil webview? And a nil node?
-    WebView *webView = [self webView];
-    
-    NSPoint webViewPoint = [webView convertPoint:aPoint fromView:[self superview]];
-    NSDictionary *elementInfo = [webView elementAtPoint:webViewPoint];
-    DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
+    // Does the point correspond to one of the selections? If so, target that.
     
     
-    // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
-    NSView *result;
-    if ([[self dataSource] webEditingView:self nodeIsSelectable:node])
-    {
-        result = [super hitTest:aPoint];
-    }
-    else
-    {
-        result = [webView hitTest:aPoint];  // as a sneaky optimisation, assume we share the exact same co-ordinate system as the webview so as to save trying to convert systems
-    }
+    // Otherwsie let our datasource decide.
+    NSView *result = [[self dataSource] editingOverlay:self hitTest:aPoint];
+    if (!result) result = [super hitTest:aPoint];
     
     return result;
 }

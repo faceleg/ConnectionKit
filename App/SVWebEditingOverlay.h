@@ -21,13 +21,11 @@
 @interface SVWebEditingOverlay : NSView
 {
   @private
-    WebView                             *_webView;
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
     NSMutableArray  *_selection;
 }
 
-@property(nonatomic, retain) IBOutlet WebView *webView;
 @property(nonatomic, assign) id <SVWebEditingOverlayDataSource> dataSource;
 
 @property(nonatomic, copy, readonly) NSArray *selectedBorders;
@@ -39,5 +37,5 @@
 
 
 @protocol SVWebEditingOverlayDataSource <NSObject>
-- (BOOL)webEditingView:(SVWebEditingOverlay *)view nodeIsSelectable:(DOMNode *)node;
+- (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
 @end

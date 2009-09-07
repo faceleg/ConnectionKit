@@ -327,16 +327,26 @@
 
 @synthesize contentObjects = _contentObjects;
 
-- (BOOL)webEditingView:(SVWebEditingOverlay *)view nodeIsSelectable:(DOMNode *)node;
+- (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
 {
-    BOOL result = NO;
+    WebView *webView = [self webView];
     
-    for (SVContentObject *aContentObject in [self contentObjects])
+    NSPoint webViewPoint = [webView convertPoint:point fromView:[overlay superview]];
+    NSDictionary *elementInfo = [webView elementAtPoint:webViewPoint];
+    DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
+    
+    
+    // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
+    NSView *result = [webView hitTest:point];
+    if (node)
     {
-        if ([node isDescendantOfNode:[aContentObject DOMElement]])
+        for (SVContentObject *aContentObject in [self contentObjects])
         {
-            result = YES;
-            break;
+            if ([node isDescendantOfNode:[aContentObject DOMElement]])
+            {
+                result = nil;
+                break;
+            }
         }
     }
     
