@@ -13,6 +13,7 @@
 #import "KTPage.h"
 #import "SVContainerTextBlock.h"
 #import "SVContentObject.h"
+#import "SVSelectionBorder.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -203,7 +204,17 @@
             [object release];
             
             
-            [[self editingOverlayView] insertObject:element inSelectedNodesAtIndex:0];
+            // Select it for now
+            NSRect elementRect = [element boundingBox];
+            NSView *elementView = [[[[element ownerDocument] webFrame] frameView] documentView];
+            NSRect borderRect = [[self editingOverlayView] convertRect:elementRect
+                                                              fromView:elementView];
+        
+            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+            [border setFrame:NSRectToCGRect(borderRect)];
+            
+            [[self editingOverlayView] insertObject:border inSelectedBordersAtIndex:0];
+            [border release];
         }
         
         [self setContentObjects:contentObjects];

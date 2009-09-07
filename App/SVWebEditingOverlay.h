@@ -15,6 +15,9 @@
 @protocol SVWebEditingOverlayDataSource;
 
 
+@class SVSelectionBorder;
+
+
 @interface SVWebEditingOverlay : NSView
 {
   @private
@@ -27,9 +30,9 @@
 @property(nonatomic, retain) IBOutlet WebView *webView;
 @property(nonatomic, assign) id <SVWebEditingOverlayDataSource> dataSource;
 
-@property(nonatomic, copy, readonly) NSArray *selectedNodes;
-- (void)insertObject:(DOMNode *)node inSelectedNodesAtIndex:(NSUInteger)index;
-- (void)removeObjectFromSelectedNodesAtIndex:(NSUInteger)index;
+@property(nonatomic, copy, readonly) NSArray *selectedBorders;
+- (void)insertObject:(SVSelectionBorder *)border inSelectedBordersAtIndex:(NSUInteger)index;
+- (void)removeObjectFromSelectedBordersAtIndex:(NSUInteger)index;
 
 
 @end

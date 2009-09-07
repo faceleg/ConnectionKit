@@ -43,25 +43,20 @@
 
 #pragma mark Selection
 
-@synthesize selectedNodes = _selection;
+@synthesize selectedBorders = _selection;
 
-- (void)insertObject:(DOMNode *)node inSelectedNodesAtIndex:(NSUInteger)index;
+- (void)insertObject:(SVSelectionBorder *)border inSelectedBordersAtIndex:(NSUInteger)index;
 {
-    [_selection insertObject:node atIndex:index];
-    
-    // Create a layer corresponding to the node
-    NSRect nodeRect = [node boundingBox];
-    NSView *elementView = [[[[node ownerDocument] webFrame] frameView] documentView];
-    NSRect layerRect = [self convertRect:nodeRect fromView:elementView];
-    
-    CALayer *layer = [[SVSelectionBorder alloc] init];
-    [layer setFrame:NSRectToCGRect(layerRect)];
-    [[self layer] addSublayer:layer];
-    [layer release];
+    [_selection insertObject:border atIndex:index];
+    [[self layer] addSublayer:border];
 }
 
-- (void)removeObjectFromSelectedNodesAtIndex:(NSUInteger)index;
+- (void)removeObjectFromSelectedBordersAtIndex:(NSUInteger)index;
 {
+    // Remove layer
+    SVSelectionBorder *border = [_selection objectAtIndex:index];
+    [border removeFromSuperlayer];
+    
     [_selection removeObjectAtIndex:index];
 }
 

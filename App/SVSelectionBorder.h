@@ -6,6 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
+#import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -18,9 +19,24 @@ enum SVSelectionResizeMask
 };
 
 
+@class SVWebEditingOverlay;
+
+
 @interface SVSelectionBorder : CALayer
 {
-
+    CALayer *_bottomLeftSelectionHandle;
+    CALayer *_leftSelectionHandle;
+    CALayer *_topLeftSelectionHandle;
+    CALayer *_bottomRightSelectionHandle;
+    CALayer *_rightSelectionHandle;
+    CALayer *_topRightSelectionHandle;
+    CALayer *_bottomSelectionHandle;
+    CALayer *_topSelectionHandle;
 }
+
+// Only the overlay view itself should call this
+//@property(nonatomic, assign) SVWebEditingOverlay *overlayView;
+
+//@property(nonatomic, readonly) CALayer *layer;
 
 @end
