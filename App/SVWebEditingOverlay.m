@@ -13,6 +13,17 @@
 #import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
 
 
+NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
+
+
+@interface SVWebEditingOverlay ()
+- (void)postSelectionChangedNotification;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVWebEditingOverlay
 
 - (id)initWithFrame:(NSRect)frameRect
@@ -63,6 +74,8 @@
 {
     [_selection insertObject:border atIndex:index];
     [[self layer] addSublayer:border];
+    
+    [self postSelectionChangedNotification];
 }
 
 - (void)removeObjectFromSelectedBordersAtIndex:(NSUInteger)index;
@@ -72,6 +85,34 @@
     [border removeFromSuperlayer];
     
     [_selection removeObjectAtIndex:index];
+    
+    [self postSelectionChangedNotification];
+}
+
+- (void)postSelectionChangedNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditingOverlaySelectionDidChangeNotification
+                                                        object:self];
+}
+
+#pragma mark Getting Item Information
+
+- (SVSelectionBorder *)selectionBorderForItemAtPoint:(NSPoint)point;
+{
+    SVSelectionBorder *result = nil;
+    
+    // Should we actually be running this in reverse instead?
+    CGPoint cgPoint = NSPointToCGPoint(point);
+    for (SVSelectionBorder *aLayer in [self selectedBorders])
+    {
+        if ([aLayer hitTest:cgPoint])
+        {
+            result = aLayer;
+            break;
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Event Handling
@@ -86,25 +127,15 @@
 
 - (NSView *)editingOverlayHitTest:(NSPoint)aPoint;
 {
-    NSView *result = nil;
-    
-    
     // Does the point correspond to one of the selections? If so, target that.
-    CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
+    NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
-    for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
+    NSView *result;
+    if ([self selectionBorderForItemAtPoint:point])
     {
-        CALayer *hitLayer = [aLayer hitTest:point];
-        if (hitLayer)
-        {
-            result = self;
-            break;
-        }
+        result = self;
     }
-    
-    
-    // Otherwise let our datasource decide.
-    if (!result)
+    else
     {
         result = [[self dataSource] editingOverlay:self hitTest:aPoint];
         if (!result) result = [super hitTest:aPoint];
@@ -117,15 +148,32 @@
 
 #pragma mark Tracking the Mouse
 
+/*  Actions we could take from this:
+ *      - Deselect everything
+ *      - Change selection to new item
+ *      - Start editing selected item
+ */
 - (void)mouseDown:(NSEvent *)event
 {
+    // Where was the mouse down?
+    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    
+    
+    
+    BOOL eventHandled = NO;
+    
+    
     // Need to swallow mouse down events to stop them reaching the webview
     
     
+    
     // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
-    NSPoint point = [[self superview] convertPoint:[event locationInWindow] fromView:nil];  // yes, hit testing is supposed to be in the superview's co-ordinate system
-    NSView *target = [[self dataSource] editingOverlay:self hitTest:point];
-    [target mouseDown:event];
+    if (!eventHandled)
+    {
+        NSPoint point = [[self superview] convertPoint:[event locationInWindow] fromView:nil];  // yes, hit testing is supposed to be in the superview's co-ordinate system
+        NSView *target = [[self dataSource] editingOverlay:self hitTest:point];
+        [target mouseDown:event];
+    }
 }
 
 - (void)mouseMoved:(NSEvent *)event

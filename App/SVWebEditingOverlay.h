@@ -33,6 +33,12 @@
 - (void)removeObjectFromSelectedBordersAtIndex:(NSUInteger)index;
 
 
+#pragma mark Getting Item Information
+
+//  As it says on the tin
+- (SVSelectionBorder *)selectionBorderForItemAtPoint:(NSPoint)point;
+
+
 #pragma mark Event Handling
 
 /*  SVWebEditingOverlay overrides NSView's default hit testing behaviour in some important ways:
@@ -61,3 +67,6 @@
 - (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
 
 @end
+
+
+extern NSString *SVWebEditingOverlaySelectionDidChangeNotification;
