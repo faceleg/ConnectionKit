@@ -40,6 +40,7 @@
     [self addTrackingArea:trackingArea];
     [trackingArea release];
     
+    
     return self;
 }
 
@@ -80,16 +81,25 @@
     NSView *result = nil;
     
     
-    // Does the point correspond to one of the selections? If so, target that.
-    CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
-    
-    for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
+    // Mouse down events ALWAYS go through us so we can handle selection
+    NSEvent *event = [[self window] currentEvent];
+    if ([event type] == NSLeftMouseDown)
     {
-        CALayer *hitLayer = [aLayer hitTest:point];
-        if (hitLayer)
+        result = self;
+    }
+    else
+    {
+        // Does the point correspond to one of the selections? If so, target that.
+        CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
+        
+        for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
         {
-            result = self;
-            break;
+            CALayer *hitLayer = [aLayer hitTest:point];
+            if (hitLayer)
+            {
+                result = self;
+                break;
+            }
         }
     }
     
@@ -100,6 +110,7 @@
         result = [[self dataSource] editingOverlay:self hitTest:aPoint];
         if (!result) result = [super hitTest:aPoint];
     }
+    
     
     //NSLog(@"Hit Test: %@", result);
     return result;
