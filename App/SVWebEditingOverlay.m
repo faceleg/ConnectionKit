@@ -8,6 +8,8 @@
 
 #import "SVWebEditingOverlay.h"
 #import "SVSelectionBorder.h"
+#import "SVSelectionHandleLayer.h"
+
 #import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
 
 
@@ -27,6 +29,15 @@
     [self setLayer:layer];
     [self setWantsLayer:YES];
     
+    
+    NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
+    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                                options:options
+                                                                  owner:self
+                                                               userInfo:nil];
+    
+    [self addTrackingArea:trackingArea];
+    [trackingArea release];
     
     return self;
 }
@@ -100,30 +111,30 @@
 
 #pragma mark Cursor
 
-- (void)updateTrackingAreas
+- (void)XupdateTrackingAreas
 {
     [[self layer] updateTrackingAreasInView:self];
     [super updateTrackingAreas];
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-    [[NSCursor openHandCursor] set];
-}
-
-- (void)mouseExited:(NSEvent *)event
-{
-    [[NSCursor arrowCursor] set];
-}
-
 - (void)mouseMoved:(NSEvent *)event
 {
-    // Does the point correspond to its tracking area? If so, target that.
-    NSTrackingArea *trackingArea = [event trackingArea];
+    // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-    if ([self mouse:point inRect:[trackingArea rect]])
+    CALayer *layer = [[self layer] hitTest:NSPointToCGPoint(point)];
+    
+    if ([layer isKindOfClass:[SVSelectionHandleLayer class]])
     {
-        [[NSCursor openHandCursor] set];
+        // We need to fractionally delay setting the cursor otherwise WebKit jumps in and changes it back
+        [[NSRunLoop currentRunLoop] performSelector:@selector(set)
+                                             target:[NSCursor openHandCursor]
+                                           argument:nil
+                                              order:0
+                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+    }
+    else
+    {
+        [[NSCursor arrowCursor] set];
     }
 }
 
