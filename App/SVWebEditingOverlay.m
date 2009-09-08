@@ -78,28 +78,27 @@
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
+    // Mouse down events ALWAYS go through us so we can handle selection
+    NSEvent *event = [[self window] currentEvent];
+    NSView *result = ([event type] == NSLeftMouseDown) ? self : [self editingOverlayHitTest:aPoint];
+    return result;
+}
+
+- (NSView *)editingOverlayHitTest:(NSPoint)aPoint;
+{
     NSView *result = nil;
     
     
-    // Mouse down events ALWAYS go through us so we can handle selection
-    NSEvent *event = [[self window] currentEvent];
-    if ([event type] == NSLeftMouseDown)
+    // Does the point correspond to one of the selections? If so, target that.
+    CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
+    
+    for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
     {
-        result = self;
-    }
-    else
-    {
-        // Does the point correspond to one of the selections? If so, target that.
-        CGPoint point = NSPointToCGPoint([self convertPoint:aPoint fromView:[self superview]]);
-        
-        for (CALayer *aLayer in [self selectedBorders]) // should we actually be running this in reverse?
+        CALayer *hitLayer = [aLayer hitTest:point];
+        if (hitLayer)
         {
-            CALayer *hitLayer = [aLayer hitTest:point];
-            if (hitLayer)
-            {
-                result = self;
-                break;
-            }
+            result = self;
+            break;
         }
     }
     
