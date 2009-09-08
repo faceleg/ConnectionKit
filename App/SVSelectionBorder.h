@@ -48,6 +48,7 @@ enum SVSelectionResizeMask
 
 
 @interface CALayer (SVTrackingAreas)
+- (NSCursor *)webEditingOverlayCursor;
 // The containing editing overlay view will call this as it needs to
 - (void)updateTrackingAreasInView:(NSView *)view;
 @end

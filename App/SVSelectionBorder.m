@@ -146,6 +146,11 @@
 
 @implementation CALayer (SVTrackingAreas)
 
+- (NSCursor *)webEditingOverlayCursor;
+{
+    return nil;
+}
+
 - (void)updateTrackingAreasInView:(NSView *)view
 {
     [[self sublayers] makeObjectsPerformSelector:@selector(updateTrackingAreasInView:)

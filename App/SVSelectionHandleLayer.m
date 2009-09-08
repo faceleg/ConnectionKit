@@ -32,6 +32,14 @@
     [super dealloc];
 }
 
+#pragma mark Cursor
+
+- (NSCursor *)webEditingOverlayCursor;
+{
+    // TODO: Pick a cusor based on handle location
+    return [NSCursor openHandCursor];
+}
+
 @synthesize trackingArea = _trackingArea;
 
 - (void)updateTrackingAreasInView:(NSView *)view;

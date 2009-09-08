@@ -30,6 +30,7 @@
     [self setWantsLayer:YES];
     
     
+    // Tracking area
     NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
                                                                 options:options
@@ -111,23 +112,18 @@
 
 #pragma mark Cursor
 
-- (void)XupdateTrackingAreas
-{
-    [[self layer] updateTrackingAreasInView:self];
-    [super updateTrackingAreas];
-}
-
 - (void)mouseMoved:(NSEvent *)event
 {
     // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
     CALayer *layer = [[self layer] hitTest:NSPointToCGPoint(point)];
+    NSCursor *cursor = [layer webEditingOverlayCursor];
     
-    if ([layer isKindOfClass:[SVSelectionHandleLayer class]])
+    if (cursor)
     {
         // We need to fractionally delay setting the cursor otherwise WebKit jumps in and changes it back
         [[NSRunLoop currentRunLoop] performSelector:@selector(set)
-                                             target:[NSCursor openHandCursor]
+                                             target:cursor
                                            argument:nil
                                               order:0
                                               modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
