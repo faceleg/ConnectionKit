@@ -376,8 +376,6 @@
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C745C7104EA01B00FBA79D /* SVContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C7458C104E96CF00FBA79D /* SVContentObject.h */; };
 		27C745C8104EA01C00FBA79D /* SVContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7458D104E96CF00FBA79D /* SVContentObject.m */; };
-		27C74640104ECDA700FBA79D /* SVSelectionHandlesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */; };
-		27C74641104ECDA800FBA79D /* SVSelectionHandlesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */; };
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
@@ -1813,8 +1811,6 @@
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
 		27C7458C104E96CF00FBA79D /* SVContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentObject.h; sourceTree = "<group>"; };
 		27C7458D104E96CF00FBA79D /* SVContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObject.m; sourceTree = "<group>"; };
-		27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSelectionHandlesView.h; sourceTree = "<group>"; };
-		27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSelectionHandlesView.m; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
@@ -2750,8 +2746,6 @@
 				27C7458D104E96CF00FBA79D /* SVContentObject.m */,
 				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
 				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
-				27C7463A104ECA1C00FBA79D /* SVSelectionHandlesView.h */,
-				27C7463B104ECA1C00FBA79D /* SVSelectionHandlesView.m */,
 				271B485E1051C2F4008B698C /* SVWebEditingOverlay.h */,
 				271B485F1051C2F4008B698C /* SVWebEditingOverlay.m */,
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
@@ -5029,7 +5023,6 @@
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
 				277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */,
 				27C745C7104EA01B00FBA79D /* SVContentObject.h in Headers */,
-				27C74640104ECDA700FBA79D /* SVSelectionHandlesView.h in Headers */,
 				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
 				275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */,
 				271B48601051C2F4008B698C /* SVWebEditingOverlay.h in Headers */,
@@ -6427,7 +6420,6 @@
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 				27C745C8104EA01C00FBA79D /* SVContentObject.m in Sources */,
-				27C74641104ECDA800FBA79D /* SVSelectionHandlesView.m in Sources */,
 				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,
 				275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */,
 				271B48611051C2F4008B698C /* SVWebEditingOverlay.m in Sources */,
