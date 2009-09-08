@@ -152,27 +152,30 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
  *      - Deselect everything
  *      - Change selection to new item
  *      - Start editing selected item
+ *      - Add to the selection
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // Where was the mouse down?
+    // Was an item clicked?
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    SVSelectionBorder *item = [self selectionBorderForItemAtPoint:location];
     
     
-    
-    BOOL eventHandled = NO;
-    
-    
-    // Need to swallow mouse down events to stop them reaching the webview
-    
-    
-    
-    // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
-    if (!eventHandled)
+    if (item)
     {
-        NSPoint point = [[self superview] convertPoint:[event locationInWindow] fromView:nil];  // yes, hit testing is supposed to be in the superview's co-ordinate system
-        NSView *target = [[self dataSource] editingOverlay:self hitTest:point];
+        // Make sure nothing else is selected. Then start editing
+    }
+    else
+    {
+        // Nothing is selected. Wha-hey
+        [[self mutableArrayValueForKey:@"selectedBorders"] removeAllObjects];
+        
+        
+        // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
+        NSPoint hitTestPoint = [self convertPoint:location toView:[self superview]];  // yes, hit testing is supposed to be in the superview's co-ordinate system
+        NSView *target = [[self dataSource] editingOverlay:self hitTest:hitTestPoint];
         [target mouseDown:event];
+        
     }
 }
 
