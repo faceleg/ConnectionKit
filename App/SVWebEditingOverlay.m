@@ -122,6 +122,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 #pragma mark Event Handling
 
+- (BOOL)acceptsFirstResponder { return YES; }
+
 - (NSView *)hitTest:(NSPoint)aPoint
 {
     // Mouse down events ALWAYS go through us so we can handle selection
@@ -211,6 +213,10 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         {
             [[NSCursor arrowCursor] set];
         }
+    }
+    else
+    {
+        [super mouseMoved:event];
     }
 }
 
