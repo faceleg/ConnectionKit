@@ -50,5 +50,14 @@
 
 
 @protocol SVWebEditingOverlayDataSource <NSObject>
+
+/*!
+ @method editingOverlay:hitTest:
+ @abstract When something hit tests an area which the overlay is not intending to claim for its own, the responsibility for hit testing is delegated.
+ @param overlay The WebEditingOverlay object sending the message.
+ @param point The point being tested. Like -[NSView hitTest:], specified in the overlay's superview's coordinates.
+ @result The deepest view of the hierarchy that contains the point. Return nil if the area is considered "selectable" rather than targeting the view beneath the overlay.
+ */
 - (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
+
 @end
