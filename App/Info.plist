@@ -309,6 +309,8 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSDockTilePlugIn</key>
+	<string>DockTile.docktileplugin</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 </dict>

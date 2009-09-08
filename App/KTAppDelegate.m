@@ -1399,6 +1399,74 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 
 	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
+
+	
+	// Get the desired app icon, based on our dock icon changer code.
+	
+	NSDate *now = [NSDate date];
+	// Get the current year, so we can plug it back into the date creation.  Is there a less hackish way to do this?
+	NSDateFormatter *dateFormat = [[[NSDateFormatter alloc] init] autorelease];
+	[dateFormat setDateFormat:@"y"];
+	NSString *yearString = [dateFormat stringFromDate:now];
+	int year = [yearString intValue];
+	
+	// Get the target dates for THIS YEAR.
+	//
+	// FIXME: I really want dates starting TODAY OR LATER so I will always have a date in the future to schedule.
+	// Is there an easy (and non-locale-specific) to construct dates in the coming year?
+	//
+	// For now, just get all dates this year and next year ... we're sure to find an upcoming date!
+	
+	NSSet *fireDates = [NSSet setWithObjects:
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-10-31 00:00:00 -0800", year]],
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-03-17 00:00:00 -0800", year]],
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-04-01 00:00:00 -0800", year]],
+						
+						// TEST ... force a specific date to show up, like today
+						//[[NSDate date] dateByAddingTimeInterval:-100.0],
+						
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-10-31 00:00:00 -0800", 1+year]],
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-03-17 00:00:00 -0800", 1+year]],
+						[NSDate dateWithString:[NSString stringWithFormat:@"%d-04-01 00:00:00 -0800", 1+year]],
+						
+						nil];
+	NSArray *orderedDates = [[fireDates allObjects] sortedArrayUsingSelector:@selector(compare:)];
+	
+	NSString *iconBaseName = nil;
+	
+	[dateFormat setDateFormat:@"MMdd"];
+	
+	NSEnumerator *dateEnum = [orderedDates objectEnumerator];
+	NSDate *date;
+	while ( ( date = [dateEnum nextObject] ) )
+	{
+		if (NSOrderedAscending != [now compare:date])	// is now >= date
+		{
+			NSDate *stopDate = [[[NSDate alloc] initWithTimeInterval:(60 * 60 * 24) sinceDate:date] autorelease];
+			if (NSOrderedAscending == [now compare:stopDate])	// is now < end of that day
+			{
+				iconBaseName = [dateFormat stringFromDate:date];	// remember which icon to 
+				break;	// no need to keep searching.
+			}
+			// Otherwise we have passed that day, so keep looking for the next one.
+		}
+	}
+	
+	if (iconBaseName)
+	{
+		NSString *newImagePath = [[NSBundle mainBundle]
+								  pathForResource:[NSString stringWithFormat:@"io%@", iconBaseName]
+								  ofType:@"tla"];	// obfuscated extension
+		NSImage *newImage = [[[NSImage alloc] initWithContentsOfFile:newImagePath] autorelease];
+		if (newImage)
+		{
+			[NSApp setApplicationIconImage:newImage];
+		}
+	}
+
+	
+	
+	
 	
 	// Force imedia browser to load just so we can get RBSplitView loaded
 	[iMediaBrowser class];
