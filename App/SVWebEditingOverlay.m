@@ -115,12 +115,18 @@
     return result;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+#pragma mark Tracking the Mouse
+
+- (void)mouseDown:(NSEvent *)event
 {
     // Need to swallow mouse down events to stop them reaching the webview
+    
+    
+    // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
+    NSPoint point = [[self superview] convertPoint:[event locationInWindow] fromView:nil];  // yes, hit testing is supposed to be in the superview's co-ordinate system
+    NSView *target = [[self dataSource] editingOverlay:self hitTest:point];
+    [target mouseDown:event];
 }
-
-#pragma mark Cursor
 
 - (void)mouseMoved:(NSEvent *)event
 {
