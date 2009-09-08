@@ -132,21 +132,26 @@
 {
     // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-    CALayer *layer = [[self layer] hitTest:NSPointToCGPoint(point)];
-    NSCursor *cursor = [layer webEditingOverlayCursor];
+    CALayer *myLayer = [self layer];
+    CALayer *layer = [myLayer hitTest:NSPointToCGPoint(point)];
     
-    if (cursor)
+    if (layer != myLayer)
     {
-        // We need to fractionally delay setting the cursor otherwise WebKit jumps in and changes it back
-        [[NSRunLoop currentRunLoop] performSelector:@selector(set)
-                                             target:cursor
-                                           argument:nil
-                                              order:0
-                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-    }
-    else
-    {
-        [[NSCursor arrowCursor] set];
+        NSCursor *cursor = [layer webEditingOverlayCursor];
+        
+        if (cursor)
+        {
+            // We need to fractionally delay setting the cursor otherwise WebKit jumps in and changes it back
+            [[NSRunLoop currentRunLoop] performSelector:@selector(set)
+                                                 target:cursor
+                                               argument:nil
+                                                  order:0
+                                                  modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+        }
+        else
+        {
+            [[NSCursor arrowCursor] set];
+        }
     }
 }
 
