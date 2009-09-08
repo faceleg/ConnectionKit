@@ -8,8 +8,6 @@
 
 #import "SVContentObject.h"
 
-#import "SVSelectionHandlesView.h"
-
 
 @interface SVContentObject ()
 - (void)updateView;
