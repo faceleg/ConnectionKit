@@ -35,8 +35,11 @@
 
 #pragma mark Getting Item Information
 
-//  As it says on the tin
+//  Queries just our currently selected items
 - (SVSelectionBorder *)selectionBorderForItemAtPoint:(NSPoint)point;
+
+//  Queries the datasource
+- (SVSelectionBorder *)itemAtPoint:(NSPoint)point;
 
 
 #pragma mark Event Handling
@@ -65,6 +68,10 @@
  @result The deepest view of the hierarchy that contains the point. Return nil if the area is considered "selectable" rather than targeting the view beneath the overlay.
  */
 - (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
+
+
+// You should return the selection border that represents the foremost item at that point, or nil if there is none. The overlay view uses this for adding to its selection etc.
+- (SVSelectionBorder *)editingOverlay:(SVWebEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
 
 @end
 

@@ -115,6 +115,11 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     return result;
 }
 
+- (SVSelectionBorder *)itemAtPoint:(NSPoint)point;
+{
+    return [[self dataSource] editingOverlay:self itemAtPoint:point];
+}
+
 #pragma mark Event Handling
 
 - (NSView *)hitTest:(NSPoint)aPoint
@@ -151,24 +156,27 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 /*  Actions we could take from this:
  *      - Deselect everything
  *      - Change selection to new item
- *      - Start editing selected item
+ *      - Start editing selected item (actually happens upon -mouseUp:)
  *      - Add to the selection
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // Was an item clicked?
+    // What was clicked?
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    SVSelectionBorder *item = [self selectionBorderForItemAtPoint:location];
-    
+    SVSelectionBorder *item = [self itemAtPoint:location];
+    NSMutableArray *selection = [self mutableArrayValueForKey:@"selectedBorders"];
+        
     
     if (item)
     {
-        // Make sure nothing else is selected. Then start editing
+        // Depending on the command key, add/remove from the selection, or become the selection
+        [selection removeAllObjects];
+        [selection insertObject:item atIndex:0];
     }
     else
     {
         // Nothing is selected. Wha-hey
-        [[self mutableArrayValueForKey:@"selectedBorders"] removeAllObjects];
+        [selection removeAllObjects];
         
         
         // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain

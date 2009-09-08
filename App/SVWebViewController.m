@@ -202,19 +202,6 @@
             
             [contentObjects addObject:object];
             [object release];
-            
-            
-            // Select it for now
-            NSRect elementRect = [element boundingBox];
-            NSView *elementView = [[[[element ownerDocument] webFrame] frameView] documentView];
-            NSRect borderRect = [[self editingOverlayView] convertRect:elementRect
-                                                              fromView:elementView];
-        
-            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-            [border setFrame:NSRectToCGRect(borderRect)];
-            
-            [[self editingOverlayView] insertObject:border inSelectedBordersAtIndex:0];
-            [border release];
         }
         
         [self setContentObjects:contentObjects];
@@ -327,27 +314,47 @@
 
 @synthesize contentObjects = _contentObjects;
 
-- (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
+- (SVContentObject *)itemAtPoint:(NSPoint)point
 {
-    WebView *webView = [self webView];
-    
-    NSPoint webViewPoint = [webView convertPoint:point fromView:[overlay superview]];
-    NSDictionary *elementInfo = [webView elementAtPoint:webViewPoint];
-    DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
-    
-    
     // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
-    NSView *result = [webView hitTest:point];
+    NSDictionary *elementInfo = [[self webView] elementAtPoint:point];
+    DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
+    SVContentObject *result = nil;
+    
     if (node)
     {
-        for (SVContentObject *aContentObject in [self contentObjects])
+        for (result in [self contentObjects])
         {
-            if ([node isDescendantOfNode:[aContentObject DOMElement]])
+            if ([node isDescendantOfNode:[result DOMElement]])
             {
-                result = nil;
                 break;
             }
         }
+    }
+    
+    return result;
+}
+
+- (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
+{
+    NSView *result = ([self itemAtPoint:point]) ? nil : [[self webView] hitTest:point];
+    return result;
+}
+
+- (SVSelectionBorder *)editingOverlay:(SVWebEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
+{
+    SVSelectionBorder *result = nil;
+    SVContentObject *item = [self itemAtPoint:point];
+    
+    if (item)
+    {
+        result = [SVSelectionBorder layer];
+        
+        DOMElement *element = [item DOMElement];
+        NSRect elementRect = [element boundingBox];
+        NSView *elementView = [[[[element ownerDocument] webFrame] frameView] documentView];
+        NSRect borderRect = [overlay convertRect:elementRect fromView:elementView];
+        [result setFrame:NSRectToCGRect(borderRect)];
     }
     
     return result;
