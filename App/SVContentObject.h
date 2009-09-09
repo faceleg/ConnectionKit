@@ -9,10 +9,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+
+#import "SVEditingOverlayItem.h"
 #import "SVDOMNodeBoundsTracker.h"
 
 
-@interface SVContentObject : NSViewController <SVDOMNodeBoundsTrackerDelegate>
+@interface SVContentObject : NSViewController <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
 {
   @private
     DOMElement  *_element;

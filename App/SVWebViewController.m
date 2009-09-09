@@ -78,7 +78,7 @@
 }
 
 @synthesize editingOverlayView = _editingOverlay;
-- (void)setEditingOverlayView:(SVWebEditingOverlay *)overlay
+- (void)setEditingOverlayView:(SVEditingOverlay *)overlay
 {
     [[self editingOverlayView] setDataSource:nil];
     
@@ -335,28 +335,15 @@
     return result;
 }
 
-- (NSView *)editingOverlay:(SVWebEditingOverlay *)overlay hitTest:(NSPoint)point;
+- (NSView *)editingOverlay:(SVEditingOverlay *)overlay hitTest:(NSPoint)point;
 {
     NSView *result = ([self itemAtPoint:point]) ? nil : [[self webView] hitTest:point];
     return result;
 }
 
-- (SVSelectionBorder *)editingOverlay:(SVWebEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
+- (id <SVEditingOverlayItem>)editingOverlay:(SVEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
 {
-    SVSelectionBorder *result = nil;
-    SVContentObject *item = [self itemAtPoint:point];
-    
-    if (item)
-    {
-        result = [SVSelectionBorder layer];
-        
-        DOMElement *element = [item DOMElement];
-        NSRect elementRect = [element boundingBox];
-        NSView *elementView = [[[[element ownerDocument] webFrame] frameView] documentView];
-        NSRect borderRect = [overlay convertRect:elementRect fromView:elementView];
-        [result setFrame:NSRectToCGRect(borderRect)];
-    }
-    
+    id <SVEditingOverlayItem> result = [self itemAtPoint:point];
     return result;
 }
 

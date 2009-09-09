@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditingOverlay.h"
+#import "SVEditingOverlay.h"
 #import "SVSelectionBorder.h"
 #import "SVSelectionHandleLayer.h"
 
@@ -16,15 +16,19 @@
 NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
-@interface SVWebEditingOverlay ()
+@interface SVEditingOverlay ()
+
+// Selection
+@property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
+
 @end
 
 
 #pragma mark -
 
 
-@implementation SVWebEditingOverlay
+@implementation SVEditingOverlay
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -32,7 +36,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     
     // ivars
-    _selection = [[NSMutableArray alloc] init];
+    _selectedItems = [[NSMutableArray alloc] init];
     
     
     // Create a CALayer for drawing
@@ -57,53 +61,75 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (void)dealloc
 {
-    [_selection release];
+    [_selectionBorders release];
+    [_selectedItems release];
     
     [super dealloc];
 }
 
-#pragma mark Basic Accessors
+#pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
 
 #pragma mark Selection
 
-@synthesize selectedBorders = _selection;
-
-- (void)insertObject:(SVSelectionBorder *)border inSelectedBordersAtIndex:(NSUInteger)index;
+@synthesize selectedItems = _selectedItems;
+- (void)setSelectedItems:(NSArray *)items
 {
-    [_selection insertObject:border atIndex:index];
-    [[self layer] addSublayer:border];
+    [self selectItems:items byExtendingSelection:NO];
+}
+
+- (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
+{
+    // Reset layers
+    if (!extendSelection)
+    {
+        [_selectionBorders makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    }
     
+    
+    // Store new selection
+    NSArray *oldSelection = _selectedItems;
+    _selectedItems = (extendSelection ?
+                      [[_selectedItems arrayByAddingObjectsFromArray:items] retain] :
+                      [items copy]);
+    [oldSelection release];
+    
+    
+    // Create layers for the new selection
+    NSMutableArray *layers = nil;
+    if (extendSelection) layers = [_selectionBorders mutableCopy];
+    if (!layers) layers = [[NSMutableArray alloc] init];
+    
+    for (id <SVEditingOverlayItem> anItem in items)
+    {
+        CALayer *border = [[SVSelectionBorder alloc] init];
+        [border setFrame:NSRectToCGRect([anItem rect])];
+        
+        [layers addObject:border];
+        [[self layer] addSublayer:border];
+        
+        [border release];
+    }
+    
+    [_selectionBorders release];
+    _selectionBorders = [layers copy];
+    [layers release];
+    
+    
+    // Alert observers
     [self postSelectionChangedNotification];
 }
 
-- (void)removeObjectFromSelectedBordersAtIndex:(NSUInteger)index;
-{
-    // Remove layer
-    SVSelectionBorder *border = [_selection objectAtIndex:index];
-    [border removeFromSuperlayer];
-    
-    [_selection removeObjectAtIndex:index];
-    
-    [self postSelectionChangedNotification];
-}
+@synthesize selectionBorders = _selectionBorders;
 
-- (void)postSelectionChangedNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditingOverlaySelectionDidChangeNotification
-                                                        object:self];
-}
-
-#pragma mark Getting Item Information
-
-- (SVSelectionBorder *)selectionBorderForItemAtPoint:(NSPoint)point;
+- (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
 {
     SVSelectionBorder *result = nil;
     
     // Should we actually be running this in reverse instead?
     CGPoint cgPoint = NSPointToCGPoint(point);
-    for (SVSelectionBorder *aLayer in [self selectedBorders])
+    for (SVSelectionBorder *aLayer in [self selectionBorders])
     {
         if ([aLayer hitTest:cgPoint])
         {
@@ -115,7 +141,15 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     return result;
 }
 
-- (SVSelectionBorder *)itemAtPoint:(NSPoint)point;
+- (void)postSelectionChangedNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditingOverlaySelectionDidChangeNotification
+                                                        object:self];
+}
+
+#pragma mark Getting Item Information
+
+- (id <SVEditingOverlayItem>)itemAtPoint:(NSPoint)point;
 {
     return [[self dataSource] editingOverlay:self itemAtPoint:point];
 }
@@ -138,7 +172,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
     NSView *result;
-    if ([self selectionBorderForItemAtPoint:point])
+    if ([self selectionBorderAtPoint:point])
     {
         result = self;
     }
@@ -165,21 +199,21 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 {
     // What was clicked?
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    SVSelectionBorder *item = [self itemAtPoint:location];
-    NSMutableArray *selection = [self mutableArrayValueForKey:@"selectedBorders"];
+    id <SVEditingOverlayItem> item = [self itemAtPoint:location];
         
     
     if (item)
     {
         // Depending on the command key, add/remove from the selection, or become the selection
-        [selection removeAllObjects];
-        [selection insertObject:item atIndex:0];
+        [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
     }
     else
     {
         // Nothing is selected. Wha-hey
-        [selection removeAllObjects];
+        [self setSelectedItems:nil];
         
+        [super mouseDown:event];
+        return;
         
         // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
         NSPoint hitTestPoint = [self convertPoint:location toView:[self superview]];  // yes, hit testing is supposed to be in the superview's co-ordinate system

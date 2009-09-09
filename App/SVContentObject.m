@@ -56,6 +56,20 @@
 
 @synthesize DOMElement = _element;
 
+#pragma mark Editing Overlay Item
+
+- (NSRect)rect
+{
+    DOMElement *element = [self DOMElement];
+    NSRect elementRect = [element boundingBox];
+    WebFrame *frame = [[element ownerDocument] webFrame];
+    NSView *elementView = [[frame frameView] documentView];
+    WebView *webView = [frame webView];
+    
+    NSRect result = [webView convertRect:elementRect fromView:elementView];
+    return result;
+}
+
 #pragma mark Overlay View
 
 - (void)loadView
