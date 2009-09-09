@@ -250,6 +250,8 @@ extern NSString *gInfoWindowAutoSaveName;
 - (KTPagelet *)pageletEnclosing:(DOMNode *)aDomNode;
 - (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;
 
+- (NSString *)createLink:(NSString *)link desiredText:(NSString *)aString openLinkInNewWindow:(BOOL)openLinkInNewWindow;
+
 @end
 
 

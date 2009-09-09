@@ -105,7 +105,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 - (void)selectInlineIMGNode:(DOMNode *)aNode container:(KTAbstractElement *)aContainer;
 
-- (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow;
+- (NSString *)createLink:(NSString *)link desiredText:(NSString *)aString openLinkInNewWindow:(BOOL)openLinkInNewWindow;
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange;
 
 - (void)insertHref:(NSString *)aURLAsString inRange:(DOMRange *)aRange;
@@ -1275,8 +1275,9 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 /*  The process of creating a link is very simple: Crate the DOM nodes and then insert them using -replaceSelectionWithNode:
  *  WebKit will manage the undo/redo stuff for us.
+ *		aString is the fallback text to use if there is no selection to replace. If nil, just use the text of the URL.
  */
-- (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow
+- (NSString *)createLink:(NSString *)link desiredText:(NSString *)aString openLinkInNewWindow:(BOOL)openLinkInNewWindow
 {
 	// Preparation
     WebView *webView = [[self webViewController] webView];      OBASSERT(webView);
@@ -1293,8 +1294,16 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		
 		[anchor setHref:link];
 		if (openLinkInNewWindow) [anchor setTarget:@"_blank"];
-		[anchor appendChild:[selectedRange cloneContents]];
-		
+		if ([selectedRange startOffset] == [selectedRange endOffset])
+		{
+			NSString *textToInsert = (KSISNULL(aString) || [aString isEmptyString]) ? link : aString;
+			DOMText *text = [DOMDoc createTextNode:textToInsert];
+			[anchor appendChild:text];
+		}
+		else
+		{
+			[anchor appendChild:[selectedRange cloneContents]];
+		}
 		
 		// Insert the link into the DOM
 		[webView replaceSelectionWithNode:anchor];
@@ -1345,7 +1354,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		// have we set up a local link?
 		if ( nil != [info valueForKey:@"KTLocalLink"] )
 		{
-			undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+			undoActionName = [self createLink:[info valueForKey:@"KTLocalLink"] desiredText:nil openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 		}
 		else
 		{
@@ -1372,7 +1381,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				}
 				
 				// not empty, is there already an anchor in play?
-				undoActionName = [self createLink:value openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
+				undoActionName = [self createLink:value desiredText:nil openLinkInNewWindow:[oLinkOpenInNewWindowSwitch state] == NSOnState];
 			}
 		}
 
