@@ -78,7 +78,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	
 	// Prepare Amazon operations
 	[AmazonOperation setAccessKeyID:@"AKIAILC2YRBONHT2JFVA"];	// amazon_nomoney@karelia.com secret key, no monetary accounts hooked up to this account!
-	[AmazonOperation setSecretKeyID:@"zxPWQOd2RAGbj2z4eQurrD1061DHuXZlgy8/ZpyC"];
+	[AmazonOperation setHash:@"zxPWQOd2RAGbj2z4eQurrD1061DHuXZlgy8/ZpyC"];
 
 	//[AmazonOperation setAssociateID:@"karelsofwa-20"];
 }
