@@ -52,7 +52,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Mask rect
     _scrollLayer = [[CAScrollLayer alloc] init];
     [_scrollLayer setAutoresizingMask:(kCALayerWidthSizable | kCALayerHeightSizable)];
-    [self setClipRect:[self bounds]];
+    [self setContentRect:[self bounds]];
     [layer addSublayer:_scrollLayer];
     
     
@@ -82,8 +82,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 #pragma mark Document View
 
-@synthesize clipRect = _clipRect;
-- (void)setClipRect:(NSRect)clipRect
+@synthesize contentRect = _clipRect;
+- (void)setContentRect:(NSRect)clipRect
 {
     _clipRect = clipRect;
     [[self scrollLayer] setFrame:NSRectToCGRect(clipRect)];

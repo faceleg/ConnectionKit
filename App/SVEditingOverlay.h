@@ -33,7 +33,7 @@
 #pragma mark Document View
 
 // Our document view (in Sandvox, the main frame's WebFrameView) will often not fill the space as ourself. Rather than have to reposition the overlay view to match, it should be more efficent to adjust this mask to match the document.
-@property(nonatomic) NSRect clipRect;
+@property(nonatomic) NSRect contentRect;
 
 
 #pragma mark Data Source
