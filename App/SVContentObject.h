@@ -14,24 +14,16 @@
 #import "SVDOMNodeBoundsTracker.h"
 
 
-@interface SVContentObject : NSViewController <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
+@interface SVContentObject : NSObject <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
 {
   @private
     DOMElement  *_element;
         
     SVDOMNodeBoundsTracker  *_nodeTracker;
-    
-    BOOL    _isSelected;
-    NSView  *_selectionHandlesView;
 }
 
 - (id)initWithDOMElement:(DOMElement *)element;
 
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
-
-
-
-
-@property(nonatomic, getter=isSelected) BOOL selected;
 
 @end
