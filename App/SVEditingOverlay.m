@@ -18,6 +18,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @interface SVEditingOverlay ()
 
+@property(nonatomic, retain, readonly) CALayer *scrollLayer;
+
 // Selection
 @property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
@@ -29,6 +31,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 
 @implementation SVEditingOverlay
+
+#pragma mark Initialization & Deallocation
 
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -43,6 +47,13 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     CALayer *layer = [[CALayer alloc] init];
     [self setLayer:layer];
     [self setWantsLayer:YES];
+    
+    
+    // Mask rect
+    _scrollLayer = [[CAScrollLayer alloc] init];
+    [_scrollLayer setAutoresizingMask:(kCALayerWidthSizable | kCALayerHeightSizable)];
+    [self setClipRect:[self bounds]];
+    [layer addSublayer:_scrollLayer];
     
     
     // Tracking area
@@ -64,8 +75,21 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [_selectionBorders release];
     [_selectedItems release];
     
+    [_scrollLayer release];
+    
     [super dealloc];
 }
+
+#pragma mark Document View
+
+@synthesize clipRect = _clipRect;
+- (void)setClipRect:(NSRect)clipRect
+{
+    _clipRect = clipRect;
+    [[self scrollLayer] setFrame:NSRectToCGRect(clipRect)];
+}
+
+@synthesize scrollLayer = _scrollLayer;
 
 #pragma mark Data Source
 
@@ -107,7 +131,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         [border setFrame:NSRectToCGRect([anItem rect])];
         
         [layers addObject:border];
-        [[self layer] addSublayer:border];
+        [[self scrollLayer] addSublayer:border];
         
         [border release];
     }

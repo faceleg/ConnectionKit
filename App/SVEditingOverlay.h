@@ -14,7 +14,7 @@
 
 
 @protocol SVWebEditingOverlayDataSource;
-@class SVSelectionBorder;
+@class SVSelectionBorder, CAScrollLayer;
 
 
 @interface SVEditingOverlay : NSView
@@ -22,9 +22,19 @@
   @private
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
+    NSRect          _clipRect;
+    CAScrollLayer   *_scrollLayer;
+    
     NSArray *_selectedItems;
     NSArray *_selectionBorders;
 }
+
+
+#pragma mark Document View
+
+// Our document view (in Sandvox, the main frame's WebFrameView) will often not fill the space as ourself. Rather than have to reposition the overlay view to match, it should be more efficent to adjust this mask to match the document.
+@property(nonatomic) NSRect clipRect;
+
 
 #pragma mark Data Source
 
