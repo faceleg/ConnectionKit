@@ -13,7 +13,7 @@ SANDVOX_VERSION = 1.6.4b4
 PRODUCT_VARIANT = BETA
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2009-09-30 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2009-10-15 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
@@ -21,7 +21,7 @@ EXPIRY_TIMESTAMP = '@\"2009-09-30 11:59:59 -0800\"'
 CK_REVISION = 1388
 
 // iMedia
-IMEDIA_REVISION = 818
+IMEDIA_REVISION = 819
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
