@@ -335,12 +335,6 @@
     return result;
 }
 
-- (NSView *)editingOverlay:(SVEditingOverlay *)overlay hitTest:(NSPoint)point;
-{
-    NSView *result = ([self itemAtPoint:point]) ? nil : [[self webView] hitTest:point];
-    return result;
-}
-
 - (id <SVEditingOverlayItem>)editingOverlay:(SVEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
 {
     id <SVEditingOverlayItem> result = [self itemAtPoint:point];

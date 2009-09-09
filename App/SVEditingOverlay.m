@@ -171,15 +171,15 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Does the point correspond to one of the selections? If so, target that.
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
-    NSView *result;
-    if ([self selectionBorderAtPoint:point])
+    NSView *result = nil;
+    if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
     {
         result = self;
     }
     else
     {
-        result = [[self dataSource] editingOverlay:self hitTest:aPoint];
-        if (!result) result = [super hitTest:aPoint];
+        //result = [[self dataSource] editingOverlay:self hitTest:aPoint];
+        //if (!result) result = [super hitTest:aPoint];
     }
     
     
@@ -213,14 +213,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         [self setSelectedItems:nil];
         
         [super mouseDown:event];
-        return;
-        
-        // Pass through to the webview any events that we didn't directly act upon. This is the equivalent of NSResponder's usual behaviour of passing such events up the chain
-        NSPoint hitTestPoint = [self convertPoint:location toView:[self superview]];  // yes, hit testing is supposed to be in the superview's co-ordinate system
-        NSView *target = [[self dataSource] editingOverlay:self hitTest:hitTestPoint];
-        [target mouseDown:event];
-        
-    }
+   }
 }
 
 - (void)mouseMoved:(NSEvent *)event
