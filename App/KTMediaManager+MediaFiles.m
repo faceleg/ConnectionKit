@@ -79,7 +79,9 @@
 	NSError *error = nil;
 	NSArray *result = [[self managedObjectContext] allObjectsWithEntityName:@"ExternalMediaFile" error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];
 	}
 	
 	return result;
@@ -235,7 +237,9 @@
 		NSError *error = nil;
 		[data writeToFile:destinationPath options:0 error:&error];
 		if (error) {
-			[[NSAlert alertWithError:error] runModal];
+			NSAlert *alert = [NSAlert alertWithError:error];
+			[alert setIcon:[NSApp applicationIconImage]];
+			[alert runModal];
 		}
 		
 		// Then add the object to the DB
@@ -296,7 +300,9 @@
 	NSError *error = nil;
 	NSArray *result = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];
 	}
 	
 	return result;

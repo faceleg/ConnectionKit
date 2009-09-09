@@ -187,7 +187,7 @@
 									   alternateButton:NSLocalizedString(@"Only This File", "Button to ignore other automatically found media")
 										   otherButton:nil
 							 informativeTextWithFormat:localizedMessage];
-		
+		[alert setIcon:[NSApp applicationIconImage]];
 		if ([alert runModal] == NSAlertDefaultReturn)
 		{
 			[mediaToMigrate unionSet:similarMissingMedia];

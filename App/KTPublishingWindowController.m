@@ -308,6 +308,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         
         // Put up an alert explaining why and let the window controller deal with it
         NSAlert *alert = [[NSAlert alloc] init];    // The window controller will release it
+		[alert setIcon:[NSApp applicationIconImage]];
         [alert setMessageText:NSLocalizedString(@"No changes need publishing.", @"message for progress window")];
         [alert setInformativeText:NSLocalizedString(@"Sandvox has detected that no content has changed since the site was last published. Publish All will upload all content, regardless of whether it has changed or not.", "alert info text")];
         [alert addButtonWithTitle:NSLocalizedString(@"OK", @"change cancel button to ok")];

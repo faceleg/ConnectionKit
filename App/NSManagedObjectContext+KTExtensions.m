@@ -212,7 +212,9 @@
 	NSError *error = nil;
 	result = [self objectsWithEntityName:@"Pagelet" predicate:predicate error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];
 	}
 	
 	return result;

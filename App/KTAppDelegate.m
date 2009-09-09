@@ -812,6 +812,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to put the current version of the document in the Trash before reverting. This is done as a safety precaution. The document will not be reverted. Please check the Trash for any problems or remove the document at %@ manually.",
 																		 "alert: could not Trash document"), documentPath];
 		
+		[alert setIcon:[NSApp applicationIconImage]];
 		(void)[alert runModal];
 		
 		// reopen the document
@@ -844,6 +845,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 							 informativeTextWithFormat:NSLocalizedString(@"Sandvox was unable to revert using the current snapshot. Please drag the document %@ out of the Trash and reopen it to continue using it. Please also check that the directory %@ is readable.",
 																		 "alert: could not revert document"), documentName, [snapshotDirectory stringByDeletingLastPathComponent]];
 		
+		[alert setIcon:[NSApp applicationIconImage]];
 		(void)[alert runModal];
 		return;
 	}
@@ -1238,7 +1240,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 					[progressPanel performClose:self];	// hide this FIRST
 
                     NSAlert *alert = [[NSAlert alloc] init];
-                    [alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
+                    [alert setIcon:[NSApp applicationIconImage]];
+					[alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
                     [alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
                     [alert setInformativeText:missingFiles];
                     [alert setAlertStyle:NSWarningAlertStyle];
@@ -1402,6 +1405,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	
 	// Get the desired app icon, based on our dock icon changer code.
+	
+	// TEST
+//	NSImage *im = [[[NSImage alloc] initWithContentsOfFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns"] autorelease];
+//	[NSApp setApplicationIconImage: im];
 	
 	NSDate *now = [NSDate date];
 	// Get the current year, so we can plug it back into the date creation.  Is there a less hackish way to do this?
@@ -1838,6 +1845,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 								   alternateButton:nil 
 									   otherButton:nil
 						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Sandvox menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+	[alert setIcon:[NSApp applicationIconImage]];
 	(void)[alert runModal];
 #endif
 }

@@ -78,6 +78,7 @@
                 result = nil;
                 
                 NSAlert *alert = [[NSAlert alloc] init];
+				[alert setIcon:[NSApp applicationIconImage]];
                 [alert setMessageText:NSLocalizedString(@"The site cannot be exported here as that would replace the document.", "Alert title")];
                 [alert setInformativeText:NSLocalizedString(@"Choose a different location or file name for the export.", "Alert info")];
                 

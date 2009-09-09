@@ -103,7 +103,8 @@
         {
             // Tell the user why
             NSAlert *alert = [[NSAlert alloc] init];    // Will be released when it ends
-            [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
+            [alert setIcon:[NSApp applicationIconImage]];
+			[alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
             [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
             [alert addButtonWithTitle:TOOLBAR_SETUP_HOST];
             [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];

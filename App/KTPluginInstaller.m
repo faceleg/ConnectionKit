@@ -151,7 +151,7 @@ NSLog(@"%@", aURL);
 		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plug-ins were installed:\n\n%@\nPlease re-launch Sandvox to make use of newly installed plug-ins.",@"result of installation"), pluginList];
 			
 		NSAlert *alert = [NSAlert alertWithMessageText:message defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:information];
-		
+		[alert setIcon:[NSApp applicationIconImage]];
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		
@@ -184,7 +184,7 @@ NSLog(@"%@", aURL);
 		NSString *information = [NSString stringWithFormat:NSLocalizedString(@"The following plug-ins could not be installed:\n\n%@",@"result of installation"), pluginList];
 		
 		NSAlert *alert = [NSAlert alertWithMessageText:message defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:information];
-		
+		[alert setIcon:[NSApp applicationIconImage]];
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		

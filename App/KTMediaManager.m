@@ -265,7 +265,9 @@ NSString *KTMediaLogDomain = @"Media";
 	NSError *error = nil;
 	NSArray *allObjects = [docMOC allObjectsWithEntityName:entityName error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];
 	}
 	
 	// Run through the objects asking for their media

@@ -187,7 +187,9 @@
 	NSError *error = nil;
 	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];
 		return nil;
 	}
 	

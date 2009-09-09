@@ -1230,7 +1230,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
                                    alternateButton:NSLocalizedString(@"Cancel", "Cancel Button")  
                                        otherButton:nil
                          informativeTextWithFormat:message];
-    
+    [alert setIcon:[NSApp applicationIconImage]];
     [alert beginSheetModalForWindow:[self windowForSheet]
                       modalDelegate:self
                      didEndSelector:@selector(shouldRevertToSnapshotAlertDidEnd:returnCode:contextInfo:)
