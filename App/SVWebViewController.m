@@ -44,7 +44,7 @@
 
 - (void)dealloc
 {
-    [self setEditingOverlayView:nil];   // needed to tear down data source
+    [self setEditingOverlay:nil];   // needed to tear down data source
     
     [_page release];
     OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
@@ -77,10 +77,10 @@
     [webView setEditingDelegate:self];
 }
 
-@synthesize editingOverlayView = _editingOverlay;
-- (void)setEditingOverlayView:(SVEditingOverlay *)overlay
+@synthesize editingOverlay = _editingOverlay;
+- (void)setEditingOverlay:(SVEditingOverlay *)overlay
 {
-    [[self editingOverlayView] setDataSource:nil];
+    [[self editingOverlay] setDataSource:nil];
     
     [overlay retain];
     [_editingOverlay release];

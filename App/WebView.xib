@@ -137,11 +137,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">editingOverlayView</string>
+						<string key="label">editingOverlay</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="161729315"/>
 					</object>
-					<int key="connectionID">8</int>
+					<int key="connectionID">9</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -233,7 +233,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">8</int>
+			<int key="maxID">9</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -412,7 +412,7 @@
 					<string key="className">SVWebViewController</string>
 					<string key="superclassName">KSWebViewController</string>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">editingOverlayView</string>
+						<string key="NS.key.0">editingOverlay</string>
 						<string key="NS.object.0">SVEditingOverlay</string>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

@@ -46,7 +46,7 @@
 
 #pragma mark Selectable Objects
 
-@property(nonatomic, retain) IBOutlet SVEditingOverlay *editingOverlayView;
+@property(nonatomic, retain) IBOutlet SVEditingOverlay *editingOverlay;
 @property(nonatomic, copy, readonly) NSArray *contentObjects;
 
 @end
