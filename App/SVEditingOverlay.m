@@ -18,7 +18,9 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @interface SVEditingOverlay ()
 
+@property(nonatomic, retain, readonly) CALayer *drawingLayer;
 @property(nonatomic, retain, readonly) NSWindow *overlayWindow;
+
 // Selection
 @property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
@@ -52,10 +54,12 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [_overlayWindow setIgnoresMouseEvents:YES];
     
     
-    // Create a CALayer for drawing
-    //CALayer *layer = [[CALayer alloc] init];
-    //[self setLayer:layer];
-    //[self setWantsLayer:YES];
+    // Create a layer for drawing
+    NSView *overlayView = [_overlayWindow contentView];
+    _drawingLayer = [[CAScrollLayer alloc] init];
+    
+    [overlayView setLayer:_drawingLayer];
+    [overlayView setWantsLayer:YES];
     
     
     // Tracking area
@@ -99,6 +103,10 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 #pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
+
+#pragma mark Drawing
+
+@synthesize drawingLayer = _drawingLayer;
 
 #pragma mark Overlay Window
 
@@ -227,7 +235,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         [border setFrame:NSRectToCGRect([anItem rect])];
         
         [layers addObject:border];
-        [[self layer] addSublayer:border];
+        [[self drawingLayer] addSublayer:border];
         
         [border release];
     }
@@ -339,7 +347,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 {
     // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-    CALayer *myLayer = [self layer];
+    CALayer *myLayer = [self drawingLayer];
     CALayer *layer = [myLayer hitTest:NSPointToCGPoint(point)];
     
     if (layer != myLayer)

@@ -24,6 +24,9 @@
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
     // Drawing
+    CALayer *_drawingLayer;
+    
+    // Overlay Window
     NSWindow        *_overlayWindow;
     NSArray         *_trackedViews;
     
