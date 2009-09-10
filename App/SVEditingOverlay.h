@@ -22,7 +22,6 @@
   @private
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
-    NSRect          _clipRect;
     CAScrollLayer   *_scrollLayer;
     
     NSArray *_selectedItems;

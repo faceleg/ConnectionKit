@@ -82,10 +82,14 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 #pragma mark Document View
 
-@synthesize contentRect = _clipRect;
+- (NSRect)contentRect
+{
+    CGRect result = [[self scrollLayer] frame];
+    return NSRectFromCGRect(result);
+}
+
 - (void)setContentRect:(NSRect)clipRect
 {
-    _clipRect = clipRect;
     [[self scrollLayer] setFrame:NSRectToCGRect(clipRect)];
 }
 
@@ -184,9 +188,16 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    // Mouse down events ALWAYS go through us so we can handle selection
-    NSEvent *event = [[self window] currentEvent];
-    NSView *result = ([event type] == NSLeftMouseDown) ? self : [self editingOverlayHitTest:aPoint];
+    NSView *result = nil;   // pass through to view underneath by default
+    
+    // Simplest test, is it within our content area?
+    if ([self mouse:aPoint inRect:[self contentRect]])
+    {
+        // Mouse down events in the content area ALWAYS go through us so we can handle selection
+        NSEvent *event = [[self window] currentEvent];
+        result = ([event type] == NSLeftMouseDown) ? self : [self editingOverlayHitTest:aPoint];
+    }
+    
     return result;
 }
 
