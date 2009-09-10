@@ -14,7 +14,7 @@
 @class WebView, KTPage, SVTextBlock;
 
 
-@interface SVWebViewController : KSWebViewController <SVEditingOverlayDataSource, KTHTMLParserDelegate>
+@interface SVWebViewController : KSWebViewController <SVWebEditingOverlayDataSource, KTHTMLParserDelegate>
 {
     KTPage  *_page;
     BOOL    _isLoading;
