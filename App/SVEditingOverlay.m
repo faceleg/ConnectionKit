@@ -186,22 +186,19 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (BOOL)acceptsFirstResponder { return YES; }
 
-- (NSView *)hitTest:(NSPoint)aPoint
+- (BOOL)resignFirstResponder
 {
-    NSView *result = nil;   // pass through to view underneath by default
-    
-    // Simplest test, is it within our content area?
-    if ([self mouse:aPoint inRect:[self contentRect]])
+    BOOL result = [super resignFirstResponder];
+    if (result)
     {
-        // Mouse down events in the content area ALWAYS go through us so we can handle selection
-        NSEvent *event = [[self window] currentEvent];
-        result = ([event type] == NSLeftMouseDown) ? self : [self editingOverlayHitTest:aPoint];
+        // Before I was trying to handle this by intercepting -mouseDown: and then passing the event along. This was DUMB, instead the AppKit will take care of telling us whether a mouse down should really remove the selection.
+        [self setSelectedItems:nil];
     }
     
     return result;
 }
 
-- (NSView *)editingOverlayHitTest:(NSPoint)aPoint;
+- (NSView *)hitTest:(NSPoint)aPoint
 {
     // Does the point correspond to one of the selections? If so, target that.
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
@@ -210,11 +207,6 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
     {
         result = self;
-    }
-    else
-    {
-        //result = [[self dataSource] editingOverlay:self hitTest:aPoint];
-        //if (!result) result = [super hitTest:aPoint];
     }
     
     

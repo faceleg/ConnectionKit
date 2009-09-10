@@ -52,19 +52,6 @@
 - (id <SVEditingOverlayItem>)itemAtPoint:(NSPoint)point;
 
 
-#pragma mark Event Handling
-
-/*  SVWebEditingOverlay overrides NSView's default hit testing behaviour in some important ways:
- *
- *      1.  If the point corresponds to the current selection, the receiver will be returned.
- *
- *      2.  Otherwise, hit testing will be delegated to the receiver's Data Source.
- *
- *      3.  BUT, depending on the current event, a different view may be returned that will handle a particular event type before passing it onto the real recipient. This has to be done in -hitTest: so as to hook into Cocoa's event handling mechanisms. If you're looking to avoid this, use the -editingOverlayHitTest: method which will ignore the requirement.
- */
-- (NSView *)hitTest:(NSPoint)aPoint;
-- (NSView *)editingOverlayHitTest:(NSPoint)aPoint;
-
 @end
 
 
