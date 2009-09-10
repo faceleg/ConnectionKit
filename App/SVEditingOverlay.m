@@ -18,8 +18,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @interface SVEditingOverlay ()
 
-@property(nonatomic, retain, readonly) CALayer *scrollLayer;
-
+@property(nonatomic, retain, readonly) NSWindow *overlayWindow;
 // Selection
 @property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
@@ -43,17 +42,20 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     _selectedItems = [[NSMutableArray alloc] init];
     
     
+    // Create overlay window
+    _overlayWindow = [[NSWindow alloc] initWithContentRect:NSZeroRect
+                                                 styleMask:NSBorderlessWindowMask
+                                                   backing:NSBackingStoreBuffered
+                                                     defer:YES];
+    [_overlayWindow setOpaque:NO];
+    [_overlayWindow setBackgroundColor:[[NSColor redColor] colorWithAlphaComponent:0.2]];
+    [_overlayWindow setIgnoresMouseEvents:YES];
+    
+    
     // Create a CALayer for drawing
-    CALayer *layer = [[CALayer alloc] init];
-    [self setLayer:layer];
-    [self setWantsLayer:YES];
-    
-    
-    // Mask rect
-    _scrollLayer = [[CAScrollLayer alloc] init];
-    [_scrollLayer setAutoresizingMask:(kCALayerWidthSizable | kCALayerHeightSizable)];
-    [self setContentRect:[self bounds]];
-    [layer addSublayer:_scrollLayer];
+    //CALayer *layer = [[CALayer alloc] init];
+    //[self setLayer:layer];
+    //[self setWantsLayer:YES];
     
     
     // Tracking area
@@ -72,32 +74,122 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [_selectionBorders release];
     [_selectedItems release];
     
-    [_scrollLayer release];
+    [_overlayWindow release];
     
     [super dealloc];
 }
 
-#pragma mark Document View
+#pragma mark Document
 
-- (NSRect)contentRect
+- (NSRect)contentFrame
 {
-    CGRect result = [[self scrollLayer] frame];
-    return NSRectFromCGRect(result);
+    return [self bounds];
 }
 
-- (void)setContentRect:(NSRect)clipRect
+- (void)setContentFrame:(NSRect)clipRect
 {
-    [[self scrollLayer] setFrame:NSRectToCGRect(clipRect)];
+    
 }
-
-@synthesize scrollLayer = _scrollLayer;
 
 #pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
+
+#pragma mark Overlay Window
+
+@synthesize overlayWindow = _overlayWindow;
+
+/*  Positions the overly window in the right place and resets tracking of views
+ */
+- (void)resetOverlayWindow
+{
+    // So where we moved to?
+    NSWindow *window = [self window];
+    NSWindow *overlayWindow = [self overlayWindow];
+    
+    if (window)
+    {
+        // Place the overlay window in exactly the same location as our content. Use -disableScreenUpdatesUntilFlush otherwise we can get untidily out of sync with the main window
+        NSRect contentRect = [self convertRectToBase:[self contentFrame]];
+        contentRect.origin = [window convertBaseToScreen:contentRect.origin];
+        NSRect overlayFrame = [overlayWindow frameRectForContentRect:contentRect];
+        
+        [overlayWindow disableScreenUpdatesUntilFlush];
+        [overlayWindow setFrame:overlayFrame display:NO];
+        
+        if (![overlayWindow parentWindow])
+        {
+            [window addChildWindow:overlayWindow ordered:NSWindowAbove];
+        }
+    }
+    else
+    {
+        // Nowhere to display the window, so just wait till we come back onscreen
+        [[overlayWindow parentWindow] removeChildWindow:overlayWindow];
+        [overlayWindow orderOut:self];
+    }
+}
+
+- (void)viewDidMove:(NSNotification *)notification
+{
+    [self resetOverlayWindow];
+}
+
+- (void)viewDidMoveToWindow
+{
+    [super viewDidMoveToWindow];
+    
+    // Stop observing old views
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    for (NSView *aView in _trackedViews)
+    {
+        [notificationCenter removeObserver:self
+                                      name:NSViewFrameDidChangeNotification
+                                    object:aView];
+        [notificationCenter removeObserver:self
+                                      name:NSViewBoundsDidChangeNotification
+                                    object:aView];
+    }
+    [_trackedViews release], _trackedViews = nil;
+    
+    
+    // Reposition window
+    [self resetOverlayWindow];
+    
+    
+    // Observe our new superviews for signs of movement
+    if ([self window])
+    {
+        NSMutableArray *superviews = [[NSMutableArray alloc] init];
+        
+        NSView *aView = self;
+        while (aView)
+        {
+            [superviews insertObject:aView atIndex:0];
+            
+            [notificationCenter addObserver:self 
+                                   selector:@selector(viewDidMove:)
+                                       name:NSViewFrameDidChangeNotification
+                                     object:aView];
+            
+            [notificationCenter addObserver:self
+                                   selector:@selector(viewDidMove:)
+                                       name:NSViewBoundsDidChangeNotification 
+                                     object:aView];
+            
+            aView = [aView superview];
+        }
+        
+        
+        // Store new observed superviews
+        _trackedViews = superviews;
+    }
+}
 
 #pragma mark Selection
 
@@ -135,7 +227,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         [border setFrame:NSRectToCGRect([anItem rect])];
         
         [layers addObject:border];
-        [[self scrollLayer] addSublayer:border];
+        [[self layer] addSublayer:border];
         
         [border release];
     }

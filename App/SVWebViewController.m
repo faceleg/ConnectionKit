@@ -190,13 +190,8 @@
         
         
         // So we need the overlay view's contentRect to match up to the webframe. This may not be the best place to do it, but it's good enough for now
-        WebFrameView *frameView = [frame frameView];
-        NSView *documentView = [frameView documentView];
-        NSRect frame = [documentView visibleRect];
-        
-        SVEditingOverlay *overlay = [self editingOverlay];
-        NSRect contentRect = [overlay convertRect:frame fromView:documentView];
-        [overlay setContentRect:contentRect];
+        //NSView *documentView = [[frame frameView] documentView];
+        //[[self editingOverlay] setDocumentView:documentView];
         
         
         
