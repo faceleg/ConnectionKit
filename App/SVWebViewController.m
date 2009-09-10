@@ -189,6 +189,17 @@
         
         
         
+        // So we need the overlay view's contentRect to match up to the webframe. This may not be the best place to do it, but it's good enough for now
+        WebFrameView *frameView = [frame frameView];
+        NSView *documentView = [frameView documentView];
+        NSRect frame = [documentView visibleRect];
+        
+        SVEditingOverlay *overlay = [self editingOverlay];
+        NSRect contentRect = [overlay convertRect:frame fromView:documentView];
+        [overlay setContentRect:contentRect];
+        
+        
+        
         // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
         NSArray *pagelets = [[[self page] sidebarPagelets] arrayByAddingObjectsFromArray:[[self page] callouts]];
         NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
