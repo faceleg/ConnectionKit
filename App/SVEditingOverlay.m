@@ -77,10 +77,14 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     [_scrollLayer release];
     
+    [_contentView release];
+    
     [super dealloc];
 }
 
-#pragma mark Document View
+#pragma mark Content/Document View
+
+@synthesize contentView = _contentView;
 
 - (NSRect)contentRect
 {
@@ -200,13 +204,17 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    // Does the point correspond to one of the selections? If so, target that.
+    // Does the point correspond to an item? If so, we're the target; otherwise fall back to standard behaviour
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
-    NSView *result = nil;
+    NSView *result;
     if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
     {
         result = self;
+    }
+    else
+    {
+        result = [super hitTest:aPoint];
     }
     
     
