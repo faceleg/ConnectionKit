@@ -14,7 +14,7 @@
 
 
 @protocol SVWebEditingOverlayDataSource;
-@class SVSelectionBorder, CAScrollLayer;
+@class SVSelectionBorder, SVEditingOverlayDrawingView;
 
 
 @interface SVEditingOverlay : NSView
@@ -25,8 +25,7 @@
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
     // Drawing
-    CAScrollLayer   *_drawingLayer;
-    NSPoint         _lastScrollPoint;
+    SVEditingOverlayDrawingView *_drawingView;
     
     // Overlay Window
     NSWindow        *_overlayWindow;

@@ -7,8 +7,7 @@
 //
 
 #import "SVEditingOverlay.h"
-#import "SVSelectionBorder.h"
-#import "SVSelectionHandleLayer.h"
+#import "SVEditingOverlay+Drawing.h"
 
 #import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
 
@@ -21,7 +20,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 // Document
 
 // Drawing Layer
-@property(nonatomic, retain, readonly) CAScrollLayer *drawingLayer;
+@property(nonatomic, retain, readonly) SVEditingOverlayDrawingView *drawingView;
 - (CGRect)convertDocumentRectToDrawingLayer:(NSRect)rect;
 
 // Overlay window
@@ -49,7 +48,6 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     // ivars
     _contentFrame = [self bounds];
-    _lastScrollPoint = NSZeroPoint;
     _selectedItems = [[NSMutableArray alloc] init];
     
     
@@ -63,12 +61,13 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [_overlayWindow setIgnoresMouseEvents:YES];
     
     
-    // Create a layer for drawing
-    NSView *overlayView = [_overlayWindow contentView];
-    _drawingLayer = [[CAScrollLayer alloc] init];
+    // Create drawing view
+    NSView *contentView = [_overlayWindow contentView];
+    _drawingView = [[SVEditingOverlayDrawingView alloc]
+                    initWithFrame:[contentView bounds]];
     
-    [overlayView setLayer:_drawingLayer];
-    [overlayView setWantsLayer:YES];
+    [_drawingView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [contentView addSubview:_drawingView];
     
     
     // Tracking area
@@ -109,17 +108,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (void)scrollToPoint:(NSPoint)aPoint;
 {
-    CAScrollLayer *scrollLayer = [self drawingLayer];
-    
-    // because the only way to do flipped geometry on 10.5 is manually :(
-    CGPoint scrollPoint;
-    scrollPoint.x = aPoint.x;
-    scrollPoint.y = -([scrollLayer bounds].size.height + aPoint.y); 
-    
-    [scrollLayer scrollToPoint:scrollPoint];
-    
-    // Store it for when resizing
-    _lastScrollPoint = aPoint;
+    [[self drawingView] scrollToPoint:aPoint];
 }
 
 - (CGPoint)convertPointToContent:(NSPoint)aPoint;
@@ -157,9 +146,9 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [self setContentFrame:contentFrame];
 }
 
-#pragma mark Drawing Layer
+#pragma mark Drawing
 
-@synthesize drawingLayer = _drawingLayer;
+@synthesize drawingView = _drawingView;
 
 - (CGRect)convertDocumentRectToDrawingLayer:(NSRect)rect;
 {
@@ -185,10 +174,6 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     [overlayWindow disableScreenUpdatesUntilFlush];
     [overlayWindow setFrame:overlayFrame display:NO];
-    
-    
-    // Need to reset the scrolling because of the flippin' flipped coordinate system.
-    [self scrollToPoint:_lastScrollPoint];
 }
 
 - (void)viewDidMoveToWindow
@@ -296,7 +281,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
         [border setFrame:[self convertDocumentRectToDrawingLayer:itemRect]];
         
         [layers addObject:border];
-        [[self drawingLayer] addSublayer:border];
+        [[[self drawingView] scrollLayer] addSublayer:border];
         
         [border release];
     }
@@ -409,7 +394,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 {
     // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-    CALayer *myLayer = [self drawingLayer];
+    CALayer *myLayer = [[self drawingView] scrollLayer];
     CALayer *layer = [myLayer hitTest:[self convertPointToContent:point]];
     
     if (layer != myLayer)

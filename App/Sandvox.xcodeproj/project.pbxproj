@@ -295,6 +295,8 @@
 		277560370CA5228B00D8A412 /* KTParsedKeyPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KTParsedKeyPath.m */; };
 		2775612E0CA718C200D8A412 /* KTWebViewComponentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */; settings = {ATTRIBUTES = (); }; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
+		277F38EE105A71C50061628C /* SVEditingOverlay+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */; };
+		277F38EF105A71C50061628C /* SVEditingOverlay+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F61DE104D95720099B186 /* SVContainerTextBlock.h */; };
 		27851910104FCF17009C8558 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2785190F104FCF17009C8558 /* WebView.xib */; };
@@ -1729,6 +1731,8 @@
 		2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponentProtocol.h; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
+		277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVEditingOverlay+Drawing.h"; sourceTree = "<group>"; };
+		277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVEditingOverlay+Drawing.m"; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
 		277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SlideshowPlay.tiff; sourceTree = "<group>"; };
 		277F61DE104D95720099B186 /* SVContainerTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContainerTextBlock.h; sourceTree = "<group>"; };
@@ -2751,6 +2755,8 @@
 				27ED5D95105549020089F3C5 /* SVSelectionHandleLayer.h */,
 				27ED5D96105549020089F3C5 /* SVSelectionHandleLayer.m */,
 				27FA884C1057AD9800E8D870 /* SVEditingOverlayItem.h */,
+				277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */,
+				277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */,
 			);
 			name = "Editing Overlay";
 			sourceTree = "<group>";
@@ -5032,6 +5038,7 @@
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
 				27ED5D97105549020089F3C5 /* SVSelectionHandleLayer.h in Headers */,
 				27FA884D1057AD9800E8D870 /* SVEditingOverlayItem.h in Headers */,
+				277F38EE105A71C50061628C /* SVEditingOverlay+Drawing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6430,6 +6437,7 @@
 				271B489B1052CC9D008B698C /* SVContainerTextBlock.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
 				27ED5D98105549020089F3C5 /* SVSelectionHandleLayer.m in Sources */,
+				277F38EF105A71C50061628C /* SVEditingOverlay+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
