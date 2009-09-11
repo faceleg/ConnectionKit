@@ -402,9 +402,11 @@
 {
 	NSMutableSet *result = [NSMutableSet setWithSet:[super requiredMediaIdentifiers]];
 	
-	// Inclue our thumbnail and site outline image
+	// Inclue our thumbnail, site outline image, and any images in custom summary
 	[result addObjectIgnoringNil:[self valueForKey:@"thumbnailMediaIdentifier"]];
 	[result addObjectIgnoringNil:[self valueForKey:@"customSiteOutlineIconIdentifier"]];
+    
+    [result unionSet:[KTMediaContainer mediaContainerIdentifiersInHTML:[self customSummaryHTML]]];
 	
 	// Include anything our index requires?
 	NSSet *indexMediaIDs = [[self index] requiredMediaIdentifiers];
