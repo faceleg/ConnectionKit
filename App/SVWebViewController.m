@@ -199,6 +199,11 @@
         
         [overlay setContentFrame:contentFrameRect];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didScroll:)
+                                                     name:NSViewBoundsDidChangeNotification
+                                                   object:nil];
+        
         
         
         // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
@@ -351,6 +356,11 @@
 {
     id <SVEditingOverlayItem> result = [self itemAtPoint:point];
     return result;
+}
+
+- (void)didScroll:(NSNotification *)notification
+{
+    [[self editingOverlay] scrollToPoint:self.webView.mainFrame.frameView.documentView.enclosingScrollView.contentView.bounds.origin];
 }
 
 @end

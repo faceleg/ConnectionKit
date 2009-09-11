@@ -18,8 +18,11 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @interface SVEditingOverlay ()
 
-// Drawing
+// Document
+
+// Drawing Layer
 @property(nonatomic, retain, readonly) CAScrollLayer *drawingLayer;
+- (CGRect)convertDocumentRectToDrawingLayer:(NSRect)rect;
 
 // Overlay window
 @property(nonatomic, retain, readonly) NSWindow *overlayWindow;
@@ -62,7 +65,6 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Create a layer for drawing
     NSView *overlayView = [_overlayWindow contentView];
     _drawingLayer = [[CAScrollLayer alloc] init];
-    //[_drawingLayer setAffineTransform:CGAffineTransformMakeScale(1.0, -1.0)];
     
     [overlayView setLayer:_drawingLayer];
     [overlayView setWantsLayer:YES];
@@ -104,11 +106,16 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [self viewDidMove:nil];
 }
 
-- (void)scrollToPoint:(NSPoint)point;
+- (void)scrollToPoint:(NSPoint)aPoint;
 {
-    CGPoint cgPoint = NSPointToCGPoint(point);
-    cgPoint.y = -cgPoint.y; // because the only way to do flipped geometry on 10.5 is manually :(
-    [[self drawingLayer] scrollToPoint:cgPoint];
+    CAScrollLayer *scrollLayer = [self drawingLayer];
+    
+    // because the only way to do flipped geometry on 10.5 is manually :(
+    CGPoint scrollPoint;
+    scrollPoint.x = aPoint.x;
+    scrollPoint.y = -([scrollLayer bounds].size.height + aPoint.y); 
+    
+    [scrollLayer scrollToPoint:scrollPoint];
 }
 
 - (CGPoint)convertPointToContent:(NSPoint)aPoint;
@@ -149,6 +156,14 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 #pragma mark Drawing Layer
 
 @synthesize drawingLayer = _drawingLayer;
+
+- (CGRect)convertDocumentRectToDrawingLayer:(NSRect)rect;
+{
+    CGRect result = NSRectToCGRect(rect);
+    result.origin.y = -rect.origin.y;
+    result.size.height = -rect.size.height;
+    return result;
+}
 
 #pragma mark Overlay Window
 
@@ -269,7 +284,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     for (id <SVEditingOverlayItem> anItem in items)
     {
         CALayer *border = [[SVSelectionBorder alloc] init];
-        [border setFrame:[self convertRectToContent:[anItem rect]]];
+        NSRect itemRect = [anItem rect];
+        [border setFrame:[self convertDocumentRectToDrawingLayer:itemRect]];
         
         [layers addObject:border];
         [[self drawingLayer] addSublayer:border];
