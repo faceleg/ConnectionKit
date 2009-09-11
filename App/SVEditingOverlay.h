@@ -21,6 +21,7 @@
 {
   @private
     // Content
+    NSRect  _contentFrame;
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
     // Drawing

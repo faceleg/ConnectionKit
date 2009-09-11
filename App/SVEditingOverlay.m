@@ -18,8 +18,12 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @interface SVEditingOverlay ()
 
+// Drawing
 @property(nonatomic, retain, readonly) CALayer *drawingLayer;
+
+// Overlay window
 @property(nonatomic, retain, readonly) NSWindow *overlayWindow;
+- (void)viewDidMove:(NSNotification *)notification;
 
 // Selection
 @property(nonatomic, copy, readonly) NSArray *selectionBorders;
@@ -41,6 +45,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     
     // ivars
+    _contentFrame = [self bounds];
     _selectedItems = [[NSMutableArray alloc] init];
     
     
@@ -90,19 +95,31 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 #pragma mark Document
 
-- (NSRect)contentFrame
-{
-    return [self bounds];
-}
-
+@synthesize contentFrame = _contentFrame;
 - (void)setContentFrame:(NSRect)clipRect
 {
+    _contentFrame = clipRect;
     
+    [self viewDidMove:nil];
 }
 
 #pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
+
+#pragma mark Frame Rectangle
+
+- (void)setFrame:(NSRect)frameRect
+{
+    NSRect oldFrame = [self frame];
+    [super setFrame:frameRect];
+    
+    // Need to update content frame accordingly. It behaves just like the springs/struts mechanism to stretch size
+    NSRect contentFrame = [self contentFrame];
+    contentFrame.size.width += frameRect.size.width - oldFrame.size.width;
+    contentFrame.size.height += frameRect.size.height - oldFrame.size.height;
+    [self setContentFrame:contentFrame];
+}
 
 #pragma mark Drawing
 
@@ -170,7 +187,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     {
         NSMutableArray *superviews = [[NSMutableArray alloc] init];
         
-        NSView *aView = self;
+        NSView *aView = [self superview];   // we'll take care directly of our own frame changes
         while (aView)
         {
             [superviews insertObject:aView atIndex:0];
