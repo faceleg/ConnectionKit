@@ -57,7 +57,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
                                                    backing:NSBackingStoreBuffered
                                                      defer:YES];
     [_overlayWindow setOpaque:NO];
-    [_overlayWindow setBackgroundColor:[[NSColor redColor] colorWithAlphaComponent:0.1]];
+    [_overlayWindow setBackgroundColor:[NSColor clearColor]];
     [_overlayWindow setIgnoresMouseEvents:YES];
     
     
