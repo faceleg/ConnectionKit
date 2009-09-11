@@ -20,6 +20,8 @@
         
         // Create a layer for drawing
         CALayer *layer = [[CALayer alloc] init];
+        [layer setDelegate:self];
+        
         [self setLayer:layer];
         [self setWantsLayer:YES];
         [layer release];
@@ -28,14 +30,25 @@
         _scrollLayer = [[CAScrollLayer alloc] init];
         [_scrollLayer setFrame:[layer bounds]];
         [_scrollLayer setAutoresizingMask:(kCALayerWidthSizable | kCALayerHeightSizable)];
+        [_scrollLayer setDelegate:self];
+        
         [layer addSublayer:_scrollLayer];
     }
     
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+    
+    NSRect rect;
+    rect.origin = _lastScrollPoint;
+    rect.size.width = 100.0;
+    rect.size.height = 100.0;
+    
+    [[NSColor blackColor] set];
+    NSRectFill([self centerScanRect:rect]);
 }
 
 - (void)setFrame:(NSRect)frameRect
@@ -49,6 +62,8 @@
 
 - (void)scrollToPoint:(NSPoint)aPoint
 {
+    [[self window] disableScreenUpdatesUntilFlush];
+    
     CAScrollLayer *scrollLayer = [self scrollLayer];
     
     // because the only way to do flipped geometry on 10.5 is manually :(
@@ -60,6 +75,11 @@
     
     // Store it for when resizing
     _lastScrollPoint = aPoint;
+}
+
+- (id < CAAction >)actionForLayer:(CALayer *)layer forKey:(NSString *)event
+{
+    return (id)[NSNull null];
 }
 
 @end

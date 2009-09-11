@@ -106,6 +106,18 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [self viewDidMove:nil];
 }
 
+- (void)setFrame:(NSRect)frameRect
+{
+    NSRect oldFrame = [self frame];
+    [super setFrame:frameRect];
+    
+    // Need to update content frame accordingly. It behaves just like the springs/struts mechanism to stretch size
+    NSRect contentFrame = [self contentFrame];
+    contentFrame.size.width += frameRect.size.width - oldFrame.size.width;
+    contentFrame.size.height += frameRect.size.height - oldFrame.size.height;
+    [self setContentFrame:contentFrame];
+}
+
 - (void)scrollToPoint:(NSPoint)aPoint;
 {
     [[self drawingView] scrollToPoint:aPoint];
@@ -131,20 +143,6 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 #pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
-
-#pragma mark Frame Rectangle
-
-- (void)setFrame:(NSRect)frameRect
-{
-    NSRect oldFrame = [self frame];
-    [super setFrame:frameRect];
-    
-    // Need to update content frame accordingly. It behaves just like the springs/struts mechanism to stretch size
-    NSRect contentFrame = [self contentFrame];
-    contentFrame.size.width += frameRect.size.width - oldFrame.size.width;
-    contentFrame.size.height += frameRect.size.height - oldFrame.size.height;
-    [self setContentFrame:contentFrame];
-}
 
 #pragma mark Drawing
 
