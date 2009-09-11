@@ -1313,7 +1313,12 @@ from representedObject */
         }
         else if ([self selectedPagelet])
         {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
+            //[menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
+            
+            // hack to deal with fact that 1.* no longer duplicates pagelets
+            // let's stop indicating to users that this is even possible
+            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
+            return NO;
         }
         else
         {
