@@ -19,7 +19,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 @interface SVEditingOverlay ()
 
 // Drawing
-@property(nonatomic, retain, readonly) CALayer *drawingLayer;
+@property(nonatomic, retain, readonly) CAScrollLayer *drawingLayer;
 
 // Overlay window
 @property(nonatomic, retain, readonly) NSWindow *overlayWindow;
@@ -62,6 +62,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Create a layer for drawing
     NSView *overlayView = [_overlayWindow contentView];
     _drawingLayer = [[CAScrollLayer alloc] init];
+    //[_drawingLayer setAffineTransform:CGAffineTransformMakeScale(1.0, -1.0)];
     
     [overlayView setLayer:_drawingLayer];
     [overlayView setWantsLayer:YES];
@@ -101,6 +102,13 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     _contentFrame = clipRect;
     
     [self viewDidMove:nil];
+}
+
+- (void)scrollToPoint:(NSPoint)point;
+{
+    CGPoint cgPoint = NSPointToCGPoint(point);
+    cgPoint.y = -cgPoint.y; // because the only way to do flipped geometry on 10.5 is manually :(
+    [[self drawingLayer] scrollToPoint:cgPoint];
 }
 
 - (CGPoint)convertPointToContent:(NSPoint)aPoint;

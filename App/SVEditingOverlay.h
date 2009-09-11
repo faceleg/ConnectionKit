@@ -25,7 +25,7 @@
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
     // Drawing
-    CALayer *_drawingLayer;
+    CAScrollLayer   *_drawingLayer;
     
     // Overlay Window
     NSWindow        *_overlayWindow;
@@ -41,6 +41,9 @@
 
 // Our document view (in Sandvox, the main frame's WebFrameView) will often not fill the space as ourself. Rather than have to reposition the overlay view to match, it should be more efficent to adjust this mask to match the document.
 @property(nonatomic) NSRect contentFrame;
+
+// Uses the same coordinate system as a standard NSScrollView. i.e. 0,0 is the top of the document. 0,10 scrolls down by 10 pixels.
+- (void)scrollToPoint:(NSPoint)point;
 
 // Pretty similar to NSView's -convertXToBase: set of methods. Translates coordinates as though -contentFrame were its own coordinates system.
 - (CGPoint)convertPointToContent:(NSPoint)aPoint;
