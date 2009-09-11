@@ -26,6 +26,7 @@
     
     // Drawing
     CAScrollLayer   *_drawingLayer;
+    NSPoint         _lastScrollPoint;
     
     // Overlay Window
     NSWindow        *_overlayWindow;

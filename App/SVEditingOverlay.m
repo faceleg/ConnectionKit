@@ -49,6 +49,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     // ivars
     _contentFrame = [self bounds];
+    _lastScrollPoint = NSZeroPoint;
     _selectedItems = [[NSMutableArray alloc] init];
     
     
@@ -116,6 +117,9 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     scrollPoint.y = -([scrollLayer bounds].size.height + aPoint.y); 
     
     [scrollLayer scrollToPoint:scrollPoint];
+    
+    // Store it for when resizing
+    _lastScrollPoint = aPoint;
 }
 
 - (CGPoint)convertPointToContent:(NSPoint)aPoint;
@@ -171,7 +175,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (void)viewDidMove:(NSNotification *)notification
 {
-    // Move the overlay window to be in exactly the same location as our content. Use -disableScreenUpdatesUntilFlush otherwise we can get untidily out of sync with the main window
+    // Place the overlay window in exactly the same location as our content. Use -disableScreenUpdatesUntilFlush otherwise we can get untidily out of sync with the main window
     NSWindow *window = [self window];
     NSWindow *overlayWindow = [self overlayWindow];
     
@@ -181,6 +185,10 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     
     [overlayWindow disableScreenUpdatesUntilFlush];
     [overlayWindow setFrame:overlayFrame display:NO];
+    
+    
+    // Need to reset the scrolling because of the flippin' flipped coordinate system.
+    [self scrollToPoint:_lastScrollPoint];
 }
 
 - (void)viewDidMoveToWindow
