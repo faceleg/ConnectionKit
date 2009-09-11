@@ -213,17 +213,18 @@
 	float width = [[[[self windowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
 	[[self documentInfo] setInteger:width forKey:@"sourceOutlineSize"];
 	
-	
 	// Icon size
 	[[self documentInfo] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
-	
-	
+    
 	// Window size
 	NSWindow *window = [[self windowController] window];
 	if (window)
 	{
 		[[self documentInfo] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
+    
+    // editing controls
+    [[self documentInfo] setBool:[self displayEditingControls] forKey:@"displayEditingControls"];
 }
 
 #pragma mark -

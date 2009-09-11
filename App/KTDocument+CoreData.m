@@ -108,7 +108,7 @@
 	{
 		// Load up document display properties
 		[self setDisplaySmallPageIcons:[[self documentInfo] boolForKey:@"displaySmallPageIcons"]];
-		
+		[self setDisplayEditingControls:[[self documentInfo] boolForKey:@"displayEditingControls"]];
 		
         // For diagnostics, log the value of the host properties
 		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"] )
