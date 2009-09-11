@@ -15,10 +15,10 @@
 
 - (id)init
 {
-    return [self initWithDOMElement:nil];
+    return [self initWithElement:nil];
 }
 
-- (id)initWithDOMElement:(DOMHTMLElement *)element;
+- (id)initWithElement:(DOMHTMLElement *)element;
 {
     OBPRECONDITION(element);
     
@@ -45,13 +45,13 @@
 
 #pragma mark DOM
 
-@synthesize DOMElement = _element;
+@synthesize element = _element;
 
 #pragma mark Editing Overlay Item
 
 - (NSRect)rect
 {
-    DOMElement *element = [self DOMElement];
+    DOMElement *element = [self element];
     NSRect result = [element boundingBox];
     return result;
 }

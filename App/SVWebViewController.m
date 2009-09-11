@@ -215,7 +215,7 @@
             NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
             DOMElement *element = [domDoc getElementById:pageletID];
             
-            SVContentObject *object = [[SVContentObject alloc] initWithDOMElement:element];
+            SVContentObject *object = [[SVContentObject alloc] initWithElement:element];
             
             [contentObjects addObject:object];
             [object release];
@@ -342,7 +342,7 @@
     {
         for (result in [self contentObjects])
         {
-            if ([node isDescendantOfNode:[result DOMElement]])
+            if ([node isDescendantOfNode:[result element]])
             {
                 break;
             }
