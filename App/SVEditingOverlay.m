@@ -112,45 +112,24 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 @synthesize overlayWindow = _overlayWindow;
 
-/*  Positions the overly window in the right place and resets tracking of views
- */
-- (void)resetOverlayWindow
+- (void)viewDidMove:(NSNotification *)notification
 {
-    // So where we moved to?
+    // Move the overlay window to be in exactly the same location as our content. Use -disableScreenUpdatesUntilFlush otherwise we can get untidily out of sync with the main window
     NSWindow *window = [self window];
     NSWindow *overlayWindow = [self overlayWindow];
     
-    if (window)
-    {
-        // Place the overlay window in exactly the same location as our content. Use -disableScreenUpdatesUntilFlush otherwise we can get untidily out of sync with the main window
-        NSRect contentRect = [self convertRectToBase:[self contentFrame]];
-        contentRect.origin = [window convertBaseToScreen:contentRect.origin];
-        NSRect overlayFrame = [overlayWindow frameRectForContentRect:contentRect];
-        
-        [overlayWindow disableScreenUpdatesUntilFlush];
-        [overlayWindow setFrame:overlayFrame display:NO];
-        
-        if (![overlayWindow parentWindow])
-        {
-            [window addChildWindow:overlayWindow ordered:NSWindowAbove];
-        }
-    }
-    else
-    {
-        // Nowhere to display the window, so just wait till we come back onscreen
-        [[overlayWindow parentWindow] removeChildWindow:overlayWindow];
-        [overlayWindow orderOut:self];
-    }
-}
-
-- (void)viewDidMove:(NSNotification *)notification
-{
-    [self resetOverlayWindow];
+    NSRect contentRect = [self convertRectToBase:[self contentFrame]];
+    contentRect.origin = [window convertBaseToScreen:contentRect.origin];
+    NSRect overlayFrame = [overlayWindow frameRectForContentRect:contentRect];
+    
+    [overlayWindow disableScreenUpdatesUntilFlush];
+    [overlayWindow setFrame:overlayFrame display:NO];
 }
 
 - (void)viewDidMoveToWindow
 {
     [super viewDidMoveToWindow];
+    
     
     // Stop observing old views
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -166,8 +145,24 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [_trackedViews release], _trackedViews = nil;
     
     
-    // Reposition window
-    [self resetOverlayWindow];
+    // Position window. There might be nowhere to display it, so just wait till we come back onscreen
+    NSWindow *window = [self window];
+    NSWindow *overlayWindow = [self overlayWindow];
+    
+    if (window)
+    {
+        [self viewDidMove:nil];
+    
+        if (![window parentWindow])
+        {
+            [window addChildWindow:overlayWindow ordered:NSWindowAbove];
+        }
+    }
+    else
+    {
+        [[overlayWindow parentWindow] removeChildWindow:overlayWindow];
+        [overlayWindow orderOut:self];
+    }
     
     
     // Observe our new superviews for signs of movement
