@@ -23,8 +23,8 @@
     NSArray         *_textBlocks;
     SVTextBlock     *_selectedTextBlock;
     
-    SVEditingOverlay *_editingOverlay;
-    NSArray             *_contentObjects;
+    SVEditingOverlay    *_editingOverlay;
+    NSArray             *_contentItems;
 }
 
 // These should all be KVO-compliant
@@ -47,6 +47,6 @@
 #pragma mark Selectable Objects
 
 @property(nonatomic, retain) IBOutlet SVEditingOverlay *editingOverlay;
-@property(nonatomic, copy, readonly) NSArray *contentObjects;
+@property(nonatomic, copy, readonly) NSArray *contentItems;
 
 @end

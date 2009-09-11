@@ -14,7 +14,7 @@
 #import "SVDOMNodeBoundsTracker.h"
 
 
-@interface SVContentObject : NSObject <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
+@interface SVWebContentItem : NSObject <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
 {
   @private
     DOMElement  *_element;

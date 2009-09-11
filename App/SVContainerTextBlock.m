@@ -8,7 +8,7 @@
 
 #import "SVContainerTextBlock.h"
 
-#import "SVContentObject.h"
+#import "SVWebContentItem.h"
 
 
 @implementation SVContainerTextBlock
@@ -33,7 +33,7 @@
     for (int i = 0; i < [imageNodes length]; i++)
     {
         DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[imageNodes item:i];
-        SVContentObject *item = [[SVContentObject alloc] initWithElement:anImage];
+        SVWebContentItem *item = [[SVWebContentItem alloc] initWithElement:anImage];
         [self addWebContentItem:item];
         [item release];
     }
@@ -41,7 +41,7 @@
 
 - (NSSet *)webContentItems { return [[_webContentItems copy] autorelease]; }
 
-- (void)addWebContentItem:(SVContentObject *)item;
+- (void)addWebContentItem:(SVWebContentItem *)item;
 {
     [_webContentItems addObject:item];
 }

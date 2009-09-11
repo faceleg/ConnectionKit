@@ -12,7 +12,7 @@
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVContainerTextBlock.h"
-#import "SVContentObject.h"
+#import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 
 #import "DOMNode+Karelia.h"
@@ -25,7 +25,7 @@
 @property(nonatomic, copy, readwrite) NSArray *textBlocks;
 @property(nonatomic, retain, readwrite) SVTextBlock *selectedTextBlock;
 
-@property(nonatomic, copy, readwrite) NSArray *contentObjects;
+@property(nonatomic, copy, readwrite) NSArray *contentItems;
 
 @end
 
@@ -215,13 +215,13 @@
             NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
             DOMElement *element = [domDoc getElementById:pageletID];
             
-            SVContentObject *object = [[SVContentObject alloc] initWithElement:element];
+            SVWebContentItem *object = [[SVWebContentItem alloc] initWithElement:element];
             
             [contentObjects addObject:object];
             [object release];
         }
         
-        [self setContentObjects:contentObjects];
+        [self setContentItems:contentObjects];
         [contentObjects release];
         
         
@@ -327,20 +327,20 @@
 
 @synthesize selectedTextBlock = _selectedTextBlock;
 
-#pragma mark Content Objects
+#pragma mark Content Items
 
-@synthesize contentObjects = _contentObjects;
+@synthesize contentItems = _contentItems;
 
-- (SVContentObject *)itemAtPoint:(NSPoint)point
+- (SVWebContentItem *)itemAtPoint:(NSPoint)point
 {
     // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
     NSDictionary *elementInfo = [[self webView] elementAtPoint:point];
     DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
-    SVContentObject *result = nil;
+    SVWebContentItem *result = nil;
     
     if (node)
     {
-        for (result in [self contentObjects])
+        for (result in [self contentItems])
         {
             if ([node isDescendantOfNode:[result element]])
             {

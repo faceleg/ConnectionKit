@@ -6,10 +6,10 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContentObject.h"
+#import "SVWebContentItem.h"
 
 
-@implementation SVContentObject
+@implementation SVWebContentItem
 
 #pragma mark Init & Dealloc
 
