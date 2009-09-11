@@ -352,6 +352,14 @@ defaults delete com.karelia.Sandvox metaRobots
         </dl>
 
         <dl>
+            <dt>QuickLook thumbnail</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DisableQuickLookThumbnail -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Disables generation of QuickLook thumbnails for all Sandvox documents. Disabling QuickLook thumbnails may improve issues with Sandvox hanging during document save. (Note that Mac OS X 10.4 "Tiger" does not save QuickLook thumbnails.)</dd>
+        </dl>
+
+        <dl>
             <dt>Open file alert</dt>
 
             <dd><code>defaults write com.karelia.Sandvox OpenUntitledFileWhenIconClicked -bool <span class="prefValue">NO</span></code></dd>
