@@ -6,7 +6,7 @@
 GCC_VERSION = 4.0
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.6.4b5
+SANDVOX_VERSION = 1.6.4b6
 
 // the SLA variant to wrap around the .dmg [BETA,RELEASE]
 // Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
@@ -21,7 +21,7 @@ EXPIRY_TIMESTAMP = '@\"2009-10-15 11:59:59 -0800\"'
 CK_REVISION = 1388
 
 // iMedia
-IMEDIA_REVISION = 819
+IMEDIA_REVISION = 822
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
