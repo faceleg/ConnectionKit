@@ -439,6 +439,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	BOOL result = NO;
     
     BOOL quickLookEnabled = ![[NSUserDefaults standardUserDefaults] boolForKey:@"DisableQuickLookThumbnail"];
+    
+    // hack: always turn off QuickLook on Tiger
+    BOOL isTiger = (floor(NSAppKitVersionNumber) <= 824);
+    if ( isTiger ) quickLookEnabled = NO;
 	
     // Kick off thumbnail generation
 	if ( quickLookEnabled )
