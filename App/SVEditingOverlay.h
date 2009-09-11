@@ -37,10 +37,14 @@
 }
 
 
-#pragma mark Document View
+#pragma mark Document
 
 // Our document view (in Sandvox, the main frame's WebFrameView) will often not fill the space as ourself. Rather than have to reposition the overlay view to match, it should be more efficent to adjust this mask to match the document.
 @property(nonatomic) NSRect contentFrame;
+
+// Pretty similar to NSView's -convertXToBase: set of methods. Translates coordinates as though -contentFrame were its own coordinates system.
+- (CGPoint)convertPointToContent:(NSPoint)aPoint;
+- (CGRect)convertRectToContent:(NSRect)aRect;
 
 
 #pragma mark Data Source

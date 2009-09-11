@@ -103,6 +103,23 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [self viewDidMove:nil];
 }
 
+- (CGPoint)convertPointToContent:(NSPoint)aPoint;
+{
+    // Should be enough to offset it by content rect's origin
+    NSPoint offset = [self contentFrame].origin;
+    aPoint.x -= offset.x;
+    aPoint.y -= offset.y;
+    
+    return NSPointToCGPoint(aPoint);
+}
+
+- (CGRect)convertRectToContent:(NSRect)aRect;
+{
+    CGRect result = NSRectToCGRect(aRect);
+    result.origin = [self convertPointToContent:aRect.origin];
+    return result;
+}
+
 #pragma mark Data Source
 
 @synthesize dataSource = _dataSource;
@@ -121,7 +138,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     [self setContentFrame:contentFrame];
 }
 
-#pragma mark Drawing
+#pragma mark Drawing Layer
 
 @synthesize drawingLayer = _drawingLayer;
 
@@ -244,7 +261,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     for (id <SVEditingOverlayItem> anItem in items)
     {
         CALayer *border = [[SVSelectionBorder alloc] init];
-        [border setFrame:NSRectToCGRect([anItem rect])];
+        [border setFrame:[self convertRectToContent:[anItem rect]]];
         
         [layers addObject:border];
         [[self drawingLayer] addSublayer:border];
@@ -268,7 +285,8 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     SVSelectionBorder *result = nil;
     
     // Should we actually be running this in reverse instead?
-    CGPoint cgPoint = NSPointToCGPoint(point);
+    CGPoint cgPoint = [self convertPointToContent:point];
+    
     for (SVSelectionBorder *aLayer in [self selectionBorders])
     {
         if ([aLayer hitTest:cgPoint])
@@ -360,7 +378,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Does the point correspond to a selection handle? If so, target that.
     NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
     CALayer *myLayer = [self drawingLayer];
-    CALayer *layer = [myLayer hitTest:NSPointToCGPoint(point)];
+    CALayer *layer = [myLayer hitTest:[self convertPointToContent:point]];
     
     if (layer != myLayer)
     {
