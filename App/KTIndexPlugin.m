@@ -137,6 +137,8 @@
 				[image setScalesWhenResized:YES];
 				// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
 				[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
+                // hacky fix for menu height problem: if we change the image size, above, we need to change the imageHeight, too
+                imageHeight = [image size].height;
 				[menuItem setImage:image];
 				[style setMinimumLineHeight:imageHeight];
 			}
