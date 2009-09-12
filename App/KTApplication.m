@@ -24,6 +24,16 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 @implementation KTApplication
 
+- (void)orderFrontStandardAboutPanel:(id)sender
+{
+    // suppress Version so that about panel just displays CFBundleShortVersionString
+    // putting all info in CFBundleShortVersionString allows Snow Leopard's Finder
+    // to continue to display complete information in info panel 
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             @"", @"Version",
+                             nil];
+    [self orderFrontStandardAboutPanelWithOptions:options];
+}
 
 @end
 
