@@ -20,6 +20,26 @@
     return self;
 }
 
+- (NSArray *)contentItems
+{
+    // One item per image
+    DOMNodeList *imageNodes = [[self DOMElement] getElementsByTagName:@"img"];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[imageNodes length]];
+    
+    for (int i = 0; i < [imageNodes length]; i++)
+    {
+        DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[imageNodes item:i];
+        SVWebContentItem *item = [[SVWebContentItem alloc] initWithElement:anImage];
+        [result addObject:item];
+        [item release];
+    }
+    
+    return result;
+}
+
+
+
+
 /*  We need to go through the HTML creating dedicated objects for each non-text element
  */
 - (void)setHTMLString:(NSString *)html

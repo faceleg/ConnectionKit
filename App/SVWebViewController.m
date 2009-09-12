@@ -331,6 +331,20 @@
 
 @synthesize contentItems = _contentItems;
 
+- (SVWebContentItem *)itemForNode:(DOMNode *)node inItems:(NSArray *)items
+{
+    SVWebContentItem *result = nil;
+    for (result in items)
+    {
+        if ([node isDescendantOfNode:[result element]])
+        {
+            break;
+        }
+    }
+    
+    return result;
+}
+
 - (SVWebContentItem *)itemAtPoint:(NSPoint)point
 {
     // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
@@ -340,11 +354,13 @@
     
     if (node)
     {
-        for (result in [self contentItems])
+        result = [self itemForNode:node inItems:[self contentItems]];
+        if (!result)
         {
-            if ([node isDescendantOfNode:[result element]])
+            for (SVTextBlock *aTextBlock in [self textBlocks])
             {
-                break;
+                result = [self itemForNode:node inItems:[aTextBlock contentItems]];
+                if (result) break;
             }
         }
     }

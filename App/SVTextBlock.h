@@ -44,7 +44,8 @@
 @property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
 
 
-
+// Sub content
+@property(nonatomic, readonly) NSArray *contentItems;
 
 @end
 

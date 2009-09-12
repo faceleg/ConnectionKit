@@ -106,6 +106,11 @@
 
 @synthesize isFieldEditor = _isFieldEditor;
 
+#pragma mark Sub-content
+
+// Our subclasses implement this properly
+- (NSArray *)contentItems { return nil; }
+
 @end
 
 
