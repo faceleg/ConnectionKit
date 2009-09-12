@@ -419,5 +419,11 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     }
 }
 
+/*  Trap -mouseDragged: events otherwise they pass through to the webview which reclaims the cursor
+ */
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+}
+
 @end
 
