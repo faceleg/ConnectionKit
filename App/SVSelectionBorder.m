@@ -98,8 +98,8 @@
 
     
     // Add our border
-    [self setBorderColor:[[NSColor selectedControlColor] CGColor]];
-    [self setBorderWidth:1.0];
+    //[self setBorderColor:[[NSColor selectedControlColor] CGColor]];
+    //[self setBorderWidth:1.0];
     
     return self;
 }
