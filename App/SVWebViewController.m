@@ -37,11 +37,6 @@
 
 #pragma mark Init & Dealloc
 
-- (id)init
-{
-    return [self initWithNibName:@"WebView" bundle:nil];
-}
-
 - (void)dealloc
 {
     [self setEditingOverlay:nil];   // needed to tear down data source
@@ -54,6 +49,21 @@
 }
 
 #pragma mark Views
+
+- (void)loadView
+{
+    SVEditingOverlay *overlay = [[SVEditingOverlay alloc] init];
+    
+    WebView *webView = [[WebView alloc] init];
+    [overlay setContentView:webView];
+    
+    [self setView:overlay];
+    [self setEditingOverlay:overlay];
+    [self setWebView:webView];
+    
+    [webView release];
+    [overlay release];
+}
 
 - (void)setWebView:(WebView *)webView
 {

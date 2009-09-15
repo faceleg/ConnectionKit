@@ -299,7 +299,6 @@
 		277F38EF105A71C50061628C /* SVEditingOverlay+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F61DE104D95720099B186 /* SVContainerTextBlock.h */; };
-		27851910104FCF17009C8558 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2785190F104FCF17009C8558 /* WebView.xib */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
 		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
 		2786BE9A0CAD10780086F9E0 /* KTInDocumentMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */; settings = {ATTRIBUTES = (); }; };
@@ -1738,7 +1737,6 @@
 		277F61DE104D95720099B186 /* SVContainerTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContainerTextBlock.h; sourceTree = "<group>"; };
 		277F61DF104D95720099B186 /* SVContainerTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContainerTextBlock.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
-		2785190F104FCF17009C8558 /* WebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebView.xib; sourceTree = "<group>"; };
 		2785197D104FD34A009C8558 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
 		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
 		2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTInDocumentMediaFile.h; sourceTree = "<group>"; };
@@ -2966,7 +2964,6 @@
 				2790BF0310459B3C00654665 /* SVBindableTextBlock.m */,
 				277F61DE104D95720099B186 /* SVContainerTextBlock.h */,
 				277F61DF104D95720099B186 /* SVContainerTextBlock.m */,
-				2785190F104FCF17009C8558 /* WebView.xib */,
 			);
 			name = WebView;
 			sourceTree = "<group>";
@@ -5755,7 +5752,6 @@
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
 				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
-				27851910104FCF17009C8558 /* WebView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

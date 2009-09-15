@@ -98,6 +98,20 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 #pragma mark Document
 
+@synthesize contentView = _contentView;
+- (void)setContentView:(NSView *)view
+{
+    [[self contentView] removeFromSuperview];
+    
+    [view retain];
+    [_contentView release];
+    _contentView = view;
+    
+    [view setFrame:[self bounds]];
+    [view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [self addSubview:view];
+}
+
 @synthesize contentFrame = _contentFrame;
 - (void)setContentFrame:(NSRect)clipRect
 {
@@ -348,10 +362,14 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     // Does the point correspond to one of the selections? If so, target that.
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
-    NSView *result = nil;
+    NSView *result;
     if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
     {
         result = self;
+    }
+    else
+    {
+        result = [super hitTest:aPoint];
     }
     
     

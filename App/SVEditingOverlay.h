@@ -21,6 +21,7 @@
 {
   @private
     // Content
+    NSView  *_contentView;
     NSRect  _contentFrame;
     id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
     
@@ -38,6 +39,8 @@
 
 
 #pragma mark Document
+
+@property(nonatomic, retain) NSView *contentView;
 
 // Our document view (in Sandvox, the main frame's WebFrameView) will often not fill the space as ourself. Rather than have to reposition the overlay view to match, it should be more efficent to adjust this mask to match the document.
 @property(nonatomic) NSRect contentFrame;
