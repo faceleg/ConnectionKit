@@ -18,6 +18,7 @@
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
+#import "KTMediaContainer.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
