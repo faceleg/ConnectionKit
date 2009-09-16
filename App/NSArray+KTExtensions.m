@@ -36,56 +36,6 @@
 	return YES;
 }
 
-#warning Is this even used?
-- (KTPage *)commonParent
-{
-	KTPage *firstPage = [self firstObjectKS];
-	KTPage *seedParent = [firstPage parent];
-	KTPage *commonParent = nil;
-	
-	if ( [seedParent isRoot] )
-	{
-		return seedParent;
-	}
-	
-	if ( (nil == seedParent) || [firstPage isDeleted] )
-	{
-		// somehow we're being asked for the parent of a deleted page!
-		return nil;
-	}
-	
-	BOOL parentFound = NO;
-	while ( !parentFound )
-	{
-		commonParent = seedParent;
-		
-		unsigned int i;
-		for ( i=0; i<[self count]; i++ )
-		{
-			KTPage *child = [self objectAtIndex:i];
-			if ( ![child isDeleted] && ![child isDescendantOfPage:commonParent] )
-			{
-				// we didn't find a common parent,
-				// back up one level and try again
-				seedParent = [commonParent parent];
-				if ( [seedParent isRoot] )
-				{
-					return seedParent;
-				}
-			}
-		}
-		
-		// if we got through all the pages without changing the seedParent, we're done
-		if ( [seedParent isEqual:commonParent] )
-		{
-			parentFound = YES;
-		}
-	}
-	
-	return commonParent;
-}
-
-
 
 - (BOOL)containsRoot
 {

@@ -25,9 +25,6 @@
 
 // operations that assume all objects in array are KTPages
 
-/*! returns parent common to all objects in array */
-- (KTPage *)commonParent;
-
 /*! returns NO if parents differ */
 - (BOOL)objectsHaveCommonParent;
 
