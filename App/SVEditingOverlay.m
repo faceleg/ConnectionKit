@@ -377,6 +377,25 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
     return result;
 }
 
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    // We're not personally interested in scroll events, let content have a crack at them.
+    // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
+    if (_isProcessingEvent)
+    {
+        [super scrollWheel:theEvent];
+    }
+    else
+    {
+        NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+        NSView *targetView = [[self contentView] hitTest:location];
+        
+        _isProcessingEvent = YES;
+        [targetView scrollWheel:theEvent];
+        _isProcessingEvent = NO;
+    }
+}
+
 #pragma mark Tracking the Mouse
 
 /*  Actions we could take from this:
