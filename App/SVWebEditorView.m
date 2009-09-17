@@ -92,17 +92,25 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Drawing
 
-- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
+- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyWebViewRect
 {
     NSArray *selectedItems = [self selectedItems];
     if ([selectedItems count] > 0)
     {
+        NSView *view = [NSView focusView];
+        NSRect dirtyRect = [view convertRect:dirtyWebViewRect fromView:sender];
+        
         SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
         
         for (id <SVEditingOverlayItem> anItem in [self selectedItems])
         {
-            [border drawWithFrame:[[anItem DOMElement] boundingBox]
-                           inView:[NSView focusView]];
+            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+            NSRect frameRect = [[anItem DOMElement] boundingBox];
+            NSRect drawingRect = [border drawingRectForFrame:frameRect];
+            if (NSIntersectsRect(drawingRect, dirtyRect))
+            {
+                [border drawWithFrame:frameRect inView:view];
+            }
         }
         
         [border release];
