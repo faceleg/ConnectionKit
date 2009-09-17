@@ -8,7 +8,7 @@
 
 #import "KSWebViewController.h"
 #import "KTHTMLParser.h"
-#import "SVEditingOverlay.h"
+#import "SVWebEditorView.h"
 
 
 @class WebView, KTPage, SVTextBlock;
@@ -23,7 +23,7 @@
     NSArray         *_textBlocks;
     SVTextBlock     *_selectedTextBlock;
     
-    SVEditingOverlay    *_editingOverlay;
+    SVWebEditorView    *_webEditorView;
     NSArray             *_contentItems;
 }
 
@@ -46,7 +46,7 @@
 
 #pragma mark Selectable Objects
 
-@property(nonatomic, retain) SVEditingOverlay *editingOverlay;
+@property(nonatomic, retain) SVWebEditorView *webEditorView;
 @property(nonatomic, copy, readonly) NSArray *contentItems;
 
 @end

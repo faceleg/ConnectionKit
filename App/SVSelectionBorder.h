@@ -19,7 +19,7 @@ enum SVSelectionResizeMask
 };
 
 
-@class SVEditingOverlay;
+@class SVWebEditorView;
 
 
 @interface SVSelectionBorder : CALayer

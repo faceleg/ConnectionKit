@@ -39,7 +39,7 @@
 
 - (void)dealloc
 {
-    [self setEditingOverlay:nil];   // needed to tear down data source
+    [self setWebEditorView:nil];   // needed to tear down data source
     
     [_page release];
     OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
@@ -52,17 +52,13 @@
 
 - (void)loadView
 {
-    SVEditingOverlay *overlay = [[SVEditingOverlay alloc] init];
+    SVWebEditorView *editor = [[SVWebEditorView alloc] init];
     
-    WebView *webView = [[WebView alloc] init];
-    [overlay setContentView:webView];
+    [self setView:editor];
+    [self setWebEditorView:editor];
+    [self setWebView:[editor webView]];
     
-    [self setView:overlay];
-    [self setEditingOverlay:overlay];
-    [self setWebView:webView];
-    
-    [webView release];
-    [overlay release];
+    [editor release];
 }
 
 - (void)setWebView:(WebView *)webView
@@ -87,14 +83,14 @@
     [webView setEditingDelegate:self];
 }
 
-@synthesize editingOverlay = _editingOverlay;
-- (void)setEditingOverlay:(SVEditingOverlay *)overlay
+@synthesize webEditorView = _webEditorView;
+- (void)setWebEditorView:(SVWebEditorView *)overlay
 {
-    [[self editingOverlay] setDataSource:nil];
+    [[self webEditorView] setDataSource:nil];
     
     [overlay retain];
-    [_editingOverlay release];
-    _editingOverlay = overlay;
+    [_webEditorView release];
+    _webEditorView = overlay;
     
     [overlay setDataSource:self];
 }
@@ -198,21 +194,7 @@
         [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
         
         
-        
-        // So we need the overlay view's contentRect to match up to the webframe. This may not be the best place to do it, but it's good enough for now
-        NSView *documentView = [[frame frameView] documentView];
-        NSScrollView *scrollView = [documentView enclosingScrollView];
-        SVEditingOverlay *overlay = [self editingOverlay];
-        
-        NSRect contentFrameRect = [overlay convertRect:[[scrollView contentView] frame]
-                                              fromView:scrollView];
-        
-        [overlay setContentFrame:contentFrameRect];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didScroll:)
-                                                     name:NSViewBoundsDidChangeNotification
-                                                   object:nil];
+                
         
         
         
@@ -378,15 +360,10 @@
     return result;
 }
 
-- (id <SVEditingOverlayItem>)editingOverlay:(SVEditingOverlay *)overlay itemAtPoint:(NSPoint)point;
+- (id <SVEditingOverlayItem>)editingOverlay:(SVWebEditorView *)overlay itemAtPoint:(NSPoint)point;
 {
     id <SVEditingOverlayItem> result = [self itemAtPoint:point];
     return result;
-}
-
-- (void)didScroll:(NSNotification *)notification
-{
-    [[self editingOverlay] scrollToPoint:self.webView.mainFrame.frameView.documentView.enclosingScrollView.contentView.bounds.origin];
 }
 
 @end
