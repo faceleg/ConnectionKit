@@ -90,7 +90,7 @@
 
 - (NSString *)_currentPath;
 {
-	BOOL mountVolumes = [[NSUserDefaults standardUserDefaults] boolForKey:@"MediaCanMountVolumes"];
+	BOOL mountVolumes = ![[NSUserDefaults standardUserDefaults] boolForKey:@"DisableMediaMountsVolumes"];
     NSString *result = [[self alias] fullPathRelativeToPath:nil
                                                mountVolumes:mountVolumes];
 	

@@ -431,7 +431,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithShort:0],		@"truncateCharacters",
 		[NSNumber numberWithShort:KTCopyMediaAll], @"copyMediaOriginals",
-        [NSNumber numberWithBool:YES], @"MediaCanMountVolumes",
 		[NSNumber numberWithShort:KTSummarizeAutomatic], @"collectionSummaryType",
 		[NSNumber numberWithShort:NSDateFormatterMediumStyle], @"timestampFormat",
 		[NSNumber numberWithBool:YES], @"timestampShowTime",
@@ -527,6 +526,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
         
         /// whether we generate a QuickLook thumbnail during save, expressed in the negative for backwards compatibility
         [NSNumber numberWithBool:NO], @"DisableQuickLookThumbnail",
+
+        /// Case 46886 - allow turning off mounting of volumes during alias resolution
+        [NSNumber numberWithBool:NO], @"DisableMediaMountsVolumes",
 
 		nil];
 	
