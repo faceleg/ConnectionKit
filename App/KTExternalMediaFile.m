@@ -90,7 +90,9 @@
 
 - (NSString *)_currentPath;
 {
-	NSString *result = [[self alias] fullPath];
+	BOOL mountVolumes = [[NSUserDefaults standardUserDefaults] boolForKey:@"MediaCanMountVolumes"];
+    NSString *result = [[self alias] fullPathRelativeToPath:nil
+                                               mountVolumes:mountVolumes];
 	
 	// Ignore files which are in the Trash
 	if (result && [result rangeOfString:@".Trash"].location != NSNotFound)

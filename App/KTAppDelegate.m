@@ -431,6 +431,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
 		[NSNumber numberWithShort:0],		@"truncateCharacters",
 		[NSNumber numberWithShort:KTCopyMediaAll], @"copyMediaOriginals",
+        [NSNumber numberWithBool:YES], @"MediaCanMountVolumes",
 		[NSNumber numberWithShort:KTSummarizeAutomatic], @"collectionSummaryType",
 		[NSNumber numberWithShort:NSDateFormatterMediumStyle], @"timestampFormat",
 		[NSNumber numberWithBool:YES], @"timestampShowTime",
