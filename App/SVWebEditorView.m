@@ -23,6 +23,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
 
+// Event handling
+- (void)forwardEvent:(NSEvent *)theEvent toWebViewWithSelector:(SEL)selector;
+
 @end
 
 
@@ -237,6 +240,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     // We're not personally interested in scroll events, let content have a crack at them.
+    [self forwardEvent:theEvent toWebViewWithSelector:_cmd];
+}
+
+- (void)forwardEvent:(NSEvent *)theEvent toWebViewWithSelector:(SEL)selector
+{
     // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
     if (_isProcessingEvent)
     {
@@ -248,7 +256,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         NSView *targetView = [[self webView] hitTest:location];
         
         _isProcessingEvent = YES;
-        [targetView scrollWheel:theEvent];
+        [targetView performSelector:selector withObject:theEvent];
         _isProcessingEvent = NO;
     }
 }
@@ -279,7 +287,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [self setSelectedItems:nil];
         
         [super mouseDown:event];
-   }
+    }
 }
 
 @end
