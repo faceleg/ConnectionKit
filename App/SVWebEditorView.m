@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
 
 
-NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
+NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
 @interface SVWebEditorView ()
@@ -187,7 +187,7 @@ NSString *SVWebEditingOverlaySelectionDidChangeNotification = @"SVWebEditingOver
 
 - (void)postSelectionChangedNotification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditingOverlaySelectionDidChangeNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewSelectionDidChangeNotification
                                                         object:self];
 }
 

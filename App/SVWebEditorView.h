@@ -14,7 +14,7 @@
 #import "SVEditingOverlayItem.h"
 
 
-@protocol SVWebEditingOverlayDataSource;
+@protocol SVWebEditorViewDataSource;
 @class SVSelectionBorder, SVEditingOverlayDrawingView;
 
 
@@ -23,7 +23,7 @@
   @private
     // Content
     WebView *_webView;
-    id <SVWebEditingOverlayDataSource>  _dataSource;    // weak ref as you'd expect
+    id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
     
     // Selection
     NSArray *_selectedItems;
@@ -40,7 +40,7 @@
 
 #pragma mark Data Source
 
-@property(nonatomic, assign) id <SVWebEditingOverlayDataSource> dataSource;
+@property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
 
 
 #pragma mark Selection
@@ -61,7 +61,7 @@
 #pragma mark -
 
 
-@protocol SVWebEditingOverlayDataSource <NSObject>
+@protocol SVWebEditorViewDataSource <NSObject>
 
 /*!
  @method editingOverlay:itemAtPoint:
@@ -75,4 +75,4 @@
 @end
 
 
-extern NSString *SVWebEditingOverlaySelectionDidChangeNotification;
+extern NSString *SVWebEditorViewSelectionDidChangeNotification;
