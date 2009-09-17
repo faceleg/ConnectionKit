@@ -264,7 +264,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if (item)
     {
         // Depending on the command key, add/remove from the selection, or become the selection
-        [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+        [self selectItems:[NSArray arrayWithObject:item]
+     byExtendingSelection:(([event modifierFlags] & NSCommandKeyMask) > 0)];
     }
     else
     {
