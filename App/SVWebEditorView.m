@@ -9,6 +9,8 @@
 #import "SVWebEditorView.h"
 #import "SVSelectionBorder.h"
 
+#import "NSArray+Karelia.h"
+
 
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
@@ -153,6 +155,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [self postSelectionChangedNotification];
 }
 
+- (void)deselectItem:(id <SVEditingOverlayItem>)item;
+{
+    // Remove item
+    NSMutableArray *newSelection = [[self selectedItems] mutableCopy];
+    [newSelection removeObjectIdenticalTo:item];
+    [_selectedItems release];   _selectedItems = newSelection;
+    
+    
+    // Redraw
+    NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    NSRect drawingRect = [border drawingRectForFrame:[[item DOMElement] boundingBox]];
+    [docView setNeedsDisplayInRect:drawingRect];
+}
+
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
 {
     SVSelectionBorder *result = nil;
@@ -264,8 +281,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if (item)
     {
         // Depending on the command key, add/remove from the selection, or become the selection
-        [self selectItems:[NSArray arrayWithObject:item]
-     byExtendingSelection:(([event modifierFlags] & NSCommandKeyMask) > 0)];
+        if ([event modifierFlags] & NSCommandKeyMask)
+        {
+            if ([[self selectedItems] containsObjectIdenticalTo:item])
+            {
+                [self deselectItem:item];
+            }
+            else
+            {
+                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:YES];
+            }
+        }
+        else
+        {
+            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+        }
     }
     else
     {

@@ -50,6 +50,7 @@
 
 @property(nonatomic, copy) NSArray *selectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
+- (void)deselectItem:(id <SVEditingOverlayItem>)item;
 
 
 #pragma mark Getting Item Information
