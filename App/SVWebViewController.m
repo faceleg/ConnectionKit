@@ -151,7 +151,7 @@
     
     
     // Load the HTML into the webview
-    [[[self webView] mainFrame] loadHTMLString:pageHTML baseURL:pageURL];
+    [[self webEditorView] loadHTMLString:pageHTML baseURL:pageURL];
 }
 
 - (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock;
@@ -167,7 +167,7 @@
 	{
 		// Prepare controllers for each text block
         NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
-        DOMDocument *domDoc = [[self webView] mainFrameDocument];
+        DOMDocument *domDoc = [[self webEditorView] DOMDocument];
         
         for (KTHTMLTextBlock *aTextBlock in _HTMLTextBlocks)
         {
@@ -231,7 +231,7 @@
 {
     OBPRECONDITION([notification object] == [self webView]);
 	
-    [self setSelectedTextBlock:[self textBlockForDOMRange:[[self webView] selectedDOMRange]]];
+    [self setSelectedTextBlock:[self textBlockForDOMRange:[[self webEditorView] selectedDOMRange]]];
 }
 
 - (BOOL)webView:(WebView *)aWebView shouldEndEditingInDOMRange:(DOMRange *)range

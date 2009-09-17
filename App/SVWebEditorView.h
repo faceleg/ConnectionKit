@@ -36,13 +36,17 @@
 #pragma mark Document
 
 @property(nonatomic, retain, readonly) WebView *webView;
+@property(nonatomic, readonly) DOMDocument *DOMDocument;
 
-#pragma mark Data Source
+#pragma mark Content
 
 @property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
 
 
 #pragma mark Selection
+
+@property(nonatomic, readonly) DOMRange *selectedDOMRange;
 
 @property(nonatomic, copy) NSArray *selectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;

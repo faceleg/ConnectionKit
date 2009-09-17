@@ -77,9 +77,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @synthesize webView = _webView;
 
-#pragma mark Data Source
+- (DOMDocument *)DOMDocument { return [[self webView] mainFrameDocument]; }
+
+#pragma mark Content
 
 @synthesize dataSource = _dataSource;
+
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
+{
+    [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
+}
 
 #pragma mark Drawing
 
@@ -101,6 +108,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 }
 
 #pragma mark Selection
+
+- (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
 
 @synthesize selectedItems = _selectedItems;
 - (void)setSelectedItems:(NSArray *)items
