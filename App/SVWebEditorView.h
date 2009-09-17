@@ -29,6 +29,7 @@
     NSArray *_selectedItems;
     
     // Event Handling
+    NSEvent *_possibleBeginEditingMouseDownEvent;
     BOOL    _isProcessingEvent;
 }
 

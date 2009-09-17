@@ -288,10 +288,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     if (item)
     {
+        BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
+        
         // Depending on the command key, add/remove from the selection, or become the selection
         if ([event modifierFlags] & NSCommandKeyMask)
         {
-            if ([[self selectedItems] containsObjectIdenticalTo:item])
+            if (itemIsSelected)
             {
                 [self deselectItem:item];
             }
@@ -302,7 +304,15 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         }
         else
         {
-            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+            if (itemIsSelected)
+            {
+                // If you click an aready selected item quick enough, it will start editing
+                _possibleBeginEditingMouseDownEvent = [event retain];
+            }
+            else
+            {
+                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+            }
         }
     }
     else
@@ -312,6 +322,35 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         
         [super mouseDown:event];
     }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    if (_possibleBeginEditingMouseDownEvent)
+    {
+        // Was the mouse up quick enough to start editing?
+        if ([theEvent timestamp] - [_possibleBeginEditingMouseDownEvent timestamp] < 0.5)
+        {
+            // If so, it's time to hand off to the webview for editing
+            NSPoint location = [self convertPoint:[_possibleBeginEditingMouseDownEvent locationInWindow]
+                                         fromView:nil];
+            NSView *targetView = [[self webView] hitTest:location];
+            [[targetView window] makeFirstResponder:targetView];
+            
+            [self forwardMouseEvent:_possibleBeginEditingMouseDownEvent
+                           selector:@selector(mouseDown:)];
+            [self forwardMouseEvent:theEvent selector:_cmd];
+        }
+        
+        // Select the underlying content please!
+        [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+    }
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+    // A drag of the mouse automatically removes the possibility that editing might commence
+    [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
 }
 
 @end
