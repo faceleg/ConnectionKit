@@ -27,7 +27,6 @@
     
     // Selection
     NSArray *_selectedItems;
-    NSArray *_selectionBorders;
     
     // Event Handling
     BOOL    _isProcessingEvent;

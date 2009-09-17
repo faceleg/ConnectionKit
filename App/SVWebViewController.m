@@ -328,7 +328,7 @@
     SVWebContentItem *result = nil;
     for (result in items)
     {
-        if ([node isDescendantOfNode:[result element]])
+        if ([node isDescendantOfNode:[result DOMElement]])
         {
             break;
         }

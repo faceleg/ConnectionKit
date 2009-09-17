@@ -45,16 +45,9 @@
 
 #pragma mark DOM
 
-@synthesize element = _element;
+@synthesize DOMElement = _element;
 
 #pragma mark Editing Overlay Item
-
-- (NSRect)rect
-{
-    DOMElement *element = [self element];
-    NSRect result = [element boundingBox];
-    return result;
-}
 
 - (void)trackerDidDetectDOMNodeBoundsChange:(NSNotification *)notification;
 {

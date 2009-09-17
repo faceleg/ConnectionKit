@@ -7,9 +7,7 @@
 //
 
 #import "SVWebEditorView.h"
-#import "SVEditingOverlay+Drawing.h"
-
-#import <QuartzCore/QuartzCore.h>   // for CoreAnimation – why isn't it pulled in by default?
+#import "SVSelectionBorder.h"
 
 
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
@@ -20,7 +18,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Document
 
 // Selection
-@property(nonatomic, copy, readonly) NSArray *selectionBorders;
 - (void)postSelectionChangedNotification;
 
 // Event handling
@@ -70,7 +67,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_selectionBorders release];
     [_selectedItems release];
     [_webView release];
         
@@ -92,12 +88,15 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     NSArray *selectedItems = [self selectedItems];
     if ([selectedItems count] > 0)
     {
-        [[NSColor blackColor] setFill];
+        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
         
         for (id <SVEditingOverlayItem> anItem in [self selectedItems])
         {
-            NSFrameRectWithWidthUsingOperation([anItem rect], 1.0, NSCompositeSourceOver);
+            [border drawWithFrame:[[anItem DOMElement] boundingBox]
+                           inView:[NSView focusView]];
         }
+        
+        [border release];
     }
 }
 
@@ -112,16 +111,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     
-    // Reset layers
+    // Remove old frames
     if (!extendSelection)
     {
         for (id <SVEditingOverlayItem> anItem in [self selectedItems])
         {
-            [docView setNeedsDisplayInRect:[anItem rect]];
+            NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+            [docView setNeedsDisplayInRect:drawingRect];
         }
-        
-        [_selectionBorders makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
     }
     
     
@@ -136,37 +135,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Draw new selection
     for (id <SVEditingOverlayItem> anItem in items)
     {
-        [docView setNeedsDisplayInRect:[anItem rect]];
+        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+        [docView setNeedsDisplayInRect:drawingRect];
     }
-    
-    
-    // Create layers for the new selection
-    NSMutableArray *layers = nil;
-    if (extendSelection) layers = [_selectionBorders mutableCopy];
-    if (!layers) layers = [[NSMutableArray alloc] init];
-    
-    for (id <SVEditingOverlayItem> anItem in items)
-    {
-        CALayer *border = [[SVSelectionBorder alloc] init];
-        //NSRect itemRect = [anItem rect];
-        //[border setFrame:[self convertDocumentRectToDrawingLayer:itemRect]];
-        
-        [layers addObject:border];
-        //[[[self drawingView] scrollLayer] addSublayer:border];
-        
-        [border release];
-    }
-    
-    [_selectionBorders release];
-    _selectionBorders = [layers copy];
-    [layers release];
     
     
     // Alert observers
     [self postSelectionChangedNotification];
 }
-
-@synthesize selectionBorders = _selectionBorders;
 
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
 {

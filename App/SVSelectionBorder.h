@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
 
 
 enum SVSelectionResizeMask
@@ -19,22 +18,14 @@ enum SVSelectionResizeMask
 };
 
 
-@class SVWebEditorView;
-
-
-@interface SVSelectionBorder : CALayer
+@interface SVSelectionBorder : NSObject
 {
-    CALayer *_bottomLeftSelectionHandle;
-    CALayer *_leftSelectionHandle;
-    CALayer *_topLeftSelectionHandle;
-    CALayer *_bottomRightSelectionHandle;
-    CALayer *_rightSelectionHandle;
-    CALayer *_topRightSelectionHandle;
-    CALayer *_bottomSelectionHandle;
-    CALayer *_topSelectionHandle;
 }
 
+- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 
+- (NSRect)drawingRectForFrame:(NSRect)frameRect;
+- (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view;
 
 // Only the overlay view itself should call this
 //@property(nonatomic, assign) SVWebEditingOverlay *overlayView;
@@ -42,14 +33,3 @@ enum SVSelectionResizeMask
 //@property(nonatomic, readonly) CALayer *layer;
 
 @end
-
-
-#pragma mark -
-
-
-@interface CALayer (SVTrackingAreas)
-- (NSCursor *)webEditingOverlayCursor;
-// The containing editing overlay view will call this as it needs to
-- (void)updateTrackingAreasInView:(NSView *)view;
-@end
-

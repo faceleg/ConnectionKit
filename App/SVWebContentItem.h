@@ -24,6 +24,6 @@
 
 - (id)initWithElement:(DOMElement *)element;
 
-@property(nonatomic, retain, readonly) DOMElement *element;
+@property(nonatomic, retain, readonly) DOMElement *DOMElement;
 
 @end

@@ -7,13 +7,10 @@
 //
 
 #import "SVSelectionBorder.h"
-#import "SVSelectionHandleLayer.h"
-
-#import "NSColor+Karelia.h"
 
 
 @interface SVSelectionBorder ()
-//@property(nonatomic, readonly) CALayer *layer;
+- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view;
 @end
 
 
@@ -22,141 +19,65 @@
 
 @implementation SVSelectionBorder
 
-- (CALayer *)newSelectionHandle
-{
-    CALayer *result = [[SVSelectionHandleLayer alloc] init];
-    [self addSublayer:result];
-    
-    return result;
-}
-
-- (id)init
-{
-    self = [super init];
-    
-    [self setLayoutManager:[CAConstraintLayoutManager layoutManager]];
-    
-    // Add selection handles
-    CAConstraint *minXConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidX 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMinX];
-    
-    CAConstraint *midXConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidX 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMidX];
-    
-    CAConstraint *maxXConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidX 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMaxX
-                                                                  offset:-1.0];
-    
-    CAConstraint *minYConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidY 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMinY];
-    
-    CAConstraint *midYConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidY 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMidY];
-    
-    CAConstraint *maxYConstraint = [CAConstraint constraintWithAttribute:kCAConstraintMidY 
-                                                              relativeTo:@"superlayer"
-                                                               attribute:kCAConstraintMaxY
-                                                                  offset:-1.0];
-    
-    
-    _bottomLeftSelectionHandle = [self newSelectionHandle];
-    [_bottomLeftSelectionHandle addConstraint:minXConstraint];
-    [_bottomLeftSelectionHandle addConstraint:minYConstraint];
-    
-    _leftSelectionHandle = [self newSelectionHandle];
-    [_leftSelectionHandle addConstraint:minXConstraint];
-    [_leftSelectionHandle addConstraint:midYConstraint];
-    
-    _topLeftSelectionHandle = [self newSelectionHandle];
-    [_topLeftSelectionHandle addConstraint:minXConstraint];
-    [_topLeftSelectionHandle addConstraint:maxYConstraint];
-
-    _bottomRightSelectionHandle = [self newSelectionHandle];
-    [_bottomRightSelectionHandle addConstraint:maxXConstraint];
-    [_bottomRightSelectionHandle addConstraint:minYConstraint];
-
-    _rightSelectionHandle = [self newSelectionHandle];
-    [_rightSelectionHandle addConstraint:maxXConstraint];
-    [_rightSelectionHandle addConstraint:midYConstraint];
-
-    _topRightSelectionHandle = [self newSelectionHandle];
-    [_topRightSelectionHandle addConstraint:maxXConstraint];
-    [_topRightSelectionHandle addConstraint:maxYConstraint];
-
-    _bottomSelectionHandle = [self newSelectionHandle];
-    [_bottomSelectionHandle addConstraint:midXConstraint];
-    [_bottomSelectionHandle addConstraint:minYConstraint];
-
-    _topSelectionHandle = [self newSelectionHandle];
-    [_topSelectionHandle addConstraint:midXConstraint];
-    [_topSelectionHandle addConstraint:maxYConstraint];
-
-    
-    // Add our border
-    //[self setBorderColor:[[NSColor selectedControlColor] CGColor]];
-    //[self setBorderWidth:1.0];
-    
-    return self;
-}
-
 - (void)dealloc
 {
-    [_bottomLeftSelectionHandle release];
-    [_leftSelectionHandle release];
-    [_topLeftSelectionHandle release];
-    [_bottomRightSelectionHandle release];
-    [_rightSelectionHandle release];
-    [_topRightSelectionHandle release];
-    [_bottomSelectionHandle release];
-    [_topSelectionHandle release];
-     
+    
     [super dealloc];
 }
 
-- (CALayer *)hitTest:(CGPoint)thePoint
+
+- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
-    CALayer *result = nil;
+    // First draw overall frame
+    [[NSColor selectedControlColor] setFill];
+    NSFrameRectWithWidthUsingOperation([view centerScanRect:frameRect],
+                                       1.0,
+                                       NSCompositeSourceOver);
     
-    // The default implementation assumes all sublayers are within our bounds. We know that all selection handles are at least partially outside.
-    CGPoint localPoint = [self convertPoint:thePoint fromLayer:[self superlayer]];
-    for (CALayer *aSublayer in [self sublayers])
-    {
-        result = [aSublayer hitTest:localPoint];
-        if (result) break;
-    }
+    // Then draw handles
+    CGFloat minX = NSMinX(frameRect);
+    CGFloat midX = NSMidX(frameRect);
+    CGFloat maxX = NSMaxX(frameRect) - 1.0;
+    CGFloat minY = NSMinY(frameRect);
+    CGFloat midY = NSMidY(frameRect);
+    CGFloat maxY = NSMaxY(frameRect) - 1.0;
     
-    if (!result)
-    {
-        if ([self containsPoint:localPoint]) result = self;
-    }
+    [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view];
+    [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view];
+}
+
+- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view
+{
+    NSRect rect = [view centerScanRect:NSMakeRect(point.x - 3.0,
+                                                  point.y - 3.0,
+                                                  7.0,
+                                                  7.0)];
     
+    [[NSColor blackColor] setFill];
+    NSEraseRect(rect);
+    NSFrameRect(rect);
+}
+
+/*  Enlarge by 3 pixels to accomodate selection handles
+ */
+- (NSRect)drawingRectForFrame:(NSRect)frameRect;
+{
+    NSRect result = NSInsetRect(frameRect, -3.0, -3.0);
+    return result;
+}
+
+/*  Mostly a simple question of if frame contains point, but also return yes if the point is in one of our selection handles
+ */
+- (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view
+{
+    BOOL result = [view mouse:mousePoint inRect:frameRect];
     return result;
 }
 
 @end
-
-
-#pragma mark -
-
-
-@implementation CALayer (SVTrackingAreas)
-
-- (NSCursor *)webEditingOverlayCursor;
-{
-    return nil;
-}
-
-- (void)updateTrackingAreasInView:(NSView *)view
-{
-    [[self sublayers] makeObjectsPerformSelector:@selector(updateTrackingAreasInView:)
-                                      withObject:view];
-}
-
-@end
-
-

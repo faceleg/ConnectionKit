@@ -295,8 +295,6 @@
 		277560370CA5228B00D8A412 /* KTParsedKeyPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KTParsedKeyPath.m */; };
 		2775612E0CA718C200D8A412 /* KTWebViewComponentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */; settings = {ATTRIBUTES = (); }; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
-		277F38EE105A71C50061628C /* SVEditingOverlay+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */; };
-		277F38EF105A71C50061628C /* SVEditingOverlay+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		277F61E0104D95730099B186 /* SVContainerTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 277F61DE104D95720099B186 /* SVContainerTextBlock.h */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
@@ -408,8 +406,6 @@
 		27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEC0EC30B6F000E85DD /* KSException.nib */; };
 		27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */; };
 		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
-		27ED5D97105549020089F3C5 /* SVSelectionHandleLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ED5D95105549020089F3C5 /* SVSelectionHandleLayer.h */; };
-		27ED5D98105549020089F3C5 /* SVSelectionHandleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ED5D96105549020089F3C5 /* SVSelectionHandleLayer.m */; };
 		27EF1BCF0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */; };
 		27EF1BD00DC1F9BF00976C66 /* KTSiteOutlineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (); }; };
@@ -1730,8 +1726,6 @@
 		2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponentProtocol.h; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
-		277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVEditingOverlay+Drawing.h"; sourceTree = "<group>"; };
-		277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVEditingOverlay+Drawing.m"; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
 		277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SlideshowPlay.tiff; sourceTree = "<group>"; };
 		277F61DE104D95720099B186 /* SVContainerTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContainerTextBlock.h; sourceTree = "<group>"; };
@@ -1888,8 +1882,6 @@
 		27E4D0210EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4D0220EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
-		27ED5D95105549020089F3C5 /* SVSelectionHandleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSelectionHandleLayer.h; sourceTree = "<group>"; };
-		27ED5D96105549020089F3C5 /* SVSelectionHandleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSelectionHandleLayer.m; sourceTree = "<group>"; };
 		27EF1BCD0DC1F9BF00976C66 /* KTSiteOutlineDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineDataSource.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* KTSiteOutlineDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineDataSource.m; sourceTree = "<group>"; };
 		27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+QuickLook.h"; path = "../Code/QuickLook/NSBundle+QuickLook.h"; sourceTree = SOURCE_ROOT; };
@@ -2750,11 +2742,7 @@
 				271B485F1051C2F4008B698C /* SVWebEditorView.m */,
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
 				2755279B10546D990037524C /* SVSelectionBorder.m */,
-				27ED5D95105549020089F3C5 /* SVSelectionHandleLayer.h */,
-				27ED5D96105549020089F3C5 /* SVSelectionHandleLayer.m */,
 				27FA884C1057AD9800E8D870 /* SVEditingOverlayItem.h */,
-				277F38EC105A71C50061628C /* SVEditingOverlay+Drawing.h */,
-				277F38ED105A71C50061628C /* SVEditingOverlay+Drawing.m */,
 			);
 			name = "Web Editor View";
 			sourceTree = "<group>";
@@ -5033,9 +5021,7 @@
 				275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */,
 				271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */,
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
-				27ED5D97105549020089F3C5 /* SVSelectionHandleLayer.h in Headers */,
 				27FA884D1057AD9800E8D870 /* SVEditingOverlayItem.h in Headers */,
-				277F38EE105A71C50061628C /* SVEditingOverlay+Drawing.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6432,8 +6418,6 @@
 				271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */,
 				271B489B1052CC9D008B698C /* SVContainerTextBlock.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
-				27ED5D98105549020089F3C5 /* SVSelectionHandleLayer.m in Sources */,
-				277F38EF105A71C50061628C /* SVEditingOverlay+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
