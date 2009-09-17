@@ -27,9 +27,4 @@ enum SVSelectionResizeMask
 - (NSRect)drawingRectForFrame:(NSRect)frameRect;
 - (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view;
 
-// Only the overlay view itself should call this
-//@property(nonatomic, assign) SVWebEditingOverlay *overlayView;
-
-//@property(nonatomic, readonly) CALayer *layer;
-
 @end
