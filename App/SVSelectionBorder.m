@@ -29,8 +29,8 @@
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
     // First draw overall frame
-    [[NSColor selectedControlColor] setFill];
-    NSFrameRectWithWidthUsingOperation([view centerScanRect:frameRect],
+    [[NSColor grayColor] setFill];
+    NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
                                        1.0,
                                        NSCompositeSourceOver);
     
