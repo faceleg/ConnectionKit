@@ -5044,7 +5044,7 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = g;
+				ORGANIZATIONNAME = "Karelia Software";
 			};
 			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Marvel" */;
 			compatibilityVersion = "Xcode 2.4";
