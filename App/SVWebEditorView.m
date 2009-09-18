@@ -145,9 +145,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     
     
-    // Store new selection
+    // Store new selection. Odd looking logic I know, but should handle edge cases like _selectedItems being nil
     NSArray *oldSelection = _selectedItems;
-    _selectedItems = (extendSelection ?
+    _selectedItems = ((extendSelection && _selectedItems) ?
                       [[_selectedItems arrayByAddingObjectsFromArray:items] retain] :
                       [items copy]);
     [oldSelection release];
