@@ -415,17 +415,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         // Was the mouse up quick enough to start editing?
         if ([theEvent timestamp] - [_possibleBeginEditingMouseDownEvent timestamp] < 0.5)
         {
-            // If so, it's time to hand off to the webview for editing.
+            // If so, it's time to hand off to the webview for editing. Easiest way is by switching to editing mode and then refiring the events through to their new target
             [self setIsEditingSelection:YES];
             
-            NSPoint location = [self convertPoint:[_possibleBeginEditingMouseDownEvent locationInWindow]
-                                         fromView:nil];
-            NSView *targetView = [[self webView] hitTest:location];
-            [[targetView window] makeFirstResponder:targetView];
-            
-            [self forwardMouseEvent:_possibleBeginEditingMouseDownEvent
-                           selector:@selector(mouseDown:)];
-            [self forwardMouseEvent:theEvent selector:_cmd];
+            [NSApp sendEvent:_possibleBeginEditingMouseDownEvent];
+            [NSApp sendEvent:theEvent];
         }
         
         // Tidy up
