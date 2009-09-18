@@ -93,14 +93,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Drawing
 
-- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyWebViewRect
+- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view
 {
     NSArray *selectedItems = [self selectedItems];
     if ([selectedItems count] > 0)
     {
-        NSView *view = [NSView focusView];
-        NSRect dirtyRect = [view convertRect:dirtyWebViewRect fromView:sender];
-        
         SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
         [border setEditing:[self isEditingSelection]];
         
@@ -403,6 +400,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     // A drag of the mouse automatically removes the possibility that editing might commence
     [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+}
+
+#pragma mark -
+#pragma mark WebUIDelegate
+
+- (void)webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
+{
+    [[sender window] makeFirstResponder:responder];
+}
+
+- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
+{
+    NSView *drawingView = [NSView focusView];
+    NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
+    [self drawRect:dirtyDrawingRect inView:drawingView];
 }
 
 @end
