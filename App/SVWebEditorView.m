@@ -49,6 +49,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     _webView = [[WebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setUIDelegate:self];
+    [_webView setEditingDelegate:self];
+    
     [self addSubview:_webView];
     
     
@@ -68,7 +70,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_webView setUIDelegate:nil];
+    [_webView setEditingDelegate:nil];
     
     [_selectedItems release];
     [_webView release];
@@ -177,23 +180,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [docView setNeedsDisplayInRect:drawingRect];
 }
 
-@synthesize isEditingSelection = _isEditingSelection;
-- (void)setIsEditingSelection:(BOOL)editing
-{
-    _isEditingSelection = editing;
-    
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
-    {
-        DOMElement *element = [anItem DOMElement];
-        NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
-        NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
-        [docView setNeedsDisplayInRect:drawingRect];
-    }
-    
-    [border release];
-}
-
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
 {
     SVSelectionBorder *result = nil;
@@ -218,6 +204,46 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewSelectionDidChangeNotification
                                                         object:self];
+}
+
+#pragma mark Editing
+
+@synthesize isEditingSelection = _isEditingSelection;
+- (void)setIsEditingSelection:(BOOL)editing
+{
+    _isEditingSelection = editing;
+    
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    {
+        DOMElement *element = [anItem DOMElement];
+        NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
+        NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+        [docView setNeedsDisplayInRect:drawingRect];
+    }
+    
+    [border release];
+}
+
+- (void)selectionDidChangeWhileEditing
+{
+    [[NSRunLoop currentRunLoop] performSelector:@selector(checkIfEditingDidEnd)
+                                         target:self
+                                       argument:nil
+                                          order:0
+                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+}
+
+- (void)checkIfEditingDidEnd
+{
+    NSResponder *firstResponder = [[self window] firstResponder];
+    if (!firstResponder ||
+        ![firstResponder isKindOfClass:[NSView class]] ||
+        ![(NSView *)firstResponder isDescendantOf:self])
+    {
+        [self setSelectedItems:nil];
+        [self setIsEditingSelection:NO];
+    }
 }
 
 #pragma mark Getting Item Information
@@ -391,7 +417,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             [self forwardMouseEvent:theEvent selector:_cmd];
         }
         
-        // Select the underlying content please!
+        // Tidy up
         [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
     }
 }
@@ -402,7 +428,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
 }
 
-#pragma mark -
 #pragma mark WebUIDelegate
 
 - (void)webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
@@ -415,6 +440,19 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     NSView *drawingView = [NSView focusView];
     NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
     [self drawRect:dirtyDrawingRect inView:drawingView];
+}
+
+#pragma mark WebEditingDelegate
+
+- (void)webViewDidChangeSelection:(NSNotification *)notification
+{
+    OBPRECONDITION([notification object] == [self webView]);
+    
+    // Changing selection while editing is a pretty good indication that the webview will end editing, even including by losing first responder status. However, at this point, the webview is still first responder, so we have to delay our check fractionally
+    if ([self isEditingSelection])
+    {
+        [self selectionDidChangeWhileEditing];
+    }
 }
 
 @end

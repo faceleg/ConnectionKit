@@ -54,7 +54,11 @@
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(id <SVEditingOverlayItem>)item;
 
+
+#pragma mark Editing
+
 @property(nonatomic, readonly) BOOL isEditingSelection;
+
 
 
 #pragma mark Getting Item Information

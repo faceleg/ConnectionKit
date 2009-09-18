@@ -65,7 +65,6 @@
 {
     // Tear down old delegates
     [[self webView] setFrameLoadDelegate:nil];
-    [[self webView] setEditingDelegate:nil];
     
     
     // Store new webview
@@ -80,7 +79,6 @@
     
     // Delegation
     [webView setFrameLoadDelegate:self];
-    [webView setEditingDelegate:self];
 }
 
 @synthesize webEditorView = _webEditorView;
@@ -226,6 +224,8 @@
 //  - window title
 
 #pragma mark Editing
+
+// FIXME: Need to hook this up to WebEditorView
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {
