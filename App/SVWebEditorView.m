@@ -255,7 +255,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Event Handling
 
-- (BOOL)acceptsFirstResponder { return YES; }
+/*  Normally, we're quite happy to become first responder; that's what governs whether we have a selection. But when in editing mode, the role is reversed, and we don't want to become first responder unless the user clicks another item.
+ */
+- (BOOL)acceptsFirstResponder
+{
+    return ![self isEditingSelection];
+}
 
 /*  There are 2 reasons why you might resign first responder:
  *      1)  The user generally selected some different bit of the UI. If so, the selection is no longer relevant, so throw it away.
@@ -320,12 +325,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent
-{
-    // We're not personally interested in scroll events, let content have a crack at them.
-    [self forwardMouseEvent:theEvent selector:_cmd];
-}
-
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector
 {
     // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
@@ -354,6 +353,18 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
+    // While editing, we enter into a bit of special mode where a click anywhere outside the editing area is targetted to ourself. This is done so we can take control of the cursor. A click outside the editing area will end editing, but also handle the event as per normal. Easiest way to achieve this I reckon is to end editing and then simply refire the event, arriving at its real target. Very re-entrant :)
+    if ([self isEditingSelection])
+    {
+        [self setSelectedItems:nil];
+        [self setIsEditingSelection:NO];
+        [NSApp sendEvent:event];
+        return;
+    }
+    
+    
+    
+    
     // What was clicked?
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     id <SVEditingOverlayItem> item = [self itemAtPoint:location];
@@ -426,6 +437,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     // A drag of the mouse automatically removes the possibility that editing might commence
     [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    // We're not personally interested in scroll events, let content have a crack at them.
+    [self forwardMouseEvent:theEvent selector:_cmd];
 }
 
 #pragma mark WebUIDelegate
