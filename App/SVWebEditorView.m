@@ -388,14 +388,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         }
         else
         {
+            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+            
             if (itemIsSelected)
             {
                 // If you click an aready selected item quick enough, it will start editing
                 _possibleBeginEditingMouseDownEvent = [event retain];
-            }
-            else
-            {
-                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
             }
         }
     }
@@ -412,21 +410,25 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     if (_possibleBeginEditingMouseDownEvent)
     {
-        // Was the mouse up quick enough to start editing?
-        if ([theEvent timestamp] - [_possibleBeginEditingMouseDownEvent timestamp] < 0.5)
+        NSEvent *mouseDownEvent = [_possibleBeginEditingMouseDownEvent retain];
+        [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+        
+        
+        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
+        if ([theEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
         {
-            // If so, it's time to hand off to the webview for editing. Easiest way is by switching to editing mode and then refiring the events through to their new target
+            // There might be multiple items selected. If so, 
+            // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
             [self setIsEditingSelection:YES];
             
-            [NSApp sendEvent:_possibleBeginEditingMouseDownEvent];
-            [_possibleBeginEditingMouseDownEvent release];  _possibleBeginEditingMouseDownEvent = nil;  // otherwise double-clicks get stuck in an inifinte loop
-            [NSApp sendEvent:[theEvent copy]];
+            // Refire events, this time they'll go to their correct target.
+            [NSApp sendEvent:mouseDownEvent];
+            [NSApp sendEvent:theEvent];
         }
-        else
-        {
-            // Tidy up
-            [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
-        }
+        
+        
+        // Tidy up
+        [mouseDownEvent release];
     }
 }
 
