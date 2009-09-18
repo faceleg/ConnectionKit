@@ -257,36 +257,41 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
-    
-    NSView *result = self;
-    if ([self isEditingSelection])
+    // First off, we'll only consider special behaviour if targeting the document
+    NSView *result = [super hitTest:aPoint];
+    if ([result isDescendantOf:[[[[self webView] mainFrame] frameView] documentView]])
     {
-        //  2)
-        for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+        NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
+        
+        if ([self isEditingSelection])
         {
-            DOMElement *element = [anItem DOMElement];
-            NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
-            NSPoint mousePoint = [self convertPoint:point toView:docView];
-            if ([docView mouse:mousePoint inRect:[element boundingBox]])
+            //  2)
+            BOOL targetSelf = YES;
+            for (id <SVEditingOverlayItem> anItem in [self selectedItems])
             {
-                result = [super hitTest:aPoint];
+                DOMElement *element = [anItem DOMElement];
+                NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+                NSPoint mousePoint = [self convertPoint:point toView:docView];
+                if ([docView mouse:mousePoint inRect:[element boundingBox]])
+                {
+                    targetSelf = NO;
+                }
             }
-        }
-    }
-    else
-    {
-        //  1)
-        if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
-        {
-            result = self;
+            if (targetSelf) result = self;
         }
         else
         {
-            result = [super hitTest:aPoint];
+            //  1)
+            if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
+            {
+                result = self;
+            }
         }
     }
     
+    
+    
+        
     
     //NSLog(@"Hit Test: %@", result);
     return result;
