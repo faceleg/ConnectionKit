@@ -419,11 +419,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             [self setIsEditingSelection:YES];
             
             [NSApp sendEvent:_possibleBeginEditingMouseDownEvent];
-            [NSApp sendEvent:theEvent];
+            [_possibleBeginEditingMouseDownEvent release];  _possibleBeginEditingMouseDownEvent = nil;  // otherwise double-clicks get stuck in an inifinte loop
+            [NSApp sendEvent:[theEvent copy]];
         }
-        
-        // Tidy up
-        [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+        else
+        {
+            // Tidy up
+            [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+        }
     }
 }
 
