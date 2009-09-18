@@ -20,6 +20,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Document
 
 // Selection
+@property(nonatomic, readwrite) BOOL isEditingSelection;
 - (void)postSelectionChangedNotification;
 
 // Event handling
@@ -101,6 +102,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         NSRect dirtyRect = [view convertRect:dirtyWebViewRect fromView:sender];
         
         SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+        [border setEditing:[self isEditingSelection]];
         
         for (id <SVEditingOverlayItem> anItem in [self selectedItems])
         {
@@ -178,6 +180,23 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [docView setNeedsDisplayInRect:drawingRect];
 }
 
+@synthesize isEditingSelection = _isEditingSelection;
+- (void)setIsEditingSelection:(BOOL)editing
+{
+    _isEditingSelection = editing;
+    
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    {
+        DOMElement *element = [anItem DOMElement];
+        NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
+        NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+        [docView setNeedsDisplayInRect:drawingRect];
+    }
+    
+    [border release];
+}
+
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
 {
     SVSelectionBorder *result = nil;
@@ -215,31 +234,57 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (BOOL)acceptsFirstResponder { return YES; }
 
+/*  There are 2 reasons why you might resign first responder:
+ *      1)  The user generally selected some different bit of the UI. If so, the selection is no longer relevant, so throw it away.
+ *      2)  A selected border was clicked in a manner suitable to start editing its contents. This means resigning first responder status to let WebKit take over and so we don't want to affect the selection as it will already have been taken care of.
+ */
 - (BOOL)resignFirstResponder
 {
     BOOL result = [super resignFirstResponder];
-    if (result)
+    if (result && ![self isEditingSelection])
     {
-        // Before I was trying to handle this by intercepting -mouseDown: and then passing the event along. This was DUMB, instead the AppKit will take care of telling us whether a mouse down should really remove the selection.
         [self setSelectedItems:nil];
     }
     
     return result;
 }
 
+/*  AppKit uses hit-testing to drill down into the view hierarchy and figure out just which view it needs to target with a mouse event. We can exploit this to effectively "hide" some portions of the webview from the standard event handling mechanisms; all such events will come straight to us instead. We have 2 different behaviours depending on current mode:
+ *
+ *      1)  Usually, any portion of the webview designated as "selectable" (e.g. pagelets) overrides hit-testing so that clicking selects them rather than the standard WebKit behaviour.
+ *
+ *      2)  But with -isEditingSelection set to YES, the role is flipped. The user has scoped in on the selected portion of the webview. They have normal access to that, but everything else we need to take control of so that clicking outside the box ends editing.
+ */
 - (NSView *)hitTest:(NSPoint)aPoint
 {
-    // Does the point correspond to one of the selections? If so, target that.
     NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
     
-    NSView *result;
-    if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
+    NSView *result = self;
+    if ([self isEditingSelection])
     {
-        result = self;
+        //  2)
+        for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+        {
+            DOMElement *element = [anItem DOMElement];
+            NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+            NSPoint mousePoint = [self convertPoint:point toView:docView];
+            if ([docView mouse:mousePoint inRect:[element boundingBox]])
+            {
+                result = [super hitTest:aPoint];
+            }
+        }
     }
     else
     {
-        result = [super hitTest:aPoint];
+        //  1)
+        if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
+        {
+            result = self;
+        }
+        else
+        {
+            result = [super hitTest:aPoint];
+        }
     }
     
     
@@ -331,7 +376,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         // Was the mouse up quick enough to start editing?
         if ([theEvent timestamp] - [_possibleBeginEditingMouseDownEvent timestamp] < 0.5)
         {
-            // If so, it's time to hand off to the webview for editing
+            // If so, it's time to hand off to the webview for editing.
+            [self setIsEditingSelection:YES];
+            
             NSPoint location = [self convertPoint:[_possibleBeginEditingMouseDownEvent locationInWindow]
                                          fromView:nil];
             NSView *targetView = [[self webView] hitTest:location];

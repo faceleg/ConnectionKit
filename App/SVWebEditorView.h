@@ -27,6 +27,7 @@
     
     // Selection
     NSArray *_selectedItems;
+    BOOL    _isEditingSelection;
     
     // Event Handling
     NSEvent *_possibleBeginEditingMouseDownEvent;
@@ -52,6 +53,8 @@
 @property(nonatomic, copy) NSArray *selectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(id <SVEditingOverlayItem>)item;
+
+@property(nonatomic, readonly) BOOL isEditingSelection;
 
 
 #pragma mark Getting Item Information

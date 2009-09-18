@@ -19,6 +19,8 @@
 
 @implementation SVSelectionBorder
 
+@synthesize editing = _isEditing;
+
 - (void)dealloc
 {
     
@@ -35,21 +37,24 @@
                                        NSCompositeSourceOver);
     
     // Then draw handles
-    CGFloat minX = NSMinX(frameRect);
-    CGFloat midX = NSMidX(frameRect);
-    CGFloat maxX = NSMaxX(frameRect) - 1.0;
-    CGFloat minY = NSMinY(frameRect);
-    CGFloat midY = NSMidY(frameRect);
-    CGFloat maxY = NSMaxY(frameRect) - 1.0;
-    
-    [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view];
-    [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view];
+    if (![self isEditing])
+    {
+        CGFloat minX = NSMinX(frameRect);
+        CGFloat midX = NSMidX(frameRect);
+        CGFloat maxX = NSMaxX(frameRect) - 1.0;
+        CGFloat minY = NSMinY(frameRect);
+        CGFloat midY = NSMidY(frameRect);
+        CGFloat maxY = NSMaxY(frameRect) - 1.0;
+        
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view];
+    }
 }
 
 - (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view

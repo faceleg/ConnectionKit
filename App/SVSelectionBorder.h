@@ -20,7 +20,10 @@ enum SVSelectionResizeMask
 
 @interface SVSelectionBorder : NSObject
 {
+    BOOL    _isEditing;
 }
+
+@property(nonatomic, getter=isEditing) BOOL editing;
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 
