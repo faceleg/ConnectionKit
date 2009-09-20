@@ -358,6 +358,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
+    // Store the event for a bit (for draging, editing, etc.)
+    _mouseDownEvent = [event retain];
+    
+    
     // While editing, we enter into a bit of special mode where a click anywhere outside the editing area is targetted to ourself. This is done so we can take control of the cursor. A click outside the editing area will end editing, but also handle the event as per normal. Easiest way to achieve this I reckon is to end editing and then simply refire the event, arriving at its real target. Very re-entrant :)
     if ([self isEditingSelection])
     {
@@ -398,7 +402,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             if (itemIsSelected)
             {
                 // If you click an aready selected item quick enough, it will start editing
-                _possibleBeginEditingMouseDownEvent = [event retain];
+                _mouseUpMayBeginEditing = YES;
             }
         }
     }
@@ -413,10 +417,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    if (_possibleBeginEditingMouseDownEvent)
+    if (_mouseDownEvent)
     {
-        NSEvent *mouseDownEvent = [_possibleBeginEditingMouseDownEvent retain];
-        [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+        NSEvent *mouseDownEvent = [_mouseDownEvent retain];
+        [_mouseDownEvent release],  _mouseDownEvent = nil;
         
         
         // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
@@ -434,13 +438,50 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         
         // Tidy up
         [mouseDownEvent release];
+        _mouseUpMayBeginEditing = NO;
     }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
+    // Now let's start a-dragging!
+    NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+    
+    //  Ideally, we'd place onto the pasteboard:
+    //      Sandvox item info, everything, else, WebKit, does, normally
+    //
+    //  -[WebView writeElement:withPasteboardTypes:toPasteboard:] would seem to be ideal for this, but it turns internally to fall back to trying to write the selection to the pasteboard, which is definitely not what we want. Fortunately, it boils down to writing:
+    //      Sandvox item info, WebArchive, RTF, plain text
+    //
+    //  Furthermore, there arises the question of how to handle multiple items selected. WebKit has no concept of such a selection so couldn't help us here, even if it wanted to. Should we try to string together the HTML/text sections into one big lump? Or use 10.6's ability to write multiple items to the pasteboard?
+    
+    id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
+    DOMElement *element = [item DOMElement];
+    
+    [pboard declareTypes:[NSArray arrayWithObjects:WebArchivePboardType, nil] owner:self];
+    [pboard setData:[[element webArchive] data] forType:WebArchivePboardType];
+    
+    [self dragImage:[NSApp applicationIconImage]
+                 at:NSZeroPoint
+             offset:NSZeroSize
+              event:_mouseDownEvent
+         pasteboard:pboard
+             source:self
+          slideBack:YES];
+    
+    
     // A drag of the mouse automatically removes the possibility that editing might commence
-    [_possibleBeginEditingMouseDownEvent release],  _possibleBeginEditingMouseDownEvent = nil;
+    [_mouseDownEvent release],  _mouseDownEvent = nil;
+    
+    
+    
+}
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+{
+    NSDragOperation result = NSDragOperationCopy;
+    if (isLocal) result = (result | NSDragOperationMove);
+    return result;
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent

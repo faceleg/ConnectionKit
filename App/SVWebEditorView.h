@@ -29,10 +29,13 @@
     
     // Selection
     NSArray *_selectedItems;
+    
+    // Editing
     BOOL    _isEditingSelection;
+    BOOL    _mouseUpMayBeginEditing;
     
     // Event Handling
-    NSEvent *_possibleBeginEditingMouseDownEvent;
+    NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
     BOOL    _isProcessingEvent;
 }
 
