@@ -14,7 +14,7 @@
 #import "SVEditingOverlayItem.h"
 
 
-@protocol SVWebEditorViewDataSource;
+@protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
 @class SVSelectionBorder, SVEditingOverlayDrawingView;
 
 
@@ -24,6 +24,8 @@
     // Content
     WebView *_webView;
     id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
+    id <SVWebEditorViewDelegate>    _delegate;      // "
+    BOOL    _isLoading;
     
     // Selection
     NSArray *_selectedItems;
@@ -40,10 +42,10 @@
 @property(nonatomic, retain, readonly) WebView *webView;
 @property(nonatomic, readonly) DOMDocument *DOMDocument;
 
-#pragma mark Content
+#pragma mark Loading Data
 
-@property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
+@property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 
 #pragma mark Selection
@@ -67,6 +69,11 @@
 - (id <SVEditingOverlayItem>)itemAtPoint:(NSPoint)point;
 
 
+#pragma mark Setting the DataSource/Delegate
+
+@property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
+@property(nonatomic, assign) id <SVWebEditorViewDelegate> delegate;
+
 @end
 
 
@@ -86,5 +93,16 @@
 
 @end
 
+
+#pragma mark -
+
+
+@protocol SVWebEditorViewDelegate <NSObject>
+
+ - (void)webEditorView:(SVWebEditorView *)webEditorView
+handleNavigationAction:(NSDictionary *)actionInformation
+               request:(NSURLRequest *)request;
+
+@end
 
 extern NSString *SVWebEditorViewSelectionDidChangeNotification;

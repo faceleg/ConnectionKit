@@ -10,6 +10,7 @@
 #import "SVSelectionBorder.h"
 
 #import "NSArray+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
@@ -48,6 +49,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // WebView
     _webView = [[WebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [_webView setPolicyDelegate:self];
     [_webView setUIDelegate:self];
     [_webView setEditingDelegate:self];
     
@@ -70,6 +72,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)dealloc
 {
+    [_webView setPolicyDelegate:nil];
     [_webView setUIDelegate:nil];
     [_webView setEditingDelegate:nil];
     
@@ -85,14 +88,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (DOMDocument *)DOMDocument { return [[self webView] mainFrameDocument]; }
 
-#pragma mark Content
-
-@synthesize dataSource = _dataSource;
+#pragma mark Loading Data
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
 {
+    _isLoading = YES;
     [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
+    _isLoading = NO;
 }
+
+@synthesize loading = _isLoading;
 
 #pragma mark Drawing
 
@@ -442,6 +447,47 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     // We're not personally interested in scroll events, let content have a crack at them.
     [self forwardMouseEvent:theEvent selector:_cmd];
+}
+
+#pragma mark Setting the DataSource/Delegate
+
+@synthesize dataSource = _dataSource;
+
+@synthesize delegate = _delegate;
+
+#pragma mark WebPolicyDelegate
+
+/*	We don't want to allow navigation within Sandvox! Open in web browser instead
+ */
+- (void)webView:(WebView *)sender decidePolicyForNewWindowAction:(NSDictionary *)actionInformation
+        request:(NSURLRequest *)request
+   newFrameName:(NSString *)frameName
+decisionListener:(id <WebPolicyDecisionListener>)listener
+{
+	// Open the URL in the user's web browser
+	[listener ignore];
+	
+	NSURL *URL = [request URL];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+}
+
+/*  We don't allow navigation, but our delegate may then decide to
+ */
+- (void)webView:(WebView *)sender decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+		request:(NSURLRequest *)request
+		  frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
+{
+    if ([self isLoading])
+    {
+        // We want to allow initial loading of the webview…
+        [listener use];
+    }
+    else
+    {
+        // …but after that navigation is undesireable
+        [listener ignore];
+        [[self delegate] webEditorView:self handleNavigationAction:actionInformation request:request];
+    }
 }
 
 #pragma mark WebUIDelegate
