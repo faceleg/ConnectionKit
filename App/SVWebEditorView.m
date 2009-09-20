@@ -444,13 +444,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    // Now let's start a-dragging!
+    if (!_mouseDownEvent) return;   // otherwise we initiate a drag multiple times!
+    
+    
+    
+    
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
     //  Ideally, we'd place onto the pasteboard:
     //      Sandvox item info, everything, else, WebKit, does, normally
     //
-    //  -[WebView writeElement:withPasteboardTypes:toPasteboard:] would seem to be ideal for this, but it turns internally to fall back to trying to write the selection to the pasteboard, which is definitely not what we want. Fortunately, it boils down to writing:
+    //  -[WebView writeElement:withPasteboardTypes:toPasteboard:] would seem to be ideal for this, but it turns out internally to fall back to trying to write the selection to the pasteboard, which is definitely not what we want. Fortunately, it boils down to writing:
     //      Sandvox item info, WebArchive, RTF, plain text
     //
     //  Furthermore, there arises the question of how to handle multiple items selected. WebKit has no concept of such a selection so couldn't help us here, even if it wanted to. Should we try to string together the HTML/text sections into one big lump? Or use 10.6's ability to write multiple items to the pasteboard?
@@ -461,20 +465,35 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [pboard declareTypes:[NSArray arrayWithObjects:WebArchivePboardType, nil] owner:self];
     [pboard setData:[[element webArchive] data] forType:WebArchivePboardType];
     
-    [self dragImage:[NSApp applicationIconImage]
-                 at:NSZeroPoint
+    
+    // Want the pagelet as the drag image, so have to draw that portion of the webview into a new image
+    NSView <WebDocumentView> *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+    NSRect imageRect = [element boundingBox];
+    
+    NSBitmapImageRep *bitmap = [docView bitmapImageRepForCachingDisplayInRect:imageRect];
+    [docView cacheDisplayInRect:imageRect toBitmapImageRep:bitmap];
+    
+    NSImage *image = [[NSImage alloc] initWithSize:imageRect.size];
+    [image addRepresentation:bitmap];
+    
+    
+    // Now let's start a-dragging!
+    NSRect dragImageRect = [self convertRect:imageRect fromView:docView];
+    
+    [self dragImage:image
+                 at:dragImageRect.origin
              offset:NSZeroSize
               event:_mouseDownEvent
          pasteboard:pboard
              source:self
           slideBack:YES];
     
+    [image release];
+    
+    
     
     // A drag of the mouse automatically removes the possibility that editing might commence
     [_mouseDownEvent release],  _mouseDownEvent = nil;
-    
-    
-    
 }
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
