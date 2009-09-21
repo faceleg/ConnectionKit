@@ -3182,9 +3182,10 @@
 			name = "Document UI";
 			sourceTree = "<group>";
 		};
-		27DF88CE0D85785D00AEF4B5 /* Window */ = {
+		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
+				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
 				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
@@ -3196,7 +3197,7 @@
 				3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */,
 				2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */,
 			);
-			name = Window;
+			name = "Main Document Window";
 			sourceTree = "<group>";
 		};
 		27E31BC10D4B795C00895DA1 /* Plugins */ = {
@@ -3242,13 +3243,13 @@
 				3C951FF70D762D9C009FCAC9 /* Configuration */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Documents */,
-				3C0B1D53104798F5002EE098 /* Design Chooser */,
 				278849800F5FF0C400C70629 /* Site */,
 				278849810F5FF0D300C70629 /* Master */,
 				275E067A0DDA0F1A0072567F /* Elements */,
 				2786BE970CAD10530086F9E0 /* Media */,
-				27DF88CE0D85785D00AEF4B5 /* Window */,
+				27DF88CE0D85785D00AEF4B5 /* Main Document Window */,
 				2721E0ED0E9E0CA200A458B2 /* Controller Chain */,
+				3C0B1D53104798F5002EE098 /* Design Chooser */,
 				3C5188A10D2F4DDC002D7414 /* Site Outline */,
 				272321DB0D48B5A70075F31F /* Page Details */,
 				3C202DA507DFC4BA00DE4994 /* Web Content Area */,
@@ -3697,7 +3698,6 @@
 				3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */,
 				3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */,
 				3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */,
-				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				3C9BC1E8103DF84800D2CF47 /* Info.xib */,
 				3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */,
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
