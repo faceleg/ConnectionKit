@@ -13,6 +13,8 @@
 #import "NSWorkspace+Karelia.h"
 
 
+#define WebDragImageAlpha 0.75f // copied from WebKit
+
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
@@ -202,6 +204,74 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         }
     }
     */
+    return result;
+}
+
+/*  Generates an image suitable for dragging by plucking out the contents of the DOM. Also returns by reference the rect of the image within our own coordinate system.
+ */
+- (NSImage *)selectionDragImage:(NSRect *)outImageRect
+{
+    // The core items involved
+    id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
+    DOMElement *element = [item DOMElement];
+    NSRect itemRect = NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
+    NSImage *result = [[[NSImage alloc] initWithSize:itemRect.size] autorelease];
+    
+    WebFrameView *frameView = [[[element ownerDocument] webFrame] frameView];
+    NSView <WebDocumentView> *docView = [frameView documentView];
+    
+    
+    // Try to capture straight from WebKit. This is a private method so may not always be available
+    if ([element respondsToSelector:@selector(renderedImage)])
+    {
+        NSImage *elementImage = [element performSelector:@selector(renderedImage)];
+        if (elementImage)
+        {
+            NSRect drawingRect; drawingRect.origin = NSZeroPoint;   drawingRect.size = [elementImage size];
+            
+            [result lockFocus];
+            
+            [elementImage drawInRect:NSInsetRect(drawingRect, 1.0f, 1.0f)
+                            fromRect:NSZeroRect
+                           operation:NSCompositeCopy
+                            fraction:WebDragImageAlpha];
+            
+            [[[NSColor grayColor] colorWithAlphaComponent:WebDragImageAlpha] setFill];
+            NSFrameRect(drawingRect);
+            
+            [result unlockFocus];
+        }
+    }
+    
+    
+    // Otherwise, fall back to caching display. Don't forget to be semi-transparent!
+    if (!result)
+    {
+        NSRect imageDrawingRect = [frameView convertRect:itemRect fromView:docView];
+        NSBitmapImageRep *bitmap = [frameView bitmapImageRepForCachingDisplayInRect:imageDrawingRect];
+        [frameView cacheDisplayInRect:imageDrawingRect toBitmapImageRep:bitmap];
+        
+        NSImage *image = [[NSImage alloc] initWithSize:itemRect.size];
+        [image addRepresentation:bitmap];
+        
+        [result lockFocus];
+        [image drawAtPoint:NSZeroPoint
+                  fromRect:NSZeroRect
+                 operation:NSCompositeCopy
+                  fraction:WebDragImageAlpha];
+        [result unlockFocus];
+        
+        [image release];
+    }
+    
+    
+    // Also return rect if requested
+    if (result && outImageRect)
+    {
+        *outImageRect = [self convertRect:itemRect fromView:docView];
+    }
+    
+    
     return result;
 }
 
@@ -466,39 +536,20 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [pboard setData:[[element webArchive] data] forType:WebArchivePboardType];
     
     
-    // Want the pagelet as the drag image, so have to draw that portion of the webview into a new image
-    WebFrameView *frameView = [[[element ownerDocument] webFrame] frameView];
-    NSView <WebDocumentView> *docView = [frameView documentView];
-    
-    NSRect imageRect = NSInsetRect([element boundingBox], -1.0, -1.0);  // Expand by 1px to capture border
-    NSRect imageDrawingRect = [frameView convertRect:imageRect fromView:docView];
-    
-    NSBitmapImageRep *bitmap = [frameView bitmapImageRepForCachingDisplayInRect:imageDrawingRect];
-    [frameView cacheDisplayInRect:imageDrawingRect toBitmapImageRep:bitmap];
-    
-    NSImage *image = [[NSImage alloc] initWithSize:imageRect.size];
-    [image addRepresentation:bitmap];
-    
-    NSImage *dragImage = [[NSImage alloc] initWithSize:[image size]];
-    [dragImage lockFocus];
-    [image drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositeCopy fraction:0.5];
-    [dragImage unlockFocus];
-    [image release];
-    
-    
     // Now let's start a-dragging!
-    NSRect dragImageRect = [self convertRect:imageRect fromView:docView];
+    NSRect dragImageRect;
+    NSImage *dragImage = [self selectionDragImage:&dragImageRect];
     
-    [self dragImage:dragImage
-                 at:dragImageRect.origin
-             offset:NSZeroSize
-              event:_mouseDownEvent
-         pasteboard:pboard
-             source:self
-          slideBack:YES];
-    
-    [dragImage release];
-    
+    if (dragImage)
+    {
+        [self dragImage:dragImage
+                     at:dragImageRect.origin
+                 offset:NSZeroSize
+                  event:_mouseDownEvent
+             pasteboard:pboard
+                 source:self
+              slideBack:YES];
+    }
     
     
     // A drag of the mouse automatically removes the possibility that editing might commence
