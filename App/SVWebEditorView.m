@@ -13,7 +13,7 @@
 #import "NSWorkspace+Karelia.h"
 
 
-#define WebDragImageAlpha 0.75f // copied from WebKit
+#define WebDragImageAlpha 0.5f // name is copied from WebKit, but we use 0.5 instead of 0.75 which I felt obscured destination too much
 
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
