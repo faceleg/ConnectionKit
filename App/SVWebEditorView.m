@@ -535,8 +535,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
     DOMElement *element = [item DOMElement];
     
-    [pboard declareTypes:[NSArray arrayWithObjects:WebArchivePboardType, nil] owner:self];
+    [pboard declareTypes:[NSArray arrayWithObjects:WebArchivePboardType, NSStringPboardType, nil]
+                   owner:self];
+    
     [pboard setData:[[element webArchive] data] forType:WebArchivePboardType];
+    [pboard setString:[(DOMHTMLElement *)element innerText] forType:NSStringPboardType];
     
     
     // Now let's start a-dragging!
