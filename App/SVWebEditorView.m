@@ -207,12 +207,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-/*  Generates an image suitable for dragging by plucking out the contents of the DOM. Also returns by reference the rect of the image within our own coordinate system.
+/*  When beginning a drag, you want to drag all the selected items. I haven't quite decided how to do this yet – one big image containing them all or an image for the item under the mouse and a numeric overlay? – so this is fairly temporary. Also return by reference the origin of the image within our own coordinate system.
  */
-- (NSImage *)selectionDragImage:(NSRect *)outImageRect
+- (NSImage *)dragImageForSelectionFromItem:(id <SVEditingOverlayItem>)item
+                                  location:(NSPoint *)outImageLocation
 {
     // The core items involved
-    id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
     DOMElement *element = [item DOMElement];
     NSRect itemRect = NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
     NSImage *result = [[[NSImage alloc] initWithSize:itemRect.size] autorelease];
@@ -266,9 +266,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Also return rect if requested
-    if (result && outImageRect)
+    if (result && outImageLocation)
     {
-        *outImageRect = [self convertRect:itemRect fromView:docView];
+        NSRect imageRect = [self convertRect:itemRect fromView:docView];
+        *outImageLocation = imageRect.origin;
     }
     
     
@@ -543,13 +544,13 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Now let's start a-dragging!
-    NSRect dragImageRect;
-    NSImage *dragImage = [self selectionDragImage:&dragImageRect];
+    NSPoint dragImageRect;
+    NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
     
     if (dragImage)
     {
         [self dragImage:dragImage
-                     at:dragImageRect.origin
+                     at:dragImageRect
                  offset:NSZeroSize
                   event:_mouseDownEvent
              pasteboard:pboard
