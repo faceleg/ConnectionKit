@@ -493,16 +493,19 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [_mouseDownEvent release],  _mouseDownEvent = nil;
         
         
-        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-        if ([theEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+        if (_mouseUpMayBeginEditing)
         {
-            // There might be multiple items selected. If so, 
-            // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
-            [self setIsEditingSelection:YES];
-            
-            // Refire events, this time they'll go to their correct target.
-            [NSApp sendEvent:mouseDownEvent];
-            [NSApp sendEvent:theEvent];
+            // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
+            if ([theEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+            {
+                // There might be multiple items selected. If so, 
+                // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
+                [self setIsEditingSelection:YES];
+                
+                // Refire events, this time they'll go to their correct target.
+                [NSApp sendEvent:mouseDownEvent];
+                [NSApp sendEvent:theEvent];
+            }
         }
         
         
