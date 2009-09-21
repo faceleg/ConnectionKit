@@ -467,20 +467,29 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Want the pagelet as the drag image, so have to draw that portion of the webview into a new image
-    NSView <WebDocumentView> *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
-    NSRect imageRect = [element boundingBox];
+    WebFrameView *frameView = [[[element ownerDocument] webFrame] frameView];
+    NSView <WebDocumentView> *docView = [frameView documentView];
     
-    NSBitmapImageRep *bitmap = [docView bitmapImageRepForCachingDisplayInRect:imageRect];
-    [docView cacheDisplayInRect:imageRect toBitmapImageRep:bitmap];
+    NSRect imageRect = NSInsetRect([element boundingBox], -1.0, -1.0);  // Expand by 1px to capture border
+    NSRect imageDrawingRect = [frameView convertRect:imageRect fromView:docView];
+    
+    NSBitmapImageRep *bitmap = [frameView bitmapImageRepForCachingDisplayInRect:imageDrawingRect];
+    [frameView cacheDisplayInRect:imageDrawingRect toBitmapImageRep:bitmap];
     
     NSImage *image = [[NSImage alloc] initWithSize:imageRect.size];
     [image addRepresentation:bitmap];
+    
+    NSImage *dragImage = [[NSImage alloc] initWithSize:[image size]];
+    [dragImage lockFocus];
+    [image drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositeCopy fraction:0.5];
+    [dragImage unlockFocus];
+    [image release];
     
     
     // Now let's start a-dragging!
     NSRect dragImageRect = [self convertRect:imageRect fromView:docView];
     
-    [self dragImage:image
+    [self dragImage:dragImage
                  at:dragImageRect.origin
              offset:NSZeroSize
               event:_mouseDownEvent
@@ -488,7 +497,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
              source:self
           slideBack:YES];
     
-    [image release];
+    [dragImage release];
     
     
     
