@@ -16,6 +16,7 @@
 #import "SVSelectionBorder.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSArray+Karelia.h"
 
 
 @interface SVWebViewController ()
@@ -375,9 +376,21 @@
            writeItems:(NSArray *)items
          toPasteboard:(NSPasteboard *)pasteboard;
 {
-    [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
-                       owner:self];
-    return YES;
+    BOOL result = NO;
+    
+    NSArray *pboardReps = [items valueForKeyPath:@"pagelet.pasteboardRepresentation"];
+    if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
+    {
+        result = YES;
+        
+        [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
+                           owner:self];
+        [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
+                    forType:kKTPageletsPboardType];
+    }
+    
+    
+    return result;
 }
 
 @end
