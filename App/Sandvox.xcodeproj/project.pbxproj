@@ -240,6 +240,8 @@
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
+		27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* SVWebEditorWebView.h */; };
+		27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* SVWebEditorWebView.m */; };
 		27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1670,6 +1672,8 @@
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
+		2742243F106A926E0058C8DA /* SVWebEditorWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorWebView.h; sourceTree = "<group>"; };
+		27422440106A926E0058C8DA /* SVWebEditorWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewLoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
@@ -2743,6 +2747,8 @@
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
 				2755279B10546D990037524C /* SVSelectionBorder.m */,
 				27FA884C1057AD9800E8D870 /* SVEditingOverlayItem.h */,
+				2742243F106A926E0058C8DA /* SVWebEditorWebView.h */,
+				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
 			);
 			name = "Web Editor View";
 			sourceTree = "<group>";
@@ -5022,6 +5028,7 @@
 				271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */,
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
 				27FA884D1057AD9800E8D870 /* SVEditingOverlayItem.h in Headers */,
+				27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6418,6 +6425,7 @@
 				271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */,
 				271B489B1052CC9D008B698C /* SVContainerTextBlock.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
+				27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

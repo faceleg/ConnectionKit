@@ -7,6 +7,7 @@
 //
 
 #import "SVWebEditorView.h"
+#import "SVWebEditorWebView.h"
 #import "SVSelectionBorder.h"
 
 #import "NSArray+Karelia.h"
@@ -20,7 +21,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @interface SVWebEditorView ()
 
-// Document
 
 // Selection
 @property(nonatomic, readwrite) SVWebEditingMode mode;
@@ -29,6 +29,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
 
+@end
+
+@interface SVWebEditorView (Internal)
+- (SVWebEditorWebView *)webView; // publicly, it's declared as a plain WebView, but we kow better
 @end
 
 
@@ -49,7 +53,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // WebView
-    _webView = [[WebView alloc] initWithFrame:[self bounds]];
+    _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setPolicyDelegate:self];
     [_webView setUIDelegate:self];

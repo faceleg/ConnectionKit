@@ -22,14 +22,14 @@ typedef enum {
 
 
 @protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
-@class SVSelectionBorder, SVEditingOverlayDrawingView;
+@class SVWebEditorWebView;
 
 
 @interface SVWebEditorView : NSView
 {
   @private
     // Content
-    WebView *_webView;
+    SVWebEditorWebView              *_webView;
     id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
     id <SVWebEditorViewDelegate>    _delegate;      // "
     BOOL    _isLoading;
