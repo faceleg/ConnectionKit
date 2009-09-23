@@ -24,7 +24,7 @@
     
     self = [super init];
     
-    _element = [element retain];
+    _DOMElement = [element retain];
     
     _nodeTracker = [[SVDOMNodeBoundsTracker alloc] initWithDOMNode:element];
     [_nodeTracker setDelegate:self];
@@ -38,14 +38,14 @@
     [_nodeTracker setDelegate:nil];
     [_nodeTracker release];
     
-    [_element release];
+    [_DOMElement release];
     
     [super dealloc];
 }
 
 #pragma mark DOM
 
-@synthesize DOMElement = _element;
+@synthesize DOMElement = _DOMElement;
 
 #pragma mark Editing Overlay Item
 

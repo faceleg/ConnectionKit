@@ -17,7 +17,7 @@
 @interface SVWebContentItem : NSObject <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
 {
   @private
-    DOMElement  *_element;
+    DOMElement  *_DOMElement;
         
     SVDOMNodeBoundsTracker  *_nodeTracker;
 }
