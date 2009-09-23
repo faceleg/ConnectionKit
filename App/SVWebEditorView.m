@@ -23,7 +23,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Document
 
 // Selection
-@property(nonatomic, readwrite) BOOL isEditingSelection;
+@property(nonatomic, readwrite) SVWebEditingMode mode;
 - (void)postSelectionChangedNotification;
 
 // Event handling
@@ -105,24 +105,28 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view
 {
-    NSArray *selectedItems = [self selectedItems];
-    if ([selectedItems count] > 0)
+    // Nothing to draw during a drag op
+    if ([self mode] != SVWebEditingModeDragging)
     {
-        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-        [border setEditing:[self isEditingSelection]];
-        
-        for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+        NSArray *selectedItems = [self selectedItems];
+        if ([selectedItems count] > 0)
         {
-            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-            NSRect frameRect = [[anItem DOMElement] boundingBox];
-            NSRect drawingRect = [border drawingRectForFrame:frameRect];
-            if (NSIntersectsRect(drawingRect, dirtyRect))
+            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+            [border setEditing:([self mode] == SVWebEditingModeEditing)];
+            
+            for (id <SVEditingOverlayItem> anItem in [self selectedItems])
             {
-                [border drawWithFrame:frameRect inView:view];
+                // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+                NSRect frameRect = [[anItem DOMElement] boundingBox];
+                NSRect drawingRect = [border drawingRectForFrame:frameRect];
+                if (NSIntersectsRect(drawingRect, dirtyRect))
+                {
+                    [border drawWithFrame:frameRect inView:view];
+                }
             }
+            
+            [border release];
         }
-        
-        [border release];
     }
 }
 
@@ -284,11 +288,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Editing
 
-@synthesize isEditingSelection = _isEditingSelection;
-- (void)setIsEditingSelection:(BOOL)editing
+@synthesize mode = _mode;
+- (void)setMode:(SVWebEditingMode)mode
 {
-    _isEditingSelection = editing;
+    _mode = mode;
     
+    // The whole selection will need redrawing
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     for (id <SVEditingOverlayItem> anItem in [self selectedItems])
     {
@@ -318,7 +323,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         ![(NSView *)firstResponder isDescendantOf:self])
     {
         [self setSelectedItems:nil];
-        [self setIsEditingSelection:NO];
+        [self setMode:SVWebEditingModeNormal];
     }
 }
 
@@ -335,7 +340,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (BOOL)acceptsFirstResponder
 {
-    return ![self isEditingSelection];
+    BOOL result = ([self mode] != SVWebEditingModeEditing);
+    return result;
 }
 
 /*  There are 2 reasons why you might resign first responder:
@@ -345,7 +351,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (BOOL)resignFirstResponder
 {
     BOOL result = [super resignFirstResponder];
-    if (result && ![self isEditingSelection])
+    if (result && [self mode] != SVWebEditingModeEditing)
     {
         [self setSelectedItems:nil];
     }
@@ -367,7 +373,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     {
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
-        if ([self isEditingSelection])
+        if ([self mode] == SVWebEditingModeEditing)
         {
             //  2)
             BOOL targetSelf = YES;
@@ -434,10 +440,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // While editing, we enter into a bit of special mode where a click anywhere outside the editing area is targetted to ourself. This is done so we can take control of the cursor. A click outside the editing area will end editing, but also handle the event as per normal. Easiest way to achieve this I reckon is to end editing and then simply refire the event, arriving at its real target. Very re-entrant :)
-    if ([self isEditingSelection])
+    if ([self mode] == SVWebEditingModeEditing)
     {
         [self setSelectedItems:nil];
-        [self setIsEditingSelection:NO];
+        [self setMode:SVWebEditingModeNormal];
         [NSApp sendEvent:event];
         return;
     }
@@ -501,7 +507,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             {
                 // There might be multiple items selected. If so, 
                 // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
-                [self setIsEditingSelection:YES];
+                [self setMode:SVWebEditingModeEditing];
                 
                 // Refire events, this time they'll go to their correct target.
                 [NSApp sendEvent:mouseDownEvent];
@@ -515,6 +521,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         _mouseUpMayBeginEditing = NO;
     }
 }
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    // We're not personally interested in scroll events, let content have a crack at them.
+    [self forwardMouseEvent:theEvent selector:_cmd];
+}
+
+#pragma mark Drag and Drop
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
@@ -570,10 +584,28 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent
+- (void)draggedImage:(NSImage *)anImage beganAt:(NSPoint)aPoint
 {
-    // We're not personally interested in scroll events, let content have a crack at them.
-    [self forwardMouseEvent:theEvent selector:_cmd];
+    // Hide the dragged items so it looks like a proper drag
+    [self setMode:SVWebEditingModeDragging];    // will redraw without selection borders
+    
+    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    {
+        DOMElement *element = [anItem DOMElement];
+        [[element style] setProperty:@"visibility" value:@"hidden" priority:@""];
+    }
+}
+
+- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
+{
+    // Make the dragged items visible again
+    [self setMode:SVWebEditingModeNormal];
+    
+    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    {
+        DOMElement *element = [anItem DOMElement];
+        [[element style] removeProperty:@"visibility"];
+    }
 }
 
 #pragma mark Setting the DataSource/Delegate
@@ -631,6 +663,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [self drawRect:dirtyDrawingRect inView:drawingView];
 }
 
+- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+{
+    // Drag and drop appears not to go through the standard hitTest: API in order to locate the drag destination, allowing it to drop content straight onto an area obscured by a selectable item. We don't want that, but happily can control the drag using this delegate method.
+    NSPoint location = [self convertPointFromBase:[draggingInfo draggingLocation]];
+    if ([self itemAtPoint:location])
+    {
+        return WebDragDestinationActionNone;
+    }
+    else
+    {
+        return WebDragDestinationActionEdit;
+    }
+}
+
 #pragma mark WebEditingDelegate
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
@@ -638,7 +684,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     OBPRECONDITION([notification object] == [self webView]);
     
     // Changing selection while editing is a pretty good indication that the webview will end editing, even including by losing first responder status. However, at this point, the webview is still first responder, so we have to delay our check fractionally
-    if ([self isEditingSelection])
+    if ([self mode] == SVWebEditingModeEditing)
     {
         [self selectionDidChangeWhileEditing];
     }

@@ -204,11 +204,16 @@
         {
             NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
             DOMElement *element = [domDoc getElementById:pageletID];
-            
-            SVWebContentItem *object = [[SVWebContentItem alloc] initWithElement:element];
-            
-            [contentObjects addObject:object];
-            [object release];
+            if (element)
+            {
+                SVWebContentItem *object = [[SVWebContentItem alloc] initWithElement:element];
+                [contentObjects addObject:object];
+                [object release];
+            }
+            else
+            {
+                NSLog(@"Could not locate pagelet with ID: %@", pageletID);
+            }
         }
         
         [self setContentItems:contentObjects];

@@ -14,6 +14,13 @@
 #import "SVEditingOverlayItem.h"
 
 
+typedef enum {
+    SVWebEditingModeNormal,
+    SVWebEditingModeEditing,
+    SVWebEditingModeDragging,
+} SVWebEditingMode;
+
+
 @protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
 @class SVSelectionBorder, SVEditingOverlayDrawingView;
 
@@ -28,10 +35,10 @@
     BOOL    _isLoading;
     
     // Selection
-    NSArray *_selectedItems;
+    NSArray             *_selectedItems;
+    SVWebEditingMode    _mode;
     
     // Editing
-    BOOL    _isEditingSelection;
     BOOL    _mouseUpMayBeginEditing;
     
     // Event Handling
@@ -62,7 +69,7 @@
 
 #pragma mark Editing
 
-@property(nonatomic, readonly) BOOL isEditingSelection;
+@property(nonatomic, readonly) SVWebEditingMode mode;
 
 
 
