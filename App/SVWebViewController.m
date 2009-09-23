@@ -371,5 +371,14 @@
     return result;
 }
 
+- (BOOL)webEditorView:(SVWebEditorView *)sender
+           writeItems:(NSArray *)items
+         toPasteboard:(NSPasteboard *)pasteboard;
+{
+    [pasteboard declareTypes:[NSArray arrayWithObject:@"com.karelia.Sandvox.pagelet-list"]
+                       owner:self];
+    return YES;
+}
+
 @end
 

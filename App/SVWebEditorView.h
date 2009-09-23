@@ -101,6 +101,17 @@ typedef enum {
 - (id <SVEditingOverlayItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
 
+/*!
+ @method webEditorView:writeItems:toPasteboard:
+ @param sender
+ @param items An array of SVEditingOverlayItem objects to be written
+ @param pasteboard
+ @result YES if the items could be written to the pasteboard
+ */
+- (BOOL)webEditorView:(SVWebEditorView *)sender
+           writeItems:(NSArray *)items
+         toPasteboard:(NSPasteboard *)pasteboard;
+
 @end
 
 

@@ -541,12 +541,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     //
     //  Furthermore, there arises the question of how to handle multiple items selected. WebKit has no concept of such a selection so couldn't help us here, even if it wanted to. Should we try to string together the HTML/text sections into one big lump? Or use 10.6's ability to write multiple items to the pasteboard?
     
-    id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
+    NSArray *selection = [self selectedItems];
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
-    if ([item writeToPasteboard:pboard])
+    if ([[self dataSource] webEditorView:self writeItems:selection toPasteboard:pboard])
     {
         // Now let's start a-dragging!
+        id <SVEditingOverlayItem> item = [selection lastObject]; // FIXME: use the item actually being dragged
+        
         NSPoint dragImageRect;
         NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
         

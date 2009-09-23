@@ -13,8 +13,4 @@
 
 - (DOMElement *)DOMElement;
 
-/*  Return YES or NO to indicate whether a drag should commence
- */
-- (BOOL)writeToPasteboard:(NSPasteboard *)pasteboard;
-
 @end
