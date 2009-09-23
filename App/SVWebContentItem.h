@@ -22,7 +22,7 @@
     SVDOMNodeBoundsTracker  *_nodeTracker;
 }
 
-- (id)initWithElement:(DOMElement *)element;
+- (id)initWithDOMElement:(DOMElement *)element;
 
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
 

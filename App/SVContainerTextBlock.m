@@ -29,7 +29,7 @@
     for (int i = 0; i < [imageNodes length]; i++)
     {
         DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[imageNodes item:i];
-        SVWebContentItem *item = [[SVWebContentItem alloc] initWithElement:anImage];
+        SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:anImage];
         [result addObject:item];
         [item release];
     }
@@ -53,7 +53,7 @@
     for (int i = 0; i < [imageNodes length]; i++)
     {
         DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[imageNodes item:i];
-        SVWebContentItem *item = [[SVWebContentItem alloc] initWithElement:anImage];
+        SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:anImage];
         [self addWebContentItem:item];
         [item release];
     }

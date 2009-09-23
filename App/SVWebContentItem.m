@@ -15,10 +15,10 @@
 
 - (id)init
 {
-    return [self initWithElement:nil];
+    return [self initWithDOMElement:nil];
 }
 
-- (id)initWithElement:(DOMHTMLElement *)element;
+- (id)initWithDOMElement:(DOMHTMLElement *)element;
 {
     OBPRECONDITION(element);
     
