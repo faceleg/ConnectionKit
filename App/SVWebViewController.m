@@ -224,6 +224,11 @@
         [contentObjects release];
         
         
+        
+        // Locate the sidebar
+        _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
+        
+        
         // Mark as loaded
         [self setLoading:NO];
 	}
@@ -394,6 +399,27 @@
     
     
     return result;
+}
+
+- (id)webEditorView:(SVWebEditorView *)sender destinationForDrop:(id <NSDraggingInfo>)dragInfo;
+{
+    // Let the editor do its thing with drag and drop EXCEPT for the sidebar, which we will claim
+    id result = nil;
+    
+    if (_sidebarDiv)
+    {
+        NSView *docView = [[[[_sidebarDiv ownerDocument] webFrame] frameView] documentView];
+        NSRect sidebarRect = [_sidebarDiv boundingBox];
+        NSPoint mouseLocation = [docView convertPointFromBase:[dragInfo draggingLocation]];
+        if ([docView mouse:mouseLocation inRect:sidebarRect]) result = self;
+    }
+    
+    return result;
+}
+
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
+{
+    return NSDragOperationMove;
 }
 
 @end

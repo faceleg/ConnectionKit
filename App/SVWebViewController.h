@@ -23,7 +23,8 @@
     NSArray         *_textBlocks;
     SVTextBlock     *_selectedTextBlock;
     
-    SVWebEditorView    *_webEditorView;
+    SVWebEditorView     *_webEditorView;
+    DOMHTMLDivElement   *_sidebarDiv;
     NSArray             *_contentItems;
 }
 

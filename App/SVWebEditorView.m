@@ -683,11 +683,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [self drawRect:dirtyDrawingRect inView:drawingView];
 }
 
-- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo
+/*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions
+ */
+- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
 {
-    // Drag and drop appears not to go through the standard hitTest: API in order to locate the drag destination, allowing it to drop content straight onto an area obscured by a selectable item. We don't want that, but happily can control the drag using this delegate method.
-    NSPoint location = [self convertPointFromBase:[draggingInfo draggingLocation]];
-    if ([self itemAtPoint:location])
+    if (_lastDraggingDestination)
     {
         return WebDragDestinationActionNone;
     }
@@ -697,17 +697,24 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
-- (NSDragOperation)webView:(WebView *)webView validateDrop:(id <NSDraggingInfo>)draggingInfo;
+- (void)webView:(WebView *)webView willValidateDrop:(id <NSDraggingInfo>)dragInfo;
 {
-    NSPoint location = [self convertPointFromBase:[draggingInfo draggingLocation]];
-    if ([self itemAtPoint:location])
+    // Let our data source decide if it wants to handle the drop
+    _lastDraggingDestination = [[self dataSource] webEditorView:self destinationForDrop:dragInfo];
+}
+
+- (NSDragOperation)webView:(WebView *)webView
+              validateDrop:(id <NSDraggingInfo>)dragInfo
+         proposedOperation:(NSDragOperation)operation;
+{
+    NSDragOperation result = operation;
+    
+    if (_lastDraggingDestination)
     {
-        return NSDragOperationMove;
+        result = [_lastDraggingDestination draggingUpdated:dragInfo];
     }
-    else
-    {
-        return NSDragOperationNone;
-    }
+    
+    return result;
 }
 
 #pragma mark WebEditingDelegate

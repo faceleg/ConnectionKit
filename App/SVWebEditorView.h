@@ -41,6 +41,9 @@ typedef enum {
     // Editing
     BOOL    _mouseUpMayBeginEditing;
     
+    // Drag & Drop
+    id  _lastDraggingDestination;   // weak ref
+    
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
     BOOL    _isProcessingEvent;
@@ -100,6 +103,15 @@ typedef enum {
  */
 - (id <SVEditingOverlayItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
+
+/*!
+ @method webEditorView:draggingDestinationForDrop:
+ @param sender
+ @param dragInfo
+ @result A NSDraggingDestination-compliant object to handle the drop, or nil to use the default handling.
+ @discussion Use this to "claim" a portion of the view as your own for drag & drop.
+ */
+- (id)webEditorView:(SVWebEditorView *)sender destinationForDrop:(id <NSDraggingInfo>)dragInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:

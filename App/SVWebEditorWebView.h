@@ -11,9 +11,6 @@
 
 @protocol SVWebEditorWebUIDelegate;
 @interface SVWebEditorWebView : WebView
-{
-
-}
 
 @property(nonatomic, assign) id <SVWebEditorWebUIDelegate> UIDelegate;
 
@@ -21,5 +18,11 @@
 
 
 @protocol SVWebEditorWebUIDelegate <NSObject>
-- (NSDragOperation)webView:(WebView *)webView validateDrop:(id <NSDraggingInfo>)info;
+
+- (void)webView:(WebView *)webView willValidateDrop:(id <NSDraggingInfo>)dragInfo;
+
+- (NSDragOperation)webView:(WebView *)webView
+              validateDrop:(id <NSDraggingInfo>)dragInfo
+         proposedOperation:(NSDragOperation)operation;
+
 @end

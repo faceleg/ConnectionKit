@@ -18,14 +18,27 @@
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    return [self draggingUpdated:sender];
+    // Alert the delegate to incoming drop
+    [[self UIDelegate] webView:self willValidateDrop:sender];
+    
+    // Do usual thing but let delegate have final say
+    NSDragOperation result = [super draggingEntered:sender];
+    result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+    
+    return result;
 }
 
 - (BOOL)wantsPeriodicDraggingUpdates { return NO; }
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
-    NSDragOperation result = [[self UIDelegate] webView:self validateDrop:sender];
+    // Alert the delegate to incoming drop
+    [[self UIDelegate] webView:self willValidateDrop:sender];
+    
+    // Do usual thing but let delegate have final say
+    NSDragOperation result = [super draggingUpdated:sender];
+    result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+    
     return result;
 }
 
