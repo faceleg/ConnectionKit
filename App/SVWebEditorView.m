@@ -526,22 +526,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent
-{
-    // We're not personally interested in scroll events, let content have a crack at them.
-    [self forwardMouseEvent:theEvent selector:_cmd];
-}
-
-#pragma mark Drag and Drop
-
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     if (!_mouseDownEvent) return;   // otherwise we initiate a drag multiple times!
     
     
     
-    
-    NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
     //  Ideally, we'd place onto the pasteboard:
     //      Sandvox item info, everything, else, WebKit, does, normally
@@ -552,34 +542,58 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     //  Furthermore, there arises the question of how to handle multiple items selected. WebKit has no concept of such a selection so couldn't help us here, even if it wanted to. Should we try to string together the HTML/text sections into one big lump? Or use 10.6's ability to write multiple items to the pasteboard?
     
     id <SVEditingOverlayItem> item = [[self selectedItems] lastObject]; // FIXME: use the item actually being dragged
-    DOMElement *element = [item DOMElement];
+    NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
-    [pboard declareTypes:[NSArray arrayWithObjects:WebArchivePboardType, NSStringPboardType, nil]
-                   owner:self];
-    
-    [pboard setData:[[element webArchive] data] forType:WebArchivePboardType];
-    [pboard setString:[(DOMHTMLElement *)element innerText] forType:NSStringPboardType];
-    
-    
-    // Now let's start a-dragging!
-    NSPoint dragImageRect;
-    NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
-    
-    if (dragImage)
+    if ([item writeToPasteboard:pboard])
     {
-        [self dragImage:dragImage
-                     at:dragImageRect
-                 offset:NSZeroSize
-                  event:_mouseDownEvent
-             pasteboard:pboard
-                 source:self
-              slideBack:YES];
+        // Now let's start a-dragging!
+        NSPoint dragImageRect;
+        NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
+        
+        if (dragImage)
+        {
+            [self dragImage:dragImage
+                         at:dragImageRect
+                     offset:NSZeroSize
+                      event:_mouseDownEvent
+                 pasteboard:pboard
+                     source:self
+                  slideBack:YES];
+        }
     }
     
     
     // A drag of the mouse automatically removes the possibility that editing might commence
     [_mouseDownEvent release],  _mouseDownEvent = nil;
 }
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    // We're not personally interested in scroll events, let content have a crack at them.
+    [self forwardMouseEvent:theEvent selector:_cmd];
+}
+
+#pragma mark Drag Types
+
+/*  All this sort of stuff we really want to target the webview with
+ */
+
+- (void)registerForDraggedTypes:(NSArray *)pboardTypes
+{
+    [[self webView] registerForDraggedTypes:pboardTypes];
+}
+
+- (NSArray *)registeredDraggedTypes
+{
+    return [[self webView] registeredDraggedTypes];
+}
+
+- (void)unregisterDraggedTypes
+{
+    [[self webView] unregisterDraggedTypes];
+}
+
+#pragma mark NSDraggingSource
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {

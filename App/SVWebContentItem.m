@@ -47,6 +47,14 @@
 
 @synthesize DOMElement = _element;
 
+- (BOOL)writeToPasteboard:(NSPasteboard *)pasteboard;
+{
+    [pasteboard declareTypes:[NSArray arrayWithObject:@"com.karelia.Sandvox.pagelet-list"]
+                       owner:self];
+    
+    return YES;
+}
+
 #pragma mark Editing Overlay Item
 
 - (void)trackerDidDetectDOMNodeBoundsChange:(NSNotification *)notification;
