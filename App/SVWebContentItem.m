@@ -32,20 +32,32 @@
     return self;
 }
 
+- (id)initWithDOMElement:(DOMElement *)element pagelet:(KTPagelet *)pagelet;
+{
+    self = [self initWithDOMElement:element];
+    
+    _pagelet = [pagelet retain];
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_nodeTracker stopTracking];
     [_nodeTracker setDelegate:nil];
     [_nodeTracker release];
     
+    [_pagelet release];
     [_DOMElement release];
     
     [super dealloc];
 }
 
-#pragma mark DOM
+#pragma mark Accessors
 
 @synthesize DOMElement = _DOMElement;
+
+@synthesize pagelet = _pagelet;
 
 #pragma mark Editing Overlay Item
 

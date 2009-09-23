@@ -206,7 +206,7 @@
             DOMElement *element = [domDoc getElementById:pageletID];
             if (element)
             {
-                SVWebContentItem *object = [[SVWebContentItem alloc] initWithElement:element];
+                SVWebContentItem *object = [[SVWebContentItem alloc] initWithDOMElement:element pagelet:aPagelet];
                 [contentObjects addObject:object];
                 [object release];
             }
@@ -375,7 +375,7 @@
            writeItems:(NSArray *)items
          toPasteboard:(NSPasteboard *)pasteboard;
 {
-    [pasteboard declareTypes:[NSArray arrayWithObject:@"com.karelia.Sandvox.pagelet-list"]
+    [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
                        owner:self];
     return YES;
 }
