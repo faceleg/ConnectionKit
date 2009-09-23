@@ -59,6 +59,9 @@
     [self setWebEditorView:editor];
     [self setWebView:[editor webView]];
     
+    // Register the editor for drag & drop
+    [editor registerForDraggedTypes:[NSArray arrayWithObject:kKTPageletsPboardType]];
+    
     [editor release];
 }
 

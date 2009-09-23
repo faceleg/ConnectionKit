@@ -19,7 +19,7 @@
 NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
-@interface SVWebEditorView ()
+@interface SVWebEditorView () <SVWebEditorWebUIDelegate>
 
 
 // Selection
@@ -694,6 +694,19 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     else
     {
         return WebDragDestinationActionEdit;
+    }
+}
+
+- (NSDragOperation)webView:(WebView *)webView validateDrop:(id <NSDraggingInfo>)draggingInfo;
+{
+    NSPoint location = [self convertPointFromBase:[draggingInfo draggingLocation]];
+    if ([self itemAtPoint:location])
+    {
+        return NSDragOperationMove;
+    }
+    else
+    {
+        return NSDragOperationNone;
     }
 }
 

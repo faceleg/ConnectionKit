@@ -9,9 +9,17 @@
 #import <WebKit/WebKit.h>
 
 
+@protocol SVWebEditorWebUIDelegate;
 @interface SVWebEditorWebView : WebView
 {
 
 }
 
+@property(nonatomic, assign) id <SVWebEditorWebUIDelegate> UIDelegate;
+
+@end
+
+
+@protocol SVWebEditorWebUIDelegate <NSObject>
+- (NSDragOperation)webView:(WebView *)webView validateDrop:(id <NSDraggingInfo>)info;
 @end
