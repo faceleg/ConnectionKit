@@ -1,5 +1,5 @@
 //
-//  SVEditingOverlayItem.h
+//  SVWebEditorItem.h
 //  Sandvox
 //
 //  Created by Mike on 09/09/2009.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@protocol SVEditingOverlayItem <NSObject>
+@protocol SVWebEditorItem <NSObject>
 
 - (DOMElement *)DOMElement;
 

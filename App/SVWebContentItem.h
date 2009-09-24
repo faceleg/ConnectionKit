@@ -10,14 +10,14 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "SVEditingOverlayItem.h"
+#import "SVWebEditorItem.h"
 #import "SVDOMNodeBoundsTracker.h"
 
 
 @class KTPagelet;
 
 
-@interface SVWebContentItem : NSObject <SVEditingOverlayItem, SVDOMNodeBoundsTrackerDelegate>
+@interface SVWebContentItem : NSObject <SVWebEditorItem, SVDOMNodeBoundsTrackerDelegate>
 {
   @private
     DOMElement  *_DOMElement;

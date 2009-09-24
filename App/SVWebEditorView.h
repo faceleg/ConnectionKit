@@ -11,7 +11,8 @@
 
 
 #import <WebKit/WebKit.h>
-#import "SVEditingOverlayItem.h"
+#import "SVWebEditorItem.h"
+#import "KSDragging.h"
 
 
 typedef enum {
@@ -67,7 +68,7 @@ typedef enum {
 
 @property(nonatomic, copy) NSArray *selectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
-- (void)deselectItem:(id <SVEditingOverlayItem>)item;
+- (void)deselectItem:(id <SVWebEditorItem>)item;
 
 
 #pragma mark Editing
@@ -79,7 +80,7 @@ typedef enum {
 #pragma mark Getting Item Information
 
 //  Queries the datasource
-- (id <SVEditingOverlayItem>)itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 
 
 #pragma mark Setting the DataSource/Delegate
@@ -101,7 +102,7 @@ typedef enum {
  @param point The point being tested in the overlay's coordinate system.
  @result The frontmost item that covers the point. nil if there is none.
  */
-- (id <SVEditingOverlayItem>)editingOverlay:(SVWebEditorView *)overlay
+- (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
 
 /*!
@@ -111,12 +112,13 @@ typedef enum {
  @result A NSDraggingDestination-compliant object to handle the drop, or nil to use the default handling.
  @discussion Use this to "claim" a portion of the view as your own for drag & drop.
  */
-- (id)webEditorView:(SVWebEditorView *)sender destinationForDrop:(id <NSDraggingInfo>)dragInfo;
+- (id <KSDraggingDestination>)webEditorView:(SVWebEditorView *)sender
+                         destinationForDrop:(id <NSDraggingInfo>)dragInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:
  @param sender
- @param items An array of SVEditingOverlayItem objects to be written
+ @param items An array of SVWebEditorItem objects to be written
  @param pasteboard
  @result YES if the items could be written to the pasteboard
  */

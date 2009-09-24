@@ -374,9 +374,9 @@
     return result;
 }
 
-- (id <SVEditingOverlayItem>)editingOverlay:(SVWebEditorView *)overlay itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay itemAtPoint:(NSPoint)point;
 {
-    id <SVEditingOverlayItem> result = [self itemAtPoint:point];
+    id <SVWebEditorItem> result = [self itemAtPoint:point];
     return result;
 }
 

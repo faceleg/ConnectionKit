@@ -118,7 +118,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
             [border setEditing:([self mode] == SVWebEditingModeEditing)];
             
-            for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+            for (id <SVWebEditorItem> anItem in [self selectedItems])
             {
                 // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
                 NSRect frameRect = [[anItem DOMElement] boundingBox];
@@ -152,7 +152,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Remove old frames
     if (!extendSelection)
     {
-        for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+        for (id <SVWebEditorItem> anItem in [self selectedItems])
         {
             NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
@@ -169,7 +169,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Draw new selection
-    for (id <SVEditingOverlayItem> anItem in items)
+    for (id <SVWebEditorItem> anItem in items)
     {
         NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
         [docView setNeedsDisplayInRect:drawingRect];
@@ -180,7 +180,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [self postSelectionChangedNotification];
 }
 
-- (void)deselectItem:(id <SVEditingOverlayItem>)item;
+- (void)deselectItem:(id <SVWebEditorItem>)item;
 {
     // Remove item
     NSMutableArray *newSelection = [[self selectedItems] mutableCopy];
@@ -217,7 +217,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 /*  When beginning a drag, you want to drag all the selected items. I haven't quite decided how to do this yet – one big image containing them all or an image for the item under the mouse and a numeric overlay? – so this is fairly temporary. Also return by reference the origin of the image within our own coordinate system.
  */
-- (NSImage *)dragImageForSelectionFromItem:(id <SVEditingOverlayItem>)item
+- (NSImage *)dragImageForSelectionFromItem:(id <SVWebEditorItem>)item
                                   location:(NSPoint *)outImageLocation
 {
     // The core items involved
@@ -299,7 +299,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     // The whole selection will need redrawing
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    for (id <SVWebEditorItem> anItem in [self selectedItems])
     {
         DOMElement *element = [anItem DOMElement];
         NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
@@ -333,7 +333,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Getting Item Information
 
-- (id <SVEditingOverlayItem>)itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 {
     return [[self dataSource] editingOverlay:self itemAtPoint:point];
 }
@@ -381,7 +381,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         {
             //  2)
             BOOL targetSelf = YES;
-            for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+            for (id <SVWebEditorItem> anItem in [self selectedItems])
             {
                 DOMElement *element = [anItem DOMElement];
                 NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
@@ -457,7 +457,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     // What was clicked?
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    id <SVEditingOverlayItem> item = [self itemAtPoint:location];
+    id <SVWebEditorItem> item = [self itemAtPoint:location];
         
     
     if (item)
@@ -547,7 +547,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if ([[self dataSource] webEditorView:self writeItems:selection toPasteboard:pboard])
     {
         // Now let's start a-dragging!
-        id <SVEditingOverlayItem> item = [selection lastObject]; // FIXME: use the item actually being dragged
+        id <SVWebEditorItem> item = [selection lastObject]; // FIXME: use the item actually being dragged
         
         NSPoint dragImageRect;
         NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
@@ -609,7 +609,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Hide the dragged items so it looks like a proper drag
     [self setMode:SVWebEditingModeDragging];    // will redraw without selection borders
     
-    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    for (id <SVWebEditorItem> anItem in [self selectedItems])
     {
         DOMElement *element = [anItem DOMElement];
         [[element style] setProperty:@"visibility" value:@"hidden" priority:@""];
@@ -621,7 +621,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Make the dragged items visible again
     [self setMode:SVWebEditingModeNormal];
     
-    for (id <SVEditingOverlayItem> anItem in [self selectedItems])
+    for (id <SVWebEditorItem> anItem in [self selectedItems])
     {
         DOMElement *element = [anItem DOMElement];
         [[element style] removeProperty:@"visibility"];
