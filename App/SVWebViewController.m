@@ -419,7 +419,7 @@
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
-    return NSDragOperationMove;
+    return NSDragOperationCopy;
 }
 
 @end

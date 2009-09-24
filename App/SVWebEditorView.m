@@ -671,11 +671,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegate
 
-- (void)webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
-{
-    [[sender window] makeFirstResponder:responder];
-}
-
 - (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
 {
     NSView *drawingView = [NSView focusView];
@@ -715,6 +710,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     return result;
+}
+
+- (BOOL)webView:(WebView *)webView acceptDrop:(id <NSDraggingInfo>)dragInfo;
+{
+    return NO;
 }
 
 #pragma mark WebEditingDelegate

@@ -21,47 +21,89 @@
     // Alert the delegate to incoming drop
     [[self UIDelegate] webView:self willValidateDrop:sender];
     
-    // Do usual thing but let delegate have final say
+    // Do usual thing, but give delegate final chance
     NSDragOperation result = [super draggingEntered:sender];
-    result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+    if (result == NSDragOperationNone)
+    {
+        result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+        _delegateWillHandleDrop = YES;
+    }
+    else
+    {
+        _delegateWillHandleDrop = NO;
+    }
     
     return result;
 }
-
-- (BOOL)wantsPeriodicDraggingUpdates { return NO; }
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
     // Alert the delegate to incoming drop
     [[self UIDelegate] webView:self willValidateDrop:sender];
     
-    // Do usual thing but let delegate have final say
+    // Do usual thing, but give delegate final chance
     NSDragOperation result = [super draggingUpdated:sender];
-    result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+    if (result == NSDragOperationNone)
+    {
+        result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
+        _delegateWillHandleDrop = YES;
+    }
+    else
+    {
+        _delegateWillHandleDrop = NO;
+    }
     
     return result;
 }
 
 - (void)draggingEnded:(id < NSDraggingInfo >)sender
 {
+    _delegateWillHandleDrop = NO;
     
+    if ([WebView instancesRespondToSelector:_cmd])  // shipping version of WebKit doesn't implement this method
+    {
+        [super draggingEnded:sender];
+    }
 }
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
-    
+    _delegateWillHandleDrop = NO;
+    [super draggingExited:sender];
 }
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
-    return YES;
+    BOOL result = YES;
+    if (!_delegateWillHandleDrop)
+    {
+        result = [super prepareForDragOperation:sender];
+    }
+    return result;
 }
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
-    return YES;
+    BOOL result;
+    if (_delegateWillHandleDrop)
+    {
+        result = [[self UIDelegate] webView:self acceptDrop:sender];
+    }
+    else
+    {
+        result = [super performDragOperation:sender];
+    }
+    
+    return result;
 }
 
-- (void)concludeDragOperation:(id < NSDraggingInfo >)sender { }
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender
+{
+    if (!_delegateWillHandleDrop)
+    {
+        [super concludeDragOperation:sender];
+    }
+    _delegateWillHandleDrop = NO;
+}
 
 @end
