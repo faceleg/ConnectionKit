@@ -595,6 +595,13 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [[self webView] unregisterDraggedTypes];
 }
 
+#pragma mark NSDraggingDestination
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+    return NSDragOperationCopy;
+}
+
 #pragma mark NSDraggingSource
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal

@@ -17,7 +17,7 @@
     BOOL    _superviewWillHandleDrop;
 }
 
-@property(nonatomic, assign) id <SVWebEditorWebUIDelegate> UIDelegate;
+//@property(nonatomic, assign) id <SVWebEditorWebUIDelegate> UIDelegate;
 
 @end
 

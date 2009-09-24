@@ -26,7 +26,7 @@ typedef enum {
 @class SVWebEditorWebView;
 
 
-@interface SVWebEditorView : NSView
+@interface SVWebEditorView : NSView <KSDraggingDestination>
 {
   @private
     // Content

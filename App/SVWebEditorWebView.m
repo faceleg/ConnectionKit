@@ -9,24 +9,28 @@
 #import "SVWebEditorWebView.h"
 
 
+@interface SVWebEditorWebView (Superview)
+- (NSDragOperation)draggingEnteredSuperview:(id <NSDraggingInfo>)sender;
+- (void)draggingExitedSuperview:(id <NSDraggingInfo>)sender;
+@end
+
+
 @implementation SVWebEditorWebView
 
-@dynamic UIDelegate;
-
-/*  Our aim here is to extend WebUIDelegate to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
+/*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
  */
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
     NSDragOperation result = [super draggingEntered:sender];
-    if (result == NSDragOperationNone && [[self superview] respondsToSelector:_cmd])
+    if (result == NSDragOperationNone)
     {
-        result = [[self superview] draggingEntered:sender];
-        _superviewWillHandleDrop = YES;
+        result = [self draggingEnteredSuperview:sender];
     }
-    else
+    else if (_superviewWillHandleDrop)
     {
-        _superviewWillHandleDrop = NO;
+        // Great, WebKit will handle the drop. But we need to inform previous target that it's gone
+        [self draggingExitedSuperview:sender];
     }
     
     return result;
@@ -35,14 +39,24 @@
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
     NSDragOperation result = [super draggingUpdated:sender];
-    if (result == NSDragOperationNone && [[self superview] respondsToSelector:_cmd])
+    if (result == NSDragOperationNone)
     {
-        result = [[self superview] draggingUpdated:sender];
-        _superviewWillHandleDrop = YES;
+        // Although the drag has been updated from AppKit's perspective, to our superview, it may have only just entered
+        if (!_superviewWillHandleDrop)
+        {
+            result = [self draggingEnteredSuperview:sender];
+        }
+        
+        // Update drag
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            result = [[self superview] draggingUpdated:sender];
+        }
     }
-    else
+    else if (_superviewWillHandleDrop)
     {
-        _superviewWillHandleDrop = NO;
+        // Great, WebKit will handle the drop. But we need to inform previous target that it's gone
+        [self draggingExitedSuperview:sender];
     }
     
     return result;
@@ -71,11 +85,7 @@
 {
     if (_superviewWillHandleDrop)
     {
-        _superviewWillHandleDrop = NO;
-        if ([[self superview] respondsToSelector:_cmd])
-        {
-            [[self superview] draggingExited:sender];
-        }
+        [self draggingExitedSuperview:sender];
     }
     else
     {
@@ -138,3 +148,31 @@
 }
 
 @end
+
+
+@implementation SVWebEditorWebView (Superview)
+
+- (NSDragOperation)draggingEnteredSuperview:(id <NSDraggingInfo>)sender;
+{
+    NSDragOperation result = NSDragOperationNone;
+    
+    if ([[self superview] respondsToSelector:@selector(draggingEntered:)])
+    {
+        result = [[self superview] draggingEntered:sender];
+    }
+    _superviewWillHandleDrop = YES;
+    
+    return result;
+}
+
+- (void)draggingExitedSuperview:(id <NSDraggingInfo>)sender
+{
+    _superviewWillHandleDrop = NO;
+    if ([[self superview] respondsToSelector:@selector(draggingExited:)])
+    {
+        [[self superview] draggingExited:sender];
+    }
+}
+
+@end
+
