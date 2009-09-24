@@ -13,25 +13,6 @@
 
 #pragma mark Init & Dealloc
 
-- (id)init
-{
-    return [self initWithDOMElement:nil];
-}
-
-- (id)initWithDOMElement:(DOMHTMLElement *)element;
-{
-    OBPRECONDITION(element);
-    
-    self = [super init];
-    
-    _DOMElement = [element retain];
-    
-    _nodeTracker = [[SVDOMNodeBoundsTracker alloc] initWithDOMNode:element];
-    [_nodeTracker setDelegate:self];
-    
-    return self;
-}
-
 - (id)initWithDOMElement:(DOMElement *)element pagelet:(KTPagelet *)pagelet;
 {
     self = [self initWithDOMElement:element];
@@ -48,14 +29,11 @@
     [_nodeTracker release];
     
     [_pagelet release];
-    [_DOMElement release];
     
     [super dealloc];
 }
 
 #pragma mark Accessors
-
-@synthesize DOMElement = _DOMElement;
 
 @synthesize pagelet = _pagelet;
 

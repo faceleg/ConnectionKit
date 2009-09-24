@@ -11,7 +11,7 @@
 
 
 #import <WebKit/WebKit.h>
-#import "SVWebEditorItem.h"
+#import "SVWebEditorItemProtocol.h"
 #import "KSDragging.h"
 
 
