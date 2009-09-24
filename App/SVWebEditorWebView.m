@@ -18,19 +18,15 @@
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    // Alert the delegate to incoming drop
-    [[self UIDelegate] webView:self willValidateDrop:sender];
-    
-    // Do usual thing, but give delegate final chance
     NSDragOperation result = [super draggingEntered:sender];
-    if (result == NSDragOperationNone)
+    if (result == NSDragOperationNone && [[self superview] respondsToSelector:_cmd])
     {
-        result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
-        _delegateWillHandleDrop = YES;
+        result = [[self superview] draggingEntered:sender];
+        _superviewWillHandleDrop = YES;
     }
     else
     {
-        _delegateWillHandleDrop = NO;
+        _superviewWillHandleDrop = NO;
     }
     
     return result;
@@ -38,19 +34,15 @@
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
-    // Alert the delegate to incoming drop
-    [[self UIDelegate] webView:self willValidateDrop:sender];
-    
-    // Do usual thing, but give delegate final chance
     NSDragOperation result = [super draggingUpdated:sender];
-    if (result == NSDragOperationNone)
+    if (result == NSDragOperationNone && [[self superview] respondsToSelector:_cmd])
     {
-        result = [[self UIDelegate] webView:self validateDrop:sender proposedOperation:result];
-        _delegateWillHandleDrop = YES;
+        result = [[self superview] draggingUpdated:sender];
+        _superviewWillHandleDrop = YES;
     }
     else
     {
-        _delegateWillHandleDrop = NO;
+        _superviewWillHandleDrop = NO;
     }
     
     return result;
@@ -58,36 +50,68 @@
 
 - (void)draggingEnded:(id < NSDraggingInfo >)sender
 {
-    _delegateWillHandleDrop = NO;
-    
-    if ([WebView instancesRespondToSelector:_cmd])  // shipping version of WebKit doesn't implement this method
+    if (_superviewWillHandleDrop)
     {
-        [super draggingEnded:sender];
+        _superviewWillHandleDrop = NO;
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            [[self superview] draggingEnded:sender];
+        }
+    }
+    else
+    {
+        if ([WebView instancesRespondToSelector:_cmd])  // shipping version of WebKit doesn't implement this method
+        {
+            [super draggingEnded:sender];
+        }
     }
 }
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
-    _delegateWillHandleDrop = NO;
-    [super draggingExited:sender];
+    if (_superviewWillHandleDrop)
+    {
+        _superviewWillHandleDrop = NO;
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            [[self superview] draggingExited:sender];
+        }
+    }
+    else
+    {
+        [super draggingExited:sender];
+    }
 }
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
     BOOL result = YES;
-    if (!_delegateWillHandleDrop)
+    
+    if (_superviewWillHandleDrop)
+    {
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            result = [[self superview] prepareForDragOperation:sender];
+        }
+    }
+    else
     {
         result = [super prepareForDragOperation:sender];
     }
+    
     return result;
 }
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
-    BOOL result;
-    if (_delegateWillHandleDrop)
+    BOOL result = NO;
+    
+    if (_superviewWillHandleDrop)
     {
-        result = [[self UIDelegate] webView:self acceptDrop:sender];
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            result = [[self superview] performDragOperation:sender];
+        }
     }
     else
     {
@@ -99,11 +123,18 @@
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
-    if (!_delegateWillHandleDrop)
+    if (_superviewWillHandleDrop)
+    {
+        _superviewWillHandleDrop = NO;
+        if ([[self superview] respondsToSelector:_cmd])
+        {
+            [[self superview] concludeDragOperation:sender];
+        }
+    }
+    else
     {
         [super concludeDragOperation:sender];
     }
-    _delegateWillHandleDrop = NO;
 }
 
 @end
