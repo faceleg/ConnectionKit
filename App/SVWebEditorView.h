@@ -53,7 +53,6 @@ typedef enum {
 
 #pragma mark Document
 
-@property(nonatomic, retain, readonly) WebView *webView;
 @property(nonatomic, readonly) DOMDocument *DOMDocument;
 
 #pragma mark Loading Data
@@ -141,3 +140,13 @@ handleNavigationAction:(NSDictionary *)actionInformation
 @end
 
 extern NSString *SVWebEditorViewSelectionDidChangeNotification;
+
+
+#pragma mark -
+
+
+@interface SVWebEditorView (SPI)
+@property(nonatomic, retain, readonly) WebView *webView;
+@end
+
+

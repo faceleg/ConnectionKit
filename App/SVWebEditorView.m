@@ -21,6 +21,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @interface SVWebEditorView () <SVWebEditorWebUIDelegate>
 
+@property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
 
 // Selection
 @property(nonatomic, readwrite) SVWebEditingMode mode;
@@ -32,7 +33,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @end
 
 @interface SVWebEditorView (Internal)
-- (SVWebEditorWebView *)webView; // publicly, it's declared as a plain WebView, but we kow better
 @end
 
 
@@ -53,7 +53,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // WebView
-    _webView = [[WebView alloc] initWithFrame:[self bounds]];
+    _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setPolicyDelegate:self];
     [_webView setUIDelegate:self];
@@ -597,9 +597,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark NSDraggingDestination
 
-- (NSDragOperation)XdraggingUpdated:(id <NSDraggingInfo>)sender
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    return NSDragOperationCopy;
+    return NSDragOperationMove;
 }
 
 #pragma mark NSDraggingSource
@@ -677,6 +677,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     NSView *drawingView = [NSView focusView];
     NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
     [self drawRect:dirtyDrawingRect inView:drawingView];
+    
+    [[self webView] didDrawRect:dirtyRect];
 }
 
 /*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions
