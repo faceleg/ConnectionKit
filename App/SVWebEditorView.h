@@ -94,7 +94,7 @@ typedef enum {
 #pragma mark -
 
 
-@protocol SVWebEditorViewDataSource <NSObject>
+@protocol SVWebEditorViewDataSource <NSObject, KSDraggingDestination>
 
 /*!
  @method editingOverlay:itemAtPoint:

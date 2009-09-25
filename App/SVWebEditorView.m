@@ -53,7 +53,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // WebView
-    _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
+    _webView = [[WebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setPolicyDelegate:self];
     [_webView setUIDelegate:self];
@@ -597,7 +597,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark NSDraggingDestination
 
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+- (NSDragOperation)XdraggingUpdated:(id <NSDraggingInfo>)sender
 {
     return NSDragOperationCopy;
 }
@@ -615,12 +615,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     // Hide the dragged items so it looks like a proper drag
     [self setMode:SVWebEditingModeDragging];    // will redraw without selection borders
-    
-    for (id <SVWebEditorItem> anItem in [self selectedItems])
-    {
-        DOMElement *element = [anItem DOMElement];
-        [[element style] setProperty:@"visibility" value:@"hidden" priority:@""];
-    }
 }
 
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
@@ -697,31 +691,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         return WebDragDestinationActionEdit;
     }
-}
-
-- (void)webView:(WebView *)webView willValidateDrop:(id <NSDraggingInfo>)dragInfo;
-{
-    // Let our data source decide if it wants to handle the drop
-    _lastDraggingDestination = [[self dataSource] webEditorView:self destinationForDrop:dragInfo];
-}
-
-- (NSDragOperation)webView:(WebView *)webView
-              validateDrop:(id <NSDraggingInfo>)dragInfo
-         proposedOperation:(NSDragOperation)operation;
-{
-    NSDragOperation result = operation;
-    
-    if (_lastDraggingDestination)
-    {
-        result = [_lastDraggingDestination draggingUpdated:dragInfo];
-    }
-    
-    return result;
-}
-
-- (BOOL)webView:(WebView *)webView acceptDrop:(id <NSDraggingInfo>)dragInfo;
-{
-    return NO;
 }
 
 #pragma mark WebEditingDelegate
