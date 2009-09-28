@@ -36,7 +36,7 @@
 @interface KTMediaFile (Private)  
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
-- (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate;
+- (KTMediaFileUpload *)_uploadMatchingPredicate:(NSPredicate *)predicate;
 @end
 
 
@@ -150,7 +150,7 @@
 {
 	// Create a MediaFileUpload object if needed
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scalingProperties == nil"];
-	KTMediaFileUpload *result = [self _anyUploadMatchingPredicate:predicate];
+	KTMediaFileUpload *result = [self _uploadMatchingPredicate:predicate];
 	
 	if (!result || [result isDeleted])
 	{
@@ -207,7 +207,7 @@
     
 	// Search for an existing upload
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pathRelativeToSite == %@", path];
-	KTMediaFileUpload *result = [self _anyUploadMatchingPredicate:predicate];
+	KTMediaFileUpload *result = [self _uploadMatchingPredicate:predicate];
 	
 	
 	// If none was found, create a new upload
@@ -249,7 +249,7 @@
                                           scalingProps,
                                           [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]];
                 
-                result = [self _anyUploadMatchingPredicate:predicate];
+                result = [self _uploadMatchingPredicate:predicate];
                 
                 
                 // If not, create our own
@@ -339,7 +339,7 @@
 	return result;
 }
 
-- (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate
+- (KTMediaFileUpload *)_uploadMatchingPredicate:(NSPredicate *)predicate
 {
 	OBPRECONDITION(predicate);
     
@@ -347,13 +347,24 @@
 	// Search for an existing upload
 	NSSet *uploads = [self valueForKey:@"uploads"];
 	NSEnumerator *uploadsEnumerator = [uploads objectEnumerator];
-	KTMediaFileUpload *result;
+	KTMediaFileUpload *result = nil;
 	
-	while (result = [uploadsEnumerator nextObject])
+	KTMediaFileUpload *anUpload;
+    while (anUpload = [uploadsEnumerator nextObject])
 	{
-		if ([predicate evaluateWithObject:result])
+		// If there is only a single match, use that. Otherwise, use whichever comes last alphabetically for consistency
+        if ([predicate evaluateWithObject:anUpload])
 		{
-			break;
+			if (result)
+            {
+                NSString *resultPath = [result pathRelativeToSite];
+                NSString *anUploadPath = [anUpload pathRelativeToSite];
+                if ([anUploadPath compare:resultPath] == NSOrderedDescending) result = anUpload;
+            }
+            else
+            {
+                result = anUpload;
+            }
 		}
 	}
 	
