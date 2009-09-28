@@ -40,13 +40,13 @@
 @synthesize draggingDestinationNode = _draggingDestinationNode;
 - (void)setDraggingDestinationNode:(DOMNode *)node
 {
-    [_draggingDestinationNode setViewNeedsDisplayForBoundingBox];
+    [_draggingDestinationNode setDocumentViewNeedsDisplayInBoundingBoxRect];
     
     [node retain];
     [_draggingDestinationNode release];
     _draggingDestinationNode = node;
     
-    [node setViewNeedsDisplayForBoundingBox];
+    [node setDocumentViewNeedsDisplayInBoundingBoxRect];
 }
 
 

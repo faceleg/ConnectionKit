@@ -408,7 +408,7 @@
     
     if (_sidebarDiv)
     {
-        NSView *docView = [[[[_sidebarDiv ownerDocument] webFrame] frameView] documentView];
+        NSView *docView = [_sidebarDiv documentView];
         NSRect sidebarRect = [_sidebarDiv boundingBox];
         NSPoint mouseLocation = [docView convertPointFromBase:[dragInfo draggingLocation]];
         if ([docView mouse:mouseLocation inRect:sidebarRect]) result = self;

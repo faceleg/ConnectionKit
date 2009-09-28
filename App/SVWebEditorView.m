@@ -10,6 +10,7 @@
 #import "SVWebEditorWebView.h"
 #import "SVSelectionBorder.h"
 
+#import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
@@ -303,8 +304,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     {
         DOMElement *element = [anItem DOMElement];
         NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
-        NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
-        [docView setNeedsDisplayInRect:drawingRect];
+        [[element documentView] setNeedsDisplayInRect:drawingRect];
     }
     
     [border release];
@@ -384,7 +384,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             for (id <SVWebEditorItem> anItem in [self selectedItems])
             {
                 DOMElement *element = [anItem DOMElement];
-                NSView *docView = [[[[element ownerDocument] webFrame] frameView] documentView];
+                NSView *docView = [element documentView];
                 NSPoint mousePoint = [self convertPoint:point toView:docView];
                 if ([docView mouse:mousePoint inRect:[element boundingBox]])
                 {
