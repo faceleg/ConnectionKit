@@ -109,7 +109,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Drawing
 
-- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view
+- (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
 {
     // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
     if (_dragHighlightNode)
@@ -721,7 +721,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     NSView *drawingView = [NSView focusView];
     NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
-    [self drawRect:dirtyDrawingRect inView:drawingView];
+    [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
 }
 
 /*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions

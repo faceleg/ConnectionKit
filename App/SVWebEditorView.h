@@ -76,6 +76,11 @@ typedef enum {
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
 
+#pragma mark Drawing
+// The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
+- (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
+
+
 #pragma mark Dragging Destination
 
 // Pretty much as it says on the tin. Note that you must return a NSDraggingInfo object. Normally, just return sender, but you could return a customised version if desired. sender may be nil to signify an exiting/ending drop; if so return value has no effect.
