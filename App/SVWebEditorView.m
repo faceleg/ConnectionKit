@@ -111,6 +111,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view
 {
+    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
+    if (_dragHighlightNode)
+    {
+        NSRect dropRect = [_dragHighlightNode boundingBox];
+        
+        [[NSColor aquaColor] setFill];
+        NSFrameRectWithWidth(dropRect, 3.0f);
+    }
+    
+    
     // Nothing to draw during a drag op
     if ([self mode] != SVWebEditingModeDragging)
     {
@@ -133,16 +143,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             
             [border release];
         }
-    }
-    
-    
-    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
-    if (_dragHighlightNode)
-    {
-        NSRect dropRect = [_dragHighlightNode boundingBox];
-        
-        [[NSColor aquaColor] setFill];
-        NSFrameRectWithWidth(dropRect, 3.0f);
     }
 }
 
