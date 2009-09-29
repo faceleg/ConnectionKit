@@ -7,43 +7,16 @@
 //
 
 #import "SVWebEditorWebView.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
-#import "NSColor+Karelia.h"
-
-
-@interface SVWebEditorWebView ()
-@property(nonatomic, retain) DOMNode *draggingDestinationNode;
-@end
 
 
 @implementation SVWebEditorWebView
 
-#pragma mark Drawing
-
-- (void)didDrawRect:(NSRect)dirtyRect;
+- (SVWebEditorView *)webEditorView
 {
-    // Draw drop overlay if there is one. 3px inset from bounding box, "Aqua" colour
-    DOMNode *draggingDestinationNode = [self draggingDestinationNode];
-    if (draggingDestinationNode)
-    {
-        NSRect dropRect = [draggingDestinationNode boundingBox];
-        
-        [[NSColor aquaColor] setFill];
-        NSFrameRectWithWidth(dropRect, 3.0f);
-    }
-}
-
-@synthesize draggingDestinationNode = _draggingDestinationNode;
-- (void)setDraggingDestinationNode:(DOMNode *)node
-{
-    [_draggingDestinationNode setDocumentViewNeedsDisplayInBoundingBoxRect];
-    
-    [node retain];
-    [_draggingDestinationNode release];
-    _draggingDestinationNode = node;
-    
-    [node setDocumentViewNeedsDisplayInBoundingBoxRect];
+    return (SVWebEditorView *)[self superview];
 }
 
 #pragma mark Dragging Destination
@@ -53,50 +26,37 @@
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
+    sender = [[self webEditorView] willValidateDrop:sender];
+    
     NSDragOperation result = [super draggingEntered:sender];
-    [self viewDidValidate:result drop:sender];
+    result = [[self webEditorView] validateDrop:sender proposedOperation:result];
+    
     return result;
 }
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
+    sender = [[self webEditorView] willValidateDrop:sender];
+    
     NSDragOperation result = [super draggingUpdated:sender];
-    [self viewDidValidate:result drop:sender];
+    
+    // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed
+    if (result == NSDragOperationNone) [self removeDragCaret];
+    
+    result = [[self webEditorView] validateDrop:sender proposedOperation:result];
     return result;
 }
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
     [super draggingExited:sender];
-    [self setDraggingDestinationNode:nil];
+    [[self webEditorView] removeDragHighlight];
 }
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
     [super concludeDragOperation:sender];
-    [self setDraggingDestinationNode:nil];
-}
-
-- (void)viewDidValidate:(NSDragOperation)op drop:(id <NSDraggingInfo>)sender;
-{
-    OBPRECONDITION(sender);
-    
-    
-    DOMNode *dropNode = nil;
-    if (op > NSDragOperationNone)
-    {
-        NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
-        DOMRange *editingRange = [self editableDOMRangeForPoint:point];
-        dropNode = [[editingRange startContainer] containingContentEditableElement];
-    }
-    
-    
-    // Mark for redraw if needed
-    if (dropNode != [self draggingDestinationNode]) [self setDraggingDestinationNode:dropNode];
-    
-    
-    // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not remoed
-    if (op == NSDragOperationNone) [self removeDragCaret];
+    [[self webEditorView] removeDragHighlight];
 }
 
 @end

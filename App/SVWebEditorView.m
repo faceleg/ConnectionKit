@@ -12,6 +12,7 @@
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSColor+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 
@@ -132,6 +133,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             
             [border release];
         }
+    }
+    
+    
+    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
+    if (_dragHighlightNode)
+    {
+        NSRect dropRect = [_dragHighlightNode boundingBox];
+        
+        [[NSColor aquaColor] setFill];
+        NSFrameRectWithWidth(dropRect, 3.0f);
     }
 }
 
@@ -595,14 +606,48 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [[self webView] unregisterDraggedTypes];
 }
 
-#pragma mark NSDraggingDestination
+#pragma mark Dragging Destination
 
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+- (id <NSDraggingInfo>)willValidateDrop:(id <NSDraggingInfo>)sender;
 {
-    return NSDragOperationMove;
+    return sender;
 }
 
-#pragma mark NSDraggingSource
+- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
+{
+    DOMNode *dropNode = nil;
+    if (op > NSDragOperationNone)
+    {
+        NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
+        DOMRange *editingRange = [[self webView] editableDOMRangeForPoint:point];
+        dropNode = [[editingRange startContainer] containingContentEditableElement];
+    }
+    
+    
+    // Mark for redraw if needed
+    [self moveDragHighlightToNode:dropNode];
+    
+    
+    return op;
+}
+
+- (void)moveDragHighlightToNode:(DOMNode *)node
+{
+    if (node != _dragHighlightNode)
+    {
+        [self removeDragHighlight];
+        _dragHighlightNode = [node retain];
+        [node setDocumentViewNeedsDisplayInBoundingBoxRect];
+    }
+}
+
+- (void)removeDragHighlight
+{
+    [_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
+    [_dragHighlightNode release];   _dragHighlightNode = nil;
+}
+
+#pragma mark Dragging Source
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
@@ -677,8 +722,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     NSView *drawingView = [NSView focusView];
     NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
     [self drawRect:dirtyDrawingRect inView:drawingView];
-    
-    [[self webView] didDrawRect:dirtyRect];
 }
 
 /*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions

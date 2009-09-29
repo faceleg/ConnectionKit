@@ -26,7 +26,7 @@ typedef enum {
 @class SVWebEditorWebView;
 
 
-@interface SVWebEditorView : NSView <KSDraggingDestination>
+@interface SVWebEditorView : NSView
 {
   @private
     // Content
@@ -43,6 +43,7 @@ typedef enum {
     BOOL    _mouseUpMayBeginEditing;
     
     // Drag & Drop
+    DOMNode *_dragHighlightNode;
     id  _lastDraggingDestination;   // weak ref
     
     // Event Handling
@@ -74,6 +75,18 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+
+#pragma mark Dragging Destination
+
+// Pretty much as it says on the tin. Note that you must return a NSDraggingInfo object. Normally, just return sender, but you could return a customised version if desired. sender may be nil to signify an exiting/ending drop; if so return value has no effect.
+- (id <NSDraggingInfo>)willValidateDrop:(id <NSDraggingInfo>)sender;
+
+// sender may be nil to signify an exiting/ending drop. If so, return value has no effect.
+- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
+   
+// These methds operate in a similar fashion to WebView's drag caret methods, but instead draw the big blue highlight box
+- (void)moveDragHighlightToNode:(DOMNode *)node;
+- (void)removeDragHighlight;
 
 
 #pragma mark Getting Item Information
