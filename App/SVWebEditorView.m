@@ -647,6 +647,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [_dragHighlightNode release];   _dragHighlightNode = nil;
 }
 
+- (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo { return YES; }
+
 #pragma mark Dragging Source
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
@@ -728,14 +730,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
 {
-    if (_lastDraggingDestination)
-    {
-        return WebDragDestinationActionNone;
-    }
-    else
-    {
-        return WebDragDestinationActionEdit;
-    }
+    return ([self useDefaultBehaviourForDrop:dragInfo]) ? WebDragDestinationActionEdit : WebDragDestinationActionNone;
 }
 
 #pragma mark WebEditingDelegate

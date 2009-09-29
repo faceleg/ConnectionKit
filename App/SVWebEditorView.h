@@ -44,7 +44,6 @@ typedef enum {
     
     // Drag & Drop
     DOMNode *_dragHighlightNode;
-    id  _lastDraggingDestination;   // weak ref
     
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
@@ -55,6 +54,7 @@ typedef enum {
 #pragma mark Document
 
 @property(nonatomic, readonly) DOMDocument *DOMDocument;
+
 
 #pragma mark Loading Data
 
@@ -92,6 +92,9 @@ typedef enum {
 // These methds operate in a similar fashion to WebView's drag caret methods, but instead draw the big blue highlight box
 - (void)moveDragHighlightToNode:(DOMNode *)node;
 - (void)removeDragHighlight;
+
+// This is implemented to just return YES. Override to return NO if you want to stop the standard behaviour (allowing a drop to edit text)
+- (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo;
 
 
 #pragma mark Getting Item Information
