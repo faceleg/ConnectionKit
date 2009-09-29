@@ -16,13 +16,10 @@
 @property(nonatomic, retain) DOMNode *draggingDestinationNode;
 @end
 
-@interface SVWebEditorWebView (Superview)
-- (NSDragOperation)draggingEnteredSuperview:(id <NSDraggingInfo>)sender;
-- (void)draggingExitedSuperview:(id <NSDraggingInfo>)sender;
-@end
-
 
 @implementation SVWebEditorWebView
+
+#pragma mark Drawing
 
 - (void)didDrawRect:(NSRect)dirtyRect;
 {
@@ -49,30 +46,44 @@
     [node setDocumentViewNeedsDisplayInBoundingBoxRect];
 }
 
+#pragma mark Dragging Destination
 
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
  */
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    return [self validateDrop:sender];
+    NSDragOperation result = [super draggingEntered:sender];
+    [self viewDidValidate:result drop:sender];
+    return result;
 }
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
-    return [self validateDrop:sender];
+    NSDragOperation result = [super draggingUpdated:sender];
+    [self viewDidValidate:result drop:sender];
+    return result;
 }
 
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
-    [self validateDrop:nil];
+    [super draggingExited:sender];
+    [self setDraggingDestinationNode:nil];
 }
 
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender;
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
-    DOMNode *dropNode = nil;
+    [super concludeDragOperation:sender];
+    [self setDraggingDestinationNode:nil];
+}
+
+- (void)viewDidValidate:(NSDragOperation)op drop:(id <NSDraggingInfo>)sender;
+{
+    OBPRECONDITION(sender);
     
-    if (sender)
+    
+    DOMNode *dropNode = nil;
+    if (op > NSDragOperationNone)
     {
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [self editableDOMRangeForPoint:point];
@@ -80,21 +91,13 @@
     }
     
     
-    NSDragOperation result = NSDragOperationNone;
-    if (dropNode)
-    {
-        result = NSDragOperationCopy;
-    }
-    
     // Mark for redraw if needed
     if (dropNode != [self draggingDestinationNode]) [self setDraggingDestinationNode:dropNode];
-        
-    return result;
-}
-
-- (void)draggingEnded:(id < NSDraggingInfo >)sender
-{
-    [self validateDrop:nil];
+    
+    
+    // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not remoed
+    if (op == NSDragOperationNone) [self removeDragCaret];
 }
 
 @end
+

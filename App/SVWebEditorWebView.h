@@ -21,7 +21,7 @@
 
 #pragma mark NSDraggingDestination
 // Sender might be nil to signify a drag exiting
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender;
+- (void)viewDidValidate:(NSDragOperation)op drop:(id <NSDraggingInfo>)sender;
 
 
 #pragma mark Drawing
