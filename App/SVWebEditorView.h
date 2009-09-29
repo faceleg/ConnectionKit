@@ -89,9 +89,8 @@ typedef enum {
 // sender may be nil to signify an exiting/ending drop. If so, return value has no effect.
 - (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
    
-// These methds operate in a similar fashion to WebView's drag caret methods, but instead draw the big blue highlight box
+// Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
 - (void)moveDragHighlightToNode:(DOMNode *)node;
-- (void)removeDragHighlight;
 
 // This is implemented to just return YES. Override to return NO if you want to stop the standard behaviour (allowing a drop to edit text)
 - (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo;

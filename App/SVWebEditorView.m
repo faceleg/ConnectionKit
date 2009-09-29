@@ -635,16 +635,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     if (node != _dragHighlightNode)
     {
-        [self removeDragHighlight];
-        _dragHighlightNode = [node retain];
+        [_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
+        [_dragHighlightNode release];   _dragHighlightNode = [node retain];
         [node setDocumentViewNeedsDisplayInBoundingBoxRect];
     }
-}
-
-- (void)removeDragHighlight
-{
-    [_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
-    [_dragHighlightNode release];   _dragHighlightNode = nil;
 }
 
 - (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo { return YES; }

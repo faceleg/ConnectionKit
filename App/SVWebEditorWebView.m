@@ -50,13 +50,13 @@
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
     [super draggingExited:sender];
-    [[self webEditorView] removeDragHighlight];
+    [[self webEditorView] moveDragHighlightToNode:nil];
 }
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
     [super concludeDragOperation:sender];
-    [[self webEditorView] removeDragHighlight];
+    [[self webEditorView] moveDragHighlightToNode:nil];
 }
 
 @end
