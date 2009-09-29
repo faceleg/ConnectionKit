@@ -391,6 +391,8 @@
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
 		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
+		27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */; };
+		27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (); }; };
@@ -1833,6 +1835,8 @@
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
+		27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocWebEditorView.h; sourceTree = "<group>"; };
+		27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocWebEditorView.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractHTMLPlugin.h; sourceTree = "<group>"; };
@@ -2749,7 +2753,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		271B497B105468AA008B698C /* Web Editor View */ = {
+		271B497B105468AA008B698C /* Web Editor (Generic) */ = {
 			isa = PBXGroup;
 			children = (
 				271B485E1051C2F4008B698C /* SVWebEditorView.h */,
@@ -2760,7 +2764,7 @@
 				2742243F106A926E0058C8DA /* SVWebEditorWebView.h */,
 				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
 			);
-			name = "Web Editor View";
+			name = "Web Editor (Generic)";
 			sourceTree = "<group>";
 		};
 		2721E0ED0E9E0CA200A458B2 /* Controller Chain */ = {
@@ -2951,7 +2955,7 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* WebView */ = {
+		2759CC98103970FC00E2C046 /* Web Editor (Doc) */ = {
 			isa = PBXGroup;
 			children = (
 				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
@@ -2972,8 +2976,10 @@
 				27F243AD106BC873007FEC56 /* SVSidebarEditorItem.m */,
 				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
 				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
+				27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */,
+				27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */,
 			);
-			name = WebView;
+			name = "Web Editor (Doc)";
 			sourceTree = "<group>";
 		};
 		275A641410501CF800AE6E2A /* Loading */ = {
@@ -3490,8 +3496,8 @@
 		3C202DA507DFC4BA00DE4994 /* Web Content Area */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* WebView */,
-				271B497B105468AA008B698C /* Web Editor View */,
+				2759CC98103970FC00E2C046 /* Web Editor (Doc) */,
+				271B497B105468AA008B698C /* Web Editor (Generic) */,
 				275A641510501D2900AE6E2A /* Other content */,
 				275A641410501CF800AE6E2A /* Loading */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
@@ -5047,6 +5053,7 @@
 				27F790D9106BABA6007DF81B /* KSDragging.h in Headers */,
 				27F243AE106BC873007FEC56 /* SVSidebarEditorItem.h in Headers */,
 				27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */,
+				27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6446,6 +6453,7 @@
 				27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */,
 				27F243AF106BC873007FEC56 /* SVSidebarEditorItem.m in Sources */,
 				27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */,
+				27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

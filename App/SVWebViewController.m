@@ -53,7 +53,7 @@
 
 - (void)loadView
 {
-    SVWebEditorView *editor = [[SVWebEditorView alloc] init];
+    SVDocWebEditorView *editor = [[SVDocWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditorView:editor];
@@ -86,7 +86,7 @@
 }
 
 @synthesize webEditorView = _webEditorView;
-- (void)setWebEditorView:(SVWebEditorView *)overlay
+- (void)setWebEditorView:(SVDocWebEditorView *)overlay
 {
     [[self webEditorView] setDataSource:nil];
     
