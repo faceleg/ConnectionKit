@@ -25,7 +25,6 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTDocWebViewController.h"
-#import "KTDocWindow.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
 #import "KTIndexPlugin.h"
@@ -1785,10 +1784,6 @@ from representedObject */
 	else if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
 	{
 		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
-	}
-	else if ([[aNotification object] isKindOfClass:[KTDocWindow class]])
-	{
-		;  // taken care of from standard one
 	}
 	else
 	{

@@ -436,7 +436,6 @@
 		3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
-		3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
 		3C202DAC07DFC4DD00DE4994 /* KTBackgroundTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DA707DFC4DD00DE4994 /* KTBackgroundTabView.m */; };
 		3C202DAD07DFC4DD00DE4994 /* KTImageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DA907DFC4DD00DE4994 /* KTImageTextCell.m */; };
@@ -603,7 +602,6 @@
 		3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1A07DFC0AA00DE4994 /* KTApplication.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B130BF9092E00CC732B /* KTDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */; settings = {ATTRIBUTES = (); }; };
-		3CEC8B140BF9093000CC732B /* KTDocWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B150BF9093100CC732B /* KTDocWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B190BF9095B00CC732B /* KTDesign.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB53A800899A9AD006B0019 /* KTDesign.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B1B0BF9095C00CC732B /* KTStringRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */; settings = {ATTRIBUTES = (); }; };
@@ -1933,8 +1931,6 @@
 		3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAppDelegate.m; sourceTree = "<group>"; };
 		3C202D1A07DFC0AA00DE4994 /* KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTApplication.h; sourceTree = "<group>"; };
 		3C202D1B07DFC0AA00DE4994 /* KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTApplication.m; sourceTree = "<group>"; };
-		3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindow.h; sourceTree = "<group>"; };
-		3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindow.m; sourceTree = "<group>"; };
 		3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPrefsController.h; sourceTree = "<group>"; };
 		3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPrefsController.m; sourceTree = "<group>"; };
 		3C202D3307DFC0F000DE4994 /* KTDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocument.h; sourceTree = "<group>"; };
@@ -3214,8 +3210,6 @@
 				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
 				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
 				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
-				3C202D1E07DFC0AA00DE4994 /* KTDocWindow.h */,
-				3C202D1F07DFC0AA00DE4994 /* KTDocWindow.m */,
 				2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */,
 			);
 			name = "Main Document Window";
@@ -4775,7 +4769,6 @@
 				3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */,
 				3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */,
 				3CEC8B130BF9092E00CC732B /* KTDocumentController.h in Headers */,
-				3CEC8B140BF9093000CC732B /* KTDocWindow.h in Headers */,
 				3CEC8B150BF9093100CC732B /* KTDocWindowController.h in Headers */,
 				3CEC8B190BF9095B00CC732B /* KTDesign.h in Headers */,
 				3CEC8B1B0BF9095C00CC732B /* KTStringRenderer.h in Headers */,
@@ -6131,7 +6124,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				3C202D2B07DFC0AA00DE4994 /* KTDocWindow.m in Sources */,
 				3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */,
 				3C202DAC07DFC4DD00DE4994 /* KTBackgroundTabView.m in Sources */,
 				3C202DAD07DFC4DD00DE4994 /* KTImageTextCell.m in Sources */,

@@ -18,7 +18,6 @@
 #import "KTApplication.h"
 #import "KTDesign.h"
 #import "KTDocSiteOutlineController.h"
-#import "KTDocWindow.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "KTSite.h"
@@ -384,10 +383,10 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
  */
 - (void)windowDidBecomeValidForInspection:(NSNotification *)notification
 {
-	id object = [notification object];
-	if ([object isKindOfClass:[KTDocWindow class]])
+	NSWindow *window = [notification object];
+	if ([[window windowController] isKindOfClass:[KTDocWindowController class]])
 	{
-		[self setMainWindow:object];
+		[self setMainWindow:window];
 	}
 }
 
@@ -406,7 +405,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 - (void)windowWillBecomeInvalidForInspection:(NSNotification *)aNotification
 {
 	NSWindow *window = [aNotification object];
-    if ([window isKindOfClass:[KTDocWindow class]])
+    if ([[window windowController] isKindOfClass:[KTDocWindowController class]])
 	{
 		[self clearAllButKeepWindowOpen];
 	}

@@ -8,7 +8,6 @@
 
 #import "KTDesignPickerView.h"
 
-#import "KTDocWindow.h"
 #import "KTDocWindowController.h"
 #import "KTAppDelegate.h"
 #import "KTDesign.h"
