@@ -237,8 +237,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)finishLinkPanel:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 
-- (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
-
 - (id)itemForDOMNodeID:(NSString *)anID;
 
 - (NSMutableDictionary *)contextElementInformation;
@@ -246,8 +244,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (BOOL)selectedDOMRangeIsEditable;
 - (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty;
-
-- (BOOL)acceptDropOfURLsFromDraggingInfo:(id <NSDraggingInfo>)sender;
 
 - (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
 - (NSString *)propertyNameForDOMNodeID:(NSString *)anID;
