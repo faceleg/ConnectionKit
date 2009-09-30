@@ -26,8 +26,6 @@
 
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    sender = [[self webEditorView] willValidateDrop:sender];
-    
     NSDragOperation result = [super draggingEntered:sender];
     result = [[self webEditorView] validateDrop:sender proposedOperation:result];
     
@@ -36,8 +34,6 @@
 
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
 {
-    sender = [[self webEditorView] willValidateDrop:sender];
-    
     NSDragOperation result = [super draggingUpdated:sender];
     
     // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed
@@ -50,13 +46,13 @@
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
     [super draggingExited:sender];
-    [[self webEditorView] moveDragHighlightToNode:nil];
+    [[self webEditorView] moveDragHighlightToDOMNode:nil];
 }
 
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender
 {
     [super concludeDragOperation:sender];
-    [[self webEditorView] moveDragHighlightToNode:nil];
+    [[self webEditorView] moveDragHighlightToDOMNode:nil];
 }
 
 @end

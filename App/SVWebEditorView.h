@@ -44,6 +44,8 @@ typedef enum {
     
     // Drag & Drop
     DOMNode *_dragHighlightNode;
+	DOMNode *_dragCaretNode1;
+    DOMNode *_dragCaretNode2;
     
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
@@ -76,6 +78,12 @@ typedef enum {
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
 
+#pragma mark Layout
+- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
+                        beforeDOMNode:(DOMNode *)node2
+                          minimumSize:(CGFloat)minSize;
+
+
 #pragma mark Drawing
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -83,17 +91,10 @@ typedef enum {
 
 #pragma mark Dragging Destination
 
-// Pretty much as it says on the tin. Note that you must return a NSDraggingInfo object. Normally, just return sender, but you could return a customised version if desired. sender may be nil to signify an exiting/ending drop; if so return value has no effect.
-- (id <NSDraggingInfo>)willValidateDrop:(id <NSDraggingInfo>)sender;
-
-// sender may be nil to signify an exiting/ending drop. If so, return value has no effect.
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
-   
 // Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
-- (void)moveDragHighlightToNode:(DOMNode *)node;
-
-// This is implemented to just return YES. Override to return NO if you want to stop the standard behaviour (allowing a drop to edit text)
-- (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo;
+- (void)moveDragHighlightToDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
+- (void)removeDragCaret;
 
 
 #pragma mark Getting Item Information
@@ -113,7 +114,7 @@ typedef enum {
 #pragma mark -
 
 
-@protocol SVWebEditorViewDataSource <NSObject, KSDraggingDestination>
+@protocol SVWebEditorViewDataSource <NSObject>
 
 /*!
  @method editingOverlay:itemAtPoint:
@@ -124,15 +125,9 @@ typedef enum {
 - (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
 
-/*!
- @method webEditorView:draggingDestinationForDrop:
- @param sender
- @param dragInfo
- @result A NSDraggingDestination-compliant object to handle the drop, or nil to use the default handling.
- @discussion Use this to "claim" a portion of the view as your own for drag & drop.
- */
-- (id <KSDraggingDestination>)webEditorView:(SVWebEditorView *)sender
-                         destinationForDrop:(id <NSDraggingInfo>)dragInfo;
+// Return something other than NSDragOperationNone to take command of the drop
+- (NSDragOperation)webEditorView:(SVWebEditorView *)sender
+      dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:

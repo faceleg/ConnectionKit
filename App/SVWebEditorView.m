@@ -107,45 +107,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @synthesize loading = _isLoading;
 
-#pragma mark Drawing
-
-- (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
-{
-    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
-    if (_dragHighlightNode)
-    {
-        NSRect dropRect = [_dragHighlightNode boundingBox];
-        
-        [[NSColor aquaColor] setFill];
-        NSFrameRectWithWidth(dropRect, 3.0f);
-    }
-    
-    
-    // Nothing to draw during a drag op
-    if ([self mode] != SVWebEditingModeDragging)
-    {
-        NSArray *selectedItems = [self selectedItems];
-        if ([selectedItems count] > 0)
-        {
-            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-            [border setEditing:([self mode] == SVWebEditingModeEditing)];
-            
-            for (id <SVWebEditorItem> anItem in [self selectedItems])
-            {
-                // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-                NSRect frameRect = [[anItem DOMElement] boundingBox];
-                NSRect drawingRect = [border drawingRectForFrame:frameRect];
-                if (NSIntersectsRect(drawingRect, dirtyRect))
-                {
-                    [border drawWithFrame:frameRect inView:view];
-                }
-            }
-            
-            [border release];
-        }
-    }
-}
-
 #pragma mark Selection
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
@@ -347,6 +308,81 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 {
     return [[self dataSource] editingOverlay:self itemAtPoint:point];
+}
+
+#pragma mark Layout
+
+- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
+                        beforeDOMNode:(DOMNode *)node2
+                          minimumSize:(CGFloat)minSize;
+{
+    NSRect box1 = [node1 boundingBox];
+    NSRect box2 = [node2 boundingBox];
+    
+    // Claim the space between the pagelets
+    NSRect result;
+    result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
+    result.origin.y = NSMaxY(box1);
+    result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
+    result.size.height = NSMinY(box2) - result.origin.y;
+    
+    // It should be at least 25 pixels tall
+    if (result.size.height < minSize)
+    {
+        result = NSInsetRect(result, 0.0f, -0.5 * (minSize - result.size.height));
+    }
+    
+    return [self convertRect:result fromView:[node1 documentView]];
+}
+
+#pragma mark Drawing
+
+- (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
+{
+    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
+    if (_dragHighlightNode)
+    {
+        NSRect dropRect = [_dragHighlightNode boundingBox];
+        
+        [[NSColor aquaColor] setFill];
+        NSFrameRectWithWidth(dropRect, 3.0f);
+    }
+    
+    
+    // Nothing to draw during a drag op
+    if ([self mode] != SVWebEditingModeDragging)
+    {
+        NSArray *selectedItems = [self selectedItems];
+        if ([selectedItems count] > 0)
+        {
+            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+            [border setEditing:([self mode] == SVWebEditingModeEditing)];
+            
+            for (id <SVWebEditorItem> anItem in [self selectedItems])
+            {
+                // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+                NSRect frameRect = [[anItem DOMElement] boundingBox];
+                NSRect drawingRect = [border drawingRectForFrame:frameRect];
+                if (NSIntersectsRect(drawingRect, dirtyRect))
+                {
+                    [border drawWithFrame:frameRect inView:view];
+                }
+            }
+            
+            [border release];
+        }
+    }
+    
+    
+    // Draw drag caret
+    if (_dragCaretNode1 && _dragCaretNode2)
+    {
+        [[NSColor aquaColor] set];
+        NSRect rect = [self rectOfDragCaretAfterDOMNode:_dragCaretNode1
+                                          beforeDOMNode:_dragCaretNode2
+                                            minimumSize:7.0];
+        NSRectFill([view convertRect:rect fromView:self]);
+    }
 }
 
 #pragma mark Event Handling
@@ -608,13 +644,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Dragging Destination
 
-- (id <NSDraggingInfo>)willValidateDrop:(id <NSDraggingInfo>)sender;
-{
-    return sender;
-}
-
 - (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
 {
+    // Update drag highlight to match
     DOMNode *dropNode = nil;
     if (op > NSDragOperationNone)
     {
@@ -622,16 +654,20 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         DOMRange *editingRange = [[self webView] editableDOMRangeForPoint:point];
         dropNode = [[editingRange startContainer] containingContentEditableElement];
     }
+    [self moveDragHighlightToDOMNode:dropNode];
     
     
-    // Mark for redraw if needed
-    [self moveDragHighlightToNode:dropNode];
+    // Let datasource have a crack at the drop
+    if (op == NSDragOperationNone)
+    {
+        op = [[self dataSource] webEditorView:self dataSourceShouldHandleDrop:sender];
+    }
     
     
     return op;
 }
 
-- (void)moveDragHighlightToNode:(DOMNode *)node
+- (void)moveDragHighlightToDOMNode:(DOMNode *)node
 {
     if (node != _dragHighlightNode)
     {
@@ -641,7 +677,35 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
-- (BOOL)useDefaultBehaviourForDrop:(id <NSDraggingInfo>)dragInfo { return YES; }
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
+{
+    // Dump the old caret
+    [self removeDragCaret];
+    
+    // Draw ne one
+    _dragCaretNode1 = [node1 retain];
+    _dragCaretNode2 = [node2 retain];
+    [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
+                                                    beforeDOMNode:_dragCaretNode2
+                                                      minimumSize:7.0f]];
+}
+
+- (void)removeDragCaret;
+{
+    if (_dragCaretNode1 || _dragCaretNode2)
+    {
+        [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
+                                                        beforeDOMNode:_dragCaretNode2
+                                                          minimumSize:7.0f]];
+        
+        [_dragCaretNode1 release],  _dragCaretNode1 = nil;
+        [_dragCaretNode1 release],  _dragCaretNode2 = nil;
+    }
+    else
+    {
+        [[self webView] removeDragCaret];
+    }
+}
 
 #pragma mark Dragging Source
 
@@ -724,7 +788,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
 {
-    return ([self useDefaultBehaviourForDrop:dragInfo]) ? WebDragDestinationActionEdit : WebDragDestinationActionNone;
+    NSUInteger result = WebDragDestinationActionEdit;
+    
+    if ([[self dataSource] webEditorView:self dataSourceShouldHandleDrop:dragInfo])
+    {
+        result = WebDragDestinationActionNone;
+    }
+    
+    return result;
 }
 
 #pragma mark WebEditingDelegate
