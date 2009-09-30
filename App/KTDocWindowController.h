@@ -243,7 +243,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation;
 
 - (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
-- (NSString *)propertyNameForDOMNodeID:(NSString *)anID;
 
 - (KTPagelet *)pageletEnclosing:(DOMNode *)aDomNode;
 - (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;

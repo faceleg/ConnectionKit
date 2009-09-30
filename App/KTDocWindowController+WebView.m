@@ -53,41 +53,7 @@
 #import "Debug.h"
 
 
-#define CREATE_LINK_MENUITEM_TITLE			NSLocalizedString(@"Create Link...", "Create Link... MenuItem")
-#define EDIT_LINK_MENUITEM_TITLE			NSLocalizedString(@"Edit Link...", "Edit Link... MenuItem")
-
-
-typedef enum {
-    WebKitEditableLinkDefaultBehavior = 0,
-    WebKitEditableLinkAlwaysLive,
-    WebKitEditableLinkOnlyLiveWithShiftKey,
-    WebKitEditableLinkLiveWhenNotFocused
-} WebKitEditableLinkBehavior;
-
-
-@interface WebPreferences (WebPrivate)
-
-- (WebKitEditableLinkBehavior)editableLinkBehavior;
-- (void)setEditableLinkBehavior:(WebKitEditableLinkBehavior)behavior;
-@end
-
-
-@interface DOMHTMLElement ( newWebKit )
-- (void) focus;
-@end
-
-
 NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
-
-
-@interface NSObject (WebBridgeHack )
-- (DOMRange *)dragCaretDOMRange;
-@end
-
-
-@interface NSView ( WebBridgeHack )
-- (id) _bridge;	// WebFrameBridge
-@end
 
 
 @interface KTDocWebViewController (EditingPrivate)
@@ -97,7 +63,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 @interface KTDocWindowController ( WebViewPrivate )
 
-- (NSString *)savedPageletStyle;
 - (NSPoint)linkPanelTopLeftPointForSelectionRect:(NSRect)aSelectionRect;
 - (DOMHTMLElement *)elementOfClass:(NSString *)aDesiredClass enclosing:(DOMNode *)aNode;
 
@@ -117,29 +82,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 #pragma mark -
 #pragma mark Image Replacement
-
-- (NSString *)codeForDOMNodeID:(NSString *)anID		// id like k-Entity-Property-434-h1h
-{
-	NSArray *dashComponents = [anID componentsSeparatedByString:@"-"];
-	if ([dashComponents count] < 5)
-	{
-		return nil;		// code is optional, so return nil if it's not there
-	}
-	NSString *property = [dashComponents objectAtIndex:4];
-	return property;
-}
-
-- (NSString *)propertyNameForDOMNodeID:(NSString *)anID	// id like k-Entity-Property-434-h1h
-{
-	NSString *result = nil;
-	NSArray *dashComponents = [anID componentsSeparatedByString:@"-"];
-	if ([dashComponents count] > 2)
-	{
-		result = [dashComponents objectAtIndex:2];
-	}
-	return result;
-}
-
 
 - (id)itemForDOMNodeID:(NSString *)anID	// id like k-Entity-Property-434-h1h
 {
