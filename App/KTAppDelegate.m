@@ -60,7 +60,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "KTUtilities.h"
-#import "KTWebView.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+KTExtensions.h"
@@ -847,9 +846,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	KSProgressPanel *progressPanel = nil;
     @try
 	{
-		// just to be sure, make sure that webview is loaded
-		(void) [KTWebView class];
-
 		// Make an empty string for "No Selection" so that empty/0 numeric text fields are empty!
 		[NSTextFieldCell setDefaultPlaceholder: @""
 									 forMarker: NSNoSelectionMarker
