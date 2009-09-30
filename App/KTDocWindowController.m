@@ -1182,6 +1182,8 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+    return YES;
+    
 	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
 		

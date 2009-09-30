@@ -18,6 +18,9 @@
 {
     // load designs -- only seems to work if I do it here? seems as good a place as any...
     [self setDesigns:[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension]];
+    
+    // restrict to a max of 4 columns
+    [oCollectionView setMaxNumberOfColumns:4];
 }
 
 @synthesize designs = designs_;
