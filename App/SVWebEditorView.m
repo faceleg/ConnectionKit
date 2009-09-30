@@ -32,9 +32,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
 
-@end
+// Dragging destination
+- (void)removeDragCaretFromDOMNodes;
 
-@interface SVWebEditorView (Internal)
 @end
 
 
