@@ -242,9 +242,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (NSMutableDictionary *)contextElementInformation;
 - (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation;
 
-- (BOOL)selectedDOMRangeIsEditable;
-- (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty;
-
 - (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
 - (NSString *)propertyNameForDOMNodeID:(NSString *)anID;
 

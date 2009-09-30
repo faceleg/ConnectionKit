@@ -1317,11 +1317,7 @@ from representedObject */
     // Duplicate
     else if (itemAction == @selector(duplicate:))
     {
-        if ([self selectedDOMRangeIsEditable] )
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-        }
-        else if ([self selectedPagelet])
+        if ([self selectedPagelet])
         {
             [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
         }

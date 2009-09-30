@@ -214,51 +214,6 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 	myContextElementInformation = aContextElementInformation;
 }
 
-- (BOOL)selectedDOMRangeIsEditable
-{
-	DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
-	if ( nil == selectedRange )
-	{
-		return NO;
-	}
-	DOMHTMLElement *selectableNode = [[selectedRange startContainer] firstSelectableParentNode];
-	
-	return ( (nil != selectableNode) && [self isEditableElement:selectableNode] );
-}
-
-- (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty
-{
-	DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
-	if ( nil == selectedRange )
-	{
-		return NO; // no selected text, not even an insertion point
-	}
-	
-	if ( !canBeEmpty && ([selectedRange startOffset] == [selectedRange endOffset]) )
-	{
-		return NO; // no actual text selected, probably just an insertion point
-	}
-	
-	DOMHTMLElement *selectableNode = [[selectedRange startContainer] firstSelectableParentNode];
-    
-    BOOL nodeContainsKHtml = NO;
-    if ( (nil != selectableNode) && [[selectableNode idName] hasPrefix:@"k-"] )
-    {
-        NSString *classes = [selectableNode className];
-        if ( NSNotFound != [classes rangeOfString:@"kHtml"].location )
-        {
-            nodeContainsKHtml = YES;
-        }
-    }        
-	
-    BOOL result = ( !nodeContainsKHtml
-					&& (nil != selectableNode) 
-					&& [self isEditableElement:selectableNode] 
-					&& [DOMNode isLinkableFromDOMNodeClass:[selectableNode className]] 
-					);
-	return result;
-}
-
 #pragma mark -
 #pragma mark WebUIDelegate Methods
 
