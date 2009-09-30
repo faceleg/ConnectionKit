@@ -11,8 +11,5 @@
 
 
 @interface SVDocWebEditorView : SVWebEditorView
-{
-
-}
 
 @end

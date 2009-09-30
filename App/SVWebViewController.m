@@ -401,18 +401,35 @@
     return result;
 }
 
-- (id)webEditorView:(SVWebEditorView *)sender destinationForDrop:(id <NSDraggingInfo>)dragInfo;
+- (NSDragOperation)webEditorView:(SVWebEditorView *)sender
+      dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
-    // Let the editor do its thing with drag and drop EXCEPT for the sidebar, which we will claim
-    id result = nil;
+    NSDragOperation result = NSDragOperationNone;
     
-    if (_sidebarDiv)
+    // Drags are generally fine unless they fall in the drop zone between pagelets.
+    NSArray *pagelets = [self contentItems];
+    
+    NSUInteger i, count = [pagelets count] - 1;
+    for (i = 0; i < count; i++)
     {
-        NSView *docView = [_sidebarDiv documentView];
-        NSRect sidebarRect = [_sidebarDiv boundingBox];
-        NSPoint mouseLocation = [docView convertPointFromBase:[dragInfo draggingLocation]];
-        if ([docView mouse:mouseLocation inRect:sidebarRect]) result = self;
+        SVWebEditorItem *item1 = [pagelets objectAtIndex:i];
+        SVWebEditorItem *item2 = [pagelets objectAtIndex:i+1];
+        
+        
+        NSRect aDropZone = [sender rectOfDragCaretAfterDOMNode:[item1 DOMElement]
+                                                               beforeDOMNode:[item2 DOMElement]
+                                                                 minimumSize:25.0f];;
+        
+        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
+                 inRect:aDropZone])
+        {
+            result = NSDragOperationMove;
+            [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]
+                                                beforeDOMNode:[item2 DOMElement]];
+            break;
+        }
     }
+    
     
     return result;
 }
