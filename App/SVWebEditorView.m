@@ -782,13 +782,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegate
 
-- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
-{
-    NSView *drawingView = [NSView focusView];
-    NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
-    [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
-}
-
 /*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
@@ -801,6 +794,15 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     return result;
+}
+
+#pragma mark WebUIDelegatePrivate
+
+- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
+{
+    NSView *drawingView = [NSView focusView];
+    NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
+    [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
 }
 
 #pragma mark WebEditingDelegate
