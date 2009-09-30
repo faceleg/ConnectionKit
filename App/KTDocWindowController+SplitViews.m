@@ -91,9 +91,9 @@ static float sGrowCutoffSidebarDimension;
 /*!	Cause the little dragging view to work as the dragger
 */
 
-- (int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview
+- (unsigned int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview
 {
-	int result = NSNotFound;
+	unsigned int result = NSNotFound;
 	
 	if (sender == oSidebarSplitView)
 	{
