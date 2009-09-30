@@ -653,14 +653,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [[self webView] editableDOMRangeForPoint:point];
         dropNode = [[editingRange startContainer] containingContentEditableElement];
+        
+        [self removeDragCaretFromDOMNodes]; // if WebView is accepting drop, can't use our custom caret
     }
     [self moveDragHighlightToDOMNode:dropNode];
     
     
-    // Let datasource have a crack at the drop
+    // Let datasource have a crack at the drop. If it's not interested either, ensure the drag caret is removed
     if (op == NSDragOperationNone)
     {
         op = [[self dataSource] webEditorView:self dataSourceShouldHandleDrop:sender];
+        if (op == NSDragOperationNone) [self removeDragCaret];
     }
     
     
@@ -682,7 +685,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Dump the old caret
     [self removeDragCaret];
     
-    // Draw ne one
+    // Draw new one
     _dragCaretNode1 = [node1 retain];
     _dragCaretNode2 = [node2 retain];
     [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
@@ -692,19 +695,19 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)removeDragCaret;
 {
-    if (_dragCaretNode1 || _dragCaretNode2)
-    {
-        [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
-                                                        beforeDOMNode:_dragCaretNode2
-                                                          minimumSize:7.0f]];
-        
-        [_dragCaretNode1 release],  _dragCaretNode1 = nil;
-        [_dragCaretNode1 release],  _dragCaretNode2 = nil;
-    }
-    else
-    {
-        [[self webView] removeDragCaret];
-    }
+    [[self webView] removeDragCaret];
+    [self removeDragCaretFromDOMNodes];
+}
+
+// Support method that ignores any drag caret in the webview
+- (void)removeDragCaretFromDOMNodes;
+{
+    [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
+                                                    beforeDOMNode:_dragCaretNode2
+                                                      minimumSize:7.0f]];
+    
+    [_dragCaretNode1 release],  _dragCaretNode1 = nil;
+    [_dragCaretNode1 release],  _dragCaretNode2 = nil;
 }
 
 #pragma mark Dragging Source

@@ -162,6 +162,8 @@ extern NSString *SVWebEditorViewSelectionDidChangeNotification;
 
 @interface SVWebEditorView (SPI)
 @property(nonatomic, retain, readonly) WebView *webView;
+- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
+- (void)removeDragCaretFromDOMNodes;
 @end
 
 

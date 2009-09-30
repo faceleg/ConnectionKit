@@ -46,13 +46,21 @@
 - (void)draggingExited:(id < NSDraggingInfo >)sender
 {
     [super draggingExited:sender];
+    
+    // Need to end any of our custom drawing
+    [[self webEditorView] removeDragCaret];
     [[self webEditorView] moveDragHighlightToDOMNode:nil];
 }
 
-- (void)concludeDragOperation:(id < NSDraggingInfo >)sender
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
-    [super concludeDragOperation:sender];
+    BOOL result = [super prepareForDragOperation:sender];
+    
+    // Need to end any of our custom drawing
+    [[self webEditorView] removeDragCaret];
     [[self webEditorView] moveDragHighlightToDOMNode:nil];
+    
+    return result;
 }
 
 @end
