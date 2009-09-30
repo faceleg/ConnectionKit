@@ -312,6 +312,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Layout
 
+- (NSRect)rectOfDragCaret;
+{
+    NSRect result = [self rectOfDragCaretAfterDOMNode:_dragCaretNode1
+                                        beforeDOMNode:_dragCaretNode2
+                                          minimumSize:7.0];
+    return result;
+}
+
 - (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
                         beforeDOMNode:(DOMNode *)node2
                           minimumSize:(CGFloat)minSize;
@@ -378,9 +386,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if (_dragCaretNode1 && _dragCaretNode2)
     {
         [[NSColor aquaColor] set];
-        NSRect rect = [self rectOfDragCaretAfterDOMNode:_dragCaretNode1
-                                          beforeDOMNode:_dragCaretNode2
-                                            minimumSize:7.0];
+        NSRect rect = [self rectOfDragCaret];
         NSRectFill([view convertRect:rect fromView:self]);
     }
 }
@@ -688,9 +694,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Draw new one
     _dragCaretNode1 = [node1 retain];
     _dragCaretNode2 = [node2 retain];
-    [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
-                                                    beforeDOMNode:_dragCaretNode2
-                                                      minimumSize:7.0f]];
+    [self setNeedsDisplayInRect:[self rectOfDragCaret]];
 }
 
 - (void)removeDragCaret;
@@ -702,9 +706,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Support method that ignores any drag caret in the webview
 - (void)removeDragCaretFromDOMNodes;
 {
-    [self setNeedsDisplayInRect:[self rectOfDragCaretAfterDOMNode:_dragCaretNode1
-                                                    beforeDOMNode:_dragCaretNode2
-                                                      minimumSize:7.0f]];
+    [self setNeedsDisplayInRect:[self rectOfDragCaret]];
     
     [_dragCaretNode1 release],  _dragCaretNode1 = nil;
     [_dragCaretNode1 release],  _dragCaretNode2 = nil;

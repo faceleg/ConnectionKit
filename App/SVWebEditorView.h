@@ -79,6 +79,7 @@ typedef enum {
 
 
 #pragma mark Layout
+- (NSRect)rectOfDragCaret;
 - (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
                         beforeDOMNode:(DOMNode *)node2
                           minimumSize:(CGFloat)minSize;
