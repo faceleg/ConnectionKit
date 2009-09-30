@@ -798,6 +798,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegatePrivate
 
+/*  Log javacript to the standard console; it may be helpful for us or for people who put javascript into their stuff.
+ *  Hint originally from: http://lists.apple.com/archives/webkitsdk-dev/2006/Apr/msg00018.html
+ */
+- (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)aDict
+{
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"LogJavaScript"])
+	{
+		NSString *message = [aDict objectForKey:@"message"];
+		NSString *lineNumber = [aDict objectForKey:@"lineNumber"];
+		if (!lineNumber) lineNumber = @""; else lineNumber = [NSString stringWithFormat:@" line %@", lineNumber];
+		// NSString *sourceURL = [aDict objectForKey:@"sourceURL"]; // not that useful, it's an applewebdata
+		NSLog(@"JavaScript%@> %@", lineNumber, message);
+	}
+}
+
 - (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
 {
     NSView *drawingView = [NSView focusView];

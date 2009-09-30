@@ -281,23 +281,6 @@ Node was retained so that it lives to this invocation!
 	[anElement autorelease];		// go ahead and let it go now
 }
 
-// http://lists.apple.com/archives/webkitsdk-dev/2006/Apr/msg00018.html
-
-// Just log javacript errors in the standard console; it may be helpful for us or for people who put javascript into their stuff.
-
-- (void)webView:(WebView *)sender addMessageToConsole:(NSDictionary *)aDict
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults boolForKey:@"LogJavaScript"])
-	{
-		NSString *message = [aDict objectForKey:@"message"];
-		NSString *lineNumber = [aDict objectForKey:@"lineNumber"];
-		if (!lineNumber) lineNumber = @""; else lineNumber = [NSString stringWithFormat:@" line %@", lineNumber];
-		// NSString *sourceURL = [aDict objectForKey:@"sourceURL"]; // not that useful, it's an applewebdata
-		NSLog(@"JavaScript%@> %@", lineNumber, message);
-	}
-}
-
 /*!	This is my own delegate method for dealing with a click.  Store the selected ID away, and flash the rectangle of what was clicked, using an overlay window so we don't interfere with the WebView.
 
 Note that this method is called AFTER the webview handles the click.
