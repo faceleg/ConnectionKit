@@ -139,18 +139,6 @@
     myWebViewTitle = aWebViewTitle;
 }
 
-- (DOMRange *)selectedDOMRange
-{ 
-	return mySelectedDOMRange;
-}
-
-- (void)setSelectedDOMRange:(DOMRange *)aSelectedDOMRange
-{
-    [aSelectedDOMRange retain];
-    [mySelectedDOMRange release];
-    mySelectedDOMRange = aSelectedDOMRange;
-}
-
 - (NSRect)selectionRect
 { 
 	return mySelectionRect;

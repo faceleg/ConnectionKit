@@ -100,7 +100,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	KTPagelet						*mySelectedPagelet;
 	
 	// oWebView selection
-	DOMRange						*mySelectedDOMRange;
 	NSPoint							myLastClickedPoint;
 	NSRect							mySelectionRect;
 	
@@ -267,9 +266,6 @@ extern NSString *KTSelectedDOMRangeKey;
 - (void)setWebViewTitle:(NSString *)aWebViewTitle;
 
 //- (DOMNode *)selectedDomNode;
-
-- (DOMRange *)selectedDOMRange;
-- (void)setSelectedDOMRange:(DOMRange *)aSelectedDOMRange;
 
 - (NSRect)selectionRect;
 - (void)setSelectionRect:(NSRect)aSelectionRect;
