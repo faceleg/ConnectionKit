@@ -73,31 +73,15 @@
     [[self valueForKey:@"archivePages"] makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
-/*	These accessors are tacked on to 1.5. They should become a proper part of the model in 2.0
- */
-
 - (BOOL)shouldUpdateFileNameWhenTitleChanges
 {
-	BOOL result;
-	
-	NSNumber *defaultResult = [self valueForUndefinedKey:@"shouldUpdateFileNameWhenTitleChanges"];
-	if (defaultResult)
-	{
-		result = [defaultResult boolValue];
-	}
-	else
-	{
-		result = (![self publishedPath] && ![self publishedDataDigest]);
-	}
-	
-	return result;
+    return [self wrappedBoolForKey:@"shouldUpdateFileNameWhenTitleChanges"];
 }
 
 - (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate
 {
-	[self setValue:[NSNumber numberWithBool:autoUpdate] forUndefinedKey:@"shouldUpdateFileNameWhenTitleChanges"];
+    [self setWrappedBool:autoUpdate forKey:@"shouldUpdateFileNameWhenTitleChanges"];
 }
-
 
 #pragma mark -
 #pragma mark Relationships

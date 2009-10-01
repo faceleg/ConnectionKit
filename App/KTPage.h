@@ -51,8 +51,7 @@
 - (void)setDisableComments:(BOOL)disableComments;
 
 // Title
-- (BOOL)shouldUpdateFileNameWhenTitleChanges;
-- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate;
+@property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
 
 // Draft
 - (void)setIsDraft:(BOOL)flag;
