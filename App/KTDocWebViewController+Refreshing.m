@@ -212,10 +212,6 @@
 	}
 	
 	
-	// Clear out status field, need to move over something to get it populated
-	[[self windowController] setStatusField:@""];
-	
-	
 	// Clearly the webview is no longer in need of refreshing
 	[self setWebViewNeedsReload:NO];
 }

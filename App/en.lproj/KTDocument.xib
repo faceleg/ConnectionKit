@@ -833,64 +833,10 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 											<reference key="NSNextResponder" ref="120441936"/>
 											<int key="NSvFlags">256</int>
 											<array class="NSMutableArray" key="NSSubviews">
-												<object class="NSCustomView" id="578329482">
-													<reference key="NSNextResponder" ref="430827376"/>
-													<int key="NSvFlags">290</int>
-													<array class="NSMutableArray" key="NSSubviews">
-														<object class="NSTextField" id="109723378">
-															<reference key="NSNextResponder" ref="578329482"/>
-															<int key="NSvFlags">258</int>
-															<string key="NSFrame">{{21, 4}, {762, 14}}</string>
-															<reference key="NSSuperview" ref="578329482"/>
-															<bool key="NSEnabled">YES</bool>
-															<object class="NSTextFieldCell" key="NSCell" id="1052295250">
-																<int key="NSCellFlags">67239424</int>
-																<int key="NSCellFlags2">4325376</int>
-																<string key="NSContents"/>
-																<reference key="NSSupport" ref="26"/>
-																<reference key="NSControlView" ref="109723378"/>
-																<reference key="NSBackgroundColor" ref="966204512"/>
-																<reference key="NSTextColor" ref="801130899"/>
-															</object>
-														</object>
-														<object class="NSImageView" id="590596981">
-															<reference key="NSNextResponder" ref="578329482"/>
-															<int key="NSvFlags">260</int>
-															<set class="NSMutableSet" key="NSDragTypes">
-																<string>Apple PDF pasteboard type</string>
-																<string>Apple PICT pasteboard type</string>
-																<string>Apple PNG pasteboard type</string>
-																<string>NSFilenamesPboardType</string>
-																<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-																<string>NeXT TIFF v4.0 pasteboard type</string>
-															</set>
-															<string key="NSFrame">{{0, -2}, {16, 23}}</string>
-															<reference key="NSSuperview" ref="578329482"/>
-															<bool key="NSEnabled">YES</bool>
-															<object class="NSImageCell" key="NSCell" id="364281120">
-																<int key="NSCellFlags">130560</int>
-																<int key="NSCellFlags2">33554432</int>
-																<object class="NSCustomResource" key="NSContents">
-																	<string key="NSClassName">NSImage</string>
-																	<string key="NSResourceName">grabber</string>
-																</object>
-																<int key="NSAlign">0</int>
-																<int key="NSScale">0</int>
-																<int key="NSStyle">0</int>
-																<bool key="NSAnimates">NO</bool>
-															</object>
-															<bool key="NSEditable">YES</bool>
-														</object>
-													</array>
-													<string key="NSFrameSize">{800, 21}</string>
-													<reference key="NSSuperview" ref="430827376"/>
-													<string key="NSClassName">NTBoxView</string>
-													<string key="NSExtension">NSView</string>
-												</object>
 												<object class="NSTabView" id="699990157">
 													<reference key="NSNextResponder" ref="430827376"/>
 													<int key="NSvFlags">274</int>
-													<string key="NSFrame">{{0, 20}, {800, 379}}</string>
+													<string key="NSFrameSize">{800, 399}</string>
 													<reference key="NSSuperview" ref="430827376"/>
 													<array class="NSMutableArray" key="NSTabViewItems"/>
 													<reference key="NSFont" ref="502413197"/>
@@ -1211,35 +1157,11 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oStatusBar</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="578329482"/>
-					</object>
-					<int key="connectionID">349</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oStatusBarField</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="109723378"/>
-					</object>
-					<int key="connectionID">350</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">oDocumentController</string>
 						<reference key="source" ref="496514088"/>
 						<reference key="destination" ref="884529613"/>
 					</object>
 					<int key="connectionID">355</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oSplitDragView</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="590596981"/>
-					</object>
-					<int key="connectionID">358</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2378,35 +2300,9 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 						<int key="objectID">414</int>
 						<reference key="object" ref="430827376"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="578329482"/>
 							<reference ref="699990157"/>
 						</array>
 						<reference key="parent" ref="120441936"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">29</int>
-						<reference key="object" ref="578329482"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="109723378"/>
-							<reference ref="590596981"/>
-						</array>
-						<reference key="parent" ref="430827376"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">41</int>
-						<reference key="object" ref="109723378"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="1052295250"/>
-						</array>
-						<reference key="parent" ref="578329482"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">141</int>
-						<reference key="object" ref="590596981"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="364281120"/>
-						</array>
-						<reference key="parent" ref="578329482"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1510</int>
@@ -2567,16 +2463,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 						<reference key="parent" ref="531133486"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1535</int>
-						<reference key="object" ref="1052295250"/>
-						<reference key="parent" ref="109723378"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1536</int>
-						<reference key="object" ref="364281120"/>
-						<reference key="parent" ref="590596981"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1543</int>
 						<reference key="object" ref="763904971"/>
 						<reference key="parent" ref="1070504502"/>
@@ -2733,16 +2619,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<string key="1280.CustomClassName">KSLabel</string>
 				<string key="1280.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1280.ImportedFromIB2"/>
-				<object class="NSMutableDictionary" key="141.IBAttributePlaceholdersKey">
-					<string key="NS.key.0">AccessibilityDescription</string>
-					<object class="IBAccessibilityAttribute" key="NS.object.0">
-						<string key="name">AccessibilityDescription</string>
-						<reference key="object" ref="590596981"/>
-						<string key="accessibilityValue">Site Outline splitter</string>
-					</object>
-				</object>
-				<string key="141.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="141.ImportedFromIB2"/>
 				<boolean value="YES" key="1427.ImportedFromIB2"/>
 				<string key="1466.IBPluginDependency">net.brockerhoff.RBsplitView.IBPlugin</string>
 				<boolean value="YES" key="1466.ImportedFromIB2"/>
@@ -2787,8 +2663,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<string key="1532.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1533.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1534.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1535.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1536.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1537.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1538.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1539.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2810,8 +2684,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<boolean value="YES" key="26.ImportedFromIB2"/>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="28.ImportedFromIB2"/>
-				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="381.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="381.ImportedFromIB2"/>
 				<boolean value="YES" key="381.windowTemplate.hasMinSize"/>
@@ -2822,8 +2694,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<boolean value="YES" key="383.ImportedFromIB2"/>
 				<string key="409.IBPluginDependency">net.brockerhoff.RBsplitView.IBPlugin</string>
 				<boolean value="YES" key="409.ImportedFromIB2"/>
-				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="41.ImportedFromIB2"/>
 				<string key="410.IBPluginDependency">net.brockerhoff.RBsplitView.IBPlugin</string>
 				<boolean value="YES" key="410.ImportedFromIB2"/>
 				<string key="411.IBPluginDependency">net.brockerhoff.RBsplitView.IBPlugin</string>
@@ -3168,9 +3038,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 						<string key="oMessageWindow">KSBorderlessWindow</string>
 						<string key="oPageDetailsController">KTDocViewController</string>
 						<string key="oSidebarSplitView">RBSplitView</string>
-						<string key="oSplitDragView">NSImageView</string>
-						<string key="oStatusBar">NTBoxView</string>
-						<string key="oStatusBarField">NSTextField</string>
 						<string key="siteOutlineController">KTDocSiteOutlineController</string>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3181,10 +3048,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">KTDocWindowController</string>
 					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">oWebView</string>
-						<string key="NS.object.0">WebView</string>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -3429,13 +3292,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTWebView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSObject+KTExtensions.h</string>
 					</object>
 				</object>
@@ -3474,6 +3330,13 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="55000223">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSDragging.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSView</string>
 					<reference key="sourceIdentifier" ref="299612660"/>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3499,6 +3362,10 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindow</string>
+					<reference key="sourceIdentifier" ref="55000223"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
@@ -3581,28 +3448,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebContentAreaController</string>
 					<string key="superclassName">KSTabViewController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WebView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/WebKit/WebView+Karelia.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WebView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTWebKitCompatibility.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WebView</string>
-					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -3730,22 +3575,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSImageCell</string>
-					<string key="superclassName">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSImageCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSImageView</string>
-					<string key="superclassName">NSControl</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSImageView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -4641,27 +4470,6 @@ AAAAAAAAbW1vZAAAAAAAAAYQAACSGAIAA6i7TLsAAAAAAAAAAAAAAAAAAAAAAA</bytes>
 						<string key="NS.object.0">id</string>
 					</object>
 					<reference key="sourceIdentifier" ref="121363797"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">WebView</string>
-					<string key="superclassName">NSView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="goBack:">id</string>
-						<string key="goForward:">id</string>
-						<string key="makeTextLarger:">id</string>
-						<string key="makeTextSmaller:">id</string>
-						<string key="makeTextStandardSize:">id</string>
-						<string key="reload:">id</string>
-						<string key="reloadFromOrigin:">id</string>
-						<string key="stopLoading:">id</string>
-						<string key="takeStringURLFrom:">id</string>
-						<string key="toggleContinuousSpellChecking:">id</string>
-						<string key="toggleSmartInsertDelete:">id</string>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">WebKit.framework/Headers/WebView.h</string>
-					</object>
 				</object>
 			</array>
 		</object>

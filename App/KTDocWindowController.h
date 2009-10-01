@@ -57,11 +57,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet KTDocViewController		*oPageDetailsController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
-	// Status bar below the webview
-    IBOutlet NTBoxView				*oStatusBar;	// below web view
-	IBOutlet NSImageView			*oSplitDragView;
-	IBOutlet NSTextField			*oStatusBarField;	// URL pointed to, expand size to left of visible item(s) below
-	
 	//  Navigation bar above the webview
 	IBOutlet RBSplitSubview			*oDesignsSplitPane;
     IBOutlet KTDesignPickerView		*oDesignsView;
@@ -140,9 +135,6 @@ extern NSString *gInfoWindowAutoSaveName;
 // Other public functions
 
 - (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
-
-- (void)setStatusField:(NSString *)string;
-- (NSString *)status;
 
 //- (void)updateEditMenuItems;
 - (void) updateBuyNow:(NSNotification *)aNotification;

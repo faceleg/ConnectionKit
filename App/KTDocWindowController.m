@@ -77,7 +77,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 // Actions
 - (void)showDesigns:(BOOL)inShow;
-- (void)showStatusBar:(BOOL)inShow;
 
 + (NSSet *)windowTitleKeyPaths;
 
@@ -141,7 +140,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setAddCollectionPopUpButton:nil];
     [self setAddPagePopUpButton:nil];
     [self setAddPageletPopUpButton:nil];
-    [self setSelectedDOMRange:nil];
     [self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];
     [self setToolbars:nil];
@@ -232,11 +230,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                               withKeyPath:@"selectedObjects"
                                   options:nil];
 	
-	// UI setup of box views
-	[oStatusBar setDrawsFrame:YES];
-	[oStatusBar setBorderMask:NTBoxTop];
-	
-	
 	// Link Popup in address bar
 	//		[[oLinkPopup cell] setUsesItemFromMenu:NO];
 	//		[oLinkPopup setIconImage:[NSImage imageNamed:@"links"]];
@@ -253,12 +246,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	else	// initialize the view
 	{
 		[self splitView:oDesignsSplitView didExpand:oDesignsSplitPane];
-	}
-	
-	// Same with status bar
-	if (![[self document] displayStatusBar])
-	{
-		[self showStatusBar:NO];
 	}
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -524,23 +511,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return [[oSidebarSplitView subviewAtPosition:0] isCollapsed];
 }
 
-- (void)setStatusField:(NSString *)string
-{
-	//if (nil == string) string = @"";	/// defense against nil
-	NSString *newStatus = @"";
-	if ( nil != string )
-	{
-		newStatus = [newStatus stringByAppendingString:string];
-	}
-    [oStatusBarField setStringValue:newStatus];
-	//[oStatusBarField displayIfNeeded];  // Why are we doing this? Mike.
-}
-
-- (NSString *)status
-{
-	return [oStatusBarField stringValue];
-}
-
 - (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
 {
 	NSSize iconSize = aSmall ? NSMakeSize(16.0,16.0) : NSMakeSize(32.0, 32.0);
@@ -655,17 +625,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark -
 #pragma mark Other
-
-- (IBAction)toggleStatusBarShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] displayStatusBar];
-	BOOL newValue = !value;
-	[[self document] setDisplayStatusBar:newValue];
-	
-	// update UI
-	[self showStatusBar:newValue];
-}
 
 - (IBAction)toggleEditingControlsShown:(id)sender
 {
@@ -1384,19 +1343,6 @@ from representedObject */
         }
     }
 	
-	// "Hide Status Bar" toggleStatusBarShown:
-    else if (itemAction == @selector(toggleStatusBarShown:))
-    {
-        if ([[self document] displayStatusBar])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Status Bar", @"menu title to hide status bar")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Status Bar", @"menu title to show status bar")];
-        }
-    }
-	
 	// "Hide Site Outline" toggleSiteOutlineShown:
 	else if (itemAction == @selector(toggleSiteOutlineShown:))
 	{
@@ -2079,38 +2025,6 @@ from representedObject */
 	{
 		[oDesignsSplitPane display];	// hack, rainer suggested this....
 	}
-}
-
-- (void)showStatusBar:(BOOL)inShow
-{
-    if ( inShow ) {
-        // show status bars
-        // add status bar back as a subview
-        // resize the two views in the frame
-		[oStatusBar setHidden:NO];
-		
-        WebView *webView = [[self webViewController] webView];
-		NSRect webViewFrame = [webView frame];
-		float statusBarHeight = [oStatusBar frame].size.height;
-		webViewFrame.size.height -= statusBarHeight;
-		webViewFrame.origin.y += statusBarHeight;
-		[webView setFrame:webViewFrame];
-		[webView setNeedsDisplay:YES];
-    }
-    else {
-        // hide status bars
-		
-		[oStatusBar setHidden:YES];
-		
-		WebView *webView = [[self webViewController] webView];
-		NSRect webViewFrame = [webView frame];
-		float statusBarHeight = [oStatusBar frame].size.height;
-		webViewFrame.size.height += statusBarHeight;
-		webViewFrame.origin.y -= statusBarHeight;
-		[webView setFrame:webViewFrame];
-		[webView setNeedsDisplay:YES];
-    }
-	
 }
 
 // TODO: Rather than forward this on, make the controller part of the responder chain

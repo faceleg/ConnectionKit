@@ -408,9 +408,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		[[self windowController] finishLinkPanel:nil]; // process [self contextElementInformation]
 	}
 	
-	// setSelectedDOMRange
-	[[self windowController] setSelectedDOMRange:[theWebview selectedDOMRange]];
-	
 	// setSelectionRect
 	//	 get the webView's selection rectangle
 	NSRect unconvertedSelectionRect = NSZeroRect;

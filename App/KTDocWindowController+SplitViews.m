@@ -33,22 +33,6 @@ TO DO:
 
 @implementation KTDocWindowController ( SplitViews )
 
-- (void) updateDraggerState
-{
-	RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
-	
-	NSString *toolTipText;
-	if ([sidebarSplit isCollapsed])
-	{
-		toolTipText = NSLocalizedString(@"Drag to the right to reveal the site outline sitebar",@"tooltip");
-	}
-	else
-	{
-		toolTipText = NSLocalizedString(@"Drag to the left or right to adjust the width of the site outline sidebar.",@"tooltip");
-	}
-	[oSplitDragView setToolTip:toolTipText];
-}
-
 - (NSTimeInterval)splitView:(RBSplitView*)sender willAnimateSubview:(RBSplitSubview*)subview withDimension:(float)dimension;
 {
 	return // ([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask)
@@ -62,7 +46,6 @@ TO DO:
     if ( sender == oSidebarSplitView )
     {
 		[[self document] setDisplaySiteOutline:NO];
-		[self updateDraggerState];
     }
 	else if (sender == oDesignsSplitView)
 	{
@@ -75,7 +58,6 @@ TO DO:
     if ( sender == oSidebarSplitView )
     {
 		[[self document] setDisplaySiteOutline:YES];
-		[self updateDraggerState];
     }
 	if (sender == oDesignsSplitView)
 	{
@@ -102,10 +84,6 @@ static float sGrowCutoffSidebarDimension;
 		// Check for dragging control in lower left corner of right-hand subview
 		if (subview == webviewSplit)
 		{
-			if ([oSplitDragView mouse:[oSplitDragView convertPoint:point fromView:sender] inRect:[oSplitDragView bounds]])
-			{
-				result = 0;
-			}
 		}
 		else if (subview == sidebarSplit)
 		{
@@ -113,11 +91,6 @@ static float sGrowCutoffSidebarDimension;
 			NSRect bounds = [subview bounds];
 			bounds.origin.x += bounds.size.width - 1;
 			bounds.size.width = 1;
-			
-			if ([oSplitDragView mouse:point inRect:bounds])
-			{
-				result = 0;
-			}
 		}
 		
 		// Give a chance for a slop rect now
@@ -205,9 +178,6 @@ you start dragging to enlarge.  Not exact, depending on how fast mouse is moved.
 {
 	if (sender == oSidebarSplitView)
 	{
-		[sender addCursorRect:[oSplitDragView convertRect:[oSplitDragView bounds] toView:sender]
-					   cursor:[RBSplitView cursor:RBSVVerticalCursor]];
-
 		RBSplitSubview *sidebarSplit = [sender subviewAtPosition:0];
 		NSRect bounds = [sidebarSplit bounds];
 		bounds.origin.x += bounds.size.width - 1;
@@ -246,7 +216,6 @@ But as window shrinks, allow the sidebar to shrink (to the collapsing point) if 
 		{
 			[sender adjustSubviewsExcepting:sidebarSplit];
 		}
-		[self updateDraggerState];
 	}
 }
 

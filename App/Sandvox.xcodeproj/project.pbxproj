@@ -3416,6 +3416,7 @@
 		3C202D1707DFC06B00DE4994 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */,
 				3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */,
 				3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */,
 				3C202D1A07DFC0AA00DE4994 /* KTApplication.h */,
@@ -3712,7 +3713,6 @@
 			children = (
 				3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */,
 				3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */,
-				3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */,
 				3C9BC1E8103DF84800D2CF47 /* Info.xib */,
 				3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */,
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
