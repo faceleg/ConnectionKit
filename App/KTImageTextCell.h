@@ -10,7 +10,7 @@
 
 @interface KTImageTextCell : NSTextFieldCell
 {
-    @private
+  @private
     NSImage		*myImage;
     NSImageCell	*myImageCell;
 	float		myMaxImageSize;
@@ -20,9 +20,6 @@
 	BOOL		myIsRoot;
 	BOOL		myHasCodeInjection;
 }
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
-- (NSSize)cellSize;
 
 - (void)setImage:(NSImage *)anImage;
 - (NSImage *)image;

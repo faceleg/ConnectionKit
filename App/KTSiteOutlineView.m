@@ -162,11 +162,11 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 // via http://www.corbinstreehouse.com/blog/?p=151
 - (void)reloadData
 {
-	if ( !myIsReloading )
+	if ( !_isReloadingData )
 	{
-		myIsReloading = YES;
+		_isReloadingData = YES;
 		[super reloadData];
-		myIsReloading = NO;
+		_isReloadingData = NO;
 	}
 	else
 	{

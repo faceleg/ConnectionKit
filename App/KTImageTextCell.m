@@ -11,33 +11,9 @@
 
 #import "KT.H"
 
-void InterpolateBlue (void* info, float const* inData, float *outData);
-void InterpolateGray (void* info, float const* inData, float *outData);
-
 
 #define DEFAULT_PADDING 4   // eyeball guess, 4 is a standard Aqua spacing
 
-void InterpolateBlue (void* info, float const* inData, float *outData)
-{
-	static float color1[4] = { 0.36, 0.61, 0.92, 1.0f };
-	static float color2[4] = { 0.14, 0.36, 0.81, 1.0f };
-
-	int i;
-	float a = inData[0];
-	for(i = 0; i < 4; i++)
-		outData[i] = (1.0f-a)*color1[i] + a*color2[i];
-}
-
-void InterpolateGray (void* info, float const* inData, float *outData)
-{
-	static float color1[4] = { 0.59, 0.59, 0.59, 1.0f };
-	static float color2[4] = { 0.42, 0.42, 0.42, 1.0f };
-
-	int i;
-	float a = inData[0];
-	for(i = 0; i < 4; i++)
-		outData[i] = (1.0f-a)*color1[i] + a*color2[i];
-}
 
 void InterpolateCurveShadow (void* info, float const* inData, float *outData)
 {
@@ -61,8 +37,6 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 
 @interface KTImageTextCell ()
-- (BOOL)useGradientHighlight;
-
 + (NSImage *)codeInjectionIcon;
 - (float)codeInjectionIconWidth;
 @end
@@ -291,81 +265,12 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	}
 }
 
-// draw cell background (gradient or standard)
+// draw cell background
 - (void)drawWithFrame:(NSRect)cellFrame
                inView:(NSView *)controlView
 {
-	// in Sandvox, we only draw a gradient behind selected cells
-    if ( [self useGradientHighlight] && [self isHighlighted] )
-	{
-		/* Determine whether we should draw a blue or grey gradient. */
-		NSWindow *window = [controlView window];
-		BOOL useBlue = (([window firstResponder] == controlView) && [window isMainWindow] && [window isKeyWindow]);
-		
-		
-        [controlView lockFocus];
-
-        /* Draw the gradient background. */
-		NSEraseRect(cellFrame);
-
-		struct CGFunctionCallbacks callbacks = { 0, useBlue ? InterpolateBlue : InterpolateGray, NULL };
-
-		CGFunctionRef function = CGFunctionCreate(
-												  NULL,       // void* info,
-												  1,          // size_t domainDimension,
-												  NULL,       // float const* domain,
-												  4,          // size_t rangeDimension,
-												  NULL,       // float const* range,
-												  &callbacks  // CGFunctionCallbacks const* callbacks
-												  );
-
-		CGColorSpaceRef cspace = CGColorSpaceCreateDeviceRGB();
-
-		float srcX = NSMinX(cellFrame), srcY = NSMinY(cellFrame);	// from lower left
-		float dstX = NSMinX(cellFrame), dstY = NSMaxY(cellFrame);	// to upper left
-		CGShadingRef shading = CGShadingCreateAxial(
-													cspace,                    // CGColorSpaceRef colorspace,
-													CGPointMake(srcX, srcY),   // CGPoint start,
-													CGPointMake(dstX, dstY),   // CGPoint end,
-													function,                  // CGFunctionRef function,
-													false,                     // bool extendStart,
-													false                      // bool extendEnd
-													);
-
-		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-		CGContextDrawShading(
-							 context,
-							 shading
-							 );
-
-		CGShadingRelease(shading);
-		CGColorSpaceRelease(cspace);
-		CGFunctionRelease(function);
-
-		/* Draw a darker line along the top */
-		NSColor *topColor = useBlue
-			? [NSColor colorWithCalibratedRed:0.14 green:0.36 blue:0.82 alpha:1.0]
-			: [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
-		[topColor set];
-
-		NSPoint pt1 = NSMakePoint(0, NSMinY(cellFrame) + 0.5);
-		NSPoint pt2 = NSMakePoint(1000.0, NSMinY(cellFrame) + 0.5);		// fake the width
-        [NSBezierPath strokeLineFromPoint:pt1 toPoint:pt2];
-
-		[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers on TOP of highlight blue
-		
-        [controlView unlockFocus];
-		
-		// now, draw the rest of the cell
-		[self drawInteriorWithFrame:cellFrame inView:controlView];
-    }
-	
-	// otherwise, we just let Cocoa do its thing
-	else
-	{
-		[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers FIRST - will this work?
-		[super drawWithFrame:cellFrame inView:controlView];
-	}
+	[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers FIRST - will this work?
+	[super drawWithFrame:cellFrame inView:controlView];
 }
 
 // draw cell interior (image and text)
@@ -404,7 +309,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	
 	
 	// if drawing on top of a gradient, make the text color white
-	if ( [self useGradientHighlight] && [self isHighlighted] )
+	if ([self isHighlighted] )
 	{
 		NSMutableAttributedString *newAttrString = [[[self attributedStringValue] mutableCopy] autorelease];
 		[newAttrString addAttribute:@"NSColor" value:[NSColor whiteColor] range:NSMakeRange(0, [newAttrString length])];
@@ -499,11 +404,6 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (int)padding { return myPadding; }
 
 - (void)setPadding:(int)anInt { myPadding = anInt; }
-
-- (BOOL)useGradientHighlight
-{
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"UseGradientSiteOutlineHilite"];
-}
 
 - (BOOL)isRoot { return myIsRoot; }
 

@@ -11,7 +11,7 @@
 
 @interface KTSiteOutlineView : NSOutlineView
 {
-	BOOL myIsReloading;
+	BOOL _isReloadingData;
 }
 
 @end
