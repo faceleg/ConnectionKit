@@ -54,7 +54,6 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet RBSplitView				*oDesignsSplitView;
 	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
 	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
-	IBOutlet KTDocViewController		*oPageDetailsController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
 	//  Navigation bar above the webview

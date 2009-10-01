@@ -204,9 +204,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	
-	// Controller chain
-	[self addChildController:oPageDetailsController];
-	
 	// Design Chooser bindings
 	[oDesignsView bind:@"selectedDesign"
 			  toObject:[self siteOutlineController]
