@@ -17,6 +17,8 @@
     [super init];
     
     _webViewController = [[SVWebViewLoadController alloc] init];
+    [_webViewController setDelegate:self];
+    
     [self setViewControllers:[NSArray arrayWithObject:_webViewController]
                selectedIndex:0];
     
@@ -64,6 +66,23 @@
 {
     [[self viewControllers] makeObjectsPerformSelector:@selector(updateWebView:)
                                             withObject:sender];
+}
+
+#pragma mark Load Delegate
+
+- (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
+{
+    // Take advantag of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
+    if (page)
+    {
+        NSDictionary *bindingInfo = [self infoForBinding:@"selectedPages"];
+        if (bindingInfo)
+        {
+            id object = [bindingInfo objectForKey:NSObservedObjectKey];
+            NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
+            [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
+        }
+    }
 }
 
 @end

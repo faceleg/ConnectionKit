@@ -7,12 +7,10 @@
 //
 
 #import "KSTabViewController.h"
+#import "SVWebViewLoadController.h"
 
 
-@class SVWebViewLoadController;
-
-
-@interface SVWebContentAreaController : KSTabViewController
+@interface SVWebContentAreaController : KSTabViewController <SVWebViewLoadControllerDelegate>
 {
   @private
     SVWebViewLoadController *_webViewController;

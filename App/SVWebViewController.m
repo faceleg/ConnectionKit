@@ -21,6 +21,8 @@
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
+#import "KSSilencingConfirmSheet.h"
+
 
 @interface SVWebViewController ()
 - (void)loadPage:(KTPage *)page;
@@ -461,7 +463,19 @@
         [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
         KTPage *page = [[[self page] site] pageWithPreviewURLPath:relativePath];
-        [[self delegate] webEditorViewController:self openPage:page];
+        if (page)
+        {
+            [[self delegate] webEditorViewController:self openPage:page];
+        }
+        else if ([[self view] window])
+        {
+            [KSSilencingConfirmSheet alertWithWindow:[[self view] window]
+                                        silencingKey:@"shutUpFakeURL"
+                                               title:NSLocalizedString(@"Non-Page Link",@"title of alert")
+                                              format:NSLocalizedString
+             (@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
+             [URL path]];
+        }
     }
     
     
