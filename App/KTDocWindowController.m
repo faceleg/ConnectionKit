@@ -386,7 +386,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	// Dump the old controller
 	NSSet *windowTitleKeyPaths = [[self class] windowTitleKeyPaths];
-	[[[self siteOutlineViewController] pagesController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
+	[[self siteOutlineViewController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
 		
 	
 	// Set up the new controller
@@ -394,7 +394,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
 	
 	[controller setRootPage:[[[self document] site] root]];
-	[[controller pagesController] addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
+	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
 
 @synthesize webContentAreaController = oContentViewController;
@@ -444,10 +444,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	if (!result)
 	{
-		result = [[NSSet alloc] initWithObjects:@"selection.master.siteTitleHTML",
-												@"selection.master.author",
-												@"selection.windowTitle",
-												@"selection.titleText", nil];
+		result = [[NSSet alloc] initWithObjects:@"pagesController.selection.master.siteTitleHTML",
+												@"pagesController.selection.master.author",
+												@"pagesController.selection.windowTitle",
+												@"pagesController.selection.titleText", nil];
 	}
 	
 	return result;
