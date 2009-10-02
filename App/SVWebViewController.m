@@ -11,12 +11,15 @@
 #import "KTHTMLParser.h"
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
+#import "KTSite.h"
 #import "SVContainerTextBlock.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSURL+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 
 @interface SVWebViewController ()
@@ -86,15 +89,17 @@
 }
 
 @synthesize webEditorView = _webEditorView;
-- (void)setWebEditorView:(SVDocWebEditorView *)overlay
+- (void)setWebEditorView:(SVDocWebEditorView *)editor
 {
+    [[self webEditorView] setDelegate:nil];
     [[self webEditorView] setDataSource:nil];
     
-    [overlay retain];
+    [editor retain];
     [_webEditorView release];
-    _webEditorView = overlay;
+    _webEditorView = editor;
     
-    [overlay setDataSource:self];
+    [editor setDelegate:self];
+    [editor setDataSource:self];
 }
 
 #pragma mark Loading
@@ -374,6 +379,12 @@
     return result;
 }
 
+#pragma mark Delegate
+
+@synthesize delegate = _delegate;
+
+#pragma mark WebEditorViewDataSource
+
 - (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay itemAtPoint:(NSPoint)point;
 {
     id <SVWebEditorItem> result = [self itemAtPoint:point];
@@ -434,9 +445,51 @@
     return result;
 }
 
-- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
+
+#pragma mark SVWebEditorViewDelegate
+
+- (void)webEditorView:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
 {
-    return NSDragOperationCopy;
+    NSURL *URL = [actionInfo objectForKey:@"WebActionOriginalURLKey"];
+    
+    
+    // A link to another page within the document should open that page. Let the delegate take care of deciding how to open it
+    NSURL *relativeURL = [URL URLRelativeToURL:[[self page] URL]];
+    NSString *relativePath = [relativeURL relativePath];
+    
+    if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
+        [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
+    {
+        KTPage *page = [[[self page] site] pageWithPreviewURLPath:relativePath];
+        [[self delegate] webEditorViewController:self openPage:page];
+    }
+    
+    
+    // Open normal links in the user's browser
+    else if ([[URL scheme] isEqualToString:@"http"])
+    {
+        int navigationType = [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue];
+        switch (navigationType)
+        {
+            case WebNavigationTypeFormSubmitted:
+            case WebNavigationTypeBackForward:
+            case WebNavigationTypeReload:
+            case WebNavigationTypeFormResubmitted:
+                // 1.x allowed the webview to load these - do we want actually want to?
+                break;
+                
+            case WebNavigationTypeOther:
+                // Only allow the request if we're loading a page. BUGSID:26693 this stops meta tags refreshing the page
+                break;
+                
+            default:
+                // load with user's preferred browser:
+                [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+        }
+    }
+    
+    // We used to do [listener use] for file: URLs. Why?
+    // And again the fallback option for to -use. Why?
 }
 
 @end
