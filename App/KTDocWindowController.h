@@ -157,7 +157,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)updateWebView:(id)sender;
 
 - (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem;
-- (IBAction)reloadOutline:(id)sender;
 
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
 - (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem;

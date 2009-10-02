@@ -120,7 +120,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)dealloc
 {
 	// Get rid of the site outline controller
-	[self setSiteOutlineController:nil];
+	[self setSiteOutlineViewController:nil];
 	
 	
     // Dispose of the controller chain
@@ -687,11 +687,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self document] setDisplaySmallPageIcons:!value];
 }
 
-- (IBAction)reloadOutline:(id)sender
-{
-	[[[[self siteOutlineViewController] pagesController] siteOutline] reloadData];
-}
-
 #pragma mark Page Actions
 
 /*! adds a new page to site outline, obtaining its class from representedObject */
@@ -898,7 +893,7 @@ from representedObject */
         
         
         // Expand the item in the Site Outline
-        [[[[self siteOutlineViewController] pagesController] siteOutline] expandItem:indexPage];
+        [[[self siteOutlineViewController] outlineView] expandItem:indexPage];
     }
     else
     {
@@ -1064,7 +1059,7 @@ from representedObject */
 	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:collection]];
 	
 	// expand the new collection
-	[[[[self siteOutlineViewController] pagesController] siteOutline] expandItem:collection];
+	[[[self siteOutlineViewController] outlineView] expandItem:collection];
 	
 	// tidy up the undo stack with a relevant name
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
@@ -1089,7 +1084,7 @@ from representedObject */
 	
 	// here's the naive approach
 	NSArray *selectedPages = [[[[self siteOutlineViewController] pagesController] selectedObjects] copy];
-	id itemAbove = [[[[self siteOutlineViewController] pagesController] siteOutline] itemAboveFirstSelectedRow];
+	id itemAbove = [[[self siteOutlineViewController] outlineView] itemAboveFirstSelectedRow];
 	
 	KTPage *selectedParent = [[[[self siteOutlineViewController] pagesController] selectedPage] parent];
 	if (nil == selectedParent)
@@ -1228,7 +1223,7 @@ from representedObject */
 	// "Delete Page(s)" deletePage:
 	else if ( itemAction == @selector(deletePages:) )
 	{
-		if (![[[self window] firstResponder] isEqual:[[[self siteOutlineViewController] pagesController] siteOutline]])
+		if (![[[self window] firstResponder] isEqual:[[self siteOutlineViewController] outlineView]])
 		{
 			return NO;
 		}

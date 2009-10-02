@@ -418,7 +418,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 	if ( document != [self associatedDocument] )
 	{
 		[self setAssociatedDocument:document];
-		[self setupViewStackFor:[[[document mainWindowController] siteOutlineController] selectedPage] selectLevel:NO];
+		[self setupViewStackFor:[[[[document mainWindowController] siteOutlineViewController] pagesController]selectedPage] selectLevel:NO];
 	}
 }
 
@@ -1556,7 +1556,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
  */
 - (KTDocSiteOutlineController *)siteOutlineController
 {
-	return [[[self associatedDocument] mainWindowController] siteOutlineController];
+	return [[[[self associatedDocument] mainWindowController] siteOutlineViewController] pagesController];
 }
 
 @end

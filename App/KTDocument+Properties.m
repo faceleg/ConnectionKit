@@ -190,7 +190,7 @@
 - (void)copyDocumentDisplayPropertiesToModel
 {
 	// Selected pages
-	NSIndexSet *outlineSelectedRowIndexSet = [[[[self mainWindowController] siteOutlineController] siteOutline] selectedRowIndexes];
+	NSIndexSet *outlineSelectedRowIndexSet = [[[[self mainWindowController] siteOutlineViewController] outlineView] selectedRowIndexes];
 	[[self site] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
 	
 	
