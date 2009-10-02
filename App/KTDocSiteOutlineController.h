@@ -9,23 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTPage, KTDocument, KTDocWindowController, KTSiteOutlineDataSource;
+@class KTPage, KTDocument, KTDocWindowController;
 
 
 @interface KTDocSiteOutlineController : NSArrayController
 {
-	IBOutlet NSOutlineView			*siteOutline;
-	
-@private
-	
-	KTDocWindowController	*myWindowController;
-	KTSiteOutlineDataSource	*mySiteOutlineDataSource;
+  @private
 }
-
-- (NSOutlineView *)siteOutline;
-
-- (KTDocWindowController *)windowController;
-- (void)setWindowController:(KTDocWindowController *)controller;
 
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 

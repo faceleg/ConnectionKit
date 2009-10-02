@@ -865,7 +865,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			
 			if (nil == sourceObject)	// no appropriate pagelet selected, try page
 			{
-				sourceObject = [[[self mainWindowController] siteOutlineController] selectedPage];
+				sourceObject = [[[[self mainWindowController] siteOutlineViewController] pagesController] selectedPage];
 				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
 				{
 					sourceObject = nil;		// no, don't try to edit a non-rich text

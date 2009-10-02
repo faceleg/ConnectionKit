@@ -76,25 +76,25 @@
 	KTPage *contextRoot = [aManagedObjectContext root];
 	
 	// figure out our selection
-	if (![[self siteOutlineController] selectedPage])
+	if (![[[self siteOutlineViewController] pagesController] selectedPage])
 	{
 		// if nothing selected, treat as if root we're selected
 		parentCollection = contextRoot;
 	}
-	else if ( [[[self siteOutlineController] selectedPage] isEqual:contextRoot]  )
+	else if ( [[[[self siteOutlineViewController] pagesController] selectedPage] isEqual:contextRoot]  )
 	{
 		// if root is selected, we're adding to root
-		parentCollection = [[self siteOutlineController] selectedPage];
+		parentCollection = [[[self siteOutlineViewController] pagesController] selectedPage];
 	}
-	else if ( [[[self siteOutlineController] selectedPage] isCollection] )
+	else if ( [[[[self siteOutlineViewController] pagesController] selectedPage] isCollection] )
 	{
 		// if the selected page has an index, it must be a collection, so we're adding to it
-		parentCollection = [[self siteOutlineController] selectedPage];
+		parentCollection = [[[self siteOutlineViewController] pagesController] selectedPage];
 	}
 	else
 	{
 		// selection won't do it, so we add to selection's parent
-		parentCollection = [[[self siteOutlineController] selectedPage] parent];
+		parentCollection = [[[[self siteOutlineViewController] pagesController] selectedPage] parent];
 	}
 	
 	if ( nil == parentCollection )

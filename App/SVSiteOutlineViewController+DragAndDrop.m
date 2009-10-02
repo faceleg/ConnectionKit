@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAppDelegate.h"
-#import "KTSiteOutlineDataSource.h"
+#import "SVSiteOutlineViewController.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTDocWindowController.h"
@@ -39,7 +39,7 @@
 
 
 
-@interface KTSiteOutlineDataSource (DragAndDropPrivate)
+@interface SVSiteOutlineViewController (DragAndDropPrivate)
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
@@ -50,7 +50,7 @@
 @end
 
 
-@implementation KTSiteOutlineDataSource (DragAndDrop)
+@implementation SVSiteOutlineViewController (DragAndDrop)
 
 #pragma mark -
 #pragma mark Drag
@@ -85,10 +85,10 @@
 	id item;
 	while ( item = [e nextObject] )
 	{
-		[allRows addObject:[NSString stringWithFormat:@"%i", [[self siteOutline] rowForItem:item]]];
+		[allRows addObject:[NSString stringWithFormat:@"%i", [[self outlineView] rowForItem:item]]];
 		if ( ![self items:items containsParentOfItem:item] )
 		{
-			[parentRows addObject:[NSString stringWithFormat:@"%i", [[self siteOutline] rowForItem:item]]];
+			[parentRows addObject:[NSString stringWithFormat:@"%i", [[self outlineView] rowForItem:item]]];
 		}
 	}
 	
@@ -135,7 +135,7 @@
 	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 	NSArray *allRows = [pboardData objectForKey:@"allRows"];
 	
-	id root = [[[self document] site] root];
+	id root = [self rootPage];
 	id proposedParent;
 	if ( nil == item )
 	{
@@ -151,9 +151,9 @@
 	BOOL cameFromProgram = (nil != [info draggingSource]);
 	if (cameFromProgram)
 	{
-		if  ( [[self siteOutline] isEqual:[info draggingSource]] )
+		if  ( [[self outlineView] isEqual:[info draggingSource]] )
 		{
-			KTPage *firstDraggedItem = [[self siteOutline] itemAtRow:[[allRows objectAtIndex:0] intValue]];
+			KTPage *firstDraggedItem = [[self outlineView] itemAtRow:[[allRows objectAtIndex:0] intValue]];
 			// this should be a "local" drag
 			if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]] )
 			{
@@ -199,8 +199,8 @@
 					return NSDragOperationNone;
 				}
 				else if ( [proposedParent isEqual:[firstDraggedItem parent]]
-						 && ((![proposedParent isRoot] && ((unsigned)anIndex == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))
-							 || ([proposedParent isRoot] && ((unsigned)(anIndex-1) == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))) )
+						 && ((proposedParent != [self rootPage] && ((unsigned)anIndex == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))
+							 || (proposedParent == [self rootPage] && ((unsigned)(anIndex-1) == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))) )
 				{
 					// the text of the above conditional is "if the parent is the same and
 					// the index is the same or, if the parent is the same and also root and
@@ -292,7 +292,7 @@
 			{
 				// if we've made it this far through the rules, we need to look at KTCollectionSortType
 				int dropIndex = anIndex;
-				if ( [proposedParent isRoot] )
+				if (proposedParent == [self rootPage])
 				{
 					--dropIndex;
 				}
@@ -451,7 +451,7 @@
 				return NSDragOperationNone;
 			}
 		}
-		else if ( [proposedParent isRoot] && (0 == anIndex) )
+		else if (proposedParent == [self rootPage] && (0 == anIndex) )
 		{
 			// we don't allow dropping above "home"
 			//LOG((@"disallowing drop above home"));
@@ -462,7 +462,7 @@
 			//LOG((@"wants to create child of %@ at index %i", [item fileName], anIndex));
 			// if we've made it this far through the rules, we need to look at KTCollectionSortType
 			int dropIndex = anIndex;
-			if ( [proposedParent isRoot] )
+			if (proposedParent == [self rootPage])
 			{
 				--dropIndex;
 			}
@@ -561,13 +561,13 @@
 				}
 			}
 		}
-		else if ( [proposedParent isEqual:[[self siteOutline] itemAtRow:([[self siteOutline] numberOfRows]-1)]] )
+		else if ( [proposedParent isEqual:[[self outlineView] itemAtRow:([[self outlineView] numberOfRows]-1)]] )
 		{
 			// if we're dropping below the last row of the outline, accept the drag
 			// but reposition the drop to be at the root level
 			// NB: we add 1 to account for the row taken up by "home"
-			[[self siteOutline] setDropItem:nil 
-					   dropChildIndex:([[[[(KTDocument *)[self document] site] root] children] count]+1)];
+			[[self outlineView] setDropItem:nil 
+					   dropChildIndex:([[[self rootPage] children] count]+1)];
 			return NSDragOperationCopy;
 		}
 		else
@@ -595,13 +595,13 @@
 	
 	// The new page must be a child of something
 	KTPage *proposedParent = item;
-	if (!proposedParent) proposedParent = [[[self document] site] root];
+	if (!proposedParent) proposedParent = [self rootPage];
 	
 	BOOL cameFromProgram = nil != [info draggingSource];
 	
 	if (cameFromProgram)
 	{
-		if  ([[self siteOutline] isEqual:[info draggingSource]])
+		if  ([[self outlineView] isEqual:[info draggingSource]])
 		{
 			// drag is internal to document
 			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
@@ -641,7 +641,7 @@
 	id dropItem = item;
 	if ( nil == dropItem )
 	{
-		dropItem = [[[self document] site] root];
+		dropItem = [self rootPage];
 		dropIndex = anIndex-1;
 	}
 	//LOG((@"accepting drop from external source on %@ at index %i", [dropItem fileName], dropIndex));
@@ -658,7 +658,7 @@
 	
 	// remember all selected rows
 	NSArray *allRows = [pboardData objectForKey:@"allRows"];
-	NSArray *selectedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
+	NSArray *selectedItems = [[self outlineView] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
 	
 	
 	// we use parentRows here as moving the parent rows should move all the children as well
@@ -666,7 +666,7 @@
 	
 	// Adjust dropRow to account for "home"
 	int dropRow;
-	if ([page isRoot]) {
+	if (page == [self rootPage]) {
 		dropRow = anIndex-1;
 	}
 	else {
@@ -674,7 +674,7 @@
 	}
 	
 	
-	NSArray *draggedItems = [[self siteOutline] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
+	NSArray *draggedItems = [[self outlineView] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
 	
 	
 	// The behavior is different depending on the drag destination.
@@ -713,8 +713,8 @@
 	}
 	
 	// select what was selected during the drag
-	NSIndexSet *selectedRows = [[self siteOutline] rowsForItems:selectedItems];
-	[[self siteOutline] selectRowIndexes:selectedRows byExtendingSelection:NO];
+	NSIndexSet *selectedRows = [[self outlineView] rowsForItems:selectedItems];
+	[[self outlineView] selectRowIndexes:selectedRows byExtendingSelection:NO];
 	
 	// Record the Undo operation
     // For reasons I cannot fathom, on Tiger this upsets the undo manager if you are dragging a freshly created page. Turning it off keeps things reasonably happy, but if you hit undo the page is deleted immediately, and hitting undo again raises an exception. It's definitely not ideal, but the best compromise I can find for now. (case 41296)
@@ -758,7 +758,7 @@
         [progressPanel setInformativeText:nil];
         [progressPanel setMinValue:1 maxValue:[archivedPages count] doubleValue:1];
         
-        [progressPanel beginSheetModalForWindow:[[self windowController] window]];
+        [progressPanel beginSheetModalForWindow:[[self view] window]];
 	}
 	
 	
@@ -793,7 +793,7 @@
 		OBASSERTSTRING(page, @"unable to create Page");
 	}
 	
-	[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag",
+	[[[[self rootPage] managedObjectContext] undoManager] setActionName:NSLocalizedString(@"Drag",
 																   @"action name for dragging source objects withing the outline")];
 	
 	[progressPanel endSheet];
@@ -801,7 +801,7 @@
 	
 	
 	// Select the dropped pages
-	[[self siteOutlineController] setSelectedObjects:droppedPages];
+	[[self pagesController] setSelectedObjects:droppedPages];
 	
 	
 	return result;
@@ -810,7 +810,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (KTDocWindowController *)windowController { return [[self siteOutlineController] windowController]; }
+- (KTDocWindowController *)windowController { return [[self pagesController] windowController]; }
 
 - (NSArray *)itemsForRows:(NSArray *)anArray
 {
@@ -820,7 +820,7 @@
 	id row;
 	while ( row = [e nextObject] )
 	{
-		[items addObject:[[self siteOutline] itemAtRow:[row intValue]]];
+		[items addObject:[[self outlineView] itemAtRow:[row intValue]]];
 	}
 	
 	return [NSArray arrayWithArray:items];

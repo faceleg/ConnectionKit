@@ -43,7 +43,7 @@
           contextInfo:nil];
     
     [self bind:@"selectedDesign"
-      toObject:[[[self document] mainWindowController] siteOutlineController]
+      toObject:[[[[self document] mainWindowController] siteOutlineViewController] pagesController]
    withKeyPath:@"selection.master.design"
        options:nil];
     

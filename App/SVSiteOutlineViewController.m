@@ -6,11 +6,12 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTSiteOutlineDataSource.h"
+#import "SVSiteOutlineViewController.h"
 #import "KTDocSiteOutlineController.h"
 
 #import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
@@ -39,7 +40,7 @@
 NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
-@interface KTSiteOutlineDataSource ()
+@interface SVSiteOutlineViewController ()
 + (NSSet *)mostSiteOutlineRefreshingKeyPaths;
 
 - (void)observeValueForSortedChildrenOfPage:(KTPage *)page change:(NSDictionary *)change context:(void *)context;
@@ -54,7 +55,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 
 
-@implementation KTSiteOutlineDataSource
+@implementation SVSiteOutlineViewController
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {
@@ -68,24 +69,20 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     }
 }
 
-- (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller
+- (id)initWithCoder:(NSCoder *)coder
 {
-	[super init];
-	
-	
-	mySiteOutlineController = controller;	// Weak ref
-	
-	myPages = [[NSMutableSet alloc] initWithCapacity:200];
-	
-	// Caches
-	myCachedPluginIcons = [[NSMutableDictionary alloc] init];
-	myCachedCustomPageIcons = [[NSMutableDictionary alloc] init];
-	
-	// Icon queue
-	myCustomIconGenerationQueue = [[NSMutableArray alloc] init];
-	
-	
-	
+	if (self = [super initWithCoder:coder])
+    {
+        _pages = [[NSMutableSet alloc] initWithCapacity:200];
+        
+        // Caches
+        myCachedPluginIcons = [[NSMutableDictionary alloc] init];
+        myCachedCustomPageIcons = [[NSMutableDictionary alloc] init];
+        
+        // Icon queue
+        myCustomIconGenerationQueue = [[NSMutableArray alloc] init];
+    }
+        
 	return self;
 }
 
@@ -98,24 +95,85 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Dump the pages list
 	[self resetPageObservation];       // This will also remove home page observation
-    OBASSERT([myPages count] == 0);
-	[myPages release];
+    OBASSERT([_pages count] == 0);
+	[_pages release];
 	
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark Accessors
+#pragma mark View
 
-- (KTDocSiteOutlineController *)siteOutlineController { return mySiteOutlineController; }		// Weak ref
+- (NSOutlineView *)outlineView
+{
+    [self view];    // make sure it's loaded
+    return _outlineView;
+}
 
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller { mySiteOutlineController = controller; }
+- (void)setOutlineView:(NSOutlineView *)outlineView
+{
+	// Dump the old outline
+	[_outlineView setDataSource:nil];  // don't call [self outlineView] as that may try to load the nib when we don't want it to
+	[_outlineView setDelegate:nil];
+	[self resetPageObservation];
+	
+	
+	// Set up the appearance of the new view
+	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
+	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
+	[imageTextCell setEditable:YES];
+	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
+	[tableColumn setDataCell:imageTextCell];
+	
+	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
+	
+	
+	// Drag 'n' drop
+	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
+                                 [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
+    
+	[dragTypes addObject:kKTOutlineDraggingPboardType];
+	[dragTypes addObject:kKTLocalLinkPboardType];
+	[outlineView registerForDraggedTypes:dragTypes];
+	[outlineView setVerticalMotionCanBeginDrag:YES];
+	[outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+    [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
+	
+	
+	// Retain the new view
+	[outlineView retain];
+	[_outlineView release], _outlineView = outlineView;
+	
+	
+	// Finally, hook up outline delegate & data source
+	if (outlineView)
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:[self pagesController]
+												 selector:@selector(outlineViewSelectionDidChange:)
+													 name:NSOutlineViewSelectionDidChangeNotification
+												   object:outlineView];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:[self pagesController]
+												 selector:@selector(outlineViewItemWillCollapse:)
+													 name:NSOutlineViewItemWillCollapseNotification
+												   object:outlineView];
+		
+		[outlineView setDelegate:self];		// -setDelegate: MUST come first to receive all notifications
+		[outlineView setDataSource:self];
+		
+        // Ensure we have a selection (case ID unknown), and that a -selectionDidChange: message got through (Snow Leopard problem)
+		//[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+    }
+}
 
-- (NSOutlineView *)siteOutline { return [[self siteOutlineController] siteOutline]; }
+#pragma mark Other Accessors
 
-- (KTDocument *)document { return [[[self siteOutlineController] windowController] document]; }
+@synthesize pagesController = _pagesController;
+- (void)setPagesController:(KTDocSiteOutlineController *)controller
+{
+    [controller retain];
+    [_pagesController release]; _pagesController = controller;
+}
 
-#pragma mark -
 #pragma mark Pages List
 
 /*	NSOutlineView does not retain its objects. Neither does NSManagedObjectContext (by default anyway!)
@@ -126,26 +184,25 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  *	Wolf wrote a nice blogpost on this sort of business - http://rentzsch.com/cocoa/foamingAtTheMouth
  */
 
-- (NSSet *)pages { return [[myPages copy] autorelease]; }
+- (NSSet *)pages { return [[_pages copy] autorelease]; }
 
-- (KTPage *)homePage { return myHomePage; }
-
-- (void)setHomePage:(KTPage *)page
+@synthesize rootPage = _rootPage;
+- (void)setRootPage:(KTPage *)page
 {
-    [[self homePage] removeObserver:self forKeyPath:@"master.favicon"];
-    [[self homePage] removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
+    [[self rootPage] removeObserver:self forKeyPath:@"master.favicon"];
+    [[self rootPage] removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
     
     [page retain];
-    [myHomePage release];
-    myHomePage = page;
+    [_rootPage release];
+    _rootPage = page;
     
-    [[self homePage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
-    [[self homePage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
+    [[self rootPage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
+    [[self rootPage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
 }
 
 - (void)addPagesObject:(KTPage *)page
 {
-	if (![myPages containsObject:page] )
+	if (![_pages containsObject:page] )
 	{
 		// KVO
         NSSet *pages = [NSSet setWithObject:page];
@@ -156,7 +213,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         
         //	Begin observing the page
 		[page addObserver:self
-				forKeyPath:[[self siteOutlineController] childrenKeyPath]
+				forKeyPath:[[self pagesController] childrenKeyPath]
 				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
 				   context:nil];
 		
@@ -165,15 +222,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				   options:(NSKeyValueObservingOptionNew)
 				   context:nil];
 		
-		if ([page isRoot])	// Observe home page's favicon & master code injection
-		{
-			[self setHomePage:page];
-		}
 		
-        
 		// Add to the set
         OBASSERT(page);
-		[myPages addObject:page];
+		[_pages addObject:page];
 		
         
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
@@ -195,7 +247,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)removePagesObject:(KTPage *)aPage
 {
-	if ([myPages containsObject:aPage])
+	if ([_pages containsObject:aPage])
 	{
 		// KVO
         [self willChangeValueForKey:@"pages"
@@ -203,14 +255,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                        usingObjects:[NSSet setWithObject:aPage]];
         
         // Remove observers
-		[aPage removeObserver:self forKeyPath:[[self siteOutlineController] childrenKeyPath]];
+		[aPage removeObserver:self forKeyPath:[[self pagesController] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		// Uncache custom icon to free memory
 		[myCachedCustomPageIcons removeObjectForKey:aPage];
 		
 		// Remove from the set
-		[myPages removeObject:aPage];
+		[_pages removeObject:aPage];
         
         // KVO
         [self didChangeValueForKey:@"pages"
@@ -243,9 +295,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     // Cancel any pending icons
     [myCustomIconGenerationQueue removeAllObjects];
     
-    // Home page
-	[self setHomePage:nil];
-    
     // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc
     NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
     KTPage *aPage;
@@ -269,7 +318,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Having prescreened the parameters, pass them onto the right support methods for processing
 	OBASSERT([object isKindOfClass:[KTPage class]]);
-	if ([keyPath isEqualToString:[[self siteOutlineController] childrenKeyPath]])
+	if ([keyPath isEqualToString:[[self pagesController] childrenKeyPath]])
 	{
 		[self observeValueForSortedChildrenOfPage:object change:change context:context];
 	}
@@ -301,7 +350,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	
 	// Do the reload
-	NSArray *oldSelection = [[self siteOutline] selectedItems];
+	NSArray *oldSelection = [[self outlineView] selectedItems];
 	[self reloadPage:page reloadChildren:YES];
 	
 	
@@ -325,7 +374,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         [correctedSelection addObject:page];
 	}
 	
-	[[self siteOutline] selectItems:[correctedSelection allObjects] forceDidChangeNotification:YES];
+	[[self outlineView] selectItems:[correctedSelection allObjects] forceDidChangeNotification:YES];
 }
 
 /*	There was a change that doesn't affect the tree itself, so we just need to mark the outline for display.
@@ -350,7 +399,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	BOOL childrenNeedDisplay = ([keyPath isEqualToString:@"isDraft"]);
 	
 	
-	[[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
+	[[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
 }
 
 #pragma mark -
@@ -358,7 +407,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)reloadSiteOutline
 {
-	[[self siteOutline] reloadData];
+	[[self outlineView] reloadData];
 }
 
 /*	!!IMPORTANT!!
@@ -366,11 +415,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  */
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
 {
-	NSOutlineView *siteOutline = [self siteOutline];
+	NSOutlineView *siteOutline = [self outlineView];
 	
 	
 	// Do the approrpriate refresh. In the case of the home page, we must reload everything.
-	if ([anItem isRoot] && reloadChildren)
+	if (anItem == [self rootPage] && reloadChildren)
 	{
 		[siteOutline reloadData];
 	}
@@ -398,13 +447,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	OBPRECONDITION(!item || [item isKindOfClass:[KTPage class]]);
 	int result = 0;
 	
-	if (![item isRoot])
+	if (item != [self rootPage])
 	{
 		// Due to the slightly odd layout of the site outline, must figure the right page
-		KTPage *page = (item) ? item : [[[self document] site] root];
+		KTPage *page = (item) ? item : [self rootPage];
 		OBASSERT(page);
 		
-		NSString *childrenKeyPath = [[self siteOutlineController] childrenKeyPath];	// Don't use -children as a shortcut as
+		NSString *childrenKeyPath = [[self pagesController] childrenKeyPath];	// Don't use -children as a shortcut as
 		OBASSERT(childrenKeyPath);													// it may be our of sync during an undo
 		result = [[page valueForKey:childrenKeyPath] count];						//  op.
 		
@@ -419,7 +468,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	BOOL result = NO;
 	
-	if ( item == [[[self document] site] root] )
+	if ( item == [self rootPage] )
 	{
 		result = NO;
 	}
@@ -443,13 +492,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	{
 		if (anIndex == 0)
 		{
-			child = [[[self document] site] root];
+			child = [self rootPage];
 		}
 		else
 		{
 			// subtract 1 at top level for "My Site"
 			unsigned int childIndex = anIndex-1;
-			NSArray *children = [[[[self document] site] root] sortedChildren];
+			NSArray *children = [[self rootPage] sortedChildren];
 			if ( [children count] >= childIndex+1 )
 			{
 				child = [children objectAtIndex:childIndex];
@@ -482,7 +531,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if ([[tableColumn identifier] isEqualToString:@"displayName"] && [item isKindOfClass:[KTPage class]])
 	{
 		KTPage *page = item;
-		if ([page isRoot])
+		if (page == [self rootPage])
 		{
 			result = [[page master] siteTitleText];
 		}
@@ -493,7 +542,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	else
 	{
-		id result = [NSString stringWithFormat:@"%i:%i", [[self siteOutline] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
+		id result = [NSString stringWithFormat:@"%i:%i", [[self outlineView] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
 		return result;
 	}
 	
@@ -548,13 +597,13 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{
 		// Size
-		NSControlSize controlSize = ([[self document] displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
+		NSControlSize controlSize = ([self displaySmallPageIcons]) ? NSSmallControlSize : NSRegularControlSize;
 		[cell setControlSize:controlSize];
 	
 		// Icon
 		NSImage *pageIcon = [self iconForPage:item];
 		[cell setImage:pageIcon];
-		[cell setMaxImageSize:([[self document] displaySmallPageIcons] ? 16.0 : 32.0)];
+		[cell setMaxImageSize:([self displaySmallPageIcons] ? 16.0 : 32.0)];
 		
 		// Staleness    /// 1.5 is now ignoring this key and using digest-based staleness
 		//BOOL isPageStale = [item boolForKey:@"isStale"];
@@ -566,19 +615,19 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		// Code Injection
 		[cell setHasCodeInjection:[[page codeInjection] hasCodeInjection]];
-		if ([page isRoot] && ![cell hasCodeInjection])
+		if (page == [self rootPage] && ![cell hasCodeInjection])
 		{
 			[cell setHasCodeInjection:[[[page master] codeInjection] hasCodeInjection]];
 		}
 		
 		// Home page is drawn slightly differently
-		[cell setRoot:[item isRoot]];
+		[cell setRoot:(item == [self rootPage])];
 	}
 	
 	
 	
 	//if ( (item == [context root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
-	if ( (item == [[[self document] site] root]) && ![[[self siteOutline] selectedItems] containsObject:item] )
+	if ( (item == [self rootPage]) && ![[[self outlineView] selectedItems] containsObject:item] )
 	{
 		// draw a line to "separate" the root from its children
 		float width = [tableColumn width]*0.95;
@@ -586,7 +635,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		
 		float height = 1; // line thickness
 		float lineY;
-		if ([[self document] displaySmallPageIcons])
+		if ([self displaySmallPageIcons])
 		{
 			lineY = SMALL_ICON_CELL_HEIGHT+SMALL_ICON_ROOT_SPACING-3.0;
 		}
@@ -611,7 +660,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// we'll build the tooltip based on defaults
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	if ( [ov isEqual:[self siteOutline]] && [defaults boolForKey:@"ShowOutlineTooltips"] )
+	if ( [ov isEqual:[self outlineView]] && [defaults boolForKey:@"ShowOutlineTooltips"] )
 	{
 		if ( [cell isKindOfClass:[NSTextFieldCell class]] ) 
 		{
@@ -765,7 +814,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     return result;
 }
 
-#pragma mark -
 #pragma mark Delegate (Editing)
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
@@ -773,7 +821,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	return NO;
 }
 
-#pragma mark -
 #pragma mark Delegate (Selection)
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
@@ -789,14 +836,52 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
-#pragma mark -
+/*	Called ONLY when the selected row INDEXES changes. We must do other management to detect when the selected page
+ *	changes, but the selected row(s) remain the same.
+ *
+ *	Initially I thought -selectionIsChanging: would do the trick, but it's not invoked by keyboard navigation.
+ */
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+	NSArray *selectedPages = [[self outlineView] selectedItems];
+	[[self pagesController] setSelectedObjects:selectedPages];
+	
+	// let interested parties know that selection changed
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
+														object:[selectedPages firstObjectKS]];
+}
+
+/*	If the current selection is about to be collapsed away, select the parent.
+ */
+- (void)outlineViewItemWillCollapse:(NSNotification *)notification
+{
+	KTPage *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
+	BOOL shouldSelectCollapsingItem = YES;
+	NSEnumerator *selectionEnumerator = [[[self pagesController] selectedObjects] objectEnumerator];
+	KTPage *aPage;
+	
+	while (aPage = [selectionEnumerator nextObject])
+	{
+		if (![aPage isDescendantOfPage:collapsingItem])
+		{
+			shouldSelectCollapsingItem = NO;
+			break;
+		}
+	}
+	
+	if (shouldSelectCollapsingItem)
+	{
+		[[self outlineView] selectItem:collapsingItem];
+	}
+}
+
 #pragma mark Delegate (Row Height)
 
 - (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	if ([item isRoot]) 
+	if (item == [self rootPage]) 
 	{
-		if ( [[self document] displaySmallPageIcons] )
+		if ( [self displaySmallPageIcons] )
 		{
 			return SMALL_ICON_CELL_HEIGHT + SMALL_ICON_ROOT_SPACING;
 		}
@@ -807,7 +892,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	else
 	{
-		if ( [[self document] displaySmallPageIcons] )
+		if ( [self displaySmallPageIcons] )
 		{
 			return SMALL_ICON_CELL_HEIGHT;
 		}
@@ -818,13 +903,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
-#pragma mark -
 #pragma mark Notification Handlers
 
 - (void)outlineViewSelectionIsChanging:(NSNotification *)notification
 {
 	// Close the Raw HTML editing window, if open
-	NSWindowController *HTMLInspectorController = [[self document] HTMLInspectorControllerWithoutLoading];
+	NSWindowController *HTMLInspectorController = [[[[[self view] window] windowController] document] HTMLInspectorControllerWithoutLoading];
 	if ( nil != HTMLInspectorController )
 	{
 		NSWindow *HTMLInspectorWindow = [HTMLInspectorController window];
@@ -835,9 +919,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
-- (void)pageIconSizeDidChange:(NSNotification *)notification
+#pragma mark Options
+
+@synthesize displaySmallPageIcons = _useSmallIconSize;
+- (void)setDisplaySmallPageIcons:(BOOL)smallIcons
 {
-	[self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
+	_useSmallIconSize = smallIcons;
+    
+    [self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
 	
 	// Setup is complete, reload outline
 	[self reloadSiteOutline];

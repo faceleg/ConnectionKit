@@ -36,6 +36,7 @@
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
+#import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
 #import "KTHTMLTextBlock.h"
 
@@ -206,8 +207,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Design Chooser bindings
 	[oDesignsView bind:@"selectedDesign"
-			  toObject:[self siteOutlineController]
-		   withKeyPath:@"selection.master.design"
+			  toObject:[self siteOutlineViewController]
+		   withKeyPath:@"pagesController.selection.master.design"
 			   options:nil];
 	
 	
@@ -223,8 +224,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     // Tie the web content area to the source list's selection
     [[self webContentAreaController] bind:@"selectedPages"
-                                 toObject:[self siteOutlineController]
-                              withKeyPath:@"selectedObjects"
+                                 toObject:[self siteOutlineViewController]
+                              withKeyPath:@"pagesController.selectedObjects"
                                   options:nil];
 	
 	// Link Popup in address bar
@@ -380,25 +381,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark individual controllers
 
-- (KTDocSiteOutlineController *)siteOutlineController { return siteOutlineController; }
-
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
+@synthesize siteOutlineViewController = _siteOutlineViewController;
+- (void)setSiteOutlineViewController:(SVSiteOutlineViewController *)controller
 {
 	// Dump the old controller
 	NSSet *windowTitleKeyPaths = [[self class] windowTitleKeyPaths];
-	[[self siteOutlineController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
-	
-	[[self siteOutlineController] setWindowController:nil];
-	
+	[[[self siteOutlineViewController] pagesController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
+		
 	
 	// Set up the new controller
 	[controller retain];
-	[siteOutlineController release];
-	siteOutlineController = controller;
+	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
 	
-	[controller setContent:[[[self document] site] root]];
-	[controller setWindowController:self];
-	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
+	[controller setRootPage:[[[self document] site] root]];
+	[[controller pagesController] addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
 
 @synthesize webContentAreaController = oContentViewController;
@@ -408,9 +404,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-	if ([[self siteOutlineController] selectedPage])
+	if ([[[self siteOutlineViewController] pagesController] selectedPage])
 	{
-		KTPage *selPage = [[self siteOutlineController] selectedPage];
+		KTPage *selPage = [[[self siteOutlineViewController] pagesController] selectedPage];
 		NSString *titleString = [selPage windowTitle];
 		if (nil == titleString || [titleString isEqualToString:@""])
 		{
@@ -566,7 +562,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)visitPublishedPage:(id)sender
 {
-	NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
+	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
 	if (pageURL)
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
@@ -693,7 +689,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)reloadOutline:(id)sender
 {
-	[[[self siteOutlineController] siteOutline] reloadData];
+	[[[[self siteOutlineViewController] pagesController] siteOutline] reloadData];
 }
 
 #pragma mark Page Actions
@@ -727,7 +723,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
             [self insertPage:page parent:nearestParent];
             
             // Make the Site Outline display the new item nicely
-			[[self siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:page]];
+			[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSArray arrayWithObject:page]];
 		}
 		else
 		{
@@ -755,7 +751,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	if (pageletPlugin && [pageletPlugin isKindOfClass:[KTElementPlugin class]])
     {
-		KTPage *targetPage = [[self siteOutlineController] selectedPage];
+		KTPage *targetPage = [[[self siteOutlineViewController] pagesController] selectedPage];
 		if (nil == targetPage)
 		{
 			// if nothing is selected, treat as if the root folder were selected
@@ -902,7 +898,7 @@ from representedObject */
         
         
         // Expand the item in the Site Outline
-        [[[self siteOutlineController] siteOutline] expandItem:indexPage];
+        [[[[self siteOutlineViewController] pagesController] siteOutline] expandItem:indexPage];
     }
     else
     {
@@ -917,7 +913,7 @@ from representedObject */
 	// add component to parent
 	[aCollection addPage:aPage];
 	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:aPage]];
+	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:aPage]];
 	
 	// label undo and perserve the current selection
     if ( [aPage isCollection] )
@@ -972,7 +968,7 @@ from representedObject */
 /*! group the selection in a new summary */
 - (void)group:(id)sender
 {
-	NSArray *selectedPages = [[[[self siteOutlineController] selectedObjects] retain] autorelease];	// Hang onto it for length of method
+	NSArray *selectedPages = [[[[[self siteOutlineViewController] pagesController] selectedObjects] retain] autorelease];	// Hang onto it for length of method
 	
 	// This shouldn't happen
 	if ([selectedPages count] == 0)
@@ -1065,10 +1061,10 @@ from representedObject */
 		[collection addPage:page];
 	}            
 	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:collection]];
+	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:collection]];
 	
 	// expand the new collection
-	[[[self siteOutlineController] siteOutline] expandItem:collection];
+	[[[[self siteOutlineViewController] pagesController] siteOutline] expandItem:collection];
 	
 	// tidy up the undo stack with a relevant name
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
@@ -1092,10 +1088,10 @@ from representedObject */
 	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
 	
 	// here's the naive approach
-	NSArray *selectedPages = [[[self siteOutlineController] selectedObjects] copy];
-	id itemAbove = [[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow];
+	NSArray *selectedPages = [[[[self siteOutlineViewController] pagesController] selectedObjects] copy];
+	id itemAbove = [[[[self siteOutlineViewController] pagesController] siteOutline] itemAboveFirstSelectedRow];
 	
-	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
+	KTPage *selectedParent = [[[[self siteOutlineViewController] pagesController] selectedPage] parent];
 	if (nil == selectedParent)
 	{
 		selectedParent = [[(KTDocument *)[self document] site] root];
@@ -1126,7 +1122,7 @@ from representedObject */
 		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Pages", @"action name for removing selected pages")];
 	}
 	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:itemAbove]];
+	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:itemAbove]];
 	
 	[itemAbove release];
 	[selectedPages release];
@@ -1149,7 +1145,7 @@ from representedObject */
 	// "Cut" cut:
 	if (itemAction == @selector(cut:))
 	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] site] root]])
 		{
 			return YES;
@@ -1170,7 +1166,7 @@ from representedObject */
 	// "Copy" copy:
 	else if (itemAction == @selector(copy:))
 	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 		if (selectedPages && [selectedPages count] > 0)
 		{
 			return YES;
@@ -1192,7 +1188,7 @@ from representedObject */
 	else if ( itemAction == @selector(paste:) )
 	{
 		{
-			NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+			NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 			if (1 != [selectedPages count])
 			{
 				return NO;	// can't paste if zero or >1 pages selected
@@ -1232,13 +1228,13 @@ from representedObject */
 	// "Delete Page(s)" deletePage:
 	else if ( itemAction == @selector(deletePages:) )
 	{
-		if (![[[self window] firstResponder] isEqual:[[self siteOutlineController] siteOutline]])
+		if (![[[self window] firstResponder] isEqual:[[[self siteOutlineViewController] pagesController] siteOutline]])
 		{
 			return NO;
 		}
 
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
+		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 		
 		if ( (nil != selectedPage) && ![selectedPage isRoot] )
 		{
@@ -1257,7 +1253,7 @@ from representedObject */
 	// "Delete Pagelet(s)" deletePagelets:
 	else if ( itemAction == @selector(deletePagelets:) )
 	{
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
 		KTPagelet *selectedPagelet = [self selectedPagelet];
 		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
 		{
@@ -1278,7 +1274,7 @@ from representedObject */
         }
         else
         {
-            NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+            NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
             if ([selectedPages count] > 0 && ![selectedPages containsRoot])
             {
                 if ([selectedPages count] == 1)
@@ -1371,7 +1367,7 @@ from representedObject */
     }
     else if (itemAction == @selector(addPagelet:))
     {
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
 		return ([selectedPage sidebarChangeable]);
     }
 	else if (itemAction == @selector(addCollection:))
@@ -1387,18 +1383,18 @@ from representedObject */
     // Other
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
+		NSArray *selectedItems = [[[self siteOutlineViewController] pagesController] selectedObjects];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
 	else if ( itemAction == @selector(duplicate:) )
     {
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
 		KTPagelet *selectedPagelet = [self selectedPagelet];
 		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
 		{
@@ -1408,7 +1404,7 @@ from representedObject */
 		else
 		{
 			// we're going to be duplicating a page or pages
-			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
+			return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[[self document] site] root]] );
 		}
     }
 	
@@ -1422,7 +1418,7 @@ from representedObject */
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
-		NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
+		NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
 		return (nil != pageURL);
 	}
 
@@ -1511,15 +1507,15 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
+		NSArray *selectedItems = [[[self siteOutlineViewController] pagesController] selectedObjects];
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
@@ -1536,7 +1532,7 @@ from representedObject */
     }
     else if ( [toolbarItem action] == @selector(duplicate:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[[self document] site] root]] );
     }
 	
     return YES;
@@ -1703,10 +1699,9 @@ from representedObject */
 	[oDesignsView unbind:@"selectedDesign"];
 	[oDocumentController unbind:@"contentObject"];
 	
-	[[self siteOutlineController] setContent:nil];
-	[self setSiteOutlineController:nil];
+	[self setSiteOutlineViewController:nil];
 	
-	 [oDocumentController setContent:nil];
+	[oDocumentController setContent:nil];
 }
 
 /*!	Notification that some window is closing
@@ -1766,7 +1761,7 @@ from representedObject */
 - (void)undo_selectPages:(NSArray *)pages scrollPoint:(NSPoint)scrollPoint
 {
 	// Select the pages in the Site Outline; the rest is taken care of for us
-	[[self siteOutlineController] setSelectedObjects:pages];
+	[[[self siteOutlineViewController] pagesController] setSelectedObjects:pages];
 	
 	
 	// Record what to do when redoing/undoing the change again
@@ -1785,7 +1780,7 @@ from representedObject */
 	// When ending the top level undo group, record the selected pages
 	if ([undoManager groupingLevel] == 1)
 	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 		
 		// Figuring out the scroll point is a little trickier
 		NSPoint scrollPoint = NSZeroPoint;
@@ -1934,7 +1929,7 @@ from representedObject */
 	// if not dropping on an item, set the selection to the last page created
 	if ( latestPage != nil )
 	{
-		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:latestPage]];
+		[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:latestPage]];
 	}
 	
 	// Done
@@ -1951,7 +1946,7 @@ from representedObject */
 	if (!myMasterCodeInjectionController)
 	{
 		myMasterCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[self siteOutlineController] master:YES];
+			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[[self siteOutlineViewController] pagesController] master:YES];
 		
 		[[self document] addWindowController:myMasterCodeInjectionController];
 	}
@@ -1969,7 +1964,7 @@ from representedObject */
 	if (!myPageCodeInjectionController)
 	{
 		myPageCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[self siteOutlineController] master:NO];
+			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[[self siteOutlineViewController] pagesController] master:NO];
 		
 		[[self document] addWindowController:myPageCodeInjectionController];
 	}
@@ -2056,9 +2051,9 @@ from representedObject */
 		{
 			[sharedController setupViewStackFor:mySelectedPagelet selectLevel:NO];
 		}
-		else if ([[[self siteOutlineController] selectedObjects] count] > 0)
+		else if ([[[[self siteOutlineViewController] pagesController] selectedObjects] count] > 0)
 		{
-			[sharedController setupViewStackFor:[[[self siteOutlineController] selectedObjects] firstObjectKS]
+			[sharedController setupViewStackFor:[[[[self siteOutlineViewController] pagesController] selectedObjects] firstObjectKS]
                                     selectLevel:NO];
 		}
 		

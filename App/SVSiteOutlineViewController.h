@@ -13,18 +13,24 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class KTDocSiteOutlineController, KTDocument;
+@class KTDocSiteOutlineController, KTDocWindowController;
 @class KTPage;
 
 
-@interface KTSiteOutlineDataSource : NSObject
+@interface SVSiteOutlineViewController : NSViewController
 {
-	@private
-    KTDocSiteOutlineController	*mySiteOutlineController;	// Weak ref
+  @private
+    NSOutlineView               *_outlineView;
+    KTDocSiteOutlineController	*_pagesController;
+	    
+    // Content
+	NSMutableSet    *_pages;
+    KTPage          *_rootPage;
+    
+    // Options
+    BOOL    _useSmallIconSize;
 	
-	NSMutableSet    *myPages;
-    KTPage          *myHomePage;
-	
+    // Cache
 	NSImage				*myCachedFavicon;
 	NSMutableDictionary	*myCachedPluginIcons;
 	NSMutableDictionary	*myCachedCustomPageIcons;
@@ -33,23 +39,26 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	KTPage				*myGeneratingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m
 }
 
-- (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)controller;
+@property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
 
-- (KTDocSiteOutlineController *)siteOutlineController;
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
+@property(nonatomic, retain) IBOutlet KTDocSiteOutlineController *pagesController;
 
-- (NSOutlineView *)siteOutline;
-- (KTDocument *)document;
+
+@property(nonatomic, retain) KTPage *rootPage;
 
 - (void)resetPageObservation;
 
 - (void)reloadSiteOutline;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
 
+
+#pragma mark Options
+@property(nonatomic) BOOL displaySmallPageIcons;
+
 @end
 
 
-@interface KTSiteOutlineDataSource (Icons)
+@interface SVSiteOutlineViewController (Icons)
 - (NSImage *)iconForPage:(KTPage *)page;
 
 - (void)invalidateIconCaches;

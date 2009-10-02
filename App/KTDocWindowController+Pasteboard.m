@@ -60,7 +60,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self copyPagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
+	else if ([[[[self siteOutlineViewController] pagesController] selectionIndexes] count] > 0)
 	{
 		[self copyPages:sender];
 	}
@@ -93,7 +93,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 // copy selected pages
 - (IBAction)copyPages:(id)sender
 {
-    NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+    NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 	if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]))
     {
         // copy was sent from a contextual menuitem, get the selection from the context
@@ -163,7 +163,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self cutPagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
+	else if ([[[[self siteOutlineViewController] pagesController] selectionIndexes] count] > 0)
 	{
 		[self cutPages:sender];
 	}
@@ -197,7 +197,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 - (IBAction)cutPages:(id)sender
 {
 	// Figure out the selection
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+	NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
 	if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
         // cut was sent from a contextual menuitem, get the selection from the context
@@ -368,7 +368,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[[self siteOutlineController] selectedObjects] objectAtIndex:0];
+        selectedPage = [[[[self siteOutlineViewController] pagesController] selectedObjects] objectAtIndex:0];
     }
     
     // if we haven't selected a collection, use its parent
@@ -474,7 +474,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[[self siteOutlineController] selectedObjects] objectAtIndex:0];
+        selectedPage = [[[[self siteOutlineViewController] pagesController] selectedObjects] objectAtIndex:0];
     }
     
     if ( [selectedPage isKindOfClass:[KTPage class]] )
@@ -644,7 +644,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 		if ( nil != pboardData )
 		{
 			NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
-			NSOutlineView *siteOutline = [[self siteOutlineController] siteOutline];
+			NSOutlineView *siteOutline = [[[self siteOutlineViewController] pagesController] siteOutline];
 			selectedPages = [NSMutableArray arrayWithArray:[siteOutline itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]]];
 			
 			switch ( [selectedPages count] )
@@ -664,8 +664,8 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	}
     else
     {
-        selectedPages = [[[[self siteOutlineController] selectedObjects] mutableCopy] autorelease];
-        selectedPage = [[self siteOutlineController] selectedPage];
+        selectedPages = [[[[[self siteOutlineViewController] pagesController] selectedObjects] mutableCopy] autorelease];
+        selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
     }
 	
 	if ( [selectedPages count] >= 1 )
@@ -767,7 +767,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	// FIXME: we could do away with the context dictionay, since we're going off of selected pages,
 	// but first test whether this is OK for deleting from a contextual menu
 	
-    NSSet *selectedPages = [NSSet setWithArray:[[self siteOutlineController] selectedObjects]];
+    NSSet *selectedPages = [NSSet setWithArray:[[[self siteOutlineViewController] pagesController] selectedObjects]];
 	
     
     // The user shouldn't be able to try to delete root, but if so, beep and fail
@@ -841,7 +841,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     if ( [selectedPagelet isKindOfClass:[KTPagelet class]] )
     {
-        KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+        KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
         if ( [[selectedPagelet page] isEqual:selectedPage] )
         {		
             NSManagedObjectContext *context = [selectedPage managedObjectContext];
@@ -886,7 +886,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self duplicatePagelets:sender];
 	}
-	else if ([[[self siteOutlineController] selectionIndexes] count] > 0)
+	else if ([[[[self siteOutlineViewController] pagesController] selectionIndexes] count] > 0)
 	{
 		[self duplicateSelectedPages:sender];
 	}
@@ -910,7 +910,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 - (IBAction)duplicateSelectedPages:(id)sender
 {
 	// Figure out our selection
-	NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
+	NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
     if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
         // Duplicate was sent from a contextual menuitem, get the selection from the context
@@ -940,7 +940,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     
     // Select the new pages
-    [[self siteOutlineController] setSelectedObjects:newPages];
+    [[[self siteOutlineViewController] pagesController] setSelectedObjects:newPages];
     [newPages release];
     
     
@@ -977,7 +977,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     if ( [selectedPagelet isKindOfClass:[KTPagelet class]] )
     {
-        KTPage *selectedPage = [[self siteOutlineController] selectedPage];
+        KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
         if ( [[selectedPagelet page] isEqual:selectedPage] )
         {		
             // create a special pasteboard just for this document/operation

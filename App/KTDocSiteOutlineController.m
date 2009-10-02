@@ -7,7 +7,7 @@
 //
 
 #import "KTDocSiteOutlineController.h"
-#import "KTSiteOutlineDataSource.h"
+#import "SVSiteOutlineViewController.h"
 
 #import "Debug.h"
 #import "KTAbstractElement.h"
@@ -39,23 +39,6 @@
  */
 
 
-@interface KTDocWindowController (PrivatePageStuff)
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
-@end
-
-
-#pragma mark -
-
-
-@interface KTDocSiteOutlineController ()
-- (void)setSiteOutline:(NSOutlineView *)outlineView;
-
-- (NSSet *)pages;
-- (void)addPagesObject:(KTPage *)aPage;
-- (void)removePagesObject:(KTPage *)aPage;
-@end
-
-
 #pragma mark -
 
 
@@ -82,139 +65,19 @@
 	
 	if ( nil != self )
 	{
-		mySiteOutlineDataSource = [[KTSiteOutlineDataSource alloc] initWithSiteOutlineController:self];
-		
 		// Prepare tree controller parameters
 		[self setObjectClass:[KTPage class]];
 		
 		[self setAvoidsEmptySelection:NO];
 		[self setPreservesSelection:YES];
 		[self setSelectsInsertedObjects:NO];
-		
-		[self bind:@"contentSet" toObject:mySiteOutlineDataSource withKeyPath:@"pages" options:nil];
 	}
 	
 	return self;
 }
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-    [self setWindowController:nil];
-	[self setSiteOutline:nil];
-	
-	
-	// Release remaining iVars
-	[mySiteOutlineDataSource setSiteOutlineController:nil];
-	[mySiteOutlineDataSource release];
-	
-	[super dealloc];
-}
-
 #pragma mark -
 #pragma mark Accessors
-
-- (KTDocWindowController *)windowController { return myWindowController; }
-
-- (void)setWindowController:(KTDocWindowController *)controller
-{
-	// Stop observing the old controller
-	[[NSNotificationCenter defaultCenter] removeObserver:mySiteOutlineDataSource
-													name:@"KTDisplaySmallPageIconsDidChange"
-												  object:[self windowController]];
-	
-	// Store the controller
-	myWindowController = controller;
-	
-	
-	// Do stuff with the new controller
-	if (!controller)
-	{
-		[self setSiteOutline:nil];
-	}
-	
-	if (controller)
-	{
-		OBASSERT([controller document]);
-        [[NSNotificationCenter defaultCenter] addObserver:mySiteOutlineDataSource
-												 selector:@selector(pageIconSizeDidChange:)
-													 name:@"KTDisplaySmallPageIconsDidChange"
-												   object:[controller document]];
-	}
-}
-
-- (NSOutlineView *)siteOutline { return siteOutline; }
-
-- (void)setSiteOutline:(NSOutlineView *)outlineView
-{
-	// Dump the old outline
-	NSOutlineView *oldSiteOutline = [self siteOutline];
-	if (oldSiteOutline)
-	{
-		[oldSiteOutline setDataSource:nil];
-		[oldSiteOutline setDelegate:nil];
-		
-		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-		[notificationCenter removeObserver:self name:NSOutlineViewSelectionDidChangeNotification object:oldSiteOutline];
-		[notificationCenter removeObserver:self name:NSOutlineViewItemWillCollapseNotification object:oldSiteOutline];
-	}
-	[mySiteOutlineDataSource resetPageObservation];
-	
-	
-	// Set up the appearance of the new view
-	NSTableColumn *tableColumn = [outlineView tableColumnWithIdentifier:@"displayName"];
-	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
-	[imageTextCell setEditable:YES];
-	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
-	[tableColumn setDataCell:imageTextCell];
-	
-	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
-	
-	
-	// Set up the behaviour of the new view
-	[outlineView setTarget:myWindowController];
-	[outlineView setDoubleAction:@selector(showInfo:)];
-	
-    
-    // Drag n drop
-	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
-                                 [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
-    
-	[dragTypes addObject:kKTOutlineDraggingPboardType];
-	[dragTypes addObject:kKTLocalLinkPboardType];
-	[outlineView registerForDraggedTypes:dragTypes];
-	[outlineView setVerticalMotionCanBeginDrag:YES];
-	[outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
-	
-	
-	// Retain the new view
-	[outlineView retain];
-	[siteOutline release];
-	siteOutline = outlineView;
-	
-	
-	// Finally, hook up outline delegate & data source
-	if (siteOutline)
-	{
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(outlineViewSelectionDidChange:)
-													 name:NSOutlineViewSelectionDidChangeNotification
-												   object:siteOutline];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(outlineViewItemWillCollapse:)
-													 name:NSOutlineViewItemWillCollapseNotification
-												   object:siteOutline];
-		
-		[outlineView setDelegate:mySiteOutlineDataSource];		// -setDelegate: MUST come first to receive all notifications
-		[outlineView setDataSource:mySiteOutlineDataSource];
-		
-        // Ensure we have a selection (case ID unknown), and that a -selectionDidChange: message got through (Snow Leopard problem)
-		[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-     }
-}
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }
 

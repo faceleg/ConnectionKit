@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTSiteOutlineDataSource.h"
+#import "SVSiteOutlineViewController.h"
 
 #import "KTAbstractElement+Internal.h"
 #import "KTElementPlugin.h"
@@ -31,7 +31,7 @@
 NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 
-@interface KTSiteOutlineDataSource (IconsPrivate)
+@interface SVSiteOutlineViewController (IconsPrivate)
 
 - (NSImage *)favicon;
 - (NSImage *)cachedFavicon;
@@ -53,7 +53,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 #pragma mark -
 
 
-@implementation KTSiteOutlineDataSource (Icons)
+@implementation SVSiteOutlineViewController (Icons)
 
 #pragma mark -
 #pragma mark General
@@ -64,7 +64,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSImage *result = nil;
 	
 	// The home page always appears as some kind of favicon
-	if ([page isRoot])
+	if (page == [self rootPage])
 	{
 		result = [self favicon];
 	}
@@ -114,7 +114,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		KTMediaContainer *faviconSource = [[[[[self siteOutlineController] managedObjectContext] root] master] favicon];
+		KTMediaContainer *faviconSource = [[[[[self pagesController] managedObjectContext] root] master] favicon];
 		NSString *faviconSourcePath = [[faviconSource file] currentPath];
 		
 		// If there is no favicon chosen, default to 32favicon
@@ -342,7 +342,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 		myGeneratingCustomIcon = [page retain];
 		
 		BOOL mask = NO;
-		if (![[self document] displaySmallPageIcons])
+		if (![self displaySmallPageIcons])
 		{
 			mask = [page shouldMaskCustomSiteOutlinePageIcon:page];
 		}
@@ -381,7 +381,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// Refresh Site Outline for new icon
 	if (icon)
     {
-        [[self siteOutline] setItemNeedsDisplay:page childrenNeedDisplay:NO];
+        [[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:NO];
     }
 	
     
@@ -437,11 +437,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	static float sScaleFactor;
 	if (!sScaleFactor)
 	{
-		sScaleFactor = [[[self siteOutline] window] userSpaceScaleFactor];
+		sScaleFactor = [[[self outlineView] window] userSpaceScaleFactor];
 	}
 	
 	// Figure out the size
-	if ([[self document] displaySmallPageIcons])
+	if ([self displaySmallPageIcons])
 	{
 		return sScaleFactor * 16.0;
 	}

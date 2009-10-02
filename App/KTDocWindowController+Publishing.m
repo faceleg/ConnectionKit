@@ -89,7 +89,7 @@
 - (BOOL)shouldPublish
 {
     BOOL result = [[self webViewController] commitEditing];
-    [[self siteOutlineController] commitEditing];
+    [[[self siteOutlineViewController] pagesController] commitEditing];
 
     result = ([[[[self document] site] hostProperties] siteURL] != nil);
     

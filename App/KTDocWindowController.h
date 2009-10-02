@@ -38,7 +38,7 @@
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTPluginInspectorViewsManager;
-@class KTDocViewController, SVWebContentAreaController, KTDocWebViewController, KTDocSiteOutlineController;
+@class KTDocViewController, SVWebContentAreaController, KTDocWebViewController, SVSiteOutlineViewController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
@@ -53,7 +53,7 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet RBSplitView				*oSidebarSplitView;
     IBOutlet RBSplitView				*oDesignsSplitView;
 	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
-	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
+	SVSiteOutlineViewController         *_siteOutlineViewController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
 	//  Navigation bar above the webview
@@ -119,9 +119,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)addChildController:(KTDocViewController *)controller;
 - (void)removeChildController:(KTDocViewController *)controller;
 
-- (KTDocSiteOutlineController *)siteOutlineController;
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
-
+@property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, readonly) SVWebContentAreaController *webContentAreaController;
 
 
