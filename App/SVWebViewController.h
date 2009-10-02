@@ -64,23 +64,7 @@
 
 
 @protocol SVWebEditorViewControllerDelegate
-// The controller is not a position to open a page by itself; it lets somebody else decide how to
+// The controller is not in a position to open a page by itself; it lets somebody else decide how to
 - (void)webEditorViewController:(SVWebViewController *)sender openPage:(KTPage *)page;
 @end
 
-
-/*  CODE THAT THE ABOVE DELEGATE METHOD SHOULD DO SOMEWHERE ALONG THE LINE
- if (!thePage)
- {
- [KSSilencingConfirmSheet alertWithWindow:[[self view] window]
- silencingKey:@"shutUpFakeURL"
- title:NSLocalizedString(@"Non-Page Link",@"title of alert")
- format:NSLocalizedString
- (@"You clicked on a link that would open a page that Sandvox cannot directly display.\n\n\t%@\n\nWhen you publish your website, you will be able to view the page with your browser.", @""),
- [URL path]];
- }
- else
- {
- [[[self windowController] siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:thePage]];
- }
-*/

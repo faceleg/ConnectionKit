@@ -29,7 +29,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     // Create controllers
     _primaryController = [[SVWebViewController alloc] init];
+    [_primaryController setDelegate:self];
+    
     _secondaryController = [[SVWebViewController alloc] init];
+    [_secondaryController setDelegate:self];
+    
     _webViewLoadingPlaceholder = [[NSViewController alloc] initWithNibName:@"WebViewLoadingPlaceholder"
                                                                     bundle:nil];
     
@@ -162,7 +166,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     _needsLoad = flag;
 }
 
-#pragma mark -
+#pragma mark Delegate
+
+@synthesize delegate = _delegate;
+
+#pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -185,6 +193,17 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     else
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark SVWebEditorViewControllerDelegate
+
+- (void)webEditorViewController:(SVWebViewController *)sender openPage:(KTPage *)page;
+{
+    // Only want to do as asked if the controller is the one currently visible. Otherwise it could come as a bit of a surprise!
+    if (sender == [self selectedViewController])
+    {
+        [[self delegate] loadController:self openPage:page];
     }
 }
 
