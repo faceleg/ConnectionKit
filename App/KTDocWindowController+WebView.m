@@ -738,5 +738,81 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 }
 
+#pragma mark -
+#pragma mark TextField Delegate
+
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+	//LOG((@"controlTextDidEndEditing: %@", aNotification));
+	id object = [aNotification object];
+	if ( [object isEqual:oLinkDestinationField] )
+	{
+		/// defend against nil
+		NSString *string = [[[object stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
+		if (nil == string) string = @"";
+		[object setStringValue:string];
+	}
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	//LOG((@"controlTextDidEndEditing: %@", aNotification));
+	id object = [aNotification object];
+	if ( [object isEqual:oLinkDestinationField] )
+	{
+		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
+		
+		BOOL empty = ( [value isEqualToString:@""] 
+                      || [value isEqualToString:@"http://"] 
+                      || [value isEqualToString:@"https://"] 
+                      || [value isEqualToString:@"ftp://"]
+                      || [value isEqualToString:@"mailto:"] );
+		
+		[oLinkView setConnected:!empty];
+	}
+}
+
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor;
+{
+	if ( [control isEqual:oLinkDestinationField] )
+	{
+		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
+		
+		if ( [value isEqualToString:@""] 
+            || [value isEqualToString:@"http://"] 
+            || [value isEqualToString:@"https://"] 
+            || [value isEqualToString:@"ftp://"]
+            || [value isEqualToString:@"mailto:"] )
+		{
+			// empty, this is OK
+			return YES;
+		}
+		else if ( [value hasPrefix:@"mailto:"] )
+		{
+			// check how mailto looks.
+			if ( NSNotFound == [value rangeOfString:@"@"].location )
+			{
+				return NO;
+			}
+		}
+		else
+		{
+			// Check how URL looks.  If it's bad, beep and exit -- don't let them close.
+			NSURL *checkURL = [NSURL URLWithUnescapedString:value];
+            
+			NSString *host = [checkURL host];
+			NSString *path = [checkURL path];
+			if (NULL == checkURL
+				|| (NULL == host && NULL == path) 
+				|| (NULL != host && NSNotFound == [host rangeOfString:@"."].location) )
+			{
+				return NO;
+			}
+		}
+	}
+	return YES;
+}
+
 @end
 
