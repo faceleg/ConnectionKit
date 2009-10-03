@@ -48,8 +48,13 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 - (void)resetPageObservation;
 
+
+#pragma mark Public Functions
 - (void)reloadSiteOutline;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
+
+// Deletes the selected pages
+- (void)delete:(id)sender;
 
 
 #pragma mark Options

@@ -114,6 +114,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Dump the old outline
 	[_outlineView setDataSource:nil];  // don't call [self outlineView] as that may try to load the nib when we don't want it to
 	[_outlineView setDelegate:nil];
+    // TODO: Reset responder chain
 	[self resetPageObservation];
 	
 	
@@ -142,6 +143,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Retain the new view
 	[outlineView retain];
 	[_outlineView release], _outlineView = outlineView;
+    
+    
+    // Responder Chain
+    [outlineView setNextResponder:self insert:YES];
 	
 	
 	// Finally, hook up outline delegate & data source
@@ -402,7 +407,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[[self outlineView] setItemNeedsDisplay:page childrenNeedDisplay:childrenNeedDisplay];
 }
 
-#pragma mark -
 #pragma mark Public Functions
 
 - (void)reloadSiteOutline
@@ -437,6 +441,25 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 //		[[NSNotificationCenter defaultCenter] postNotificationName:NSOutlineViewSelectionDidChangeNotification
 //															object:siteOutline];
 //	}
+}
+
+- (void)delete:(id)sender
+{
+    NSLog(@"-[%@ %@]", self, NSStringFromSelector(_cmd));
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    NSString *characters = [theEvent charactersIgnoringModifiers];
+    if ([characters isEqualToCharacter:NSBackspaceCharacter] ||
+        [characters isEqualToCharacter:NSDeleteCharacter])
+    {
+        [self delete:self];
+    }
+    else
+    {
+        [super keyDown:theEvent];
+    }
 }
 
 #pragma mark -
@@ -819,6 +842,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	return NO;
+}
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)command
+{
+    return NO;
 }
 
 #pragma mark Delegate (Selection)
