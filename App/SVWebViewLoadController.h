@@ -40,7 +40,6 @@
 #pragma mark Loading
 @property(nonatomic) BOOL needsLoad;
 - (void)load;
-- (IBAction)updateWebView:(id)sender;
 - (void)loadIfNeeded;
 
 

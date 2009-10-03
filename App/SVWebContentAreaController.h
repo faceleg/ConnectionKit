@@ -23,7 +23,5 @@
 
 @property(nonatomic, readonly) SVWebViewLoadController *webViewLoadController;
 
-// Reloads all subcontrollers
-- (IBAction)updateWebView:(id)sender;
 
 @end

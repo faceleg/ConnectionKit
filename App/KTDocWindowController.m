@@ -39,6 +39,7 @@
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
 #import "KTHTMLTextBlock.h"
+#import "SVWebContentAreaController.h"
 
 #import "SVDesignChooserWindowController.h"
 
@@ -1795,10 +1796,9 @@ from representedObject */
 	}
 }
 
-// TODO: Rather than forward this on, make the controller part of the responder chain
-- (IBAction)updateWebView:(id)sender;
+- (void)updateWebView:(id)sender;
 {
-    [[self webContentAreaController] updateWebView:sender];
+    [[[self webContentAreaController] webViewLoadController] setNeedsLoad:YES];
 }
 
 // the goal here will be to clear the HTML markup from the pasteboard before pasting,

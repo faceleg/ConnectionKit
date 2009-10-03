@@ -62,12 +62,6 @@
 
 @synthesize webViewLoadController = _webViewController;
 
-- (IBAction)updateWebView:(id)sender;
-{
-    [[self viewControllers] makeObjectsPerformSelector:@selector(updateWebView:)
-                                            withObject:sender];
-}
-
 #pragma mark Load Delegate
 
 - (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
