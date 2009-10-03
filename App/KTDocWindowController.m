@@ -1032,42 +1032,6 @@ from representedObject */
 		}
 	}
 	
-	// Duplicate
-    else if (itemAction == @selector(duplicate:))
-    {
-        if ([self selectedPagelet])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
-        }
-        else
-        {
-            NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
-            if ([selectedPages count] > 0 && ![selectedPages containsRoot])
-            {
-                if ([selectedPages count] == 1)
-                {
-                    if ([[selectedPages objectAtIndex:0] isCollection])
-                    {
-                        [menuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
-                    }
-                    else
-                    {
-                        [menuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
-                    }
-                }
-                else
-                {
-                    [menuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
-                }
-            }
-            else
-            {
-                [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-                return NO;
-            }
-        }
-    }
-	
 	// "Create Link..." showLinkPanel:
 	else if (itemAction == @selector(showLinkPanel:))
 	{
@@ -1158,21 +1122,6 @@ from representedObject */
         return ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
-    }
-	else if ( itemAction == @selector(duplicate:) )
-    {
-		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-		KTPagelet *selectedPagelet = [self selectedPagelet];
-		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
-		{
-			// we're going to be duplicating a pagelet
-			return YES;
-		}
-		else
-		{
-			// we're going to be duplicating a page or pages
-			return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[[self document] site] root]] );
-		}
     }
 	
 	// "Visit Published Site" visitPublishedSite:
@@ -1297,11 +1246,7 @@ from representedObject */
     {
         return YES;
     }
-    else if ( [toolbarItem action] == @selector(duplicate:) )
-    {
-        return ( ![[[[self siteOutlineViewController] pagesController] selectedObjects] containsObject:[[[self document] site] root]] );
-    }
-	
+    
     return YES;
 }
 
