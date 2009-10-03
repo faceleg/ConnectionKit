@@ -53,9 +53,15 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (void)reloadSiteOutline;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
 
-// Deletes the selected pages
+
+#pragma mark Actions
+// All act upon the selected pages
+- (IBAction)cut:(id)sender;
+- (IBAction)copy:(id)sender;
 - (IBAction)delete:(id)sender;
-@property(nonatomic, readonly) BOOL canDelete;
+
+@property(nonatomic, readonly) BOOL canCopy;  // also used by -cut: as it's effectively doing a copy op
+@property(nonatomic, readonly) BOOL canDelete;  // also used by -cut: as it's effectively doing a delete op
 
 
 #pragma mark Options

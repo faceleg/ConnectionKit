@@ -22,6 +22,7 @@
 #import "KTAbstractHTMLPlugin.h"
 
 #import "NSArray+Karelia.h"
+#import "NSArray+KTExtensions.h"
 #import "NSDate+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
@@ -445,6 +446,46 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 //	}
 }
 
+#pragma mark Actions
+
+// cut selected pages (copy and then remove from parents)
+- (void)cut:(id)sender;
+{
+	if ([self canCopy] && [self canDelete])
+    {
+        // Copy to the clipboard
+        [self copy:sender];
+        
+        // Delete the selection
+        [self delete:sender];
+    }
+    else
+    {
+        // There shouldn't be another responder up the chain that handles this so it will beep. But you never know, somebody else might like to handle it.
+        [self makeNextResponderDoCommandBySelector:_cmd];
+    }
+}
+
+// copy selected pages
+- (void)copy:(id)sender
+{
+    if ([self canCopy])
+    {
+        // Package up the selected page(s) (children included)
+        NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+        [pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, nil] owner:self];
+        
+        NSArray *topLevelPages = [[[self pagesController] selectedObjects] parentObjects];
+        NSArray *pasteboardReps = [topLevelPages valueForKey:@"pasteboardRepresentation"];
+        [pboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPagesPboardType];
+    }
+    else
+    {
+        // There shouldn't be another responder up the chain that handles this so it will beep. But you never know, somebody else might like to handle it.
+        [self makeNextResponderDoCommandBySelector:_cmd];
+    }
+}
+
 - (void)delete:(id)sender
 {
     /// Old code did a -processPendingChanges here but haven't a clue why. Mike.
@@ -489,6 +530,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     }
 }
 
+- (BOOL)canCopy
+{
+    BOOL result = ([[[self pagesController] selectedObjects] count] > 0);
+    return result;
+}
+
 // Can only delete a page if there's a selection and that selection doesn't include the root page
 - (BOOL)canDelete
 {
@@ -497,6 +544,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                    ![[objectController selectedObjects] containsObjectIdenticalTo:[self rootPage]]);
     return result;
 }
+
+#pragma mark NSResponder
 
 - (void)keyDown:(NSEvent *)theEvent
 {
@@ -512,7 +561,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     }
 }
 
-#pragma mark -
 #pragma mark Datasource
 
 - (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
@@ -969,22 +1017,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
-#pragma mark NSUserInterfaceValidations
-
-- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
-{
-    BOOL result = NO;
-    
-    if ([anItem action] == @selector(delete:))
-    {
-        result = [self canDelete];
-    }
-    
-    return result;
-}
-
-#pragma mark Notification Handlers
-
 - (void)outlineViewSelectionIsChanging:(NSNotification *)notification
 {
 	// Close the Raw HTML editing window, if open
@@ -997,6 +1029,29 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			[HTMLInspectorWindow close];
 		}
 	}
+}
+
+#pragma mark NSUserInterfaceValidations
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = NO;
+    SEL action = [anItem action];
+    
+    if (action == @selector(cut:))
+    {
+        result = ([self canDelete] && [self canCopy]);
+    }
+    else if (action == @selector(copy:))
+    {
+        result = [self canCopy];
+    }
+    else if (action == @selector(delete:))
+    {
+        result = [self canDelete];
+    }
+    
+    return result;
 }
 
 #pragma mark Options

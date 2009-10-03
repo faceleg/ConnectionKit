@@ -1135,50 +1135,8 @@ from representedObject */
 		
 	// Edit menu
 	
-	// "Cut" cut:
-	if (itemAction == @selector(cut:))
-	{
-		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
-		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] site] root]])
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-	
-	// "Cut Page(s)" cutPages:
-	else if (itemAction == @selector(cutPages:))
-	{
-		LOG((@"ERROR: cutPages: validated but shouldn't exist!"));
-		return NO;
-	}
-	
-	// "Copy" copy:
-	else if (itemAction == @selector(copy:))
-	{
-		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
-		if (selectedPages && [selectedPages count] > 0)
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}	
-	
-	// "Copy Page(s)" copyPages:
-	else if (itemAction == @selector(copyPages:))
-	{
-		LOG((@"ERROR: copyPages: validated but shouldn't exist!"));
-		return NO;
-	}
-	
 	// "Paste" paste:
-	else if ( itemAction == @selector(paste:) )
+	if ( itemAction == @selector(paste:) )
 	{
 		{
 			NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];

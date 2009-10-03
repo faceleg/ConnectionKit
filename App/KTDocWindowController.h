@@ -180,22 +180,10 @@ extern NSString *gInfoWindowAutoSaveName;
 - (BOOL)canPastePages;
 - (BOOL)canPastePagelets;
 
-- (IBAction)cut:(id)sender;
-- (IBAction)cutViaContextualMenu:(id)sender;
-- (IBAction)cutPages:(id)sender;
-- (IBAction)cutPagelets:(id)sender;
-
-- (IBAction)copy:(id)sender;
-- (IBAction)copyViaContextualMenu:(id)sender;
-- (IBAction)copyPages:(id)sender;
-- (IBAction)copyPagelets:(id)sender;
-
 - (IBAction)paste:(id)sender;
 - (IBAction)pasteViaContextualMenu:(id)sender;
 - (IBAction)pastePages:(id)sender;
 - (IBAction)pastePagelets:(id)sender;
-
-- (IBAction)deleteViaContextualMenu:(id)sender;
 
 - (IBAction)duplicate:(id)sender;
 - (IBAction)duplicateSelectedPages:(id)sender;
