@@ -8,6 +8,7 @@
 
 #import "SVWebViewLoadController.h"
 #import "SVWebViewController.h"
+#import "SVLoadingPlaceholderViewController.h"
 
 
 @interface SVWebViewLoadController ()
@@ -34,8 +35,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     _secondaryController = [[SVWebViewController alloc] init];
     [_secondaryController setDelegate:self];
     
-    _webViewLoadingPlaceholder = [[NSViewController alloc] initWithNibName:@"WebViewLoadingPlaceholder"
-                                                                    bundle:nil];
+    _webViewLoadingPlaceholder = [[SVLoadingPlaceholderViewController alloc] init];
     
     [self setViewControllers:[NSArray arrayWithObjects:
                               _primaryController,

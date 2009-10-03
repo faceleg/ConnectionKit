@@ -207,6 +207,8 @@
 		270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
+		2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */; };
+		2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -1644,6 +1646,8 @@
 		270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsController.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
 		2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSResponder+Karelia.m"; sourceTree = "<group>"; };
+		2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoadingPlaceholderViewController.h; sourceTree = "<group>"; };
+		2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLoadingPlaceholderViewController.m; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
 		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
@@ -2981,6 +2985,8 @@
 				2759CD421039B83900E2C046 /* SVWebViewLoadController.h */,
 				2759CD431039B83900E2C046 /* SVWebViewLoadController.m */,
 				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
+				2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */,
+				2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */,
 			);
 			name = Loading;
 			sourceTree = "<group>";
@@ -5045,6 +5051,7 @@
 				27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */,
 				27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */,
 				2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */,
+				2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6444,6 +6451,7 @@
 				27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */,
 				27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,
+				2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
