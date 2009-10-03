@@ -1218,22 +1218,7 @@ from representedObject */
 		}
 	}
 	
-	// "Delete Pagelet(s)" deletePagelets:
-	else if ( itemAction == @selector(deletePagelets:) )
-	{
-		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-		KTPagelet *selectedPagelet = [self selectedPagelet];
-		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-    
-    // Duplicate
+	// Duplicate
     else if (itemAction == @selector(duplicate:))
     {
         if ([self selectedPagelet])

@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="29"/>
+			<integer value="164"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -459,15 +459,6 @@
 									<string key="NSTitle">Delete</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="596601528">
-									<reference key="NSMenu" ref="261338889"/>
-									<string key="NSTitle">Delete Pagelet</string>
-									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
-									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
@@ -1865,14 +1856,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">deletePagelets:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="596601528"/>
-					</object>
-					<int key="connectionID">666</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">delete:</string>
 						<reference key="source" ref="464856506"/>
 						<reference key="destination" ref="952672329"/>
@@ -2931,7 +2914,6 @@
 							<reference ref="805063139"/>
 							<reference ref="1021189407"/>
 							<reference ref="65573845"/>
-							<reference ref="596601528"/>
 							<reference ref="236219990"/>
 							<reference ref="156517136"/>
 							<reference ref="687393641"/>
@@ -3027,11 +3009,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">656</int>
 						<reference key="object" ref="65573845"/>
-						<reference key="parent" ref="261338889"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">665</int>
-						<reference key="object" ref="596601528"/>
 						<reference key="parent" ref="261338889"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3738,7 +3715,7 @@
 				<boolean value="YES" key="163.ImportedFromIB2"/>
 				<string key="164.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="164.ImportedFromIB2"/>
-				<string key="169.IBEditorWindowLastContentRect">{{133, 333}, {257, 403}}</string>
+				<string key="169.IBEditorWindowLastContentRect">{{133, 353}, {251, 383}}</string>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="169.ImportedFromIB2"/>
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3851,8 +3828,6 @@
 				<boolean value="YES" key="58.ImportedFromIB2"/>
 				<string key="656.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="656.ImportedFromIB2"/>
-				<string key="665.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="665.ImportedFromIB2"/>
 				<string key="686.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="686.ImportedFromIB2"/>
 				<string key="687.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

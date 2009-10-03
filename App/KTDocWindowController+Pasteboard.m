@@ -606,64 +606,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     } 
 }
 
-- (IBAction)deletePagelets:(id)sender
-{
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-
-	[[[self document] managedObjectContext] lock];
-
-    // currently assumes there is only one pagelet to be deleted
-    KTPagelet *selectedPagelet = nil;
-    
-    if ( [sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
-    {
-        // paste was sent from a contextual menuitem, get the selection from the context
-        id context = [sender representedObject];
-        id selection = [context valueForKey:kKTSelectedObjectsKey];
-        OBASSERTSTRING([selection isKindOfClass:[NSArray class]], @"selection should be an array.");
-        // we're only going to delete the first selected pagelet
-        selectedPagelet = [selection objectAtIndex:0];
-    }
-    else
-    {
-        selectedPagelet = [self selectedPagelet];
-    }
-    
-    if ( [selectedPagelet isKindOfClass:[KTPagelet class]] )
-    {
-        KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-        if ( [[selectedPagelet page] isEqual:selectedPage] )
-        {		
-            NSManagedObjectContext *context = [selectedPage managedObjectContext];
-            
-            // remove pagelet from the page
-			[[selectedPagelet page] removePagelet:selectedPagelet];
-			
-            // delete it from the context
-            LOG((@"deleting pagelet “%@” from context", [selectedPagelet valueForKey:@"pluginIdentifier"]));
-            [context deleteObject:selectedPagelet];
-            
-            // close undo group
-            [context processPendingChanges];
-			
-			// save
-			LOG((@"removed a save here, is it still needed?"));
-//			[[self document] saveContext:context onlyIfNecessary:NO];
-            
-            // change the selection to be the page
-            [self setSelectedPagelet:nil];
-            
-            // update the inspector and reload the page
-            [self postSelectionAndUpdateNotificationsForItem:selectedPage];
-            
-            // label undo
-            [[[self document] undoManager] setActionName:NSLocalizedString(@"Delete Pagelet", "Delete Pagelet MenuItem")];
-        }
-    }
-	
-	[[[self document] managedObjectContext] unlock];
-}
-
 #pragma mark -
 #pragma mark Duplicate
 
