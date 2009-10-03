@@ -977,54 +977,6 @@ from representedObject */
     [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<table><tr><td></td><td></td></tr></table>"];
 }
 
-
-
-/*! removes the selected pages */
-- (IBAction)remove:(id)sender
-{
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-	
-	// here's the naive approach
-	NSArray *selectedPages = [[[[self siteOutlineViewController] pagesController] selectedObjects] copy];
-	id itemAbove = [[[self siteOutlineViewController] outlineView] itemAboveFirstSelectedRow];
-	
-	KTPage *selectedParent = [[[[self siteOutlineViewController] pagesController] selectedPage] parent];
-	if (nil == selectedParent)
-	{
-		selectedParent = [[(KTDocument *)[self document] site] root];
-	}
-	
-	NSManagedObjectContext *context = [selectedParent managedObjectContext];
-	
-	NSEnumerator *e = [selectedPages objectEnumerator];
-	KTPage *object;
-	while ( object = [e nextObject] )
-	{
-		KTPage *parent = [object parent];
-		[parent removePage:object]; // this might be better done with a delete rule in the model
-		LOG((@"deleting page “%@” from context", [object fileName]));
-		[context deleteObject:object];
-	}
-	
-	[context processPendingChanges];
-	LOG((@"removed a save here, is it still needed?"));
-//	[[self document] saveContext:context onlyIfNecessary:NO];
-	
-	if ( [selectedPages count] == 1 )
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Page", @"action name for removing selected page")];
-	}
-	else
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Pages", @"action name for removing selected pages")];
-	}
-	
-	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:itemAbove]];
-	
-	[itemAbove release];
-	[selectedPages release];
-}
-
 #pragma mark -
 #pragma mark Action Validation
 

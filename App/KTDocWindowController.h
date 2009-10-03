@@ -133,7 +133,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)addPagelet:(id)sender;
 - (IBAction)addCollection:(id)sender;
 - (IBAction)group:(id)sender;
-- (IBAction)remove:(id)sender;
 
 @property(retain) SVDesignChooserWindowController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
