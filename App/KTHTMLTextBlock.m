@@ -21,7 +21,6 @@
 #import "KTMaster+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
-#import "KTWebKitCompatibility.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageContainer.h"

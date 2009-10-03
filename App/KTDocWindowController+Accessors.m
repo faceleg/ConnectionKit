@@ -19,9 +19,6 @@
 
 // GENERIC, NO-BIG-WHOOP ACCESSORS ONLY.  PUT ANYTHING WITH LOGIC IN A DIFFERENT FILE PLEASE.
 
-@interface 	WebView ( newWebKit )
-- (id) selectedFrame;
-@end
 
 @implementation KTDocWindowController ( Accessors )
 

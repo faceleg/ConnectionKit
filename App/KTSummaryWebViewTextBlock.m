@@ -8,7 +8,6 @@
 
 #import "KTSummaryWebViewTextBlock.h"
 
-#import "KTWebKitCompatibility.h"
 #import "KTPage.h"
 
 #import "NSObject+Karelia.h"

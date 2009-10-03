@@ -22,8 +22,6 @@
 #import "KTMediaManager+Internal.h"
 #import "KTUtilities.h"
 
-#import "KTWebKitCompatibility.h"
-
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSError+Karelia.h"

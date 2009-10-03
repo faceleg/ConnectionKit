@@ -26,7 +26,6 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 
-#import "KTWebKitCompatibility.h"
 #import "DOMNode+Karelia.h"
 #import "DOM+KTWebViewController.h"
 #import "DOMNode+KTExtensions.h"

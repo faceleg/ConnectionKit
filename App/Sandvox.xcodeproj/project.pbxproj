@@ -577,7 +577,6 @@
 		3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC210103DF9CB00D2CF47 /* MediaInspector.xib */; };
 		3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC213103DF9DF00D2CF47 /* HTMLEditor.xib */; };
 		3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9B30D0804643200C3053B /* KTDocument+Properties.m */; };
-		3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */; settings = {ATTRIBUTES = (); }; };
 		3CB5E2B0080303C7006BB008 /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A6080303C7006BB008 /* document.icns */; };
 		3CB5E2B1080303C7006BB008 /* graydimple1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A7080303C7006BB008 /* graydimple1.png */; };
 		3CB5E2B2080303C7006BB008 /* graydimple2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A8080303C7006BB008 /* graydimple2.png */; };
@@ -2129,7 +2128,6 @@
 		3CA9016C0D63D1D100815310 /* DownloadElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DownloadElement.xcodeproj; path = ../Plugins/Elements/DownloadElement/DownloadElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA901A20D63D45B00815310 /* LinkElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkElement.xcodeproj; path = ../Plugins/Elements/LinkElement/LinkElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
-		3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebKitCompatibility.h; sourceTree = "<group>"; };
 		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../Plugins/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedElement.xcodeproj; path = ../Plugins/Elements/FeedElement/FeedElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CB5E2A6080303C7006BB008 /* document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = document.icns; sourceTree = "<group>"; };
@@ -3943,7 +3941,6 @@
 				3CF9422A0D6244C000B1C83D /* DOMNode+KTExtensions.m */,
 				271575CB0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.h */,
 				271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */,
-				3CA9FAE90D63796D00815310 /* KTWebKitCompatibility.h */,
 			);
 			name = WebKit;
 			sourceTree = "<group>";
@@ -4854,7 +4851,6 @@
 				274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */,
 				274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
-				3CA9FAEA0D63796D00815310 /* KTWebKitCompatibility.h in Headers */,
 				27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */,
 				27AD53A60D6B40C300883550 /* KTHTMLParser+Private.h in Headers */,
 				27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */,

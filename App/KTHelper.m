@@ -13,8 +13,6 @@
 #import "KTWebViewComponent.h"
 #import "KTHTMLTextBlock.h"
 
-#import "KTWebKitCompatibility.h"
-
 #import "DOMNode+KTExtensions.h"
 #import "DOM+KTWebViewController.h"
 
