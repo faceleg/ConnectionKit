@@ -78,9 +78,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 // Controller chain
 - (void)removeAllChildControllers;
 
-// Actions
-- (void)showDesigns:(BOOL)inShow;
-
 + (NSSet *)windowTitleKeyPaths;
 
 @end
@@ -133,7 +130,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // disconnect UI delegates
-    [oDesignsSplitView setDelegate:nil];
 	[oDocumentController unbind:@"contentObject"];
     [oDocumentController setContent:nil];
     [oSidebarSplitView setDelegate:nil];
@@ -207,13 +203,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	
-	// Design Chooser bindings
-	[oDesignsView bind:@"selectedDesign"
-			  toObject:[self siteOutlineViewController]
-		   withKeyPath:@"pagesController.selection.master.design"
-			   options:nil];
-	
-	
 	// Split View
 	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
 	short sourceOutlineSize = [[[self document] site] integerForKey:@"sourceOutlineSize"];
@@ -239,15 +228,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
 	// Hide address bar if it's hidden (it's showing to begin with, in the nib)
-	if (![[self document] showDesigns])
-	{
-		[oDesignsSplitPane collapse];	// collapse the split pane -- without animation.
-	}
-	else	// initialize the view
-	{
-		[self splitView:oDesignsSplitView didExpand:oDesignsSplitPane];
-	}
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(anyWindowWillClose:)
 												 name:NSWindowWillCloseNotification
@@ -586,17 +566,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
     
     [designChooserWindowController_ displayAsSheet];
-}
-
-- (IBAction)toggleDesignsShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] showDesigns];
-	BOOL newValue = !value;
-	[[self document] setShowDesigns:newValue];
-    
-	// update UI
-	[self showDesigns:newValue];
 }
 
 #pragma mark -
@@ -1516,7 +1485,6 @@ from representedObject */
     }
     
     
-	[oDesignsView unbind:@"selectedDesign"];
 	[oDocumentController unbind:@"contentObject"];
 	
 	[self setSiteOutlineViewController:nil];
@@ -1775,25 +1743,6 @@ from representedObject */
 		[myBuyNowButton setHidden:YES];
 	}
 	
-}
-
-
-- (void)showDesigns:(BOOL)inShow
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL animate = [defaults boolForKey:@"DoAnimations"];
-	if ( inShow )
-	{
-		[oDesignsSplitPane expandWithAnimation:animate withResize:NO];
-	}
-	else
-	{
-		[oDesignsSplitPane collapseWithAnimation:animate withResize:NO];
-	}
-	if (!animate)
-	{
-		[oDesignsSplitPane display];	// hack, rainer suggested this....
-	}
 }
 
 - (void)updateWebView:(id)sender;

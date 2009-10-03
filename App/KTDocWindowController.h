@@ -30,7 +30,6 @@
 @class KSBorderlessWindow;
 @class KTInlineImageElement;
 @class KSTextField, KSPopUpButton;
-@class KTDesignPickerView;
 @class RoundedBox;
 @class RBSplitView;
 @class RBSplitSubview;
@@ -51,19 +50,11 @@ extern NSString *gInfoWindowAutoSaveName;
 @interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain>
 {
     IBOutlet RBSplitView				*oSidebarSplitView;
-    IBOutlet RBSplitView				*oDesignsSplitView;
 	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
 	SVSiteOutlineViewController         *_siteOutlineViewController;
 	IBOutlet NSObjectController			*oDocumentController;
 		
-	//  Navigation bar above the webview
-	IBOutlet RBSplitSubview			*oDesignsSplitPane;
-    IBOutlet KTDesignPickerView		*oDesignsView;
-    IBOutlet NSButton				*oDesignBackButton;
-    IBOutlet NSButton				*oDesignForwardButton;
-    IBOutlet NSButton				*oDesignCloseButton;
-	
-    //  TOOLBARS
+	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
 	RYZImagePopUpButton             *myAddPagePopUpButton;       // constructed via toolbar code
     RYZImagePopUpButton             *myAddPageletPopUpButton;       // constructed via toolbar code
@@ -152,7 +143,6 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(retain) SVDesignChooserWindowController *designChooserWindowController;
 - (IBAction)chooseDesign:(id)sender;
 - (IBAction)showChooseDesignSheet:(id)sender;
-- (IBAction)toggleDesignsShown:(id)sender;
 
 - (IBAction)updateWebView:(id)sender;
 

@@ -47,10 +47,6 @@ TO DO:
     {
 		[[self document] setDisplaySiteOutline:NO];
     }
-	else if (sender == oDesignsSplitView)
-	{
-		[oDesignsView inUse:NO];
-	}
 }
 
 - (void)splitView:(RBSplitView*)sender didExpand:(RBSplitSubview*)subview;
@@ -59,10 +55,6 @@ TO DO:
     {
 		[[self document] setDisplaySiteOutline:YES];
     }
-	if (sender == oDesignsSplitView)
-	{
-		[oDesignsView inUse:YES];		// set up UI since we're showing it
-	}
 }
 
 static float sGrowCutoffSidebarDimension;
