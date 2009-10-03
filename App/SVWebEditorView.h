@@ -61,6 +61,10 @@ typedef enum {
 #pragma mark Loading Data
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
+
+// Blocks until either loading is finished or date is reached. Returns YES if the former.
+- (BOOL)loadUntilDate:(NSDate *)date;
+
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 

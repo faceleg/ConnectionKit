@@ -123,15 +123,8 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     
     // The webview gets a limited amount of time to load synchronously in, and then we switch to asynchronous
-    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-    while ([webViewController isLoading] && [synchronousLoadEndDate timeIntervalSinceNow] > 0)
-    {
-        [runLoop runUntilDate:[NSDate distantPast]];
-    }
-    
-    
-    // Switch to the loading view.
-    if ([webViewController isLoading])
+    BOOL loaded = [[webViewController webEditorView] loadUntilDate:synchronousLoadEndDate];
+    if (!loaded)
     {
         [self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
     }

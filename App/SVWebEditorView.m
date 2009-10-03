@@ -105,6 +105,20 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     _isLoading = NO;
 }
 
+- (BOOL)loadUntilDate:(NSDate *)date;
+{
+    BOOL result = NO;
+    
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    while (!result && [date timeIntervalSinceNow] > 0)
+    {
+        [runLoop runUntilDate:[NSDate distantPast]];
+        result = ![self isLoading];
+    }
+    
+    return result;
+}
+
 @synthesize loading = _isLoading;
 
 #pragma mark Selection
