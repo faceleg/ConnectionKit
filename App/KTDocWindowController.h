@@ -129,10 +129,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 // Actions
 
-- (IBAction)visitPublishedSite:(id)sender;
-- (IBAction)visitPublishedPage:(id)sender;
-- (IBAction)submitSiteToDirectory:(id)sender;
-
 - (IBAction)windowHelp:(id)sender;
 - (IBAction)addPage:(id)sender;
 - (IBAction)addPagelet:(id)sender;
@@ -266,6 +262,10 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (IBAction)exportSite:(id)sender;
 - (IBAction)exportSiteAgain:(id)sender;
+
+- (IBAction)visitPublishedSite:(id)sender;
+- (IBAction)visitPublishedPage:(id)sender;
+- (IBAction)submitSiteToDirectory:(id)sender;
 
 @end
 

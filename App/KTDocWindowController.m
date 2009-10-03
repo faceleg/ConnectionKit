@@ -58,9 +58,7 @@
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "NSThread+Karelia.h"
-#import "NSURL+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "NSWorkspace+Karelia.h"
 
 #import "NTBoxView.h"
 #import "KSProgressPanel.h"
@@ -512,39 +510,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
-}
-
-- (IBAction)visitPublishedSite:(id)sender
-{
-	NSURL *siteURL = [[[[self document] site] root] URL];
-	if (siteURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
-	}
-}
-
-- (IBAction)visitPublishedPage:(id)sender
-{
-	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
-	if (pageURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
-	}
-}
-
-- (IBAction)submitSiteToDirectory:(id)sender;
-{
-	NSURL *siteURL = [[[[self document] site] root] URL];
-	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
-	parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-		[siteURL absoluteString], @"url",
-			gRegistrationString, @"reg",
-							  nil]];
-	
-	if (submissionURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:submissionURL];
-	}
 }
 
 #pragma mark -

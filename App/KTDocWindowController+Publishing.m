@@ -18,9 +18,15 @@
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
 #import "KTRemotePublishingEngine.h"
+#import "SVSiteOutlineViewController.h"
+#import "KTDocSiteOutlineController.h"
 #import "KTToolbars.h"
+#import "NSURL+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 #import "NSObject+Karelia.h"
+
+#import "Registration.h"
 
 
 @interface KTDocWindowController (PublishingPrivate)
@@ -29,9 +35,11 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation KTDocWindowController (Publishing)
 
-#pragma mark -
 #pragma mark Publishing
 
 - (IBAction)publishSiteChanges:(id)sender
@@ -167,7 +175,6 @@
     }
 }
 
-#pragma mark -
 #pragma mark Site Export
 
 /*  Puts up a sheet for the user to pick an export location, then starts up the publishing engine.
@@ -266,6 +273,41 @@
     // Store the path and kick off exporting
     [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
     [self exportSiteAgain:self];
+}
+
+#pragma mark Open in Web Browser
+
+- (IBAction)visitPublishedSite:(id)sender
+{
+	NSURL *siteURL = [[[[self document] site] root] URL];
+	if (siteURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
+	}
+}
+
+- (IBAction)visitPublishedPage:(id)sender
+{
+	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
+	if (pageURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
+	}
+}
+
+- (IBAction)submitSiteToDirectory:(id)sender;
+{
+	NSURL *siteURL = [[[[self document] site] root] URL];
+	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
+                                      parameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                  [siteURL absoluteString], @"url",
+                                                  gRegistrationString, @"reg",
+                                                  nil]];
+	
+	if (submissionURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:submissionURL];
+	}
 }
 
 @end
