@@ -26,7 +26,7 @@ typedef enum {
 @class SVWebEditorWebView;
 
 
-@interface SVWebEditorView : NSView
+@interface SVWebEditorView : NSView <NSUserInterfaceValidations>
 {
   @private
     // Content
@@ -77,6 +77,12 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+
+#pragma mark Cut, Copy & Paste
+- (IBAction)cut:(id)sender;
+- (IBAction)copy:(id)sender;
+- (BOOL)copy;
+// - (IBAction)paste:(id)sender;
 
 #pragma mark Layout
 - (NSRect)rectOfDragCaret;

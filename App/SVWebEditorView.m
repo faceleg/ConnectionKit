@@ -303,6 +303,32 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
+#pragma mark Cut, Copy & Paste
+
+- (void)cut:(id)sender
+{
+    if ([self copy])
+    {
+        // TODO: Delete selection
+    }
+}
+
+- (void)copy:(id)sender
+{
+    [self copy];
+}
+
+- (BOOL)copy;
+{
+    // Rely on the datasource to serialize items to the pasteboard
+    BOOL result = [[self dataSource] webEditorView:self 
+                                        writeItems:[self selectedItems]
+                                      toPasteboard:[NSPasteboard generalPasteboard]];
+    if (!result) NSBeep();
+    
+    return result;
+}
+
 #pragma mark Getting Item Information
 
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
@@ -831,6 +857,22 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         [self selectionDidChangeWhileEditing];
     }
+}
+
+#pragma mark NSUserInterfaceValidations
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = NO;
+    SEL action = [anItem action];
+    
+    // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
+    if (action == @selector(cut:) || action == @selector(copy:))
+    {
+        result = ([[self selectedItems] count] >= 1);
+    }
+    
+    return result;
 }
 
 @end

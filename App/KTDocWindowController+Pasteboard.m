@@ -324,21 +324,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
 }
 
-#pragma mark delete
-
-- (IBAction)deleteViaContextualMenu:(id)sender
-{
-    id selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
-    if ( [selectionClassName isEqualToString:[KTPage className]] )
-    {
-        [self deletePages:sender];
-    }
-    else if ( [selectionClassName isEqualToString:[KTPagelet className]] )
-    {
-        [self deletePagelets:sender];
-    } 
-}
-
 #pragma mark -
 #pragma mark Duplicate
 
