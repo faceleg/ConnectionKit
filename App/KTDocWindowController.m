@@ -350,29 +350,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
 	
 	
-	// Stop notifications from old doc
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter removeObserver:self
-								  name:NSUndoManagerWillCloseUndoGroupNotification
-								object:[[self document] undoManager]];
-    
-    
-    // Default behaviour
+	// Default behaviour
 	[super setDocument:document];
 	
 	
 	// Alert sub-controllers to the change
     [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
-	
-	
-	// Observe new document
-    if (document)
-    {
-        [notificationCenter addObserver:self
-                               selector:@selector(undoManagerWillCloseUndoGroup:)
-                                   name:NSUndoManagerWillCloseUndoGroupNotification
-                                 object:[document undoManager]];
-    }
 }
 
 - (KTDocWindowController *)windowController { return self; }
@@ -1586,49 +1569,6 @@ from representedObject */
 		}
 	}
 	return result;
-}
-
-#pragma mark -
-#pragma mark Undo
-
-/*	Called whenever a change is undone. Ensure the correct page is highlighted in the Site Outline to show the change.
- */
-- (void)undo_selectPages:(NSArray *)pages scrollPoint:(NSPoint)scrollPoint
-{
-	// Select the pages in the Site Outline; the rest is taken care of for us
-	[[[self siteOutlineViewController] pagesController] setSelectedObjects:pages];
-	
-	
-	// Record what to do when redoing/undoing the change again
-	NSUndoManager *undoManager = [[self document] undoManager];
-	[[undoManager prepareWithInvocationTarget:self] undo_selectPages:pages scrollPoint:scrollPoint];
-}
-
-- (void)undoManagerWillCloseUndoGroup:(NSNotification *)notification
-{
-	// I have disabled this code for now as it forces any text editing to record undo operations
-	// character-by-character. Mike.
-	
-	/*
-	NSUndoManager *undoManager = [notification object];
-	
-	// When ending the top level undo group, record the selected pages
-	if ([undoManager groupingLevel] == 1)
-	{
-		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
-		
-		// Figuring out the scroll point is a little trickier
-		NSPoint scrollPoint = NSZeroPoint;
-		WebView *webView = [[self webViewController] webView];
-		NSView <WebDocumentView> *documentView = [[[webView mainFrame] frameView] documentView];
-		NSClipView *clipView = (NSClipView *)[documentView superview];
-		if ([clipView isKindOfClass:[NSClipView class]])
-		{
-			scrollPoint = [clipView documentVisibleRect].origin;
-		}
-		
-		[[undoManager prepareWithInvocationTarget:self] undo_selectPages:selectedPages scrollPoint:scrollPoint];
-	}*/
 }
 
 #pragma mark -
