@@ -209,6 +209,8 @@
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
 		2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */; };
 		2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */; };
+		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
+		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* KTHTMLParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */; };
 		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -1648,6 +1650,8 @@
 		2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSResponder+Karelia.m"; sourceTree = "<group>"; };
 		2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoadingPlaceholderViewController.h; sourceTree = "<group>"; };
 		2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLoadingPlaceholderViewController.m; sourceTree = "<group>"; };
+		2713C0671078177A000864C2 /* SVLayoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLayoutView.h; sourceTree = "<group>"; };
+		2713C0681078177A000864C2 /* SVLayoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLayoutView.m; sourceTree = "<group>"; };
 		271568660D5B2EE100A91E58 /* KTElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTElementTemplate.html; sourceTree = "<group>"; };
 		27156A800D5CA1C700A91E58 /* KTHTMLParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTHTMLParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
@@ -2987,6 +2991,8 @@
 				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
 				2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */,
 				2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */,
+				2713C0671078177A000864C2 /* SVLayoutView.h */,
+				2713C0681078177A000864C2 /* SVLayoutView.m */,
 			);
 			name = Loading;
 			sourceTree = "<group>";
@@ -5052,6 +5058,7 @@
 				27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */,
 				2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */,
 				2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */,
+				2713C0691078177A000864C2 /* SVLayoutView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6452,6 +6459,7 @@
 				27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,
 				2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */,
+				2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
