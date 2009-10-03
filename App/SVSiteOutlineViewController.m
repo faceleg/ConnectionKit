@@ -23,8 +23,10 @@
 
 #import "NSArray+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
+#import "NSResponder+Karelia.h"
 #import "NSSet+KTExtensions.h"
 #import "NSSet+Karelia.h"
 
@@ -445,7 +447,55 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)delete:(id)sender
 {
-    NSLog(@"-[%@ %@]", self, NSStringFromSelector(_cmd));
+    /// Old code did a -processPendingChanges here but haven't a clue why. Mike.
+        
+    
+    if ([self canDelete])
+    {
+        NSSet *selection = [[NSSet alloc] initWithArray:[[self pagesController] selectedObjects]];
+        
+        // Remove the pages from their parents
+        NSSet *parentPages = [selection valueForKey:@"parent"];
+        for (KTPage *aParentPage in parentPages)
+        {
+            [aParentPage removePages:selection];	// Far more efficient than calling -removePage: repetitively
+        }
+            
+        // Delete the pages
+		[[[self rootPage] managedObjectContext] deleteObjectsInCollection:selection];
+		
+		// Label undo menu
+        NSUndoManager *undoManager = [[[self rootPage] managedObjectContext] undoManager];
+		if ([selection count] == 1)
+		{
+			if ([[selection anyObject] isCollection])
+			{
+				[undoManager setActionName:NSLocalizedString(@"Delete Collection", "Delete Collection MenuItem")];
+			}
+			else
+			{
+				[undoManager setActionName:NSLocalizedString(@"Delete Page", "Delete Page MenuItem")];
+			}
+		}
+		else
+		{
+			[undoManager setActionName:NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")];
+		}
+    }
+    else
+    {
+        // There shouldn't be another responder up the chain that handles this so it will beep. But you never know, somebody else might like to handle it.
+        [self makeNextResponderDoCommandBySelector:_cmd];
+    }
+}
+
+// Can only delete a page if there's a selection and that selection doesn't include the root page
+- (BOOL)canDelete
+{
+    NSObjectController *objectController = [self pagesController];
+    BOOL result = ([objectController canRemove] &&
+                   ![[objectController selectedObjects] containsObjectIdenticalTo:[self rootPage]]);
+    return result;
 }
 
 - (void)keyDown:(NSEvent *)theEvent
@@ -600,8 +650,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 }
 
 
-#pragma mark -
-#pragma mark Delegate (Cell Drawing)
+#pragma mark Delegate
 
 - (void)outlineView:(NSOutlineView *)outlineView
     willDisplayCell:(KTImageTextCell *)cell
@@ -837,19 +886,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     return result;
 }
 
-#pragma mark Delegate (Editing)
-
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	return NO;
 }
-
-- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)command
-{
-    return NO;
-}
-
-#pragma mark Delegate (Selection)
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
@@ -903,8 +943,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 }
 
-#pragma mark Delegate (Row Height)
-
 - (float)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	if (item == [self rootPage]) 
@@ -929,6 +967,20 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			return LARGE_ICON_CELL_HEIGHT;
 		}
 	}
+}
+
+#pragma mark NSUserInterfaceValidations
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = NO;
+    
+    if ([anItem action] == @selector(delete:))
+    {
+        result = [self canDelete];
+    }
+    
+    return result;
 }
 
 #pragma mark Notification Handlers

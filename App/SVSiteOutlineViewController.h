@@ -17,7 +17,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @class KTPage;
 
 
-@interface SVSiteOutlineViewController : NSViewController
+@interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
 {
   @private
     NSOutlineView               *_outlineView;
@@ -54,7 +54,8 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
 
 // Deletes the selected pages
-- (void)delete:(id)sender;
+- (IBAction)delete:(id)sender;
+@property(nonatomic, readonly) BOOL canDelete;
 
 
 #pragma mark Options

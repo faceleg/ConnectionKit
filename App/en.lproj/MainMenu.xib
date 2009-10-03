@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="288"/>
+			<integer value="29"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -458,15 +458,6 @@
 									<reference key="NSMenu" ref="261338889"/>
 									<string key="NSTitle">Delete</string>
 									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="375774895">
-									<reference key="NSMenu" ref="261338889"/>
-									<string key="NSTitle">Delete Page(s)</string>
-									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
@@ -1890,14 +1881,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">deletePages:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="375774895"/>
-					</object>
-					<int key="connectionID">673</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">paste:</string>
 						<reference key="source" ref="464856506"/>
 						<reference key="destination" ref="764860879"/>
@@ -2949,7 +2932,6 @@
 							<reference ref="1021189407"/>
 							<reference ref="65573845"/>
 							<reference ref="596601528"/>
-							<reference ref="375774895"/>
 							<reference ref="236219990"/>
 							<reference ref="156517136"/>
 							<reference ref="687393641"/>
@@ -3050,11 +3032,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">665</int>
 						<reference key="object" ref="596601528"/>
-						<reference key="parent" ref="261338889"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">670</int>
-						<reference key="object" ref="375774895"/>
 						<reference key="parent" ref="261338889"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -3761,7 +3738,7 @@
 				<boolean value="YES" key="163.ImportedFromIB2"/>
 				<string key="164.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="164.ImportedFromIB2"/>
-				<string key="169.IBEditorWindowLastContentRect">{{133, 702}, {257, 423}}</string>
+				<string key="169.IBEditorWindowLastContentRect">{{133, 333}, {257, 403}}</string>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="169.ImportedFromIB2"/>
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3876,8 +3853,6 @@
 				<boolean value="YES" key="656.ImportedFromIB2"/>
 				<string key="665.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="665.ImportedFromIB2"/>
-				<string key="670.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="670.ImportedFromIB2"/>
 				<string key="686.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="686.ImportedFromIB2"/>
 				<string key="687.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4550,10 +4525,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">KTDocSiteOutlineController</string>
 					<string key="superclassName">NSArrayController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">siteOutline</string>
-						<string key="NS.object.0">NSOutlineView</string>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTDocSiteOutlineController.h</string>
@@ -4637,7 +4608,6 @@
 						<string key="cutPages:">id</string>
 						<string key="cutViaContextualMenu:">id</string>
 						<string key="deletePagelets:">id</string>
-						<string key="deletePages:">id</string>
 						<string key="deleteViaContextualMenu:">id</string>
 						<string key="duplicate:">id</string>
 						<string key="duplicatePagelets:">id</string>
@@ -4654,7 +4624,6 @@
 						<string key="publishSiteAll:">id</string>
 						<string key="publishSiteChanges:">id</string>
 						<string key="publishSiteFromToolbar:">NSToolbarItem</string>
-						<string key="reloadOutline:">id</string>
 						<string key="remove:">id</string>
 						<string key="showChooseDesignSheet:">id</string>
 						<string key="showLinkPanel:">id</string>
@@ -4682,9 +4651,8 @@
 						<string key="oLinkView">KTLinkSourceView</string>
 						<string key="oMessageTextField">NSTextField</string>
 						<string key="oMessageWindow">KSBorderlessWindow</string>
-						<string key="oPageDetailsController">KTDocViewController</string>
 						<string key="oSidebarSplitView">RBSplitView</string>
-						<string key="siteOutlineController">KTDocSiteOutlineController</string>
+						<string key="siteOutlineViewController">SVSiteOutlineViewController</string>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -5000,6 +4968,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/NSResponder+Karelia.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSTabView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -5137,6 +5112,22 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVSiteOutlineViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">delete:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="outlineView">NSOutlineView</string>
+						<string key="pagesController">KTDocSiteOutlineController</string>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVSiteOutlineViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

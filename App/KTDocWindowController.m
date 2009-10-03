@@ -1218,31 +1218,6 @@ from representedObject */
 		}
 	}
 	
-	// "Delete Page(s)" deletePage:
-	else if ( itemAction == @selector(deletePages:) )
-	{
-		if (![[[self window] firstResponder] isEqual:[[self siteOutlineViewController] outlineView]])
-		{
-			return NO;
-		}
-
-		KTPage *selectedPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-		NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
-		
-		if ( (nil != selectedPage) && ![selectedPage isRoot] )
-		{
-			return YES;
-		}
-		else if ( ([selectedPages count] > 1) && ![selectedPages containsRoot] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-	
 	// "Delete Pagelet(s)" deletePagelets:
 	else if ( itemAction == @selector(deletePagelets:) )
 	{

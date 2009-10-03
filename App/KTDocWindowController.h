@@ -196,7 +196,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)pastePagelets:(id)sender;
 
 - (IBAction)deleteViaContextualMenu:(id)sender;
-- (IBAction)deletePages:(id)sender;
 - (IBAction)deletePagelets:(id)sender;
 
 - (IBAction)duplicate:(id)sender;
