@@ -52,7 +52,6 @@ extern NSString *gInfoWindowAutoSaveName;
     IBOutlet RBSplitView				*oSidebarSplitView;
 	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
 	SVSiteOutlineViewController         *_siteOutlineViewController;
-	IBOutlet NSObjectController			*oDocumentController;
 		
 	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
@@ -149,7 +148,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 // clean up at document close
 - (void)selectionDealloc;
-- (void)documentControllerDeallocSupport;
 
 - (void)showInfo:(BOOL)inShow;
 

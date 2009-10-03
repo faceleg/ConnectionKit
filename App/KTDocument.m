@@ -588,9 +588,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// suspend outline view updating
 		///[[self windowController] siteOutlineDeallocSupport];
 				
-		// final clean up, we're done
-		[(KTDocWindowController *)windowController documentControllerDeallocSupport];
-		
 		// balance retain in makeWindowControllers
 		[_mainWindowController release]; _mainWindowController = nil;
 	}

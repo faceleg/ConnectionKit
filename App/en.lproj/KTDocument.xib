@@ -10,7 +10,9 @@
 			<string key="com.apple.InterfaceBuilder.CocoaPlugin">732</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
-		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs"/>
+		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="1547"/>
+		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -39,7 +41,7 @@
 				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{800, 280}</string>
 				<object class="NSView" key="NSWindowView" id="810270195">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSView">
@@ -284,32 +286,12 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{835, 553}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{800, 302}</string>
 				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSFrameAutosaveName">KTDocument</string>
-			</object>
-			<object class="NSObjectController" id="884529613">
-				<array class="NSMutableArray" key="NSDeclaredKeys">
-					<string>selectedPage.fileName</string>
-					<string>selectedPage.isCollection</string>
-					<string>pageSource</string>
-					<string>selectedPage.fileExtensionInherited</string>
-					<string>selectedPage.keywordsAsArray</string>
-					<string>selectedPage.canEditTitle</string>
-					<string>selectedPages.fileName</string>
-					<string>managedObjectContext</string>
-					<string>document.managedObjectContext</string>
-					<string>selectedPage.fileExtension</string>
-					<string>selectedPagesIncludesACollection</string>
-					<string>selectedPages</string>
-					<string>allSelectedPageTitlesAreEditable</string>
-					<string>isCollection</string>
-				</array>
-				<string key="NSObjectClassName">KTDocument</string>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 			</object>
 			<object class="NSViewController" id="363902086"/>
 			<object class="NSArrayController" id="601368962">
@@ -540,14 +522,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oDocumentController</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="884529613"/>
-					</object>
-					<int key="connectionID">355</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">initialFirstResponder</string>
 						<reference key="source" ref="64365601"/>
 						<reference key="destination" ref="77244483"/>
@@ -734,12 +708,6 @@
 						<reference key="object" ref="905391626"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">First Responder</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">59</int>
-						<reference key="object" ref="884529613"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Document Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">381</int>
@@ -981,9 +949,9 @@
 				<string key="1540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1541.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBEditorWindowLastContentRect">{{456, 435}, {835, 553}}</string>
+				<string key="1547.IBEditorWindowLastContentRect">{{331, 435}, {835, 553}}</string>
 				<string key="1547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBWindowTemplateEditedContentRect">{{456, 435}, {835, 553}}</string>
+				<string key="1547.IBWindowTemplateEditedContentRect">{{331, 435}, {835, 553}}</string>
 				<boolean value="YES" key="1547.ImportedFromIB2"/>
 				<boolean value="YES" key="1547.windowTemplate.hasMinSize"/>
 				<string key="1547.windowTemplate.minSize">{800, 280}</string>
@@ -1033,8 +1001,6 @@
 				</object>
 				<string key="565.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="565.ImportedFromIB2"/>
-				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="59.ImportedFromIB2"/>
 				<string key="628.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="628.ImportedFromIB2"/>
 				<string key="630.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1107,30 +1073,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTDesignPickerView</string>
-					<string key="superclassName">NSView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="nextPage:">id</string>
-						<string key="prevPage:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="oNextButton">NSButton</string>
-						<string key="oPrevButton">NSButton</string>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTDesignPickerView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">KTDesignPickerView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">KTDocSiteOutlineController</string>
 					<string key="superclassName">NSArrayController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1159,17 +1101,6 @@
 						<string key="addPagelet:">id</string>
 						<string key="chooseDesign:">id</string>
 						<string key="clearLinkDestination:">id</string>
-						<string key="copy:">id</string>
-						<string key="copyPagelets:">id</string>
-						<string key="copyPages:">id</string>
-						<string key="copyViaContextualMenu:">id</string>
-						<string key="cut:">id</string>
-						<string key="cutPagelets:">id</string>
-						<string key="cutPages:">id</string>
-						<string key="cutViaContextualMenu:">id</string>
-						<string key="deletePagelets:">id</string>
-						<string key="deletePages:">id</string>
-						<string key="deleteViaContextualMenu:">id</string>
 						<string key="duplicate:">id</string>
 						<string key="duplicatePagelets:">id</string>
 						<string key="duplicateSelectedPages:">id</string>
@@ -1185,12 +1116,10 @@
 						<string key="publishSiteAll:">id</string>
 						<string key="publishSiteChanges:">id</string>
 						<string key="publishSiteFromToolbar:">NSToolbarItem</string>
-						<string key="reloadOutline:">id</string>
 						<string key="remove:">id</string>
 						<string key="showChooseDesignSheet:">id</string>
 						<string key="showLinkPanel:">id</string>
 						<string key="submitSiteToDirectory:">id</string>
-						<string key="toggleDesignsShown:">id</string>
 						<string key="updateWebView:">id</string>
 						<string key="visitPublishedPage:">id</string>
 						<string key="visitPublishedSite:">id</string>
@@ -1198,12 +1127,6 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oContentViewController">SVWebContentAreaController</string>
-						<string key="oDesignBackButton">NSButton</string>
-						<string key="oDesignCloseButton">NSButton</string>
-						<string key="oDesignForwardButton">NSButton</string>
-						<string key="oDesignsSplitPane">RBSplitSubview</string>
-						<string key="oDesignsSplitView">RBSplitView</string>
-						<string key="oDesignsView">KTDesignPickerView</string>
 						<string key="oDocumentController">NSObjectController</string>
 						<string key="oLinkControlsBox">RoundedBox</string>
 						<string key="oLinkDestinationField">NSTextField</string>
@@ -1455,6 +1378,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/NSResponder+Karelia.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSTabView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1553,6 +1483,11 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVSiteOutlineViewController</string>
 					<string key="superclassName">NSViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="copy:">id</string>
+						<string key="cut:">id</string>
+						<string key="delete:">id</string>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="outlineView">NSOutlineView</string>
 						<string key="pagesController">KTDocSiteOutlineController</string>
@@ -1565,10 +1500,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebContentAreaController</string>
 					<string key="superclassName">KSTabViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">updateWebView:</string>
-						<string key="NS.object.0">id</string>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebContentAreaController.h</string>

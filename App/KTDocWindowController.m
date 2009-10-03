@@ -103,9 +103,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (id)init
 {
-	self = [super initWithWindowNibName:@"KTDocument"];
-	
-	if ( nil != self )
+	if (self = [super initWithWindowNibName:@"KTDocument"])
 	{
 		// do not cascade window using size in nib
 		[self setShouldCascadeWindows:NO];
@@ -128,9 +126,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // disconnect UI delegates
-	[oDocumentController unbind:@"contentObject"];
-    [oDocumentController setContent:nil];
-    [oSidebarSplitView setDelegate:nil];
+	[oSidebarSplitView setDelegate:nil];
 
     // release ivars
 	[self setContextElementInformation:nil];
@@ -149,13 +145,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [super dealloc];
 }
 
-// break bindings in oDocumentController
-- (void)documentControllerDeallocSupport
-{
-	[oDocumentController unbind:@"contentObject"];
-    [oDocumentController setContent:nil];
-}
-
 - (void)selectionDealloc
 {
 	[self setSelectedInlineImageElement:nil];
@@ -165,10 +154,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
-	
-	
-	// Setup binding
-	[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
 	
 	
 	// Now let the webview and the site outline initialize themselves.
@@ -1450,11 +1435,7 @@ from representedObject */
     }
     
     
-	[oDocumentController unbind:@"contentObject"];
-	
 	[self setSiteOutlineViewController:nil];
-	
-	[oDocumentController setContent:nil];
 }
 
 /*!	Notification that some window is closing
