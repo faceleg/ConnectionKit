@@ -52,6 +52,7 @@
 #import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
+#import "NSResponder+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
