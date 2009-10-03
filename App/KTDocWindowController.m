@@ -299,9 +299,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Patch responder chain
     NSResponder *previousResponder = [_childControllers lastObject];
     if (!previousResponder) previousResponder = self;
-    
-    [controller setNextResponder:[previousResponder nextResponder]];
-    [previousResponder setNextResponder:controller];
+    [previousResponder setNextResponder:controller insert:YES];
     
     
     // Add to controller chain
