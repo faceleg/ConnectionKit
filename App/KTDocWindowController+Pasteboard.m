@@ -27,16 +27,10 @@
 #import "NSThread+Karelia.h"
 
 
-@interface KTDocWindowController ( Pasteboard_Private )
-- (void)copyPagelets:(NSArray *)thePages toPasteboard:(NSPasteboard *)aPboard;
-
+@interface KTDocWindowController (Pasteboard_Private)
 - (NSArray *)pastePagesFromPasteboard:(NSPasteboard *)aPboard toParent:(KTPage *)aParent keepingUniqueID:(BOOL)aFlag;
 - (NSArray *)pastePagesFromArchive:(NSArray *)archive toParent:(KTPage *)aParent;
 - (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag;
-
-- (void)removePages:(NSArray *)anArray fromContext:(NSManagedObjectContext *)aContext;
-- (void)removePagelets:(NSArray *)anArray fromContext:(NSManagedObjectContext *)aContext;
-- (void)actuallyDeletePages:(NSDictionary *)aContext;
 @end
 
 
