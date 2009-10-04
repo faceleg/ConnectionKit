@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1547"/>
+			<integer value="1647"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -69,7 +69,7 @@
 														<object class="NSOutlineView" id="373687824">
 															<reference key="NSNextResponder" ref="218882052"/>
 															<int key="NSvFlags">4370</int>
-															<string key="NSFrameSize">{150, 530}</string>
+															<string key="NSFrameSize">{160, 530}</string>
 															<reference key="NSSuperview" ref="218882052"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="_NSCornerView" key="NSCornerView">
@@ -80,7 +80,7 @@
 															<array class="NSMutableArray" key="NSTableColumns">
 																<object class="NSTableColumn" id="402314034">
 																	<string key="NSIdentifier">displayName</string>
-																	<double key="NSWidth">147</double>
+																	<double key="NSWidth">157</double>
 																	<double key="NSMinWidth">16</double>
 																	<double key="NSMaxWidth">1000</double>
 																	<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -170,7 +170,7 @@
 															<float key="NSOutlineViewIndentationPerLevelKey">14</float>
 														</object>
 													</array>
-													<string key="NSFrameSize">{150, 530}</string>
+													<string key="NSFrameSize">{160, 530}</string>
 													<reference key="NSSuperview" ref="243233654"/>
 													<reference key="NSNextKeyView" ref="373687824"/>
 													<reference key="NSDocView" ref="373687824"/>
@@ -179,8 +179,8 @@
 												</object>
 												<object class="NSScroller" id="523380596">
 													<reference key="NSNextResponder" ref="243233654"/>
-													<int key="NSvFlags">-2147483392</int>
-													<string key="NSFrame">{{135, 1}, {15, 140}}</string>
+													<int key="NSvFlags">256</int>
+													<string key="NSFrame">{{160, 0}, {15, 530}}</string>
 													<reference key="NSSuperview" ref="243233654"/>
 													<reference key="NSTarget" ref="243233654"/>
 													<string key="NSAction">_doScroller:</string>
@@ -189,7 +189,7 @@
 												<object class="NSScroller" id="181544056">
 													<reference key="NSNextResponder" ref="243233654"/>
 													<int key="NSvFlags">-2147483392</int>
-													<string key="NSFrame">{{0, 515}, {0, 15}}</string>
+													<string key="NSFrame">{{-100, -100}, {160, 15}}</string>
 													<reference key="NSSuperview" ref="243233654"/>
 													<int key="NSsFlags">1</int>
 													<reference key="NSTarget" ref="243233654"/>
@@ -197,10 +197,10 @@
 													<double key="NSPercent">0.8875739574432373</double>
 												</object>
 											</array>
-											<string key="NSFrame">{{0, 23}, {150, 530}}</string>
+											<string key="NSFrame">{{0, 23}, {175, 530}}</string>
 											<reference key="NSSuperview" ref="23163371"/>
 											<reference key="NSNextKeyView" ref="218882052"/>
-											<int key="NSsFlags">560</int>
+											<int key="NSsFlags">16</int>
 											<reference key="NSVScroller" ref="523380596"/>
 											<reference key="NSHScroller" ref="181544056"/>
 											<reference key="NSContentView" ref="218882052"/>
@@ -209,7 +209,7 @@
 										<object class="BWAnchoredButtonBar" id="90532405">
 											<reference key="NSNextResponder" ref="23163371"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrameSize">{150, 23}</string>
+											<string key="NSFrameSize">{175, 23}</string>
 											<reference key="NSSuperview" ref="23163371"/>
 											<bool key="BWABBIsResizable">YES</bool>
 											<bool key="BWABBIsAtBottom">YES</bool>
@@ -217,7 +217,7 @@
 											<int key="BWABBSelectedIndex">0</int>
 										</object>
 									</array>
-									<string key="NSFrameSize">{150, 553}</string>
+									<string key="NSFrameSize">{175, 553}</string>
 									<reference key="NSSuperview" ref="463123297"/>
 									<string key="NSClassName">NSView</string>
 								</object>
@@ -228,7 +228,7 @@
 										<object class="NSTabView" id="92364140">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrameSize">{684, 553}</string>
+											<string key="NSFrameSize">{659, 553}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<array class="NSMutableArray" key="NSTabViewItems"/>
 											<reference key="NSFont" ref="502413197"/>
@@ -236,7 +236,7 @@
 											<bool key="NSAllowTruncatedLabels">YES</bool>
 										</object>
 									</array>
-									<string key="NSFrame">{{151, 0}, {684, 553}}</string>
+									<string key="NSFrame">{{176, 0}, {659, 553}}</string>
 									<reference key="NSSuperview" ref="463123297"/>
 									<string key="NSClassName">NSView</string>
 								</object>
@@ -1116,7 +1116,6 @@
 						<string key="publishSiteAll:">id</string>
 						<string key="publishSiteChanges:">id</string>
 						<string key="publishSiteFromToolbar:">NSToolbarItem</string>
-						<string key="remove:">id</string>
 						<string key="showChooseDesignSheet:">id</string>
 						<string key="showLinkPanel:">id</string>
 						<string key="submitSiteToDirectory:">id</string>
@@ -1127,7 +1126,6 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oContentViewController">SVWebContentAreaController</string>
-						<string key="oDocumentController">NSObjectController</string>
 						<string key="oLinkControlsBox">RoundedBox</string>
 						<string key="oLinkDestinationField">NSTextField</string>
 						<string key="oLinkLocalPageField">NSTextField</string>
