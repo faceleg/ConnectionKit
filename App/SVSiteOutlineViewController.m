@@ -550,8 +550,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)keyDown:(NSEvent *)theEvent
 {
     NSString *characters = [theEvent charactersIgnoringModifiers];
-    if ([characters isEqualToCharacter:NSBackspaceCharacter] ||
-        [characters isEqualToCharacter:NSDeleteCharacter])
+    if ([characters isEqualToCharacter:NSDeleteCharacter] ||    // -deleteBackwards:
+        [characters isEqualToCharacter:NSDeleteFunctionKey])    // -deleteForwards:
     {
         [self delete:self];
     }
