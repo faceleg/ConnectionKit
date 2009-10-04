@@ -19,7 +19,13 @@
     _webViewController = [[SVWebViewLoadController alloc] init];
     [_webViewController setDelegate:self];
     
-    [self setViewControllers:[NSArray arrayWithObject:_webViewController]
+    _placeholderViewController = [[NSViewController alloc] initWithNibName:@"SelectionPlaceholder"
+                                                                    bundle:nil];
+    
+    [self setViewControllers:[NSArray arrayWithObjects:
+                              _webViewController,
+                              _placeholderViewController,
+                              nil]
                selectedIndex:0];
     
     return self;
@@ -28,6 +34,8 @@
 - (void)dealloc
 {
     [_webViewController release];
+    [_placeholderViewController release];
+    
     [_selectedPages release];
     
     [super dealloc];
@@ -47,13 +55,14 @@
     switch ([pages count])
     {
         case 0:
-            [[self webViewLoadController] setPage:nil];
+            [self setSelectedViewController:_placeholderViewController];
             break;
         case 1:
             [[self webViewLoadController] setPage:[pages objectAtIndex:0]];
+            [self setSelectedViewController:[self webViewLoadController]];
             break;
         default:
-            // TODO: display "Multiple pages selected" placeholder instead of webview
+            [self setSelectedViewController:_placeholderViewController];
             break;
     }
 }

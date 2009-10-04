@@ -281,6 +281,7 @@
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
 		275E07240DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */; };
+		2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2761C0181079074F00683C23 /* SelectionPlaceholder.xib */; };
 		276503170EAD26AB00461A0E /* KTMaster+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503160EAD26AB00461A0E /* KTMaster+Internal.h */; };
 		276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */; };
 		276503720EAD2FFB00461A0E /* KTAbstractElement+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503700EAD2FFB00461A0E /* KTAbstractElement+Internal.h */; };
@@ -1722,6 +1723,7 @@
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
 		275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaPersistentStoreCoordinator.m; sourceTree = "<group>"; };
+		2761C0181079074F00683C23 /* SelectionPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectionPlaceholder.xib; sourceTree = "<group>"; };
 		276503160EAD26AB00461A0E /* KTMaster+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMaster+Internal.h"; sourceTree = "<group>"; };
 		276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractPage+Internal.h"; sourceTree = "<group>"; };
 		276503700EAD2FFB00461A0E /* KTAbstractElement+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractElement+Internal.h"; sourceTree = "<group>"; };
@@ -3002,6 +3004,7 @@
 			children = (
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
+				2761C0181079074F00683C23 /* SelectionPlaceholder.xib */,
 			);
 			name = "Other content";
 			sourceTree = "<group>";
@@ -5775,6 +5778,7 @@
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
 				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
+				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

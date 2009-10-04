@@ -14,6 +14,7 @@
 {
   @private
     SVWebViewLoadController *_webViewController;
+    NSViewController        *_placeholderViewController;
     
     NSArray *_selectedPages;
 }
