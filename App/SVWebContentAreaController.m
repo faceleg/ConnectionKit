@@ -51,20 +51,28 @@
     [_selectedPages release];
     _selectedPages = pages;
     
+    
     // Update subcontrollers
+    NSViewController *controller;
     switch ([pages count])
     {
         case 0:
-            [self setSelectedViewController:_placeholderViewController];
+            [_placeholderViewController setTitle:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
+            controller = _placeholderViewController;
             break;
+            
         case 1:
             [[self webViewLoadController] setPage:[pages objectAtIndex:0]];
-            [self setSelectedViewController:[self webViewLoadController]];
+            controller = [self webViewLoadController];
             break;
+            
         default:
-            [self setSelectedViewController:_placeholderViewController];
+            [_placeholderViewController setTitle:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
+            controller = _placeholderViewController;
             break;
     }
+    
+    [self setSelectedViewController:controller];
 }
 
 #pragma mark View controllers
