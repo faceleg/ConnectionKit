@@ -87,6 +87,8 @@ typedef enum {
 - (IBAction)copy:(id)sender;
 - (BOOL)copy;
 // - (IBAction)paste:(id)sender;
+- (IBAction)delete:(id)sender;
+
 
 #pragma mark Layout
 - (NSRect)rectOfDragCaret;
@@ -135,6 +137,8 @@ typedef enum {
  */
 - (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
+
+- (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 
 // Return something other than NSDragOperationNone to take command of the drop
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender

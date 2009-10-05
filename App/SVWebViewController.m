@@ -393,6 +393,12 @@
     return result;
 }
 
+- (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
+{
+    return NO;
+    // TODO: Implement deletion support
+}
+
 - (BOOL)webEditorView:(SVWebEditorView *)sender
            writeItems:(NSArray *)items
          toPasteboard:(NSPasteboard *)pasteboard;

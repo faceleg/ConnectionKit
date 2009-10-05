@@ -13,6 +13,7 @@
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "NSEvent+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 
@@ -323,7 +324,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     if ([self copy])
     {
-        // TODO: Delete selection
+        [self delete:sender];
     }
 }
 
@@ -341,6 +342,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if (!result) NSBeep();
     
     return result;
+}
+
+- (void)delete:(id)sender;
+{
+    if (![[self dataSource] webEditorView:self deleteItems:[self selectedItems]])
+    {
+        NSBeep();
+    }
 }
 
 #pragma mark Getting Item Information
@@ -502,6 +511,19 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     //NSLog(@"Hit Test: %@", result);
     return result;
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+    // Interpret delete keys specially, otherwise ignore key events
+    if ([theEvent isDeleteKeyEvent])
+    {
+        [self delete:self];
+    }
+    else
+    {
+        [super keyDown:theEvent];
+    }
 }
 
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector
@@ -877,7 +899,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
-    BOOL result = NO;
+    BOOL result = YES;
     SEL action = [anItem action];
     
     // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
