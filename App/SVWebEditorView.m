@@ -554,11 +554,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // Store the event for a bit (for draging, editing, etc.)
-    OBASSERT(!_mouseDownEvent);
-    _mouseDownEvent = [event retain];
-    
-    
     // While editing, we enter into a bit of special mode where a click anywhere outside the editing area is targetted to ourself. This is done so we can take control of the cursor. A click outside the editing area will end editing, but also handle the event as per normal. Easiest way to achieve this I reckon is to end editing and then simply refire the event, arriving at its real target. Very re-entrant :)
     if ([self mode] == SVWebEditingModeEditing)
     {
@@ -567,6 +562,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [NSApp sendEvent:event];
         return;
     }
+    
+    
+    // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
+    OBASSERT(!_mouseDownEvent);
+    _mouseDownEvent = [event retain];
     
     
     
