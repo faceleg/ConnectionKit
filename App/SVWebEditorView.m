@@ -555,6 +555,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)mouseDown:(NSEvent *)event
 {
     // Store the event for a bit (for draging, editing, etc.)
+    OBASSERT(!_mouseDownEvent);
     _mouseDownEvent = [event retain];
     
     
@@ -611,7 +612,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)mouseUpEvent
 {
     if (_mouseDownEvent)
     {
@@ -622,15 +623,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         if (_mouseUpMayBeginEditing)
         {
             // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-            if ([theEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+            if ([mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
             {
                 // There might be multiple items selected. If so, 
                 // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
                 [self setMode:SVWebEditingModeEditing];
                 
-                // Refire events, this time they'll go to their correct target.
-                [NSApp sendEvent:mouseDownEvent];
-                [NSApp sendEvent:theEvent];
+                // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
+                // Note that they're posted in reverse order since I'm placing onto the front of the queue
+                [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
             }
         }
         
