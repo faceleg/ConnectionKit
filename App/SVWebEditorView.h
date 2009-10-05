@@ -100,7 +100,7 @@ typedef enum {
 #pragma mark Drawing
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
-
+- (void)drawDragCaretInView:(NSView *)view;
 
 #pragma mark Dragging Destination
 

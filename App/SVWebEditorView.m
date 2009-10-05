@@ -432,11 +432,18 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Draw drag caret
+    [self drawDragCaretInView:view];
+}
+
+- (void)drawDragCaretInView:(NSView *)view;
+{
     if (_dragCaretNode1 && _dragCaretNode2)
     {
         [[NSColor aquaColor] set];
-        NSRect rect = [self rectOfDragCaret];
-        NSRectFill([view convertRect:rect fromView:self]);
+        NSRect drawingRect = [view convertRect:[self rectOfDragCaret] fromView:self];
+        NSRect outlineRect = NSInsetRect(drawingRect, 0.0f, 1.0f);
+        NSEraseRect(outlineRect);
+        NSRectFill(NSInsetRect(outlineRect, 0.0f, 1.0f));
     }
 }
 
