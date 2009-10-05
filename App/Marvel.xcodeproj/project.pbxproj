@@ -102,6 +102,7 @@
 				2770641E0DA985AA001EB02A /* Script - Add QuickLook LEOPARD */,
 				CE452BD41057052300EFF3EC /* Script - Add Dock Tile Plugin */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
+				CE85D385107A84E200F5299F /* Script - [RELEASE] remove nib stuff */,
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
@@ -6015,6 +6016,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nSOURCE=\"${SRCROOT}/../Plugins/DockTile.docktileplugin\"\nPLUGINS_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\n\necho \"Dock Tile Plugin: PBXCp ${SOURCE} ${PLUGINS_DIR}\"\n\nmkdir -p ${PLUGINS_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${SOURCE}\" \"${PLUGINS_DIR}\"\n\n\n";
+		};
+		CE85D385107A84E200F5299F /* Script - [RELEASE] remove nib stuff */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - [RELEASE] remove nib stuff";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# see http://is.gd/3Z8mI  for why we can remove these files.  But we don't want to remove them for betas so localizers can do their thing.\n\nif [ $PRODUCT_VARIANT == \"BETA\" ]\nthen\n\techo \"this is beta -- not stripping nibs\"\nelse\n\techo \"this is release -- stripping nibs\"\nfi\n\n\necho \"For now, actually stripping all of this, just to make sure this all works.\"\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'designable.nib' -delete\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'classes.nib' -delete\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'info.nib' -delete\n";
+			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
 			isa = PBXShellScriptBuildPhase;

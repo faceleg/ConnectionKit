@@ -41,8 +41,8 @@ pushd "$2" > /dev/null
 mkdir -p$VERBOSE $WD/Subversion/imedia
 cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
 
-mkdir -p$VERBOSE $WD/Subversion/connection/branches/sandvox1.6
-cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/branches/sandvox1.6
+mkdir -p$VERBOSE $WD/Subversion/connection/branches/1.2
+cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/branches/1.2
 
 mkdir -p$VERBOSE $WD/Subversion/Shared/Code/AmazonSupport
 cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Shared/Code/AmazonSupport
