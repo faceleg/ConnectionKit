@@ -24,6 +24,7 @@
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSDate+Karelia.h"
+#import "NSEvent+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
@@ -549,9 +550,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-    NSString *characters = [theEvent charactersIgnoringModifiers];
-    if ([characters isEqualToCharacter:NSDeleteCharacter] ||    // -deleteBackwards:
-        [characters isEqualToCharacter:NSDeleteFunctionKey])    // -deleteForwards:
+    if ([theEvent isDeleteKeyEvent])
     {
         [self delete:self];
     }
