@@ -409,9 +409,7 @@
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 				<bool key="NSAutomaticallyRearrangesObjects">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="977032394">
-				<string key="NSClassName">SVWebContentAreaController</string>
-			</object>
+			<object class="NSViewController" id="539911399"/>
 			<object class="NSWindowTemplate" id="64365601">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
@@ -702,14 +700,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oContentViewController</string>
-						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="977032394"/>
-					</object>
-					<int key="connectionID">1516</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="815548613"/>
 						<reference key="destination" ref="496514088"/>
@@ -723,22 +713,6 @@
 						<reference key="destination" ref="815548613"/>
 					</object>
 					<int key="connectionID">1666</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tabView</string>
-						<reference key="source" ref="977032394"/>
-						<reference key="destination" ref="92364140"/>
-					</object>
-					<int key="connectionID">1668</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="977032394"/>
-						<reference key="destination" ref="92364140"/>
-					</object>
-					<int key="connectionID">1669</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -787,6 +761,30 @@
 						<reference key="destination" ref="601368962"/>
 					</object>
 					<int key="connectionID">1683</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="539911399"/>
+						<reference key="destination" ref="92364140"/>
+					</object>
+					<int key="connectionID">1695</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabView</string>
+						<reference key="source" ref="539911399"/>
+						<reference key="destination" ref="92364140"/>
+					</object>
+					<int key="connectionID">1696</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oContentViewController</string>
+						<reference key="source" ref="496514088"/>
+						<reference key="destination" ref="539911399"/>
+					</object>
+					<int key="connectionID">1697</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -839,12 +837,6 @@
 							<reference ref="634066315"/>
 						</array>
 						<reference key="parent" ref="834058994"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">660</int>
-						<reference key="object" ref="977032394"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Content View Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">-3</int>
@@ -1081,6 +1073,11 @@
 						<reference key="object" ref="17210142"/>
 						<reference key="parent" ref="356048149"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1694</int>
+						<reference key="object" ref="539911399"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1128,6 +1125,8 @@
 				<string key="1691.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1692.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1693.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1694.CustomClassName">SVWebContentAreaController</string>
+				<string key="1694.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="381.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="381.ImportedFromIB2"/>
 				<boolean value="YES" key="381.windowTemplate.hasMinSize"/>
@@ -1159,13 +1158,12 @@
 				<boolean value="YES" key="634.ImportedFromIB2"/>
 				<string key="658.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="658.ImportedFromIB2"/>
-				<boolean value="YES" key="660.ImportedFromIB2"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1693</int>
+			<int key="maxID">1697</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

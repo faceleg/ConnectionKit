@@ -31,6 +31,12 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)coder
+{
+    // We don't support loading any properties from a nib (yet), so jump straight to normal initialisation
+    return [self init];
+}
+
 - (void)dealloc
 {
     [_webViewController release];
