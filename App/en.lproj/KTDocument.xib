@@ -409,7 +409,7 @@
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 				<bool key="NSAutomaticallyRearrangesObjects">YES</bool>
 			</object>
-			<object class="NSViewController" id="539911399"/>
+			<object class="NSViewController" id="819526151"/>
 			<object class="NSWindowTemplate" id="64365601">
 				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
@@ -716,14 +716,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="363902086"/>
-						<reference key="destination" ref="243233654"/>
-					</object>
-					<int key="connectionID">1672</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">outlineView</string>
 						<reference key="source" ref="363902086"/>
 						<reference key="destination" ref="373687824"/>
@@ -765,7 +757,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
-						<reference key="source" ref="539911399"/>
+						<reference key="source" ref="819526151"/>
 						<reference key="destination" ref="92364140"/>
 					</object>
 					<int key="connectionID">1695</int>
@@ -773,7 +765,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">tabView</string>
-						<reference key="source" ref="539911399"/>
+						<reference key="source" ref="819526151"/>
 						<reference key="destination" ref="92364140"/>
 					</object>
 					<int key="connectionID">1696</int>
@@ -782,9 +774,17 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oContentViewController</string>
 						<reference key="source" ref="496514088"/>
-						<reference key="destination" ref="539911399"/>
+						<reference key="destination" ref="819526151"/>
 					</object>
 					<int key="connectionID">1697</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="363902086"/>
+						<reference key="destination" ref="23163371"/>
+					</object>
+					<int key="connectionID">1698</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1075,7 +1075,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1694</int>
-						<reference key="object" ref="539911399"/>
+						<reference key="object" ref="819526151"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
@@ -1163,7 +1163,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1697</int>
+			<int key="maxID">1698</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
