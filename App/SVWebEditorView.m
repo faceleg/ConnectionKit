@@ -65,10 +65,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [self addSubview:_webView];
     
     
-    // Default settings
-    [self setAllowsUndo:NO];
-    
-    
     // Tracking area
     NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
@@ -322,9 +318,18 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
-// Covers for WebKit methods pending publication
+#pragma mark Undo Support
+
+/*  Covers for prviate WebKit methods
+ */
+
 - (BOOL)allowsUndo { return [(NSTextView *)[self webView] allowsUndo]; }
 - (void)setAllowsUndo:(BOOL)undo { [(NSTextView *)[self webView] setAllowsUndo:undo]; }
+
+- (void)removeAllUndoActions
+{
+    [[self webView] performSelector:@selector(_clearUndoRedoOperations)];
+}
 
 #pragma mark Cut, Copy & Paste
 

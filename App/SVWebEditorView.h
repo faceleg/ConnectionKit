@@ -82,7 +82,11 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+
+#pragma mark Undo Support
+// It is the responsibility of SVWebEditorTextBlocks to use these methods to control undo support as they modify the DOM
 @property(nonatomic) BOOL allowsUndo;
+- (void)removeAllUndoActions;
 
 
 #pragma mark Cut, Copy & Paste
