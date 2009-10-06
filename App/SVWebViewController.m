@@ -406,6 +406,11 @@
 
 #pragma mark SVWebEditorViewDelegate
 
+- (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+{
+    [self setTitle:title];
+}
+
 - (void)webEditorView:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
 {
     NSURL *URL = [actionInfo objectForKey:@"WebActionOriginalURLKey"];

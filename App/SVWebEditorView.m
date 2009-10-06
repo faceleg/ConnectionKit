@@ -829,6 +829,16 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @synthesize delegate = _delegate;
 
+#pragma mark WebFrameLoadDelegate
+
+- (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
+{
+    if (frame == [sender mainFrame])
+    {
+        [[self delegate] webEditorView:self didReceiveTitle:title];
+    }
+}
+
 #pragma mark WebPolicyDelegate
 
 /*	We don't want to allow navigation within Sandvox! Open in web browser instead
