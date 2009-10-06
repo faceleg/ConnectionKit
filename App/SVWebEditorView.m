@@ -904,6 +904,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
+/*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
+ */
+- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
+{
+	return [[[NSUndoManager alloc] init] autorelease];
+}
+
 #pragma mark NSUserInterfaceValidations
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
