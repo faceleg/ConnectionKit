@@ -244,56 +244,6 @@
 // TODO: WebFrameLoadDelegate:
 //  - window title
 
-#pragma mark Editing
-
-// FIXME: Need to hook this up to WebEditorView
-
-- (void)webViewDidChangeSelection:(NSNotification *)notification
-{
-    OBPRECONDITION([notification object] == [self webView]);
-	
-    [self setSelectedTextBlock:[self textBlockForDOMRange:[[self webEditorView] selectedDOMRange]]];
-}
-
-- (BOOL)webView:(WebView *)aWebView shouldEndEditingInDOMRange:(DOMRange *)range
-{
-    OBPRECONDITION(aWebView == [self webView]);
-	
-    // Ask the text block if it wants to end editing
-    SVTextBlock *textBlock = [self textBlockForDOMRange:range];
-    BOOL result = (textBlock ? [textBlock shouldEndEditing] : YES);
-    return result;
-}
-
-/*	Called whenever the user tries to type something.
- *	We never allow a tab to be entered. (Although such a case never seems to occur)
- */
-- (BOOL)webView:(WebView *)aWebView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
-{
-	BOOL result = YES;
-	
-	if ([text isEqualToString:@"\t"])	// Disallow tabs
-	{
-		result = NO;
-	}
-	
-	return result;
-}
-
-
-/*	When certain actions are taken we override them
- */
-- (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector
-{
-	OBPRECONDITION(aWebView == [self webView]);
-	
-    // Pass on responsibility for handling the command
-    return [[self selectedTextBlock] webView:aWebView doCommandBySelector:selector];
-}
-
-// TODO: WebEditingDelegate:
-//  - (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
-
 #pragma mark Text Blocks
 
 @synthesize textBlocks = _textBlocks;
@@ -384,6 +334,12 @@
 {
     id <SVWebEditorItem> result = [self itemAtPoint:point];
     return result;
+}
+
+- (id <SVWebEditorTextBlock>)webEditorView:(SVWebEditorView *)sender
+                      textBlockForDOMRange:(DOMRange *)range;
+{
+    return [self textBlockForDOMRange:range];
 }
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;

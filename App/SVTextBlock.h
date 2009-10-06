@@ -11,9 +11,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "SVWebEditorTextBlockProtocol.h"
 
 
-@interface SVTextBlock : NSObject
+@interface SVTextBlock : NSObject <SVWebEditorTextBlock>
 {
   @private
     DOMHTMLElement      *_element;
@@ -56,9 +57,6 @@
 // We follow the same pattern (and notifications) as NSText/NSTextView
 - (void)didChangeText;
 - (void)didBeginEditingText;    // should be no need to call yourself, -didChangeText will call it for you
-- (BOOL)shouldEndEditing;   // provided for webview's delegate to signal when editing is done
-
-- (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector;
 
 @end
 

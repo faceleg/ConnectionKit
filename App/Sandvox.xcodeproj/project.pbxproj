@@ -328,6 +328,7 @@
 		278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */; settings = {ATTRIBUTES = (); }; };
 		278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */; };
 		278FCE941079F2AD0091A239 /* NSEvent+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */; };
+		278FCFBB107B5E9D0091A239 /* SVWebEditorTextBlockProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextBlockProtocol.h */; };
 		2790BD9E103E890600654665 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BD9C103E890600654665 /* SVDOMController.h */; };
 		2790BD9F103E890600654665 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BD9D103E890600654665 /* SVDOMController.m */; };
 		2790BDAF1040162000654665 /* SVTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVTextBlock.h */; };
@@ -1774,6 +1775,7 @@
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+Karelia.h"; sourceTree = "<group>"; };
 		278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+Karelia.m"; sourceTree = "<group>"; };
+		278FCFBA107B5E9D0091A239 /* SVWebEditorTextBlockProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextBlockProtocol.h; sourceTree = "<group>"; };
 		2790BD9C103E890600654665 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		2790BD9D103E890600654665 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		2790BDAD1040162000654665 /* SVTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBlock.h; sourceTree = "<group>"; };
@@ -2768,6 +2770,7 @@
 				27FA884C1057AD9800E8D870 /* SVWebEditorItemProtocol.h */,
 				2742243F106A926E0058C8DA /* SVWebEditorWebView.h */,
 				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
+				278FCFBA107B5E9D0091A239 /* SVWebEditorTextBlockProtocol.h */,
 			);
 			name = "Web Editor (Generic)";
 			sourceTree = "<group>";
@@ -5062,6 +5065,7 @@
 				2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */,
 				2713C0691078177A000864C2 /* SVLayoutView.h in Headers */,
 				278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */,
+				278FCFBB107B5E9D0091A239 /* SVWebEditorTextBlockProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

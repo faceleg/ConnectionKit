@@ -100,14 +100,10 @@
 #pragma mark Superclass Hooks
 // How we know that something changed and therefore binding needs to match
 
-- (BOOL)shouldEndEditing
+- (void)didEndEditing
 {
-    BOOL result = [super shouldEndEditing];
-    if (result)
-    {
-        result = [self commitEditing];
-    }
-    return result;
+    [super didEndEditing];
+    [self commitEditing];   // TODO: Can we handle it returning nil?
 }
 
 - (void)didBeginEditingText;

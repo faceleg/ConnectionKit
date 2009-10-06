@@ -106,6 +106,34 @@
 
 @synthesize isFieldEditor = _isFieldEditor;
 
+#pragma mark SVWebEditorTextBlock
+
+- (void)didEndEditing
+{
+    _isEditing = NO;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification object:self];
+}
+
+- (BOOL)doCommandBySelector:(SEL)selector
+{
+    BOOL result = NO;
+    
+    if (selector == @selector(insertNewline:) && [self isFieldEditor])
+	{
+		[self commitEditing];
+		result = YES;
+	}
+	// When the user hits option-return insert a line break.
+	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
+	{
+		[[[[self webView] window] firstResponder] insertLineBreak:self];
+		result = YES;
+	}
+	
+	return result;
+}
+
 #pragma mark Sub-content
 
 // Our subclasses implement this properly
@@ -139,39 +167,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification object:self];
 }
 
-- (BOOL)shouldEndEditing
-{
-    _isEditing = NO;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification object:self];
-    
-    return YES;
-}
-
 - (void)webViewDidChange:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self webView]);
     
     
-}
-
-- (BOOL)webView:(WebView *)aWebView doCommandBySelector:(SEL)selector
-{
-    BOOL result = NO;
-    
-    if (selector == @selector(insertNewline:) && [self isFieldEditor])
-	{
-		[self commitEditing];
-		result = YES;
-	}
-	// When the user hits option-return insert a line break.
-	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
-	{
-		[[[aWebView window] firstResponder] insertLineBreak:self];
-		result = YES;
-	}
-	
-	return result;
 }
 
 @end

@@ -904,6 +904,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
+- (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
+{
+    OBASSERT(!_selectedTextBlock);
+    _selectedTextBlock = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+    [_selectedTextBlock retain];
+    
+    return YES;
+}
+
+- (void)webViewDidEndEditing:(NSNotification *)notification
+{
+    [_selectedTextBlock didEndEditing];
+    [_selectedTextBlock release],   _selectedTextBlock = nil;
+}
+
 /*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
  */
 - (NSUndoManager *)undoManagerForWebView:(WebView *)webView

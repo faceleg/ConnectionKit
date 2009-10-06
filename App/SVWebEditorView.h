@@ -12,7 +12,7 @@
 
 #import <WebKit/WebKit.h>
 #import "SVWebEditorItemProtocol.h"
-#import "KSDragging.h"
+#import "SVWebEditorTextBlockProtocol.h"
 
 
 typedef enum {
@@ -36,8 +36,9 @@ typedef enum {
     BOOL    _isLoading;
     
     // Selection
-    NSArray             *_selectedItems;
-    SVWebEditingMode    _mode;
+    NSArray                     *_selectedItems;
+    id <SVWebEditorTextBlock>   _selectedTextBlock;
+    SVWebEditingMode            _mode;
     
     // Editing
     BOOL    _mouseUpMayBeginEditing;
@@ -137,6 +138,11 @@ typedef enum {
  */
 - (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay
                                 itemAtPoint:(NSPoint)point;
+
+/*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
+ */
+- (id <SVWebEditorTextBlock>)webEditorView:(SVWebEditorView *)sender
+                      textBlockForDOMRange:(DOMRange *)range;
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 
