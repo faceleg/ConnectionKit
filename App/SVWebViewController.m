@@ -163,79 +163,74 @@
 
 @synthesize loading = _isLoading;
 
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+- (void)webEditorViewDidFinishLoading:(WebView *)sender;
 {
-	if (frame == [sender mainFrame])
-	{
-		// Prepare controllers for each text block
-        NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
-        DOMDocument *domDoc = [[self webEditorView] DOMDocument];
+    // Prepare controllers for each text block
+    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
+    DOMDocument *domDoc = [[self webEditorView] DOMDocument];
+    
+    for (KTHTMLTextBlock *aTextBlock in _HTMLTextBlocks)
+    {
+        // Basic controller
+        DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
+        OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
-        for (KTHTMLTextBlock *aTextBlock in _HTMLTextBlocks)
+        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVBindableTextBlock class]);
+        SVTextBlock *aController = [[textBlockClass alloc] initWithDOMElement:element];
+        [aController setRichText:[aTextBlock isRichText]];
+        [aController setFieldEditor:[aTextBlock isFieldEditor]];
+        
+        [controllers addObject:aController];
+        [aController release];
+        
+        // Binding
+        [aController bind:NSValueBinding
+                 toObject:[aTextBlock HTMLSourceObject]
+              withKeyPath:[aTextBlock HTMLSourceKeyPath]
+                  options:nil];
+    }
+    
+    [self setTextBlocks:controllers];
+    [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
+    
+    
+    
+    
+    
+    
+    // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
+    NSArray *pagelets = [[[self page] sidebarPagelets] arrayByAddingObjectsFromArray:[[self page] callouts]];
+    NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
+    
+    for (KTPagelet *aPagelet in pagelets)
+    {
+        NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
+        DOMElement *element = [domDoc getElementById:pageletID];
+        if (element)
         {
-            // Basic controller
-            DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
-            OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
-            
-            Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVBindableTextBlock class]);
-            SVTextBlock *aController = [[textBlockClass alloc] initWithDOMElement:element];
-            [aController setRichText:[aTextBlock isRichText]];
-            [aController setFieldEditor:[aTextBlock isFieldEditor]];
-            
-            [controllers addObject:aController];
-            [aController release];
-            
-            // Binding
-            [aController bind:NSValueBinding
-                     toObject:[aTextBlock HTMLSourceObject]
-                  withKeyPath:[aTextBlock HTMLSourceKeyPath]
-                      options:nil];
+            SVWebContentItem *object = [[SVWebContentItem alloc] initWithDOMElement:element pagelet:aPagelet];
+            [contentObjects addObject:object];
+            [object release];
         }
-        
-        [self setTextBlocks:controllers];
-        [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
-        
-        
-                
-        
-        
-        
-        // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-        NSArray *pagelets = [[[self page] sidebarPagelets] arrayByAddingObjectsFromArray:[[self page] callouts]];
-        NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
-        
-        for (KTPagelet *aPagelet in pagelets)
+        else
         {
-            NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
-            DOMElement *element = [domDoc getElementById:pageletID];
-            if (element)
-            {
-                SVWebContentItem *object = [[SVWebContentItem alloc] initWithDOMElement:element pagelet:aPagelet];
-                [contentObjects addObject:object];
-                [object release];
-            }
-            else
-            {
-                NSLog(@"Could not locate pagelet with ID: %@", pageletID);
-            }
+            NSLog(@"Could not locate pagelet with ID: %@", pageletID);
         }
-        
-        [self setContentItems:contentObjects];
-        [contentObjects release];
-        
-        
-        
-        // Locate the sidebar
-        _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
-        
-        
-        // Mark as loaded
-        [self setLoading:NO];
-	}
+    }
+    
+    [self setContentItems:contentObjects];
+    [contentObjects release];
+    
+    
+    
+    // Locate the sidebar
+    _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
+    
+    
+    // Mark as loaded
+    [self setLoading:NO];
+    
 }
-
-// TODO: WebFrameLoadDelegate:
-//  - window title
 
 #pragma mark Text Blocks
 
