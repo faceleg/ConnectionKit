@@ -39,7 +39,6 @@
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
 #import "KTHTMLTextBlock.h"
-#import "SVWebContentAreaController.h"
 
 #import "SVDesignChooserWindowController.h"
 
@@ -330,73 +329,49 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 @synthesize siteOutlineViewController = _siteOutlineViewController;
 - (void)setSiteOutlineViewController:(SVSiteOutlineViewController *)controller
 {
-	// Dump the old controller
-	NSSet *windowTitleKeyPaths = [[self class] windowTitleKeyPaths];
-	[[self siteOutlineViewController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
-		
-	
 	// Set up the new controller
 	[controller retain];
 	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
 	
 	[controller setRootPage:[[[self document] site] root]];
-	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
 }
 
-@synthesize webContentAreaController = oContentViewController;
+@synthesize webContentAreaController = _webContentAreaController;
+- (void)setWebContentAreaController:(SVWebContentAreaController *)controller
+{
+    [[self webContentAreaController] setDelegate:nil];
+    
+    [controller retain];
+    [_webContentAreaController release],   _webContentAreaController = controller;
+    
+    [controller setDelegate:self];
+}
 
 #pragma mark -
 #pragma mark Window Title
 
+/*  We append the title of our current content to the default. This gives a similar effect to the titlebar in a web browser.
+ */
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-	if ([[[self siteOutlineViewController] pagesController] selectedPage])
-	{
-		KTPage *selPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-		NSString *titleString = [selPage windowTitle];
-		if (nil == titleString || [titleString isEqualToString:@""])
-		{
-			titleString = [selPage comboTitleText];
-		}
-		
-		return [NSString stringWithFormat:@"%@ %C %@",
-			displayName,
-			0x2014,	// em dash
-			titleString];
-	}
-	return displayName;
-}
-
-/*	When something changes to affect it, reload the window title.
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-	if ([[[self class] windowTitleKeyPaths] containsObject:keyPath])
-	{
-		[self synchronizeWindowTitleWithDocumentName];
-	}
-    else
+    SVWebContentAreaController *contentController = [self webContentAreaController];
+    if ([contentController selectedViewController] == [contentController webViewLoadController])
     {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+        NSString *contentTitle = [[contentController selectedViewController] title];
+        if ([contentTitle length] > 0)
+        {
+            displayName = [displayName stringByAppendingFormat:
+                           @" — %@",    // yes, that's an em-dash
+                           contentTitle];
+        }
+	}
+    
+    return displayName;
 }
 
-+ (NSSet *)windowTitleKeyPaths
+- (void)webContentAreaControllerDidChangeTitle:(SVWebContentAreaController *)controller;
 {
-	static NSSet *result;
-	
-	if (!result)
-	{
-		result = [[NSSet alloc] initWithObjects:@"pagesController.selection.master.siteTitleHTML",
-												@"pagesController.selection.master.author",
-												@"pagesController.selection.windowTitle",
-												@"pagesController.selection.titleText", nil];
-	}
-	
-	return result;
+    [self synchronizeWindowTitleWithDocumentName];
 }
 
 #pragma mark -

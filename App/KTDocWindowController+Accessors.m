@@ -124,18 +124,6 @@
 	}
 }
 
-- (NSString *)webViewTitle
-{
-    return myWebViewTitle;
-}
-
-- (void)setWebViewTitle:(NSString *)aWebViewTitle
-{
-    [aWebViewTitle retain];
-    [myWebViewTitle release];
-    myWebViewTitle = aWebViewTitle;
-}
-
 - (NSRect)selectionRect
 { 
 	return mySelectionRect;

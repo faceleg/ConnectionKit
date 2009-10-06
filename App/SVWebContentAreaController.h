@@ -10,6 +10,9 @@
 #import "SVWebViewLoadController.h"
 
 
+@protocol SVWebContentAreaControllerDelegate;
+
+
 @interface SVWebContentAreaController : KSTabViewController <SVWebViewLoadControllerDelegate>
 {
   @private
@@ -17,6 +20,8 @@
     NSViewController        *_placeholderViewController;
     
     NSArray *_selectedPages;
+    
+    id <SVWebContentAreaControllerDelegate> _delegate;  // weak ref
 }
 
 // Set this and the webview/source list view will be updated to match. Can even bind it!
@@ -24,5 +29,12 @@
 
 @property(nonatomic, readonly) SVWebViewLoadController *webViewLoadController;
 
+@property(nonatomic, assign) id <SVWebContentAreaControllerDelegate> delegate;
 
+@end
+
+
+@protocol SVWebContentAreaControllerDelegate
+
+- (void)webContentAreaControllerDidChangeTitle:(SVWebContentAreaController *)controller;
 @end

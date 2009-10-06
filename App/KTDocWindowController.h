@@ -11,6 +11,7 @@
 
 #import "KTDocumentControllerChain.h"
 #import "KTHTMLParser.h"
+#import "SVWebContentAreaController.h"
 
 
 #define CUT_MENUITEM_TITLE					NSLocalizedString(@"Cut", "Cut MenuItem")
@@ -37,7 +38,7 @@
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTPluginInspectorViewsManager;
-@class KTDocViewController, SVWebContentAreaController, KTDocWebViewController, SVSiteOutlineViewController;
+@class KTDocViewController, KTDocWebViewController, SVSiteOutlineViewController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
@@ -47,11 +48,11 @@
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain>
+@interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain, SVWebContentAreaControllerDelegate>
 {
-    IBOutlet RBSplitView				*oSidebarSplitView;
-	IBOutlet SVWebContentAreaController *oContentViewController;     // Weak ref
-	SVSiteOutlineViewController         *_siteOutlineViewController;
+    IBOutlet RBSplitView		*oSidebarSplitView;
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
+	SVSiteOutlineViewController *_siteOutlineViewController;
 		
 	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
@@ -60,7 +61,6 @@ extern NSString *gInfoWindowAutoSaveName;
     RYZImagePopUpButton             *myAddCollectionPopUpButton;    // constructed via toolbar code
 	
 	// WEBVIEW STUFF ....
-	NSString						*myWebViewTitle;
 	@public
 	BOOL							myHasSavedVisibleRect;
 	NSRect							myDocumentVisibleRect;
@@ -110,7 +110,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void)removeChildController:(KTDocViewController *)controller;
 
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
-@property(nonatomic, readonly) SVWebContentAreaController *webContentAreaController;
+@property(nonatomic, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
 
 
 #pragma mark Other

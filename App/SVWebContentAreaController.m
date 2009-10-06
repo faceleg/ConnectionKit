@@ -85,7 +85,29 @@
 
 @synthesize webViewLoadController = _webViewController;
 
+- (void)setSelectedIndex:(NSUInteger)index;
+{
+    [super setSelectedIndex:index];
+    
+    // Inform delegate of change to title
+    NSString *title = nil;
+    if ([self selectedViewController] == [self webViewLoadController])
+    {
+        title = [[self webViewLoadController] title];
+    }
+    [[self delegate] webContentAreaControllerDidChangeTitle:self];
+}
+
+#pragma mark Delegate
+
+@synthesize delegate = _delegate;
+
 #pragma mark Load Delegate
+
+- (void)loadControllerDidChangeTitle:(SVWebViewLoadController *)controller;
+{
+    [[self delegate] webContentAreaControllerDidChangeTitle:self];
+}
 
 - (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
 {

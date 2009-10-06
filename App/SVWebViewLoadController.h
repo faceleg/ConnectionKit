@@ -53,6 +53,9 @@
 
 
 @protocol SVWebViewLoadControllerDelegate
+
+- (void)loadControllerDidChangeTitle:(SVWebViewLoadController *)controller;
+
 // The controller is not in a position to open a page by itself; it lets somebody else decide how to
 - (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
 @end

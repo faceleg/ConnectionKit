@@ -73,6 +73,15 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     [super dealloc];
 }
 
+#pragma mark Title
+
+- (void)setTitle:(NSString *)title
+{
+    [super setTitle:title];
+    
+    [[self delegate] loadControllerDidChangeTitle:self];
+}
+
 #pragma mark Controllers
 
 @synthesize primaryWebViewController = _primaryController;
