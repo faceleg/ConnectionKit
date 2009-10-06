@@ -94,8 +94,8 @@
 	
 	if ([self HTMLGenerationPurpose] == kGeneratingPreview)
 	{
-		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"additionalEditingCSS"
-																			 ofType:@"txt"];
+		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"design-time"
+																			 ofType:@"css"];
 		[stylesheetLines addObject:[self stylesheetLink:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil media:nil]];
 	}
 	

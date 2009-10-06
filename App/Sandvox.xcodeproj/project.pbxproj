@@ -934,7 +934,7 @@
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE264CDE081708DD009D3B6C /* grabber.png in Resources */ = {isa = PBXBuildFile; fileRef = CE264CDB081708DD009D3B6C /* grabber.png */; };
 		CE2652D608180BA4009D3B6C /* grabberDim.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2652D508180BA4009D3B6C /* grabberDim.png */; };
-		CE26FA1408C4D9C500C9604B /* additionalEditingCSS.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */; };
+		CE26FA1408C4D9C500C9604B /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* design-time.css */; };
 		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */; };
@@ -2515,7 +2515,7 @@
 		CE2652D508180BA4009D3B6C /* grabberDim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grabberDim.png; sourceTree = "<group>"; };
 		CE265C8F08195CEF009D3B6C /* fwd_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwd_sm.png; sourceTree = "<group>"; };
 		CE265C9008195CEF009D3B6C /* bak_sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bak_sm.png; sourceTree = "<group>"; };
-		CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = additionalEditingCSS.txt; sourceTree = "<group>"; };
+		CE26FA1308C4D9C500C9604B /* design-time.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "design-time.css"; sourceTree = "<group>"; };
 		CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
 		CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+KTExtensions.m"; sourceTree = "<group>"; };
 		CE27F6620D6193B200D211EA /* NSTextView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTExtensions.h"; sourceTree = "<group>"; };
@@ -2961,6 +2961,7 @@
 		2759CC98103970FC00E2C046 /* Web Editor (Doc) */ = {
 			isa = PBXGroup;
 			children = (
+				CE26FA1308C4D9C500C9604B /* design-time.css */,
 				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
 				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
 				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
@@ -3590,7 +3591,6 @@
 				3C202F4307E0132000DE4994 /* documentJavascript.txt */,
 				CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */,
 				CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */,
-				CE26FA1308C4D9C500C9604B /* additionalEditingCSS.txt */,
 				CEA962C20AF6A924008A1367 /* sandvox.css */,
 				CEAE132B08450536007025D4 /* RSSTemplate.xml */,
 				CEC4DB2F0935179500D75C23 /* NonStandardURL.html */,
@@ -5650,7 +5650,7 @@
 				3C26FAC80898777500FCC13F /* 32favicon.png in Resources */,
 				CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */,
 				3C66E3EA08A9781400EC7716 /* 16x16_empty.png in Resources */,
-				CE26FA1408C4D9C500C9604B /* additionalEditingCSS.txt in Resources */,
+				CE26FA1408C4D9C500C9604B /* design-time.css in Resources */,
 				CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */,
 				CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */,
 				CE8E83500917EFE2001DC88D /* designCoverRight.png in Resources */,
