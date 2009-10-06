@@ -58,6 +58,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // WebView
     _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    
+    [_webView setFrameLoadDelegate:self];
     [_webView setPolicyDelegate:self];
     [_webView setUIDelegate:self];
     [_webView setEditingDelegate:self];
@@ -81,6 +83,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)dealloc
 {
+    [_webView setFrameLoadDelegate:nil];
     [_webView setPolicyDelegate:nil];
     [_webView setUIDelegate:nil];
     [_webView setEditingDelegate:nil];

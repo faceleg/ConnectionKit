@@ -73,10 +73,6 @@
 
 - (void)setWebView:(WebView *)webView
 {
-    // Tear down old delegates
-    [[self webView] setFrameLoadDelegate:nil];
-    
-    
     // Store new webview
     [super setWebView:webView];
     
@@ -85,10 +81,6 @@
     // TODO: Define a constant or method for this
     BOOL spellCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"ContinuousSpellChecking"];
 	[webView setContinuousSpellCheckingEnabled:spellCheck];
-    
-    
-    // Delegation
-    [webView setFrameLoadDelegate:self];
 }
 
 @synthesize webEditorView = _webEditorView;
