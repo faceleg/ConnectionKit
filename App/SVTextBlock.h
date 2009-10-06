@@ -11,7 +11,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import "SVWebEditorTextBlockProtocol.h"
+#import "SVWebEditorTextProtocol.h"
 
 
 @interface SVTextBlock : NSObject <SVWebEditorText>

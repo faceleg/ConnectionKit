@@ -12,7 +12,7 @@
 
 #import <WebKit/WebKit.h>
 #import "SVWebEditorItemProtocol.h"
-#import "SVWebEditorTextBlockProtocol.h"
+#import "SVWebEditorTextProtocol.h"
 
 
 typedef enum {

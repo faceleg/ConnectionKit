@@ -15,6 +15,7 @@
 #import "SVContainerTextBlock.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
+#import "SVTextBlock.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -336,8 +337,8 @@
     return result;
 }
 
-- (id <SVWebEditorTextBlock>)webEditorView:(SVWebEditorView *)sender
-                      textBlockForDOMRange:(DOMRange *)range;
+- (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
+                 textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textBlockForDOMRange:range];
 }
