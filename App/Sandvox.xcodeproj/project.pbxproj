@@ -400,8 +400,6 @@
 		27DB807B0C8465C200E29C38 /* KTPluginInspectorViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */; };
 		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
 		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
-		27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */; };
-		27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
 		27E2ED950D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */; };
 		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (); }; };
@@ -1849,8 +1847,6 @@
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
-		27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocWebEditorView.h; sourceTree = "<group>"; };
-		27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocWebEditorView.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
 		27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractHTMLPlugin.h; sourceTree = "<group>"; };
@@ -2983,8 +2979,6 @@
 				27F243AD106BC873007FEC56 /* SVSidebarEditorItem.m */,
 				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
 				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
-				27E1CB7310722E3B0096248A /* SVDocWebEditorView.h */,
-				27E1CB7410722E3B0096248A /* SVDocWebEditorView.m */,
 			);
 			name = "Web Editor (Doc)";
 			sourceTree = "<group>";
@@ -5064,7 +5058,6 @@
 				27F790D9106BABA6007DF81B /* KSDragging.h in Headers */,
 				27F243AE106BC873007FEC56 /* SVSidebarEditorItem.h in Headers */,
 				27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */,
-				27E1CB7510722E3B0096248A /* SVDocWebEditorView.h in Headers */,
 				2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */,
 				2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */,
 				2713C0691078177A000864C2 /* SVLayoutView.h in Headers */,
@@ -6467,7 +6460,6 @@
 				27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */,
 				27F243AF106BC873007FEC56 /* SVSidebarEditorItem.m in Sources */,
 				27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */,
-				27E1CB7610722E3B0096248A /* SVDocWebEditorView.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,
 				2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */,
 				2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */,

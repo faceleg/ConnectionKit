@@ -58,7 +58,7 @@
 
 - (void)loadView
 {
-    SVDocWebEditorView *editor = [[SVDocWebEditorView alloc] init];
+    SVWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditorView:editor];
@@ -91,7 +91,7 @@
 }
 
 @synthesize webEditorView = _webEditorView;
-- (void)setWebEditorView:(SVDocWebEditorView *)editor
+- (void)setWebEditorView:(SVWebEditorView *)editor
 {
     [[self webEditorView] setDelegate:nil];
     [[self webEditorView] setDataSource:nil];
@@ -289,13 +289,6 @@
 	
     // Pass on responsibility for handling the command
     return [[self selectedTextBlock] webView:aWebView doCommandBySelector:selector];
-}
-
-/*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
- */
-- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
-{
-	return [[[NSUndoManager alloc] init] autorelease];
 }
 
 // TODO: WebEditingDelegate:
