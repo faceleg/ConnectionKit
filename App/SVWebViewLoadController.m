@@ -92,6 +92,14 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     [self didChangeValueForKey:@"secondaryWebViewController"];
 }
 
+- (void)setSelectedIndex:(NSUInteger)index;
+{
+    [super setSelectedIndex:index];
+    
+    // Update our title to match the new selection
+    [self setTitle:[[self selectedViewController] title]];
+}
+
 #pragma mark Page
 
 - (KTPage *)page { return _page; }
