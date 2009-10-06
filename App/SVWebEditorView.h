@@ -37,7 +37,7 @@ typedef enum {
     
     // Selection
     NSArray                     *_selectedItems;
-    id <SVWebEditorTextBlock>   _selectedTextBlock;
+    id <SVWebEditorText>   _selectedTextBlock;
     SVWebEditingMode            _mode;
     
     // Editing
@@ -147,7 +147,7 @@ typedef enum {
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
-- (id <SVWebEditorTextBlock>)webEditorView:(SVWebEditorView *)sender
+- (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
                       textBlockForDOMRange:(DOMRange *)range;
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;

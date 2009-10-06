@@ -14,7 +14,7 @@
 #import "SVWebEditorTextBlockProtocol.h"
 
 
-@interface SVTextBlock : NSObject <SVWebEditorTextBlock>
+@interface SVTextBlock : NSObject <SVWebEditorText>
 {
   @private
     DOMHTMLElement      *_element;

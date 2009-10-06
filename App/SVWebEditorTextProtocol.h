@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@protocol SVWebEditorTextBlock <NSObject>
+@protocol SVWebEditorText <NSObject>
 
 // Received when focus in the Web Editor moves away from an edited text block, ending editing. Implementors should use this as an opportunity to persist the text
 - (void)didEndEditing;
