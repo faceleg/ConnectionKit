@@ -65,6 +65,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [self addSubview:_webView];
     
     
+    // Default settings
+    [self setAllowsUndo:NO];
+    
+    
     // Tracking area
     NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
@@ -317,6 +321,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [self setMode:SVWebEditingModeNormal];
     }
 }
+
+// Covers for WebKit methods pending publication
+- (BOOL)allowsUndo { return [(NSTextView *)[self webView] allowsUndo]; }
+- (void)setAllowsUndo:(BOOL)undo { [(NSTextView *)[self webView] setAllowsUndo:undo]; }
 
 #pragma mark Cut, Copy & Paste
 
@@ -923,13 +931,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     BOOL result = [_selectedTextBlock doCommandBySelector:command];
     return result;
-}
-
-/*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
- */
-- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
-{
-	return [[[NSUndoManager alloc] init] autorelease];
 }
 
 #pragma mark NSUserInterfaceValidations

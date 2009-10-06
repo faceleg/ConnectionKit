@@ -82,6 +82,8 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+@property(nonatomic) BOOL allowsUndo;
+
 
 #pragma mark Cut, Copy & Paste
 - (IBAction)cut:(id)sender;
