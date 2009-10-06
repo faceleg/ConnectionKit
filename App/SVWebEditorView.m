@@ -919,6 +919,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [_selectedTextBlock release],   _selectedTextBlock = nil;
 }
 
+- (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
+{
+    BOOL result = [_selectedTextBlock doCommandBySelector:command];
+    return result;
+}
+
 /*  Need to return a fake undo manager so that the WebView doesn't record undo info to the window's undo manager (we will manage undo ourselves)
  */
 - (NSUndoManager *)undoManagerForWebView:(WebView *)webView
