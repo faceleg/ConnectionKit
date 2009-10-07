@@ -60,6 +60,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [_webView setUIDelegate:self];
     [_webView setEditingDelegate:self];
     
+    [(NSTextView *)_webView setAllowsUndo:NO];  // see -undoManagerForWebView: for details
+    
     [self addSubview:_webView];
     
     
@@ -734,6 +736,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     BOOL result = [_focusedText doCommandBySelector:command];
     return result;
+}
+
+- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
+{
+    // We want to stop the WebView from even trying to touch the standard undo manager as that would interfere with our own undo management. WebKit treats a return value of nil as indicating you want the default behaviour, so we have to return a dummy. Note that this method should not even be needed, as we turn off undo support from a private WebView method, but I'm implementing anyway to be on the safe side
+    return [[[NSUndoManager alloc] init] autorelease];
 }
 
 @end

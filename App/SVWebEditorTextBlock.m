@@ -123,10 +123,6 @@
     // Handle any bindings
     if ([self isEditing])
     {
-        // Since the edit is going to be committed to the model, we no longer want the WebView handling undo
-        [[self webView] _clearUndoRedoOperations];
-        
-        
         // Push changes from the DOM down into the model
         NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
         NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
