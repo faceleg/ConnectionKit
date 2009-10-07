@@ -949,7 +949,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
 {
-    [_selectedTextBlock textDidEndEditing];
+    [_selectedTextBlock webEditorTextDidEndEditing:notification];
     [_selectedTextBlock release],   _selectedTextBlock = nil;
 }
 

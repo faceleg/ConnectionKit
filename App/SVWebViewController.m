@@ -163,7 +163,7 @@
 
 @synthesize loading = _isLoading;
 
-- (void)webEditorViewDidFinishLoading:(WebView *)sender;
+- (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
     // Prepare controllers for each text block
     NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];

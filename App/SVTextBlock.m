@@ -43,28 +43,6 @@
 @synthesize DOMElement = _element;
 
 @synthesize webView = _webView;
-- (void)setWebView:(WebView *)webView
-{
-    // We monitor the webview for editing so as to mark ourself as editing if appropriate
-    if (_webView)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:WebViewDidChangeNotification
-                                                      object:_webView];
-    }
-    
-    [webView retain];
-    [_webView release];
-    _webView = webView;
-    
-    if (webView)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(webViewDidChange:)
-                                                     name:WebViewDidChangeNotification
-                                                   object:webView];
-    }
-}
 
 #pragma mark Contents
 
@@ -110,6 +88,24 @@
 
 #pragma mark Editing
 
+- (void)didBeginEditing;
+{
+    _isEditing = YES;
+    
+    // Subclasses might do something interesting here
+}
+
+- (void)webEditorTextDidChange:(NSNotification *)notification;
+{
+    // Notify that editing began if this is the case
+    if (!_isEditing)
+    {
+        [self didBeginEditing];
+    }
+    
+    // Can now do normal stuff in response to change
+}
+
 - (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
 {
     _isEditing = NO;
@@ -121,9 +117,7 @@
     }
 }
 
-#pragma mark SVWebEditorText
-
-- (void)textDidEndEditing
+- (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 {
     [self textDidEndEditingWithMovement:nil];
 }
@@ -156,36 +150,3 @@
 @end
 
 
-#pragma mark -
-
-
-@implementation SVTextBlock (Support)
-
-#pragma mark Editing
-
-- (void)didChangeText;
-{
-    // Notify that editing began if this is the case
-    if (!_isEditing)
-    {
-        _isEditing = YES;
-        [self didBeginEditingText];
-    }
-    
-    // Notify of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
-}
-
-- (void)didBeginEditingText;
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification object:self];
-}
-
-- (void)webViewDidChange:(NSNotification *)notification
-{
-    OBPRECONDITION([notification object] == [self webView]);
-    
-    
-}
-
-@end

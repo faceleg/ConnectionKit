@@ -111,9 +111,9 @@
     [self commitEditing];   // TODO: Can we handle it returning NO?
 }
 
-- (void)didBeginEditingText;
+- (void)didBeginEditing;
 {
-    [super didBeginEditingText];
+    [super didBeginEditing];
     
     // Tell controller we're starting editing. It's an informal protocol that object may or may not implement
     id observedObject = [[self infoForBinding:NSValueBinding] objectForKey:NSObservedObjectKey];

@@ -46,6 +46,9 @@
 
 
 #pragma mark Editing
+
+- (void)didBeginEditing;
+- (void)webEditorTextDidChange:(NSNotification *)notification;
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
 
@@ -54,14 +57,3 @@
 @property(nonatomic, readonly) NSArray *contentItems;
 
 @end
-
-
-@interface SVTextBlock (Support)
-
-// Editing.
-// We follow the same pattern (and notifications) as NSText/NSTextView
-- (void)didChangeText;
-- (void)didBeginEditingText;    // should be no need to call yourself, -didChangeText will call it for you
-
-@end
-
