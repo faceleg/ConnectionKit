@@ -27,6 +27,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
 
 // Selection
+- (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 @property(nonatomic, readwrite) SVWebEditingMode mode;
 - (void)postSelectionChangedNotification;
 
@@ -125,11 +126,28 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @synthesize loading = _isLoading;
 
-#pragma mark Selection
+#pragma mark Selected DOM Range
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
 
+#pragma mark Text Selection
+
 @synthesize focusedText = _focusedText;
+
+// Notification is optional as it's just a nicety to pass onto text object
+- (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification
+{
+    // Ignore identical text as it would send unwanted editing messages to the text in question
+    if (text == _focusedText) return;
+    
+    // Let the old text know it's done
+    [[self focusedText] webEditorTextDidEndEditing:notification];
+    
+    // Store the new text
+    [_focusedText release], _focusedText = [text retain];
+}
+
+#pragma mark Selected Items
 
 @synthesize selectedItems = _selectedItems;
 - (void)setSelectedItems:(NSArray *)items
@@ -929,6 +947,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebEditingDelegate
 
+- (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
+{
+    id <SVWebEditorText> text = [[self dataSource] webEditorView:self
+                                            textBlockForDOMRange:range];
+    [self setFocusedText:text notification:nil];
+    
+    return YES;
+}
+
+- (void)webViewDidChange:(NSNotification *)notification
+{
+    [[self focusedText] webEditorTextDidChange:notification];
+}
+
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self webView]);
@@ -940,24 +972,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
 }
 
-- (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
-{
-    OBASSERT(!_focusedText);
-    _focusedText = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
-    [_focusedText retain];
-    
-    return YES;
-}
-
-- (void)webViewDidChange:(NSNotification *)notification
-{
-    [[self focusedText] webEditorTextDidChange:notification];
-}
-
 - (void)webViewDidEndEditing:(NSNotification *)notification
 {
-    [[self focusedText] webEditorTextDidEndEditing:notification];
-    [_focusedText release],   _focusedText = nil;
+    [self setFocusedText:nil notification:notification];
 }
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
