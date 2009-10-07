@@ -581,6 +581,30 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @synthesize delegate = _delegate;
 
+#pragma mark NSUserInterfaceValidations
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = YES;
+    SEL action = [anItem action];
+    
+    // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
+    if (action == @selector(cut:) || action == @selector(copy:))
+    {
+        result = ([[self selectedItems] count] >= 1);
+    }
+    
+    return result;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVWebEditorView (WebDelegates)
+
 #pragma mark WebFrameLoadDelegate
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
@@ -709,22 +733,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
     BOOL result = [_focusedText doCommandBySelector:command];
-    return result;
-}
-
-#pragma mark NSUserInterfaceValidations
-
-- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
-{
-    BOOL result = YES;
-    SEL action = [anItem action];
-    
-    // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
-    if (action == @selector(cut:) || action == @selector(copy:))
-    {
-        result = ([[self selectedItems] count] >= 1);
-    }
-    
     return result;
 }
 
