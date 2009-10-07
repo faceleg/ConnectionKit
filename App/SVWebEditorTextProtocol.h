@@ -17,7 +17,7 @@
 // Conceptually the same as how NSTextField is informed editing ended by the field editor. The notification is the same as a WebView will have dished out (could well be nil too)
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 
-// Return YES if you will handle the selector yourself. Return to have the Web Editor do its own thing
+// Return YES if you will handle the selector yourself. Return NO to have the Web Editor do its own thing
 - (BOOL)doCommandBySelector:(SEL)selector;
 
 @end

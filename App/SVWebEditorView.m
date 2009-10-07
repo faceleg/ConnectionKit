@@ -947,6 +947,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
+- (void)webViewDidChange:(NSNotification *)notification
+{
+    [_selectedTextBlock webEditorTextDidChange:notification];
+}
+
 - (void)webViewDidEndEditing:(NSNotification *)notification
 {
     [_selectedTextBlock webEditorTextDidEndEditing:notification];
