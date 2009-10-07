@@ -26,8 +26,9 @@
     BOOL    _isFieldEditor;
     
     // Editing
-    BOOL        _isEditing;
-    NSString    *_uneditedValue;
+    BOOL            _isEditing;
+    NSString        *_uneditedValue;
+    NSUndoManager   *_undoManager;
     
     // Bindings
     id <KSEditorRegistration> _controller;  // weak ref

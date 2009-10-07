@@ -187,9 +187,13 @@
 
 - (NSUndoManager *)undoManager
 {
-    // Just use the window's undo manager for now. Might get cleverer later
-    NSUndoManager *result = [[[[self DOMElement] documentView] window] undoManager];
-    return result;
+    if (!_undoManager)
+    {
+        // Just use the window's undo manager for now. Might get cleverer later
+        _undoManager = [[[[[self DOMElement] documentView] window] undoManager] retain];
+    }
+    
+    return _undoManager;
 }
 
 #pragma mark Bindings/NSEditor
