@@ -99,24 +99,9 @@ typedef enum {
 - (IBAction)delete:(id)sender;
 
 
-#pragma mark Layout
-- (NSRect)rectOfDragCaret;
-- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
-                        beforeDOMNode:(DOMNode *)node2
-                          minimumSize:(CGFloat)minSize;
-
-
 #pragma mark Drawing
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
-- (void)drawDragCaretInView:(NSView *)view;
-
-#pragma mark Dragging Destination
-
-// Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
-- (void)moveDragHighlightToDOMNode:(DOMNode *)node;
-- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
-- (void)removeDragCaret;
 
 
 #pragma mark Getting Item Information
@@ -129,6 +114,34 @@ typedef enum {
 
 @property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
 @property(nonatomic, assign) id <SVWebEditorViewDelegate> delegate;
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVWebEditorView (Dragging)
+
+#pragma mark Dragging Destination
+
+// Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
+- (void)moveDragHighlightToDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
+- (void)removeDragCaret;
+
+
+#pragma mark Drawing
+- (void)drawDragCaretInView:(NSView *)view;
+
+
+#pragma mark Layout
+- (NSRect)rectOfDragCaret;
+- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
+                        beforeDOMNode:(DOMNode *)node2
+                          minimumSize:(CGFloat)minSize;
+
+
 
 @end
 
