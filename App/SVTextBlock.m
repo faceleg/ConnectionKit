@@ -8,6 +8,8 @@
 
 #import "SVTextBlock.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVTextBlock
 
@@ -106,13 +108,24 @@
 
 @synthesize isFieldEditor = _isFieldEditor;
 
-#pragma mark SVWebEditorTextBlock
+#pragma mark Editing
 
-- (void)didEndEditing
+- (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
 {
     _isEditing = NO;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification object:self];
+    // Like NSTextField, we want the return key to select the field's contents
+    if ([self isFieldEditor] && [textMovement intValue] == NSReturnTextMovement)
+    {
+        [[[self DOMElement] documentView] selectAll:self];
+    }
+}
+
+#pragma mark SVWebEditorText
+
+- (void)textDidEndEditing
+{
+    [self textDidEndEditingWithMovement:nil];
 }
 
 - (BOOL)doCommandBySelector:(SEL)selector
@@ -121,13 +134,14 @@
     
     if (selector == @selector(insertNewline:) && [self isFieldEditor])
 	{
-		[self commitEditing];
+		// Return key ends editing
+        [self textDidEndEditingWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
 		result = YES;
 	}
-	// When the user hits option-return insert a line break.
 	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
 	{
-		[[[[self webView] window] firstResponder] insertLineBreak:self];
+		// When the user hits option-return insert a line break.
+        [[[[self webView] window] firstResponder] insertLineBreak:self];
 		result = YES;
 	}
 	

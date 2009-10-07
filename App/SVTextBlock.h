@@ -45,6 +45,11 @@
 @property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
 
 
+#pragma mark Editing
+// e.g. Movement might be NSReturnTextMovement. Nil if we don't know
+- (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
+
+
 // Sub content
 @property(nonatomic, readonly) NSArray *contentItems;
 

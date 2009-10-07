@@ -175,7 +175,7 @@ typedef enum {
 
 @protocol SVWebEditorViewDelegate <NSObject>
 
-- (void)webEditorViewDidFinishLoading:(WebView *)sender;
+- (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
 - (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;

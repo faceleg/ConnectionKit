@@ -77,6 +77,10 @@
 
 - (BOOL)commitEditing;
 {
+    // Since the edit is going to be committed to the model, we no longer want the WebView handling undo
+    [[self webView] _clearUndoRedoOperations];
+    
+    
     // Push changes (if any) from the DOM down into the model
     NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
     if (![editedValue isEqualToString:[self boundValue]])
@@ -86,6 +90,7 @@
         [observedObject setValue:editedValue
                           forKey:[bindingInfo objectForKey:NSObservedKeyPathKey]];
     }
+    
     
     // Tell controller we're done. It's an informal protocol that object may or may not implement
     id observedObject = [[self infoForBinding:NSValueBinding] objectForKey:NSObservedObjectKey];
@@ -100,10 +105,10 @@
 #pragma mark Superclass Hooks
 // How we know that something changed and therefore binding needs to match
 
-- (void)didEndEditing
+- (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
 {
-    [super didEndEditing];
-    [self commitEditing];   // TODO: Can we handle it returning nil?
+    [super textDidEndEditingWithMovement:textMovement];
+    [self commitEditing];   // TODO: Can we handle it returning NO?
 }
 
 - (void)didBeginEditingText;
