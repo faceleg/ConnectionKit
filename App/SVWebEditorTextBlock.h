@@ -25,10 +25,11 @@
     BOOL    _isRichText;
     BOOL    _isFieldEditor;
     
-    BOOL    _isEditing;
+    // Editing
+    BOOL        _isEditing;
+    NSString    *_uneditedValue;
     
     // Bindings
-    NSString    *_value;
     id <KSEditorRegistration> _controller;  // weak ref
 }
 
@@ -62,8 +63,10 @@
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
 
+@property(nonatomic, readonly) NSUndoManager *undoManager;
 
-// Sub content
+
+#pragma mark Sub content
 @property(nonatomic, readonly) NSArray *contentItems;
 
 @end
