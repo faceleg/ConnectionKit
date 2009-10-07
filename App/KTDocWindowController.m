@@ -75,8 +75,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 // Controller chain
 - (void)removeAllChildControllers;
 
-+ (NSSet *)windowTitleKeyPaths;
-
 @end
 
 
@@ -135,7 +133,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];
     [self setToolbars:nil];
-    [self setWebViewTitle:nil];    
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 	[myPluginInspectorViewsManager release];

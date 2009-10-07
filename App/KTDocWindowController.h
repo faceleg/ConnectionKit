@@ -219,9 +219,6 @@ extern NSString *KTSelectedDOMRangeKey;
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
 
-- (NSString *)webViewTitle;
-- (void)setWebViewTitle:(NSString *)aWebViewTitle;
-
 //- (DOMNode *)selectedDomNode;
 
 - (NSRect)selectionRect;

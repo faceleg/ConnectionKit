@@ -749,16 +749,6 @@
 	}
 }
 
-- (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
-{
-	// Only report feedback for the main frame.
-	if (frame == [sender mainFrame])
-	{
-		[[self windowController] setWebViewTitle:title];
-		//		[self updateWindow];
-	}
-}
-
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
 	if (frame == [[self webView] mainFrame])
