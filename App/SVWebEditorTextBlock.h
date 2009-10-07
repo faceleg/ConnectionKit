@@ -12,9 +12,10 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 #import "SVWebEditorTextProtocol.h"
+#import "KSKeyValueBinding.h"
 
 
-@interface SVTextBlock : NSObject <SVWebEditorText>
+@interface SVWebEditorTextBlock : NSObject <SVWebEditorText, KSEditor>
 {
   @private
     DOMHTMLElement      *_element;
@@ -25,6 +26,10 @@
     BOOL    _isFieldEditor;
     
     BOOL    _isEditing;
+    
+    // Bindings
+    NSString    *_value;
+    id <KSEditorRegistration> _controller;  // weak ref
 }
 
 - (id)initWithDOMElement:(DOMHTMLElement *)element;// controller:(SVWebViewController *)controller;
@@ -47,10 +52,15 @@
 
 #pragma mark Editing
 
+@property(nonatomic, readonly, getter=isEditing) BOOL editing;
+
 - (void)didBeginEditing;
+
+// Calls -didBeginEditing if needed
 - (void)webEditorTextDidChange:(NSNotification *)notification;
+
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
-- (void)textDidEndEditingWithMovement:(NSNumber *)textMovement;
+- (void)didEndEditingWithMovement:(NSNumber *)textMovement;
 
 
 // Sub content

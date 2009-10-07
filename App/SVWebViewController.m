@@ -15,7 +15,7 @@
 #import "SVContainerTextBlock.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
-#import "SVTextBlock.h"
+#import "SVWebEditorTextBlock.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -30,7 +30,7 @@
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
 @property(nonatomic, copy, readwrite) NSArray *textBlocks;
-@property(nonatomic, retain, readwrite) SVTextBlock *selectedTextBlock;
+@property(nonatomic, retain, readwrite) SVWebEditorTextBlock *selectedTextBlock;
 
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
 
@@ -175,8 +175,8 @@
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
-        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVBindableTextBlock class]);
-        SVTextBlock *aController = [[textBlockClass alloc] initWithDOMElement:element];
+        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVWebEditorTextBlock class]);
+        SVWebEditorTextBlock *aController = [[textBlockClass alloc] initWithDOMElement:element];
         [aController setRichText:[aTextBlock isRichText]];
         [aController setFieldEditor:[aTextBlock isFieldEditor]];
         
@@ -236,9 +236,9 @@
 
 @synthesize textBlocks = _textBlocks;
 
-- (SVTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+- (SVWebEditorTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 {
-    SVTextBlock *result = nil;
+    SVWebEditorTextBlock *result = nil;
     DOMHTMLElement *editableElement = [node containingContentEditableElement];
     
     if (editableElement)
@@ -263,7 +263,7 @@
     return result;
 }
 
-- (SVTextBlock *)textBlockForDOMRange:(DOMRange *)range;
+- (SVWebEditorTextBlock *)textBlockForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textBlockForDOMNode:[range startContainer]];
@@ -301,7 +301,7 @@
         result = [self itemForNode:node inItems:[self contentItems]];
         if (!result)
         {
-            for (SVTextBlock *aTextBlock in [self textBlocks])
+            for (SVWebEditorTextBlock *aTextBlock in [self textBlocks])
             {
                 result = [self itemForNode:node inItems:[aTextBlock contentItems]];
                 if (result) break;

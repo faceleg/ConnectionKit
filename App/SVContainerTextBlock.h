@@ -9,13 +9,13 @@
 //  Takes a regular text block and adds the ability to embed pagelets in it.
 
 
-#import "SVBindableTextBlock.h"
+#import "SVWebEditorTextBlock.h"
 
 
 @class SVWebContentItem;
 
 
-@interface SVContainerTextBlock : SVBindableTextBlock
+@interface SVContainerTextBlock : SVWebEditorTextBlock
 {
     NSMutableSet    *_webContentItems;
 }
