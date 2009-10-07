@@ -129,6 +129,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
 
+@synthesize focusedText = _focusedText;
+
 @synthesize selectedItems = _selectedItems;
 - (void)setSelectedItems:(NSArray *)items
 {
@@ -940,27 +942,27 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
 {
-    OBASSERT(!_selectedTextBlock);
-    _selectedTextBlock = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
-    [_selectedTextBlock retain];
+    OBASSERT(!_focusedText);
+    _focusedText = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+    [_focusedText retain];
     
     return YES;
 }
 
 - (void)webViewDidChange:(NSNotification *)notification
 {
-    [_selectedTextBlock webEditorTextDidChange:notification];
+    [[self focusedText] webEditorTextDidChange:notification];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
 {
-    [_selectedTextBlock webEditorTextDidEndEditing:notification];
-    [_selectedTextBlock release],   _selectedTextBlock = nil;
+    [[self focusedText] webEditorTextDidEndEditing:notification];
+    [_focusedText release],   _focusedText = nil;
 }
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
-    BOOL result = [_selectedTextBlock doCommandBySelector:command];
+    BOOL result = [_focusedText doCommandBySelector:command];
     return result;
 }
 

@@ -36,9 +36,9 @@ typedef enum {
     BOOL    _isLoading;
     
     // Selection
-    NSArray                     *_selectedItems;
-    id <SVWebEditorText>   _selectedTextBlock;
-    SVWebEditingMode            _mode;
+    id <SVWebEditorText>    _focusedText;
+    NSArray                 *_selectedItems;
+    SVWebEditingMode        _mode;
     
     // Editing
     BOOL    _mouseUpMayBeginEditing;
@@ -72,6 +72,8 @@ typedef enum {
 #pragma mark Selection
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
+
+@property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;
 
 @property(nonatomic, copy) NSArray *selectedItems;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
