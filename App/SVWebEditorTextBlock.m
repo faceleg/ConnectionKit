@@ -12,6 +12,8 @@
 
 
 @interface SVWebEditorTextBlock ()
+- (void)doUndoCoalescing;
+- (void)undoCoalescedChanges;
 @end
 
 
@@ -111,6 +113,7 @@
     
     if (result)
     {
+        OBASSERT(_nextChangeIsSimpleTextInsertion == NO);
         _nextChangeIsSimpleTextInsertion = YES;
     }
     
@@ -144,12 +147,17 @@
     }
     
     
-    //  Can now do other stuff in response to change
-    //  -----
+    /* Can now do other stuff in response to change */
+    
+    
     //  Commit editing unless the change was suitable for coalescing (i.e simple typing of text)
     if (endEditing)
     {
-        [self didEndEditingWithMovement:nil];
+        [self breakUndoCoalescing]; // will do the commit for us
+    }
+    else
+    {
+        [self doUndoCoalescing];
     }
 }
 
@@ -209,6 +217,8 @@
 	return result;
 }
 
+#pragma mark Undo Support
+
 - (NSUndoManager *)undoManager
 {
     if (!_undoManager)
@@ -218,6 +228,42 @@
     }
     
     return _undoManager;
+}
+
+@synthesize isCoalescingUndo = _isCoalescingUndo;
+
+- (void)doUndoCoalescing;
+{
+    //  The opposite of -breakUndoCoalescing.
+    if (![self isCoalescingUndo])
+    {
+        // Still need to register something on the undo stack to make 
+        [[[self undoManager] prepareWithInvocationTarget:self] undoCoalescedChanges];
+        _isCoalescingUndo = YES;
+    }
+}
+
+- (void)breakUndoCoalescing
+{
+    // When we started coalescing, it was recorded to the undo manager. We need to remove that. This includes faking an undo op so that if a document is paying attention its change count stays in sync
+    if ([self isCoalescingUndo])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerWillUndoChangeNotification object:[self undoManager]];
+        
+        [[self undoManager] removeAllActionsWithTarget:self];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerDidUndoChangeNotification object:[self undoManager]];
+    }
+    
+    // It's time to commit changes to the model
+    [self didEndEditingWithMovement:nil];
+    _isCoalescingUndo = NO;
+}
+
+- (void)undoCoalescedChanges
+{
+    _isCoalescingUndo = NO;
+    [self setValue:_uneditedValue forKey:NSValueBinding];
 }
 
 #pragma mark Bindings/NSEditor
