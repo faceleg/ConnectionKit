@@ -31,7 +31,8 @@
     NSUndoManager   *_undoManager;
     
     // Bindings
-    id <KSEditorRegistration> _controller;  // weak ref
+    id <KSEditorRegistration>   _controller;  // weak ref
+    BOOL                        _isCommittingEditing;
 }
 
 - (id)initWithDOMElement:(DOMHTMLElement *)element;// controller:(SVWebViewController *)controller;

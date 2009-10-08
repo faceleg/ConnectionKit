@@ -139,8 +139,11 @@
         NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
         NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
         id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+        
+        _isCommittingEditing = YES;
         [observedObject setValue:editedValue
                           forKey:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+        _isCommittingEditing = NO;
         
         
         // Inform controller
@@ -243,13 +246,17 @@
         value = [value copy];
         [_uneditedValue release], _uneditedValue = value;
         
-        if ([self isRichText])
+        // The change needs to be pushed through the GUI unless it was triggered by the user in the first place
+        if (!_isCommittingEditing)
         {
-            [self setHTMLString:value];
-        }
-        else
-        {
-            [self setString:value];
+            if ([self isRichText])
+            {
+                [self setHTMLString:value];
+            }
+            else
+            {
+                [self setString:value];
+            }
         }
     }
     else
