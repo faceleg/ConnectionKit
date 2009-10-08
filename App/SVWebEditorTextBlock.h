@@ -29,6 +29,7 @@
     BOOL            _isEditing;
     NSString        *_uneditedValue;
     NSUndoManager   *_undoManager;
+    BOOL            _nextChangeIsSimpleTextInsertion;
     
     // Bindings
     id <KSEditorRegistration>   _controller;  // weak ref
@@ -72,3 +73,4 @@
 @property(nonatomic, readonly) NSArray *contentItems;
 
 @end
+

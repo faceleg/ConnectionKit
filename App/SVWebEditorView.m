@@ -711,6 +711,15 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
+- (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+{
+    // Let the text object decide
+    BOOL result = [[self focusedText] webEditorTextShouldInsertText:text
+                                                  replacingDOMRange:range
+                                                        givenAction:action];
+    return result;
+}
+
 - (void)webViewDidChange:(NSNotification *)notification
 {
     [[self focusedText] webEditorTextDidChange:notification];

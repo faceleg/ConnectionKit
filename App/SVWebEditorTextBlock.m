@@ -103,6 +103,20 @@
 
 #pragma mark Editing
 
+- (BOOL)webEditorTextShouldInsertText:(NSString *)text
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action;
+{
+    BOOL result = YES;
+    
+    if (result)
+    {
+        _nextChangeIsSimpleTextInsertion = YES;
+    }
+    
+    return result;
+}
+
 @synthesize editing = _isEditing;
 
 - (void)didBeginEditing;
@@ -118,16 +132,25 @@
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
+    // Reset any change tracking stuff
+    BOOL endEditing = !_nextChangeIsSimpleTextInsertion;
+    _nextChangeIsSimpleTextInsertion = NO;
+    
+    
     // Notify that editing began if this is the case
     if (![self isEditing])
     {
         [self didBeginEditing];
     }
     
-    // Can now do other stuff in response to change
     
-    // Persist the change to the model
-    [self didEndEditingWithMovement:nil];
+    //  Can now do other stuff in response to change
+    //  -----
+    //  Commit editing unless the change was suitable for coalescing (i.e simple typing of text)
+    if (endEditing)
+    {
+        [self didEndEditingWithMovement:nil];
+    }
 }
 
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;

@@ -11,6 +11,11 @@
 
 @protocol SVWebEditorText <NSObject>
 
+// This MIGHT be received before editing the DOM
+- (BOOL)webEditorTextShouldInsertText:(NSString *)text
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action;
+
 // Informs the receiver that some portion of it did change through editing. The notification is the same as a WebView will have dished out.
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 
