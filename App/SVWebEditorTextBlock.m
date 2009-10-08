@@ -12,7 +12,6 @@
 
 
 @interface SVWebEditorTextBlock ()
-- (void)discardEditing_Undo;
 @end
 
 
@@ -115,10 +114,6 @@
     
     // Tell controller we're starting editing
     [_controller objectDidBeginEditing:self];
-    
-    
-    // Register undo op so the user can get back here if they wish
-    [[[self undoManager] prepareWithInvocationTarget:self] discardEditing_Undo];
 }
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
@@ -130,6 +125,9 @@
     }
     
     // Can now do other stuff in response to change
+    
+    // Persist the change to the model
+    [self didEndEditingWithMovement:nil];
 }
 
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
@@ -258,14 +256,6 @@
     {
         [super setValue:value forKey:key];
     }
-}
-
-- (void)discardEditing_Undo
-{
-    // I didn't want to implement -discardEditing, at least not yet. So had to mangle the name a little!
-    
-    // Reset DOM to original markup. Take advantage of our binding support to do this
-    [self setValue:_uneditedValue forKey:NSValueBinding];
 }
 
 - (BOOL)commitEditing;
