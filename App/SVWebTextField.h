@@ -28,9 +28,6 @@
     // Editing
     BOOL            _isEditing;
     NSString        *_uneditedValue;
-    NSUndoManager   *_undoManager;
-    BOOL            _isCoalescingUndo;
-    BOOL            _nextChangeIsSimpleTextInsertion;
     
     // Bindings
     id <KSEditorRegistration>   _controller;  // weak ref
@@ -66,12 +63,6 @@
 
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
-
-
-#pragma mark Undo Support
-@property(nonatomic, readonly) NSUndoManager *undoManager;
-@property(nonatomic, readonly) BOOL isCoalescingUndo;
-- (void)breakUndoCoalescing;
 
 
 #pragma mark Sub content
