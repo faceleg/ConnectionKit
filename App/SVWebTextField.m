@@ -6,12 +6,12 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorTextBlock.h"
+#import "SVWebTextField.h"
 
 #import "DOMNode+Karelia.h"
 
 
-@interface SVWebEditorTextBlock ()
+@interface SVWebTextField ()
 - (void)doUndoCoalescing;
 - (void)undoCoalescedChanges;
 @end
@@ -20,7 +20,7 @@
 #pragma mark -
 
 
-@implementation SVWebEditorTextBlock
+@implementation SVWebTextField
 
 #pragma mark Init & Dealloc
 
@@ -238,7 +238,7 @@
     if (![self isCoalescingUndo])
     {
         // Still need to register something on the undo stack to make 
-        [[[self undoManager] prepareWithInvocationTarget:self] undoCoalescedChanges];
+        //[[[self undoManager] prepareWithInvocationTarget:self] undoCoalescedChanges];
         _isCoalescingUndo = YES;
     }
 }
@@ -248,11 +248,11 @@
     // When we started coalescing, it was recorded to the undo manager. We need to remove that. This includes faking an undo op so that if a document is paying attention its change count stays in sync
     if ([self isCoalescingUndo])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerWillUndoChangeNotification object:[self undoManager]];
+        /*[[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerWillUndoChangeNotification object:[self undoManager]];
         
         [[self undoManager] removeAllActionsWithTarget:self];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerDidUndoChangeNotification object:[self undoManager]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerDidUndoChangeNotification object:[self undoManager]];*/
     }
     
     // It's time to commit changes to the model

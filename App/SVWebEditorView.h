@@ -42,6 +42,7 @@ typedef enum {
     
     // Editing
     BOOL    _mouseUpMayBeginEditing;
+    NSUndoManager   *_undoManager;
     
     // Drag & Drop
     DOMNode *_dragHighlightNode;

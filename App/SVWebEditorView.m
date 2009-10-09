@@ -60,8 +60,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [_webView setUIDelegate:self];
     [_webView setEditingDelegate:self];
     
-    [(NSTextView *)_webView setAllowsUndo:NO];  // see -undoManagerForWebView: for details
-    
     [self addSubview:_webView];
     
     
@@ -139,6 +137,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     // Let the old text know it's done
     [[self focusedText] webEditorTextDidEndEditing:notification];
+    [[self undoManager] removeAllActions];
     
     // Store the new text
     [_focusedText release], _focusedText = [text retain];
@@ -270,6 +269,28 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 }
 
 #pragma mark Undo Support
+
+- (NSUndoManager *)undoManager
+{
+    if (!_undoManager)
+    {
+        _undoManager = [[NSUndoManager alloc] init];
+    }
+    return _undoManager;
+}
+
+/*  This is pretty sucky: There are -undo: and -redo: actions for menu items but they are not documented anywhere. Since we're using a custom undo manager, need to implement these methods ourself
+ */
+
+- (void)undo:(id)sender
+{
+    [[self undoManager] undo];
+}
+
+- (void)redo:(id)sender
+{
+    [[self undoManager] redo];
+}
 
 /*  Covers for prviate WebKit methods
  */
@@ -590,10 +611,39 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     BOOL result = YES;
     SEL action = [anItem action];
     
+    if (action == @selector(undo:))
+    {
+        result = [[self undoManager] canUndo];
+    }
+    else if (action == @selector(redo:))
+    {
+        result = [[self undoManager] canRedo];
+    }
+    
     // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
-    if (action == @selector(cut:) || action == @selector(copy:))
+    else if (action == @selector(cut:) || action == @selector(copy:))
     {
         result = ([[self selectedItems] count] >= 1);
+    }
+    
+    return result;
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    //  And here I am forced to lie a bit to the undo manager. If we're not in the middle of editing, we want undo messages to be handled by the window as usual. Easiest way is just to claim we don't respond.
+    BOOL result;
+    if (aSelector == @selector(undo:))
+    {
+        result = [[self undoManager] canUndo];
+    }
+    else if (aSelector == @selector(redo:))
+    {
+        result = [[self undoManager] canRedo];
+    }
+    else
+    {
+        result = [super respondsToSelector:aSelector];
     }
     
     return result;
@@ -747,11 +797,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return result;
 }
 
-- (NSUndoManager *)undoManagerForWebView:(WebView *)webView
-{
-    // We want to stop the WebView from even trying to touch the standard undo manager as that would interfere with our own undo management. WebKit treats a return value of nil as indicating you want the default behaviour, so we have to return a dummy. Note that this method should not even be needed, as we turn off undo support from a private WebView method, but I'm implementing anyway to be on the safe side
-    return [[[NSUndoManager alloc] init] autorelease];
-}
-
 @end
 
+
+/*  SEP - Somebody Else's Problem
+*/
