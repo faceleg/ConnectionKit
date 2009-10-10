@@ -913,7 +913,6 @@
 		CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE16DD0B0D871EA90077C779 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */; };
-		CE1B90470B5EF68C0051B380 /* Empty.html in Resources */ = {isa = PBXBuildFile; fileRef = CE1B90460B5EF68C0051B380 /* Empty.html */; };
 		CE1D2FD50BD82CA100927C96 /* liveoak.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB490BCEC566001BF9F7 /* liveoak.png */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
 		CE2232BC0869F47200341BAF /* bigtop.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B20869F47200341BAF /* bigtop.png */; };
@@ -2481,7 +2480,6 @@
 		CE1AD3520A7E83C90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = it; path = it.lproj/Credits.html; sourceTree = "<group>"; };
 		CE1AD3570A7E83C90083C01E /* it */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE1AD35D0A7E83C90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE1B90460B5EF68C0051B380 /* Empty.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Empty.html; sourceTree = "<group>"; };
 		CE214BF9098060CD006DD2B1 /* Languages.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Languages.plist; sourceTree = "<group>"; };
 		CE2232AF0869F47200341BAF /* fwdbak32x20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwdbak32x20.png; sourceTree = "<group>"; };
 		CE2232B00869F47200341BAF /* fwdback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwdback.png; sourceTree = "<group>"; };
@@ -3577,7 +3575,6 @@
 				CEAE132B08450536007025D4 /* RSSTemplate.xml */,
 				CEC4DB2F0935179500D75C23 /* NonStandardURL.html */,
 				CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */,
-				CE1B90460B5EF68C0051B380 /* Empty.html */,
 				2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */,
 				278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */,
 				271568660D5B2EE100A91E58 /* KTElementTemplate.html */,
@@ -5656,7 +5653,6 @@
 				CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */,
 				CEA962C30AF6A924008A1367 /* sandvox.css in Resources */,
 				3CE686D40B531F9B0097451B /* movie.png in Resources */,
-				CE1B90470B5EF68C0051B380 /* Empty.html in Resources */,
 				CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */,
 				CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */,
 				CE9CAB4D0BCEC566001BF9F7 /* serverlogistics.jpg in Resources */,
