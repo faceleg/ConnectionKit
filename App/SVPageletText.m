@@ -6,12 +6,12 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContainerTextBlock.h"
+#import "SVPageletText.h"
 
 #import "SVWebContentItem.h"
 
 
-@implementation SVContainerTextBlock
+@implementation SVPageletText
 
 - (id)initWithDOMElement:(DOMHTMLElement *)element
 {

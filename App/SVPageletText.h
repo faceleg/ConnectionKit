@@ -15,7 +15,7 @@
 @class SVWebContentItem;
 
 
-@interface SVContainerTextBlock : SVWebTextField
+@interface SVPageletText : SVWebTextField
 {
     NSMutableSet    *_webContentItems;
 }

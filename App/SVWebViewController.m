@@ -12,7 +12,7 @@
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
 #import "KTSite.h"
-#import "SVContainerTextBlock.h"
+#import "SVPageletText.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVWebTextField.h"
@@ -175,7 +175,7 @@
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
-        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVContainerTextBlock class] : [SVWebTextField class]);
+        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVPageletText class] : [SVWebTextField class]);
         SVWebTextField *aController = [[textBlockClass alloc] initWithDOMElement:element];
         [aController setRichText:[aTextBlock isRichText]];
         [aController setFieldEditor:[aTextBlock isFieldEditor]];
