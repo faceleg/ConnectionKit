@@ -8,7 +8,7 @@
 
 #import <CoreData/CoreData.h>
 
-@class SVPageletContent;
+@class SVPageletBody;
 @class SVSidebar;
 
 @interface SVPagelet :  NSManagedObject  
@@ -17,7 +17,7 @@
 
 @property(nonatomic, retain) NSString * titleHTMLString;
 @property(nonatomic, retain) SVSidebar * sidebar;
-@property(nonatomic, retain, readonly) SVPageletContent *content;
+@property(nonatomic, retain, readonly) SVPageletBody *body;
 
 @end
 

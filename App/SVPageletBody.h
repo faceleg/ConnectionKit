@@ -12,7 +12,7 @@
 @class SVContentObject;
 
 
-@interface SVPageletContent :  NSManagedObject  
+@interface SVPageletBody :  NSManagedObject  
 
 #pragma mark Owner
 @property(nonatomic, retain, readonly) SVPagelet *pagelet;

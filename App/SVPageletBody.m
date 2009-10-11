@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPageletContent.h"
+#import "SVPageletBody.h"
 
 #import "KTPagelet.h"
 #import "SVContentObject.h"
 
 
-@interface SVPageletContent ()
+@interface SVPageletBody ()
 @property(nonatomic, copy, readwrite) NSSet *contentObjects;
 @end
 
@@ -20,7 +20,7 @@
 #pragma mark -
 
 
-@implementation SVPageletContent 
+@implementation SVPageletBody 
 
 #pragma mark Owner
 

@@ -137,21 +137,21 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-content" class="[[if includeInIndex]][[if parent.collectionShowNavigationArrows]][[if parent.index.navigationArrowsStyle==1]]has-photo-navigation[[else3]]has-text-navigation[[endif3]][[else2]]no-navigation[[endif2]][[endif]]">
 [[if includeSidebar]]
 					<div id="sidebar-container">
-[[if sidebarPagelets|editing]]
+[[if sidebar.pagelets|editing]]
 						<div id="sidebar">
 					  		<div id="sidebar-top"></div>
 							<div id="sidebar-content">
 								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
-[[forEach sidebarPagelets aPagelet]]
-								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTML]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="k-[[=aPagelet.uniqueID]]">
+[[forEach sidebar.pagelets aPagelet]]
+								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTMLString]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="[[=aPagelet.elementID]]">
 
 [[if aPagelet.canHaveTitle]]
-[[if aPagelet.titleHTML|editing]]
-									[[textblock property:aPagelet.titleHTML flags:"line" tag:h4 graphicalTextCode:h4s]]
+[[if aPagelet.titleHTMLString|editing]]
+									[[textblock property:aPagelet.titleHTMLString flags:"line" tag:h4 graphicalTextCode:h4s]]
 [[endif4]]
 [[endif3]]
 									<div class="pagelet-body">
-[[parsecomponent aPagelet elementTemplate]]
+                                        [[textblock property:aPagelet.body.archiveHTMLString flags:"block imageable"]]
 									</div>
 								</div>
 [[endForEach]]

@@ -8,12 +8,12 @@
 
 #import "SVPagelet.h"
 
-#import "SVPageletContent.h"
+#import "SVPageletBody.h"
 #import "SVSidebar.h"
 
 
 @interface SVPagelet ()
-@property(nonatomic, retain, readwrite) SVPageletContent *content;
+@property(nonatomic, retain, readwrite) SVPageletBody *body;
 @end
 
 
@@ -27,15 +27,15 @@
     [super awakeFromInsert];
     
     // Create a corresponding content object
-    SVPageletContent *content = [NSEntityDescription
-                                 insertNewObjectForEntityForName:@"PageletContent"
+    SVPageletBody *content = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"PageletBody"
                                  inManagedObjectContext:[self managedObjectContext]];
     
-    [self setContent:content];
+    [self setBody:content];
 }
 
 @dynamic titleHTMLString;
 @dynamic sidebar;
-@dynamic content;
+@dynamic body;
 
 @end

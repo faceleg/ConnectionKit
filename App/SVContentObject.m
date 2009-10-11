@@ -8,7 +8,7 @@
 
 #import "SVContentObject.h"
 
-#import "SVPageletContent.h"
+#import "SVPageletBody.h"
 
 @implementation SVContentObject 
 

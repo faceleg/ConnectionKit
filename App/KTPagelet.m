@@ -17,7 +17,7 @@
 #import "KTHTMLParser.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
-#import "SVPageletContent.h"
+#import "SVPageletBody.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"

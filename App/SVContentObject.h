@@ -8,14 +8,14 @@
 
 #import <CoreData/CoreData.h>
 
-@class SVPageletContent;
+@class SVPageletBody;
 
 @interface SVContentObject :  NSManagedObject  
 {
 }
 
 @property (nonatomic, retain) NSString * elementID;
-@property (nonatomic, retain) SVPageletContent * container;
+@property (nonatomic, retain) SVPageletBody * container;
 
 @end
 

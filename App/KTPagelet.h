@@ -28,7 +28,7 @@ typedef enum {
 } KTPageletLocation;
 
 
-@class KTPage, SVPageletContent;
+@class KTPage, SVPageletBody;
 @interface KTPagelet : KTAbstractElement
 
 #pragma mark Basic accessors
