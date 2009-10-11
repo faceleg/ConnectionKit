@@ -18,8 +18,10 @@
 
 + (SVPagelet *)pageletWithPage:(KTPage *)page;
 
-@property(nonatomic, retain) NSString * titleHTMLString;
 @property(nonatomic, retain) SVSidebar * sidebar;
+
+@property(nonatomic, retain) NSString * elementID;
+@property(nonatomic, retain) NSString * titleHTMLString;
 @property(nonatomic, retain, readonly) SVPageletBody *body;
 
 @end

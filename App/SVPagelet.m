@@ -58,6 +58,7 @@
     [self setBody:content];
 }
 
+@dynamic elementID;
 @dynamic titleHTMLString;
 @dynamic sidebar;
 @dynamic body;
