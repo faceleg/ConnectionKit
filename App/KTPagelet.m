@@ -32,7 +32,6 @@
 @interface KTPagelet ()
 + (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location;
 - (NSSet *)allPagesThatInheritSidebarsFromPage:(KTPage *)page;
-@property(nonatomic, retain, readwrite) SVPageletContent *content;
 @end
 
 
@@ -106,7 +105,7 @@
 	
 	
 	// Create the pagelet
-	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"OldPagelet"
+	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(result);
 	
@@ -168,18 +167,6 @@
 	}
 }
 
-- (void)awakeFromInsert
-{
-    [super awakeFromInsert];
-    
-    // Create a corresponding content object
-    SVPageletContent *content = [NSEntityDescription
-                                 insertNewObjectForEntityForName:@"PageletContent"
-                                 inManagedObjectContext:[self managedObjectContext]];
-    
-    [self setContent:content];
-}
-
 #pragma mark -
 #pragma mark Basic accessors
 
@@ -216,10 +203,6 @@
 - (BOOL)showBorder { return [self wrappedBoolForKey:@"showBorder"]; }
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
-
-#pragma mark Content
-
-@dynamic content;
 
 #pragma mark -
 #pragma mark Page

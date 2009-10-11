@@ -217,7 +217,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			// peform fetch
 			NSManagedObjectContext *context = [[self document] managedObjectContext];
 			NSError *fetchError = nil;
-			NSArray *fetchedObjects = [context objectsWithEntityName:@"OldPagelet"
+			NSArray *fetchedObjects = [context objectsWithEntityName:@"Pagelet"
 														   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
 															   error:&fetchError];	
 			// extract result

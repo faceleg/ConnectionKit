@@ -31,7 +31,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTSite, KTMaster;
+@class KTSite, KTMaster, SVSidebar;
 @class KTHTMLParser;
 
 
@@ -52,6 +52,9 @@ KTCollectionPathStyle;
 - (KTSite *)site;
 
 - (KTMaster *)master;
+
+@property(nonatomic, retain, readonly) SVSidebar *sidebar;
+
 
 #pragma mark Title
 - (BOOL)canEditTitle;

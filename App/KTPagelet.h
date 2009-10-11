@@ -48,11 +48,6 @@ typedef enum {
 - (NSSet *)allPages;
 
 
-#pragma mark Content
-
-@property(nonatomic, retain, readonly) SVPageletContent *content;
-
-
 #pragma mark Location
 
 - (KTPageletLocation)location;

@@ -12,6 +12,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTHTMLParser.h"
+#import "SVSidebar.h"
 
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -24,6 +25,11 @@
 #import "NSScanner+Karelia.h"
 
 #import "Debug.h"
+
+
+@interface KTAbstractPage ()
+@property(nonatomic, retain, readwrite) SVSidebar *sidebar;
+@end
 
 
 @interface KTPage (ChildrenPrivate)
@@ -82,6 +88,19 @@
 	return result;
 }
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    // Create a corresponding sidebar
+    SVSidebar *sidebar = [NSEntityDescription insertNewObjectForEntityForName:@"Sidebar"
+                                                       inManagedObjectContext:[self managedObjectContext]];
+    
+    [self setSidebar:sidebar];
+}
+
+#pragma mark Accessors
+
 - (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
 
 /*	Only KTPages can be collections
@@ -115,6 +134,8 @@
     SUBCLASSMUSTIMPLEMENT;
     return nil;
 }
+
+@dynamic sidebar;
 
 #pragma mark -
 #pragma mark Title

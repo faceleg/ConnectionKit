@@ -8,13 +8,14 @@
 
 #import <CoreData/CoreData.h>
 
-@class KTPagelet;
+@class SVPagelet;
 @class SVContentObject;
+
 
 @interface SVPageletContent :  NSManagedObject  
 
 #pragma mark Owner
-@property(nonatomic, retain, readonly) KTPagelet *pagelet;
+@property(nonatomic, retain, readonly) SVPagelet *pagelet;
 
 
 #pragma mark Content
@@ -26,9 +27,6 @@
 @property(nonatomic, copy, readonly) NSSet *contentObjects;
 - (void)setArchiveHTMLString:(NSString *)html
               contentObjects:(NSSet *)contentObjects;
-
-
-#pragma mark Editing
 
 
 #pragma mark Publishing

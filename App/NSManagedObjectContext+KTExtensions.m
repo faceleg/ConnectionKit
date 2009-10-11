@@ -180,10 +180,10 @@
 {
 	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
 	
-	// we have to search in Root, Page, OldPagelet, Element, and Media
+	// we have to search in Root, Page, Pagelet, Element, and Media
 	NSArray *entityNames = [NSArray arrayWithObjects:
 		@"Page", 
-		@"OldPagelet", 
+		@"Pagelet", 
 		nil];
 	
 	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
@@ -196,7 +196,7 @@
 	static NSArray *entityNames;
 	if (!entityNames)
 	{
-		entityNames = [[NSArray alloc] initWithObjects:@"OldPagelet", @"Page", nil];
+		entityNames = [[NSArray alloc] initWithObjects:@"Pagelet", @"Page", nil];
 	}
 	
 	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
@@ -210,7 +210,7 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pluginIdentifier == %@", pluginIdentifier];
 	
 	NSError *error = nil;
-	result = [self objectsWithEntityName:@"OldPagelet" predicate:predicate error:&error];
+	result = [self objectsWithEntityName:@"Pagelet" predicate:predicate error:&error];
 	if (error) {
 		[[NSAlert alertWithError:error] runModal];
 	}
@@ -314,7 +314,7 @@
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page
 {
 	NSArray *pages = [self allObjectsWithEntityName:@"Page" error:NULL];
-	NSArray *pagelets = [self allObjectsWithEntityName:@"OldPagelet" error:NULL];
+	NSArray *pagelets = [self allObjectsWithEntityName:@"Pagelet" error:NULL];
 	
 	NSMutableArray *plugins = [[NSMutableArray alloc] initWithCapacity:[pages count] + [pagelets count]];
 	[plugins addObjectsFromArray:pages];
