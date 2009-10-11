@@ -13,7 +13,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithDOMElement:(DOMElement *)element pagelet:(KTPagelet *)pagelet;
+- (id)initWithDOMElement:(DOMElement *)element pagelet:(SVPagelet *)pagelet;
 {
     self = [self initWithDOMElement:element];
     

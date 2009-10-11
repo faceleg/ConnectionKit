@@ -11,6 +11,7 @@
 #import "KTHTMLParser.h"
 #import "KTHTMLTextBlock.h"
 #import "KTPage.h"
+#import "SVPagelet.h"
 #import "KTSite.h"
 #import "SVPageletText.h"
 #import "SVWebContentItem.h"
@@ -199,13 +200,12 @@
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    NSArray *pagelets = [[[self page] sidebarPagelets] arrayByAddingObjectsFromArray:[[self page] callouts]];
+    NSSet *pagelets = [[[self page] sidebar] pagelets];
     NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
-    for (KTPagelet *aPagelet in pagelets)
+    for (SVPagelet *aPagelet in pagelets)
     {
-        NSString *pageletID = [@"k-" stringByAppendingString:aPagelet.uniqueID];
-        DOMElement *element = [domDoc getElementById:pageletID];
+        DOMElement *element = [domDoc getElementById:[aPagelet elementID]];
         if (element)
         {
             SVWebContentItem *object = [[SVWebContentItem alloc] initWithDOMElement:element pagelet:aPagelet];
@@ -214,7 +214,7 @@
         }
         else
         {
-            NSLog(@"Could not locate pagelet with ID: %@", pageletID);
+            NSLog(@"Could not locate pagelet with ID: %@", [aPagelet elementID]);
         }
     }
     
@@ -342,7 +342,7 @@
 {
     BOOL result = NO;
     
-    NSArray *pboardReps = [items valueForKeyPath:@"pagelet.pasteboardRepresentation"];
+    NSArray *pboardReps = [items valueForKeyPath:@"pagelet.elementID"];
     if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
     {
         result = YES;

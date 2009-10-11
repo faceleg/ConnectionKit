@@ -12,19 +12,19 @@
 #import "SVDOMNodeBoundsTracker.h"
 
 
-@class KTPagelet;
+@class SVPagelet;
 
 
 @interface SVWebContentItem : SVWebEditorItem <SVDOMNodeBoundsTrackerDelegate>
 {
   @private
-    KTPagelet   *_pagelet;
+    SVPagelet   *_pagelet;
         
     SVDOMNodeBoundsTracker  *_nodeTracker;
 }
 
-- (id)initWithDOMElement:(DOMElement *)element pagelet:(KTPagelet *)pagelet;
+- (id)initWithDOMElement:(DOMElement *)element pagelet:(SVPagelet *)pagelet;
 
-@property(nonatomic, retain, readonly) KTPagelet *pagelet;
+@property(nonatomic, retain, readonly) SVPagelet *pagelet;
 
 @end
