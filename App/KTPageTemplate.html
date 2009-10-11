@@ -145,10 +145,8 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[forEach sidebar.pagelets aPagelet]]
 								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTMLString]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="[[=aPagelet.elementID]]">
 
-[[if aPagelet.canHaveTitle]]
 [[if aPagelet.titleHTMLString|editing]]
 									[[textblock property:aPagelet.titleHTMLString flags:"line" tag:h4 graphicalTextCode:h4s]]
-[[endif4]]
 [[endif3]]
 									<div class="pagelet-body">
                                         [[textblock property:aPagelet.body.archiveHTMLString flags:"block imageable"]]

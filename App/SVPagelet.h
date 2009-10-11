@@ -9,11 +9,14 @@
 #import <CoreData/CoreData.h>
 
 @class SVPageletBody;
-@class SVSidebar;
+@class KTPage, SVSidebar;
 
-@interface SVPagelet :  NSManagedObject  
+
+@interface SVPagelet : NSManagedObject  
 {
 }
+
++ (SVPagelet *)pageletWithPage:(KTPage *)page;
 
 @property(nonatomic, retain) NSString * titleHTMLString;
 @property(nonatomic, retain) SVSidebar * sidebar;

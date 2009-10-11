@@ -61,6 +61,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
+#import "SVPagelet.h"
 #import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
@@ -237,6 +238,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
         KTMediaContainer *faviconMedia = [[root mediaManager] mediaContainerWithPath:faviconPath];
         [master setValue:[faviconMedia identifier] forKey:@"faviconMediaIdentifier"];
+        
+        
+        // Create a starter pagelet
+        SVPagelet *pagelet = [SVPagelet pageletWithPage:root];
+        [pagelet setTitleHTMLString:@"Test"];
+        [[pagelet body] setArchiveHTMLString:@"Test"];
         
         
         // Make the initial Sandvox badge
