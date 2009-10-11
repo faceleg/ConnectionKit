@@ -324,7 +324,7 @@
 
 	keywords allowed:
 		
-		entity - like Document, Page, Element, Pagelet.  With optional _anything suffix just to keep unique
+		entity - like Document, Page, Element, OldPagelet.  With optional _anything suffix just to keep unique
 		property - for editing, what property (key-value) does this ID'd object get loaded from/saved to?
 		flags: one or more of:
 			block - editable as a block of text, one or more paragraphs

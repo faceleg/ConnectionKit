@@ -66,7 +66,7 @@
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray;
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
 
-// returns KTManagedObject, searching entities Root, Page, Pagelet, Element, and Media
+// returns KTManagedObject, searching entities Root, Page, OldPagelet, Element, and Media
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
 - (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
 

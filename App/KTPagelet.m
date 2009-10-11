@@ -106,7 +106,7 @@
 	
 	
 	// Create the pagelet
-	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
+	KTPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"OldPagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(result);
 	
