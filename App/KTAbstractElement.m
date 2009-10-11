@@ -94,7 +94,7 @@
 {
 	[super awakeFromInsert];
 	
-	[self setWrappedValue:[NSString shortUUIDString] forKey:@"uniqueID"];
+	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
 }
 
 - (void)awakeFromFetch

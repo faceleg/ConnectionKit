@@ -36,8 +36,8 @@
 	
 	[self setBool:[defaults boolForKey:@"deletePagesWhenPublishing"] forKey:@"deletePagesWhenPublishing"];
 	[self setBool:[defaults boolForKey:@"PathsWithIndexPages"] forKey:@"PathsWithIndexPages"];
-	[self setValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
-	[self setValue:[defaults objectForKey:@"archivesBaseName"] forKey:@"archivesBaseName"];
+	[self setPrimitiveValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
+	[self setPrimitiveValue:[defaults objectForKey:@"archivesBaseName"] forKey:@"archivesBaseName"];
 }
 
 - (void)awakeFromFetch

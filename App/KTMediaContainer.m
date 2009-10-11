@@ -153,7 +153,7 @@
 {
 	[super awakeFromInsert];
 	
-	[self setValue:[NSString UUIDString] forKey:@"identifier"];
+	[self setPrimitiveValue:[NSString UUIDString] forKey:@"identifier"];
 }
 
 - (void)awakeFromFetch

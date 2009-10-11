@@ -54,7 +54,7 @@
 	// Prepare our continue reading link
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
-	[self setValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
+	[self setPrimitiveValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
 	
 	
 	// Enable/disable graphical text
@@ -68,7 +68,7 @@
     // Code Injection
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"MasterCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
-    [self setValue:codeInjection forKey:@"codeInjection"];
+    [self setPrimitiveValue:codeInjection forKey:@"codeInjection"];
 }
 
 - (void)awakeFromFetch

@@ -40,13 +40,13 @@
 	
 	// Give ourself a unique ID
 	NSString *siteID = [NSString shortUUIDString];
-    [self setValue:siteID forKey:@"siteID"];
+    [self setPrimitiveValue:siteID forKey:@"siteID"];
 	
 	
 	// Create Host Properties object as well.
 	NSManagedObject *hostProperties = [NSEntityDescription insertNewObjectForEntityForName:@"HostProperties"
 																	inManagedObjectContext:[self managedObjectContext]];
-	[self setValue:hostProperties forKey:@"hostProperties"];
+	[self setPrimitiveValue:hostProperties forKey:@"hostProperties"];
 	
 	
 	// Copy media originals setting

@@ -203,20 +203,20 @@
 	
 	// attributes
 	NSDate *now = [NSDate date];
-	[self setValue:now forKey:@"creationDate"];
-	[self setValue:now forKey:@"lastModificationDate"];
+	[self setPrimitiveValue:now forKey:@"creationDate"];
+	[self setPrimitiveValue:now forKey:@"lastModificationDate"];
 	
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
     if ([maxTitles isKindOfClass:[NSNumber class]])
     {
-        [self setValue:maxTitles forKey:@"collectionSummaryMaxPages"];
+        [self setPrimitiveValue:maxTitles forKey:@"collectionSummaryMaxPages"];
     }
     
     
     // Code Injection
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"PageCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
-    [self setValue:codeInjection forKey:@"codeInjection"];
+    [self setPrimitiveValue:codeInjection forKey:@"codeInjection"];
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert
