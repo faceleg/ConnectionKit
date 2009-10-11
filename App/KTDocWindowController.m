@@ -782,7 +782,7 @@ from representedObject */
 	// add component to parent
 	[aCollection addPage:aPage];
 	
-	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSSet setWithObject:aPage]];
+	[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSArray arrayWithObject:aPage]];
 	
 	// label undo and perserve the current selection
     if ( [aPage isCollection] )
