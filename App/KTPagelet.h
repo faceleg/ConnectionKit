@@ -28,7 +28,7 @@ typedef enum {
 } KTPageletLocation;
 
 
-@class KTPage;
+@class KTPage, SVPageletContent;
 @interface KTPagelet : KTAbstractElement
 
 #pragma mark Basic accessors
@@ -46,6 +46,12 @@ typedef enum {
 
 - (KTPage *)page;
 - (NSSet *)allPages;
+
+
+#pragma mark Content
+
+@property(nonatomic, retain, readonly) SVPageletContent *content;
+
 
 #pragma mark Location
 

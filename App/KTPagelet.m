@@ -17,6 +17,7 @@
 #import "KTHTMLParser.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
+#import "SVPageletContent.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -31,6 +32,7 @@
 @interface KTPagelet ()
 + (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page pluginIdentifier:(NSString *)identifier location:(KTPageletLocation)location;
 - (NSSet *)allPagesThatInheritSidebarsFromPage:(KTPage *)page;
+@property(nonatomic, retain, readwrite) SVPageletContent *content;
 @end
 
 
@@ -166,6 +168,18 @@
 	}
 }
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    // Create a corresponding content object
+    SVPageletContent *content = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"PageletContent"
+                                 inManagedObjectContext:[self managedObjectContext]];
+    
+    [self setContent:content];
+}
+
 #pragma mark -
 #pragma mark Basic accessors
 
@@ -202,6 +216,10 @@
 - (BOOL)showBorder { return [self wrappedBoolForKey:@"showBorder"]; }
 
 - (void)setShowBorder:(BOOL)flag { [self setWrappedBool:flag forKey:@"showBorder"]; }
+
+#pragma mark Content
+
+@dynamic content;
 
 #pragma mark -
 #pragma mark Page
