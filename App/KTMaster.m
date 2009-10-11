@@ -68,7 +68,7 @@
     // Code Injection
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"MasterCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
-    [self setPrimitiveValue:codeInjection forKey:@"codeInjection"];
+    [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
 - (void)awakeFromFetch

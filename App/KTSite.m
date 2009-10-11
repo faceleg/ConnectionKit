@@ -46,7 +46,7 @@
 	// Create Host Properties object as well.
 	NSManagedObject *hostProperties = [NSEntityDescription insertNewObjectForEntityForName:@"HostProperties"
 																	inManagedObjectContext:[self managedObjectContext]];
-	[self setPrimitiveValue:hostProperties forKey:@"hostProperties"];
+	[self setValue:hostProperties forKey:@"hostProperties"];
 	
 	
 	// Copy media originals setting

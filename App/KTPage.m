@@ -216,7 +216,7 @@
     // Code Injection
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"PageCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
-    [self setPrimitiveValue:codeInjection forKey:@"codeInjection"];
+    [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
 /*!	Initialization that happens after awakeFromFetch or awakeFromInsert
