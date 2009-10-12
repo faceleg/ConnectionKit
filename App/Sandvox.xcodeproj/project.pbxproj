@@ -1525,6 +1525,34 @@
 			remoteGlobalIDString = D09933551011B26E00C527B7 /* iMedia2.app */;
 			remoteInfo = "iMedia2 Tester";
 		};
+		CE7638091083F70600EEA9CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteInfo = Framework;
+		};
+		CE76380B1083F70600EEA9CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteInfo = UnitTest;
+		};
+		CE76380D1083F70600EEA9CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteInfo = DropletHelper;
+		};
+		CE76380F1083F70600EEA9CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteInfo = DropletLauncher;
+		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -4584,6 +4612,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CE7638021083F70600EEA9CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE76380A1083F70600EEA9CF /* Connection.framework */,
+				CE76380C1083F70600EEA9CF /* UnitTest.octest */,
+				CE76380E1083F70600EEA9CF /* DropletHelper.app */,
+				CE7638101083F70600EEA9CF /* DropletLauncher */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CE8E71900912F5E7001DC88D /* payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -5095,6 +5134,10 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
+					ProductGroup = CE7638021083F70600EEA9CF /* Products */;
+					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C4C6A6D0D6410F300398BDA /* Products */;
 					ProjectRef = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
 				},
@@ -5434,6 +5477,34 @@
 			fileType = wrapper.application;
 			path = iMedia2.app;
 			remoteRef = CE7637F11083F61500EEA9CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE76380A1083F70600EEA9CF /* Connection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Connection.framework;
+			remoteRef = CE7638091083F70600EEA9CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE76380C1083F70600EEA9CF /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = CE76380B1083F70600EEA9CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE76380E1083F70600EEA9CF /* DropletHelper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DropletHelper.app;
+			remoteRef = CE76380D1083F70600EEA9CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE7638101083F70600EEA9CF /* DropletLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DropletLauncher;
+			remoteRef = CE76380F1083F70600EEA9CF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE99831A0D614DD700F2DD12 /* MetaSandvox.mdimporter */ = {
