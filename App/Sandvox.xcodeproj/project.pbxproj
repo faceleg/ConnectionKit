@@ -1515,42 +1515,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* iMedia.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = iMedia;
 		};
 		CE7637F11083F61500EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D09933551011B26E00C527B7 /* iMedia2.app */;
+			remoteGlobalIDString = D09933551011B26E00C527B7;
 			remoteInfo = "iMedia2 Tester";
 		};
 		CE7638091083F70600EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		CE76380B1083F70600EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
 		};
 		CE76380D1083F70600EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
 			remoteInfo = DropletHelper;
 		};
 		CE76380F1083F70600EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
 			remoteInfo = DropletLauncher;
 		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
@@ -1782,8 +1782,8 @@
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
 		27AE758C0EEE9D8000409D80 /* Publishing.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Publishing.nib; sourceTree = "<group>"; };
-		27AE75C60EEEB12D00409D80 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = ../../connection/branches/1.2/error.png; sourceTree = SOURCE_ROOT; };
-		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../../connection/branches/1.2/finished.png; sourceTree = SOURCE_ROOT; };
+		27AE75C60EEEB12D00409D80 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = ../../connection/error.png; sourceTree = SOURCE_ROOT; };
+		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../../connection/finished.png; sourceTree = SOURCE_ROOT; };
 		27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFile.h; sourceTree = "<group>"; };
 		27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
