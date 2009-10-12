@@ -985,41 +985,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		270D21A010188DFD00976F59 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
-			remoteInfo = Framework;
-		};
-		270D21A210188DFD00976F59 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00;
-			remoteInfo = UnitTest;
-		};
-		270D21A410188DFD00976F59 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
-			remoteInfo = DropletHelper;
-		};
-		270D21A610188DFD00976F59 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
-			remoteInfo = DropletLauncher;
-		};
-		270D21AA10188E0D00976F59 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
-			remoteInfo = Framework;
-		};
 		274339ED0D77339B00164FA5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
@@ -1905,7 +1870,7 @@
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
-		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/branches/1.2/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3EB90F09F71C3F00881A08 /* connection */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = connection; path = ../../connection; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2774,17 +2739,6 @@
 				3C42E6BB0D6510BE004F35FD /* HTML.svxElement */,
 				CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */,
 				CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		270D219910188DFD00976F59 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				270D21A110188DFD00976F59 /* Connection.framework */,
-				270D21A310188DFD00976F59 /* UnitTest.octest */,
-				270D21A510188DFD00976F59 /* DropletHelper.app */,
-				270D21A710188DFD00976F59 /* DropletLauncher */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4183,7 +4137,7 @@
 			isa = PBXGroup;
 			children = (
 				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
-				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
+				3C3EB90F09F71C3F00881A08 /* connection */,
 				3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */,
 			);
 			name = Frameworks;
@@ -4593,6 +4547,13 @@
 			path = DesignPicker;
 			sourceTree = "<group>";
 		};
+		CE762D311083F25D00EEA9CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CE8E71900912F5E7001DC88D /* payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -4994,7 +4955,6 @@
 			dependencies = (
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
-				270D21AB10188E0D00976F59 /* PBXTargetDependency */,
 				27E4D4530EC30D04000E85DD /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */,
@@ -5084,8 +5044,8 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
-					ProductGroup = 270D219910188DFD00976F59 /* Products */;
-					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+					ProductGroup = CE762D311083F25D00EEA9CF /* Products */;
+					ProjectRef = 3C3EB90F09F71C3F00881A08 /* connection */;
 				},
 				{
 					ProductGroup = 3C4C6A6D0D6410F300398BDA /* Products */;
@@ -5219,34 +5179,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		270D21A110188DFD00976F59 /* Connection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Connection.framework;
-			remoteRef = 270D21A010188DFD00976F59 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		270D21A310188DFD00976F59 /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = 270D21A210188DFD00976F59 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		270D21A510188DFD00976F59 /* DropletHelper.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DropletHelper.app;
-			remoteRef = 270D21A410188DFD00976F59 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		270D21A710188DFD00976F59 /* DropletLauncher */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = DropletLauncher;
-			remoteRef = 270D21A610188DFD00976F59 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		274339EE0D77339B00164FA5 /* CollectionArchive.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -6404,11 +6336,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		270D21AB10188E0D00976F59 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Framework;
-			targetProxy = 270D21AA10188E0D00976F59 /* PBXContainerItemProxy */;
-		};
 		274339F10D7733B600164FA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CollectionArchiveElement;
