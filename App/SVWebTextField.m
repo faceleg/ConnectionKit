@@ -148,7 +148,7 @@
         
         _isCommittingEditing = YES;
         [observedObject setValue:editedValue
-                          forKey:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
         _isCommittingEditing = NO;
         
         
