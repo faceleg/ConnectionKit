@@ -59,6 +59,19 @@
     }
 }
 
+
+- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action
+                           pasteboard:(NSPasteboard *)pasteboard;
+{
+    // Unlike text fields, support any drop
+    return YES;
+}
+
+
+
+
 - (NSSet *)webContentItems { return [[_webContentItems copy] autorelease]; }
 
 - (void)addWebContentItem:(SVWebContentItem *)item;
