@@ -761,12 +761,35 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
+- (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+{
+    // Let the text object decide
+    NSPasteboard *pasteboard = nil;
+    if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+    {
+        pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+    }
+    
+    BOOL result = [[self focusedText] webEditorTextShouldInsertNode:node
+                                                  replacingDOMRange:range
+                                                        givenAction:action
+                                                         pasteboard:pasteboard];
+    return result;
+}
+
 - (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     // Let the text object decide
+    NSPasteboard *pasteboard = nil;
+    if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+    {
+        pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+    }
+    
     BOOL result = [[self focusedText] webEditorTextShouldInsertText:text
                                                   replacingDOMRange:range
-                                                        givenAction:action];
+                                                        givenAction:action
+                                                         pasteboard:pasteboard];
     return result;
 }
 

@@ -103,9 +103,18 @@
 
 #pragma mark Editing
 
+- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action
+                           pasteboard:(NSPasteboard *)pasteboard;
+{
+    return YES;
+}
+
 - (BOOL)webEditorTextShouldInsertText:(NSString *)text
                     replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action;
+                          givenAction:(WebViewInsertAction)action
+                           pasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = YES;
     return result;
