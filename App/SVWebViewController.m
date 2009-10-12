@@ -365,7 +365,7 @@
     // Drags are generally fine unless they fall in the drop zone between pagelets.
     NSArray *pagelets = [self contentItems];
     
-    NSUInteger i, count = [pagelets count] - 1;
+    NSInteger i, count = [pagelets count] - 1;  // must use signed integer for now to handle 0 pagelets
     for (i = 0; i < count; i++)
     {
         SVWebEditorItem *item1 = [pagelets objectAtIndex:i];
