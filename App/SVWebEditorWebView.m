@@ -56,8 +56,8 @@
 {
     BOOL result = [super prepareForDragOperation:sender];
     
-    // Need to end any of our custom drawing
-    [[self webEditorView] removeDragCaret];
+    // Need to end any of our custom drawing. Do NOT call -[WebView removeDragCaret] as it will forget where the drop is supposed to go!
+    [[self webEditorView] performSelector:@selector(removeDragCaretFromDOMNodes)];
     [[self webEditorView] moveDragHighlightToDOMNode:nil];
     
     return result;
