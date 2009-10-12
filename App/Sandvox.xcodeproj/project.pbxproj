@@ -3430,6 +3430,9 @@
 		3C202D1707DFC06B00DE4994 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				3C9BC1FC103DF94300D2CF47 /* Prefs.xib */,
+				3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */,
+				3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */,
 				3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */,
 				3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */,
 				3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */,
@@ -3725,7 +3728,6 @@
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
 				3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */,
 				3C9BC1F8103DF92500D2CF47 /* Placeholder.xib */,
-				3C9BC1FC103DF94300D2CF47 /* Prefs.xib */,
 				3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */,
 			);
 			name = Localized;
@@ -4704,8 +4706,6 @@
 				CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */,
 				3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */,
 				3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */,
-				3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */,
-				3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */,
 				3C27FE00096F198E00702991 /* KTReleaseNotesController.h */,
 				3C27FE01096F198E00702991 /* KTReleaseNotesController.m */,
 				CE510FCB090EA74C00547CFF /* KTTranscriptController.h */,
