@@ -763,6 +763,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
+    id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+    
     // Let the text object decide
     NSPasteboard *pasteboard = nil;
     if ([webView respondsToSelector:@selector(_insertionPasteboard)])
@@ -770,15 +772,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
     }
     
-    BOOL result = [[self focusedText] webEditorTextShouldInsertNode:node
-                                                  replacingDOMRange:range
-                                                        givenAction:action
-                                                         pasteboard:pasteboard];
+    BOOL result = [text webEditorTextShouldInsertNode:node
+                                    replacingDOMRange:range
+                                          givenAction:action
+                                           pasteboard:pasteboard];
     return result;
 }
 
-- (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)text replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+- (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)string replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
+    id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+    
     // Let the text object decide
     NSPasteboard *pasteboard = nil;
     if ([webView respondsToSelector:@selector(_insertionPasteboard)])
@@ -786,10 +790,10 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
     }
     
-    BOOL result = [[self focusedText] webEditorTextShouldInsertText:text
-                                                  replacingDOMRange:range
-                                                        givenAction:action
-                                                         pasteboard:pasteboard];
+    BOOL result = [text webEditorTextShouldInsertText:string
+                                    replacingDOMRange:range
+                                          givenAction:action
+                                           pasteboard:pasteboard];
     return result;
 }
 
