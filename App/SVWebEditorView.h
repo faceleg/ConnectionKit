@@ -85,6 +85,9 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+// WebKit doesn't supply any sort of -willFoo editing notifications, but we're in control now and can provide a pretty decent approximation.
+- (void)willEditDOMRange:(DOMRange *)range;
+
 
 #pragma mark Undo Support
 // It is the responsibility of SVWebEditorTextBlocks to use these methods to control undo support as they modify the DOM
@@ -209,7 +212,10 @@ extern NSString *SVWebEditorViewSelectionDidChangeNotification;
 
 
 @interface SVWebEditorView (SPI)
+
+// Do NOT attempt to edit this WebView in any way. The whole point of SVWebEditorView is to provide a more structured API around a WebView's editing capabilities. You should only ever be modifying the WebView through the API SVWebEditorView and its Date Source/Delegate provides.
 @property(nonatomic, retain, readonly) WebView *webView;
+
 - (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
 @end
 

@@ -268,6 +268,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
+- (void)willEditDOMRange:(DOMRange *)range
+{
+
+}
+
 #pragma mark Undo Support
 
 - (NSUndoManager *)undoManager
@@ -776,6 +781,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                                     replacingDOMRange:range
                                           givenAction:action
                                            pasteboard:pasteboard];
+    
+    if (result)
+    {
+        [self willEditDOMRange:range];
+    }
+    
     return result;
 }
 
@@ -794,11 +805,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                                     replacingDOMRange:range
                                           givenAction:action
                                            pasteboard:pasteboard];
+    
+    if (result)
+    {
+        [self willEditDOMRange:range];
+    }
+    
     return result;
 }
 
 - (void)webViewDidChange:(NSNotification *)notification
 {
+    // Inform the focused text that a change took place. There is somewhat of a problem though: this method has no context as to what changed. In the case of dropping some content, the selection never actually changes in fact, so we have no idea to whom this message should actually be sent.
     [[self focusedText] webEditorTextDidChange:notification];
 }
 
