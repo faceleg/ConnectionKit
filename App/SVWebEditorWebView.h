@@ -17,8 +17,10 @@
 
 @interface SVWebEditorWebView : WebView
 
-
 @property(nonatomic, readonly) SVWebEditorView *webEditorView;
+
+// Returns YES if the first responder is a subview of the receiver
+@property(nonatomic, readonly) BOOL isFirstResponder;
 
 @end
 

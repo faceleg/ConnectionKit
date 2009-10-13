@@ -19,6 +19,20 @@
     return (SVWebEditorView *)[self superview];
 }
 
+- (BOOL)isFirstResponder
+{
+    BOOL result = NO;
+    
+    NSResponder *firstResponder = [[self window] firstResponder];
+    if ([firstResponder isKindOfClass:[NSView class]])
+    {
+        NSView *selectedView = (NSView *)firstResponder;
+        result = [selectedView isDescendantOf:self];
+    }
+    
+    return result;
+}
+
 #pragma mark Dragging Destination
 
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
