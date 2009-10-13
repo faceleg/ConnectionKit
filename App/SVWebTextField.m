@@ -174,13 +174,16 @@
     {
         // Push changes from the DOM down into the model
         NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
-        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-        
-        _isCommittingEditing = YES;
-        [observedObject setValue:editedValue
-                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-        _isCommittingEditing = NO;
+        if (![editedValue isEqualToString:_uneditedValue])
+        {
+            NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
+            id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+            
+            _isCommittingEditing = YES;
+            [observedObject setValue:editedValue
+                          forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+            _isCommittingEditing = NO;
+        }
         
         
         // Inform controller
