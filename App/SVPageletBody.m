@@ -45,7 +45,29 @@
 - (NSString *)editingHTMLString;
 {
     // Take archived HTML and insert editing HTML for content objects into it. We do this now so as to generate as close as possible an approximation to how the page will look when published. (The alternative is to load archived HTML into the DOM, and then replace individual nodes with content objects)
-    return [self archiveHTMLString];
+    NSString *result = [self archiveHTMLString];
+    
+    if ([[self contentObjects] count] > 0)
+    {
+        NSMutableString *buffer = [result mutableCopy];
+        
+        // Insert each content object
+        for (SVContentObject *aContentObject in [self contentObjects])
+        {
+            NSString *target = [aContentObject archiveHTMLString];
+            [buffer replaceOccurrencesOfString:target
+                                    withString:[aContentObject editingHTMLString]
+                                       options:0 
+                                         range:NSMakeRange(0, [buffer length])];
+        }
+        
+        
+        // Tidy up
+        result = buffer;
+        [buffer autorelease];
+    }
+    
+    return result;
 }
 
 #pragma mark Publishing

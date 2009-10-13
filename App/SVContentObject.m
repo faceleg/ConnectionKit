@@ -15,4 +15,16 @@
 @dynamic elementID;
 @dynamic container;
 
+- (NSString *)archiveHTMLString;
+{
+    NSString *result = [NSString stringWithFormat:@"<object id=\"%@\" />", [self elementID]];
+    return result;
+}
+
+- (NSString *)editingHTMLString;
+{
+    // TODO: Return something real
+    return @"<img />";
+}
+
 @end

@@ -14,8 +14,15 @@
 {
 }
 
-@property (nonatomic, retain) NSString * elementID;
 @property (nonatomic, retain) SVPageletBody * container;
+
+@property(nonatomic, retain, readonly) NSString *elementID;
+- (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
+
+
+#pragma mark Editing
+- (NSString *)editingHTMLString;
+
 
 @end
 
