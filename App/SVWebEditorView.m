@@ -268,6 +268,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
+- (BOOL)canEdit;
+{
+    //  Editing is only supported while the WebView is First Responder. Otherwise there is no selection to indicate what is being edited. We can work around the issue a bit by forcing there to be a selection, or refusing the edit if not
+    BOOL result = [[self webView] isFirstResponder];
+    if (!result)
+    {
+        result = [[self window] makeFirstResponder:[self webView]];
+    }
+    return result;
+}
+
 - (void)willEditDOMRange:(DOMRange *)range
 {
 
@@ -768,23 +779,28 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
-    id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
-    
-    // Let the text object decide
-    NSPasteboard *pasteboard = nil;
-    if ([webView respondsToSelector:@selector(_insertionPasteboard)])
-    {
-        pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
-    }
-    
-    BOOL result = [text webEditorTextShouldInsertNode:node
-                                    replacingDOMRange:range
-                                          givenAction:action
-                                           pasteboard:pasteboard];
+    BOOL result = [self canEdit];
     
     if (result)
     {
-        [self willEditDOMRange:range];
+        id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+        
+        // Let the text object decide
+        NSPasteboard *pasteboard = nil;
+        if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+        {
+            pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+        }
+        
+        result = [text webEditorTextShouldInsertNode:node
+                                        replacingDOMRange:range
+                                              givenAction:action
+                                               pasteboard:pasteboard];
+        
+        if (result)
+        {
+            [self willEditDOMRange:range];
+        }
     }
     
     return result;
@@ -792,31 +808,39 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)string replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
-    id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
-    
-    // Let the text object decide
-    NSPasteboard *pasteboard = nil;
-    if ([webView respondsToSelector:@selector(_insertionPasteboard)])
-    {
-        pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
-    }
-    
-    BOOL result = [text webEditorTextShouldInsertText:string
-                                    replacingDOMRange:range
-                                          givenAction:action
-                                           pasteboard:pasteboard];
+    BOOL result = [self canEdit];
     
     if (result)
     {
-        [self willEditDOMRange:range];
+        id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+        
+        // Let the text object decide
+        NSPasteboard *pasteboard = nil;
+        if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+        {
+            pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+        }
+        
+        result = [text webEditorTextShouldInsertText:string
+                                   replacingDOMRange:range
+                                         givenAction:action
+                                          pasteboard:pasteboard];
+        
+        if (result)
+        {
+            [self willEditDOMRange:range];
+        }
     }
     
     return result;
 }
 
+/*  The WebView sends this message whenever its content changes. Unfortunately, there is no way to know what part of the DOM changed, so we are left guessing who to send this message to.
+ */
 - (void)webViewDidChange:(NSNotification *)notification
 {
-    // Inform the focused text that a change took place. There is somewhat of a problem though: this method has no context as to what changed. In the case of dropping some content, the selection never actually changes in fact, so we have no idea to whom this message should actually be sent.
+    OBASSERT([[self webView] isFirstResponder]);
+    
     [[self focusedText] webEditorTextDidChange:notification];
 }
 

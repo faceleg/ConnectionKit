@@ -217,6 +217,7 @@
 		2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */; };
 		271575540D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575520D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
+		27158FCA1083FBE600E72B74 /* bak.png in Resources */ = {isa = PBXBuildFile; fileRef = CE264CD9081708DD009D3B6C /* bak.png */; };
 		27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
@@ -5714,6 +5715,7 @@
 				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
 				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
+				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

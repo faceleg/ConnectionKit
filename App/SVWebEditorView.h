@@ -85,6 +85,8 @@ typedef enum {
 
 @property(nonatomic, readonly) SVWebEditingMode mode;
 
+// We don't want to allow any sort of change unless the WebView is First Responder
+- (BOOL)canEdit;
 // WebKit doesn't supply any sort of -willFoo editing notifications, but we're in control now and can provide a pretty decent approximation.
 - (void)willEditDOMRange:(DOMRange *)range;
 
